@@ -19108,6 +19108,12 @@ canonical_text: >-
   refs only. Generic webhook success predicates are bounded to default 2xx plus at most five atoms from
   status_class_is, status_code_equals, header_exists, header_equals_literal, json_pointer_exists, and
   json_pointer_equals_literal.
+  External destination test-send is separately queued and rate-limited under the existing RuntimeResourceGovernor,
+  distinct from local sound preview. Notification fanout and delivery backpressure must not block Goal or provider
+  event handling; delivery scheduling uses existing governed work/queue bounds, not a peer scheduler. Queue
+  admission, retry or rate limiting never claims delivery success, bypasses permission/redaction, changes source
+  event state, or resolves a blocked condition. Existing owner receipts and provider success predicates remain
+  the only delivery outcome evidence; no new event, storage family or command is admitted by this performance rule.
 gui_related: false
 gui_classification_reason: Defines shared notification payload, destination, receipt, retry, and predicate data contracts; GUI renders them elsewhere.
 depends_on: []
@@ -19119,6 +19125,8 @@ acceptance_criteria:
   - Retry class is transient for 408, 429, 5xx, and network failures; malformed, revoked, missing, forbidden, or capability-disabled cases are permanent failures.
   - Idempotency keys, rate-limit profiles, mention policies, and provider success predicates are stored or derived without exposing secret material.
   - Generic webhook predicates cannot execute scripts, shell, arbitrary JS, regex-catastrophic expressions, dynamic imports, loops, network calls, or provider snippets.
+  - External test-send is separately queued/rate-limited, while notification fanout/backpressure cannot block Goal/provider event handling; source-event progress and delivery outcomes remain distinct.
+  - Queue/retry admission proves neither successful delivery nor permission and preserves existing secret exclusion, idempotency, receipt and owner-route boundaries.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - notification delivery contract fixtures
@@ -19141,6 +19149,7 @@ source_lineage:
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0063
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0084
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0091
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/09_optimization_settings_load_handoff.md#notifications-and-sounds
 source_atom_ids: [atom-0061, atom-0062, atom-0063, atom-0084, atom-0091]
 decision_refs: [dec-0009, dec-0010, dec-0011, dec-0012, dec-0013]
 preserved_exact_tokens:
@@ -19171,6 +19180,8 @@ preserved_exact_tokens:
   - "NotificationDeliveryAttemptReceipt"
   - "status_class_is"
   - "json_pointer_equals_literal"
+  - "Notification fanout"
+  - "delivery backpressure"
 negative_constraints:
   - Do not include raw secrets, webhook URLs, tokens, private paths, full prompts, full logs, screenshots, raw diff bodies, or unredacted identities in payloads or receipts.
   - Do not let external notification dismissal resolve PM blocked episodes or canonical conditions.

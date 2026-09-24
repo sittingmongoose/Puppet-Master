@@ -2120,6 +2120,9 @@ border-radius = 4
 - Parse and validate each file against the token schema (§6.2). Invalid files log a warning and are skipped (not loaded); user sees a toast on Settings open: "Theme '{name}' has errors -- see log for details"
 - Valid custom themes appear in the theme selector (Settings > General and title bar theme selector) alongside built-in themes
 - **Hot reload:** Editing a theme TOML file while the app is running triggers a re-scan (via file watcher on the themes directory). If the currently active theme is modified, changes apply immediately (same as live theme switch within a family). If font changes are detected, prompt for restart.
+- Debounce custom-theme file-watch events; unchanged invalid theme content must not cause a validation/reload retry loop. Preserve the invalid-file warning and do not apply invalid tokens to the effective theme.
+- Materialize large theme/font inventory details lazily and in bounded work. This does not skip required startup custom-TOML discovery/validation or validation of the selected active theme. Font changes retain the restart prompt; lazy enumeration does not silently change the effective font.
+- Theme preview and accepted reload invalidate affected token consumers without recompiling/reloading unrelated surfaces. Settings-owned appearance preview stays reversible and non-persistent, and committed consumers still share the atomic effective Project theme snapshot; neither watch events nor preview create another theme authority.
 
 **Theme selector UI:**
 - The title-bar trigger is a morphing icon button: sun = manual Light mode, moon = manual Dark mode, continuous sun-to-moon morph = Auto mode (follows OS appearance)
@@ -9572,6 +9575,12 @@ canonical_text: >-
   Theme loading scans custom theme TOML files on startup, validates token schema, skips invalid
   files with warning/toast disclosure, and hot-reloads modified active themes while prompting for
   restart on font changes.
+  Debounce custom-theme file-watch events and suppress retry loops for unchanged invalid theme content while
+  retaining warnings and the last valid effective theme. Large theme/font inventory details are lazy and bounded,
+  without skipping required startup TOML discovery/validation or selected-theme validation. Theme preview and
+  accepted reload invalidate affected token consumers without recompiling/reloading unrelated surfaces. Consume
+  Settings' reversible non-persistent preview and atomic committed Project theme snapshot; font changes retain
+  the restart prompt, not a silent effective-font change.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible theme loading, validation, toast, and live theme update behavior.
@@ -9579,6 +9588,9 @@ split_recommended: true
 depends_on: []
 unblocks: []
 acceptance_criteria:
+- "Theme watch bursts are debounced; unchanged invalid content does not retry-loop or replace the last valid theme."
+- "Lazy bounded theme/font details preserve startup and selected-theme validation, warnings and the font-change restart boundary."
+- "Reversible preview and accepted reload update affected token consumers without recompiling/reloading unrelated surfaces or creating another theme authority."
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
@@ -9596,6 +9608,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064"
+- PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/09_optimization_settings_load_handoff.md#themes
 preserved_exact_tokens:
 - ".toml"
 - "Theme '{name}' has errors -- see log for details"
@@ -9604,6 +9617,9 @@ preserved_exact_tokens:
 - "re-scan"
 - "font changes"
 - "prompt for restart"
+- "unchanged invalid theme content"
+- "theme/font inventory"
+- "recompiling/reloading unrelated surfaces"
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -27779,6 +27795,11 @@ canonical_text: >-
   The in-app toast/banner destination renders through the
   title-bar notification affordance per PMConcept7 (2026-07-23): ephemeral deliveries stage beneath the title-bar
   notification stack and durable deliveries join the stack and its count badge (F3-460, F3-461).
+  Local sound preview remains low latency under the existing RuntimeResourceGovernor. Audio decode/cache memory
+  is bounded with eviction; a later preview reloads the selected available asset through the same validation and
+  truthful playback lifecycle, never an unrelated substitute. Sound-pack import hashing and validation run off the
+  Slint UI thread on the existing governed CPU/blocking lanes. External test-send remains a separate explicit
+  queued, rate-limited delivery operation under CV-298, not a side effect of local preview or cache reload.
 gui_related: true
 gui_classification_reason: Defines Settings GUI, notification destination controls, sound library controls, upload UI, preview, and test-send presentation.
 depends_on: [ACD-428, CV-298, SP-222, PS-124, UCC-103]
@@ -27791,6 +27812,8 @@ acceptance_criteria:
   - Preview is local only; test-send is explicit, labeled, rate-limited, masked, receipt-recorded, and never mutates alert state.
   - Audio absence or disabled sound remains accessible through visible labels and non-audio state.
   - Playback tests cover actual audio start, zero volume, Stop, replacement, natural completion, navigation/Project cleanup, unavailable assets, decode/device failure, and rejected startup without false playing or delivery-success state.
+  - Audio decode/cache memory is bounded with eviction; selected-asset reload preserves validation, failure disclosure and resource cleanup without substituting another sound or sending an external notification.
+  - Sound-pack import hashing/validation runs off the Slint UI thread under existing CPU/blocking admission; separately queued external test-send retains explicit permission, rate limits, masking and receipts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Notifications and Sounds settings GUI fixtures
@@ -27816,6 +27839,7 @@ source_lineage:
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0066
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0067
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0068
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/09_optimization_settings_load_handoff.md#notifications-and-sounds
 source_atom_ids: [atom-0052, atom-0064, atom-0065, atom-0066, atom-0067, atom-0068]
 decision_refs: [dec-0009, dec-0010, dec-0011, dec-0012, dec-0013]
 preserved_exact_tokens:
@@ -27838,6 +27862,9 @@ preserved_exact_tokens:
   - "default sound mappings"
   - "allowed_mentions"
   - "parse mode"
+  - "Audio decode/cache"
+  - "eviction"
+  - "Slint UI thread"
 negative_constraints:
   - Do not create a top-level Settings tab for notifications.
   - Do not bundle PeonPing-style voice packs until license verification permits it.
