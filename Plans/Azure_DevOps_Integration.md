@@ -402,6 +402,8 @@ owner_hints: [Plans/Azure_DevOps_Integration.md, Plans/Source_Control_System.md]
 
 ### ADO-008 - Explicit New Team-Project Child Operation
 
+FGI-021 supplies this operation's exact generic route, `cmd.forge.team_project.create`, and sole planned `handlers::forge::team_project_create` target under `ForgeIntegrationCoordinator`. Azure owns the actual provider mapping, permission and asynchronous result/readback; the distinct current-admission carrier and durable operation-journal companion are required before dispatch. The ordinary repository-create command and every existing legacy carrier remain unchanged; `handler_unavailable` is not lifted by this specification.
+
 ```yaml
 plan_unit_id: ADO-008
 unit_type: integration_contract

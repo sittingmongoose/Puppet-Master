@@ -2164,7 +2164,7 @@
         "future Azure review/policy adapter",
         "future Source Control review UI"
       ],
-      "line_count": 491,
+      "line_count": 493,
       "path": "Plans/Azure_DevOps_Integration.md",
       "plan_unit_count": 8,
       "plan_unit_ids": [
@@ -2190,7 +2190,7 @@
         "duplicated_or_unenforced_azure_check_presentation",
         "silently_transferred_azure_approval_or_policy_evidence"
       ],
-      "sha256": "12418c4c4b7ce99b982b604e1c0cc559a542bb402a9895ed46ad4aad8d02f7fd",
+      "sha256": "380f15db35875f949c40b6eb360c1156fdbac108f4c6d25614cd8b080b36b326",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -3545,7 +3545,7 @@
         "False": 34,
         "True": 46
       },
-      "heading_count": 191,
+      "heading_count": 192,
       "implementation_surfaces": [
         "Plans/BinaryLocator_Spec.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -3596,7 +3596,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 6347,
+      "line_count": 6351,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 80,
       "plan_unit_ids": [
@@ -3768,7 +3768,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "0a0f2919249e9f92b970472d9675698e6fa56d0e082bb9dc3280605a13984747",
+      "sha256": "cde3ded4bb6905026188fb85f40e428ea7d0f215f6f9bef779ec4d7b374d1de2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80
@@ -7980,21 +7980,24 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 1,
-        "True": 19
+        "True": 20
       },
-      "heading_count": 49,
+      "heading_count": 51,
       "implementation_surfaces": [
         "Plans/Azure_DevOps_Integration.md",
         "Plans/Commands_System.md",
         "Plans/FinalGUISpec.md",
         "Plans/Forge_Integrations.md",
+        "Plans/Project_System.md",
         "Plans/Settings_System.md",
         "Plans/Shared_Integration_Runtime.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
         "Plans/forge_integration_contract_fixtures.json",
         "Plans/forge_integration_contracts.schema.json",
+        "Plans/storage_value_registry.json",
         "Plans/touch_closure.json",
+        "future ForgeIntegrationCoordinator and Azure adapter",
         "future Forgejo adapter",
         "future Gitea adapter",
         "future Product Onboarding owner adapter",
@@ -8012,9 +8015,9 @@
         "future signed provider catalog",
         "future webhook ingress"
       ],
-      "line_count": 1343,
+      "line_count": 1435,
       "path": "Plans/Forge_Integrations.md",
-      "plan_unit_count": 20,
+      "plan_unit_count": 21,
       "plan_unit_ids": [
         "FGI-001",
         "FGI-002",
@@ -8035,12 +8038,14 @@
         "FGI-017",
         "FGI-018",
         "FGI-019",
-        "FGI-020"
+        "FGI-020",
+        "FGI-021"
       ],
       "reasoning_tiers": [
         "high"
       ],
       "risk_classes": [
+        "azure_team_project_child_bypasses_common_forge_admission",
         "capability_matrix_scope_trust_or_admin_authority_conflation",
         "capability_widening_or_false_completeness",
         "command_alias_event_forgery_or_phantom_runtime",
@@ -8062,15 +8067,15 @@
         "stale_review_evidence_or_agent_publication",
         "unbindable_vote_promise"
       ],
-      "sha256": "e1f9524386d7ea1a296bed7af3b94fd1c3fc54442d8f1454cc7d7f03733449fd",
+      "sha256": "ad68d12d274c9d63096c05e49812f4e2fdc40a4308f7dbade51a76596e2cdc93",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 20
+        "accepted": 21
       },
       "title": "Forge Integrations",
       "unit_type_counts": {
         "command_binding": 3,
-        "integration_contract": 6,
+        "integration_contract": 7,
         "invariant": 1,
         "owner_boundary": 1,
         "requirement": 8,
@@ -8090,6 +8095,7 @@
         "Plans/protected_auth_browser_contracts.schema.json",
         "Plans/touch_closure.json",
         "accessibility and degraded-state tests",
+        "actual Project-child-to-repository composition tests",
         "and multi-forge routing fixtures",
         "app/token/webhook schema fixtures",
         "auth",
@@ -8098,6 +8104,7 @@
         "central catalog/wiring/touch parity checks",
         "command/wiring census",
         "compact query fixtures",
+        "current admission and legacy rejection tests",
         "future Origin golden output",
         "future concrete-workflow owner admission checklist, local-offline independence, provider identity/scopes, timeout reconciliation and unsupported-provider negatives",
         "future creation-preview and approved-draft owner-join fixtures",
@@ -8109,6 +8116,7 @@
         "future push-success/review-failure, timeout-after-create, restart resume, rewritten stack, protected head, exact base mapping and Draft policy fixtures",
         "future requeue disabled-reason and confirmation fixtures",
         "future versioned provider-option fixtures",
+        "journal/reconciliation static contract tests",
         "migration fixtures",
         "no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. No merge-strategy field exists in the forge schema or its fixture pack, at base or after this landing, so the contracts gate cannot fail if this unit's promises are broken.",
         "no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. No requeue command, target kind or disabled reason exists in the forge schema or its fixture pack, so the contracts gate cannot fail if this unit's promises are broken.",
@@ -14326,7 +14334,7 @@
         "scripts/pm_project_forge_contract.py",
         "scripts/pm_ui_command_response.py"
       ],
-      "line_count": 530,
+      "line_count": 532,
       "path": "Plans/Project_System.md",
       "plan_unit_count": 8,
       "plan_unit_ids": [
@@ -14353,7 +14361,7 @@
         "project_identity_or_owner_collapse",
         "project_registration_or_migration_data_loss"
       ],
-      "sha256": "0fcf5569fd89659d882b810c5d6c88c516473cd7b5b632f9f8a8abb3c7f06ac3",
+      "sha256": "f618d6b754e99fe810ca737bb94ab433bb18c3e0ea89199b2b7023bf65d5f2c0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -19962,7 +19970,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-24T13:26:10Z",
+  "generated_at_utc": "2026-09-24T13:31:27Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19971,12 +19979,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3522,
-      "True": 3198
+      "True": 3199
     },
-    "plan_unit_count": 6720,
+    "plan_unit_count": 6721,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6529,
+      "accepted": 6530,
       "retired": 182,
       "superseded": 9
     },
@@ -20023,7 +20031,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 81,
+      "integration_contract": 82,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,
