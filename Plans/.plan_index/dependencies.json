@@ -50102,6 +50102,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PWIZ-021",
+      "to": "T-136"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-021",
+      "to": "T-142"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PWIZ-022",
       "to": "PWIZ-021"
     },
@@ -98676,7 +98686,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-25T04:57:35Z",
+  "generated_at_utc": "2026-09-25T04:58:17Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -186884,8 +186894,8 @@
       "source_location": {
         "heading": "PWIZ-021 - Product Onboarding draft-first state machine and connect-existing shortcut",
         "heading_level": 3,
-        "heading_line": 1873,
-        "line": 1875,
+        "heading_line": 1877,
+        "line": 1879,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186901,8 +186911,8 @@
       "source_location": {
         "heading": "PWIZ-022 - Product Onboarding motion, accessibility, and migration",
         "heading_level": 3,
-        "heading_line": 1973,
-        "line": 1975,
+        "heading_line": 1984,
+        "line": 1986,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186918,8 +186928,8 @@
       "source_location": {
         "heading": "PWIZ-023 - Guided Tour newbie-first real-application practice",
         "heading_level": 3,
-        "heading_line": 2045,
-        "line": 2047,
+        "heading_line": 2056,
+        "line": 2058,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186935,8 +186945,8 @@
       "source_location": {
         "heading": "PWIZ-024 - Visible project routes, independent placement, and live reviewed setup draft",
         "heading_level": 3,
-        "heading_line": 2098,
-        "line": 2100,
+        "heading_line": 2109,
+        "line": 2111,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186952,8 +186962,8 @@
       "source_location": {
         "heading": "PWIZ-025 - Bootstrap recovery, connector phases, and forge parity",
         "heading_level": 3,
-        "heading_line": 2196,
-        "line": 2198,
+        "heading_line": 2207,
+        "line": 2209,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186969,8 +186979,8 @@
       "source_location": {
         "heading": "Notebook Topic Research Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 2325,
-        "line": 2329,
+        "heading_line": 2336,
+        "line": 2340,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -186986,8 +186996,8 @@
       "source_location": {
         "heading": "PWIZ-027 - Research Decision Dispositions Into Topics And Amendments",
         "heading_level": 3,
-        "heading_line": 2371,
-        "line": 2373,
+        "heading_line": 2382,
+        "line": 2384,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -187003,8 +187013,8 @@
       "source_location": {
         "heading": "PWIZ-028 - Bounded Acceptance Of A Sealed Plan",
         "heading_level": 3,
-        "heading_line": 2489,
-        "line": 2491,
+        "heading_line": 2500,
+        "line": 2502,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -213078,9 +213088,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15689,
+    "depends_on_edge_count": 15691,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18388,
+    "edge_count": 18390,
     "node_count": 6729,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
