@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24243-L26317
+Source lines: L24243-L26319
 
-Source SHA256: `5044ca80c582deac8cc5d531882a92240ebdd13011d54f0089f97f0e24f15c9c`
+Source SHA256: `bd6e93bb28c734306e9f8e7991db3d2ffd715c50c8362beacc7c3ae27a0cc384`
 
 ---
 
@@ -1587,6 +1587,8 @@ The added composition has a further representational requirement even after refe
 A future explicitly owner-qualified readiness contract must resolve the full fixed family schema, recognize the separate nonstored validation identity, and check each complete native-accepted profile's original wrapper/key/codec/producer/reader branch. This source adoption does not implement or authorize that validator change, change the registry schema, or claim an implementation-readiness/gate pass. The source adoption preserves this readiness limitation.
 
 **2026-09-23 follow-up.** Section 2.3.1 now states the owner-qualified readiness contract that this subsection called for, written on Jared's 2026-09-23 instruction to repair the Storage registry findings, and the readiness validator implements it. The three rows resolve their composition and both whole wrappers in the declared `goal` realm. The composition identity stays validation metadata, and each wrapper keeps its literal stored header. This clears the 24 inline-shape failures on these rows without relabelling a member or inventing an envelope. The registry rows, the registry schema and every stored identity are unchanged. Native codec, key, producer and reader qualification remains NOT_RUN.
+
+**2026-09-24 follow-up: member wrapper digests.** Each `whole_wrapper_sha256` in `Plans/goal_workflow_cancel_contracts/physical-profiles.json` is the lowercase hexadecimal SHA-256 of the UTF-8 bytes of one text. That text is the JSON value the member's `whole_wrapper_ref` resolves to in the `goal` realm of `Plans/goal_workflow_cancel_schema_resources.json`: the definition at the reference's JSON Pointer, not its whole document. It is written with object members in document order, not sorted, two-space indentation, one member or array element per line, `": "` after each member name, non-ASCII characters as UTF-8 rather than escapes, and one final LF. Exactly, it is Python's `json.dumps(definition, ensure_ascii=False, indent=2) + "\n"`. The digest pins the reviewed wrapper schema definition inside the declaration. It is not a hash of any stored value, and it does not use `pm.goal.cancel_command_json.v1`, the codec of the stored wrappers themselves. This is the recipe of the generator that wrote the declaration: `build_proposal.py` of the physical source package whose manifest `reports/event-authority-20260911/step-08-goal-workflow-coordinator-checks.json` pins by SHA-256 `1c2a331b8fc097a6215712227e7abb0250a8334ec73dd33401bd92d68f4b8ab2`. It reproduces all six declared values from the current hash-pinned documents. Readiness recomputes each member's digest and rejects a member whose declared value differs (section 2.3.1), so a changed wrapper definition needs a newly declared digest even when the resource map's document pin is refreshed. Decided by Jared, by delegation to the coordinator, on 2026-09-24 (DL-076).
 
 ```yaml
 plan_unit_id: SP-310
