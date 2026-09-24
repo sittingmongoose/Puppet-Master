@@ -30,18 +30,20 @@ run-gates copy falls back to the truncated rule. The summary prints each such pa
 
 A subcheck that prints only a sample is keyed from its export instead, where it has one (the exports
 brief of 2026-09-24). Both aggregates re-invoke every subcheck as `pm-plans-verify.py <command> --report
-<tmp> <arguments>`, count the rows of that report and print the first 50 or 100 of them, so the report the
-same command line writes when this script runs it again is the complete list of what the subcheck counts:
-its export. Read in pm-plans-verify.py and in every validator it calls, each command the aggregates run
-writes a complete one except `validate-audit-closure`, which keeps only the first 200 of its validator's
-errors (EXPORT_COMMANDS, NO_EXPORT_COMMANDS). When the export's total equals the printed total, and the
-baseline holds that subcheck's rows in full, printed or recorded from an export, every row is keyed from
-the export and the subcheck is not truncated: the kind rules judge every row, and a rise in its total
-stops nothing by itself. Otherwise the truncated rule applies as before, and the summary says which case
-and why: no complete export, a baseline that holds only a sample, an export whose total disagrees, or one
-that timed out or could not be read. The run header lists the commands that write a complete export and
-the subchecks keyed from one. --record-baseline keys from exports too and records their rows beside the
-printed ones, which stay what a landing whose export falls back compares with.
+<tmp> <arguments>`, count the rows of that report and print the first 50 or 100 of them, so the report
+the same command line writes when this script runs it again is the complete list of what the subcheck
+counts: its export. Read in pm-plans-verify.py and in every validator it calls, each command the
+aggregates run writes a complete one except `validate-audit-closure`, which keeps only the first 200 of
+its validator's errors (EXPORT_COMMANDS, NO_EXPORT_COMMANDS). When the export's total equals the printed
+total, every row the aggregate printed is among the export's rows, and the baseline holds that
+subcheck's rows in full, printed or recorded from an export, every row is keyed from the export and the
+subcheck is not truncated: the kind rules judge every row, and a rise in its total stops nothing by
+itself. Otherwise the truncated rule applies as before, and the summary says which case and why: no
+complete export, a baseline that holds only a sample, an export whose total disagrees, one that lacks a
+row the aggregate printed (review X-09), or one that timed out or could not be read. The run header
+lists the commands that write a complete export and the subchecks keyed from one. --record-baseline keys
+from exports too and records their rows beside the printed ones, which stay what a landing whose export
+falls back compares with.
 
 Governance staleness is what AGENTS.md names: Spec Lock `stale_hash`, stale owner or artifact
 evidence hashes (among them `event_authority_currentness_source_drift` and `_validator_drift`), stale
@@ -1282,6 +1284,7 @@ def key_from_exports(
     argv_map: dict[tuple[str, str], list[str]] | str,
     timeout_seconds: int,
     keep_dir: Path | None = None,
+    items: list[dict[str, Any]] | tuple[dict[str, Any], ...] = (),
 ) -> tuple[dict[tuple[str, str], list[dict[str, Any]]], list[dict[str, Any]]]:
     """The exports brief: key each subcheck that prints only a sample from its complete export.
 
@@ -1289,7 +1292,9 @@ def key_from_exports(
     run and that did not time out, saying whether it was keyed and why. It is keyed when its command
     writes a complete export (EXPORT_COMMANDS), the baseline holds its rows in full, printed or recorded
     from an export (`baseline_checks` is None when a baseline is being recorded), the export finished
-    within `timeout_seconds` and could be read, and the export's total equals the printed total. One
+    within `timeout_seconds` and could be read, the export's total equals the printed total, and every row
+    the aggregate printed for it (`items`) is among the export's rows, the evidence that the second run saw
+    what the aggregate saw (review X-09, as L-07 takes the same evidence). One
     command line is run once, for every subcheck that runs it. Sets `exported` on the count of every
     keyed subcheck and returns ({(check, subcheck): the export's rows, normalized}, the rows).
     """
@@ -1354,10 +1359,19 @@ def key_from_exports(
                 row["reason"] = (f"its export ({argv[0]}) holds {len(failures)} rows, but the printed total is "
                                  f"{row['reported']}")
             else:
+                key = (row["check"], row["subcheck"])
+                rows_now = [normalize(row["check"], row["subcheck"], failure, root) for failure in failures]
+                printed = Counter(item["key"] for item in items if (item["check"], item["subcheck"]) == key)
+                printed.subtract(Counter(item["key"] for item in rows_now))
+                unmatched = sum(count for count in printed.values() if count > 0)
+                if unmatched:
+                    row["case"], row["exported"] = "rows_mismatch", len(failures)
+                    row["reason"] = (f"its export ({argv[0]}) holds all {len(failures)} rows, but {unmatched} of the "
+                                     f"rows the aggregate printed {'is' if unmatched == 1 else 'are'} not among them")
+                    continue
                 row["case"], row["exported"], row["keyed"] = "keyed", len(failures), True
                 row["reason"] = f"its export ({argv[0]}) holds all {len(failures)} rows, the printed total"
-                key = (row["check"], row["subcheck"])
-                exported[key] = [normalize(row["check"], row["subcheck"], failure, root) for failure in failures]
+                exported[key] = rows_now
                 counts[row["check"]][row["subcheck"]]["exported"] = len(failures)
     return exported, rows
 
@@ -1566,7 +1580,7 @@ def main() -> int:
             argv_map = f"{type(exc).__name__}: {exc}"
     exported, export_rows = key_from_exports(
         root, counts, None if args.record_baseline else (baseline.get("checks") or {}), timed_out, argv_map,
-        args.subcheck_timeout_seconds, keep_dir)
+        args.subcheck_timeout_seconds, keep_dir, items)
 
     if args.record_baseline:
         untracked = untracked_check_inputs(root)

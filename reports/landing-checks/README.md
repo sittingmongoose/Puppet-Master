@@ -213,7 +213,7 @@ export when all of these hold:
 - the baseline holds its rows in full, because it printed all of them or recorded them from an
   export;
 - the export finished within `--subcheck-timeout-seconds` and could be read;
-- the export's total equals the printed total.
+- the export's total equals the printed total, and every row the aggregate printed is among its rows.
 
 Then every row is keyed from the export and the subcheck is not truncated. The kind rules judge every
 row, as for a subcheck that prints everything: staleness is excused, a pre-existing or improved count
@@ -235,6 +235,9 @@ and why, ending "the truncated rule applies":
 - *total mismatch*: the export holds a different number of rows than the printed total, for example
   because the tree changed between the two runs: "its export (validate-plan-graph) holds 132 rows, but
   the printed total is 133";
+- *rows mismatch*: the export holds the printed total, but a row the aggregate printed is not among its
+  rows, so the second run did not see what the aggregate saw, for example because the tree changed between
+  the two runs;
 - *export timeout* or *unreadable*: the export did not finish within the bound, or its report is not
   JSON or holds no list of failures. This is not an infrastructure result: the subcheck itself
   finished, so its total and its printed rows are known, and only the keying falls back.
@@ -259,7 +262,7 @@ Evidence and plan-graph are complete in that baseline (0 each), so a landing key
 
 In `--json`, `exports` carries `complete_export_commands` and `no_complete_export`, and under
 `subchecks` one row per sampled subcheck. Each row has its `case` (`keyed`, `no_export`,
-`baseline_sample`, `total_mismatch`, `export_timeout` or `export_unreadable`), the `reason`, the
+`baseline_sample`, `total_mismatch`, `rows_mismatch`, `export_timeout` or `export_unreadable`), the `reason`, the
 number of rows `exported`, and for a keyed subcheck its `classes`. `compared_with_baseline_exports`
 names the subchecks compared with the baseline's export rows without being exported themselves. A
 keyed subcheck's count carries `exported`, and its row in `grown_subchecks` carries
@@ -273,8 +276,8 @@ so the check exited 2 on staleness the rule says never stops a landing. Keyed fr
 same run exits 1: the 132 rows are staleness and the `missing_ref` is pre-existing.
 
 What this leaves open: audit-closure stays sampled, and its validator's errors past the first 200
-are seen by nothing. The export is a second run of the same validator. The equal total is the
-evidence that it saw what the aggregate saw; the rows are not compared one by one.
+are seen by nothing. The export is a second run of the same validator. The equal total and every printed row
+being among its rows are the evidence that it saw what the aggregate saw.
 
 ## What counts as governance staleness
 

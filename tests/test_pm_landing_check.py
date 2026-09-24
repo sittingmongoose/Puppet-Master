@@ -2133,6 +2133,18 @@ class ExportKeyedSubchecks(LandingRun):
                          ["audit-governance/plan_graph", "run-gates/validate_plan_graph"])
         self.assertEqual(report["blocking"], 2)
 
+    def test_a_printed_row_the_export_does_not_hold_falls_back_at_an_equal_total(self):
+        """Review X-09: the export is a second run. When a row the aggregate printed is not among its rows, at an
+        equal total, the second run did not see what the aggregate saw, and the printed row must still be judged."""
+        rows = ea_anchors_rows()
+        printed = list(rows)
+        printed[5] = {"path": "Plans/storage-plan.md", "error": "missing_ref", "ref": "#gone"}
+        code, out = self.land_ea_anchors(printed, export=rows)
+        self.assertEqual(code, 2, out)
+        self.assertIn("[not keyed] run-gates/validate_plan_graph (50 of 133 printed): its export (validate-plan-graph) holds "
+                      "all 133 rows, but 1 of the rows the aggregate printed is not among them; the truncated rule applies", out)
+        self.assertIn("[blocking    ] run-gates/validate_plan_graph  missing_ref  Plans/storage-plan.md", out)
+
     def test_an_export_that_times_out_or_cannot_be_read_falls_back_and_says_so(self):
         for export, reason in (("timeout", "did not finish within 600 s"),
                                ("unreadable", "could not be read: its report is not JSON (stand-in)")):
