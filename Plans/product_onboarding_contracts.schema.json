@@ -1516,7 +1516,8 @@
                   "remote_access_setup",
                   "review_setup_plan",
                   "automatic_preparation",
-                  "free_models_setup"
+                  "free_models_setup",
+                  "ready"
                 ]
               },
               "local_context": {"properties": {"intent": {"const": "return"}}}
@@ -2108,7 +2109,8 @@
                   "remote_access_setup",
                   "review_setup_plan",
                   "automatic_preparation",
-                  "free_models_setup"
+                  "free_models_setup",
+                  "ready"
                 ]
               },
               "session_status_after": {"const": "active"},
@@ -2160,6 +2162,16 @@
               {
                 "if": {"properties": {"stage_before": {"const": "free_models_setup"}}, "required": ["stage_before"]},
                 "then": {"properties": {"stage_after": {"const": "provider_setup"}}}
+              },
+              {
+                "if": {"properties": {"stage_before": {"const": "ready"}}},
+                "then": {
+                  "oneOf": [
+                    {"properties": {"stage_after": {"const": "free_models_setup"}, "continuation_snapshot": {"properties": {"path_kind": {"const": "guided_setup"}, "project_disposition": {"const": "committed"}}}}},
+                    {"properties": {"stage_after": {"const": "automatic_preparation"}, "continuation_snapshot": {"properties": {"path_kind": {"const": "guided_setup"}, "project_disposition": {"const": "deferred"}}}}},
+                    {"properties": {"stage_after": {"const": "automatic_preparation"}, "continuation_snapshot": {"properties": {"path_kind": {"const": "connect_existing"}, "project_disposition": {"const": "not_applicable"}}}}}
+                  ]
+                }
               }
             ]
           }
