@@ -201,7 +201,9 @@ the two timeout rows read as new failures and lifted two subcheck totals from 0 
 
 A baseline is never recorded from a run in which a subcheck timed out: `--record-baseline` exits 3
 and writes nothing, because a baseline that says a subcheck passed, or failed once, when it never
-finished would mislead every landing after it. Rerun with a larger `--subcheck-timeout-seconds`.
+finished would mislead every landing after it. Rerun with a larger `--subcheck-timeout-seconds`. The
+nightly refresh reruns with a larger bound the same night rather than skipping. A skipped refresh
+leaves an older baseline, and rule 2 compares against it.
 
 ## Which paths count as the branch's
 
@@ -284,6 +286,10 @@ Four things that make the difference between a good baseline and a misleading on
 
 Takes about ten minutes. The run also ends at a new `current_run.json`, so the next landing check
 validates the new snapshot rather than the one it replaced.
+
+If `--record-baseline` refuses with exit 3 because a subcheck timed out, rerun it the same night with
+a larger `--subcheck-timeout-seconds`, for example `--subcheck-timeout-seconds 1200`; never skip the
+night, because a skipped refresh leaves an older baseline and rule 2 compares against it.
 
 ## Related branch
 
