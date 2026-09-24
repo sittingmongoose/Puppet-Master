@@ -25,7 +25,7 @@ For a Step 9 registration, the decision entry is the DL-078 landing entry that n
 
 ## The three admission records
 
-All three pin the Step 8(a) depth assessment `reports/event-authority-20260911/step-08-depth42-assessment-20260924.json` at SHA-256 `ff7dbd59b678aa53f311e5c6727ea5835e2a03c398d9b5d4639d52957f73e30e`. That file is on `plans/ea-step08-depth42-20260924` and lands before this branch. If its review changes it, the records are re-pinned before this branch lands.
+All three pin the Step 8(a) depth assessment `reports/event-authority-20260911/step-08-depth42-assessment-20260924.json` at SHA-256 `ba9b84f99e0e0761a8b435a16602d4c88d14589ef273f789fd5b92bdbd5849fd`, the version after that branch's review cycle 2 repairs; they first pinned `ff7dbd59...`. That file is on `plans/ea-step08-depth42-20260924` and lands before this branch. If it changes again, the records are re-pinned before this branch lands.
 
 | Family | Decision entry | Registry before -> after | Criteria not passing in the assessment |
 |---|---|---|---|
@@ -56,7 +56,7 @@ The counterfactual shows what the amendment does and does not do. With complete 
 
 ## Evidence
 
-`/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-10-post-august-amendment-20260924/`, `SHA256SUMS` SHA-256 `f8d6d081673659d121a2e16854cce1336a07f4c301d770b4ea569ddeb6f55382` (16 files). It holds:
+`/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-10-post-august-amendment-20260924/`, `SHA256SUMS` SHA-256 `2cbfed75a4fde219765de0e2d75e1cf53cef1d7280d8587d22b8ce86f93ff35c` (16 files). It holds:
 - the validator diff and the three harness runs;
 - the test logs and the currentness output;
 - copies of the receipt and the records;

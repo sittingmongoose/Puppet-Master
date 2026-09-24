@@ -17,7 +17,7 @@
  "registry_row_sha256": "41a79eb9484860b8176893fca50173dab58f8cc068cb491b3fdc92db3e08cb06",
  "depth_assessment": {
   "path": "reports/event-authority-20260911/step-08-depth42-assessment-20260924.json",
-  "sha256": "ff7dbd59b678aa53f311e5c6727ea5835e2a03c398d9b5d4639d52957f73e30e"
+  "sha256": "ba9b84f99e0e0761a8b435a16602d4c88d14589ef273f789fd5b92bdbd5849fd"
  },
  "admission_landing": {
   "commit": "69553720f1c55528ed423a8c723bc97ec9cc4281",
@@ -30,7 +30,7 @@
  ],
  "status_at_recording": "incomplete_depth",
  "recorded_by": "claude-opus-5.5:dl039-steps-8-9-20260924",
- "recorded_at_utc": "2026-09-24T22:55:25Z",
+ "recorded_at_utc": "2026-09-24T23:15:29Z",
  "notes": [
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ]

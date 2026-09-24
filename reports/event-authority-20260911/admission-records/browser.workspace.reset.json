@@ -17,7 +17,7 @@
  "registry_row_sha256": "b4aa4de2d9409199a0615c26a7ea7e581ee64fde6411625e393f83adcc479eb2",
  "depth_assessment": {
   "path": "reports/event-authority-20260911/step-08-depth42-assessment-20260924.json",
-  "sha256": "ff7dbd59b678aa53f311e5c6727ea5835e2a03c398d9b5d4639d52957f73e30e"
+  "sha256": "ba9b84f99e0e0761a8b435a16602d4c88d14589ef273f789fd5b92bdbd5849fd"
  },
  "admission_landing": {
   "commit": "4fe66204bde92ab710a6d1f1cf9f46be75d18458",
@@ -28,7 +28,7 @@
  ],
  "status_at_recording": "incomplete_depth",
  "recorded_by": "claude-opus-5.5:dl039-steps-8-9-20260924",
- "recorded_at_utc": "2026-09-24T22:55:25Z",
+ "recorded_at_utc": "2026-09-24T23:15:29Z",
  "notes": [
   "The reset admission did not change the revision label: 2026-09-11.2 names both the 41-family and the 42-family registry. The SHA-256 values distinguish them.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
