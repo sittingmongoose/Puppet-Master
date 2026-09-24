@@ -5900,6 +5900,7 @@ acceptance_criteria:
   - Admission records in the new form exist for context.compaction.completed, browser.workspace.created and browser.workspace.reset, each carrying its current depth assessment; the check fails closed for any of them whose assessment does not show all twelve criteria passing.
   - No registry row, family admission, freeze digest, closure hash, certification or seal follows from this decision.
 validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
   - python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
   - python3 -m unittest tests.test_event_authority_holding_bucket
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -5959,6 +5960,7 @@ acceptance_criteria:
   - A registry change that is not a Step 9 registration passing the full procedure still needs Jared's own checkpoint approval.
   - The Step 9 procedure record states the rule.
 validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
   - python3 -m unittest tests.test_pm_pnc019_currentness
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

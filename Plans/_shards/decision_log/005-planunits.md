@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1586-L6111
+Source lines: L1586-L6113
 
-Source SHA256: `1a7c05bc22cf53b64d14fb3e81946e8c036919732580f01b5d9fdeae637ae418`
+Source SHA256: `29a76d50e45bf449dab121a50c6f10eb7d408ce32d5ddf95a75f737aecb3066c`
 
 ---
 
@@ -4325,6 +4325,7 @@ acceptance_criteria:
   - Admission records in the new form exist for context.compaction.completed, browser.workspace.created and browser.workspace.reset, each carrying its current depth assessment; the check fails closed for any of them whose assessment does not show all twelve criteria passing.
   - No registry row, family admission, freeze digest, closure hash, certification or seal follows from this decision.
 validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
   - python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
   - python3 -m unittest tests.test_event_authority_holding_bucket
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -4384,6 +4385,7 @@ acceptance_criteria:
   - A registry change that is not a Step 9 registration passing the full procedure still needs Jared's own checkpoint approval.
   - The Step 9 procedure record states the rule.
 validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
   - python3 -m unittest tests.test_pm_pnc019_currentness
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
