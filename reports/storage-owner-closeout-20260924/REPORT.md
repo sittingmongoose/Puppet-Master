@@ -1,6 +1,6 @@
 # Storage owner closeout, 2026-09-24
 
-STATUS: in progress. Task 1(a) committed and pushed (`c21befb8e9`, `af4d1737b6`); Task 1(b) under way.
+STATUS: in progress. Task 1(a) and 1(b) committed and pushed (`c21befb8e9`, `af4d1737b6`, `cc10739917`, `60009eec0a`); Decision Log entry, Task 2 and Task 3 next.
 
 Branch `plans/storage-owner-closeout-20260924`, sparse worktree `~/pm-worktrees/storage-owner-closeout-20260924` (`Plans scripts reports tests .claude`). Not landed.
 
@@ -52,3 +52,59 @@ The reviewer tried compact and spaced separators, but not `indent=2`. The recipe
 - A mutation run confirms the negatives are not vacuous. A copy of the validator with the digest comparison disabled fails exactly the two negative checks, and the positive check still passes.
 
 `Plans/goal_workflow_cancel_contracts/physical-profiles.json` itself is unchanged, so no resource map, manifest or report pin moves.
+
+## Task 1(b): `redb_snapshot_id` in the stored SP-278 read token
+
+**Decision: the four checkpoint rows stop storing the snapshot id. SP-311's rule stays as written, with no exception.**
+
+**What canon said.**
+- SP-311 (goal_run started projector): "Snapshot id from the actual ten-field generic token is only a live transaction fence; never persist or manufacture it." SP-312 repeats it: "The tenth actual redb_snapshot_id is a live fence only, never durable or manufactured."
+- Three goal_run consumer schemas (started, cancelled, certified) each define `DurableGenericToken`, which is exactly the canonical `read_token` without `redb_snapshot_id` (checked by equality).
+- The restore-created v2 digest ("it is not persisted in this digest") and the restore-expiry `index_selection_sha256` ("read_token excluding redb_snapshot_id") both leave it out of stored digests.
+- Against that, four owner passages stored the whole ten-field token on purpose:
+  - SP-282 Browser reset: "A stored snapshot ID is historical provenance, not a reopenable native snapshot or a restart credential."
+  - SP-270 seglog reader: "stores the exact closed read_token as index_read_token: ... and redb_snapshot_id".
+  - SP-273 Home reader: "including ... actual redb_snapshot_id".
+  - SP-275 restore expiry: "generic_read_token additionally carries the actual redb_snapshot_id".
+- The Browser oracle and its tests encoded the provenance reading: the stored id is never rewritten, and disclosure swaps in the live id.
+
+**Reasoning, in three sentences.** A stored snapshot id served no function: every one of the four owners already forbade using it as a fence, a restart handle or a currentness proof, so it was an inert field whose only safe use was to be ignored, and it invited exactly the misuse those guards exist to prevent. Keeping SP-311's rule universal costs only planning churn now, because nothing is implemented, and the nine-field durable token is already canon in three consumer schemas. The alternative, an exception in SP-311 for checkpoint custody, would leave two meanings of "stored read token" in one Storage plan.
+
+**What changed** (commits `cc10739917` and `60009eec0a`).
+- `Plans/storage-plan.md`:
+  - SP-278 gains a dated "2026-09-24: the durable read token" paragraph. It defines the stored form as the canonical token with `redb_snapshot_id` removed from `properties` and `required`, and says each read joins the snapshot id of its own live read transaction.
+  - Dated DL-076 amendments in the four passages (SP-282, SP-270, SP-273, SP-275). The SP-282 amendment says outright that the "historical provenance" reading no longer applies. SP-282 criterion A001 is amended in place.
+  - Section 2.3.1: the read-token bullet is rewritten, and the closing sentence names DL-076.
+  - SP-311's text is unchanged.
+- Contracts:
+  - `Plans/browser_workspace_reset_contracts.schema.json` gains a local `$defs/durable_read_token`, which `checkpoint` and `checkpoint_core` now reference.
+  - The whole-token copies become the nine-field projection in:
+    - `Plans/seglog_append_observability_contracts.schema.json` (3 copies);
+    - `Plans/home_layout_event_contracts.schema.json` (3);
+    - the Home3 receipt contract `Plans/home_layout_pending_receipt.schema.json` (3), which carries the same checkpoint definitions;
+    - `Plans/restore_point_expired_contracts.schema.json` (2).
+  - Not touched: the frozen Home2 reader `Plans/home_layout_pending_receipt_v2_reader.schema.json`; `Plans/event_record_index_checkpoint.schema.json`, which 12 resource maps pin by hash; and every live-read contract (reader inputs, owner resolutions, reader routes).
+- Fixtures: the eight stored checkpoint values in the home, restore and seglog contract fixtures lose the field. A jsonschema harness over all 28 value-shape cases gives the same per-case outcome before and after. Each updated contract now rejects a stored checkpoint whose token carries the field.
+- `Plans/storage_value_registry.json`: the four rows. The Browser row's local definition is renamed `durable_read_token`, and its `replay_behavior` sentence "Stored snapshot ID is provenance, never a restart handle." is replaced. The row equals `expected_storage_family()`.
+- `scripts/pm_browser_workspace_reset.py`:
+  - `durable_read_token_schema()` computes the projection from the canonical token.
+  - `binding_failures` rejects a contract whose `durable_read_token` is not that projection.
+  - `index_token_failures` validates the stored nine-field token and then joins the observation's live snapshot id. A missing live id is `generic_live_snapshot_unproved`.
+  - `disclose` no longer rewrites a stored field.
+- `tests/test_pm_browser_workspace_reset.py`:
+  - `test_every_read_token_field_exactly_joins` covers the nine stored fields.
+  - The snapshot observation case now uses a missing or empty live id.
+  - The new-snapshot disclosure test asserts that no id is stored.
+  - Two new tests: a stored id is rejected even when it equals the live id, and the contract's durable token is the SP-278 projection, with a negative.
+  - The storage-binding mutation list gains `stored_snapshot_id`.
+- `scripts/pm-implementation-readiness.py`:
+  - The read-token exemption accepts the canonical token or its durable projection.
+  - New failure `storage_value_registry_live_snapshot_fence_persisted`. It fires for any `redb_snapshot_id` property reachable from an inline value schema: subschema keywords and local references are followed, unreferenced `$defs` are not, so `retention_hold_record`'s unused whole-token definition is correctly not reported. It also fires, conservatively, for any such property in the SP-310 union record graphs.
+  - Five self-test checks: `sp278_persisted_read_tokens_are_durable` (positive), `persisted_whole_read_token_rejected`, `persisted_snapshot_fence_through_local_reference_rejected`, `stored_profile_union_record_graph_snapshot_fence_rejected` and `durable_read_token_schema_under_other_name_rejected`.
+  - `read_token_local_reference_to_altered_definition_rejected` follows the renamed Browser definition.
+  - The representation test names 36 checks.
+- Mutation runs on the validator, each caught:
+  - with the inline rule removed, the two inline negatives fail;
+  - with the union rule removed, the union negative fails;
+  - with the exemption limited to the whole token, the live-row positive fails;
+  - with local references not followed, the local-reference negative fails.
