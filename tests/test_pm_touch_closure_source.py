@@ -886,5 +886,22 @@ class CentralArchivedProjectAdapterTests(unittest.TestCase):
         self.assertEqual(result["central_map_crosscheck"], "pass")
 
 
+class HoverTimingResidualTests(unittest.TestCase):
+    def test_hover_residual_uses_current_owner_timing_without_runtime_promotion(self):
+        registry = json.loads((ROOT / "Plans/touch_closure.json").read_text())
+        schema = json.loads((ROOT / "Plans/final_gui_interaction_contracts.schema.json").read_text())
+        dwell = schema["$defs"]["hover_tag"]["properties"]["focus_dwell_ms"]["const"]
+        row = next(row for row in registry["rows"] if row[0] == "TOUCH-HOVER-001")
+        source = (ROOT / "Concepts/pm7-tools/global_hover_tags_source.py").read_text()
+        owner = (ROOT / "Plans/FinalGUISpec.md").read_text()
+        self.assertEqual(dwell, 1000)
+        self.assertIn(f"FOCUS_OPEN_MS={dwell}", source)
+        self.assertIn(f"{dwell} ms of continuous keyboard focus", owner)
+        self.assertIn(f"{dwell} ms continuous keyboard-focus dwell", row[5])
+        self.assertNotIn("900 ms", row[5])
+        self.assertEqual(row[4], "partial")
+        self.assertIn("pending or unproven", row[5])
+
+
 if __name__ == "__main__":
     unittest.main()
