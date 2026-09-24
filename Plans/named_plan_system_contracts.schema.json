@@ -116,6 +116,7 @@
       "allOf": [
         {"if": {"properties": {"outcome": {"enum": ["accepted", "no_change"]}}}, "then": {"properties": {"named_plan_id": {"$ref": "#/$defs/non_empty_string"}, "named_plan_revision": {"type": "integer", "minimum": 1}, "currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "projection_ref": {"$ref": "#/$defs/safe_ref"}, "disabled_reason": {"type": "null"}, "error_code": {"type": "null"}}}},
         {"if": {"properties": {"outcome": {"const": "accepted"}}}, "then": {"properties": {"receipt_refs": {"minItems": 1}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.named_plan.create"}, "outcome": {"const": "accepted"}}, "required": ["command_id", "outcome"]}, "then": {"properties": {"thread_group_ref": {"$ref": "#/$defs/safe_ref"}, "route_ref": {"$ref": "#/$defs/safe_ref"}, "named_plan_revision": {"const": 1}}}},
         {"if": {"properties": {"outcome": {"const": "rejected"}}}, "then": {"properties": {"error_code": {"type": "string"}}}},
         {"if": {"properties": {"disabled_reason": {"type": "string"}}}, "then": {"properties": {"outcome": {"const": "rejected"}, "error_code": {"type": "string"}}}}
       ]
