@@ -7999,7 +7999,7 @@
         "False": 1,
         "True": 19
       },
-      "heading_count": 48,
+      "heading_count": 49,
       "implementation_surfaces": [
         "Plans/Azure_DevOps_Integration.md",
         "Plans/Commands_System.md",
@@ -8029,7 +8029,7 @@
         "future signed provider catalog",
         "future webhook ingress"
       ],
-      "line_count": 1295,
+      "line_count": 1335,
       "path": "Plans/Forge_Integrations.md",
       "plan_unit_count": 20,
       "plan_unit_ids": [
@@ -8079,7 +8079,7 @@
         "stale_review_evidence_or_agent_publication",
         "unbindable_vote_promise"
       ],
-      "sha256": "8b264c03ba0e29fccb1e5c81aae17c31a25c2b23b986839f7fd2c0ad231035cd",
+      "sha256": "ef41dab1bd6a5b5ede40c9fa6363566631cc538844934a34152c72d7f2f72646",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 20
@@ -8117,6 +8117,7 @@
         "compact query fixtures",
         "future Origin golden output",
         "future concrete-workflow owner admission checklist, local-offline independence, provider identity/scopes, timeout reconciliation and unsupported-provider negatives",
+        "future creation-preview and approved-draft owner-join fixtures",
         "future exact-version positive and negative fixtures; static prose is not runtime proof",
         "future per-provider merge strategy mapping fixtures",
         "future per-provider vote and reviewer fixtures",
@@ -8124,6 +8125,7 @@
         "future provider matrix/trust/admin fixtures",
         "future push-success/review-failure, timeout-after-create, restart resume, rewritten stack, protected head, exact base mapping and Draft policy fixtures",
         "future requeue disabled-reason and confirmation fixtures",
+        "future versioned provider-option fixtures",
         "migration fixtures",
         "no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. No merge-strategy field exists in the forge schema or its fixture pack, at base or after this landing, so the contracts gate cannot fail if this unit's promises are broken.",
         "no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. No requeue command, target kind or disabled reason exists in the forge schema or its fixture pack, so the contracts gate cannot fail if this unit's promises are broken.",
@@ -19993,7 +19995,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T04:55:31Z",
+  "generated_at_utc": "2026-09-25T04:56:06Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
