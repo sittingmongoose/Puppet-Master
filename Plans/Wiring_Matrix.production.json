@@ -43516,7 +43516,7 @@
         "cmd.project.add_existing must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.project.add_existing must expose projected state selector and disabled reason before dispatch",
         "cmd.project.add_existing dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.project.add_existing must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.project.add_existing uses the Project owner request/result pair; successful listed registration requires owner persistence/readback, not dispatch acknowledgement",
         "cmd.project.add_existing must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project."
       ],
@@ -43525,9 +43525,9 @@
       "disabled_reason_projection": "state.commands.project_add_existing.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.project.add_existing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Successful cmd.project.add_existing completion requires the typed Project owner result after verified listed registration and persistence/readback, with correlated owner receipts; dispatch acknowledgement is not completion. No new EventRecord is admitted.",
         "receipt_or_event_refs": [
-          "cmd.project.add_existing.dispatch_receipt"
+          "Plans/project_system_contracts.schema.json#/$defs/project_action_result"
         ]
       },
       "accessibility_contract": {
@@ -43550,7 +43550,7 @@
         {
           "test_id": "wiring.catalog.project_add_existing.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.project.add_existing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Successful cmd.project.add_existing completion requires the typed Project owner result after verified listed registration and persistence/readback, with correlated owner receipts; dispatch acknowledgement is not completion. No new EventRecord is admitted."
         },
         {
           "test_id": "wiring.catalog.project_add_existing.accessibility",
@@ -43564,7 +43564,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.project.add_existing records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.project.add_existing correlates its actual Project owner result and registration persistence/readback receipts, preserves exact caller return and idempotent original-result replay, and emits zero unregistered EventRecord effects; failure never publishes a half-listed Project."
       ]
     },
     "catalog.project_archive": {
@@ -43572,12 +43572,14 @@
       "ui_location": "Projects list > Archive",
       "ui_command_id": "cmd.project.archive",
       "handler_location": "handlers::project::archive",
+      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
+      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
       "expected_event_types": [],
       "acceptance_checks": [
         "Archive is reversible and performs no disk deletion",
         "The confirmation surface is view state; confirmation_strength lives in this command contract",
         "Archived projects leave the active list but remain restorable",
-        "cmd.project.archive must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.project.archive uses the Project owner request/result pair; archived registry state follows owner persistence/readback, not optimistic local removal",
         "cmd.project.archive must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.project.archive; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
@@ -43585,9 +43587,9 @@
       "disabled_reason_projection": "state.commands.project_archive.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.project.archive has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "cmd.project.archive records the reversible archived registry lifecycle through Project owner persistence/readback and a correlated typed owner result; it never deletes Project content. Dispatch acknowledgement is not completion and no new EventRecord is admitted.",
         "receipt_or_event_refs": [
-          "cmd.project.archive.dispatch_receipt"
+          "Plans/project_system_contracts.schema.json#/$defs/project_action_result"
         ]
       },
       "accessibility_contract": {
@@ -43610,7 +43612,7 @@
         {
           "test_id": "wiring.catalog.project_archive.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.project.archive has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.project.archive records the reversible archived registry lifecycle through Project owner persistence/readback and a correlated typed owner result; it never deletes Project content. Dispatch acknowledgement is not completion and no new EventRecord is admitted."
         },
         {
           "test_id": "wiring.catalog.project_archive.accessibility",
@@ -43619,7 +43621,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.project.archive records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.project.archive returns correlated Project owner registry persistence/readback receipts, preserves Project content and exact caller return, replays the original idempotent result without another write, and emits zero unregistered EventRecord effects."
       ]
     },
     "catalog.project_chain_wizard_open_deferred": {
@@ -44524,7 +44526,7 @@
         "cmd.project.new_local must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.project.new_local must expose projected state selector and disabled reason before dispatch",
         "cmd.project.new_local dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.project.new_local must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.project.new_local uses the Project owner request/result pair; successful listed registration requires owner-routed creation and persistence/readback, not dispatch acknowledgement",
         "cmd.project.new_local must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project."
       ],
@@ -44533,9 +44535,9 @@
       "disabled_reason_projection": "state.commands.project_new_local.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.project.new_local has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "Successful cmd.project.new_local completion requires the typed Project owner result after owner-routed local creation, listed registration and persistence/readback, with the stable config and correlated owner receipts; dispatch acknowledgement is not completion. No new EventRecord is admitted.",
         "receipt_or_event_refs": [
-          "cmd.project.new_local.dispatch_receipt"
+          "Plans/project_system_contracts.schema.json#/$defs/project_action_result"
         ]
       },
       "accessibility_contract": {
@@ -44558,7 +44560,7 @@
         {
           "test_id": "wiring.catalog.project_new_local.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.project.new_local has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Successful cmd.project.new_local completion requires the typed Project owner result after owner-routed local creation, listed registration and persistence/readback, with the stable config and correlated owner receipts; dispatch acknowledgement is not completion. No new EventRecord is admitted."
         },
         {
           "test_id": "wiring.catalog.project_new_local.accessibility",
@@ -44572,7 +44574,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.project.new_local records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.project.new_local correlates its actual Project owner result and creation/registration persistence/readback receipts, preserves exact caller return and idempotent original-result replay, and emits zero unregistered EventRecord effects; failure never publishes a half-listed Project."
       ]
     },
     "catalog.project_open": {
@@ -44644,6 +44646,8 @@
       "ui_location": "Projects list > Project settings",
       "ui_command_id": "cmd.project.open_settings",
       "handler_location": "handlers::project::open_settings",
+      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
+      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
       "expected_event_types": [],
       "acceptance_checks": [
         "Dispatch opens the F3-442 Project Settings Modal through canonical route/open identity for the target project",
@@ -44704,6 +44708,8 @@
       "ui_location": "Projects list > Refresh; Product Onboarding read-only real-Project picker/preflight under PWIZ-021",
       "ui_command_id": "cmd.project.refresh",
       "handler_location": "handlers::project::refresh",
+      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
+      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
       "expected_event_types": [],
       "acceptance_checks": [
         "Refresh rescans the projects list projection without mutating project records",
@@ -44765,12 +44771,14 @@
       "ui_location": "Projects list > Remove",
       "ui_command_id": "cmd.project.remove",
       "handler_location": "handlers::project::remove",
+      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
+      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
       "expected_event_types": [],
       "acceptance_checks": [
         "Remove deletes the list entry only and never touches the working tree",
         "The confirmation surface is view state; confirmation_strength lives in this command contract",
         "Removed projects can be re-added via the existing add/open commands without data loss",
-        "cmd.project.remove must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.project.remove uses the Project owner request/result pair; list-only registry removal follows owner persistence/readback and never becomes data deletion",
         "cmd.project.remove must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.project.remove; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
@@ -44778,9 +44786,9 @@
       "disabled_reason_projection": "state.commands.project_remove.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.project.remove has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "cmd.project.remove records removed_from_list through Project owner registry persistence/readback and a correlated typed owner result; it is never a data deletion and preserves the retained stable identity alias. Dispatch acknowledgement is not completion and no new EventRecord is admitted.",
         "receipt_or_event_refs": [
-          "cmd.project.remove.dispatch_receipt"
+          "Plans/project_system_contracts.schema.json#/$defs/project_action_result"
         ]
       },
       "accessibility_contract": {
@@ -44803,7 +44811,7 @@
         {
           "test_id": "wiring.catalog.project_remove.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.project.remove has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.project.remove records removed_from_list through Project owner registry persistence/readback and a correlated typed owner result; it is never a data deletion and preserves the retained stable identity alias. Dispatch acknowledgement is not completion and no new EventRecord is admitted."
         },
         {
           "test_id": "wiring.catalog.project_remove.accessibility",
@@ -44812,7 +44820,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.project.remove records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.project.remove returns correlated Project owner list-removal persistence/readback receipts, preserves Project data and the retention-policy-governed stable identity alias, preserves exact caller return, replays the original idempotent result without another write, and emits zero unregistered EventRecord effects."
       ]
     },
     "catalog.project_source_location_add": {
