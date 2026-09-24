@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L26642-L26829
+Source lines: L26642-L26830
 
-Source SHA256: `141c3ff380e07b001a64ebab9dd2774617bc82e81eafcadf6a19ee5a01fb512b`
+Source SHA256: `7c4924f6b9125fd9f76d1d713d0e3108bc9344a51cf9f331eeb105c7e13948d2`
 
 ---
 
@@ -72,9 +72,10 @@ disclosure; index-only equality never produces a historical fact.
 
 For verified original-move semantics, independently resolve the actual original
 terminal owner admission and immutable ProducerInput, original request/revisions,
-predecessor membership, accepted target and section creation, the vacated source
-section's empty state with no replacement workgroup, pane or session (DL-070), full unchanged
-pane/session/PTY identity, actual terminal readback and any applicable sibling
+predecessor membership, accepted target and section creation, the empty state of a
+source section the move vacated, with no replacement workgroup, pane or session
+(DL-070), full unchanged pane/session/PTY identity, actual terminal readback and
+any applicable sibling
 settlement, original result/SIR/CV-333 joins, and genuine original append authority.
 SP-286/CV-339 require the real eleven-field first AppendReceipt and original append
 result, actual original full EventRecord commitment and Storage-assignment joins;
@@ -97,8 +98,8 @@ sibling settlement or append-custody obligations remain unproved; `unavailable`
 means current source/access cannot authorize the read. The first two observations
 carry the complete unchanged original EventRecord and the whole live read token of
 this read's own snapshot (never persisted), with explicit original-validation
-status and unresolved obligation names as
-applicable; unavailable discloses neither. Neither observation certifies current
+status and unresolved obligation names as applicable; unavailable discloses
+neither. Neither observation certifies current
 terminal state or grants action authority. The closed private result companion
 must be defined and installed before runtime disclosure; these outcome names are
 a normative obligation, not an already deployed schema or validator pass.
@@ -176,7 +177,7 @@ acceptance_criteria:
   - Recheck current access/deletion/source and complete values after helpers before disclosure; no partial original-value substitution.
   - No durable reader effect or family checkpoint exists; generic SP-278 remains mandatory.
   - Store no read token; the whole ten-field token exists only for this read's own redb snapshot, and any stored copy is the nine-field durable token without redb_snapshot_id (DL-076).
-  - A verified original move includes the vacated source section's empty state; paired negatives reject a reseeded vacated section or a reported reseed (DL-070).
+  - A verified original move that vacated its source section includes that section's empty state; paired negatives reject a reseeded vacated section or a reported reseed (DL-070).
   - Paired static oracles and closed original/read-result companions remain required, distinct from native proof.
 validation_surfaces: [Plans/event_payloads/terminal_workgroup_moved.schema.json, Plans/event_record_index_checkpoint.schema.json, Plans/event_family_registry.json, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-170]
 risk_class: terminal_move_history_source_or_original_authority_escape

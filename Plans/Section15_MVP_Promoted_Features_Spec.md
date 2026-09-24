@@ -11812,12 +11812,12 @@ SIR alone authenticates acknowledgement and produces its outcome; an event or
 owner result cannot create acknowledgement or completion. The result's exact
 closed schema, original pending/result storage and SIR delegation must be
 materialized and admitted by their actual owners before this producer activates.
-If those companions store an SP-278 read token, they store the nine-field durable
-token without `redb_snapshot_id` (DL-076), and every read joins the snapshot ID of
-its own live read transaction.
 No existing Home receipt, restore-point result, arbitrary ref or shared descriptive
 role supplies that missing admission. This prose establishes those obligations;
-it does not claim the companion schemas/physical custody exist.
+it does not claim the companion schemas/physical custody exist. If those
+companions store an SP-278 read token, they store the nine-field durable token
+without `redb_snapshot_id` (DL-076), and every read joins the snapshot ID of its
+own live read transaction.
 
 Before effects, the admitted terminal operation custody must preserve the actual
 original request/owner authority, exact permitted beforeimages, accepted intent,
