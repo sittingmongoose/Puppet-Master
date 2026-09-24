@@ -1,0 +1,40 @@
+{
+  "schema_id": "pm.packet_canon_closure.project_wiring_repair.v1",
+  "base_commit": "b688606877a9b67b0a2f44e9093f087037a94ab1",
+  "findings": ["SDR-002", "SDR-003"],
+  "scope": "Existing Project wiring declarations only; no owner Markdown, owner schema, catalog identity, handler implementation, EventRecord admission or governance binding change.",
+  "changed_entries": [
+    "catalog.project_add_existing",
+    "catalog.project_archive",
+    "catalog.project_new_local",
+    "catalog.project_open_settings",
+    "catalog.project_refresh",
+    "catalog.project_remove"
+  ],
+  "schema_pointer_joins": ["cmd.project.archive", "cmd.project.remove", "cmd.project.refresh", "cmd.project.open_settings"],
+  "registry_effect_corrections": ["cmd.project.add_existing", "cmd.project.new_local", "cmd.project.archive", "cmd.project.remove"],
+  "owner_authority": [
+    {"path": "Plans/Project_System.md", "sha256": "0fcf5569fd89659d882b810c5d6c88c516473cd7b5b632f9f8a8abb3c7f06ac3", "lines": "45-65,77-95,120-136", "units": ["PJCT-001", "PJCT-002", "PJCT-007"]},
+    {"path": "Plans/project_system_contracts.schema.json", "sha256": "d3da35930fc33652bd24a180fb0c020b26b89f37348f18c931f45310a6a55058", "definitions": ["project_action_request", "project_action_result"]}
+  ],
+  "verification": [
+    {"command": "python3 -B tests/test_pm_project_wiring_contracts.py", "phase": "before_wiring_fix", "tests": 5, "assertion_failures": 9, "result": "reproduced_missing_bindings_and_no_persist_effects"},
+    {"command": "python3 -B tests/test_pm_project_wiring_contracts.py", "phase": "after_wiring_fix", "tests": 5, "result": "pass"},
+    {"command": "python3 -B tests/test_pm_project_unarchive.py", "tests": 14, "result": "pass"},
+    {"command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix", "result": "pass", "failures": 0},
+    {"command": "python3 scripts/pm-new-contracts-verify.py --help", "note": "This script ignores command-line arguments and executed its full static contract check.", "result": "pass", "contract_pairs": 31, "positive_cases": 1067, "negative_cases_rejected": 3479, "findings": 0},
+    {"command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json", "result": "pass", "docs_checked": 99, "shards_checked": 2720},
+    {"command": "python3 -B tests/test_pm_onboarding_phases.py", "tests": 42, "result": "preexisting_failure_identical_on_base_and_repair", "failure": "OnboardingStorageTests.test_existing_family_and_retention_census_is_unchanged: 294 != 90"},
+    {"command": "git diff --check", "result": "pass"}
+  ],
+  "boundaries_preserved": [
+    "One existing handler, state selector and disabled-reason projection per command; static pointers grant no native availability.",
+    "All six touched rows retain empty expected_event_types; registry persistence does not require inventing an EventRecord.",
+    "Open Settings remains route_open and refresh remains cached projection work, not registry mutation.",
+    "Project remove is list-only and retains the retention-policy-governed stable identity alias; delete_data is untouched.",
+    "GitHub creation/quarantined event obligations and user-adjudicated unarchive remain untouched.",
+    "Confirmation, permission, currentness, caller return and idempotency requirements are preserved; dispatch acknowledgement is not successful owner readback.",
+    "No shard/index generation is required because no Plans Markdown changed. No governance seal, baseline refresh, full landing check or main push was performed."
+  ],
+  "residual_work": "Independent review/integration, designated-owner reseal if required, and future native dispatcher/handler/persistence/readback/accessibility evidence. SDR-001 deletion handoff and SDR-004 spellcheck are not repaired here."
+}
