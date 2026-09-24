@@ -34,7 +34,21 @@ EXPECTED_SHARED_FILES = {
     "theme_surface_matrix.json", "motion_frame_matrix.json",
     "workspace_layout_event_fixtures.json",
 }
-FORBIDDEN_COMPACTION_EVENT_PREFIX = "context.compaction."
+COMPACTION_EVENT_PREFIX = "context.compaction."
+# ACD-461 / SP-259 admit only committed completion. This is a read-only
+# consumer check, not a new family registration or proof of native emission.
+COMPACTION_COMPLETION_TYPE = "context.compaction.completed"
+COMPACTION_COMPLETION_REGISTRY_FIELDS = {
+    "family_id": "event-family-context-compaction-completed",
+    "family_revision": "1.0.0",
+    "scope_policy": "project_only",
+    "payload_schema_id": "pm.context_compaction_completed.schema.v1",
+    "payload_schema_ref": {
+        "path": "Plans/event_payload_context_compaction_completed.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.context_compaction_completed.schema.v1",
+    },
+}
 EXPECTED_STATUS_BAR_INVENTORY = [
     "workspace", "orchestrator", "index", "ports", "branch", "sync"
 ]
@@ -508,14 +522,23 @@ def validate() -> dict[str, Any]:
     compaction = [
         f.get("event_type") for f in registry.get("families", [])
         if isinstance(f.get("event_type"), str)
-        and f["event_type"].startswith(FORBIDDEN_COMPACTION_EVENT_PREFIX)
+        and f["event_type"].startswith(COMPACTION_EVENT_PREFIX)
     ]
     if len(workspace_families) != 1:
         failures.append({"error": "workspace_event_family_count", "actual": len(workspace_families)})
     elif workspace_families[0].get("payload_schema_id") != event_schema.get("$id"):
         failures.append({"error": "workspace_event_schema_registry_mismatch"})
-    if compaction:
-        failures.append({"error": "forbidden_context_compaction_event_family", "events": compaction})
+    forbidden_compaction = [event for event in compaction if event != COMPACTION_COMPLETION_TYPE]
+    if forbidden_compaction:
+        failures.append({"error": "forbidden_context_compaction_event_family", "events": forbidden_compaction})
+    completion_families = [f for f in registry.get("families", []) if f.get("event_type") == COMPACTION_COMPLETION_TYPE]
+    if len(completion_families) != 1:
+        failures.append({"error": "context_compaction_completion_family_count", "actual": len(completion_families)})
+    else:
+        mismatched = [key for key, expected in COMPACTION_COMPLETION_REGISTRY_FIELDS.items()
+                      if completion_families[0].get(key) != expected]
+        if mismatched:
+            failures.append({"error": "context_compaction_completion_registry_mismatch", "fields": mismatched})
 
     command_fixtures = load(COMMAND_FIXTURES)
     valid_names = {x.get("name") for x in command_fixtures.get("valid", [])}
@@ -531,7 +554,7 @@ def validate() -> dict[str, Any]:
         "pm7_context_compaction_degraded_result_receipt_without_event",
         "pm7_context_compaction_unavailable_result_receipt_without_event",
         "pm7_context_compaction_retry_scheduled_result_receipt_without_event",
-        "pm7_context_compaction_result_receipt_without_event",
+        "pm7_context_compaction_committed_completion_event",
         "pm7_context_compaction_failed_result_receipt_without_event",
     }
     required_invalid = {
@@ -542,7 +565,12 @@ def validate() -> dict[str, Any]:
         "pm7_usage_widget_commit_cannot_emit_workspace_event",
         "pm7_commit_cannot_claim_unchanged",
         "pm7_error_phase_not_admitted",
-        "pm7_context_compaction_cannot_fabricate_event",
+        "pm7_context_compaction_completed_requires_event",
+        "pm7_context_compaction_completed_cannot_duplicate_event",
+        "pm7_context_compaction_failed_cannot_emit_completion",
+        "pm7_context_compaction_started_cannot_emit_completion",
+        "pm7_context_compaction_completed_cannot_emit_started",
+        "pm7_context_compaction_completed_cannot_emit_failed",
     }
     if not required_valid.issubset(valid_names):
         failures.append({"error": "missing_pm7_valid_command_fixtures", "missing": sorted(required_valid - valid_names)})
