@@ -88,6 +88,8 @@ tests/
 !/tests/test_pm_plan_index.py
 !/tests/test_pm_validate_pm7_gui_fixtures.py
 !/tests/test_pm_assistant_contract_closure.py
+!/tests/test_pm_browser_workspace_reset.py
+!/tests/test_shared_runtime_storage_contracts.py
 !/tests/test_v3_residuals.js
 # Fixture files the repository-wide gates read. run-gates and audit-governance fail on missing
 # files without them, so a checkout that does not have them cannot reproduce a landing check.
