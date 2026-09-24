@@ -4,7 +4,8 @@
   "answers_source_ref": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_DEPTH_GRADING.md",
   "answers_source_sha256": "cfea2eb818663d22eba69dca9296657aa05c51383a470bc1796b87aef65b923c",
   "card_ref": "reports/event-authority-20260911/step-08-depth42-product-cards-20260924.md",
-  "card_sha256": "b83dbae42c81518394f5a73a06e5a36763018917d0d8f2fd10551677254aa6bb",
+  "card_sha256": "193f481dd79112c81eda3a98b497c6d505f7e4e06ea5402311e8aed49f38d90f",
+  "card_note": "The bytes Jared saw (fd980eb2d4, 31b2f80048 after the rebase). Review fix G-01 (fb7e6a2877) added a Platform sentence to card 4 after publication; it was never on the published page, and the card file was restored to these bytes (6d81bfe924).",
   "decisions": [
     {
       "dl": "DL-079",
@@ -447,7 +448,7 @@
   ],
   "notes": [
     "Card 3 said the platform event's contract meets 11 of 12 criteria. Review G-01 later lowered its retention cell to PARTIAL (the application-scoped count that card 4 answers), so the assessment shows 10 of 12.",
-    "The card file is kept as presented (status line and blank Answer lines), as the DL-068 to DL-075 cards are; the answers are in DL-079 to DL-083 and decision-responses.jsonl.",
+    "The card file is kept as presented (status line and blank Answer lines), as the DL-068 to DL-075 cards are; the answers are in DL-079 to DL-083 and decision-responses.jsonl. Review fix G-01 had edited card 4 after publication (a Platform sentence that was never on the page Jared answered); the file is restored to the presented bytes 193f481dd79112c81eda3a98b497c6d505f7e4e06ea5402311e8aed49f38d90f, which all five response rows pin.",
     "No owner document other than Plans/Decision_Log.md is edited on this branch. The owner follow-ups above edit Plans/Goal_Runtime_System.md and Plans/storage-plan.md, whose plan-sharding evidence rows exceed the landing check's print cap, so they wait for the landing-check exports repair."
   ]
 }

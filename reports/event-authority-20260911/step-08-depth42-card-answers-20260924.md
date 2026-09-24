@@ -37,7 +37,7 @@ The assessment's MD says the same things where it listed these questions:
 - the Step 8(b) Replan bullet;
 - "Product questions this grading surfaced, and their answers".
 
-The card file is kept as presented, with its status line and blank Answer lines, as the DL-068 to DL-075 cards are. Card 3 said the platform event meets 11 of 12 criteria. Review G-01 later lowered its retention cell to PARTIAL for the application-scoped count that card 4 covers, so the assessment shows 10 of 12.
+The card file is kept as presented, with its status line and blank Answer lines, as the DL-068 to DL-075 cards are. Review fix G-01 (`fb7e6a2877`) had added a Platform sentence to card 4 after the cards were published. That sentence was never on the page Jared answered, so the file is restored to the presented bytes (SHA-256 `193f481dd79112c81eda3a98b497c6d505f7e4e06ea5402311e8aed49f38d90f`), and all five response rows pin them. Card 3 said the platform event meets 11 of 12 criteria. Review G-01 later lowered its retention cell to PARTIAL for the application-scoped count that card 4 covers, so the assessment shows 10 of 12.
 
 **Re-anchored citations.** The branch was rebased onto `main` `ac9c0ad2e4`, which carries DL-077 and DL-078, and this recording inserts DL-079 to DL-083. Both sit above the DL-076 PlanUnit, so its line moved from 5775 to 5997 in `Plans/Decision_Log.md`. The three evidence items that quote it now cite line 5997:
 - `workspace.layout_changed`, consumers;
