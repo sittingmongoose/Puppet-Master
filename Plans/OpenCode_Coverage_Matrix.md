@@ -173,7 +173,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 | GUI surface in FinalGUISpec.md | ✅ | §7.4A Agent Config Skills tab mirrors the `Plans/Skills_System.md` owner contract. |
 | Config keys/state storage | ✅ | Canonical storage and discovery roots are defined in `Plans/Skills_System.md` (project: `.puppet-master/skills/`, global: `~/.config/puppet-master/skills/`, plus legacy discovery roots for compatibility). |
 | No secrets in files | ✅ | Skills are Markdown files with no secret content. |
-| Doctor/preflight checks | ❌ | No Doctor check for skill validation. |
+| Doctor/preflight checks | ⚠️ | Historical audit found no Doctor check for skill validation. The September 3 census is now adopted in `Plans/newtools.md` N2-152; exact descriptor companions and native execution remain separate obligations. |
 
 ### 4.4 Plugins
 
@@ -200,7 +200,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 | GUI surface in FinalGUISpec.md | ✅ | §7.4.13 — dedicated Formatters tab. |
 | Config keys/state storage | ✅ | TOML config `[formatter]` section at global and project levels. |
 | No secrets in files | ✅ | Formatter config contains no secrets. |
-| Doctor/preflight checks | ⚠️ | No explicit Doctor check for formatter binary availability. Auto-detection runs per session but results are not surfaced in Doctor. Consider a `doctor.formatters.available` check. |
+| Doctor/preflight checks | ⚠️ | Historical audit found no explicit Doctor check for formatter binary availability and suggested `doctor.formatters.available`. `Plans/newtools.md` N2-152 now requires that diagnostic dimension; the suggested spelling is not thereby registered, and descriptor companions/native execution remain unproved. |
 
 ---
 
@@ -243,6 +243,8 @@ Provider/account/model reconciliation for OpenCode coverage stays linked to `Pla
 ### 5.5 Doctor/Preflight Gaps
 
 12. Consider adding Doctor checks for: (a) invalid permission configs, (b) invalid command schemas, (c) skill validation errors, (d) formatter binary availability, (e) plugin manifest validation, (f) model/provider availability. These are audit findings — the specific Doctor additions should be tracked in `Plans/FinalGUISpec.md` Health tab or a dedicated Doctor spec.
+
+Current disposition: the skill validation errors and formatter binary availability subset is no longer merely a recommendation. `Plans/newtools.md` N2-152 adopts both under the September 3 required diagnostic census, preserving domain ownership and explicit unsupported/unavailable outcomes. The historical audit findings (including OCM-010/011) remain source/currentness records; this disposition does not close other recommendations, register the suggested formatter check ID, create executable tasks or establish descriptor/native/runtime completion.
 
 ---
 
@@ -971,7 +973,7 @@ plan_unit_id: OCM-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/OpenCode_Coverage_Matrix.md
-canonical_text: 'Doctor/preflight gaps remain audit findings only: invalid permission configs, invalid command schemas, skill validation errors, formatter binary availability, plugin manifest validation, and model/provider availability. Specific Doctor additions should be tracked in FinalGUISpec.md Health tab or a dedicated Doctor spec.'
+canonical_text: 'Doctor/preflight findings preserve the historical audit of invalid permission configs, invalid command schemas, skill validation errors, formatter binary availability, plugin manifest validation, and model/provider availability. The skill validation and formatter binary availability subset is now a required diagnostic obligation under Plans/newtools.md N2-152, not merely an audit suggestion; other recommendations remain audit/currentness records subject to their owner dispositions. FinalGUISpec.md Health tab or a dedicated Doctor spec remains the owner routing, not proof of native checks.'
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible audit surfaces, settings, tabs, or Doctor/currentness findings.
 split_recommended: false
@@ -981,6 +983,7 @@ acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - The covered audit fact remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
 - Audit findings remain audit/currentness metadata and are not converted into implementation tasks by this PlanUnit.
+- The adopted skill validation errors and formatter binary availability subset routes to N2-152; it neither registers a suggested check ID nor proves descriptor companion or native execution completeness, and unrelated audit findings are not silently closed.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -995,6 +998,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Coverage_Matrix-S0020
+- PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/07_DOCTOR_HEALTH_AND_REMEDIATION.md:35
 preserved_exact_tokens:
 - Doctor/Preflight Gaps
 - invalid permission configs

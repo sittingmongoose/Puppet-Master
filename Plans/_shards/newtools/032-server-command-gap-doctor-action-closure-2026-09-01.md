@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L8866-L8923
+Source lines: L8894-L8953
 
-Source SHA256: `8e8d163aaa15c432f0ced8535780a5160cd6a2b3bff06147fa1d20ff81949dc0`
+Source SHA256: `f76550c5fe67d004a88eca1ce0a85e40f15e46eeab64f8c12503f1733c3670c4`
 
 ---
 
@@ -25,6 +25,8 @@ Doctor remains a registry/router/projection owner, not the owner of every diagno
 | 50 / `machine/command_census.json:540` | `cmd.doctor.run_check` -> `ui.doctor.run_check` | Run one exact bounded check through its domain owner and replace state only from a fresh owner result. |
 
 The six `ui.doctor.*` rows have typed request/result records, but no Doctor semantic-domain handler and no domain EventRecord. A local controller may route `run_check` or `open_remediation` to an already-admitted exact semantic-owner operation; that owner result remains the only mutation/truth evidence. Local results are bounded and redacted, preserve exact currentness/focus/return context, and cannot claim owner success from navigation, focus, cache, or stale state.
+
+The retained rejection of the packet spelling `cmd.doctor.run_all` concerns that unbounded global sweep, not the September 3 requirement for explicitly requested bounded Run All Checks. The latter is the finite owner-check composition specified by N2-152 above. It does not change the historical rejection record, register a new command/local-action identity or claim an existing batch carrier.
 
 The exact GUI consumers for the export and all six local actions are Settings > Doctor and Doctor finding/detail/return surfaces.
 

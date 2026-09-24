@@ -2,9 +2,9 @@
 
 Source: `Plans/OpenCode_Coverage_Matrix.md`
 
-Source lines: L264-L1197
+Source lines: L266-L1201
 
-Source SHA256: `d775247c8b00867abc5374cd74a1973a1943935b5395298ef7079d37c0c9682e`
+Source SHA256: `5290e6dca5679c755e3048eaf2fb09def3ead441326cd64e859aa6e169e08299`
 
 ---
 
@@ -718,7 +718,7 @@ plan_unit_id: OCM-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/OpenCode_Coverage_Matrix.md
-canonical_text: 'Doctor/preflight gaps remain audit findings only: invalid permission configs, invalid command schemas, skill validation errors, formatter binary availability, plugin manifest validation, and model/provider availability. Specific Doctor additions should be tracked in FinalGUISpec.md Health tab or a dedicated Doctor spec.'
+canonical_text: 'Doctor/preflight findings preserve the historical audit of invalid permission configs, invalid command schemas, skill validation errors, formatter binary availability, plugin manifest validation, and model/provider availability. The skill validation and formatter binary availability subset is now a required diagnostic obligation under Plans/newtools.md N2-152, not merely an audit suggestion; other recommendations remain audit/currentness records subject to their owner dispositions. FinalGUISpec.md Health tab or a dedicated Doctor spec remains the owner routing, not proof of native checks.'
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible audit surfaces, settings, tabs, or Doctor/currentness findings.
 split_recommended: false
@@ -728,6 +728,7 @@ acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - The covered audit fact remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
 - Audit findings remain audit/currentness metadata and are not converted into implementation tasks by this PlanUnit.
+- The adopted skill validation errors and formatter binary availability subset routes to N2-152; it neither registers a suggested check ID nor proves descriptor companion or native execution completeness, and unrelated audit findings are not silently closed.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -742,6 +743,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Coverage_Matrix-S0020
+- PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/07_DOCTOR_HEALTH_AND_REMEDIATION.md:35
 preserved_exact_tokens:
 - Doctor/Preflight Gaps
 - invalid permission configs
