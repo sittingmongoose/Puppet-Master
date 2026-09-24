@@ -5191,6 +5191,10 @@ negative_constraints:
   - Do not claim a native controller or runtime result from the PMConcept7 simulation.
 owner_hints: [Plans/Commands_System.md, Plans/Planning_Wizard.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md]
 ```
+### Team-project child command owner prerequisite — 2026-09-24
+
+`cmd.forge.team_project.create` has the sole planned target `handlers::forge::team_project_create` under `ForgeIntegrationCoordinator`, owned by FGI-021 with ADO-008 provider semantics. It is invoked only within the actual approved Project-owner chain; this does not add a standalone Onboarding, provider-specific or Puppet Master Project command. The concrete `team_project_create_command_request_v1` -> `team_project_create_command_result_v1` contract and current request/result/error/availability/receipt admission unions remain separate machine companions. Central catalog/Touch/production wiring enrollment must consume those exact definitions and keep `handler_unavailable`, `expected_event_types=[]`, current target-specific permission and durable-journal prerequisites. The legacy 46 Forge command IDs/definitions and the historical source partitions below are unchanged; a new command is not admitted by appending it to a legacy enum or by naming a handler.
+
 ## Server/Egolite Command-Gap Central Registration Addendum - 2026-09-01
 
 

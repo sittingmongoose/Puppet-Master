@@ -379,7 +379,7 @@ unblocks: []
 acceptance_criteria:
   - No provider adds a dedicated rail/panel or provider-specific command namespace; `github_actions` is migration-read/route input only and normalizes to `repository_automation`.
   - Visible actions converge on one canonical command with exact provider/binding/target/currentness/permission payload.
-  - Every one of the 46 canonical Forge commands has one schema-valid request and one rejected permission/guard/currentness negative fixture.
+  - Every one of the 46 existing legacy Forge commands retains one schema-valid request and one rejected permission/guard/currentness negative fixture; FGI-021 separately requires actual positive and causal negative fixtures for the new team-project child command.
   - GitHub retains its provider-native Actions content inside the generic shell; a Git remote named Origin never fabricates an Origin Actions service.
   - Legacy hosted records migrate only from validated provider identity; ambiguous records remain blocked.
 validation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, provider GUI fixtures, command/wiring census, migration fixtures, accessibility and degraded-state tests]
@@ -508,7 +508,7 @@ These names remain semantic-owner candidates only. This command-contract pass do
 
 ### 3.3 Typed command admission and result boundary
 
-The primary command enum is exactly the 46 IDs in §3.1. Two (`cmd.forge.review.create` and `cmd.forge.review.merge`) retain their provider-owner routes, `cmd.forge.repository.create` retains the separate common route bound by FGI-009, and the remaining 43 use the FGI-010 common central Forge route set (the prior 34 plus nine new command admissions). The nine new commands start `handler_unavailable`, require `expected_event_types=[]`, and do not gain runtime credit from schema, fixture, catalog, handler-name, or static wiring presence. One provider-neutral request object carries exact provider and variant, normalized host, stable account, PM and provider repository binding, expected binding generation, optional independent automation binding and expected automation-binding generation where required, requested/effective authority, requested capability, catalog/API currentness, non-secret credential/grant ref, permission snapshot, target-bound preflight, optional confirmation, target identity, availability, FileSafe decision for local writes, and `ObservableWork` when admitted asynchronous work requires it.
+The historical `command_id` enum remains exactly the 46 existing IDs in §3.1; FGI-021 separately specifies `cmd.forge.team_project.create` through a new concrete current-admission arm, not by widening that legacy enum. Two (`cmd.forge.review.create` and `cmd.forge.review.merge`) retain their provider-owner routes, `cmd.forge.repository.create` retains the separate common route bound by FGI-009, and the remaining 43 use the FGI-010 common central Forge route set (the prior 34 plus nine new command admissions). The nine new commands start `handler_unavailable`, require `expected_event_types=[]`, and do not gain runtime credit from schema, fixture, catalog, handler-name, or static wiring presence. One provider-neutral request object carries exact provider and variant, normalized host, stable account, PM and provider repository binding, expected binding generation, optional independent automation binding and expected automation-binding generation where required, requested/effective authority, requested capability, catalog/API currentness, non-secret credential/grant ref, permission snapshot, target-bound preflight, optional confirmation, target identity, availability, FileSafe decision for local writes, and `ObservableWork` when admitted asynchronous work requires it.
 
 Family-level conditionals select repository, mirror, review, immutable review thread/version, pipeline/job, webhook delivery, or connection targets without provider-specific peer request types. Mutations require current binding/catalog/API evidence, `mutation_safety=verified`, direct execution-time revalidation, effective authority, permission, and idempotency. Destructive or publication-sensitive actions require target-bound confirmation. Review/thread/version commands require immutable revision identities. Pipeline run/retry/cancel require current direct validation and `ObservableWork`; stale or partial projections cannot validate as dispatch-admitted mutations. Mirror mutation requires verified authority. Webhook redelivery requires signature-before-parse, fresh replay state, dedupe state, exact delivery identity, and redelivery idempotency.
 
@@ -542,7 +542,7 @@ Schema validation is structural evidence only. Fresh provider sandboxes or contr
 
 ## 6. Plan-To-Node Readiness
 
-The common static command contract is now structurally specified for all 46 canonical IDs. The nine 2026-09-01 additions have explicit no-event dispositions and unavailable future handler targets, but the domain remains node-blocked until cross-owner central registration/wiring/touch closure, storage, provider-owner mappings, current signed catalogs, native adapters and handlers, credential broker, secure webhook ingress, an allowlisted official-page dispatcher plus protected-browser routing when auth requires it, `ObservableWork`, migration, security tests, GUI fixtures, and fresh provider runtime evidence exist. This Plan creates no WorkNode, event admission, native handler, connection, webhook, app, token, browser execution, runtime proof, or readiness certification.
+The common static command contract is structurally specified for the existing 46 IDs. FGI-021's separately specified team-project child command still requires its machine companions and current-admission consumer enrollment. The nine 2026-09-01 additions have explicit no-event dispositions and unavailable future handler targets, but the domain remains node-blocked until cross-owner central registration/wiring/touch closure, storage, provider-owner mappings, current signed catalogs, native adapters and handlers, credential broker, secure webhook ingress, an allowlisted official-page dispatcher plus protected-browser routing when auth requires it, `ObservableWork`, migration, security tests, GUI fixtures, and fresh provider runtime evidence exist. This Plan creates no WorkNode, event admission, native handler, connection, webhook, app, token, browser execution, runtime proof, or readiness certification.
 
 ## 7. Deferred, Retired, Compatibility, And Non-Goals
 
@@ -1340,4 +1340,96 @@ source_lineage: [Plans/Decision_Log.md#DL-065, Plans/Decision_Log.md#DL-060, Pla
 preserved_exact_tokens: [vote value, required reviewer, observed by Puppet Master, provider-asserted]
 negative_constraints: [Do not add a vote carrier only one provider can populate., Do not show a vote with no binding of either kind as current evidence., Do not restore the Azure vote criteria before the carrier exists.]
 owner_hints: [Plans/Forge_Integrations.md, Plans/Azure_DevOps_Integration.md]
+```
+
+
+## Explicit Team-Project Child Routing — 2026-09-24
+
+### FGI-021 - Team-Project Create Child Route And Admission
+
+```yaml
+plan_unit_id: FGI-021
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: >-
+  cmd.forge.team_project.create is the distinct generic Forge child command for ADO-008's explicitly reviewed
+  Azure team-project creation, with one sole planned target handlers::forge::team_project_create under
+  ForgeIntegrationCoordinator. It is a required child of the initiating approved Project-owner operation, not a
+  new Puppet Master Project command, independent Onboarding wrapper or hidden repository-create effect. Its
+  pre-project subject binds the actual verified account and organization or collection without a fabricated
+  project or repository. Current dispatch consumes its real closed intent, preview and target-specific admission;
+  handler_unavailable remains until native owner routing, durable recovery and provider proof exist.
+gui_related: true
+gui_classification_reason: The existing reviewed optional Azure choice exposes exact availability, child progress, failures and return without adding an independent setup command surface.
+depends_on: [FGI-008, FGI-011, ADO-008, PJCT-007]
+unblocks: []
+acceptance_criteria:
+  - >-
+    The sole planned target is handlers::forge::team_project_create under ForgeIntegrationCoordinator; the Azure
+    owner supplies provider mapping and execution. Requests are restricted to azure_devops_services or
+    azure_devops_server under a current initiating Project request/setup binding, original reviewed draft hash,
+    exact parent operation, active Client and selected Host/Execution Environment. The generic command name
+    grants no other provider support, standalone palette/API creation or precommit source-access authority.
+  - >-
+    Plans/forge_integration_contracts.schema.json owns team_project_create_command_request_v1,
+    team_project_create_command_result_v1, team_project_create_command_error_v1,
+    team_project_create_command_availability_v1 and team_project_create_command_receipt_v1. Each carries a
+    distinct schema ID and the exact command ID. Existing command_id remains the closed historical 46-ID enum;
+    all existing request/result/error/availability/receipt definitions remain exact. The new request cannot be
+    decoded or dispatched as legacy command_request or repository_create_command_request_v2.
+  - >-
+    Current command_request_admission appends only team_project_create_command_request_v1 to its unchanged
+    existing arms. command_result_admission is exactly command_result or team_project_create_command_result_v1;
+    command_error_admission is exactly command_error_record or team_project_create_command_error_v1;
+    command_availability_admission is exactly command_availability or team_project_create_command_availability_v1;
+    command_receipt_admission is exactly command_receipt or team_project_create_command_receipt_v1.
+    All legacy arms remain unchanged. Their discriminating schema IDs prevent an older carrier from gaining the new
+    mutation. Current consumers use these admission unions; historical readers remain available as readers.
+  - >-
+    The concrete request consumes actual team_project_creation_intent and the hash-bound resolved
+    team_project_creation_preview. team_project_creation_admission independently joins actual source, parent,
+    account/organization-or-collection, current capability/catalog/API endpoint support, permission_decision,
+    scoped grant, target-bound confirmation, rate budget and expiry. A caller snapshot or wrapper-only validator
+    is not admission. The operation's exact team-project-create target and capability are explicit new arms,
+    never a repository capability, invented repository generation or extension of the legacy closed vocabularies.
+  - >-
+    Intent/preview retain project name, explicit project visibility, current catalog-resolved process template
+    and Git-only capabilities. An uncreated project has no provider_project_id. Provider acceptance exposes
+    linked ObservableWork and the actual native operation identity when returned, not success. Typed
+    team_project_operation_observation and the dedicated terminal result/receipt distinguish pending, failure,
+    cancellation, reconciliation-required and effect_unknown from causally verified success with ready-project
+    readback. No unknown response or same-name resource licenses a second creation request.
+  - >-
+    Forge owns the bounded durable team_project_creation_operation journal and typed terminal receipt under
+    existing scd.forge.durable.v1, with Storage-owned physical registration and retention/redaction companions.
+    The journal binds parent/request/intent/preview/source hashes, target, stable dedupe identity, dispatch
+    boundary, observation sequence and native operation/result refs before effects and through reconciliation.
+    scd.forge.command_transport.v1 continues to classify transient requests/previews/results separately. The
+    existing durable disposition is physical_family_registration_pending; naming a journal or reusing that
+    disposition is not a physical writer, implemented journal, restart guarantee or native admission.
+  - >-
+    A typed team_project_repository_handoff binds the original approved create source, child journal/operation,
+    verified terminal receipt and current ready-project resource. Project System resolves and hash-checks the
+    actual child records; generic receipt membership or matching strings do not prove success. The existing
+    repository-create command receives the real result-derived subject plus its own fresh preview/permission.
+    The approved source is never rewritten to existing and the child's admission never requires its own
+    terminal parent result. Required child failures prevent publication of a falsely ready Puppet Master Project.
+  - >-
+    Central Commands/catalog, TCP-FORGE and production wiring companions must name the same concrete command,
+    schemas and sole planned handler. Existing thirteen Onboarding local actions remain unchanged; the reviewed
+    Project owner dispatches the child. Every new actual carrier requires positive and causal negative fixtures,
+    including wrong parent/subject/hash, legacy admission bypass, no-project absence, async response loss and
+    no-replay, terminal readback mismatch and exact repository handoff. expected_event_types=[] remains; no
+    EventRecord, native implementation, WorkNode, readiness unlock or physical family is admitted by this prose.
+validation_surfaces: [Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, current admission and legacy rejection tests, actual Project-child-to-repository composition tests, journal/reconciliation static contract tests]
+risk_class: azure_team_project_child_bypasses_common_forge_admission
+reasoning_tier: high
+context_scope: forge_team_project_creation_child_route
+implementation_surfaces: [Plans/Commands_System.md, Plans/Project_System.md, Plans/UI_Command_Catalog.md, Plans/touch_closure.json, Plans/Wiring_Matrix.production.json, Plans/storage_value_registry.json, future ForgeIntegrationCoordinator and Azure adapter]
+node_compile_hint: {mode: forge_owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Azure_DevOps_Integration.md#ADO-008, "packet:PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/04_ACCOUNT_SIGNIN_AND_PROJECT_CREATION_MATRIX.md#section-4", Plans/Project_System.md#PJCT-007]
+preserved_exact_tokens: [cmd.forge.team_project.create, handlers::forge::team_project_create, ForgeIntegrationCoordinator, handler_unavailable, command_request_admission, command_result_admission, command_error_admission, command_availability_admission, command_receipt_admission, permission_decision, ObservableWork, provider_project_id, effect_unknown, scd.forge.durable.v1, scd.forge.command_transport.v1, physical_family_registration_pending]
+negative_constraints: [Do not add the new mutation to the legacy 46-ID enum., Do not reuse repository creation for team-project creation., Do not invent a project or repository identity before provider creation., Do not treat transient transport as a durable dedupe journal., Do not bypass current parent/target permission through an internal wrapper., Do not rewrite approved create intent as existing., Do not grant native availability from schemas or handler names.]
+owner_hints: [Plans/Forge_Integrations.md, Plans/Azure_DevOps_Integration.md, Plans/Project_System.md, Plans/Commands_System.md, Plans/storage-plan.md]
 ```

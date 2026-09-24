@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15698,
+    "depends_on_edge_count": 15702,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18397,
-    "node_count": 6730,
+    "edge_count": 18401,
+    "node_count": 6731,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T05:03:25Z",
+  "generated_at_utc": "2026-09-25T05:04:07Z",
   "gui_related_units": {
-    "count": 3199,
+    "count": 3200,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3620,7 +3620,7 @@
           "heading": "ADO-008 - Explicit New Team-Project Child Operation",
           "heading_level": 3,
           "heading_line": 403,
-          "line": 405,
+          "line": 407,
           "path": "Plans/Azure_DevOps_Integration.md"
         }
       },
@@ -6952,8 +6952,8 @@
         "source_location": {
           "heading": "CS-073 - Server And Egolite Central Command Registration",
           "heading_level": 3,
-          "heading_line": 5422,
-          "line": 5424,
+          "heading_line": 5426,
+          "line": 5428,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6963,8 +6963,8 @@
         "source_location": {
           "heading": "CS-074 - Remaining Touch Primary Command Closure",
           "heading_level": 3,
-          "heading_line": 5703,
-          "line": 5705,
+          "heading_line": 5707,
+          "line": 5709,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6974,8 +6974,8 @@
         "source_location": {
           "heading": "CS-075 - ConnectionDraft Activation Registration And Candidate Normalization",
           "heading_level": 3,
-          "heading_line": 5756,
-          "line": 5758,
+          "heading_line": 5760,
+          "line": 5762,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6985,8 +6985,8 @@
         "source_location": {
           "heading": "CS-077 - Neutral Source-Control Primary Registration Completion",
           "heading_level": 3,
-          "heading_line": 5850,
-          "line": 5852,
+          "heading_line": 5854,
+          "line": 5856,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -6996,8 +6996,8 @@
         "source_location": {
           "heading": "CS-078 - Assistant Redesign Central Contract, Event, And Record Registration",
           "heading_level": 3,
-          "heading_line": 6043,
-          "line": 6045,
+          "heading_line": 6047,
+          "line": 6049,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -16935,6 +16935,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Forge_Integrations.md",
+        "plan_unit_id": "FGI-021",
+        "source_location": {
+          "heading": "FGI-021 - Team-Project Create Child Route And Admission",
+          "heading_level": 3,
+          "heading_line": 1348,
+          "line": 1350,
+          "path": "Plans/Forge_Integrations.md"
+        }
+      },
+      {
         "owner_doc": "Plans/feature-list.md",
         "plan_unit_id": "FL-008",
         "source_location": {
@@ -24035,8 +24046,8 @@
         "source_location": {
           "heading": "PJCT-001 - Project aggregate and registry owner",
           "heading_level": 3,
-          "heading_line": 142,
-          "line": 144,
+          "heading_line": 144,
+          "line": 146,
           "path": "Plans/Project_System.md"
         }
       },
@@ -24046,8 +24057,8 @@
         "source_location": {
           "heading": "PJCT-002 - Project actions, persistence, and migration",
           "heading_level": 3,
-          "heading_line": 169,
-          "line": 171,
+          "heading_line": 171,
+          "line": 173,
           "path": "Plans/Project_System.md"
         }
       },
@@ -24057,8 +24068,8 @@
         "source_location": {
           "heading": "PJCT-003 - Project Composition, Local Action, Alias, And Rejection Closure",
           "heading_level": 3,
-          "heading_line": 227,
-          "line": 229,
+          "heading_line": 229,
+          "line": 231,
           "path": "Plans/Project_System.md"
         }
       },
@@ -24068,8 +24079,8 @@
         "source_location": {
           "heading": "PJCT-004 - Project Backup, History, And Restore-As-New Consumer",
           "heading_level": 3,
-          "heading_line": 266,
-          "line": 268,
+          "heading_line": 268,
+          "line": 270,
           "path": "Plans/Project_System.md"
         }
       },
@@ -24079,8 +24090,8 @@
         "source_location": {
           "heading": "PJCT-005 - Project Backup Preference, Copy, Move, And Recovery Consumption",
           "heading_level": 3,
-          "heading_line": 309,
-          "line": 311,
+          "heading_line": 311,
+          "line": 313,
           "path": "Plans/Project_System.md"
         }
       },
@@ -24090,8 +24101,8 @@
         "source_location": {
           "heading": "PJCT-007 - Reviewed Onboarding Commit And Provider Handoff",
           "heading_level": 3,
-          "heading_line": 388,
-          "line": 390,
+          "heading_line": 390,
+          "line": 392,
           "path": "Plans/Project_System.md"
         }
       },
@@ -35213,10 +35224,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6730,
+  "plan_unit_count": 6731,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2180,
+      "high": 2181,
       "low": 5,
       "medium": 8,
       "standard": 4537
@@ -35458,6 +35469,7 @@
       "azure_container_identity_collapse": 1,
       "azure_gui_command_or_migration_drift": 1,
       "azure_stale_pr_or_policy_evidence": 1,
+      "azure_team_project_child_bypasses_common_forge_admission": 1,
       "azure_team_project_mutation_or_identity_without_reviewed_authority": 1,
       "backoff_expired_payload_loss": 1,
       "backoff_started_payload_loss": 1,
@@ -39079,7 +39091,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6539,
+      "accepted": 6540,
       "retired": 182,
       "superseded": 9
     },
@@ -39126,7 +39138,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 81,
+      "integration_contract": 82,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,
@@ -39361,6 +39373,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Plugins_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Project_System.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
