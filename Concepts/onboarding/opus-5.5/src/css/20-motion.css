@@ -1,0 +1,111 @@
+/* ---- O55 motion: window open/close, screen choreography, look reveal --------------------------------------------
+   Canon budgets (PWIZ-022): step 420-560 ms, stagger 60-80 ms (total under 500 ms), micro 120-220 ms, exits ~70 % of
+   the entrance. Shared-axis choreography: the outgoing layer is gone in the first ~40 % while the incoming stagger
+   starts, so text never overlaps. Families differ in path and easing, never in waiting time. Retro never scales. */
+#pm-o55-onboarding { --o55-ui-ease: cubic-bezier(0.2, 0, 0, 1); --o55-step: 500ms; --o55-out: 350ms; --o55-stagger: 70ms; --o55-enter-delay: 110ms; }
+#pm-o55-onboarding[data-family="friendly"] { --o55-ui-ease: cubic-bezier(0.34, 1.56, 0.64, 1); --o55-step: 560ms; }
+#pm-o55-onboarding[data-family="glass"] { --o55-ui-ease: cubic-bezier(0.05, 0.7, 0.1, 1); --o55-step: 560ms; }
+#pm-o55-onboarding[data-family="retro"] { --o55-ui-ease: steps(4, end); --o55-step: 420ms; --o55-stagger: 60ms; --o55-enter-delay: 90ms; }
+
+/* layers are transparent so the outgoing layer stays visible under the incoming one */
+.o55-layer { background: transparent !important; }
+.o55-layer.o55-out { pointer-events: none; z-index: 0; }
+.o55-layer:not(.o55-out) { z-index: 1; }
+
+/* ---- incoming stagger ------------------------------------------------------------------------------------------ */
+.o55-entering .o55-st { animation: o55-st-basic var(--o55-step) var(--o55-ui-ease) calc(var(--o55-enter-delay) + var(--i, 0) * var(--o55-stagger)) both; }
+.o55-entering.o55-in-back .o55-st { animation-name: o55-st-basic-back; }
+.o55-entering .o55-main.o55-st { animation-name: o55-fadeonly; }
+.o55-entering .o55-foot.o55-st { animation: o55-fadeonly 220ms ease calc(var(--o55-enter-delay) + 60ms) both; }
+.o55-entering .o55-main .o55-card, .o55-entering .o55-main .o55-row, .o55-entering .o55-main .o55-tile, .o55-entering .o55-promise li {
+  animation: o55-card-basic var(--o55-step) var(--o55-ui-ease) calc(var(--o55-enter-delay) + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms) both; }
+@keyframes o55-fadeonly { from { opacity: 0; } to { opacity: 1; } }
+@keyframes o55-st-basic { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
+@keyframes o55-st-basic-back { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
+@keyframes o55-card-basic { from { opacity: 0; transform: translateX(22px); } to { opacity: 1; transform: none; } }
+
+/* Friendly: paper pieces hop up and settle with a small overshoot */
+#pm-o55-onboarding[data-family="friendly"] .o55-entering .o55-st { animation-name: o55-st-friendly; }
+#pm-o55-onboarding[data-family="friendly"] .o55-entering.o55-in-back .o55-st { animation-name: o55-st-friendly-back; }
+#pm-o55-onboarding[data-family="friendly"] .o55-entering .o55-main.o55-st { animation-name: o55-fadeonly; }
+#pm-o55-onboarding[data-family="friendly"] .o55-entering .o55-foot.o55-st { animation-name: o55-fadeonly; animation-timing-function: ease; }
+#pm-o55-onboarding[data-family="friendly"] .o55-entering .o55-main .o55-card, #pm-o55-onboarding[data-family="friendly"] .o55-entering .o55-main .o55-row,
+#pm-o55-onboarding[data-family="friendly"] .o55-entering .o55-main .o55-tile, #pm-o55-onboarding[data-family="friendly"] .o55-entering .o55-promise li { animation-name: o55-card-friendly; }
+@keyframes o55-st-friendly { from { opacity: 0; transform: translateY(20px) scale(0.97); } 40% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes o55-st-friendly-back { from { opacity: 0; transform: translateY(-16px) scale(0.97); } 40% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes o55-card-friendly { from { opacity: 0; transform: translateY(26px) rotate(-1.2deg) scale(0.96); } 45% { opacity: 1; } to { opacity: 1; transform: none; } }
+
+/* Glass: panes float up out of focus depth */
+#pm-o55-onboarding[data-family="glass"] .o55-entering .o55-st { animation-name: o55-st-glass; }
+#pm-o55-onboarding[data-family="glass"] .o55-entering.o55-in-back .o55-st { animation-name: o55-st-glass-back; }
+#pm-o55-onboarding[data-family="glass"] .o55-entering .o55-main.o55-st { animation-name: o55-fadeonly; }
+#pm-o55-onboarding[data-family="glass"] .o55-entering .o55-foot.o55-st { animation-name: o55-fadeonly; animation-timing-function: ease; }
+#pm-o55-onboarding[data-family="glass"] .o55-entering .o55-main .o55-card, #pm-o55-onboarding[data-family="glass"] .o55-entering .o55-main .o55-row,
+#pm-o55-onboarding[data-family="glass"] .o55-entering .o55-main .o55-tile, #pm-o55-onboarding[data-family="glass"] .o55-entering .o55-promise li { animation-name: o55-card-glass; }
+@keyframes o55-st-glass { from { opacity: 0; transform: translateY(10px) scale(1.035); } to { opacity: 1; transform: none; } }
+@keyframes o55-st-glass-back { from { opacity: 0; transform: translateY(-8px) scale(0.975); } to { opacity: 1; transform: none; } }
+@keyframes o55-card-glass { from { opacity: 0; transform: translateY(14px) scale(1.05); } to { opacity: 1; transform: none; } }
+
+/* Retro: hard stepped moves; the title types itself in */
+#pm-o55-onboarding[data-family="retro"] .o55-entering .o55-st { animation-name: o55-st-retro; }
+#pm-o55-onboarding[data-family="retro"] .o55-entering.o55-in-back .o55-st { animation-name: o55-st-retro-back; }
+#pm-o55-onboarding[data-family="retro"] .o55-entering .o55-title.o55-st { animation: o55-type 480ms steps(12, end) calc(var(--o55-enter-delay) + var(--o55-stagger)) both; }
+#pm-o55-onboarding[data-family="retro"] .o55-entering .o55-main.o55-st, #pm-o55-onboarding[data-family="retro"] .o55-entering .o55-foot.o55-st { animation-name: o55-blink-in; animation-timing-function: steps(1, end); animation-duration: 300ms; }
+#pm-o55-onboarding[data-family="retro"] .o55-entering .o55-main .o55-card, #pm-o55-onboarding[data-family="retro"] .o55-entering .o55-main .o55-row,
+#pm-o55-onboarding[data-family="retro"] .o55-entering .o55-main .o55-tile, #pm-o55-onboarding[data-family="retro"] .o55-entering .o55-promise li { animation-name: o55-card-retro; animation-timing-function: steps(3, end); }
+@keyframes o55-st-retro { from { opacity: 0; transform: translateX(16px); } 25% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes o55-st-retro-back { from { opacity: 0; transform: translateX(-16px); } 25% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes o55-card-retro { from { opacity: 0; transform: translateX(24px); } 34% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes o55-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes o55-blink-in { 0% { opacity: 0; } 30% { opacity: 1; } 50% { opacity: 0; } 70%, 100% { opacity: 1; } }
+
+/* ---- outgoing layer (inert, ID-free) --------------------------------------------------------------------------- */
+.o55-layer.o55-out-fwd { animation: o55-out-basic var(--o55-out) cubic-bezier(0.3, 0, 1, 1) both; }
+.o55-layer.o55-out-back { animation: o55-out-basic-back var(--o55-out) cubic-bezier(0.3, 0, 1, 1) both; }
+@keyframes o55-out-basic { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: translateX(-26px); } }
+@keyframes o55-out-basic-back { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: translateX(26px); } }
+#pm-o55-onboarding[data-family="friendly"] .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="friendly"] .o55-layer.o55-out-back { animation-name: o55-out-friendly; }
+@keyframes o55-out-friendly { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: translateY(14px) scale(0.98); } }
+#pm-o55-onboarding[data-family="glass"] .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="glass"] .o55-layer.o55-out-back { animation-name: o55-out-glass; }
+@keyframes o55-out-glass { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: scale(0.975); } }
+#pm-o55-onboarding[data-family="retro"] .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="retro"] .o55-layer.o55-out-back { animation: o55-out-retro 240ms steps(4, end) both; }
+@keyframes o55-out-retro { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(100% 0 0 0); } }
+
+/* ---- window open / close (bounds never change; only opacity, transform and clip) -------------------------------- */
+#pm-o55-onboarding.o55-opening .o55-scrim { animation: o55-fadeonly 360ms ease both; }
+#pm-o55-onboarding.o55-opening .o55-win { animation: o55-win-in 540ms cubic-bezier(0.2, 0, 0, 1) both; }
+@keyframes o55-win-in { from { opacity: 0; transform: translateY(14px) scale(0.985); } to { opacity: 1; transform: none; } }
+#pm-o55-onboarding[data-family="friendly"].o55-opening .o55-win { animation: o55-win-in-friendly 680ms cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes o55-win-in-friendly { from { opacity: 0; transform: translateY(34px) scale(0.95) rotate(-0.6deg); } 35% { opacity: 1; } to { opacity: 1; transform: none; } }
+#pm-o55-onboarding[data-family="glass"].o55-opening .o55-win { animation: o55-win-in-glass 700ms cubic-bezier(0.05, 0.7, 0.1, 1) both; }
+@keyframes o55-win-in-glass { from { opacity: 0; transform: scale(1.045); } to { opacity: 1; transform: none; } }
+#pm-o55-onboarding[data-family="retro"].o55-opening .o55-win { animation: o55-win-in-retro 460ms steps(6, end) both; }
+@keyframes o55-win-in-retro { 0% { clip-path: inset(49.6% 0 49.6% 0); opacity: 1; } 35% { clip-path: inset(49.6% 0 49.6% 0); } 100% { clip-path: inset(0 0 0 0); opacity: 1; } }
+#pm-o55-onboarding.o55-opening .o55-layer .o55-st { animation-delay: calc(260ms + var(--i, 0) * var(--o55-stagger)); }
+#pm-o55-onboarding.o55-opening .o55-layer .o55-main .o55-card, #pm-o55-onboarding.o55-opening .o55-layer .o55-promise li { animation-delay: calc(260ms + 3 * var(--o55-stagger) + var(--ci, 0) * 60ms); }
+
+#pm-o55-onboarding.o55-closing .o55-scrim { animation: o55-fadeout 320ms ease both; }
+#pm-o55-onboarding.o55-closing .o55-win { animation: o55-win-out 300ms cubic-bezier(0.3, 0, 1, 1) both; }
+@keyframes o55-fadeout { to { opacity: 0; } }
+@keyframes o55-win-out { to { opacity: 0; transform: translateY(10px) scale(0.985); } }
+#pm-o55-onboarding[data-family="retro"].o55-closing .o55-win { animation: o55-win-out-retro 300ms steps(5, end) both; }
+@keyframes o55-win-out-retro { 0% { clip-path: inset(0 0 0 0); } 70% { clip-path: inset(49.6% 0 49.6% 0); opacity: 1; } 100% { clip-path: inset(49.6% 20% 49.6% 20%); opacity: 0; } }
+
+/* ---- look reveal (View Transitions): the new world opens from the chosen tile; clicks keep working meanwhile ---- */
+html[data-o55-vt]::view-transition { pointer-events: none; }
+html[data-o55-vt]::view-transition-old(root), html[data-o55-vt]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+/* ---- Reduced Motion: order and cause/effect kept, movement removed ---------------------------------------------- */
+html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-st, html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-main *,
+html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-promise li { animation: o55-fadeonly 140ms ease both !important; }
+html[data-motion="reduced"] #pm-o55-onboarding .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
+html[data-motion="reduced"] #pm-o55-onboarding.o55-opening .o55-win, html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation: o55-fadeonly 160ms ease both !important; }
+html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation-name: o55-fadeout !important; }
+html[data-motion="reduced"] #pm-o55-onboarding * { transition-duration: 0.01ms !important; }
+@media (prefers-reduced-motion: reduce) {
+  #pm-o55-onboarding .o55-entering .o55-st, #pm-o55-onboarding .o55-entering .o55-main *, #pm-o55-onboarding .o55-entering .o55-promise li { animation: o55-fadeonly 140ms ease both !important; }
+  #pm-o55-onboarding .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
+  #pm-o55-onboarding.o55-opening .o55-win { animation: o55-fadeonly 160ms ease both !important; }
+  #pm-o55-onboarding.o55-closing .o55-win { animation: o55-fadeout 160ms ease both !important; }
+  #pm-o55-onboarding * { transition-duration: 0.01ms !important; }
+}

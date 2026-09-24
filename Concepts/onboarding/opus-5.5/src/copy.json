@@ -1,1 +1,147 @@
-{}
+{
+  "chrome": {
+    "brand": "Puppet Master",
+    "progressLabel": "Setup progress",
+    "progress": "Chapter {n} of {total}: {name}",
+    "close": "Close",
+    "closeHint": "Close — your choices are saved",
+    "back": "Back",
+    "continue": "Continue",
+    "recommended": "Recommended",
+    "done": "Done",
+    "soundOn": "Sound on — click to mute",
+    "soundOff": "Sound off — click to turn on",
+    "resume": "Finish setting up",
+    "resumeOptional": "Continue optional setup",
+    "hide": "Hide",
+    "notNow": "Not now",
+    "later": "Do this later",
+    "skip": "Skip",
+    "optional": "Optional",
+    "working": "Working…",
+    "tryAgain": "Try again",
+    "edit": "Edit",
+    "change": "Change"
+  },
+  "chapters": {
+    "welcome": "Welcome",
+    "computer": "Computer",
+    "project": "Project",
+    "ai": "AI",
+    "ready": "Ready"
+  },
+  "welcome": {
+    "eyebrow": "Welcome",
+    "title": "Welcome to Puppet Master",
+    "lead": "Describe what you want to make. Puppet Master plans it with you, then coordinates the work.",
+    "promise": {
+      "describe": "Say what you want in your own words",
+      "plan": "Check the plan before anything starts",
+      "work": "Puppet Master coordinates the work"
+    },
+    "resumed": "Picking up where you left off.",
+    "startOver": "Start over",
+    "returning": "Welcome back — found {projects} {and} {ai} on this computer.",
+    "oneProject": "1 Project",
+    "nProjects": "{n} Projects",
+    "and": "and",
+    "skip": "Skip",
+    "start": "Get Started"
+  },
+  "look": {
+    "eyebrow": "Make it yours",
+    "title": "Pick a look",
+    "lead": "Pictures, movement and sound all follow this look. Change it any time.",
+    "modeLabel": "Light or dark",
+    "light": "Light",
+    "dark": "Dark",
+    "hint": "Starts from your computer's setting.",
+    "families": {
+      "basic": {
+        "name": "Basic",
+        "sub": "Blueprint · calm and precise"
+      },
+      "friendly": {
+        "name": "Friendly",
+        "sub": "Paper theatre · warm and playful"
+      },
+      "glass": {
+        "name": "Glass",
+        "sub": "Light lab · glowing and airy"
+      },
+      "retro": {
+        "name": "Retro",
+        "sub": "Arcade · pixel-sharp and fun"
+      }
+    }
+  },
+  "where": {
+    "eyebrow": "The computer",
+    "title": "Where should Puppet Master do the work?",
+    "lead": "Most people use this computer. You can add others later.",
+    "this": {
+      "title": "This computer",
+      "sub": "Everything stays here. The easiest start.",
+      "short": "This computer"
+    },
+    "connect": {
+      "title": "Connect this device",
+      "sub": "Use a Puppet Master you already have on another computer.",
+      "short": "Connect"
+    },
+    "server": {
+      "title": "Set up another computer as a Server",
+      "sub": "A NAS, home server or cloud computer that stays on.",
+      "short": "New Server"
+    },
+    "check": {
+      "label": "Quick check of this computer",
+      "space": "{gb} GB free",
+      "history": "Safe History ready",
+      "historyLater": "Safe History added at the end",
+      "internet": "Online",
+      "offline": "Offline — local work still works",
+      "checking": "Checking…"
+    },
+    "restoreAll": "Moving from an old computer? Restore everything",
+    "detailsLabel": "What is a Server?",
+    "details": "The computer that does the work is called a Server. This computer can be one. A Server that stays on — like a NAS — can keep working while your laptop sleeps."
+  },
+  "missing": {
+    "name": "Give your Project a name first.",
+    "folder": "Choose the folder first.",
+    "repository": "Choose which online Project to bring in.",
+    "backup": "Choose the backup to restore.",
+    "storage": "Choose where on the network the files will live.",
+    "signin": "Sign in to the online service first.",
+    "server": "Choose your Puppet Master first."
+  },
+  "art": {
+    "hero": "A marionette control bar with three helpers on strings",
+    "route": "The route your choices make",
+    "nas": "This computer and the storage device exchanging a key",
+    "where": "Where the work happens",
+    "labels": {
+      "thisComputer": "this computer",
+      "thisDevice": "this device",
+      "homeNas": "home nas",
+      "strings": "strings",
+      "plan": "the plan",
+      "ready": "ready",
+      "start": "Start",
+      "new": "new",
+      "files": "Files",
+      "documents": "documents",
+      "worksHere": "Works here",
+      "you": "You",
+      "lookingNearby": "looking nearby",
+      "itsId": "its id",
+      "yourKeys": "your keys",
+      "addingKey": "adding your key",
+      "projectsFolder": "projects",
+      "yourPm": "your puppet master",
+      "alwaysOn": "always on",
+      "pressStart": "press start"
+    }
+  }
+}

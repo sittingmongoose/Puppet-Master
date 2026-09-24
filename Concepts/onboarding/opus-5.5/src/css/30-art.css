@@ -58,6 +58,7 @@
 .o55-amb-bob { animation: o55-bob var(--ambd, 2.6s) ease-in-out infinite alternate; }
 .o55-amb-twinkle { animation: o55-twinkle var(--ambd, 2.4s) ease-in-out infinite; }
 .o55-amb-float { animation: o55-float var(--ambd, 4s) ease-in-out infinite alternate; }
+.o55-amb-blink { animation: o55-led var(--ambd, 1.1s) steps(1, end) infinite; }
 .o55-amb-drift { animation: o55-drift var(--ambd, 18s) ease-in-out infinite alternate; transform-box: view-box; transform-origin: 0 0; }
 .o55-amb-sweep { animation: o55-sweep 11s ease-in-out infinite; transform-box: view-box; }
 .o55-amb-pulse .o55-ring, .o55-ring { animation: o55-ring 1.9s ease-out infinite; animation-delay: calc(var(--ri, 0) * 320ms); transform-box: fill-box; transform-origin: center; }

@@ -102,7 +102,7 @@
       const tpl = document.createElement('template'); tpl.innerHTML = html;
       const next = tpl.content.firstElementChild;
       for (const { name, value } of Array.from(next.attributes)) svg.setAttribute(name, value);
-      U.morph(svg, next.innerHTML);
+      U.morphFrom(svg, next);
       current.classList.add('o55-beat');
       return current;
     }

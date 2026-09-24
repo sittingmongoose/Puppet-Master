@@ -33,7 +33,8 @@
   const same = (a, b) => a.nodeType === b.nodeType && (a.nodeType !== 1 || (a.tagName === b.tagName && (a.id || '') === (b.id || '')));
 
   function patchAttributes(a, b) {
-    for (const { name } of Array.from(a.attributes)) if (!b.hasAttribute(name)) a.removeAttribute(name);
+    /* live hosts (data-morph-skip) keep attributes their owner added at runtime */
+    if (!a.hasAttribute('data-morph-skip')) for (const { name } of Array.from(a.attributes)) if (!b.hasAttribute(name)) a.removeAttribute(name);
     for (const { name, value } of Array.from(b.attributes)) if (a.getAttribute(name) !== value) a.setAttribute(name, value);
     if (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.tagName === 'SELECT') {
       if (document.activeElement !== a && 'value' in b && a.value !== b.value) a.value = b.value;
@@ -72,6 +73,9 @@
     tpl.innerHTML = html;
     morphChildren(target, tpl.content);
   };
+  /* Morph from already-parsed nodes. SVG content must come through here: an SVG fragment parsed outside <svg> lands
+     in the HTML namespace and renders nothing. */
+  U.morphFrom = function morphFrom(target, sourceParent) { morphChildren(target, sourceParent); };
 
   /* ---- disposers ---------------------------------------------------------------------------------------------- */
   U.bag = function bag() {
