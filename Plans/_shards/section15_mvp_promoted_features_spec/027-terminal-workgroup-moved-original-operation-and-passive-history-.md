@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11753-L11973
+Source lines: L11753-L11972
 
-Source SHA256: `3d4c26715afcfc38d30163f4aec4dc8ce2685dc8bc46f357cecfb4c4486bd4b9`
+Source SHA256: `a7d9d36b340c4292c027c2879ebe096cea6f5a2dff287fda64fc9ce27bbb8d00`
 
 ---
 
@@ -176,8 +176,7 @@ live owner, regardless of event order. Original move validation and current
 source-read authorization are separate, as defined by SP-319.
 This unit owns the family's semantics and SP-319 is the Storage binding that
 consumes them: SP-319 depends on this unit and binds this consumer to its
-passive source read, and this unit names SP-319 only as its Storage validation
-surface and contract reference.
+passive source read, and this unit does not list SP-319 in depends_on.
 
 Withdrawal stops new producer admission and new reader disclosure independently.
 Already admitted operations retain their original owner/custody and settle under

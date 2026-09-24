@@ -11918,8 +11918,7 @@ live owner, regardless of event order. Original move validation and current
 source-read authorization are separate, as defined by SP-319.
 This unit owns the family's semantics and SP-319 is the Storage binding that
 consumes them: SP-319 depends on this unit and binds this consumer to its
-passive source read, and this unit names SP-319 only as its Storage validation
-surface and contract reference.
+passive source read, and this unit does not list SP-319 in depends_on.
 
 Withdrawal stops new producer admission and new reader disclosure independently.
 Already admitted operations retain their original owner/custody and settle under
