@@ -1584,6 +1584,13 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Too
 - Projector checkpoints are durable ownership boundaries; partial projection writes do not advance checkpoints.
 - Rebuild after schema-version change clears only the derived projection state being regenerated; the canonical seglog and unrelated redb families remain untouched.
 
+**Transaction and index scheduling:**
+- Use short, bounded redb write transactions and batched projection revisions. Never hold a storage transaction or its transaction lock across UI/network/provider awaits.
+- Open per-Project/Vault indexes lazily when their owned work requires them; unrelated cold indexes do not become a startup or visible-surface loading barrier.
+- Batch Tantivy commit/merge work under existing maintenance permits from the single `RuntimeResourceGovernor`, respecting its bounded storage/index and CPU/blocking admission rather than introducing a separate scheduler or ungoverned pool.
+- Skip unchanged projection/index content by stable identity/hash. This optimization does not suppress required canonical events, advance a checkpoint past incomplete owned writes, or treat a content match as proof of current permission or source ownership.
+- The existing single seglog writer, ordered/grouped append and durable-tail rules remain authoritative. Releasing a transaction lock is not permission to publish a half-committed canonical operation: owned projection writes become durable before checkpoint advancement, and canonical commit/publication barriers remain intact.
+
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
 **Checkpoint guarantees:**
@@ -10342,7 +10349,15 @@ plan_unit_id: SP-138
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Tantivy indices, analytics rollups, and projections rebuild from seglog or the owning projector canonical source range; projector checkpoints are durable ownership boundaries, partial writes do not advance checkpoints, and schema-version rebuilds clear only derived projection state.
+canonical_text: >-
+  Tantivy indices, analytics rollups, and projections rebuild from seglog or the owning projector canonical source range;
+  projector checkpoints are durable ownership boundaries, partial writes do not advance checkpoints, and schema-version
+  rebuilds clear only derived projection state. Use short redb write transactions and batched projection revisions;
+  never hold a storage transaction or its lock across UI/network/provider awaits. Open per-Project/Vault indexes lazily,
+  batch Tantivy commit/merge work under existing maintenance permits from RuntimeResourceGovernor, and skip unchanged
+  projection/index content by stable identity/hash. These scheduling optimizations preserve the single seglog writer,
+  ordered/grouped append, durable-tail correctness, canonical commit/publication barriers and checkpoint advancement
+  only after owned writes are durable; they introduce no separate scheduler, pool or storage authority.
 gui_related: false
 gui_classification_reason: This unit preserves backend projection rebuild and checkpoint ownership boundaries.
 split_recommended: false
@@ -10356,6 +10371,9 @@ acceptance_criteria:
 - This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- redb writes use short bounded transactions and grouped projection revisions, with no transaction or transaction lock retained across UI/network/provider awaits.
+- Per-Project/Vault index opening is lazy, and Tantivy commit/merge batches consume existing RuntimeResourceGovernor maintenance permits rather than a new scheduler or pool.
+- Stable identity/hash avoids unchanged projection/index work without skipping canonical events or relaxing source authority, durable-tail correctness or checkpoint-after-durable-write ordering.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -10369,6 +10387,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0086
+- source_packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08:02_FINAL_DECISION_REGISTER.md:95-105
+- source_packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08:source_inputs/01_prior_full_thread_decision_register.md:439-449
 preserved_exact_tokens:
 - Tantivy indices
 - analytics rollups
@@ -10383,9 +10403,17 @@ preserved_exact_tokens:
 - derived projection state
 - canonical seglog
 - unrelated redb families
+- short redb write transactions
+- batched projection revisions
+- UI/network/provider awaits
+- per-Project/Vault
+- maintenance permits
+- stable identity/hash
 negative_constraints:
 - Partial projection writes do not advance checkpoints.
 - Rebuild after schema-version change clears only the derived projection state being regenerated; the canonical seglog and unrelated redb families remain untouched.
+- Never hold a storage transaction or its transaction lock across UI/network/provider awaits.
+- A stable content match does not authorize dropping required canonical events, changing source authority, or publishing before the existing durability barriers.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md'
 compatibility_only_notes: []
