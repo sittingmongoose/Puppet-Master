@@ -1,0 +1,198 @@
+/* O55.art — scene system. One composition per scene (props, positions, beats) is rendered by four family prop
+   libraries into inline SVG. Every placed prop is an outer anchor group (position; CSS transform so beat changes glide)
+   around an inner animated group (entrance/ambient keyframes). CSS keyframes never touch the anchor, so positioned
+   props never snap to the origin (lesson from TestOpus 2026-09-04). Portable to Slint: vector shapes, transforms,
+   opacity and clipping only; no Canvas/WebGL/filters. */
+(function () {
+  'use strict';
+  const O55 = window.O55;
+  const U = O55.util;
+  /* Portrait canvas: the art pane sits beside the content on wide windows. Keep key content inside x 60..420 (the
+     pane crops the sides slightly); narrow windows show each scene's landscape `band` instead. */
+  const A = O55.art = { families: {}, scenes: {}, W: 480, H: 600 };
+
+  /* Read live theme tokens so light/dark re-light the same drawings from the app's real palette. */
+  A.tokens = function tokens(el) {
+    const cs = getComputedStyle(el || document.documentElement);
+    const get = (n, fb) => (cs.getPropertyValue(n) || '').trim() || fb;
+    return {
+      bg: get('--background', '#121212'), surface: get('--surface', '#1e1e1e'), text: get('--text-primary', '#e8e8e8'),
+      text2: get('--text-secondary', '#aaa'), muted: get('--text-muted', '#888'), border: get('--border', '#333'),
+      blue: get('--accent-blue', '#64b5f6'), magenta: get('--accent-magenta', '#ff69b4'), lime: get('--accent-lime', '#3dd68c'),
+      orange: get('--accent-orange', '#ffa347'), warn: get('--accent-warning', '#f5c542'), error: get('--accent-error', '#ef5350'),
+      primary: get('--accent-primary', get('--accent-blue', '#64b5f6'))
+    };
+  };
+
+  /* Colour helpers (tokens are hex in every theme; anything else passes through). */
+  A.hex = function hex(c) {
+    c = String(c || '').trim();
+    if (/^#[0-9a-f]{3}$/i.test(c)) c = '#' + c.slice(1).split('').map((x) => x + x).join('');
+    const m = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(c);
+    return m ? [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)] : null;
+  };
+  A.rgba = function rgba(c, a) { const h = A.hex(c); return h ? `rgba(${h[0]},${h[1]},${h[2]},${a})` : c; };
+  A.mix = function mix(c1, c2, t) {
+    const a = A.hex(c1), b = A.hex(c2); if (!a || !b) return c1;
+    const v = a.map((x, i) => Math.round(x + (b[i] - x) * t));
+    return '#' + v.map((x) => x.toString(16).padStart(2, '0')).join('');
+  };
+  A.defineFamily = function defineFamily(name, def) { A.families[name] = def; };
+  /* Semantic tones: scenes ask for tone 0..3; each family maps them onto its own accents. */
+  A.tone = function tone(ctx, i) { const t = ctx.pal.tones || [ctx.pal.ink || '#888']; return t[((i || 0) % t.length + t.length) % t.length]; };
+  A.defineScene = function defineScene(id, def) { A.scenes[id] = def; };
+
+  /* place(item) -> anchor + animated inner group */
+  function place(item, inner, family) {
+    if (family === 'retro') { item = Object.assign({}, item, { r: 0, s: item.sr || 1 }); }
+    const tf = `translate(${(+item.x || 0).toFixed(1)}px, ${(+item.y || 0).toFixed(1)}px)`
+      + (item.s && item.s !== 1 ? ` scale(${item.s})` : '') + (item.r ? ` rotate(${item.r}deg)` : '');
+    const anim = item.anim ? ` o55-an o55-an-${item.anim}` : '';
+    const amb = item.amb ? ` o55-amb o55-amb-${item.amb}` : '';
+    const style = `--d:${Math.round(item.delay || 0)}ms;${item.dur ? `--dur:${item.dur}ms;` : ''}${item.ambd ? `--ambd:${item.ambd}ms;` : ''}`;
+    const op = item.o != null ? ` opacity="${item.o}"` : '';
+    return `<g class="o55-it${item.cls ? ' ' + item.cls : ''}" data-key="${U.esc(item.key)}" style="transform:${tf}"${op}>`
+      + `<g class="o55-in${anim}" style="${style}"><g class="o55-am${amb}">${inner}</g></g></g>`;
+  }
+
+  /* render(sceneId, {family, mode, beat, params}) -> svg markup */
+  A.render = function render(sceneId, ctx) {
+    ctx = Object.assign({ beat: 'default', params: {} }, ctx || {});
+    const th = O55.theme();
+    ctx.family = ctx.family || th.family; ctx.mode = ctx.mode || th.mode;
+    const fam = A.families[ctx.family] || A.families.basic;
+    const scene = A.scenes[sceneId] || A.scenes.hero;
+    ctx.tok = ctx.tok || A.tokens();
+    /* Stable per scene/family/mode so a beat morph keeps its <defs> ids; two layers of different looks never collide. */
+    ctx.uid = 'o55' + U.hash(`${sceneId}|${ctx.family}|${ctx.mode}|${ctx.instance || ''}`).toString(36);
+    ctx.url = (name) => `url(#${ctx.uid}-${name})`;
+    ctx.pal = fam.palette(ctx.mode, ctx.tok, ctx);
+    ctx.fam = fam; ctx.sceneId = sceneId;
+    const items = (scene.compose(ctx) || []).filter(Boolean);
+    const layers = { back: [], mid: [], front: [] };
+    for (const item of items) {
+      const draw = fam.props[item.prop] || (A.common[item.prop] && ((c, o) => A.common[item.prop](c, o, fam)));
+      if (!draw) continue;
+      const inner = draw(ctx, item);
+      (layers[item.layer || 'mid'] || layers.mid).push(place(item, inner, ctx.family));
+    }
+    const bg = fam.background ? fam.background(ctx) : '';
+    const fx = fam.overlay ? fam.overlay(ctx) : '';
+    const defs = fam.defs ? fam.defs(ctx) : '';
+    const label = scene.label ? O55.t(scene.label) : '';
+    const band = ctx.band ? (scene.band || [0, 170, A.W, 280]) : null;
+    const vb = band ? band.join(' ') : `0 0 ${A.W} ${A.H}`;
+    return `<svg class="o55-scene o55-f-${ctx.family} o55-m-${ctx.mode}" viewBox="${vb}" preserveAspectRatio="xMidYMid slice"`
+      + ` role="img" aria-label="${U.esc(label)}" data-scene="${U.esc(sceneId)}" data-beat="${U.esc(ctx.beat)}" data-family="${ctx.family}" xmlns="http://www.w3.org/2000/svg">`
+      + `<defs>${defs}</defs><g class="o55-bg" data-key="bg">${bg}</g>`
+      + `<g class="o55-layer o55-back" data-key="back">${layers.back.join('')}</g>`
+      + `<g class="o55-layer o55-mid" data-key="mid">${layers.mid.join('')}</g>`
+      + `<g class="o55-layer o55-front" data-key="front">${layers.front.join('')}</g>`
+      + `<g class="o55-fx" data-key="fx">${fx}</g></svg>`;
+  };
+
+  /* mount(host, sceneId, ctx): first mount plays the entrance; the same scene with a new beat morphs (keyed props
+     glide to new positions, new props enter, removed props exit); a different scene cross-transitions with an inert
+     outgoing layer so there is never a blank frame. */
+  A.mount = function mount(host, sceneId, ctx) {
+    const current = host.querySelector(':scope > .o55-scene-wrap:not(.o55-out)');
+    const html = A.render(sceneId, ctx);
+    if (current && current.getAttribute('data-scene') === sceneId) {
+      const svg = current.querySelector('svg');
+      const tpl = document.createElement('template'); tpl.innerHTML = html;
+      const next = tpl.content.firstElementChild;
+      for (const { name, value } of Array.from(next.attributes)) svg.setAttribute(name, value);
+      U.morph(svg, next.innerHTML);
+      current.classList.add('o55-beat');
+      return current;
+    }
+    const wrap = document.createElement('div');
+    wrap.className = 'o55-scene-wrap o55-enter';
+    wrap.setAttribute('data-scene', sceneId);
+    wrap.innerHTML = html;
+    if (current) {
+      current.classList.add('o55-out');
+      current.setAttribute('aria-hidden', 'true');
+      current.setAttribute('inert', '');
+      const done = () => current.remove();
+      const t = O55.motion.real.setTimeout(done, 900);
+      current.addEventListener('animationend', (e) => { if (e.target === current) { O55.motion.real.clearTimeout(t); done(); } });
+    }
+    host.appendChild(wrap);
+    O55.motion.real.setTimeout(() => wrap.classList.remove('o55-enter'), 40);
+    return wrap;
+  };
+
+  /* Shared parametric helpers used by several families. */
+  A.common = {};
+  A.path = (pts) => pts.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ');
+  A.curve = (x1, y1, x2, y2, sag) => { const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 + (sag || 0); return `M${x1} ${y1} Q${mx} ${my} ${x2} ${y2}`; };
+
+  /* Retro pixel sprites: rows of chars mapped to palette keys; runs merged into rects. */
+  A.sprite = function sprite(rows, map, px, ox, oy) {
+    px = px || 4; ox = ox || 0; oy = oy || 0;
+    const w = Math.max(...rows.map((r) => r.length));
+    const x0 = ox - (w * px) / 2, y0 = oy - (rows.length * px) / 2;
+    let out = '';
+    rows.forEach((row, y) => {
+      let x = 0;
+      while (x < row.length) {
+        const ch = row[x]; let run = 1;
+        while (x + run < row.length && row[x + run] === ch) run++;
+        const entry = map[ch];
+        const fill = entry && typeof entry === 'object' ? entry.fill : entry;
+        const cls = entry && typeof entry === 'object' && entry.cls ? ` class="${entry.cls}"` : '';
+        if (fill) out += `<rect x="${x0 + x * px}" y="${y0 + y * px}" width="${run * px}" height="${px}" fill="${fill}"${cls}/>`;
+        x += run;
+      }
+    });
+    return `<g shape-rendering="crispEdges">${out}</g>`;
+  };
+
+  /* Shared 24x24 stroke glyphs; each family renders them in its own material (line, paper, light, pixel). */
+  A.glyphs = {
+    seed: '<path d="M12 21v-9"/><path d="M12 12c0-4.2 3-6.6 7.5-6.6 0 4.2-3 6.6-7.5 6.6z"/><path d="M12 14.5c0-3.2-2.4-5.3-6.3-5.3 0 3.2 2.4 5.3 6.3 5.3z"/><path d="M8 21h8"/>',
+    folder: '<path d="M3 7.5a2 2 0 0 1 2-2h4.2l2.1 2.2H19a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 10h18"/>',
+    computer: '<rect x="3.5" y="4.5" width="17" height="11" rx="1.6"/><path d="M1.5 19.5h21"/><path d="M8.5 15.5l-.8 4M15.5 15.5l.8 4"/>',
+    person: '<circle cx="12" cy="8" r="3.6"/><path d="M4.8 20.5c1.1-4.1 3.9-6.3 7.2-6.3s6.1 2.2 7.2 6.3"/>',
+    cloud: '<path d="M7 18.5a4.2 4.2 0 0 1-.6-8.36A6.2 6.2 0 0 1 18.3 9.3a4.6 4.6 0 0 1-.3 9.2z"/>',
+    vault: '<path d="M12 2.8l7.5 3.1v6.2c0 4.7-3.1 7.9-7.5 9.4-4.4-1.5-7.5-4.7-7.5-9.4V5.9z"/><path d="M9 12l2.2 2.2L15.5 10"/>',
+    server: '<rect x="4" y="3.5" width="16" height="7" rx="1.5"/><rect x="4" y="13.5" width="16" height="7" rx="1.5"/><path d="M8 7h.01M8 17h.01M12 7h5M12 17h5"/>',
+    box: '<path d="M3 8l9-5 9 5v8.2l-9 5-9-5z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8.2"/>',
+    rewind: '<circle cx="12.5" cy="12.5" r="7.5"/><path d="M12.5 8.5v4.2l2.9 1.8"/><path d="M3 4.5v4h4"/><path d="M3.3 8.3A9.6 9.6 0 0 1 5.6 6"/>',
+    key: '<circle cx="7.5" cy="12" r="4"/><path d="M11.5 12H21M17.5 12v3.5M20.5 12v2.5"/>',
+    globe: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 3.8 5.2 3.8 8.5s-1.2 6.1-3.8 8.5c-2.6-2.4-3.8-5.2-3.8-8.5s1.2-6.1 3.8-8.5z"/>',
+    spark: '<path d="M12 3v5M12 16v5M3 12h5M16 12h5"/><path d="M12 9.5l1 1.5 1.5 1-1.5 1-1 1.5-1-1.5-1.5-1 1.5-1z"/>',
+    link: '<path d="M10 14a4 4 0 0 1 0-5.7l3-3a4 4 0 0 1 5.7 5.7l-1.4 1.4"/><path d="M14 10a4 4 0 0 1 0 5.7l-3 3a4 4 0 0 1-5.7-5.7l1.4-1.4"/>',
+    power: '<path d="M13 2.5L5 13.5h6l-1 8 8-11h-6z"/>',
+    history: '<path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5v4h4"/><path d="M12 8v4.5l3 2"/>',
+    phone: '<rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/>',
+    check: '<path d="M4.5 12.5l4.5 4.5L19.5 6.5"/>',
+    lock: '<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>',
+    plug: '<path d="M9 3v5M15 3v5"/><path d="M6.5 8h11v3.5a5.5 5.5 0 0 1-11 0z"/><path d="M12 17v4"/>',
+    stack: '<path d="M12 3l9 4.5-9 4.5-9-4.5z"/><path d="M3 12l9 4.5 9-4.5"/><path d="M3 16.5L12 21l9-4.5"/>'
+  };
+  A.glyph = function glyph(name, stroke, width) {
+    return `<g fill="none" stroke="${stroke || 'currentColor'}" stroke-width="${width || 1.8}" stroke-linecap="round" stroke-linejoin="round">${A.glyphs[name] || A.glyphs.spark}</g>`;
+  };
+
+  /* Identity picture: a deterministic symmetric 5x5 glyph (identicon-like) from a fingerprint string, drawn in the
+     family's style by the caller. Used for Server, NAS and SSH key identities. */
+  A.identity = function identity(seed) {
+    const r = U.rng(String(seed));
+    const cells = [];
+    for (let y = 0; y < 5; y++) for (let x = 0; x < 3; x++) { const on = r() > 0.45; if (on) { cells.push([x, y]); if (x < 2) cells.push([4 - x, y]); } }
+    const hue = Math.floor(r() * 360);
+    const words = ['amber', 'otter', 'lantern', 'maple', 'harbor', 'violet', 'cedar', 'pebble', 'comet', 'willow', 'ember', 'falcon', 'meadow', 'quartz', 'river', 'saffron'];
+    const pick = () => words[Math.floor(r() * words.length)];
+    return { cells, hue, words: [pick(), pick(), pick(), pick()] };
+  };
+  A.identitySvg = function identitySvg(seed, size, family) {
+    const id = A.identity(seed), s = size || 44, c = s / 5;
+    const fill = `hsl(${id.hue} 62% ${family === 'retro' ? 55 : 60}%)`;
+    const rx = family === 'friendly' ? c * 0.35 : family === 'glass' ? c * 0.25 : 0;
+    const rects = id.cells.map(([x, y]) => `<rect x="${x * c + 0.5}" y="${y * c + 0.5}" width="${c - 1}" height="${c - 1}" rx="${rx}" fill="${fill}"${family === 'glass' ? ' fill-opacity="0.8"' : ''}/>`).join('');
+    const frame = family === 'basic' ? `<rect x="0.5" y="0.5" width="${s - 1}" height="${s - 1}" fill="none" stroke="currentColor" stroke-opacity="0.45"/>` : '';
+    return `<svg class="o55-identity" viewBox="0 0 ${s} ${s}" width="${s}" height="${s}" aria-hidden="true"${family === 'retro' ? ' shape-rendering="crispEdges"' : ''}>${frame}${rects}</svg>`;
+  };
+})();
