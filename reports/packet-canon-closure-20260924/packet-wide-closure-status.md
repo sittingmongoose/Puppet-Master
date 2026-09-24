@@ -154,3 +154,21 @@ The scoped hash-drift landing exception remains narrow and unexercised; a future
 landing still needs the lock, current-main reconciliation and complete failure-key
 delta. The PM bootstrap planning-ledger skill keeps source lineage distinct from
 canon and forbids treating this review record as a seal or readiness unlock.
+
+## Follow-up repair dispositions
+
+- Settings/Artifacts: the conflicting SSYS-023 criterion and misleading fixture
+  reason are repaired, with the blocked command and 80-token partition unchanged.
+  See `artifacts-blocked-disposition-repair.md`; this does not admit a new route.
+- Backup: currentness-reviewed owner prose for ACT-089/101/102/110 is repaired.
+  Actual typed companions and owner joins remain open; see
+  `backup-four-operands-owner-repair.md`. The four findings are not closed.
+- Home/widgets: ordinary return behavior already exists in production wiring.
+  Only the two Tour-only summary strings needed reconciliation; see
+  `home-widget-return-metadata-repair.md`. Concrete exchange/storage coverage
+  remains unverified. Newer DL-076 checkpoint authority must win at integration.
+
+No follow-up above touches the frozen assistant-chat topics. Standard index
+validation now exposes 20 unchanged legacy decision errors plus DL-076 absent
+relative to newer main; these are reported, not repaired or waived here. Branch
+pushes are not main landings, and the full packet goal remains open.
