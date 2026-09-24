@@ -2699,7 +2699,7 @@
           }
         },
         {
-          "x-rule": "only_exit_reports_terminal_state",
+          "x-rule": "only_exit_or_retained_answer_reports_terminal_state",
           "if": {
             "properties": {
               "correlation": {
@@ -2709,7 +2709,8 @@
                       "enum": [
                         "ui.guided_tour.skip",
                         "ui.guided_tour.finish",
-                        "ui.guided_tour.replay"
+                        "ui.guided_tour.replay",
+                        "ui.guided_tour.toggle_eli5"
                       ]
                     }
                   }

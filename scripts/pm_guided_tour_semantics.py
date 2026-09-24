@@ -49,6 +49,40 @@ def successful(result):
     return result["status"] in {"applied", "no_change"}
 
 
+def source_session(value):
+    q, c, r, before, after, action = parts(value)
+    if not successful(r) or action == "start" or before is not None:
+        return True
+    # A reload has no live controller. Only the explicit, separately revalidated
+    # checkpoint path can reconstruct it; echoed request/context IDs are not one.
+    return action == "resume" and q["resume_source"] == "checkpoint"
+
+
+def lifecycle(value):
+    q, c, r, before, after, action = parts(value)
+    if not successful(r) or before is None or action == "replay":
+        return True
+    status = before["status"]
+    suspended = status in {"paused", "interrupted", "recovery_required"}
+    terminal = status in {"completed", "skipped"}
+    if not suspended and not terminal:
+        return True
+    if suspended and action in {"resume", "skip"}:
+        return True
+    if terminal and action == "skip" and status == "skipped":
+        return r["status"] == "no_change" and after == before
+    allowed = {"back", "focus_route", "toggle_eli5", "pause"} if suspended else {"toggle_eli5"}
+    if action not in allowed or after["status"] != status:
+        return False
+    effects = r["effect_boundary"]
+    # ELI5 can update the existing local answer, not satisfy paused practice or
+    # resume choreography. Back and focus remain usable without resuming work.
+    return (after["completed_predicate_refs"] == before["completed_predicate_refs"] and
+            not effects["choreography_running"] and not effects["decorative_work_running"] and
+            effects["active_subscription_count"] == 0 and
+            (action == "toggle_eli5" or not effects["owner_dispatches"]))
+
+
 def ordered_phases(context):
     return [(chapter, phase) for chapter, phases in CHAPTERS for phase in phases if context["optional_intro_included"] or phase != "comfort_intro"]
 
@@ -192,7 +226,8 @@ def story_transition(value):
             return False
     elif action not in {"resume"} and (after["step"], after["phase"], after["step_id"]) != (before["step"], before["phase"], before["step_id"]):
         return False
-    if action not in {"skip", "finish"} and after["status"] in {"completed", "skipped"}:
+    if action not in {"skip", "finish"} and after["status"] in {"completed", "skipped"} and not (
+            action == "toggle_eli5" and before["status"] == after["status"]):
         return False
     if action not in {"skip", "finish"} and after["captured_state"] != before["captured_state"]:
         return False
@@ -258,11 +293,13 @@ def pause_resume(value):
         return after["status"] == "paused" and not e["choreography_running"] and not e["decorative_work_running"] and e["active_subscription_count"] == 0
     if action != "resume" or not successful(r):
         return True
-    if not before or before["status"] not in {"paused", "interrupted", "recovery_required"}:
+    if before and before["status"] not in {"paused", "interrupted", "recovery_required"}:
         return False
     if after["status"] not in {"awaiting_user", "demonstrating"}:
         return False
     if q["resume_source"] == "live":
+        if not before:
+            return False
         d = r["detail"]
         validated = c["revalidated_predicate_refs"]
         unsatisfied = next((p for _, phase in ordered_phases(c) if (p := PRACTICE.get(phase)) and p not in validated), None)
@@ -278,6 +315,11 @@ def pause_resume(value):
     if cp["checkpoint_id"] != q["checkpoint_ref"] or d["checkpoint_ref"] != cp["checkpoint_id"]:
         return False
     if cp["tour_session_id"] != q["tour_session_id"] or cp["project_id"] != q["project_id"]:
+        return False
+    if before is None and ((q["step"], q["step_id"]) != (cp["step"], cp["step_id"]) or
+                           c["revision"] != cp["session_revision"] or after["revision"] <= cp["session_revision"]):
+        return False
+    if after["captured_state"] != c["original_capture"]:
         return False
     if d["validated_owner_state_refs"] != c["owner_state_revision_refs"] or cp["owner_state_revision_refs"] != c["owner_state_revision_refs"]:
         return False
@@ -329,6 +371,8 @@ def partial_practice(value):
 
 
 RULES = (
+    ("tour.source_session", source_session),
+    ("tour.lifecycle_admission", lifecycle),
     ("tour.request_result_correlation", correlation),
     ("tour.currentness_admission", currentness),
     ("tour.initial_state", initial_state),

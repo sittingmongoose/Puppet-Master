@@ -67,6 +67,8 @@ class TourActionContractTests(unittest.TestCase):
 
     def test_each_cross_record_rule_has_a_causal_counterexample(self):
         cases = {
+            "tour.source_session": "next_missing_live_source",
+            "tour.lifecycle_admission": "next_revives_paused",
             "tour.request_result_correlation": "start_correlation_command_instance_id",
             "tour.currentness_admission": "next_stale_currentness_sha256",
             "tour.initial_state": "start_substitutes_capture",
@@ -97,6 +99,50 @@ class TourActionContractTests(unittest.TestCase):
         value = self.valid["joined_eli5_before_answer_retains_partial_owner_practice"]["value"]
         self.assertTrue(value["context"]["partial_practice_owner_refs"])
         self.assertEqual(value["context"]["partial_practice_owner_refs"], value["partial_practice_owner_refs_after"])
+
+    def test_every_non_start_action_needs_a_live_source(self):
+        for action in self.schema["$defs"]["guided_tour_action_request"]["properties"]["action_id"]["enum"]:
+            short = action.rsplit(".", 1)[1]
+            if short == "start":
+                self.assertIsNone(self.valid["joined_start"]["value"]["context"]["before"])
+                continue
+            case = self.invalid[short + "_missing_live_source"]
+            value = materialize(self.valid[case["base_valid"]]["value"], case)
+            with self.subTest(action=action):
+                self.assertEqual([], self.errors(case["definition"], value))
+                self.assertIn("tour.source_session", semantics.guided_tour_semantic_failures(case["definition"], value))
+
+    def test_checkpoint_reconstruction_is_explicit_and_revalidated_not_a_null_bypass(self):
+        base = self.valid["joined_checkpoint_reconstructs_without_live_controller"]["value"]
+        self.assertIsNone(base["context"]["before"])
+        self.assertEqual("checkpoint", base["request"]["resume_source"])
+        self.assertEqual([], semantics.guided_tour_semantic_failures("guided_tour_action_exchange", base))
+        for name, case in self.invalid.items():
+            if not name.startswith("checkpoint_no_live_"):
+                continue
+            value = materialize(base, case)
+            with self.subTest(case=name):
+                self.assertEqual([], self.errors(case["definition"], value))
+                self.assertEqual(["tour.pause_resume"], semantics.guided_tour_semantic_failures(case["definition"], value))
+                with patch.object(semantics, "RULES", tuple(item for item in semantics.RULES if item[0] != "tour.pause_resume")):
+                    self.assertEqual([], semantics.guided_tour_semantic_failures(case["definition"], value))
+
+    def test_lifecycle_rejection_is_causal_and_preserves_safe_controls(self):
+        for status in ("paused", "interrupted", "recovery_required", "skipped", "completed"):
+            for action in ("next", "show_me", "back", "focus_route", "finish"):
+                if status == "completed" and action not in {"back", "finish"}:
+                    continue  # Completed chapter constraints already reject other synthetic sources.
+                case = self.invalid[action + "_revives_" + status]
+                value = materialize(self.valid[case["base_valid"]]["value"], case)
+                with self.subTest(action=action, status=status):
+                    self.assertEqual([], self.errors(case["definition"], value))
+                    self.assertEqual(["tour.lifecycle_admission"], semantics.guided_tour_semantic_failures(case["definition"], value))
+                    with patch.object(semantics, "RULES", tuple(item for item in semantics.RULES if item[0] != "tour.lifecycle_admission")):
+                        self.assertEqual([], semantics.guided_tour_semantic_failures(case["definition"], value))
+        for action in ("back", "focus_route", "toggle_eli5", "pause", "skip"):
+            value = self.valid["joined_paused_" + action + "_stays_safe"]["value"]
+            self.assertEqual([], semantics.guided_tour_semantic_failures("guided_tour_action_exchange", value))
+            self.assertFalse(value["result"]["effect_boundary"]["choreography_running"])
 
     def test_each_of_eleven_actions_has_causal_correlation_and_currentness_rejection(self):
         for action in self.schema["$defs"]["guided_tour_action_request"]["properties"]["action_id"]["enum"]:
