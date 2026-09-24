@@ -1690,9 +1690,159 @@
         "event_policy": "event_silent_pending_event_authority",
         "expected_event_types": []
       }
+    },
+    {
+      "name": "doctor_export.positive.correlated_round_trip",
+      "definition": "DoctorReportExportCommandRoundTrip",
+      "value": {
+        "request": {
+          "schema_id": "pm.doctor_report_export.command_request.v1",
+          "record_kind": "DoctorReportExportCommandRequest",
+          "command_id": "cmd.doctor.export_report",
+          "operation": "export_report",
+          "command_instance_id": "command:doctor_report_export:1",
+          "idempotency_key": "idempotency:doctor_report_export:1",
+          "doctor_report_id": "doctor-report:1",
+          "project_id": "project:1",
+          "expected_registry_generation": 3,
+          "expected_projection_generation": 4,
+          "permission_snapshot_ref": "permission:doctor_report_export:1",
+          "return_context": {
+            "surface_id": "settings.doctor",
+            "route_id": "settings/doctor",
+            "focus_target": "export-report",
+            "invocation_token": "return:settings.doctor:1",
+            "return_generation": 3
+          },
+          "payload": {
+            "action": "cmd.doctor.export_report",
+            "report_projection_ref": "doctor-report-projection:1",
+            "report_projection_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+            "redaction_profile_ref": "redaction-profile:doctor-report",
+            "bounded_selection_ref": "bounded-selection:doctor-report:1",
+            "export_destination_ref": "export-destination:doctor-report:1",
+            "project_filemanager_copy_out": false
+          }
+        },
+        "result": {
+          "schema_id": "pm.doctor_report_export.command_result.v1",
+          "record_kind": "DoctorReportExportCommandResult",
+          "command_id": "cmd.doctor.export_report",
+          "operation": "export_report",
+          "command_instance_id": "command:doctor_report_export:1",
+          "status": "succeeded",
+          "doctor_report_id": "doctor-report:1",
+          "project_id": "project:1",
+          "expected_registry_generation": 3,
+          "expected_projection_generation": 4,
+          "receipt_ref": "receipt:doctor_report_export:1",
+          "observable_work_ref": "work:doctor_report_export:1",
+          "return_context": {
+            "surface_id": "settings.doctor",
+            "route_id": "settings/doctor",
+            "focus_target": "export-report",
+            "invocation_token": "return:settings.doctor:1",
+            "return_generation": 3
+          },
+          "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+          "output": {
+            "action": "cmd.doctor.export_report",
+            "changed": true,
+            "state": "completed",
+            "currentness": "current",
+            "operation_receipt_ref": "receipt:doctor_report_export:1",
+            "resulting_generation": 8,
+            "restart_disposition": "resume",
+            "secret_material_exposed": false,
+            "protected_auth_content_exposed": false
+          },
+          "completed_at_utc": "2026-09-01T04:00:00Z"
+        }
+      }
     }
   ],
   "invalid": [
+    {
+      "name": "doctor_export.negative.command_instance_id_mismatch",
+      "definition": "DoctorReportExportCommandRoundTrip",
+      "semantic_rule": "doctor_export.request_result_identity",
+      "base_valid": "doctor_export.positive.correlated_round_trip",
+      "patch": {
+        "result.command_instance_id": "command:doctor_report_export:other"
+      }
+    },
+    {
+      "name": "doctor_export.negative.doctor_report_id_mismatch",
+      "definition": "DoctorReportExportCommandRoundTrip",
+      "semantic_rule": "doctor_export.request_result_identity",
+      "base_valid": "doctor_export.positive.correlated_round_trip",
+      "patch": {
+        "result.doctor_report_id": "doctor-report:other"
+      }
+    },
+    {
+      "name": "doctor_export.negative.project_id_mismatch",
+      "definition": "DoctorReportExportCommandRoundTrip",
+      "semantic_rule": "doctor_export.request_result_identity",
+      "base_valid": "doctor_export.positive.correlated_round_trip",
+      "patch": {
+        "result.project_id": "project:other"
+      }
+    },
+    {
+      "name": "doctor_export.negative.expected_registry_generation_mismatch",
+      "definition": "DoctorReportExportCommandRoundTrip",
+      "semantic_rule": "doctor_export.request_generation_echo",
+      "base_valid": "doctor_export.positive.correlated_round_trip",
+      "patch": {
+        "result.expected_registry_generation": 2
+      }
+    },
+    {
+      "name": "doctor_export.negative.expected_projection_generation_mismatch",
+      "definition": "DoctorReportExportCommandRoundTrip",
+      "semantic_rule": "doctor_export.request_generation_echo",
+      "base_valid": "doctor_export.positive.correlated_round_trip",
+      "patch": {
+        "result.expected_projection_generation": 3
+      }
+    },
+    {
+      "name": "doctor_export.negative.return_context_surface_id_mismatch",
+      "definition": "DoctorReportExportCommandRoundTrip",
+      "semantic_rule": "doctor_export.exact_return_context",
+      "base_valid": "doctor_export.positive.correlated_round_trip",
+      "patch": {
+        "result.return_context.surface_id": "settings.other"
+      }
+    },
+    {
+      "name": "doctor_export.negative.return_context_route_id_mismatch",
+      "definition": "DoctorReportExportCommandRoundTrip",
+      "semantic_rule": "doctor_export.exact_return_context",
+      "base_valid": "doctor_export.positive.correlated_round_trip",
+      "patch": {
+        "result.return_context.route_id": "settings/other"
+      }
+    },
+    {
+      "name": "doctor_export.negative.return_context_invocation_token_mismatch",
+      "definition": "DoctorReportExportCommandRoundTrip",
+      "semantic_rule": "doctor_export.exact_return_context",
+      "base_valid": "doctor_export.positive.correlated_round_trip",
+      "patch": {
+        "result.return_context.invocation_token": "return:other"
+      }
+    },
+    {
+      "name": "doctor_export.negative.return_context_return_generation_mismatch",
+      "definition": "DoctorReportExportCommandRoundTrip",
+      "semantic_rule": "doctor_export.exact_return_context",
+      "base_valid": "doctor_export.positive.correlated_round_trip",
+      "patch": {
+        "result.return_context.return_generation": 2
+      }
+    },
     {
       "name": "secret_bearing_result_schema_is_rejected",
       "definition": "doctor_check_descriptor",
@@ -2233,6 +2383,7 @@
     {
       "name": "server_gap_b.negative.exact_return_mismatch",
       "definition": "DoctorReportExportCommandRoundTrip",
+      "semantic_rule": "doctor_export.exact_return_context",
       "value": {
         "request": {
           "schema_id": "pm.doctor_report_export.command_request.v1",
@@ -2281,7 +2432,7 @@
             "route_id": "settings/doctor",
             "focus_target": "different-control",
             "invocation_token": "return:settings.doctor:1",
-            "return_generation": -1
+            "return_generation": 3
           },
           "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
           "output": {
