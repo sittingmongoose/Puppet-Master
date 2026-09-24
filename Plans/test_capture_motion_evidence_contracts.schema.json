@@ -635,7 +635,7 @@
         {"if": {"properties": {"command_id": {"enum": ["cmd.testing.capture.pause", "cmd.testing.capture.resume", "cmd.testing.capture.stop", "cmd.testing.capture.health.inspect"]}}}, "then": {"required": ["capture_session_id"]}},
         {"if": {"properties": {"command_id": {"const": "cmd.testing.capture.bookmark"}}}, "then": {"required": ["capture_session_id", "bookmark_monotonic_ns", "bookmark_label_ref"]}},
         {"if": {"properties": {"command_id": {"const": "cmd.testing.capture.save_clip"}}}, "then": {"required": ["capture_session_id", "raw_capture_id", "clip_start_monotonic_ns", "clip_end_monotonic_ns", "derivation_manifest_ref", "privacy_review_ref"]}},
-        {"if": {"properties": {"command_id": {"const": "cmd.testing.capture.target.update"}}}, "then": {"required": ["capture_session_id", "target", "expected_target_currentness_ref", "expected_target_currentness_sha256"]}},
+        {"if": {"properties": {"command_id": {"const": "cmd.testing.capture.target.update"}}}, "then": {"required": ["capture_session_id", "target", "target_policy", "expected_target_currentness_ref", "expected_target_currentness_sha256"]}},
         {"if": {"properties": {"command_id": {"const": "cmd.artifacts.create_demonstration_video"}}}, "then": {"required": ["raw_capture_ids", "derivation_manifest_ref", "privacy_review_ref", "confirmation_receipt_ref"]}},
         {"if": {"properties": {"command_id": {"const": "cmd.artifacts.inspect_capture_provenance"}}}, "then": {"required": ["provenance_subject_ref", "candidate_capture_ids"]}}
       ]
