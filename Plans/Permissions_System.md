@@ -9038,7 +9038,9 @@ The storage registry must materialize this row separately and bind it to the str
 
 ### Application versus project identity and denial replay
 
-All new permission audit and `tool.denied` writes use EventRecord `2.0.0`. A project-bound invocation uses `scope_kind = project` and its non-empty `project_id`. An application-level invocation before project selection uses `scope_kind = application` and `project_id = null`; it emits the denial/audit EventRecord without fabricating a project-scoped permission-snapshot row. If a mutation-capable attempt requires durable permission evidence, it must already be bound to one project and one materialized permission snapshot.
+All new permission audit and `tool.denied` writes use EventRecord `2.0.0`. A project-bound invocation uses `scope_kind = project` and its non-empty `project_id`. An application-level invocation before project selection uses `scope_kind = application` and `project_id = null`; it emits the denial/audit EventRecord without fabricating a project-scoped permission-snapshot row. A project-bound executor/provider attempt that requires durable permission evidence must already be bound to its actual project and one materialized immutable attempt permission snapshot. A separately owned capability-provisioning operation is not converted into such an attempt merely to obtain permission evidence: its application or Project scope is its actual FullThread scope. Permissions supplies the immutable decision for the exact `cmd.capability.ensure` request, resolved effect/target, actor, effective policy and authority generations, and applicable approval; the existing provisioning operation retains that decision without writing a fabricated project/attempt/node snapshot. This operation decision does not authorize the originating executor/provider attempt, which still requires its own applicable admission and snapshot before continuation.
+
+Demand, Auto/On, readiness, installation ownership, a lease, provider consent, and a recorded decision are not interchangeable permission authorities. Before an installation or other effect, the semantic owner resolves the current Permissions decision and separately satisfies FileSafe, source/provenance, ownership, license/cost/elevation/network, storage-mode and provider-first acquisition requirements. Missing, denied, ask/prompt-pending, stale, mismatched, revoked, or unresolved authority prevents the effect. Changed request bytes, target, actor/scope, Host/Environment/topology, policy, approval or authority generation requires fresh evaluation, not mutation of historical evidence. An operation can await permission without claiming effect execution. Permission audit retains PS-076 and PS-133; an embedded decision does not create an EventRecord name, replace the required audit, or bypass failed audit admission. Pre-dispatch refusal follows the existing central response boundary and does not fabricate an operation or Server.
 
 Permission audit inspection of an EventRecord `2.0.0` root requires a reader that validates `2.0.0`; an unsupported reader refuses the view with `unsupported_schema_version` instead of presenting partial permission history. Event routing consumes the storage-owned key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` with application `app` or the registered reversible project partition. Permissions does not derive a lookup key from current UI project/account state, omit `event_id`, or treat the index as permission authority.
 
@@ -9119,13 +9121,17 @@ canonical_text: >-
   replay-only restrictions. Permission, FileSafe, and storage gates compose by
   intersection: approval cannot widen viewer, blocked, integrity, root, or newer-store
   restrictions; pre-mutation permission denial is restore_refused with permission_denied;
-  and permission outcomes never clear recovery holds.
+  and permission outcomes never clear recovery holds. Independently scoped capability provisioning retains its
+  exact Permissions-owned operation decision without fabricating Project/attempt/node snapshot identity;
+  originating executor/provider attempts still require their own applicable admission and immutable snapshot.
 gui_related: true
 gui_classification_reason: Denial, disabled-action, approval, viewer, and recovery-state explanations are user-visible permission behavior.
 depends_on: [PS-093, PS-097, CV-317, CV-320, SP-239, SP-240]
 unblocks: []
 acceptance_criteria:
   - Project denials use project scope and application-level denials use null-project application scope without a fake snapshot key.
+  - Application-scoped cmd.capability.ensure preserves null Project/NamedPlan and retains its exact Permissions-issued operation decision in the existing provisioning operation; it never manufactures a project/attempt/node snapshot.
+  - Project-bound executor/provider attempt snapshots and independent continuation re-admission remain unchanged; static joins cannot issue permission, prove audit persistence, or execute an effect.
   - A reader lacking EventRecord 2.0 validation refuses permission-history inspection, and routing consumes the full storage-owned v2 scope, sequence, and event lookup key.
   - dedupe_unavailable remains fail-closed for execution and projector_replay_only cannot alter current permission or scheduler state.
   - Approval cannot enable a mutation prohibited by storage viewer/blocked state, root continuity, integrity, or newer-store rules.
@@ -9152,6 +9158,10 @@ source_lineage:
   - Case-L:L-021
   - Case-L:L-024
   - Case-L:EVT-01..EVT-07
+  - Plans/Shared_Integration_Runtime.md#SIR-003
+  - Plans/Shared_Integration_Runtime.md#SIR-015
+  - Plans/Shared_Integration_Runtime.md#SIR-042
+  - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/07_demand_driven_capability_provisioning_handoff.md:35-49,69-96
 negative_constraints:
   - Do not report a pre-mutation permission refusal as restore_failed.
   - Do not let permission approval override storage or FileSafe safety gates.

@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-24T13:31:28Z",
+  "generated_at_utc": "2026-09-24T14:16:58Z",
   "gui_related_units": {
     "count": 3199,
     "units": [
@@ -25619,8 +25619,8 @@
         "source_location": {
           "heading": "PS-133 - Case L Denial Scope And Recovery Gate Composition",
           "heading_level": 3,
-          "heading_line": 9109,
-          "line": 9111,
+          "heading_line": 9111,
+          "line": 9113,
           "path": "Plans/Permissions_System.md"
         }
       },
@@ -25630,8 +25630,8 @@
         "source_location": {
           "heading": "PS-135 - Browser State Minimum Export Boundary",
           "heading_level": 3,
-          "heading_line": 9225,
-          "line": 9227,
+          "heading_line": 9235,
+          "line": 9237,
           "path": "Plans/Permissions_System.md"
         }
       },
@@ -25641,8 +25641,8 @@
         "source_location": {
           "heading": "PS-138 - Forge And Repository Automation Effect Authorization",
           "heading_level": 3,
-          "heading_line": 9357,
-          "line": 9359,
+          "heading_line": 9367,
+          "line": 9369,
           "path": "Plans/Permissions_System.md"
         }
       },
@@ -25652,8 +25652,8 @@
         "source_location": {
           "heading": "PS-139 - Backup Recovery And Connector Protected Effects",
           "heading_level": 3,
-          "heading_line": 9395,
-          "line": 9397,
+          "heading_line": 9405,
+          "line": 9407,
           "path": "Plans/Permissions_System.md"
         }
       },
@@ -39348,6 +39348,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/OpenCode_Coverage_Matrix.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Permissions_System.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
