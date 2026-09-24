@@ -43,6 +43,7 @@ Evidence root:
 | --- | --- |
 | `receipt.json` | `20679902dbcc79136dcfc69756dab17a3a48fb2349cd997d5aca6a40841ffbb3` |
 | `currentness-main-siblings.json` | `df98e2f94be8930d4b348179318998bffa06fcd572de33329d64c6137e79adaf` |
+| `independent-review-001.md` | `b2891a4cbdd5d849fc4e24eaa25523a6e9e4bb844b0033085719cfe2ce3ec8f3` |
 
 The PM planning-ledger skill kept owner prose and companion work separate and
 preserved the governance boundary. No native proof, governance reseal, main

@@ -78,8 +78,9 @@
   ],
   "next_repair_batch": {
     "area": "Backup input contracts and owner composition",
-    "status": "branch_snapshot_gaps_pending_newer_authority_revalidation",
-    "canonical_writes_started": false,
+    "status": "currentness_revalidated_owner_prose_repaired_typed_companions_pending",
+    "canonical_writes_started": true,
+    "owner_step_report": "reports/packet-canon-closure-20260924/backup-four-operands-owner-repair.md",
     "cases": [
       {"case_id": "ACT-089", "requirement": "selected destination update configuration/patch"},
       {"case_id": "ACT-101", "requirement": "selected verification snapshot set and verification level"},

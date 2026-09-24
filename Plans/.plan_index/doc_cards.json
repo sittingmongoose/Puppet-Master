@@ -2397,7 +2397,7 @@
         "future restore coordinator",
         "future security adapter registry"
       ],
-      "line_count": 1768,
+      "line_count": 1815,
       "path": "Plans/Backup_Restore_System.md",
       "plan_unit_count": 29,
       "plan_unit_ids": [
@@ -2465,7 +2465,7 @@
         "unsafe_restore_or_false_operational_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "c4f00ec4f86bee8f080b7defebc6d49311e86d1c4dc6a7bc66c827087a4e16c7",
+      "sha256": "15cdf9907ef6933769006efb0b3edf54d9669df3d88adbbdc85272a5c896e365",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 29
@@ -19970,7 +19970,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-24T14:56:37Z",
+  "generated_at_utc": "2026-09-24T15:15:22Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
