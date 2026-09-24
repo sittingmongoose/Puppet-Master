@@ -5462,6 +5462,512 @@
           }
         ]
       }
+    },
+    {
+      "name": "uncreated_repository_request",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:forge:uncreated:request",
+        "idempotency_key": "idempotency:forge:uncreated:request",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "account_id": "account:gitlab:alpha",
+        "repo_id": null,
+        "repository_binding_ref": null,
+        "expected_binding_generation": 0,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "repository",
+        "capability_snapshot_ref": "capability-snapshot:forge:3",
+        "api_compatibility_ref": "api-compatibility:forge:3",
+        "credential_or_grant_ref": "grant:forge:3",
+        "currentness": {
+          "binding_generation": 0,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:3",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-08-31T21:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:3",
+          "rate_budget_ref": "rate-budget:forge:3"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:3",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:3",
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "confirmation": null,
+        "target": {
+          "target_kind": "repository",
+          "identity_source": "validated_account_container",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": null,
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-08-31T21:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null
+      }
+    },
+    {
+      "name": "uncreated_repository_result_accepted",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.forge.command_result.v1",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:create:accepted",
+        "operation_id": "operation:create:accepted",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "expected_binding_generation": 0,
+        "outcome": "accepted",
+        "target_ref": "repository-intent:create:example",
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:10:00Z"
+        },
+        "error": null,
+        "observable_work_id": "work:create:accepted",
+        "terminal_provider_result_ref": null,
+        "receipt_ref": "receipt:create:accepted",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T21:10:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_receipt_accepted",
+      "definition": "command_receipt",
+      "value": {
+        "schema_id": "pm.forge.command_receipt.v1",
+        "receipt_id": "receipt:create:accepted",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:create:accepted",
+        "operation_id": "operation:create:accepted",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "review_revision_ref": null,
+        "expected_binding_generation": 0,
+        "credential_or_grant_ref": "grant:gitlab:pipeline:1",
+        "idempotency_key": "idempotency:forge:retry:1",
+        "outcome": "accepted",
+        "observable_work_id": "work:create:accepted",
+        "event_refs": [],
+        "recovery_actions": [],
+        "completed_at_utc": "2026-08-31T13:06:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_result_blocked",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.forge.command_result.v1",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:create:blocked",
+        "operation_id": "operation:create:blocked",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "expected_binding_generation": 0,
+        "outcome": "blocked",
+        "target_ref": "repository-intent:create:example",
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:10:00Z"
+        },
+        "error": {
+          "code": "permission_denied",
+          "message": "Creation did not complete.",
+          "retry_disposition": "after_user_action",
+          "effect_state": "known_not_applied",
+          "provider_error_ref": null,
+          "recovery_action_ids": []
+        },
+        "observable_work_id": "work:create:blocked",
+        "terminal_provider_result_ref": null,
+        "receipt_ref": "receipt:create:blocked",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T21:10:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_receipt_blocked",
+      "definition": "command_receipt",
+      "value": {
+        "schema_id": "pm.forge.command_receipt.v1",
+        "receipt_id": "receipt:create:blocked",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:create:blocked",
+        "operation_id": "operation:create:blocked",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "review_revision_ref": null,
+        "expected_binding_generation": 0,
+        "credential_or_grant_ref": "grant:gitlab:pipeline:1",
+        "idempotency_key": "idempotency:forge:retry:1",
+        "outcome": "blocked",
+        "observable_work_id": "work:create:blocked",
+        "event_refs": [],
+        "recovery_actions": [],
+        "completed_at_utc": "2026-08-31T13:06:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_result_failed",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.forge.command_result.v1",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:create:failed",
+        "operation_id": "operation:create:failed",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "expected_binding_generation": 0,
+        "outcome": "failed",
+        "target_ref": "repository-intent:create:example",
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:10:00Z"
+        },
+        "error": {
+          "code": "permission_denied",
+          "message": "Creation did not complete.",
+          "retry_disposition": "after_user_action",
+          "effect_state": "known_not_applied",
+          "provider_error_ref": null,
+          "recovery_action_ids": []
+        },
+        "observable_work_id": "work:create:failed",
+        "terminal_provider_result_ref": null,
+        "receipt_ref": "receipt:create:failed",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T21:10:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_receipt_failed",
+      "definition": "command_receipt",
+      "value": {
+        "schema_id": "pm.forge.command_receipt.v1",
+        "receipt_id": "receipt:create:failed",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:create:failed",
+        "operation_id": "operation:create:failed",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "review_revision_ref": null,
+        "expected_binding_generation": 0,
+        "credential_or_grant_ref": "grant:gitlab:pipeline:1",
+        "idempotency_key": "idempotency:forge:retry:1",
+        "outcome": "failed",
+        "observable_work_id": "work:create:failed",
+        "event_refs": [],
+        "recovery_actions": [],
+        "completed_at_utc": "2026-08-31T13:06:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_result_cancelled",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.forge.command_result.v1",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:create:cancelled",
+        "operation_id": "operation:create:cancelled",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "expected_binding_generation": 0,
+        "outcome": "cancelled",
+        "target_ref": "repository-intent:create:example",
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:10:00Z"
+        },
+        "error": {
+          "code": "permission_denied",
+          "message": "Creation did not complete.",
+          "retry_disposition": "after_user_action",
+          "effect_state": "known_not_applied",
+          "provider_error_ref": null,
+          "recovery_action_ids": []
+        },
+        "observable_work_id": "work:create:cancelled",
+        "terminal_provider_result_ref": null,
+        "receipt_ref": "receipt:create:cancelled",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T21:10:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_receipt_cancelled",
+      "definition": "command_receipt",
+      "value": {
+        "schema_id": "pm.forge.command_receipt.v1",
+        "receipt_id": "receipt:create:cancelled",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:create:cancelled",
+        "operation_id": "operation:create:cancelled",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "review_revision_ref": null,
+        "expected_binding_generation": 0,
+        "credential_or_grant_ref": "grant:gitlab:pipeline:1",
+        "idempotency_key": "idempotency:forge:retry:1",
+        "outcome": "cancelled",
+        "observable_work_id": "work:create:cancelled",
+        "event_refs": [],
+        "recovery_actions": [],
+        "completed_at_utc": "2026-08-31T13:06:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_result_recovery_required",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.forge.command_result.v1",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:create:recovery_required",
+        "operation_id": "operation:create:recovery_required",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "expected_binding_generation": 0,
+        "outcome": "recovery_required",
+        "target_ref": "repository-intent:create:example",
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:10:00Z"
+        },
+        "error": {
+          "code": "permission_denied",
+          "message": "Creation did not complete.",
+          "retry_disposition": "after_user_action",
+          "effect_state": "known_not_applied",
+          "provider_error_ref": null,
+          "recovery_action_ids": []
+        },
+        "observable_work_id": "work:create:recovery_required",
+        "terminal_provider_result_ref": null,
+        "receipt_ref": "receipt:create:recovery_required",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T21:10:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_receipt_recovery_required",
+      "definition": "command_receipt",
+      "value": {
+        "schema_id": "pm.forge.command_receipt.v1",
+        "receipt_id": "receipt:create:recovery_required",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:create:recovery_required",
+        "operation_id": "operation:create:recovery_required",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "review_revision_ref": null,
+        "expected_binding_generation": 0,
+        "credential_or_grant_ref": "grant:gitlab:pipeline:1",
+        "idempotency_key": "idempotency:forge:retry:1",
+        "outcome": "recovery_required",
+        "observable_work_id": "work:create:recovery_required",
+        "event_refs": [],
+        "recovery_actions": [],
+        "completed_at_utc": "2026-08-31T13:06:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_result_effect_unknown",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.forge.command_result.v1",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:create:effect_unknown",
+        "operation_id": "operation:create:effect_unknown",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "expected_binding_generation": 0,
+        "outcome": "effect_unknown",
+        "target_ref": "repository-intent:create:example",
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-08-31T21:10:00Z"
+        },
+        "error": {
+          "code": "effect_unknown_reconciliation_required",
+          "message": "Creation outcome is unknown; reconcile first.",
+          "retry_disposition": "after_reconciliation",
+          "effect_state": "unknown",
+          "provider_error_ref": null,
+          "recovery_action_ids": []
+        },
+        "observable_work_id": "work:create:effect_unknown",
+        "terminal_provider_result_ref": null,
+        "receipt_ref": "receipt:create:effect_unknown",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-08-31T21:10:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_receipt_effect_unknown",
+      "definition": "command_receipt",
+      "value": {
+        "schema_id": "pm.forge.command_receipt.v1",
+        "receipt_id": "receipt:create:effect_unknown",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:create:effect_unknown",
+        "operation_id": "operation:create:effect_unknown",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "review_revision_ref": null,
+        "expected_binding_generation": 0,
+        "credential_or_grant_ref": "grant:gitlab:pipeline:1",
+        "idempotency_key": "idempotency:forge:retry:1",
+        "outcome": "effect_unknown",
+        "observable_work_id": "work:create:effect_unknown",
+        "event_refs": [],
+        "recovery_actions": [],
+        "completed_at_utc": "2026-08-31T13:06:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_error",
+      "definition": "command_error_record",
+      "value": {
+        "schema_id": "pm.forge.command_error.v1",
+        "command_id": "cmd.forge.repository.create",
+        "command_instance_id": "command:forge:uncreated:error",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "error": {
+          "code": "effect_unknown_reconciliation_required",
+          "message": "Provider effect is unknown; reconcile before retry.",
+          "retry_disposition": "after_reconciliation",
+          "effect_state": "unknown",
+          "provider_error_ref": "provider-error:forge:1",
+          "recovery_action_ids": [
+            "cmd.forge.mirror.inspect"
+          ]
+        },
+        "recorded_at_utc": "2026-08-31T21:11:00Z"
+      }
+    },
+    {
+      "name": "uncreated_repository_availability",
+      "definition": "command_availability",
+      "value": {
+        "schema_id": "pm.forge.command_availability.v1",
+        "command_id": "cmd.forge.repository.create",
+        "provider": "gitlab",
+        "repository_binding_ref": null,
+        "expected_binding_generation": 0,
+        "requested_capability": "repository",
+        "availability": {
+          "requested": true,
+          "effective": false,
+          "state": "blocked",
+          "reason_codes": [
+            "pipeline_projection_stale"
+          ],
+          "disabled_reason_code": "pipeline_projection_stale",
+          "allowed_action_ids": [
+            "cmd.forge.pipeline.refresh"
+          ],
+          "evaluated_at_utc": "2026-08-31T21:12:00Z"
+        },
+        "currentness": {
+          "binding_generation": 0,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:blocked",
+          "state": "stale",
+          "mutation_safety": "blocked",
+          "projection_updated_at_utc": "2026-08-31T20:00:00Z",
+          "direct_revalidation_ref": null,
+          "rate_budget_ref": "rate-budget:forge:blocked"
+        },
+        "recorded_at_utc": "2026-08-31T21:12:00Z"
+      }
     }
   ],
   "invalid": [
@@ -6763,6 +7269,433 @@
         }
       },
       "expected_error": "the apply fences the same scope entry the preview fenced; a mutation that cannot say which scope it applies to has the defect the preview repair removed"
+    },
+    {
+      "name": "uncreated_repository_request_rejects_expected_generation",
+      "definition": "command_request",
+      "base_valid": "uncreated_repository_request",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_request_rejects_observed_generation",
+      "definition": "command_request",
+      "base_valid": "uncreated_repository_request",
+      "patch": {
+        "currentness.binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_request_rejects_provider_identity",
+      "definition": "command_request",
+      "base_valid": "uncreated_repository_request",
+      "patch": {
+        "target.provider_repository_id": "invented:repo"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_request_rejects_identity_source",
+      "definition": "command_request",
+      "base_valid": "uncreated_repository_request",
+      "patch": {
+        "target.identity_source": "validated_repository_binding"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_request_rejects_null_account",
+      "definition": "command_request",
+      "base_valid": "uncreated_repository_request",
+      "patch": {
+        "account_id": null
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_request_rejects_null_locator",
+      "definition": "command_request",
+      "base_valid": "uncreated_repository_request",
+      "patch": {
+        "target.repository_locator_ref": null
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_request_rejects_denied_permission",
+      "definition": "command_request",
+      "base_valid": "uncreated_repository_request",
+      "patch": {
+        "permission.decision": "deny"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_request_rejects_stale_currentness",
+      "definition": "command_request",
+      "base_valid": "uncreated_repository_request",
+      "patch": {
+        "currentness.state": "stale"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_request_rejects_mixed_repo",
+      "definition": "command_request",
+      "base_valid": "uncreated_repository_request",
+      "patch": {
+        "repo_id": "repo:existing"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_request_rejects_mixed_binding",
+      "definition": "command_request",
+      "base_valid": "uncreated_repository_request",
+      "patch": {
+        "repository_binding_ref": "binding:existing"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_request_rejects_unknown_field",
+      "definition": "command_request",
+      "base_valid": "uncreated_repository_request",
+      "patch": {
+        "unexpected_identity_override": true
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_accepted_rejects_other_command",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_accepted",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_accepted_rejects_expected_generation",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_accepted",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_accepted_rejects_missing_work",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_accepted",
+      "patch": {
+        "observable_work_id": null
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_accepted_rejects_unbound_succeeded",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_accepted",
+      "patch": {
+        "outcome": "succeeded",
+        "terminal_provider_result_ref": "provider-result:create:done",
+        "receipt_ref": "receipt:create:done"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_accepted_rejects_unbound_degraded",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_accepted",
+      "patch": {
+        "outcome": "degraded",
+        "terminal_provider_result_ref": "provider-result:create:done",
+        "receipt_ref": "receipt:create:done"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_accepted_rejects_other_command",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_accepted",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_accepted_rejects_expected_generation",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_accepted",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_accepted_rejects_missing_work",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_accepted",
+      "patch": {
+        "observable_work_id": null
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_accepted_rejects_unbound_succeeded",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_accepted",
+      "patch": {
+        "outcome": "succeeded"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_accepted_rejects_unbound_degraded",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_accepted",
+      "patch": {
+        "outcome": "degraded"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_blocked_rejects_other_command",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_blocked",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_blocked_rejects_expected_generation",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_blocked",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_blocked_rejects_other_command",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_blocked",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_blocked_rejects_expected_generation",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_blocked",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_failed_rejects_other_command",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_failed",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_failed_rejects_expected_generation",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_failed",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_failed_rejects_other_command",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_failed",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_failed_rejects_expected_generation",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_failed",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_cancelled_rejects_other_command",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_cancelled",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_cancelled_rejects_expected_generation",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_cancelled",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_cancelled_rejects_other_command",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_cancelled",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_cancelled_rejects_expected_generation",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_cancelled",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_recovery_required_rejects_other_command",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_recovery_required",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_recovery_required_rejects_expected_generation",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_recovery_required",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_recovery_required_rejects_other_command",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_recovery_required",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_recovery_required_rejects_expected_generation",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_recovery_required",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_effect_unknown_rejects_other_command",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_effect_unknown",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_effect_unknown_rejects_expected_generation",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_effect_unknown",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_effect_unknown_rejects_blind_retry",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_effect_unknown",
+      "patch": {
+        "error.retry_disposition": "after_user_action"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_result_effect_unknown_rejects_terminal_result",
+      "definition": "command_result",
+      "base_valid": "uncreated_repository_result_effect_unknown",
+      "patch": {
+        "terminal_provider_result_ref": "provider-result:claimed"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_effect_unknown_rejects_other_command",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_effect_unknown",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_receipt_effect_unknown_rejects_expected_generation",
+      "definition": "command_receipt",
+      "base_valid": "uncreated_repository_receipt_effect_unknown",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_error_rejects_other_command",
+      "definition": "command_error_record",
+      "base_valid": "uncreated_repository_error",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_availability_rejects_other_command",
+      "definition": "command_availability",
+      "base_valid": "uncreated_repository_availability",
+      "patch": {
+        "command_id": "cmd.forge.review.merge"
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_availability_rejects_expected_generation",
+      "definition": "command_availability",
+      "base_valid": "uncreated_repository_availability",
+      "patch": {
+        "expected_binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
+    },
+    {
+      "name": "uncreated_repository_availability_rejects_observed_generation",
+      "definition": "command_availability",
+      "base_valid": "uncreated_repository_availability",
+      "patch": {
+        "currentness.binding_generation": 1
+      },
+      "expected_error": "Uncreated identity must retain exact create lifecycle and owner gates."
     }
   ],
   "command_coverage": {

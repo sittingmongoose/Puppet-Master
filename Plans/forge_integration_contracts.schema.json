@@ -2751,9 +2751,73 @@
             }
           },
           "else": {
-            "properties": {
-              "repository_binding_ref": {
-                "$ref": "#/$defs/non_empty_string"
+            "if": {
+              "properties": {
+                "command_id": {
+                  "const": "cmd.forge.repository.create"
+                }
+              },
+              "required": [
+                "command_id"
+              ]
+            },
+            "then": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "repository_binding_ref": {
+                      "type": "null"
+                    },
+                    "expected_binding_generation": {
+                      "const": 0
+                    },
+                    "outcome": {
+                      "enum": [
+                        "accepted",
+                        "blocked",
+                        "failed",
+                        "cancelled",
+                        "recovery_required",
+                        "effect_unknown"
+                      ]
+                    }
+                  },
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "outcome": {
+                            "const": "accepted"
+                          }
+                        },
+                        "required": [
+                          "outcome"
+                        ]
+                      },
+                      "then": {
+                        "properties": {
+                          "observable_work_id": {
+                            "$ref": "#/$defs/non_secret_ref"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "properties": {
+                    "repository_binding_ref": {
+                      "$ref": "#/$defs/non_empty_string"
+                    }
+                  }
+                }
+              ]
+            },
+            "else": {
+              "properties": {
+                "repository_binding_ref": {
+                  "$ref": "#/$defs/non_empty_string"
+                }
               }
             }
           }
@@ -6292,12 +6356,65 @@
             }
           },
           "else": {
-            "properties": {
-              "repository_binding_ref": {
-                "$ref": "#/$defs/non_secret_ref"
+            "if": {
+              "properties": {
+                "command_id": {
+                  "const": "cmd.forge.repository.create"
+                }
               },
-              "repo_id": {
-                "$ref": "#/$defs/non_empty_string"
+              "required": [
+                "command_id"
+              ]
+            },
+            "then": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "repository_binding_ref": {
+                      "type": "null"
+                    },
+                    "expected_binding_generation": {
+                      "const": 0
+                    },
+                    "currentness": {
+                      "properties": {
+                        "binding_generation": {
+                          "const": 0
+                        }
+                      }
+                    },
+                    "repo_id": {
+                      "type": "null"
+                    },
+                    "target": {
+                      "properties": {
+                        "provider_repository_id": {
+                          "type": "null"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "repository_binding_ref": {
+                      "$ref": "#/$defs/non_secret_ref"
+                    },
+                    "repo_id": {
+                      "$ref": "#/$defs/non_empty_string"
+                    }
+                  }
+                }
+              ]
+            },
+            "else": {
+              "properties": {
+                "repository_binding_ref": {
+                  "$ref": "#/$defs/non_secret_ref"
+                },
+                "repo_id": {
+                  "$ref": "#/$defs/non_empty_string"
+                }
               }
             }
           }
@@ -6633,9 +6750,52 @@
             }
           },
           "else": {
-            "properties": {
-              "repository_binding_ref": {
-                "$ref": "#/$defs/non_secret_ref"
+            "if": {
+              "properties": {
+                "command_id": {
+                  "const": "cmd.forge.repository.create"
+                }
+              },
+              "required": [
+                "command_id"
+              ]
+            },
+            "then": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "repository_binding_ref": {
+                      "type": "null"
+                    },
+                    "expected_binding_generation": {
+                      "const": 0
+                    },
+                    "outcome": {
+                      "enum": [
+                        "accepted",
+                        "blocked",
+                        "failed",
+                        "cancelled",
+                        "recovery_required",
+                        "effect_unknown"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "repository_binding_ref": {
+                      "$ref": "#/$defs/non_secret_ref"
+                    }
+                  }
+                }
+              ]
+            },
+            "else": {
+              "properties": {
+                "repository_binding_ref": {
+                  "$ref": "#/$defs/non_secret_ref"
+                }
               }
             }
           }
@@ -6710,9 +6870,39 @@
             }
           },
           "else": {
-            "properties": {
-              "repository_binding_ref": {
-                "$ref": "#/$defs/non_secret_ref"
+            "if": {
+              "properties": {
+                "command_id": {
+                  "const": "cmd.forge.repository.create"
+                }
+              },
+              "required": [
+                "command_id"
+              ]
+            },
+            "then": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "repository_binding_ref": {
+                      "type": "null"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "repository_binding_ref": {
+                      "$ref": "#/$defs/non_secret_ref"
+                    }
+                  }
+                }
+              ]
+            },
+            "else": {
+              "properties": {
+                "repository_binding_ref": {
+                  "$ref": "#/$defs/non_secret_ref"
+                }
               }
             }
           }
@@ -6804,9 +6994,49 @@
             }
           },
           "else": {
-            "properties": {
-              "repository_binding_ref": {
-                "$ref": "#/$defs/non_secret_ref"
+            "if": {
+              "properties": {
+                "command_id": {
+                  "const": "cmd.forge.repository.create"
+                }
+              },
+              "required": [
+                "command_id"
+              ]
+            },
+            "then": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "repository_binding_ref": {
+                      "type": "null"
+                    },
+                    "expected_binding_generation": {
+                      "const": 0
+                    },
+                    "currentness": {
+                      "properties": {
+                        "binding_generation": {
+                          "const": 0
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "repository_binding_ref": {
+                      "$ref": "#/$defs/non_secret_ref"
+                    }
+                  }
+                }
+              ]
+            },
+            "else": {
+              "properties": {
+                "repository_binding_ref": {
+                  "$ref": "#/$defs/non_secret_ref"
+                }
               }
             }
           }
