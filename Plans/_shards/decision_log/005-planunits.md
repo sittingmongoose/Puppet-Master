@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L1586-L6111
 
-Source SHA256: `446a780b9ce3d6d0d3f434d1b04147ae36ef43a59fc89f5e9b8110495d843837`
+Source SHA256: `1a7c05bc22cf53b64d14fb3e81946e8c036919732580f01b5d9fdeae637ae418`
 
 ---
 
@@ -4322,7 +4322,7 @@ unblocks: []
 acceptance_criteria:
   - The independent seal check keeps every existing rule and accepts a post-August registered family only with a complete admission record; a missing, malformed or mismatched record, or any depth criterion not passing, fails closed.
   - The amendment lands with a written receipt after a blind review, and its receipt names the author and lander as barred from applying the seal.
-  - Admission records for context.compaction.completed, browser.workspace.created and browser.workspace.reset exist in the new form and state which criteria still fail.
+  - Admission records in the new form exist for context.compaction.completed, browser.workspace.created and browser.workspace.reset, each carrying its current depth assessment; the check fails closed for any of them whose assessment does not show all twelve criteria passing.
   - No registry row, family admission, freeze digest, closure hash, certification or seal follows from this decision.
 validation_surfaces:
   - python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py

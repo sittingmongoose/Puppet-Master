@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L1577
 
-Source SHA256: `446a780b9ce3d6d0d3f434d1b04147ae36ef43a59fc89f5e9b8110495d843837`
+Source SHA256: `1a7c05bc22cf53b64d14fb3e81946e8c036919732580f01b5d9fdeae637ae418`
 
 ---
 
@@ -1536,7 +1536,7 @@ Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the 
 
 This authorizes exactly one more receipted change to the independent seal check, the second after DL-039's holding-bucket change. The agent that writes and lands it must not be the one that applies the seal, and it lands with a written receipt after a blind review. The amendment keeps every existing rule. It accepts a family registered beyond the original 37 and the two August families only with a complete admission record as defined above, and fails closed for any family without one, with a malformed or mismatched record, or with a depth assessment that shows any criterion not passing. DL-039's seal condition now reads: the seal check passes with the DL-039 holding-bucket change and this amendment, and with no other modification. DL-039's prohibition of any other validator edit stands.
 
-This decision registers no family, changes no registry row, restamps no freeze digest or closure hash, and certifies nothing. The records for the three families already admitted after August are written in the new form and say which of their criteria still fail.
+This decision registers no family, changes no registry row, restamps no freeze digest or closure hash, and certifies nothing. The three families already admitted after August need admission records in the new form, and the check fails closed for each until its record shows all twelve criteria passing.
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_SEAL_CHECK.md`, SHA-256 `afdbdd4ebfef46e720ad31b28a7e27c0387ad377c32cfb834ed59bad5f091cdb`; card `reports/event-authority-20260911/step-10-validator-live-set-card-20260924.md`.
 

@@ -1538,7 +1538,7 @@ Answered on 2026-09-24 by Jared, in conversation with the coordinator, from the 
 
 This authorizes exactly one more receipted change to the independent seal check, the second after DL-039's holding-bucket change. The agent that writes and lands it must not be the one that applies the seal, and it lands with a written receipt after a blind review. The amendment keeps every existing rule. It accepts a family registered beyond the original 37 and the two August families only with a complete admission record as defined above, and fails closed for any family without one, with a malformed or mismatched record, or with a depth assessment that shows any criterion not passing. DL-039's seal condition now reads: the seal check passes with the DL-039 holding-bucket change and this amendment, and with no other modification. DL-039's prohibition of any other validator edit stands.
 
-This decision registers no family, changes no registry row, restamps no freeze digest or closure hash, and certifies nothing. The records for the three families already admitted after August are written in the new form and say which of their criteria still fail.
+This decision registers no family, changes no registry row, restamps no freeze digest or closure hash, and certifies nothing. The three families already admitted after August need admission records in the new form, and the check fails closed for each until its record shows all twelve criteria passing.
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260924/ANSWERS_SEAL_CHECK.md`, SHA-256 `afdbdd4ebfef46e720ad31b28a7e27c0387ad377c32cfb834ed59bad5f091cdb`; card `reports/event-authority-20260911/step-10-validator-live-set-card-20260924.md`.
 
@@ -5897,7 +5897,7 @@ unblocks: []
 acceptance_criteria:
   - The independent seal check keeps every existing rule and accepts a post-August registered family only with a complete admission record; a missing, malformed or mismatched record, or any depth criterion not passing, fails closed.
   - The amendment lands with a written receipt after a blind review, and its receipt names the author and lander as barred from applying the seal.
-  - Admission records for context.compaction.completed, browser.workspace.created and browser.workspace.reset exist in the new form and state which criteria still fail.
+  - Admission records in the new form exist for context.compaction.completed, browser.workspace.created and browser.workspace.reset, each carrying its current depth assessment; the check fails closed for any of them whose assessment does not show all twelve criteria passing.
   - No registry row, family admission, freeze digest, closure hash, certification or seal follows from this decision.
 validation_surfaces:
   - python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
