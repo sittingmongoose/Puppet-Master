@@ -1,8 +1,8 @@
 # Storage owner closeout, 2026-09-24
 
-STATUS: ready to land, waiting for the coordinator's go. All three tasks are committed on `plans/storage-owner-closeout-20260924`, rebased onto `origin/main` `15ab001892` and pushed. Not landed; the landing lock has not been taken.
+STATUS: landed on `main` on 2026-09-24 under the landing lock. The landing record is `reports/landing-checks/LANDING_20260924_STORAGE_OWNER_CLOSEOUT.md`. DL-076 is the decision recorded.
 
-Branch `plans/storage-owner-closeout-20260924`, sparse worktree `~/pm-worktrees/storage-owner-closeout-20260924` (`Plans scripts reports tests .claude`), rebased onto `origin/main` `15ab001892`. Not landed.
+Branch `plans/storage-owner-closeout-20260924`, sparse worktree `~/pm-worktrees/storage-owner-closeout-20260924` (`Plans scripts reports tests .claude`), rebased for landing onto `main` `22e516b456` (tip `51c71b9ca4`). Landed.
 
 Scope, on Jared's authorization relayed by the coordinator (Jared approved the coordinator deciding these on his behalf):
 1. The two Storage owner questions left open by `reports/storage-registry-repairs-20260923/REPORT.md` (review findings R-02 and R-05): the `whole_wrapper_sha256` preimage on the three SP-310 stored-profile union members, and `redb_snapshot_id` inside the persisted SP-278 read token.
