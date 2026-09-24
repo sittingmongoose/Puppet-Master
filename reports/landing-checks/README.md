@@ -26,8 +26,9 @@ sampled subcheck's printed rows, which is what the readiness growth counter read
 be outside the repository: the check refuses one inside it with exit 3, before it runs anything.
 
 Exit codes: 0 nothing to report; 1 nothing it reports stops the landing, meaning governance
-staleness on files the branch edited, pre-existing failures whose count has not risen, or failures
-that are new but name none of the branch's files; 2 something it reports does stop the landing,
+staleness on files the branch edited, pre-existing failures whose count has not risen against a
+current baseline (see "Only against a current baseline" below), or failures that are new but name
+none of the branch's files; 2 something it reports does stop the landing,
 meaning a failure on the branch's files that is neither staleness nor pre-existing, a bucket that
 grew whose error kind is not staleness, or a rise in a subcheck whose failures are truncated, other
 than the readiness growth counter; 3 the check could not run, or a subcheck timed out while
@@ -41,10 +42,14 @@ right to stop, but a lander would have read those as theirs. Run it in the share
 landing or after `git sparse-checkout disable`; `--allow-sparse` overrides it for a deliberate
 partial run.
 
-The recorded `commit` is the branch's own first commit, not `main`. It has to be: the script that
-records a baseline must exist in the tree that records it. That commit adds only a script, a test,
-rule text and one `.gitignore` line, none of which any of the three checks reads, and the run taken
-at `main` itself produced the same three failure totals.
+The recorded `commit` is the commit the baseline was taken at, and it has to be a commit of `main`:
+rule 2 applies only while that commit is an ancestor of the landing's base (see "Only against a
+current baseline" below). The nightly runbook records at `origin/main` before it commits the
+snapshot, so the commit it names is `main`'s. The first baseline, of 2026-09-21, named its branch's
+own first commit `b29eab7b99`, because the script that records a baseline had to exist in the tree
+that recorded it; the rebase at landing left that commit off `main` (it landed as `2c527ce17f`), so
+against that baseline rule 2 would be off. The baseline recorded at `main` `75bcda93bc` on
+2026-09-23 replaced it.
 
 ## What a key is
 
@@ -179,9 +184,31 @@ reads as pre-existing. The summary counts such rows, meaning changed content on 
 touched, so that the lander compares them with the baseline's. The count it compares against is the
 baseline's, not `main`'s. A failure that `main` fixed after the baseline's commit, and that a branch
 brings back on a file it edits, reads as pre-existing, so the older the baseline, the more such
-regressions it excuses. A count that fell because the subcheck stopped part-way reads as improved.
-The stop itself stops the landing only if it names a file of the branch's; otherwise it is reported
-as new.
+regressions it excuses; that is why rule 2 applies only against a current baseline, below. A count
+that fell because the subcheck stopped part-way reads as improved. The stop itself stops the landing
+only if it names a file of the branch's; otherwise it is reported as new.
+
+### Only against a current baseline
+
+Rule 2 applies only while the baseline is current: the commit `baseline.json` names is an ancestor
+of the base, the branch's rebase target (`--base`, `origin/main` at landing), and no more than seven
+days older than it by committer time (`git show -s --format=%ct` of each commit). The nightly
+refresh keeps it within a day, and seven days cover a run of failed nights without turning every
+landing red. When it is current, the summary's second line says so and gives the age; `--json`
+carries the finding as `baseline_currency`: both commits, `ancestor`, `age_days`, `max_age_days`,
+`rule_two_applies` and the reason.
+
+When the baseline is not current, because its commit is more than seven days older than the base, is
+not on the base's history, is unknown to the repository or is missing, rule 2 is off for that
+landing. A failure in a baseline bucket whose count has not risen is then judged as it was before
+rule 2: on a file the branch touched it stops the landing with exit 2, and one whose content changed
+is new. The report says so in its first lines, before anything else (`--json` prints the same lines
+to stderr): the baseline is stale and must be re-recorded before the next landing. Never re-record
+it to make the landing at hand pass; that excuses exactly the failure it was meant to show. Rule 1,
+staleness, and rule 3, timeouts, do not depend on it.
+
+The base is what `--base` names, so the age is measured against the rebase target the lander passes;
+at landing that is `origin/main` just fetched.
 
 ## Subchecks that time out
 
@@ -210,7 +237,8 @@ A baseline is never recorded from a run in which a subcheck timed out: `--record
 and writes nothing, because a baseline that says a subcheck passed, or failed once, when it never
 finished would mislead every landing after it. Rerun with a larger `--subcheck-timeout-seconds`. The
 nightly refresh reruns with a larger bound the same night rather than skipping. A skipped refresh
-leaves an older baseline, and rule 2 compares against it.
+leaves an older baseline, which rule 2 compares against until it is more than seven days older than
+the base; from then on rule 2 is off for every landing until the baseline is re-recorded.
 
 ## Which paths count as the branch's
 
@@ -288,7 +316,8 @@ Four things that make the difference between a good baseline and a misleading on
 - The symlink, because `json_syntax` reads 16 raw captures underneath it. It is the one check input
   that stays untracked: it points at raw evidence, which is never committed here.
 - `--record-baseline` after the snapshot, not before, so the baseline describes the snapshot the
-  next day's landings will be checked against.
+  next day's landings will be checked against; and before the commit, so the commit it names is
+  `origin/main` itself, which rule 2 needs on the history of every later base.
 - Both files in one commit, so the baseline and the run it describes never disagree.
 
 Takes about ten minutes. The run also ends at a new `current_run.json`, so the next landing check
@@ -296,7 +325,8 @@ validates the new snapshot rather than the one it replaced.
 
 If `--record-baseline` refuses with exit 3 because a subcheck timed out, rerun it the same night with
 a larger `--subcheck-timeout-seconds`, for example `--subcheck-timeout-seconds 1200`; never skip the
-night, because a skipped refresh leaves an older baseline and rule 2 compares against it.
+night, because a skipped refresh leaves an older baseline and rule 2 compares against it, and after
+seven days without a refresh rule 2 is off for every landing.
 
 ## Related branch
 

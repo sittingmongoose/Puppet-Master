@@ -30,7 +30,12 @@ and nothing else new.
 
 A failure that is not staleness, in a baseline bucket whose count on the branch has not risen, is
 pre-existing, whether or not its content changed: it never stops a landing, and it is reported as
-"pre-existing" or "improved" with the baseline's count and the branch's.
+"pre-existing" or "improved" with the baseline's count and the branch's. That is rule 2, and it
+counts against the baseline's commit, not against main, so it applies only while the baseline is
+current: its commit is an ancestor of the base, the branch's rebase target, and no more than seven
+days older than it by commit time. Otherwise rule 2 is off for the landing, such a failure is judged
+as it was before rule 2, and the report's first lines say that the baseline is stale and must be
+re-recorded before the next landing, never to make this one pass.
 
 A subcheck that pm-plans-verify.py killed at --subcheck-timeout-seconds (600 by default here) has no
 result. Its timeout row is an infrastructure result, printed on its own line with how long the
@@ -67,8 +72,8 @@ replayed exactly.
 Exit codes:
   0  nothing to report
   1  nothing it reports stops the landing: governance staleness on files the branch edited,
-     pre-existing failures whose count has not risen, or failures that are new but name none of the
-     branch's files (push, and report them)
+     pre-existing failures whose count has not risen against a current baseline, or failures that
+     are new but name none of the branch's files (push, and report them)
   2  it reports something that does stop the landing: a failure on the branch's files that is
      neither staleness nor pre-existing, a bucket that grew whose error kind is not staleness, or a
      rise in a subcheck whose failures are truncated, where the on-branch match cannot see what was
@@ -161,6 +166,13 @@ INFRASTRUCTURE_ERRORS = {"subprocess_timeout", "subcheck_timeout"}
 # checkout on the network mount, with 0 failures when run on its own at e44b9186fb; the old 180 s
 # bound killed it in both aggregates at the terminal.workgroup_moved landing of 2026-09-24.
 DEFAULT_SUBCHECK_TIMEOUT_SECONDS = 600
+
+# Rule 2 applies only while the baseline is current: the commit it names is an ancestor of the base,
+# the branch's rebase target, and no more than this many days older than it by committer time. The
+# nightly refresh keeps it within a day; seven days cover a run of failed nights without turning every
+# landing red. Against an older baseline, a failure main fixed after the baseline's commit, brought
+# back by a branch on a file it edits, would read as pre-existing.
+MAX_BASELINE_AGE_DAYS = 7
 
 
 def utc_now() -> str:
@@ -778,6 +790,87 @@ def baseline_index(doc: dict[str, Any]) -> tuple[dict[str, set[str] | None], dic
     return known, counts
 
 
+def git_out(root: Path, *args: str) -> str | None:
+    """A git command's stdout, stripped, or None when the command fails."""
+    proc = subprocess.run(["git", *args], cwd=root, capture_output=True, text=True)
+    return proc.stdout.strip() if proc.returncode == 0 else None
+
+
+def commit_of(root: Path, rev: str) -> str | None:
+    return git_out(root, "rev-parse", "--verify", "--quiet", f"{rev}^{{commit}}")
+
+
+def baseline_currency(
+    root: Path,
+    baseline_commit: Any,
+    base: str,
+    max_age_days: int = MAX_BASELINE_AGE_DAYS,
+) -> dict[str, Any]:
+    """Whether rule 2 may be applied at this landing: only against a current baseline (review L-05).
+
+    Current means that the commit the baseline names is an ancestor of the base, the branch's rebase
+    target, and at most `max_age_days` older than it by committer time. Rule 2 compares a bucket's
+    count with the baseline's, not with main's, so a failure main fixed after the baseline's commit,
+    and that a branch brings back on a file it edits, reads as pre-existing; the older the baseline,
+    the more such regressions it would excuse. Returns what was found, `rule_two_applies`, and the
+    reason in words.
+    """
+    found: dict[str, Any] = {
+        "baseline_commit": baseline_commit if isinstance(baseline_commit, str) else None,
+        "base": base,
+        "base_commit": commit_of(root, base),
+        "ancestor": None,
+        "age_days": None,
+        "max_age_days": max_age_days,
+        "rule_two_applies": False,
+    }
+    if not isinstance(baseline_commit, str) or not baseline_commit.strip():
+        found["reason"] = "the baseline names no commit"
+        return found
+    name = baseline_commit[:12]
+    commit = commit_of(root, baseline_commit)
+    if commit is None:
+        found["reason"] = f"its commit {name} is not a commit this repository has"
+        return found
+    if found["base_commit"] is None:
+        found["reason"] = f"the base {base} is not a commit this repository has"
+        return found
+    # `--base` is usually a name such as origin/main; say which commit it named.
+    named = "" if found["base_commit"].startswith(base) else f" ({found['base_commit'][:12]})"
+    where = f"the base {base}{named}"
+    found["ancestor"] = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", commit, found["base_commit"]], cwd=root, capture_output=True
+    ).returncode == 0
+    times = [git_out(root, "show", "-s", "--format=%ct", rev) for rev in (commit, found["base_commit"])]
+    seconds = int(times[1]) - int(times[0]) if all(t and t.isdigit() for t in times) else None
+    if seconds is not None:
+        found["age_days"] = round(seconds / 86400, 2)
+    if not found["ancestor"]:
+        found["reason"] = f"its commit {name} is not an ancestor of {where}"
+    elif seconds is None:
+        found["reason"] = f"the commit times of {name} and {where} could not be read"
+    elif seconds > max_age_days * 86400:
+        found["reason"] = (f"its commit {name} is {seconds / 86400:.2f} days older than {where}, more than "
+                           f"the {max_age_days} rule 2 allows")
+    else:
+        found["rule_two_applies"] = True
+        found["reason"] = (f"its commit {name} is an ancestor of {where} and {max(seconds, 0) / 86400:.2f} "
+                           f"days older than it, within {max_age_days}")
+    return found
+
+
+def stale_baseline_notice(currency: dict[str, Any]) -> list[str]:
+    """The first lines of a report whose baseline is not current: rule 2 is off, and why."""
+    return [
+        "pm-landing-check: the baseline is stale, so rule 2 (pre-existing failures never block) is off "
+        f"for this landing: {currency['reason']}.",
+        "  A failure in a baseline bucket whose count has not risen is judged as it was before rule 2: "
+        "on a file this branch touched it stops the landing, and one whose content changed is new.",
+        "  Re-record the baseline before the next landing (--record-baseline in a full checkout at main, "
+        "by the nightly runbook in reports/landing-checks/README.md), never to make this landing pass.",
+    ]
+
+
 # ---------------------------------------------------------------------------------------- output
 
 
@@ -864,6 +957,7 @@ def main() -> int:
     # about ten minutes, and a missing baseline or an unknown base should say so at once.
     baseline: dict[str, Any] = {}
     touched: list[str] = []
+    currency: dict[str, Any] = {}
     if not args.record_baseline:
         try:
             baseline = load_baseline(baseline_path)
@@ -876,6 +970,7 @@ def main() -> int:
         except RuntimeError as exc:
             print(f"pm-landing-check: {exc}", file=sys.stderr)
             return 3
+        currency = baseline_currency(root, baseline.get("commit"), args.base)
 
     items: list[dict[str, Any]] = []
     counts: dict[str, dict[str, dict[str, int]]] = {}
@@ -940,6 +1035,7 @@ def main() -> int:
     partial = partial_subchecks(compared, baseline.get("checks") or {})
 
     run_counts = bucket_counts(items)
+    rule_two = currency["rule_two_applies"]
     new_items: list[dict[str, Any]] = []
     on_branch: list[dict[str, Any]] = []
     pre_existing: list[dict[str, Any]] = []
@@ -955,7 +1051,9 @@ def main() -> int:
         # Rule 2: a failure that is not staleness, in a bucket the baseline holds whose count has not
         # risen, is pre-existing, content changed or not. It never blocks and is reported with both
         # counts whenever it would have been reported at all: on a branch file, or with new content.
-        standing = None if item["stale"] else standing_of(run_counts[name], baseline_counts.get(name))
+        # Only against a current baseline; against a stale one every failure is judged as before.
+        standing = (None if item["stale"] or not rule_two
+                    else standing_of(run_counts[name], baseline_counts.get(name)))
         counted = (
             {"standing": standing, "baseline_count": baseline_counts[name], "count": run_counts[name]}
             if standing else {}
@@ -990,9 +1088,15 @@ def main() -> int:
     blocking = blocking_items(on_branch, grown, subcheck_growth)
 
     if args.json:
+        if not rule_two:
+            # The report itself is the JSON below, whose `baseline_currency` says the same; this is
+            # for the lander reading the terminal.
+            for line in stale_baseline_notice(currency):
+                print(line, file=sys.stderr)
         print(json.dumps(
             {
                 "schema_id": "pm.landing_check.report.v1",
+                "baseline_currency": currency,
                 "branch_units": len(units),
                 "derived_paths_excluded": derived,
                 "subchecks_compared_by_total_only": sorted(f"{c}/{s}" for c, s in partial),
@@ -1026,8 +1130,13 @@ def main() -> int:
             sort_keys=True,
         ))
     else:
+        if not rule_two:
+            for line in stale_baseline_notice(currency):
+                print(line)
         print(f"pm-landing-check: baseline {baseline_path.relative_to(root)} recorded at "
               f"{str(baseline.get('commit'))[:12]}; this checkout is at {commit[:12]}")
+        if rule_two:
+            print(f"  the baseline is current, so rule 2 applies: {currency['reason']}")
         for check in CHECKS:
             total = sum(c["reported"] for c in counts[check].values())
             was = baseline.get("checks", {}).get(check, {}).get("failure_total", 0)
@@ -1060,7 +1169,8 @@ def main() -> int:
             print(describe(item, item_tag(item, item["key"] in on_branch_keys)))
         if len(new_items) > 40:
             print(f"  ... {len(new_items) - 40} more")
-        print(f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): {len(pre_existing)}")
+        off = "" if rule_two else " (rule 2 is off: the baseline is stale, see the first lines)"
+        print(f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): {len(pre_existing)}{off}")
         if pre_existing:
             # Rule 2 counts against the baseline's commit, not main: a failure main fixed after that
             # commit and this branch brings back reads as pre-existing.

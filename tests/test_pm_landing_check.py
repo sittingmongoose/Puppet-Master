@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -1416,6 +1417,100 @@ class RuleTwoPreExisting(LandingRun):
         code, out = self.compare()
         self.assertEqual(code, 2, out)
         self.assertIn("the baseline does not excuse", out)
+
+
+class RuleTwoNeedsACurrentBaseline(LandingRun):
+    """Review L-05, as the brief owner answered it: rule 2 applies only while the baseline is current,
+    its commit an ancestor of the base and no more than seven days older than it by commit time.
+    Against a stale baseline such a failure on a touched file stops the landing, as before rule 2,
+    and the report's first lines say the baseline must be re-recorded before the next landing."""
+
+    VALIDATOR = "scripts/pm-implementation-readiness.py"
+
+    def record_seven(self):
+        """The recorded shape of rule 2: one self-test row listing seven false checks at the baseline."""
+        self.stub(audit={self.AG_READINESS: [self_test_row(*[f"check_{n}" for n in range(7)])]})
+        self.record()
+
+    def main_moves_on(self, seconds):
+        """A commit on main `seconds` after the baseline's commit by commit time: the rebase target."""
+        then = int(self.git("show", "-s", "--format=%ct", "HEAD").strip()) + seconds
+        env = dict(os.environ, GIT_COMMITTER_DATE=f"@{then} +0000", GIT_AUTHOR_DATE=f"@{then} +0000")
+        (self.repo / "Plans" / "Later.md").write_text("main moved on\n", encoding="utf-8")
+        self.git("add", "Plans/Later.md")
+        subprocess.run(["git", "commit", "-qm", "later"], cwd=self.repo, env=env, check=True, capture_output=True)
+        return self.git("rev-parse", "HEAD").strip()
+
+    def land(self, base):
+        """The branch edits the validator and its self-test row now lists three false checks: same
+        bucket, same count, changed content. Returns the text run and the --json run."""
+        self.touch(self.VALIDATOR)
+        self.stub(audit={self.AG_READINESS: [self_test_row("check_0", "check_1", "check_2")]})
+        text = self.run_main("--base", base, "--baseline", "baseline.json")
+        code, out = self.run_main("--base", base, "--baseline", "baseline.json", "--json")
+        return text, (code, json.loads(out), self.stderr)
+
+    def test_a_baseline_seven_days_older_than_the_base_is_current_and_rule_two_applies(self):
+        """The bound is inclusive: exactly seven days older still counts as current."""
+        self.record_seven()
+        base = self.main_moves_on(7 * 86400)
+        (code, out), (json_code, report, _) = self.land(base)
+        self.assertEqual((code, json_code), (1, 1), out)
+        self.assertTrue(out.startswith("pm-landing-check: baseline "), out)
+        self.assertIn("the baseline is current, so rule 2 applies: its commit", out)
+        self.assertIn("and 7.00 days older than it, within 7", out)
+        self.assertIn("[pre-existing] audit-governance/implementation_readiness", out)
+        currency = report["baseline_currency"]
+        self.assertEqual((currency["rule_two_applies"], currency["ancestor"], currency["age_days"]), (True, True, 7.0))
+        self.assertEqual((len(report["pre_existing"]), report["blocking"]), (1, 0))
+
+    def test_a_baseline_more_than_seven_days_older_turns_rule_two_off_and_says_so_first(self):
+        self.record_seven()
+        base = self.main_moves_on(8 * 86400)
+        (code, out), (json_code, report, stderr) = self.land(base)
+        self.assertEqual((code, json_code), (2, 2), out)
+        first = out.splitlines()[:3]
+        self.assertTrue(first[0].startswith("pm-landing-check: the baseline is stale, so rule 2 (pre-existing "
+                                            "failures never block) is off for this landing: its commit"), first)
+        self.assertIn("is 8.00 days older than the base", first[0])
+        self.assertIn("more than the 7 rule 2 allows", first[0])
+        self.assertIn("on a file this branch touched it stops the landing", first[1])
+        self.assertIn("Re-record the baseline before the next landing", first[2])
+        self.assertIn("never to make this landing pass", first[2])
+        self.assertIn("(never blocks): 0 (rule 2 is off: the baseline is stale", out)
+        self.assertIn("[blocking    ] audit-governance/implementation_readiness", out)
+        self.assertIn("the baseline does not excuse", out)
+        currency = report["baseline_currency"]
+        self.assertEqual((currency["rule_two_applies"], currency["ancestor"], currency["age_days"]), (False, True, 8.0))
+        self.assertEqual((report["pre_existing"], report["blocking"]), ([], 1))
+        self.assertTrue(stderr.startswith("pm-landing-check: the baseline is stale"), stderr)
+
+    def test_a_baseline_whose_commit_is_not_on_the_base_turns_rule_two_off(self):
+        """The first baseline named its branch's own first commit, which the rebase at landing left off
+        main: a baseline must be recorded at a commit of main."""
+        self.git("checkout", "-q", "-b", "side")
+        (self.repo / "Plans" / "Side.md").write_text("side\n", encoding="utf-8")
+        self.git("add", "Plans/Side.md")
+        self.git("commit", "-qm", "side")
+        self.record_seven()
+        self.git("checkout", "-q", "main")
+        (code, out), (_, report, _) = self.land(self.base)
+        self.assertEqual(code, 2, out)
+        self.assertIn("is off for this landing: its commit", out.splitlines()[0])
+        self.assertIn("is not an ancestor of the base", out.splitlines()[0])
+        self.assertEqual((report["baseline_currency"]["ancestor"], report["blocking"]), (False, 1))
+
+    def test_one_second_past_seven_days_is_stale_and_an_unknown_commit_is_never_current(self):
+        self.stub()
+        base = self.main_moves_on(7 * 86400 + 1)
+        past = self.module.baseline_currency(self.repo, self.base, base)
+        self.assertFalse(past["rule_two_applies"], past)
+        self.assertTrue(self.module.baseline_currency(self.repo, self.base, self.base)["rule_two_applies"])
+        self.assertEqual(self.module.baseline_currency(self.repo, None, base)["reason"],
+                         "the baseline names no commit")
+        unknown = self.module.baseline_currency(self.repo, "c0ffee" * 6 + "c0ff", base)
+        self.assertFalse(unknown["rule_two_applies"])
+        self.assertIn("is not a commit this repository has", unknown["reason"])
 
 
 def timeout_row(command_id="lint-contractrefs", seconds=180):
