@@ -61,6 +61,8 @@ from pm_forge_cancel_selected_semantics import cancel_selected_semantic_failures
 from pm_forge_thread_reply_semantics import thread_reply_semantic_failures
 from pm_backup_destination_lifecycle import lifecycle_semantic_failures
 from pm_backup_selected_delete import selected_delete_semantic_failures
+from pm_git_pull_selected import git_pull_semantic_failures
+from pm_git_pull_response import git_pull_dispatch_semantic_failures
 from pm_jj_publication_selected import publication_semantic_failures
 from pm_jj_publication_response import jj_publication_dispatch_semantic_failures
 from pm_forge_log_selection_semantics import log_selection_semantic_failures
@@ -130,9 +132,11 @@ CONTRACT_PAIRS = (
     ("Plans/forge_thread_reply_contracts.schema.json", "Plans/forge_thread_reply_contract_fixtures.json"),
     ("Plans/backup_destination_lifecycle_contracts.schema.json", "Plans/backup_destination_lifecycle_contract_fixtures.json"),
     ("Plans/backup_selected_delete_contracts.schema.json", "Plans/backup_selected_delete_contract_fixtures.json"),
+    ("Plans/git_pull_selected.schema.json", "Plans/git_pull_selected_fixtures.json"),
+    ("Plans/sir_git_pull_dispatch.schema.json", "Plans/sir_git_pull_dispatch_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 59
+EXPECTED_CONTRACT_PAIR_COUNT = 61
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1265,6 +1269,10 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/git_pull_selected.schema.json":
+        return git_pull_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/sir_git_pull_dispatch.schema.json":
+        return git_pull_dispatch_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_selected_delete_contracts.schema.json":
         return selected_delete_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_destination_lifecycle_contracts.schema.json":

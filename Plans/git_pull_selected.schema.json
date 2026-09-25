@@ -1,0 +1,1363 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/git-pull-selected/1.0.0/git_pull_selected.schema.json",
+  "$defs": {
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "object_id",
+        "mode"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "present",
+            "absent",
+            "unknown"
+          ]
+        },
+        "object_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mode": {
+          "oneOf": [
+            {
+              "enum": [
+                "100644",
+                "100755",
+                "120000",
+                "160000"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "present"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "object_id": {
+                "type": "string",
+                "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+              },
+              "mode": {
+                "enum": [
+                  "100644",
+                  "100755",
+                  "120000",
+                  "160000"
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "object_id": {
+                "type": "null"
+              },
+              "mode": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "path_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "index_stages",
+        "worktree"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/path"
+        },
+        "index_stages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "stage",
+              "content"
+            ],
+            "properties": {
+              "stage": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 3
+              },
+              "content": {
+                "$ref": "#/$defs/content"
+              }
+            }
+          }
+        },
+        "worktree": {
+          "$ref": "#/$defs/content"
+        }
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "native_state",
+        "base",
+        "ours",
+        "theirs"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/path"
+        },
+        "native_state": {
+          "enum": [
+            "unresolved",
+            "resolved",
+            "unknown"
+          ]
+        },
+        "base": {
+          "$ref": "#/$defs/content"
+        },
+        "ours": {
+          "$ref": "#/$defs/content"
+        },
+        "theirs": {
+          "$ref": "#/$defs/content"
+        }
+      }
+    },
+    "view": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "head_commit_oid",
+        "head_tree_oid",
+        "index_tree_oid",
+        "worktree_snapshot_sha256",
+        "paths",
+        "conflicts",
+        "complete"
+      ],
+      "properties": {
+        "head_commit_oid": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "head_tree_oid": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        "index_tree_oid": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "worktree_snapshot_sha256": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/sha256"
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/path_state"
+          }
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/conflict"
+          }
+        },
+        "complete": {
+          "type": "boolean"
+        }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "remote_id",
+        "fetch_url",
+        "branch_ref",
+        "strategy",
+        "remote_selection_generation",
+        "transport",
+        "host_identity"
+      ],
+      "properties": {
+        "remote_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "fetch_url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "branch_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "strategy": {
+          "enum": [
+            "merge",
+            "rebase",
+            "ff_only"
+          ]
+        },
+        "transport": {"enum":["https","ssh","local"]},
+        "host_identity": {"type":"string","minLength":1},
+        "remote_selection_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "config": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "git_version",
+        "native_configuration_sha256",
+        "native_semantics_ref",
+        "autostash"
+      ],
+      "properties": {
+        "git_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_configuration_sha256": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/sha256"
+        },
+        "native_semantics_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "autostash": {
+          "const": false
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "idempotency_key",
+        "repository_context_ref",
+        "expected_revision",
+        "writer_lease_ref",
+        "writer_lease_generation",
+        "writer_lease_epoch",
+        "credential_lease_ref",
+        "permission_snapshot_ref",
+        "file_safe_decision_ref",
+        "selection",
+        "preview_ref",
+        "return_context",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_pull.request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "const": "cmd.git.pull"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "repository_context_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "expected_revision": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/git_revision"
+        },
+        "writer_lease_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "writer_lease_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "writer_lease_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "credential_lease_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "permission_snapshot_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "preview_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "return_context": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/return_context"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requested_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        }
+      }
+    },
+    "state_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "source_id",
+        "repository_context_ref",
+        "repo_id",
+        "revision",
+        "view",
+        "config",
+        "evidence_refs",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_pull.state_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "source_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "repository_context_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "repo_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "revision": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/git_revision"
+        },
+        "view": {
+          "$ref": "#/$defs/view"
+        },
+        "config": {
+          "$ref": "#/$defs/config"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+          },
+          "minItems": 1
+        },
+        "observed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        }
+      }
+    },
+    "upstream_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "source_id",
+        "repository_context_ref",
+        "repo_id",
+        "selection",
+        "upstream_commit_oid",
+        "upstream_tree_oid",
+        "object_format",
+        "availability",
+        "acquisition_receipt_ref",
+        "evidence_refs",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_pull.upstream_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "source_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "repository_context_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "repo_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "upstream_commit_oid": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        "upstream_tree_oid": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        "object_format": {
+          "enum": [
+            "sha1",
+            "sha256"
+          ]
+        },
+        "availability": {
+          "enum": [
+            "verified_local",
+            "acquired_under_admission",
+            "unavailable",
+            "unknown"
+          ]
+        },
+        "acquisition_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+          },
+          "minItems": 1
+        },
+        "observed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        }
+      }
+    },
+    "path_effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "disposition"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/path"
+        },
+        "disposition": {
+          "enum": [
+            "preserved",
+            "integrated",
+            "conflicted",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "preview_id",
+        "command_id",
+        "command_instance_id",
+        "repository_context_ref",
+        "selection",
+        "expected_revision",
+        "before_source_ref",
+        "upstream_source_ref",
+        "qualification_ref",
+        "qualification",
+        "native_reason_ref",
+        "config",
+        "before",
+        "proposed",
+        "effects",
+        "ancestry",
+        "permission_snapshot_ref",
+        "file_safe_decision_ref",
+        "writer_lease_ref",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_pull.preview.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "preview_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "command_id": {
+          "const": "cmd.git.pull"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository_context_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "expected_revision": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/git_revision"
+        },
+        "before_source_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "upstream_source_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "qualification_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "qualification": {
+          "enum": [
+            "qualified",
+            "blocked",
+            "unknown"
+          ]
+        },
+        "native_reason_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "config": {
+          "$ref": "#/$defs/config"
+        },
+        "before": {
+          "$ref": "#/$defs/view"
+        },
+        "proposed": {
+          "$ref": "#/$defs/view"
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/path_effect"
+          }
+        },
+        "ancestry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "merge_base_oids",
+            "upstream_is_descendant",
+            "rewritten_commit_oids"
+          ],
+          "properties": {
+            "merge_base_oids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+              }
+            },
+            "upstream_is_descendant": {
+              "enum": [
+                "yes",
+                "no",
+                "unknown"
+              ]
+            },
+            "rewritten_commit_oids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+              }
+            }
+          }
+        },
+        "permission_snapshot_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "writer_lease_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "issued_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        }
+      }
+    },
+    "qualification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "repository_context_ref",
+        "selection",
+        "expected_revision",
+        "before_source_ref",
+        "upstream_source_ref",
+        "qualification",
+        "native_reason_ref",
+        "config",
+        "before",
+        "proposed",
+        "effects",
+        "ancestry",
+        "permission_snapshot_ref",
+        "file_safe_decision_ref",
+        "writer_lease_ref",
+        "issued_at_utc",
+        "qualification_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_pull.qualification.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "const": "cmd.git.pull"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository_context_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "expected_revision": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/git_revision"
+        },
+        "before_source_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "upstream_source_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "qualification": {
+          "enum": [
+            "qualified",
+            "blocked",
+            "unknown"
+          ]
+        },
+        "native_reason_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "config": {
+          "$ref": "#/$defs/config"
+        },
+        "before": {
+          "$ref": "#/$defs/view"
+        },
+        "proposed": {
+          "$ref": "#/$defs/view"
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/path_effect"
+          }
+        },
+        "ancestry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "merge_base_oids",
+            "upstream_is_descendant",
+            "rewritten_commit_oids"
+          ],
+          "properties": {
+            "merge_base_oids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+              }
+            },
+            "upstream_is_descendant": {
+              "enum": [
+                "yes",
+                "no",
+                "unknown"
+              ]
+            },
+            "rewritten_commit_oids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+              }
+            }
+          }
+        },
+        "permission_snapshot_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "writer_lease_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "issued_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        },
+        "qualification_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        }
+      }
+    },
+    "phase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "phase",
+        "complete",
+        "fetched_object_oids",
+        "ref_updates",
+        "state",
+        "effect_state",
+        "native_receipt_ref",
+        "before_source_ref",
+        "after_source_ref",
+        "upstream_source_ref",
+        "started_at_utc",
+        "finished_at_utc"
+      ],
+      "properties": {
+        "complete": {"type":"boolean"},
+        "fetched_object_oids": {"type":"array","uniqueItems":true,"items":{"type":"string","pattern":"^(?:[0-9a-f]{40}|[0-9a-f]{64})$"}},
+        "ref_updates": {"type":"array","items":{"type":"object","additionalProperties":false,"required":["ref_name","before_oid","after_oid"],"properties":{"ref_name":{"type":"string","minLength":1},"before_oid":{"type":["string","null"],"pattern":"^(?:[0-9a-f]{40}|[0-9a-f]{64})$"},"after_oid":{"type":["string","null"],"pattern":"^(?:[0-9a-f]{40}|[0-9a-f]{64})$"}}}},
+        "phase": {
+          "enum": [
+            "fetch",
+            "integrate"
+          ]
+        },
+        "state": {
+          "enum": [
+            "not_called",
+            "completed",
+            "failed",
+            "cancelled",
+            "unknown"
+          ]
+        },
+        "effect_state": {
+          "enum": [
+            "none",
+            "known_applied",
+            "known_not_applied",
+            "unknown"
+          ]
+        },
+        "native_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "before_source_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_source_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "upstream_source_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "started_at_utc": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "finished_at_utc": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "observation_id",
+        "original_request_ref",
+        "command_instance_id",
+        "operation_id",
+        "preview_ref",
+        "selection",
+        "fetch",
+        "integration",
+        "actual_effects",
+        "completion",
+        "evidence_refs",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_pull.observation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "observation_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "preview_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "fetch": {
+          "$ref": "#/$defs/phase"
+        },
+        "integration": {
+          "$ref": "#/$defs/phase"
+        },
+        "actual_effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/path_effect"
+          }
+        },
+        "completion": {
+          "enum": [
+            "completed",
+            "partial",
+            "not_applied",
+            "unknown"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+          },
+          "minItems": 1
+        },
+        "observed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "original_request_ref",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "idempotency_key",
+        "outcome",
+        "operation_receipt_ref",
+        "observation_ref",
+        "observable_work_id",
+        "error_ref",
+        "error_projection_ref",
+        "return_context",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_pull.result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "command_id": {
+          "const": "cmd.git.pull"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "succeeded",
+            "blocked",
+            "failed",
+            "cancelled",
+            "recovery_required",
+            "effect_unknown"
+          ]
+        },
+        "operation_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observation_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observable_work_id": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error_projection_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/return_context"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        }
+      }
+    },
+    "native_phase_receipt": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "receipt_id",
+    "operation_id",
+    "repository_context_ref",
+    "selection",
+    "permission_snapshot_ref",
+    "file_safe_decision_ref",
+    "writer_lease_ref",
+    "credential_lease_ref",
+    "phase"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.source_control.git_pull.native_phase_receipt.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "receipt_id": {
+      "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "operation_id": {
+      "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "repository_context_ref": {
+      "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "selection": {
+      "$ref": "#/$defs/selection"
+    },
+    "permission_snapshot_ref": {
+      "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "file_safe_decision_ref": {
+      "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "writer_lease_ref": {
+      "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "credential_lease_ref": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "phase": {
+      "$ref": "#/$defs/phase"
+    }
+  }
+},
+    "error": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "command_instance_id",
+    "error_code",
+    "effect_state",
+    "retry_allowed",
+    "safe_next_actions",
+    "occurred_at_utc",
+    "schema_version",
+    "command_id",
+    "repository_context_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.source_control.git_pull.error.v1"
+    },
+    "command_instance_id": {
+      "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_empty_string"
+    },
+    "error_code": {
+      "type": "string",
+      "enum": [
+        "backend_missing",
+        "repository_missing",
+        "workspace_missing",
+        "stale_revision",
+        "lease_conflict",
+        "permission_denied",
+        "credential_required",
+        "setup_required",
+        "degraded",
+        "recovery_required",
+        "effect_unknown",
+        "identity_incomplete",
+        "forge_binding_missing",
+        "handler_unavailable",
+        "checkpoint_missing",
+        "checkpoint_invalid",
+        "checkpoint_mismatch",
+        "filesafe_denied",
+        "topology_stale"
+      ]
+    },
+    "effect_state": {
+      "type": "string",
+      "enum": [
+        "no_effect",
+        "effects_reconciled",
+        "effect_unknown"
+      ]
+    },
+    "retry_allowed": {
+      "type": "boolean"
+    },
+    "safe_next_actions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "refresh",
+          "inspect",
+          "retry",
+          "reconcile_effects",
+          "rebind_repository",
+          "renew_lease",
+          "connect_credentials",
+          "repair_setup",
+          "none"
+        ]
+      }
+    },
+    "detail_ref": {
+      "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "occurred_at_utc": {
+      "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "command_id": {
+      "const": "cmd.git.pull"
+    },
+    "repository_context_ref": {
+      "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "error_code": {
+            "const": "effect_unknown"
+          }
+        },
+        "required": [
+          "error_code"
+        ]
+      },
+      "then": {
+        "properties": {
+          "effect_state": {
+            "const": "effect_unknown"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "effect_state": {
+            "const": "effect_unknown"
+          }
+        },
+        "required": [
+          "effect_state"
+        ]
+      },
+      "then": {
+        "properties": {
+          "retry_allowed": {
+            "const": false
+          },
+          "safe_next_actions": {
+            "contains": {
+              "const": "reconcile_effects"
+            },
+            "not": {
+              "contains": {
+                "const": "retry"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+},
+    "fixture_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "result",
+        "records"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "result": {
+          "$ref": "#/$defs/result"
+        },
+        "records": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "x-fixture-only": true
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/state_source"
+    },
+    {
+      "$ref": "#/$defs/upstream_source"
+    },
+    {
+      "$ref": "#/$defs/preview"
+    },
+    {
+      "$ref": "#/$defs/qualification"
+    },
+    {
+      "$ref": "#/$defs/observation"
+    },
+    {
+      "$ref": "#/$defs/result"
+    },
+    {"$ref": "#/$defs/native_phase_receipt"},
+    {"$ref": "#/$defs/error"}
+  ]
+}

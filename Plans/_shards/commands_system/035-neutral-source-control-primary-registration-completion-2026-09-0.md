@@ -2,13 +2,15 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L5844-L5887
+Source lines: L5844-L5889
 
-Source SHA256: `9053f729959eded186387957c34d978206a00f72d4ddbe42e20d445cfeb18653`
+Source SHA256: `931ee1cb5c17bb3259f545ba280ba30410ded74295cf4cd4890e75c9f33cd2a8`
 
 ---
 
 ## Neutral Source-Control Primary Registration Completion - 2026-09-02
+
+The existing `cmd.git.pull` consumes `Plans/git_pull_selected.schema.json#/$defs/request` -> `Plans/git_pull_selected.schema.json#/$defs/result` under SCS-003, through the authentic original and independent delivery binding in `Plans/sir_git_pull_dispatch.schema.json` owned by SIR-042. The sole future handler remains `handlers::git::pull`, `handler_unavailable`, with `expected_event_types=[]`. Explicit merge/rebase/ff_only, native-qualified selected upstream and before/proposed/actual phase effects are required; accepted work is nonterminal and unknown effects require reconciliation. This is neither stash-pop nor route/open success; no new confirmation policy or native/physical custody proof follows.
 
 Three existing Source Control owner commands already have typed owner contracts, Touch Closure rows, and production-intent wiring, but require explicit concrete central catalog records. This section completes those records without minting new semantics or changing the packet compatibility aliases that target them.
 

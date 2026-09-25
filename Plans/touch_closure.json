@@ -8146,6 +8146,62 @@
       "evidence_refs": [
         "static_schema_and_fixture_only"
       ]
+    },
+    {
+      "profile_id": "TCP-GIT-PULL",
+      "requirement_refs": [
+        "Plans/Source_Control_System.md#SCS-003",
+        "Plans/Shared_Integration_Runtime.md#SIR-042",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "owner_plan": "Plans/Source_Control_System.md",
+      "plan_unit": "SCS-003",
+      "dry_contract_ref": "Plans/git_pull_selected.schema.json",
+      "payload_schema_ref": "Plans/git_pull_selected.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/git_pull_selected.schema.json#/$defs/result",
+      "error_schema_ref": "Plans/git_pull_selected.schema.json#/$defs/error",
+      "availability_rule": "Actual selected upstream/ref and explicit strategy require complete native-qualified preview, authentic source currentness, permission/FileSafe and exact leases. Accepted work is nonterminal; unknown phase effects require reconciliation. No default, implicit autostash or stash-selected policy.",
+      "permission_gate": "Actual original permission/FileSafe, writer lease and selected transport credential lease, native qualification and currentness; no synthetic or read-only grant.",
+      "disabled_reason_rule": "Expose backend/repository/workspace missing, stale revision, lease conflict, permission, credential, setup, degraded, or recovery blocker.",
+      "handler_owner": "Source Control Git adapter, sole future handlers::git::pull; handler_unavailable without native proof.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner/schema and production-intent wiring only; no native runtime or concept implementation evidence is asserted by this profile.",
+      "gui_triggers": [
+        "Source Control workbench, Settings, Project, palette, forge consumers"
+      ],
+      "return_route": "Exact original and independently authenticated current delivery caller; no null or foreign substitution.",
+      "reverse_consumers": [
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Forge_Integrations.md",
+        "Plans/Settings_System.md"
+      ],
+      "event_refs": [
+        "No new EventRecord; expected_event_types=[] until Event Authority admission."
+      ],
+      "receipt_refs": [
+        "Plans/git_pull_selected.schema.json#/$defs/native_phase_receipt",
+        "Plans/source_control_contracts.schema.json#/$defs/operation_receipt"
+      ],
+      "observable_work": [
+        "Required for remote and long repository operations."
+      ],
+      "persistence_refs": [
+        "Plans/storage_value_registry.json"
+      ],
+      "migration_refs": [
+        "Plans/Source_Control_System.md#7.1"
+      ],
+      "test_refs": [
+        "Plans/git_pull_selected_fixtures.json",
+        "Plans/sir_git_pull_dispatch_fixtures.json",
+        "tests/test_pm_git_pull_selected.py",
+        "tests/test_pm_git_pull_response.py",
+        "tests/test_pm_git_pull_bindings.py"
+      ],
+      "evidence_refs": [
+        "static_schema_and_fixture_only"
+      ]
     }
   ],
   "row_columns": [
@@ -13300,6 +13356,14 @@
       "cmd.credential.add",
       "partial",
       "SIR-033 statically normalizes to cmd.credential_source.add before every gate and grants no credential visibility or attachment authority; no source registration, peer handler, peer wiring, persistence identity, or EventRecord exists, and native normalization proof remains absent."
+    ],
+    [
+      "TOUCH-GITPULL-001",
+      "TCP-GIT-PULL",
+      "command",
+      "cmd.git.pull",
+      "partial",
+      "Native authentication, qualification, admission/execution, source/original/receipt custody and current disclosure remain unproved. Static bindings do not admit fetch/integration or replay."
     ]
   ],
   "excluded_tokens": [

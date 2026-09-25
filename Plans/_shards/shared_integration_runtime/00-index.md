@@ -1,48 +1,48 @@
 # Shard Index: Plans/Shared_Integration_Runtime.md
 
-Generated: 2026-09-25T09:56:14Z
+Generated: 2026-09-25T10:09:05Z
 
-Source SHA256: `a0751d356a7a7046121f1b36ba02890911dd92dfcbac558a81aff13b0445c73a`
+Source SHA256: `30cdffbc37e481e7bbdedb105be0e108c4b2dc5790820974953bfc02a64e16b1`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `5eb15c54bf5dff6e6bfe9b32188a9e3f7814b9d4e93ae0d64332718fc34520ed`
-- [002 - 1. Authority and scope](002-1.-authority-and-scope.md) L5-L32 `48b900c2f8838487434cf30a94626cee2b46b58db877174cb0d8925f21e76ecd`
-- [003 - 2. Platform invariants](003-2.-platform-invariants.md) L34-L47 `0f0b92a7cf907f8fa18850518ca13c79f0a86c29655a202cefc8cc6feea3dd4f`
-- [004 - 3. Canonical shared identities](004-3.-canonical-shared-identities.md) L49-L76 `a5266ec4a483eef75911e59e909e1e007b9c3ff87038d2daacae13e51eebfde2`
-- [005 - 4. Installation and capability lifecycle](005-4.-installation-and-capability-lifecycle.md) L78-L213 `479487ba0f369adcc3d9a8b87a08373f42a30e9e0c770f6c21071ff78eab2067`
-- [006 - 5. Durable environment connection and domain synchronization](006-5.-durable-environment-connection-and-domain-synchronization.md) L215-L223 `f276a05c9ed9823c3e142679fc0bb79e99d09c548a67f781bbe04d29c05a9e4a`
-- [007 - 6. Durable command outbox](007-6.-durable-command-outbox.md) L225-L235 `46ba7df2da81eff4a3e83565eb526d383e09ecc03fde868de686064657246909`
-- [008 - 7. Cursor replay, snapshot, live buffering, and coalescing](008-7.-cursor-replay-snapshot-live-buffering-and-coalescing.md) L237-L257 `860c315bd073c9170d85472616321b7738cba8b3353e7689892d6f23ecc014e3`
-- [009 - 8. RuntimeResourceGovernor and ObservableWork](009-8.-runtimeresourcegovernor-and-observablework.md) L259-L277 `a3252da9e08ef716ee77c68fe928f90eb5d1ef1bbdddbc0d458ed70cc6410e30`
-- [010 - 9. Leases and operational awareness](010-9.-leases-and-operational-awareness.md) L279-L297 `cb9511a7b49990d5f698ab4009021d7f34c04d5a0789ba3951f0f3dd62a6faa5`
-- [011 - 10. DebugSession and EvalSession shared lifecycle](011-10.-debugsession-and-evalsession-shared-lifecycle.md) L299-L319 `1f1bf9dd42b082e30d9f4fa520c7de9fabd13b2302bab1b3eb50912150c9c337`
-- [012 - 11. Provider dispatch admission](012-11.-provider-dispatch-admission.md) L321-L327 `a1d6ca07e4b2b681cb895f23eeb332cfd68df353514067bdac5985d9e6848875`
-- [013 - 12. Time-Traveling conditional rules](013-12.-time-traveling-conditional-rules.md) L329-L339 `da5035ad4808c7888f1b26c9992b61aab4365094128db3de8c1600e275bf568a`
-- [014 - 13. Back Seat Driver](014-13.-back-seat-driver.md) L341-L361 `3c5998d71a50bf39e8de98c16296966861381488a458ee2a4337dd6f0f272a90`
-- [015 - 14. Persistence, recovery, and migration](015-14.-persistence-recovery-and-migration.md) L363-L385 `6295bf92222013580625b9b65cb26b0f0347d265afd5d916f708f7d6a602eb6a`
-- [016 - 15. Commands, wiring, DRY, GUI, and Usage](016-15.-commands-wiring-dry-gui-and-usage.md) L387-L429 `24d7a463894a9f5d317d13ad65c3415b59aaede725db1b44817096517b380ca5`
-- [017 - 16. Verification contract](017-16.-verification-contract.md) L431-L453 `d493489f30f16d9f16306a617689b9f5f320bd6b5f00511b2ef8f119d5e371c9`
-- [018 - 17. Conflict dispositions](018-17.-conflict-dispositions.md) L455-L467 `e04d9528513a727c9c22e47b8c4b2c08979b72d0da34b40e96056ba10a2af62a`
-- [019 - 18. Owner / consumer map](019-18.-owner-consumer-map.md) L469-L483 `a9a9adae63e31248f43a31da43d677169ea778f4581f24f3bb0ecd0a14e4feea`
-- [020 - 19. PlanUnits](020-19.-planunits.md) L485-L875 `8ce0be3642ad76593335b743d9e0c838969b50af713d9143e9992d047ba4aaad`
-- [021 - 20. Migration coverage](021-20.-migration-coverage.md) L877-L895 `ff3c33d12c67a8a329c0e0731bf8ddfdffc6d49c3823809919cc2b6c8e84bb63`
-- [022 - Full-Thread Performance And Continuity Addendum - 2026-08-31](022-full-thread-performance-and-continuity-addendum-2026-08-31.md) L897-L1194 `b1eb9cfa41e36ad38ee56da9f8798834a84fca4624636d9052e141859b0c6968`
-- [023 - Command Contract Closure Addendum - Connection Profiles And Installation Selection](023-command-contract-closure-addendum-connection-profiles-and-instal.md) L1196-L1286 `cb052354630d10f3c12815996e58d10338c4e91ac5dbfac2ea4fde5ffff5e177`
-- [024 - Retained PKT-04 Candidate Inventory (Deferred, Non-Emitting, Non-Canonical)](024-retained-pkt-04-candidate-inventory-deferred-non-emitting-non-ca.md) L1288-L1414 `95945e19b6a653c08d28979f7d1f51810f96626131fcfd7f5b44fb21f8ff75aa`
-- [025 - Server/WAN exact-command owner closure addendum](025-server-wan-exact-command-owner-closure-addendum.md) L1416-L1681 `b34f72c9a2f26d01aed242f22a55d66ad4a9d697ec9a552cc5077d20d65b996b`
-- [026 - Shared Connection Central-Route Binding Addendum - 2026-09-01](026-shared-connection-central-route-binding-addendum-2026-09-01.md) L1683-L1713 `8b1ed5ff18830d51c107a0ee5b86346194d94b0841c2d39885361bdc60ae9aad`
-- [027 - Central Sole Future Handler Binding Addendum - 2026-09-01](027-central-sole-future-handler-binding-addendum-2026-09-01.md) L1715-L1776 `a2c7d13af553022b394dd6a8828e6606d739cea3183e801159967c44907e0d62`
-- [028 - Expansion Compatibility Materialization Addendum - 2026-09-01](028-expansion-compatibility-materialization-addendum-2026-09-01.md) L1778-L1848 `e46e4cfe29e2dd18c332e629946e1ff50c053e83310672a272606a1348bc9a81`
-- [029 - Forge, Backup, Automation, And Embedded-Connector Consumer Addendum - 2026-09-01](029-forge-backup-automation-and-embedded-connector-consumer-addendum.md) L1850-L2013 `4540fa5dbb79bfb7219b853ec7b9cef0602c5f8c20bd1ee4663db383f0863a21`
-- [030 - ConnectionDraft Candidate Closure Addendum - 2026-09-02](030-connectiondraft-candidate-closure-addendum-2026-09-02.md) L2015-L2076 `79b338c77ef5bef10e10a35aad274ec1e5d4912de9f4f2f26e4bafe06c22c882`
-- [031 - Additive Correction v4 — Provisioning Only After Start (2026-09-03)](031-additive-correction-v4-provisioning-only-after-start-2026-09-03.md) L2078-L2087 `4ab9dfdf232c9ba25e794b325ae6dfdbc796f61d7321e7c38bc99b647c45fb03`
-- [032 - Working Notebook Transition Runtime Addendum (2026-09-05)](032-working-notebook-transition-runtime-addendum-2026-09-05.md) L2089-L2162 `5118f599f90cbb22a53113b327e47669d23dabcbf5d9f326ca75822dfa301da3`
-- [033 - Compaction completion replay binding (DL-040)](033-compaction-completion-replay-binding-dl-040.md) L2164-L2580 `1a368b1d4d15593b0565a16fc98dc120026cacf5419c48d833629a9387b95e0c`
-- [034 - Original delete-command delegated custody](034-original-delete-command-delegated-custody.md) L2583-L2649 `0dfc7a742ca227bf67fd7c3896a07f5ff418dd9c08a43531a128190ef09bdf3b`
-- [035 - Original legal-hold command and pending outcome custody](035-original-legal-hold-command-and-pending-outcome-custody.md) L2651-L2746 `f7db30c9bdbb7d4f093f3ecdf409e756f63d528888c6a39f2cc2c86c9f593ebb`
-- [036 - Original Goal start pending and terminal source custody](036-original-goal-start-pending-and-terminal-source-custody.md) L2748-L2762 `f809936a8ad1ebd4f84d6250fa8921802e1423992411b6f65b60787e2a16c449`
-- [037 - SIR-048 - Original Goal start pending and terminal source custody](037-sir-048-original-goal-start-pending-and-terminal-source-custody.md) L2764-L2825 `73fd301c065368a9798dbc9186aea5431248718ecfcadfa0cdabb38a918b3c5e`
-- [038 - Original Goal update source and terminal custody](038-original-goal-update-source-and-terminal-custody.md) L2826-L3224 `874e9addf4dd96c7b5681f84dcdcaef1b7ae213067fd97b12b1c308568de0190`
+- [001 - Preamble](001-preamble.md) L1-L3 `ae92af9f14fb90f7dac5389708ed0ae577b15e4837e786b20168a1c9ee185562`
+- [002 - 1. Authority and scope](002-1.-authority-and-scope.md) L5-L32 `16109358ecdc6d9805c1f91dc713ba88e77101cdc51c7bd5e9b57b901ea21cd1`
+- [003 - 2. Platform invariants](003-2.-platform-invariants.md) L34-L47 `22752bda60e976a6a09c6a7b738e930debe60bce18b6b95fe098d2b1b7689d3e`
+- [004 - 3. Canonical shared identities](004-3.-canonical-shared-identities.md) L49-L76 `3b4bb48294655f9af50ac36d2527901c42119fe4f7d0abc761c61924d3dd667b`
+- [005 - 4. Installation and capability lifecycle](005-4.-installation-and-capability-lifecycle.md) L78-L213 `8c473679c6458cb7d7830c5fcea4573cac746a60b348ca8c7af28b253d88f112`
+- [006 - 5. Durable environment connection and domain synchronization](006-5.-durable-environment-connection-and-domain-synchronization.md) L215-L223 `2d93f56be20bbb870f58dbaea8aacb8ca0f2c77e4f1d6afb55e739ee32f3c972`
+- [007 - 6. Durable command outbox](007-6.-durable-command-outbox.md) L225-L235 `8300c8a282d45a9cdd573f06f60690d08c8c79020057325b4f44bc895dc0cf1b`
+- [008 - 7. Cursor replay, snapshot, live buffering, and coalescing](008-7.-cursor-replay-snapshot-live-buffering-and-coalescing.md) L237-L257 `cffc547edc0abed6b4dda875e3f210fa9416cc9b26d308cb6da4e5902dba33ba`
+- [009 - 8. RuntimeResourceGovernor and ObservableWork](009-8.-runtimeresourcegovernor-and-observablework.md) L259-L277 `63c6f7475eae55b4e58f1e3486b81ddbf420d2065753c7a2b12288b972a60d1f`
+- [010 - 9. Leases and operational awareness](010-9.-leases-and-operational-awareness.md) L279-L297 `ac9a15ecaf221ec4678cd9f14cdc26512825231616fbb7965cf2086d953c2007`
+- [011 - 10. DebugSession and EvalSession shared lifecycle](011-10.-debugsession-and-evalsession-shared-lifecycle.md) L299-L319 `3823a1dc79193da2ccb6422ad25f97808d7a374044dbcb5acad1fa13d36097fc`
+- [012 - 11. Provider dispatch admission](012-11.-provider-dispatch-admission.md) L321-L327 `5c95a2cac94d3188924a1f18b224d202660455e742b54b0538f933a4b33b8ee5`
+- [013 - 12. Time-Traveling conditional rules](013-12.-time-traveling-conditional-rules.md) L329-L339 `0e0b42156316c1e51f7054ad965d84d7933aa62489abc086bac059d6f4e3bde4`
+- [014 - 13. Back Seat Driver](014-13.-back-seat-driver.md) L341-L361 `1abe994c48aff4e0b68bea7d5c7ba08331e106450fd3d51174828186a296bbf0`
+- [015 - 14. Persistence, recovery, and migration](015-14.-persistence-recovery-and-migration.md) L363-L385 `c5705b103f3e6b53ad58aaa897d4ae33cbaec6e898dfdb33d53e042e55e946bd`
+- [016 - 15. Commands, wiring, DRY, GUI, and Usage](016-15.-commands-wiring-dry-gui-and-usage.md) L387-L429 `0308319c0389b96bd9b8e8b880ac2c04634710a99072e3670574942941fbc510`
+- [017 - 16. Verification contract](017-16.-verification-contract.md) L431-L453 `cb21284a83fce52b754ad49e6b6b06d051c3d83905ca706a063c052e7f9ecc9d`
+- [018 - 17. Conflict dispositions](018-17.-conflict-dispositions.md) L455-L467 `f550de037d9c8ddf0d06f75a8df500b1797cecec3e1882b96d72386c83007f94`
+- [019 - 18. Owner / consumer map](019-18.-owner-consumer-map.md) L469-L483 `93452b8a51b177b7dccff6557ee4dd7f8e9c21819a93d9f6f956edca3f0861e0`
+- [020 - 19. PlanUnits](020-19.-planunits.md) L485-L875 `1ba7805993536cb139b83875f84c92ebc2550d4745da0db373eb840a87d72e29`
+- [021 - 20. Migration coverage](021-20.-migration-coverage.md) L877-L895 `846fa536693ca795677746fbf19e1a15ec4ccce2de5d34ba6c2838d97f164140`
+- [022 - Full-Thread Performance And Continuity Addendum - 2026-08-31](022-full-thread-performance-and-continuity-addendum-2026-08-31.md) L897-L1194 `f344d34ca0d2354df64f6c0e617faf2df65b9c1692631553b14b9a6c011ccd6d`
+- [023 - Command Contract Closure Addendum - Connection Profiles And Installation Selection](023-command-contract-closure-addendum-connection-profiles-and-instal.md) L1196-L1286 `b46ef8518de2f797277b73ae1bcb9b00b060706a70f1fe9520941b3a4bef15d1`
+- [024 - Retained PKT-04 Candidate Inventory (Deferred, Non-Emitting, Non-Canonical)](024-retained-pkt-04-candidate-inventory-deferred-non-emitting-non-ca.md) L1288-L1414 `abfde411f338f12cd4cf96ae6e6f5a2750336bd344780e91d1d67a9e510147c6`
+- [025 - Server/WAN exact-command owner closure addendum](025-server-wan-exact-command-owner-closure-addendum.md) L1416-L1681 `f4b8d270d8cc391b5eeb783f73aba521cb63880c29f2d5ddb6f696cfe41a91b3`
+- [026 - Shared Connection Central-Route Binding Addendum - 2026-09-01](026-shared-connection-central-route-binding-addendum-2026-09-01.md) L1683-L1713 `443ded1198a8a1e14c2e121f1138c4fabaf3ffae9ae997b614732935e17402d0`
+- [027 - Central Sole Future Handler Binding Addendum - 2026-09-01](027-central-sole-future-handler-binding-addendum-2026-09-01.md) L1715-L1776 `19c504fd4ae917e1e11e1e58d1eeda65ca425c40cc099ac755e950f1ea6aafc4`
+- [028 - Expansion Compatibility Materialization Addendum - 2026-09-01](028-expansion-compatibility-materialization-addendum-2026-09-01.md) L1778-L1848 `dd570340636819611d50de795ef7a05f0d61334be86df541a1d2d11a56abcf09`
+- [029 - Forge, Backup, Automation, And Embedded-Connector Consumer Addendum - 2026-09-01](029-forge-backup-automation-and-embedded-connector-consumer-addendum.md) L1850-L2013 `ee69325633987d328fd7b78e41988defb65105bc6f75230328a94b65dd8da7a4`
+- [030 - ConnectionDraft Candidate Closure Addendum - 2026-09-02](030-connectiondraft-candidate-closure-addendum-2026-09-02.md) L2015-L2076 `d7d496dbde1bcc7ff82bd48d74781f9f1a1a1d12278701bcc2daa1de3e9de4b8`
+- [031 - Additive Correction v4 — Provisioning Only After Start (2026-09-03)](031-additive-correction-v4-provisioning-only-after-start-2026-09-03.md) L2078-L2087 `6062f9eccd51df97f47103ee1c1502ced60095a9f65beaf221a81b0324d48a6a`
+- [032 - Working Notebook Transition Runtime Addendum (2026-09-05)](032-working-notebook-transition-runtime-addendum-2026-09-05.md) L2089-L2162 `fb46eb9271e88cafa69e4f0ce3439f8629938534917873ce3e7fb0dd383afd76`
+- [033 - Compaction completion replay binding (DL-040)](033-compaction-completion-replay-binding-dl-040.md) L2164-L2584 `24934167d456829dd7bb3d79a07c1756765c79328457546a27a44872afef73ea`
+- [034 - Original delete-command delegated custody](034-original-delete-command-delegated-custody.md) L2587-L2653 `4f1feba65738dd4cba5d2abbabb54c4bb87b1caf7967e7f77ccf889f6a5ca9dd`
+- [035 - Original legal-hold command and pending outcome custody](035-original-legal-hold-command-and-pending-outcome-custody.md) L2655-L2750 `3fd51bdf4117342c362889401eb9697d0f1a18d687e13cad63bd442282dee17b`
+- [036 - Original Goal start pending and terminal source custody](036-original-goal-start-pending-and-terminal-source-custody.md) L2752-L2766 `21fe45a339549d3c01796f5a12113608dfc723d0827573b6da5db64652e0e305`
+- [037 - SIR-048 - Original Goal start pending and terminal source custody](037-sir-048-original-goal-start-pending-and-terminal-source-custody.md) L2768-L2829 `0228b460083bfb0c7b813c519d6d7c84cb6937ee04b52011ec6b3ce4bd38a533`
+- [038 - Original Goal update source and terminal custody](038-original-goal-update-source-and-terminal-custody.md) L2830-L3228 `6be018aa09741d247704ca8d4ac479c1542da193d4801621b6003fb54c76bdce`

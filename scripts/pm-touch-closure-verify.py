@@ -449,6 +449,12 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
 
     scm_text = read("Plans/Source_Control_System.md")
     scm = tokens(between(scm_text, "The command owner must register the following exact primary identities:", "### 3.2 Canonical events"))
+    # Exact new pull profile comes from the actual command discriminator, not the Touch row.
+    pull_schema = json.loads(read("Plans/git_pull_selected.schema.json"))
+    pull_command = pull_schema["$defs"]["request"]["properties"]["command_id"]["const"]
+    if pull_command != "cmd.git.pull":
+        raise ValueError("selected pull owner discriminator drift")
+    add("TCP-GIT-PULL", "command", {pull_command})
     scm_alias = {"cmd.source_control.select_worktree"}
     add("TCP-SCM", "command", {item for item in scm if item.startswith("cmd.source_control.")} - scm_alias)
     add("TCP-SCM-ALIAS", "command_alias", scm_alias)
@@ -1890,8 +1896,10 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # Preserve the full guard obligation and its profile; do not invent an alias.
     # DL-044 retains the GitHub create obligation/profile as a Forge alias:
     # 64 -> 65 aliases, 1143 -> 1142 production rows; no new Touch row or proof.
+    # ACT017 adds one missing existing core Git pull consumer and exact profile:
+    # 643 -> 644 rows, 141 -> 142 profiles; no new public command or runtime proof.
     exact_resolved_denominators = {
-        "row_count": 643,
+        "row_count": 644,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
         # SIR-031: three protected-auth locals select the existing protected
@@ -1900,7 +1908,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # selected logs use four bounded successor profiles. No new Touch rows.
         # Credential source-add has one exact successor, leaving nine peers intact.
         # Exact Forge cancellation consumes its bounded successor, no new row.
-        "profile_count": 141,
+        "profile_count": 142,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1142,

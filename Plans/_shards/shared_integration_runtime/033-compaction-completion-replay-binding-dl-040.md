@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2580
+Source lines: L2164-L2584
 
-Source SHA256: `a0751d356a7a7046121f1b36ba02890911dd92dfcbac558a81aff13b0445c73a`
+Source SHA256: `30cdffbc37e481e7bbdedb105be0e108c4b2dc5790820974953bfc02a64e16b1`
 
 ---
 
@@ -184,6 +184,10 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+For exactly `cmd.git.pull`, `Plans/sir_git_pull_dispatch.schema.json` binds the authenticated dispatcher original full IdentityEnvelope, selected arguments and canonical argument-only digest, request/dispatch/frame, independent target generation, idempotency, actor/permission and actual nullable caller. The actual delivery owner independently supplies its nullable current caller value; missing, foreign and null substitution do not pass as equivalent. RepositoryContext contributes only its existing Project/Plan/Goal/topology lineage, never fabricated Server/Run/agent identity. Accepted genuine ObservableWork cannot already be terminal or carry a terminal receipt. Actual terminal receipt facts and unresolved native effects govern the unchanged common response; no_op is not inferred.
+
+The explicit `pm.sir.git_pull_error_projection.v1` resolves the unchanged new pull owner error by the actual error_ref, preserves its exact full payload, command/instance and authenticated original/delivery caller, and supplies the existing nullable UICommandError value. Null UI error for actual cancellation does not erase owner error/effect/recovery truth. No total error-code mapping, truncation or normalization is invented; unavailable authentic projection fails closed. Inputs and live resolved original/source/preview/receipt values are snapshotted before dependent callbacks and checked for mutation afterward. Replay preserves original outcomes and cannot refetch/reintegrate. Authentic producer/disclosure enforcement and logical original/error/phase custody remain independent prerequisites, not proof supplied by synthetic fixtures or hash equality. No UICommandEnvelope or historical identity schema is widened.
 
 For exactly `cmd.backup.delete`, `Plans/backup_selected_delete_contracts.schema.json` materializes `pm.sir.backup_selected_delete_dispatch.v1` from the existing authenticated dispatcher and `pm.sir.backup_selected_delete_error_projection.v1` as a nonpersisted safe disclosure projection. Retain the real original IdentityEnvelope, request/operation/instance/dispatch/frame/target, actor/permission, admission time, idempotency, full typed arguments and existing canonical payload digest. Original caller uses the existing nullable return_context value grammar, not Source Control producer authority; actual delivery must equal the independently retained original value. No normalized caller bag, invented Project or new Full Thread field is introduced.
 

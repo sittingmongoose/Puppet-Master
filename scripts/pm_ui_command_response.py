@@ -38,6 +38,7 @@ JJ_PUBLICATION_BINDING = {"path":"Plans/jj_publication_selected.schema.json", "j
 FORGE_LOG_COMMAND = "cmd.forge.pipeline.open_logs"
 FORGE_LOG_BINDING = {"path":"Plans/forge_log_selection_contracts.schema.json", "json_pointer":"#/$defs/result", "schema_id":"pm.forge.log_selection.result.v1"}
 
+from pm_git_pull_response import COMMANDS as GIT_PULL_COMMANDS, BINDING as GIT_PULL_BINDING
 FORGE_REVIEW_COMMANDS = frozenset(("cmd.forge.review.approve", "cmd.forge.review.request_changes"))
 FORGE_REVIEW_BINDING = {"path": "Plans/forge_review_decisions.schema.json", "json_pointer": "#/$defs/result", "schema_id": "pm.forge.review_decision.result.v1"}
 GIT_THREE_COMMANDS = frozenset(("cmd.git.commit", "cmd.source_control.stash.create", "cmd.source_control.branch.create"))
@@ -108,7 +109,8 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
     forge_reply = response.get('command_id') == 'cmd.forge.review.thread.reply' or result.get('schema_id') == 'pm.forge.thread_reply.result.v1'
     backup_lifecycle = response.get('command_id') in ('cmd.backup.destination.test','cmd.backup.destination.remove') or result.get('schema_id') == 'pm.backup.destination_lifecycle.result.v1'
     backup_delete = response.get('command_id') == 'cmd.backup.delete' or result.get('schema_id') == 'pm.backup.selected_delete.result.v1'
-    if not git_three and not forge_review and not backup_read and not jj_publication and not forge_log and not credential_source and not forge_cancel and not forge_reply and not backup_lifecycle and not backup_delete:
+    git_pull = (response.get("command_id") in GIT_PULL_COMMANDS or result.get("schema_id") == GIT_PULL_BINDING["schema_id"])
+    if not git_three and not forge_review and not backup_read and not jj_publication and not forge_log and not credential_source and not forge_cancel and not forge_reply and not backup_lifecycle and not backup_delete and not git_pull:
         return _response_bundle_failures(bundle)
     snapshot = deepcopy(bundle)
     failures = _response_bundle_failures(snapshot, resolve_owner_record=resolve_owner_record,
@@ -120,7 +122,7 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
                                          forge_log_dependencies=forge_log_dependencies, backup_delete_dependencies=backup_delete_dependencies, backup_lifecycle_dependencies=backup_lifecycle_dependencies, forge_reply_dependencies=forge_reply_dependencies, forge_cancel_dependencies=forge_cancel_dependencies,
                                          credential_source_dependencies=credential_source_dependencies)
     if bundle != snapshot:
-        failures.append("credential_bundle_mutated_during_resolution" if credential_source else "backup_read_bundle_mutated_during_resolution" if backup_read else "jj_publication_bundle_mutated_during_resolution" if jj_publication else "forge_log_bundle_mutated_during_resolution" if forge_log else "forge_bundle_mutated_during_resolution" if forge_review else "git3_bundle_mutated_during_resolution")
+        failures.append("git_pull_bundle_mutated_during_resolution" if git_pull else "credential_bundle_mutated_during_resolution" if credential_source else "backup_read_bundle_mutated_during_resolution" if backup_read else "jj_publication_bundle_mutated_during_resolution" if jj_publication else "forge_log_bundle_mutated_during_resolution" if forge_log else "forge_bundle_mutated_during_resolution" if forge_review else "git3_bundle_mutated_during_resolution")
     return sorted(set(failures))
 
 
@@ -165,7 +167,7 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
         if response["response_kind"] == "local_projection":
             commands = schema(SHARED_SCHEMA)["$defs"]["canonical_command_id"]["enum"]
             scm_commands = schema(SOURCE_CONTROL_SCHEMA)["$defs"]["source_control_command_id"]["enum"]
-            if response["command_id"] in commands or response["command_id"] in scm_commands or response["command_id"] in GIT_THREE_COMMANDS or response["command_id"] in FORGE_REVIEW_COMMANDS or response["command_id"] == CREDENTIAL_SOURCE_COMMAND or response["command_id"] in BACKUP_READ_COMMANDS or response["command_id"] in JJ_PUBLICATION_COMMANDS:
+            if response["command_id"] in commands or response["command_id"] in scm_commands or response["command_id"] in GIT_THREE_COMMANDS or response["command_id"] in FORGE_REVIEW_COMMANDS or response["command_id"] == CREDENTIAL_SOURCE_COMMAND or response["command_id"] in BACKUP_READ_COMMANDS or response["command_id"] in JJ_PUBLICATION_COMMANDS or response["command_id"] in GIT_PULL_COMMANDS:
                 failures.append("durable_command_disguised_as_local_projection")
         return sorted(set(failures))
     if structural_failures(OUTCOME_SCHEMA, outcome, "#/$defs/CommandOutcomeRecord"):
@@ -207,6 +209,8 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
         failures.append("backup_read_owner_result_binding")
     if response["command_id"] in JJ_PUBLICATION_COMMANDS and response["owner_result_schema_ref"] != JJ_PUBLICATION_BINDING:
         failures.append("jj_publication_owner_result_binding")
+    if response["command_id"] in GIT_PULL_COMMANDS and response["owner_result_schema_ref"] != GIT_PULL_BINDING:
+        failures.append("git_pull_owner_result_binding")
     if response["command_id"] in FORGE_REVIEW_COMMANDS and response["owner_result_schema_ref"] != FORGE_REVIEW_BINDING:
         failures.append("forge_review_owner_result_binding")
     if response["command_id"] in GIT_THREE_COMMANDS and response["owner_result_schema_ref"] != GIT_THREE_BINDING:
@@ -284,6 +288,15 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
             elif owner_result.get('schema_id') == 'pm.backup.selected_delete.result.v1':
                 from pm_backup_selected_delete import response_failures as delete_response_failures
                 failures.extend(delete_response_failures(bundle, backup_delete_dependencies))
+            elif owner_result.get("schema_id") == GIT_PULL_BINDING["schema_id"]:
+                if "delivery_return_context" not in bundle:
+                    failures.append("git_pull_delivery_owner_value_missing")
+                from pm_git_pull_response import response_failures as git_pull_response_failures
+                failures.extend(git_pull_response_failures(
+                    response, outcome, owner_result, bundle.get("owner_request"), request,
+                    bundle.get("original_binding_ref"), bundle.get("delivery_return_context"),
+                    resolve_record=resolve_owner_record, canonical_request_digest=canonical_request_digest,
+                    canon_root=ROOT, registry=registry()))
             elif owner_result.get("schema_id") == FORGE_REVIEW_BINDING["schema_id"]:
                 if "delivery_return_context" not in bundle:
                     failures.append("forge_delivery_owner_value_missing")

@@ -16,11 +16,11 @@ composition, Forge ACT051/052 and their SIR response binding, and Usage quota-aw
 refresh/export are now specified and statically tested. Remaining exact selections
 are listed below; this is not native implementation or whole-family completion.
 
-1. Exact Storage specification integration: the current registry has 42 explicitly
-   pending disposition rows (41 physical-family and one external-store pending),
+1. Exact Storage specification integration: the current registry has 44 explicitly
+   pending disposition rows (43 physical-family and one external-store pending),
    including Guided Tour, pairing, original Forge dispatch and Backup read originals/receipts. Its
-   93 dispositions leave the 294 physical families unchanged. These are not
-   42 engines to build. Determine owner key/value/retention/migration
+   97 dispositions leave the 294 physical families unchanged. These are not
+   44 engines to build. Determine owner key/value/retention/migration
    decisions separately from deployment of already specified native writers.
 2. Narrow authority adjudications: Settings exposure/import semantics, Vault
    sharing and supervisor scope, and remaining plugin applicability clauses.
@@ -84,14 +84,14 @@ Remaining selected-input/result composition uses these existing source IDs:
 
 Plain-language boundaries and the earlier exact 26-source-occurrence snapshot are
 in `remaining-command-boundaries.md`. Cancellation ACT071, thread reply ACT156,
-Backup destination test/remove ACT090/091 and snapshot deletion ACT105 are now
-integrated, leaving 21 selected source occurrences below, not 21 engines or a
+Backup destination test/remove ACT090/091, snapshot deletion ACT105 and Git pull
+ACT017 are now integrated, leaving 20 selected source occurrences below, not 20 engines or a
 whole-packet count.
 
 | Owner | Exact remaining IDs |
 | --- | --- |
 | Neutral SCM, final-review open | ACT006,008,009,012,013,045 |
-| Git | ACT017,019 |
+| Git | ACT019 |
 | JJ, final-review open | ACT037,038 |
 | Forge | ACT048,053,060,062,067,070,072 |
 | Backup | ACT111,118,119,120 |
@@ -107,6 +107,17 @@ remain separate; passing static review does not establish them.
 Backup ACT090/091/105 are integrated with actual original, effects, receipt,
 caller/error and current-union consumers; see `backup-lifecycle-delete-companions.md`.
 This does not implement native canary testing, registration mutation or deletion.
+
+Git ACT017 has a reviewed exact three-strategy pull contract and actual central
+response composition; see `git-pull-companion.md`. The pre-existing omission of
+core Git push/fetch from Touch's neutral-family extraction remains a separate census
+gap, not silent closure of those commands or authority to add their semantics.
+Forge ACT053 comment and Backup ACT111 export have approved bounded owner-first
+directions, with detached companions in progress, not integrated credit. Recovery-key
+rotation ACT118, compromise re-encryption ACT119 and restore preview ACT120 now have
+bounded current-owner proposals that credit existing protection/preview contracts;
+no new key policy, encryption format, cross-capture merge policy or fifth mode is
+admitted by those proposals.
 
 ACT019 stash apply needs a genuine index-restoration decision: explicit selection,
 fixed files-only restoration or fixed restoration of saved staged state. Neither

@@ -9866,6 +9866,8 @@ ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/W
 
 ### Source Control depth rows
 
+The existing `cmd.git.pull` consumes `Plans/git_pull_selected.schema.json#/$defs/request` -> `Plans/git_pull_selected.schema.json#/$defs/result` under SCS-003, through the authentic original and independent delivery binding in `Plans/sir_git_pull_dispatch.schema.json` owned by SIR-042. The sole future handler remains `handlers::git::pull`, `handler_unavailable`, with `expected_event_types=[]`. Explicit merge/rebase/ff_only, native-qualified selected upstream and before/proposed/actual phase effects are required; accepted work is nonterminal and unknown effects require reconciliation. This is neither stash-pop nor route/open success; no new confirmation policy or native/physical custody proof follows.
+
 These rows resolve the underdefined `cmd.source_control.stash.*` compatibility-family declaration into first-class commands (list/create/apply/pop/drop; pop is added because the declared family lacked it) and supply the branch selector commands the section 2.5 coverage prose promises. `cmd.git.commit` registers the commit action the prototype's `panels.git_commit` token retires into. Stash drop and pop route the shared confirm surface; all mutating rows inherit projection-freshness gating.
 
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
@@ -9882,7 +9884,7 @@ These rows resolve the underdefined `cmd.source_control.stash.*` compatibility-f
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md
 
-The existing `cmd.git.commit`, `cmd.source_control.stash.create` and `cmd.source_control.branch.create` rows consume `Plans/git_selected_three.schema.json#/$defs/request` -> `Plans/git_selected_three.schema.json#/$defs/result`, with their exact command discriminator and selected-input semantic joins from SCS-003. The actual owner operation receipt and adapter observation remain required; route/open alone is not mutation success. Existing handlers, availability, confirmation and disabled reasons are unchanged. This typed binding proves neither native admission nor physical observation/original replay custody. Pull and stash-apply preview contracts remain pending and are not admitted by this schema.
+The existing `cmd.git.commit`, `cmd.source_control.stash.create` and `cmd.source_control.branch.create` rows consume `Plans/git_selected_three.schema.json#/$defs/request` -> `Plans/git_selected_three.schema.json#/$defs/result`, with their exact command discriminator and selected-input semantic joins from SCS-003. The actual owner operation receipt and adapter observation remain required; route/open alone is not mutation success. Existing handlers, availability, confirmation and disabled reasons are unchanged. This typed binding proves neither native admission nor physical observation/original replay custody. This Git-three schema admits neither pull nor stash-apply. Pull has the separate selected companion above; stash-apply preview/index-restoration contracts remain pending.
 
 ### Worktree and GitHub PR rows
 

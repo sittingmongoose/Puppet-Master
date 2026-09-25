@@ -5843,6 +5843,8 @@ negative_constraints:
 
 ## Neutral Source-Control Primary Registration Completion - 2026-09-02
 
+The existing `cmd.git.pull` consumes `Plans/git_pull_selected.schema.json#/$defs/request` -> `Plans/git_pull_selected.schema.json#/$defs/result` under SCS-003, through the authentic original and independent delivery binding in `Plans/sir_git_pull_dispatch.schema.json` owned by SIR-042. The sole future handler remains `handlers::git::pull`, `handler_unavailable`, with `expected_event_types=[]`. Explicit merge/rebase/ff_only, native-qualified selected upstream and before/proposed/actual phase effects are required; accepted work is nonterminal and unknown effects require reconciliation. This is neither stash-pop nor route/open success; no new confirmation policy or native/physical custody proof follows.
+
 Three existing Source Control owner commands already have typed owner contracts, Touch Closure rows, and production-intent wiring, but require explicit concrete central catalog records. This section completes those records without minting new semantics or changing the packet compatibility aliases that target them.
 
 | Command ID | Canonical owner | Sole future handler | Exact request -> result | Current evidence boundary |

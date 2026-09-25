@@ -118,6 +118,14 @@ owner_hints: [Plans/Source_Control_System.md, Plans/WorktreeGitImprovement.md, P
 
 ### SCS-003 - Writer Leases, Credential Leases, Commands, Events, And Receipts
 
+For exactly `cmd.git.pull`, `Plans/git_pull_selected.schema.json` materializes the original selected fetch remote identity/transport/host/ref, independently generated remote selection snapshot, explicit `merge|rebase|ff_only`, actual RepositoryContext/Git revision, lease generation/epoch, permission/FileSafe, caller and preview. No default strategy, moving-current-branch substitution, silent fallback, implicit autostash or stash-pop interpretation is admitted. Historical operation_request, RemoteOperationTarget and ExternalEffectReconciliation cannot be relabelled to fit pull: their command/operation grammars and mandatory push targets remain unchanged. The disjoint selected fetch identity and phase receipts are new typed materializations, not historical types claimed to already cover pull.
+
+The native Git owner supplies a closed complete preview with actual before HEAD/index/worktree/path/conflict state, selected immutable upstream commit/tree and object format, exact native configuration/version and qualified ancestry/rewrite facts, complete proposed state and every affected or preserved path. A future generated commit ID may remain unpredicted in proposed state; actual resulting commit identity is supplied only by the post-state source. Native qualification resolves matching typed facts, not an opaque disclosure bag or permissive callback. Unknown inputs/qualification cannot authorize integration. Native unresolved conflicts remain distinct from clean materialized files. ff_only requires actual qualified fast-forward ancestry and never falls back. Existing dirty state is preserved except for explicitly previewed, genuinely admitted path effects; no reset/clean/index policy is guessed.
+
+Fetch and integration have separate actual phase observations and exact native phase receipts within the same pull operation. A successful fetch's object/ref effects survive later integration failure or cancellation. Actual integration input HEAD/index/worktree/config and upstream object must still equal the admitted preview facts; changed inputs require a fresh qualified admission, not silent substitution. A verified already-local object needs no fabricated fetch receipt. Native acquisition or preview writes require their actual existing owner admission and receipts; a read-only label grants neither fetch nor mutation. Known applied/not-applied phase facts resolve exact source and receipt identities; unknown phases preserve reconciliation-only outcomes, not blind replay or inferred success. An actual terminal Source Control operation_receipt supplies final before/after/outcome/work/event facts. Accepted work remains nonterminal. Static schemas and joins do not establish native authenticity, permission enforcement, FileSafe execution, atomic currentness or physical custody.
+
+The disjoint pull error record reuses existing Source Control error-code/effect/retry/action value grammar without widening the historical neutral command enum. It preserves exact pull command/instance/context and actual owner error_ref. Its SIR UI projection is separately typed and may be null for genuine cancelled disclosure while retaining the original nonnull owner error and recovery facts. No peer physical store, new retention, event family, command or handler-availability change follows from this companion.
+
 ```yaml
 plan_unit_id: SCS-003
 unit_type: requirement
@@ -193,9 +201,10 @@ acceptance_criteria:
     cmd.source_control.stash.apply and cmd.source_control.branch.create retain their current owners and handlers.
     The three closed selected-input bindings in Plans/git_selected_three.schema.json adopt commit message plus
     expected index tree, stash-create include_untracked plus message, and branch-create name plus immutable base.
-    Pull remote/branch/merge/rebase/ff_only strategy plus actual pull-preview contents and stash-apply selected object
-    plus actual conflict/dependency/effect preview contents remain pending typed companions, not merely missing
-    native implementations. These concrete commands are not silently inserted into
+    Pull remote/branch/merge/rebase/ff_only strategy and actual native-qualified pull-preview/phase contents use
+    the separate git_pull_selected companion above. Stash-apply selected object plus actual conflict/dependency/effect
+    preview and index-restoration policy remain pending typed companions, not merely missing native implementations.
+    These concrete commands are not silently inserted into
     the neutral command family. Stash apply is not pop/drop, branch creation does not admit branch deletion, and
     historical candidate cmd.git.stash.* or cmd.git.branch.create names do not create peer public commands.
   - >-

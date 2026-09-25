@@ -3826,6 +3826,141 @@
         "Plans/backup_selected_delete_contracts.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.source_control.git_pull_transport.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/git_pull_selected.schema.json",
+      "record_kinds": [
+        "pm.source_control.git_pull.request.v1",
+        "pm.source_control.git_pull.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent hold or replay authority. Original arguments, actual error and effects remain retained under their authentic owners.",
+        "expiry_rule": "Dispose of transport or safe disclosure when delivery ends or source/current disclosure is invalidated; never release retained original/error/effect authority by disposing of projections."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Preserve historical Source Control decoders and original authority. No fabricated pull selection, preview, native phase/effect, lease, caller or replay from predecessors; no new physical writer, peer store, retention interval or migration is admitted.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted transport or safe disclosure only; actual original arguments survive under retained dispatch and native owner source/receipt custody.",
+      "source_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/git_pull_selected.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.source_control.git_pull_source_effect.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/git_pull_selected.schema.json",
+      "record_kinds": [
+        "pm.source_control.git_pull.state_source.v1",
+        "pm.source_control.git_pull.upstream_source.v1",
+        "pm.source_control.git_pull.preview.v1",
+        "pm.source_control.git_pull.qualification.v1",
+        "pm.source_control.git_pull.observation.v1",
+        "pm.source_control.git_pull.native_phase_receipt.v1",
+        "pm.source_control.git_pull.error.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve actual originals, native sources/qualification, known partial effects, phase/terminal receipt references, error and unresolved reconciliation under original replay/audit/hold obligations; exact physical per-kind policy is pending.",
+        "expiry_rule": "No cleanup writer or TTL is admitted. Exact physical keys, producer/readers, dependency holds, lifetime/deletion, migration and coherent backup must be registered before persistence."
+      },
+      "redaction_transform_ids": [
+        "rt.server_remote_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Preserve historical Source Control decoders and original authority. No fabricated pull selection, preview, native phase/effect, lease, caller or replay from predecessors; no new physical writer, peer store, retention interval or migration is admitted.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained authentic selected source, preview/qualification, native phase/effect/error or original dispatch authority; physical admission remains pending.",
+      "source_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/git_pull_selected.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.git_pull_dispatch.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/sir_git_pull_dispatch.schema.json",
+      "record_kinds": [
+        "pm.sir.git_pull_dispatch_binding.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve actual originals, native sources/qualification, known partial effects, phase/terminal receipt references, error and unresolved reconciliation under original replay/audit/hold obligations; exact physical per-kind policy is pending.",
+        "expiry_rule": "No cleanup writer or TTL is admitted. Exact physical keys, producer/readers, dependency holds, lifetime/deletion, migration and coherent backup must be registered before persistence."
+      },
+      "redaction_transform_ids": [
+        "rt.server_remote_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Preserve historical Source Control decoders and original authority. No fabricated pull selection, preview, native phase/effect, lease, caller or replay from predecessors; no new physical writer, peer store, retention interval or migration is admitted.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained authentic selected source, preview/qualification, native phase/effect/error or original dispatch authority; physical admission remains pending.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/sir_git_pull_dispatch.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.git_pull_error_projection.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/sir_git_pull_dispatch.schema.json",
+      "record_kinds": [
+        "pm.sir.git_pull_error_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent hold or replay authority. Original arguments, actual error and effects remain retained under their authentic owners.",
+        "expiry_rule": "Dispose of transport or safe disclosure when delivery ends or source/current disclosure is invalidated; never release retained original/error/effect authority by disposing of projections."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Preserve historical Source Control decoders and original authority. No fabricated pull selection, preview, native phase/effect, lease, caller or replay from predecessors; no new physical writer, peer store, retention interval or migration is admitted.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted transport or safe disclosure only; actual original arguments survive under retained dispatch and native owner source/receipt custody.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/sir_git_pull_dispatch.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [
