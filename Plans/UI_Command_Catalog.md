@@ -11776,6 +11776,8 @@ Every primary row below is static central intent. A named `handler_location` is 
 
 ### Exact 100 primary catalog rows
 
+For exactly `cmd.forge.review.thread.reply`, the selected binding is `Plans/forge_thread_reply_contracts.schema.json#/$defs/request` -> `#/$defs/result`. It preserves actual original body/version, whole immutable thread/revision window, authentic SIR original/current caller and genuine provider receipt/work/error disclosure. Accepted is not posted; unknown is reconciliation-only and replay does not repost. The sole handler, availability and event policy remain unchanged.
+
 For exactly `cmd.forge.pipeline.cancel`, the selected cancellation binding is `Plans/forge_cancel_selected_contracts.schema.json#/$defs/request` -> `#/$defs/result`. It retains the actual AutomationBinding/run/state fence, direct revalidation, original SIR caller and truthful provider receipt/work/error disclosure. Accepted is not stopped; unknown is reconciliation-only. Existing handler availability, command ID and event policy remain unchanged.
 
 For exactly `cmd.credential_source.add`, the current terminal source-add binding is `Plans/credential_source_add_contracts.schema.json#/$defs/request` -> `#/$defs/result` with the actual `#/$defs/receipt` and authentic SIR original/current-disclosure composition. Other CredentialBroker commands retain their existing expansion bindings; `cmd.credential.add` remains normalization-only. Source registration does not attach, activate, authenticate or issue a lease. Handler availability and receipt-only event policy are unchanged.

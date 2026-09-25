@@ -8081,6 +8081,71 @@
       "evidence_refs": [
         "static_schema_and_fixture_only"
       ]
+    },
+    {
+      "profile_id": "TCP-FORGE-THREAD-REPLY",
+      "requirement_refs": [
+        "Plans/Forge_Integrations.md#FGI-004",
+        "Plans/Forge_Integrations.md#FGI-010",
+        "Plans/Shared_Integration_Runtime.md#SIR-042"
+      ],
+      "owner_plan": "Plans/Forge_Integrations.md",
+      "plan_unit": "FGI-010",
+      "dry_contract_ref": "Plans/forge_thread_reply_contracts.schema.json",
+      "payload_schema_ref": "Plans/forge_thread_reply_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/forge_thread_reply_contracts.schema.json#/$defs/result",
+      "error_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_error_record",
+      "availability_rule": "Requires authentic original body/version, existing whole thread/window and immutable revision triple, actual provider reply/receipt and current disclosure; accepted work is nonterminal and unknown effects remain reconciliation-only. Native proof and physical custody remain absent.",
+      "permission_gate": "Permissions, credential/grant broker, provider authority, immutable revision, FileSafe, and confirmation apply.",
+      "disabled_reason_rule": "Expose connection/auth/setup, capability, rate, stale generation/revision, permission, mirror, degraded, or recovery blocker.",
+      "handler_owner": "Forge Integrations owns 46 primaries; the common central route set contains 43, including the nine FGI-013 admissions. Every planned target remains handler_unavailable without native/provider evidence.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static common/provider schemas and PMConcept7 projection only. Central production-intent wiring is specified; no native runtime proof. Central production-intent wiring is specified; native runtime evidence remains absent.",
+      "gui_triggers": [
+        "Source Control forge sections, Settings connections, Project setup, official-page routes",
+        "Product Onboarding selected-source precommit read-only account/container repository list without a phantom repository"
+      ],
+      "return_route": "Exact provider/repository/review/pipeline and caller focus.",
+      "reverse_consumers": [
+        "Plans/Cursor_Origin_Integration.md",
+        "Plans/GitLab_Integration.md",
+        "Plans/Azure_DevOps_Integration.md",
+        "Plans/Bitbucket_Integration.md",
+        "Plans/Source_Control_System.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "event_refs": [
+        "No admitted Forge EventRecord for this delta; expected_event_types=[] until Event Authority admission."
+      ],
+      "receipt_refs": [
+        "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt",
+        "Plans/forge_thread_reply_contracts.schema.json#/$defs/observation"
+      ],
+      "observable_work": [
+        "Required for repository, mirror, review, pipeline, webhook, and connection work."
+      ],
+      "persistence_refs": [
+        "forge connection, repository binding, mirror, review, pipeline refs"
+      ],
+      "migration_refs": [
+        "Plans/Forge_Integrations.md#7.1"
+      ],
+      "test_refs": [
+        "Plans/forge_integration_contract_fixtures.json",
+        "Plans/cursor_origin_integration_fixtures.json",
+        "Plans/gitlab_integration_fixtures.json",
+        "Plans/azure_devops_integration_fixtures.json",
+        "Plans/bitbucket_integration_fixtures.json",
+        "tests/test_pm_onboarding_phases.py",
+        "Plans/forge_thread_reply_contract_fixtures.json",
+        "tests/test_pm_forge_thread_reply.py",
+        "tests/test_pm_forge_thread_reply_bindings.py"
+      ],
+      "evidence_refs": [
+        "static_schema_and_fixture_only"
+      ]
     }
   ],
   "row_columns": [
@@ -10334,7 +10399,7 @@
     ],
     [
       "TOUCH-FGI-022",
-      "TCP-FORGE",
+      "TCP-FORGE-THREAD-REPLY",
       "command",
       "cmd.forge.review.thread.reply",
       "partial",

@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2567
+Source lines: L2164-L2572
 
-Source SHA256: `0e454fd67a95be7d32e1da284b4da0cf22c5016a4026f64f7c405f4e00bdefac`
+Source SHA256: `0c2498b9274fbea56d4156f67557c90435e0e09e586720b8eff1d8508eafa391`
 
 ---
 
@@ -184,6 +184,11 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+For exactly `cmd.forge.review.thread.reply`, `Plans/forge_thread_reply_contracts.schema.json#/$defs/dispatch_binding` is a disjoint authentic SIR original containing unchanged full IdentityEnvelope, exact selected arguments/canonical digest, permission and original nullable caller. Current delivery is independently authenticated and preserves the actual caller; RepositoryBinding or current panel state cannot fabricate identity. Domain/central composition resolves actual whole thread/revision window, original body/version, issued reply observation and common receipt/work/outcome. Accepted work is an actual nonterminal acceptance snapshot without terminal receipt; unknown effects remain reconciliation-only and replay cannot repost. Live original/resolved-value mutation fails closed. Physical original/observation custody and native authority remain independently pending.
+
+The new `pm.sir.forge_thread_reply_error_projection.v1` is an internal nonpersisted safe disclosure projection, not a receipt/error store. It binds the actual unchanged Forge command error record and outcome error reference to the exact original request/identity/caller and nullable UI error. No provider-code default or normalization is inferred. Genuine cancelled responses may retain owner error/partial effects/recovery while common UI error is null. The native final-disclosure adapter authenticates the actual source error and projection; matching synthetic records or digest values establish no native proof.
+
 
 For exactly `cmd.forge.pipeline.cancel`, `Plans/forge_cancel_selected_contracts.schema.json#/$defs/dispatch_binding` is a disjoint authentic SIR original containing actual full identity, selected request, canonical digest, permission and original caller context. Shared response composition resolves actual state-fence/revalidation/observation, receipt/work, original dispatch and current caller/disclosure, rejecting late mutation and replayed effects. Existing Full Thread identity and central outcome grammars remain unchanged. Actual original and observation custody remain physical-registration-pending; a static match does not authenticate the issuer or enable a native handler.
 
