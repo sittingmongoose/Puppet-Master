@@ -960,6 +960,28 @@ STORAGE_VALUE_KEYED_COMPOSITION_MEMBERS = {
         "checkpoint",
     ),
 }
+# The key shapes of each keyed composition, in the order of STORAGE_VALUE_KEYED_COMPOSITION_MEMBERS
+# (cycle-2 residual R4-04): the row's key_shape parts must equal them, so a key-shape reorder with an
+# unchanged oneOf is rejected as a member order mismatch.
+STORAGE_VALUE_KEYED_COMPOSITION_KEY_SHAPES = {
+    "coordination_event_records": (
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted",
+        "coordination.debug_mirror_exported",
+    ),
+    "coordination_read_model_projections": (
+        "coordination_agent_projection.v1:{project_id}:{agent_id}",
+        "coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}",
+        "coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}",
+        "coordination_snapshot_projection.v1:{project_id}:{projection_scope}",
+        "projector.checkpoint.coordination:{project_id}",
+    ),
+}
 # SP-278 read token (Plans/storage-plan.md section 2.3.1, 2026-09-23; amended 2026-09-24, DL-076):
 # a closed, non-secret read selector of Storage identity, relative control names, hashes,
 # generation and frontier. The whole token adds the live redb_snapshot_id of one read transaction;
@@ -6553,6 +6575,13 @@ def storage_value_keyed_composition_failures(family: dict[str, Any], *, row_path
             expected=expected_members,
             actual=[name for name, _member in members],
         )
+    expected_key_shapes = list(STORAGE_VALUE_KEYED_COMPOSITION_KEY_SHAPES.get(str(family_id), ()))
+    if key_shapes != expected_key_shapes:
+        fail(
+            "storage_value_registry_keyed_composition_member_order_mismatch",
+            expected_key_shapes=expected_key_shapes,
+            actual_key_shapes=key_shapes,
+        )
     if family.get("compatibility_key_shapes") != []:
         fail("storage_value_registry_keyed_composition_compatibility_keys_present")
     owner_path = str(family.get("value_schema_ref", "")).split("#", 1)[0]
@@ -8758,6 +8787,16 @@ def storage_value_representation_self_test_checks(
         errors(keyed_order, "keyed-member-order"),
         "storage_value_registry_keyed_composition_member_order_mismatch",
         family_id="coordination_read_model_projections",
+    )
+    keyed_key_shape = clone_registry()
+    key_shape_row = family_of(keyed_key_shape, "coordination_event_records")
+    key_shape_parts = [part.strip() for part in str(key_shape_row["key_shape"]).split("|")]
+    key_shape_parts[0], key_shape_parts[1] = key_shape_parts[1], key_shape_parts[0]
+    key_shape_row["key_shape"] = " | ".join(key_shape_parts)
+    checks["keyed_composition_key_shape_order_drift_rejected"] = has(
+        errors(keyed_key_shape, "keyed-key-shape-order"),
+        "storage_value_registry_keyed_composition_member_order_mismatch",
+        family_id="coordination_event_records",
     )
     keyed_relabelled = clone_registry()
     relabelled_row = family_of(keyed_relabelled, "coordination_read_model_projections")
