@@ -1,0 +1,147 @@
+{
+  "cycle": 2,
+  "reviewed_commit": "74820a6a964e7052dc1d0477f1a31622f4fd63e2",
+  "previous_reviewed_commit": "74c79b5bf900b37a7437ac3999bf546fca7b1827",
+  "base": "63cf2cb97f936c91dd7bb5c585d9a35d8409ed61",
+  "scope": "DL-066 cycle-2 rule: only the rows the 13 cycle-1 findings touched, and whatever sits next to each repair.",
+  "verdict": "ready",
+  "checks_run": [
+    "git fetch origin plans/replan-v8-a1-20260925: origin matches 74820a6a9; origin/main is still 63cf2cb97f. The 13 unit IDs are still unclaimed on every other origin/* ref.",
+    "Range 74c79b5bf..74820a6a9 has 14 commits: eac37db16 (the cycle-1 form, byte-identical to the reviewer's review-cycle-1.json, sha256 7b53bf0d…), then one commit per finding. Each commit touches only the paths its finding names.",
+    "git diff --name-only 74c79b5bf 74820a6a9 names only: the report, STATUS.md, a1/A1-source-checks.json, a1/SHA256SUMS, a1/A1-full-outputs.SHA256SUMS (new), a1/review-cycle-1.json (new), Plans/storage-plan.md, the 87 Plans/_shards/storage-plan files, and Plans/.plan_index dependencies.json, doc_cards.json and plan_units.jsonl. Every one is a path the findings touch; node_readiness_report.json is unchanged.",
+    "On a fresh export of 74820a6a9 (made after the container restart): sha256sum -c a1/SHA256SUMS gives 4 OK; sha256sum -c a1/A1-full-outputs.SHA256SUMS gives 23 OK (status only; the files live in another scratchpad directory and were not read).",
+    "Shard check PASS (99 documents, 2,770 shards). pm-plan-index.py validate: stale_generated_index_artifact for node_readiness_report.json (the accepted exception) plus the environmental no-.git retention-baseline row; 6,755 PlanUnits and 26,413 acceptance units.",
+    "Regeneration check for A1-C1-08 and A1-C1-09: pm-shard-plans.py --generate and pm-plan-index.py generate on a copy of the export reproduce every committed shard, plan_units.jsonl and acceptance_units.jsonl exactly; coverage_report, dependencies and doc_cards differ only in generated_at_utc. The storage-plan.md diff is exactly line 523 and SP-321's depends_on entry.",
+    "Every repaired row was read against its cycle-1 suggested repair: the report (sections 2, 4, 5, 7, Open questions, Reseal request R-2, Landing prerequisites, Evidence, Cost), STATUS.md (Where it stands, Open questions, Cost, prerequisites, landing block, Reseal items, Next) and a1/A1-source-checks.json (validated as JSON). The quoted plan estimate was checked against origin/main step-08-remaining-source-work-plan-20260924.md line 117, and PuppetMaster-Packages origin/main (3928dd6) was re-fetched."
+  ],
+  "findings": [
+    {
+      "finding_id": "A1-C2-01",
+      "file": "reports/event-authority-20260911/replan-v8/A1-canonical-placement-20260925.md; reports/event-authority-20260911/replan-v8/STATUS.md",
+      "kind": "omission",
+      "severity": "note",
+      "claim": "This is point (d), a side effect of repairing A1-C1-05. Replacing the whole prerequisite (report line 221, now the \"If `main` has moved past `63cf2cb97f`\" bullet) removed the sentence \"`/families/294` stays the append point only while no other landing adds a registry row, and `45e383b2…` is the registry's expected hash only at `63cf2cb97f`.\" The new rule covers its substance: a registry that moved gives a different merged-registry hash in rebase_check, which sends the lander on the full route. But no text now says why the hash would change. Separately, the unchanged STATUS landing comment \"sha256sum Plans/storage_value_registry.json   # 45e383b2… while main is at 63cf2cb97f\" (in the code block next to the A1-C1-06 repair) cannot hold as written: A0 and the process answers must land first, so `main` will no longer be at `63cf2cb97f`, although the registry itself will be unchanged.",
+      "verified_evidence": "git diff 74c79b5bf 74820a6a9 -- reports/event-authority-20260911/replan-v8/A1-canonical-placement-20260925.md: the removed text \"`/families/294` stays the append point only while no other landing adds a registry row, and `45e383b2…` is the registry's expected hash only at `63cf2cb97f`.\"; reports/event-authority-20260911/replan-v8/STATUS.md at 74820a6a9 keeps \"#   sha256sum Plans/storage_value_registry.json   # 45e383b2aedf8056cc21d300d96d44c3088e91f93d0d8f3a46415e965db94c13 while main is at 63cf2cb97f\"; A0 (632f557c0) and process answers (616f12bfd) are not ancestors of origin/main 63cf2cb97f.",
+      "suggested_repair": "The fact should come back as one sentence. In the report's \"If `main` has moved past `63cf2cb97f`\" bullet and in the same bullet of STATUS.md, after \"Never edit outputs by hand.\" insert: \"`/families/294` stays the append point, and `45e383b2…` the registry's expected hash, only while no landing after `63cf2cb97f` changes `Plans/storage_value_registry.json`; if one does, `rebase_check.py` reports a different merged-registry hash and the full route above applies.\" In STATUS.md change the comment \"# 45e383b2aedf8056cc21d300d96d44c3088e91f93d0d8f3a46415e965db94c13 while main is at 63cf2cb97f\" to \"# 45e383b2aedf8056cc21d300d96d44c3088e91f93d0d8f3a46415e965db94c13 while main's storage_value_registry.json is 63cf2cb97f's\"."
+    },
+    {
+      "finding_id": "A1-C2-02",
+      "file": "reports/event-authority-20260911/replan-v8/A1-canonical-placement-20260925.md; reports/event-authority-20260911/replan-v8/a1/SHA256SUMS",
+      "kind": "omission",
+      "severity": "note",
+      "claim": "This is next to the A1-C1-07 repair. The Evidence table and a1/SHA256SUMS now cover \"the four bundle files above\", but a1/ holds five data files. `a1/review-cycle-1.json`, added at eac37db16, has no Evidence row and no SHA256SUMS line, and the cycle-2 form will be the same unless it is added.",
+      "verified_evidence": "Export of 74820a6a9: a1/ contains A1-full-outputs.SHA256SUMS, A1-source-checks.json, author-decisions-20260925.md, citation-census.json, review-cycle-1.json and SHA256SUMS. SHA256SUMS has 4 lines (A1-source-checks.json, author-decisions-20260925.md, citation-census.json, A1-full-outputs.SHA256SUMS). Report Evidence row: \"| `a1/SHA256SUMS` | SHA-256 of the four bundle files above (`sha256sum -c SHA256SUMS` in `a1/`) |\". A0's Evidence table lists its review forms (\"`a0/review-cycle-1.json` | The cycle-1 blind review form ...\").",
+      "suggested_repair": "In the report's Evidence table, before the `a1/SHA256SUMS` row, add \"| `a1/review-cycle-1.json` | The cycle-1 blind review form on `74c79b5bf` (13 findings: 8 should_fix, 5 notes; verdict ready), each repaired in its own commit |\" and \"| `a1/review-cycle-2.json` | The cycle-2 re-review of the repaired rows on `74820a6a9`: verdict ready (4 notes); the cycle cap is reached |\". Change \"SHA-256 of the four bundle files above\" to \"SHA-256 of the six bundle files above\". Add both forms to a1/SHA256SUMS and re-run `sha256sum -c SHA256SUMS` in `a1/`."
+    },
+    {
+      "finding_id": "A1-C2-03",
+      "file": "reports/event-authority-20260911/replan-v8/a1/A1-full-outputs.SHA256SUMS; reports/event-authority-20260911/replan-v8/a1/A1-source-checks.json; reports/event-authority-20260911/replan-v8/A1-canonical-placement-20260925.md",
+      "kind": "citation",
+      "severity": "note",
+      "claim": "This is part of the A1-C1-07 repair. raw_evidence.consistency_rerun says \"the task-1 consistency check (check_filled.py; 373 checks, 0 failed) was re-run\", and report line 133 names `check_filled.py`. But A1-full-outputs.SHA256SUMS pins only the wrapper `checks/list_consistency_checks.py`, its outputs, the input hashes and the run time. The checker that produced the 373 results is not pinned, so the output hash cannot be tied to a checker version.",
+      "verified_evidence": "74820a6a9 reports/event-authority-20260911/replan-v8/a1/A1-full-outputs.SHA256SUMS: 23 lines, including \".../a1-compile/checks/list_consistency_checks.py\", \".../checks/consistency-filled-rerun.out\", \".../checks/consistency-filled-rerun-list.out\", \".../checks/filled-inputs-before-rerun.sha\" and \".../checks/consistency-rerun-time.txt\"; no line names check_filled.py. `sha256sum -c` on the list gives 23 OK (status only; the files were not read).",
+      "suggested_repair": "Add the SHA-256 line of the `check_filled.py` that ran at 14:07Z to a1/A1-full-outputs.SHA256SUMS, after the `list_consistency_checks.py` line, and refresh a1/SHA256SUMS. If the file is no longer available, append to raw_evidence.consistency_rerun: \"; the checker check_filled.py itself is not pinned\"."
+    },
+    {
+      "finding_id": "A1-C2-04",
+      "file": "reports/event-authority-20260911/replan-v8/A1-canonical-placement-20260925.md; reports/event-authority-20260911/replan-v8/STATUS.md; reports/event-authority-20260911/replan-v8/a1/A1-source-checks.json",
+      "kind": "claim",
+      "severity": "note",
+      "claim": "This is point (e). After cycle 2, the report's \"**Branch state.** Compiled on the branch, pending the blind review of the canon branch.\", STATUS's \"**Where it stands.** Compiled on the branch, pending the blind review.\", \"- Next: one blind form-driven review of the canon branch, cycle cap two, then the handover for landing.\" and \"## Next\" (\"The blind form-driven review of the A1 canon branch, then its handover ...\"), and A1-source-checks.json status \"A1_COMPILED_ON_BRANCH_PENDING_CANON_BRANCH_BLIND_REVIEW\" and canon_branch_blind_review \"PENDING (cycle cap two)\" all become false. The coordinator will update them in the final STATUS commit, so exact wording is given here.",
+      "verified_evidence": "74820a6a9 reports/event-authority-20260911/replan-v8/A1-canonical-placement-20260925.md line 9; reports/event-authority-20260911/replan-v8/STATUS.md \"Where it stands\" and \"## Next\"; reports/event-authority-20260911/replan-v8/a1/A1-source-checks.json \"status\" and \"repository_checks.canon_branch_blind_review\".",
+      "suggested_repair": "Report line 9: \"**Branch state.** Compiled on the branch and reviewed. Task 1, the owner prose, is `94585533b`; task 2, the companions, is `48a2b6840`; this report and its bundle followed at `74c79b5bf`. The blind form-driven review of the canon branch ran two cycles, the cap: cycle 1 on `74c79b5bf` (`a1/review-cycle-1.json`) was ready with 8 should_fix findings and 5 notes, each repaired in its own commit (`a4485fcd1` to `74820a6a9`); cycle 2 on `74820a6a9` (`a1/review-cycle-2.json`) was ready with 4 notes. `Plans/.plan_index/node_readiness_report.json` is deliberately left at `main`'s version; the lander regenerates it (see \"Landing prerequisites\").\" STATUS: replace \"**Where it stands.** Compiled on the branch, pending the blind review.\" with \"**Where it stands.** Compiled on the branch and reviewed; ready to land after A0 and the process answers.\"; replace \"The report and its `a1/` bundle are the commit after them.\" with \"The report and its `a1/` bundle followed at `74c79b5bf`, then one repair commit per review finding.\"; replace \"- Next: one blind form-driven review of the canon branch, cycle cap two, then the handover for landing.\" with \"- The blind form-driven review of the canon branch ran two cycles, the cap: cycle 1 on `74c79b5bf` ready (8 should_fix, 5 notes, each repaired in its own commit), cycle 2 on `74820a6a9` ready (4 notes). The forms are `a1/review-cycle-1.json` and `a1/review-cycle-2.json`.\"; replace the first sentence of \"## Next\" with \"The handover of the A1 canon branch for landing, after A0 and the process answers.\" A1-source-checks.json: set \"status\" to \"A1_COMPILED_ON_BRANCH_REVIEWED_READY_FOR_LANDING\" and repository_checks.canon_branch_blind_review to \"DONE: cycle 1 on 74c79b5bf ready (8 should_fix, 5 notes; repaired a4485fcd1..74820a6a9); cycle 2 on 74820a6a9 ready (4 notes); cycle cap reached\"; refresh a1/SHA256SUMS."
+    }
+  ],
+  "cycle_1_dispositions": [
+    {
+      "finding_id": "A1-C1-01",
+      "disposition": "repaired",
+      "commit": "a4485fcd1",
+      "evidence": "Report section 5 sentence, Open questions row and A1-source-checks.json open_after_a1 item added in the suggested words; a1/SHA256SUMS refreshed and verifies."
+    },
+    {
+      "finding_id": "A1-C1-02",
+      "disposition": "repaired",
+      "commit": "d011441d8",
+      "evidence": "The Q-05/Q-06/Q-11/Q-12 sentence now ends \"Q-10 stays open (Open questions).\"; the Q-10 row was added to the report; STATUS Open questions carries A0 Q-10 with the same content."
+    },
+    {
+      "finding_id": "A1-C1-03",
+      "disposition": "repaired",
+      "commit": "bc4f4e3f9",
+      "evidence": "Report lines 38 and 223, the STATUS 'Where it stands' bullet, the deleted prerequisite, the deleted 'Jared merges' sentence in Next, and A1-source-checks.json packages_branch_merged_to_main true and landing_prerequisites.packages_branch all match the suggestion. PuppetMaster-Packages origin/main is still 3928dd6 after a fresh fetch."
+    },
+    {
+      "finding_id": "A1-C1-04",
+      "disposition": "repaired",
+      "commit": "f1f445f9d",
+      "evidence": "R-2 paragraph and STATUS reseal sentence extended in the suggested words."
+    },
+    {
+      "finding_id": "A1-C1-05",
+      "disposition": "repaired with side effect",
+      "commit": "739b8eeb9",
+      "evidence": "The report bullet, STATUS bullet and landing_prerequisites.if_main_moved carry the suggested text verbatim. Side effect: the '/families/294 ... 45e383b2… only at 63cf2cb97f' qualifier was removed; see A1-C2-01 (note)."
+    },
+    {
+      "finding_id": "A1-C1-06",
+      "disposition": "repaired",
+      "commit": "e98f8ad37",
+      "evidence": "STATUS landing block: force-with-lease push, then restore of Plans/.plan_index, worktree remove, branch -d and remote branch delete, with the lock released last, as CLAUDE.md requires."
+    },
+    {
+      "finding_id": "A1-C1-07",
+      "disposition": "repaired",
+      "commit": "d2ba9d932",
+      "evidence": "a1/A1-full-outputs.SHA256SUMS added (23 lines, sha256sum -c 23 OK) and listed in a1/SHA256SUMS; raw_evidence added; report line 133 and Evidence table updated. The additions in (a) are accepted. Adjacent notes: A1-C2-02 and A1-C2-03."
+    },
+    {
+      "finding_id": "A1-C1-08",
+      "disposition": "repaired",
+      "commit": "2cbb8cc40",
+      "evidence": "storage-plan.md line 523 now carries the suggested sentences exactly. The _shards/storage-plan and .plan_index changes are regeneration only: regenerating on a copy of the 74820a6a9 export gives identical shards, identical plan_units.jsonl and acceptance_units.jsonl, and differs only in generated_at_utc in coverage_report, dependencies and doc_cards. The report and task_2_checks wording in (b) is accurate; counts are unchanged."
+    },
+    {
+      "finding_id": "A1-C1-09",
+      "disposition": "repaired",
+      "commit": "415bed8f1",
+      "evidence": "SP-321 depends_on SP-319 -> SP-317; dependencies.json edge 'to' SP-319 -> SP-317 plus generated_at_utc only; plan-index validate finds no cycle and no missing target."
+    },
+    {
+      "finding_id": "A1-C1-10",
+      "disposition": "repaired",
+      "commit": "6edfcd34a",
+      "evidence": "The Q-U4-11 and U3-Q10 rows were added to Open questions in the suggested words."
+    },
+    {
+      "finding_id": "A1-C1-11",
+      "disposition": "repaired",
+      "commit": "fd4596f70",
+      "evidence": "Cost filled in the report, STATUS (with the '**Cost.**' lead in (c), which matches A0's section) and A1-source-checks.json. The plan estimate quoted (1.5 to 2.5 agent-days, 0.8M to 1.2M tokens) matches step-08-remaining-source-work-plan-20260924.md line 117. The agent-hour and token figures were not verified."
+    },
+    {
+      "finding_id": "A1-C1-12",
+      "disposition": "repaired",
+      "commit": "c31e02b1d",
+      "evidence": "landing_check_expectation now reads 'exit 1 with 0 blocking items; ...', which agrees with STATUS; a1/SHA256SUMS refreshed."
+    },
+    {
+      "finding_id": "A1-C1-13",
+      "disposition": "repaired",
+      "commit": "74820a6a9",
+      "evidence": "Report section 4 now reads \"the Stop root acceptance `ab69b0a9…` (its `acceptance.json`; manifest `dc58f7d2…`)\"."
+    }
+  ],
+  "coordinator_questions": {
+    "a_A1_C1_07_additions": "Accepted. Listing A1-full-outputs.SHA256SUMS in a1/SHA256SUMS and giving it an Evidence row is right. raw_evidence.location and consistency_rerun are accurate and agree with the report. Re-running check_filled.py and pinning its output is an acceptable substitute for the lost original output, with the scratch path and the SHA-256 list as the durable record. The checker itself is not pinned (A1-C2-03, note), and the table does not yet cover review-cycle-1.json (A1-C2-02, note). The claim that the filled drafts equal 94585533b byte for byte was not verified, because the input-hash file sits in another scratchpad directory.",
+    "b_A1_C1_08_wording": "Accepted. Both statements are true: line 523 was reworded after review, and the counts are unchanged.",
+    "c_A1_C1_11_cost_lead": "Accepted. '**Cost.**' matches the form of A0's STATUS section.",
+    "d_removed_append_point_fact": "The substance is covered by the new rule, because any registry change gives a different merged-registry hash in rebase_check and sends the lander on the full route. It should still come back as one sentence, and the STATUS comment 'while main is at 63cf2cb97f' should be corrected, since main will have moved when A0 lands. Exact words are in A1-C2-01 (note).",
+    "e_branch_state_wording": "Yes. Exact wording for the report's Branch state line, STATUS's Where it stands and Next, and A1-source-checks.json status and canon_branch_blind_review is in A1-C2-04 (note)."
+  },
+  "not_checked": [
+    "The contents of the 23 files listed in a1/A1-full-outputs.SHA256SUMS (another scratchpad directory): only their SHA-256 status was checked. So the 373/0 result and the byte-identity of the filled drafts to 94585533b are taken from the report.",
+    "The agent-hour and output-token figures in the cost statements.",
+    "Rows the cycle-1 findings did not touch (DL-066 cycle-2 scope), and pm-landing-check.py (needs a full checkout with history, the recorded baseline and the gitignored receipt)."
+  ]
+}
