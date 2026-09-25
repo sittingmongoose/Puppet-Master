@@ -595,7 +595,7 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Com
 |---|---|---|---|
 | Project open | IndexBuilder `build_full` or `validate` | Project-ready signal | project_id + current anchor -> validation or full build |
 | Git fetch (remote) | IndexBuilder `build_incremental` | New commits detected | `old_anchor..new_HEAD` diff -> dirty paths -> incremental rebuild |
-| `cmd.search.rebuild_regex_index` | IndexBuilder `build_full` | User action or command | project_id -> full rebuild |
+| `cmd.search.rebuild_index` | IndexBuilder `build_full` | User action or command | project_id -> full rebuild |
 | Startup recovery | IndexSnapshot `load` | project open / app restart | highest valid generation -> checksum validation -> mmap / rebuild |
 | IndexBuilder completion | ArcSwap publish | New generation ready | new `IndexSnapshot` -> atomic pointer swap through the `arc-swap` crate's production-proven, wait-free read-mostly `ArcSwap<T>` pattern used by tokio, hyper, and other production Rust projects |
 | Status bar | IndexBuilder state | Build or refresh lasts >2s | build_state + progress -> `Indexing` / `Refreshing index` indicator |
@@ -2469,7 +2469,7 @@ plan_unit_id: WM-029
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: Search-panel regex, status-bar Indexing / Refreshing index, cmd.search.rebuild_regex_index, cmd.search.evict_remote_cache, and cmd.search.clear_all_remote_caches expose index state and cache control without re-owning storage or remote correctness.
+canonical_text: Search-panel regex, status-bar Indexing / Refreshing index, cmd.search.rebuild_index, cmd.search.evict_remote_cache, and cmd.search.clear_all_remote_caches expose index state and cache control without re-owning storage or remote correctness. The historical cmd.search.rebuild_regex_index spelling is source lineage only, not a registered command or alias.
 gui_related: true
 gui_classification_reason: The unit covers user-visible Search panel regex behavior, status-bar indicators, and cache control commands.
 split_recommended: false
@@ -2483,6 +2483,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - WM-029 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
+- The IndexBuilder build_full edge uses the existing cmd.search.rebuild_index identity from the UI catalog and production wiring; the historical rebuild_regex_index spelling supplies no alternate dispatch or alias.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -2501,6 +2502,7 @@ source_lineage:
 preserved_exact_tokens:
 - Search-panel regex query
 - regex ON
+- cmd.search.rebuild_index
 - cmd.search.rebuild_regex_index
 - Indexing
 - Refreshing index
@@ -2511,7 +2513,8 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md'
-compatibility_only_notes: []
+compatibility_only_notes:
+- cmd.search.rebuild_regex_index is retained source lineage only, not a command or alias; the active command is cmd.search.rebuild_index.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/Wiring_Matrix.md

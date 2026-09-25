@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L487-L605
 
-Source SHA256: `4eec7424ab8aa240f6c59800270256e4f9ee148fa1ce137a010d94f858996170`
+Source SHA256: `aeef65e96c82bbe9268797e05aafcfd3e7c01907536be6b1486110e305e273ae`
 
 ---
 
@@ -119,7 +119,7 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Com
 |---|---|---|---|
 | Project open | IndexBuilder `build_full` or `validate` | Project-ready signal | project_id + current anchor -> validation or full build |
 | Git fetch (remote) | IndexBuilder `build_incremental` | New commits detected | `old_anchor..new_HEAD` diff -> dirty paths -> incremental rebuild |
-| `cmd.search.rebuild_regex_index` | IndexBuilder `build_full` | User action or command | project_id -> full rebuild |
+| `cmd.search.rebuild_index` | IndexBuilder `build_full` | User action or command | project_id -> full rebuild |
 | Startup recovery | IndexSnapshot `load` | project open / app restart | highest valid generation -> checksum validation -> mmap / rebuild |
 | IndexBuilder completion | ArcSwap publish | New generation ready | new `IndexSnapshot` -> atomic pointer swap through the `arc-swap` crate's production-proven, wait-free read-mostly `ArcSwap<T>` pattern used by tokio, hyper, and other production Rust projects |
 | Status bar | IndexBuilder state | Build or refresh lasts >2s | build_state + progress -> `Indexing` / `Refreshing index` indicator |
