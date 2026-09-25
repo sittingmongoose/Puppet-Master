@@ -16837,6 +16837,7 @@
         "Plans/shared_integration_runtime_fixtures.json",
         "Plans/shared_runtime_command_contract_fixtures.json",
         "Plans/shared_runtime_command_contracts.schema.json",
+        "Plans/sir_git_stash_apply_dispatch.schema.json",
         "Plans/sir_jj_recovery_dispatch.schema.json",
         "Plans/storage-plan.md",
         "Plans/storage_value_registry.json",
@@ -16856,7 +16857,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 3268,
+      "line_count": 3272,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 52,
       "plan_unit_ids": [
@@ -16970,7 +16971,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "bcfd62b1c4abb7f15fd4436dbfabf7c7f16fd2764b3ced4c196e9eb336275d16",
+      "sha256": "48bddcc3310dfd05b43dc85c0bbff23336991a6efbd3664bef9fc01b9de50a26",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -17060,6 +17061,8 @@
         "Plans/shared_runtime_command_contract_fixtures.json",
         "Plans/shared_runtime_command_contracts.schema.json",
         "Plans/shared_runtime_contracts.schema.json",
+        "Plans/sir_git_stash_apply_dispatch.schema.json",
+        "Plans/sir_git_stash_apply_dispatch_fixtures.json",
         "Plans/sir_jj_recovery_dispatch.schema.json",
         "Plans/sir_jj_recovery_dispatch_fixtures.json",
         "Plans/storage-plan.md#SP-304",
@@ -17157,6 +17160,7 @@
         "tests/test_pm_auth_handoff_contracts.py",
         "tests/test_pm_capability_ensure_custody.py",
         "tests/test_pm_full_thread_contracts.py",
+        "tests/test_pm_git_stash_apply_response.py",
         "tests/test_pm_installation_update_preferences.py",
         "tests/test_pm_jj_recovery_response.py",
         "tests/test_pm_runtime_identity_scope.py",
@@ -17273,7 +17277,6 @@
         "Plans/source_control_contracts.schema.json",
         "Plans/source_control_selected_operands.schema.json",
         "Plans/touch_closure.json",
-        "future Plans/git_stash_apply_selected.schema.json and its fixture companion",
         "future Product Onboarding native controller",
         "future Product Onboarding owner adapter",
         "future Source Control Slint components",
@@ -17281,7 +17284,6 @@
         "future Source Control checkpoint native handlers",
         "future Source Control manager",
         "future Source Control setup surface and Slint consumer",
-        "future Source Control stash-apply surface, Slint consumer and UI_Command_Catalog row binding",
         "future SourceGraph projector and Slint consumer",
         "future SourceSnapshotAdapter and GitJJClosureValidator",
         "future acceptance harness",
@@ -17296,9 +17298,11 @@
         "future source-control capability resolver and adapters",
         "future source-control context resolver",
         "future source-control facade",
-        "future source-control migration"
+        "future source-control migration",
+        "the `Plans/git_stash_apply_selected.schema.json` and `Plans/git_stash_apply_selected_fixtures.json` companion, and the `Plans/sir_git_stash_apply_dispatch.schema.json` and `Plans/sir_git_stash_apply_dispatch_fixtures.json` original/delivery/error binding",
+        "the existing UI_Command_Catalog row binding and Wiring_Matrix stash-apply registration; the future Source Control stash-apply surface, Slint consumer and handler"
       ],
-      "line_count": 1934,
+      "line_count": 1941,
       "path": "Plans/Source_Control_System.md",
       "plan_unit_count": 24,
       "plan_unit_ids": [
@@ -17356,7 +17360,7 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "e9660aafd57edabb43001cc18a70034d69318de30539324877fec2d038a15116",
+      "sha256": "1437e3e3c1e3472f4ab0120b93019c9925ac09ee877d4390fd994e1bf8203b01",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 24
@@ -17406,7 +17410,6 @@
         "future Forgejo/Gitea transport/API/security/currentness and repository-automation handoff tests",
         "future IPC and credential security tests",
         "future Slint panel fixtures",
-        "future `Plans/git_stash_apply_selected.schema.json` request/preview/result defs and their fixture companion",
         "future all-terminal, stale selection, duplicate, lease-loss, interruption and unknown-effect fixtures",
         "future capability revision",
         "future clean-host closure, GC race, merge/currentness, remote trust, credential reattachment, unsafe-config, collision/conflict, and rollback tests",
@@ -17425,7 +17428,6 @@
         "future native pagination, stale-page, anchor-preservation, large-graph, Git/Jujutsu parity, accessibility, and frame-pacing tests",
         "future normalized roundtrip",
         "future owner-return and protected-auth runtime fixtures",
-        "no validator surface in this landing: the stash-apply selected-input companion SCS-003 names as pending is not yet materialized, so this unit is stated and not yet falsifiable. `Plans/git_selected_three.schema.json` and `Plans/git_pull_selected.schema.json` are the sibling companions this record already consumes and neither is extended here.",
         "no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. Neither source-control contract file carries an enforcement or gate-list shape, and Plans/Source_Control_System.md is not a sharding_config source, so the shard check never reads this document.",
         "prompt suppression tests",
         "python3 scripts/pm-new-contracts-verify.py",
@@ -17440,14 +17442,16 @@
         "signed catalog currentness tests",
         "source_control_projection fixtures",
         "stale lease tests",
+        "stash-apply tests: unset choice, file-changes-only, file-changes-plus-saved-staged-selections, staged selections not restorable, retained-stash result, no separately acquired stash source, a completed success only with a verified post-apply stash source, and no pop/drop behavior",
         "tests/test_pm_onboarding_phases.py",
         "tests/test_pm_source_control_response.py",
         "tests/test_pm_source_control_selected_operands.py",
         "tests/test_pm_source_control_selected_response.py",
+        "the `Plans/git_stash_apply_selected.schema.json` request/stash-source/preview/observation/result defs and their fixture companion",
+        "the stash-apply selected-input companion SCS-003 names is now materialized, so this unit is falsifiable through `scripts/pm_git_stash_apply_selected.py`, `scripts/pm_git_stash_apply_response.py` and `tests/test_pm_git_stash_apply_selected.py`; `Plans/git_selected_three.schema.json` and `Plans/git_pull_selected.schema.json` are the sibling companions this record already consumes and neither is extended here.",
         "timeout/reconcile",
         "webhook replay",
-        "writer and credential lease fixtures",
-        "{'future stash-apply tests': 'unset choice, file-changes-only, file-changes-plus-saved-staged-selections, staged selections not restorable, retained-stash result, and no pop/drop behavior'}"
+        "writer and credential lease fixtures"
       ]
     },
     {
@@ -19067,7 +19071,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "be9b225e517e8eaa67b1b0ffd0cdfabfaa7b7d0076afffb7d34c98a98cf3dfa3",
+      "sha256": "5227ce400b12fbef17736aa5e1d2e14cd417be676ba0cedc18c3167b3d230c1f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163,
@@ -20133,7 +20137,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T19:05:45Z",
+  "generated_at_utc": "2026-09-25T19:09:30Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

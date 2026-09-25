@@ -57810,9 +57810,10 @@
         "cmd.source_control.stash.apply dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.source_control.stash.apply must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.source_control.stash.apply must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "cmd.source_control.stash.apply availability class is selection (stash_selected) with confirmation class none; disabled reasons come only from the closed set: blocked_state_required, stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)"
+        "cmd.source_control.stash.apply availability class is selection (stash_selected) with confirmation class none; disabled reasons come only from the closed set: blocked_state_required, stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)",
+        "Validate the required explicit DL-096 restoration choice, the immutable selected stash object and the native-qualified original preview/effect/result through SCS-003/SCS-024 and SIR-042; no default mode, current-selection substitution, pop/drop/delete, borrowed pull confirmation policy or new handler/event follows."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/GitHub_Integration.md; Plans/WorktreeGitImprovement.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/GitHub_Integration.md; Plans/WorktreeGitImprovement.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Typed/static joins do not establish execution, native admission, physical custody or production certification; exact selected-input owner: Plans/Source_Control_System.md#SCS-003 and #SCS-024.",
       "state_selector": "state.cmd_source_control_stash_apply.enabled",
       "disabled_reason_projection": "state.cmd_source_control_stash_apply.disabled_reason",
       "effect_contract": {
@@ -57862,7 +57863,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.source_control.stash.apply records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+      ],
+      "request_schema_ref": "Plans/git_stash_apply_selected.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/git_stash_apply_selected.schema.json#/$defs/result"
     },
     "catalog.source_control_stash_create": {
       "ui_element_id": "catalog.source_control_stash_create",

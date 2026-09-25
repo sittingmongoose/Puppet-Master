@@ -248,7 +248,9 @@ acceptance_criteria:
     the separate git_pull_selected companion above. `cmd.source_control.stash.apply` keeps its immutable selected
     stash object, original-request/currentness, FileSafe and Git-adapter ownership, and its staged-state restoration
     choice is the explicit DL-096 choice recorded in SCS-024; that selected object, the actual conflict/dependency/effect
-    preview and the chosen restoration mode remain one pending typed companion with its fixtures, not merely a missing
+    preview and the chosen restoration mode are materialized as the closed `Plans/git_stash_apply_selected.schema.json`
+    request/stash-source/preview/observation/result companion with its fixture pack and the separately typed
+    `Plans/sir_git_stash_apply_dispatch.schema.json` original/delivery/error binding, not merely a missing
     native implementation.
     These concrete commands are not silently inserted into
     the neutral command family. Stash apply is not pop/drop, branch creation does not admit branch deletion, and
@@ -1843,9 +1845,9 @@ owner_hints: [Plans/Source_Control_System.md, Plans/FinalGUISpec.md, Plans/Azure
 
 ## DL-096 Accepted Stash-Apply Staged-State Choice - 2026-09-25
 
-This addendum compiles the DL-096 answer as accepted planning requirements for the existing stash apply flow. It admits no command, request meaning, handler, event, store, setting or runtime capability: `cmd.source_control.stash.apply` keeps its current owner and row with `handler_unavailable`, and `cmd.source_control.stash.pop` and `cmd.source_control.stash.drop` keep their existing two-step destructive confirmation and meaning. The selected-input companion SCS-003 records as pending stays pending; this unit fixes the choice that companion must carry and the behavior the apply flow must show. Git keeps its index, staging and stash semantics, and Jujutsu gains no index or stash semantic. Whether the choice renders as an action parameter or through an existing confirm surface is a UI/catalog landing decision, not a product choice made here.
+This addendum compiles the DL-096 answer as accepted planning requirements for the existing stash apply flow. It admits no command, request meaning, handler, event, store, setting or runtime capability: `cmd.source_control.stash.apply` keeps its current owner and row with `handler_unavailable`, and `cmd.source_control.stash.pop` and `cmd.source_control.stash.drop` keep their existing two-step destructive confirmation and meaning. The selected-input companion SCS-003 records as pending is materialized as `Plans/git_stash_apply_selected.schema.json` with its fixture companion and the `Plans/sir_git_stash_apply_dispatch.schema.json` original/delivery/error binding; this unit fixes the choice that companion carries and the behavior the apply flow must show. Git keeps its index, staging and stash semantics, and Jujutsu gains no index or stash semantic. Whether the choice renders as an action parameter or through an existing confirm surface is a UI/catalog landing decision, not a product choice made here.
 
-ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Source_Control_System.md
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/git_stash_apply_selected.schema.json, ContractName:Plans/sir_git_stash_apply_dispatch.schema.json
 
 ### SCS-024 - Explicit Stash-Apply Staged-State Restoration Choice
 
@@ -1894,23 +1896,28 @@ acceptance_criteria:
     stash semantic is added by this decision.
   - >-
     Planning acceptance admits no command, request meaning, enum, handler availability, event, store, setting or native
-    behavior: the row stays `handler_unavailable`, the pending selected-input companion in SCS-003 remains a follow-up
-    obligation, and no WorkNode or NodeSeed is created.
+    behavior: the row stays `handler_unavailable`, the selected-input companion SCS-003 names is materialized as
+    `Plans/git_stash_apply_selected.schema.json` with its fixture companion and the `Plans/sir_git_stash_apply_dispatch.schema.json`
+    original/delivery/error binding, and no WorkNode or NodeSeed is created.
 validation_surfaces:
   - >-
-    no validator surface in this landing: the stash-apply selected-input companion SCS-003 names as pending is not yet
-    materialized, so this unit is stated and not yet falsifiable. `Plans/git_selected_three.schema.json` and
+    the stash-apply selected-input companion SCS-003 names is now materialized, so this unit is falsifiable through
+    `scripts/pm_git_stash_apply_selected.py`, `scripts/pm_git_stash_apply_response.py` and
+    `tests/test_pm_git_stash_apply_selected.py`; `Plans/git_selected_three.schema.json` and
     `Plans/git_pull_selected.schema.json` are the sibling companions this record already consumes and neither is
     extended here.
-  - future `Plans/git_stash_apply_selected.schema.json` request/preview/result defs and their fixture companion
-  - future stash-apply tests: unset choice, file-changes-only, file-changes-plus-saved-staged-selections, staged selections not restorable, retained-stash result, and no pop/drop behavior
+  - the `Plans/git_stash_apply_selected.schema.json` request/stash-source/preview/observation/result defs and their fixture companion
+  - >-
+    stash-apply tests: unset choice, file-changes-only, file-changes-plus-saved-staged-selections, staged selections not
+    restorable, retained-stash result, no separately acquired stash source, a completed success only with a verified
+    post-apply stash source, and no pop/drop behavior
 risk_class: silently_chosen_staged_state_or_apply_meaning_drift
 reasoning_tier: high
 context_scope: stash_apply_staged_state_choice
 implementation_surfaces:
   - Plans/Source_Control_System.md
-  - future Plans/git_stash_apply_selected.schema.json and its fixture companion
-  - future Source Control stash-apply surface, Slint consumer and UI_Command_Catalog row binding
+  - the `Plans/git_stash_apply_selected.schema.json` and `Plans/git_stash_apply_selected_fixtures.json` companion, and the `Plans/sir_git_stash_apply_dispatch.schema.json` and `Plans/sir_git_stash_apply_dispatch_fixtures.json` original/delivery/error binding
+  - the existing UI_Command_Catalog row binding and Wiring_Matrix stash-apply registration; the future Source Control stash-apply surface, Slint consumer and handler
 node_compile_hint:
   mode: static_owner_contract_only
   create_worknodes: false

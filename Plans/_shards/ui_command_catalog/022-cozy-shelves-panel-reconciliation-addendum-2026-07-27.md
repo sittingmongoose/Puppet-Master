@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L9726-L10647
 
-Source SHA256: `be9b225e517e8eaa67b1b0ffd0cdfabfaa7b7d0076afffb7d34c98a98cf3dfa3`
+Source SHA256: `5227ce400b12fbef17736aa5e1d2e14cd417be676ba0cedc18c3167b3d230c1f`
 
 ---
 
@@ -171,7 +171,7 @@ These rows resolve the underdefined `cmd.source_control.stash.*` compatibility-f
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md
 
-The existing `cmd.git.commit`, `cmd.source_control.stash.create` and `cmd.source_control.branch.create` rows consume `Plans/git_selected_three.schema.json#/$defs/request` -> `Plans/git_selected_three.schema.json#/$defs/result`, with their exact command discriminator and selected-input semantic joins from SCS-003. The actual owner operation receipt and adapter observation remain required; route/open alone is not mutation success. Existing handlers, availability, confirmation and disabled reasons are unchanged. This typed binding proves neither native admission nor physical observation/original replay custody. This Git-three schema admits neither pull nor stash-apply. Pull has the separate selected companion above; stash-apply preview/index-restoration contracts remain pending.
+The existing `cmd.git.commit`, `cmd.source_control.stash.create` and `cmd.source_control.branch.create` rows consume `Plans/git_selected_three.schema.json#/$defs/request` -> `Plans/git_selected_three.schema.json#/$defs/result`, with their exact command discriminator and selected-input semantic joins from SCS-003. The actual owner operation receipt and adapter observation remain required; route/open alone is not mutation success. Existing handlers, availability, confirmation and disabled reasons are unchanged. This typed binding proves neither native admission nor physical observation/original replay custody. This Git-three schema admits neither pull nor stash-apply. Pull has the separate selected companion above. The existing `cmd.source_control.stash.apply` row consumes `Plans/git_stash_apply_selected.schema.json#/$defs/request` -> `Plans/git_stash_apply_selected.schema.json#/$defs/result` under SCS-003 and the explicit DL-096 choice recorded in SCS-024, through the authentic original and independent delivery binding in `Plans/sir_git_stash_apply_dispatch.schema.json`. The original request must supply one of the two restoration modes for the bound `stash_selected` object; the owner preview shows the file changes, the chosen staged-selection restoration or its explicit non-restoration, the actual conflict and dependency effects and the proposed state; applying retains the stash and the result reports it as still present, so apply never becomes pop, drop or delete. The existing `handler_unavailable` status, `expected_event_types=[]`, `selection (stash_selected)` availability, `Confirmation: none` and the `blocked_state_required`/`stale_projection` disabled reasons are unchanged, and no new handler, event or confirmation policy follows. Whether the choice renders as an action parameter or through the existing confirm surface remains the consumer owner's decision and is not decided here.
 
 ### Worktree and GitHub PR rows
 
