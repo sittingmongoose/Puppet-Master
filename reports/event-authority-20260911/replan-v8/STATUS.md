@@ -42,7 +42,7 @@ The branch touches only `reports/event-authority-20260911/replan-v8/`. It edits 
 **Expected landing check.** Exit 0 or 1. No failure can name a file this branch touches except the new report files, and no check reads them.
 
 **Cloud preview.** `pm-landing-check.py --base origin/main` ran on `c0e9644a57` in the cloud clone, a full checkout, in 3 minutes. It exited 1: nothing stops the landing. The baseline `792d2fb8b1` is current. No row names a path this branch touches. 647 rows are new since the baseline, and all of them are off-branch:
-- Staleness left on `main` by the Step 8(d) landing: Spec Lock `stale_hash` for `Goal_Runtime_System.md` and `storage-plan.md`, and the 143 plan-sharding evidence and plan-graph rows, keyed from their exports.
+- Staleness left on `main` by the Step 8(d) landing: Spec Lock `stale_hash` for `Goal_Runtime_System.md` and `storage-plan.md`, and 143 `artifact_hash_stale` rows in each of the evidence and plan-graph aggregates (132 for the two documents and their 130 shards, 11 for `main`'s own Decision Log rows), keyed from their exports.
 - Rows from the cloud environment, for example `raw_capture_manifest_path_unresolved` on `tests/fixtures/governance/raw_evidence_capture_modes.json`. The NAS path behind `tests/agent_packet_restrictions` does not exist here.
 
 The landing check on the VM is the one that counts.
