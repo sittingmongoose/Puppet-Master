@@ -1,80 +1,109 @@
-STATUS: last completed step: the DL-077 validator amendment landed (`main` `2b73d6b7c0`, pushed 00:24:37Z, record `a7869662e7`), with the validator at `190a86f2...`, the receipt at `dceb7f21...` and the three admission records pinned to assessment `ba9b84f9...`. Landed on `main` before it: Step 9 batch 1 (`41fbecb612`), DL-077 and DL-078 (`8650c2f9e8`), the 8(a) depth assessment with DL-079 to DL-083 (`3ce6eb882c`) and the Step 8 remaining-work plan (`b359936728`). Withdrawn: the compaction PM7 validator branch, because the packet-canon-closure thread already carries a stricter fix of the same hunks (`96ab84f13c`). Next: the Browser pair SP-286 repair round (review cycle 1 found 0 blocking and asks for S-02 to S-10), then its cycle 2; the Browser-created v2-current branch is rebased onto the repaired SP-286 tip after that cycle passes and waits for the exports repair to land. Parked until the exports repair: the 8(d) anchors. Then Step 9 batch 2.
+STATUS: handover, 2026-09-25. The DL-039 Steps 8-9 agent (under the coordinator's thread) stopped on Jared's change of plan: the Event Authority program moves to its own session. Last completed step: the SP-286 repair round (`plans/ea-browser-pair-sp286-20260924` at `d08075c7c7`, pushed). Last landing: the 8(d) anchors (`main` `9507c8d2e8`, record `a6480b0f7c`). No work is in progress and no lock is held.
 
-# DL-039 Steps 8 and 9: progress, 2026-09-24
+# DL-039 Steps 8 and 9: handover, 2026-09-25
 
-Opus agent under the coordinator's thread, continuing the DL-039 step list on Jared's authorization. This file is rewritten after every step; the STATUS line above always names the last completed step.
+## Landed on `main`
 
-## Starting point
-
-- Branch `plans/ea-step08-depth42-20260924`, inherited from the previous session with only its handover note (`20c90b124b`, `step-08-depth42-handover-20260924.md`). It was based on `main` `f1ce058ccd`, rebased onto `ac9c0ad2e4`, and landed at `3ce6eb882c`.
-- Handover evidence in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-handover-20260924/`, verified against the note before use:
-
-| File | SHA-256 | Check |
-|---|---|---|
-| `depth_currentness.py` | `6a6b213a11b6be44f92056f0eea014f6de40b7c7df9edcbc22817745e4b6c7bc` | matches |
-| `depth_currentness.json` | `50a794f9532c22bd945d8574b15afad18f9ee9086ad515f85e037b1339381b56` | matches |
-| `depth_currentness2.json` | `4d19bc83b11638fd25960db9d40412b96d85940db1c5f79eb9671f85105a17f0` | matches |
-
-- Orientation read on `origin/main` `f1ce058ccd`:
-  - DL-039, both prose and PlanUnit;
-  - DL-045 to DL-047 and DL-068 to DL-076;
-  - `NEXT_STEPS_20260910.md` (both copies SHA-256 `85dde9aaaef7c1834fe6df3a5ad5ffed2f383bd0c1cfddf32b0985d789d150e1`);
-  - `takeover-20260923.md`;
-  - the landing records for `a73cb06d10`, `3d391fd297`, `2da97421a1`, `22e516b456`, `9f0da5c2b1`, `566576ea55`, `d7e26ed537` and `f1ce058ccd`.
-
-## Work list
-
-| Item | What | State |
-|---|---|---|
-| 8(a) | Current depth assessment of the 42 registered families at checkpoint `2026-09-11.2` | Landed at `3ce6eb882c`, after a two-cycle blind review and a DL-066 repair round. Assessment SHA-256 `ba9b84f99e0e0761a8b435a16602d4c88d14589ef273f789fd5b92bdbd5849fd`. Totals: 335 PASS, 144 PARTIAL, 13 CONFLICT, 12 ABSENT. Jared's five answers are applied (DL-079 to DL-083). |
-| 8(b) | Remaining source work: the Replan v8 package; original capture for restore-point corruption | Plan written (part 2 of the remaining-work plan). Recommendation: compile Group A (Replan v8) after the exports repair, and hold Group B until its missing roles have sources. The package work needs Jared's go. |
-| 8(c) | Browser-created and Browser-reset PARTIAL cells | First half, `plans/ea-browser-pair-sp286-20260924` (`2df56dd8a9`): both producers adopt SP-286/CV-339 by name. Review cycle 1 returned fix-then-land with 0 blocking findings; the repairs S-02 to S-10 are applied one commit each after a rebase onto `main`, then cycle 2. It is Section 15 only. Second half, `plans/ea-browser-created-v2-current-20260924` (`05daf756bc`, built on the first half): the Browser-created storage row, admission binding and validators move to the v2 checkpoint, with report `step-08-browser-created-v2-current-20260925.md`. It also edits SMPFS-167, so its review waits until the first half passes cycle 2; it is then rebased onto the repaired tip and reviewed. It lands after the first half and after the exports repair (it edits `Plans/storage-plan.md` and the sharded storage value registry). |
-| 8(c'), compaction | `context.compaction.completed`'s oracle cell | Withdrawn on 2026-09-25 on the coordinator's routing. Its blind review (`~/PM-Experiments/review-ea-compaction-pm7-20260924/`, 2 blocking) found that the packet-canon-closure thread already carries a stricter fix of the same hunks: `96ab84f13c`, on `origin/fix/named-plan-identity-joins-20260924` and `origin/fix/packet-canon-repairs-20260924`, which pins revision, scope and `schema_ref`, with `validate()`-level tests and an independent review. Ours compared only `family_id` and `payload_schema_id`, and whichever fix landed second would conflict in both files, so theirs stands. Our branch is deleted on `origin` (GitHub and the NAS) and its worktree removed; the local ref stays at `a3f68cbaf0`, and its report never landed. The fix is carried by `96ab84f13c`. The oracle cell moves only through a regrade. The authority reading for any PM7 validator edit is ATS-040 (`Plans/Automated_Testing_System.md` line 3701), not DL-040. |
-| 8(d) | `goal_run.certified` older owner anchors | `plans/ea-certified-anchors-20260924` (`57b54b5623`) is landing-ready. It is parked until the exports repair: 132 rows over the print cap. |
-| 9 | J248 campaign: 252 rows | Batch 1 landed (`41fbecb612`). Count: 0 registered, 7 excluded, 0 carded, 245 remaining. The remaining rows are all TECHNICAL_BLOCKED and need full contracts. Batch 2 is the largest owner group, the 40 rows owned by `Plans/orchestrator-subagent-integration.md`, and its evidence map is being built. The coordinator put it after the amendment and the compaction fix: the amendment has landed and our compaction fix is withdrawn, so batch 2 follows the SP-286 repair round unless the coordinator says otherwise. |
-| 10 prep | DL-077 validator amendment and admission records | Landed at `2b73d6b7c0` (record `a7869662e7`) after a two-cycle blind review (V-01 to V-11). Validator `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20` (CRLF, 1,754 lines), receipt `dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827`, records pinned to assessment `ba9b84f99e0e0761a8b435a16602d4c88d14589ef273f789fd5b92bdbd5849fd`. All three records fail closed on their non-passing criteria, as they should until those cells pass. The seal is not applied (DL-077 bars this task). |
-
-## Decision Log entries
-
-- **DL-077 and DL-078.** Jared's answers to `EA-S10-VALIDATOR-LIVE-SET-001`, landed at `8650c2f9e8`.
-- **DL-079 to DL-083.** Jared's answers to the five depth-grading cards, landed at `3ce6eb882c`. DL-082 is a deferral, not an approval. DL-083 covers the three Storage families only: the card Jared answered did not name Platform.
-- **The DL-078 clarification.** The coordinator's ruling on D-07: a registration landing regenerates the derived plan index only. Landed with depth42.
-
-## Landings
-
-| Branch | `main` | Record | Landing check |
+| What | `main` | Record | Landing check |
 |---|---|---|---|
-| `plans/ea-step09-card-answers-20260924` (Step 9 batch 1) | `41fbecb612` | `bc1d99c11e` | exit 0 |
-| `plans/ea-seal-check-decisions-20260924` (DL-077 and DL-078) | `8650c2f9e8` | `ac9c0ad2e4` | exit 1: 50 staleness rows on `Plans/Decision_Log.md` |
-| `plans/ea-step08-depth42-20260924` (8(a) and DL-079 to DL-083) | `3ce6eb882c` | `38b8c1301d` | exit 1: 50 staleness rows on `Plans/Decision_Log.md` |
-| `plans/ea-step08-remaining-plan-20260924` (the Step 8 remaining-work plan) | `b359936728` | `2cdd280768` | exit 1: `main`'s Decision Log staleness only |
-| `plans/ea-validator-post-august-20260924` (the DL-077 amendment) | `2b73d6b7c0` | `a7869662e7` | exit 1: `main`'s Decision Log staleness only |
+| Step 9 batch 1 (DL-074/075 applied) | `41fbecb612` | `bc1d99c11e` | exit 0 |
+| DL-077 and DL-078 | `8650c2f9e8` | `ac9c0ad2e4` | exit 1, staleness only |
+| 8(a) depth assessment `ba9b84f9...`, DL-079 to DL-083 | `3ce6eb882c` | `38b8c1301d` | exit 1, staleness only |
+| Step 8 remaining-work plan | `b359936728` | `2cdd280768` | exit 1, `main`'s staleness |
+| DL-077 validator amendment: validator `190a86f2...`, receipt `dceb7f21...`, 3 admission records | `2b73d6b7c0` | `a7869662e7` | exit 1, `main`'s staleness |
+| 8(d) `goal_run.certified` owner anchors (GRS payload minima, SP-214, SP-214-A006) | `9507c8d2e8` | `a6480b0f7c` | exit 1, staleness only; evidence and plan graph keyed from exports |
 
-## Open items (running)
+## Branches and their state
 
-1. **Reseal request.** The coordinator's designated agent does one reseal for the whole wave. It covers:
-   - the `Plans/Decision_Log.md` rows of the plan-sharding evidence bundle;
-   - a currentness edition that includes `Plans/Decision_Log.md`; until then `test_pm_pnc019_currentness` fails on `main` with one drift row;
-   - the run-002 pair;
-   - the implementation-readiness gate report;
-   - the migration snapshot;
-   - whatever the anchors and later landings add.
-2. **Worknode follow-up (DL-082).** The Platform capability catalog is filled in right before Puppet Master is built, as part of the building process, likely as a worknode. This is for whoever owns the worknode work.
-3. **DL-083 for Platform.** The application-scoped evaluations of `platform.capability_evaluated` sit on the same seam but were not on the card. The coordinator is asking Jared; an answer would be recorded as an addendum.
-4. **Owner follow-ups from DL-079, DL-080, DL-081 and DL-083.** They are listed in `step-08-depth42-card-answers-20260924.md`. Those that edit `Plans/Goal_Runtime_System.md` or `Plans/storage-plan.md` wait for the exports repair.
-5. **Procedure record open questions.** D-05, D-02, D-08, D-12 and question 7 (DL-078's clarified wording). The application record's line 40 wording note (the depth42 re-check) is still open.
-6. **`.gitignore` line (review V-09).** `tests/test_event_authority_holding_bucket.py` is tracked but not named in `.gitignore`. The coordinator is asking Jared for the line.
-   - **Three mutation survivors (amendment review, cycle 2).** No test fails under M9 (the `depth_blocking` entry), M16 (the `..` path check) or M17 (the redundant DL-077 token check). They are recorded in the landing record as low-value; no fix is planned.
-7. **Standing rules from the coordinator (2026-09-24).**
-   - A card file is frozen at the bytes Jared sees, and its hash is recorded at presentation. A later change to what a card covers is a new card or an addendum, never an edit to the presented file.
-   - An evidence directory is never rewritten: a re-run writes a new dated subdirectory.
-   - The amendment's pin rule (V-07): any later change to a pinned registry row, the DL-040, DL-046 or DL-077 section, the depth assessment or the receipt re-pins the affected admission records in the same landing. Every Step 9 registration landing under DL-078 adds its family's record in that landing.
-   - Currentness is per family (V-10): a record's assessment row is current when its `family_id` and `family_revision` equal the live registry row.
-8. **Compaction follow-ups for Jared, for the packet-canon-closure thread** (our compaction review's extra points, `~/PM-Experiments/review-ea-compaction-pm7-20260924/`):
-   - **C-04.** A legacy-alias guard, so that an alias mapping `context.compaction.started` or `context.compaction.failed` onto the admitted row fails the PM7 validator.
-   - **C-05.** The ATS-037 checker expectation and the fixture `tests/fixtures/pm7_shared/assistant_context_continuity.json` still require zero events for a Compact Now that changes the ring revision (`open_drawer_compact_now_zero_events` under must, `context.compaction.completed` under must_not), contradicting DL-040 and ATS-040. This is ATS-037 owner work, and it may keep the compaction oracle cell PARTIAL even after the fix.
-9. **The certified registry anchors** still point at the old sections. Moving them changes the registry hash, so the move should ride with the next registry revision that needs approval anyway.
-10. **Tooling notes.**
-   - Run the independent validator only through `~/PM-Experiments/event-authority-step8-9-20260924/validator-amend/run_validator_harness.py`, or restore its tracked receipt afterwards.
-   - `pm-event-authority-currentness.py validate` needs `PM_EVIDENCE_MAP` when the currentness audit is symlinked.
-   - Regenerate the plan index only with the ignored currentness edition present, never hand-merged.
+- **`plans/ea-browser-pair-sp286-20260924` at `d08075c7c7`** (8(c), first half; on `main` `a6480b0f7c`; worktree `~/pm-worktrees/ea-browser-pair-sp286-20260924`).
+  - Review cycle 1 repairs S-02 to S-10 are applied, one commit each. Section 15 equals the reviewer's tested proposed file plus the two S-08 entries.
+  - Report: `reports/event-authority-20260911/step-08-browser-pair-sp286-20260924.md`.
+  - Next: blind review cycle 2 (review directory `~/PM-Experiments/review-ea-browser-sp286-20260924/`), then the landing on the coordinator's go.
+  - Expected at landing: exit 1, with +30/+30 evidence and plan-graph rows, +1 readiness row and +3 run-002 rows.
+- **`plans/ea-browser-created-v2-current-20260924` at `05daf756bc`** (8(c), second half; built on SP-286's old tip `2df56dd8a9`; worktree `~/pm-worktrees/ea-browser-created-v2-current-20260924`).
+  - It moves Browser-created to the v2 checkpoint: the storage row, admission binding, SP-266, SMPFS-167 and the validators. Report: `step-08-browser-created-v2-current-20260925.md`.
+  - Not yet reviewed. It also edits SMPFS-167, so after SP-286 passes cycle 2 it is rebased onto SP-286's tip, then blind-reviewed.
+  - It lands after SP-286. The exports repair it was waiting for is now on `main`.
+- **Withdrawn: `fix/ea-compaction-pm7-validator-20260924`** (tip `a3f68cbaf0`).
+  - The packet-canon-closure thread's stricter `96ab84f13c` carries the fix.
+  - It is deleted on both remotes and locally. It is kept as the bundle `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/compaction-pm7-withdrawn-20260925/fix-ea-compaction-pm7-validator-20260924.bundle`, SHA-256 `372d481facbc82b77b85c8560366468509e75b7b51bcd78c3697a0637d2ca5d8`, which requires `ac9c0ad2e4`.
+  - Its review: `~/PM-Experiments/review-ea-compaction-pm7-20260924/`.
+
+## Step 9 count and the next batch
+
+- **Count after batch 1:** 0 registered, 7 excluded, 0 carded, 245 remaining, all TECHNICAL_BLOCKED. Batch 2 was not started.
+- **Next batch** (largest owner group): the 40 rows owned by `Plans/orchestrator-subagent-integration.md`.
+  - `coordination.` (7): `agent_registered`, `agent_status_updated`, `agent_operation_updated`, `agent_file_ownership_updated`, `agent_unregistered`, `agent_crashed`, `agent_aborted`.
+  - `crew.` board (3): `board_message_posted`, `board_message_read`, `board_messages_archived`.
+  - `crew.` lifecycle (6): `formed`, `member_added`, `member_removed`, `coordination`, `completed`, `disbanded`.
+  - `subagent.` (21): `spawned`, `started`, `completed`, `failed`, `cancelled`, `timeout`, `paused`, `resumed`, `progress`, `tool_called`, `tool_completed`, `message_sent`, `message_received`, `output_truncated`, `retried`, `context_warning`, `model_switched`, `budget_warning`, `escalated`, `spawn_requested`, `spawn_completed`.
+  - Diagnostics (3): `phase.force_completed`, `config.validation.failed`, `parser.error`.
+- **Unreviewed evidence map**, from a read-only survey of `main` `d30bbc95e8`: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-batch2-evidence-map-20260925/evidence-map.md`, SHA-256 `7d4a6b509421624f3c9b09ca57c3f36c1f8281bc566dc2a8327e5428f13a7959`. It suggests:
+  - the 7 coordination rows can be registered with no product question (retention `RP-COORDINATION-180D` is bound);
+  - the other 33 wait on three draft product questions: retention for child-run, crew and diagnostic histories; retiring the six crew lifecycle events in favour of `collaboration.*`; retiring the two spawn-request events.
+  - The drafts are not DL-036 cards and nothing has been shown to Jared.
+- **Registration procedure (DL-077, DL-078).** Each family needs:
+  - a full contract;
+  - a blind review;
+  - its own landing, one family per landing;
+  - the coordinator's go;
+  - in that same landing, its DL-077 admission record, which needs a depth row with all twelve criteria at PASS, plus the checkpoint constants and test pins moved under DL-078.
+
+## Standing rules
+
+- **Card freeze.** A card file is frozen at the bytes Jared sees, with its hash recorded at presentation. Any later change to what it covers is a new card or an addendum, never an edit.
+- **Evidence directories** are never rewritten. A re-run writes a new dated subdirectory.
+- **Currentness is per family (V-10).** A record's assessment row is current when its `family_id` and `family_revision` equal the live registry row.
+- **The V-07 re-pin rule.** A later change to a pinned registry row, the DL-040, DL-046 or DL-077 section, the assessment or the receipt re-pins the admission records in the same landing.
+- **D-07.** A registration landing regenerates only the derived plan index. The gate report is left to the reseal.
+- **One reseal** for the whole wave, by the designated Plans agent.
+- **Decision Log numbers** are taken at landing, after a fetch.
+- **Product decisions are Jared's,** on DL-036 cards.
+
+## Reseal list (one reseal, the designated Plans agent)
+
+- **Plan-sharding bundle rows:** `Decision_Log.md` and its 10 shards (11), `Goal_Runtime_System.md` and `storage-plan.md` with their 130 shards (132), and later Section 15 and its 29 shard files (30).
+- **Spec Lock:** `Goal_Runtime_System.md` and `storage-plan.md`.
+- **The certified-family pins:** the composition manifest's GRS member (`ccedade9...` to `f233eb9c...`), the storage-plan member (`328858615b...`, already stale) and citations C01 to C05. Also the PNC-019 hash for GRS.
+- **Currentness:** an edition covering `Decision_Log.md`, both anchor documents and later Section 15. Until then `test_pm_pnc019_currentness` fails.
+- **Run-002:** Decision Log row 43, storage-plan rows 173 to 180, later Section 15 rows 168 to 170, and the final summary (6,728 PlanUnits).
+- **The readiness gate report and the migration snapshot.**
+
+## Open questions
+
+- **For Jared:**
+  - the V-09 `.gitignore` line `!/tests/test_event_authority_holding_bucket.py`;
+  - DL-083's Platform part;
+  - 8(b) Group A (Replan v8) go. Group B stays uncompiled until its roles have sources;
+  - compaction C-04 (a legacy-alias guard) and C-05 (the ATS-037 checker and `tests/fixtures/pm7_shared/assistant_context_continuity.json` still expect zero events for a ring-revision-changing Compact Now, contradicting DL-040 and ATS-040). These go to the packet-canon-closure thread. The authority for PM7 validator edits is ATS-040 (`Automated_Testing_System.md` line 3701).
+- **Recorded, not blocking:**
+  - mutation survivors M9, M16 and M17;
+  - procedure questions D-05, D-02, D-08, D-12 and 7;
+  - the depth42 application record's line-40 wording;
+  - anchors A-10 (no executable check reads SP-214-A006);
+  - SP-286 A005 and A006 have only a named native obligation;
+  - the certified registry anchors still name the old sections and move with the next approved registry revision;
+  - DL-082's worknode follow-up;
+  - the DL-079/080/081/083 owner follow-ups in `step-08-depth42-card-answers-20260924.md`.
+
+## Commands to resume
+
+```
+cd /mnt/Cursor/PuppetMaster && git fetch origin
+# existing worktrees: ~/pm-worktrees/ea-browser-pair-sp286-20260924, ~/pm-worktrees/ea-browser-created-v2-current-20260924
+# a new worktree: see .claude/CLAUDE.md "Where to work"; then, for any check that reads the currentness audit:
+ln -s /mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness Plans/.audits/event-authority-2026-08-13-currentness
+# after any Plans/*.md edit, in the worktree:
+python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json && python3 scripts/pm-plan-index.py generate
+python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json && python3 scripts/pm-plan-index.py validate
+# rebase conflicts in Plans/.plan_index: take main's, regenerate, never hand-merge
+git checkout --ours -- Plans/.plan_index/   # then the two generate commands, git add Plans/.plan_index Plans/_shards, git rebase --continue
+# landing (shared checkout, under /mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held with holder.txt):
+git merge --ff-only <branch> && python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+python3 scripts/pm-landing-check.py --base origin/main --json --keep-check-reports <evidence dir>/check-reports
+git push origin main && git push truenas-backup main   # or git reset --keep origin/main on exit 2
+# the independent seal validator rewrites its tracked receipt; run it only through
+python3 ~/PM-Experiments/event-authority-step8-9-20260924/validator-amend/run_validator_harness.py
+```
+
+The session log is `~/PM-Experiments/event-authority-step8-9-20260924/SESSION_LOG.md`.
