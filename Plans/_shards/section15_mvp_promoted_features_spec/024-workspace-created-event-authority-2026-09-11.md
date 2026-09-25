@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11411-L11600
+Source lines: L11411-L11608
 
-Source SHA256: `0d2de54e70174eb826198d840f75fe67d0318daae1a37e7ad1b3fa074bb2b5d2`
+Source SHA256: `46182ec511dee2377bb9f64399300d3c8f93a89c9ab82f5fda5a9d2ab3e2dce1`
 
 ---
 
@@ -103,7 +103,15 @@ first mint from a missing receipt, lost delivery, tail absence or a supplied
 never-issued flag; only Storage's own writer reaches
 `storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
 protected group. Missing or conflicting custody keeps the operation
-recovery-required under the existing failure behavior. Resolution is passive: it
+recovery-required under the existing failure behavior. A proper subset, lost
+previously issued custody, restored old pending request or ambiguous original
+group stays fenced under that behavior. In-place restart after actual protected
+promotion follows SP-286's original group handoff without reconstructing old
+transient capabilities. A verified older restore does not make omitted creation
+work fresh: only an actual newly accepted owner creation after the coordinator's
+completed restore occurrence/session may use its fresh-operation admission, and
+lost or restored creation requests, reserved workspace identities and pending work
+cannot be renamed or reaccepted as a new creation. Resolution is passive: it
 grants no current Browser authority, recreates no process and reopens no retired
 source. This owner does not claim that a supplied complete EventRecord equals its
 originally issued value, so it does not rely on
@@ -184,7 +192,7 @@ acceptance_criteria:
   - The one read consumer uses the complete SP-266 snapshot/checkpoint token; historical creation and index currentness never grant current Browser authority.
   - Replay, deletion, recovery and withdrawal cannot dispatch, recreate a process, restore a controller, attach prompt material or create UsageRecords.
   - A separately admitted v2 reader must use SP-266's full SP-278 frontier/source token and authenticated checkpoint handoff; this conditional target does not make v2 current.
-  - Lost-acknowledgement and uncertain-append recovery resolves the original creation append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, and no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1.
+  - Lost-acknowledgement and uncertain-append recovery resolves the original creation append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
 validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, Plans/browser_workspace_created_checkpoint_v2.schema.json]
 risk_class: browser_workspace_creation_or_replay_authority_escape
 reasoning_tier: high

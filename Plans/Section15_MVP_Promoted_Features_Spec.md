@@ -11503,7 +11503,15 @@ first mint from a missing receipt, lost delivery, tail absence or a supplied
 never-issued flag; only Storage's own writer reaches
 `storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
 protected group. Missing or conflicting custody keeps the operation
-recovery-required under the existing failure behavior. Resolution is passive: it
+recovery-required under the existing failure behavior. A proper subset, lost
+previously issued custody, restored old pending request or ambiguous original
+group stays fenced under that behavior. In-place restart after actual protected
+promotion follows SP-286's original group handoff without reconstructing old
+transient capabilities. A verified older restore does not make omitted creation
+work fresh: only an actual newly accepted owner creation after the coordinator's
+completed restore occurrence/session may use its fresh-operation admission, and
+lost or restored creation requests, reserved workspace identities and pending work
+cannot be renamed or reaccepted as a new creation. Resolution is passive: it
 grants no current Browser authority, recreates no process and reopens no retired
 source. This owner does not claim that a supplied complete EventRecord equals its
 originally issued value, so it does not rely on
@@ -11584,7 +11592,7 @@ acceptance_criteria:
   - The one read consumer uses the complete SP-266 snapshot/checkpoint token; historical creation and index currentness never grant current Browser authority.
   - Replay, deletion, recovery and withdrawal cannot dispatch, recreate a process, restore a controller, attach prompt material or create UsageRecords.
   - A separately admitted v2 reader must use SP-266's full SP-278 frontier/source token and authenticated checkpoint handoff; this conditional target does not make v2 current.
-  - Lost-acknowledgement and uncertain-append recovery resolves the original creation append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, and no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1.
+  - Lost-acknowledgement and uncertain-append recovery resolves the original creation append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
 validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, Plans/browser_workspace_created_checkpoint_v2.schema.json]
 risk_class: browser_workspace_creation_or_replay_authority_escape
 reasoning_tier: high
@@ -11722,7 +11730,15 @@ tail absence or a supplied never-issued flag; only Storage's own writer reaches
 `storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
 protected group. Missing or conflicting custody keeps the path unavailable under
 the existing failure behavior; it never proves no effect, restores the old
-generation or repeats the reset. Resolution is passive: it grants no current
+generation or repeats the reset. A proper subset, lost previously issued custody,
+restored old pending request or ambiguous original group stays fenced under that
+behavior. In-place restart after actual protected promotion follows SP-286's
+original group handoff without reconstructing old transient capabilities. A
+verified older restore does not make omitted reset work fresh: only an actual
+newly accepted owner reset after the coordinator's completed restore
+occurrence/session may use its fresh-operation admission, and lost or restored
+reset requests and pending work cannot be renamed or reaccepted as a new reset.
+Resolution is passive: it grants no current
 Browser authority, controller or generation mutation and reopens no retired
 source. This owner does not claim that a supplied complete EventRecord equals its
 originally issued value, so it does not rely on
@@ -11779,7 +11795,7 @@ acceptance_criteria:
   - Rejected or unchanged transitions emit nothing; known reset effect with failed/unknown append remains fenced until original identity resolution.
   - Original-result retry and historical replay cannot reset again, rewind a newer generation or recreate unavailable owner custody.
   - The sole historical reader adopts the complete SP-278 token through SP-282 without acquiring live Browser, Usage or Prompt authority.
-  - Failed, uncertain or lost-acknowledgement append recovery resolves the original reset append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, and no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1.
+  - Failed, uncertain or lost-acknowledgement append recovery resolves the original reset append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
 validation_surfaces: [Plans/browser_workspace_reset_contracts.schema.json, Plans/browser_workspace_reset_contract_fixtures.json, tests/test_pm_browser_workspace_reset.py]
 risk_class: browser_reset_generation_replay_or_append_uncertainty
 reasoning_tier: high

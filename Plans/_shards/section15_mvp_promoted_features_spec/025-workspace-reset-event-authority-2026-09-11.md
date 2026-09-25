@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11602-L11795
+Source lines: L11610-L11811
 
-Source SHA256: `0d2de54e70174eb826198d840f75fe67d0318daae1a37e7ad1b3fa074bb2b5d2`
+Source SHA256: `46182ec511dee2377bb9f64399300d3c8f93a89c9ab82f5fda5a9d2ab3e2dce1`
 
 ---
 
@@ -131,7 +131,15 @@ tail absence or a supplied never-issued flag; only Storage's own writer reaches
 `storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
 protected group. Missing or conflicting custody keeps the path unavailable under
 the existing failure behavior; it never proves no effect, restores the old
-generation or repeats the reset. Resolution is passive: it grants no current
+generation or repeats the reset. A proper subset, lost previously issued custody,
+restored old pending request or ambiguous original group stays fenced under that
+behavior. In-place restart after actual protected promotion follows SP-286's
+original group handoff without reconstructing old transient capabilities. A
+verified older restore does not make omitted reset work fresh: only an actual
+newly accepted owner reset after the coordinator's completed restore
+occurrence/session may use its fresh-operation admission, and lost or restored
+reset requests and pending work cannot be renamed or reaccepted as a new reset.
+Resolution is passive: it grants no current
 Browser authority, controller or generation mutation and reopens no retired
 source. This owner does not claim that a supplied complete EventRecord equals its
 originally issued value, so it does not rely on
@@ -188,7 +196,7 @@ acceptance_criteria:
   - Rejected or unchanged transitions emit nothing; known reset effect with failed/unknown append remains fenced until original identity resolution.
   - Original-result retry and historical replay cannot reset again, rewind a newer generation or recreate unavailable owner custody.
   - The sole historical reader adopts the complete SP-278 token through SP-282 without acquiring live Browser, Usage or Prompt authority.
-  - Failed, uncertain or lost-acknowledgement append recovery resolves the original reset append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, and no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1.
+  - Failed, uncertain or lost-acknowledgement append recovery resolves the original reset append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
 validation_surfaces: [Plans/browser_workspace_reset_contracts.schema.json, Plans/browser_workspace_reset_contract_fixtures.json, tests/test_pm_browser_workspace_reset.py]
 risk_class: browser_reset_generation_replay_or_append_uncertainty
 reasoning_tier: high
