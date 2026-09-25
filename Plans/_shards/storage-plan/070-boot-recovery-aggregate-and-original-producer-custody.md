@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L23596-L23706
 
-Source SHA256: `cefd36c74fe5ce86304f639be67b48196f592e533448aafa86f7a4b7c475cd82`
+Source SHA256: `6bcb9a18c9d8e7ab8daec194142a9bcc20485b00c992da0b8dcc19d3183deaff`
 
 ---
 
@@ -16,7 +16,7 @@ This section extends the existing application-only `storage.boot_recovery` event
 
 The closed `pm.storage.boot_recovery_control.v1@1.0.0` aggregate uses `Plans/storage_boot_recovery_control.schema.json` and exact actual-root path `storage/migrations/boot-recovery.v1/{sha256_utf8(storage_instance_id)}/{recovery_epoch_20}.intent.msgpack`. `recovery_epoch_20` is the zero-padded twenty-digit unsigned-decimal epoch. The path selects an exact identity; filename resemblance is not original occurrence or owner evidence. This canonical, non-rebuildable control retains current selection, original source membership, original frozen producer input and original issued result through its closed collecting/frozen/issued/settled/no-obligation states. All values use the unchanged canonical MessagePack profile: exact JSON value types, UTF-8 byte-ordered string keys, minimal integer/container encodings, exact finite float representation where the schema permits floats, and no Boolean/integer/float or string coercion. The closed Boot schemas require actual unsigned integers for their integer fields; no floating-point or 53-bit shortcut is introduced.
 
-Unsettled aggregate custody is protected until actual original resolution. Settled/no-obligation controls retain the unchanged `RP-OPERATIONAL-2555D@1.0.0` policy and stronger existing references/holds. This policy remains `fixed_ttl`, terminal-transition anchor, `retain_indefinitely=false`, `ttl_seconds=220752000`, `max_cardinality=2000000`, `cardinality_scope=project`, `max_bytes=null`, fail-closed overflow, hold eligible and compact expiry; none of these values changes. The existing application Boot event already maps to that same policy. Application-scoped records under it count in the application-wide buckets of the next subsection, which Jared decided in DL-083 and DL-089; no fictitious project, new policy object or policy value resolves their count. The model proves no seven-year scheduler or native cleanup.
+Unsettled aggregate custody is protected until actual original resolution. Settled/no-obligation controls retain the unchanged `RP-OPERATIONAL-2555D@1.0.0` policy and stronger existing references/holds. This policy remains `fixed_ttl`, terminal-transition anchor, `retain_indefinitely=false`, `ttl_seconds=220752000`, `max_cardinality=2000000`, `cardinality_scope=project`, `max_bytes=null`, fail-closed overflow, hold eligible and compact expiry; none of these values changes. The existing application Boot event already maps to that same policy. The application-scoped records that the next subsection assigns count in its application-wide buckets, which Jared decided in DL-083 and DL-089; no fictitious project, new policy object or policy value resolves their count, and no other application-scoped record under this policy is counted there. The model proves no seven-year scheduler or native cleanup.
 
 ### Application-wide count buckets under the operational policy (DL-083, DL-089)
 
@@ -101,7 +101,7 @@ acceptance_criteria:
   - Install and settlement preserve the complete original event set, all assignments, distinct old gaps/evidence, actual same Store and explicit original full-value witness.
   - Any activated Boot event requires positive enrollment on every original issuance route, regardless of malformed identity grammar; unrelated issuance stays independent.
   - Original mandatory backup joins current Boot custody and pending resolution without copying the external current anchor or undoing unrelated original effects.
-  - Existing operational policy values stay unchanged and explicit; application-scoped records count in the DL-083 bucket app:storage_operational or the DL-089 bucket app:platform_capability with the unchanged 2,000,000 cap, fail-closed overflow and seven-year period; no event/Goal registry array, native proof or readiness scope expands.
+  - Existing operational policy values stay unchanged and explicit; the application-scoped records of storage.boot_recovery, storage.recovery_applied and storage.compaction_lifecycle_changed and the settled/no-obligation Boot aggregate controls count in the DL-083 bucket app:storage_operational, and the application-scoped evaluations of platform.capability_evaluated in the DL-089 bucket app:platform_capability, each with the unchanged 2,000,000 cap, fail-closed overflow and seven-year period; no other family is assigned to either bucket, and no event/Goal registry array, native proof or readiness scope expands.
 validation_surfaces: [Plans/storage_boot_recovery_control.schema.json, Plans/storage_boot_original_source_contracts.schema.json, Plans/event_payload_storage_boot_recovery.schema.json, Plans/event_append_receipt_contracts.schema.json, Plans/storage_value_registry.json]
 risk_class: false_boot_occurrence_or_non_original_receipt_publication
 reasoning_tier: high
