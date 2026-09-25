@@ -561,6 +561,22 @@ class TransitionModelTests(unittest.TestCase):
         self.assert_refused_unchanged(model, "a7_crashed_race_r6", "coordination_conflict:stale_revision")
         self.assert_refused_unchanged(model, "a7_aborted_after_terminal_r7", "coordination_conflict:already_terminal")
 
+    def test_repeat_registration_follows_the_transition_table(self):
+        # SP-320's transition table is canon: a registration of a registered, non-terminal agent is already_registered
+        # and of a terminal agent already_terminal, decided by the agent's state before the revision rule, unless it
+        # is an exact retry. Under another recovery epoch the idempotency key differs, so the repeat is not a retry.
+        other_epoch = CHECK.idempotency_key("coordination.agent_registered", CONTEXT["project_id"], "agent_fixture_7",
+                                            CONTEXT["recovery_epoch"] + 1, 1)
+        model = store()
+        first = submit(model, "a7_registered_full")
+        self.assertEqual(first["result"], "appended")
+        self.assert_refused_unchanged(model, "a7_registered_full", "coordination_conflict:already_registered", idempotency_key=other_epoch)
+        for case_id in ("a7_status_running_r2", "a7_unregistered_failed_r3"):
+            self.assertEqual(submit(model, case_id)["result"], "appended", case_id)
+        self.assert_refused_unchanged(model, "a7_registered_full", "coordination_conflict:already_terminal", idempotency_key=other_epoch)
+        retry = submit(model, "a7_registered_full")
+        self.assertEqual((retry["result"], retry["event_id"]), ("exact_retry_original_result", first["event_id"]))
+
     def test_heartbeat_expiry_needs_the_observed_age_and_no_threshold_field(self):
         crash = PAYLOADS["a8_crashed_heartbeat_r3"]
         without_age = {key: value for key, value in crash["payload"].items() if key != "heartbeat_age_ms"}

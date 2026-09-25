@@ -43,7 +43,7 @@
       "exact_retry: the same (scope_partition, event_type, idempotency_key) and producer digest returns the original event (exact_retry_original_result); a different digest is idempotency_conflict",
       "family_admission: an event type outside admitted_event_types is quarantined_before_append",
       "payload: schema, then the static rules",
-      "transition: registration existence (not_registered, already_registered), then the revision rule (stale_revision: agent_revision is not the agent's revision plus 1, expected_previous_revision is not agent_revision minus 1, or last_applied_event_id is not the agent's), then terminal (already_terminal), then lineage (lineage_mismatch)",
+      "transition, in SP-320's precedence: any event but a registration of an agent with no event is not_registered; a registration of an agent that already has one is already_terminal when the agent is terminal and already_registered otherwise, before the revision rule; any other event is checked by the revision rule (stale_revision: agent_revision is not the agent's revision plus 1, expected_previous_revision is not agent_revision minus 1, or last_applied_event_id is not the agent's), then terminal (already_terminal), then lineage (lineage_mismatch)",
       "change: coordination_unchanged when status and status_reason, the operation's summary, progress and refs, or the claim's kind, confidence and operation_id all equal the current rows",
       "append: appended; the event_id follows the identity recipe"
     ],

@@ -1058,8 +1058,10 @@ class CoordinationStore:
     """Synthetic model of one Project's coordination admission, never seglog, redb or lock behavior.
 
     Admission order: exact retry, family admission, payload (schema then static rules), current
-    projection (assumed available), transition and revision (registration existence, revision,
-    terminal, lineage), change, append.
+    projection (assumed available), transition and revision in SP-320's precedence (not_registered;
+    a registration of an agent that already has an event by the agent's state alone, already_terminal
+    or already_registered; any other event stale_revision, then already_terminal, then
+    lineage_mismatch), change, append.
     """
 
     def __init__(self, storage_instance_id: str, recovery_epoch: int, admitted: list[str], *, root: Path = ROOT) -> None:
@@ -1094,7 +1096,10 @@ class CoordinationStore:
                 return {"result": "coordination_conflict:not_registered"}
         else:
             if event_type == "coordination.agent_registered":
-                return {"result": "coordination_conflict:already_registered"}
+                # SP-320's transition table: a terminal agent refuses any event as already_terminal, and a registered,
+                # non-terminal agent refuses a registration as already_registered; neither reaches the revision rule.
+                return {"result": "coordination_conflict:already_terminal" if "terminal" in agent
+                        else "coordination_conflict:already_registered"}
             if (revision != agent["agent_revision"] + 1
                     or ("expected_previous_revision" in payload and payload["expected_previous_revision"] != revision - 1)
                     or ("last_applied_event_id" in payload and payload["last_applied_event_id"] != agent["last_applied_event_id"])):
