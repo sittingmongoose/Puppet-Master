@@ -31,7 +31,10 @@ Usage DL-098 owner prose/PlanUnits and stash DL-096 owner prose/SCS-024 are now
 integrated on the repair branch; see `usage-and-stash-owner-decisions.md` for exact
 external review and application hashes. Their typed companions still require
 separate reconciliation, so this does not close the selected-command occurrences.
-The other owner decisions and native implementation remain pending. Newer spellcheck,
+Amended DL-097 is also integrated into Forge §3.4 and indexed FGI-008; see
+`review-checkout-owner-decision.md`. Its selected-request/result/preview companion
+remains separate work. Settings DL-095 owner reconciliation, the dictionary sharing
+boundary, and native implementation remain pending. Newer spellcheck,
 Help/Teacher and assistant/platform designs remain protected.
 
 The earlier capability-precedence question was an overstatement of the packet:
