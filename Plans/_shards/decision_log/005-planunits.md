@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L2166-L7678
+Source lines: L2210-L7787
 
-Source SHA256: `0ca4f10131297113a0413c3bfb0d9d3481a8bd7301aea3aac7c3eafa8c2db506`
+Source SHA256: `164a57caf10aa15c318ed060576966b4feffc08b4bd2fb689f38fd9deead2d59`
 
 ---
 
@@ -5397,6 +5397,71 @@ negative_constraints:
 owner_hints:
   - Plans/Decision_Log.md
   - Plans/Plan_To_Node_Compilation.md
+```
+
+### DL-095 - A Silent Agent Counts As Crashed Five Minutes After Its Last Heartbeat
+
+```yaml
+plan_unit_id: DL-095
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on 2026-09-25 to EA-S09B2-HEARTBEAT-EXPIRY-001: the
+  coordination heartbeat expiry is five minutes, coordination_heartbeat_expiry_ms =
+  300000, so an agent working alongside others that stops sending its heartbeat while its
+  process has not exited is recorded as crashed with heartbeat_expired once its last
+  liveness signal is more than five minutes old, ten missed 30-second heartbeats. The
+  Orchestrator runtime policy that OSI-438 names as the value's owner records
+  coordination_heartbeat_expiry_ms as 300000, SP-320 cites it, and the heartbeat_expired
+  crash reason becomes active; the coordination.agent_crashed event records the observed
+  heartbeat_age_ms, never the threshold. An exited or lost process and a deleted worktree
+  are still recorded from their own evidence, and handling a computer that was asleep
+  stays technical work. That owner edit lands before or with the
+  coordination.agent_crashed admission and is not made by this entry; until it lands,
+  heartbeat_expired is not inferred. This entry is not the decision entry of the
+  coordination.agent_crashed registration, and nothing else is registered, admitted or
+  changed.
+gui_related: false
+gui_classification_reason: Sets a runtime crash-detection threshold, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - The Orchestrator runtime policy that OSI-438 names as the owner of the value records coordination_heartbeat_expiry_ms as 300000, and SP-320 cites it.
+  - The crash detector records coordination.agent_crashed with heartbeat_expired only when an agent's last liveness signal is older than 300000 ms, and the event carries the observed heartbeat_age_ms, never the threshold.
+  - That owner edit lands before or with the coordination.agent_crashed admission, and until it lands heartbeat_expired is not inferred.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: coordination_heartbeat_expiry_policy_drift
+reasoning_tier: high
+context_scope: coordination_heartbeat_expiry_runtime_policy
+implementation_surfaces:
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_HEARTBEAT_AND_DL093_SCOPE.md
+  - reports/event-authority-20260911/step-09-coordination-heartbeat-card-20260925.md
+  - /mnt/Cursor/PM-Experiments/review-ea-s09-coordination-prep-20260925/findings.jsonl
+preserved_exact_tokens:
+  - "Approve"
+  - "EA-S09B2-HEARTBEAT-EXPIRY-001"
+  - "coordination_heartbeat_expiry_ms"
+  - "300000"
+  - "heartbeat_expired"
+negative_constraints:
+  - Do not use a two-minute or ten-minute heartbeat expiry, and do not infer heartbeat_expired before the runtime policy records the value.
+  - Do not write the threshold into the coordination.agent_crashed payload; the event records the observed heartbeat_age_ms only.
+  - Do not cite this entry as the decision entry of the coordination.agent_crashed registration, or treat it as registering or admitting any family.
+owner_hints:
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/storage-plan.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

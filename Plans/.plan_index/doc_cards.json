@@ -5420,10 +5420,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 52,
+        "False": 53,
         "True": 38
       },
-      "heading_count": 187,
+      "heading_count": 189,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5507,9 +5507,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 7706,
+      "line_count": 7815,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 90,
+      "plan_unit_count": 91,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5600,6 +5600,7 @@
         "DL-091",
         "DL-092",
         "DL-093",
+        "DL-095",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5627,6 +5628,7 @@
         "collaborative_workflow_history_retention_drift",
         "compaction_detail_retention_and_original_custody",
         "completion_state_conflation",
+        "coordination_heartbeat_expiry_policy_drift",
         "correction_landed_in_a_shape_its_owner_did_not_choose",
         "corroboration_disagreement_outcome_drift",
         "corroboration_threshold_drift",
@@ -5697,16 +5699,16 @@
         "weak_integration_underclassification",
         "workflow_verification_exception_route_drift"
       ],
-      "sha256": "0ca4f10131297113a0413c3bfb0d9d3481a8bd7301aea3aac7c3eafa8c2db506",
+      "sha256": "164a57caf10aa15c318ed060576966b4feffc08b4bd2fb689f38fd9deead2d59",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 90
+        "accepted": 91
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 87
+        "requirement": 88
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -20042,7 +20044,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T09:03:46Z",
+  "generated_at_utc": "2026-09-25T13:54:21Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20050,13 +20052,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3545,
+      "False": 3546,
       "True": 3197
     },
-    "plan_unit_count": 6742,
+    "plan_unit_count": 6743,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6551,
+      "accepted": 6552,
       "retired": 182,
       "superseded": 9
     },
@@ -20123,7 +20125,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5296,
+      "requirement": 5297,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

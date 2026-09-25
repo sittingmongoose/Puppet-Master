@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L2157
+Source lines: L13-L2202
 
-Source SHA256: `0ca4f10131297113a0413c3bfb0d9d3481a8bd7301aea3aac7c3eafa8c2db506`
+Source SHA256: `164a57caf10aa15c318ed060576966b4feffc08b4bd2fb689f38fd9deead2d59`
 
 ---
 
@@ -2153,3 +2153,48 @@ The Decision Log entry that each registration landing of the seven coordination 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_OPEN_QUESTIONS.md`, SHA-256 `678b9a32a0942fff08cea4127d9c52d7e73774509869c88958f466d6b8d0171a`; Step 9 procedure record `reports/event-authority-20260911/step-09-procedure-20260924.md` (open question 2, D-02); post-August admission receipt `reports/event-authority-20260911/step-10-post-august-admission-receipt.json`.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-077, ContractName:Plans/Decision_Log.md#DL-078, ContractName:Plans/event_family_registry.json
+
+
+### DL-095: A silent agent counts as crashed five minutes after its last heartbeat
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session, from the card page: **Approve** on `EA-S09B2-HEARTBEAT-EXPIRY-001`, which selects option 1.
+
+**Name:** How long an agent can go silent before it counts as crashed.
+
+**Question:** When an agent that is working alongside others stops sending its heartbeat but its process has not exited, how long should Puppet Master wait before recording it as crashed?
+
+**Why:**
+
+- Agents working in parallel send a heartbeat every 30 seconds. An agent whose process exits, or whose working folder disappears, is recorded as crashed right away, whatever you choose here.
+- An agent that hangs without exiting is caught only by its missing heartbeats. The orchestrator's text gives "e.g., 5 minutes" as an example and says the actual number belongs to runtime policy. No value has been set.
+- Until there is a value, a hung agent is never recorded as crashed. The files it said it was working on stay claimed, and its work is not handed back.
+- Choosing the number is a runtime policy choice, so it is yours.
+
+**What you get:**
+
+- **Five minutes:** a hung agent is released about five minutes after its last heartbeat, after ten missed heartbeats in a row.
+- **Two minutes:** faster recovery, after four missed heartbeats.
+- **Ten minutes:** fewer live agents recorded as crashed when the computer is briefly overloaded.
+
+**What it costs:**
+
+- **Five minutes:** a hung agent holds its claimed files for up to five minutes.
+- **Two minutes:** an agent on a busy computer is more likely to be recorded as crashed while it is still working, and its work is stopped.
+- **Ten minutes:** a hung agent holds its claimed files twice as long.
+- **Any choice:** how a computer that was asleep is handled is technical work and not part of this question.
+
+**Options:**
+
+1. **Five minutes (recommended).** The example the orchestrator already gives.
+2. **Two minutes.**
+3. **Ten minutes.**
+
+**Recommendation:** Option 1. Ten missed heartbeats is a clear signal, exits are caught at once anyway, and it is the value the orchestrator's text already suggests.
+
+**Answer:** Approve (option 1).
+
+The heartbeat expiry is five minutes: `coordination_heartbeat_expiry_ms` is 300000. An agent working alongside others that stops sending its heartbeat while its process has not exited is recorded as crashed, with the crash reason `heartbeat_expired`, once its last liveness signal is more than five minutes old, which at the 30-second heartbeat is ten missed heartbeats in a row. The Orchestrator runtime policy that OSI-438 names as the owner of this value records `coordination_heartbeat_expiry_ms` as 300000, SP-320 cites it, and the `heartbeat_expired` crash reason becomes active. The `coordination.agent_crashed` event still records the observed `heartbeat_age_ms`, never the threshold. An agent whose process exits, whose process is lost or whose worktree is deleted is still recorded as crashed from that evidence, whatever the threshold, and how a computer that was asleep is handled stays technical work, as the card said. That owner edit lands before or with the `coordination.agent_crashed` admission. It is not made by this entry or on the branch that records it; until it lands, runtime policy supplies no value, so `heartbeat_expired` is still not inferred (OSI-438). This entry is not the decision entry of the `coordination.agent_crashed` registration; that family's own registration landing adds that entry under DL-078 (DL-093). This entry registers, admits or changes nothing else: no payload field, registry row, retention policy or other runtime value.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_HEARTBEAT_AND_DL093_SCOPE.md`, SHA-256 `5d0538a1ab9e9a7d397093cfefc71045b2ac214654984767f37efa2bbabf889f`; card `reports/event-authority-20260911/step-09-coordination-heartbeat-card-20260925.md`, SHA-256 `530e783739ab61e9ef7a3bcf4e3d02a6c3a7dc4ca6657f37049964e48559118b`, a byte-identical copy of the presented file (artifact `M8GSmygZ1MXjYaA7osPcTh`, version 1); review finding CP-05 in `/mnt/Cursor/PM-Experiments/review-ea-s09-coordination-prep-20260925/findings.jsonl`.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#OSI-438, ContractName:Plans/storage-plan.md#SP-320, ContractName:Plans/Contracts_V0.md#CV-353
