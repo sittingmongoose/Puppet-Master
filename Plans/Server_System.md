@@ -231,6 +231,7 @@ unblocks: [SRV-007, SRV-008, RAS-008]
 acceptance_criteria:
   - Native and web Clients use the same commands, identities, receipts, and projection cursors.
   - Standalone and container bootstrap preserve requested/effective execution_form, require a prior claim receipt, validate the execution baseline, and enable normal Server execution.
+  - cmd.server.bootstrap.start adopts exactly one sole future handler target, handlers::server::bootstrap_start, adjudicated in owner section 4.2; the target name is dispatch intent, no competing bootstrap handler exists, and the command stays handler_unavailable with empty expected events until native evidence exists.
   - Client tab or process loss does not cancel Server-owned work.
   - One authoritative relation lifecycle delegates transport supervision to SIR; Client/Server identity is not silently equated with ExecutionEnvironmentId, and the exact relation-to-supervisor binding remains required before composition is claimed.
   - Explicit Server stop is permission-gated, drains or checkpoints work, and exposes truthful blocked or recovery-required outcomes.
@@ -243,7 +244,7 @@ node_compile_hint: {mode: permanent_server_product_contract, create_worknodes: f
 source_lineage:
   - source_ref:normalized-register:server-first-2026-08-31:C01-C06
   - source_ref:packet:backbone_v5/10_SERVER_REMOTE_ACCESS_DEPLOYMENT_CONTRACT.md
-preserved_exact_tokens: [permanent web UI, Stop Server, restart, dormant, loopback, cmd.server.bootstrap.start, execution_form]
+preserved_exact_tokens: [permanent web UI, Stop Server, restart, dormant, loopback, cmd.server.bootstrap.start, handlers::server::bootstrap_start, execution_form]
 negative_constraints: [Do not use a frontend dev server as product architecture., Do not cancel work on Client close., Do not fabricate local filesystem or device capability in a web Client.]
 owner_hints: [Plans/Server_System.md, Plans/Shared_Integration_Runtime.md, Plans/FinalGUISpec.md]
 ```
@@ -508,6 +509,8 @@ The Server owner additionally accepts exactly six primary domain commands. They 
 - `cmd.client.pair.reject` is the trusted approver's terminal refusal with an exact reason and current pairing generation.
 - `cmd.client.pair.cancel` is the requesting Client's terminal abort before trust issuance, distinct from rejection.
 - `cmd.client.revoke` revokes the entire `ClientTrustRecord`, increments trust generation, terminates every active session for that Client, rejects stale commands, and writes the durable revocation receipt. Session-only revocation is not substituted for this trust action.
+
+This owner adopts exactly one sole future handler target for `cmd.server.bootstrap.start`: `handlers::server::bootstrap_start`. No second bootstrap handler, alias, or fallback route exists, and pairing issuance stays a separate contract that is never bootstrap authority. The adopted target name is central dispatch intent only: it proves no native dispatcher, executable handler, durable effect, or receipt, and `cmd.server.bootstrap.start` remains `handler_unavailable` with `expected_event_types=[]` until source-hashed native evidence closes its claim receipt, durable roots/mounts, immutable execution-baseline, consent, requested/effective form, restart, rollback, exact return, and accessibility obligations.
 
 `cmd.server.connect` remains the sole Server connection command. Its typed `connection_mode = connect|reconnect|resume` preserves exact requested/effective intent: reconnect requires a prior session; resume additionally requires its durable cursor and does not create new work. Separate `cmd.server.reconnect` or `cmd.server.resume` handlers would duplicate the same semantic operation and are not added.
 

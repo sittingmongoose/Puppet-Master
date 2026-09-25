@@ -53626,12 +53626,12 @@
       "result_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/supplemental_command_result",
       "expected_event_types": [],
       "acceptance_checks": [
-        "The specified target is unresolved production intent and remains disabled with handler_unavailable until Server owner adjudication and native evidence exist.",
+        "cmd.server.bootstrap.start names exactly one owner-adopted sole future target handlers::server::bootstrap_start in Plans/Server_System.md section 4.2; the target string and this production-intent row are not native dispatcher or handler proof and the row remains disabled with handler_unavailable until native evidence exists.",
         "Bootstrap follows a successful claim for standalone or container only and requires exact claim receipt, durable roots/mounts, immutable execution baseline, consent, requested/effective form, and ObservableWork.",
         "It never collapses into cmd.server.claim, silently creates a control-plane-only Server, or mutates a disposable container layer.",
         "Product Onboarding and Settings use this same row and exact return route; browser choreography is not runtime proof."
       ],
-      "evidence_required": "Server owner target-name adjudication, native bootstrap dispatcher/handler, durable-root/mount/baseline/consent/rollback/restart fixtures, exact return, accessibility, and fresh runtime receipts.",
+      "evidence_required": "Native bootstrap dispatcher/handler, durable-root/mount/baseline/consent/rollback/restart fixtures, exact return, accessibility, and fresh runtime receipts.",
       "state_selector": "state.commands.server_bootstrap_start.availability",
       "disabled_reason_projection": "state.commands.server_bootstrap_start.disabled_reason",
       "effect_contract": {
@@ -53652,7 +53652,7 @@
         {
           "test_id": "wiring.catalog.server_bootstrap_start.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "After owner adjudication, prove exact request/result reaches one native handler; current target text is not evidence."
+          "requirement": "Prove exact request/result reaches only handlers::server::bootstrap_start; the target string is not handler evidence."
         },
         {
           "test_id": "wiring.catalog.server_bootstrap_start.state",
