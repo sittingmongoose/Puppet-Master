@@ -27,7 +27,7 @@
 - two `event_authority_currentness_source_drift` rows, one per document;
 - 132 `artifact_hash_stale` rows in the live plan-sharding evidence bundle (the two documents and their 130 shards). They make `validate_plan_graph` and `validate_evidence` truncated rises, so the landing check exits 2 until the rises are classified as this staleness, as the `f1ce058ccd` landing did;
 - the node readiness report regenerated after the rebase with the ignored currentness edition present (review A-08), never hand-merged;
-- the certified-family pins above (A-07);
+- the certified-family pins below (A-07);
 - the plan-migration snapshot rows for the two documents' units.
 
 The reseal request to the designated Plans agent covers the Spec Lock entries, the live plan-sharding evidence bundle, the PNC-019 hash for `Goal_Runtime_System.md`, a currentness edition for both documents, the plan-migration snapshot, and the certified-family pins.
