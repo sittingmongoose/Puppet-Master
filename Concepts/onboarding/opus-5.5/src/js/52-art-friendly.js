@@ -31,19 +31,21 @@
     const p = ctx.pal, o = item.opts || {}, s = item.s || 1, v = o.variant || 0, pose = o.pose || 'stand';
     const body = variants(p)[v % 4], skin = p.skin[v % 3], hair = p.hair[v % 3];
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -67 Q${(dx * 0.5 + 3).toFixed(1)} ${(dy * 0.5).toFixed(1)} ${dx.toFixed(1)} ${dy.toFixed(1)}" fill="none" stroke="${p.paper}" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>`; })() : '';
-    const arm = (side, a) => { const x = side * 15; const dir = a; return `<g transform="translate(${x} -40) rotate(${dir})"><rect x="-3.5" y="-2" width="7" height="20" rx="3.5" fill="${body}" ${OL(p, 1.8)}/><circle cx="0" cy="19" r="4.2" fill="${skin}" ${OL(p, 1.6)}/></g>`; };
+    const arm = (side, a, hook) => { const x = side * 15; const dir = a; return `<g transform="translate(${x} -40) rotate(${dir})"><rect x="-3.5" y="-2" width="7" height="20" rx="3.5" fill="${body}" ${OL(p, 1.8)}/><circle cx="0" cy="19" r="4.2" fill="${skin}" ${OL(p, 1.6)}/>${hook ? '<circle class="o55-hook" data-hook="hand" cx="0" cy="19" r="0.01" fill="none"/>' : ''}</g>`; };
     const angles = { stand: [14, -14], wave: [14, -150], carry: [-38, 38], bow: [4, -4], point: [14, -95] }[pose] || [14, -14];
     const sheet = pose === 'carry' ? `<g transform="translate(0 -26) rotate(-4)"><rect x="-10" y="-8" width="20" height="16" rx="2" fill="${p.paper}" ${OL(p, 1.6)}/><path d="M-6 -3H6M-6 1H3" stroke="${p.lilac}" stroke-width="1.6" stroke-linecap="round"/></g>` : '';
     const figure = `<ellipse cx="-6" cy="-1" rx="6" ry="3.2" fill="${p.ink}"/><ellipse cx="6" cy="-1" rx="6" ry="3.2" fill="${p.ink}"/>`
       + `<path d="M-15 -42 Q-19 -24 -18 -8 Q0 -2 18 -8 Q19 -24 15 -42 Q0 -48 -15 -42Z" fill="${body}" ${OL(p)}/>`
       + `<path d="M-13 -24 Q0 -20 13 -24" fill="none" stroke="${p.ink}" stroke-width="1.4" stroke-linecap="round" opacity="0.35"/>`
-      + arm(-1, angles[0]) + arm(1, angles[1])
+      + arm(-1, angles[0]) + (pose === 'wave' ? `<g class="o55-arm" data-pivot="15 -40">${arm(1, angles[1], true)}</g>` : arm(1, angles[1]))
       + `<path d="M-7 -44 Q0 -39 7 -44" fill="${p.cream}" ${OL(p, 1.6)}/>`
       + `<circle cx="0" cy="-56" r="13" fill="${skin}" ${OL(p)}/>`
       + `<path d="M-11 -62 Q-8 -73 1 -71 Q10 -74 11 -62 Q6 -67 0 -65 Q-6 -67 -11 -62Z" fill="${hair}" ${OL(p, 1.6)}/>`
       + `<ellipse cx="-4.6" cy="-56.5" rx="1.7" ry="2.2" fill="${p.ink}"/><ellipse cx="4.6" cy="-56.5" rx="1.7" ry="2.2" fill="${p.ink}"/>`
       + `<ellipse cx="-8.3" cy="-51.5" rx="2.6" ry="1.6" fill="${p.cheek}" opacity="0.7"/><ellipse cx="8.3" cy="-51.5" rx="2.6" ry="1.6" fill="${p.cheek}" opacity="0.7"/>`
-      + `<path d="M-3.4 -50.5 Q0 -47.5 3.4 -50.5" fill="none" stroke="${p.ink}" stroke-width="1.6" stroke-linecap="round"/>` + sheet;
+      + `<path d="M-3.4 -50.5 Q0 -47.5 3.4 -50.5" fill="none" stroke="${p.ink}" stroke-width="1.6" stroke-linecap="round"/>` + sheet
+      /* tied to the bar: the string ends in a little paper loop tied into the hair */
+      + (o.rig ? `<circle cx="0" cy="-71.5" r="2.3" fill="none" stroke="${p.paper}" stroke-width="1.5"/><circle cx="0" cy="-71.5" r="3.4" fill="none" stroke="${p.ink}" stroke-width="0.8" opacity="0.5"/>` : '');
     return `<g>${str}${sh(p, `<path d="M-15 -42 Q-19 -24 -18 -8 Q0 -2 18 -8 Q19 -24 15 -42 Q0 -48 -15 -42Z"/><circle cx="0" cy="-56" r="13"/>`)}${figure}</g>`;
   };
 
@@ -164,6 +166,9 @@
   A.defineFamily('friendly', {
     palette,
     props,
+    /* a marionette string: paper thread (the rig sets its d every frame; a slack thread sags) */
+    string: (ctx, d) => `<path class="o55-sp" d="${d}" fill="none" stroke="${ctx.mode === 'light' ? ctx.pal.ink : ctx.pal.paper}" stroke-width="1.5" stroke-linecap="round" opacity="${ctx.mode === 'light' ? 0.55 : 0.9}"/>`,
+    hand: { wave: [24.5, -56.5] },
     defs(ctx) {
       const p = ctx.pal;
       return `<linearGradient id="${ctx.uid}-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.wall}"/><stop offset="1" stop-color="${p.wall2}"/></linearGradient>`

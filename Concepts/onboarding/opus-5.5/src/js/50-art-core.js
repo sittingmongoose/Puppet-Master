@@ -70,10 +70,35 @@
     ctx.fam = fam; ctx.sceneId = sceneId;
     const items = (scene.compose(ctx) || []).filter(Boolean);
     const layers = { back: [], mid: [], front: [] };
+    /* Marionette strings. A helper tied to the control bar (opts.tie) does not draw its own string: the scene gets one
+       string per tie, in the family's own string style, from the bar's hook to the helper's head (and, for a raised
+       hand, from a second hook to that hand). O55.art.rig keeps every string on its two hook points every frame and
+       drives the bar and the tied helpers as one linked system, so nothing comes loose while it all moves. */
+    const bar = items.find((it) => it.prop === 'bar');
+    const ties = bar && fam.string ? items.filter((it) => it.prop === 'helper' && it.opts && it.opts.tie) : [];
+    if (ties.length) {
+      const m = A.metrics(ctx.family), hooks = Object.assign({}, m.barHooks, (bar.opts || {}).hooks);
+      bar.amb = null; bar.opts = Object.assign({}, bar.opts, { hooks });
+      ties.forEach((it) => { it.amb = null; it.opts = Object.assign({}, it.opts, { anchor: null, rig: true }); });
+      const pt = (it, local) => [it.x + (it.s || 1) * local[0], it.y + (it.s || 1) * local[1]];
+      const d = (a, b) => `M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
+      const strings = ties.map((it) => {
+        const from = hooks[it.opts.tie] || [0, 0], head = pt(it, m.hook);
+        let out = `<g class="o55-tie" data-key="tie-${U.esc(it.key)}" data-from="${U.esc(bar.key)}:${U.esc(it.opts.tie)}" data-to="${U.esc(it.key)}:head">${fam.string(ctx, d(pt(bar, from), head))}</g>`;
+        const hand = it.opts.pose === 'wave' && it.opts.handTie && fam.hand && fam.hand.wave;
+        if (hand) out += `<g class="o55-tie o55-tie-hand" data-key="tie-${U.esc(it.key)}-hand" data-from="${U.esc(bar.key)}:${U.esc(it.opts.handTie)}" data-to="${U.esc(it.key)}:hand">${fam.string(ctx, d(pt(bar, hooks[it.opts.handTie] || from), pt(it, fam.hand.wave)), true)}</g>`;
+        return out;
+      }).join('');
+      layers.mid.push(`<g class="o55-ties" data-key="ties">${strings}</g>`);
+    }
+    const hook = (name, x, y) => `<circle class="o55-hook" data-hook="${name}" cx="${x}" cy="${y}" r="0.01" fill="none"/>`;
     for (const item of items) {
       const draw = fam.props[item.prop] || (A.common[item.prop] && ((c, o) => A.common[item.prop](c, o, fam)));
       if (!draw) continue;
-      const inner = draw(ctx, item);
+      let inner = draw(ctx, item);
+      /* hook points the rig measures: the bar's string points, a tied helper's head */
+      if (ties.length && item === bar) inner = inner.replace(/<\/g>$/, Object.entries(item.opts.hooks).map(([k, [x, y]]) => hook(k, x, y)).join('') + '</g>');
+      if (item.opts && item.opts.rig) { const h = A.metrics(ctx.family).hook; inner = inner.replace(/<\/g>$/, hook('head', h[0], h[1]) + '</g>'); }
       (layers[item.layer || 'mid'] || layers.mid).push(place(item, inner, ctx.family));
     }
     const bg = fam.background ? fam.background(ctx) : '';
@@ -104,6 +129,7 @@
       for (const { name, value } of Array.from(next.attributes)) svg.setAttribute(name, value);
       U.morphFrom(svg, next);
       current.classList.add('o55-beat');
+      if (A.rig) A.rig.watch(svg);
       return current;
     }
     const wrap = document.createElement('div');
@@ -120,6 +146,7 @@
     }
     host.appendChild(wrap);
     O55.motion.after(40, () => wrap.classList.remove('o55-enter'));
+    if (A.rig) A.rig.watch(wrap.querySelector('svg'));
     return wrap;
   };
 

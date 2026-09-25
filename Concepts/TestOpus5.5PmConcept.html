@@ -82110,10 +82110,35 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     ctx.fam = fam; ctx.sceneId = sceneId;
     const items = (scene.compose(ctx) || []).filter(Boolean);
     const layers = { back: [], mid: [], front: [] };
+    /* Marionette strings. A helper tied to the control bar (opts.tie) does not draw its own string: the scene gets one
+       string per tie, in the family's own string style, from the bar's hook to the helper's head (and, for a raised
+       hand, from a second hook to that hand). O55.art.rig keeps every string on its two hook points every frame and
+       drives the bar and the tied helpers as one linked system, so nothing comes loose while it all moves. */
+    const bar = items.find((it) => it.prop === 'bar');
+    const ties = bar && fam.string ? items.filter((it) => it.prop === 'helper' && it.opts && it.opts.tie) : [];
+    if (ties.length) {
+      const m = A.metrics(ctx.family), hooks = Object.assign({}, m.barHooks, (bar.opts || {}).hooks);
+      bar.amb = null; bar.opts = Object.assign({}, bar.opts, { hooks });
+      ties.forEach((it) => { it.amb = null; it.opts = Object.assign({}, it.opts, { anchor: null, rig: true }); });
+      const pt = (it, local) => [it.x + (it.s || 1) * local[0], it.y + (it.s || 1) * local[1]];
+      const d = (a, b) => `M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
+      const strings = ties.map((it) => {
+        const from = hooks[it.opts.tie] || [0, 0], head = pt(it, m.hook);
+        let out = `<g class="o55-tie" data-key="tie-${U.esc(it.key)}" data-from="${U.esc(bar.key)}:${U.esc(it.opts.tie)}" data-to="${U.esc(it.key)}:head">${fam.string(ctx, d(pt(bar, from), head))}</g>`;
+        const hand = it.opts.pose === 'wave' && it.opts.handTie && fam.hand && fam.hand.wave;
+        if (hand) out += `<g class="o55-tie o55-tie-hand" data-key="tie-${U.esc(it.key)}-hand" data-from="${U.esc(bar.key)}:${U.esc(it.opts.handTie)}" data-to="${U.esc(it.key)}:hand">${fam.string(ctx, d(pt(bar, hooks[it.opts.handTie] || from), pt(it, fam.hand.wave)), true)}</g>`;
+        return out;
+      }).join('');
+      layers.mid.push(`<g class="o55-ties" data-key="ties">${strings}</g>`);
+    }
+    const hook = (name, x, y) => `<circle class="o55-hook" data-hook="${name}" cx="${x}" cy="${y}" r="0.01" fill="none"/>`;
     for (const item of items) {
       const draw = fam.props[item.prop] || (A.common[item.prop] && ((c, o) => A.common[item.prop](c, o, fam)));
       if (!draw) continue;
-      const inner = draw(ctx, item);
+      let inner = draw(ctx, item);
+      /* hook points the rig measures: the bar's string points, a tied helper's head */
+      if (ties.length && item === bar) inner = inner.replace(/<\/g>$/, Object.entries(item.opts.hooks).map(([k, [x, y]]) => hook(k, x, y)).join('') + '</g>');
+      if (item.opts && item.opts.rig) { const h = A.metrics(ctx.family).hook; inner = inner.replace(/<\/g>$/, hook('head', h[0], h[1]) + '</g>'); }
       (layers[item.layer || 'mid'] || layers.mid).push(place(item, inner, ctx.family));
     }
     const bg = fam.background ? fam.background(ctx) : '';
@@ -82144,6 +82169,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       for (const { name, value } of Array.from(next.attributes)) svg.setAttribute(name, value);
       U.morphFrom(svg, next);
       current.classList.add('o55-beat');
+      if (A.rig) A.rig.watch(svg);
       return current;
     }
     const wrap = document.createElement('div');
@@ -82160,6 +82186,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
     host.appendChild(wrap);
     O55.motion.after(40, () => wrap.classList.remove('o55-enter'));
+    if (A.rig) A.rig.watch(wrap.querySelector('svg'));
     return wrap;
   };
 
@@ -82276,18 +82303,21 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const p = ctx.pal, o = item.opts || {}, s = item.s || 1, pose = o.pose || 'stand';
     const arms = {
       stand: 'M-12 -40 L-17 -29 L-18 -19 M12 -40 L17 -29 L18 -19',
-      wave: 'M-12 -40 L-17 -29 L-18 -19 M12 -40 L20 -50 L24 -61',
+      wave: 'M-12 -40 L-17 -29 L-18 -19',
       carry: 'M-12 -40 L-10 -30 L-3 -27 M12 -40 L10 -30 L3 -27',
       bow: 'M-12 -40 L-14 -30 L-12 -21 M12 -40 L14 -30 L12 -21',
       point: 'M-12 -40 L-17 -29 L-18 -19 M12 -40 L23 -37 L33 -36'
     }[pose] || '';
     const joints = [[-12, -40], [12, -40], [-8, -18], [8, -18], [-6, -9], [6, -9]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.7" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/>`).join('');
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -64 L${dx.toFixed(1)} ${dy.toFixed(1)}" ${S(p, 0.8, p.ink2)}/><circle cx="0" cy="-64" r="1.6" fill="${p.ink}"/>`; })() : '';
+    /* tied to the bar: a knot where the string meets the head; a waving arm is its own group (the rig lifts it) */
+    const knot = o.rig ? `<circle cx="0" cy="-63" r="1.7" fill="${p.ink}"/>` : '';
+    const waveArm = pose === 'wave' ? `<g class="o55-arm" data-pivot="12 -40"><path d="M12 -40 L20 -50 L24 -61" ${S(p, 1.4)}/><circle cx="24" cy="-61" r="1.9" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/><circle class="o55-hook" data-hook="hand" cx="24" cy="-61" r="0.01" fill="none"/></g>` : '';
     const carry = pose === 'carry' ? `<rect x="-9" y="-34" width="18" height="12" rx="1" ${F(p, p.accentFill, 1.2, p.accent)}/><path d="M-5 -30H5M-5 -26.5H2" ${S(p, 0.8, p.accent)}/>` : '';
     return `<g>${str}<circle cx="0" cy="-54" r="9" ${F(p, p.fill, 1.5)}/><path d="M-9 -54H9M0 -63V-45" ${S(p, 0.5, p.faint)}/>`
       + `<path d="M0 -45V-41" ${S(p)}/><path d="M-12 -41 L12 -41 L8 -18 L-8 -18 Z" ${F(p, p.fill, 1.5)}/>`
       + `<path d="${arms}" ${S(p, 1.4)}/><path d="M-8 -18 L-6 -9 L-7 0 M8 -18 L6 -9 L7 0" ${S(p, 1.4)}/>`
-      + `<path d="M-11 0H-3M3 0H11" ${S(p, 1.4)}/>${joints}${carry}</g>`;
+      + `<path d="M-11 0H-3M3 0H11" ${S(p, 1.4)}/>${joints}${waveArm}${carry}${knot}</g>`;
   };
 
   const props = {
@@ -82387,6 +82417,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   A.defineFamily('basic', {
     palette,
     props,
+    /* a marionette string: a fine ink line (the rig sets its d every frame) */
+    string: (ctx, d) => `<path class="o55-sp" d="${d}" fill="none" stroke="${ctx.pal.ink2}" stroke-width="0.8" stroke-linecap="round"/>`,
+    hand: { wave: [24, -61] },
     defs(ctx) {
       const p = ctx.pal;
       return `<pattern id="${ctx.uid}-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="${p.grid}" stroke-width="0.6"/></pattern>`
@@ -82438,19 +82471,21 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const p = ctx.pal, o = item.opts || {}, s = item.s || 1, v = o.variant || 0, pose = o.pose || 'stand';
     const body = variants(p)[v % 4], skin = p.skin[v % 3], hair = p.hair[v % 3];
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -67 Q${(dx * 0.5 + 3).toFixed(1)} ${(dy * 0.5).toFixed(1)} ${dx.toFixed(1)} ${dy.toFixed(1)}" fill="none" stroke="${p.paper}" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>`; })() : '';
-    const arm = (side, a) => { const x = side * 15; const dir = a; return `<g transform="translate(${x} -40) rotate(${dir})"><rect x="-3.5" y="-2" width="7" height="20" rx="3.5" fill="${body}" ${OL(p, 1.8)}/><circle cx="0" cy="19" r="4.2" fill="${skin}" ${OL(p, 1.6)}/></g>`; };
+    const arm = (side, a, hook) => { const x = side * 15; const dir = a; return `<g transform="translate(${x} -40) rotate(${dir})"><rect x="-3.5" y="-2" width="7" height="20" rx="3.5" fill="${body}" ${OL(p, 1.8)}/><circle cx="0" cy="19" r="4.2" fill="${skin}" ${OL(p, 1.6)}/>${hook ? '<circle class="o55-hook" data-hook="hand" cx="0" cy="19" r="0.01" fill="none"/>' : ''}</g>`; };
     const angles = { stand: [14, -14], wave: [14, -150], carry: [-38, 38], bow: [4, -4], point: [14, -95] }[pose] || [14, -14];
     const sheet = pose === 'carry' ? `<g transform="translate(0 -26) rotate(-4)"><rect x="-10" y="-8" width="20" height="16" rx="2" fill="${p.paper}" ${OL(p, 1.6)}/><path d="M-6 -3H6M-6 1H3" stroke="${p.lilac}" stroke-width="1.6" stroke-linecap="round"/></g>` : '';
     const figure = `<ellipse cx="-6" cy="-1" rx="6" ry="3.2" fill="${p.ink}"/><ellipse cx="6" cy="-1" rx="6" ry="3.2" fill="${p.ink}"/>`
       + `<path d="M-15 -42 Q-19 -24 -18 -8 Q0 -2 18 -8 Q19 -24 15 -42 Q0 -48 -15 -42Z" fill="${body}" ${OL(p)}/>`
       + `<path d="M-13 -24 Q0 -20 13 -24" fill="none" stroke="${p.ink}" stroke-width="1.4" stroke-linecap="round" opacity="0.35"/>`
-      + arm(-1, angles[0]) + arm(1, angles[1])
+      + arm(-1, angles[0]) + (pose === 'wave' ? `<g class="o55-arm" data-pivot="15 -40">${arm(1, angles[1], true)}</g>` : arm(1, angles[1]))
       + `<path d="M-7 -44 Q0 -39 7 -44" fill="${p.cream}" ${OL(p, 1.6)}/>`
       + `<circle cx="0" cy="-56" r="13" fill="${skin}" ${OL(p)}/>`
       + `<path d="M-11 -62 Q-8 -73 1 -71 Q10 -74 11 -62 Q6 -67 0 -65 Q-6 -67 -11 -62Z" fill="${hair}" ${OL(p, 1.6)}/>`
       + `<ellipse cx="-4.6" cy="-56.5" rx="1.7" ry="2.2" fill="${p.ink}"/><ellipse cx="4.6" cy="-56.5" rx="1.7" ry="2.2" fill="${p.ink}"/>`
       + `<ellipse cx="-8.3" cy="-51.5" rx="2.6" ry="1.6" fill="${p.cheek}" opacity="0.7"/><ellipse cx="8.3" cy="-51.5" rx="2.6" ry="1.6" fill="${p.cheek}" opacity="0.7"/>`
-      + `<path d="M-3.4 -50.5 Q0 -47.5 3.4 -50.5" fill="none" stroke="${p.ink}" stroke-width="1.6" stroke-linecap="round"/>` + sheet;
+      + `<path d="M-3.4 -50.5 Q0 -47.5 3.4 -50.5" fill="none" stroke="${p.ink}" stroke-width="1.6" stroke-linecap="round"/>` + sheet
+      /* tied to the bar: the string ends in a little paper loop tied into the hair */
+      + (o.rig ? `<circle cx="0" cy="-71.5" r="2.3" fill="none" stroke="${p.paper}" stroke-width="1.5"/><circle cx="0" cy="-71.5" r="3.4" fill="none" stroke="${p.ink}" stroke-width="0.8" opacity="0.5"/>` : '');
     return `<g>${str}${sh(p, `<path d="M-15 -42 Q-19 -24 -18 -8 Q0 -2 18 -8 Q19 -24 15 -42 Q0 -48 -15 -42Z"/><circle cx="0" cy="-56" r="13"/>`)}${figure}</g>`;
   };
 
@@ -82571,6 +82606,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   A.defineFamily('friendly', {
     palette,
     props,
+    /* a marionette string: paper thread (the rig sets its d every frame; a slack thread sags) */
+    string: (ctx, d) => `<path class="o55-sp" d="${d}" fill="none" stroke="${ctx.mode === 'light' ? ctx.pal.ink : ctx.pal.paper}" stroke-width="1.5" stroke-linecap="round" opacity="${ctx.mode === 'light' ? 0.55 : 0.9}"/>`,
+    hand: { wave: [24.5, -56.5] },
     defs(ctx) {
       const p = ctx.pal;
       return `<linearGradient id="${ctx.uid}-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.wall}"/><stop offset="1" stop-color="${p.wall2}"/></linearGradient>`
@@ -82633,16 +82671,20 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const p = ctx.pal, o = item.opts || {}, s = item.s || 1, tint = tints[(o.variant || 0) % 4];
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -68 L${dx.toFixed(1)} ${dy.toFixed(1)}" stroke="${p[tint]}" stroke-width="5" opacity="0.14" stroke-linecap="round"/><path d="M0 -68 L${dx.toFixed(1)} ${dy.toFixed(1)}" stroke="${ctx.url('fil')}" stroke-width="1.3" stroke-linecap="round"/><circle cx="0" cy="-68" r="2.2" fill="${p.core}"/>`; })() : '';
     const pose = o.pose || 'stand';
-    const armR = { wave: 'M13 -40 L22 -54 L25 -64', point: 'M13 -40 L26 -39 L36 -38', carry: 'M13 -40 L9 -30 L3 -27' }[pose] || 'M13 -40 L18 -28 L19 -18';
+    const armR = { wave: '', point: 'M13 -40 L26 -39 L36 -38', carry: 'M13 -40 L9 -30 L3 -27' }[pose] || 'M13 -40 L18 -28 L19 -18';
+    /* a waving arm is its own group (the rig lifts it); tied to the bar, a bright knot where the string meets the head */
+    const waveArm = pose === 'wave' ? `<g class="o55-arm" data-pivot="13 -40"><path d="M13 -40 L22 -54 L25 -64" fill="none" stroke="${ctx.url('edge')}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`
+      + `<path d="M13 -40 L22 -54 L25 -64" fill="none" stroke="${p[tint]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/><circle cx="25" cy="-64" r="2" fill="${p.core}"/><circle class="o55-hook" data-hook="hand" cx="25" cy="-64" r="0.01" fill="none"/></g>` : '';
+    const knot = o.rig ? `${glow(ctx, tint, 7, 0, -68.5)}<circle cx="0" cy="-68.5" r="2.2" fill="${p.core}"/>` : '';
     const armL = pose === 'carry' ? 'M-13 -40 L-9 -30 L-3 -27' : 'M-13 -40 L-18 -28 L-19 -18';
     const orb = pose === 'carry' ? `${glow(ctx, 'amber', 14, 0, -28)}<circle cx="0" cy="-28" r="6" ${G(ctx)}/><circle cx="0" cy="-28" r="2.4" fill="${p.core}"/>` : '';
     return `<g>${str}<ellipse cx="0" cy="1" rx="16" ry="3.5" fill="${p.shade}"/>`
-      + `<path d="${armL} M${armR.slice(1)}" fill="none" stroke="${ctx.url('edge')}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`
-      + `<path d="${armL} M${armR.slice(1)}" fill="none" stroke="${p[tint]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>`
+      + `<path d="${armL}${armR ? ' M' + armR.slice(1) : ''}" fill="none" stroke="${ctx.url('edge')}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`
+      + `<path d="${armL}${armR ? ' M' + armR.slice(1) : ''}" fill="none" stroke="${p[tint]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>` + waveArm
       + `<path d="M-7 -12 L-8 0 M7 -12 L8 0" stroke="${ctx.url('edge')}" stroke-width="4.5" stroke-linecap="round"/>`
       + `<path d="M0 -46 L15 -38 L12 -14 L0 -8 L-12 -14 L-15 -38 Z" ${G(ctx)}/>${glow(ctx, tint, 13, 0, -27)}<circle cx="0" cy="-27" r="3.2" fill="${p.core}" class="o55-core"/>`
       + hl('M-11 -37 L-3 -41') + `<circle cx="0" cy="-57" r="11.5" ${G(ctx)}/>${hl('M-7 -62 A8 8 0 0 1 2 -65.5')}`
-      + `<circle cx="-3.6" cy="-57" r="1.4" fill="${p.core}"/><circle cx="3.6" cy="-57" r="1.4" fill="${p.core}"/>${orb}</g>`;
+      + `<circle cx="-3.6" cy="-57" r="1.4" fill="${p.core}"/><circle cx="3.6" cy="-57" r="1.4" fill="${p.core}"/>${orb}${knot}</g>`;
   };
 
   const props = {
@@ -82735,6 +82777,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   A.defineFamily('glass', {
     palette,
     props,
+    /* a marionette string: a soft glow under a bright filament (the rig sets both d's every frame) */
+    string: (ctx, d) => `<path class="o55-sp" d="${d}" fill="none" stroke="${ctx.pal.lav}" stroke-width="5" opacity="0.14" stroke-linecap="round"/><path class="o55-sp" d="${d}" fill="none" stroke="${ctx.url('fil')}" stroke-width="1.3" stroke-linecap="round"/>`,
+    hand: { wave: [25, -64] },
     defs(ctx) {
       const p = ctx.pal, u = ctx.uid;
       const rg = (name, color, a) => `<radialGradient id="${u}-glow-${name}"><stop offset="0" stop-color="${color}" stop-opacity="${a}"/><stop offset="0.45" stop-color="${color}" stop-opacity="${a * 0.35}"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></radialGradient>`;
@@ -82796,6 +82841,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const HELPER = {
     stand: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaak.', 'kaaaaaaaak', 'saaaaaaaas', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
     wave: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssks', '..kkkkkkk.', '.kaaaaaak.', 'kaaaaaaaa.', 'saaaaaaaa.', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
+    /* the second frame of the wave: the hand out at shoulder height */
+    wave2: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaaks', 'kaaaaaaak.', 'saaaaaaaa.', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
     carry: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaak.', 'kawwwwwwak', 'kswkkkkwsk', '.kwwwwwwk.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.']
   };
   const BAR = ['............kkkk............', '...........k....k...........', '............kkkk............', '.............kk.............',
@@ -82851,7 +82898,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return dots(p, 0, -14 * (o.px || 5) - 2, dx, dy, p.text); })() : '';
       const map = { k: p.dark ? '#000' : p.ink, h: p.hair, s: p.skin, m: p.b, a: bodyColor(p, o.variant), b: p.dark ? p.mid : p.mid, w: p.dark ? '#f5ecd8' : '#ffffff' };
       const px = o.px || 5;
-      return `<g>${str}<g transform="translate(0 ${-7 * px})">${sprite(rows, map, px)}</g></g>`;
+      /* tied to the bar and waving: two frames the rig swaps on its stepped clock; a pixel knot where the string meets the head */
+      const body = o.rig && o.pose === 'wave' ? `<g class="o55-wf">${sprite(rows, map, px)}</g><g class="o55-wf" style="display:none">${sprite(HELPER.wave2, map, px)}</g>` : sprite(rows, map, px);
+      const knot = o.rig ? `<rect x="-2" y="${-14 * px - 3}" width="4" height="4" fill="${p.text}" shape-rendering="crispEdges"/>` : '';
+      return `<g>${str}<g transform="translate(0 ${-7 * px})">${body}</g>${knot}</g>`;
     },
     stage(ctx) {
       const p = ctx.pal, w = 380, bw = 20, bh = 10;
@@ -82927,6 +82977,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   A.defineFamily('retro', {
     palette,
     props,
+    /* a marionette string: a dotted pixel line on whole pixels (the rig sets its d on each step). It leaves from a
+       stud's centre, 12 px inside the bar's outline, so the dots are phased to start right under the outline. */
+    string: (ctx, d) => `<path class="o55-sp" d="${d}" fill="none" stroke="${ctx.pal.text}" stroke-width="3" stroke-dasharray="4 4" stroke-dashoffset="4" shape-rendering="crispEdges"/>`,
     icons: ICONS,
     defs(ctx) {
       const p = ctx.pal;
@@ -82967,12 +83020,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const O55 = window.O55, A = O55.art;
   const L = (key, fallback) => { const v = O55.t('art.labels.' + key); return v === 'art.labels.' + key ? fallback : v; };
 
+  /* hook: where a string meets a helper's head (helper units, before its scale); barHooks: the bar's string points
+     (a0 left end, a1 the upright's foot, a2 right end; w0 / w2 part-way out, for a raised hand's string) */
+  const hooks = (a) => ({ a0: a[0], a1: a[1], a2: a[2], w0: [Math.round(a[0][0] * 0.56), a[0][1]], w2: [Math.round(a[2][0] * 0.56), a[2][1]] });
   const METRICS = {
-    basic: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 470, helperScale: 1.75, barY: 136 },
-    friendly: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 472, helperScale: 1.6, barY: 140 },
-    glass: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 478, helperScale: 1.7, barY: 136 },
-    retro: { anchors: [[-100, -4], [0, 36], [92, -4]], floor: 458, helperScale: 1, barY: 132, helperPx: 7 }
+    basic: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 470, helperScale: 1.75, barY: 136, hook: [0, -63] },
+    friendly: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 472, helperScale: 1.6, barY: 140, hook: [0, -73.5] },
+    glass: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 478, helperScale: 1.7, barY: 136, hook: [0, -68.5] },
+    retro: { anchors: [[-96, -4], [0, 36], [96, -4]], floor: 458, helperScale: 1, barY: 132, helperPx: 7, hook: [0, -100] }
   };
+  Object.values(METRICS).forEach((m) => { m.barHooks = hooks(m.anchors); });
   A.metrics = (family) => METRICS[family] || METRICS.basic;
 
   /* Marionette ensemble: bar + three helpers on strings (hero, look tiles, creating, ready). */
@@ -82983,9 +83040,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const items = [{ key: 'bar', prop: 'bar', x: cx, y: barY, layer: 'front', anim: 'drop', delay: o.delay || 0, amb: 'sway', ambd: 5600 }];
     [-1, 0, 1].forEach((side, i) => {
       const a = side < 0 ? m.anchors[0] : side > 0 ? m.anchors[2] : m.anchors[1];
+      /* each helper hangs from its own point on the bar; a waving helper's hand hangs from a second point on its side */
       items.push({ key: 'h' + i, prop: 'helper', x: cx + side * spread, y: floor - (side === 0 ? 14 : 0), s, layer: 'mid', anim: 'drop',
         delay: (o.delay || 0) + 260 + i * 90, amb: 'bob', ambd: 2400 + i * 380,
-        opts: { variant: (o.variants || [0, 1, 2])[i], pose: poses[i], anchor: [cx + a[0], barY + a[1]], px: m.helperPx } });
+        opts: { variant: (o.variants || [0, 1, 2])[i], pose: poses[i], anchor: [cx + a[0], barY + a[1]], px: m.helperPx,
+          tie: ['a0', 'a1', 'a2'][side + 1], handTie: side > 0 ? 'w2' : 'w0', side } });
     });
     return items;
   };
@@ -83261,6 +83320,222 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       return items;
     }
   });
+})();
+
+/* ---- js/58-rig.js ---- */
+/* O55.art.rig — the marionette as one linked system (ties and hooks are rendered in 50-art-core.js). Every frame:
+   1. the control bar tilts, and lifts a little, on the motion clock, with the family's feel;
+   2. each tied helper hangs from its string: when its point on the bar rises, the helper is lifted with it; when the
+      point drops, the helper stays standing and its string goes slack and sags; it swings after its point with a
+      spring's lag and leans toward the pull, pivoting on its feet;
+   3. a raised hand tied to the bar rises and falls with its string, with a small wave of its own;
+   4. every string is drawn between its two hook points, so it stays attached through the entrance, beat glides and
+      all of the above; a helper can also be made to cheer (A.rig.cheer) and the whole troupe to celebrate.
+   Cost: while props are still arriving (an entrance, a beat glide) the hooks are measured, all reads before any
+   write, once a frame. Once settled, each hook's place inside its own group is cached and every later frame is plain
+   arithmetic on the transforms the rig itself sets: no layout reads on this very large page.
+   Retro moves in whole pixels on a stepped clock and never rotates: the bar hops, the helpers hop with it, the waving
+   helper swaps between two frames. Reduced Motion and low-resource mode hold the ambient motion still; nothing runs
+   while the scene is hidden, paused or gone. */
+(function () {
+  'use strict';
+  const O55 = window.O55, A = O55.art, M = O55.motion;
+  /* tilt (deg) and period (ms) of the bar; bob (px); lift share; sideways follow; lean (deg per px); arm (deg per px of
+     hand-point rise); a small wave of the hand of its own; spring stiffness and damping */
+  const FEEL = {
+    basic: { tilt: 1.7, period: 6400, bob: 1.6, lift: 1, swing: 0.55, lean: 0.12, arm: 1.1, wave: 4, waveHz: 0.9, k: 60, c: 15 },
+    friendly: { tilt: 3.4, period: 3900, bob: 2.4, lift: 1, swing: 0.75, lean: 0.2, arm: 1.5, wave: 9, waveHz: 1.3, k: 95, c: 7 },
+    glass: { tilt: 2.1, period: 8200, bob: 3, lift: 1, swing: 0.6, lean: 0.1, arm: 1, wave: 5, waveHz: 0.7, k: 28, c: 8 },
+    retro: { step: 380, hop: 4 }
+  };
+  const rigs = new Map();
+  let raf = 0;
+  const rad = (d) => (d * Math.PI) / 180;
+  const rot = (p, deg) => { const c = Math.cos(rad(deg)), s = Math.sin(rad(deg)); return [p[0] * c - p[1] * s, p[0] * s + p[1] * c]; };
+
+  const parse = (el) => { /* the anchor group's own translate/scale (its CSS transform, the value it settles on) */
+    const t = (el && el.style.transform) || '';
+    const m = /translate\(\s*(-?[\d.]+)px,\s*(-?[\d.]+)px\)/.exec(t), s = /scale\(\s*(-?[\d.]+)\)/.exec(t);
+    return { x: m ? +m[1] : 0, y: m ? +m[2] : 0, s: s ? +s[1] : 1 };
+  };
+  const hookLocal = (h) => [+h.getAttribute('cx'), +h.getAttribute('cy')];
+  /* a point given in el's user space, in the user space of `space` (el inside it), whatever lies between */
+  function inSpace(space, el, local) {
+    const a = space.getScreenCTM(), b = el.getScreenCTM(); if (!a || !b) return local;
+    const r = a.inverse().multiply(b);
+    return [r.a * local[0] + r.c * local[1] + r.e, r.b * local[0] + r.d * local[1] + r.f];
+  }
+
+  A.rig = {
+    /* (re)read a mounted scene: after its first mount and after every beat change */
+    watch(svg) {
+      if (!svg) return;
+      const ties = [...svg.querySelectorAll('.o55-tie')];
+      if (!ties.length) { rigs.delete(svg); return; }
+      const fam = svg.getAttribute('data-family'), it = (key) => svg.querySelector(`.o55-it[data-key="${key}"]`);
+      const am = (g) => g && g.querySelector(':scope > .o55-in > .o55-am');
+      const prev = rigs.get(svg), now = M.now();
+      const st = { svg, fam, feel: FEEL[fam] || FEEL.basic, born: prev ? prev.born : now, last: now, settleAt: now + (prev ? 950 : 1900), amb0: null, cached: false, helpers: new Map() };
+      const barKey = ties[0].getAttribute('data-from').split(':')[0], barIt = it(barKey);
+      st.bar = { it: barIt, am: am(barIt), pos: parse(barIt), tilt: 0, lift: 0 };
+      st.ties = ties.map((g) => {
+        const [fk, fh] = g.getAttribute('data-from').split(':'), [tk, th] = g.getAttribute('data-to').split(':');
+        const from = it(fk) && it(fk).querySelector(`.o55-hook[data-hook="${fh}"]`), hIt = it(tk), to = hIt && hIt.querySelector(`.o55-hook[data-hook="${th}"]`);
+        if (!from || !to) return null;
+        const t = { g, from, to, paths: [...g.querySelectorAll('.o55-sp')], hand: th === 'hand', key: tk };
+        if (!st.helpers.has(tk)) {
+          const old = prev && prev.helpers.get(tk), arm = hIt.querySelector('.o55-arm');
+          st.helpers.set(tk, { it: hIt, am: am(hIt), pos: parse(hIt), arm, pivot: arm ? (arm.getAttribute('data-pivot') || '0 0').split(/[ ,]+/).map(Number) : null,
+            frames: [...hIt.querySelectorAll('.o55-wf')], x: old ? old.x : 0, v: old ? old.v : 0, up: 0, lean: 0, ang: 0, cheer: old ? old.cheer : null, i: st.helpers.size });
+        }
+        const h = st.helpers.get(tk);
+        if (t.hand) h.handTie = t; else h.head = t;
+        t.h = h;
+        return t;
+      }).filter(Boolean);
+      rigs.set(svg, st);
+      if (!raf) raf = requestAnimationFrame(frame);
+    },
+    /* a helper cheers: a hop and a lean (and a lifted arm), on top of whatever the bar is doing. `who` is a helper key
+       or 'all' (the troupe celebrates, one after another). */
+    cheer(svg, who, o) {
+      const st = svg && rigs.get(svg); if (!st) return false;
+      const now = M.now(), big = !!(o && o.big);
+      [...st.helpers.entries()].forEach(([k, h], i) => {
+        if (who !== 'all' && who !== k) return;
+        h.cheer = { t0: now + (who === 'all' ? i * 110 : 0), dur: big ? 1300 : 760, hop: big ? 22 : 12, turns: big ? 2 : 1 };
+      });
+      st.until = now + (big ? 1900 : 1100);
+      if (!raf) raf = requestAnimationFrame(frame);
+      return true;
+    },
+    /* for tests and films: each string's ends against its hooks' measured places, in scene units */
+    gaps(svg) {
+      const st = rigs.get(svg); if (!st) return null;
+      return st.ties.map((t) => {
+        const a = inSpace(st.svg, t.from, hookLocal(t.from)), b = inSpace(st.svg, t.to, hookLocal(t.to)), n = t.paths[0].getAttribute('d').match(/-?[\d.]+/g).map(Number);
+        return { key: t.key, hand: t.hand, start: Math.hypot(n[0] - a[0], n[1] - a[1]), end: Math.hypot(n[n.length - 2] - b[0], n[n.length - 1] - b[1]) };
+      });
+    },
+    running: () => rigs.size
+  };
+
+  const ambientOn = (svg) => {
+    if (M.reduced() || M.lowResource || document.hidden) return false;
+    const host = svg.closest('[data-o55-ambient]');
+    return !host || host.getAttribute('data-o55-ambient') === 'on';
+  };
+
+  function frame() {
+    raf = 0;
+    let any = false;
+    for (const [svg, st] of rigs) {
+      if (!svg.isConnected) { rigs.delete(svg); continue; }
+      const now = M.now();
+      if (now < st.settleAt) { measured(st); any = true; continue; } /* props still arriving: measure */
+      if (!st.cached) cache(st);
+      const moving = ambientOn(svg), cheering = st.until && now < st.until;
+      if (!moving && !cheering && st.drawnStill) continue;
+      drive(st, now, moving);
+      computed(st);
+      st.drawnStill = !moving && !cheering;
+      any = true;
+    }
+    if (any) raf = requestAnimationFrame(frame);
+  }
+
+  /* ---------------------------------------------------------------- while props arrive: measured, reads first */
+  function measured(st) {
+    const ends = st.ties.map((t) => [inSpace(st.svg, t.from, hookLocal(t.from)), inSpace(st.svg, t.to, hookLocal(t.to))]);
+    st.ties.forEach((t, i) => write(st, t, ends[i][0], ends[i][1]));
+  }
+  /* once settled: where each hook sits inside the group the rig moves (bar, helper, arm), measured one time */
+  function cache(st) {
+    for (const t of st.ties) {
+      t.fromLocal = st.bar.am ? inSpace(st.bar.am, t.from, hookLocal(t.from)) : hookLocal(t.from);
+      const h = t.h;
+      t.toLocal = t.hand && h.arm ? inSpace(h.arm, t.to, hookLocal(t.to)) : h.am ? inSpace(h.am, t.to, hookLocal(t.to)) : hookLocal(t.to);
+    }
+    /* rest lengths of the head strings, for slack */
+    for (const t of st.ties) if (!t.hand) { const [a, b] = ends(st, t, true); t.rest = Math.hypot(b[0] - a[0], b[1] - a[1]); }
+    st.cached = true;
+  }
+  /* a tie's two ends from the rig's own transforms (rest = with every rig transform at zero) */
+  function ends(st, t, rest) {
+    const B = st.bar, h = t.h, bs = B.pos.s || 1, hs = h.pos.s || 1;
+    const bp = rest ? t.fromLocal : (() => { const r = rot(t.fromLocal, B.tilt); return [r[0], r[1] - B.lift]; })();
+    const a = [B.pos.x + bs * bp[0], B.pos.y + bs * bp[1]];
+    let p = t.toLocal;
+    if (!rest && t.hand && h.arm) { const pv = h.pivot, r = rot([p[0] - pv[0], p[1] - pv[1]], h.ang); p = [pv[0] + r[0], pv[1] + r[1]]; }
+    if (!rest) { const r = rot(p, h.lean); p = [r[0] + h.x / hs, r[1] - h.up / hs]; }
+    return [a, [h.pos.x + hs * p[0], h.pos.y + hs * p[1]]];
+  }
+  function computed(st) { for (const t of st.ties) { const [a, b] = ends(st, t, false); write(st, t, a, b); } }
+
+  /* a string between two points; a head string shorter than its rest length is slack and sags */
+  function write(st, t, a, b) {
+    const retro = st.fam === 'retro';
+    if (retro) { a = a.map(Math.round); b = b.map(Math.round); }
+    const len = Math.hypot(b[0] - a[0], b[1] - a[1]), slack = !retro && t.rest ? Math.max(0, t.rest - len) : 0;
+    let d;
+    if (slack > 0.4) {
+      const sag = Math.min(16, Math.sqrt(slack) * 3.2), mx = (a[0] + b[0]) / 2 + sag * 0.45, my = (a[1] + b[1]) / 2 + sag * 0.2;
+      d = `M${a[0].toFixed(1)} ${a[1].toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
+    } else d = `M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
+    if (t.d !== d) { t.d = d; t.paths.forEach((p) => p.setAttribute('d', d)); }
+  }
+
+  /* ---------------------------------------------------------------- the motion */
+  /* a cheer's offset at time now: a hop (up and down twice for a big one), a lean and an arm lift */
+  function cheerAt(h, now) {
+    const c = h.cheer; if (!c) return null;
+    const p = (now - c.t0) / c.dur; if (p < 0) return { up: 0, lean: 0, arm: 0 };
+    if (p >= 1) { h.cheer = null; return null; }
+    const hop = Math.abs(Math.sin(Math.PI * p * c.turns)) * (1 - p * 0.35) * c.hop;
+    return { up: hop, lean: Math.sin(Math.PI * 2 * p * c.turns) * 5 * (1 - p), arm: -Math.sin(Math.PI * p) * 34 };
+  }
+  function drive(st, now, moving) {
+    const dt = Math.min(0.05, Math.max(0, (now - st.last) / 1000)); st.last = now;
+    if (st.amb0 == null) st.amb0 = now; /* the ambient motion starts from rest, never mid-swing */
+    const t = moving ? (now - st.amb0) / 1000 : 0, f = st.feel;
+    if (st.fam === 'retro') return driveRetro(st, now, moving);
+    const w = (p) => (2 * Math.PI * t) / (p / 1000);
+    const B = st.bar;
+    B.tilt = moving ? f.tilt * Math.sin(w(f.period)) + f.tilt * 0.25 * Math.sin(w(f.period * 0.41)) : B.tilt;
+    B.lift = moving ? f.bob * Math.sin(w(f.period * 1.7)) : B.lift;
+    if (B.am) B.am.setAttribute('transform', `translate(0 ${(-B.lift).toFixed(2)}) rotate(${B.tilt.toFixed(3)})`);
+    for (const h of st.helpers.values()) {
+      if (!h.head || !h.am) continue;
+      const loc = h.head.fromLocal, r = rot(loc, B.tilt), dx = r[0] - loc[0], dy = r[1] - loc[1] - B.lift;
+      const target = moving ? dx * f.swing + 1.2 * Math.sin(w(2900 + h.i * 530) + h.i * 1.7) : h.x;
+      const acc = f.k * (target - h.x) - f.c * h.v; h.v += acc * dt; h.x += h.v * dt;
+      const ch = cheerAt(h, now);
+      h.up = Math.max(0, -dy) * f.lift + (ch ? ch.up : 0);
+      h.lean = Math.max(-8, Math.min(8, (dx - h.x) * f.lean + h.v * 0.02 + (ch ? ch.lean : 0)));
+      const s = h.pos.s || 1;
+      h.am.setAttribute('transform', `translate(${(h.x / s).toFixed(2)} ${(-h.up / s).toFixed(2)}) rotate(${h.lean.toFixed(2)})`);
+      if (h.arm) {
+        const hy = h.handTie ? (() => { const l = h.handTie.fromLocal, rr = rot(l, B.tilt); return rr[1] - l[1] - B.lift; })() : 0;
+        h.ang = Math.max(-28, Math.min(22, hy * f.arm)) + (moving ? f.wave * Math.sin(2 * Math.PI * f.waveHz * t) : 0) + (ch ? ch.arm : 0);
+        h.arm.setAttribute('transform', `rotate(${h.ang.toFixed(2)} ${h.pivot[0]} ${h.pivot[1]})`);
+      }
+    }
+  }
+  function driveRetro(st, now, moving) {
+    const f = st.feel, n = moving ? Math.floor((now - st.amb0) / f.step) : 0;
+    const up = n % 4 === 1 || n % 4 === 2 ? f.hop : 0;
+    st.bar.lift = up; st.bar.tilt = 0;
+    if (st.bar.am) st.bar.am.setAttribute('transform', `translate(0 ${-up})`);
+    for (const h of st.helpers.values()) {
+      if (!h.am) continue;
+      const late = (n + h.i) % 4 === 2 || (n + h.i) % 4 === 3 ? f.hop : 0; /* each helper hops a step after the one before */
+      const c0 = h.cheer ? h.cheer.t0 : null, ch = cheerAt(h, now), jump = ch ? Math.round(ch.up / 4) * 4 : 0; /* a cheer jumps in whole 4 px steps */
+      h.up = Math.min(up, late) + jump; h.lean = 0; h.x = 0;
+      h.am.setAttribute('transform', `translate(0 ${-h.up})`);
+      const frame = ch && c0 != null ? Math.floor(Math.max(0, now - c0) / 120) : n; /* a cheering helper waves fast */
+      if (h.frames.length > 1) h.frames.forEach((fr, i) => { fr.style.display = i === frame % 2 ? '' : 'none'; });
+    }
+  }
 })();
 
 /* ---- js/60-ui-core.js ---- */

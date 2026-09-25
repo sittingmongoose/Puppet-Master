@@ -29,16 +29,20 @@
     const p = ctx.pal, o = item.opts || {}, s = item.s || 1, tint = tints[(o.variant || 0) % 4];
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -68 L${dx.toFixed(1)} ${dy.toFixed(1)}" stroke="${p[tint]}" stroke-width="5" opacity="0.14" stroke-linecap="round"/><path d="M0 -68 L${dx.toFixed(1)} ${dy.toFixed(1)}" stroke="${ctx.url('fil')}" stroke-width="1.3" stroke-linecap="round"/><circle cx="0" cy="-68" r="2.2" fill="${p.core}"/>`; })() : '';
     const pose = o.pose || 'stand';
-    const armR = { wave: 'M13 -40 L22 -54 L25 -64', point: 'M13 -40 L26 -39 L36 -38', carry: 'M13 -40 L9 -30 L3 -27' }[pose] || 'M13 -40 L18 -28 L19 -18';
+    const armR = { wave: '', point: 'M13 -40 L26 -39 L36 -38', carry: 'M13 -40 L9 -30 L3 -27' }[pose] || 'M13 -40 L18 -28 L19 -18';
+    /* a waving arm is its own group (the rig lifts it); tied to the bar, a bright knot where the string meets the head */
+    const waveArm = pose === 'wave' ? `<g class="o55-arm" data-pivot="13 -40"><path d="M13 -40 L22 -54 L25 -64" fill="none" stroke="${ctx.url('edge')}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`
+      + `<path d="M13 -40 L22 -54 L25 -64" fill="none" stroke="${p[tint]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/><circle cx="25" cy="-64" r="2" fill="${p.core}"/><circle class="o55-hook" data-hook="hand" cx="25" cy="-64" r="0.01" fill="none"/></g>` : '';
+    const knot = o.rig ? `${glow(ctx, tint, 7, 0, -68.5)}<circle cx="0" cy="-68.5" r="2.2" fill="${p.core}"/>` : '';
     const armL = pose === 'carry' ? 'M-13 -40 L-9 -30 L-3 -27' : 'M-13 -40 L-18 -28 L-19 -18';
     const orb = pose === 'carry' ? `${glow(ctx, 'amber', 14, 0, -28)}<circle cx="0" cy="-28" r="6" ${G(ctx)}/><circle cx="0" cy="-28" r="2.4" fill="${p.core}"/>` : '';
     return `<g>${str}<ellipse cx="0" cy="1" rx="16" ry="3.5" fill="${p.shade}"/>`
-      + `<path d="${armL} M${armR.slice(1)}" fill="none" stroke="${ctx.url('edge')}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`
-      + `<path d="${armL} M${armR.slice(1)}" fill="none" stroke="${p[tint]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>`
+      + `<path d="${armL}${armR ? ' M' + armR.slice(1) : ''}" fill="none" stroke="${ctx.url('edge')}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`
+      + `<path d="${armL}${armR ? ' M' + armR.slice(1) : ''}" fill="none" stroke="${p[tint]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>` + waveArm
       + `<path d="M-7 -12 L-8 0 M7 -12 L8 0" stroke="${ctx.url('edge')}" stroke-width="4.5" stroke-linecap="round"/>`
       + `<path d="M0 -46 L15 -38 L12 -14 L0 -8 L-12 -14 L-15 -38 Z" ${G(ctx)}/>${glow(ctx, tint, 13, 0, -27)}<circle cx="0" cy="-27" r="3.2" fill="${p.core}" class="o55-core"/>`
       + hl('M-11 -37 L-3 -41') + `<circle cx="0" cy="-57" r="11.5" ${G(ctx)}/>${hl('M-7 -62 A8 8 0 0 1 2 -65.5')}`
-      + `<circle cx="-3.6" cy="-57" r="1.4" fill="${p.core}"/><circle cx="3.6" cy="-57" r="1.4" fill="${p.core}"/>${orb}</g>`;
+      + `<circle cx="-3.6" cy="-57" r="1.4" fill="${p.core}"/><circle cx="3.6" cy="-57" r="1.4" fill="${p.core}"/>${orb}${knot}</g>`;
   };
 
   const props = {
@@ -131,6 +135,9 @@
   A.defineFamily('glass', {
     palette,
     props,
+    /* a marionette string: a soft glow under a bright filament (the rig sets both d's every frame) */
+    string: (ctx, d) => `<path class="o55-sp" d="${d}" fill="none" stroke="${ctx.pal.lav}" stroke-width="5" opacity="0.14" stroke-linecap="round"/><path class="o55-sp" d="${d}" fill="none" stroke="${ctx.url('fil')}" stroke-width="1.3" stroke-linecap="round"/>`,
+    hand: { wave: [25, -64] },
     defs(ctx) {
       const p = ctx.pal, u = ctx.uid;
       const rg = (name, color, a) => `<radialGradient id="${u}-glow-${name}"><stop offset="0" stop-color="${color}" stop-opacity="${a}"/><stop offset="0.45" stop-color="${color}" stop-opacity="${a * 0.35}"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></radialGradient>`;

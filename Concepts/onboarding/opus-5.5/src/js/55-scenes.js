@@ -7,12 +7,16 @@
   const O55 = window.O55, A = O55.art;
   const L = (key, fallback) => { const v = O55.t('art.labels.' + key); return v === 'art.labels.' + key ? fallback : v; };
 
+  /* hook: where a string meets a helper's head (helper units, before its scale); barHooks: the bar's string points
+     (a0 left end, a1 the upright's foot, a2 right end; w0 / w2 part-way out, for a raised hand's string) */
+  const hooks = (a) => ({ a0: a[0], a1: a[1], a2: a[2], w0: [Math.round(a[0][0] * 0.56), a[0][1]], w2: [Math.round(a[2][0] * 0.56), a[2][1]] });
   const METRICS = {
-    basic: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 470, helperScale: 1.75, barY: 136 },
-    friendly: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 472, helperScale: 1.6, barY: 140 },
-    glass: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 478, helperScale: 1.7, barY: 136 },
-    retro: { anchors: [[-100, -4], [0, 36], [92, -4]], floor: 458, helperScale: 1, barY: 132, helperPx: 7 }
+    basic: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 470, helperScale: 1.75, barY: 136, hook: [0, -63] },
+    friendly: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 472, helperScale: 1.6, barY: 140, hook: [0, -73.5] },
+    glass: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 478, helperScale: 1.7, barY: 136, hook: [0, -68.5] },
+    retro: { anchors: [[-96, -4], [0, 36], [96, -4]], floor: 458, helperScale: 1, barY: 132, helperPx: 7, hook: [0, -100] }
   };
+  Object.values(METRICS).forEach((m) => { m.barHooks = hooks(m.anchors); });
   A.metrics = (family) => METRICS[family] || METRICS.basic;
 
   /* Marionette ensemble: bar + three helpers on strings (hero, look tiles, creating, ready). */
@@ -23,9 +27,11 @@
     const items = [{ key: 'bar', prop: 'bar', x: cx, y: barY, layer: 'front', anim: 'drop', delay: o.delay || 0, amb: 'sway', ambd: 5600 }];
     [-1, 0, 1].forEach((side, i) => {
       const a = side < 0 ? m.anchors[0] : side > 0 ? m.anchors[2] : m.anchors[1];
+      /* each helper hangs from its own point on the bar; a waving helper's hand hangs from a second point on its side */
       items.push({ key: 'h' + i, prop: 'helper', x: cx + side * spread, y: floor - (side === 0 ? 14 : 0), s, layer: 'mid', anim: 'drop',
         delay: (o.delay || 0) + 260 + i * 90, amb: 'bob', ambd: 2400 + i * 380,
-        opts: { variant: (o.variants || [0, 1, 2])[i], pose: poses[i], anchor: [cx + a[0], barY + a[1]], px: m.helperPx } });
+        opts: { variant: (o.variants || [0, 1, 2])[i], pose: poses[i], anchor: [cx + a[0], barY + a[1]], px: m.helperPx,
+          tie: ['a0', 'a1', 'a2'][side + 1], handTie: side > 0 ? 'w2' : 'w0', side } });
     });
     return items;
   };

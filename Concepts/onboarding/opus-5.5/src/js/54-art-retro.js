@@ -25,6 +25,8 @@
   const HELPER = {
     stand: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaak.', 'kaaaaaaaak', 'saaaaaaaas', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
     wave: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssks', '..kkkkkkk.', '.kaaaaaak.', 'kaaaaaaaa.', 'saaaaaaaa.', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
+    /* the second frame of the wave: the hand out at shoulder height */
+    wave2: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaaks', 'kaaaaaaak.', 'saaaaaaaa.', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
     carry: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaak.', 'kawwwwwwak', 'kswkkkkwsk', '.kwwwwwwk.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.']
   };
   const BAR = ['............kkkk............', '...........k....k...........', '............kkkk............', '.............kk.............',
@@ -80,7 +82,10 @@
       const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return dots(p, 0, -14 * (o.px || 5) - 2, dx, dy, p.text); })() : '';
       const map = { k: p.dark ? '#000' : p.ink, h: p.hair, s: p.skin, m: p.b, a: bodyColor(p, o.variant), b: p.dark ? p.mid : p.mid, w: p.dark ? '#f5ecd8' : '#ffffff' };
       const px = o.px || 5;
-      return `<g>${str}<g transform="translate(0 ${-7 * px})">${sprite(rows, map, px)}</g></g>`;
+      /* tied to the bar and waving: two frames the rig swaps on its stepped clock; a pixel knot where the string meets the head */
+      const body = o.rig && o.pose === 'wave' ? `<g class="o55-wf">${sprite(rows, map, px)}</g><g class="o55-wf" style="display:none">${sprite(HELPER.wave2, map, px)}</g>` : sprite(rows, map, px);
+      const knot = o.rig ? `<rect x="-2" y="${-14 * px - 3}" width="4" height="4" fill="${p.text}" shape-rendering="crispEdges"/>` : '';
+      return `<g>${str}<g transform="translate(0 ${-7 * px})">${body}</g>${knot}</g>`;
     },
     stage(ctx) {
       const p = ctx.pal, w = 380, bw = 20, bh = 10;
@@ -156,6 +161,9 @@
   A.defineFamily('retro', {
     palette,
     props,
+    /* a marionette string: a dotted pixel line on whole pixels (the rig sets its d on each step). It leaves from a
+       stud's centre, 12 px inside the bar's outline, so the dots are phased to start right under the outline. */
+    string: (ctx, d) => `<path class="o55-sp" d="${d}" fill="none" stroke="${ctx.pal.text}" stroke-width="3" stroke-dasharray="4 4" stroke-dashoffset="4" shape-rendering="crispEdges"/>`,
     icons: ICONS,
     defs(ctx) {
       const p = ctx.pal;

@@ -36,18 +36,21 @@
     const p = ctx.pal, o = item.opts || {}, s = item.s || 1, pose = o.pose || 'stand';
     const arms = {
       stand: 'M-12 -40 L-17 -29 L-18 -19 M12 -40 L17 -29 L18 -19',
-      wave: 'M-12 -40 L-17 -29 L-18 -19 M12 -40 L20 -50 L24 -61',
+      wave: 'M-12 -40 L-17 -29 L-18 -19',
       carry: 'M-12 -40 L-10 -30 L-3 -27 M12 -40 L10 -30 L3 -27',
       bow: 'M-12 -40 L-14 -30 L-12 -21 M12 -40 L14 -30 L12 -21',
       point: 'M-12 -40 L-17 -29 L-18 -19 M12 -40 L23 -37 L33 -36'
     }[pose] || '';
     const joints = [[-12, -40], [12, -40], [-8, -18], [8, -18], [-6, -9], [6, -9]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.7" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/>`).join('');
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -64 L${dx.toFixed(1)} ${dy.toFixed(1)}" ${S(p, 0.8, p.ink2)}/><circle cx="0" cy="-64" r="1.6" fill="${p.ink}"/>`; })() : '';
+    /* tied to the bar: a knot where the string meets the head; a waving arm is its own group (the rig lifts it) */
+    const knot = o.rig ? `<circle cx="0" cy="-63" r="1.7" fill="${p.ink}"/>` : '';
+    const waveArm = pose === 'wave' ? `<g class="o55-arm" data-pivot="12 -40"><path d="M12 -40 L20 -50 L24 -61" ${S(p, 1.4)}/><circle cx="24" cy="-61" r="1.9" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/><circle class="o55-hook" data-hook="hand" cx="24" cy="-61" r="0.01" fill="none"/></g>` : '';
     const carry = pose === 'carry' ? `<rect x="-9" y="-34" width="18" height="12" rx="1" ${F(p, p.accentFill, 1.2, p.accent)}/><path d="M-5 -30H5M-5 -26.5H2" ${S(p, 0.8, p.accent)}/>` : '';
     return `<g>${str}<circle cx="0" cy="-54" r="9" ${F(p, p.fill, 1.5)}/><path d="M-9 -54H9M0 -63V-45" ${S(p, 0.5, p.faint)}/>`
       + `<path d="M0 -45V-41" ${S(p)}/><path d="M-12 -41 L12 -41 L8 -18 L-8 -18 Z" ${F(p, p.fill, 1.5)}/>`
       + `<path d="${arms}" ${S(p, 1.4)}/><path d="M-8 -18 L-6 -9 L-7 0 M8 -18 L6 -9 L7 0" ${S(p, 1.4)}/>`
-      + `<path d="M-11 0H-3M3 0H11" ${S(p, 1.4)}/>${joints}${carry}</g>`;
+      + `<path d="M-11 0H-3M3 0H11" ${S(p, 1.4)}/>${joints}${waveArm}${carry}${knot}</g>`;
   };
 
   const props = {
@@ -147,6 +150,9 @@
   A.defineFamily('basic', {
     palette,
     props,
+    /* a marionette string: a fine ink line (the rig sets its d every frame) */
+    string: (ctx, d) => `<path class="o55-sp" d="${d}" fill="none" stroke="${ctx.pal.ink2}" stroke-width="0.8" stroke-linecap="round"/>`,
+    hand: { wave: [24, -61] },
     defs(ctx) {
       const p = ctx.pal;
       return `<pattern id="${ctx.uid}-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="${p.grid}" stroke-width="0.6"/></pattern>`
