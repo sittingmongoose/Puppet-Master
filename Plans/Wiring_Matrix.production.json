@@ -10131,13 +10131,13 @@
         "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.backup_prune.availability and state.commands.backup_prune.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.backup.prune dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.backup_prune.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.backup.prune request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.backup.prune in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.backup.prune request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.backup.prune (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.backup.prune in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.backup.prune (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.backup_prune.disabled_reason",
       "effect_contract": {
@@ -10155,7 +10155,7 @@
       "event_test_requirements": [
         "Assert cmd.backup.prune records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.backup.prune: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.backup.prune: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.backup.prune dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::backup_prune",
       "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
@@ -10179,13 +10179,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.backup.prune dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.backup_prune.accessibility"
         }
       ],
       "ui_command_id": "cmd.backup.prune",
       "ui_element_id": "catalog.backup_prune",
-      "ui_location": "Settings > Backup > Retention confirmation; Backup workspace; Doctor"
+      "ui_location": "Settings > Backup > Retention confirmation; Backup workspace; Doctor (route to owner only; no dispatch)"
     },
     "catalog.backup_recovery_key_acknowledge_saved": {
       "acceptance_checks": [
@@ -10317,13 +10317,13 @@
         "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.backup_recovery_key_export.availability and state.commands.backup_recovery_key_export.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.backup.recovery_key.export dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.backup_recovery_key_export.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.backup.recovery_key.export request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.backup.recovery_key.export in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.backup.recovery_key.export request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.backup.recovery_key.export (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.backup.recovery_key.export in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.backup.recovery_key.export (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.backup_recovery_key_export.disabled_reason",
       "effect_contract": {
@@ -10341,7 +10341,7 @@
       "event_test_requirements": [
         "Assert cmd.backup.recovery_key.export records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.backup.recovery_key.export: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.backup.recovery_key.export: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.backup.recovery_key.export dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::recovery_key_export",
       "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
@@ -10365,13 +10365,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.backup.recovery_key.export dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.backup_recovery_key_export.accessibility"
         }
       ],
       "ui_command_id": "cmd.backup.recovery_key.export",
       "ui_element_id": "catalog.backup_recovery_key_export",
-      "ui_location": "Settings > Backup > Recovery key; protected Bootstrap recovery; Doctor"
+      "ui_location": "Settings > Backup > Recovery key; protected Bootstrap recovery; Doctor (route to owner only; no dispatch)"
     },
     "catalog.backup_recovery_key_print": {
       "acceptance_checks": [
@@ -10441,13 +10441,13 @@
         "Validate Plans/backup_reencrypt_contracts.schema.json#/$defs/request -> Plans/backup_reencrypt_contracts.schema.json#/$defs/result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.backup_recovery_key_reencrypt.availability and state.commands.backup_recovery_key_reencrypt.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.backup.recovery_key.reencrypt dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.backup_recovery_key_reencrypt.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.backup.recovery_key.reencrypt request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.backup.recovery_key.reencrypt in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.backup.recovery_key.reencrypt request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.backup.recovery_key.reencrypt (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.backup.recovery_key.reencrypt in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.backup.recovery_key.reencrypt (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.backup_recovery_key_reencrypt.disabled_reason",
       "effect_contract": {
@@ -10463,7 +10463,7 @@
       "event_test_requirements": [
         "Assert cmd.backup.recovery_key.reencrypt records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.backup.recovery_key.reencrypt: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.backup.recovery_key.reencrypt: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.backup.recovery_key.reencrypt dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::recovery_key_reencrypt",
       "request_schema_ref": "Plans/backup_reencrypt_contracts.schema.json#/$defs/request",
@@ -10487,13 +10487,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.backup.recovery_key.reencrypt dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.backup_recovery_key_reencrypt.accessibility"
         }
       ],
       "ui_command_id": "cmd.backup.recovery_key.reencrypt",
       "ui_element_id": "catalog.backup_recovery_key_reencrypt",
-      "ui_location": "Settings > Backup > Recovery key rotation; Backup workspace; Doctor"
+      "ui_location": "Settings > Backup > Recovery key rotation; Backup workspace; Doctor (route to owner only; no dispatch)"
     },
     "catalog.backup_recovery_key_rotate": {
       "acceptance_checks": [
@@ -10501,13 +10501,13 @@
         "Validate Plans/backup_key_rotation_contracts.schema.json#/$defs/request -> Plans/backup_key_rotation_contracts.schema.json#/$defs/result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.backup_recovery_key_rotate.availability and state.commands.backup_recovery_key_rotate.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.backup.recovery_key.rotate dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.backup_recovery_key_rotate.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.backup.recovery_key.rotate request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.backup.recovery_key.rotate in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.backup.recovery_key.rotate request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.backup.recovery_key.rotate (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.backup.recovery_key.rotate in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.backup.recovery_key.rotate (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.backup_recovery_key_rotate.disabled_reason",
       "effect_contract": {
@@ -10523,7 +10523,7 @@
       "event_test_requirements": [
         "Assert cmd.backup.recovery_key.rotate records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.backup.recovery_key.rotate: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, actual protected session progress or dedicated rotation receipt correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.backup.recovery_key.rotate: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, actual protected session progress or dedicated rotation receipt correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.backup.recovery_key.rotate dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::recovery_key_rotate",
       "request_schema_ref": "Plans/backup_key_rotation_contracts.schema.json#/$defs/request",
@@ -10547,13 +10547,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.backup.recovery_key.rotate dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.backup_recovery_key_rotate.accessibility"
         }
       ],
       "ui_command_id": "cmd.backup.recovery_key.rotate",
       "ui_element_id": "catalog.backup_recovery_key_rotate",
-      "ui_location": "Settings > Backup > Recovery key rotation; Doctor"
+      "ui_location": "Settings > Backup > Recovery key rotation; Doctor (route to owner only; no dispatch)"
     },
     "catalog.backup_recovery_key_test": {
       "acceptance_checks": [
@@ -10561,13 +10561,13 @@
         "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.backup_recovery_key_test.availability and state.commands.backup_recovery_key_test.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.backup.recovery_key.test dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.backup_recovery_key_test.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.backup.recovery_key.test request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.backup.recovery_key.test in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.backup.recovery_key.test request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.backup.recovery_key.test (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.backup.recovery_key.test in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.backup.recovery_key.test (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.backup_recovery_key_test.disabled_reason",
       "effect_contract": {
@@ -10585,7 +10585,7 @@
       "event_test_requirements": [
         "Assert cmd.backup.recovery_key.test records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.backup.recovery_key.test: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.backup.recovery_key.test: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.backup.recovery_key.test dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::recovery_key_test",
       "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
@@ -10609,13 +10609,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.backup.recovery_key.test dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.backup_recovery_key_test.accessibility"
         }
       ],
       "ui_command_id": "cmd.backup.recovery_key.test",
       "ui_element_id": "catalog.backup_recovery_key_test",
-      "ui_location": "Settings > Backup > Recovery key; protected Bootstrap recovery; Doctor"
+      "ui_location": "Settings > Backup > Recovery key; protected Bootstrap recovery; Doctor (route to owner only; no dispatch)"
     },
     "catalog.backup_retention_preview": {
       "acceptance_checks": [
@@ -10871,13 +10871,13 @@
         "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.backup_unlock.availability and state.commands.backup_unlock.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.backup.unlock dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.backup_unlock.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.backup.unlock request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.backup.unlock in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.backup.unlock request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.backup.unlock (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.backup.unlock in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.backup.unlock (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.backup_unlock.disabled_reason",
       "effect_contract": {
@@ -10895,7 +10895,7 @@
       "event_test_requirements": [
         "Assert cmd.backup.unlock records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.backup.unlock: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.backup.unlock: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.backup.unlock dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::backup_unlock",
       "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
@@ -10919,13 +10919,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.backup.unlock dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.backup_unlock.accessibility"
         }
       ],
       "ui_command_id": "cmd.backup.unlock",
       "ui_element_id": "catalog.backup_unlock",
-      "ui_location": "Backup and Restore protected unlock prompts; Product Onboarding > Restore; Settings > Backup; Doctor"
+      "ui_location": "Backup and Restore protected unlock prompts; Product Onboarding > Restore; Settings > Backup; Doctor (route to owner only; no dispatch)"
     },
     "catalog.backup_verify": {
       "acceptance_checks": [
@@ -47022,13 +47022,13 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_remote_link_rotate_recovery_key.availability and state.commands.remote_access_remote_link_rotate_recovery_key.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.remote_access.remote_link.rotate_recovery_key dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_remote_link_rotate_recovery_key.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.remote_access.remote_link.rotate_recovery_key request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.remote_access.remote_link.rotate_recovery_key in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.remote_access.remote_link.rotate_recovery_key request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.remote_access.remote_link.rotate_recovery_key (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.remote_access.remote_link.rotate_recovery_key in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.remote_access.remote_link.rotate_recovery_key (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.remote_access_remote_link_rotate_recovery_key.disabled_reason",
       "effect_contract": {
@@ -47042,7 +47042,7 @@
       "event_test_requirements": [
         "Assert cmd.remote_access.remote_link.rotate_recovery_key records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.remote_access.remote_link.rotate_recovery_key: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.remote_access.remote_link.rotate_recovery_key: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.remote_access.remote_link.rotate_recovery_key dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::remote_access::remote_link_rotate_recovery_key",
       "request_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/command_payload",
@@ -47066,13 +47066,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.remote_access.remote_link.rotate_recovery_key dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.remote_access_remote_link_rotate_recovery_key.accessibility"
         }
       ],
       "ui_command_id": "cmd.remote_access.remote_link.rotate_recovery_key",
       "ui_element_id": "catalog.remote_access_remote_link_rotate_recovery_key",
-      "ui_location": "Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API"
+      "ui_location": "Settings Remote Access manager, Onboarding, Doctor (route to owner only; no dispatch), Server cards, palette, API"
     },
     "catalog.remote_access_remote_link_setup": {
       "acceptance_checks": [
@@ -47602,13 +47602,13 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_headscale_start.availability and state.commands.remote_access_tailscale_headscale_start.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.remote_access.tailscale.headscale.start dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_headscale_start.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.remote_access.tailscale.headscale.start request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.remote_access.tailscale.headscale.start in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.remote_access.tailscale.headscale.start request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.remote_access.tailscale.headscale.start (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.remote_access.tailscale.headscale.start in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.remote_access.tailscale.headscale.start (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.remote_access_tailscale_headscale_start.disabled_reason",
       "effect_contract": {
@@ -47622,7 +47622,7 @@
       "event_test_requirements": [
         "Assert cmd.remote_access.tailscale.headscale.start records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.remote_access.tailscale.headscale.start: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.remote_access.tailscale.headscale.start: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.remote_access.tailscale.headscale.start dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::remote_access::tailscale_headscale_start",
       "request_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/command_payload",
@@ -47646,13 +47646,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.remote_access.tailscale.headscale.start dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.remote_access_tailscale_headscale_start.accessibility"
         }
       ],
       "ui_command_id": "cmd.remote_access.tailscale.headscale.start",
       "ui_element_id": "catalog.remote_access_tailscale_headscale_start",
-      "ui_location": "Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API"
+      "ui_location": "Settings Remote Access manager, Onboarding, Doctor (route to owner only; no dispatch), Server cards, palette, API"
     },
     "catalog.remote_access_tailscale_headscale_submit_registration": {
       "acceptance_checks": [
@@ -47660,13 +47660,13 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_headscale_submit_registration.availability and state.commands.remote_access_tailscale_headscale_submit_registration.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.remote_access.tailscale.headscale.submit_registration dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_headscale_submit_registration.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.remote_access.tailscale.headscale.submit_registration request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.remote_access.tailscale.headscale.submit_registration in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.remote_access.tailscale.headscale.submit_registration request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.remote_access.tailscale.headscale.submit_registration (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.remote_access.tailscale.headscale.submit_registration in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.remote_access.tailscale.headscale.submit_registration (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.remote_access_tailscale_headscale_submit_registration.disabled_reason",
       "effect_contract": {
@@ -47680,7 +47680,7 @@
       "event_test_requirements": [
         "Assert cmd.remote_access.tailscale.headscale.submit_registration records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.remote_access.tailscale.headscale.submit_registration: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.remote_access.tailscale.headscale.submit_registration: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.remote_access.tailscale.headscale.submit_registration dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::remote_access::tailscale_headscale_submit_registration",
       "request_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/command_payload",
@@ -47704,13 +47704,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.remote_access.tailscale.headscale.submit_registration dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.remote_access_tailscale_headscale_submit_registration.accessibility"
         }
       ],
       "ui_command_id": "cmd.remote_access.tailscale.headscale.submit_registration",
       "ui_element_id": "catalog.remote_access_tailscale_headscale_submit_registration",
-      "ui_location": "Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API"
+      "ui_location": "Settings Remote Access manager, Onboarding, Doctor (route to owner only; no dispatch), Server cards, palette, API"
     },
     "catalog.remote_access_tailscale_identity_reset": {
       "acceptance_checks": [
@@ -47718,13 +47718,13 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_identity_reset.availability and state.commands.remote_access_tailscale_identity_reset.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.remote_access.tailscale.identity.reset dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_identity_reset.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.remote_access.tailscale.identity.reset request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.remote_access.tailscale.identity.reset in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.remote_access.tailscale.identity.reset request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.remote_access.tailscale.identity.reset (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.remote_access.tailscale.identity.reset in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.remote_access.tailscale.identity.reset (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.remote_access_tailscale_identity_reset.disabled_reason",
       "effect_contract": {
@@ -47738,7 +47738,7 @@
       "event_test_requirements": [
         "Assert cmd.remote_access.tailscale.identity.reset records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.remote_access.tailscale.identity.reset: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.remote_access.tailscale.identity.reset: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.remote_access.tailscale.identity.reset dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::remote_access::tailscale_identity_reset",
       "request_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/command_payload",
@@ -47762,13 +47762,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.remote_access.tailscale.identity.reset dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.remote_access_tailscale_identity_reset.accessibility"
         }
       ],
       "ui_command_id": "cmd.remote_access.tailscale.identity.reset",
       "ui_element_id": "catalog.remote_access_tailscale_identity_reset",
-      "ui_location": "Settings > Remote Access > Built into Puppet Master; Product Onboarding; Doctor; Server cards; palette/API"
+      "ui_location": "Settings > Remote Access > Built into Puppet Master; Product Onboarding; Doctor (route to owner only; no dispatch); Server cards; palette/API"
     },
     "catalog.remote_access_tailscale_login_resume": {
       "acceptance_checks": [
@@ -47776,13 +47776,13 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_login_resume.availability and state.commands.remote_access_tailscale_login_resume.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.remote_access.tailscale.login.resume dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_login_resume.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.remote_access.tailscale.login.resume request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.remote_access.tailscale.login.resume in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.remote_access.tailscale.login.resume request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.remote_access.tailscale.login.resume (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.remote_access.tailscale.login.resume in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.remote_access.tailscale.login.resume (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.remote_access_tailscale_login_resume.disabled_reason",
       "effect_contract": {
@@ -47796,7 +47796,7 @@
       "event_test_requirements": [
         "Assert cmd.remote_access.tailscale.login.resume records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.remote_access.tailscale.login.resume: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.remote_access.tailscale.login.resume: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.remote_access.tailscale.login.resume dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::remote_access::tailscale_login_resume",
       "request_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/command_payload",
@@ -47820,13 +47820,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.remote_access.tailscale.login.resume dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.remote_access_tailscale_login_resume.accessibility"
         }
       ],
       "ui_command_id": "cmd.remote_access.tailscale.login.resume",
       "ui_element_id": "catalog.remote_access_tailscale_login_resume",
-      "ui_location": "Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API"
+      "ui_location": "Settings Remote Access manager, Onboarding, Doctor (route to owner only; no dispatch), Server cards, palette, API"
     },
     "catalog.remote_access_tailscale_login_start": {
       "acceptance_checks": [
@@ -47834,13 +47834,13 @@
         "Validate Plans/remote_access_system_contracts.schema.json#/$defs/command_payload -> Plans/remote_access_system_contracts.schema.json#/$defs/command_result and Plans/remote_access_system_contracts.schema.json#/$defs/command_error with exact availability and permission gates.",
         "Read state.commands.remote_access_tailscale_login_start.availability and state.commands.remote_access_tailscale_login_start.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.remote_access.tailscale.login.start dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.remote_access_tailscale_login_start.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.remote_access.tailscale.login.start request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.remote_access.tailscale.login.start in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.remote_access.tailscale.login.start request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.remote_access.tailscale.login.start (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.remote_access.tailscale.login.start in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.remote_access.tailscale.login.start (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.remote_access_tailscale_login_start.disabled_reason",
       "effect_contract": {
@@ -47854,7 +47854,7 @@
       "event_test_requirements": [
         "Assert cmd.remote_access.tailscale.login.start records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.remote_access.tailscale.login.start: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.remote_access.tailscale.login.start: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.remote_access.tailscale.login.start dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::remote_access::tailscale_login_start",
       "request_schema_ref": "Plans/remote_access_system_contracts.schema.json#/$defs/command_payload",
@@ -47878,13 +47878,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.remote_access.tailscale.login.start dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.remote_access_tailscale_login_start.accessibility"
         }
       ],
       "ui_command_id": "cmd.remote_access.tailscale.login.start",
       "ui_element_id": "catalog.remote_access_tailscale_login_start",
-      "ui_location": "Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API"
+      "ui_location": "Settings Remote Access manager, Onboarding, Doctor (route to owner only; no dispatch), Server cards, palette, API"
     },
     "catalog.remote_access_tailscale_setup_start": {
       "acceptance_checks": [
@@ -48368,13 +48368,13 @@
         "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.restore_project_as_new.availability and state.commands.restore_project_as_new.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.restore.project_as_new dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.restore_project_as_new.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.restore.project_as_new request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.restore.project_as_new in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.restore.project_as_new request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.restore.project_as_new (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.restore.project_as_new in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.restore.project_as_new (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.restore_project_as_new.disabled_reason",
       "effect_contract": {
@@ -48392,7 +48392,7 @@
       "event_test_requirements": [
         "Assert cmd.restore.project_as_new records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.restore.project_as_new: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.restore.project_as_new: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.restore.project_as_new dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::restore_project_as_new",
       "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
@@ -48416,13 +48416,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.restore.project_as_new dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.restore_project_as_new.accessibility"
         }
       ],
       "ui_command_id": "cmd.restore.project_as_new",
       "ui_element_id": "catalog.restore_project_as_new",
-      "ui_location": "Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API"
+      "ui_location": "Settings Backup manager, Project/Server cards, Onboarding restore, Doctor (route to owner only; no dispatch), palette, API"
     },
     "catalog.restore_project_in_place": {
       "acceptance_checks": [
@@ -48430,13 +48430,13 @@
         "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.restore_project_in_place.availability and state.commands.restore_project_in_place.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.restore.project_in_place dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.restore_project_in_place.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.restore.project_in_place request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.restore.project_in_place in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.restore.project_in_place request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.restore.project_in_place (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.restore.project_in_place in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.restore.project_in_place (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.restore_project_in_place.disabled_reason",
       "effect_contract": {
@@ -48454,7 +48454,7 @@
       "event_test_requirements": [
         "Assert cmd.restore.project_in_place records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.restore.project_in_place: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.restore.project_in_place: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.restore.project_in_place dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::restore_project_in_place",
       "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
@@ -48478,13 +48478,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.restore.project_in_place dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.restore_project_in_place.accessibility"
         }
       ],
       "ui_command_id": "cmd.restore.project_in_place",
       "ui_element_id": "catalog.restore_project_in_place",
-      "ui_location": "Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API"
+      "ui_location": "Settings Backup manager, Project/Server cards, Onboarding restore, Doctor (route to owner only; no dispatch), palette, API"
     },
     "catalog.restore_retry": {
       "acceptance_checks": [
@@ -48554,13 +48554,13 @@
         "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.restore_rollback.availability and state.commands.restore_rollback.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.restore.rollback dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.restore_rollback.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.restore.rollback request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.restore.rollback in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.restore.rollback request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.restore.rollback (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.restore.rollback in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.restore.rollback (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.restore_rollback.disabled_reason",
       "effect_contract": {
@@ -48578,7 +48578,7 @@
       "event_test_requirements": [
         "Assert cmd.restore.rollback records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.restore.rollback: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.restore.rollback: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.restore.rollback dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::restore_rollback",
       "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
@@ -48602,13 +48602,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.restore.rollback dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.restore_rollback.accessibility"
         }
       ],
       "ui_command_id": "cmd.restore.rollback",
       "ui_element_id": "catalog.restore_rollback",
-      "ui_location": "Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API"
+      "ui_location": "Settings Backup manager, Project/Server cards, Onboarding restore, Doctor (route to owner only; no dispatch), palette, API"
     },
     "catalog.restore_selective": {
       "acceptance_checks": [
@@ -48616,13 +48616,13 @@
         "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.restore_selective.availability and state.commands.restore_selective.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.restore.selective dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.restore_selective.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.restore.selective request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.restore.selective in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.restore.selective request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.restore.selective (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.restore.selective in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.restore.selective (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.restore_selective.disabled_reason",
       "effect_contract": {
@@ -48640,7 +48640,7 @@
       "event_test_requirements": [
         "Assert cmd.restore.selective records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.restore.selective: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.restore.selective: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.restore.selective dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::restore_selective",
       "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
@@ -48664,13 +48664,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.restore.selective dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.restore_selective.accessibility"
         }
       ],
       "ui_command_id": "cmd.restore.selective",
       "ui_element_id": "catalog.restore_selective",
-      "ui_location": "Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API"
+      "ui_location": "Settings Backup manager, Project/Server cards, Onboarding restore, Doctor (route to owner only; no dispatch), palette, API"
     },
     "catalog.restore_server_full": {
       "acceptance_checks": [
@@ -48678,13 +48678,13 @@
         "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.restore_server_full.availability and state.commands.restore_server_full.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
-        "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
+        "Prove every named dispatch reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return; prove Doctor shows route-to-owner navigation only with no cmd.restore.server_full dispatch, and Doctor route/focus return proves no owner success (N2-156/F3-528)."
       ],
       "accessibility_contract": {
         "disabled_announcement": "Announce state.commands.restore_server_full.disabled_reason, including handler_unavailable, without secrets or raw output.",
-        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation.",
-        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.restore.server_full request only when available.",
-        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.restore.server_full in every named consumer."
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation. A Doctor route or focus return never proves owner success (N2-156/F3-528).",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.restore.server_full request only when available in dispatch consumers; in Doctor keyboard/pointer activate route-to-owner navigation only and never dispatch cmd.restore.server_full (N2-156/F3-528).",
+        "role_or_semantics": "Expose a stable role/name/description and current state for cmd.restore.server_full in every named consumer. In Doctor the same surface is route-to-owner navigation only and never the owner dispatch control for cmd.restore.server_full (N2-156/F3-528)."
       },
       "disabled_reason_projection": "state.commands.restore_server_full.disabled_reason",
       "effect_contract": {
@@ -48702,7 +48702,7 @@
       "event_test_requirements": [
         "Assert cmd.restore.server_full records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.restore.server_full: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.restore.server_full: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage (dispatch consumers dispatch; Doctor proves route-to-owner navigation only with no cmd.restore.server_full dispatch), accessibility, restart/race/currentness negatives, and exact return (Doctor route/focus return proves no owner success). The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::restore_server_full",
       "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
@@ -48726,13 +48726,13 @@
         },
         {
           "evidence_kind": "accessibility_regression",
-          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement.",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement. In Doctor prove route-to-owner navigation only with no cmd.restore.server_full dispatch, and route/focus return proves no owner success (N2-156/F3-528).",
           "test_id": "wiring.catalog.restore_server_full.accessibility"
         }
       ],
       "ui_command_id": "cmd.restore.server_full",
       "ui_element_id": "catalog.restore_server_full",
-      "ui_location": "Settings Backup manager, Project/Server cards, Onboarding restore, Doctor, palette, API"
+      "ui_location": "Settings Backup manager, Project/Server cards, Onboarding restore, Doctor (route to owner only; no dispatch), palette, API"
     },
     "catalog.run_debug_attach": {
       "ui_element_id": "catalog.run_debug_attach",

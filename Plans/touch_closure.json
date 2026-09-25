@@ -3069,7 +3069,7 @@
       "wiring_status": "specified",
       "production_or_simulation": "Owner/schema contracts plus PMConcept7 simulation; no WAN, security, or E2E runtime proof. Central production-intent wiring is specified; no native runtime proof. Central production-intent wiring is specified; native runtime evidence remains absent.",
       "gui_triggers": [
-        "Settings Remote Access manager, Product Onboarding, Doctor, Server cards, palette/API; ordinary UI says Built into Puppet Master and does not expose tsnet/Serve internals"
+        "Settings Remote Access manager, Product Onboarding, Doctor (owner-route navigation only for protected or mutating remediation; no Doctor command dispatch or owner-success proof; Doctor-owned read diagnostics and rechecks remain available), Server cards, palette/API; ordinary UI says Built into Puppet Master and does not expose tsnet/Serve internals"
       ],
       "return_route": "Exact remote route/details and focus.",
       "reverse_consumers": [
@@ -3172,7 +3172,7 @@
       "wiring_status": "specified",
       "production_or_simulation": "Owner/schema contracts plus PMConcept7 simulation; no backup bytes, restore drill, or runtime proof. Central production-intent wiring is specified; native runtime evidence remains absent.",
       "gui_triggers": [
-        "Settings Backup managers; Backup workspace; Project/Server cards; Files/Projects snapshot routes; Onboarding restore; protected Bootstrap recovery; Doctor; palette/API only where semantically admitted"
+        "Settings Backup managers; Backup workspace; Project/Server cards; Files/Projects snapshot routes; Onboarding restore; protected Bootstrap recovery; Doctor (owner-route navigation only for protected or mutating remediation; no Doctor command dispatch or owner-success proof; Doctor-owned read diagnostics and rechecks remain available); palette/API only where semantically admitted"
       ],
       "return_route": "Exact backup/restore source, preview, result, and caller focus.",
       "reverse_consumers": [
@@ -9603,7 +9603,7 @@
       "command",
       "cmd.remote_access.tailscale.headscale.start",
       "partial",
-      "Remote scope is accepted; native Headscale lifecycle and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Remote scope is accepted; native Headscale lifecycle and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.remote_access.tailscale.headscale.start; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-RAS-011",
@@ -9611,7 +9611,7 @@
       "command",
       "cmd.remote_access.tailscale.headscale.submit_registration",
       "partial",
-      "Remote scope is accepted; native registration handoff and security evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Remote scope is accepted; native registration handoff and security evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.remote_access.tailscale.headscale.submit_registration; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-RAS-012",
@@ -9619,7 +9619,7 @@
       "command",
       "cmd.remote_access.tailscale.login.resume",
       "partial",
-      "Remote scope is accepted; native login continuation and security evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Remote scope is accepted; native login continuation and security evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.remote_access.tailscale.login.resume; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-RAS-013",
@@ -9627,7 +9627,7 @@
       "command",
       "cmd.remote_access.tailscale.login.start",
       "partial",
-      "Remote scope is accepted; native login lifecycle and security evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Remote scope is accepted; native login lifecycle and security evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.remote_access.tailscale.login.start; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-RAS-014",
@@ -9643,7 +9643,7 @@
       "command",
       "cmd.remote_access.tailscale.identity.reset",
       "partial",
-      "Built-in connector command is statically specified with handler_unavailable and expected_event_types=[]; native connector, security, WAN, accessibility, and runtime evidence remain absent."
+      "Built-in connector command is statically specified with handler_unavailable and expected_event_types=[]; native connector, security, WAN, accessibility, and runtime evidence remain absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.remote_access.tailscale.identity.reset; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-RAS-016",
@@ -9835,7 +9835,7 @@
       "command",
       "cmd.remote_access.remote_link.rotate_recovery_key",
       "partial",
-      "Remote scope is accepted; native protected key rotation and recovery evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Remote scope is accepted; native protected key rotation and recovery evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.remote_access.remote_link.rotate_recovery_key; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-RAS-040",
@@ -10051,7 +10051,7 @@
       "command",
       "cmd.restore.project_in_place",
       "partial",
-      "Accepted scope only; native restore, recovery point, rollback, and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Accepted scope only; native restore, recovery point, rollback, and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.restore.project_in_place; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-BRS-019",
@@ -10059,7 +10059,7 @@
       "command",
       "cmd.restore.project_as_new",
       "partial",
-      "Accepted scope only; native identity-safe restore and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Accepted scope only; native identity-safe restore and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.restore.project_as_new; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-BRS-020",
@@ -10067,7 +10067,7 @@
       "command",
       "cmd.restore.selective",
       "partial",
-      "Accepted scope only; native selective restore and consistency evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Accepted scope only; native selective restore and consistency evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.restore.selective; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-BRS-021",
@@ -10075,7 +10075,7 @@
       "command",
       "cmd.restore.server_full",
       "partial",
-      "Accepted Full Server restore scope only; replacement restore and crash-safe activation evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Accepted Full Server restore scope only; replacement restore and crash-safe activation evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.restore.server_full; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-BRS-022",
@@ -10099,7 +10099,7 @@
       "command",
       "cmd.restore.rollback",
       "partial",
-      "Accepted scope only; native recovery-point rollback drill is absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Accepted scope only; native recovery-point rollback drill is absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.restore.rollback; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-BRS-025",
@@ -13683,7 +13683,7 @@
       "command",
       "cmd.backup.prune",
       "partial",
-      "September 1 Backup/Restore command is statically owner-bound with handler_unavailable and expected_event_types=[]; native storage, protected-secret, accessibility, and runtime evidence remain absent."
+      "September 1 Backup/Restore command is statically owner-bound with handler_unavailable and expected_event_types=[]; native storage, protected-secret, accessibility, and runtime evidence remain absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.backup.prune; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-BRS-029",
@@ -13691,7 +13691,7 @@
       "command",
       "cmd.backup.unlock",
       "partial",
-      "September 1 Backup/Restore command is statically owner-bound with handler_unavailable and expected_event_types=[]; native storage, protected-secret, accessibility, and runtime evidence remain absent."
+      "September 1 Backup/Restore command is statically owner-bound with handler_unavailable and expected_event_types=[]; native storage, protected-secret, accessibility, and runtime evidence remain absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.backup.unlock; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-BRS-030",
@@ -13739,7 +13739,7 @@
       "command",
       "cmd.backup.recovery_key.export",
       "partial",
-      "September 1 Backup/Restore command is statically owner-bound with handler_unavailable and expected_event_types=[]; native storage, protected-secret, accessibility, and runtime evidence remain absent."
+      "September 1 Backup/Restore command is statically owner-bound with handler_unavailable and expected_event_types=[]; native storage, protected-secret, accessibility, and runtime evidence remain absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.backup.recovery_key.export; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-BRS-036",
@@ -13763,7 +13763,7 @@
       "command",
       "cmd.backup.recovery_key.test",
       "partial",
-      "September 1 Backup/Restore command is statically owner-bound with handler_unavailable and expected_event_types=[]; native storage, protected-secret, accessibility, and runtime evidence remain absent."
+      "September 1 Backup/Restore command is statically owner-bound with handler_unavailable and expected_event_types=[]; native storage, protected-secret, accessibility, and runtime evidence remain absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.backup.recovery_key.test; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-BRS-039",
@@ -13779,7 +13779,7 @@
       "command",
       "cmd.backup.recovery_key.rotate",
       "partial",
-      "September 1 Backup/Restore command is statically owner-bound with handler_unavailable and expected_event_types=[]; native storage, protected-secret, accessibility, and runtime evidence remain absent."
+      "September 1 Backup/Restore command is statically owner-bound with handler_unavailable and expected_event_types=[]; native storage, protected-secret, accessibility, and runtime evidence remain absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.backup.recovery_key.rotate; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-BRS-041",
@@ -13787,7 +13787,7 @@
       "command",
       "cmd.backup.recovery_key.reencrypt",
       "partial",
-      "September 1 Backup/Restore command is statically owner-bound with handler_unavailable and expected_event_types=[]; native storage, protected-secret, accessibility, and runtime evidence remain absent."
+      "September 1 Backup/Restore command is statically owner-bound with handler_unavailable and expected_event_types=[]; native storage, protected-secret, accessibility, and runtime evidence remain absent. Static correction: Doctor is route-to-owner navigation only per N2-156/F3-528 and never dispatches cmd.backup.recovery_key.reencrypt; Doctor route/focus return proves no owner success. Native dispatch and runtime proof remain absent."
     ],
     [
       "TOUCH-RAS-049",
