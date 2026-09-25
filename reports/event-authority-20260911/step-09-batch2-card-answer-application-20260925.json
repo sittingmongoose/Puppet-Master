@@ -904,5 +904,989 @@
       "Plans/storage_value_registry.json:509"
     ],
     "note": "Line numbers this application adds refer to main at the base revision; Plans/Contracts_V0.md, storage-plan.md, storage_value_registry.json, orchestrator-subagent-integration.md, assistant-chat-design.md and Run_Modes.md are byte-identical there to 9986aeabe5, where the cards' technical companion read them. The Decision Log anchors DL-084 to DL-089 are the entries this branch adds. Citations already in the rows keep the revisions they were written against and are not refreshed here."
+  },
+  "card4_and_retention_ruling_application": {
+    "application_id": "EA-STEP09-BATCH2-CARD4-DL087-DL090-DL091-DL092-DL093-AND-RETENTION-CELL-RULING",
+    "applied_at_utc": "2026-09-25T04:46:50Z",
+    "previous_branch_tip": "6b2653d97c940820f6335284f6828add27deb874",
+    "authority_refs": [
+      "Plans/Decision_Log.md#DL-039",
+      "Plans/Decision_Log.md#DL-087",
+      "Plans/Decision_Log.md#DL-090",
+      "Plans/Decision_Log.md#DL-091",
+      "Plans/Decision_Log.md#DL-092",
+      "Plans/Decision_Log.md#DL-093"
+    ],
+    "answers": {
+      "DL-087": {
+        "decision_log": "Plans/Decision_Log.md#DL-087",
+        "card_id": "EA-S09B2-CREW-HISTORY-001",
+        "chosen_option": null,
+        "answer": "no answer",
+        "answer_verbatim": "retire them but register the shared collaborative workflow events, so adding scope to this.",
+        "reading": "The six crew lifecycle events are retired, the substance of the card's option 1 in his own words; the added scope is defined by the addendum (DL-090 to DL-092).",
+        "decided_by": "Jared",
+        "answered_on": "2026-09-25",
+        "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md",
+        "answer_source_sha256": "e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af",
+        "card_copy": "reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md",
+        "card_copy_sha256": "f1b6ddda4a05c10839f0f985fb480728ced5d0e3fb75f2448d42ab3e4b4d73d6",
+        "owner_edits_pending": [
+          "Contracts: remove the six crew lifecycle rows (Plans/Contracts_V0.md:3061-3064, 3068-3069), narrow CV-270 to the board events and retire CV-271 (accepted text)",
+          "Orchestrator: add a pointer from its Crew text (Plans/orchestrator-subagent-integration.md:4200-4202, 4258-4260) to Plans/Collaborative_Workflows.md"
+        ],
+        "j248_rows": [
+          "crew.formed",
+          "crew.member_added",
+          "crew.member_removed",
+          "crew.coordination",
+          "crew.completed",
+          "crew.disbanded"
+        ]
+      },
+      "DL-090": {
+        "decision_log": "Plans/Decision_Log.md#DL-090",
+        "card_id": "EA-S09B2-COLLAB-EVENTS-001",
+        "chosen_option": "2",
+        "answer": "no answer",
+        "answer_verbatim": "option 2",
+        "reading": "Option 2, written in the note with no radio button selected.",
+        "decided_by": "Jared",
+        "answered_on": "2026-09-25",
+        "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_CARD4_ADDENDUM.md",
+        "answer_source_sha256": "b09b2afdaed355e1170ef0a96db1d468fa00a35ef185cb8fddeed16b1bbea8c8",
+        "card_copy": "reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md",
+        "card_copy_sha256": "295f17d7ac6423d9f19dc5d82c001c03385db0fb3e45f2ee605cd405337ba30a",
+        "owner_edits_pending": [
+          "Collaborative Workflows: section 13 cites DL-090",
+          "One preparation branch for the collaborative set and one Storage admission landing per family, each with its full contract, blind review and DL-077 admission record",
+          "Each contract of an event that carries proposal or finding text says how that text is protected and deleted",
+          "The run, message, proposal and finding records get their own contracts schema and fixture pair (Collaborative Workflows section 12)"
+        ],
+        "j248_rows": [],
+        "new_scope_families": [
+          "collaboration.created",
+          "collaboration.started",
+          "collaboration.paused",
+          "collaboration.resumed",
+          "collaboration.cancelled",
+          "collaboration.completed",
+          "collaboration.participant_started",
+          "collaboration.participant_completed",
+          "collaboration.message_added",
+          "collaboration.artifact_added",
+          "collaboration.configuration_changed",
+          "brainstorm.proposal_added",
+          "brainstorm.vote_added",
+          "brainstorm.plan_synthesized",
+          "review.finding_added",
+          "review.finding_dispositioned",
+          "review.artifact_finalized"
+        ]
+      },
+      "DL-091": {
+        "decision_log": "Plans/Decision_Log.md#DL-091",
+        "card_id": "EA-S09B2-COLLAB-FAILED-001",
+        "chosen_option": "1",
+        "answer": "Approve",
+        "decided_by": "Jared",
+        "answered_on": "2026-09-25",
+        "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_CARD4_ADDENDUM.md",
+        "answer_source_sha256": "b09b2afdaed355e1170ef0a96db1d468fa00a35ef185cb8fddeed16b1bbea8c8",
+        "card_copy": "reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md",
+        "card_copy_sha256": "295f17d7ac6423d9f19dc5d82c001c03385db0fb3e45f2ee605cd405337ba30a",
+        "owner_edits_pending": [
+          "Collaborative Workflows: section 13 gains collaboration.failed; its contract and landing join DL-090's set (the permission's exact list is 18 names)"
+        ],
+        "j248_rows": [],
+        "new_scope_families": [
+          "collaboration.failed"
+        ]
+      },
+      "DL-092": {
+        "decision_log": "Plans/Decision_Log.md#DL-092",
+        "card_id": "EA-S09B2-COLLAB-RETENTION-001",
+        "chosen_option": "1",
+        "answer": "Approve",
+        "decided_by": "Jared",
+        "answered_on": "2026-09-25",
+        "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_CARD4_ADDENDUM.md",
+        "answer_source_sha256": "b09b2afdaed355e1170ef0a96db1d468fa00a35ef185cb8fddeed16b1bbea8c8",
+        "card_copy": "reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md",
+        "card_copy_sha256": "295f17d7ac6423d9f19dc5d82c001c03385db0fb3e45f2ee605cd405337ba30a",
+        "owner_edits_pending": [
+          "Storage: Case L-3 retention text assigns the chat lifetime to the 18 families (RP-GOAL-THREAD-LIFETIME after the DL-045 reuse check, or a materialized Chat content class with the same lifetime), together with DL-084's assignment",
+          "Each of the 18 family contracts: structured retention_policy_ref and chat-deletion behavior"
+        ],
+        "j248_rows": []
+      },
+      "DL-093": {
+        "decision_log": "Plans/Decision_Log.md#DL-093",
+        "question": "the host's question 4 (review question D-02 of the Step 9 procedure record)",
+        "answer": "Approve",
+        "answer_verbatim": "4 i approve",
+        "decided_by": "Jared",
+        "answered_on": "2026-09-25",
+        "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_OPEN_QUESTIONS.md",
+        "answer_source_sha256": "678b9a32a0942fff08cea4127d9c52d7e73774509869c88958f466d6b8d0171a",
+        "card_copy": null,
+        "owner_edits_pending": [],
+        "j248_rows": []
+      }
+    },
+    "retention_cell_ruling": {
+      "ruled_by": "the Event Authority program's host session, which runs this branch",
+      "ruled_on": "2026-09-25",
+      "rows": [
+        "subagent.spawned",
+        "subagent.started",
+        "subagent.completed",
+        "subagent.failed",
+        "subagent.cancelled",
+        "subagent.timeout",
+        "subagent.paused",
+        "subagent.resumed",
+        "subagent.progress",
+        "subagent.tool_called",
+        "subagent.tool_completed",
+        "subagent.message_sent",
+        "subagent.message_received",
+        "subagent.output_truncated",
+        "subagent.retried",
+        "subagent.context_warning",
+        "subagent.model_switched",
+        "subagent.budget_warning",
+        "subagent.escalated",
+        "crew.board_message_posted",
+        "crew.board_message_read",
+        "crew.board_messages_archived",
+        "phase.force_completed",
+        "config.validation.failed",
+        "parser.error"
+      ],
+      "reason": "Step 9 batch 1's PASS cells rested on owner text that had landed (Plans/Runtime_Artifacts_Panel.md and the storage-plan Case L-3 assignment); no owner text binds these families' retention yet.",
+      "cell": {
+        "status": "FAIL",
+        "citation": "Plans/Decision_Log.md#DL-084|DL-085|DL-086 (the row's entry)",
+        "note": "Retention decided by Jared in DL-08x (<plain policy>); the Storage owner binding (Case L-3 assignment and the family contract) is not written yet, so the cell stays FAIL until it lands."
+      },
+      "supersedes": "the first application's retention_after PASS for these 25 rows (rows[] above, kept as history)"
+    },
+    "rows": [
+      {
+        "event_type": "crew.formed",
+        "decision": "DL-087",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.formed.json",
+        "before_sha256": "30aa14d2a4c0a475f9b20f065d3476987b5a40b05838a82c3989d41f20465d4e",
+        "after_sha256": "9b9f428563e3af6c88d9f540e392a624931192cd16f73369a54663c9d5f81790",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+        "retention_before": {
+          "status": "OWNER_REQUIRED",
+          "citation": null
+        },
+        "retention_after": {
+          "status": "OWNER_REQUIRED",
+          "citation": null
+        },
+        "outcome": "EXCLUDED_RETIRED"
+      },
+      {
+        "event_type": "crew.member_added",
+        "decision": "DL-087",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.member_added.json",
+        "before_sha256": "bfc476902d2fd3cffc409a8fd01ce3a80fa44d6900f0e847602402104e06014a",
+        "after_sha256": "30d3b2eff6fa0cd5504da323181025f025f143354936091873ef440eb9882f30",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+        "retention_before": {
+          "status": "OWNER_REQUIRED",
+          "citation": null
+        },
+        "retention_after": {
+          "status": "OWNER_REQUIRED",
+          "citation": null
+        },
+        "outcome": "EXCLUDED_RETIRED"
+      },
+      {
+        "event_type": "crew.member_removed",
+        "decision": "DL-087",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.member_removed.json",
+        "before_sha256": "49beba77f2de1d19cd7ac05230c231ff6ce920735f1700ae61147b93db75f47d",
+        "after_sha256": "600c68e12263fd866c4118df80b559de99522781836aacbda7799deb54039f65",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+        "retention_before": {
+          "status": "OWNER_REQUIRED",
+          "citation": null
+        },
+        "retention_after": {
+          "status": "OWNER_REQUIRED",
+          "citation": null
+        },
+        "outcome": "EXCLUDED_RETIRED"
+      },
+      {
+        "event_type": "crew.coordination",
+        "decision": "DL-087",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.coordination.json",
+        "before_sha256": "a17316217772d2865c440423235c6b2922b7d8bcb4695c3b839fc2b2308ab14a",
+        "after_sha256": "a9dd3ab6d5702eeca046442168d5d2321704c82ed16eda2c73c96918fea498c0",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+        "retention_before": {
+          "status": "OWNER_REQUIRED",
+          "citation": null
+        },
+        "retention_after": {
+          "status": "OWNER_REQUIRED",
+          "citation": null
+        },
+        "outcome": "EXCLUDED_RETIRED"
+      },
+      {
+        "event_type": "crew.completed",
+        "decision": "DL-087",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.completed.json",
+        "before_sha256": "a120fed2a80e1935183a62da7221abc580dbe110733ec48fd8612c4ee131857e",
+        "after_sha256": "5ea99dc1c9da0d3d539ccc116b85888e2ee921b2b7ad583fda0c5824924d2e7c",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+        "retention_before": {
+          "status": "OWNER_REQUIRED",
+          "citation": null
+        },
+        "retention_after": {
+          "status": "OWNER_REQUIRED",
+          "citation": null
+        },
+        "outcome": "EXCLUDED_RETIRED"
+      },
+      {
+        "event_type": "crew.disbanded",
+        "decision": "DL-087",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.disbanded.json",
+        "before_sha256": "0b6bd4bad717dbc9d15e3bcb52b66096f6d42e2c23534e1328800b39a8ab8c19",
+        "after_sha256": "fd1f32b72dd46ae536d6c15a6992cdf2174f476a87417381812b9d9a0c3a3ad6",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+        "retention_before": {
+          "status": "OWNER_REQUIRED",
+          "citation": null
+        },
+        "retention_after": {
+          "status": "OWNER_REQUIRED",
+          "citation": null
+        },
+        "outcome": "EXCLUDED_RETIRED"
+      },
+      {
+        "event_type": "subagent.spawned",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawned.json",
+        "before_sha256": "4398df65e292780c578e6ea48678b2b69df81255effcddcdcbce740fc4302bce",
+        "after_sha256": "4eefaeda05771b10838fa8261e9e2e64c014f886f81eb0588c5997763564cfd1",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.started",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.started.json",
+        "before_sha256": "58b011921af2f829e95867602982695ceaf19feb535cb2d6f9ade3ec75444131",
+        "after_sha256": "8f88f61f4d266eb6258c1c5d2db87589a00f5e01328a8738949ed98934d3a823",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.completed",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.completed.json",
+        "before_sha256": "684d04dbd7b9ee4233a030a962a6bd7141bb851a64abc3d9633ed823a086f5a7",
+        "after_sha256": "924c5dc7b834435893c30a571924ae234ca060abdf09f25e002856cde9a01db4",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.failed",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.failed.json",
+        "before_sha256": "52997c409c708d53753f07a5f0cd673c740f7ec417c647705afb5c6470908661",
+        "after_sha256": "8404f42d85fc3987cdbab3d0933c234928a8b7400249a273b93d665bf8f113d9",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.cancelled",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.cancelled.json",
+        "before_sha256": "69ec990f2b2358e3f286f3d4c9a225b54cc3c15517bdc57cccdff835ce2c908c",
+        "after_sha256": "696042c1443cb03d2f117d57a51466bb78f36c275cedd5b4706a28c45fb9c25c",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.timeout",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.timeout.json",
+        "before_sha256": "0677ced7f88ed54b6c1a740b3c0d6c21948cdd44b64abb44dbfc13fabe5a2cfa",
+        "after_sha256": "899e4176e9456d6c055c90f23ec0290de9acd731449fa85971925075eaface0c",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.paused",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.paused.json",
+        "before_sha256": "668c0e6696d1690c020b698fe432271a7cb79f53b5199b5d1efc1be2c1a96a9b",
+        "after_sha256": "af95089daa3d907c6eb5978d455da68d45e5429a117318ce3cf7205b96dd4406",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.resumed",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.resumed.json",
+        "before_sha256": "f2c9a2d6687e18201827c9b19c673e09302024a4be25c2ce7683d5c5bac7bdf1",
+        "after_sha256": "4d009febcd96e784bb0ef4652c7c4f5d0549d3cb3370d3902dbc9c8911bf82f1",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.progress",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.progress.json",
+        "before_sha256": "1d2ed95a154f76a9bb2e13194fa353beee8964126e929dabe4b23fb3a260d0f5",
+        "after_sha256": "bdd13f00098263b1c6163f88785b19b6c0c3d337fd4c06c33d2d98b892bf26cd",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.tool_called",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.tool_called.json",
+        "before_sha256": "59d909ad51ba976d26fa924dcc8f50a782ca39e425e8b5dbcb2214671867f2d6",
+        "after_sha256": "64776c4e65bded2b634dc1b7dbd5bea818b06fa2e08c16dc5b4f4e76fb39ee2d",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.tool_completed",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.tool_completed.json",
+        "before_sha256": "ac12586ea7a04a4eb54ac6aab883a05f75f22f4159ce10856fe6739e0ac4b5d1",
+        "after_sha256": "8dbda99150e3200e725b98266b9da7f6e6465599f5095175f0c341f5ef436815",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.message_sent",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.message_sent.json",
+        "before_sha256": "b42455647f99bc3009b86060e6d5beda064af176880dd82681299ccbfc9751f5",
+        "after_sha256": "671e84b4a40b1fb9496a66281a117c47007f38d2f1e6f4d30a5e738f99088f31",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.message_received",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.message_received.json",
+        "before_sha256": "9d40b31e9071059abc31117be2c1dec5b1da30f9936aa07fe5bc8e057d89c651",
+        "after_sha256": "bb4c58e3636ed3f38adfbeed0ca1f5afbbfcb07b4bc3272dc19795c9100e9baf",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.output_truncated",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.output_truncated.json",
+        "before_sha256": "83b283ff4c77730938c92f06838afed8ce08d823a87ff5761c4ef1c0f0c948f3",
+        "after_sha256": "55071dfdb00b48a81cfe6f6c02e1c37c985d87d0036de597dac0a7d5bc46af99",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.retried",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.retried.json",
+        "before_sha256": "1d3a64c2e3d7757ee4ac97e2b0f2fa8779b058f677b463b5f34cfde6264ceba7",
+        "after_sha256": "368ea7a088cad59a842fef804e0632e42a315f49191d155902abf83fee35fc43",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.context_warning",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.context_warning.json",
+        "before_sha256": "0aed842d682e04688a1b70e9b480f426b426283cacb146eaaa94249656029402",
+        "after_sha256": "91c03845c91fbe3db0d94935db3c00e8ceb2b2753049716d0ad2fbbcb1d30c74",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.model_switched",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.model_switched.json",
+        "before_sha256": "ead0428b983e8d94cee5449df1faed1d79013ef04ef3b77eabb8db1f5c0b918f",
+        "after_sha256": "96f75ff9b2ec6ff91a6e4cfc94c1bc59131fca1c433c17c9e6cb83ae77bca118",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.budget_warning",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.budget_warning.json",
+        "before_sha256": "65bae4dd4705068403023653fa2b7466b6e93e5ee7feb23ae1a0bb245a1ea9b1",
+        "after_sha256": "b36c7176659be262b57e761c1e2d9d494238d41e1c6021d3558260c8ceb463a0",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "subagent.escalated",
+        "decision": "DL-084",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.escalated.json",
+        "before_sha256": "28babaf31060b6d98d3cd32e31d9f0aac61f5edc9f05aeb5633bf0eb273dee00",
+        "after_sha256": "e603fb44c55a92b0af803543d1f14710e8b4e46d377ad9cc79faa73f26fc6be2",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-084"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "crew.board_message_posted",
+        "decision": "DL-085",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_message_posted.json",
+        "before_sha256": "2b832141993d847715c290c24623491ddd21b59421917e5397a45b75cea3b10f",
+        "after_sha256": "b74b100c52f572d8bf690c9618fc02fa9339b277d7de2c7bba8cf6f28d53be2d",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-085"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-085"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "crew.board_message_read",
+        "decision": "DL-085",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_message_read.json",
+        "before_sha256": "19c83eadaf716ac47836554ad228fbc5c1949e7a023dbec2e0cca1ad88a73acf",
+        "after_sha256": "bc7dd3b9312fc47fff3098ec4047f43dc2c2895613b6083ceea0e327f734510d",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-085"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-085"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "crew.board_messages_archived",
+        "decision": "DL-085",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_messages_archived.json",
+        "before_sha256": "9c8e51df9a6054303c60c873440e03f7c2fa6ef9aee58b02a740d14b6638ca19",
+        "after_sha256": "94fc56aba0f41d20b2a0d6716f1d67b4215dcf4062493567206726c0012002a7",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-085"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-085"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "phase.force_completed",
+        "decision": "DL-086",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_phase.force_completed.json",
+        "before_sha256": "e735ad326eed7dab9cf1a8853c2d74acfbd9d0c6d32812d45935c0f868cad38e",
+        "after_sha256": "6fcde95443df3b86e35e944ad7441e79321b3e6592fc7027cbcd6833c09855a9",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-086"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-086"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "config.validation.failed",
+        "decision": "DL-086",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_config.validation.failed.json",
+        "before_sha256": "8be48e5e91b07020b4fda76b87b53673bf6c224a6046caa12a96f66a0bc9d3c5",
+        "after_sha256": "3cda60add7372d8ea4f8b3a516125cf238778ee10d0f327bd41b741be997ae57",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-086"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-086"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      },
+      {
+        "event_type": "parser.error",
+        "decision": "DL-086",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_parser.error.json",
+        "before_sha256": "cddb317ab62a6204d2ae7d6b36af3c9eeb22e6495e555488c1eb2f22ed524cde",
+        "after_sha256": "d04694ca13b4ed64de3a8cb1a29b4b86584ee6bc8cfbd0ada42ab8378d3d8513",
+        "disposition_before": "KEEP_QUARANTINED",
+        "disposition_after": "KEEP_QUARANTINED",
+        "retention_before": {
+          "status": "PASS",
+          "citation": "Plans/Decision_Log.md#DL-086"
+        },
+        "retention_after": {
+          "status": "FAIL",
+          "citation": "Plans/Decision_Log.md#DL-086"
+        },
+        "outcome": "REMAINING_TECHNICAL_RETENTION_DECIDED_CELL_FAIL_UNTIL_STORAGE_BINDING"
+      }
+    ],
+    "untouched_batch2_rows": [
+      {
+        "event_type": "coordination.agent_registered",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_registered.json",
+        "sha256_before_and_after": "e990debac213073de4d9a970b1072b807edfe55d8abab5f0547b3326bd1d8da6",
+        "reason": "no card; technical work (contracts prepared on plans/ea-s09-coordination-prep-20260925)"
+      },
+      {
+        "event_type": "coordination.agent_status_updated",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_status_updated.json",
+        "sha256_before_and_after": "266e6752cda5b254e2818995edc0eabbdc4ceaff324664cfc35d8dfa0a37093b",
+        "reason": "no card; technical work (contracts prepared on plans/ea-s09-coordination-prep-20260925)"
+      },
+      {
+        "event_type": "coordination.agent_operation_updated",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_operation_updated.json",
+        "sha256_before_and_after": "cf0fee1bd113e829aaad05a735d2fd82dcec04f69835c446c286c7933874a922",
+        "reason": "no card; technical work (contracts prepared on plans/ea-s09-coordination-prep-20260925)"
+      },
+      {
+        "event_type": "coordination.agent_file_ownership_updated",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_file_ownership_updated.json",
+        "sha256_before_and_after": "eb4d9cf65087961842079d548aa336c4b48ab08a8d70f04808b51c0d2a6ddc10",
+        "reason": "no card; technical work (contracts prepared on plans/ea-s09-coordination-prep-20260925)"
+      },
+      {
+        "event_type": "coordination.agent_unregistered",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_unregistered.json",
+        "sha256_before_and_after": "a20ed35a36b3e1b9d5748963d70505ca102c05c5918cda9792adfb936c2481f9",
+        "reason": "no card; technical work (contracts prepared on plans/ea-s09-coordination-prep-20260925)"
+      },
+      {
+        "event_type": "coordination.agent_crashed",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_crashed.json",
+        "sha256_before_and_after": "ec685b8e67ec5b74f9647c251965a05ad55e5532feeee86ed561bde08757f6f9",
+        "reason": "no card; technical work (contracts prepared on plans/ea-s09-coordination-prep-20260925)"
+      },
+      {
+        "event_type": "coordination.agent_aborted",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_aborted.json",
+        "sha256_before_and_after": "8af83e23a692a63f9358265931a07c254a36d6d05015f2d81b7f4c215429052e",
+        "reason": "no card; technical work (contracts prepared on plans/ea-s09-coordination-prep-20260925)"
+      },
+      {
+        "event_type": "subagent.spawn_requested",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawn_requested.json",
+        "sha256_before_and_after": "a2736784d9454ad738df273d9dacbf02e11d92d3ebbe2f4eb09a41e67ce42e2d",
+        "reason": "excluded as retired by the first application (DL-088); not touched here"
+      },
+      {
+        "event_type": "subagent.spawn_completed",
+        "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawn_completed.json",
+        "sha256_before_and_after": "002172d30d9c19c099f4880967a192102a0d999a51c104f90af9718c563c3a7d",
+        "reason": "excluded as retired by the first application (DL-088); not touched here"
+      }
+    ],
+    "files": {
+      "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+        "before_sha256": "313545d22286dea665a0c6e35bc8d53ee34ff721dc8ef7858c8efbafaf25fc88",
+        "after_sha256": "c838efed8fd4703d71275da87b7b5fe987f4f5aec1cca5450ddbf4257cbb0349",
+        "lines_changed": 31
+      },
+      "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": {
+        "before_sha256": "31e0124f04a0baeb19ff8e684b60089248853012bb27d2701ff76149e685d73c",
+        "after_sha256": "2d35c1e4d69e8f471ac9ba3906bc3c924eb70272ace3302ccc478d6c2ac4183c",
+        "lines_changed": 31
+      },
+      "Plans/.audits/event-authority-2026-08-12/individual-disposition/OWNER_VETOES.jsonl": {
+        "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "changed": false
+      }
+    },
+    "campaign_count": {
+      "after_first_application": {
+        "registered": 0,
+        "excluded": 9,
+        "carded": 6,
+        "remaining": 237,
+        "total": 252
+      },
+      "after_this_application": {
+        "registered": 0,
+        "excluded": 15,
+        "carded": 0,
+        "remaining": 237,
+        "total": 252
+      },
+      "new_scope_outside_252": {
+        "families": 18,
+        "event_types": [
+          "collaboration.created",
+          "collaboration.started",
+          "collaboration.paused",
+          "collaboration.resumed",
+          "collaboration.cancelled",
+          "collaboration.completed",
+          "collaboration.participant_started",
+          "collaboration.participant_completed",
+          "collaboration.message_added",
+          "collaboration.artifact_added",
+          "collaboration.configuration_changed",
+          "brainstorm.proposal_added",
+          "brainstorm.vote_added",
+          "brainstorm.plan_synthesized",
+          "review.finding_added",
+          "review.finding_dispositioned",
+          "review.artifact_finalized",
+          "collaboration.failed"
+        ],
+        "authority": [
+          "Plans/Decision_Log.md#DL-090",
+          "Plans/Decision_Log.md#DL-091",
+          "Plans/Decision_Log.md#DL-092"
+        ],
+        "note": "New campaign scope, worked as its own batch; not J248 rows and not counted in the 252."
+      }
+    },
+    "boundaries": {
+      "registry_changed": false,
+      "bulk_registration": false,
+      "analogy_used": false,
+      "inference_used": false,
+      "validator_changed": false,
+      "cohort_pins_changed": false,
+      "denominator_removal_claimed": false,
+      "depth_pass_claimed": false,
+      "owner_documents_changed": false,
+      "owner_vetoes_file_changed": false
+    },
+    "response_rows_effect_updated": [
+      "Plans/Decision_Log.md#DL-084",
+      "Plans/Decision_Log.md#DL-085",
+      "Plans/Decision_Log.md#DL-086"
+    ],
+    "other_branch_files": {
+      "Plans/.plan_index/acceptance_units.jsonl": {
+        "before_sha256": "0575ba1036aab38ce0279d29350f8a6252df4f59df78b90eb550646988f467a6",
+        "after_sha256": "f13e9d4ee985a310052131ad43f5fc663ac21594f3fda487bb6247e64f4a493d",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/.plan_index/coverage_report.json": {
+        "before_sha256": "88682fbd09f9e05a57f081222cf9eb7ffd2127025883131626f18163d2f269ef",
+        "after_sha256": "e29d2a5745d6bb33fc26c1619d15072416a818ead22316e27263d5a8d1b1d76c",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/.plan_index/dependencies.json": {
+        "before_sha256": "abfc0ad647c21662082d8f1f8071c24e725b2f59bd57657e40379197eeeeeaba",
+        "after_sha256": "a938f607d68a8f3b262da8bdec351e1aab667fed63bb0b4735c3f84ecc54321f",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/.plan_index/doc_cards.json": {
+        "before_sha256": "1357bfdce7e4c8b4c38fffd3a20bd0207b5f51bead4ab9dd2bd0a6107836abe3",
+        "after_sha256": "9ff3faf5c3775e19895b720ea8b024ba19ff582b19dc377668fbc41bfaf72627",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/.plan_index/node_readiness_report.json": {
+        "before_sha256": "80e88f1f7c55e95cec2766061cd210ece4539b56a8187c3f0aaa6456a58f4137",
+        "after_sha256": "cc1a419ee82f3e7c8245e74d3867456db013cb536f6134cd0c45404ad9ab7172",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/.plan_index/plan_units.jsonl": {
+        "before_sha256": "277bfd65c2d220de604e2f64a80351c8df80ac0430e05a664c9ac8adc8f25cdd",
+        "after_sha256": "ef55312cc2b62fed93e384c143567f5fbb282ba818fb1ceb6d96bf742b4886fb",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/Decision_Log.md": {
+        "before_sha256": "bb3332032c23b5840bcf9763a3e62451e19b20ceaf6bd82617aab3bf1524ca8b",
+        "after_sha256": "794261c7a6057eff765489ee4932364f0b7c0ef80cd04fea6a497af81009e8d4",
+        "kind": "edited"
+      },
+      "Plans/_shards/decision_log/00-index.md": {
+        "before_sha256": "de1691b26d20e62c6e5d6c6ea5a16e1470495c325fa89ccab73d025992d7b171",
+        "after_sha256": "2802b786235ac5a3240d16b997e254b3f4d148da7fac98356eb014294e575723",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/_shards/decision_log/001-preamble.md": {
+        "before_sha256": "bdb31fc2b798fc1cae8f37e1eb7226897e416f6af6e698c7e5d520c3f70428c7",
+        "after_sha256": "873637628101cf776aa93ccf91fd390a06bdfb8c1d598094477f8f63080d9962",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/_shards/decision_log/002-purpose.md": {
+        "before_sha256": "bfcf43c4e3c9d966d008f343b4967b866511a0c4e92d576fb5035ba656b4faec",
+        "after_sha256": "5ac22932940dede03a646d483fa3781082e1c48db2e8ae0f676446feba228c6e",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/_shards/decision_log/003-entries.md": {
+        "before_sha256": "e8eb8387c77abf0d8cc92be0506e284c8908eb01574689d4b50c560f0be989f6",
+        "after_sha256": "e7b6851b8bc5d5f006009120ea2143c485cb76696fd0a7a9d060f6424fe2412c",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/_shards/decision_log/004-owner-consumer-map.md": {
+        "before_sha256": "596da57ef30dcce36f64c3c1ae75b386c2fcdedf6772c6ad2ca9aca37a53397e",
+        "after_sha256": "40a86285e9ca4ccf105385256fd2f097b5330cfd3cee05b8e9c5068e7da55c7b",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/_shards/decision_log/005-planunits.md": {
+        "before_sha256": "2e03097a9b7ef6aacc6cbdf41a70de6f2ff3fbfbde456acccce22594f894931c",
+        "after_sha256": "1caeee97172e3cedb5444ddbfdb23b7414b2caf5a72dd71dc892f46eb28e15bd",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/_shards/decision_log/006-migration-coverage.md": {
+        "before_sha256": "383e9b700f3333e64f7f9cdb705bda9d9f937baf850d0dcc9d8a6d63082a5b3a",
+        "after_sha256": "3800f15e483d16db0c88e263b22d1604d390ca1752595f6d2ecc39225d99bbd4",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/_shards/decision_log/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md": {
+        "before_sha256": "1b3b18d26c666eddfe230a83901cb61d4b4fbc053807dda7e272f9627c67e977",
+        "after_sha256": "2a70ebe2a7b4901a9714a2c5a4662d6c98e50eeaa4af02ef1289eab5e2fa3a81",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/_shards/decision_log/008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md": {
+        "before_sha256": "2b5863e88f4198d9c5b4ab1c103a7b8fe977c1dbcdd2819076460e3a03a131ea",
+        "after_sha256": "26a2f9e7c22bcbb6e7cb593d76a99a9ded287b8808941c1f43d1f5ad57541cb0",
+        "kind": "derived (regenerated)"
+      },
+      "Plans/_shards/decision_log/manifest.json": {
+        "before_sha256": "66291e310eb4b05e14d287417737fb33a509d0fb79191545cef4d6b36438be03",
+        "after_sha256": "2e108cdbf8c6516055a712b80ad3dd68f2a70c1a5759766a548091edf288e272",
+        "kind": "derived (regenerated)"
+      },
+      "reports/event-authority-20260911/decision-responses.jsonl": {
+        "before_sha256": "3a435c02b11c91f401712d07169c812a72aa3a8381e6b56dede8dc7db4956324",
+        "after_sha256": "4c9dbff2132df50e14d93205560248f7ef27e72bcea54317a57538cfd55e15d9",
+        "kind": "edited"
+      },
+      "reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md": {
+        "before_sha256": null,
+        "after_sha256": "295f17d7ac6423d9f19dc5d82c001c03385db0fb3e45f2ee605cd405337ba30a",
+        "kind": "added"
+      },
+      "reports/event-authority-20260911/step-09-procedure-20260924.md": {
+        "before_sha256": "0f5a9866f7584a6b264c3ab1e2ca8bbdc03cf648ae7372b0f70f2998b896eb33",
+        "after_sha256": "5d67ec19789a7d28fba8ceee697cab8edd370941a7948c277646629021fcd65c",
+        "kind": "edited"
+      }
+    },
+    "application_record_before_sha256": "f71b2c790a5d18241d5be13ea11216d451d5fd291372134797741451bf46d940",
+    "citation_anchor_revision": {
+      "new_line_citations": "1e5d9b097b46aa58e7af488a9c38a87efb780d5f",
+      "applies_to": [
+        "Plans/Collaborative_Workflows.md:384-408",
+        "Plans/Collaborative_Workflows.md:416",
+        "Plans/Collaborative_Workflows.md:51",
+        "Plans/Collaborative_Workflows.md:63",
+        "Plans/Contracts_V0.md:16669-16717",
+        "Plans/Contracts_V0.md:3061",
+        "Plans/Contracts_V0.md:3062",
+        "Plans/Contracts_V0.md:3063",
+        "Plans/Contracts_V0.md:3064",
+        "Plans/Contracts_V0.md:3068",
+        "Plans/Contracts_V0.md:3069",
+        "Plans/orchestrator-subagent-integration.md:4202"
+      ],
+      "note": "Line numbers this application adds refer to main at 1e5d9b097b; Plans/Contracts_V0.md, Collaborative_Workflows.md and orchestrator-subagent-integration.md are unchanged on this branch. The Decision Log anchors DL-087 and DL-090 to DL-093 are the entries this branch adds."
+    }
   }
 }

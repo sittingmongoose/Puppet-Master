@@ -107,3 +107,93 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-ba
 - **Reseal.** Landing adds governance staleness for `Plans/Decision_Log.md`, its shards and the index rows of its units, which the designated Plans agent's reseal owes: the currentness edition, Spec Lock and the evidence and readiness rows.
 - **Another branch touches the index.** `plans/ea-s09-coordination-prep-20260925` edits `Plans/orchestrator-subagent-integration.md` and `Plans/Contracts_V0.md` (OSI-438, CV-353) and also regenerates `Plans/.plan_index`. Whichever lands second rebases and regenerates the index; it is never hand-merged.
 - **Nothing else changes.** This records planning canon and the campaign rows only. It admits, registers and retires nothing in the registry, and it changes no owner contract, retention policy, validator, receipt or governance artifact.
+
+## Second application: Card 4, its addendum, question 4 and the host ruling on the retention cells, 2026-09-25
+
+This section is added after the first application above, which stays as it was written. Where they differ, this section is current. It is recorded in the application record under the new key `card4_and_retention_ruling_application`. The record's earlier content is byte-identical.
+
+Jared's answers:
+
+| DL | Question | Answer | What it decides | J248 rows |
+|---|---|---|---|---|
+| DL-087 | `EA-S09B2-CREW-HISTORY-001` (Card 4) | No answer; he wrote "retire them but register the shared collaborative workflow events, so adding scope to this." | The six crew lifecycle events are retired, which is the substance of option 1 in his own words. The added scope is DL-090 to DL-092 | 6, excluded as retired |
+| DL-090 | `EA-S09B2-COLLAB-EVENTS-001` (addendum 4a) | Option 2, written in the note with no radio button selected | All 17 names of `Plans/Collaborative_Workflows.md` section 13 are to be registered, one family per landing, under a separate bounded technical-binding permission on DL-045's terms, as DL-046 did. New scope outside the 252 | none |
+| DL-091 | `EA-S09B2-COLLAB-FAILED-001` (addendum 4b) | Approve (option 1) | Section 13 gains `collaboration.failed`, registered under DL-090's permission, whose exact list is therefore 18 names | none |
+| DL-092 | `EA-S09B2-COLLAB-RETENTION-001` (addendum 4c) | Approve (option 1) | The events of DL-090 and DL-091 are kept as long as the chat exists, DL-084's lifetime and the same Storage reuse check. This covers the recorded events only | none |
+| DL-093 | The host's question 4 (review question D-02) | "4 i approve" | The Decision Log entry each Step 9 registration landing adds is Jared's decision entry for that family in the DL-077 sense | none |
+
+Sources: `ANSWERS_STEP09_BATCH2.md` (`e224ff62...`), `ANSWERS_CARD4_ADDENDUM.md` (`b09b2afd...`) and `ANSWERS_OPEN_QUESTIONS.md` (`678b9a32...`), all in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/`. The answered addendum is kept byte-identical as `step-09-batch2-card4-addendum-20260925.md` (`295f17d7...`, artifact `QaLQRPQHwhsqQnNeRQ6g1z` version 1).
+
+### Campaign count
+
+| | After the first application | After this one |
+|---|---:|---:|
+| Registered | 0 | 0 |
+| Excluded | 9 | **15** |
+| Carded (waiting for an answer) | 6 | **0** |
+| Remaining technical work | 237 | 237 |
+| Total | 252 | 252 |
+
+The ledger agrees. Among the 252 July cohort rows, less `context.compaction.completed`, which is outside the 252, there are 237 `KEEP_QUARANTINED` and 15 `RECLASSIFY_TO_EXCLUDED`. DL-090 and DL-091 add 18 collaborative workflow families outside the 252. They are worked as their own batch and are not in this count.
+
+### What changed in the rows
+
+- **The 6 crew lifecycle rows (DL-087)** move from `KEEP_QUARANTINED` to `RECLASSIFY_TO_EXCLUDED` as retired, following the procedure's "Per exclusion", exactly as the two spawn rows did under DL-088:
+  - The rationale is replaced with the exclusion text. It cites the Contracts crew table row (`Plans/Contracts_V0.md:3061` to `3064`, `3068`, `3069`), CV-271 (`16669-16717`), `Plans/Collaborative_Workflows.md:51` (one run identity) and `Plans/orchestrator-subagent-integration.md:4202`. Each row also has one sentence of its own: the frozen roster (`Collaborative_Workflows.md:416`) for the two member rows, the shared transcript (`:63`) for `crew.coordination`, and `collaboration.failed` (DL-091) for `crew.disbanded`.
+  - New `citations_checked` entries record the same citations.
+  - The legacy bucket and the `july248` pin are kept, no evidence cell changes, and no denominator removal is claimed.
+- **The host ruling on the 25 retention cells** (19 `subagent.*` rows on DL-084, 3 `crew.board_*` rows on DL-085 and `phase.force_completed`, `config.validation.failed` and `parser.error` on DL-086):
+  - The first application set these cells to `PASS` on the Decision Log entry and said this was its one judgment. The host session ruled that they go to `FAIL`. Step 9 batch 1's `PASS` cells rested on owner text that had landed: `Plans/Runtime_Artifacts_Panel.md` and the storage-plan Case L-3 assignment. No owner text binds these families yet.
+  - Each cell is now `{"status": "FAIL", "citation": "Plans/Decision_Log.md#DL-08x"}` with the ruling's note, "Retention decided by Jared in DL-08x (...); the Storage owner binding (Case L-3 assignment and the family contract) is not written yet, so the cell stays FAIL until it lands." The plain policy in the note is "kept as long as its chat exists" (DL-084), "kept with the run's other coordination records, 180 days after the run finishes" (DL-085) or "kept one year after the run finishes" (DL-086).
+  - One sentence is appended to each rationale. The rows stay `KEEP_QUARANTINED`, and no other evidence cell or `citations_checked` entry changes.
+  - This replaces the paragraph "Why the retention cells cite the Decision Log" above: the retention decision stands, but the cell passes only once owner text binds it.
+- **Both ledgers:** the same 31 lines. The individual ledger lines are rewritten from the row objects. On the census lines, the 6 crew rows get the exclusion disposition, the two card copies and the application record in `evidence_refs`, their citations in `source_citations` and a note. The 25 retention rows get one sentence in `notes`. Each file's serialization and each line's CRLF ending are kept.
+- **`decision-responses.jsonl`:** the effect text of the DL-084, DL-085 and DL-086 rows said the retention cell is `PASS`. It now says the cell is `FAIL`, citing the entry, until the Storage owner binding lands. Only `effect` changes in those three lines. The four new response rows for DL-087 and DL-090 to DL-092 were added in their own commit.
+- **Not changed:**
+  - the 7 coordination rows;
+  - the 2 spawn rows the first application excluded;
+  - `OWNER_VETOES.jsonl`, which stays empty;
+  - `COVERAGE.json`.
+
+### Hashes
+
+The new record entry lists every changed row's SHA-256 before (at the previous branch tip, `6b2653d97c`) and after. It also gives the before and after hash of every other file changed since that tip. The main ones:
+
+| File | Before (`6b2653d97c`) | After |
+|---|---|---|
+| `step-09-batch2-card-answer-application-20260925.json` (this record) | `f71b2c790a5d18241d5be13ea11216d451d5fd291372134797741451bf46d940` | `ddcc37dae32267dc7c630d163a7b7e7be64b7da984e1da5f780379d3468b6d84` |
+| `individual-disposition/LEDGER.jsonl` | `313545d22286dea665a0c6e35bc8d53ee34ff721dc8ef7858c8efbafaf25fc88` | `c838efed8fd4703d71275da87b7b5fe987f4f5aec1cca5450ddbf4257cbb0349` |
+| `census-adjudication/LEDGER.jsonl` | `31e0124f04a0baeb19ff8e684b60089248853012bb27d2701ff76149e685d73c` | `2d35c1e4d69e8f471ac9ba3906bc3c924eb70272ace3302ccc478d6c2ac4183c` |
+| `decision-responses.jsonl` | `3a435c02b11c91f401712d07169c812a72aa3a8381e6b56dede8dc7db4956324` | `4c9dbff2132df50e14d93205560248f7ef27e72bcea54317a57538cfd55e15d9` |
+| `Plans/Decision_Log.md` | `bb3332032c23b5840bcf9763a3e62451e19b20ceaf6bd82617aab3bf1524ca8b` | `794261c7a6057eff765489ee4932364f0b7c0ef80cd04fea6a497af81009e8d4` |
+| `step-09-procedure-20260924.md` | `0f5a9866f7584a6b264c3ab1e2ca8bbdc03cf648ae7372b0f70f2998b896eb33` | `5d67ec19789a7d28fba8ceee697cab8edd370941a7948c277646629021fcd65c` |
+| `step-09-batch2-card4-addendum-20260925.md` | none (added) | `295f17d7ac6423d9f19dc5d82c001c03385db0fb3e45f2ee605cd405337ba30a` |
+| this note | `59c8a60b7842b85cdb5cc04b23fbdfb757c3312b3e8bd4c969507e407b4f8f15` | given in the batch report |
+
+The Decision_Log shards and the six `Plans/.plan_index` files are in the record with their hashes.
+
+### Owner follow-ups added by these answers
+
+None of them is done on this branch.
+
+1. **DL-087, Contracts with Orchestrator.** Contracts removes the six crew lifecycle rows (`Plans/Contracts_V0.md:3061-3064`, `3068-3069`), narrows CV-270 to the board events and retires CV-271. The orchestrator adds a pointer from its Crew text (`Plans/orchestrator-subagent-integration.md:4200-4202`, `4258-4260`) to `Plans/Collaborative_Workflows.md`.
+2. **DL-090 and DL-091, the collaborative workflow batch.**
+   - Collaborative Workflows section 13 cites DL-090 and gains `collaboration.failed`.
+   - The 18 families are prepared on one branch and admitted one per landing, each with its full contract, blind review and DL-077 admission record, citing its own landing entry (DL-093).
+   - The contracts of events that carry proposal or finding text say how that text is protected and deleted.
+   - The run, message, proposal and finding records get their own contracts schema and fixture pair.
+3. **DL-092, Storage.** The Case L-3 retention text assigns the chat lifetime to the 18 families, together with DL-084's 19 families, after the same reuse check. Each family contract carries the structured `retention_policy_ref`.
+
+The Storage retention follow-ups of the first application stand: DL-083 and DL-089 in SP-291, and the Case L-3 bindings for DL-084 to DL-086. The 25 retention cells stay `FAIL` until those bindings land.
+
+### Checks
+
+`verify_card4_application.py` checks this application against `6b2653d97c`:
+- exactly the 31 row files changed, and only the permitted fields;
+- 31 lines in each ledger, with line endings kept, and each individual ledger line equals its row object;
+- the 9 other batch 2 rows are identical;
+- only `effect` changed in the three response rows;
+- the record's earlier content is byte-identical and every hash in the new entry matches;
+- the J248 count over the ledger is 237 and 15.
+
+The shard check, index validation, test modules and the currentness validator run at the branch state are listed in the batch report, `step-09-batch2-20260925.md`, with the evidence directory `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-batch2-answers-checks-final-20260925/`.

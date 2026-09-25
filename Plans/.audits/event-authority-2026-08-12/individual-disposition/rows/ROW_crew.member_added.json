@@ -6,8 +6,8 @@
     "july248"
   ],
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to crew.member_added. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "DL-039 Step 9 individual semantic adjudication at 2026-09-25T04:46:50Z: Jared gave no answer to EA-S09B2-CREW-HISTORY-001 on 2026-09-25 and wrote \"retire them but register the shared collaborative workflow events, so adding scope to this.\" (Plans/Decision_Log.md#DL-087): crew.formed, crew.member_added, crew.member_removed, crew.coordination, crew.completed and crew.disbanded are retired, the substance of the card's option 1, and a Crew run is recorded only by the history all collaborative workflows share, whose kind-specific records \"never create a second run identity\" (Plans/Collaborative_Workflows.md:51); DL-090 to DL-092 add the registration of those shared events as new scope. crew.member_added is a row of the Contracts crew table (Plans/Contracts_V0.md:3062) and of accepted CV-271 (Plans/Contracts_V0.md:16669-16717); no Plans document names a producer for it, nothing writes it, and the orchestrator says crew lifecycle follows the canonical parent/child orchestration and runtime lifecycle contracts (Plans/orchestrator-subagent-integration.md:4202). A Crew's members are fixed when the run starts (Plans/Collaborative_Workflows.md:416), so adding a member describes something Crew does not do. The Contracts owner edit that removes the six rows, narrows CV-270 to the board events and retires CV-271, and the orchestrator's pointer to Collaborative Workflows, are still pending. This records the exclusion of this exact token from the persisted-family campaign as retired; it creates no alias, deletes no history and changes no registered family. Application: reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json. The legacy CPU bucket and cohort pins remain because the frozen schema and validator have no J248 exclusion category. No denominator removal, contract-depth pass or seal is claimed.",
   "evidence": {
     "membership_version": {
       "status": "OWNER_REQUIRED",
@@ -85,6 +85,41 @@
       "citation": "Plans/.audits/event-authority-2026-08-12/cohort-pins/EVENT_TO_COHORTS.json:239-241",
       "status": "ok",
       "notes": "Immutable cohort map assigns crew.member_added to july248; retained independently of working bucket."
+    },
+    {
+      "citation": "Plans/Decision_Log.md#DL-087",
+      "status": "ok",
+      "notes": "Jared's answer to EA-S09B2-CREW-HISTORY-001, 2026-09-25: no answer, with the words \"retire them but register the shared collaborative workflow events, so adding scope to this.\"; recorded as retiring the six crew lifecycle events."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:3062",
+      "status": "ok",
+      "notes": "The crew table row for this event; DL-087's Contracts owner edit removes it (pending)."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:16669-16717",
+      "status": "ok",
+      "notes": "Accepted CV-271 lists the six crew lifecycle families; DL-087's Contracts owner edit retires it and narrows CV-270 (16621-16667) to the board events (pending)."
+    },
+    {
+      "citation": "Plans/Collaborative_Workflows.md:51",
+      "status": "ok",
+      "notes": "One CollaborativeRun per invocation; kind-specific records attach to it and \"never create a second run identity\"."
+    },
+    {
+      "citation": "Plans/orchestrator-subagent-integration.md:4202",
+      "status": "ok",
+      "notes": "Crew lifecycle follows the canonical parent/child orchestration and runtime lifecycle contracts; the orchestrator names none of the six events."
+    },
+    {
+      "citation": "Plans/Collaborative_Workflows.md:384-408",
+      "status": "ok",
+      "notes": "Section 13: the shared collaborative workflow events, emission disabled until registration; DL-090 to DL-092 add their registration as new scope."
+    },
+    {
+      "citation": "Plans/Collaborative_Workflows.md:416",
+      "status": "ok",
+      "notes": "The effective roster frozen at start is the run's truth; a Crew's membership does not change during a run."
     }
   ],
   "owner_veto": null,
