@@ -65,8 +65,11 @@ class PairingIssuanceTests(unittest.TestCase):
                  if row['disposition_id'].startswith('scd.server_pairing.')}
         self.assertEqual(set(added), {'scd.server_pairing.issuance_transport.v1',
                                       'scd.server_pairing.issuance_custody.v1'})
+        # Preserve every pre-existing disposition, while independent later
+        # companions own their own newly added rows and validation.
+        original_ids = {row['disposition_id'] for row in before['contract_family_dispositions']}
         self.assertEqual([row for row in registry['contract_family_dispositions']
-                          if row['disposition_id'] not in added], before['contract_family_dispositions'])
+                          if row['disposition_id'] in original_ids], before['contract_family_dispositions'])
         transport = added['scd.server_pairing.issuance_transport.v1']
         custody = added['scd.server_pairing.issuance_custody.v1']
         self.assertEqual(transport['physical_family_status'], 'not_applicable_nonpersisted')

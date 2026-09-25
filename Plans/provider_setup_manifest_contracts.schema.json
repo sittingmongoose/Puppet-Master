@@ -1,0 +1,484 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/provider_setup_manifest_contracts.schema.json",
+  "x-schema-id": "pm.provider_setup_manifest.contracts.v1",
+  "description": "Declarative metadata and internal existing-owner consumer binding; not runtime authority, storage or a procedure implementation.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/provider_setup_manifest"
+    },
+    {
+      "$ref": "#/$defs/setup_consumer_binding"
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8192
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_ref",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "record_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "revision": {
+          "$ref": "#/$defs/id"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "provider_setup_manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "manifest_ref",
+        "revision",
+        "provider_id",
+        "setup_method_id",
+        "label",
+        "credential_owner",
+        "account_creation_url",
+        "authorization_destination",
+        "instructions",
+        "requirements",
+        "secure_input",
+        "callback",
+        "validation_procedure_id",
+        "model_refresh_procedure_id",
+        "usage_refresh_procedure_id",
+        "return_destination_ref",
+        "known_limitations",
+        "provenance"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.provider_setup.manifest.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "manifest_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "revision": {
+          "$ref": "#/$defs/id"
+        },
+        "provider_id": {
+          "$ref": "#/$defs/id"
+        },
+        "setup_method_id": {
+          "$ref": "#/$defs/id"
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "credential_owner": {
+          "enum": [
+            "cli",
+            "pm",
+            "external_service"
+          ]
+        },
+        "account_creation_url": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authorization_destination": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "url",
+            "allowed_hosts"
+          ],
+          "properties": {
+            "url": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "format": "uri"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "allowed_hosts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/id"
+              },
+              "uniqueItems": true
+            }
+          }
+        },
+        "instructions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          },
+          "uniqueItems": true
+        },
+        "requirements": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scopes",
+            "organization",
+            "region"
+          ],
+          "properties": {
+            "scopes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/id"
+              },
+              "uniqueItems": true
+            },
+            "organization": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/text"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "region": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/text"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "secure_input": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type_id",
+            "owner_descriptor_ref"
+          ],
+          "properties": {
+            "type_id": {
+              "oneOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]
+            },
+            "owner_descriptor_ref": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/id"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "callback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "behavior_id",
+            "owner_behavior_ref"
+          ],
+          "properties": {
+            "behavior_id": {
+              "oneOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]
+            },
+            "owner_behavior_ref": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/id"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "validation_procedure_id": {
+          "$ref": "#/$defs/id"
+        },
+        "model_refresh_procedure_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "usage_refresh_procedure_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_destination_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "known_limitations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          },
+          "uniqueItems": true
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_refs",
+            "last_verified_at"
+          ],
+          "properties": {
+            "source_refs": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/id"
+              }
+            },
+            "last_verified_at": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "setup_consumer_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "binding_ref",
+        "original_invocation_ref",
+        "manifest",
+        "provider_entry_id",
+        "provider_route_id",
+        "setup_method_id",
+        "credential_owner",
+        "execution_host_id",
+        "execution_environment_id",
+        "topology_generation",
+        "account_ref",
+        "profile_ref",
+        "connection_ref",
+        "readiness_proof_ref",
+        "owner_currentness_ref",
+        "return_context_ref",
+        "return_destination_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.provider_setup.consumer_binding.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "binding_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "original_invocation_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "manifest": {
+          "$ref": "#/$defs/reference"
+        },
+        "provider_entry_id": {
+          "$ref": "#/$defs/id"
+        },
+        "provider_route_id": {
+          "$ref": "#/$defs/id"
+        },
+        "setup_method_id": {
+          "$ref": "#/$defs/id"
+        },
+        "credential_owner": {
+          "enum": [
+            "cli",
+            "pm",
+            "external_service"
+          ]
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "account_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "profile_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "connection_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readiness_proof_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_currentness_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "return_context_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "return_destination_ref": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "procedure_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "procedure_id",
+        "role",
+        "provider_entry_id",
+        "setup_method_id",
+        "credential_owner",
+        "registry_revision"
+      ],
+      "properties": {
+        "procedure_id": {
+          "$ref": "#/$defs/id"
+        },
+        "role": {
+          "enum": [
+            "validate",
+            "refresh_models",
+            "refresh_usage"
+          ]
+        },
+        "provider_entry_id": {
+          "$ref": "#/$defs/id"
+        },
+        "setup_method_id": {
+          "$ref": "#/$defs/id"
+        },
+        "credential_owner": {
+          "enum": [
+            "cli",
+            "pm",
+            "external_service"
+          ]
+        },
+        "registry_revision": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "manifest_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "runtime_evidence",
+        "manifest",
+        "binding",
+        "procedures"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.provider_setup.manifest_fixture.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "record_kind": {
+          "const": "provider_setup_manifest_fixture"
+        },
+        "runtime_evidence": {
+          "const": false
+        },
+        "manifest": {
+          "$ref": "#/$defs/provider_setup_manifest"
+        },
+        "binding": {
+          "$ref": "#/$defs/setup_consumer_binding"
+        },
+        "procedures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/procedure_resolution"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

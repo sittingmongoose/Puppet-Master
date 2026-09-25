@@ -1,0 +1,179 @@
+{
+  "schema_id": "pm.provider_setup_manifest.contract_fixtures.v1",
+  "valid": [
+    {
+      "name": "fabricated_manifest_binding",
+      "definition": "manifest_fixture",
+      "value": {
+        "schema_id": "pm.provider_setup.manifest_fixture.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "provider_setup_manifest_fixture",
+        "runtime_evidence": false,
+        "manifest": {
+          "schema_id": "pm.provider_setup.manifest.v1",
+          "schema_version": "1.0.0",
+          "manifest_ref": "fixture:manifest",
+          "revision": "opaque:revision-A",
+          "provider_id": "fixture:provider-entry",
+          "setup_method_id": "fixture:setup-method",
+          "label": "Fabricated provider setup; not supported product metadata",
+          "credential_owner": "pm",
+          "account_creation_url": "https://accounts.example.invalid/signup",
+          "authorization_destination": {
+            "url": "https://accounts.example.invalid/authorize",
+            "allowed_hosts": [
+              "accounts.example.invalid"
+            ]
+          },
+          "instructions": [
+            "Metadata-only fabricated fixture; never an executable instruction."
+          ],
+          "requirements": {
+            "scopes": [
+              "fixture:scope"
+            ],
+            "organization": null,
+            "region": null
+          },
+          "secure_input": {
+            "type_id": "fixture:secure-input-type",
+            "owner_descriptor_ref": "fixture:secure-input-description"
+          },
+          "callback": {
+            "behavior_id": "fixture:callback-behavior-type",
+            "owner_behavior_ref": "fixture:callback-behavior"
+          },
+          "validation_procedure_id": "fixture:validate",
+          "model_refresh_procedure_id": "fixture:models",
+          "usage_refresh_procedure_id": null,
+          "return_destination_ref": "fixture:return-destination",
+          "known_limitations": [
+            "No native procedure or provider integration exists."
+          ],
+          "provenance": {
+            "source_refs": [
+              "fixture:source"
+            ],
+            "last_verified_at": "2026-09-25T00:00:00Z"
+          }
+        },
+        "binding": {
+          "schema_id": "pm.provider_setup.consumer_binding.v1",
+          "schema_version": "1.0.0",
+          "binding_ref": "fixture:binding",
+          "original_invocation_ref": "fixture:invocation",
+          "manifest": {
+            "record_ref": "fixture:manifest",
+            "revision": "opaque:revision-A",
+            "sha256": "724271c7ee886c70e552d3a82d77303325574f9ac097148fc8438baf8cbf6ca4"
+          },
+          "provider_entry_id": "fixture:provider-entry",
+          "provider_route_id": "fixture:route",
+          "setup_method_id": "fixture:setup-method",
+          "credential_owner": "pm",
+          "execution_host_id": "fixture:host",
+          "execution_environment_id": "fixture:environment",
+          "topology_generation": 7,
+          "account_ref": null,
+          "profile_ref": null,
+          "connection_ref": null,
+          "readiness_proof_ref": null,
+          "owner_currentness_ref": "fixture:currentness",
+          "return_context_ref": "fixture:return-context",
+          "return_destination_ref": "fixture:return-destination"
+        },
+        "procedures": [
+          {
+            "procedure_id": "fixture:validate",
+            "role": "validate",
+            "provider_entry_id": "fixture:provider-entry",
+            "setup_method_id": "fixture:setup-method",
+            "credential_owner": "pm",
+            "registry_revision": "fixture:registry-revision"
+          },
+          {
+            "procedure_id": "fixture:models",
+            "role": "refresh_models",
+            "provider_entry_id": "fixture:provider-entry",
+            "setup_method_id": "fixture:setup-method",
+            "credential_owner": "pm",
+            "registry_revision": "fixture:registry-revision"
+          }
+        ]
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "executable_payload_forbidden",
+      "definition": "manifest_fixture",
+      "base_valid": "fabricated_manifest_binding",
+      "patch": {
+        "manifest.command": "curl | sh"
+      }
+    },
+    {
+      "name": "untrusted_host",
+      "definition": "manifest_fixture",
+      "base_valid": "fabricated_manifest_binding",
+      "patch": {
+        "manifest.authorization_destination.url": "https://foreign.example.invalid/auth"
+      },
+      "semantic_rule": "manifest_destination_not_allowlisted"
+    },
+    {
+      "name": "foreign_provider",
+      "definition": "manifest_fixture",
+      "base_valid": "fabricated_manifest_binding",
+      "patch": {
+        "binding.provider_entry_id": "fixture:other"
+      },
+      "semantic_rule": "manifest_binding_provider"
+    },
+    {
+      "name": "wrong_procedure_role",
+      "definition": "manifest_fixture",
+      "base_valid": "fabricated_manifest_binding",
+      "patch": {
+        "procedures.0.role": "refresh_usage"
+      },
+      "semantic_rule": "procedure_role"
+    },
+    {
+      "name": "stale_manifest_revision",
+      "definition": "manifest_fixture",
+      "base_valid": "fabricated_manifest_binding",
+      "patch": {
+        "binding.manifest.revision": "opaque:other"
+      },
+      "semantic_rule": "manifest_binding_revision"
+    },
+    {
+      "name": "wrong_return_destination",
+      "definition": "manifest_fixture",
+      "base_valid": "fabricated_manifest_binding",
+      "patch": {
+        "binding.return_destination_ref": "fixture:other"
+      },
+      "semantic_rule": "manifest_binding_return"
+    },
+    {
+      "name": "unsupported_scheme",
+      "definition": "manifest_fixture",
+      "base_valid": "fabricated_manifest_binding",
+      "patch": {
+        "manifest.account_creation_url": "file:///etc/passwd"
+      },
+      "semantic_rule": "manifest_destination_scheme"
+    },
+    {
+      "name": "credential_in_url",
+      "definition": "manifest_fixture",
+      "base_valid": "fabricated_manifest_binding",
+      "patch": {
+        "manifest.account_creation_url": "https://user:secret@accounts.example.invalid/"
+      },
+      "semantic_rule": "manifest_destination_credentials"
+    }
+  ]
+}

@@ -3341,7 +3341,7 @@
         "future ProviderRequestEnvelope and CLI bridge context payloads",
         "future bridged-provider adapter contracts"
       ],
-      "line_count": 2065,
+      "line_count": 2082,
       "path": "Plans/CLI_Bridged_Providers.md",
       "plan_unit_count": 31,
       "plan_unit_ids": [
@@ -3414,7 +3414,7 @@
         "stream_resilience_drift",
         "worktree_context_drift"
       ],
-      "sha256": "61ff77b13e19670cbcdced26ec1910102ac694ba9fbaace8f3dd8f3b684bb83f",
+      "sha256": "8d2ce56f55e97bcf9ff5f024167d6dd88634488ac8580641c667c86b4c742fe8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 31
@@ -3429,6 +3429,8 @@
       "validation_surfaces": [
         "Bridge restores cooked mode/echo on crash or timeout.",
         "Orphan process cleanup receipts written.",
+        "Plans/provider_setup_manifest_contract_fixtures.json",
+        "Plans/provider_setup_manifest_contracts.schema.json",
         "Plans/working_notebook_contract_fixtures.json",
         "Version mismatch blocks before raw protocol noise hits terminal.",
         "bounded markdown/YAML structure check for CBP-028",
@@ -3447,7 +3449,8 @@
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
-        "python3 scripts/pm-shard-plans.py --check"
+        "python3 scripts/pm-shard-plans.py --check",
+        "tests/test_pm_provider_setup_manifest.py"
       ]
     },
     {
@@ -20042,7 +20045,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T05:44:16Z",
+  "generated_at_utc": "2026-09-25T05:51:49Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

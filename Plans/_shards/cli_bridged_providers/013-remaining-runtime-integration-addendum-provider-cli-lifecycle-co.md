@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L1641-L1766
+Source lines: L1641-L1783
 
-Source SHA256: `61ff77b13e19670cbcdced26ec1910102ac694ba9fbaace8f3dd8f3b684bb83f`
+Source SHA256: `8d2ce56f55e97bcf9ff5f024167d6dd88634488ac8580641c667c86b4c742fe8`
 
 ---
 
@@ -45,6 +45,18 @@ usage_telemetry_state
 `ProviderReadinessProof` carries `provider_id`, `provider_route_id`, `installation_id`, `installation_generation`, `execution_host_id`, `execution_environment_id`, `topology_generation`, `profile_ref?`, `account_id?`, `connection_id?`, product/entitlement and catalog refs, adapter/capability probe refs, generation proof/refusal reason, Usage availability, required-check set, observed facts, `readiness_state`, `readiness_confidence`, `failure_class?`, `failure_evidence_refs[]`, and `observed_at`. A bridge attempt freezes the effective installation generation and profile/account/connection identity; activation of a later generation never rewrites in-flight or historical truth.
 
 Claude CLI and Antigravity CLI OAuth/native login remain CLI-owned. PM may select an isolated supported profile root, launch the CLI-owned login, handle a protected human-only browser/device-code step, and verify identity/readiness afterward, but it must not label or copy that flow as PM-direct OAuth. PM-direct OAuth exists only for explicitly supported direct-provider clients. Provider setup manifests own exact official URLs/domains and trusted probe procedure IDs; manifests and clients cannot inject arbitrary shell commands.
+
+`Plans/provider_setup_manifest_contracts.schema.json` defines the PM-owned declarative setup-method value consumed by the existing provider/auth owners. Its sixteen metadata dimensions are provider identity, setup-method identity, human label, credential owner (`cli`, `pm`, or `external_service`), account-creation destination, authorization/key-creation destination and exact domain allowlist, instructions, required scopes/organization/region, secure-input description, callback/device-code behavior, validation procedure, model-refresh procedure, Usage-refresh procedure, exact return destination, known limitations, and source/last-verification provenance. A method may explicitly mark an inapplicable destination or optional procedure null; absence never guesses a provider URL, callback, support or default. Provider identity resolves to the existing concrete provider entry, not just its family label.
+
+The manifest contains no executable command, shell arguments, script, secret input, credential value or usable callback/dispatch token. Instructions are explanatory text, never execution input. Procedure IDs resolve only through the actual PM-owned trusted procedure registry for this exact entry, setup method, credential owner and procedure role; arbitrary IDs or caller-supplied registry contents do not grant execution. Official account/auth destinations are separately validated by their owner against the manifest's exact allowlisted hosts and verified source. Matching host strings alone are not official-source proof. Redirects, dynamically issued authorization URLs, callbacks and protected human input remain governed by the existing authentication owner and its current state/PKCE/expiry/protected-channel rules, not supplied by this manifest.
+
+The internal consumer binding retains the original invocation, exact manifest identity/revision/hash, concrete provider entry/route, selected Host/Environment/topology, selected account/profile/connection references where applicable, current owner revision and exact return context. Null account/profile is allowed before acquisition; a nonnull reference does not establish authentication or readiness. Current owner resolution must verify supported route/method, credential ownership, real account/product compatibility and genuine independent readiness evidence when referenced; no new account/product/credential-proof family is created. Initial provider CLI acquisition still needs explicit consent; manifest selection, UI navigation and provider demand are not consent or successful setup.
+
+After dependent resolvers return, recheck original/current binding and disclosure under the actual owner fence before use. A changed manifest, registry, route, account, topology, operation or return context rejects stale use instead of substituting the current focused selection. Historical metadata never replays login, acquisition, probes or return navigation. A successful static validation is not a dispatch permit, live provider support, authentication, ready route or successful return. Native procedure execution, official-source verification, credentials, protected channels and effects remain NOT_RUN. This value adds no public command, handler, storage family/key, independent writer or readiness authority.
+
+`scd.provider_setup.manifest_transport.v1` classifies the decoded manifest and internal consumer binding as nonpersisted validation/transport views. Authentic PM-owned manifest publication and trusted-registry custody remain with their existing owners; the decoded view creates no new catalog row, stored credential or reusable authority. The fixture wrapper is test-only and is not a runtime record.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md#CBP-028, ContractName:Plans/Multi-Account.md#MA-012, ContractName:Plans/Multi-Account.md#MA-070, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/provider_setup_manifest_contracts.schema.json
 
 Raw secrets never enter bridge envelopes, argv, logs, receipts, Project Sync, prompts, seglog, or redb. PM-owned secret material is referenced only through an OS credential-store handle. A CLI-owned profile is represented by a non-secret, host-local `profile_ref`; it is not a PM secret-store reference and its OAuth material is not copied. SQLite is forbidden.
 
@@ -92,8 +104,13 @@ acceptance_criteria:
   - Source-required external runtime mappings retain Claude subscription to claude, Antigravity subscription to agy, Grok Build subscription to grok, Muse Code subscription to muse, and conditional optional external OpenCode runtime to opencode; acquisition is explicit and exact-Host, never inferred from catalog presence.
   - Cursor SDK/API-key, Anthropic API/cloud, Gemini API/Vertex, xAI API, Qwen/Alibaba Coding Plan and Token Plan, Z.AI Coding Plan, Kimi Code, OpenCode Go, OpenCode Zen, and Meta Model API routes expose no provider-CLI Install merely for an SDK/bridge/shipped dependency. Token Plan is not silently collapsed into Coding Plan.
   - A named required route with missing verified acquisition/auth/probe evidence remains unavailable or setup-required, not ready; product retention does not invent provider IDs, endpoints, supported methods, entitlement or live integration facts.
+  - A setup manifest retains all sixteen source metadata dimensions, names only trusted owner-resolved procedure IDs, and cannot inject executable commands or raw secrets.
+  - Exact manifest/entry/method/credential/route/account/Host/currentness/return bindings are resolved by existing owners; unresolved, unsupported or stale values never become setup authority or readiness.
 validation_surfaces:
   - bounded markdown/YAML structure check for CBP-028
+  - Plans/provider_setup_manifest_contracts.schema.json
+  - Plans/provider_setup_manifest_contract_fixtures.json
+  - tests/test_pm_provider_setup_manifest.py
   - future provider_setup_required and stale-continuation fixtures
   - future installation-auth-readiness separation fixtures
   - future post-update dependent-route revalidation and failure-loop fixtures
