@@ -1,0 +1,3677 @@
+{
+  "schema_id": "pm.coordination_event_contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "claim_boundary": "Authored synthetic static cases for the seven coordination agent families and the prepared, not admitted, coordination.debug_mirror_exported payload. They are not runtime captures, prove no native seglog, redb, lock, crash detector or append path, admit no family and grant no Event Authority, readiness or seal clearance. required_native_oracles are obligations that stay NOT_RUN.",
+  "authority_refs": [
+    "Plans/orchestrator-subagent-integration.md#OSI-438",
+    "Plans/Contracts_V0.md#CV-353",
+    "Plans/storage-plan.md#SP-320",
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "payload_schema": {
+    "path": "Plans/coordination_event_payloads.schema.json",
+    "schema_id": "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json"
+  },
+  "projection_schema": {
+    "path": "Plans/coordination_projection_contracts.schema.json",
+    "schema_id": "https://puppetmaster.local/schemas/coordination_projection_contracts/1.0.0/coordination_projection_contracts.schema.json"
+  },
+  "storage_context": {
+    "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+    "recovery_epoch": 3,
+    "project_id": "project_fixture_alpha",
+    "scope_partition": "project~cHJvamVjdF9maXh0dXJlX2FscGhh"
+  },
+  "evaluation": {
+    "schema": "Draft 2020-12 validation against the payload or projection definition, with the schema files and Plans/event_record_index_checkpoint.schema.json registered by $id and no remote retrieval. format is not asserted; calendar validity is the valid_utc_datetime rule.",
+    "static_rules": {
+      "valid_utc_datetime": "Every family timestamp is a real calendar date and time (CV-353 rule 5).",
+      "identity_recipe": "idempotency_key is coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}, and event_id is evt_coordination_ plus the lowercase hex SHA-256 of the RFC 8785 array of strings [storage_instance_id, recovery_epoch, project_id, event_type, agent_id, agent_revision] (SP-320).",
+      "path_hash_recipe": "path_hash is the lowercase hex SHA-256 of the UTF-8 bytes of path_ref (SP-320).",
+      "abort_ref_join": "A parent abort has aborted_by_ref run:{parent_run_id} (CV-353 rule 6)."
+    },
+    "envelope_rules": {
+      "project_only": "scope_kind is project with a project_id (Contracts coordination scope).",
+      "inline_only": "payload_ref is null.",
+      "payload_schema_id": "payload_schema_id is the family's pm.coordination_event.<family>.schema.v1.",
+      "payload_envelope_identity": "project_id, run_id and idempotency_key equal the payload's; thread_id and node_id equal the payload's or are null when it omits them; attempt_id is null (CV-353 rule 8).",
+      "redaction_profile": "redaction_profile is no_secrets.",
+      "replay_policy": "replay_policy is dedupe_by_idempotency_key.",
+      "occurred_at_join": "occurred_at_utc equals the payload's family timestamp."
+    },
+    "admission_order": [
+      "exact_retry: the same (scope_partition, event_type, idempotency_key) and producer digest returns the original event (exact_retry_original_result); a different digest is idempotency_conflict",
+      "family_admission: an event type outside admitted_event_types is quarantined_before_append",
+      "payload: schema, then the static rules",
+      "transition: registration existence (not_registered, already_registered), then the revision rule (stale_revision: agent_revision is not the agent's revision plus 1, expected_previous_revision is not agent_revision minus 1, or last_applied_event_id is not the agent's), then terminal (already_terminal), then lineage (lineage_mismatch)",
+      "change: coordination_unchanged when status and status_reason, the operation's summary, progress and refs, or the claim's kind, confidence and operation_id all equal the current rows",
+      "append: appended; the event_id follows the identity recipe"
+    ],
+    "producer_digest": "For these fixtures the producer semantic digest is the SHA-256 of the canonical JSON {event_type, payload}; an exact retry repeats the payload byte for byte.",
+    "path_normalization": "path_vectors apply SP-320's recipe lexically: no file system and no symbolic links. A path that leaves the worktree produces no claim."
+  },
+  "payloads": [
+    {
+      "case_id": "a7_registered_full",
+      "event_type": "coordination.agent_registered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "thread_id": "thr_fixture_1",
+        "agent_type": "rust-engineer",
+        "parent_run_id": "run_fixture_parent",
+        "child_run_id": "run_fixture_child_7",
+        "node_id": "node_1.1.1",
+        "lane_id": "lane_a",
+        "worktree_id": "wt_fixture_7",
+        "platform": "codex",
+        "agent_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:1",
+        "model_id": "gpt-5-codex",
+        "started_at_utc": "2026-09-25T04:00:00Z"
+      }
+    },
+    {
+      "case_id": "a7_registered_retry_changed",
+      "event_type": "coordination.agent_registered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "thread_id": "thr_fixture_1",
+        "agent_type": "rust-engineer",
+        "parent_run_id": "run_fixture_parent",
+        "child_run_id": "run_fixture_child_7",
+        "node_id": "node_1.1.1",
+        "lane_id": "lane_a",
+        "worktree_id": "wt_fixture_7",
+        "platform": "codex",
+        "agent_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:1",
+        "model_id": "gpt-5-codex",
+        "started_at_utc": "2026-09-25T04:00:30Z"
+      }
+    },
+    {
+      "case_id": "a7_operation_initial_r2",
+      "event_type": "coordination.agent_operation_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 2,
+        "expected_previous_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_7:2",
+        "operation_id": "op_fixture_1",
+        "operation_summary": "Starting node 1.1.1",
+        "observed_at_utc": "2026-09-25T04:01:00Z"
+      }
+    },
+    {
+      "case_id": "a7_status_running_r3",
+      "event_type": "coordination.agent_status_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 3,
+        "last_applied_event_id": "evt_coordination_d27e930b3a55013fec5262b125ad3319b64468765ba1405a803f99705f9aba3f",
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3",
+        "status": "running",
+        "observed_at_utc": "2026-09-25T04:02:00Z"
+      }
+    },
+    {
+      "case_id": "a7_file_editing_r4",
+      "event_type": "coordination.agent_file_ownership_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 4,
+        "expected_previous_revision": 3,
+        "last_applied_event_id": "evt_coordination_154f6d09cf926b6f8a3f64023463e97d00ef9c358246d2585e7657e0235df8d1",
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:4",
+        "path_ref": "src/api.rs",
+        "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b",
+        "claim_kind": "editing",
+        "claim_confidence": "high",
+        "operation_id": "op_fixture_1",
+        "observed_at_utc": "2026-09-25T04:03:00Z"
+      }
+    },
+    {
+      "case_id": "a7_operation_progress_r5",
+      "event_type": "coordination.agent_operation_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 5,
+        "expected_previous_revision": 4,
+        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_7:5",
+        "operation_id": "op_fixture_1",
+        "operation_summary": "editing src/auth/password.rs",
+        "progress_pct": 40,
+        "operation_refs": [
+          "command:cargo_test",
+          "artifact:build_log_7"
+        ],
+        "observed_at_utc": "2026-09-25T04:04:00Z"
+      }
+    },
+    {
+      "case_id": "a7_unregistered_complete_r6",
+      "event_type": "coordination.agent_unregistered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 6,
+        "expected_previous_revision": 5,
+        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:6",
+        "terminal_status": "complete",
+        "finished_at_utc": "2026-09-25T04:05:00Z",
+        "result_ref": "receipt:node_1.1.1"
+      }
+    },
+    {
+      "case_id": "a7_crashed_race_r6",
+      "event_type": "coordination.agent_crashed",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 6,
+        "expected_previous_revision": 5,
+        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_7:6",
+        "crash_reason": "process_exit",
+        "detected_at_utc": "2026-09-25T04:05:01Z"
+      }
+    },
+    {
+      "case_id": "a7_aborted_after_terminal_r7",
+      "event_type": "coordination.agent_aborted",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 7,
+        "expected_previous_revision": 6,
+        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_7:7",
+        "abort_reason": "runtime",
+        "aborted_by_ref": "component:runtime_supervisor",
+        "aborted_at_utc": "2026-09-25T04:06:00Z"
+      }
+    },
+    {
+      "case_id": "a7_status_running_r2",
+      "event_type": "coordination.agent_status_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 2,
+        "expected_previous_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:2",
+        "status": "running",
+        "observed_at_utc": "2026-09-25T04:01:00Z"
+      }
+    },
+    {
+      "case_id": "a7_status_running_r2_other_run",
+      "event_type": "coordination.agent_status_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_other",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 2,
+        "expected_previous_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:2",
+        "status": "running",
+        "observed_at_utc": "2026-09-25T04:01:00Z"
+      }
+    },
+    {
+      "case_id": "a7_status_running_r2_other_node",
+      "event_type": "coordination.agent_status_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 2,
+        "expected_previous_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:2",
+        "status": "running",
+        "observed_at_utc": "2026-09-25T04:01:00Z",
+        "node_id": "node_other"
+      }
+    },
+    {
+      "case_id": "a7_file_editing_r2",
+      "event_type": "coordination.agent_file_ownership_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 2,
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:2",
+        "path_ref": "src/api.rs",
+        "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b",
+        "claim_kind": "editing",
+        "claim_confidence": "high",
+        "observed_at_utc": "2026-09-25T04:01:00Z"
+      }
+    },
+    {
+      "case_id": "a7_file_reviewing_r3",
+      "event_type": "coordination.agent_file_ownership_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 3,
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:3",
+        "path_ref": "src/api.rs",
+        "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b",
+        "claim_kind": "reviewing",
+        "claim_confidence": "medium",
+        "observed_at_utc": "2026-09-25T04:02:00Z"
+      }
+    },
+    {
+      "case_id": "a7_file_reviewing_again_r4",
+      "event_type": "coordination.agent_file_ownership_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 4,
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:4",
+        "path_ref": "src/api.rs",
+        "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b",
+        "claim_kind": "reviewing",
+        "claim_confidence": "medium",
+        "observed_at_utc": "2026-09-25T04:03:00Z"
+      }
+    },
+    {
+      "case_id": "a7_unregistered_failed_r4",
+      "event_type": "coordination.agent_unregistered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 4,
+        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:4",
+        "terminal_status": "failed",
+        "finished_at_utc": "2026-09-25T04:04:00Z"
+      }
+    },
+    {
+      "case_id": "a7_operation_progress_r3",
+      "event_type": "coordination.agent_operation_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 3,
+        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_7:3",
+        "operation_id": "op_fixture_1",
+        "operation_summary": "running cargo test",
+        "progress_pct": 80,
+        "observed_at_utc": "2026-09-25T04:02:00Z"
+      }
+    },
+    {
+      "case_id": "a8_registered_minimal",
+      "event_type": "coordination.agent_registered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_8",
+        "agent_id": "agent_fixture_8",
+        "agent_type": "test-writer",
+        "platform": "claude",
+        "agent_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_8:1",
+        "started_at_utc": "2026-09-25T04:10:00Z"
+      }
+    },
+    {
+      "case_id": "a8_status_running_r2",
+      "event_type": "coordination.agent_status_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_8",
+        "agent_id": "agent_fixture_8",
+        "platform": "claude",
+        "agent_revision": 2,
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:2",
+        "status": "running",
+        "observed_at_utc": "2026-09-25T04:11:00Z"
+      }
+    },
+    {
+      "case_id": "a8_crashed_heartbeat_r3",
+      "event_type": "coordination.agent_crashed",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_8",
+        "agent_id": "agent_fixture_8",
+        "platform": "claude",
+        "agent_revision": 3,
+        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_8:3",
+        "crash_reason": "heartbeat_expired",
+        "detected_at_utc": "2026-09-25T04:17:00Z",
+        "heartbeat_age_ms": 360000,
+        "process_ref": "process:4242"
+      }
+    },
+    {
+      "case_id": "a9_registered",
+      "event_type": "coordination.agent_registered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_9",
+        "agent_id": "agent_fixture_9",
+        "agent_type": "reviewer",
+        "parent_run_id": "run_fixture_parent",
+        "platform": "cursor",
+        "agent_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_9:1",
+        "started_at_utc": "2026-09-25T04:20:00Z"
+      }
+    },
+    {
+      "case_id": "a9_aborted_parent_r2",
+      "event_type": "coordination.agent_aborted",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_9",
+        "agent_id": "agent_fixture_9",
+        "agent_type": "reviewer",
+        "parent_run_id": "run_fixture_parent",
+        "platform": "cursor",
+        "agent_revision": 2,
+        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_9:2",
+        "abort_reason": "parent",
+        "aborted_by_ref": "run:run_fixture_parent",
+        "aborted_at_utc": "2026-09-25T04:21:00Z"
+      }
+    },
+    {
+      "case_id": "a10_registered",
+      "event_type": "coordination.agent_registered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_10",
+        "agent_id": "agent_fixture_10",
+        "agent_type": "researcher",
+        "platform": "gemini",
+        "agent_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_10:1",
+        "started_at_utc": "2026-09-25T04:30:00Z"
+      }
+    },
+    {
+      "case_id": "a10_status_blocked_r2",
+      "event_type": "coordination.agent_status_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_10",
+        "agent_id": "agent_fixture_10",
+        "platform": "gemini",
+        "agent_revision": 2,
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_10:2",
+        "status": "blocked",
+        "status_reason": "waiting for review",
+        "observed_at_utc": "2026-09-25T04:31:00Z"
+      }
+    },
+    {
+      "case_id": "a10_status_blocked_again_r3",
+      "event_type": "coordination.agent_status_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_10",
+        "agent_id": "agent_fixture_10",
+        "platform": "gemini",
+        "agent_revision": 3,
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_10:3",
+        "status": "blocked",
+        "status_reason": "waiting for review",
+        "observed_at_utc": "2026-09-25T04:32:00Z"
+      }
+    },
+    {
+      "case_id": "a10_status_running_r3",
+      "event_type": "coordination.agent_status_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_10",
+        "agent_id": "agent_fixture_10",
+        "platform": "gemini",
+        "agent_revision": 3,
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_10:3",
+        "status": "running",
+        "observed_at_utc": "2026-09-25T04:33:00Z"
+      }
+    },
+    {
+      "case_id": "a10_aborted_user_r4",
+      "event_type": "coordination.agent_aborted",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_10",
+        "agent_id": "agent_fixture_10",
+        "platform": "gemini",
+        "agent_revision": 4,
+        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_10:4",
+        "abort_reason": "user",
+        "aborted_by_ref": "actor:user_fixture",
+        "aborted_at_utc": "2026-09-25T04:34:00Z"
+      }
+    },
+    {
+      "case_id": "a11_registered",
+      "event_type": "coordination.agent_registered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_11",
+        "agent_id": "agent_fixture_11",
+        "agent_type": "doc-writer",
+        "platform": "copilot",
+        "agent_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_11:1",
+        "started_at_utc": "2026-09-25T04:40:00Z"
+      }
+    },
+    {
+      "case_id": "a11_aborted_runtime_r2",
+      "event_type": "coordination.agent_aborted",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_11",
+        "agent_id": "agent_fixture_11",
+        "platform": "copilot",
+        "agent_revision": 2,
+        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_11:2",
+        "abort_reason": "runtime",
+        "aborted_by_ref": "component:runtime_supervisor",
+        "aborted_at_utc": "2026-09-25T04:41:00Z"
+      }
+    },
+    {
+      "case_id": "a11_status_running_r3",
+      "event_type": "coordination.agent_status_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_11",
+        "agent_id": "agent_fixture_11",
+        "platform": "copilot",
+        "agent_revision": 3,
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_11:3",
+        "status": "running",
+        "observed_at_utc": "2026-09-25T04:42:00Z"
+      }
+    },
+    {
+      "case_id": "a12_registered",
+      "event_type": "coordination.agent_registered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_12",
+        "agent_id": "agent_fixture_12",
+        "agent_type": "refactorer",
+        "platform": "codex",
+        "agent_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_12:1",
+        "started_at_utc": "2026-09-25T04:50:00Z"
+      }
+    },
+    {
+      "case_id": "a12_crashed_worktree_lost_r2",
+      "event_type": "coordination.agent_crashed",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_12",
+        "agent_id": "agent_fixture_12",
+        "platform": "codex",
+        "agent_revision": 2,
+        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_12:2",
+        "crash_reason": "worktree_lost",
+        "detected_at_utc": "2026-09-25T04:51:00Z",
+        "worktree_ref": "worktree:wt_fixture_12"
+      }
+    },
+    {
+      "case_id": "a12_operation_r3",
+      "event_type": "coordination.agent_operation_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_12",
+        "agent_id": "agent_fixture_12",
+        "platform": "codex",
+        "agent_revision": 3,
+        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_12:3",
+        "operation_id": "op_fixture_12",
+        "operation_summary": "moving helpers into util.rs",
+        "observed_at_utc": "2026-09-25T04:52:00Z"
+      }
+    },
+    {
+      "case_id": "a12_aborted_runtime_r2",
+      "event_type": "coordination.agent_aborted",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_12",
+        "agent_id": "agent_fixture_12",
+        "platform": "codex",
+        "agent_revision": 2,
+        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_12:2",
+        "abort_reason": "runtime",
+        "aborted_by_ref": "component:runtime_supervisor",
+        "aborted_at_utc": "2026-09-25T04:51:01Z"
+      }
+    },
+    {
+      "case_id": "a8_file_claim_r3",
+      "event_type": "coordination.agent_file_ownership_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_8",
+        "agent_id": "agent_fixture_8",
+        "platform": "claude",
+        "agent_revision": 3,
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_8:3",
+        "path_ref": "tests/api_test.rs",
+        "path_hash": "ca585527d3a9fd0abee05a7e2b15a9597f0e7072f2001889ab3be781b90758b0",
+        "claim_kind": "generated_output",
+        "claim_confidence": "medium",
+        "observed_at_utc": "2026-09-25T04:12:00Z"
+      }
+    },
+    {
+      "case_id": "a8_file_claim_r4",
+      "event_type": "coordination.agent_file_ownership_updated",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_8",
+        "agent_id": "agent_fixture_8",
+        "platform": "claude",
+        "agent_revision": 4,
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_8:4",
+        "path_ref": "tests/api_test.rs",
+        "path_hash": "ca585527d3a9fd0abee05a7e2b15a9597f0e7072f2001889ab3be781b90758b0",
+        "claim_kind": "generated_output",
+        "claim_confidence": "medium",
+        "observed_at_utc": "2026-09-25T04:18:00Z"
+      }
+    },
+    {
+      "case_id": "a9_unregistered_r2",
+      "event_type": "coordination.agent_unregistered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_9",
+        "agent_id": "agent_fixture_9",
+        "platform": "cursor",
+        "agent_revision": 2,
+        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_9:2",
+        "terminal_status": "cancelled",
+        "finished_at_utc": "2026-09-25T04:21:01Z"
+      }
+    },
+    {
+      "case_id": "a9_crashed_r3",
+      "event_type": "coordination.agent_crashed",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_9",
+        "agent_id": "agent_fixture_9",
+        "platform": "cursor",
+        "agent_revision": 3,
+        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_9:3",
+        "crash_reason": "process_lost",
+        "detected_at_utc": "2026-09-25T04:22:00Z"
+      }
+    },
+    {
+      "case_id": "a9_unregistered_r3",
+      "event_type": "coordination.agent_unregistered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_9",
+        "agent_id": "agent_fixture_9",
+        "platform": "cursor",
+        "agent_revision": 3,
+        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_9:3",
+        "terminal_status": "complete",
+        "finished_at_utc": "2026-09-25T04:22:01Z"
+      }
+    },
+    {
+      "case_id": "a7_unregistered_failed_r3",
+      "event_type": "coordination.agent_unregistered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 3,
+        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:3",
+        "terminal_status": "failed",
+        "finished_at_utc": "2026-09-25T04:02:00Z"
+      }
+    },
+    {
+      "case_id": "a7_crashed_process_lost_r3",
+      "event_type": "coordination.agent_crashed",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "platform": "codex",
+        "agent_revision": 3,
+        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_7:3",
+        "crash_reason": "process_lost",
+        "detected_at_utc": "2026-09-25T04:02:01Z"
+      }
+    },
+    {
+      "case_id": "debug_mirror_exported_written",
+      "event_type": "coordination.debug_mirror_exported",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "mirror_path": ".puppet-master/state/active-agents.json",
+        "mirror_kind": "active_agents",
+        "source_checkpoint": "projector.checkpoint.coordination:project_fixture_alpha",
+        "source_sequence_id": 41,
+        "export_status": "written",
+        "exported_at_utc": "2026-09-25T04:59:00Z"
+      }
+    }
+  ],
+  "invalid_payloads": [
+    {
+      "case_id": "registered_extra_sketch_field",
+      "base_case_id": "a7_registered_full",
+      "patch": {
+        "current_operation": "Starting node 1.1.1"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_registered"
+    },
+    {
+      "case_id": "registered_legacy_worktree_path",
+      "base_case_id": "a7_registered_full",
+      "patch": {
+        "worktree_path": ".puppet-master/worktrees/agent_fixture_7"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_registered"
+    },
+    {
+      "case_id": "registered_missing_project_lineage",
+      "base_case_id": "a8_registered_minimal",
+      "patch": {},
+      "remove": [
+        "project_id"
+      ],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_registered"
+    },
+    {
+      "case_id": "registered_missing_agent_type",
+      "base_case_id": "a8_registered_minimal",
+      "patch": {},
+      "remove": [
+        "agent_type"
+      ],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_registered"
+    },
+    {
+      "case_id": "registered_wrong_platform_enum",
+      "base_case_id": "a8_registered_minimal",
+      "patch": {
+        "platform": "Claude"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_registered"
+    },
+    {
+      "case_id": "registered_revision_not_one",
+      "base_case_id": "a8_registered_minimal",
+      "patch": {
+        "agent_revision": 2
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_registered"
+    },
+    {
+      "case_id": "registered_with_expected_previous_revision",
+      "base_case_id": "a8_registered_minimal",
+      "patch": {
+        "expected_previous_revision": 1
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_registered"
+    },
+    {
+      "case_id": "registered_null_optional_lineage",
+      "base_case_id": "a8_registered_minimal",
+      "patch": {
+        "thread_id": null
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_registered"
+    },
+    {
+      "case_id": "registered_offset_timestamp",
+      "base_case_id": "a8_registered_minimal",
+      "patch": {
+        "started_at_utc": "2026-09-25T04:10:00+00:00"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_registered"
+    },
+    {
+      "case_id": "registered_key_padded_revision",
+      "base_case_id": "a8_registered_minimal",
+      "patch": {
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_8:01"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_registered"
+    },
+    {
+      "case_id": "registered_key_other_agent",
+      "base_case_id": "a8_registered_minimal",
+      "patch": {
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_99:1"
+      },
+      "remove": [],
+      "expected_rejection": "identity_recipe",
+      "event_type": "coordination.agent_registered"
+    },
+    {
+      "case_id": "registered_invalid_calendar_date",
+      "base_case_id": "a8_registered_minimal",
+      "patch": {
+        "started_at_utc": "2026-02-30T04:10:00Z"
+      },
+      "remove": [],
+      "expected_rejection": "valid_utc_datetime",
+      "event_type": "coordination.agent_registered"
+    },
+    {
+      "case_id": "status_terminal_value",
+      "base_case_id": "a8_status_running_r2",
+      "patch": {
+        "status": "complete"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_status_updated"
+    },
+    {
+      "case_id": "status_wrong_enum_case",
+      "base_case_id": "a8_status_running_r2",
+      "patch": {
+        "status": "Running"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_status_updated"
+    },
+    {
+      "case_id": "status_heartbeat_field",
+      "base_case_id": "a8_status_running_r2",
+      "patch": {
+        "last_update": "2026-09-25T04:11:30Z"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_status_updated"
+    },
+    {
+      "case_id": "status_missing_run_lineage",
+      "base_case_id": "a8_status_running_r2",
+      "patch": {},
+      "remove": [
+        "run_id"
+      ],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_status_updated"
+    },
+    {
+      "case_id": "status_revision_one",
+      "base_case_id": "a8_status_running_r2",
+      "patch": {
+        "agent_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:1"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_status_updated"
+    },
+    {
+      "case_id": "status_reason_secret",
+      "base_case_id": "a10_status_blocked_r2",
+      "patch": {
+        "status_reason": "retry with password=hunter2-fixture"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_status_updated"
+    },
+    {
+      "case_id": "status_reason_multiline",
+      "base_case_id": "a10_status_blocked_r2",
+      "patch": {
+        "status_reason": "waiting\nfor review"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_status_updated"
+    },
+    {
+      "case_id": "status_reason_empty",
+      "base_case_id": "a10_status_blocked_r2",
+      "patch": {
+        "status_reason": ""
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_status_updated"
+    },
+    {
+      "case_id": "status_key_wrong_revision",
+      "base_case_id": "a8_status_running_r2",
+      "patch": {
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:3"
+      },
+      "remove": [],
+      "expected_rejection": "identity_recipe",
+      "event_type": "coordination.agent_status_updated"
+    },
+    {
+      "case_id": "operation_summary_secret_key",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {
+        "operation_summary": "exporting sk-fixture0123456789abcdef"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "operation_summary_bearer_token",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {
+        "operation_summary": "calling api with Bearer abcdefghijklmnop"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "operation_summary_too_long",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {
+        "operation_summary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "operation_progress_over_100",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {
+        "progress_pct": 101
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "operation_progress_fraction",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {
+        "progress_pct": 40.5
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "operation_refs_empty",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {
+        "operation_refs": []
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "operation_refs_duplicate",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {
+        "operation_refs": [
+          "command:cargo_test",
+          "command:cargo_test"
+        ]
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "operation_refs_too_many",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {
+        "operation_refs": [
+          "artifact:log_0",
+          "artifact:log_1",
+          "artifact:log_2",
+          "artifact:log_3",
+          "artifact:log_4",
+          "artifact:log_5",
+          "artifact:log_6",
+          "artifact:log_7",
+          "artifact:log_8",
+          "artifact:log_9",
+          "artifact:log_10",
+          "artifact:log_11",
+          "artifact:log_12",
+          "artifact:log_13",
+          "artifact:log_14",
+          "artifact:log_15",
+          "artifact:log_16"
+        ]
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "operation_ref_absolute_path",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {
+        "operation_refs": [
+          "worktree:/home/fixture/project/src"
+        ]
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "operation_ref_without_kind",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {
+        "operation_refs": [
+          "cargo test"
+        ]
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "operation_wrong_platform_enum",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {
+        "platform": "vscode"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "operation_missing_agent_lineage",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {},
+      "remove": [
+        "agent_id"
+      ],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "operation_extra_prompt_field",
+      "base_case_id": "a7_operation_progress_r5",
+      "patch": {
+        "prompt_excerpt": "fixture prompt text"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_operation_updated"
+    },
+    {
+      "case_id": "file_low_confidence_claim",
+      "base_case_id": "a7_file_editing_r4",
+      "patch": {
+        "claim_confidence": "low"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_file_ownership_updated"
+    },
+    {
+      "case_id": "file_release_claim_kind",
+      "base_case_id": "a7_file_editing_r4",
+      "patch": {
+        "claim_kind": "released"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_file_ownership_updated"
+    },
+    {
+      "case_id": "file_absolute_path_ref",
+      "base_case_id": "a7_file_editing_r4",
+      "patch": {
+        "path_ref": "/home/fixture/project/src/api.rs",
+        "path_hash": "cbcdf335b367f8bb5bd6d74ecf0c7fac0be092711a36773182541db4894eaffe"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_file_ownership_updated"
+    },
+    {
+      "case_id": "file_dot_dot_path_ref",
+      "base_case_id": "a7_file_editing_r4",
+      "patch": {
+        "path_ref": "src/../api.rs",
+        "path_hash": "6055bd436ad083169ec2c348f257040240b6ebd6ea74c56877edc510919c0fb9"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_file_ownership_updated"
+    },
+    {
+      "case_id": "file_leading_dot_path_ref",
+      "base_case_id": "a7_file_editing_r4",
+      "patch": {
+        "path_ref": "./src/api.rs",
+        "path_hash": "a9c11373e31658d9c39abcd34f493ce5f84b773e8ded3966cb4310a859dfdcd2"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_file_ownership_updated"
+    },
+    {
+      "case_id": "file_trailing_slash_path_ref",
+      "base_case_id": "a7_file_editing_r4",
+      "patch": {
+        "path_ref": "src/",
+        "path_hash": "e88f707fcae6f35251afab324d28934cd6ffc27aad1ce25e820164d568286403"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_file_ownership_updated"
+    },
+    {
+      "case_id": "file_uppercase_path_hash",
+      "base_case_id": "a7_file_editing_r4",
+      "patch": {
+        "path_hash": "ADEA2445327E39EB215DE697B440DBBC02135357380FB612A10A9E659129A46B"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_file_ownership_updated"
+    },
+    {
+      "case_id": "file_legacy_file_path",
+      "base_case_id": "a7_file_editing_r4",
+      "patch": {
+        "file_path": "/home/fixture/project/src/api.rs"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_file_ownership_updated"
+    },
+    {
+      "case_id": "file_missing_platform_lineage",
+      "base_case_id": "a7_file_editing_r4",
+      "patch": {},
+      "remove": [
+        "platform"
+      ],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_file_ownership_updated"
+    },
+    {
+      "case_id": "file_hash_of_other_path",
+      "base_case_id": "a7_file_editing_r4",
+      "patch": {
+        "path_hash": "b1a35a68f14e696205874893c07fd24fdb88882b47c23cc0e0c80a30c7d53759"
+      },
+      "remove": [],
+      "expected_rejection": "path_hash_recipe",
+      "event_type": "coordination.agent_file_ownership_updated"
+    },
+    {
+      "case_id": "unregistered_nonterminal_status",
+      "base_case_id": "a7_unregistered_complete_r6",
+      "patch": {
+        "terminal_status": "running"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_unregistered"
+    },
+    {
+      "case_id": "unregistered_superseded_status",
+      "base_case_id": "a7_unregistered_complete_r6",
+      "patch": {
+        "terminal_status": "superseded"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_unregistered"
+    },
+    {
+      "case_id": "unregistered_result_ref_local_path",
+      "base_case_id": "a7_unregistered_complete_r6",
+      "patch": {
+        "result_ref": "file:///home/fixture/result.json"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_unregistered"
+    },
+    {
+      "case_id": "unregistered_missing_finished_at",
+      "base_case_id": "a7_unregistered_complete_r6",
+      "patch": {},
+      "remove": [
+        "finished_at_utc"
+      ],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_unregistered"
+    },
+    {
+      "case_id": "unregistered_missing_run_lineage",
+      "base_case_id": "a7_unregistered_complete_r6",
+      "patch": {},
+      "remove": [
+        "run_id"
+      ],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_unregistered"
+    },
+    {
+      "case_id": "unregistered_sibling_terminal_field",
+      "base_case_id": "a7_unregistered_complete_r6",
+      "patch": {
+        "crash_reason": "process_exit"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_unregistered"
+    },
+    {
+      "case_id": "crashed_unknown_reason",
+      "base_case_id": "a8_crashed_heartbeat_r3",
+      "patch": {
+        "crash_reason": "timeout"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_crashed"
+    },
+    {
+      "case_id": "crashed_heartbeat_without_age",
+      "base_case_id": "a8_crashed_heartbeat_r3",
+      "patch": {},
+      "remove": [
+        "heartbeat_age_ms"
+      ],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_crashed"
+    },
+    {
+      "case_id": "crashed_negative_heartbeat_age",
+      "base_case_id": "a8_crashed_heartbeat_r3",
+      "patch": {
+        "heartbeat_age_ms": -1
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_crashed"
+    },
+    {
+      "case_id": "crashed_threshold_field",
+      "base_case_id": "a8_crashed_heartbeat_r3",
+      "patch": {
+        "coordination_heartbeat_expiry_ms": 300000
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_crashed"
+    },
+    {
+      "case_id": "crashed_empty_process_ref",
+      "base_case_id": "a8_crashed_heartbeat_r3",
+      "patch": {
+        "process_ref": "process:"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_crashed"
+    },
+    {
+      "case_id": "crashed_missing_agent_lineage",
+      "base_case_id": "a8_crashed_heartbeat_r3",
+      "patch": {},
+      "remove": [
+        "agent_id"
+      ],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_crashed"
+    },
+    {
+      "case_id": "aborted_unknown_reason",
+      "base_case_id": "a9_aborted_parent_r2",
+      "patch": {
+        "abort_reason": "cancelled"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_aborted"
+    },
+    {
+      "case_id": "aborted_parent_with_actor_ref",
+      "base_case_id": "a9_aborted_parent_r2",
+      "patch": {
+        "aborted_by_ref": "actor:user_fixture"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_aborted"
+    },
+    {
+      "case_id": "aborted_parent_without_parent_run",
+      "base_case_id": "a9_aborted_parent_r2",
+      "patch": {},
+      "remove": [
+        "parent_run_id"
+      ],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_aborted"
+    },
+    {
+      "case_id": "aborted_user_with_component_ref",
+      "base_case_id": "a10_aborted_user_r4",
+      "patch": {
+        "aborted_by_ref": "component:runtime_supervisor"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_aborted"
+    },
+    {
+      "case_id": "aborted_runtime_with_run_ref",
+      "base_case_id": "a11_aborted_runtime_r2",
+      "patch": {
+        "aborted_by_ref": "run:run_fixture_parent"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_aborted"
+    },
+    {
+      "case_id": "aborted_missing_project_lineage",
+      "base_case_id": "a11_aborted_runtime_r2",
+      "patch": {},
+      "remove": [
+        "project_id"
+      ],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_aborted"
+    },
+    {
+      "case_id": "aborted_sibling_terminal_field",
+      "base_case_id": "a11_aborted_runtime_r2",
+      "patch": {
+        "heartbeat_age_ms": 1000
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_aborted"
+    },
+    {
+      "case_id": "aborted_parent_ref_other_run",
+      "base_case_id": "a9_aborted_parent_r2",
+      "patch": {
+        "aborted_by_ref": "run:run_fixture_other"
+      },
+      "remove": [],
+      "expected_rejection": "abort_ref_join",
+      "event_type": "coordination.agent_aborted"
+    },
+    {
+      "case_id": "debug_mirror_absolute_path",
+      "base_case_id": "debug_mirror_exported_written",
+      "patch": {
+        "mirror_path": "/home/fixture/project/.puppet-master/state/active-agents.json"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.debug_mirror_exported"
+    },
+    {
+      "case_id": "debug_mirror_agent_field",
+      "base_case_id": "debug_mirror_exported_written",
+      "patch": {
+        "agent_id": "agent_fixture_7"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.debug_mirror_exported"
+    },
+    {
+      "case_id": "debug_mirror_missing_sequence",
+      "base_case_id": "debug_mirror_exported_written",
+      "patch": {},
+      "remove": [
+        "source_sequence_id"
+      ],
+      "expected_rejection": "schema",
+      "event_type": "coordination.debug_mirror_exported"
+    }
+  ],
+  "valid_event": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "evt_coordination_a7bdc319a4601dc160b2c56a1617f8c83c165419f670b07f12b3b8b8ab0a16c6",
+    "event_type": "coordination.agent_status_updated",
+    "project_id": "project_fixture_alpha",
+    "thread_id": null,
+    "run_id": "run_fixture_child_7",
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "component:orchestrator",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-09-25T04:01:00Z",
+    "observed_at_utc": "2026-09-25T04:02:00.100000Z",
+    "persisted_at_utc": "2026-09-25T04:02:00.200000Z",
+    "sequence_id": 42,
+    "producer_sequence_id": null,
+    "correlation_id": "correlation:fixture:coordination",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:2",
+    "payload_schema_id": "pm.coordination_event.agent_status_updated.schema.v1",
+    "payload": {
+      "schema_version": "1.0.0",
+      "project_id": "project_fixture_alpha",
+      "run_id": "run_fixture_child_7",
+      "agent_id": "agent_fixture_7",
+      "platform": "codex",
+      "agent_revision": 2,
+      "expected_previous_revision": 1,
+      "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:2",
+      "status": "running",
+      "observed_at_utc": "2026-09-25T04:01:00Z"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null,
+      "compatibility_event_type": null
+    }
+  },
+  "invalid_events": [
+    {
+      "case_id": "event_application_scope",
+      "patch": {
+        "scope_kind": "application",
+        "project_id": null
+      },
+      "expected_rejection": "project_only"
+    },
+    {
+      "case_id": "event_external_payload_ref",
+      "patch": {
+        "payload_ref": "artifact:fixture:payload"
+      },
+      "expected_rejection": "inline_only"
+    },
+    {
+      "case_id": "event_wrong_payload_schema_id",
+      "patch": {
+        "payload_schema_id": "pm.coordination_event.agent_operation_updated.schema.v1"
+      },
+      "expected_rejection": "payload_schema_id"
+    },
+    {
+      "case_id": "event_other_project",
+      "patch": {
+        "project_id": "project_fixture_beta"
+      },
+      "expected_rejection": "payload_envelope_identity"
+    },
+    {
+      "case_id": "event_other_run",
+      "patch": {
+        "run_id": "run_fixture_other"
+      },
+      "expected_rejection": "payload_envelope_identity"
+    },
+    {
+      "case_id": "event_thread_without_payload_thread",
+      "patch": {
+        "thread_id": "thr_fixture_1"
+      },
+      "expected_rejection": "payload_envelope_identity"
+    },
+    {
+      "case_id": "event_attempt_id_present",
+      "patch": {
+        "attempt_id": "attempt_fixture_1"
+      },
+      "expected_rejection": "payload_envelope_identity"
+    },
+    {
+      "case_id": "event_other_idempotency_key",
+      "patch": {
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:9"
+      },
+      "expected_rejection": "payload_envelope_identity"
+    },
+    {
+      "case_id": "event_redacted_profile",
+      "patch": {
+        "redaction_profile": "redacted"
+      },
+      "expected_rejection": "redaction_profile"
+    },
+    {
+      "case_id": "event_append_once_policy",
+      "patch": {
+        "replay_policy": "append_once"
+      },
+      "expected_rejection": "replay_policy"
+    },
+    {
+      "case_id": "event_occurred_at_not_family_time",
+      "patch": {
+        "occurred_at_utc": "2026-09-25T04:11:59Z"
+      },
+      "expected_rejection": "occurred_at_join"
+    },
+    {
+      "case_id": "event_id_off_recipe",
+      "patch": {
+        "event_id": "evt_coordination_0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expected_rejection": "identity_recipe"
+    }
+  ],
+  "identity_vectors": [
+    {
+      "case_id": "identity_registered_rev1",
+      "event_type": "coordination.agent_registered",
+      "project_id": "project_fixture_alpha",
+      "agent_id": "agent_fixture_7",
+      "agent_revision": 1,
+      "expected_idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:1",
+      "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"3\",\"project_fixture_alpha\",\"coordination.agent_registered\",\"agent_fixture_7\",\"1\"]",
+      "expected_event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+    },
+    {
+      "case_id": "identity_status_rev3",
+      "event_type": "coordination.agent_status_updated",
+      "project_id": "project_fixture_alpha",
+      "agent_id": "agent_fixture_7",
+      "agent_revision": 3,
+      "expected_idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3",
+      "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"3\",\"project_fixture_alpha\",\"coordination.agent_status_updated\",\"agent_fixture_7\",\"3\"]",
+      "expected_event_id": "evt_coordination_154f6d09cf926b6f8a3f64023463e97d00ef9c358246d2585e7657e0235df8d1"
+    },
+    {
+      "case_id": "identity_terminal_rev12",
+      "event_type": "coordination.agent_unregistered",
+      "project_id": "project_fixture_alpha",
+      "agent_id": "agent_fixture_7",
+      "agent_revision": 12,
+      "expected_idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:12",
+      "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"3\",\"project_fixture_alpha\",\"coordination.agent_unregistered\",\"agent_fixture_7\",\"12\"]",
+      "expected_event_id": "evt_coordination_7da5a8960e113061bb8f77764d3043fc6efc41a197bfaeeb39aea0d7819d8b84"
+    },
+    {
+      "case_id": "identity_agent_id_with_colon",
+      "event_type": "coordination.agent_crashed",
+      "project_id": "project_fixture_alpha",
+      "agent_id": "agent:with:colon",
+      "agent_revision": 2,
+      "expected_idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent:with:colon:2",
+      "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"3\",\"project_fixture_alpha\",\"coordination.agent_crashed\",\"agent:with:colon\",\"2\"]",
+      "expected_event_id": "evt_coordination_3ceb3ef7ce821c012cea1423624e4ca998e58d69251c4d7b8234d887c1ea1c62"
+    },
+    {
+      "case_id": "identity_non_ascii_ids",
+      "event_type": "coordination.agent_aborted",
+      "project_id": "projet_été",
+      "agent_id": "agent_ü",
+      "agent_revision": 5,
+      "expected_idempotency_key": "coordination:coordination.agent_aborted:projet_été:agent_ü:5",
+      "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"3\",\"projet_été\",\"coordination.agent_aborted\",\"agent_ü\",\"5\"]",
+      "expected_event_id": "evt_coordination_327bced0e6706be56c3af6cc6a2ad7625938f9b9522c4e680947c64f79de6c91"
+    },
+    {
+      "case_id": "identity_new_recovery_epoch_new_event_id",
+      "event_type": "coordination.agent_registered",
+      "project_id": "project_fixture_alpha",
+      "agent_id": "agent_fixture_7",
+      "agent_revision": 1,
+      "recovery_epoch": 4,
+      "expected_idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:1",
+      "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"4\",\"project_fixture_alpha\",\"coordination.agent_registered\",\"agent_fixture_7\",\"1\"]",
+      "expected_event_id": "evt_coordination_835222aeaa0c2ad6fc55ab06d7521b3b72c1a51071bfa0cb710040f1ee015652"
+    }
+  ],
+  "path_vectors": [
+    {
+      "case_id": "path_absolute_inside_worktree",
+      "worktree_root": "/work/project_fixture_alpha/.puppet-master/worktrees/agent_fixture_7",
+      "observed_path": "/work/project_fixture_alpha/.puppet-master/worktrees/agent_fixture_7/src/api.rs",
+      "expected": {
+        "path_ref": "src/api.rs",
+        "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b"
+      }
+    },
+    {
+      "case_id": "path_relative_with_dot_segment",
+      "worktree_root": "/work/project_fixture_alpha/.puppet-master/worktrees/agent_fixture_7",
+      "observed_path": "src/./api.rs",
+      "expected": {
+        "path_ref": "src/api.rs",
+        "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b"
+      }
+    },
+    {
+      "case_id": "path_relative_with_parent_segment",
+      "worktree_root": "/work/project_fixture_alpha/.puppet-master/worktrees/agent_fixture_7",
+      "observed_path": "./src/lib/../api.rs",
+      "expected": {
+        "path_ref": "src/api.rs",
+        "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b"
+      }
+    },
+    {
+      "case_id": "path_trailing_separator",
+      "worktree_root": "/work/project_fixture_alpha/.puppet-master/worktrees/agent_fixture_7",
+      "observed_path": "src/api.rs/",
+      "expected": {
+        "path_ref": "src/api.rs",
+        "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b"
+      }
+    },
+    {
+      "case_id": "path_worktree_prefix_removed",
+      "worktree_root": "/work/project_fixture_alpha/.puppet-master/worktrees/agent_fixture_7",
+      "observed_path": ".puppet-master/worktrees/agent_fixture_7/src/api.rs",
+      "expected": {
+        "path_ref": "src/api.rs",
+        "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b"
+      }
+    },
+    {
+      "case_id": "path_case_kept",
+      "worktree_root": "/work/project_fixture_alpha/.puppet-master/worktrees/agent_fixture_7",
+      "observed_path": "Src/API.rs",
+      "expected": {
+        "path_ref": "Src/API.rs",
+        "path_hash": "f199e834f8cd50bea9a9709c0e1cb0855d9a1fa4a21f94aa7a336f57a2c7dea4"
+      }
+    },
+    {
+      "case_id": "path_unicode_and_space_kept",
+      "worktree_root": "/work/project_fixture_alpha/.puppet-master/worktrees/agent_fixture_7",
+      "observed_path": "docs/Über Straße.md",
+      "expected": {
+        "path_ref": "docs/Über Straße.md",
+        "path_hash": "15389de55c8f22937d0fbb49c8d2e8bbe251fa7949dc67e78e19a5ee15faa741"
+      }
+    },
+    {
+      "case_id": "path_leaves_worktree",
+      "worktree_root": "/work/project_fixture_alpha/.puppet-master/worktrees/agent_fixture_7",
+      "observed_path": "../outside.txt",
+      "expected": "no_claim"
+    },
+    {
+      "case_id": "path_absolute_outside_worktree",
+      "worktree_root": "/work/project_fixture_alpha/.puppet-master/worktrees/agent_fixture_7",
+      "observed_path": "/etc/hosts",
+      "expected": "no_claim"
+    }
+  ],
+  "transition_sequences": [
+    {
+      "case_id": "lifecycle_registration_to_unregister",
+      "description": "Registration, the initial operation at revision 2, status, a file claim, progress and the one terminal event; the claim is released at the terminal event and the operation row stays.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_operation_initial_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_d27e930b3a55013fec5262b125ad3319b64468765ba1405a803f99705f9aba3f"
+        },
+        {
+          "payload_case_id": "a7_status_running_r3",
+          "expected": "appended",
+          "event_id": "evt_coordination_154f6d09cf926b6f8a3f64023463e97d00ef9c358246d2585e7657e0235df8d1"
+        },
+        {
+          "payload_case_id": "a7_file_editing_r4",
+          "expected": "appended",
+          "event_id": "evt_coordination_e5f06aa708ae1893c0bf2f74e41148a42610f169c96e710a6520a612cc7c89df"
+        },
+        {
+          "payload_case_id": "a7_operation_progress_r5",
+          "expected": "appended",
+          "event_id": "evt_coordination_d8442be8745ea412dc6a0c3dd2edebbc70cfb1ed167a02716d2e44b05b762535"
+        },
+        {
+          "payload_case_id": "a7_unregistered_complete_r6",
+          "expected": "appended",
+          "event_id": "evt_coordination_de33f051abe5db623debf4397a24a1996e2378492c117f7a13277f046fba2904"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_7": {
+          "status": "complete",
+          "agent_revision": 6,
+          "last_applied_event_id": "evt_coordination_de33f051abe5db623debf4397a24a1996e2378492c117f7a13277f046fba2904",
+          "active_claim_count": 0,
+          "current_operation_id": "op_fixture_1",
+          "terminal": {
+            "event_type": "coordination.agent_unregistered",
+            "outcome": "complete",
+            "occurred_at_utc": "2026-09-25T04:05:00Z"
+          }
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": [
+        {
+          "agent_id": "agent_fixture_7",
+          "operation_id": "op_fixture_1",
+          "operation_summary": "editing src/auth/password.rs",
+          "first_observed_at_utc": "2026-09-25T04:01:00Z",
+          "last_observed_at_utc": "2026-09-25T04:04:00Z"
+        }
+      ]
+    },
+    {
+      "case_id": "stale_revision_refused",
+      "description": "An update that skips a revision fails the revision rule and appends nothing.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_status_running_r3",
+          "expected": "coordination_conflict:stale_revision"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_7": {
+          "status": "queued",
+          "agent_revision": 1,
+          "last_applied_event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91",
+          "active_claim_count": 0
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "event_before_registration_refused",
+      "description": "No event of an unregistered agent is admitted.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_status_running_r2",
+          "expected": "coordination_conflict:not_registered"
+        }
+      ],
+      "final_agents": {},
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "registration_retry_and_conflict",
+      "description": "A registration always has revision 1, so its idempotency key repeats: an exact retry returns the original event, and a changed payload is idempotency_conflict before the transition table is reached.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "exact_retry_original_result",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_registered_retry_changed",
+          "expected": "idempotency_conflict"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_7": {
+          "status": "queued",
+          "agent_revision": 1,
+          "last_applied_event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91",
+          "active_claim_count": 0
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "event_after_terminal_refused",
+      "description": "After the terminal event the next revision is refused as already_terminal.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a11_registered",
+          "expected": "appended",
+          "event_id": "evt_coordination_749fda9285fab030e78aa36f8f2a0a17e63713e80529a44e8efa1ff7abd9c4d1"
+        },
+        {
+          "payload_case_id": "a11_aborted_runtime_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_08270606461f72867633225be87cc09cc02a4f4bcf26cea911705c7290479b4a"
+        },
+        {
+          "payload_case_id": "a11_status_running_r3",
+          "expected": "coordination_conflict:already_terminal"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_11": {
+          "status": "cancelled",
+          "agent_revision": 2,
+          "last_applied_event_id": "evt_coordination_08270606461f72867633225be87cc09cc02a4f4bcf26cea911705c7290479b4a",
+          "active_claim_count": 0,
+          "terminal": {
+            "event_type": "coordination.agent_aborted",
+            "outcome": "runtime",
+            "occurred_at_utc": "2026-09-25T04:41:00Z"
+          }
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "second_terminal_event_refused",
+      "description": "Two terminal events race with the same revision: the first appends, the second fails the revision rule. A later terminal event at the next revision is already_terminal. Each agent has exactly one terminal event.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_operation_initial_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_d27e930b3a55013fec5262b125ad3319b64468765ba1405a803f99705f9aba3f"
+        },
+        {
+          "payload_case_id": "a7_status_running_r3",
+          "expected": "appended",
+          "event_id": "evt_coordination_154f6d09cf926b6f8a3f64023463e97d00ef9c358246d2585e7657e0235df8d1"
+        },
+        {
+          "payload_case_id": "a7_file_editing_r4",
+          "expected": "appended",
+          "event_id": "evt_coordination_e5f06aa708ae1893c0bf2f74e41148a42610f169c96e710a6520a612cc7c89df"
+        },
+        {
+          "payload_case_id": "a7_operation_progress_r5",
+          "expected": "appended",
+          "event_id": "evt_coordination_d8442be8745ea412dc6a0c3dd2edebbc70cfb1ed167a02716d2e44b05b762535"
+        },
+        {
+          "payload_case_id": "a7_unregistered_complete_r6",
+          "expected": "appended",
+          "event_id": "evt_coordination_de33f051abe5db623debf4397a24a1996e2378492c117f7a13277f046fba2904"
+        },
+        {
+          "payload_case_id": "a7_crashed_race_r6",
+          "expected": "coordination_conflict:stale_revision"
+        },
+        {
+          "payload_case_id": "a7_aborted_after_terminal_r7",
+          "expected": "coordination_conflict:already_terminal"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_7": {
+          "status": "complete",
+          "agent_revision": 6,
+          "last_applied_event_id": "evt_coordination_de33f051abe5db623debf4397a24a1996e2378492c117f7a13277f046fba2904",
+          "active_claim_count": 0,
+          "current_operation_id": "op_fixture_1",
+          "terminal": {
+            "event_type": "coordination.agent_unregistered",
+            "outcome": "complete",
+            "occurred_at_utc": "2026-09-25T04:05:00Z"
+          }
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": [
+        {
+          "agent_id": "agent_fixture_7",
+          "operation_id": "op_fixture_1",
+          "operation_summary": "editing src/auth/password.rs",
+          "first_observed_at_utc": "2026-09-25T04:01:00Z",
+          "last_observed_at_utc": "2026-09-25T04:04:00Z"
+        }
+      ]
+    },
+    {
+      "case_id": "unchanged_status_not_appended",
+      "description": "An update that changes nothing returns coordination_unchanged and advances no revision; the next real change uses that revision.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a10_registered",
+          "expected": "appended",
+          "event_id": "evt_coordination_2f1cbaab33b73efaffd6b7246b281a2b4bd0bb9dafd599845c3c883f5a718e6f"
+        },
+        {
+          "payload_case_id": "a10_status_blocked_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_54f78fe85b2d3bec4f1ebf3023b71eea9986b457368ae213d2ec2c85d5602999"
+        },
+        {
+          "payload_case_id": "a10_status_blocked_again_r3",
+          "expected": "coordination_unchanged"
+        },
+        {
+          "payload_case_id": "a10_status_running_r3",
+          "expected": "appended",
+          "event_id": "evt_coordination_1141e1cb7e452f731c80390a992ed3853a410a0b9d43ecaa1b3829aae20bc626"
+        },
+        {
+          "payload_case_id": "a10_aborted_user_r4",
+          "expected": "appended",
+          "event_id": "evt_coordination_3786e7c5721ec2b70e45a47a73afed0b76859ade7e141576e9b6b6a71ed785c1"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_10": {
+          "status": "cancelled",
+          "agent_revision": 4,
+          "last_applied_event_id": "evt_coordination_3786e7c5721ec2b70e45a47a73afed0b76859ade7e141576e9b6b6a71ed785c1",
+          "active_claim_count": 0,
+          "terminal": {
+            "event_type": "coordination.agent_aborted",
+            "outcome": "user",
+            "occurred_at_utc": "2026-09-25T04:34:00Z"
+          }
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "lineage_mismatch_refused",
+      "description": "Later events repeat the registration's lineage: a different run_id, or a present node_id that differs, is lineage_mismatch; omitted optional lineage is allowed.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_status_running_r2_other_run",
+          "expected": "coordination_conflict:lineage_mismatch"
+        },
+        {
+          "payload_case_id": "a7_status_running_r2_other_node",
+          "expected": "coordination_conflict:lineage_mismatch"
+        },
+        {
+          "payload_case_id": "a7_status_running_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_a7bdc319a4601dc160b2c56a1617f8c83c165419f670b07f12b3b8b8ab0a16c6"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_7": {
+          "status": "running",
+          "agent_revision": 2,
+          "last_applied_event_id": "evt_coordination_a7bdc319a4601dc160b2c56a1617f8c83c165419f670b07f12b3b8b8ab0a16c6",
+          "active_claim_count": 0
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "file_claim_supersession_and_release",
+      "description": "A newer claim by the same agent on the same path replaces the old one, an identical claim is unchanged, and the terminal event releases every claim.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_file_editing_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_fdb9b8390c1647a7fdac2dba4b7c54be15254d6fc335affe7c09f966c32bc531"
+        },
+        {
+          "payload_case_id": "a7_file_reviewing_r3",
+          "expected": "appended",
+          "event_id": "evt_coordination_269b25f6ea84b162735c491606b57dc35e6183379cee35ee4425cfc6fa64c0ad"
+        },
+        {
+          "payload_case_id": "a7_file_reviewing_again_r4",
+          "expected": "coordination_unchanged"
+        },
+        {
+          "payload_case_id": "a7_unregistered_failed_r4",
+          "expected": "appended",
+          "event_id": "evt_coordination_7684ca646b3a9669c633b94cd435a5736b015e0571a3740dde3a49dd8da96d71"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_7": {
+          "status": "failed",
+          "agent_revision": 4,
+          "last_applied_event_id": "evt_coordination_7684ca646b3a9669c633b94cd435a5736b015e0571a3740dde3a49dd8da96d71",
+          "active_claim_count": 0,
+          "terminal": {
+            "event_type": "coordination.agent_unregistered",
+            "outcome": "failed",
+            "occurred_at_utc": "2026-09-25T04:04:00Z"
+          }
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "not_yet_admitted_family_quarantined",
+      "description": "Only coordination.agent_registered is admitted: a status update and a debug mirror export are quarantined before append, and nothing else changes.",
+      "admitted_event_types": [
+        "coordination.agent_registered"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_status_running_r2",
+          "expected": "quarantined_before_append"
+        },
+        {
+          "payload_case_id": "debug_mirror_exported_written",
+          "expected": "quarantined_before_append"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_7": {
+          "status": "queued",
+          "agent_revision": 1,
+          "last_applied_event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91",
+          "active_claim_count": 0
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "crash_by_heartbeat_expiry",
+      "description": "The crash detector records heartbeat_expired with the observed age; the agent row shows failed.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a8_registered_minimal",
+          "expected": "appended",
+          "event_id": "evt_coordination_86c43bf88213cffd677acd9ad1ba5d26da759df72a8e19c23714ef0bc8da8a5e"
+        },
+        {
+          "payload_case_id": "a8_status_running_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_a64c4f18bb692325c48e4b3e3cff02bedf3f3d4c5e530d1dffcd60a13f0d6b40"
+        },
+        {
+          "payload_case_id": "a8_crashed_heartbeat_r3",
+          "expected": "appended",
+          "event_id": "evt_coordination_e1190d487ad734d53c9f06961dad0ee058f7305fac3edefec35804125d02a927"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_8": {
+          "status": "failed",
+          "agent_revision": 3,
+          "last_applied_event_id": "evt_coordination_e1190d487ad734d53c9f06961dad0ee058f7305fac3edefec35804125d02a927",
+          "active_claim_count": 0,
+          "terminal": {
+            "event_type": "coordination.agent_crashed",
+            "outcome": "heartbeat_expired",
+            "occurred_at_utc": "2026-09-25T04:17:00Z"
+          }
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "crash_by_worktree_loss",
+      "description": "A lost worktree is crash evidence; the agent row shows failed.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a12_registered",
+          "expected": "appended",
+          "event_id": "evt_coordination_e0d3f1a4ae7adfe0224ab8962bda79813aa5534073312c3ba6c690c3549be6ad"
+        },
+        {
+          "payload_case_id": "a12_crashed_worktree_lost_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_28c9d71b869ea09ce89ee8d5a691918c51c36325ba4d4bdab7ece088a180878e"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_12": {
+          "status": "failed",
+          "agent_revision": 2,
+          "last_applied_event_id": "evt_coordination_28c9d71b869ea09ce89ee8d5a691918c51c36325ba4d4bdab7ece088a180878e",
+          "active_claim_count": 0,
+          "terminal": {
+            "event_type": "coordination.agent_crashed",
+            "outcome": "worktree_lost",
+            "occurred_at_utc": "2026-09-25T04:51:00Z"
+          }
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "abort_by_parent",
+      "description": "A parent abort names the parent run; the agent row shows cancelled.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a9_registered",
+          "expected": "appended",
+          "event_id": "evt_coordination_596831f53367511bb65c8d8b961a08c1d2084deaa848c9de1013498174bfd954"
+        },
+        {
+          "payload_case_id": "a9_aborted_parent_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_3e1428f713700d1b279d7cd4c32b9c169d92a0214637f8c31a724c393e73db30"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_9": {
+          "status": "cancelled",
+          "agent_revision": 2,
+          "last_applied_event_id": "evt_coordination_3e1428f713700d1b279d7cd4c32b9c169d92a0214637f8c31a724c393e73db30",
+          "active_claim_count": 0,
+          "terminal": {
+            "event_type": "coordination.agent_aborted",
+            "outcome": "parent",
+            "occurred_at_utc": "2026-09-25T04:21:00Z"
+          }
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "operation_stale_then_after_terminal",
+      "description": "An operation update that skips a revision is stale; the same update at the next revision after the crash is already_terminal.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a12_registered",
+          "expected": "appended",
+          "event_id": "evt_coordination_e0d3f1a4ae7adfe0224ab8962bda79813aa5534073312c3ba6c690c3549be6ad"
+        },
+        {
+          "payload_case_id": "a12_operation_r3",
+          "expected": "coordination_conflict:stale_revision"
+        },
+        {
+          "payload_case_id": "a12_crashed_worktree_lost_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_28c9d71b869ea09ce89ee8d5a691918c51c36325ba4d4bdab7ece088a180878e"
+        },
+        {
+          "payload_case_id": "a12_operation_r3",
+          "expected": "coordination_conflict:already_terminal"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_12": {
+          "status": "failed",
+          "agent_revision": 2,
+          "last_applied_event_id": "evt_coordination_28c9d71b869ea09ce89ee8d5a691918c51c36325ba4d4bdab7ece088a180878e",
+          "active_claim_count": 0,
+          "terminal": {
+            "event_type": "coordination.agent_crashed",
+            "outcome": "worktree_lost",
+            "occurred_at_utc": "2026-09-25T04:51:00Z"
+          }
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "file_claim_stale_then_after_terminal",
+      "description": "A file claim that skips a revision is stale; a claim after the crash is already_terminal, so heartbeat expiry reaches claims only through the crash event.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a8_registered_minimal",
+          "expected": "appended",
+          "event_id": "evt_coordination_86c43bf88213cffd677acd9ad1ba5d26da759df72a8e19c23714ef0bc8da8a5e"
+        },
+        {
+          "payload_case_id": "a8_file_claim_r3",
+          "expected": "coordination_conflict:stale_revision"
+        },
+        {
+          "payload_case_id": "a8_status_running_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_a64c4f18bb692325c48e4b3e3cff02bedf3f3d4c5e530d1dffcd60a13f0d6b40"
+        },
+        {
+          "payload_case_id": "a8_crashed_heartbeat_r3",
+          "expected": "appended",
+          "event_id": "evt_coordination_e1190d487ad734d53c9f06961dad0ee058f7305fac3edefec35804125d02a927"
+        },
+        {
+          "payload_case_id": "a8_file_claim_r4",
+          "expected": "coordination_conflict:already_terminal"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_8": {
+          "status": "failed",
+          "agent_revision": 3,
+          "last_applied_event_id": "evt_coordination_e1190d487ad734d53c9f06961dad0ee058f7305fac3edefec35804125d02a927",
+          "active_claim_count": 0,
+          "terminal": {
+            "event_type": "coordination.agent_crashed",
+            "outcome": "heartbeat_expired",
+            "occurred_at_utc": "2026-09-25T04:17:00Z"
+          }
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "unregister_loses_race_to_abort",
+      "description": "A parent abort appends first; the racing unregister at the same revision is stale, and a later crash resolution is already_terminal.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a9_registered",
+          "expected": "appended",
+          "event_id": "evt_coordination_596831f53367511bb65c8d8b961a08c1d2084deaa848c9de1013498174bfd954"
+        },
+        {
+          "payload_case_id": "a9_aborted_parent_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_3e1428f713700d1b279d7cd4c32b9c169d92a0214637f8c31a724c393e73db30"
+        },
+        {
+          "payload_case_id": "a9_unregistered_r2",
+          "expected": "coordination_conflict:stale_revision"
+        },
+        {
+          "payload_case_id": "a9_crashed_r3",
+          "expected": "coordination_conflict:already_terminal"
+        },
+        {
+          "payload_case_id": "a9_unregistered_r3",
+          "expected": "coordination_conflict:already_terminal"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_9": {
+          "status": "cancelled",
+          "agent_revision": 2,
+          "last_applied_event_id": "evt_coordination_3e1428f713700d1b279d7cd4c32b9c169d92a0214637f8c31a724c393e73db30",
+          "active_claim_count": 0,
+          "terminal": {
+            "event_type": "coordination.agent_aborted",
+            "outcome": "parent",
+            "occurred_at_utc": "2026-09-25T04:21:00Z"
+          }
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "abort_loses_race_to_crash",
+      "description": "A worktree-loss crash appends first; the racing runtime abort at the same revision is stale.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a12_registered",
+          "expected": "appended",
+          "event_id": "evt_coordination_e0d3f1a4ae7adfe0224ab8962bda79813aa5534073312c3ba6c690c3549be6ad"
+        },
+        {
+          "payload_case_id": "a12_crashed_worktree_lost_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_28c9d71b869ea09ce89ee8d5a691918c51c36325ba4d4bdab7ece088a180878e"
+        },
+        {
+          "payload_case_id": "a12_aborted_runtime_r2",
+          "expected": "coordination_conflict:stale_revision"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_12": {
+          "status": "failed",
+          "agent_revision": 2,
+          "last_applied_event_id": "evt_coordination_28c9d71b869ea09ce89ee8d5a691918c51c36325ba4d4bdab7ece088a180878e",
+          "active_claim_count": 0,
+          "terminal": {
+            "event_type": "coordination.agent_crashed",
+            "outcome": "worktree_lost",
+            "occurred_at_utc": "2026-09-25T04:51:00Z"
+          }
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "interim_window_terminal_families_not_admitted",
+      "description": "While the three terminal families are not admitted, their events are quarantined before append and the agent stays non-terminal; nothing infers a terminal state.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_status_running_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_a7bdc319a4601dc160b2c56a1617f8c83c165419f670b07f12b3b8b8ab0a16c6"
+        },
+        {
+          "payload_case_id": "a7_unregistered_failed_r3",
+          "expected": "quarantined_before_append"
+        },
+        {
+          "payload_case_id": "a7_crashed_process_lost_r3",
+          "expected": "quarantined_before_append"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_7": {
+          "status": "running",
+          "agent_revision": 2,
+          "last_applied_event_id": "evt_coordination_a7bdc319a4601dc160b2c56a1617f8c83c165419f670b07f12b3b8b8ab0a16c6",
+          "active_claim_count": 0
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "interim_window_update_and_abort_families_not_admitted",
+      "description": "Operation, file claim and abort events are quarantined before append while their families are not admitted; the admitted families proceed and no sibling state is inferred.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_operation_initial_r2",
+          "expected": "quarantined_before_append"
+        },
+        {
+          "payload_case_id": "a7_file_editing_r2",
+          "expected": "quarantined_before_append"
+        },
+        {
+          "payload_case_id": "a7_status_running_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_a7bdc319a4601dc160b2c56a1617f8c83c165419f670b07f12b3b8b8ab0a16c6"
+        },
+        {
+          "payload_case_id": "a11_registered",
+          "expected": "appended",
+          "event_id": "evt_coordination_749fda9285fab030e78aa36f8f2a0a17e63713e80529a44e8efa1ff7abd9c4d1"
+        },
+        {
+          "payload_case_id": "a11_aborted_runtime_r2",
+          "expected": "quarantined_before_append"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_11": {
+          "status": "queued",
+          "agent_revision": 1,
+          "last_applied_event_id": "evt_coordination_749fda9285fab030e78aa36f8f2a0a17e63713e80529a44e8efa1ff7abd9c4d1",
+          "active_claim_count": 0
+        },
+        "agent_fixture_7": {
+          "status": "running",
+          "agent_revision": 2,
+          "last_applied_event_id": "evt_coordination_a7bdc319a4601dc160b2c56a1617f8c83c165419f670b07f12b3b8b8ab0a16c6",
+          "active_claim_count": 0
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "registration_not_admitted",
+      "description": "Without an admitted registration family no agent exists: the registration is quarantined and an admitted status update finds no registered agent.",
+      "admitted_event_types": [
+        "coordination.agent_status_updated"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a8_registered_minimal",
+          "expected": "quarantined_before_append"
+        },
+        {
+          "payload_case_id": "a8_status_running_r2",
+          "expected": "coordination_conflict:not_registered"
+        }
+      ],
+      "final_agents": {},
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "exact_retry_after_progress",
+      "description": "An exact retry returns the original event even after the agent has moved on.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_operation_initial_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_d27e930b3a55013fec5262b125ad3319b64468765ba1405a803f99705f9aba3f"
+        },
+        {
+          "payload_case_id": "a7_status_running_r3",
+          "expected": "appended",
+          "event_id": "evt_coordination_154f6d09cf926b6f8a3f64023463e97d00ef9c358246d2585e7657e0235df8d1"
+        },
+        {
+          "payload_case_id": "a7_operation_initial_r2",
+          "expected": "exact_retry_original_result",
+          "event_id": "evt_coordination_d27e930b3a55013fec5262b125ad3319b64468765ba1405a803f99705f9aba3f"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_7": {
+          "status": "running",
+          "agent_revision": 3,
+          "last_applied_event_id": "evt_coordination_154f6d09cf926b6f8a3f64023463e97d00ef9c358246d2585e7657e0235df8d1",
+          "active_claim_count": 0,
+          "current_operation_id": "op_fixture_1"
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": [
+        {
+          "agent_id": "agent_fixture_7",
+          "operation_id": "op_fixture_1",
+          "operation_summary": "Starting node 1.1.1",
+          "first_observed_at_utc": "2026-09-25T04:01:00Z",
+          "last_observed_at_utc": "2026-09-25T04:01:00Z"
+        }
+      ]
+    },
+    {
+      "case_id": "operation_latest_event_wins",
+      "description": "The latest event for an operation_id wins; the first observation time is kept.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_operation_initial_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_d27e930b3a55013fec5262b125ad3319b64468765ba1405a803f99705f9aba3f"
+        },
+        {
+          "payload_case_id": "a7_operation_progress_r3",
+          "expected": "appended",
+          "event_id": "evt_coordination_82e2e030a3d36dec23478bcf8c438b8871b8aa1a7b7efc087309d11618594bb9"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_7": {
+          "status": "queued",
+          "agent_revision": 3,
+          "last_applied_event_id": "evt_coordination_82e2e030a3d36dec23478bcf8c438b8871b8aa1a7b7efc087309d11618594bb9",
+          "active_claim_count": 0,
+          "current_operation_id": "op_fixture_1"
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": [
+        {
+          "agent_id": "agent_fixture_7",
+          "operation_id": "op_fixture_1",
+          "operation_summary": "running cargo test",
+          "first_observed_at_utc": "2026-09-25T04:01:00Z",
+          "last_observed_at_utc": "2026-09-25T04:02:00Z"
+        }
+      ]
+    }
+  ],
+  "projection_values": [
+    {
+      "case_id": "projection_agent_running",
+      "definition": "agent_projection",
+      "value": {
+        "schema_id": "pm.storage_value.coordination_agent_projection.v1",
+        "schema_version": "1.0.0",
+        "publication_id": "pub_fixture_2",
+        "project_id": "project_fixture_alpha",
+        "agent_id": "agent_fixture_7",
+        "run_id": "run_fixture_child_7",
+        "thread_id": "thr_fixture_1",
+        "agent_type": "rust-engineer",
+        "parent_run_id": "run_fixture_parent",
+        "child_run_id": "run_fixture_child_7",
+        "node_id": "node_1.1.1",
+        "lane_id": "lane_a",
+        "worktree_id": "wt_fixture_7",
+        "platform": "codex",
+        "model_id": "gpt-5-codex",
+        "started_at_utc": "2026-09-25T04:00:00Z",
+        "status": "running",
+        "current_operation_id": "op_fixture_1",
+        "active_claim_count": 1,
+        "agent_revision": 5,
+        "last_applied_event_id": "evt_coordination_d8442be8745ea412dc6a0c3dd2edebbc70cfb1ed167a02716d2e44b05b762535"
+      }
+    },
+    {
+      "case_id": "projection_agent_crashed",
+      "definition": "agent_projection",
+      "value": {
+        "schema_id": "pm.storage_value.coordination_agent_projection.v1",
+        "schema_version": "1.0.0",
+        "publication_id": "pub_fixture_2",
+        "project_id": "project_fixture_alpha",
+        "agent_id": "agent_fixture_8",
+        "run_id": "run_fixture_child_8",
+        "agent_type": "test-writer",
+        "platform": "claude",
+        "started_at_utc": "2026-09-25T04:10:00Z",
+        "status": "failed",
+        "active_claim_count": 0,
+        "agent_revision": 3,
+        "last_applied_event_id": "evt_coordination_e1190d487ad734d53c9f06961dad0ee058f7305fac3edefec35804125d02a927",
+        "terminal": {
+          "event_type": "coordination.agent_crashed",
+          "outcome": "heartbeat_expired",
+          "occurred_at_utc": "2026-09-25T04:17:00Z"
+        }
+      }
+    },
+    {
+      "case_id": "projection_file_claim",
+      "definition": "file_projection",
+      "value": {
+        "schema_id": "pm.storage_value.coordination_file_projection.v1",
+        "schema_version": "1.0.0",
+        "publication_id": "pub_fixture_2",
+        "project_id": "project_fixture_alpha",
+        "agent_id": "agent_fixture_7",
+        "path_ref": "src/api.rs",
+        "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b",
+        "claim_kind": "editing",
+        "claim_confidence": "high",
+        "operation_id": "op_fixture_1",
+        "observed_at_utc": "2026-09-25T04:03:00Z",
+        "source_event_id": "evt_coordination_e5f06aa708ae1893c0bf2f74e41148a42610f169c96e710a6520a612cc7c89df"
+      }
+    },
+    {
+      "case_id": "projection_operation_latest",
+      "definition": "operation_projection",
+      "value": {
+        "schema_id": "pm.storage_value.coordination_operation_projection.v1",
+        "schema_version": "1.0.0",
+        "publication_id": "pub_fixture_2",
+        "project_id": "project_fixture_alpha",
+        "agent_id": "agent_fixture_7",
+        "operation_id": "op_fixture_1",
+        "operation_summary": "editing src/auth/password.rs",
+        "progress_pct": 40,
+        "operation_refs": [
+          "command:cargo_test",
+          "artifact:build_log_7"
+        ],
+        "first_observed_at_utc": "2026-09-25T04:01:00Z",
+        "last_observed_at_utc": "2026-09-25T04:04:00Z",
+        "source_event_id": "evt_coordination_d8442be8745ea412dc6a0c3dd2edebbc70cfb1ed167a02716d2e44b05b762535"
+      }
+    },
+    {
+      "case_id": "projection_snapshot_project",
+      "definition": "snapshot_projection",
+      "value": {
+        "schema_id": "pm.storage_value.coordination_snapshot_projection.v1",
+        "schema_version": "1.0.0",
+        "publication_id": "pub_fixture_2",
+        "project_id": "project_fixture_alpha",
+        "projection_scope": "project",
+        "agents": [
+          {
+            "agent_id": "agent_fixture_7",
+            "agent_type": "rust-engineer",
+            "platform": "codex",
+            "status": "running",
+            "operation_summary": "editing src/auth/password.rs",
+            "progress_pct": 40,
+            "claims": [
+              {
+                "path_ref": "src/api.rs",
+                "claim_kind": "editing",
+                "claim_confidence": "high"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "projection_snapshot_run_scope",
+      "definition": "snapshot_projection",
+      "value": {
+        "schema_id": "pm.storage_value.coordination_snapshot_projection.v1",
+        "schema_version": "1.0.0",
+        "publication_id": "pub_fixture_2",
+        "project_id": "project_fixture_alpha",
+        "projection_scope": "run~cnVuX2ZpeHR1cmVfY2hpbGRfNw",
+        "agents": [
+          {
+            "agent_id": "agent_fixture_7",
+            "agent_type": "rust-engineer",
+            "platform": "codex",
+            "status": "running",
+            "operation_summary": "editing src/auth/password.rs",
+            "progress_pct": 40,
+            "claims": [
+              {
+                "path_ref": "src/api.rs",
+                "claim_kind": "editing",
+                "claim_confidence": "high"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "projection_snapshot_lane_scope",
+      "definition": "snapshot_projection",
+      "value": {
+        "schema_id": "pm.storage_value.coordination_snapshot_projection.v1",
+        "schema_version": "1.0.0",
+        "publication_id": "pub_fixture_2",
+        "project_id": "project_fixture_alpha",
+        "projection_scope": "lane~cnVuX2ZpeHR1cmVfY2hpbGRfNw~bGFuZV9h",
+        "agents": [
+          {
+            "agent_id": "agent_fixture_7",
+            "agent_type": "rust-engineer",
+            "platform": "codex",
+            "status": "running",
+            "operation_summary": "editing src/auth/password.rs",
+            "progress_pct": 40,
+            "claims": [
+              {
+                "path_ref": "src/api.rs",
+                "claim_kind": "editing",
+                "claim_confidence": "high"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "projection_snapshot_project_empty",
+      "definition": "snapshot_projection",
+      "value": {
+        "schema_id": "pm.storage_value.coordination_snapshot_projection.v1",
+        "schema_version": "1.0.0",
+        "publication_id": "pub_fixture_2",
+        "project_id": "project_fixture_alpha",
+        "projection_scope": "project",
+        "agents": []
+      }
+    },
+    {
+      "case_id": "checkpoint_current",
+      "definition": "checkpoint",
+      "value": {
+        "schema_id": "pm.storage_value.coordination_projector_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "publication_id": "pub_fixture_2",
+        "project_id": "project_fixture_alpha",
+        "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+        "scope_partition": "project~cHJvamVjdF9maXh0dXJlX2FscGhh",
+        "projector_id": "storage.coordination_projector.v1",
+        "projector_version": "1.0.0",
+        "admitted_event_types": [
+          "coordination.agent_aborted",
+          "coordination.agent_crashed",
+          "coordination.agent_file_ownership_updated",
+          "coordination.agent_operation_updated",
+          "coordination.agent_registered",
+          "coordination.agent_status_updated",
+          "coordination.agent_unregistered"
+        ],
+        "index_read_token": {
+          "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+          "checkpoint_key": "event_record_index_checkpoint.v1:4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+          "checkpoint_ref": "checkpoints/event_record_index_checkpoint.v1",
+          "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "generation_anchor_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "frontier_revision": 12,
+          "frontier_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "index_dataset_name": "event_record_index.v2@eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source_selection": {
+            "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "selected_segment_generation": 4,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "manifest_generation": 4,
+            "recovery_epoch": 3,
+            "manifest_survivor_prefix_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "retained_inventory_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "durable_watermarks_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "excluded_ranges_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "retired_inputs_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        },
+        "first_retained_sequence_id": 0,
+        "index_through_sequence_id": 47,
+        "source_cursor": {
+          "segment_generation": 4,
+          "segment_name": "seg-000004-00000000000000000000.active",
+          "byte_offset": 9120,
+          "frame_end_offset": 9344,
+          "last_sequence_id": 47,
+          "last_event_id": "evt_coordination_de33f051abe5db623debf4397a24a1996e2378492c117f7a13277f046fba2904"
+        },
+        "filter_complete": true,
+        "state": "current",
+        "health": "healthy",
+        "updated_at_utc": "2026-09-25T04:06:00Z",
+        "withdrawn_at_utc": null,
+        "published_at_utc": "2026-09-25T03:00:00Z",
+        "hold_refs": [],
+        "retired_generations": []
+      }
+    },
+    {
+      "case_id": "checkpoint_proven_empty_source",
+      "definition": "checkpoint",
+      "value": {
+        "schema_id": "pm.storage_value.coordination_projector_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "publication_id": "pub_fixture_2",
+        "project_id": "project_fixture_alpha",
+        "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+        "scope_partition": "project~cHJvamVjdF9maXh0dXJlX2FscGhh",
+        "projector_id": "storage.coordination_projector.v1",
+        "projector_version": "1.0.0",
+        "admitted_event_types": [
+          "coordination.agent_aborted",
+          "coordination.agent_crashed",
+          "coordination.agent_file_ownership_updated",
+          "coordination.agent_operation_updated",
+          "coordination.agent_registered",
+          "coordination.agent_status_updated",
+          "coordination.agent_unregistered"
+        ],
+        "index_read_token": {
+          "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+          "checkpoint_key": "event_record_index_checkpoint.v1:4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+          "checkpoint_ref": "checkpoints/event_record_index_checkpoint.v1",
+          "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "generation_anchor_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "frontier_revision": 12,
+          "frontier_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "index_dataset_name": "event_record_index.v2@eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source_selection": {
+            "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "selected_segment_generation": 4,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "manifest_generation": 4,
+            "recovery_epoch": 3,
+            "manifest_survivor_prefix_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "retained_inventory_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "durable_watermarks_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "excluded_ranges_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "retired_inputs_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        },
+        "first_retained_sequence_id": null,
+        "index_through_sequence_id": null,
+        "source_cursor": null,
+        "filter_complete": true,
+        "state": "current",
+        "health": "healthy",
+        "updated_at_utc": "2026-09-25T04:06:00Z",
+        "withdrawn_at_utc": null,
+        "published_at_utc": "2026-09-25T03:00:00Z",
+        "hold_refs": [],
+        "retired_generations": []
+      }
+    },
+    {
+      "case_id": "checkpoint_with_retired_generation",
+      "definition": "checkpoint",
+      "value": {
+        "schema_id": "pm.storage_value.coordination_projector_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "publication_id": "pub_fixture_2",
+        "project_id": "project_fixture_alpha",
+        "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+        "scope_partition": "project~cHJvamVjdF9maXh0dXJlX2FscGhh",
+        "projector_id": "storage.coordination_projector.v1",
+        "projector_version": "1.0.0",
+        "admitted_event_types": [
+          "coordination.agent_aborted",
+          "coordination.agent_crashed",
+          "coordination.agent_file_ownership_updated",
+          "coordination.agent_operation_updated",
+          "coordination.agent_registered",
+          "coordination.agent_status_updated",
+          "coordination.agent_unregistered"
+        ],
+        "index_read_token": {
+          "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+          "checkpoint_key": "event_record_index_checkpoint.v1:4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+          "checkpoint_ref": "checkpoints/event_record_index_checkpoint.v1",
+          "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "generation_anchor_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "frontier_revision": 12,
+          "frontier_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "index_dataset_name": "event_record_index.v2@eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source_selection": {
+            "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "selected_segment_generation": 4,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "manifest_generation": 4,
+            "recovery_epoch": 3,
+            "manifest_survivor_prefix_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "retained_inventory_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "durable_watermarks_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "excluded_ranges_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "retired_inputs_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        },
+        "first_retained_sequence_id": 0,
+        "index_through_sequence_id": 47,
+        "source_cursor": {
+          "segment_generation": 4,
+          "segment_name": "seg-000004-00000000000000000000.active",
+          "byte_offset": 9120,
+          "frame_end_offset": 9344,
+          "last_sequence_id": 47,
+          "last_event_id": "evt_coordination_de33f051abe5db623debf4397a24a1996e2378492c117f7a13277f046fba2904"
+        },
+        "filter_complete": true,
+        "state": "current",
+        "health": "healthy",
+        "updated_at_utc": "2026-09-25T04:06:00Z",
+        "withdrawn_at_utc": null,
+        "published_at_utc": "2026-09-25T03:00:00Z",
+        "hold_refs": [],
+        "retired_generations": [
+          {
+            "checkpoint_core": {
+              "schema_id": "pm.storage_value.coordination_projector_checkpoint.v1",
+              "schema_version": "1.0.0",
+              "publication_id": "pub_fixture_1",
+              "project_id": "project_fixture_alpha",
+              "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+              "scope_partition": "project~cHJvamVjdF9maXh0dXJlX2FscGhh",
+              "projector_id": "storage.coordination_projector.v1",
+              "projector_version": "1.0.0",
+              "admitted_event_types": [
+                "coordination.agent_registered"
+              ],
+              "index_read_token": {
+                "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+                "checkpoint_key": "event_record_index_checkpoint.v1:4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+                "checkpoint_ref": "checkpoints/event_record_index_checkpoint.v1",
+                "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "generation_anchor_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "frontier_revision": 12,
+                "frontier_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "index_dataset_name": "event_record_index.v2@eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "source_selection": {
+                  "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+                  "current_ref": "storage/seglog/CURRENT",
+                  "current_bytes_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                  "selected_segment_generation": 4,
+                  "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+                  "manifest_bytes_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                  "manifest_generation": 4,
+                  "recovery_epoch": 3,
+                  "manifest_survivor_prefix_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                  "retained_inventory_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                  "durable_watermarks_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "excluded_ranges_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "retired_inputs_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+                }
+              },
+              "first_retained_sequence_id": 0,
+              "index_through_sequence_id": 47,
+              "source_cursor": {
+                "segment_generation": 4,
+                "segment_name": "seg-000004-00000000000000000000.active",
+                "byte_offset": 9120,
+                "frame_end_offset": 9344,
+                "last_sequence_id": 47,
+                "last_event_id": "evt_coordination_de33f051abe5db623debf4397a24a1996e2378492c117f7a13277f046fba2904"
+              },
+              "filter_complete": true,
+              "state": "withdrawn",
+              "health": "healthy",
+              "updated_at_utc": "2026-09-25T04:06:00Z",
+              "withdrawn_at_utc": "2026-09-25T02:59:00Z",
+              "published_at_utc": "2026-09-24T20:00:00Z",
+              "hold_refs": []
+            },
+            "successor_publication_id": "pub_fixture_2"
+          }
+        ]
+      }
+    }
+  ],
+  "invalid_projection_values": [
+    {
+      "case_id": "checkpoint_persisted_snapshot_id",
+      "base_case_id": "checkpoint_current",
+      "definition": "checkpoint",
+      "patch": {
+        "index_read_token": {
+          "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+          "checkpoint_key": "event_record_index_checkpoint.v1:4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+          "checkpoint_ref": "checkpoints/event_record_index_checkpoint.v1",
+          "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "generation_anchor_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "frontier_revision": 12,
+          "frontier_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "index_dataset_name": "event_record_index.v2@eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "source_selection": {
+            "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "selected_segment_generation": 4,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "manifest_generation": 4,
+            "recovery_epoch": 3,
+            "manifest_survivor_prefix_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "retained_inventory_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "durable_watermarks_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "excluded_ranges_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+            "retired_inputs_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          "redb_snapshot_id": "snapshot_fixture_1"
+        }
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "checkpoint_current_filter_incomplete",
+      "base_case_id": "checkpoint_current",
+      "definition": "checkpoint",
+      "patch": {
+        "filter_complete": false
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "checkpoint_degraded_but_healthy",
+      "base_case_id": "checkpoint_current",
+      "definition": "checkpoint",
+      "patch": {
+        "state": "degraded"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "checkpoint_withdrawn_without_time",
+      "base_case_id": "checkpoint_current",
+      "definition": "checkpoint",
+      "patch": {
+        "state": "withdrawn"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "checkpoint_null_cursor_with_bounds",
+      "base_case_id": "checkpoint_current",
+      "definition": "checkpoint",
+      "patch": {
+        "source_cursor": null
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "checkpoint_admits_debug_mirror",
+      "base_case_id": "checkpoint_current",
+      "definition": "checkpoint",
+      "patch": {
+        "admitted_event_types": [
+          "coordination.agent_registered",
+          "coordination.debug_mirror_exported"
+        ]
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "checkpoint_no_admitted_family",
+      "base_case_id": "checkpoint_current",
+      "definition": "checkpoint",
+      "patch": {
+        "admitted_event_types": []
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "checkpoint_other_projector",
+      "base_case_id": "checkpoint_current",
+      "definition": "checkpoint",
+      "patch": {
+        "projector_id": "storage.browser_workspace_reset_index.v1"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "checkpoint_three_retired_cores",
+      "base_case_id": "checkpoint_with_retired_generation",
+      "definition": "checkpoint",
+      "patch": {
+        "retired_generations": [
+          {
+            "checkpoint_core": {
+              "schema_id": "pm.storage_value.coordination_projector_checkpoint.v1",
+              "schema_version": "1.0.0",
+              "publication_id": "pub_fixture_1",
+              "project_id": "project_fixture_alpha",
+              "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+              "scope_partition": "project~cHJvamVjdF9maXh0dXJlX2FscGhh",
+              "projector_id": "storage.coordination_projector.v1",
+              "projector_version": "1.0.0",
+              "admitted_event_types": [
+                "coordination.agent_registered"
+              ],
+              "index_read_token": {
+                "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+                "checkpoint_key": "event_record_index_checkpoint.v1:4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+                "checkpoint_ref": "checkpoints/event_record_index_checkpoint.v1",
+                "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "generation_anchor_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "frontier_revision": 12,
+                "frontier_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "index_dataset_name": "event_record_index.v2@eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "source_selection": {
+                  "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+                  "current_ref": "storage/seglog/CURRENT",
+                  "current_bytes_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                  "selected_segment_generation": 4,
+                  "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+                  "manifest_bytes_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                  "manifest_generation": 4,
+                  "recovery_epoch": 3,
+                  "manifest_survivor_prefix_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                  "retained_inventory_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                  "durable_watermarks_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "excluded_ranges_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "retired_inputs_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+                }
+              },
+              "first_retained_sequence_id": 0,
+              "index_through_sequence_id": 47,
+              "source_cursor": {
+                "segment_generation": 4,
+                "segment_name": "seg-000004-00000000000000000000.active",
+                "byte_offset": 9120,
+                "frame_end_offset": 9344,
+                "last_sequence_id": 47,
+                "last_event_id": "evt_coordination_de33f051abe5db623debf4397a24a1996e2378492c117f7a13277f046fba2904"
+              },
+              "filter_complete": true,
+              "state": "withdrawn",
+              "health": "healthy",
+              "updated_at_utc": "2026-09-25T04:06:00Z",
+              "withdrawn_at_utc": "2026-09-25T02:59:00Z",
+              "published_at_utc": "2026-09-24T20:00:00Z",
+              "hold_refs": []
+            },
+            "successor_publication_id": "pub_fixture_2"
+          },
+          {
+            "checkpoint_core": {
+              "schema_id": "pm.storage_value.coordination_projector_checkpoint.v1",
+              "schema_version": "1.0.0",
+              "publication_id": "pub_fixture_1",
+              "project_id": "project_fixture_alpha",
+              "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+              "scope_partition": "project~cHJvamVjdF9maXh0dXJlX2FscGhh",
+              "projector_id": "storage.coordination_projector.v1",
+              "projector_version": "1.0.0",
+              "admitted_event_types": [
+                "coordination.agent_registered"
+              ],
+              "index_read_token": {
+                "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+                "checkpoint_key": "event_record_index_checkpoint.v1:4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+                "checkpoint_ref": "checkpoints/event_record_index_checkpoint.v1",
+                "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "generation_anchor_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "frontier_revision": 12,
+                "frontier_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "index_dataset_name": "event_record_index.v2@eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "source_selection": {
+                  "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+                  "current_ref": "storage/seglog/CURRENT",
+                  "current_bytes_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                  "selected_segment_generation": 4,
+                  "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+                  "manifest_bytes_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                  "manifest_generation": 4,
+                  "recovery_epoch": 3,
+                  "manifest_survivor_prefix_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                  "retained_inventory_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                  "durable_watermarks_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "excluded_ranges_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "retired_inputs_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+                }
+              },
+              "first_retained_sequence_id": 0,
+              "index_through_sequence_id": 47,
+              "source_cursor": {
+                "segment_generation": 4,
+                "segment_name": "seg-000004-00000000000000000000.active",
+                "byte_offset": 9120,
+                "frame_end_offset": 9344,
+                "last_sequence_id": 47,
+                "last_event_id": "evt_coordination_de33f051abe5db623debf4397a24a1996e2378492c117f7a13277f046fba2904"
+              },
+              "filter_complete": true,
+              "state": "withdrawn",
+              "health": "healthy",
+              "updated_at_utc": "2026-09-25T04:06:00Z",
+              "withdrawn_at_utc": "2026-09-25T02:59:00Z",
+              "published_at_utc": "2026-09-24T20:00:00Z",
+              "hold_refs": []
+            },
+            "successor_publication_id": "pub_fixture_2"
+          },
+          {
+            "checkpoint_core": {
+              "schema_id": "pm.storage_value.coordination_projector_checkpoint.v1",
+              "schema_version": "1.0.0",
+              "publication_id": "pub_fixture_1",
+              "project_id": "project_fixture_alpha",
+              "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+              "scope_partition": "project~cHJvamVjdF9maXh0dXJlX2FscGhh",
+              "projector_id": "storage.coordination_projector.v1",
+              "projector_version": "1.0.0",
+              "admitted_event_types": [
+                "coordination.agent_registered"
+              ],
+              "index_read_token": {
+                "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+                "checkpoint_key": "event_record_index_checkpoint.v1:4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+                "checkpoint_ref": "checkpoints/event_record_index_checkpoint.v1",
+                "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "generation_anchor_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "frontier_revision": 12,
+                "frontier_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "index_dataset_name": "event_record_index.v2@eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "source_selection": {
+                  "storage_instance_id": "4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+                  "current_ref": "storage/seglog/CURRENT",
+                  "current_bytes_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                  "selected_segment_generation": 4,
+                  "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+                  "manifest_bytes_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                  "manifest_generation": 4,
+                  "recovery_epoch": 3,
+                  "manifest_survivor_prefix_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                  "retained_inventory_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                  "durable_watermarks_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "excluded_ranges_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "retired_inputs_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+                }
+              },
+              "first_retained_sequence_id": 0,
+              "index_through_sequence_id": 47,
+              "source_cursor": {
+                "segment_generation": 4,
+                "segment_name": "seg-000004-00000000000000000000.active",
+                "byte_offset": 9120,
+                "frame_end_offset": 9344,
+                "last_sequence_id": 47,
+                "last_event_id": "evt_coordination_de33f051abe5db623debf4397a24a1996e2378492c117f7a13277f046fba2904"
+              },
+              "filter_complete": true,
+              "state": "withdrawn",
+              "health": "healthy",
+              "updated_at_utc": "2026-09-25T04:06:00Z",
+              "withdrawn_at_utc": "2026-09-25T02:59:00Z",
+              "published_at_utc": "2026-09-24T20:00:00Z",
+              "hold_refs": []
+            },
+            "successor_publication_id": "pub_fixture_2"
+          }
+        ]
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "checkpoint_bad_scope_partition",
+      "base_case_id": "checkpoint_current",
+      "definition": "checkpoint",
+      "patch": {
+        "scope_partition": "project_fixture_alpha"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "agent_terminal_still_running",
+      "base_case_id": "projection_agent_crashed",
+      "definition": "agent_projection",
+      "patch": {
+        "status": "running"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "agent_terminal_holds_claims",
+      "base_case_id": "projection_agent_crashed",
+      "definition": "agent_projection",
+      "patch": {
+        "active_claim_count": 1
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "agent_open_with_terminal_status",
+      "base_case_id": "projection_agent_running",
+      "definition": "agent_projection",
+      "patch": {
+        "status": "complete"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "agent_heartbeat_field",
+      "base_case_id": "projection_agent_running",
+      "definition": "agent_projection",
+      "patch": {
+        "last_update": "2026-09-25T04:04:00Z"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "file_row_absolute_path",
+      "base_case_id": "projection_file_claim",
+      "definition": "file_projection",
+      "patch": {
+        "path_ref": "/home/fixture/project/src/api.rs"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "operation_row_progress_over_100",
+      "base_case_id": "projection_operation_latest",
+      "definition": "operation_projection",
+      "patch": {
+        "progress_pct": 101
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "snapshot_scoped_row_without_agents",
+      "base_case_id": "projection_snapshot_run_scope",
+      "definition": "snapshot_projection",
+      "patch": {
+        "agents": []
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "snapshot_padded_scope",
+      "base_case_id": "projection_snapshot_run_scope",
+      "definition": "snapshot_projection",
+      "patch": {
+        "projection_scope": "run~cnVuX2ZpeHR1cmVfY2hpbGRfNw=="
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "snapshot_terminal_agent_listed",
+      "base_case_id": "projection_snapshot_project",
+      "definition": "snapshot_projection",
+      "patch": {
+        "agents": [
+          {
+            "agent_id": "agent_fixture_7",
+            "agent_type": "rust-engineer",
+            "platform": "codex",
+            "status": "complete",
+            "operation_summary": "editing src/auth/password.rs",
+            "progress_pct": 40,
+            "claims": [
+              {
+                "path_ref": "src/api.rs",
+                "claim_kind": "editing",
+                "claim_confidence": "high"
+              }
+            ]
+          }
+        ]
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "case_id": "projection_value_without_publication",
+      "base_case_id": "projection_file_claim",
+      "definition": "file_projection",
+      "patch": {},
+      "remove": [
+        "publication_id"
+      ],
+      "expected_rejection": "schema"
+    }
+  ],
+  "required_native_oracles": [
+    {
+      "oracle_id": "COORD-APPEND-01",
+      "given": "an admitted registration from the Orchestrator before node execution",
+      "required_result": "one appended EventRecord and its first AppendReceipt; execution starts only after the receipt returns",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "oracle_id": "COORD-RETRY-01",
+      "given": "a lost append acknowledgement for an admitted coordination event",
+      "required_result": "storage.first_append_receipt.resolve.v2 returns the original receipt and original_append_result; no first mint and no second append",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "oracle_id": "COORD-UNCERTAIN-01",
+      "given": "an uncertain append of an agent's event",
+      "required_result": "the agent stays fenced: no later event for that agent until Storage resolves the original identity",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "oracle_id": "COORD-CAS-01",
+      "given": "a projector advance whose checkpoint changed after it was read",
+      "required_result": "prior-value compare-and-swap fails; no row or checkpoint advances",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "oracle_id": "COORD-TOKEN-01",
+      "given": "a checkpoint advance, read and recovery",
+      "required_result": "the stored nine-field durable token is joined to the live read's redb_snapshot_id and revalidated whole; an equal generation alone proves nothing",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "oracle_id": "COORD-RACE-01",
+      "given": "a crash resolution racing a normal unregister at the same revision",
+      "required_result": "the first terminal event appends; the other gets coordination_conflict stale_revision and appends nothing",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "oracle_id": "COORD-RESTORE-01",
+      "given": "a verified restore of an older backup with non-terminal agents whose processes are gone",
+      "required_result": "the crash detector resolves each with process_lost as a new operation; no lost or restored request is replayed",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "oracle_id": "COORD-QUARANTINE-01",
+      "given": "an event of a family that is not admitted",
+      "required_result": "quarantined before append; no checkpoint advance; no sibling state inferred",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "oracle_id": "COORD-HEARTBEAT-01",
+      "given": "agent liveness heartbeats and observations that change nothing",
+      "required_result": "no heartbeat reaches the append admission; unchanged updates return coordination_unchanged; no heartbeat_expired crash until coordination_heartbeat_expiry_ms exists",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "oracle_id": "COORD-READER-01",
+      "given": "a scheduler or prompt-context read while the checkpoint is not current, coverage is short or the publication changed",
+      "required_result": "typed unavailable; the scheduler treats it as coordination_conflict and neither schedules nor injects context",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "oracle_id": "COORD-WITHDRAW-01",
+      "given": "withdrawal of one admitted family",
+      "required_result": "writer admission cut off, current core withdrawn, projector and readers fenced, governed rebuild from kept seglog records; no seglog deletion",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "oracle_id": "COORD-RETENTION-01",
+      "given": "coordination records of a Run whose terminal canonical record has not resolved",
+      "required_result": "not eligible for expiry under RP-COORDINATION-180D",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "oracle_id": "COORD-MIRROR-01",
+      "given": "a stale or corrupt .puppet-master/state mirror",
+      "required_result": "never authority for scheduling, prompts, unregister, crash, abort, receipt or validation decisions",
+      "execution_status": "NOT_RUN"
+    }
+  ]
+}
