@@ -12,7 +12,7 @@ The thread runs in a cloud session, which cannot reach the NAS or the shared che
 - **Placement: CONDITIONAL.** Eighteen conditions for A1 are listed in section 8. Three are marked "decide first" because they change the v8 digest.
 - **The package's own checks reproduce.** With the real `jsonschema`/`referencing`, every counted figure matches and every PASS output is byte-identical to its frozen file.
 
-**Review.** Pending: one blind form-driven review, capped at two cycles.
+**Review.** One blind form-driven review, capped at two cycles: cycle 1 is `a0/review-cycle-1.json`; cycle 2 re-reviews the repaired rows.
 
 **Open questions.** Q-01 to Q-12 in the report. On 2026-09-25 Jared routed (by instruction to this thread, not recorded in the repository) five process questions to the PM Low cost/complexity process thread, which has authority on them:
 - Q-02: DL-078 and row revisions.
