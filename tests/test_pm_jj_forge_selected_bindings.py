@@ -28,7 +28,7 @@ class SelectedBindings(unittest.TestCase):
             'cmd.source_control.remote.publish':('TCP-SCM-SELECTED','Plans/source_control_selected_operands.schema.json#/$defs/request','Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding'),
             'cmd.source_control.workspace.remove':('TCP-SCM-SELECTED','Plans/source_control_selected_operands.schema.json#/$defs/request','Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding'),
         }
-        self.assertEqual((646,150),(len(data['rows']),len(profiles)))
+        self.assertEqual((646,151),(len(data['rows']),len(profiles)))
         for command,(profile,payload_ref,result_ref) in expected.items():
             with self.subTest(command=command):
                 self.assertEqual([profile,'command',command,'partial'],rows[command][1:5])

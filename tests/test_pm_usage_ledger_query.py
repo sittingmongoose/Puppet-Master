@@ -176,7 +176,7 @@ class LedgerGatePathTests(unittest.TestCase):
         self.assertIn((SCHEMA_REL, "Plans/usage_ledger_query_contract_fixtures.json"),
                       gate.CONTRACT_PAIRS)
         self.assertEqual(len(gate.CONTRACT_PAIRS), gate.EXPECTED_CONTRACT_PAIR_COUNT)
-        self.assertEqual(gate.EXPECTED_CONTRACT_PAIR_COUNT, 73 if INPUTS != STAGE else 77)
+        self.assertEqual(gate.EXPECTED_CONTRACT_PAIR_COUNT, 73 if INPUTS != STAGE else 78)
 
     def test_validator_dispatch(self):
         gate = self.gate

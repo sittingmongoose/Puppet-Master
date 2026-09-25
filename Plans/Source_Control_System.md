@@ -300,6 +300,26 @@ acceptance_criteria:
   - The CV-333 central response consumes only the exact source_control_command_result family for these nineteen commands and joins the original typed request's command instance, discriminated scope, applicable lineage, idempotency key and exact return context to the result and its terminal receipt. A local projection or another owner's result cannot substitute for this join.
   - Optional plan_id and goal_id lineage map exactly to the central named_plan_id and goal_id; omission or null cannot authorize an invented non-null central identity. Run and agent lineage stay in the exact owner request/result scope without inventing fields in the closed central identity.
   - Central projection maps succeeded to succeeded, blocked to rejected, failed/cancelled to their same terminal states, and recovery_required/effect_unknown to terminal_unknown and recovery_required. Any unresolved effect requires terminal_unknown regardless of a failed result label. no_effect alone is not an owner-verified no_op verdict.
+  - >-
+    `pm.source_control.review_checkout.preview.v1` is issued solely by Source Control under this unit for exactly
+    `cmd.forge.review.checkout`: one preview per original selection binding Source Location, provider review and
+    revision, repository context, backend, explicit `separate_workspace|current_workspace` placement and expected
+    revision to its preview digest, qualification, currentness, FileSafe/permission refs and target writer-lease
+    fence. It is distinct from Forge's review target and provider result: Forge's `source_control_handoff_ref`
+    names the preview but never issues, qualifies, extends or revokes it. Any change to selection, placement,
+    revision, topology, lease, permission/FileSafe or dirty snapshot revokes the preview; only a fresh
+    owner-qualified preview with a matching digest admits effects, and unknown qualification or non-current state
+    never authorizes checkout.
+  - >-
+    The preview's writer-lease fence is the TARGET workspace authority, never the source context reused as target
+    authority. For `current_workspace` placement the target is the existing source workspace, so the lease scope
+    (repository, workspace, backend) with its generation/epoch is that workspace's current lease. For
+    `separate_workspace` placement the target is a newly reserved workspace with an id distinct from the source,
+    and the lease scope is that reserved target with its own generation/epoch; the preview reserves but never
+    creates or admits the workspace. No lease is inferred from path, focus, display text or newest state. The
+    exact target lease and topology/revision are revalidated immediately before native effects; stale
+    generation/epoch, expired or non-active lease, topology/revision drift or unknown effects fail closed with
+    reconciliation-only outcomes, and no preview authorizes discarding dirty work or autostash.
 validation_surfaces: [Plans/source_control_contract_fixtures.json, Plans/source_control_selected_operand_fixtures.json, Plans/sir_source_control_selected_dispatch_fixtures.json, scripts/pm_source_control_selected_operands.py, scripts/pm_source_control_selected_response.py, tests/test_pm_source_control_selected_operands.py, tests/test_pm_source_control_selected_response.py, tests/test_pm_source_control_response.py, writer and credential lease fixtures, stale lease tests, prompt suppression tests, command idempotency tests]
 risk_class: concurrent_mutation_or_credential_escape
 reasoning_tier: high

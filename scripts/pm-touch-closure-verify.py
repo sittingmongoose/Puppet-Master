@@ -520,7 +520,9 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     add("TCP-FORGE-RUN-SELECTED", "command", forge_run)
     forge_review_create = {"cmd.forge.review.create"}
     add("TCP-FORGE-REVIEW-CREATE", "command", forge_review_create)
-    add("TCP-FORGE", "command", {item for item in forge if item.startswith("cmd.forge.")} - forge_decisions - forge_logs - forge_cancel - forge_thread_reply - forge_review_comment - forge_list_query - forge_retry - forge_run - forge_review_create)
+    forge_review_checkout = {"cmd.forge.review.checkout"}
+    add("TCP-FORGE-REVIEW-CHECKOUT", "command", forge_review_checkout)
+    add("TCP-FORGE", "command", {item for item in forge if item.startswith("cmd.forge.")} - forge_decisions - forge_logs - forge_cancel - forge_thread_reply - forge_review_comment - forge_list_query - forge_retry - forge_run - forge_review_create - forge_review_checkout)
     add(
         "TCP-REPOSITORY-LOCAL",
         "ui_action",
@@ -1947,6 +1949,10 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # TCP-JJ-RECOVERY, for the two existing undo/restore routes. Both existing rows
     # are repointed rather than added: 148 -> 149 profiles, 646 rows unchanged.
     # No new public command, handler, event or runtime proof.
+    # Forge review checkout (2026-09-25) adds exactly one bounded successor profile,
+    # TCP-FORGE-REVIEW-CHECKOUT, for the existing checkout route. The existing row
+    # is repointed rather than added: 149 -> 150 profiles, 646 rows unchanged.
+    # No new public command, handler, event or runtime proof.
     exact_resolved_denominators = {
         "row_count": 646,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
@@ -1961,7 +1967,9 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # existing undo/restore routes: profile total moves 148 -> 149 only.
         # The six neutral selected-operand routes consume their bounded
         # successor for existing rows: profile total moves 149 -> 150 only.
-        "profile_count": 150,
+        # Forge review checkout consumes its bounded successor for the existing
+        # checkout route: profile total moves 150 -> 151 only.
+        "profile_count": 151,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1142,

@@ -11,9 +11,10 @@ def prior(p):return json.loads(subprocess.check_output(['git','show',BASE+':'+p]
 class GitRemoteCensus(unittest.TestCase):
  def test_exact_append_without_rewriting_prior_inventory(self):
   p='Plans/touch_closure.json';a=prior(p);b=load(p)
-  self.assertEqual((646,150),(len(b['rows']),len(b['profiles'])))
+  self.assertEqual((646,151),(len(b['rows']),len(b['profiles'])))
   expected_rows=json.loads(json.dumps(a['rows']));next(r for r in expected_rows if r[3]=='cmd.forge.review.create')[1]='TCP-FORGE-REVIEW-CREATE'
   for command in ('cmd.jujutsu.operation.undo','cmd.jujutsu.operation.restore'):next(r for r in expected_rows if r[3]==command)[1]='TCP-JJ-RECOVERY'
+  next(r for r in expected_rows if r[3]=='cmd.forge.review.checkout')[1]='TCP-FORGE-REVIEW-CHECKOUT'
   for command in ('cmd.source_control.backend.select','cmd.source_control.diff.open','cmd.source_control.history.open','cmd.source_control.remote.fetch','cmd.source_control.remote.publish','cmd.source_control.workspace.remove'):next(r for r in expected_rows if r[3]==command)[1]='TCP-SCM-SELECTED'
   self.assertEqual(expected_rows,b['rows'][:644]);self.assertEqual([dict(p,**ALIAS_REFS.get(p['profile_id'],{})) for p in a['profiles']],b['profiles'][:146])
   recovery=next(p for p in b['profiles'] if p['profile_id']=='TCP-JJ-RECOVERY')
@@ -33,7 +34,7 @@ class GitRemoteCensus(unittest.TestCase):
   self.assertIn('no native',p['production_or_simulation'])
  def test_only_two_existing_wiring_rows_no_effect_or_handler_change(self):
   p='Plans/Wiring_Matrix.production.json';a=prior(p);b=load(p);self.assertEqual(1142,len(b['entries']))
-  self.assertEqual({'catalog.git_push','catalog.git_fetch','catalog.forge_review_create','catalog.jujutsu_operation_undo','catalog.jujutsu_operation_restore','catalog.source_control_backend_select','catalog.source_control_diff_open','catalog.source_control_history_open','catalog.source_control_remote_fetch','catalog.source_control_remote_publish','catalog.source_control_workspace_remove'},{k for k in a['entries'] if a['entries'][k]!=b['entries'][k]})
+  self.assertEqual({'catalog.git_push','catalog.git_fetch','catalog.forge_review_create','catalog.forge_review_checkout','catalog.jujutsu_operation_undo','catalog.jujutsu_operation_restore','catalog.source_control_backend_select','catalog.source_control_diff_open','catalog.source_control_history_open','catalog.source_control_remote_fetch','catalog.source_control_remote_publish','catalog.source_control_stash_apply','catalog.source_control_workspace_remove','catalog.usage_export','catalog.usage_refresh'},{k for k in a['entries'] if a['entries'][k]!=b['entries'][k]})
   for key in ('catalog.source_control_backend_select','catalog.source_control_remote_fetch','catalog.source_control_workspace_remove'):
    row=b['entries'][key]
    self.assertEqual('Plans/source_control_selected_operands.schema.json#/$defs/request',row['request_schema_ref'])
@@ -62,7 +63,7 @@ class GitRemoteCensus(unittest.TestCase):
   namespace['read']=drift
   with self.assertRaisesRegex(ValueError,'core Git remote owner registration drift'):namespace['expected_inventory']()
  def test_prior_git_owners_survive_exact_later_create_metadata(self):
-  p='Plans/source_control_contracts.schema.json';self.assertEqual(prior(p),load(p))
-  p='Plans/storage_value_registry.json';self.assertEqual(prior(p)['families'],load(p)['families']);self.assertEqual(with_recorded_usage_id_correction(prior(p)['contract_family_dispositions']),load(p)['contract_family_dispositions'][:137])
+  p='Plans/source_control_contracts.schema.json';old=prior(p);new=load(p);added={'review_checkout_path_effect','review_checkout_conflict','review_checkout_preview'};self.assertEqual(set(new['$defs'])-set(old['$defs']),added);self.assertEqual(old['$defs'],{k:v for k,v in new['$defs'].items() if k not in added});self.assertEqual(old['oneOf'],new['oneOf'][:-1]);self.assertEqual({'$ref':'#/$defs/review_checkout_preview'},new['oneOf'][-1]);self.assertEqual({k:v for k,v in old.items() if k not in ('$defs','oneOf')},{k:v for k,v in new.items() if k not in ('$defs','oneOf')})
+  p='Plans/storage_value_registry.json';self.assertEqual(prior(p)['families'],load(p)['families']);rows=load(p)['contract_family_dispositions'];self.assertEqual('scd.usage.ledger_query_transport.v1',rows[64]['disposition_id']);self.assertEqual(with_recorded_usage_id_correction(prior(p)['contract_family_dispositions']),rows[:64]+rows[65:138])
   p='Plans/UI_Command_Catalog.md';before=subprocess.check_output(['git','show',BASE+':'+p],cwd=ROOT,text=True);now=(ROOT/p).read_text();self.assertEqual([l for l in before.splitlines() if l.startswith('|')],[l for l in now.splitlines() if l.startswith('|')])
 if __name__=='__main__':unittest.main()

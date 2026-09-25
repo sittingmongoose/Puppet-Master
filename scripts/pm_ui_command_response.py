@@ -117,7 +117,7 @@ def structural_failures(path: str, value: Any, pointer: str = "#") -> list[str]:
 def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=None,
                              canonical_request_digest=None, backup_read_admission=None,
                              backup_page_source=None, backup_source_custody=None,
-                             backup_current_disclosure=None, forge_log_dependencies=None, credential_source_dependencies=None, forge_cancel_dependencies=None, forge_reply_dependencies=None, backup_lifecycle_dependencies=None, backup_delete_dependencies=None, forge_comment_dependencies=None, backup_export_dependencies=None, backup_rotation_dependencies=None, backup_reencrypt_dependencies=None, restore_preview_dependencies=None, forge_list_query_dependencies=None, forge_retry_dependencies=None, forge_run_dependencies=None, forge_create_selected_dependencies=None) -> list[str]:
+                             backup_current_disclosure=None, forge_log_dependencies=None, credential_source_dependencies=None, forge_cancel_dependencies=None, forge_reply_dependencies=None, backup_lifecycle_dependencies=None, backup_delete_dependencies=None, forge_comment_dependencies=None, backup_export_dependencies=None, backup_rotation_dependencies=None, backup_reencrypt_dependencies=None, restore_preview_dependencies=None, forge_list_query_dependencies=None, forge_retry_dependencies=None, forge_run_dependencies=None, forge_create_selected_dependencies=None, forge_checkout_dependencies=None) -> list[str]:
     """Existing static bundle; Git-three additionally requires actual owner readers.
 
     Both callbacks are trusted native contracts, not issuer/caller authentication
@@ -150,13 +150,14 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
     forge_retry = response.get('command_id') == 'cmd.forge.pipeline.retry' or result.get('schema_id') == 'pm.forge.retry_selected.result.v1'
     forge_run = response.get('command_id') == 'cmd.forge.pipeline.run' or result.get('schema_id') == 'pm.forge.run_selected.result.v1'
     forge_create_selected = response.get('command_id') == 'cmd.forge.review.create' or result.get('schema_id') == 'pm.forge.review_create_selected.result.v1'
+    forge_checkout = response.get('command_id') == 'cmd.forge.review.checkout' or result.get('schema_id') == 'pm.forge.review_checkout_selected.result.v1'
     jj_recovery = (response.get("command_id") in JJ_RECOVERY_COMMANDS or result.get("schema_id") == JJ_RECOVERY_BINDING["schema_id"])
     scm_selected = (response.get("command_id") in SCM_SELECTED_COMMANDS
                     or result.get("schema_id") == SCM_SELECTED_BINDING["schema_id"])
     git_stash_apply = (response.get("command_id") in GIT_STASH_APPLY_COMMANDS
                        or result.get("schema_id") == GIT_STASH_APPLY_BINDING["schema_id"])
     usage = (response.get("command_id") in USAGE_COMMANDS or result.get("schema_id") in USAGE_SCHEMA_IDS)
-    if not git_three and not forge_review and not backup_read and not jj_publication and not forge_log and not credential_source and not forge_cancel and not forge_reply and not backup_lifecycle and not backup_delete and not git_pull and not forge_comment and not backup_export and not backup_rotation and not backup_reencrypt and not selected_preview and not forge_list_query and not forge_retry and not forge_run and not forge_create_selected and not jj_recovery and not scm_selected and not git_stash_apply and not usage:
+    if not git_three and not forge_review and not backup_read and not jj_publication and not forge_log and not credential_source and not forge_cancel and not forge_reply and not backup_lifecycle and not backup_delete and not git_pull and not forge_comment and not backup_export and not backup_rotation and not backup_reencrypt and not selected_preview and not forge_list_query and not forge_retry and not forge_run and not forge_create_selected and not forge_checkout and not jj_recovery and not scm_selected and not git_stash_apply and not usage:
         return _response_bundle_failures(bundle)
     snapshot = deepcopy(bundle)
     failures = _response_bundle_failures(snapshot, resolve_owner_record=resolve_owner_record,
@@ -165,7 +166,7 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
                                          backup_page_source=backup_page_source,
                                          backup_source_custody=backup_source_custody,
                                          backup_current_disclosure=backup_current_disclosure,
-                                         forge_log_dependencies=forge_log_dependencies, forge_list_query_dependencies=forge_list_query_dependencies, restore_preview_dependencies=restore_preview_dependencies, backup_reencrypt_dependencies=backup_reencrypt_dependencies, backup_rotation_dependencies=backup_rotation_dependencies, backup_export_dependencies=backup_export_dependencies, forge_comment_dependencies=forge_comment_dependencies, backup_delete_dependencies=backup_delete_dependencies, backup_lifecycle_dependencies=backup_lifecycle_dependencies, forge_reply_dependencies=forge_reply_dependencies, forge_cancel_dependencies=forge_cancel_dependencies, forge_create_selected_dependencies=forge_create_selected_dependencies, forge_run_dependencies=forge_run_dependencies, forge_retry_dependencies=forge_retry_dependencies,
+                                         forge_log_dependencies=forge_log_dependencies, forge_list_query_dependencies=forge_list_query_dependencies, restore_preview_dependencies=restore_preview_dependencies, backup_reencrypt_dependencies=backup_reencrypt_dependencies, backup_rotation_dependencies=backup_rotation_dependencies, backup_export_dependencies=backup_export_dependencies, forge_comment_dependencies=forge_comment_dependencies, backup_delete_dependencies=backup_delete_dependencies, backup_lifecycle_dependencies=backup_lifecycle_dependencies, forge_reply_dependencies=forge_reply_dependencies, forge_cancel_dependencies=forge_cancel_dependencies, forge_create_selected_dependencies=forge_create_selected_dependencies, forge_run_dependencies=forge_run_dependencies, forge_retry_dependencies=forge_retry_dependencies, forge_checkout_dependencies=forge_checkout_dependencies,
                                          credential_source_dependencies=credential_source_dependencies)
     if bundle != snapshot:
         failures.append("git_stash_apply_bundle_mutated_during_resolution" if git_stash_apply else "scm_selected_bundle_mutated_during_resolution" if scm_selected else "jj_recovery_bundle_mutated_during_resolution" if jj_recovery else "git_pull_bundle_mutated_during_resolution" if git_pull else "credential_bundle_mutated_during_resolution" if credential_source else "backup_read_bundle_mutated_during_resolution" if backup_read else "jj_publication_bundle_mutated_during_resolution" if jj_publication else "forge_log_bundle_mutated_during_resolution" if forge_log else "forge_bundle_mutated_during_resolution" if forge_review else "usage_bundle_mutated_during_resolution" if usage else "git3_bundle_mutated_during_resolution")
@@ -175,7 +176,7 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
 def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=None,
                               canonical_request_digest=None, backup_read_admission=None,
                               backup_page_source=None, backup_source_custody=None,
-                              backup_current_disclosure=None, forge_log_dependencies=None, credential_source_dependencies=None, forge_cancel_dependencies=None, forge_reply_dependencies=None, backup_lifecycle_dependencies=None, backup_delete_dependencies=None, forge_comment_dependencies=None, backup_export_dependencies=None, backup_rotation_dependencies=None, backup_reencrypt_dependencies=None, restore_preview_dependencies=None, forge_list_query_dependencies=None, forge_retry_dependencies=None, forge_run_dependencies=None, forge_create_selected_dependencies=None) -> list[str]:
+                              backup_current_disclosure=None, forge_log_dependencies=None, credential_source_dependencies=None, forge_cancel_dependencies=None, forge_reply_dependencies=None, backup_lifecycle_dependencies=None, backup_delete_dependencies=None, forge_comment_dependencies=None, backup_export_dependencies=None, backup_rotation_dependencies=None, backup_reencrypt_dependencies=None, restore_preview_dependencies=None, forge_list_query_dependencies=None, forge_retry_dependencies=None, forge_run_dependencies=None, forge_create_selected_dependencies=None, forge_checkout_dependencies=None) -> list[str]:
     """Validate independently owned records and then their exact binding.
 
     normalized_request is a fixture snapshot of the authenticated dispatcher
@@ -232,6 +233,9 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
     if response.get('command_id') == 'cmd.forge.review.create':
         if response['response_kind'] != 'owner_operation' or response.get('owner_result_schema_ref') != {'path':'Plans/forge_review_create_selected_contracts.schema.json','json_pointer':'#/$defs/result','schema_id':'pm.forge.review_create_selected.result.v1'}:
             failures.append('forge_create_selected_owner_binding')
+    if response.get('command_id') == 'cmd.forge.review.checkout':
+        if response['response_kind'] != 'owner_operation' or response.get('owner_result_schema_ref') != {'path':'Plans/forge_review_checkout_selected_contracts.schema.json','json_pointer':'#/$defs/result','schema_id':'pm.forge.review_checkout_selected.result.v1'}:
+            failures.append('forge_checkout_owner_binding')
     if response.get("command_id") in USAGE_COMMANDS:
         if response["response_kind"] != "owner_operation" or not usage_binding_allowed(response["command_id"], response.get("owner_result_schema_ref")):
             failures.append("usage_owner_binding")
@@ -411,6 +415,9 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
             elif owner_result.get('schema_id') == 'pm.forge.review_create_selected.result.v1':
                 from pm_forge_review_create_selected_semantics import response_failures as create_response_failures
                 failures.extend(create_response_failures(bundle, forge_create_selected_dependencies))
+            elif owner_result.get('schema_id') == 'pm.forge.review_checkout_selected.result.v1':
+                from pm_forge_review_checkout_selected_semantics import response_failures as checkout_response_failures
+                failures.extend(checkout_response_failures(bundle, forge_checkout_dependencies))
             elif owner_result.get("schema_id") == JJ_RECOVERY_BINDING["schema_id"]:
                 if "delivery_return_context" not in bundle:
                     failures.append("jj_recovery_delivery_owner_value_missing")

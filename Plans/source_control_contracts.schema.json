@@ -98,6 +98,9 @@
     },
     {
       "$ref": "#/$defs/source_operation_routing_and_agent_boundary"
+    },
+    {
+      "$ref": "#/$defs/review_checkout_preview"
     }
   ],
   "$defs": {
@@ -4277,6 +4280,260 @@
         "durable_receipt_home_server_ref": {"$ref": "#/$defs/non_secret_ref"}, "worker_becomes_project_authority": {"const": false},
         "agent_summary": {"type": "object", "additionalProperties": false, "required": ["compact_typed_actions", "structured_blockers", "whole_registry_or_log_dump", "same_registered_commands", "ui_scraping_substitute", "alternate_account_fallback"], "properties": {"compact_typed_actions": {"const": true}, "structured_blockers": {"const": true}, "whole_registry_or_log_dump": {"const": false}, "same_registered_commands": {"const": true}, "ui_scraping_substitute": {"const": false}, "alternate_account_fallback": {"const": false}}},
         "automated_mutation": {"type": "object", "additionalProperties": false, "required": ["exact_task_policy_ref", "approval_ref", "protected_branch_bypass", "ci_cost_trigger_disclosed", "runner_is_execution_host_without_configuration"], "properties": {"exact_task_policy_ref": {"$ref": "#/$defs/non_secret_ref"}, "approval_ref": {"$ref": "#/$defs/non_secret_ref"}, "protected_branch_bypass": {"const": false}, "ci_cost_trigger_disclosed": {"const": true}, "runner_is_execution_host_without_configuration": {"const": false}}}
+      }
+    },
+    "review_checkout_path_effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "disposition"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+        },
+        "disposition": {
+          "enum": [
+            "preserved",
+            "checked_out",
+            "conflicted",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "review_checkout_conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "state"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+        },
+        "state": {
+          "enum": [
+            "resolved",
+            "unresolved",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "review_checkout_preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "preview_id",
+        "command_id",
+        "command_instance_id",
+        "repository_context_ref",
+        "repo_id",
+        "scm_backend",
+        "placement",
+        "provider_review_id",
+        "review_revision_ref",
+        "expected_revision",
+        "before_revision",
+        "proposed_revision",
+        "source_workspace_id",
+        "target_workspace_id",
+        "target_workspace_kind",
+        "effects",
+        "dirty_paths",
+        "dirty_snapshot_sha256",
+        "autostash",
+        "dirty_preserved",
+        "discarded_paths",
+        "conflicts",
+        "qualification",
+        "permission_snapshot_ref",
+        "file_safe_decision_ref",
+        "writer_lease_ref",
+        "writer_lease_generation",
+        "writer_lease_epoch",
+        "source_topology_generation",
+        "currentness_state",
+        "native_reason_ref",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.review_checkout.preview.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "preview_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "command_id": {
+          "const": "cmd.forge.review.checkout"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository_context_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "repo_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "scm_backend": {
+          "$ref": "#/$defs/scm_backend"
+        },
+        "placement": {
+          "enum": [
+            "separate_workspace",
+            "current_workspace"
+          ]
+        },
+        "provider_review_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer|cookie|private[_-]?key))[A-Za-z][A-Za-z0-9._:/#-]*$"
+        },
+        "review_revision_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer|cookie|private[_-]?key))[A-Za-z][A-Za-z0-9._:/#-]*$"
+        },
+        "expected_revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/git_revision"
+            },
+            {
+              "$ref": "#/$defs/jujutsu_revision"
+            }
+          ]
+        },
+        "before_revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/git_revision"
+            },
+            {
+              "$ref": "#/$defs/jujutsu_revision"
+            }
+          ]
+        },
+        "proposed_revision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/git_revision"
+            },
+            {
+              "$ref": "#/$defs/jujutsu_revision"
+            }
+          ]
+        },
+        "source_workspace_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "target_workspace_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "target_workspace_kind": {
+          "enum": [
+            "git_worktree",
+            "jujutsu_workspace"
+          ]
+        },
+        "effects": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/review_checkout_path_effect"
+          }
+        },
+        "dirty_paths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+          }
+        },
+        "dirty_snapshot_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "autostash": {
+          "const": false
+        },
+        "dirty_preserved": {
+          "const": true
+        },
+        "discarded_paths": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/review_checkout_conflict"
+          }
+        },
+        "qualification": {
+          "enum": [
+            "qualified",
+            "blocked",
+            "unknown"
+          ]
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "writer_lease_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "writer_lease_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "writer_lease_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "currentness_state": {
+          "enum": [
+            "current",
+            "stale",
+            "unknown"
+          ]
+        },
+        "native_reason_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issued_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
       }
     }
   },

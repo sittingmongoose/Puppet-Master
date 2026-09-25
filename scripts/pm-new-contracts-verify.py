@@ -73,6 +73,7 @@ from pm_forge_list_query import list_query_semantic_failures
 from pm_forge_retry_selected_semantics import retry_selected_semantic_failures
 from pm_forge_run_selected_semantics import run_selected_semantic_failures
 from pm_forge_review_create_selected_semantics import review_create_selected_semantic_failures
+from pm_forge_review_checkout_selected_semantics import review_checkout_selected_semantic_failures
 from pm_jj_publication_selected import publication_semantic_failures
 from pm_jj_operation_recovery import recovery_semantic_failures
 from pm_jj_publication_response import jj_publication_dispatch_semantic_failures
@@ -162,13 +163,14 @@ CONTRACT_PAIRS = (
     ("Plans/forge_retry_selected_contracts.schema.json", "Plans/forge_retry_selected_contract_fixtures.json"),
     ("Plans/forge_run_selected_contracts.schema.json", "Plans/forge_run_selected_contract_fixtures.json"),
     ("Plans/forge_review_create_selected_contracts.schema.json", "Plans/forge_review_create_selected_contract_fixtures.json"),
+    ("Plans/forge_review_checkout_selected_contracts.schema.json", "Plans/forge_review_checkout_selected_contract_fixtures.json"),
     ("Plans/source_control_selected_operands.schema.json", "Plans/source_control_selected_operand_fixtures.json"),
     ("Plans/sir_source_control_selected_dispatch.schema.json", "Plans/sir_source_control_selected_dispatch_fixtures.json"),
     ("Plans/git_stash_apply_selected.schema.json", "Plans/git_stash_apply_selected_fixtures.json"),
     ("Plans/sir_git_stash_apply_dispatch.schema.json", "Plans/sir_git_stash_apply_dispatch_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 77
+EXPECTED_CONTRACT_PAIR_COUNT = 78
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1303,6 +1305,8 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
     if schema_rel == "Plans/forge_review_create_selected_contracts.schema.json":
         return review_create_selected_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/forge_review_checkout_selected_contracts.schema.json":
+        return review_checkout_selected_semantic_failures(definition_name, value)
     if schema_rel == "Plans/forge_retry_selected_contracts.schema.json":
         return retry_selected_semantic_failures(definition_name, value)
     if schema_rel == "Plans/forge_run_selected_contracts.schema.json":

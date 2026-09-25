@@ -2852,6 +2852,150 @@
         "cross_format_migration_requested": false,
         "runtime_evidence_claimed": false
       }
+    },
+    {
+      "name": "review_checkout_preview_separate_target_lease",
+      "definition": "review_checkout_preview",
+      "value": {
+        "schema_id": "pm.source_control.review_checkout.preview.v1",
+        "schema_version": "1.0.0",
+        "preview_id": "preview:checkout:31",
+        "command_id": "cmd.forge.review.checkout",
+        "command_instance_id": "command:forge:checkout:31",
+        "repository_context_ref": "scm-context:alpha:main:31",
+        "repo_id": "repo:alpha",
+        "scm_backend": "git",
+        "placement": "separate_workspace",
+        "provider_review_id": "mr:14",
+        "review_revision_ref": "review-revision:mr-14:v3",
+        "expected_revision": {
+          "kind": "git",
+          "object_format": "sha1",
+          "commit_oid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "ref_name": "refs/heads/main",
+          "branch_name": "main",
+          "index_generation": 3
+        },
+        "before_revision": {
+          "kind": "git",
+          "object_format": "sha1",
+          "commit_oid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "ref_name": "refs/heads/main",
+          "branch_name": "main",
+          "index_generation": 3
+        },
+        "proposed_revision": {
+          "kind": "git",
+          "object_format": "sha1",
+          "commit_oid": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "ref_name": "refs/heads/review-mr-14",
+          "branch_name": "review-mr-14",
+          "index_generation": 3
+        },
+        "source_workspace_id": "workspace:alpha:main",
+        "target_workspace_id": "workspace:alpha:review-mr-14",
+        "target_workspace_kind": "git_worktree",
+        "effects": [
+          {
+            "path": "src/review.rs",
+            "disposition": "checked_out"
+          },
+          {
+            "path": "src/notes.md",
+            "disposition": "preserved"
+          }
+        ],
+        "dirty_paths": [
+          "src/notes.md"
+        ],
+        "dirty_snapshot_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "autostash": false,
+        "dirty_preserved": true,
+        "discarded_paths": [],
+        "conflicts": [],
+        "qualification": "qualified",
+        "permission_snapshot_ref": "permission:forge:checkout:31",
+        "file_safe_decision_ref": "filesafe:checkout:31",
+        "writer_lease_ref": "lease:checkout:31:target",
+        "writer_lease_generation": 7,
+        "writer_lease_epoch": 3,
+        "source_topology_generation": 8,
+        "currentness_state": "current",
+        "native_reason_ref": null,
+        "issued_at_utc": "2026-09-25T09:59:00Z"
+      }
+    },
+    {
+      "name": "review_checkout_preview_current_target_lease",
+      "definition": "review_checkout_preview",
+      "value": {
+        "schema_id": "pm.source_control.review_checkout.preview.v1",
+        "schema_version": "1.0.0",
+        "preview_id": "preview:checkout:32",
+        "command_id": "cmd.forge.review.checkout",
+        "command_instance_id": "command:forge:checkout:32",
+        "repository_context_ref": "scm-context:alpha:main:32",
+        "repo_id": "repo:alpha",
+        "scm_backend": "git",
+        "placement": "current_workspace",
+        "provider_review_id": "mr:14",
+        "review_revision_ref": "review-revision:mr-14:v3",
+        "expected_revision": {
+          "kind": "git",
+          "object_format": "sha1",
+          "commit_oid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "ref_name": "refs/heads/main",
+          "branch_name": "main",
+          "index_generation": 3
+        },
+        "before_revision": {
+          "kind": "git",
+          "object_format": "sha1",
+          "commit_oid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "ref_name": "refs/heads/main",
+          "branch_name": "main",
+          "index_generation": 3
+        },
+        "proposed_revision": {
+          "kind": "git",
+          "object_format": "sha1",
+          "commit_oid": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "ref_name": "refs/heads/review-mr-14",
+          "branch_name": "review-mr-14",
+          "index_generation": 3
+        },
+        "source_workspace_id": "workspace:alpha:main",
+        "target_workspace_id": "workspace:alpha:main",
+        "target_workspace_kind": "git_worktree",
+        "effects": [
+          {
+            "path": "src/review.rs",
+            "disposition": "checked_out"
+          },
+          {
+            "path": "src/notes.md",
+            "disposition": "preserved"
+          }
+        ],
+        "dirty_paths": [
+          "src/notes.md"
+        ],
+        "dirty_snapshot_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "autostash": false,
+        "dirty_preserved": true,
+        "discarded_paths": [],
+        "conflicts": [],
+        "qualification": "qualified",
+        "permission_snapshot_ref": "permission:forge:checkout:32",
+        "file_safe_decision_ref": "filesafe:checkout:32",
+        "writer_lease_ref": "lease:checkout:32",
+        "writer_lease_generation": 5,
+        "writer_lease_epoch": 2,
+        "source_topology_generation": 8,
+        "currentness_state": "current",
+        "native_reason_ref": null,
+        "issued_at_utc": "2026-09-25T09:59:00Z"
+      }
     }
   ],
   "invalid": [
@@ -4392,6 +4536,24 @@
         "secret_material_exposed": false,
         "reason_code": null
       }
+    },
+    {
+      "name": "review_checkout_preview_rejects_autostash",
+      "definition": "review_checkout_preview",
+      "base_valid": "review_checkout_preview_separate_target_lease",
+      "patch": {
+        "autostash": true
+      },
+      "expected_error": "checkout previews never autostash"
+    },
+    {
+      "name": "review_checkout_preview_requires_dirty_preserved",
+      "definition": "review_checkout_preview",
+      "base_valid": "review_checkout_preview_current_target_lease",
+      "patch": {
+        "dirty_preserved": false
+      },
+      "expected_error": "checkout previews preserve dirty work"
     }
   ],
   "server_gap_b_coverage": {

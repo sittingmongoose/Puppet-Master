@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11773-L12041
+Source lines: L11773-L12043
 
-Source SHA256: `7edbd66ffd386537b0bdf2fcadc53b3ce563fa52cdfb43294669200b4f667651`
+Source SHA256: `6af1874f910d80adb018db85e7c84146166b4401c65f0cc81e1c87933122eb2b`
 
 ---
 
@@ -27,6 +27,8 @@ Exactly `cmd.forge.repository.list` and `cmd.forge.pipeline.list` use `Plans/for
 For exactly `cmd.forge.review.comment`, the selected binding is `Plans/forge_review_comment_contracts.schema.json#/$defs/request` -> `Plans/forge_review_comment_contracts.schema.json#/$defs/result`. It preserves exact submitted body, nullable original revision/line anchor, authentic SIR original/current caller and provider-issued comment/result/receipt. It requires no pre-existing thread, invents no tracking identity, and never falls back from anchored to unanchored posting. Accepted is not posted; uncertain effects require reconciliation and replay cannot repost. Existing handler, confirmation, availability and event policy remain unchanged.
 
 For exactly `cmd.forge.review.thread.reply`, the selected binding is `Plans/forge_thread_reply_contracts.schema.json#/$defs/request` -> `#/$defs/result`. It preserves actual original body/version, whole immutable thread/revision window, authentic SIR original/current caller and genuine provider receipt/work/error disclosure. Accepted is not posted; unknown is reconciliation-only and replay does not repost. The sole handler, availability and event policy remain unchanged.
+
+For exactly `cmd.forge.review.checkout`, the selected binding is `Plans/forge_review_checkout_selected_contracts.schema.json#/$defs/request` -> `Plans/forge_review_checkout_selected_contracts.schema.json#/$defs/result`. It preserves the original review target, exact Source Location, explicit separate/current placement and the backend-qualified Source Control preview/handoff with FileSafe and current local-write authority. Placement is never silently defaulted, a changed placement invalidates its preview, and no preview authorizes discarding dirty work or any push/publication. Accepted is not checked-out; unknown effects are reconciliation-only and replay never rechecks-out. The sole handler, availability and event policy remain unchanged.
 
 For exactly `cmd.forge.pipeline.cancel`, the selected cancellation binding is `Plans/forge_cancel_selected_contracts.schema.json#/$defs/request` -> `#/$defs/result`. It retains the actual AutomationBinding/run/state fence, direct revalidation, original SIR caller and truthful provider receipt/work/error disclosure. Accepted is not stopped; unknown is reconciliation-only. Existing handler availability, command ID and event policy remain unchanged.
 
