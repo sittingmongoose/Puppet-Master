@@ -6,7 +6,7 @@ This is a plan document only. It covers the two items of Step 8 that are still o
 
 Nothing here edits canon or starts package work. Jared decides the 8(b) go on the coordinator's sizing. Part 1 needs the coordinator's go, and it can land only after the landing-check exports repair.
 
-A third, small item turned up while scoping. It is ready on its own branch, `fix/ea-compaction-pm7-validator-20260924`. It clears the one stated reason for `context.compaction.completed`'s PARTIAL oracle cell: `scripts/pm-validate-pm7-gui-fixtures.py` still forbade the admitted family. The branch edits a script and its test only, so it can land without the exports repair. See its report, `step-08-compaction-pm7-validator-20260924.md`.
+A third, small item turned up while scoping. It is ready on its own branch, `fix/ea-compaction-pm7-validator-20260924`. It clears the one stated reason for `context.compaction.completed`'s PARTIAL oracle cell: `scripts/pm-validate-pm7-gui-fixtures.py` still forbade the admitted family. The branch edits a script and its test only, so it can land without the exports repair. See its report, `step-08-compaction-pm7-validator-20260924.md`. **Update, 2026-09-25:** the branch is withdrawn on the coordinator's routing. The packet-canon-closure thread already carries a stricter fix of the same hunks, `96ab84f13c` (on `fix/named-plan-identity-joins-20260924` and `fix/packet-canon-repairs-20260924`), so that fix stands; our branch and its report do not land. The progress file records the withdrawal and the review's follow-ups.
 
 ## Part 1. 8(c), second half: make the Browser-created v2 checkpoint the current definition
 
@@ -42,7 +42,7 @@ A third, small item turned up while scoping. It is ready on its own branch, `fix
 - the retained-v1-reader representation in the registry, which may need a readiness rule and self-tests of its own;
 - the size of the v1 validator and test rewrite.
 
-**What it closes.** After both halves, both Browser families are complete in canon (12 of 12). Their DL-077 admission records then pass once they are re-pinned to a regraded depth assessment. That leaves `context.compaction.completed`'s oracle cell as the only post-August depth gap. That cell is blocked by the PM7 GUI validator, which sits under `Concepts/`, outside this agent's scope.
+**What it closes.** After both halves, both Browser families are complete in canon (12 of 12). Their DL-077 admission records then pass once they are re-pinned to a regraded depth assessment. That leaves `context.compaction.completed`'s oracle cell as the only post-August depth gap. That cell is blocked by the PM7 GUI validator, `scripts/pm-validate-pm7-gui-fixtures.py`, which the note on the third item at the top already names; this sentence first placed it under `Concepts/` (corrected 2026-09-25). Its fix is carried by `96ab84f13c`. The cell itself moves only through a regrade, which also has to weigh the checker's and its fixture's remaining no-event expectation for Compact Now (the compaction review's C-05, recorded in the progress file).
 
 ## Part 2. 8(b): compiling the reviewed external source packages into canon
 
