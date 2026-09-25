@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L26683-L26876
+Source lines: L26685-L26880
 
-Source SHA256: `135cc9135c4202570396eb55f627b14d495b545f3634d5eecf54140f35047506`
+Source SHA256: `015c2cb3b58d75eaf2ff1868213c5af35e3fe8eaab344ddb6bc79be1b2b6cef6`
 
 ---
 
@@ -202,3 +202,5 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-170, ContractName:Plans/Contracts_V0.md#CV-323, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Decision_Log.md#DL-070, ContractName:Plans/Decision_Log.md#DL-076
+
+<a id="coordination-event-persistence-binding-dl-045-2026-09-25"></a>

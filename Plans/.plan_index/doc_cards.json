@@ -17339,10 +17339,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 211,
+        "False": 212,
         "True": 102
       },
-      "heading_count": 765,
+      "heading_count": 781,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -17427,9 +17427,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 26876,
+      "line_count": 27095,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 313,
+      "plan_unit_count": 314,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -17743,7 +17743,8 @@
         "SP-315",
         "SP-316",
         "SP-317",
-        "SP-319"
+        "SP-319",
+        "SP-320"
       ],
       "reasoning_tiers": [
         "high",
@@ -17824,6 +17825,7 @@
         "seglog_durability_recovery_drift",
         "silent_data_loss",
         "source_history_identity_safety_or_false_recovery",
+        "stale_coordination_projection_or_lost_update",
         "stale_onboarding_path_or_unconfirmed_owner_work_replayed",
         "stale_reader_authority_or_fabricated_original_value",
         "stale_reset_projection_or_replayed_owner_effect",
@@ -17845,10 +17847,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "135cc9135c4202570396eb55f627b14d495b545f3634d5eecf54140f35047506",
+      "sha256": "015c2cb3b58d75eaf2ff1868213c5af35e3fe8eaab344ddb6bc79be1b2b6cef6",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 310,
+        "accepted": 311,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
@@ -17857,7 +17859,7 @@
         "constraint": 4,
         "migration_contract": 2,
         "owner_boundary": 2,
-        "requirement": 256,
+        "requirement": 257,
         "schema_contract": 22,
         "security_contract": 1,
         "storage_contract": 22,
@@ -17913,6 +17915,8 @@
         "Plans/browser_workspace_reset_contract_fixtures.json",
         "Plans/browser_workspace_reset_contracts.schema.json",
         "Plans/context_compaction_completion_contract_fixtures.json",
+        "Plans/coordination_event_payloads.schema.json",
+        "Plans/coordination_projection_contracts.schema.json",
         "Plans/event_append_receipt_contract_fixtures.json",
         "Plans/event_append_receipt_contracts.schema.json",
         "Plans/event_append_receipt_full_value_fixtures.json",
@@ -18140,6 +18144,7 @@
         "reports/event-authority-20260911/step-08-storage-recovery-applied-validation.md",
         "reports/event-authority-20260911/step-08-wire-validation.md",
         "reports/event-authority-20260911/step-08-wire-validation.md - future Case L seglog durability recovery fixture suite - python3 scripts/pm-plan-index.py validate",
+        "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md",
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)",
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_browser_workspace_created.py",
@@ -20019,7 +20024,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T08:02:48Z",
+  "generated_at_utc": "2026-09-25T08:03:38Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20027,13 +20032,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3543,
+      "False": 3544,
       "True": 3197
     },
-    "plan_unit_count": 6740,
+    "plan_unit_count": 6741,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6549,
+      "accepted": 6550,
       "retired": 182,
       "superseded": 9
     },
@@ -20100,7 +20105,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5295,
+      "requirement": 5296,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
