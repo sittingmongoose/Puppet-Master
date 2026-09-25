@@ -5404,10 +5404,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 42,
+        "False": 47,
         "True": 38
       },
-      "heading_count": 166,
+      "heading_count": 176,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5488,9 +5488,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 6601,
+      "line_count": 7160,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 80,
+      "plan_unit_count": 85,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5571,6 +5571,11 @@
         "DL-081",
         "DL-082",
         "DL-083",
+        "DL-084",
+        "DL-085",
+        "DL-086",
+        "DL-088",
+        "DL-089",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5592,11 +5597,13 @@
         "case_l_storage_root_lock_fallback_decision_drift",
         "case_l_supplemental_kernel_depth_decision_drift",
         "case_l_supplemental_probe_decision_drift",
+        "child_run_history_retention_drift",
         "compaction_detail_retention_and_original_custody",
         "completion_state_conflation",
         "correction_landed_in_a_shape_its_owner_did_not_choose",
         "corroboration_disagreement_outcome_drift",
         "corroboration_threshold_drift",
+        "crew_board_message_retention_drift",
         "debug_evidence_capture_hygiene_gap",
         "decision_log_authority_drift",
         "decision_review_flow_drift",
@@ -5625,7 +5632,9 @@
         "navigation_primitive_boundary_drift",
         "operational_retention_cardinality_scope_drift",
         "orchestration_model_drift",
+        "orchestrator_diagnostic_retention_drift",
         "permanent_repository_format_chosen_without_evidence",
+        "platform_capability_cardinality_scope_drift",
         "platform_capability_catalog_deferral_drift",
         "platform_decision_custody_retention_and_cleanup",
         "provider_runtime_actor_envelope_gap",
@@ -5643,6 +5652,7 @@
         "silently_transferred_approval_evidence",
         "source_control_orchestrator_boundary_drift",
         "storage_digest_recipe_or_persisted_live_fence_drift",
+        "subagent_spawn_request_event_retirement_drift",
         "support_decision_state_drift",
         "task_failure_persistence_boundary_drift",
         "terminal_input_protection_scope_bypass",
@@ -5658,16 +5668,16 @@
         "weak_integration_underclassification",
         "workflow_verification_exception_route_drift"
       ],
-      "sha256": "0493c6ce5e30a40f063ad1c4ebe2706fda55369512d82ef6c62b3e20799c4e0a",
+      "sha256": "bb3332032c23b5840bcf9763a3e62451e19b20ceaf6bd82617aab3bf1524ca8b",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 80
+        "accepted": 85
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 77
+        "requirement": 82
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -19987,7 +19997,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T04:21:40Z",
+  "generated_at_utc": "2026-09-25T06:56:01Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19995,13 +20005,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3531,
+      "False": 3536,
       "True": 3197
     },
-    "plan_unit_count": 6728,
+    "plan_unit_count": 6733,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6537,
+      "accepted": 6542,
       "retired": 182,
       "superseded": 9
     },
@@ -20068,7 +20078,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5284,
+      "requirement": 5289,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

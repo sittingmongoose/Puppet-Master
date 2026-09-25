@@ -1734,6 +1734,229 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/event_family_registry.json
 
+### DL-084: Subagent history is kept as long as its chat exists
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session, from the card page: **Approve** on `EA-S09B2-CHILDRUN-RETENTION-001`, which selects option 1.
+
+**Name:** How long a subagent's history is kept.
+
+**Question:** How long should the history of each subagent run (its start, progress, tool use, messages, warnings, retries and how it ended) be kept?
+
+**Why:**
+
+- Every subagent is a child run. Storage also keeps a task record of its settings and outcome, and a permanent record of which run started it, but its step-by-step history is recorded only as these events.
+- Canon says this history lives "in thread history", and that finished subagents "remain in history".
+- Storage already has two rules that fit. Run history is kept for one year after the run finishes. Chat content is kept as long as the chat exists. The second is also the rule you chose on 11 September for Goal text, which is kept with its chat.
+- On 23 September you decided that a task-failure card in chat is only a notice that points at this child-run history, and that the decision does not allow deleting history. The lifetime chosen here decides how long those cards can still open their details.
+- Retention is your choice. No earlier answer covers these events.
+
+**What you get:**
+
+- **As long as the chat exists:** an old chat still opens every subagent's full history, and failure cards always have their details. Deleting the chat removes this history too, within 24 hours unless it is on hold, like the chat's own messages.
+- **One year after the run finishes:** the same lifetime as the parent run's own history, and storage that stays bounded.
+- **Split:** how each subagent started, ended, retried and warned stays with the chat; the step-by-step activity (progress, tool calls, message previews) goes after one year.
+- **Forever:** nothing is ever lost, even after the chat is deleted.
+
+**What it costs:**
+
+- **As long as the chat exists:** busy chats keep growing. Storage still has to say whether a very busy chat has no count limit, as for Goal text, or rolls into a linked continuation after 250,000 records, as chat messages do. Prompt previews, message previews and error text are kept as long as the chat. A subagent's history can outlive its parent run's history, which ends after one year.
+- **One year after the run finishes:** in chats older than a year, subagent and failure cards still show, but their details are gone, and each card has to say so. Deleting a chat within the year does not remove this history unless each contract adds that rule.
+- **Split:** two rules to build and explain. After a year an old chat shows how each subagent ended, but not what it did along the way.
+- **Forever:** storage grows without end, and message and error text stays even after its chat is deleted, so each contract must say how deletion requests are handled.
+
+The permanent record of which run started which subagent is already set to be kept forever by your 23 September answer on runtime artifacts, whichever option you choose.
+
+**Options:**
+
+1. **Keep it as long as the chat exists (recommended).** The same lifetime as Goal text and chat messages.
+2. **Keep it for one year after the run finishes.** The same rule as the parent run's history.
+3. **Split.** How each subagent started, ended, retried and warned stays with the chat. Its progress, tool calls, message previews and output-cut notices are kept one year after the run finishes.
+4. **Keep it forever.**
+
+**Recommendation:** Option 1. Canon shows this history in the chat's history, and it keeps failure cards and their details together for as long as the chat exists, using a lifetime you have already approved.
+
+**Answer:** Approve (option 1).
+
+The history of the 19 child-run families the card names is kept as long as its chat exists: the eight lifecycle families of CV-267 (`subagent.spawned`, `subagent.started`, `subagent.completed`, `subagent.failed`, `subagent.cancelled`, `subagent.timeout`, `subagent.paused`, `subagent.resumed`), the six activity and message families of CV-268 (`subagent.progress`, `subagent.tool_called`, `subagent.tool_completed`, `subagent.message_sent`, `subagent.message_received`, `subagent.output_truncated`) and the five retry, context, model, budget and escalation families of CV-269 (`subagent.retried`, `subagent.context_warning`, `subagent.model_switched`, `subagent.budget_warning`, `subagent.escalated`). This is the lifetime of Goal text (DL-047) and of chat messages: deleting the chat removes this history too, within 24 hours unless it is on hold, and the prompt previews, message previews and error text these events carry are kept as long as the chat. The policy object is `RP-GOAL-THREAD-LIFETIME`, subject to the Storage owner's reuse check under DL-045: that object has no count cap, while Storage's Chat content class caps a thread at 250,000 records and rolls into a linked successor, and no policy object exists for that class yet. The card named this open point, so whether a very busy chat has no count limit or rolls into a linked continuation is a Storage owner follow-up, not decided here; either way the lifetime is the one approved, and if Storage finds the Goal-named object cannot be reused, it materializes the Chat content class for these families with the same lifetime. The Storage retention owner writes the assignment into the Case L-3 retention text, as DL-075's line does for runtime artifacts; each family's full contract carries the structured `retention_policy_ref` and reconciles its chat-deletion behavior; CV-267 to CV-269 and the orchestrator's child-run section cite this entry. The permanent record of which run started a subagent (`runtime_artifact.subagent_lineage`) stays indefinite under DL-075, and the task-failure cards of DL-074 keep their details for as long as the chat exists. This is retention only: it registers, admits or removes nothing, defines no binding and changes no registry row, and the 19 families stay Step 9 technical work.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md`, SHA-256 `e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af`; card `reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md` (Card 1); application record `reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json`.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### DL-085: Crew board messages leave the board after 24 hours and are kept with the coordination records
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session, from the card page: **Approve** on `EA-S09B2-BOARD-RETENTION-001`, which selects option 1.
+
+**Name:** Whether messages on the agents' shared board are kept or deleted once they leave the board.
+
+**Question:** After the crew board hides a message at 24 hours, should the stored message be kept with the run's other coordination records or deleted?
+
+**Why:**
+
+- The crew board is where agents working together leave each other messages: questions, blockers, handoffs. Crew, BrainStorm and the orchestrator's parallel work all use it.
+- The orchestrator already says stale messages leave the board after 24 hours, while unresolved blockers stay visible until they are resolved. Its text says those messages are "archived or deleted", and never says which.
+- Storage never edits stored history in place. A stored record goes away only when its retention period ends or an explicit deletion, such as deleting the project's data, removes it. So "deleted after 24 hours" needs its own short retention rule.
+- Canon already places the board in the same coordination record as agent sign-in, status and file claims, which are kept 180 days after the run finishes. Whether a message is deleted when it leaves the board is your choice.
+
+**What you get:**
+
+- **Hidden after 24 hours, kept with the other coordination records:** one rule for all coordination records. For up to six months you can still see what the agents told each other and why.
+- **Deleted after 24 hours:** the least stored message text.
+
+**What it costs:**
+
+- **Kept with the other coordination records:** after six months the board conversation behind a run is gone, even if the chat is still there. Message subjects and text are kept for that time. A project keeps at most 1,000,000 coordination records; past that the oldest are dropped first, so a very busy project can lose board messages before 180 days.
+- **Deleted after 24 hours:** a new retention rule. The next day nobody can see what the agents said to each other. It also sits badly with the accepted rule that board messages are stored as part of shared crew state.
+
+**Options:**
+
+1. **Hide after 24 hours and keep it with the other coordination records, 180 days after the run finishes (recommended).**
+2. **Delete after 24 hours.** Unresolved blockers stay until they are resolved.
+
+**Recommendation:** Option 1. The board is part of the run's coordination record, so it should last as long as the rest of that record, and this uses a rule already in place.
+
+**Answer:** Approve (option 1).
+
+The crew board still hides a stale message after 24 hours, and unresolved blockers stay visible until they are resolved; leaving the board deletes nothing. The stored messages of `crew.board_message_posted`, `crew.board_message_read` and `crew.board_messages_archived` are kept with the run's other coordination records under `RP-COORDINATION-180D`: 180 days after the run finishes, with at most 1,000,000 coordination records per project and the oldest eligible dropped first past that. The orchestrator owner changes "archived or deleted" in the board lifecycle to "archived"; the Storage owner binds `RP-COORDINATION-180D` for the three board families in its coordination family and retention table; the Contracts board rows carry that retention reference. No policy object is created and no policy value changes. The board families' storage placement, identity joins and payload fields stay technical work under DL-045 and are not decided here. This entry registers, admits or removes nothing and changes no registry row.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md`, SHA-256 `e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af`; card `reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md` (Card 2); application record `reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json`.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Contracts_V0.md
+
+### DL-086: Three orchestrator diagnostics are kept one year after the run finishes
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session, from the card page: **Approve** on `EA-S09B2-DIAGNOSTIC-RETENTION-001`, which selects option 1.
+
+**Name:** How long three orchestrator diagnostic records are kept.
+
+**Question:** How long should these three diagnostic records be kept: an interview phase closed early because it hit its question limit, a configuration check that failed when a run or work unit started, and agent output that could not be read?
+
+**Why:**
+
+- The orchestrator requires all three to be written to stored history. It says nothing about how long they stay.
+- Each explains why part of a run ended the way it did. The unreadable-output record carries at least the first 500 characters of the agent's raw output; the same passage also says all raw output is kept, which the owner still has to reconcile.
+- Storage has three rules that could apply. Run history is kept one year after the run finishes. Debug records are kept 30 days. Security diagnostics that are not approval or audit records, and migration and recovery history, are kept seven years; the platform capability check also uses that rule. None of these three records is a security diagnostic. Retention is your choice.
+
+**What you get:**
+
+- **One year:** the explanation lasts as long as the run it explains.
+- **30 days:** the least stored raw output.
+- **Seven years:** a long record for support and audits.
+- **Split:** raw output goes quickly, and the two records that explain a run's outcome last as long as the run.
+
+**What it costs:**
+
+- **One year:** raw agent output from each unreadable reply, at least its first 500 characters, is kept for a year.
+- **30 days:** after a month, an old run no longer shows why its interview phase closed or why its start was refused, although the run itself is still kept. Each project keeps at most 10,000 of these, a limit that may be shared with the project's other debug records, and the oldest are dropped first.
+- **Seven years:** raw output is kept seven years. Past 2,000,000 per project, new records are refused.
+- **Split:** two rules for one small group of records.
+
+**Options:**
+
+1. **One year after the run finishes (recommended).**
+2. **30 days after the record is written.**
+3. **Seven years.**
+4. **Split.** Unreadable-output records for 30 days, the other two for one year after the run finishes.
+
+**Recommendation:** Option 1. These records explain a run's outcome, so they should last as long as that run's history, using a rule already in place.
+
+**Answer:** Approve (option 1).
+
+`phase.force_completed`, `config.validation.failed` and `parser.error` are kept one year after the run finishes under `RP-RUNTIME-365D`, the rule of the run history they explain, with at most 1,000,000 records per run and 5,000,000 per project, rolling into a successor past that. The raw agent output that `parser.error` carries, at least its first 500 characters, is kept for that year. The Storage retention owner writes the assignment of the three families into its retention text, and each family's full contract carries the structured `retention_policy_ref`. Reconciling the orchestrator's "first 500 characters" with "All raw output is preserved" stays owner work, as the card said, and is not decided here. No policy object is created and no policy value changes. This entry registers, admits or removes nothing and changes no registry row.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md`, SHA-256 `e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af`; card `reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md` (Card 3); application record `reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json`.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/orchestrator-subagent-integration.md
+
+### DL-088: The two subagent start-request event names are retired
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session, from the card page: **Approve** on `EA-S09B2-SPAWN-REQUEST-001`, which selects option 1.
+
+**Name:** Recording a request to start a subagent separately from the subagent itself.
+
+**Question:** Should Puppet Master record a request to start a subagent separately from the subagent being created, or retire the two request names?
+
+**Why:**
+
+- Contracts keeps two names for a start request and its completion. Both names are in accepted Contracts text. The main rule uses them only "when a dispatcher distinguishes" a request from creating the child, and another passage calls them names a particular producer may use. No owner says Puppet Master's does. The two events have no defined content and nothing writes them.
+- When a start has to wait, the child already exists, in the "queued" state, and chat shows it that way.
+- Run Modes says "New crew spawn requests queue until a slot is free". Under current rules that wait shows as a queued child, not as a separate request record, so the sentence needs a clarifying line either way.
+- A start refused for budget before any child exists already gets a reason in the orchestrator's outcome list.
+
+**What you get:**
+
+- **Retire:** one clear record of each subagent from the moment it exists, with no parallel request history.
+- **Register:** a separate history of when a start was asked for, how long it waited for a slot, and whether it was refused before a child existed.
+- **Leave reserved:** no work now. The names stay available for a future design.
+
+**What it costs:**
+
+- **Retire:** accepted Contracts text in two places is removed, and Run Modes gains one clarifying sentence.
+- **Register:** this adds a feature. Nothing writes these events and they have no content, so the orchestrator needs a new request step, two full contracts and tests. The records are kept as long as you choose for subagent history in Card 1.
+- **Leave reserved:** accepted text keeps naming events that nothing writes, and the question comes back when someone needs them.
+
+**Options:**
+
+1. **Retire both names (recommended).** A waiting start is a queued child. A refused start keeps its existing outcome reason.
+2. **Register both as a new feature,** kept as long as Card 1's answer.
+3. **Leave the names reserved but unregistered.** A future design that needs them brings its own card.
+
+**Recommendation:** Option 1. A queued child already records the wait, and nothing today needs a separate request history.
+
+**Answer:** Approve (option 1).
+
+`subagent.spawn_requested` and `subagent.spawn_completed` are retired: Puppet Master does not record a request to start a subagent separately from the subagent it creates. A start that has to wait is a child in the `queued` state, and a start refused for budget before any child exists keeps its existing outcome reason in the orchestrator. The Contracts owner removes the two names from the subagent payload text, the lineage envelope sentence and the accepted units CV-116 and CV-266, keeping the rule that `chat.subagent_*` names are legacy aliases; the Run Modes owner adds one clarifying sentence to the crew queue row that says new crew spawn requests queue until a slot is free. Nothing writes the two events and they have no defined content, so no stored record is removed. In the Step 9 campaign the two rows are excluded as retired, keeping their legacy bucket and cohort pins, and no denominator removal is claimed. This entry itself edits no Contracts or Run Modes text, registers or admits nothing, and changes no registered family or registry row.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md`, SHA-256 `e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af`; card `reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md` (Card 5); application record `reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### DL-089: Application-wide platform capability checks count in an application-wide bucket of their own
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session, from the card page: **Approve** on `EA-S09-PLATFORM-CARDINALITY-001`, which selects option 1.
+
+**Name:** How the seven-year record cap counts platform capability checks that belong to no project.
+
+**Question:** How should the seven-year record cap count platform capability checks that belong to the whole application rather than to a project?
+
+**Why:**
+
+- A platform capability check records whether a provider feature is available. It can run for the whole application or for one project's run.
+- These checks use the seven-year operational retention rule, which caps records at 2,000,000 per project and refuses new ones past the cap. It counts only per project, so checks that belong to no project have nothing to be counted in. Storage calls this an unproved gap and says no invented project, new bucket or new number may fill it.
+- On 24 September you answered the same question for three application-wide Storage events: count them in one application-wide bucket, with the same cap, the same refusal past the cap and the same seven years. That card named only those three, so the platform checks were left open for you.
+- You also deferred filling the platform capability catalog to build time, because provider capabilities will change before then. Until then the catalog is empty and no platform check is recorded, so nothing is counted today. This question is about the counting rule, which does not depend on which capabilities end up in the catalog.
+
+**What you get:**
+
+- **Their own application-wide bucket:** the rule and numbers you approved for the Storage events, settled now, so the build-time work only has to fill the catalog. Platform checks can never use up the room kept for recovery records.
+- **The same bucket as the Storage events:** one count for every application-wide record under the seven-year rule.
+- **Decide at build time:** you decide together with the catalog.
+- **No count cap:** the simplest rule for these checks.
+
+**What it costs:**
+
+- **Their own application-wide bucket:** one more count for Storage to keep. If more than 2,000,000 application-wide checks pile up within seven years, new checks are refused, exactly as for a project. This is very unlikely.
+- **The same bucket as the Storage events:** a flood of platform checks could use up the shared cap, and then Boot recovery and the other recovery records would be refused.
+- **Decide at build time:** the gap stays open, the family's retention stays incomplete, and the build-time catalog work has to carry this question as well.
+- **No count cap:** no count guard on these records. The seven-year limit still applies.
+
+**Options:**
+
+1. **Count them in an application-wide bucket of their own, with the same numbers (recommended).** The same 2,000,000 cap, the same refusal past the cap and the same seven years as the Storage events, counted apart from them. Checks for a project keep their per-project count.
+2. **Count them in the same application-wide bucket as the three Storage events.**
+3. **Decide at build time,** when the catalog is filled.
+4. **No count cap for application-wide checks.** The seven-year limit still applies.
+
+**Recommendation:** Option 1. It closes the last open part of that gap with the rule and numbers you already approved, keeps platform checks from crowding out recovery records, changes nothing for projects, and leaves only the catalog itself for build time.
+
+**Answer:** Approve (option 1).
+
+Under `RP-OPERATIONAL-2555D`, the application-scoped evaluations of `platform.capability_evaluated` are counted in an application-wide bucket of their own, apart from the DL-083 bucket of `storage.boot_recovery`, `storage.recovery_applied` and `storage.compaction_lifecycle_changed`, with the same 2,000,000-record cap, the same fail-closed overflow and the same seven-year period, so platform checks cannot use up the room kept for recovery records. Project-scoped evaluations keep their per-project counting, and no project behavior changes. This answers the part of the SP-291 adapter seam that DL-083 left open for Jared. The Storage retention owner writes it into the SP-291 aggregate custody text as a second application-wide bucket, together with the DL-083 bucket, whose owner edit has not landed yet, and binds it technically under DL-045; no new policy object is created and no `RP-OPERATIONAL-2555D` value changes. Until that owner edit lands, the family's retention cell in the Step 8 depth assessment stays PARTIAL. The platform capability catalog stays empty until build time (DL-082), so no evaluation is recorded or counted today. This entry registers or admits nothing and changes no registry row.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md`, SHA-256 `e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af`; card `reports/event-authority-20260911/step-09-platform-cardinality-card-20260925.md`; application record `reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json`.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/event_family_registry.json
+
 
 ## Owner / Consumer Map
 
@@ -6444,6 +6667,342 @@ negative_constraints:
   - Do not create a new retention policy or change any RP-OPERATIONAL-2555D value to implement the application-wide bucket.
   - Do not invent a project for application-wide records or change per-project counting for project-scoped records.
   - Do not apply this answer to the application-scoped evaluations of platform.capability_evaluated; they sit on the same seam, but that part stays open for Jared.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+```
+
+### DL-084 - Subagent Child-Run History Is Kept As Long As Its Chat Exists
+
+```yaml
+plan_unit_id: DL-084
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on 2026-09-25 to EA-S09B2-CHILDRUN-RETENTION-001: the
+  history of the 19 child-run families subagent.spawned, subagent.started,
+  subagent.completed, subagent.failed, subagent.cancelled, subagent.timeout,
+  subagent.paused, subagent.resumed, subagent.progress, subagent.tool_called,
+  subagent.tool_completed, subagent.message_sent, subagent.message_received,
+  subagent.output_truncated, subagent.retried, subagent.context_warning,
+  subagent.model_switched, subagent.budget_warning and subagent.escalated is kept as long
+  as its chat exists, the lifetime of Goal text (DL-047) and chat messages; deleting the
+  chat removes it within 24 hours unless it is on hold. The policy object is
+  RP-GOAL-THREAD-LIFETIME, subject to the Storage owner's DL-045 reuse check against the
+  Chat content class, which caps a thread at 250,000 records with a linked successor roll
+  and has no policy object of its own; which count rule applies is a Storage owner
+  follow-up, not decided here, and the lifetime holds either way. The Storage retention
+  owner writes the Case L-3 assignment, each family contract carries the structured
+  retention_policy_ref and reconciles chat deletion, and CV-267 to CV-269 and the
+  orchestrator child-run section cite this entry. Nothing is registered, admitted or
+  removed and no registry row changes.
+gui_related: false
+gui_classification_reason: Assigns event retention; chat and card presentation are unchanged.
+split_recommended: false
+depends_on: [DL-039, DL-045, DL-047]
+unblocks: []
+acceptance_criteria:
+  - Storage owner text assigns RP-GOAL-THREAD-LIFETIME, or after its DL-045 reuse check a materialized Chat content class with the same lifetime, to the 19 child-run families in the Case L-3 retention text and states which count rule applies to a very busy chat.
+  - Each family's full contract carries the structured retention_policy_ref and removes the family's history with its chat, within 24 hours unless held; CV-267 to CV-269 and the orchestrator child-run section cite DL-084.
+  - The subagent lineage record keeps RP-AUTHORITY-INDEFINITE under DL-075, and no registry row changes and no family is registered, admitted or removed by this entry.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: child_run_history_retention_drift
+reasoning_tier: high
+context_scope: subagent_child_run_history_retention
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/Contracts_V0.md
+  - Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md
+  - reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md
+  - reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json
+preserved_exact_tokens:
+  - "Approve"
+  - "EA-S09B2-CHILDRUN-RETENTION-001"
+  - "RP-GOAL-THREAD-LIFETIME"
+  - "subagent.spawned"
+  - "subagent.started"
+  - "subagent.completed"
+  - "subagent.failed"
+  - "subagent.cancelled"
+  - "subagent.timeout"
+  - "subagent.paused"
+  - "subagent.resumed"
+  - "subagent.progress"
+  - "subagent.tool_called"
+  - "subagent.tool_completed"
+  - "subagent.message_sent"
+  - "subagent.message_received"
+  - "subagent.output_truncated"
+  - "subagent.retried"
+  - "subagent.context_warning"
+  - "subagent.model_switched"
+  - "subagent.budget_warning"
+  - "subagent.escalated"
+negative_constraints:
+  - Do not give the 19 child-run families a one-year, split or indefinite lifetime, or keep their history after its chat is deleted beyond the chat's own deletion and hold rules.
+  - Do not decide the count rule for a very busy chat on the strength of this entry; the Storage owner's reuse check settles whether RP-GOAL-THREAD-LIFETIME applies as it stands or the Chat content class is materialized.
+  - Do not treat the retention assignment as registration, admission, binding or schema completion.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/Contracts_V0.md
+  - Plans/orchestrator-subagent-integration.md
+```
+
+### DL-085 - Crew Board Messages Are Kept With The Coordination Records After Leaving The Board
+
+```yaml
+plan_unit_id: DL-085
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on 2026-09-25 to EA-S09B2-BOARD-RETENTION-001: the
+  crew board still hides a stale message after 24 hours, with unresolved blockers visible
+  until resolved, and leaving the board deletes nothing. The stored messages of
+  crew.board_message_posted, crew.board_message_read and crew.board_messages_archived are
+  kept with the run's other coordination records under RP-COORDINATION-180D, 180 days
+  after the run finishes, with at most 1,000,000 coordination records per project and the
+  oldest eligible dropped first. The orchestrator board lifecycle says archived instead of
+  archived or deleted, Storage binds RP-COORDINATION-180D for the three families in its
+  coordination family and retention table, and the Contracts board rows carry that
+  reference. No policy object or value changes, and nothing is registered, admitted or
+  removed.
+gui_related: false
+gui_classification_reason: Decides stored message retention; the 24-hour board visibility rule is unchanged.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - The orchestrator board lifecycle says stale board messages are archived after 24 hours, not archived or deleted, and unresolved blockers stay visible until resolved.
+  - Storage owner text binds RP-COORDINATION-180D for crew.board_message_posted, crew.board_message_read and crew.board_messages_archived in its coordination family and retention table, and the Contracts board rows carry that retention reference.
+  - No new retention policy is created and no RP-COORDINATION-180D value changes.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: crew_board_message_retention_drift
+reasoning_tier: high
+context_scope: crew_board_message_retention
+implementation_surfaces:
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md
+  - reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md
+  - reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json
+preserved_exact_tokens:
+  - "Approve"
+  - "EA-S09B2-BOARD-RETENTION-001"
+  - "RP-COORDINATION-180D"
+  - "crew.board_message_posted"
+  - "crew.board_message_read"
+  - "crew.board_messages_archived"
+negative_constraints:
+  - Do not delete stored board messages when they leave the board, or keep them for a period other than the coordination records' period.
+  - Do not create a new short retention policy for the crew board.
+owner_hints:
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/Contracts_V0.md
+```
+
+### DL-086 - Three Orchestrator Diagnostics Are Kept One Year After The Run Finishes
+
+```yaml
+plan_unit_id: DL-086
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on 2026-09-25 to EA-S09B2-DIAGNOSTIC-RETENTION-001:
+  phase.force_completed, config.validation.failed and parser.error are kept one year after
+  the run finishes under RP-RUNTIME-365D, the rule of the run history they explain, with
+  at most 1,000,000 records per run and 5,000,000 per project and a successor roll. The
+  raw agent output parser.error carries, at least its first 500 characters, is kept for
+  that year. The Storage retention owner writes the assignment and each family contract
+  carries the structured retention_policy_ref; reconciling the orchestrator's
+  first-500-characters rule with its all-raw-output rule stays owner work. No policy
+  object or value changes, and nothing is registered, admitted or removed.
+gui_related: false
+gui_classification_reason: Assigns event retention, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - Storage owner text assigns RP-RUNTIME-365D to phase.force_completed, config.validation.failed and parser.error, and each family's full contract carries that structured retention_policy_ref.
+  - The orchestrator reconciles its first-500-characters rule for parser.error with its all-raw-output rule, and the raw output parser.error keeps is retained for the RP-RUNTIME-365D period only.
+  - No new retention policy is created and no RP-RUNTIME-365D value changes.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: orchestrator_diagnostic_retention_drift
+reasoning_tier: high
+context_scope: orchestrator_diagnostic_retention
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md
+  - reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md
+  - reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json
+preserved_exact_tokens:
+  - "Approve"
+  - "EA-S09B2-DIAGNOSTIC-RETENTION-001"
+  - "RP-RUNTIME-365D"
+  - "phase.force_completed"
+  - "config.validation.failed"
+  - "parser.error"
+negative_constraints:
+  - Do not keep these three diagnostics for 30 days or seven years, or split them between policies.
+  - Do not treat the retention assignment as registration, admission, binding or schema completion.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/orchestrator-subagent-integration.md
+```
+
+### DL-088 - Subagent Spawn Request Event Names Are Retired
+
+```yaml
+plan_unit_id: DL-088
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on 2026-09-25 to EA-S09B2-SPAWN-REQUEST-001:
+  subagent.spawn_requested and subagent.spawn_completed are retired, and Puppet Master
+  records no start request separately from the subagent it creates. A waiting start is a
+  child in the queued state and a start refused before any child exists keeps its existing
+  outcome reason. The Contracts owner removes the two names from the subagent payload
+  text, the lineage envelope sentence, CV-116 and CV-266, keeping the rule that
+  chat.subagent_* names are legacy aliases, and Run Modes adds one clarifying sentence to
+  its crew queue row. Nothing writes the two events, so no stored record is removed; in
+  the Step 9 campaign both rows are excluded as retired with their legacy bucket and
+  cohort pins kept and no denominator removal claimed. Nothing is registered or admitted
+  and no registered family changes.
+gui_related: false
+gui_classification_reason: Retires two unwritten event names; chat already shows a waiting start as a queued child.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - Contracts no longer names subagent.spawn_requested or subagent.spawn_completed in its subagent payload text, lineage envelope sentence, CV-116 or CV-266, and keeps the rule that chat.subagent_* names are legacy aliases.
+  - Run Modes clarifies its crew queue row so that a waiting spawn is not recorded as a separate request, in wording the Run Modes owner chooses.
+  - The J248 rows subagent.spawn_requested and subagent.spawn_completed are RECLASSIFY_TO_EXCLUDED with their legacy bucket and cohort pins kept and no denominator removal claimed.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: subagent_spawn_request_event_retirement_drift
+reasoning_tier: high
+context_scope: subagent_spawn_request_retirement
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Run_Modes.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md
+  - reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md
+  - reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json
+preserved_exact_tokens:
+  - "Approve"
+  - "EA-S09B2-SPAWN-REQUEST-001"
+  - "subagent.spawn_requested"
+  - "subagent.spawn_completed"
+  - "CV-116"
+  - "CV-266"
+negative_constraints:
+  - Do not register subagent.spawn_requested or subagent.spawn_completed, or add a separate request history for subagent starts.
+  - Do not remove the legacy chat.subagent_* alias rule or any registered family when the two names are removed.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/Run_Modes.md
+```
+
+### DL-089 - Application-Scoped Platform Evaluations Count In Their Own Application Bucket Under RP-OPERATIONAL-2555D
+
+```yaml
+plan_unit_id: DL-089
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on 2026-09-25 to EA-S09-PLATFORM-CARDINALITY-001:
+  under RP-OPERATIONAL-2555D, the application-scoped evaluations of
+  platform.capability_evaluated are counted in an application-wide bucket of their own,
+  apart from the DL-083 bucket of the three Storage families, with the same
+  2,000,000-record cap, fail-closed overflow and seven-year period. Project-scoped
+  evaluations keep per-project counting. This answers the part of the SP-291 adapter seam
+  that DL-083 left open; the Storage retention owner writes it into the SP-291 policy text
+  as a second application-wide bucket, together with DL-083's still-pending edit, and
+  binds it under DL-045, with no new policy object and no policy value changed. Until that
+  owner edit lands, the family's retention cell in the Step 8 depth assessment stays
+  PARTIAL. The catalog stays empty until build time (DL-082). Nothing is registered or
+  admitted.
+gui_related: false
+gui_classification_reason: Decides retention cardinality counting, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-045, DL-083]
+unblocks: []
+acceptance_criteria:
+  - Storage owner text counts the application-scoped evaluations of platform.capability_evaluated in an application-wide bucket of their own under RP-OPERATIONAL-2555D, separate from the DL-083 bucket, with its unchanged cap, overflow and period, and replaces the unproved adapter seam statement for this family with that binding.
+  - No new retention policy object is created and no RP-OPERATIONAL-2555D value changes; project-scoped evaluations keep per-project counting.
+  - Until that owner edit lands, the Step 8 depth assessment keeps the family's retention cell PARTIAL.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: platform_capability_cardinality_scope_drift
+reasoning_tier: high
+context_scope: platform_capability_application_bucket
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md
+  - reports/event-authority-20260911/step-09-platform-cardinality-card-20260925.md
+  - reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json
+preserved_exact_tokens:
+  - "Approve"
+  - "EA-S09-PLATFORM-CARDINALITY-001"
+  - "RP-OPERATIONAL-2555D"
+  - "platform.capability_evaluated"
+negative_constraints:
+  - Do not count the application-scoped evaluations of platform.capability_evaluated in the DL-083 bucket of the three Storage families, or leave them without a count cap.
+  - Do not create a new retention policy, change any RP-OPERATIONAL-2555D value, or invent a project for application-scoped evaluations.
+  - Do not add platform capability catalog entries before build time on the strength of this entry (DL-082).
 owner_hints:
   - Plans/storage-plan.md
   - Plans/storage_value_registry.json
