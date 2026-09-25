@@ -1,0 +1,1316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json",
+  "$defs": {
+    "Scope": {
+      "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope"
+    },
+    "Owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_id",
+        "owner_epoch",
+        "operation_id"
+      ],
+      "properties": {
+        "owner_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "Selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "sha256"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "Enrollment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "profile_id",
+        "installed_descriptor_sha256",
+        "original_workflow_birth",
+        "original_workflow_birth_origin",
+        "native_storage_instance_id",
+        "database_instance_id",
+        "actual_installing_owner",
+        "original_installation_operation_id",
+        "original_birth_transaction_id",
+        "installed_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Scope"
+        },
+        "profile_id": {
+          "const": "pm.executor.workflow_source.all_writers.v8"
+        },
+        "installed_descriptor_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_workflow_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/WorkflowBirth"
+        },
+        "original_workflow_birth_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/WorkflowMutationOrigin"
+        },
+        "native_storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "database_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_installing_owner": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Owner"
+        },
+        "original_installation_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_birth_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "installed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "SlotIdle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "last_released_operation_id",
+        "last_release_selector"
+      ],
+      "properties": {
+        "kind": {
+          "const": "idle"
+        },
+        "last_released_operation_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_release_selector": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "SlotReplan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "operation_id",
+        "actual_owner",
+        "phase",
+        "control_selector",
+        "claim_transaction_id",
+        "claim_origin_key"
+      ],
+      "properties": {
+        "kind": {
+          "const": "replan"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_owner": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Owner"
+        },
+        "phase": {
+          "enum": [
+            "claimed",
+            "prepared",
+            "native_applied",
+            "appended_held",
+            "completed",
+            "observed",
+            "recovering",
+            "revoked"
+          ]
+        },
+        "control_selector": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "claim_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_origin_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "SlotCertified": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "operation_id",
+        "actual_owner",
+        "phase",
+        "control_selector",
+        "claim_transaction_id",
+        "claim_origin_key"
+      ],
+      "properties": {
+        "kind": {
+          "const": "certified"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_owner": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Owner"
+        },
+        "phase": {
+          "enum": [
+            "claimed",
+            "prepared",
+            "native_applied",
+            "appended_held",
+            "completed",
+            "observed",
+            "recovering",
+            "revoked"
+          ]
+        },
+        "control_selector": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "claim_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_origin_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "Slot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "revision",
+        "enrollment",
+        "state",
+        "previous_slot",
+        "native_issuance_transaction_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Scope"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "enrollment": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+        },
+        "state": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/SlotIdle"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/SlotReplan"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/SlotCertified"
+            }
+          ]
+        },
+        "previous_slot": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "native_issuance_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "SlotOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "issuer_method",
+        "actual_native_owner",
+        "native_storage_instance_id",
+        "database_instance_id",
+        "native_transaction_id",
+        "operation_id",
+        "slot_before",
+        "slot_after",
+        "enrollment",
+        "input_sha256",
+        "issued_at_utc",
+        "slot_revision"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Scope"
+        },
+        "issuer_method": {
+          "enum": [
+            "combined.birth.v1",
+            "combined.claim.v1",
+            "owner.workflow.replan.prepare.v1",
+            "owner.workflow.replan.apply_native.v1",
+            "owner.workflow.replan.append_original.v1",
+            "owner.workflow.replan.complete.v1",
+            "owner.workflow.replan.observe.v1",
+            "owner.workflow.replan.release.v1",
+            "owner.storage.certified_event.arm.v1",
+            "owner.storage.certified_event.append_held.v1",
+            "owner.workflow.certified_event.commit_native.v1",
+            "owner.workflow.certified_event.release.v1",
+            "owner.workflow.replan.reconcile.v1",
+            "owner.workflow.certified_event.recover_original.v1",
+            "owner.executor.workflow_source.record_stop.v1",
+            "owner.workflow.replan.finalize_producer.v1",
+            "owner.workflow.replan.read_original.v1"
+          ]
+        },
+        "actual_native_owner": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Owner"
+        },
+        "native_storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "database_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slot_before": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slot_after": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+        },
+        "enrollment": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+        },
+        "input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "slot_revision": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+        }
+      }
+    },
+    "StorageEnrollment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record",
+        "storage_instance_id",
+        "physical_key"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_combined_enrollment.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Enrollment"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "StorageSlot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record",
+        "storage_instance_id",
+        "physical_key"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_combined_slot.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Slot"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "StorageSlotOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record",
+        "storage_instance_id",
+        "physical_key"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_combined_slot_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/SlotOrigin"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "TypedOriginalRow": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "role": {
+              "const": "enrollment"
+            },
+            "selection": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageEnrollment"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "role": {
+              "const": "slot"
+            },
+            "selection": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlot"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "role": {
+              "const": "slot_origin"
+            },
+            "selection": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlotOrigin"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "role": {
+              "const": "workflow_birth"
+            },
+            "selection": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageWorkflowBirth"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "role": {
+              "const": "workflow_birth_origin"
+            },
+            "selection": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageWorkflowMutationOrigin"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "role": {
+              "const": "replan_control"
+            },
+            "selection": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredPublicationControl"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "role": {
+              "const": "certified_control"
+            },
+            "selection": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v2.schema.json#/$defs/StorageControl"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "role": {
+              "const": "replan_release"
+            },
+            "selection": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredReleaseReceipt"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "role": {
+              "const": "certified_release"
+            },
+            "selection": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v2.schema.json#/$defs/StorageRelease"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "role": {
+              "const": "slot_revision"
+            },
+            "selection": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlotRevision"
+            }
+          }
+        }
+      ]
+    },
+    "OriginalRowIssuance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "selection",
+        "actual_original_owner",
+        "original_transaction_id",
+        "original_issued_at_utc",
+        "native_issuance_read_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Scope"
+        },
+        "selection": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+        },
+        "actual_original_owner": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Owner"
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "native_issuance_read_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "StorageAcquisitionSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "native_storage_instance_id",
+        "database_instance_id",
+        "actual_native_reader",
+        "native_read_transaction_id",
+        "native_snapshot_generation",
+        "root_generation",
+        "installed_descriptor_bytes_base64",
+        "installed_descriptor_sha256",
+        "complete_family_prefixes",
+        "complete_key_inventory",
+        "typed_rows",
+        "original_issuances"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Scope"
+        },
+        "native_storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "database_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_native_reader": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Owner"
+        },
+        "native_read_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_snapshot_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "root_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "installed_descriptor_bytes_base64": {
+          "type": "string",
+          "contentEncoding": "base64"
+        },
+        "installed_descriptor_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "complete_family_prefixes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "complete_key_inventory": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "typed_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/TypedOriginalRow"
+          },
+          "minItems": 0
+        },
+        "original_issuances": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/OriginalRowIssuance"
+          },
+          "minItems": 0
+        }
+      },
+      "$comment": "Original Storage-owned raw read result from the actual installed native handle. It is never accepted as caller testimony. The lower acquisition operation obtains this source before any combined guard result exists; no guard is required to acquire itself."
+    },
+    "Unborn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source"
+      ],
+      "properties": {
+        "kind": {
+          "const": "unborn"
+        },
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageAcquisitionSource"
+        }
+      }
+    },
+    "Idle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source",
+        "enrollment",
+        "slot",
+        "slot_origin"
+      ],
+      "properties": {
+        "kind": {
+          "const": "idle"
+        },
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageAcquisitionSource"
+        },
+        "enrollment": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageEnrollment"
+        },
+        "slot": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlot"
+        },
+        "slot_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlotOrigin"
+        }
+      }
+    },
+    "ReplanHeld": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source",
+        "enrollment",
+        "slot",
+        "slot_origin",
+        "control"
+      ],
+      "properties": {
+        "kind": {
+          "const": "replan_held"
+        },
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageAcquisitionSource"
+        },
+        "enrollment": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageEnrollment"
+        },
+        "slot": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlot"
+        },
+        "slot_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlotOrigin"
+        },
+        "control": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredPublicationControl"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "CertifiedHeld": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source",
+        "enrollment",
+        "slot",
+        "slot_origin",
+        "control"
+      ],
+      "properties": {
+        "kind": {
+          "const": "certified_held"
+        },
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageAcquisitionSource"
+        },
+        "enrollment": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageEnrollment"
+        },
+        "slot": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlot"
+        },
+        "slot_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlotOrigin"
+        },
+        "control": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v2.schema.json#/$defs/StorageControl"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "Unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "scope",
+        "reason"
+      ],
+      "properties": {
+        "kind": {
+          "const": "unavailable"
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Scope"
+        },
+        "reason": {
+          "enum": [
+            "missing_original",
+            "unknown_native_issuance",
+            "incomplete_inventory",
+            "wrong_installation",
+            "scope_mismatch",
+            "stale_snapshot",
+            "slot_conflict",
+            "phase_mismatch",
+            "revoked",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "GuardResult": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Unborn"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Idle"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/ReplanHeld"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/CertifiedHeld"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Unavailable"
+        }
+      ]
+    },
+    "GuardReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "actual_requested_method_id",
+        "actual_native_owner",
+        "requested_native_read_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Scope"
+        },
+        "actual_requested_method_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_native_owner": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Owner"
+        },
+        "requested_native_read_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ClaimInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "guard",
+        "actual_requested_operation",
+        "operation_id",
+        "actual_native_owner",
+        "native_write_transaction_id"
+      ],
+      "properties": {
+        "guard": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Idle"
+        },
+        "actual_requested_operation": {
+          "enum": [
+            "replan",
+            "certified"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_native_owner": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Owner"
+        },
+        "native_write_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ClaimResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enrollment",
+        "slot",
+        "origin",
+        "slot_revision"
+      ],
+      "properties": {
+        "enrollment": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageEnrollment"
+        },
+        "slot": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlot"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlotOrigin"
+        },
+        "slot_revision": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlotRevision"
+        }
+      }
+    },
+    "BirthInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "guard",
+        "whole_original_birth_input",
+        "installed_descriptor_bytes_base64",
+        "installed_descriptor_sha256",
+        "actual_native_owner",
+        "native_birth_transaction_id"
+      ],
+      "properties": {
+        "guard": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Unborn"
+        },
+        "whole_original_birth_input": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/WorkflowBirthInput"
+        },
+        "installed_descriptor_bytes_base64": {
+          "type": "string",
+          "contentEncoding": "base64"
+        },
+        "installed_descriptor_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "actual_native_owner": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Owner"
+        },
+        "native_birth_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "BirthResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_workflow_birth_publication",
+        "enrollment",
+        "slot",
+        "origin",
+        "slot_revision"
+      ],
+      "properties": {
+        "original_workflow_birth_publication": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/WorkflowBirthPublication"
+        },
+        "enrollment": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageEnrollment"
+        },
+        "slot": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlot"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlotOrigin"
+        },
+        "slot_revision": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlotRevision"
+        }
+      }
+    },
+    "StopAcceptedPending": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "guard",
+        "slot_after",
+        "slot_origin",
+        "original_stop_operation_id",
+        "original_native_revocation_transaction_id",
+        "current_goal_revocation_source",
+        "actual_native_phase_current",
+        "complete_all_generation_effect_census",
+        "action_authority",
+        "d06_coherent_publication",
+        "native_revocation_result",
+        "native_revocation_origin",
+        "native_run_control_after",
+        "native_scheduler_control_after",
+        "native_scheduler_origin"
+      ],
+      "properties": {
+        "kind": {
+          "const": "stop_accepted_publication_pending"
+        },
+        "guard": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult"
+        },
+        "slot_after": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlot"
+        },
+        "slot_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlotOrigin"
+        },
+        "original_stop_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_native_revocation_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_goal_revocation_source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        },
+        "actual_native_phase_current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/PendingNativePhase"
+        },
+        "complete_all_generation_effect_census": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/WholeEffectCensus"
+        },
+        "action_authority": {
+          "const": "revocation_only"
+        },
+        "d06_coherent_publication": {
+          "const": "unavailable_until_original_phase_sources_complete"
+        },
+        "native_revocation_result": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult"
+        },
+        "native_revocation_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StoragePublicationOrigin"
+        },
+        "native_run_control_after": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunExecutionControl"
+        },
+        "native_scheduler_control_after": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageSchedulerControl"
+        },
+        "native_scheduler_origin": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageMutationOrigin"
+        }
+      }
+    },
+    "StorageSlotRevision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record",
+        "storage_instance_id",
+        "physical_key"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_combined_slot_revision.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Slot"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "PendingNativePhase": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "replan_pending"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/PhaseCurrent"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value",
+            "control"
+          ],
+          "properties": {
+            "kind": {
+              "const": "certified_held"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/CurrentSource"
+            },
+            "control": {
+              "$ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v2.schema.json#/$defs/StorageControl"
+            }
+          }
+        }
+      ]
+    },
+    "PendingStopSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "guard",
+        "actual_native_phase_current",
+        "current_goal",
+        "original_start",
+        "actual_scheduler",
+        "original_observer_inventory",
+        "original_pointer",
+        "complete_all_generation_effect_census"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/Request"
+        },
+        "guard": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult"
+        },
+        "actual_native_phase_current": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/PendingNativePhase"
+        },
+        "current_goal": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        },
+        "original_start": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json#/$defs/OriginalStartAssociation"
+        },
+        "actual_scheduler": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageSchedulerControl"
+        },
+        "original_observer_inventory": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageInventoryHead"
+        },
+        "original_pointer": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageCurrentPointer"
+        },
+        "complete_all_generation_effect_census": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/WholeEffectCensus"
+        }
+      }
+    }
+  }
+}

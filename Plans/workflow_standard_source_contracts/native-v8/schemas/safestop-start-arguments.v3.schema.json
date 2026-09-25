@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v3.schema.json",
+  "$comment": "Complete private phase companions only; authentic owner chooses actual permitted lifecycle phase. Never a public capability or retained snapshot family.",
+  "$defs": {
+    "OriginalStartArgument": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json#/$defs/OriginalCommitArgument"
+    },
+    "BirthStartOutput": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json#/$defs/BirthControlPublication"
+    },
+    "CurrentStartArgument": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json#/$defs/CurrentSourceArgument"
+    },
+    "StoppedAggregateArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "aggregate_input",
+        "current_start"
+      ],
+      "properties": {
+        "aggregate_input": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateInput"
+        },
+        "current_start": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json#/$defs/CurrentSourceArgument"
+        }
+      }
+    },
+    "StoppedCurrentBoundaryArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_boundary",
+        "current_start"
+      ],
+      "properties": {
+        "current_boundary": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CurrentBoundary"
+        },
+        "current_start": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json#/$defs/CurrentSourceArgument"
+        }
+      }
+    }
+  }
+}

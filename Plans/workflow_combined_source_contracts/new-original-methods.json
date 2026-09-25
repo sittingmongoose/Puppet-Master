@@ -1,0 +1,57 @@
+{
+  "profile": "pm.executor.workflow_source.all_writers.v8",
+  "methods": [
+    {
+      "method": "combined.read_guard.v1",
+      "input": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardReadRequest",
+      "result": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+      "original_owner": "original native Storage read owner",
+      "original_capability": "Actual native Storage handle performs complete run-prefix/key census and original issuance acquisition; no future result argument",
+      "entry_final": "guard-acquisition-predicates.json complete predicates, independently at entry and after last helper under actual native transaction/lock",
+      "revocation_rule": "Original read acquisition only; no execution grant or recursive dependency on RunRevocationCurrent."
+    },
+    {
+      "method": "combined.birth.v1",
+      "input": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/BirthInput",
+      "result": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/BirthResult",
+      "original_owner": "original Workflow birth owner and same native Storage transaction",
+      "original_capability": "Original full birth/profile installation plus exact real native registration; no late enrollment",
+      "entry_final": "guard-acquisition-predicates.json complete predicates, independently at entry and after last helper under actual native transaction/lock",
+      "revocation_rule": "Genuine original birth/current Goal creation authority and complete nonexistence/profile registration; never retrofit an existing stopped run."
+    },
+    {
+      "method": "combined.claim.v1",
+      "input": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/ClaimInput",
+      "result": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/ClaimResult",
+      "original_owner": "original per-Workflow native operation coordinator",
+      "original_capability": "Actual exclusive Workflow lock and slot revision CAS before prepare, no future intent/result",
+      "entry_final": "guard-acquisition-predicates.json complete predicates, independently at entry and after last helper under actual native transaction/lock",
+      "mandatory_original_run_revocation_argument": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+      "revocation_rule": "Deny claim on actual Goal/slot execution revocation or unavailable authority; original complete claim rules remain."
+    },
+    {
+      "method": "owner.executor.native.read_run_execution_revocation.v1",
+      "input": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RevocationReadRequest",
+      "result": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+      "original_owner": "Original Executor native run-execution admission/callback owner, installed at original combined Workflow birth",
+      "status": "NEW_AUTHORED_TYPED_CAPABILITY_NOT_INSTALLED",
+      "source_contract": "STOP-PROTOCOL.md",
+      "private_candidate": null,
+      "caller_supplied_afterimages": false,
+      "original_record_cancellation_reused": false,
+      "positive_route": "R06: authentic Goal Stop is acquired independently of existing slot revocation at every actual phase, explicitly first held/unrevoked. No prior lower success is asserted."
+    },
+    {
+      "method": "owner.executor.native.revoke_run_execution.v1",
+      "input": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationSource",
+      "result": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationMethodResult",
+      "original_owner": "Original Executor native run-execution admission/callback owner, installed at original combined Workflow birth",
+      "status": "NEW_AUTHORED_TYPED_CAPABILITY_NOT_INSTALLED",
+      "source_contract": "STOP-PROTOCOL.md",
+      "private_candidate": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationCandidate",
+      "caller_supplied_afterimages": false,
+      "original_record_cancellation_reused": false,
+      "positive_route": "First held/unrevoked with GoalStoppedCurrentAcquisition enters original lower publication; Goal Stop alone cannot choose already_execution_revoked. Already outcome requires genuine immutable custody and current actual native invalidation. Lower input remains held-only; released idle is readback-only."
+    }
+  ]
+}

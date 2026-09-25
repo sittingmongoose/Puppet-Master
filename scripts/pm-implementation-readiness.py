@@ -758,16 +758,20 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # deferred coordination families coordination_event_records and coordination_read_model_projections
 # are materialized in place as SP-320 keyed value compositions, so 272 materialized and 21 deferred
 # become 274 and 19. The family count, the retention-policy count and the tiers are unchanged.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 294
+# Re-pinned 2026-09-25 on branch plans/replan-v8-a1-20260925 (Replan v8 A1 companions, SP-321,
+# SP-322): 34 families are appended as /families/294 to /families/327 (SP-321 has 30, SP-322 has 4),
+# all materialized and later_gui_or_feature_projection, so 294 families, 274 materialized and 251
+# later-GUI become 328, 308 and 285. The retention-policy count and the other counts are unchanged.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 328
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 274,
+    "materialized": 308,
     "deferred_not_build_blocking": 19,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 40,
-    "later_gui_or_feature_projection": 251,
+    "later_gui_or_feature_projection": 285,
     "migration_only": 3,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [

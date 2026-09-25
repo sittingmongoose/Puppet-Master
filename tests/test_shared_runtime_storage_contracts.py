@@ -213,12 +213,15 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
         # coordination_event_records and coordination_read_model_projections are materialized in place
         # as SP-320 keyed value compositions, so 272 materialized and 21 deferred become 274 and 19.
         # The family count stays 294.
-        self.assertEqual(len(self.registry["families"]), 294)
+        # Re-pinned 2026-09-25 (Replan v8 A1, SP-321 and SP-322; branch plans/replan-v8-a1-20260925):
+        # 34 materialized families are appended as /families/294 to /families/327, so 294 families
+        # and 274 materialized become 328 and 308. Deferred and alias counts are unchanged.
+        self.assertEqual(len(self.registry["families"]), 328)
         self.assertEqual(
             Counter(row["status"] for row in self.registry["families"]),
             Counter(
                 {
-                    "materialized": 274,
+                    "materialized": 308,
                     "deferred_not_build_blocking": 19,
                     "compatibility_alias": 1,
                 }

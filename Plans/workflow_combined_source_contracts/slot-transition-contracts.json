@@ -1,0 +1,197 @@
+{
+  "status": "AUTHORING_SOURCE_CONTRACT",
+  "no_independent_untyped_slot_helper": true,
+  "methods": [
+    {
+      "actual_issuer_method": "combined.birth.v1",
+      "before": "unborn",
+      "after": "idle",
+      "atomic_scope": "same original native Workflow birth transaction",
+      "full_input_contract": "new-original-methods.json",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "combined.claim.v1",
+      "before": "idle",
+      "after": "replan:claimed|certified:claimed",
+      "atomic_scope": "original exclusive native slot compare-and-swap",
+      "full_input_contract": "new-original-methods.json",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.workflow.replan.prepare.v1",
+      "before": "replan:claimed",
+      "after": "replan:prepared",
+      "atomic_scope": "same original native prepared/intent/control publication",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.workflow.replan.apply_native.v1",
+      "before": "replan:prepared",
+      "after": "replan:native_applied",
+      "atomic_scope": "same original native body/graph/RequiredSet/member/application/origin/control transaction",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.workflow.replan.append_original.v1",
+      "before": "replan:native_applied",
+      "after": "replan:appended_held",
+      "atomic_scope": "original authentic Event append followed by matching native control/slot publication; not cross-store atomic",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.workflow.replan.complete.v1",
+      "before": "replan:appended_held",
+      "after": "replan:completed",
+      "atomic_scope": "same compact completion/origin/control native transaction",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.workflow.replan.observe.v1",
+      "before": "replan:completed",
+      "after": "replan:observed",
+      "atomic_scope": "same genuine D01 observer/inventory/control native transaction",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.workflow.replan.release.v1",
+      "before": "replan:observed",
+      "after": "idle",
+      "atomic_scope": "same original release/slot native transaction after whole original full readback",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.storage.certified_event.arm.v1",
+      "before": "certified:claimed",
+      "after": "certified:prepared",
+      "atomic_scope": "same original intent/control native transaction",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.storage.certified_event.append_held.v1",
+      "before": "certified:prepared",
+      "after": "certified:appended_held",
+      "atomic_scope": "original authentic Event append followed by original held Event phase/control/slot native transaction",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.workflow.certified_event.commit_native.v1",
+      "before": "certified:appended_held",
+      "after": "certified:completed",
+      "atomic_scope": "same original complete certified native publication/D01/receipt/commit/origin/control transaction",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.workflow.certified_event.release.v1",
+      "before": "certified:completed",
+      "after": "idle",
+      "atomic_scope": "same original release/control/slot native transaction after whole genuine readback",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.workflow.replan.reconcile.v1",
+      "before": "replan:held_or_recovering_or_revoked",
+      "after": "replan:same_authentic_phase_or_recovering_or_revoked",
+      "atomic_scope": "same original recovery only; never manufacture or repeat native application/Event/generation",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.workflow.certified_event.recover_original.v1",
+      "before": "certified:held_or_recovering_or_revoked",
+      "after": "certified:same_authentic_phase_or_recovering_or_revoked",
+      "atomic_scope": "same original recovery only; no second append or native certification",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.executor.workflow_source.record_stop.v1",
+      "before": "idle|replan:held|certified:held",
+      "after": "idle|replan:revoked|certified:revoked",
+      "atomic_scope": "actual original native Stop/revocation; preserve held family/operation, never release it",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.workflow.replan.finalize_producer.v1",
+      "before": "replan:native_applied",
+      "after": "replan:native_applied",
+      "atomic_scope": "same original compact finalization receipt/control-reference/slot native transaction; no Event append or repeat native work",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    },
+    {
+      "actual_issuer_method": "owner.workflow.replan.read_original.v1",
+      "before": "replan:observed",
+      "after": "replan:observed",
+      "atomic_scope": "same original full readback verification control CAS observer_verified to whole_verified and slot publication; a repeat nonmutating read does not issue another slot revision",
+      "full_input_contract": "Every exact occurrence of this method in complete-method-occurrences.json, conjunctively, including complete original sources/candidates/results and mandatory phase arguments.",
+      "entry": "Reacquire complete original Storage acquisition, original source arguments and fixed actual phase. Exact scope/enrollment/owner/operation/control/currentness joins under genuine native lock/CAS.",
+      "candidate": "Derive entire new slot and compact origin from actual original source/currentness and coissued original phase candidates; claim_origin_key is a deterministic key only, never its own future origin hash.",
+      "final": "After final helper repeat whole original source/candidate predicate and same slot CAS under native write transaction. Publish original phase outputs, Slot and SlotOrigin together where transaction-local; Event append is separately authentic and held across stores.",
+      "issuance_commitment_order": "Original input tuple -> original phase candidate/control bytes -> new Slot physical bytes -> SlotOrigin with slot_after hash. Slot contains only claim_origin_key, never its future SlotOrigin hash. Full independent original owner issuance remains mandatory."
+    }
+  ],
+  "current_native_dispatch": "Current native scheduler/attempt/effect/progress/Standard operations require Idle except explicitly specified same-owner lower publication/Stop/recovery phases. Slot idle is necessary, never sufficient: all full original sources and Goal guards remain mandatory.",
+  "conflict": "Actual native owner registration chooses phase. A caller cannot select either family, a released receipt, or a branch to bypass a conflicting slot.",
+  "absence": "Only original full native run-prefix/key/birth census proves no active slot. Missing metadata is unavailable.",
+  "stop_successor": "STOP-PROTOCOL.md R03-R08 and stop-native-participants.json; only existing three slot afterimages, authentic lower original Executor capability invalidation, all terminal/attempt/effect/native/scheduler facts preserved. No native cancel asserted."
+}

@@ -6,7 +6,7 @@
         "False": 32,
         "True": 36
       },
-      "heading_count": 125,
+      "heading_count": 126,
       "implementation_surfaces": [
         "Plans/.audits/_semantic_closure_registry.jsonl",
         "Plans/.audits/audit-*/audit_scope_manifest.jsonl",
@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6013,
+      "line_count": 6020,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "cb30c059749992fbb13703b93a3b7d6fda0f36daa70a2dab2cb22f4632369929",
+      "sha256": "d431167a65309ecbba8bc8ffb6a6043173acf8edee0d557ec68aa3f2774e79ce",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -17938,7 +17938,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "57d570b790eb6c47c9a6cb1c49a10ac7f6dbf63ca3fd667096ee4df22e015e76",
+      "sha256": "4c37d8c13cc374848dcf7bd6354a78c873572c982377584a6bf913da09cdd586",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 313,
@@ -20125,7 +20125,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T12:42:23Z",
+  "generated_at_utc": "2026-09-25T12:58:56Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -1,0 +1,49 @@
+{
+  "profile": "pm.executor.workflow_source.all_writers.v8",
+  "rows": [
+    {
+      "field": "workflow_update",
+      "family_id": "executor_workflow_replan_update",
+      "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_replan_observer.v1.schema.json#/$defs/StorageReplanWorkflowUpdate",
+      "schema_id": "pm.storage_value.executor_workflow_replan_update.v1",
+      "schema_version": "1.0.0",
+      "selection_rule": "Exact original same-observer-transaction physical key/codec/header/value hash; original scope and full independently acquired actual issuance must agree."
+    },
+    {
+      "field": "workflow_head",
+      "family_id": "executor_workflow_workflow_head",
+      "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageWorkflowHead",
+      "schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+      "schema_version": "8.0.0",
+      "selection_rule": "Exact original same-observer-transaction physical key/codec/header/value hash; original scope and full independently acquired actual issuance must agree."
+    },
+    {
+      "field": "pointer",
+      "family_id": "executor_workflow_current_pointer",
+      "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageCurrentPointer",
+      "schema_id": "pm.storage_value.executor_workflow_current_pointer.v2",
+      "schema_version": "2.0.0",
+      "selection_rule": "Exact original same-observer-transaction physical key/codec/header/value hash; original scope and full independently acquired actual issuance must agree."
+    },
+    {
+      "field": "inventory",
+      "family_id": "executor_workflow_inventory_head",
+      "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageInventoryHead",
+      "schema_id": "pm.storage_value.executor_workflow_inventory_head.v2",
+      "schema_version": "2.0.0",
+      "selection_rule": "Exact original same-observer-transaction physical key/codec/header/value hash; original scope and full independently acquired actual issuance must agree."
+    },
+    {
+      "field": "registration_origins",
+      "family_id": "executor_workflow_mutation_origin",
+      "schema_ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageMutationOrigin",
+      "schema_id": "pm.storage_value.executor_workflow_mutation_origin.v2",
+      "schema_version": "2.0.0",
+      "selection_rule": "Exact original same-observer-transaction physical key/codec/header/value hash; original scope and full independently acquired actual issuance must agree."
+    }
+  ],
+  "origin_family": "executor_workflow_replan_observer_origin",
+  "origin_schema_ref": "https://puppetmaster.local/proposals/executor_workflow_replan_observer.v1.schema.json#/$defs/StorageReplanObserverOrigin",
+  "complete_pointer_join": "New current pointer.workflow_head equals issued WorkflowHead selection; pointer inventory-head selection equals issued InventoryHead; all remaining unchanged pointer associations retain exact original source bindings. All original origin afterimages are exact actually published values, not planned or caller-supplied selectors.",
+  "registration_operation_identity": "Every registration origin has a genuinely distinct original native suboperation identity or is the single actual batch registration origin, under the same observer transaction. Its original physical key is injective; do not reuse one operation key for unequal per-member origins. Complete materialized membership registration is bijective with actual born records and original materialization receipts."
+}

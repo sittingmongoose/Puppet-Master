@@ -1,0 +1,4266 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json",
+  "$comment": "SOURCE ONLY. Exact original native birth/update/result publication, whole source equality, codec/origin/install/retention and final joint predicates are mandatory beyond schema. No schema instance, fixture or native subject executed.",
+  "$defs": {
+    "SourceSelector": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector"
+    },
+    "OriginalSourceBinding": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalSourceBinding"
+    },
+    "RunIdentity": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity"
+    },
+    "ExecutorScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "goal_id",
+        "goal_run_id",
+        "workgraph_id",
+        "workgraph_revision",
+        "worknode_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "worknode_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "RunScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "goal_id",
+        "goal_run_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "OwnerIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref",
+        "owner_epoch",
+        "server_id",
+        "server_claim_epoch"
+      ],
+      "properties": {
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_claim_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "WorkNodeSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "executor_worknode"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_worknode.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "WorkNodeControlSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "executor_worknode_control"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_worknode_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "AttemptSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "attempt_record"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.attempt_record.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "AttemptControlSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "executor_attempt_control"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_attempt_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "RunControlSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "executor_run_execution_control"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_run_execution_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "TransitionSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "executor_worknode_transition"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_worknode_transition.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ResultSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "executor_native_operation_result"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_native_operation_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "CompletionSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "executor_worknode_completion"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_worknode_completion.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "InputCaptureSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "executor_original_input_capture"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_original_input_capture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "OriginSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "executor_original_publication_origin"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_original_publication_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "AttemptBirthSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "executor_attempt_birth"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_attempt_birth.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "RunResultSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "executor_run_operation_result"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.executor_run_operation_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "GoalBodySelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "goal_body"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.goal_body.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "GoalBodyControlSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "goal_body_control"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.goal_body_control.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "GoalStopSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "goal_host_stop_control"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.goal_host_stop_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "GoalRunBodySelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "workflow_goal_run_body"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.workflow_goal_run_body.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "GoalRunControlSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "workflow_goal_run_control"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.workflow_goal_run_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "AttemptReceiptSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "attempt_receipt"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.storage_value.attempt_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ExecutionUnitSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "const": "execution_unit_context_store"
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "const": "pm.execution_unit_context"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "NativeBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/WorkNodeSelector"
+            },
+            {
+              "$ref": "#/$defs/AttemptSelector"
+            },
+            {
+              "$ref": "#/$defs/TransitionSelector"
+            },
+            {
+              "$ref": "#/$defs/ResultSelector"
+            },
+            {
+              "$ref": "#/$defs/CompletionSelector"
+            },
+            {
+              "$ref": "#/$defs/InputCaptureSelector"
+            },
+            {
+              "$ref": "#/$defs/AttemptBirthSelector"
+            },
+            {
+              "$ref": "#/$defs/AttemptReceiptSelector"
+            }
+          ]
+        },
+        "origin": {
+          "$ref": "#/$defs/OriginSelector"
+        }
+      }
+    },
+    "InputCaptureBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/InputCaptureSelector"
+        },
+        "origin": {
+          "$ref": "#/$defs/OriginSelector"
+        }
+      }
+    },
+    "TransitionBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/TransitionSelector"
+        },
+        "origin": {
+          "$ref": "#/$defs/OriginSelector"
+        }
+      }
+    },
+    "AttemptBirthBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/AttemptBirthSelector"
+        },
+        "origin": {
+          "$ref": "#/$defs/OriginSelector"
+        }
+      }
+    },
+    "CompletionBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/CompletionSelector"
+        },
+        "origin": {
+          "$ref": "#/$defs/OriginSelector"
+        }
+      }
+    },
+    "AttemptReceiptBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/AttemptReceiptSelector"
+        },
+        "origin": {
+          "$ref": "#/$defs/OriginSelector"
+        }
+      }
+    },
+    "OriginalMutationBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "operation_source",
+        "mutation_started_at_utc",
+        "actual_effect_receipt_ref"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_source": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "mutation_started_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "CancellationObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cancellation_id",
+        "original_request_capture",
+        "requested_at_utc",
+        "mutation_boundary",
+        "original_terminal_receipt_ref"
+      ],
+      "properties": {
+        "cancellation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_request_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "requested_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "mutation_boundary": {
+          "$ref": "#/$defs/OriginalMutationBoundary"
+        },
+        "original_terminal_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "InvalidationObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "invalidation_id",
+        "original_impact_capture",
+        "observed_run_generation",
+        "original_graph_revision",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "invalidation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_impact_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "observed_run_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "original_graph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "recorded_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "RetryCause": {
+      "enum": [
+        "initial",
+        "automatic_retry",
+        "prerequisite_resume",
+        "manual_resume",
+        "remediation_retry"
+      ]
+    },
+    "AttemptMembership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attempt_id",
+        "attempt_number",
+        "attempt_key",
+        "original_birth",
+        "cause",
+        "replan_generation"
+      ],
+      "properties": {
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attempt_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_birth": {
+          "$ref": "#/$defs/AttemptBirthBinding"
+        },
+        "cause": {
+          "$ref": "#/$defs/RetryCause"
+        },
+        "replan_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        }
+      }
+    },
+    "RetryLineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prior_attempt_id",
+        "successor_attempt_id",
+        "successor_attempt_number",
+        "cause",
+        "original_admission_capture",
+        "original_baseline_receipt_ref"
+      ],
+      "properties": {
+        "prior_attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "successor_attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "successor_attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "cause": {
+          "enum": [
+            "automatic_retry",
+            "prerequisite_resume",
+            "manual_resume",
+            "remediation_retry"
+          ]
+        },
+        "original_admission_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "original_baseline_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "AttemptCounters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attempt_count",
+        "automatic_retry_count",
+        "prerequisite_resume_count",
+        "manual_resume_count",
+        "remediation_retry_count"
+      ],
+      "properties": {
+        "attempt_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "automatic_retry_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "prerequisite_resume_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "manual_resume_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "remediation_retry_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "VerificationObservation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "outcome",
+            "timestamp_utc",
+            "original_result_capture",
+            "evidence_capture"
+          ],
+          "properties": {
+            "outcome": {
+              "const": "pending"
+            },
+            "timestamp_utc": {
+              "type": "null"
+            },
+            "original_result_capture": {
+              "type": "null"
+            },
+            "evidence_capture": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "outcome",
+            "timestamp_utc",
+            "original_result_capture",
+            "evidence_capture"
+          ],
+          "properties": {
+            "outcome": {
+              "enum": [
+                "pass",
+                "fail"
+              ]
+            },
+            "timestamp_utc": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "original_result_capture": {
+              "$ref": "#/$defs/InputCaptureBinding"
+            },
+            "evidence_capture": {
+              "$ref": "#/$defs/InputCaptureBinding"
+            }
+          }
+        }
+      ]
+    },
+    "WorkNodeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "worknode_id",
+        "goal_run_id",
+        "workgraph_id",
+        "revision",
+        "source_request_id",
+        "source_plan_unit_refs",
+        "source_acceptance_refs",
+        "objective",
+        "surfaces",
+        "readiness_predicates",
+        "lifecycle",
+        "attempts",
+        "retries",
+        "authority",
+        "model",
+        "tests",
+        "repository_ref",
+        "worktree_ref",
+        "safe_point_ref",
+        "evidence",
+        "currentness",
+        "cancellation",
+        "invalidation",
+        "replan_generation"
+      ],
+      "properties": {
+        "worknode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_plan_unit_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "source_acceptance_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "objective": {
+          "type": "string"
+        },
+        "surfaces": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "readiness_predicates": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ReadinessSnapshot"
+        },
+        "lifecycle": {
+          "enum": [
+            "queued",
+            "in_progress",
+            "verify_pending",
+            "verified",
+            "done",
+            "failed"
+          ]
+        },
+        "attempts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AttemptMembership"
+          },
+          "minItems": 0
+        },
+        "retries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RetryLineage"
+          },
+          "minItems": 0
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/authority"
+        },
+        "model": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ModelResolutionMetadata"
+        },
+        "tests": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_binding"
+        },
+        "repository_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "worktree_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "safe_point_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "currentness": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/WorkNodeCurrentness"
+        },
+        "cancellation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CancellationObservation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "invalidation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InvalidationObservation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "replan_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        }
+      }
+    },
+    "WorkNodeControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "revision",
+        "record_outer_sha256",
+        "owner",
+        "current_attempt",
+        "attempt_counters",
+        "verification",
+        "last_transition",
+        "last_operation_id",
+        "pending_operation_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "record_outer_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "owner": {
+          "$ref": "#/$defs/OwnerIdentity"
+        },
+        "current_attempt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptMembership"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_counters": {
+          "$ref": "#/$defs/AttemptCounters"
+        },
+        "verification": {
+          "$ref": "#/$defs/VerificationObservation"
+        },
+        "last_transition": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TransitionBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pending_operation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "GraphLockObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_lock_operation_id",
+        "original_graph_capture",
+        "original_graph_lock_receipt_ref",
+        "locked_at_utc"
+      ],
+      "properties": {
+        "original_lock_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_graph_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "original_graph_lock_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locked_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "RunExecutionControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "goal_id",
+        "goal_run_id",
+        "revision",
+        "workgraph_id",
+        "workgraph_revision",
+        "installed_workgraph",
+        "replan_generation",
+        "graph_lock",
+        "owner",
+        "cancellation",
+        "last_operation_id",
+        "pending_operation_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "workgraph_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "installed_workgraph": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "replan_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "graph_lock": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GraphLockObservation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner": {
+          "$ref": "#/$defs/OwnerIdentity"
+        },
+        "cancellation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CancellationObservation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pending_operation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "FrozenAttemptBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_policy_capture",
+        "max_nesting_depth",
+        "max_total_spawned_agents",
+        "max_tool_rounds",
+        "max_wall_ms",
+        "max_estimated_tokens",
+        "max_same_shell_failure",
+        "max_write_thrashing",
+        "max_retryable_errors",
+        "task_timeout_ms",
+        "parent_remaining_wall_ms",
+        "warn_budget_pct",
+        "frozen_at_utc"
+      ],
+      "properties": {
+        "original_policy_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "max_nesting_depth": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_total_spawned_agents": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_tool_rounds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_wall_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_estimated_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_same_shell_failure": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_write_thrashing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "max_writes",
+            "window_ms"
+          ],
+          "properties": {
+            "max_writes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "window_ms": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "max_retryable_errors": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "task_timeout_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "parent_remaining_wall_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "warn_budget_pct": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "frozen_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "AttemptRetryTaxonomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cause",
+        "prior_attempt_id",
+        "original_admission_capture",
+        "original_baseline_receipt_ref"
+      ],
+      "properties": {
+        "cause": {
+          "$ref": "#/$defs/RetryCause"
+        },
+        "prior_attempt_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_admission_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "original_baseline_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "RollbackPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "safe_point_ref",
+        "rollback_available",
+        "restore_action",
+        "original_disposition_capture",
+        "cancellation_state"
+      ],
+      "properties": {
+        "safe_point_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rollback_available": {
+          "type": "boolean"
+        },
+        "restore_action": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_disposition_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "cancellation_state": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CancellationObservation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "AttemptTerminalReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "receipt",
+        "original_result_id",
+        "completed_at_utc"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "completed",
+            "failed",
+            "blocked",
+            "cancelled",
+            "superseded"
+          ]
+        },
+        "receipt": {
+          "$ref": "#/$defs/AttemptReceiptBinding"
+        },
+        "original_result_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "completed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "AttemptRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "node_id",
+        "attempt_number",
+        "run_id",
+        "attempt_id",
+        "worknode_id",
+        "goal_run_id",
+        "workgraph_id",
+        "workgraph_revision",
+        "source_request_id",
+        "replan_generation",
+        "started_at_utc",
+        "execution_unit_context_ref",
+        "permission_snapshot_id",
+        "model_ref",
+        "capability_refs",
+        "safe_point_ref",
+        "recovery_lineage_refs",
+        "result_ref",
+        "blocked_state_ref",
+        "expected_output_refs",
+        "validator_refs",
+        "budget",
+        "priority",
+        "retry_taxonomy",
+        "cancellation",
+        "rollback_policy",
+        "terminal_result",
+        "scm_capable"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.attempt_record.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "node_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "worknode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "replan_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "started_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "execution_unit_context_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "model_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capability_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "safe_point_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recovery_lineage_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "result_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blocked_state_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_output_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "validator_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "budget": {
+          "$ref": "#/$defs/FrozenAttemptBudget"
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "retry_taxonomy": {
+          "$ref": "#/$defs/AttemptRetryTaxonomy"
+        },
+        "cancellation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CancellationObservation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rollback_policy": {
+          "$ref": "#/$defs/RollbackPolicy"
+        },
+        "terminal_result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptTerminalReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scm_capable": {
+          "type": "boolean"
+        },
+        "repo_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "worktree_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "worktree_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "branch_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "head_commit_oid": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseline_commit_oid": {
+          "type": "string",
+          "minLength": 1
+        },
+        "compare_target_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "git_operation_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pr_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scm_capable": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "repo_id",
+              "worktree_id",
+              "worktree_path",
+              "branch_name",
+              "head_commit_oid",
+              "baseline_commit_oid",
+              "compare_target_ref",
+              "git_operation_ref",
+              "pr_ref"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "repo_id"
+                  ]
+                },
+                {
+                  "required": [
+                    "worktree_id"
+                  ]
+                },
+                {
+                  "required": [
+                    "worktree_path"
+                  ]
+                },
+                {
+                  "required": [
+                    "branch_name"
+                  ]
+                },
+                {
+                  "required": [
+                    "head_commit_oid"
+                  ]
+                },
+                {
+                  "required": [
+                    "baseline_commit_oid"
+                  ]
+                },
+                {
+                  "required": [
+                    "compare_target_ref"
+                  ]
+                },
+                {
+                  "required": [
+                    "git_operation_ref"
+                  ]
+                },
+                {
+                  "required": [
+                    "pr_ref"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "AttemptControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "attempt_id",
+        "attempt_number",
+        "revision",
+        "record_physical_sha256",
+        "original_birth",
+        "owner",
+        "last_operation_id",
+        "pending_operation_id",
+        "terminal_result"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "record_physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_birth": {
+          "$ref": "#/$defs/AttemptBirthBinding"
+        },
+        "owner": {
+          "$ref": "#/$defs/OwnerIdentity"
+        },
+        "last_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pending_operation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal_result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptTerminalReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "AttemptBirth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "attempt_id",
+        "attempt_number",
+        "original_record_physical_sha256",
+        "execution_unit",
+        "worknode_before_revision",
+        "worknode_after_revision",
+        "cause",
+        "original_admission_capture",
+        "prior_attempt_id",
+        "replan_generation",
+        "started_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_record_physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "execution_unit": {
+          "$ref": "#/$defs/ExecutionUnitSelector"
+        },
+        "worknode_before_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "worknode_after_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "cause": {
+          "$ref": "#/$defs/RetryCause"
+        },
+        "original_admission_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "prior_attempt_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "replan_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "started_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "StateTransitionReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "worknode_id",
+        "attempt_id_or_null",
+        "from_state",
+        "to_state",
+        "cas_revision",
+        "causation_ref"
+      ],
+      "properties": {
+        "worknode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_id_or_null": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "from_state": {
+          "enum": [
+            "queued",
+            "in_progress",
+            "verify_pending",
+            "verified"
+          ]
+        },
+        "to_state": {
+          "enum": [
+            "in_progress",
+            "verify_pending",
+            "verified",
+            "done",
+            "failed"
+          ]
+        },
+        "cas_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "causation_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "from_state": {
+              "const": "queued"
+            },
+            "to_state": {
+              "const": "in_progress"
+            }
+          }
+        },
+        {
+          "properties": {
+            "from_state": {
+              "const": "in_progress"
+            },
+            "to_state": {
+              "const": "verify_pending"
+            }
+          }
+        },
+        {
+          "properties": {
+            "from_state": {
+              "const": "verify_pending"
+            },
+            "to_state": {
+              "const": "verified"
+            }
+          }
+        },
+        {
+          "properties": {
+            "from_state": {
+              "const": "verified"
+            },
+            "to_state": {
+              "const": "done"
+            }
+          }
+        },
+        {
+          "properties": {
+            "from_state": {
+              "const": "verify_pending"
+            },
+            "to_state": {
+              "const": "failed"
+            }
+          }
+        }
+      ]
+    },
+    "TransitionPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "transition_id",
+        "operation_id",
+        "transition",
+        "before_worknode_outer_sha256",
+        "after_worknode_outer_sha256",
+        "after_control_revision",
+        "original_input_captures",
+        "verification",
+        "original_attempt_receipt",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "transition_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transition": {
+          "$ref": "#/$defs/StateTransitionReceipt"
+        },
+        "before_worknode_outer_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "after_worknode_outer_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "after_control_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_input_captures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InputCaptureBinding"
+          },
+          "minItems": 1
+        },
+        "verification": {
+          "$ref": "#/$defs/VerificationObservation"
+        },
+        "original_attempt_receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptReceiptBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "OriginalInputCapture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "capture_id",
+        "input_kind",
+        "original_owner",
+        "original_operation_id",
+        "original_input_id",
+        "original_input_revision",
+        "original_payload_sha256",
+        "original_payload_codec",
+        "original_native_transaction_id",
+        "captured_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "capture_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "input_kind": {
+          "enum": [
+            "verifier_result",
+            "evidence_bundle",
+            "worknode_completion_receipt",
+            "worknode_dispatch_receipt",
+            "worknode_change_receipt",
+            "test_run_receipt",
+            "auditor_cycle_report",
+            "auditor_verification_receipt",
+            "source_control_preflight_receipt",
+            "safe_point_receipt",
+            "source_control_finalization_receipt",
+            "source_control_receipt",
+            "validator_outcome",
+            "model_resolution_receipt",
+            "repair_attempt_receipt",
+            "merge_or_promotion_receipt",
+            "attempt_start_admission",
+            "attempt_retry_admission",
+            "run_budget",
+            "rollback_disposition",
+            "cancellation_request",
+            "invalidation_impact",
+            "graph_lock"
+          ]
+        },
+        "original_owner": {
+          "$ref": "#/$defs/OwnerIdentity"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_payload_codec": {
+          "enum": [
+            "certification_source_json.v1",
+            "pm.executor.native_source_json.v1",
+            "original_evidence_bytes"
+          ]
+        },
+        "original_native_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "OriginalVerifierResult": {
+      "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/project_plan_node.schema.json#/properties/verifier_result"
+    },
+    "OriginalVerifierInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "attempt_id",
+        "attempt_number",
+        "original_result",
+        "result_capture",
+        "complete_evidence",
+        "evidence_capture",
+        "required_validator_captures",
+        "original_worknode_revision",
+        "original_run_generation"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_result": {
+          "$ref": "#/$defs/OriginalVerifierResult"
+        },
+        "result_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "complete_evidence": {
+          "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/evidence.schema.json"
+        },
+        "evidence_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "required_validator_captures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InputCaptureBinding"
+          },
+          "minItems": 0
+        },
+        "original_worknode_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_run_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        }
+      }
+    },
+    "OriginalCompletionInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "attempt_id",
+        "attempt_number",
+        "receipt",
+        "receipt_capture",
+        "verifier",
+        "dispatch",
+        "dispatch_capture",
+        "changes",
+        "change_captures",
+        "tests",
+        "test_captures",
+        "auditor",
+        "auditor_capture",
+        "auditor_cycles",
+        "auditor_cycle_captures",
+        "source_control",
+        "source_control_captures",
+        "finalization",
+        "finalization_capture",
+        "validators",
+        "validator_captures",
+        "repairs",
+        "repair_captures",
+        "promotions",
+        "promotion_captures"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "receipt": {
+          "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_completion_receipt"
+        },
+        "receipt_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "verifier": {
+          "$ref": "#/$defs/OriginalVerifierInput"
+        },
+        "dispatch": {
+          "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_dispatch_receipt"
+        },
+        "dispatch_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_change_receipt"
+          },
+          "minItems": 0
+        },
+        "change_captures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InputCaptureBinding"
+          },
+          "minItems": 0
+        },
+        "tests": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/test_run_receipt"
+          },
+          "minItems": 0
+        },
+        "test_captures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InputCaptureBinding"
+          },
+          "minItems": 0
+        },
+        "auditor": {
+          "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_verification_receipt"
+        },
+        "auditor_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "auditor_cycles": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_cycle_report"
+          },
+          "minItems": 1
+        },
+        "auditor_cycle_captures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InputCaptureBinding"
+          },
+          "minItems": 1
+        },
+        "source_control": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_receipt"
+          },
+          "minItems": 0
+        },
+        "source_control_captures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InputCaptureBinding"
+          },
+          "minItems": 0
+        },
+        "finalization": {
+          "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_finalization_receipt"
+        },
+        "finalization_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "validators": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/validator_outcome"
+          },
+          "minItems": 0
+        },
+        "validator_captures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InputCaptureBinding"
+          },
+          "minItems": 0
+        },
+        "repairs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/repair_attempt_receipt"
+          },
+          "minItems": 0
+        },
+        "repair_captures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InputCaptureBinding"
+          },
+          "minItems": 0
+        },
+        "promotions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/merge_or_promotion_receipt"
+          },
+          "minItems": 0
+        },
+        "promotion_captures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InputCaptureBinding"
+          },
+          "minItems": 0
+        }
+      }
+    },
+    "LegacyAttemptReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "receipt_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "receipt_kind",
+        "result_summary",
+        "status",
+        "execution_unit_context_ref",
+        "source_artifact_refs",
+        "destination_artifact_refs",
+        "retry_route",
+        "rollback_route",
+        "evidence_refs",
+        "validator_refs",
+        "created_at_utc",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.attempt_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "receipt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "node_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "receipt_kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result_summary": {
+          "type": "object"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "failed",
+            "blocked",
+            "cancelled",
+            "superseded"
+          ]
+        },
+        "execution_unit_context_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_artifact_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "destination_artifact_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "retry_route": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rollback_route": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "validator_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "type": "string",
+          "enum": [
+            "no_secrets",
+            "redacted_refs_only"
+          ]
+        },
+        "provider_attempt_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "usage_event_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "worktree_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "safe_point_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unresolved_risks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CompletionAttemptSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "worknode_completion_receipt_id",
+        "worknode_id",
+        "source_request_id",
+        "workgraph_id",
+        "workgraph_revision",
+        "attempt_number",
+        "replan_generation",
+        "terminal_status",
+        "verified_transition",
+        "done_transition_id",
+        "original_completion_capture",
+        "verification"
+      ],
+      "properties": {
+        "worknode_completion_receipt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "worknode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "replan_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "terminal_status": {
+          "const": "complete"
+        },
+        "verified_transition": {
+          "$ref": "#/$defs/TransitionBinding"
+        },
+        "done_transition_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_completion_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "verification": {
+          "$ref": "#/$defs/VerificationObservation"
+        }
+      }
+    },
+    "CompletionAttemptReceipt": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/LegacyAttemptReceipt"
+        },
+        {
+          "properties": {
+            "receipt_kind": {
+              "const": "worknode_completion"
+            },
+            "status": {
+              "const": "completed"
+            },
+            "result_summary": {
+              "$ref": "#/$defs/CompletionAttemptSummary"
+            },
+            "unresolved_risks": {
+              "type": "array",
+              "items": false,
+              "maxItems": 0
+            }
+          }
+        }
+      ]
+    },
+    "WorkNodeCompletionPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "completion_id",
+        "attempt_id",
+        "attempt_number",
+        "original_worknode_receipt_id",
+        "original_completion_capture",
+        "attempt_receipt",
+        "verified_transition",
+        "done_transition_id",
+        "worknode_after_revision",
+        "worknode_after_outer_sha256",
+        "attempt_after_revision",
+        "attempt_after_physical_sha256",
+        "verification",
+        "change_receipt_refs",
+        "test_run_refs",
+        "auditor_verification_ref",
+        "source_control_receipt_refs",
+        "evidence_refs",
+        "finalized_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "completion_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_worknode_receipt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_completion_capture": {
+          "$ref": "#/$defs/InputCaptureBinding"
+        },
+        "attempt_receipt": {
+          "$ref": "#/$defs/AttemptReceiptBinding"
+        },
+        "verified_transition": {
+          "$ref": "#/$defs/TransitionBinding"
+        },
+        "done_transition_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "worknode_after_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "worknode_after_outer_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "attempt_after_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attempt_after_physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "verification": {
+          "$ref": "#/$defs/VerificationObservation"
+        },
+        "change_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "test_run_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "auditor_verification_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_control_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "finalized_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "NativeOperationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "operation",
+        "worknode",
+        "worknode_control",
+        "attempt",
+        "attempt_control",
+        "transition",
+        "attempt_receipt",
+        "completion",
+        "published_at_utc",
+        "action_authority"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation": {
+          "enum": [
+            "materialize",
+            "begin_attempt",
+            "submit_verification",
+            "record_verified",
+            "record_failed",
+            "complete_worknode",
+            "record_cancellation",
+            "record_invalidation"
+          ]
+        },
+        "worknode": {
+          "$ref": "#/$defs/WorkNodeSelector"
+        },
+        "worknode_control": {
+          "$ref": "#/$defs/WorkNodeControlSelector"
+        },
+        "attempt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptSelector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptControlSelector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transition": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TransitionBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptReceiptBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "completion": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CompletionBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "published_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "PublicationOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "issuer_method",
+        "owner",
+        "original_operation_id",
+        "original_transaction_id",
+        "original_causation_ref",
+        "issued_key",
+        "issued_record_sha256",
+        "original_preimage_refs",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ExecutorScope"
+            },
+            {
+              "$ref": "#/$defs/RunScope"
+            }
+          ]
+        },
+        "issuer_method": {
+          "enum": [
+            "owner.executor.activation.materialize.v1",
+            "owner.executor.native.begin_attempt.v1",
+            "owner.executor.native.submit_verification.v1",
+            "owner.executor.native.record_verified.v1",
+            "owner.executor.native.record_failed.v1",
+            "owner.executor.native.complete_worknode.v1",
+            "owner.executor.native.record_cancellation.v1",
+            "owner.executor.native.record_invalidation.v1",
+            "owner.executor.native.apply_graph_lock.v1",
+            "owner.executor.native.capture_original_input.v1"
+          ]
+        },
+        "owner": {
+          "$ref": "#/$defs/OwnerIdentity"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_causation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_record_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_preimage_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "RunOperationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "operation",
+        "before_revision",
+        "before_control_physical_sha256",
+        "after_control",
+        "original_graph_lock",
+        "published_at_utc",
+        "action_authority"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation": {
+          "enum": [
+            "materialize",
+            "graph_lock",
+            "replan",
+            "cancel"
+          ]
+        },
+        "before_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "before_control_physical_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_control": {
+          "$ref": "#/$defs/RunControlSelector"
+        },
+        "original_graph_lock": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GraphLockObservation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "published_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "NativeMutationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "expected_worknode_revision",
+        "expected_worknode_outer_sha256",
+        "expected_attempt_id",
+        "expected_attempt_revision"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_worknode_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_worknode_outer_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_attempt_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_attempt_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "CompleteWorkNodeRequest": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/NativeMutationRequest"
+        },
+        {
+          "properties": {
+            "expected_attempt_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected_attempt_revision": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        }
+      ]
+    },
+    "MaterializeCurrentInputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "original_born_worknode",
+        "original_materialization_receipt",
+        "original_source_request",
+        "original_installed_graph",
+        "original_required_set",
+        "original_goal_run_body",
+        "original_goal_run_control"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "original_born_worknode": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/BornWorkNodeRecord"
+        },
+        "original_materialization_receipt": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/WorkNodeMaterializationReceipt"
+        },
+        "original_source_request": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeRequestSource"
+        },
+        "original_installed_graph": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/InstalledWorkGraph"
+        },
+        "original_required_set": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RequiredSet"
+        },
+        "original_goal_run_body": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBody"
+        },
+        "original_goal_run_control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControl"
+        }
+      }
+    },
+    "MaterializeCurrentCandidates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "inputs",
+        "worknode",
+        "control",
+        "run_control",
+        "result"
+      ],
+      "properties": {
+        "inputs": {
+          "$ref": "#/$defs/MaterializeCurrentInputs"
+        },
+        "worknode": {
+          "$ref": "#/$defs/WorkNodeRecord"
+        },
+        "control": {
+          "$ref": "#/$defs/WorkNodeControl"
+        },
+        "run_control": {
+          "$ref": "#/$defs/RunExecutionControl"
+        },
+        "result": {
+          "$ref": "#/$defs/NativeOperationResult"
+        }
+      }
+    },
+    "GoalControlWitness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "thread_id",
+        "body",
+        "control",
+        "stop",
+        "body_source",
+        "control_source",
+        "stop_source",
+        "goal_run_body",
+        "goal_run_control",
+        "goal_run_body_source",
+        "goal_run_control_source"
+      ],
+      "properties": {
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body": {
+          "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/inputs/Plans/goal_body_custody.schema.json#/$defs/body"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2"
+        },
+        "stop": {
+          "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json#/$defs/StopControl"
+        },
+        "body_source": {
+          "$ref": "#/$defs/GoalBodySelector"
+        },
+        "control_source": {
+          "$ref": "#/$defs/GoalBodyControlSelector"
+        },
+        "stop_source": {
+          "$ref": "#/$defs/GoalStopSelector"
+        },
+        "goal_run_body": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBody"
+        },
+        "goal_run_control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControl"
+        },
+        "goal_run_body_source": {
+          "$ref": "#/$defs/GoalRunBodySelector"
+        },
+        "goal_run_control_source": {
+          "$ref": "#/$defs/GoalRunControlSelector"
+        }
+      }
+    },
+    "NativeCurrentRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        }
+      }
+    },
+    "NativeCurrentSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "goal_controls",
+        "worknode",
+        "worknode_control",
+        "worknode_selector",
+        "control_selector",
+        "run_control",
+        "run_control_selector",
+        "run_original_result",
+        "run_result_origin",
+        "attempt",
+        "attempt_selector",
+        "attempt_control",
+        "attempt_control_selector",
+        "execution_unit",
+        "execution_unit_selector",
+        "action_authority"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "goal_controls": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GoalControlWitness"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "worknode": {
+          "$ref": "#/$defs/WorkNodeRecord"
+        },
+        "worknode_control": {
+          "$ref": "#/$defs/WorkNodeControl"
+        },
+        "worknode_selector": {
+          "$ref": "#/$defs/WorkNodeSelector"
+        },
+        "control_selector": {
+          "$ref": "#/$defs/WorkNodeControlSelector"
+        },
+        "run_control": {
+          "$ref": "#/$defs/RunExecutionControl"
+        },
+        "run_control_selector": {
+          "$ref": "#/$defs/RunControlSelector"
+        },
+        "run_original_result": {
+          "$ref": "#/$defs/RunOperationResult"
+        },
+        "run_result_origin": {
+          "$ref": "#/$defs/PublicationOrigin"
+        },
+        "attempt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_selector": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptSelector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptControl"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_control_selector": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptControlSelector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "execution_unit": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/execution_unit_context.schema.json"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "execution_unit_selector": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ExecutionUnitSelector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "NativeFinalizationWitness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_request",
+        "current",
+        "original_inputs",
+        "complete_original_attempt_receipt",
+        "candidate_worknode",
+        "candidate_control",
+        "candidate_attempt",
+        "candidate_attempt_control",
+        "candidate_transition",
+        "candidate_completion",
+        "candidate_result"
+      ],
+      "properties": {
+        "original_request": {
+          "$ref": "#/$defs/NativeMutationRequest"
+        },
+        "current": {
+          "$ref": "#/$defs/NativeCurrentSnapshot"
+        },
+        "original_inputs": {
+          "$ref": "#/$defs/OriginalCompletionInput"
+        },
+        "complete_original_attempt_receipt": {
+          "$ref": "#/$defs/CompletionAttemptReceipt"
+        },
+        "candidate_worknode": {
+          "$ref": "#/$defs/WorkNodeRecord"
+        },
+        "candidate_control": {
+          "$ref": "#/$defs/WorkNodeControl"
+        },
+        "candidate_attempt": {
+          "$ref": "#/$defs/AttemptRecord"
+        },
+        "candidate_attempt_control": {
+          "$ref": "#/$defs/AttemptControl"
+        },
+        "candidate_transition": {
+          "$ref": "#/$defs/TransitionPublication"
+        },
+        "candidate_completion": {
+          "$ref": "#/$defs/WorkNodeCompletionPublication"
+        },
+        "candidate_result": {
+          "$ref": "#/$defs/NativeOperationResult"
+        }
+      }
+    },
+    "RetainedOperationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "RetainedOperationSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result",
+        "result_origin",
+        "transition",
+        "transition_origin",
+        "attempt_receipt",
+        "attempt_receipt_origin",
+        "completion",
+        "completion_origin",
+        "action_authority"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "#/$defs/NativeOperationResult"
+        },
+        "result_origin": {
+          "$ref": "#/$defs/PublicationOrigin"
+        },
+        "transition": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TransitionPublication"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transition_origin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PublicationOrigin"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LegacyAttemptReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_receipt_origin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PublicationOrigin"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "completion": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WorkNodeCompletionPublication"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "completion_origin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PublicationOrigin"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "Unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "reason",
+        "known_original_result",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "enum": [
+            "native_runtime_unavailable",
+            "role_not_installed",
+            "source_unavailable",
+            "source_scope_mismatch",
+            "original_custody_lost",
+            "original_effect_unknown",
+            "currentness_changed",
+            "graph_generation_changed",
+            "cancellation_or_invalidation",
+            "manual_stop_latched",
+            "owner_or_permission_changed",
+            "pending_other_operation",
+            "state_transition_invalid",
+            "verification_incomplete",
+            "original_obligation_incomplete",
+            "attempt_counter_mismatch",
+            "attempt_identity_conflict",
+            "codec_unavailable",
+            "retention_or_backup_unavailable"
+          ]
+        },
+        "known_original_result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/NativeOperationResult"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "StorageWorkNodeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_worknode.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/WorkNodeRecord"
+        }
+      }
+    },
+    "StorageWorkNodeControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_worknode_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/WorkNodeControl"
+        }
+      }
+    },
+    "StorageAttemptControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_attempt_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/AttemptControl"
+        }
+      }
+    },
+    "StorageRunExecutionControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_run_execution_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/RunExecutionControl"
+        }
+      }
+    },
+    "StorageAttemptBirth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_attempt_birth.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/AttemptBirth"
+        }
+      }
+    },
+    "StorageTransitionPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_worknode_transition.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/TransitionPublication"
+        }
+      }
+    },
+    "StorageWorkNodeCompletionPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_worknode_completion.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/WorkNodeCompletionPublication"
+        }
+      }
+    },
+    "StorageNativeOperationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_native_operation_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/NativeOperationResult"
+        }
+      }
+    },
+    "StorageOriginalInputCapture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_original_input_capture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/OriginalInputCapture"
+        }
+      }
+    },
+    "StoragePublicationOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_original_publication_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/PublicationOrigin"
+        }
+      }
+    },
+    "StorageRunOperationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_run_operation_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/RunOperationResult"
+        }
+      }
+    },
+    "CombinedPublicationOrigin": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/PublicationOrigin"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/ReplanNativePublicationOrigin"
+        }
+      ]
+    },
+    "CombinedNativeCurrentSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "goal_controls",
+        "worknode",
+        "worknode_control",
+        "worknode_selector",
+        "control_selector",
+        "run_control",
+        "run_control_selector",
+        "run_original_result",
+        "run_result_origin",
+        "attempt",
+        "attempt_selector",
+        "attempt_control",
+        "attempt_control_selector",
+        "execution_unit",
+        "execution_unit_selector",
+        "action_authority"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "goal_controls": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GoalControlWitness"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "worknode": {
+          "$ref": "#/$defs/WorkNodeRecord"
+        },
+        "worknode_control": {
+          "$ref": "#/$defs/WorkNodeControl"
+        },
+        "worknode_selector": {
+          "$ref": "#/$defs/WorkNodeSelector"
+        },
+        "control_selector": {
+          "$ref": "#/$defs/WorkNodeControlSelector"
+        },
+        "run_control": {
+          "$ref": "#/$defs/RunExecutionControl"
+        },
+        "run_control_selector": {
+          "$ref": "#/$defs/RunControlSelector"
+        },
+        "run_original_result": {
+          "$ref": "#/$defs/RunOperationResult"
+        },
+        "run_result_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/CombinedPublicationOrigin"
+        },
+        "attempt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_selector": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptSelector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptControl"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "attempt_control_selector": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AttemptControlSelector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "execution_unit": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/execution_unit_context.schema.json"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "execution_unit_selector": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ExecutionUnitSelector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    }
+  }
+}

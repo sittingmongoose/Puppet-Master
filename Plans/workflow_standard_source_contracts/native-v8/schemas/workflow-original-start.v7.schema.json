@@ -1,0 +1,3258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json",
+  "$defs": {
+    "Selector": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector"
+    },
+    "RunScope": {
+      "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope"
+    },
+    "ExecutorScope": {
+      "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/ExecutorScope"
+    },
+    "Owner": {
+      "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity"
+    },
+    "MutationOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "method",
+        "operation_id",
+        "transaction_id",
+        "owner",
+        "causation",
+        "preimages",
+        "afterimages",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "method": {
+          "enum": [
+            "owner.executor.workflow_source.enroll_workflow_birth.v1",
+            "owner.executor.workflow_source.begin_coverage.v1",
+            "owner.executor.workflow_source.update_workflow.v1",
+            "owner.executor.workflow_source.register_materialization.v1",
+            "owner.executor.workflow_source.register_attempt.v1",
+            "owner.executor.workflow_source.record_wake.v1",
+            "owner.executor.workflow_source.consume_wake.v1",
+            "owner.executor.workflow_source.record_delay.v1",
+            "owner.executor.workflow_source.release_delay.v1",
+            "owner.executor.workflow_source.reserve_capacity.v1",
+            "owner.executor.workflow_source.release_capacity.v1",
+            "owner.executor.workflow_source.admit_dispatch.v1",
+            "owner.executor.workflow_source.ack_handoff.v1",
+            "owner.executor.workflow_source.record_stop.v1",
+            "owner.executor.workflow_source.recover_pending.v1"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "causation": {
+          "$ref": "#/$defs/Selector"
+        },
+        "preimages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Selector"
+          }
+        },
+        "afterimages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Selector"
+          }
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "WorkflowHead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "revision",
+        "activation_body",
+        "activation_origin",
+        "current_body",
+        "current_control",
+        "previous_head",
+        "last_update",
+        "workflow_owner_ref",
+        "workflow_owner_epoch",
+        "pending_operation_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "activation_body": {
+          "$ref": "#/$defs/Selector"
+        },
+        "activation_origin": {
+          "$ref": "#/$defs/Selector"
+        },
+        "current_body": {
+          "$ref": "#/$defs/Selector"
+        },
+        "current_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "previous_head": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_update": {
+          "$ref": "#/$defs/Selector"
+        },
+        "workflow_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pending_operation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "WorkflowUpdate": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/OriginalWorkflowUpdate"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_replan_observer.v1.schema.json#/$defs/ReplanWorkflowUpdate"
+        }
+      ]
+    },
+    "MaterializedMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "registration_sequence",
+        "original_record",
+        "original_control",
+        "materialization_result",
+        "materialization_origin"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "registration_sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_record": {
+          "$ref": "#/$defs/Selector"
+        },
+        "original_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "materialization_result": {
+          "$ref": "#/$defs/Selector"
+        },
+        "materialization_origin": {
+          "$ref": "#/$defs/Selector"
+        }
+      }
+    },
+    "AttemptMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "attempt_id",
+        "attempt_number",
+        "registration_sequence",
+        "original_birth",
+        "original_record",
+        "original_control",
+        "original_result",
+        "original_origin"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "registration_sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_birth": {
+          "$ref": "#/$defs/Selector"
+        },
+        "original_record": {
+          "$ref": "#/$defs/Selector"
+        },
+        "original_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "original_result": {
+          "$ref": "#/$defs/Selector"
+        },
+        "original_origin": {
+          "$ref": "#/$defs/Selector"
+        }
+      }
+    },
+    "DispatchInvocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "attempt_id",
+        "attempt_number",
+        "invocation_id",
+        "dispatch_operation_id",
+        "dispatch_transaction_id",
+        "role",
+        "effect_owner_ref",
+        "effect_owner_epoch",
+        "execution_unit",
+        "original_attempt_birth"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "invocation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dispatch_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dispatch_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "tool",
+            "provider",
+            "scm",
+            "worktree",
+            "filesafe",
+            "verification",
+            "process"
+          ]
+        },
+        "effect_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effect_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "execution_unit": {
+          "$ref": "#/$defs/Selector"
+        },
+        "original_attempt_birth": {
+          "$ref": "#/$defs/Selector"
+        }
+      }
+    },
+    "DispatchMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "invocation",
+        "registration_sequence",
+        "admission",
+        "admission_origin"
+      ],
+      "properties": {
+        "invocation": {
+          "$ref": "#/$defs/DispatchInvocation"
+        },
+        "registration_sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "admission": {
+          "$ref": "#/$defs/Selector"
+        },
+        "admission_origin": {
+          "$ref": "#/$defs/Selector"
+        }
+      }
+    },
+    "InventoryHead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "revision",
+        "coverage_birth",
+        "previous_head",
+        "last_origin_operation_id",
+        "materialized",
+        "attempts",
+        "dispatches",
+        "owner",
+        "pending_operation_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "coverage_birth": {
+          "$ref": "#/$defs/Selector"
+        },
+        "previous_head": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_origin_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "materialized": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MaterializedMember"
+          }
+        },
+        "attempts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AttemptMember"
+          }
+        },
+        "dispatches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DispatchMember"
+          }
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "pending_operation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "WorkflowBirth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "transaction_id",
+        "activation_body",
+        "activation_control",
+        "activation_origin",
+        "writer_contract",
+        "installed_contract_digest",
+        "birth_issuance"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activation_body": {
+          "$ref": "#/$defs/Selector"
+        },
+        "activation_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "activation_origin": {
+          "$ref": "#/$defs/Selector"
+        },
+        "writer_contract": {
+          "const": "pm.executor.workflow_source.all_writers.v8"
+        },
+        "installed_contract_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "birth_issuance": {
+          "$ref": "#/$defs/BodyIssuanceCommitment"
+        }
+      }
+    },
+    "CoverageBirth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "workflow_birth",
+        "workflow_head_at_materialization",
+        "operation_id",
+        "transaction_id",
+        "activation_body",
+        "activation_origin",
+        "initial_run_control",
+        "initial_materialization_result",
+        "initial_materialization_origin",
+        "writer_contract",
+        "installed_contract_digest"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "workflow_birth": {
+          "$ref": "#/$defs/Selector"
+        },
+        "workflow_head_at_materialization": {
+          "$ref": "#/$defs/Selector"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activation_body": {
+          "$ref": "#/$defs/Selector"
+        },
+        "activation_origin": {
+          "$ref": "#/$defs/Selector"
+        },
+        "initial_run_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "initial_materialization_result": {
+          "$ref": "#/$defs/Selector"
+        },
+        "initial_materialization_origin": {
+          "$ref": "#/$defs/Selector"
+        },
+        "writer_contract": {
+          "const": "pm.executor.workflow_source.all_writers.v3"
+        },
+        "installed_contract_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "Wake": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "reason",
+        "recorded_at_utc",
+        "original_event"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "enum": [
+            "prerequisite_resolved",
+            "approval_resolved",
+            "clarification_resolved",
+            "auth_recovered",
+            "startup_recovered",
+            "backoff_expired",
+            "verification_completed",
+            "remediation_resolved",
+            "safe_point_restored",
+            "capacity_available",
+            "replan_applied",
+            "watchdog_recheck"
+          ]
+        },
+        "recorded_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "original_event": {
+          "$ref": "#/$defs/Selector"
+        }
+      }
+    },
+    "WakeSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "replan_generation",
+        "wakes"
+      ],
+      "properties": {
+        "replan_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "wakes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Wake"
+          }
+        }
+      }
+    },
+    "Delay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "attempt_id",
+        "kind",
+        "due_at_utc",
+        "original_cause"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "kind": {
+          "enum": [
+            "backoff",
+            "retry",
+            "resume"
+          ]
+        },
+        "due_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "original_cause": {
+          "$ref": "#/$defs/Selector"
+        }
+      }
+    },
+    "Capacity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reservation_id",
+        "scope",
+        "attempt_id",
+        "lane",
+        "pool",
+        "original_capacity_admission"
+      ],
+      "properties": {
+        "reservation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "#/$defs/ExecutorScope"
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lane": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pool": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_capacity_admission": {
+          "$ref": "#/$defs/Selector"
+        }
+      }
+    },
+    "SchedulerControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "revision",
+        "owner",
+        "run_control",
+        "inventory_head",
+        "pending_wakes",
+        "pending_delays",
+        "capacity_reservations",
+        "unacknowledged_dispatches",
+        "stop",
+        "previous_control",
+        "last_origin_operation_id",
+        "pending_operation_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "run_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "inventory_head": {
+          "$ref": "#/$defs/Selector"
+        },
+        "pending_wakes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WakeSet"
+          }
+        },
+        "pending_delays": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Delay"
+          }
+        },
+        "capacity_reservations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Capacity"
+          }
+        },
+        "unacknowledged_dispatches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Selector"
+          }
+        },
+        "stop": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "previous_control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_origin_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pending_operation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "DispatchAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "invocation",
+        "scheduler_before",
+        "scheduler_after_revision",
+        "inventory_before",
+        "inventory_after_revision",
+        "run_control",
+        "worknode_control",
+        "attempt_control",
+        "goal_stop",
+        "goal_binding",
+        "permission_source",
+        "capacity_admission",
+        "original_input_capture",
+        "admitted_at_utc"
+      ],
+      "properties": {
+        "invocation": {
+          "$ref": "#/$defs/DispatchInvocation"
+        },
+        "scheduler_before": {
+          "$ref": "#/$defs/Selector"
+        },
+        "scheduler_after_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "inventory_before": {
+          "$ref": "#/$defs/Selector"
+        },
+        "inventory_after_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "run_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "worknode_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "attempt_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "goal_stop": {
+          "$ref": "#/$defs/Selector"
+        },
+        "goal_binding": {
+          "$ref": "#/$defs/Selector"
+        },
+        "permission_source": {
+          "$ref": "#/$defs/Selector"
+        },
+        "capacity_admission": {
+          "$ref": "#/$defs/Selector"
+        },
+        "original_input_capture": {
+          "$ref": "#/$defs/Selector"
+        },
+        "admitted_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "HandoffAck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "dispatch_admission",
+        "operation_id",
+        "transaction_id",
+        "effect_owner_ref",
+        "effect_owner_epoch",
+        "original_effect_admission",
+        "original_effect_origin",
+        "acknowledged_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "dispatch_admission": {
+          "$ref": "#/$defs/Selector"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effect_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effect_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_effect_admission": {
+          "$ref": "#/$defs/Selector"
+        },
+        "original_effect_origin": {
+          "$ref": "#/$defs/Selector"
+        },
+        "acknowledged_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "SchedulerStop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "transaction_id",
+        "scheduler_before",
+        "scheduler_after_revision",
+        "inventory_cut",
+        "goal_stop",
+        "native_cancel_result",
+        "native_cancel_origin",
+        "run_control_after",
+        "stopped_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scheduler_before": {
+          "$ref": "#/$defs/Selector"
+        },
+        "scheduler_after_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "inventory_cut": {
+          "$ref": "#/$defs/Selector"
+        },
+        "goal_stop": {
+          "$ref": "#/$defs/Selector"
+        },
+        "native_cancel_result": {
+          "$ref": "#/$defs/Selector"
+        },
+        "native_cancel_origin": {
+          "$ref": "#/$defs/Selector"
+        },
+        "run_control_after": {
+          "$ref": "#/$defs/Selector"
+        },
+        "stopped_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "expected_owner",
+        "expected_scheduler_revision"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "expected_scheduler_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "WorkflowCurrent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "head",
+        "update_chain",
+        "origins",
+        "activation_origin",
+        "current_body",
+        "current_control",
+        "birth",
+        "birth_origin",
+        "heads",
+        "original_writer_origins"
+      ],
+      "properties": {
+        "head": {
+          "$ref": "#/$defs/WorkflowHead"
+        },
+        "update_chain": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorkflowUpdate"
+          },
+          "minItems": 1
+        },
+        "origins": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/WorkflowMutationOrigin"
+              },
+              {
+                "$ref": "https://puppetmaster.local/proposals/executor_workflow_replan_observer.v1.schema.json#/$defs/ReplanObserverOrigin"
+              }
+            ]
+          }
+        },
+        "activation_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOrigin"
+        },
+        "current_body": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBody"
+        },
+        "current_control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControl"
+        },
+        "birth": {
+          "$ref": "#/$defs/WorkflowBirth"
+        },
+        "birth_origin": {
+          "$ref": "#/$defs/WorkflowMutationOrigin"
+        },
+        "heads": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorkflowHead"
+          },
+          "minItems": 1
+        },
+        "original_writer_origins": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/OriginalWriterOrigin"
+              },
+              {
+                "$ref": "https://puppetmaster.local/proposals/executor_workflow_replan_observer.v1.schema.json#/$defs/ReplanWriterOrigin"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "MaterializedCurrent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "membership",
+        "record",
+        "control"
+      ],
+      "properties": {
+        "membership": {
+          "$ref": "#/$defs/MaterializedMember"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/WorkNodeRecord"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/WorkNodeControl"
+        }
+      }
+    },
+    "AttemptCurrent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "membership",
+        "record",
+        "control",
+        "birth"
+      ],
+      "properties": {
+        "membership": {
+          "$ref": "#/$defs/AttemptMember"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/AttemptRecord"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/AttemptControl"
+        },
+        "birth": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/AttemptBirth"
+        }
+      }
+    },
+    "DispatchCurrent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "membership",
+        "admission",
+        "origin",
+        "handoff"
+      ],
+      "properties": {
+        "membership": {
+          "$ref": "#/$defs/DispatchMember"
+        },
+        "admission": {
+          "$ref": "#/$defs/DispatchAdmission"
+        },
+        "origin": {
+          "$ref": "#/$defs/MutationOrigin"
+        },
+        "handoff": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HandoffAck"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "CurrentSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "workflow",
+        "run_control",
+        "run_result",
+        "run_origin",
+        "coverage",
+        "inventory",
+        "scheduler",
+        "members",
+        "attempts",
+        "dispatches",
+        "current_origins",
+        "pointer",
+        "coverage_origin"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "workflow": {
+          "$ref": "#/$defs/WorkflowCurrent"
+        },
+        "run_control": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunExecutionControl"
+        },
+        "run_result": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult"
+        },
+        "run_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/CombinedPublicationOrigin"
+        },
+        "coverage": {
+          "$ref": "#/$defs/CoverageBirth"
+        },
+        "inventory": {
+          "$ref": "#/$defs/InventoryHead"
+        },
+        "scheduler": {
+          "$ref": "#/$defs/SchedulerControl"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MaterializedCurrent"
+          }
+        },
+        "attempts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AttemptCurrent"
+          }
+        },
+        "dispatches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DispatchCurrent"
+          }
+        },
+        "current_origins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MutationOrigin"
+          }
+        },
+        "pointer": {
+          "$ref": "#/$defs/CurrentPointer"
+        },
+        "coverage_origin": {
+          "$ref": "#/$defs/WorkflowMutationOrigin"
+        }
+      }
+    },
+    "StopSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "stop",
+        "stop_origin",
+        "scheduler",
+        "inventory",
+        "native_cancel_result",
+        "native_cancel_origin",
+        "run_control",
+        "pointer"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "stop": {
+          "$ref": "#/$defs/SchedulerStop"
+        },
+        "stop_origin": {
+          "$ref": "#/$defs/MutationOrigin"
+        },
+        "scheduler": {
+          "$ref": "#/$defs/SchedulerControl"
+        },
+        "inventory": {
+          "$ref": "#/$defs/InventoryHead"
+        },
+        "native_cancel_result": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult"
+        },
+        "native_cancel_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/PublicationOrigin"
+        },
+        "run_control": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunExecutionControl"
+        },
+        "pointer": {
+          "$ref": "#/$defs/CurrentPointer"
+        }
+      }
+    },
+    "Unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "reason",
+        "effect_posture",
+        "action_authority"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "enum": [
+            "unsupported_backend",
+            "missing_original",
+            "coverage_gap",
+            "owner_changed",
+            "permission_changed",
+            "pending_original",
+            "recovery_required",
+            "source_mismatch",
+            "numeric_exhausted",
+            "unsupported_effect_role",
+            "missing_transition_custody",
+            "unbound_workflow_writer",
+            "historical_body_not_retained",
+            "historical_operation_not_current"
+          ]
+        },
+        "effect_posture": {
+          "enum": [
+            "no_new_effect",
+            "original_effect_pending"
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "ReadResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "source"
+          ],
+          "properties": {
+            "kind": {
+              "const": "source"
+            },
+            "source": {
+              "$ref": "#/$defs/CurrentSource"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "unavailable"
+          ],
+          "properties": {
+            "kind": {
+              "const": "unavailable"
+            },
+            "unavailable": {
+              "$ref": "#/$defs/Unavailable"
+            }
+          }
+        }
+      ]
+    },
+    "StopResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "source"
+          ],
+          "properties": {
+            "kind": {
+              "const": "scheduler_fenced"
+            },
+            "source": {
+              "$ref": "#/$defs/StopSource"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "unavailable"
+          ],
+          "properties": {
+            "kind": {
+              "const": "unavailable"
+            },
+            "unavailable": {
+              "$ref": "#/$defs/Unavailable"
+            }
+          }
+        }
+      ]
+    },
+    "CurrentPointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "revision",
+        "workflow_head",
+        "inventory_head",
+        "scheduler_control",
+        "last_origin_operation_id",
+        "pending_operation_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "workflow_head": {
+          "$ref": "#/$defs/Selector"
+        },
+        "inventory_head": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scheduler_control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_origin_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pending_operation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "WorkflowBirthInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "activation_decision",
+        "activation_decision_origin",
+        "launch_identity",
+        "candidate"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "activation_decision": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationDecisionSource"
+        },
+        "activation_decision_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOrigin"
+        },
+        "launch_identity": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation"
+        },
+        "candidate": {
+          "$ref": "#/$defs/CurrentNativeValues"
+        }
+      }
+    },
+    "CoverageInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workflow",
+        "materialization"
+      ],
+      "properties": {
+        "workflow": {
+          "$ref": "#/$defs/WorkflowCurrent"
+        },
+        "materialization": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/MaterializeCurrentInputs"
+        }
+      }
+    },
+    "WorkflowLineageResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workflow",
+        "pointer"
+      ],
+      "properties": {
+        "workflow": {
+          "$ref": "#/$defs/WorkflowCurrent"
+        },
+        "pointer": {
+          "$ref": "#/$defs/CurrentPointer"
+        }
+      }
+    },
+    "WorkflowBirthResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "birth",
+        "birth_origin",
+        "activation_origin",
+        "workflow",
+        "pointer"
+      ],
+      "properties": {
+        "birth": {
+          "$ref": "#/$defs/WorkflowBirth"
+        },
+        "birth_origin": {
+          "$ref": "#/$defs/WorkflowMutationOrigin"
+        },
+        "activation_origin": {
+          "$ref": "#/$defs/ActivationWriterOrigin"
+        },
+        "workflow": {
+          "$ref": "#/$defs/WorkflowCurrent"
+        },
+        "pointer": {
+          "$ref": "#/$defs/CurrentPointer"
+        }
+      }
+    },
+    "StorageWorkflowBirth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_workflow_workflow_birth.v9"
+        },
+        "schema_version": {
+          "const": "9.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/WorkflowBirth"
+        }
+      }
+    },
+    "StorageCurrentPointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_workflow_current_pointer.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/CurrentPointer"
+        }
+      }
+    },
+    "StorageWorkflowHead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_workflow_workflow_head.v8"
+        },
+        "schema_version": {
+          "const": "8.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/WorkflowHead"
+        }
+      }
+    },
+    "StorageWorkflowUpdate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_workflow_workflow_update.v8"
+        },
+        "schema_version": {
+          "const": "8.0.0"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/OriginalWorkflowUpdate"
+        }
+      }
+    },
+    "StorageInventoryHead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_workflow_inventory_head.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/InventoryHead"
+        }
+      }
+    },
+    "StorageCoverageBirth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_workflow_coverage_birth.v4"
+        },
+        "schema_version": {
+          "const": "4.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/CoverageBirth"
+        }
+      }
+    },
+    "StorageSchedulerControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_workflow_scheduler_control.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/SchedulerControl"
+        }
+      }
+    },
+    "StorageDispatchAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_workflow_dispatch_admission.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/DispatchAdmission"
+        }
+      }
+    },
+    "StorageHandoffAck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_workflow_handoff_ack.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/HandoffAck"
+        }
+      }
+    },
+    "StorageSchedulerStop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_workflow_scheduler_stop.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/SchedulerStop"
+        }
+      }
+    },
+    "StorageMutationOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_workflow_mutation_origin.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/MutationOrigin"
+        }
+      }
+    },
+    "WorkflowMutationOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "method",
+        "operation_id",
+        "transaction_id",
+        "owner",
+        "causation",
+        "preimages",
+        "afterimages",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "method": {
+          "enum": [
+            "owner.executor.workflow_source.enroll_workflow_birth.v3",
+            "owner.executor.workflow_source.update_workflow.v3",
+            "owner.executor.workflow_source.begin_coverage.v3"
+          ]
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "causation": {
+          "$ref": "#/$defs/Selector"
+        },
+        "preimages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Selector"
+          }
+        },
+        "afterimages": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/WorkflowBirthAfterimages"
+            },
+            {
+              "$ref": "#/$defs/WorkflowUpdateAfterimages"
+            },
+            {
+              "$ref": "#/$defs/CoverageAfterimages"
+            }
+          ]
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "method": {
+                "const": "owner.executor.workflow_source.enroll_workflow_birth.v3"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "afterimages": {
+                "$ref": "#/$defs/WorkflowBirthAfterimages"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "method": {
+                "const": "owner.executor.workflow_source.update_workflow.v3"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "afterimages": {
+                "$ref": "#/$defs/WorkflowUpdateAfterimages"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "method": {
+                "const": "owner.executor.workflow_source.begin_coverage.v3"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "afterimages": {
+                "$ref": "#/$defs/CoverageAfterimages"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "StorageWorkflowMutationOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_workflow_lineage_origin.v9"
+        },
+        "schema_version": {
+          "const": "9.0.0"
+        },
+        "record": {
+          "$ref": "#/$defs/WorkflowMutationOrigin"
+        }
+      }
+    },
+    "WorkflowBirthAfterimages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workflow_birth",
+        "workflow_update",
+        "workflow_head",
+        "pointer"
+      ],
+      "properties": {
+        "workflow_birth": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "executor_workflow_workflow_birth"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.executor_workflow_workflow_birth.v9"
+                },
+                "schema_version": {
+                  "const": "9.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "workflow_update": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "executor_workflow_workflow_update"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.executor_workflow_workflow_update.v8"
+                },
+                "schema_version": {
+                  "const": "8.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "workflow_head": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "executor_workflow_workflow_head"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.executor_workflow_workflow_head.v8"
+                },
+                "schema_version": {
+                  "const": "8.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "pointer": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "executor_workflow_current_pointer"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.executor_workflow_current_pointer.v2"
+                },
+                "schema_version": {
+                  "const": "2.0.0"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "WorkflowUpdateAfterimages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workflow_update",
+        "workflow_head",
+        "pointer"
+      ],
+      "properties": {
+        "workflow_update": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "executor_workflow_workflow_update"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.executor_workflow_workflow_update.v8"
+                },
+                "schema_version": {
+                  "const": "8.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "workflow_head": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "executor_workflow_workflow_head"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.executor_workflow_workflow_head.v8"
+                },
+                "schema_version": {
+                  "const": "8.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "pointer": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "executor_workflow_current_pointer"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.executor_workflow_current_pointer.v2"
+                },
+                "schema_version": {
+                  "const": "2.0.0"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "CoverageAfterimages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "coverage",
+        "inventory",
+        "scheduler",
+        "pointer"
+      ],
+      "properties": {
+        "coverage": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "executor_workflow_coverage_birth"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.executor_workflow_coverage_birth.v4"
+                },
+                "schema_version": {
+                  "const": "4.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "inventory": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "executor_workflow_inventory_head"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.executor_workflow_inventory_head.v2"
+                },
+                "schema_version": {
+                  "const": "2.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "scheduler": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "executor_workflow_scheduler_control"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.executor_workflow_scheduler_control.v2"
+                },
+                "schema_version": {
+                  "const": "2.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "pointer": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "executor_workflow_current_pointer"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.executor_workflow_current_pointer.v2"
+                },
+                "schema_version": {
+                  "const": "2.0.0"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "BodyIssuanceCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "body",
+        "control",
+        "identity",
+        "body_revision",
+        "activation_revision",
+        "status",
+        "activation_state",
+        "workflow_owner_ref",
+        "workflow_owner_epoch"
+      ],
+      "properties": {
+        "kind": {
+          "const": "historical_native_issuance_commitment"
+        },
+        "body": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "workflow_goal_run_body"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_goal_run_body.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "control": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "properties": {
+                "family_id": {
+                  "const": "workflow_goal_run_control"
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_goal_run_control.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                }
+              }
+            }
+          ]
+        },
+        "identity": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity"
+        },
+        "body_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "activation_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "ready",
+            "running",
+            "provisional_success",
+            "verifying",
+            "failed_verification",
+            "repairing",
+            "certified",
+            "failed",
+            "blocked",
+            "cancelled",
+            "stopped"
+          ]
+        },
+        "activation_state": {
+          "enum": [
+            "activation_pending",
+            "records_materialized",
+            "entrypoints_queued",
+            "start_event_pending",
+            "active",
+            "cancelled_before_mutation"
+          ]
+        },
+        "workflow_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workflow_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "BoundTransitionRule": {
+      "enum": [
+        "activation_begin",
+        "activation_materialized",
+        "activation_entrypoints",
+        "activation_prepare_start",
+        "activation_abort_prestart",
+        "d06_cancel_nonterminal",
+        "d06_preserve_terminal",
+        "original_workflow_start",
+        "original_execution_progress",
+        "original_provisional_success",
+        "original_standard_certification"
+      ]
+    },
+    "RequiredOtherWorkflowWriterSource": false,
+    "TransitionCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "before",
+        "after",
+        "original_writer_method",
+        "original_owner_result",
+        "original_owner_origin"
+      ],
+      "properties": {
+        "rule": {
+          "$ref": "#/$defs/BoundTransitionRule"
+        },
+        "before": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BodyIssuanceCommitment"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after": {
+          "$ref": "#/$defs/BodyIssuanceCommitment"
+        },
+        "original_writer_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_result": {
+          "$ref": "#/$defs/Selector"
+        },
+        "original_owner_origin": {
+          "$ref": "#/$defs/Selector"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "rule": {
+                "const": "activation_begin"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "before": {
+                "type": "null"
+              },
+              "original_writer_method": {
+                "const": "owner.workflow.activation.begin.v1"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "before": {
+                "$ref": "#/$defs/BodyIssuanceCommitment"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rule": {
+                "const": "activation_materialized"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_writer_method": {
+                "const": "owner.workflow.activation.commit_materialized.v1"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rule": {
+                "const": "activation_entrypoints"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_writer_method": {
+                "const": "owner.workflow.activation.stage_entrypoints.v1"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rule": {
+                "const": "activation_prepare_start"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_writer_method": {
+                "const": "owner.workflow.activation.prepare_start.v1"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rule": {
+                "const": "activation_abort_prestart"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_writer_method": {
+                "const": "owner.workflow.activation.cancel_before_mutation.v1"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rule": {
+                "const": "d06_cancel_nonterminal"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_writer_method": {
+                "const": "owner.workflow.executor_cancel.publish_disposition.v3"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "rule": {
+                "const": "d06_preserve_terminal"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_writer_method": {
+                "const": "owner.workflow.executor_cancel.publish_disposition.v3"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ActivationWriterOrigin": {
+      "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+    },
+    "ActivationPublicationArtifacts": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "rule",
+            "decision",
+            "outbox",
+            "origins"
+          ],
+          "properties": {
+            "rule": {
+              "const": "activation_begin"
+            },
+            "decision": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationDecisionSourcePhysical"
+            },
+            "outbox": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/StartOutboxIntentPhysical"
+            },
+            "origins": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ActivationWriterOrigin"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "rule",
+            "installed_graph",
+            "required_set",
+            "born_worknodes",
+            "materialization_receipts",
+            "transition",
+            "native_result",
+            "native_origin",
+            "origins"
+          ],
+          "properties": {
+            "rule": {
+              "const": "activation_materialized"
+            },
+            "installed_graph": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/InstalledWorkGraphPhysical"
+            },
+            "required_set": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RequiredSetPhysical"
+            },
+            "born_worknodes": {
+              "type": "array",
+              "items": {
+                "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/BornWorkNodeRecordPhysical"
+              }
+            },
+            "materialization_receipts": {
+              "type": "array",
+              "items": {
+                "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/WorkNodeMaterializationReceiptPhysical"
+              }
+            },
+            "transition": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationTransitionReceiptPhysical"
+            },
+            "native_result": {
+              "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunOperationResult"
+            },
+            "native_origin": {
+              "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/PublicationOrigin"
+            },
+            "origins": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ActivationWriterOrigin"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "rule",
+            "staging",
+            "transition",
+            "origins"
+          ],
+          "properties": {
+            "rule": {
+              "const": "activation_entrypoints"
+            },
+            "staging": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/EntryPointStagingPhysical"
+            },
+            "transition": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationTransitionReceiptPhysical"
+            },
+            "origins": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ActivationWriterOrigin"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "rule",
+            "receipt",
+            "outbox",
+            "transition",
+            "origins"
+          ],
+          "properties": {
+            "rule": {
+              "const": "activation_prepare_start"
+            },
+            "receipt": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationReceiptPhysical"
+            },
+            "outbox": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/StartOutboxIntentPhysical"
+            },
+            "transition": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationTransitionReceiptPhysical"
+            },
+            "origins": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ActivationWriterOrigin"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "rule",
+            "abort",
+            "transition",
+            "origins"
+          ],
+          "properties": {
+            "rule": {
+              "const": "activation_abort_prestart"
+            },
+            "abort": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/PreMutationCancellationPhysical"
+            },
+            "transition": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationTransitionReceiptPhysical"
+            },
+            "origins": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ActivationWriterOrigin"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "OriginalWriterOrigin": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "activation_original"
+            },
+            "selection": {
+              "$ref": "#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "#/$defs/ActivationWriterOrigin"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "d06_original"
+            },
+            "selection": {
+              "$ref": "#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v7.schema.json#/$defs/StorageOrigin"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "original_workflow_start"
+            },
+            "selection": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json#/$defs/StorageOrigin"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "selection",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "standard_original"
+            },
+            "selection": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/Selector"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/StorageWorkflowOrigin"
+            }
+          }
+        }
+      ]
+    },
+    "CurrentNativeValues": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body",
+        "control"
+      ],
+      "properties": {
+        "body": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBodyPhysical"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControlPhysical"
+        }
+      }
+    },
+    "PublicationOwnerSource": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "origin",
+            "artifacts"
+          ],
+          "properties": {
+            "kind": {
+              "const": "activation_original"
+            },
+            "origin": {
+              "$ref": "#/$defs/ActivationWriterOrigin"
+            },
+            "artifacts": {
+              "$ref": "#/$defs/ActivationPublicationArtifacts"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "result",
+            "origin"
+          ],
+          "properties": {
+            "kind": {
+              "const": "d06_original"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v7.schema.json#/$defs/StorageResult"
+            },
+            "origin": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v7.schema.json#/$defs/StorageOrigin"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "commit",
+            "origin"
+          ],
+          "properties": {
+            "kind": {
+              "const": "original_workflow_start"
+            },
+            "commit": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json#/$defs/StorageCommit"
+            },
+            "origin": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json#/$defs/StorageOrigin"
+            }
+          }
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/RequiredStandardWorkflowWriterSource"
+        },
+        {
+          "$ref": "#/$defs/RequiredOtherWorkflowWriterSource"
+        }
+      ]
+    },
+    "WorkflowTransitionInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current",
+        "before",
+        "candidate",
+        "rule",
+        "original_owner",
+        "operation_id",
+        "transaction_id"
+      ],
+      "properties": {
+        "current": {
+          "$ref": "#/$defs/WorkflowCurrent"
+        },
+        "before": {
+          "$ref": "#/$defs/CurrentNativeValues"
+        },
+        "candidate": {
+          "$ref": "#/$defs/CurrentNativeValues"
+        },
+        "rule": {
+          "$ref": "#/$defs/BoundTransitionRule"
+        },
+        "original_owner": {
+          "$ref": "#/$defs/PublicationOwnerSource"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "WorkflowBirthPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "birth",
+        "head",
+        "pointer",
+        "body",
+        "control",
+        "original_activation_origin",
+        "origin"
+      ],
+      "properties": {
+        "birth": {
+          "$ref": "#/$defs/WorkflowBirth"
+        },
+        "head": {
+          "$ref": "#/$defs/WorkflowHead"
+        },
+        "pointer": {
+          "$ref": "#/$defs/CurrentPointer"
+        },
+        "body": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBody"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControl"
+        },
+        "original_activation_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOrigin"
+        },
+        "origin": {
+          "$ref": "#/$defs/WorkflowMutationOrigin"
+        }
+      }
+    },
+    "RequiredStandardWorkflowWriterSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "result",
+        "origin"
+      ],
+      "properties": {
+        "kind": {
+          "const": "standard_original"
+        },
+        "result": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/StorageWorkflowResult"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/StorageWorkflowOrigin"
+        }
+      }
+    },
+    "OriginalWorkflowUpdate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "transaction_id",
+        "revision",
+        "previous_head",
+        "before_body",
+        "before_control",
+        "after_body",
+        "after_control",
+        "cause",
+        "original_owner_result",
+        "original_owner_origin",
+        "transition"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "previous_head": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "before_body": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "before_control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_body": {
+          "$ref": "#/$defs/Selector"
+        },
+        "after_control": {
+          "$ref": "#/$defs/Selector"
+        },
+        "cause": {
+          "enum": [
+            "activation",
+            "materialized",
+            "stage_entrypoints",
+            "prepare_start",
+            "completion_certification",
+            "owner_status",
+            "recovery_exact"
+          ]
+        },
+        "original_owner_result": {
+          "$ref": "#/$defs/Selector"
+        },
+        "original_owner_origin": {
+          "$ref": "#/$defs/Selector"
+        },
+        "transition": {
+          "$ref": "#/$defs/TransitionCommitment"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "transition": {
+                "properties": {
+                  "rule": {
+                    "const": "activation_begin"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "cause": {
+                "const": "activation"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition": {
+                "properties": {
+                  "rule": {
+                    "const": "activation_materialized"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "cause": {
+                "const": "materialized"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition": {
+                "properties": {
+                  "rule": {
+                    "const": "activation_entrypoints"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "cause": {
+                "const": "stage_entrypoints"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition": {
+                "properties": {
+                  "rule": {
+                    "const": "activation_prepare_start"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "cause": {
+                "const": "prepare_start"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition": {
+                "properties": {
+                  "rule": {
+                    "const": "activation_abort_prestart"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "cause": {
+                "const": "owner_status"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition": {
+                "properties": {
+                  "rule": {
+                    "const": "d06_cancel_nonterminal"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "cause": {
+                "const": "owner_status"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition": {
+                "properties": {
+                  "rule": {
+                    "const": "d06_preserve_terminal"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "cause": {
+                "const": "owner_status"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition": {
+                "properties": {
+                  "rule": {
+                    "const": "original_workflow_start"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "cause": {
+                "const": "owner_status"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition": {
+                "properties": {
+                  "rule": {
+                    "const": "original_execution_progress"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "cause": {
+                "const": "owner_status"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition": {
+                "properties": {
+                  "rule": {
+                    "const": "original_provisional_success"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "cause": {
+                "const": "owner_status"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "transition": {
+                "properties": {
+                  "rule": {
+                    "const": "original_standard_certification"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "cause": {
+                "const": "completion_certification"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "MaterializationRegistrationInput": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "phase",
+            "source"
+          ],
+          "properties": {
+            "phase": {
+              "const": "ordinary_current"
+            },
+            "source": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/CurrentSource"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "phase",
+            "source"
+          ],
+          "properties": {
+            "phase": {
+              "const": "replan_observation"
+            },
+            "source": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_replan_observer.v1.schema.json#/$defs/ReplanInventoryObservationInput"
+            }
+          }
+        }
+      ]
+    },
+    "MaterializationRegistrationResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "phase",
+            "result"
+          ],
+          "properties": {
+            "phase": {
+              "const": "ordinary_current"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/ReadResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "phase",
+            "result"
+          ],
+          "properties": {
+            "phase": {
+              "const": "replan_observation"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_replan_observer.v1.schema.json#/$defs/ReplanInventoryPublication"
+            }
+          }
+        }
+      ]
+    },
+    "CombinedStopCurrentInput": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "phase",
+            "source"
+          ],
+          "properties": {
+            "phase": {
+              "const": "ordinary_current"
+            },
+            "source": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/CurrentSource"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "phase",
+            "source"
+          ],
+          "properties": {
+            "phase": {
+              "const": "combined_pending"
+            },
+            "source": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/PendingStopSource"
+            }
+          }
+        }
+      ]
+    },
+    "CombinedStopResult": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StopResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StopAcceptedPending"
+        }
+      ]
+    }
+  },
+  "$comment": "External whole successor proposal. Original whole schemas remain active at their unchanged IDs. See protocol.md, profile-delta.json and literal-resource-realms.json. No runtime or canonical adoption claim."
+}

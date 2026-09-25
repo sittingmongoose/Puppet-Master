@@ -307,10 +307,13 @@ class OnboardingStorageTests(unittest.TestCase):
         #   plans/ea-s09-coordination-prep-20260925); no other row of the 88 changed. The same two rows
         #   moved again with the cycle-1 review repairs on that branch: CP-01 (platform is an open runtime
         #   platform ID, not a closed list), CP-02 (the recovery epoch in the idempotency key) and CP-08
-        #   (path_ref rejects Windows drive, home-relative and backslash paths).
+        #   (path_ref rejects Windows drive, home-relative and backslash paths);
+        # - 34 families appended as /families/294 to /families/327 by the Replan v8 A1 landing
+        #   (SP-321 has 30, SP-322 has 4; 2026-09-25, branch plans/replan-v8-a1-20260925); no row of
+        #   the 88 changed.
         families = self.registry["families"]
-        self.assertEqual(len(families), 294)
-        self.assertEqual(len({row["family_id"] for row in families}), 294)
+        self.assertEqual(len(families), 328)
+        self.assertEqual(len({row["family_id"] for row in families}), 328)
         added = [row for row in families if row["family_id"] == "run_started_index_checkpoint"]
         browser_checkpoint = [row for row in families if row["family_id"] == "browser_workspace_created_index_checkpoint"]
         self.assertEqual(len(browser_checkpoint), 1)

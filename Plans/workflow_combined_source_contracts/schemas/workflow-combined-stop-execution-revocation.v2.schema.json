@@ -1,0 +1,956 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json",
+  "title": "Whole combined Stop execution-revocation source: first Stop and released current readback",
+  "description": "Fresh version preserving the complete previous typed source while explicitly separating independent current Goal Stop from prior slot revocation and supplying whole held/released-idle readback sources. No new stored roles or cancellation aliases. STOP-PROTOCOL.md remains mandatory.",
+  "$defs": {
+    "RevocationReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "current_guard",
+        "current_goal"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/RunScope"
+        },
+        "current_guard": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult"
+        },
+        "current_goal": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      }
+    },
+    "RevocationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "expected_slot",
+        "current_goal_stop"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/RunScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_slot": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+        },
+        "current_goal_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument"
+        }
+      }
+    },
+    "SlotRevocationCustody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slot_revision",
+        "slot_origin",
+        "original_goal_stop"
+      ],
+      "properties": {
+        "slot_revision": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotRevisionAtRevocation"
+        },
+        "slot_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotOriginAtRevocation"
+        },
+        "original_goal_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument"
+        }
+      }
+    },
+    "RunRevocationCurrent": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "current_guard",
+            "current_goal"
+          ],
+          "properties": {
+            "kind": {
+              "const": "not_revoked"
+            },
+            "current_guard": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult"
+            },
+            "current_goal": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "current_guard",
+            "custody"
+          ],
+          "properties": {
+            "kind": {
+              "const": "execution_revoked"
+            },
+            "current_guard": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult"
+            },
+            "custody": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotRevocationCustody"
+            }
+          }
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/GoalStoppedCurrentAcquisition"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "reason"
+          ],
+          "properties": {
+            "kind": {
+              "const": "unavailable"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "ClaimedOrdinaryPhase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "ordinary_current",
+        "original_guard",
+        "publication_control",
+        "retained_phase"
+      ],
+      "properties": {
+        "kind": {
+          "const": "replan_claimed_ordinary"
+        },
+        "ordinary_current": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/CurrentSource"
+        },
+        "original_guard": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ClaimedPreprepareGuard"
+        },
+        "publication_control": {
+          "type": "null"
+        },
+        "retained_phase": {
+          "enum": [
+            "claimed",
+            "revoked_before_prepare",
+            "recovering_before_prepare"
+          ]
+        }
+      }
+    },
+    "StopPhase": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ClaimedOrdinaryPhase"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "pending_native_phase",
+            "original_guard"
+          ],
+          "properties": {
+            "kind": {
+              "const": "publication_pending"
+            },
+            "pending_native_phase": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/PendingNativePhase"
+            },
+            "original_guard": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult"
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionRevocationSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "phase",
+        "current_revocation",
+        "original_start",
+        "actual_native_run_control",
+        "actual_native_run_result",
+        "actual_native_run_origin",
+        "actual_scheduler",
+        "all_generation_native_members",
+        "complete_all_generation_effect_census"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RevocationRequest"
+        },
+        "phase": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/StopPhase"
+        },
+        "current_revocation": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent"
+        },
+        "original_start": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json#/$defs/OriginalStartAssociation"
+        },
+        "actual_native_run_control": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/StorageRunExecutionControl"
+        },
+        "actual_native_run_result": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/StorageRunOperationResult"
+        },
+        "actual_native_run_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/CombinedPublicationOrigin"
+        },
+        "actual_scheduler": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageSchedulerControl"
+        },
+        "all_generation_native_members": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/CombinedNativeCurrentSnapshot"
+          }
+        },
+        "complete_all_generation_effect_census": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/WholeEffectCensus"
+        }
+      }
+    },
+    "NativeExecutionRevocationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "issuer_method",
+        "original_native_owner",
+        "native_transaction_id",
+        "slot_before",
+        "slot_after",
+        "slot_revision",
+        "slot_origin",
+        "original_goal_stop",
+        "native_returned_at_utc",
+        "action_authority",
+        "original_native_cancellation",
+        "effect_cleanup"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/RunScope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issuer_method": {
+          "const": "owner.executor.native.revoke_run_execution.v1"
+        },
+        "original_native_owner": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/OwnerIdentity"
+        },
+        "native_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slot_before": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+        },
+        "slot_after": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+        },
+        "slot_revision": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+        },
+        "slot_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+        },
+        "original_goal_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument"
+        },
+        "native_returned_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "action_authority": {
+          "const": "revocation_only"
+        },
+        "original_native_cancellation": {
+          "const": "not_issued_by_this_operation"
+        },
+        "effect_cleanup": {
+          "const": "not_asserted"
+        }
+      }
+    },
+    "ExecutionRevocationCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "slot_after",
+        "slot_revision_after",
+        "slot_origin",
+        "native_storage_transaction_id",
+        "worknode_attempt_effect_disposition",
+        "scheduler_disposition"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationSource"
+        },
+        "slot_after": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotAtRevocation"
+        },
+        "slot_revision_after": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotRevisionAtRevocation"
+        },
+        "slot_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotOriginAtRevocation"
+        },
+        "native_storage_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "worknode_attempt_effect_disposition": {
+          "const": "all_original_facts_preserved"
+        },
+        "scheduler_disposition": {
+          "const": "original_scheduler_facts_preserved_capability_revoked"
+        }
+      }
+    },
+    "ExecutionRevocationPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_at_commit",
+        "native_revocation_result",
+        "slot_revocation_custody",
+        "native_transaction_id",
+        "slot_after"
+      ],
+      "properties": {
+        "source_at_commit": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationSource"
+        },
+        "native_revocation_result": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/NativeExecutionRevocationResult"
+        },
+        "slot_revocation_custody": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotRevocationCustody"
+        },
+        "native_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slot_after": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotAtRevocation"
+        }
+      }
+    },
+    "ExecutionRevocationReadback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_source",
+        "slot_revocation_custody",
+        "current_native_owner",
+        "acquisition",
+        "original_native_cancellation",
+        "effect_cleanup"
+      ],
+      "properties": {
+        "current_source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationReadbackSource"
+        },
+        "slot_revocation_custody": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotRevocationCustody"
+        },
+        "current_native_owner": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/OwnerIdentity"
+        },
+        "acquisition": {
+          "const": "actual_native_revocation_guard_and_original_slot_issuance"
+        },
+        "original_native_cancellation": {
+          "const": "not_asserted"
+        },
+        "effect_cleanup": {
+          "const": "not_asserted"
+        }
+      }
+    },
+    "ExecutionRevocationMethodResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "publication"
+          ],
+          "properties": {
+            "kind": {
+              "const": "execution_revoked"
+            },
+            "publication": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationPublication"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "readback"
+          ],
+          "properties": {
+            "kind": {
+              "const": "already_execution_revoked"
+            },
+            "readback": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationReadback"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "reason"
+          ],
+          "properties": {
+            "kind": {
+              "const": "unavailable"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "CombinedStopCurrentInput": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "phase",
+            "source"
+          ],
+          "properties": {
+            "phase": {
+              "const": "ordinary_current"
+            },
+            "source": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/CurrentSource"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "phase",
+            "source"
+          ],
+          "properties": {
+            "phase": {
+              "const": "combined_pending"
+            },
+            "source": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationSource"
+            }
+          }
+        }
+      ]
+    },
+    "StopAcceptedRevocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "publication",
+        "action_authority",
+        "d06_coherent_publication",
+        "publication_control_created_by_stop"
+      ],
+      "properties": {
+        "kind": {
+          "const": "stop_execution_revoked_publication_pending"
+        },
+        "publication": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationPublication"
+        },
+        "action_authority": {
+          "const": "revocation_only"
+        },
+        "d06_coherent_publication": {
+          "const": "requires_separate_original_cancellation_source"
+        },
+        "publication_control_created_by_stop": {
+          "const": false
+        }
+      }
+    },
+    "StopRevocationReadback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "readback",
+        "action_authority",
+        "d06_coherent_publication"
+      ],
+      "properties": {
+        "kind": {
+          "const": "stop_execution_revocation_observed"
+        },
+        "readback": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationReadback"
+        },
+        "action_authority": {
+          "const": "revocation_only"
+        },
+        "d06_coherent_publication": {
+          "const": "requires_separate_original_cancellation_source"
+        }
+      }
+    },
+    "CombinedStopResult": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StopResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/StopAcceptedRevocation"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/StopRevocationReadback"
+        }
+      ]
+    },
+    "ReadStopInput": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "phase",
+            "source"
+          ],
+          "properties": {
+            "phase": {
+              "const": "ordinary_current"
+            },
+            "source": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/CurrentSource"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "phase",
+            "request",
+            "current_goal_stop",
+            "current_source",
+            "original_revocation_custody"
+          ],
+          "properties": {
+            "phase": {
+              "const": "limited_revocation_readback"
+            },
+            "request": {
+              "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/Request"
+            },
+            "current_goal_stop": {
+              "$ref": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument"
+            },
+            "current_source": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationReadbackSource"
+            },
+            "original_revocation_custody": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotRevocationCustody"
+            }
+          }
+        }
+      ]
+    },
+    "CombinedStopReadResult": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StopResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/StopRevocationReadback"
+        }
+      ]
+    },
+    "ClaimedPreprepareGuard": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/ReplanHeld"
+        },
+        {
+          "properties": {
+            "control": {
+              "type": "null"
+            },
+            "slot": {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "state": {
+                      "properties": {
+                        "kind": {
+                          "const": "replan"
+                        },
+                        "phase": {
+                          "enum": [
+                            "claimed",
+                            "revoked",
+                            "recovering"
+                          ]
+                        },
+                        "control_selector": {
+                          "type": "null"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SlotAtRevocation": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlot"
+        },
+        {
+          "properties": {
+            "record": {
+              "properties": {
+                "state": {
+                  "properties": {
+                    "phase": {
+                      "const": "revoked"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SlotRevisionAtRevocation": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlotRevision"
+        },
+        {
+          "properties": {
+            "record": {
+              "properties": {
+                "state": {
+                  "properties": {
+                    "phase": {
+                      "const": "revoked"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SlotOriginAtRevocation": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageSlotOrigin"
+        },
+        {
+          "properties": {
+            "record": {
+              "properties": {
+                "issuer_method": {
+                  "const": "owner.executor.workflow_source.record_stop.v1"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GoalStoppedCurrentAcquisition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "current_guard",
+        "original_goal_stop",
+        "slot_revocation_assertion"
+      ],
+      "properties": {
+        "kind": {
+          "const": "goal_execution_revoked"
+        },
+        "current_guard": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult"
+        },
+        "original_goal_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument"
+        },
+        "slot_revocation_assertion": {
+          "const": "not_asserted_by_goal_stop_acquisition"
+        }
+      },
+      "$comment": "Independently genuine current Goal Stop in every actual authentic slot phase, explicitly including first Stop on still-held/unrevoked claimed or prepared Replan/certified slots. No prior slot revocation, lower issuance or future slot afterimage is asserted or required. R06 supplies the native positive route."
+    },
+    "ReleasedIdleGuard": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Idle"
+        },
+        {
+          "properties": {
+            "slot": {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "state": {
+                      "properties": {
+                        "kind": {
+                          "const": "idle"
+                        },
+                        "last_released_operation_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "last_release_selector": {
+                          "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/Selector"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ReleasedReplanControl": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredPublicationControl"
+        },
+        {
+          "properties": {
+            "record": {
+              "properties": {
+                "phase": {
+                  "const": "released"
+                },
+                "release_receipt_ref": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "OriginalCurrentRelease": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "control",
+            "release",
+            "original_control_issuance",
+            "original_release_issuance"
+          ],
+          "properties": {
+            "kind": {
+              "const": "replan_released"
+            },
+            "control": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReleasedReplanControl"
+            },
+            "release": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredReleaseReceipt"
+            },
+            "original_control_issuance": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/OriginalRowIssuance"
+            },
+            "original_release_issuance": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/OriginalRowIssuance"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "full_original_released_guard"
+          ],
+          "properties": {
+            "kind": {
+              "const": "certified_released"
+            },
+            "full_original_released_guard": {
+              "$ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v2.schema.json#/$defs/GuardReleased"
+            }
+          }
+        }
+      ]
+    },
+    "HeldExecutionRevocationReadbackSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source"
+      ],
+      "properties": {
+        "kind": {
+          "const": "held_current"
+        },
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationSource"
+        }
+      }
+    },
+    "ReleasedIdleExecutionRevocationReadbackSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "current_goal_stop",
+        "current_guard",
+        "coherent_current_source",
+        "original_current_release",
+        "current_revocation",
+        "original_start",
+        "actual_native_run_control",
+        "actual_native_run_result",
+        "actual_native_run_origin",
+        "actual_scheduler",
+        "all_generation_native_members",
+        "complete_all_generation_effect_census"
+      ],
+      "properties": {
+        "kind": {
+          "const": "released_idle_current"
+        },
+        "current_goal_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument"
+        },
+        "current_guard": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReleasedIdleGuard"
+        },
+        "coherent_current_source": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/CurrentSource"
+        },
+        "original_current_release": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/OriginalCurrentRelease"
+        },
+        "current_revocation": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent"
+        },
+        "original_start": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json#/$defs/OriginalStartAssociation"
+        },
+        "actual_native_run_control": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/StorageRunExecutionControl"
+        },
+        "actual_native_run_result": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/StorageRunOperationResult"
+        },
+        "actual_native_run_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/CombinedPublicationOrigin"
+        },
+        "actual_scheduler": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/StorageSchedulerControl"
+        },
+        "all_generation_native_members": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json#/$defs/CombinedNativeCurrentSnapshot"
+          }
+        },
+        "complete_all_generation_effect_census": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/WholeEffectCensus"
+        }
+      }
+    },
+    "ExecutionRevocationReadbackSource": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/HeldExecutionRevocationReadbackSource"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReleasedIdleExecutionRevocationReadbackSource"
+        }
+      ]
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/CombinedStopCurrentInput"
+    },
+    {
+      "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReadStopInput"
+    },
+    {
+      "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/CombinedStopResult"
+    },
+    {
+      "$ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/CombinedStopReadResult"
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+[
+  {
+    "source_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-arguments.v6.schema.json",
+    "source_sha256": "3f9b2fc8d768d462db1b4ac950854e0d7f2fc13982e0bbc1422e5ecb81bdbd88",
+    "source_id": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v6.schema.json",
+    "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-start-arguments.v7.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v7.schema.json",
+    "source_realm": "certified_native"
+  },
+  {
+    "source_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-positive-arguments.v2.schema.json",
+    "source_sha256": "ec8c346caffabb0bbb06285197e5ed04bfb44ffa8b6dfa02a038aef8a5b9bdd8",
+    "source_id": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json",
+    "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-cancel-positive-arguments.v3.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v3.schema.json",
+    "source_realm": "certified_native"
+  },
+  {
+    "source_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json",
+    "source_sha256": "9209a5b923cb279c4176ccf3b648a8381c4afae541220cd397329558db5266d2",
+    "source_id": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json",
+    "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-start-custody.v7.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json",
+    "source_realm": "certified_native"
+  },
+  {
+    "source_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-original-start.v6.schema.json",
+    "source_sha256": "8e82034b4874fa7397c3ea44d7785b290ed2253281731648846505516914d376",
+    "source_id": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json",
+    "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-original-start.v7.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json",
+    "source_realm": "certified_corrected_native",
+    "frozen_original_pre_correction_lineage": {
+      "source_path": "external-source-evidence:sha256:3b345f46b139e2f0d53614f1e2276308737aa7e15f0dd1733aac9f696755d0ed",
+      "source_sha256": "3b345f46b139e2f0d53614f1e2276308737aa7e15f0dd1733aac9f696755d0ed",
+      "source_id": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json",
+      "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-original-start.v7.schema.json",
+      "new_id": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json",
+      "source_realm": "certified_native"
+    },
+    "accepted_preinstallation_correction_manifest_sha256": "external-source-evidence:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe"
+  },
+  {
+    "source_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-certification-argument.v4.schema.json",
+    "source_sha256": "830d20024033a6e1edc32c847363a523a44fe47acd2abcd84413f8a58f4131fa",
+    "source_id": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json",
+    "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-standard-certification-argument.v5.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json",
+    "source_realm": "certified_native"
+  },
+  {
+    "source_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-event-prerequisite.v4.schema.json",
+    "source_sha256": "ab8350e1f7b60c2c8b37fcb3ddb29da43a003d5b032aef145a0b220ef47f6274",
+    "source_id": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json",
+    "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-standard-event-prerequisite.v5.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v5.schema.json",
+    "source_realm": "certified_native"
+  },
+  {
+    "source_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+    "source_sha256": "747100bb06ed4c718f4f38a0fee7133b1e45d10a3c04c5d8f25a3bfd7683386c",
+    "source_id": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json",
+    "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-cancel-start-profile.v7.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v7.schema.json",
+    "source_realm": "certified_corrected_native",
+    "frozen_original_pre_correction_lineage": {
+      "source_path": "external-source-evidence:sha256:f3dfe92c5943e1ddeeab334c41834357cef97c3715f8232dc5828cde99df68ca",
+      "source_sha256": "f3dfe92c5943e1ddeeab334c41834357cef97c3715f8232dc5828cde99df68ca",
+      "source_id": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json",
+      "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-cancel-start-profile.v7.schema.json",
+      "new_id": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v7.schema.json",
+      "source_realm": "certified_native"
+    },
+    "accepted_preinstallation_correction_manifest_sha256": "external-source-evidence:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe"
+  },
+  {
+    "source_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-current-source.v4.schema.json",
+    "source_sha256": "7bd88c4a7cc2b7f32af173d18c470d64e13e296170e358fcd39fe8e64b6bbbb0",
+    "source_id": "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json",
+    "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-standard-current-source.v5.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json",
+    "source_realm": "certified_native"
+  },
+  {
+    "source_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/safestop-start-arguments.v2.schema.json",
+    "source_sha256": "5431b28e798b726aef7994ae46e51df164ed4c1719317f14bc2a07fda544f24a",
+    "source_id": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json",
+    "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/safestop-start-arguments.v3.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v3.schema.json",
+    "source_realm": "certified_native"
+  },
+  {
+    "source_path": "external-source-evidence:sha256:901d26d53de5f531fa60221af88f7b8db04a973086bb4f6906d915cea669bb31",
+    "source_sha256": "901d26d53de5f531fa60221af88f7b8db04a973086bb4f6906d915cea669bb31",
+    "source_id": "https://puppetmaster.local/drafts/goal_run_replanned_source_20260921.v3.schema.json",
+    "new_path": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json",
+    "source_realm": "replan_authoring_original"
+  },
+  {
+    "source_path": "external-source-evidence:sha256:dc3ad86fad86bfd6a0594cea8a7e856a16978e13bcc3dcdb126ba960a7833565",
+    "source_sha256": "dc3ad86fad86bfd6a0594cea8a7e856a16978e13bcc3dcdb126ba960a7833565",
+    "source_id": "https://puppetmaster.local/drafts/executor_replan_observer_20260921.v3.schema.json",
+    "new_path": "Plans/workflow_combined_source_contracts/replan/schemas/executor-workflow-replan-observer.v1.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/executor_workflow_replan_observer.v1.schema.json",
+    "source_realm": "replan_authoring_original"
+  },
+  {
+    "source_path": "Plans/goal_certified_event_coordinator_contracts/schemas/coordinator.v1.schema.json",
+    "source_sha256": "274bb7363140e13769bd75a1fdf6eaa6688f2d8699b271182fc90bce0ee88140",
+    "source_id": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json",
+    "new_path": "Plans/workflow_combined_source_contracts/coordinator/schemas/coordinator.v2.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v2.schema.json",
+    "source_realm": "certified_coordinator"
+  },
+  {
+    "source_path": "Plans/goal_certified_event_coordinator_contracts/schemas/identity.v1.schema.json",
+    "source_sha256": "c684141ada201397dce84c6f738c89b15d5951466804b185308e3edc92e12212",
+    "source_id": "https://puppetmaster.local/proposals/goal_certified_event_identity.v1.schema.json",
+    "new_path": "Plans/workflow_combined_source_contracts/coordinator/schemas/identity.v2.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/goal_certified_event_identity.v2.schema.json",
+    "source_realm": "certified_coordinator"
+  },
+  {
+    "source_path": "Plans/goal_certified_event_coordinator_contracts/schemas/append-phase.v1.schema.json",
+    "source_sha256": "81958febf169253ce6349c29ddf2bde98df5182df1c2aa74a01d7be72ac316fd",
+    "source_id": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v1.schema.json",
+    "new_path": "Plans/workflow_combined_source_contracts/coordinator/schemas/append-phase.v2.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v2.schema.json",
+    "source_realm": "certified_coordinator"
+  },
+  {
+    "source_path": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+    "source_sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79",
+    "source_id": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json",
+    "new_path": "Plans/workflow_combined_source_contracts/schemas/native-worknode-combined-current.v1.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json",
+    "source_realm": "certified_native"
+  },
+  {
+    "source_path": "external-source-evidence:sha256:f225be4289b1e7e4c2eab71fd23794a609692b3bbdeae8f1e90069b040d50f22",
+    "source_sha256": "f225be4289b1e7e4c2eab71fd23794a609692b3bbdeae8f1e90069b040d50f22",
+    "source_id": "https://puppetmaster.local/drafts/goal_run_replanned_consumer_20260921.v3.schema.json",
+    "new_path": "Plans/workflow_combined_source_contracts/replan/schemas/goal-run-started-cancelled-replanned-consumer.v1.schema.json",
+    "new_id": "https://puppetmaster.local/proposals/goal_run_started_cancelled_replanned_consumer.v1.schema.json",
+    "source_realm": "replan_authoring_original"
+  }
+]

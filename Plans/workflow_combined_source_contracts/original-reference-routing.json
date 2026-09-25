@@ -1,0 +1,2482 @@
+{
+  "base": "63cf2cb97f936c91dd7bb5c585d9a35d8409ed61",
+  "canonical_path_selection": {
+    "aliases": {
+      "certified-canonical-edition-v2": [
+        {
+          "canonical_prefix": "Plans/",
+          "original_prefix": "Plans/"
+        }
+      ],
+      "certified-coordinator-v2": [
+        {
+          "canonical_prefix": "Plans/workflow_standard_source_contracts/native-v7/",
+          "original_prefix": "native-v7/"
+        },
+        {
+          "canonical_prefix": "Plans/goal_certified_producer_source_contracts/native-v7/",
+          "original_prefix": "producer-v2/"
+        },
+        {
+          "canonical_prefix": "Plans/goal_certified_event_coordinator_contracts/schemas/",
+          "original_prefix": "schemas/"
+        },
+        {
+          "canonical_prefix": "Plans/",
+          "original_prefix": "inputs/Plans/"
+        },
+        {
+          "canonical_prefix": "Plans/goal_certified_event_coordinator_contracts/",
+          "original_prefix": ""
+        }
+      ],
+      "certified-producer-v1": [
+        {
+          "canonical_prefix": "Plans/goal_certified_producer_source_contracts/",
+          "original_prefix": ""
+        }
+      ],
+      "replan-source-v3": [
+        {
+          "canonical_prefix": "Plans/",
+          "original_prefix": "inputs/Plans/"
+        }
+      ]
+    },
+    "rule": "A route is on main when some Plans/ blob at the base has exactly its sha256 (Plans/_shards and Plans/.plan_index excluded). Among equal-byte paths the alias of the original component prefix wins (canon's original_source_text_aliases pattern), then a primary path outside preinstallation-originals/, predecessor/ and inputs/, then the first path."
+  },
+  "counts": {
+    "explicit_cross_realm_edges": 2,
+    "external": 78,
+    "on_main": 67,
+    "payload_literal_occurrences": 6,
+    "routes": 145
+  },
+  "explicit_cross_realm_edges": [
+    {
+      "declared_by": {
+        "bytes": 3375,
+        "path": "Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json",
+        "pointer": "/new_explicit_edges/0",
+        "sha256": "abbbd9624103eb50b763c6e45d53fe62647d363402eb5460b607b4d3dd54b911"
+      },
+      "from_realm": "current_d05_source",
+      "original_edge_locations": 22,
+      "reference_locations_used_by_this_closure": 0,
+      "rule": "Exact missing original edge only; nested resolution remains in the target realm; no merged realms, rewritten strings, namespace copies, network or host filesystem retrieval",
+      "target_resolves": true,
+      "to_realm": "retained_original_d05",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+      "unresolved_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+    },
+    {
+      "declared_by": {
+        "bytes": 3375,
+        "path": "Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json",
+        "pointer": "/new_explicit_edges/0",
+        "sha256": "abbbd9624103eb50b763c6e45d53fe62647d363402eb5460b607b4d3dd54b911"
+      },
+      "from_realm": "native",
+      "original_edge_locations": 22,
+      "reference_locations_used_by_this_closure": 0,
+      "rule": "Exact missing original edge only; nested resolution remains in the target realm; no merged realms, rewritten strings, namespace copies, network or host filesystem retrieval",
+      "target_resolves": true,
+      "to_realm": "retained_original_d05",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+      "unresolved_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/inputs/Plans/plans_to_code_handoff.schema.json",
+      "whole_target_sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+    }
+  ],
+  "external_source_evidence": {
+    "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+    "source": "goal-replan-combined-source v3 package manifest"
+  },
+  "host_lookup": false,
+  "instances": "NOT_RUN",
+  "native": "NOT_RUN",
+  "network_fallback": false,
+  "original_source_roots": [
+    {
+      "host_root_path_sha256": "47ed995c96373fae136ca845986e4cace71120efd4ba22fb3391bcdbacf043e5",
+      "package_prefix": "inputs/certified-v2/",
+      "root_id": "certified-coordinator-v2",
+      "routes": 69
+    },
+    {
+      "host_root_path_sha256": "fc2481cd797b1a3e81efcc5916a98da9ed7576ebd28cedd465a8a77f3923bee9",
+      "package_prefix": "inputs/replan-v3/",
+      "root_id": "replan-source-v3",
+      "routes": 42
+    },
+    {
+      "host_root_path_sha256": "ca84e099b6601f5094bc67b0a3e903c5f1323c0f9b07a056b03bbf18bd51eabd",
+      "package_prefix": "inputs/scope/",
+      "root_id": "combined-scope-adjudication-v1",
+      "routes": 3
+    },
+    {
+      "host_root_path_sha256": "cea8f94c309322d36a3be7980fa6f0c10f6d6edb5ed3459615d59a4e5156ee7e",
+      "package_prefix": "inputs/scope-addendum/",
+      "root_id": "combined-scope-adjudication-addendum-001",
+      "routes": 2
+    },
+    {
+      "host_root_path_sha256": "57fd41aae24d4f7294ebbcd4647f772df91505c652e8eecc858fe5dbc749688d",
+      "package_prefix": "inputs/plan/",
+      "root_id": "prebirth-composition-plan-v1",
+      "routes": 8
+    },
+    {
+      "host_root_path_sha256": "affad8fcb191a4abad60ec0102d0dfb7fb915f8b857bdff98a3c3577cd751b89",
+      "package_prefix": "inputs/producer-original/",
+      "root_id": "certified-producer-v1",
+      "routes": 15
+    },
+    {
+      "host_root_path_sha256": "8b5eda5ff061d3204943184f4733222cdf9fa5ae818af5198412fde3a4944a81",
+      "package_prefix": null,
+      "root_id": "certified-canonical-edition-v2",
+      "routes": 6
+    }
+  ],
+  "payload_literals": [
+    {
+      "classification": "A3_PAYLOAD_SUCCESSOR_PENDING_NOT_REGISTRY_SELECTION",
+      "external_bytes": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "member": "inputs/replan-v3/goal-run-replanned-clock-split.schema.json",
+        "route_id": "OR-078",
+        "sha256": "0e1e3720b2ce869563be2757e0524bb8dde866e37e5e65bd870bd71e30038fa1"
+      },
+      "file": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+      "kind": "const",
+      "literal_sha256": "8ddd87dafbff45c4a724561e4550c62e0a15c6a9863e869c9aedbe83ae9361ee",
+      "owner": "A3",
+      "pointer": "/$defs/WholeProducerSubmission/properties/payload_schema_id/const",
+      "resolution": "NOT_RESOLVED_IN_CANON"
+    },
+    {
+      "classification": "A3_PAYLOAD_SUCCESSOR_PENDING_NOT_REGISTRY_SELECTION",
+      "external_bytes": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "member": "inputs/replan-v3/goal-run-replanned-clock-split.schema.json",
+        "route_id": "OR-078",
+        "sha256": "0e1e3720b2ce869563be2757e0524bb8dde866e37e5e65bd870bd71e30038fa1"
+      },
+      "file": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+      "kind": "schema_reference",
+      "literal_sha256": "8ddd87dafbff45c4a724561e4550c62e0a15c6a9863e869c9aedbe83ae9361ee",
+      "owner": "A3",
+      "pointer": "/$defs/WholeProducerSubmission/properties/payload/$ref",
+      "reached_by_method_argument_bindings": [
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/304/complete_combined_declaration/output",
+          "method": "owner.workflow.replan.finalize_producer.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/305/complete_combined_declaration/input",
+          "method": "owner.workflow.replan.append_original.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/305/complete_combined_declaration/output",
+          "method": "owner.workflow.replan.append_original.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/306/complete_combined_declaration/input",
+          "method": "owner.workflow.replan.complete.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/307/complete_combined_declaration/input",
+          "method": "owner.workflow.replan.observe.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/308/complete_combined_declaration/input",
+          "method": "owner.workflow.replan.read_original.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/308/complete_combined_declaration/output",
+          "method": "owner.workflow.replan.read_original.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/309/complete_combined_declaration/output",
+          "method": "owner.workflow.replan.reconcile.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/310/complete_combined_declaration/input",
+          "method": "owner.workflow.replan.release.v1"
+        }
+      ],
+      "resolution": "NOT_RESOLVED_IN_CANON"
+    },
+    {
+      "classification": "A3_PAYLOAD_SUCCESSOR_PENDING_NOT_REGISTRY_SELECTION",
+      "external_bytes": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "member": "inputs/replan-v3/goal-run-replanned-clock-split.schema.json",
+        "route_id": "OR-078",
+        "sha256": "0e1e3720b2ce869563be2757e0524bb8dde866e37e5e65bd870bd71e30038fa1"
+      },
+      "file": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+      "kind": "const",
+      "literal_sha256": "8ddd87dafbff45c4a724561e4550c62e0a15c6a9863e869c9aedbe83ae9361ee",
+      "owner": "A3",
+      "pointer": "/$defs/WholeOriginalEvent/allOf/1/properties/payload_schema_id/const",
+      "resolution": "NOT_RESOLVED_IN_CANON"
+    },
+    {
+      "classification": "A3_PAYLOAD_SUCCESSOR_PENDING_NOT_REGISTRY_SELECTION",
+      "external_bytes": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "member": "inputs/replan-v3/goal-run-replanned-clock-split.schema.json",
+        "route_id": "OR-078",
+        "sha256": "0e1e3720b2ce869563be2757e0524bb8dde866e37e5e65bd870bd71e30038fa1"
+      },
+      "file": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+      "kind": "schema_reference",
+      "literal_sha256": "8ddd87dafbff45c4a724561e4550c62e0a15c6a9863e869c9aedbe83ae9361ee",
+      "owner": "A3",
+      "pointer": "/$defs/WholeOriginalEvent/allOf/1/properties/payload/$ref",
+      "reached_by_method_argument_bindings": [
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/305/complete_combined_declaration/output",
+          "method": "owner.workflow.replan.append_original.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/306/complete_combined_declaration/input",
+          "method": "owner.workflow.replan.complete.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/307/complete_combined_declaration/input",
+          "method": "owner.workflow.replan.observe.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/308/complete_combined_declaration/input",
+          "method": "owner.workflow.replan.read_original.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/308/complete_combined_declaration/output",
+          "method": "owner.workflow.replan.read_original.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/309/complete_combined_declaration/output",
+          "method": "owner.workflow.replan.reconcile.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/310/complete_combined_declaration/input",
+          "method": "owner.workflow.replan.release.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/311/complete_combined_declaration/input",
+          "method": "owner.workflow.replan.project.v1"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+          "location": "/311/complete_combined_declaration/output",
+          "method": "owner.workflow.replan.project.v1"
+        }
+      ],
+      "resolution": "NOT_RESOLVED_IN_CANON"
+    },
+    {
+      "classification": "A3_PAYLOAD_SUCCESSOR_PENDING_NOT_REGISTRY_SELECTION",
+      "external_bytes": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "member": "inputs/replan-v3/goal-run-replanned-clock-split.schema.json",
+        "route_id": "OR-078",
+        "sha256": "0e1e3720b2ce869563be2757e0524bb8dde866e37e5e65bd870bd71e30038fa1"
+      },
+      "file": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+      "kind": "const",
+      "literal_sha256": "8ddd87dafbff45c4a724561e4550c62e0a15c6a9863e869c9aedbe83ae9361ee",
+      "owner": "A3",
+      "pointer": "/$defs/ProducerEventChoices/properties/payload_schema_id/const",
+      "resolution": "NOT_RESOLVED_IN_CANON"
+    },
+    {
+      "classification": "A3_PAYLOAD_SUCCESSOR_PENDING_NOT_REGISTRY_SELECTION",
+      "external_bytes": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "member": "inputs/replan-v3/goal-run-replanned-clock-split.schema.json",
+        "route_id": "OR-078",
+        "sha256": "0e1e3720b2ce869563be2757e0524bb8dde866e37e5e65bd870bd71e30038fa1"
+      },
+      "file": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+      "kind": "const",
+      "literal_sha256": "7cb2f25c256ee2ed941fe8a74fb1aa5bdde9e24204a5885a7585d934eebaaa8b",
+      "owner": "A3",
+      "pointer": "/$defs/ProducerPayloadChoices/properties/schema_version/const",
+      "resolution": "NOT_RESOLVED_IN_CANON"
+    }
+  ],
+  "profile": "pm.executor.workflow_source.all_writers.v8",
+  "routes": [
+    {
+      "bytes": 14897,
+      "original_relative_path": "manifest.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/manifest.json",
+        "sha256": "91e18f5cf3a5e1f14b99c3b52d77156be44ae0a6b61911efe752794399e75ff3"
+      },
+      "route_id": "OR-001",
+      "sha256": "91e18f5cf3a5e1f14b99c3b52d77156be44ae0a6b61911efe752794399e75ff3",
+      "source_route_index": 0
+    },
+    {
+      "bytes": 99438,
+      "original_relative_path": "manifest.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/manifest.json",
+        "sha256": "eb4441c1c0a904f946a54436185dac919a3cbba6efe069c94aa664e184e5374d"
+      },
+      "route_id": "OR-002",
+      "sha256": "eb4441c1c0a904f946a54436185dac919a3cbba6efe069c94aa664e184e5374d",
+      "source_route_index": 1
+    },
+    {
+      "bytes": 384,
+      "original_relative_path": "manifest.json",
+      "original_source_root": "combined-scope-adjudication-v1",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/scope/manifest.json",
+        "sha256": "dbb39600e2d0c620b0de063bf9579e2a451f1acd3126c707250e4c4f980ae2e1"
+      },
+      "route_id": "OR-003",
+      "sha256": "dbb39600e2d0c620b0de063bf9579e2a451f1acd3126c707250e4c4f980ae2e1",
+      "source_route_index": 2
+    },
+    {
+      "bytes": 5713,
+      "original_relative_path": "ADJUDICATION.md",
+      "original_source_root": "combined-scope-adjudication-v1",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/scope/ADJUDICATION.md",
+        "sha256": "1e2a9747323a0c6021e07564885f117d02c9b74dea9838d5ac45ae3caa12db40"
+      },
+      "route_id": "OR-004",
+      "sha256": "1e2a9747323a0c6021e07564885f117d02c9b74dea9838d5ac45ae3caa12db40",
+      "source_route_index": 3
+    },
+    {
+      "bytes": 10094,
+      "original_relative_path": "source-evidence.json",
+      "original_source_root": "combined-scope-adjudication-v1",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/scope/source-evidence.json",
+        "sha256": "bad1b628da0d3d9c548d32f8c7d0f026a7579f48e9b42ce1a4401c2ae1a2a525"
+      },
+      "route_id": "OR-005",
+      "sha256": "bad1b628da0d3d9c548d32f8c7d0f026a7579f48e9b42ce1a4401c2ae1a2a525",
+      "source_route_index": 4
+    },
+    {
+      "bytes": 231,
+      "original_relative_path": "manifest.json",
+      "original_source_root": "combined-scope-adjudication-addendum-001",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/scope-addendum/manifest.json",
+        "sha256": "4e1d3da2c7a03b30fd97050a59a6c14f6ef41f6a43090b1f16e7910b742e3960"
+      },
+      "route_id": "OR-006",
+      "sha256": "4e1d3da2c7a03b30fd97050a59a6c14f6ef41f6a43090b1f16e7910b742e3960",
+      "source_route_index": 5
+    },
+    {
+      "bytes": 1083,
+      "original_relative_path": "correction.json",
+      "original_source_root": "combined-scope-adjudication-addendum-001",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/scope-addendum/correction.json",
+        "sha256": "8fcd840504c463cdd55f854726fb303fe9974f3f1a2a1f14561cee58eae504ea"
+      },
+      "route_id": "OR-007",
+      "sha256": "8fcd840504c463cdd55f854726fb303fe9974f3f1a2a1f14561cee58eae504ea",
+      "source_route_index": 6
+    },
+    {
+      "bytes": 27491,
+      "original_relative_path": "manifest.json",
+      "original_source_root": "prebirth-composition-plan-v1",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/plan/manifest.json",
+        "sha256": "21e672cadbb9bf45bc49ed8146398fa316a4f59f563417fb65155c528cedfba2"
+      },
+      "route_id": "OR-008",
+      "sha256": "21e672cadbb9bf45bc49ed8146398fa316a4f59f563417fb65155c528cedfba2",
+      "source_route_index": 7
+    },
+    {
+      "bytes": 65,
+      "original_relative_path": "installed-profile-digest.txt",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/installed-profile-digest.txt",
+        "sha256": "b1f8655b2aff07e01d2199f94666abcc044eefcd4b8f5a244d2080424c5fc1d4"
+      },
+      "route_id": "OR-009",
+      "sha256": "b1f8655b2aff07e01d2199f94666abcc044eefcd4b8f5a244d2080424c5fc1d4",
+      "source_route_index": 8
+    },
+    {
+      "bytes": 39451,
+      "original_relative_path": "protocol.md",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a"
+      },
+      "route_id": "OR-010",
+      "sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a",
+      "source_route_index": 9
+    },
+    {
+      "bytes": 19199,
+      "original_relative_path": "phase-boundaries.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "2051bdf65c434e4a385c48717c7d3eb469bfa23227ea2e554b98f63dad478887"
+      },
+      "route_id": "OR-011",
+      "sha256": "2051bdf65c434e4a385c48717c7d3eb469bfa23227ea2e554b98f63dad478887",
+      "source_route_index": 10
+    },
+    {
+      "bytes": 4727,
+      "original_relative_path": "whole-inherited-contracts.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/whole-inherited-contracts.json",
+        "sha256": "f2ba0a0e1a46064d1a4ed49271fc359da34f61873da527893a86e374df9abc5e"
+      },
+      "route_id": "OR-012",
+      "sha256": "f2ba0a0e1a46064d1a4ed49271fc359da34f61873da527893a86e374df9abc5e",
+      "source_route_index": 11
+    },
+    {
+      "bytes": 3395,
+      "original_relative_path": "original-reference-routing.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/original-reference-routing.json",
+        "sha256": "e246b9c2ea22bfeacc23b4c6c96db902fa2f492bb58718aa38afab4bbca8e514"
+      },
+      "route_id": "OR-013",
+      "sha256": "e246b9c2ea22bfeacc23b4c6c96db902fa2f492bb58718aa38afab4bbca8e514",
+      "source_route_index": 12
+    },
+    {
+      "bytes": 5385,
+      "original_relative_path": "README.md",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/README.md",
+        "sha256": "b6f081a0aad23fc52ff16745e6e9311bf3ca68d2b983a2eac7111344921c380d"
+      },
+      "route_id": "OR-014",
+      "sha256": "b6f081a0aad23fc52ff16745e6e9311bf3ca68d2b983a2eac7111344921c380d",
+      "source_route_index": 13
+    },
+    {
+      "bytes": 11226,
+      "original_relative_path": "owner-source-custody-map.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/owner-source-custody-map.json",
+        "sha256": "b4acdc00e9aaec346a34f80ba6f9323c039edf7b7417da7c755a9cff55db9040"
+      },
+      "route_id": "OR-015",
+      "sha256": "b4acdc00e9aaec346a34f80ba6f9323c039edf7b7417da7c755a9cff55db9040",
+      "source_route_index": 14
+    },
+    {
+      "bytes": 402918,
+      "original_relative_path": "profile-dag-check.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/profile-dag-check.json",
+        "sha256": "e363dc60abc3343f93b523a014e94b25006d9d260914ba6503950094c2151e95"
+      },
+      "route_id": "OR-016",
+      "sha256": "e363dc60abc3343f93b523a014e94b25006d9d260914ba6503950094c2151e95",
+      "source_route_index": 15
+    },
+    {
+      "bytes": 10262,
+      "original_relative_path": "native-participants.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_event_coordinator_contracts/native-participants.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "d55fd2a116d4a4c1b7da37134901e13063cd2b1aeb9c7b35715ce9b4b103f354"
+      },
+      "route_id": "OR-017",
+      "sha256": "d55fd2a116d4a4c1b7da37134901e13063cd2b1aeb9c7b35715ce9b4b103f354",
+      "source_route_index": 16
+    },
+    {
+      "bytes": 7871,
+      "original_relative_path": "physical-retention-install.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/physical-retention-install.json",
+        "sha256": "2b51e263bae7f779bdff522b1d374d2651f0fc739fb063b5cad4c30811b21130"
+      },
+      "route_id": "OR-018",
+      "sha256": "2b51e263bae7f779bdff522b1d374d2651f0fc739fb063b5cad4c30811b21130",
+      "source_route_index": 17
+    },
+    {
+      "bytes": 1269,
+      "original_relative_path": "before-after.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/before-after.json",
+        "sha256": "1cbaedcaacef9ca1b284d64392bc3bc2449cac547718644af45a322569979e24"
+      },
+      "route_id": "OR-019",
+      "sha256": "1cbaedcaacef9ca1b284d64392bc3bc2449cac547718644af45a322569979e24",
+      "source_route_index": 18
+    },
+    {
+      "bytes": 375384,
+      "original_relative_path": "participant-method-tuples.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/participant-method-tuples.json",
+        "sha256": "4c9c24f5822a833c2b2d6bda7e5aaabcbc3a1f1f38ebcef63fb5a8d9110af76a"
+      },
+      "route_id": "OR-020",
+      "sha256": "4c9c24f5822a833c2b2d6bda7e5aaabcbc3a1f1f38ebcef63fb5a8d9110af76a",
+      "source_route_index": 19
+    },
+    {
+      "bytes": 54713,
+      "original_relative_path": "methods.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_event_coordinator_contracts/methods.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "aa6d683e414cc7a0119acd6f7bf630f3533db6a94113be081945bf0c4c0e257d"
+      },
+      "route_id": "OR-021",
+      "sha256": "aa6d683e414cc7a0119acd6f7bf630f3533db6a94113be081945bf0c4c0e257d",
+      "source_route_index": 20
+    },
+    {
+      "bytes": 4393,
+      "original_relative_path": "commitment-domains.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_event_coordinator_contracts/commitment-domains.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "0382f823c4db4a4a6137071354344ebead91513a66a557ea659d5612472360b6"
+      },
+      "route_id": "OR-022",
+      "sha256": "0382f823c4db4a4a6137071354344ebead91513a66a557ea659d5612472360b6",
+      "source_route_index": 21
+    },
+    {
+      "bytes": 846,
+      "original_relative_path": "dependencies.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/dependencies.json",
+        "sha256": "38ddea77b08d92ad9b2a83203729fb1e73bbb6d9bc6bb4253aa353402edc894b"
+      },
+      "route_id": "OR-023",
+      "sha256": "38ddea77b08d92ad9b2a83203729fb1e73bbb6d9bc6bb4253aa353402edc894b",
+      "source_route_index": 22
+    },
+    {
+      "bytes": 404675,
+      "original_relative_path": "method-root-bindings.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/method-root-bindings.json",
+        "sha256": "d61069e21b95a74050e7ef78be4aae84ca8833d40c4b54632989a682c260c8c0"
+      },
+      "route_id": "OR-024",
+      "sha256": "d61069e21b95a74050e7ef78be4aae84ca8833d40c4b54632989a682c260c8c0",
+      "source_route_index": 23
+    },
+    {
+      "bytes": 453,
+      "original_relative_path": "checks.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/checks.json",
+        "sha256": "cce76bd7cfa386635ccf9009da3818762ec2fe1e7a35412fde875e70f9795276"
+      },
+      "route_id": "OR-025",
+      "sha256": "cce76bd7cfa386635ccf9009da3818762ec2fe1e7a35412fde875e70f9795276",
+      "source_route_index": 24
+    },
+    {
+      "bytes": 8234,
+      "original_relative_path": "installed-profile.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/installed-profile.json",
+        "sha256": "f01e9f3f6089813d74a56a636cfde1b68faac9189670c52695b9c32560d1f22f"
+      },
+      "route_id": "OR-026",
+      "sha256": "f01e9f3f6089813d74a56a636cfde1b68faac9189670c52695b9c32560d1f22f",
+      "source_route_index": 25
+    },
+    {
+      "bytes": 242213,
+      "original_relative_path": "source-citations.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/source-citations.json",
+        "sha256": "9da62e752b0631dae4c5f912573bd530720604d0c8401535fa5d8e245a700bf1"
+      },
+      "route_id": "OR-027",
+      "sha256": "9da62e752b0631dae4c5f912573bd530720604d0c8401535fa5d8e245a700bf1",
+      "source_route_index": 26
+    },
+    {
+      "bytes": 1201,
+      "original_relative_path": "correction-evidence.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/correction-evidence.json",
+        "sha256": "e09d77eee033a50a7409c27950a9d60a63ae57236eeaafa64a3960f6f297aeb4"
+      },
+      "route_id": "OR-028",
+      "sha256": "e09d77eee033a50a7409c27950a9d60a63ae57236eeaafa64a3960f6f297aeb4",
+      "source_route_index": 27
+    },
+    {
+      "bytes": 403053,
+      "original_relative_path": "resource-realms.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/resource-realms.json",
+        "sha256": "09d0a9a50f52460ab74498db45eebf384ab51c55554104549067d35de9af5200"
+      },
+      "route_id": "OR-029",
+      "sha256": "09d0a9a50f52460ab74498db45eebf384ab51c55554104549067d35de9af5200",
+      "source_route_index": 28
+    },
+    {
+      "bytes": 8803,
+      "original_relative_path": "native-v7/physical-contracts.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/physical-contracts.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "d7b7fee9c1bb95b72877430e0887fc316ecde1f570a3ca7c0a0e4aecbc3d8b15"
+      },
+      "route_id": "OR-030",
+      "sha256": "d7b7fee9c1bb95b72877430e0887fc316ecde1f570a3ca7c0a0e4aecbc3d8b15",
+      "source_route_index": 29
+    },
+    {
+      "bytes": 71464,
+      "original_relative_path": "native-v7/protocol.md",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
+      },
+      "route_id": "OR-031",
+      "sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054",
+      "source_route_index": 30
+    },
+    {
+      "bytes": 398051,
+      "original_relative_path": "native-v7/literal-resource-realms.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/native-v7/literal-resource-realms.json",
+        "sha256": "264a3519c4863650a0def9271a5ba6b53209414b24f3f57d34b622313f9d9323"
+      },
+      "route_id": "OR-032",
+      "sha256": "264a3519c4863650a0def9271a5ba6b53209414b24f3f57d34b622313f9d9323",
+      "source_route_index": 31
+    },
+    {
+      "bytes": 13591,
+      "original_relative_path": "native-v7/identity-map.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/native-v7/identity-map.json",
+        "sha256": "c690b822c7d83fb88fa97bcea192402df4c041f6c6b274f164ea68b7582809b9"
+      },
+      "route_id": "OR-033",
+      "sha256": "c690b822c7d83fb88fa97bcea192402df4c041f6c6b274f164ea68b7582809b9",
+      "source_route_index": 32
+    },
+    {
+      "bytes": 26208,
+      "original_relative_path": "native-v7/methods.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/methods.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "b701cbab89146fb5103e957d7173e55ced79f91c318524d4e627c2b823042bc0"
+      },
+      "route_id": "OR-034",
+      "sha256": "b701cbab89146fb5103e957d7173e55ced79f91c318524d4e627c2b823042bc0",
+      "source_route_index": 33
+    },
+    {
+      "bytes": 9231,
+      "original_relative_path": "native-v7/commitment-domains.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/commitment-domains.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "b4b54fa50a0da4c2c0fd0cb7a800e85add86ae056ffec357364f0476f7f2ad13"
+      },
+      "route_id": "OR-035",
+      "sha256": "b4b54fa50a0da4c2c0fd0cb7a800e85add86ae056ffec357364f0476f7f2ad13",
+      "source_route_index": 34
+    },
+    {
+      "bytes": 21952,
+      "original_relative_path": "native-v7/native-field-map.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/native-field-map.json",
+        "same_bytes_paths": 4,
+        "selection": "ALIAS_PATH",
+        "sha256": "3dd640512f1472457a75fae3094e885d3165b66959500048851e5a040ec81cce"
+      },
+      "route_id": "OR-036",
+      "sha256": "3dd640512f1472457a75fae3094e885d3165b66959500048851e5a040ec81cce",
+      "source_route_index": 35
+    },
+    {
+      "bytes": 60438,
+      "original_relative_path": "native-v7/stored-profile-routes.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/native-v7/stored-profile-routes.json",
+        "sha256": "4c312e56189ec132bec087cf56e486c8b17997c75a6920e327e924ef7d345d70"
+      },
+      "route_id": "OR-037",
+      "sha256": "4c312e56189ec132bec087cf56e486c8b17997c75a6920e327e924ef7d345d70",
+      "source_route_index": 36
+    },
+    {
+      "bytes": 181220,
+      "original_relative_path": "native-v7/fresh-profile-methods.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/fresh-profile-methods.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "f23bee216c0871c7d5205c85bf2706eedc8c778a59fc84958199709dcf981cea"
+      },
+      "route_id": "OR-038",
+      "sha256": "f23bee216c0871c7d5205c85bf2706eedc8c778a59fc84958199709dcf981cea",
+      "source_route_index": 37
+    },
+    {
+      "bytes": 4160,
+      "original_relative_path": "native-v7/first-attempt-stage-map.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/first-attempt-stage-map.json",
+        "same_bytes_paths": 2,
+        "selection": "ALIAS_PATH",
+        "sha256": "3f75795716df0c1aea3691e4d8a7ebc487210fa46ac8958c6b39f12d6d9e144d"
+      },
+      "route_id": "OR-039",
+      "sha256": "3f75795716df0c1aea3691e4d8a7ebc487210fa46ac8958c6b39f12d6d9e144d",
+      "source_route_index": 38
+    },
+    {
+      "bytes": 54273,
+      "original_relative_path": "schemas/coordinator.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_event_coordinator_contracts/schemas/coordinator.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "274bb7363140e13769bd75a1fdf6eaa6688f2d8699b271182fc90bce0ee88140"
+      },
+      "route_id": "OR-040",
+      "sha256": "274bb7363140e13769bd75a1fdf6eaa6688f2d8699b271182fc90bce0ee88140",
+      "source_route_index": 39
+    },
+    {
+      "bytes": 2435,
+      "original_relative_path": "schemas/append-phase.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_event_coordinator_contracts/schemas/append-phase.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "81958febf169253ce6349c29ddf2bde98df5182df1c2aa74a01d7be72ac316fd"
+      },
+      "route_id": "OR-041",
+      "sha256": "81958febf169253ce6349c29ddf2bde98df5182df1c2aa74a01d7be72ac316fd",
+      "source_route_index": 40
+    },
+    {
+      "bytes": 4222,
+      "original_relative_path": "schemas/identity.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_event_coordinator_contracts/schemas/identity.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "c684141ada201397dce84c6f738c89b15d5951466804b185308e3edc92e12212"
+      },
+      "route_id": "OR-042",
+      "sha256": "c684141ada201397dce84c6f738c89b15d5951466804b185308e3edc92e12212",
+      "source_route_index": 41
+    },
+    {
+      "bytes": 65,
+      "original_relative_path": "producer-v2/installed-profile-digest.txt",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/producer-v2/installed-profile-digest.txt",
+        "sha256": "5c4e7fef2f2a933643aa1009c201d83b9e43aa7074708f715b147dfb70b0b514"
+      },
+      "route_id": "OR-043",
+      "sha256": "5c4e7fef2f2a933643aa1009c201d83b9e43aa7074708f715b147dfb70b0b514",
+      "source_route_index": 42
+    },
+    {
+      "bytes": 28898,
+      "original_relative_path": "producer-v2/protocol.md",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/native-v7/protocol.md",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "02434e35116950935b412a0b0b1b0c414e811d3259d4f69d756028a09fc0ab1d"
+      },
+      "route_id": "OR-044",
+      "sha256": "02434e35116950935b412a0b0b1b0c414e811d3259d4f69d756028a09fc0ab1d",
+      "source_route_index": 43
+    },
+    {
+      "bytes": 33513,
+      "original_relative_path": "producer-v2/methods.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/native-v7/methods.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "bf82bcf31ba15a10ccb33cebecae6e89e217bdf706b6dc7bc007ce7acbf02877"
+      },
+      "route_id": "OR-045",
+      "sha256": "bf82bcf31ba15a10ccb33cebecae6e89e217bdf706b6dc7bc007ce7acbf02877",
+      "source_route_index": 44
+    },
+    {
+      "bytes": 6438,
+      "original_relative_path": "producer-v2/whole-source-bindings.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/producer-v2/whole-source-bindings.json",
+        "sha256": "ed094c21a84870702682a520a5c5a0b01d4e3a231ebebfd3f073c0d51f2fabe1"
+      },
+      "route_id": "OR-046",
+      "sha256": "ed094c21a84870702682a520a5c5a0b01d4e3a231ebebfd3f073c0d51f2fabe1",
+      "source_route_index": 45
+    },
+    {
+      "bytes": 7116,
+      "original_relative_path": "producer-v2/installed-profile.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/producer-v2/installed-profile.json",
+        "sha256": "45ddbcd5dfb0e61bdd6c855ff59e164453ec5f81461bdaa3ad7946e2a492e46f"
+      },
+      "route_id": "OR-047",
+      "sha256": "45ddbcd5dfb0e61bdd6c855ff59e164453ec5f81461bdaa3ad7946e2a492e46f",
+      "source_route_index": 46
+    },
+    {
+      "bytes": 39616,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/filesafe-effect-sources.v2.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/filesafe-effect-sources.v2.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "cb4e863836060ba06c8c17c8a3c3cc791aae93409a0cdc339984278cbb128354"
+      },
+      "route_id": "OR-048",
+      "sha256": "cb4e863836060ba06c8c17c8a3c3cc791aae93409a0cdc339984278cbb128354",
+      "source_route_index": 47
+    },
+    {
+      "bytes": 1968,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/safestop-start-arguments.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/safestop-start-arguments.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "8d8b15144fdbf04adba95ab6992767fb0450b3f980a886fc0366f34fd3221637"
+      },
+      "route_id": "OR-049",
+      "sha256": "8d8b15144fdbf04adba95ab6992767fb0450b3f980a886fc0366f34fd3221637",
+      "source_route_index": 48
+    },
+    {
+      "bytes": 40008,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/filesafe-injective-key-sources.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/filesafe-injective-key-sources.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "8a42fa18bbe6ffb9d3a87f037b85c3fa380e0aae0269a0aa4aa9dd713f52eec0"
+      },
+      "route_id": "OR-050",
+      "sha256": "8a42fa18bbe6ffb9d3a87f037b85c3fa380e0aae0269a0aa4aa9dd713f52eec0",
+      "source_route_index": 49
+    },
+    {
+      "bytes": 39356,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-cancel-disposition.v3.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-disposition.v3.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "44bae9a5df18ca8e368b276c6e167645705dc63d6ec2f71c7aaa2f7e2c2aea9e"
+      },
+      "route_id": "OR-051",
+      "sha256": "44bae9a5df18ca8e368b276c6e167645705dc63d6ec2f71c7aaa2f7e2c2aea9e",
+      "source_route_index": 50
+    },
+    {
+      "bytes": 98084,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "e0dcd4d5e782cd6344a3039b922a61fddf560a2bd9ec76b7ca2fdcda648959e0"
+      },
+      "route_id": "OR-052",
+      "sha256": "e0dcd4d5e782cd6344a3039b922a61fddf560a2bd9ec76b7ca2fdcda648959e0",
+      "source_route_index": 51
+    },
+    {
+      "bytes": 9080,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "a1e9a055f48c4917adcbce9fe9cf240363e429a5d0fd9dd3806eaaf0a7ecfd47"
+      },
+      "route_id": "OR-053",
+      "sha256": "a1e9a055f48c4917adcbce9fe9cf240363e429a5d0fd9dd3806eaaf0a7ecfd47",
+      "source_route_index": 52
+    },
+    {
+      "bytes": 17685,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-seglog-manifest.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/original-seglog-manifest.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "51b95bc7346c643a21a7f10791c2f78258dfad95d4e44777abba2ba238b02c49"
+      },
+      "route_id": "OR-054",
+      "sha256": "51b95bc7346c643a21a7f10791c2f78258dfad95d4e44777abba2ba238b02c49",
+      "source_route_index": 53
+    },
+    {
+      "bytes": 79478,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-sources.v3.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v3.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "2b5107675393d694299efb0de9acbf2f19de169dfed2dcd53b0013328129fc54"
+      },
+      "route_id": "OR-055",
+      "sha256": "2b5107675393d694299efb0de9acbf2f19de169dfed2dcd53b0013328129fc54",
+      "source_route_index": 54
+    },
+    {
+      "bytes": 45553,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-sources.v2.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v2.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "f03fb4a96cc262274ce9d6413daf368fcaae93a7f8c797bb2990a1f69304d453"
+      },
+      "route_id": "OR-056",
+      "sha256": "f03fb4a96cc262274ce9d6413daf368fcaae93a7f8c797bb2990a1f69304d453",
+      "source_route_index": 55
+    },
+    {
+      "bytes": 2441,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/safestop-current-goal-arguments.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/safestop-current-goal-arguments.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "3eaa8578efff917e8665efee8bd808a47d18c4e87704b11c75aafe45acafa39e"
+      },
+      "route_id": "OR-057",
+      "sha256": "3eaa8578efff917e8665efee8bd808a47d18c4e87704b11c75aafe45acafa39e",
+      "source_route_index": 56
+    },
+    {
+      "bytes": 38658,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-safestop.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-safestop.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "46b7e64d3c2fbfafcc5d66ab28c3f12d91b6523bdf57a31ac53db5eb2c6a9d90"
+      },
+      "route_id": "OR-058",
+      "sha256": "46b7e64d3c2fbfafcc5d66ab28c3f12d91b6523bdf57a31ac53db5eb2c6a9d90",
+      "source_route_index": 57
+    },
+    {
+      "bytes": 4885,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-arguments.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-arguments.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "8064368badc33286a0a871695b670c854e7bcde30090da5c3389c3ec174bda63"
+      },
+      "route_id": "OR-059",
+      "sha256": "8064368badc33286a0a871695b670c854e7bcde30090da5c3389c3ec174bda63",
+      "source_route_index": 58
+    },
+    {
+      "bytes": 3002,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "062e302fe0805f330c99c470df5c20cc247de7032cb424eecca2844b1b2f700e"
+      },
+      "route_id": "OR-060",
+      "sha256": "062e302fe0805f330c99c470df5c20cc247de7032cb424eecca2844b1b2f700e",
+      "source_route_index": 59
+    },
+    {
+      "bytes": 20165,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-event-append-custody.v2.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/original-event-append-custody.v2.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "505bdb5d702546637b80dfddc1d7f32abe411665f88ca193ca5af105c6b69a31"
+      },
+      "route_id": "OR-061",
+      "sha256": "505bdb5d702546637b80dfddc1d7f32abe411665f88ca193ca5af105c6b69a31",
+      "source_route_index": 60
+    },
+    {
+      "bytes": 107719,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "a500726cbf15548663c03f80a13353a9674f5677201e4018fc0a5b90cc54d338"
+      },
+      "route_id": "OR-062",
+      "sha256": "a500726cbf15548663c03f80a13353a9674f5677201e4018fc0a5b90cc54d338",
+      "source_route_index": 61
+    },
+    {
+      "bytes": 108702,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/safestop-original-start.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/safestop-original-start.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "a738fbb17ad658417a472a1d670205d2c401be236dd6865af5c5d5b4f797de18"
+      },
+      "route_id": "OR-063",
+      "sha256": "a738fbb17ad658417a472a1d670205d2c401be236dd6865af5c5d5b4f797de18",
+      "source_route_index": 62
+    },
+    {
+      "bytes": 922,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-seglog-current.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/original-seglog-current.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "f5b1f19aee3876e6c8fdc4ac8418c10941f13e7a56741f31056d2eb37bac9c7f"
+      },
+      "route_id": "OR-064",
+      "sha256": "f5b1f19aee3876e6c8fdc4ac8418c10941f13e7a56741f31056d2eb37bac9c7f",
+      "source_route_index": 63
+    },
+    {
+      "bytes": 5646,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "081d50dbaef96ce8c5e56b8bc743752943920b9727fdba03583592c6904dcef6"
+      },
+      "route_id": "OR-065",
+      "sha256": "081d50dbaef96ce8c5e56b8bc743752943920b9727fdba03583592c6904dcef6",
+      "source_route_index": 64
+    },
+    {
+      "bytes": 5203,
+      "original_relative_path": "owner-source-custody/Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "b6d192c96c552880e7f5e8041c12888e2c3f016076c3aeaef7661c74dbca1e47"
+      },
+      "route_id": "OR-066",
+      "sha256": "b6d192c96c552880e7f5e8041c12888e2c3f016076c3aeaef7661c74dbca1e47",
+      "source_route_index": 65
+    },
+    {
+      "bytes": 125623,
+      "original_relative_path": "owner-source-custody/Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+      },
+      "route_id": "OR-067",
+      "sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "source_route_index": 66
+    },
+    {
+      "bytes": 4120,
+      "original_relative_path": "native-v7/schemas/workflow-start-arguments.v6.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-arguments.v6.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "3f9b2fc8d768d462db1b4ac950854e0d7f2fc13982e0bbc1422e5ecb81bdbd88"
+      },
+      "route_id": "OR-068",
+      "sha256": "3f9b2fc8d768d462db1b4ac950854e0d7f2fc13982e0bbc1422e5ecb81bdbd88",
+      "source_route_index": 67
+    },
+    {
+      "bytes": 44259,
+      "original_relative_path": "native-v7/schemas/workflow-start-custody.v6.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "9209a5b923cb279c4176ccf3b648a8381c4afae541220cd397329558db5266d2"
+      },
+      "route_id": "OR-069",
+      "sha256": "9209a5b923cb279c4176ccf3b648a8381c4afae541220cd397329558db5266d2",
+      "source_route_index": 68
+    },
+    {
+      "bytes": 4910,
+      "original_relative_path": "native-v7/schemas/workflow-cancel-positive-arguments.v2.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-positive-arguments.v2.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "ec8c346caffabb0bbb06285197e5ed04bfb44ffa8b6dfa02a038aef8a5b9bdd8"
+      },
+      "route_id": "OR-070",
+      "sha256": "ec8c346caffabb0bbb06285197e5ed04bfb44ffa8b6dfa02a038aef8a5b9bdd8",
+      "source_route_index": 69
+    },
+    {
+      "bytes": 6672,
+      "original_relative_path": "native-v7/schemas/workflow-standard-certification-argument.v4.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-certification-argument.v4.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "830d20024033a6e1edc32c847363a523a44fe47acd2abcd84413f8a58f4131fa"
+      },
+      "route_id": "OR-071",
+      "sha256": "830d20024033a6e1edc32c847363a523a44fe47acd2abcd84413f8a58f4131fa",
+      "source_route_index": 70
+    },
+    {
+      "bytes": 1968,
+      "original_relative_path": "native-v7/schemas/safestop-start-arguments.v2.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/safestop-start-arguments.v2.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "5431b28e798b726aef7994ae46e51df164ed4c1719317f14bc2a07fda544f24a"
+      },
+      "route_id": "OR-072",
+      "sha256": "5431b28e798b726aef7994ae46e51df164ed4c1719317f14bc2a07fda544f24a",
+      "source_route_index": 71
+    },
+    {
+      "bytes": 101666,
+      "original_relative_path": "native-v7/schemas/workflow-standard-current-source.v4.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-current-source.v4.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "7bd88c4a7cc2b7f32af173d18c470d64e13e296170e358fcd39fe8e64b6bbbb0"
+      },
+      "route_id": "OR-073",
+      "sha256": "7bd88c4a7cc2b7f32af173d18c470d64e13e296170e358fcd39fe8e64b6bbbb0",
+      "source_route_index": 72
+    },
+    {
+      "bytes": 6581,
+      "original_relative_path": "native-v7/schemas/workflow-standard-event-prerequisite.v4.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-event-prerequisite.v4.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "ab8350e1f7b60c2c8b37fcb3ddb29da43a003d5b032aef145a0b220ef47f6274"
+      },
+      "route_id": "OR-074",
+      "sha256": "ab8350e1f7b60c2c8b37fcb3ddb29da43a003d5b032aef145a0b220ef47f6274",
+      "source_route_index": 73
+    },
+    {
+      "bytes": 79884,
+      "original_relative_path": "native-v7/schemas/workflow-original-start.v6.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/native-v7/schemas/workflow-original-start.v6.schema.json",
+        "sha256": "3b345f46b139e2f0d53614f1e2276308737aa7e15f0dd1733aac9f696755d0ed"
+      },
+      "route_id": "OR-075",
+      "sha256": "3b345f46b139e2f0d53614f1e2276308737aa7e15f0dd1733aac9f696755d0ed",
+      "source_route_index": 74
+    },
+    {
+      "bytes": 38600,
+      "original_relative_path": "native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+      "original_source_root": "certified-coordinator-v2",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/certified-v2/native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+        "sha256": "f3dfe92c5943e1ddeeab334c41834357cef97c3715f8232dc5828cde99df68ca"
+      },
+      "route_id": "OR-076",
+      "sha256": "f3dfe92c5943e1ddeeab334c41834357cef97c3715f8232dc5828cde99df68ca",
+      "source_route_index": 75
+    },
+    {
+      "bytes": 17091,
+      "original_relative_path": "origin-issuer-contracts.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/origin-issuer-contracts.json",
+        "sha256": "f08abdca35c4b81e2ea5470870c117c82c52dc05b3a9a8510f2a19cd140e7f30"
+      },
+      "route_id": "OR-077",
+      "sha256": "f08abdca35c4b81e2ea5470870c117c82c52dc05b3a9a8510f2a19cd140e7f30",
+      "source_route_index": 76
+    },
+    {
+      "bytes": 20205,
+      "classification": "A3_PAYLOAD_SUCCESSOR_PENDING_NOT_REGISTRY_SELECTION",
+      "original_relative_path": "goal-run-replanned-clock-split.schema.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/goal-run-replanned-clock-split.schema.json",
+        "sha256": "0e1e3720b2ce869563be2757e0524bb8dde866e37e5e65bd870bd71e30038fa1"
+      },
+      "route_id": "OR-078",
+      "sha256": "0e1e3720b2ce869563be2757e0524bb8dde866e37e5e65bd870bd71e30038fa1",
+      "source_route_index": 77
+    },
+    {
+      "bytes": 9235,
+      "original_relative_path": "source-stage-map.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/source-stage-map.json",
+        "sha256": "d520b39063da55b44ae114c3deb6ca5145f70ee0a438362acec6251427321258"
+      },
+      "route_id": "OR-079",
+      "sha256": "d520b39063da55b44ae114c3deb6ca5145f70ee0a438362acec6251427321258",
+      "source_route_index": 78
+    },
+    {
+      "bytes": 96281,
+      "original_relative_path": "executor-replan-observer.schema.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/executor-replan-observer.schema.json",
+        "sha256": "a656671fca002eef6d79c66b8416afe1c563be20a48e8af433f075bca1f56b46"
+      },
+      "route_id": "OR-080",
+      "sha256": "a656671fca002eef6d79c66b8416afe1c563be20a48e8af433f075bca1f56b46",
+      "source_route_index": 79
+    },
+    {
+      "bytes": 74354,
+      "original_relative_path": "replan-consumer.schema.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/replan-consumer.schema.json",
+        "sha256": "3cab8fcb75328515857d38511bd3c50a61489451cf90a33f400cd36de5d74a18"
+      },
+      "route_id": "OR-081",
+      "sha256": "3cab8fcb75328515857d38511bd3c50a61489451cf90a33f400cd36de5d74a18",
+      "source_route_index": 80
+    },
+    {
+      "bytes": 353795,
+      "original_relative_path": "replan-source.schema.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/replan-source.schema.json",
+        "sha256": "696ef667fda1c828b6062b0c768f27450811f52d3fb4f8707aae771f79f03f78"
+      },
+      "route_id": "OR-082",
+      "sha256": "696ef667fda1c828b6062b0c768f27450811f52d3fb4f8707aae771f79f03f78",
+      "source_route_index": 81
+    },
+    {
+      "bytes": 14174,
+      "original_relative_path": "birth-native-correspondence.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/birth-native-correspondence.json",
+        "sha256": "80fcb8312bf61b0e92ed92719f432938036faa4ac70c03892ce1b136a4b27f12"
+      },
+      "route_id": "OR-083",
+      "sha256": "80fcb8312bf61b0e92ed92719f432938036faa4ac70c03892ce1b136a4b27f12",
+      "source_route_index": 82
+    },
+    {
+      "bytes": 6684,
+      "original_relative_path": "new-definition-index.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/new-definition-index.json",
+        "sha256": "afa18de9b1da29bd4917be57c88a3192520170bc4108c2d5de2fa2d45373adc8"
+      },
+      "route_id": "OR-084",
+      "sha256": "afa18de9b1da29bd4917be57c88a3192520170bc4108c2d5de2fa2d45373adc8",
+      "source_route_index": 83
+    },
+    {
+      "bytes": 337578,
+      "original_relative_path": "draft-resource-map.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/draft-resource-map.json",
+        "sha256": "7a57cc6f271d808a1148e4fc2f4fd7c34b34bd243eaf3686a7a9231a7f3ce67a"
+      },
+      "route_id": "OR-085",
+      "sha256": "7a57cc6f271d808a1148e4fc2f4fd7c34b34bd243eaf3686a7a9231a7f3ce67a",
+      "source_route_index": 84
+    },
+    {
+      "bytes": 9902081,
+      "original_relative_path": "whole-definition-evidence.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/whole-definition-evidence.json",
+        "sha256": "89d8592bd6b0080723e9fcdf099bfa52e90333be6c5a68eaa0beb202482402dd"
+      },
+      "route_id": "OR-086",
+      "sha256": "89d8592bd6b0080723e9fcdf099bfa52e90333be6c5a68eaa0beb202482402dd",
+      "source_route_index": 85
+    },
+    {
+      "bytes": 1054,
+      "original_relative_path": "revision-findings.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/revision-findings.json",
+        "sha256": "6cda7ea676deeb3b97f00e4abb3be8374e836b9d4ea393980620c977b877a3f8"
+      },
+      "route_id": "OR-087",
+      "sha256": "6cda7ea676deeb3b97f00e4abb3be8374e836b9d4ea393980620c977b877a3f8",
+      "source_route_index": 86
+    },
+    {
+      "bytes": 732,
+      "original_relative_path": "REPRODUCE.md",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/REPRODUCE.md",
+        "sha256": "8c7c2758c65acf4987a66586a4fb130d7935c7e78fc5802a933821967df785dc"
+      },
+      "route_id": "OR-088",
+      "sha256": "8c7c2758c65acf4987a66586a4fb130d7935c7e78fc5802a933821967df785dc",
+      "source_route_index": 87
+    },
+    {
+      "bytes": 1358578,
+      "original_relative_path": "exact-passages.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/exact-passages.json",
+        "sha256": "0a12ade59b4774f245eaccf70b1f6fb5daa6ae2a2000900b6dce10b5c36df715"
+      },
+      "route_id": "OR-089",
+      "sha256": "0a12ade59b4774f245eaccf70b1f6fb5daa6ae2a2000900b6dce10b5c36df715",
+      "source_route_index": 88
+    },
+    {
+      "bytes": 594,
+      "original_relative_path": "schema-composition-features.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/schema-composition-features.json",
+        "sha256": "8aadaed44c2adb04694bc31e057f5f4d1e5ee9abf116f029b08a6d796240be12"
+      },
+      "route_id": "OR-090",
+      "sha256": "8aadaed44c2adb04694bc31e057f5f4d1e5ee9abf116f029b08a6d796240be12",
+      "source_route_index": 89
+    },
+    {
+      "bytes": 59502,
+      "original_relative_path": "source-pins.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/source-pins.json",
+        "sha256": "63a867b1c3b2344994baff5130d55dc52ec0ca6ed538f0d7cf6788c7da63643f"
+      },
+      "route_id": "OR-091",
+      "sha256": "63a867b1c3b2344994baff5130d55dc52ec0ca6ed538f0d7cf6788c7da63643f",
+      "source_route_index": 90
+    },
+    {
+      "bytes": 1129,
+      "original_relative_path": "v3-repair-check-results.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/v3-repair-check-results.json",
+        "sha256": "52ce22c4e418ff33d664f2704ef56f8f6dce5f19e32cc6afe332517508d7b825"
+      },
+      "route_id": "OR-092",
+      "sha256": "52ce22c4e418ff33d664f2704ef56f8f6dce5f19e32cc6afe332517508d7b825",
+      "source_route_index": 91
+    },
+    {
+      "bytes": 1994,
+      "original_relative_path": "role-source-index.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/role-source-index.json",
+        "sha256": "e320a7ec22bc4d1904d26b31dcfad733eb1f1148566d7f83ed08936de654e7e9"
+      },
+      "route_id": "OR-093",
+      "sha256": "e320a7ec22bc4d1904d26b31dcfad733eb1f1148566d7f83ed08936de654e7e9",
+      "source_route_index": 92
+    },
+    {
+      "bytes": 2186525,
+      "original_relative_path": "resource-reference-inventory.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/resource-reference-inventory.json",
+        "sha256": "f51c1cfc842c8fbc1f6828002bef6cf4d22be90e0e7f64c443ea0523b01b3555"
+      },
+      "route_id": "OR-094",
+      "sha256": "f51c1cfc842c8fbc1f6828002bef6cf4d22be90e0e7f64c443ea0523b01b3555",
+      "source_route_index": 93
+    },
+    {
+      "bytes": 690,
+      "original_relative_path": "delivery-profile.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/delivery-profile.json",
+        "sha256": "f0b4f1704059437123c04180e4ab993f7da15aa680cecb63da352fdc5fcae921"
+      },
+      "route_id": "OR-095",
+      "sha256": "f0b4f1704059437123c04180e4ab993f7da15aa680cecb63da352fdc5fcae921",
+      "source_route_index": 94
+    },
+    {
+      "bytes": 4005,
+      "original_relative_path": "static-check-results.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/static-check-results.json",
+        "sha256": "246568bddb340673b619534388e2ba5620e3bdb1d07d282a6ba2555dc9384623"
+      },
+      "route_id": "OR-096",
+      "sha256": "246568bddb340673b619534388e2ba5620e3bdb1d07d282a6ba2555dc9384623",
+      "source_route_index": 95
+    },
+    {
+      "bytes": 1750,
+      "original_relative_path": "resource-differences.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/resource-differences.json",
+        "sha256": "9f94191b797ae104ee87604974d3ad93485f82e1f36b939df9e230ea9c82db91"
+      },
+      "route_id": "OR-097",
+      "sha256": "9f94191b797ae104ee87604974d3ad93485f82e1f36b939df9e230ea9c82db91",
+      "source_route_index": 96
+    },
+    {
+      "bytes": 1876,
+      "original_relative_path": "producer-commitments.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/producer-commitments.json",
+        "sha256": "7964ec7f0849086db4ca2b9d1dd77e1c909f353f91e8616dfc0ae73d4f2986b3"
+      },
+      "route_id": "OR-098",
+      "sha256": "7964ec7f0849086db4ca2b9d1dd77e1c909f353f91e8616dfc0ae73d4f2986b3",
+      "source_route_index": 97
+    },
+    {
+      "bytes": 723526,
+      "original_relative_path": "realm-mapping-evidence.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/realm-mapping-evidence.json",
+        "sha256": "13258128031e7fab0f3f2493e549cbcd986bb395d0193162e92ea7e0980a57b2"
+      },
+      "route_id": "OR-099",
+      "sha256": "13258128031e7fab0f3f2493e549cbcd986bb395d0193162e92ea7e0980a57b2",
+      "source_route_index": 98
+    },
+    {
+      "bytes": 7265,
+      "original_relative_path": "commitment-order.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/commitment-order.json",
+        "sha256": "3bc1518713c70a79249596970b00f78aa367010f414888c4f1a2cefe79b77043"
+      },
+      "route_id": "OR-100",
+      "sha256": "3bc1518713c70a79249596970b00f78aa367010f414888c4f1a2cefe79b77043",
+      "source_route_index": 99
+    },
+    {
+      "bytes": 1005,
+      "original_relative_path": "STATUS.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/STATUS.json",
+        "sha256": "c26bb8b6e96bb5f372831648930f9132b04165905e8010f45785e1bd09ccaefe"
+      },
+      "route_id": "OR-101",
+      "sha256": "c26bb8b6e96bb5f372831648930f9132b04165905e8010f45785e1bd09ccaefe",
+      "source_route_index": 100
+    },
+    {
+      "bytes": 314699,
+      "original_relative_path": "v3-whole-root-deltas.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/v3-whole-root-deltas.json",
+        "sha256": "41c898aa16eb0d68dd2918dba803dd4386e612b89b08ca1015a85441d979ffb0"
+      },
+      "route_id": "OR-102",
+      "sha256": "41c898aa16eb0d68dd2918dba803dd4386e612b89b08ca1015a85441d979ffb0",
+      "source_route_index": 101
+    },
+    {
+      "bytes": 23901,
+      "original_relative_path": "methods.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/methods.json",
+        "sha256": "2c6db0621576c8fa74069dc1c6a47c148b77ddc5569b171022d20ba322146d4f"
+      },
+      "route_id": "OR-103",
+      "sha256": "2c6db0621576c8fa74069dc1c6a47c148b77ddc5569b171022d20ba322146d4f",
+      "source_route_index": 102
+    },
+    {
+      "bytes": 25988,
+      "original_relative_path": "physical-families.draft.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/physical-families.draft.json",
+        "sha256": "a9479869c0c6fdd2933d83abb71a87fa3d8ec7206cef20ec3379c42b4d868d78"
+      },
+      "route_id": "OR-104",
+      "sha256": "a9479869c0c6fdd2933d83abb71a87fa3d8ec7206cef20ec3379c42b4d868d78",
+      "source_route_index": 103
+    },
+    {
+      "bytes": 1494818,
+      "original_relative_path": "source-role-evidence.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/source-role-evidence.json",
+        "sha256": "e47f3825d4031737d457a3589cec856630a651b08879e9102d74ddb5db628e49"
+      },
+      "route_id": "OR-105",
+      "sha256": "e47f3825d4031737d457a3589cec856630a651b08879e9102d74ddb5db628e49",
+      "source_route_index": 104
+    },
+    {
+      "bytes": 44172,
+      "original_relative_path": "PROTOCOL.md",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/PROTOCOL.md",
+        "sha256": "32fb52c7cd28933f8594a51d00306ebed282796bc8fc250af2b223752c8015f8"
+      },
+      "route_id": "OR-106",
+      "sha256": "32fb52c7cd28933f8594a51d00306ebed282796bc8fc250af2b223752c8015f8",
+      "source_route_index": 105
+    },
+    {
+      "bytes": 347,
+      "original_relative_path": "predecessor-preservation.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/predecessor-preservation.json",
+        "sha256": "52fd2e5d4f04d4496503cee169b5d1cf4a39de6268e67e0f696e74ddd90ecb37"
+      },
+      "route_id": "OR-107",
+      "sha256": "52fd2e5d4f04d4496503cee169b5d1cf4a39de6268e67e0f696e74ddd90ecb37",
+      "source_route_index": 106
+    },
+    {
+      "bytes": 1842,
+      "original_relative_path": "all-writer-adoption.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/all-writer-adoption.json",
+        "sha256": "5c59cc6fa0bfe4309ccfc11b1e40ed870c20e11ce04007b0b11c8769d96aad1c"
+      },
+      "route_id": "OR-108",
+      "sha256": "5c59cc6fa0bfe4309ccfc11b1e40ed870c20e11ce04007b0b11c8769d96aad1c",
+      "source_route_index": 107
+    },
+    {
+      "bytes": 24121,
+      "original_relative_path": "method-root-closure.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/method-root-closure.json",
+        "sha256": "7e8bfedb90a7da48cc252134e2cfa3303fec2d45b5ba9bbba035496e369be7b0"
+      },
+      "route_id": "OR-109",
+      "sha256": "7e8bfedb90a7da48cc252134e2cfa3303fec2d45b5ba9bbba035496e369be7b0",
+      "source_route_index": 108
+    },
+    {
+      "bytes": 320795,
+      "original_relative_path": "composition/authoring-roots/replan-source.schema.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/composition/authoring-roots/replan-source.schema.json",
+        "sha256": "901d26d53de5f531fa60221af88f7b8db04a973086bb4f6906d915cea669bb31"
+      },
+      "route_id": "OR-110",
+      "sha256": "901d26d53de5f531fa60221af88f7b8db04a973086bb4f6906d915cea669bb31",
+      "source_route_index": 109
+    },
+    {
+      "bytes": 90019,
+      "original_relative_path": "composition/authoring-roots/executor-replan-observer.schema.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/composition/authoring-roots/executor-replan-observer.schema.json",
+        "sha256": "dc3ad86fad86bfd6a0594cea8a7e856a16978e13bcc3dcdb126ba960a7833565"
+      },
+      "route_id": "OR-111",
+      "sha256": "dc3ad86fad86bfd6a0594cea8a7e856a16978e13bcc3dcdb126ba960a7833565",
+      "source_route_index": 110
+    },
+    {
+      "bytes": 542380,
+      "original_relative_path": "composition/root-import-bindings.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/composition/root-import-bindings.json",
+        "sha256": "3247aa9c64bbcd5af45c63574a5dd630d1c5bc2eac4a3b0f030dc959ee255884"
+      },
+      "route_id": "OR-112",
+      "sha256": "3247aa9c64bbcd5af45c63574a5dd630d1c5bc2eac4a3b0f030dc959ee255884",
+      "source_route_index": 111
+    },
+    {
+      "bytes": 220849,
+      "original_relative_path": "composition/root-transform-ledger.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/composition/root-transform-ledger.json",
+        "sha256": "17afba4f9f3490408a98d277283630612d38d0d61c89051c442168ffe7d0274f"
+      },
+      "route_id": "OR-113",
+      "sha256": "17afba4f9f3490408a98d277283630612d38d0d61c89051c442168ffe7d0274f",
+      "source_route_index": 112
+    },
+    {
+      "bytes": 1050146,
+      "original_relative_path": "composition/original-banks.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/composition/original-banks.json",
+        "sha256": "78784e8308cd9eb8ad350c06a1a043fde369203c2e42fbf97c006c0f6d49a116"
+      },
+      "route_id": "OR-114",
+      "sha256": "78784e8308cd9eb8ad350c06a1a043fde369203c2e42fbf97c006c0f6d49a116",
+      "source_route_index": 113
+    },
+    {
+      "bytes": 21475,
+      "original_relative_path": "PLAN.md",
+      "original_source_root": "prebirth-composition-plan-v1",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/plan/PLAN.md",
+        "sha256": "fcc273e95c2e32a4cfa1b1d902593777b10b41eee67706ac4790e3518683ae3c"
+      },
+      "route_id": "OR-115",
+      "sha256": "fcc273e95c2e32a4cfa1b1d902593777b10b41eee67706ac4790e3518683ae3c",
+      "source_route_index": 114
+    },
+    {
+      "bytes": 35858,
+      "original_relative_path": "whole-resource-change-plan.json",
+      "original_source_root": "prebirth-composition-plan-v1",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/plan/whole-resource-change-plan.json",
+        "sha256": "480751e273a6bb2909ccabaf4523859ff37a9ae474348227734cf47e2eecb1f5"
+      },
+      "route_id": "OR-116",
+      "sha256": "480751e273a6bb2909ccabaf4523859ff37a9ae474348227734cf47e2eecb1f5",
+      "source_route_index": 115
+    },
+    {
+      "bytes": 683876,
+      "original_relative_path": "whole-method-occurrences.json",
+      "original_source_root": "prebirth-composition-plan-v1",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/plan/whole-method-occurrences.json",
+        "sha256": "44dc1ea3c145ca898a7b4100402d0988d5c00814b4981579975abcdd6d639b83"
+      },
+      "route_id": "OR-117",
+      "sha256": "44dc1ea3c145ca898a7b4100402d0988d5c00814b4981579975abcdd6d639b83",
+      "source_route_index": 116
+    },
+    {
+      "bytes": 271210,
+      "original_relative_path": "source-citations.json",
+      "original_source_root": "prebirth-composition-plan-v1",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/plan/source-citations.json",
+        "sha256": "8c46e1d89385fe8bd8f503c5502d3c2a907d1a6f8bb467b2a25a45e20bb0771b"
+      },
+      "route_id": "OR-118",
+      "sha256": "8c46e1d89385fe8bd8f503c5502d3c2a907d1a6f8bb467b2a25a45e20bb0771b",
+      "source_route_index": 117
+    },
+    {
+      "bytes": 5336,
+      "original_relative_path": "missing-original-source-definitions.json",
+      "original_source_root": "prebirth-composition-plan-v1",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/plan/missing-original-source-definitions.json",
+        "sha256": "5fab056c2519f8a11ffa90a333a76b976c53019eec711012608188f57fe767c8"
+      },
+      "route_id": "OR-119",
+      "sha256": "5fab056c2519f8a11ffa90a333a76b976c53019eec711012608188f57fe767c8",
+      "source_route_index": 118
+    },
+    {
+      "bytes": 4460,
+      "original_relative_path": "composition-dag-plan.json",
+      "original_source_root": "prebirth-composition-plan-v1",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/plan/composition-dag-plan.json",
+        "sha256": "6eb58e992e0ad2ac48d2f79a74e2900dbf5799893142cca20f73a979af086fa7"
+      },
+      "route_id": "OR-120",
+      "sha256": "6eb58e992e0ad2ac48d2f79a74e2900dbf5799893142cca20f73a979af086fa7",
+      "source_route_index": 119
+    },
+    {
+      "bytes": 491653,
+      "original_relative_path": "whole-reference-impact.json",
+      "original_source_root": "prebirth-composition-plan-v1",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/plan/whole-reference-impact.json",
+        "sha256": "960ac94f23f698593f435893a7c2f820bc63d6502eb44f2f417248bc3ef4f111"
+      },
+      "route_id": "OR-121",
+      "sha256": "960ac94f23f698593f435893a7c2f820bc63d6502eb44f2f417248bc3ef4f111",
+      "source_route_index": 120
+    },
+    {
+      "bytes": 34675,
+      "original_relative_path": "schemas/assignment-invocation.v1.schema.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/schemas/assignment-invocation.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "37d7482694855e6505b860358dbee074b69c51bba6662a172e24df2689ab37cd"
+      },
+      "route_id": "OR-122",
+      "sha256": "37d7482694855e6505b860358dbee074b69c51bba6662a172e24df2689ab37cd",
+      "source_route_index": 121
+    },
+    {
+      "bytes": 23104,
+      "original_relative_path": "schemas/original-sources.v1.schema.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/schemas/original-sources.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "6b19f24a3d923923a70084d5f1a16a2b3fc4af62fa211ef8e7f39a0c867187cf"
+      },
+      "route_id": "OR-123",
+      "sha256": "6b19f24a3d923923a70084d5f1a16a2b3fc4af62fa211ef8e7f39a0c867187cf",
+      "source_route_index": 122
+    },
+    {
+      "bytes": 11623,
+      "original_relative_path": "schemas/producer-source.v1.schema.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-source.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "6c552dbe5556163397ef40b9377831bda27d2455220f61f5d79214ebe1368284"
+      },
+      "route_id": "OR-124",
+      "sha256": "6c552dbe5556163397ef40b9377831bda27d2455220f61f5d79214ebe1368284",
+      "source_route_index": 123
+    },
+    {
+      "bytes": 8725,
+      "original_relative_path": "schemas/producer-submission.v1.schema.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-submission.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "24300fe310faeec412a362a39128d870f57a4b19ba82affce7f7c1a59daccc0e"
+      },
+      "route_id": "OR-125",
+      "sha256": "24300fe310faeec412a362a39128d870f57a4b19ba82affce7f7c1a59daccc0e",
+      "source_route_index": 124
+    },
+    {
+      "bytes": 35316,
+      "original_relative_path": "schemas/resolver-references.v1.schema.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/schemas/resolver-references.v1.schema.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "ecaf63c9c68140ee698e219c02cb953b0900bc5cd082e5f8a9c2c7498593b704"
+      },
+      "route_id": "OR-126",
+      "sha256": "ecaf63c9c68140ee698e219c02cb953b0900bc5cd082e5f8a9c2c7498593b704",
+      "source_route_index": 125
+    },
+    {
+      "bytes": 5805,
+      "original_relative_path": "native-participants.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/native-participants.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "d0bddd86f2ea4c91c7898c08d1110995f08e2dfd62084913d316b463dbc64748"
+      },
+      "route_id": "OR-127",
+      "sha256": "d0bddd86f2ea4c91c7898c08d1110995f08e2dfd62084913d316b463dbc64748",
+      "source_route_index": 126
+    },
+    {
+      "bytes": 1955,
+      "original_relative_path": "physical-retention-install.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/physical-retention-install.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "7384988a5eef52fc00bbc6d34a9c5fe0ae400954fca70c517db111329d4ea67d"
+      },
+      "route_id": "OR-128",
+      "sha256": "7384988a5eef52fc00bbc6d34a9c5fe0ae400954fca70c517db111329d4ea67d",
+      "source_route_index": 127
+    },
+    {
+      "bytes": 2846,
+      "original_relative_path": "commitment-domains.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/commitment-domains.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "3ceb8b8e3d2b2ae846cf4801526f966761a22fc0819baf3c334bb7e336bb1701"
+      },
+      "route_id": "OR-129",
+      "sha256": "3ceb8b8e3d2b2ae846cf4801526f966761a22fc0819baf3c334bb7e336bb1701",
+      "source_route_index": 128
+    },
+    {
+      "bytes": 77181,
+      "original_relative_path": "whole-field-bindings.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/preinstallation-originals/3e5c0607e05739633b089a836058f47cc558de87946ddfb990a1382755a1896e/whole-field-bindings.json",
+        "same_bytes_paths": 1,
+        "selection": "PREINSTALLATION_OR_PREDECESSOR_COPY",
+        "sha256": "3e5c0607e05739633b089a836058f47cc558de87946ddfb990a1382755a1896e"
+      },
+      "route_id": "OR-130",
+      "sha256": "3e5c0607e05739633b089a836058f47cc558de87946ddfb990a1382755a1896e",
+      "source_route_index": 129
+    },
+    {
+      "bytes": 65838,
+      "original_relative_path": "composition/authoring-roots/replan-consumer.schema.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "kind": "EXTERNAL_SOURCE_EVIDENCE",
+        "member": "inputs/replan-v3/composition/authoring-roots/replan-consumer.schema.json",
+        "sha256": "f225be4289b1e7e4c2eab71fd23794a609692b3bbdeae8f1e90069b040d50f22"
+      },
+      "route_id": "OR-131",
+      "sha256": "f225be4289b1e7e4c2eab71fd23794a609692b3bbdeae8f1e90069b040d50f22",
+      "source_route_index": 130
+    },
+    {
+      "bytes": 27787,
+      "original_relative_path": "protocol.md",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/protocol.md",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "71e143d36bfb77cd9db6b6a2bc1fd24631af60006aa9336eb441106cfc313534"
+      },
+      "route_id": "OR-132",
+      "sha256": "71e143d36bfb77cd9db6b6a2bc1fd24631af60006aa9336eb441106cfc313534",
+      "source_route_index": 131
+    },
+    {
+      "bytes": 33334,
+      "original_relative_path": "methods.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/methods.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "93507a913f1c68bb6ad5b388db9721292d53f63513b8e324e5d8b0f3cf673ff7"
+      },
+      "route_id": "OR-133",
+      "sha256": "93507a913f1c68bb6ad5b388db9721292d53f63513b8e324e5d8b0f3cf673ff7",
+      "source_route_index": 132
+    },
+    {
+      "bytes": 5805,
+      "original_relative_path": "native-participants.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/native-participants.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "d0bddd86f2ea4c91c7898c08d1110995f08e2dfd62084913d316b463dbc64748"
+      },
+      "route_id": "OR-134",
+      "sha256": "d0bddd86f2ea4c91c7898c08d1110995f08e2dfd62084913d316b463dbc64748",
+      "source_route_index": 133
+    },
+    {
+      "bytes": 1955,
+      "original_relative_path": "physical-retention-install.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/physical-retention-install.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "7384988a5eef52fc00bbc6d34a9c5fe0ae400954fca70c517db111329d4ea67d"
+      },
+      "route_id": "OR-135",
+      "sha256": "7384988a5eef52fc00bbc6d34a9c5fe0ae400954fca70c517db111329d4ea67d",
+      "source_route_index": 134
+    },
+    {
+      "bytes": 77181,
+      "original_relative_path": "whole-field-bindings.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/preinstallation-originals/3e5c0607e05739633b089a836058f47cc558de87946ddfb990a1382755a1896e/whole-field-bindings.json",
+        "same_bytes_paths": 1,
+        "selection": "PREINSTALLATION_OR_PREDECESSOR_COPY",
+        "sha256": "3e5c0607e05739633b089a836058f47cc558de87946ddfb990a1382755a1896e"
+      },
+      "route_id": "OR-136",
+      "sha256": "3e5c0607e05739633b089a836058f47cc558de87946ddfb990a1382755a1896e",
+      "source_route_index": 135
+    },
+    {
+      "bytes": 2765,
+      "original_relative_path": "installed-profile.json",
+      "original_source_root": "certified-producer-v1",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/goal_certified_producer_source_contracts/frozen-installed-profile.json",
+        "same_bytes_paths": 1,
+        "selection": "PRIMARY_PATH",
+        "sha256": "e6184271a0b8129af84bc7481217edbaddfffbc0171643c486adde825a19dc0b"
+      },
+      "route_id": "OR-137",
+      "sha256": "e6184271a0b8129af84bc7481217edbaddfffbc0171643c486adde825a19dc0b",
+      "source_route_index": 136
+    },
+    {
+      "bytes": 69892,
+      "original_relative_path": "Plans/workflow_standard_source_contracts/protocol.md",
+      "original_source_root": "certified-canonical-edition-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/protocol.md",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "df228389fe435056ea84b9038c525aa5a9661460b68bc4cf445cf42a2937b51c"
+      },
+      "route_id": "OR-138",
+      "sha256": "df228389fe435056ea84b9038c525aa5a9661460b68bc4cf445cf42a2937b51c",
+      "source_route_index": 137
+    },
+    {
+      "bytes": 26246,
+      "original_relative_path": "Plans/workflow_standard_source_contracts/methods.json",
+      "original_source_root": "certified-canonical-edition-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/methods.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "e835aa4fcfaa0b560751ac7b359899b42613745038b7b0aa6f9ce0660c1165a5"
+      },
+      "route_id": "OR-139",
+      "sha256": "e835aa4fcfaa0b560751ac7b359899b42613745038b7b0aa6f9ce0660c1165a5",
+      "source_route_index": 138
+    },
+    {
+      "bytes": 181130,
+      "original_relative_path": "Plans/workflow_standard_source_contracts/fresh-profile-methods.json",
+      "original_source_root": "certified-canonical-edition-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/fresh-profile-methods.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "a5b19f77fa43d30e9949f986cf0fc6ce9c440538aa7234bf0c44ddd1657106ff"
+      },
+      "route_id": "OR-140",
+      "sha256": "a5b19f77fa43d30e9949f986cf0fc6ce9c440538aa7234bf0c44ddd1657106ff",
+      "source_route_index": 139
+    },
+    {
+      "bytes": 2756,
+      "original_relative_path": "Plans/workflow_standard_source_contracts/installed-profile.json",
+      "original_source_root": "certified-canonical-edition-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444/installed-profile.json",
+        "same_bytes_paths": 1,
+        "selection": "PREINSTALLATION_OR_PREDECESSOR_COPY",
+        "sha256": "06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444"
+      },
+      "route_id": "OR-141",
+      "sha256": "06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444",
+      "source_route_index": 140
+    },
+    {
+      "bytes": 41766,
+      "original_relative_path": "Plans/workflow_standard_source_contracts/installation-composition.json",
+      "original_source_root": "certified-canonical-edition-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/29f110a733d6fb5dd313c605881b0e85760fc593e1bfcfee020b644951557eac/installation-composition.json",
+        "same_bytes_paths": 1,
+        "selection": "PREINSTALLATION_OR_PREDECESSOR_COPY",
+        "sha256": "29f110a733d6fb5dd313c605881b0e85760fc593e1bfcfee020b644951557eac"
+      },
+      "route_id": "OR-142",
+      "sha256": "29f110a733d6fb5dd313c605881b0e85760fc593e1bfcfee020b644951557eac",
+      "source_route_index": 141
+    },
+    {
+      "bytes": 60837,
+      "original_relative_path": "Plans/workflow_standard_source_contracts/stored-profile-routes.json",
+      "original_source_root": "certified-canonical-edition-v2",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/580b6b349bd41f7361aee6982ef7632f4b46fe4a61c806d294fb3a44a81ef757/stored-profile-routes.json",
+        "same_bytes_paths": 1,
+        "selection": "PREINSTALLATION_OR_PREDECESSOR_COPY",
+        "sha256": "580b6b349bd41f7361aee6982ef7632f4b46fe4a61c806d294fb3a44a81ef757"
+      },
+      "route_id": "OR-143",
+      "sha256": "580b6b349bd41f7361aee6982ef7632f4b46fe4a61c806d294fb3a44a81ef757",
+      "source_route_index": 142
+    },
+    {
+      "bytes": 161658,
+      "original_relative_path": "inputs/Plans/workflow_activation_contracts/physical-families.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/workflow_activation_contracts/physical-families.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "ac338df39f9d1d54a0e3a6602cf3e114e261a3d9aa6aa78c0fdb3203f6c55e7f"
+      },
+      "route_id": "OR-144",
+      "sha256": "ac338df39f9d1d54a0e3a6602cf3e114e261a3d9aa6aa78c0fdb3203f6c55e7f",
+      "source_route_index": 143
+    },
+    {
+      "bytes": 399294,
+      "original_relative_path": "inputs/Plans/executor_cancellation_contracts/physical-families.json",
+      "original_source_root": "replan-source-v3",
+      "resolution": {
+        "kind": "CANONICAL_PLANS_PATH",
+        "path": "Plans/executor_cancellation_contracts/physical-families.json",
+        "same_bytes_paths": 1,
+        "selection": "ALIAS_PATH",
+        "sha256": "782a05664faaf36dcbaf92c0b0f9d162a67c48b6da687a05b2b9de86ba382a6a"
+      },
+      "route_id": "OR-145",
+      "sha256": "782a05664faaf36dcbaf92c0b0f9d162a67c48b6da687a05b2b9de86ba382a6a",
+      "source_route_index": 144
+    }
+  ],
+  "rule": "Original prose and file-relative references resolve from their exact original document location (original source root plus relative path) through this complete route table only: to the named Plans/ path whose bytes at the base equal the route's sha256, or to the named member of the external v3 source package cited by its manifest token and the member sha256. Basenames, latest versions, same-ID replacement, host lookup and prefix inference are forbidden. Historical coordinates identify lineage and never choose current registration; active roots and methods resolve only through resource-realms.json and method-root-bindings.json. An original relative path and an external member path are written exactly as the external edition's manifest lists them; they are lineage coordinates, never renamed.",
+  "status": "CANONICAL_SOURCE_ROUTING_NATIVE_NOT_RUN",
+  "superseded_binding_sources": [
+    {
+      "bytes": 50140,
+      "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+      "member": "dependency-routing.json",
+      "sha256": "9995a3aaca0fb7c2a787917d571bd3862fe686e76b6a61666a17c0c47ad97379"
+    },
+    {
+      "bytes": 1092783,
+      "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+      "member": "original-resource-banks.json",
+      "sha256": "d502fecfcbb9f497fc9bac998f6ee9d6aa5f94ddeaad2d293070bc8a70370828"
+    },
+    {
+      "bytes": 1118255,
+      "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+      "member": "draft-resource-map.json",
+      "sha256": "7c3dbe77085a7521f9bf46198c1064d5e7a5a9f30b69914255ffbabf5c059c9b"
+    },
+    {
+      "bytes": 1785491,
+      "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+      "member": "method-root-bindings.json",
+      "sha256": "330e76b68c1c25c4fe7d63506d52565623c1af09bea6d947b27288172da199e0"
+    },
+    {
+      "bytes": 655040,
+      "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+      "member": "composition/root-import-bindings.json",
+      "sha256": "4c40fc22be28dbe67731ad343d6710858d893a4635dc571500b5c9875554e230"
+    },
+    {
+      "bytes": 471901,
+      "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+      "member": "composition/cross-bank-bindings.json",
+      "sha256": "f2df2c9c7aabe8be6dabddb575f80221aefc5ac95be48a13898758d147716683"
+    },
+    {
+      "bytes": 516236,
+      "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+      "member": "composition/uri-map.json",
+      "sha256": "bdec37aadcc6e8a845904c9c3a7d6b1987a2284e4d662b16cef8154513c1e40a"
+    },
+    {
+      "bytes": 341845,
+      "evidence": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+      "member": "composition/root-transform-ledger.json",
+      "sha256": "1419de57e000f9fb5fd08d032f906c3f96cde555b11e3a23d5c3e431c24ef691"
+    }
+  ]
+}

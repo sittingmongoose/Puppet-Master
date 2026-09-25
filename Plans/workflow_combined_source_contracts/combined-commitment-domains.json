@@ -1,0 +1,77 @@
+{
+  "profile": "pm.executor.workflow_source.all_writers.v8",
+  "whole_original_domains": [
+    {
+      "path": "inputs/certified-v2/native-v7/commitment-domains.json",
+      "sha256": "b4b54fa50a0da4c2c0fd0cb7a800e85add86ae056ffec357364f0476f7f2ad13",
+      "bytes": 9231,
+      "rule": "Whole original domains, exact field coverage, original numeric codec, semantic/full separation and phase constraints remain conjunctive."
+    },
+    {
+      "path": "inputs/certified-v2/commitment-domains.json",
+      "sha256": "0382f823c4db4a4a6137071354344ebead91513a66a557ea659d5612472360b6",
+      "bytes": 4393,
+      "rule": "Whole original domains, exact field coverage, original numeric codec, semantic/full separation and phase constraints remain conjunctive."
+    },
+    {
+      "path": "inputs/certified-v2/producer-v2/whole-source-bindings.json",
+      "sha256": "ed094c21a84870702682a520a5c5a0b01d4e3a231ebebfd3f073c0d51f2fabe1",
+      "bytes": 6438,
+      "rule": "Whole original domains, exact field coverage, original numeric codec, semantic/full separation and phase constraints remain conjunctive."
+    },
+    {
+      "path": "inputs/replan-v3/commitment-order.json",
+      "sha256": "3bc1518713c70a79249596970b00f78aa367010f414888c4f1a2cefe79b77043",
+      "bytes": 7265,
+      "rule": "Whole original domains, exact field coverage, original numeric codec, semantic/full separation and phase constraints remain conjunctive."
+    },
+    {
+      "path": "inputs/replan-v3/producer-commitments.json",
+      "sha256": "7964ec7f0849086db4ca2b9d1dd77e1c909f353f91e8616dfc0ae73d4f2986b3",
+      "bytes": 1876,
+      "rule": "Whole original domains, exact field coverage, original numeric codec, semantic/full separation and phase constraints remain conjunctive."
+    }
+  ],
+  "static_profile_domain": {
+    "preimage": "The canonical descriptor installed-profile.json of Plans/workflow_combined_source_contracts/, serialized as sorted-key compact UTF-8 JSON with no prefix and no trailing LF (CV-352). Its complete member list binds every placed whole active schema, map, protocol, physical, phase and binding companion and every canonical dependency by Plans/ path, SHA-256 and bytes.",
+    "digest": "SHA-256 of the sorted-key compact UTF-8 JSON serialization of installed-profile.json, no prefix, no trailing LF (SHA256_SORTED_KEY_COMPACT_UTF8_NO_PREFIX_NO_LF)",
+    "exclusions": [
+      "its own digest",
+      "installed-profile-digest.txt",
+      "composition.json (encloses this digest)",
+      "freeze manifest",
+      "checks/evidence outputs",
+      "runtime native values, original operation IDs or original issuance results"
+    ],
+    "native_binding": "Original WorkflowBirth.installed_contract_digest and combined Enrollment.installed_descriptor_sha256 equal this actual installed static digest. It is never a proof that registration or installation happened.",
+    "descriptor_transport": "StorageAcquisitionSource.installed_descriptor_bytes_base64 transports exactly this sorted-key compact serialization, so the transported exact bytes and the CV-352 digest preimage are the same bytes."
+  },
+  "complete_boundary_domain": {
+    "name": "pm.workflow.combined_boundary_input.v1",
+    "codec": "Complete existing pm.workflow.activation_source_json.v1 encoding; native original nested values retain their own exact original byte/hash domains. No bespoke numeric/escaping rule.",
+    "preimage_fields": [
+      "domain literal",
+      "actual installed profile digest",
+      "actual original native method ID",
+      "actual native owner/entry identity",
+      "ordered complete actual argument tuple from all exact method and phase declarations",
+      "complete actual combined guard argument, including its whole original StorageAcquisitionSource or raw acquisition input for the base case"
+    ],
+    "argument_identity": "Each tuple entry carries actual fixed position/name/realm/schema ref and the complete typed value, selected by real registration. JSON supplied declarations or branch tags cannot choose its schema.",
+    "forbidden": [
+      "hash of a selected field subset in place of any full required value",
+      "future own result/origin/after-slot as input",
+      "using current guard metadata as a reconstruction of an old original full source",
+      "substituting the combined digest for any original source/Goal/producer/candidate/output commitment"
+    ],
+    "uses": "SlotOrigin.input_sha256 commits this complete invocation where that real original operation changes the slot. All ordinary native publications continue their full original commitment fields/domains and independently mandatory combined entry/final guards; no new untyped durable native body field or retrospective source archive is introduced."
+  },
+  "slot_domains": {
+    "enrollment": "Derive from genuine original birth/origin and static descriptor; then hash complete physical Enrollment.",
+    "slot": "Derive complete next Slot and immutable SlotRevision from original before journal/source and exact original phase/control candidate. claim_origin_key is a key only, with no future origin hash.",
+    "slot_origin": "After both physical slot values are fixed, derive SlotOrigin with both exact physical selections, complete input digest and original issuer/transaction. No Slot value embeds this future SlotOrigin hash.",
+    "recovery": "Authentic original origin proves its own original issuance only. Replaying a different current snapshot does not recreate its full input; missing original full sources remain unavailable for full-source claims."
+  },
+  "original_native_and_producer": "Retain exact original source/candidate/native output/origin, producer semantic/full, original full Event/receipt/custody, append link/completion/origin, observer and source-token domains. New source roots define complete new typed inputs; no hash cuts or prefix-only comparisons. The pure clock-split payload remains exact original v3.",
+  "no_hash_capability": true
+}

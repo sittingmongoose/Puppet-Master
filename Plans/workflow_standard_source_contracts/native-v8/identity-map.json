@@ -1,0 +1,273 @@
+{
+  "additional_companion_reference_changes": {
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json"
+  },
+  "additional_companion_resource_ids": {
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json"
+  },
+  "fresh_profile": "pm.executor.workflow_source.all_writers.v8",
+  "generated_from": [
+    {
+      "bytes": 2582,
+      "path": "Plans/workflow_combined_source_contracts/active-resource-ids.json",
+      "sha256": "9bb7911b0827ad5619f1852babb5b128364eaace0abe4318f42bae483bcfdc00"
+    },
+    {
+      "bytes": 11067,
+      "path": "Plans/workflow_combined_source_contracts/whole-successor-lineage.json",
+      "sha256": "5e0ee2f835f281771826bbe8ceb545649bc64893cef37d83f5ed704b8e9a828d"
+    },
+    {
+      "bytes": 2196,
+      "path": "Plans/workflow_combined_source_contracts/physical-header-decisions.json",
+      "sha256": "672d1252c6bf1aa5ff57a11cea0121b89e6d3c82ef6bc5c357bde384e5e1c400"
+    },
+    {
+      "bytes": 189954,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/stored-profile-routes.json",
+      "sha256": "adc55336bc29b44c920cc400ead9c670577581823e64daa00bbe686af3572d6d"
+    }
+  ],
+  "prior_profile_preserved": "pm.executor.workflow_source.all_writers.v7",
+  "required_d05_typed_binding": "whole original SuccessfulReadback from actual original D05 owner; full source validation in separate current_d05_source realm; no false-only admission",
+  "rule": "Generated mechanically from the placed active-resource-ids.json, whole-successor-lineage.json, physical-header-decisions.json and native-v8/stored-profile-routes.json, in the form of native-v7/identity-map.json. It is the identity-map.json that native-v8/protocol.md names. whole_successor_reference_changes lists every $id or $ref base URI that differs between a native-v7 predecessor and its placed successor at the same JSON pointer.",
+  "stored_profile_deltas": [
+    {
+      "after_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v9",
+      "after_version": "9.0.0",
+      "before_schema_id": "pm.storage_value.executor_workflow_workflow_birth.v8",
+      "before_version": "8.0.0",
+      "definition": "StorageWorkflowBirth",
+      "family_id": "executor_workflow_workflow_birth",
+      "file": "workflow-original-start.v7.schema.json",
+      "header_decision": "BUMPED: writer_contract const now combined v8; old header cannot describe this new body grammar.",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "after_schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+      "after_version": "8.0.0",
+      "before_schema_id": "pm.storage_value.executor_workflow_workflow_head.v8",
+      "before_version": "8.0.0",
+      "definition": "StorageWorkflowHead",
+      "family_id": "executor_workflow_workflow_head",
+      "file": "workflow-original-start.v7.schema.json",
+      "header_decision": "KEPT: physical-header-decisions.json unchanged_native_headers. Nested wrapper equality with the predecessor route's closure is a review obligation (O-09); if it fails, all eleven headers bump.",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "after_schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "after_version": "8.0.0",
+      "before_schema_id": "pm.storage_value.executor_workflow_workflow_update.v8",
+      "before_version": "8.0.0",
+      "definition": "StorageWorkflowUpdate",
+      "family_id": "executor_workflow_workflow_update",
+      "file": "workflow-original-start.v7.schema.json",
+      "header_decision": "KEPT: physical-header-decisions.json unchanged_native_headers. Nested wrapper equality with the predecessor route's closure is a review obligation (O-09); if it fails, all eleven headers bump.",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "after_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v9",
+      "after_version": "9.0.0",
+      "before_schema_id": "pm.storage_value.executor_workflow_lineage_origin.v8",
+      "before_version": "8.0.0",
+      "definition": "StorageWorkflowMutationOrigin",
+      "family_id": "executor_workflow_lineage_origin",
+      "file": "workflow-original-start.v7.schema.json",
+      "header_decision": "BUMPED: Method-specific birth afterimage selector now references genuine new v9 birth.",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "after_schema_id": "pm.storage_value.workflow_start_candidate.v6",
+      "after_version": "6.0.0",
+      "before_schema_id": "pm.storage_value.workflow_start_candidate.v6",
+      "before_version": "6.0.0",
+      "definition": "StorageCandidate",
+      "family_id": "workflow_start_candidate",
+      "file": "workflow-start-custody.v7.schema.json",
+      "header_decision": "KEPT: physical-header-decisions.json unchanged_native_headers. Nested wrapper equality with the predecessor route's closure is a review obligation (O-09); if it fails, all eleven headers bump.",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "after_schema_id": "pm.storage_value.workflow_start_origin.v6",
+      "after_version": "6.0.0",
+      "before_schema_id": "pm.storage_value.workflow_start_origin.v6",
+      "before_version": "6.0.0",
+      "definition": "StorageOrigin",
+      "family_id": "workflow_start_origin",
+      "file": "workflow-start-custody.v7.schema.json",
+      "header_decision": "KEPT: physical-header-decisions.json unchanged_native_headers. Nested wrapper equality with the predecessor route's closure is a review obligation (O-09); if it fails, all eleven headers bump.",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "after_schema_id": "pm.storage_value.workflow_cancel_result.v7",
+      "after_version": "7.0.0",
+      "before_schema_id": "pm.storage_value.workflow_cancel_result.v7",
+      "before_version": "7.0.0",
+      "definition": "StorageResult",
+      "family_id": "workflow_cancel_result",
+      "file": "workflow-cancel-start-profile.v7.schema.json",
+      "header_decision": "KEPT: physical-header-decisions.json unchanged_native_headers. Nested wrapper equality with the predecessor route's closure is a review obligation (O-09); if it fails, all eleven headers bump.",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "after_schema_id": "pm.storage_value.workflow_cancel_origin.v7",
+      "after_version": "7.0.0",
+      "before_schema_id": "pm.storage_value.workflow_cancel_origin.v7",
+      "before_version": "7.0.0",
+      "definition": "StorageOrigin",
+      "family_id": "workflow_cancel_origin",
+      "file": "workflow-cancel-start-profile.v7.schema.json",
+      "header_decision": "KEPT: physical-header-decisions.json unchanged_native_headers. Nested wrapper equality with the predecessor route's closure is a review obligation (O-09); if it fails, all eleven headers bump.",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "after_schema_id": "pm.storage_value.workflow_standard_result.v4",
+      "after_version": "4.0.0",
+      "before_schema_id": "pm.storage_value.workflow_standard_result.v4",
+      "before_version": "4.0.0",
+      "definition": "StorageWorkflowResult",
+      "family_id": "workflow_standard_result",
+      "file": "workflow-standard-current-source.v5.schema.json",
+      "header_decision": "KEPT: physical-header-decisions.json unchanged_native_headers. Nested wrapper equality with the predecessor route's closure is a review obligation (O-09); if it fails, all eleven headers bump.",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "after_schema_id": "pm.storage_value.workflow_standard_origin.v4",
+      "after_version": "4.0.0",
+      "before_schema_id": "pm.storage_value.workflow_standard_origin.v4",
+      "before_version": "4.0.0",
+      "definition": "StorageWorkflowOrigin",
+      "family_id": "workflow_standard_origin",
+      "file": "workflow-standard-current-source.v5.schema.json",
+      "header_decision": "KEPT: physical-header-decisions.json unchanged_native_headers. Nested wrapper equality with the predecessor route's closure is a review obligation (O-09); if it fails, all eleven headers bump.",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    },
+    {
+      "after_schema_id": "pm.storage_value.workflow_standard_capture_origin.v4",
+      "after_version": "4.0.0",
+      "before_schema_id": "pm.storage_value.workflow_standard_capture_origin.v4",
+      "before_version": "4.0.0",
+      "definition": "StorageStandardCaptureOrigin",
+      "family_id": "workflow_standard_capture_origin",
+      "file": "workflow-standard-certification-argument.v5.schema.json",
+      "header_decision": "KEPT: physical-header-decisions.json unchanged_native_headers. Nested wrapper equality with the predecessor route's closure is a review obligation (O-09); if it fails, all eleven headers bump.",
+      "key_codec": "existing exact original family key codec unchanged; exact installed role selects new value profile"
+    }
+  ],
+  "unchanged_certified_payload": {
+    "path": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+    "schema_id": "pm.goal_runtime_event.goal_run_certified.schema.v3",
+    "sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895"
+  },
+  "whole_before_after": [
+    {
+      "after": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-start-arguments.v7.schema.json",
+      "after_sha256": "a205b6a0886aae43b143859b73812cb92e6b9a22e359d60c29b842f8950df203",
+      "before": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-arguments.v6.schema.json",
+      "before_sha256": "3f9b2fc8d768d462db1b4ac950854e0d7f2fc13982e0bbc1422e5ecb81bdbd88",
+      "whole_resource": true
+    },
+    {
+      "after": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-cancel-positive-arguments.v3.schema.json",
+      "after_sha256": "d28108aa0a301bb230c0b981b90c277c010c50335fe367a855718cef705358a2",
+      "before": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-positive-arguments.v2.schema.json",
+      "before_sha256": "ec8c346caffabb0bbb06285197e5ed04bfb44ffa8b6dfa02a038aef8a5b9bdd8",
+      "whole_resource": true
+    },
+    {
+      "after": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-start-custody.v7.schema.json",
+      "after_sha256": "47730f75a57a04520cb5989f141e06cc6a3f79dcebb6b8c5e5898d2251b7755b",
+      "before": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json",
+      "before_sha256": "9209a5b923cb279c4176ccf3b648a8381c4afae541220cd397329558db5266d2",
+      "whole_resource": true
+    },
+    {
+      "after": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-original-start.v7.schema.json",
+      "after_sha256": "f352fda339f60313b67833fc4ef691fc1759aecafcf625128610a487356b1d7d",
+      "before": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-original-start.v6.schema.json",
+      "before_sha256": "8e82034b4874fa7397c3ea44d7785b290ed2253281731648846505516914d376",
+      "frozen_pre_correction_before": "external-source-evidence:sha256:3b345f46b139e2f0d53614f1e2276308737aa7e15f0dd1733aac9f696755d0ed",
+      "frozen_pre_correction_before_sha256": "3b345f46b139e2f0d53614f1e2276308737aa7e15f0dd1733aac9f696755d0ed",
+      "whole_resource": true
+    },
+    {
+      "after": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-standard-certification-argument.v5.schema.json",
+      "after_sha256": "6e139345a94cb212d5db24c16a30482a569c8edad9b4e3f5f665486db2186b8b",
+      "before": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-certification-argument.v4.schema.json",
+      "before_sha256": "830d20024033a6e1edc32c847363a523a44fe47acd2abcd84413f8a58f4131fa",
+      "whole_resource": true
+    },
+    {
+      "after": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-standard-event-prerequisite.v5.schema.json",
+      "after_sha256": "f7337e23f953b3da65d4930dc14d807f859ad5e4560cba30980f0bad33685350",
+      "before": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-event-prerequisite.v4.schema.json",
+      "before_sha256": "ab8350e1f7b60c2c8b37fcb3ddb29da43a003d5b032aef145a0b220ef47f6274",
+      "whole_resource": true
+    },
+    {
+      "after": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-cancel-start-profile.v7.schema.json",
+      "after_sha256": "af2e11b7d6c4d6917b00c9730e62b5326ee1198acd434b6f5bea73c25b210264",
+      "before": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+      "before_sha256": "747100bb06ed4c718f4f38a0fee7133b1e45d10a3c04c5d8f25a3bfd7683386c",
+      "frozen_pre_correction_before": "external-source-evidence:sha256:f3dfe92c5943e1ddeeab334c41834357cef97c3715f8232dc5828cde99df68ca",
+      "frozen_pre_correction_before_sha256": "f3dfe92c5943e1ddeeab334c41834357cef97c3715f8232dc5828cde99df68ca",
+      "whole_resource": true
+    },
+    {
+      "after": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-standard-current-source.v5.schema.json",
+      "after_sha256": "170016ba2cebf49c3a8850c07604acd66e3077359916ce83ff0c0efc9bec4dcd",
+      "before": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-current-source.v4.schema.json",
+      "before_sha256": "7bd88c4a7cc2b7f32af173d18c470d64e13e296170e358fcd39fe8e64b6bbbb0",
+      "whole_resource": true
+    },
+    {
+      "after": "Plans/workflow_standard_source_contracts/native-v8/schemas/safestop-start-arguments.v3.schema.json",
+      "after_sha256": "befde59aebc9b7d13b030dbc2a562affcaa28220901d070f9bade510f2ad0d65",
+      "before": "Plans/workflow_standard_source_contracts/native-v7/schemas/safestop-start-arguments.v2.schema.json",
+      "before_sha256": "5431b28e798b726aef7994ae46e51df164ed4c1719317f14bc2a07fda544f24a",
+      "whole_resource": true
+    },
+    {
+      "additional_companion": true,
+      "after": "Plans/workflow_combined_source_contracts/schemas/native-worknode-combined-current.v1.schema.json",
+      "after_sha256": "22f62b961b980a948c59c99feb5ca679753e8b3f7df320b2f5022d9dfd54ca26",
+      "before": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+      "before_sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79",
+      "whole_resource": true
+    }
+  ],
+  "whole_successor_paths": {
+    "safestop-start-arguments.v2.schema.json": "safestop-start-arguments.v3.schema.json",
+    "workflow-cancel-positive-arguments.v2.schema.json": "workflow-cancel-positive-arguments.v3.schema.json",
+    "workflow-cancel-start-profile.v6.schema.json": "workflow-cancel-start-profile.v7.schema.json",
+    "workflow-original-start.v6.schema.json": "workflow-original-start.v7.schema.json",
+    "workflow-standard-certification-argument.v4.schema.json": "workflow-standard-certification-argument.v5.schema.json",
+    "workflow-standard-current-source.v4.schema.json": "workflow-standard-current-source.v5.schema.json",
+    "workflow-standard-event-prerequisite.v4.schema.json": "workflow-standard-event-prerequisite.v5.schema.json",
+    "workflow-start-arguments.v6.schema.json": "workflow-start-arguments.v7.schema.json",
+    "workflow-start-custody.v6.schema.json": "workflow-start-custody.v7.schema.json"
+  },
+  "whole_successor_reference_changes": {
+    "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v3.schema.json",
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json",
+    "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v6.schema.json": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v7.schema.json",
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json",
+    "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v7.schema.json",
+    "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v3.schema.json",
+    "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json",
+    "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json",
+    "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v5.schema.json",
+    "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json"
+  },
+  "whole_successor_resource_ids": {
+    "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v3.schema.json",
+    "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json",
+    "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v6.schema.json": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v7.schema.json",
+    "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v7.schema.json",
+    "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v3.schema.json",
+    "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v4.schema.json": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json",
+    "https://puppetmaster.local/proposals/workflow_standard_current_source.v4.schema.json": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json",
+    "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v4.schema.json": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v5.schema.json",
+    "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json"
+  }
+}

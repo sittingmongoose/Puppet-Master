@@ -1,0 +1,27 @@
+{
+  "original_acquisition_boundary": "Actual installed native Storage handle -> full StorageAcquisitionSource -> GuardResult. The application never supplies the source as proof and no future GuardResult, ProducerIntent, Event, completion, observer or release is required by this read.",
+  "whole_installation": [
+    "At the genuine original Workflow birth transaction, validate the complete descriptor preimage and all actual role bindings, publish new D01 v9 birth plus immutable enrollment and idle slot revision zero with original issuance.",
+    "Neither enrollment nor slot may be installed after a preexisting Workflow birth. Absence of JSON is not an unborn proof; complete original run-prefix/key census and original native birth lookup are mandatory.",
+    "Exact descriptor digest in WorkflowBirth, enrollment, runtime installed role and every method binding must agree. Every scope/storage/database/native owner identity is equal across the acquisition result and originals."
+  ],
+  "read_decision": [
+    "The original complete key inventory equals the independently acquired native storage prefix census. Each reported typed row is a whole original physical value selected by exact key/hash, with a matching authentic Storage issuance.",
+    "Unborn requires no native Workflow birth, enrollment, slot or coordinator records in that same snapshot.",
+    "Idle requires an authentic enrollment and original slot genesis or the complete chain to an authentic released slot. Any contradictory held coordinator control or missing release keeps the result unavailable.",
+    "Held requires the one actual slot kind and operation. Control presence and exact phase follow slot-control-phase-joins.json, including genuine preprepare revocation and the original certified empty birth control. Caller choice cannot select phase.",
+    "All currentness predicates are rechecked under the actual same native mutation transaction/lock at entry and immediately before publication. A cached guard is not a publication capability.",
+    "Read all immutable SlotRevision rows and original SlotOrigin issuances for this Workflow from the complete prefix census. Current Slot equals the latest authentic journal record by exact record value; its origin selects both exact current physical bytes and the immutable revision row. previous_slot selects the preceding immutable revision, not an overwritten mutable head. No omitted, reordered or duplicated revision may prove idle."
+  ],
+  "serialization": [
+    "Claim uses the actual native per-Workflow exclusive lock and slot compare-and-swap. Claim cannot depend on a future prepared object or result. One original claim issuance is published with the slot change.",
+    "Both coordinator families consult this same slot. Opposite family operations wait through the real owner queue or return conflict. They never create a second live slot or steal an unknown operation.",
+    "Replan preserves native-first then Event append; certified preserves append-first then native publication. Slot serialization does not claim cross-store atomicity.",
+    "Unknown source, crash or incomplete read leaves a held slot. Recovery reconciles exact existing originals; never reissues effects or generations to force progress."
+  ],
+  "release": [
+    "Only the original corresponding coordinator release with complete source predicates may transition to idle. Complete authentic native/Event/origin/observer facts are checked before release; compact slot release does not authorize new work.",
+    "Stop and Goal revocation remain independently executable while held. They may revoke/fence the slot without releasing it. A missing D06 coherent phase source never delays that limited revocation (stop-protocol.md R02): a first Stop on a held, unrevoked slot returns StopAcceptedRevocation only after the lower NativeExecutionRevocationResult validates (R03, R04), a repeated Stop returns StopRevocationReadback (R07), a contradictory or incomplete original is unavailable (R02), and full D06 cancellation stays unavailable (R08); never old D01 currentness or a fabricated completed cancel."
+  ],
+  "unavailable": "No helper or optional extension may bypass any missing original source; unsupported owner/effect roles remain unavailable."
+}

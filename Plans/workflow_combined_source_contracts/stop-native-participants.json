@@ -1,0 +1,121 @@
+{
+  "status": "COMPLETE_AUTHORED_ORIGINAL_PARTICIPANT_SOURCE_NOT_INSTALLED",
+  "native_transaction": "One actual original same-storage-instance transaction/exclusion, with final native capability invalidation and complete source/candidate revalidation before return; no serialized transaction ID grants authority.",
+  "participants": [
+    {
+      "owner": "Original Goal owner",
+      "operation": "Original Goal Stop current/source audit acquisition",
+      "input": "Genuine original Goal Stop intent/receipt/current permission/capability and Start association",
+      "result_schema": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument",
+      "writes": "Only its independently original Goal Stop route; this package adds none",
+      "phase": "Independent of complete Workflow cancellation; actual current Stop required for limited lower issuance"
+    },
+    {
+      "owner": "Original Executor run admission/callback owner",
+      "operation": "owner.executor.native.revoke_run_execution.v1",
+      "input": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationSource",
+      "private_candidate": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationCandidate",
+      "result": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationMethodResult",
+      "writes": "Native admission/dispatch/callback capability invalidation, synchronized with existing original Storage slot CAS; no new durable family",
+      "authority": "Actual original Executor native capability installed at birth, full current Goal Stop authority; cannot be called by reader or simulated with serialized result"
+    },
+    {
+      "owner": "Original D01 Workflow source owner",
+      "operation": "owner.executor.workflow_source.record_stop.v1",
+      "input": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/CombinedStopCurrentInput",
+      "result": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/CombinedStopResult",
+      "writes": "Existing Slot/SlotRevision/SlotOrigin through genuine Storage participants; unchanged native/scheduler/WorkNode/effect facts in limited route",
+      "authority": "Own exact D01 Stop source acquisition and slot revocation capability; never original native cancel issuer"
+    },
+    {
+      "owner": "Original native Storage slot owner",
+      "operation": "Existing D01 record_stop participant",
+      "input": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationCandidate",
+      "result": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/SlotRevocationCustody",
+      "writes": [
+        "Existing mutable Slot",
+        "Existing immutable SlotRevision",
+        "Existing immutable SlotOrigin"
+      ],
+      "physical_map": "replan-and-combined-physical-families.json",
+      "issuer": "owner.executor.workflow_source.record_stop.v1",
+      "lifetime": "Existing original slot/journal/origin retention only; no Event retention import"
+    },
+    {
+      "owner": "Original Executor native read owner",
+      "operation": "owner.executor.native.read_run_execution_revocation.v1",
+      "input": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RevocationReadRequest",
+      "result": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+      "writes": [],
+      "authority": "Read-only genuine original current guard/Goal acquisition; never issue historical native return"
+    },
+    {
+      "owner": "Original D01 read owner",
+      "operation": "owner.executor.workflow_source.read_stop.v1",
+      "input": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReadStopInput",
+      "result": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/CombinedStopReadResult",
+      "writes": [],
+      "authority": "Only original readback/ordinary original Stop disclosure; no fresh slot, origin, receipt or lower invocation"
+    }
+  ],
+  "mandatory_joins": [
+    "Every scope equals actual native storage/database/project/Goal/GoalRun/Workflow scope in original Goal/Start, native RunControl, scheduler, guard/enrollment and complete all-generation source; Workflow slot scope is additionally retained whole.",
+    "Native result operation_id equals the actual joint D01/lower Stop operation ID. The full original Goal Stop intent/receipt supplies its genuine causation link to that same run; independent owner operation IDs are not forced equal. Native transaction ID equals actual slot after native_issuance_transaction_id, immutable revision transaction, SlotOrigin native_transaction_id and actual joint transaction.",
+    "Native result slot_before equals acquired actual current slot selector; slot_after equals complete exact candidate Slot physical key/outer hash; slot_revision equals immutable revision physical key/outer hash; slot_origin equals original SlotOrigin exact key/outer hash.",
+    "SlotOrigin issuer_method is exactly owner.executor.workflow_source.record_stop.v1 and actual_native_owner is the original installed joint writer; NativeExecutionRevocationResult issuer_method is exactly owner.executor.native.revoke_run_execution.v1 and owner is actual original Executor.",
+    "Slot after revision increments genuine before revision exactly once, previous_slot matches before selection, enrollment unchanged, state pending operation/owner/claim origins unchanged, phase revoked. Claimed/revoked/recovering before prepare keeps null control; post-prepare preserves actual authentic nonnull control.",
+    "Immutable SlotRevision contains exact full candidate Slot and original existing header. SlotOrigin before/after/revision/enrollment/input hash exactly cover originals; input hash excludes future returned NativeExecutionRevocationResult.",
+    "Actual complete prefix/journal and original coordinator control determine phase. CurrentGoalStopArgument whole audit and independently actual current permissions/Stop are required. No guard unavailable branch is admitted as success.",
+    "All native24 WorkNode/control/attempt/execution-unit, prior RunControl/result/origin, scheduler and all-generation effect facts are preserved unchanged by limited candidate. Actual capability revocation prevents new execution; it never proves external effect completion.",
+    "Every source and candidate equality is independently rerun under native owner after last helper immediately before publication/disclosure. No lower success before actual native invalidation plus authentic slot commit.",
+    "First Stop acquisition authenticates independently current Goal Stop and an actual held/unrevoked slot. GoalStoppedCurrentAcquisition explicitly makes no slot-revocation assertion and needs no future afterimage; genuine lower native publication still must occur.",
+    "already_execution_revoked is unavailable from Goal Stop alone. It requires surviving actual immutable revoked SlotRevision and original SlotOrigin, original operation/owner/transaction/scope joins, and independently current actual native invalidation.",
+    "Released/idle readback current_guard is authentic idle with nonnull exact original last-release operation and selector. The full current native/Goal/Start/scheduler/all-generation/effect source and coherent D01 CurrentSource are acquired now, not copied from earlier held phase.",
+    "The immutable revoked SlotRevision record.state.operation_id matches current idle record.state.last_released_operation_id and the original release held-operation association. Original SlotOrigin binds the exact revision selector; its operation_id remains the distinct actual D01 Stop/lower operation ID. Original release invocation IDs are preserved, never forced equal to Stop or held-operation IDs. Replan supplies its whole current released control/receipt and original native issuances; certified supplies its whole GuardReleased. Existing physical/source/retention predicates remain required.",
+    "ReadStopInput limited_revocation_readback carries full current readback source plus original immutable revocation custody. ExecutionRevocationReadback returns those exact verified originals and current native owner only; no obsolete mutable Slot, fabricated held phase, historic lower return, SchedulerStop or native cancel is required or produced."
+  ],
+  "original_cancellation_dependency": "Original complete NativeMutationRequest/record_cancellation declaration is unchanged, dependency-only and not activated here. Original SchedulerStop/StopSource/D06 still require original native operation=cancel and its genuine original origin plus complete effects source. New lower return has no cast or storage-header alias to that family.",
+  "no_additional_durable_roles": true,
+  "positive_route_obligations": "stop-positive-route-obligations.json",
+  "current_readback_source": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ExecutionRevocationReadbackSource",
+  "released_readback_acquisition_order": [
+    {
+      "step": 1,
+      "owner_method": "combined.read_guard.v1",
+      "whole_source": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StorageAcquisitionSource",
+      "whole_result": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReleasedIdleGuard",
+      "required": "Actual same-instance Storage base acquisition reads full current slot/enrollment/control/release values and original issuances before any downstream certified guard. Complete current/previous original phase and last-release joins select genuine idle; no caller assertion or derived guard recursion."
+    },
+    {
+      "step": 2,
+      "owner_method": "owner.executor.native.read_run_execution_revocation.v1",
+      "whole_result": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/GoalStoppedCurrentAcquisition",
+      "required": "Independently genuine current Goal Stop SourceAudit plus actual current combined guard; slot revocation remains unasserted by this acquisition. Does not require lower native issuance or derived certified GuardReleased."
+    },
+    {
+      "step": 3,
+      "owner_method": "owner.storage.certified_event.read_guard.v1",
+      "whole_result": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v2.schema.json#/$defs/GuardReleased",
+      "condition": "certified original last release",
+      "required": "Its complete original GuardStoreSource/current disclosure and original predicates remain required. The earlier actual Storage acquisition and independent current revocation satisfy entry/final acquisition arguments; this output is not its own source."
+    },
+    {
+      "step": 3,
+      "owner_method": "combined.read_guard.v1 original Storage owner",
+      "whole_values": [
+        "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredPublicationControl",
+        "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredReleaseReceipt",
+        "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/OriginalRowIssuance"
+      ],
+      "condition": "Replan original last release",
+      "required": "Full current released control and exact original release receipt/issuance values from the original Storage acquisition, selected by actual current slot last_release_selector and genuine original physical profile. No new issuer or receipt is made."
+    },
+    {
+      "step": 4,
+      "owner_method": "owner.executor.workflow_source.read_stop.v1",
+      "whole_input": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/ReadStopInput",
+      "whole_result": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/CombinedStopReadResult",
+      "required": "Independently acquires complete original current D01/native/Goal/Start/scheduler/member/effect sources and surviving immutable original revoked revision/origin, verifies complete actual release lineage and current native invalidation at final boundary. Returns only original readback; no mutation or lower issuance."
+    }
+  ]
+}

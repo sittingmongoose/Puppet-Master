@@ -1,0 +1,1138 @@
+{
+  "status": "AUTHORED_COMBINED_SOURCE_NOT_INSTALLED",
+  "whole_inherited_maps": [
+    {
+      "path": "Plans/executor_cancellation_contracts/methods.json",
+      "sha256": "0fbb8d53064eaffd091cb0a1f071453e8cf9e460f897a41369f2b284b1cc08d1"
+    },
+    {
+      "path": "Plans/workflow_activation_contracts/methods.json",
+      "sha256": "cd24a81a13977ce343f270c253923d194ba3a660024f671d330e4fcc7bb19727"
+    }
+  ],
+  "inherited_dispatch": "The entire fresh-profile-methods.json is the explicit whole successor under all_writers.v7. Exact old v6 predecessor remains separately pinned, with unchanged original phase-specific dispatch/handoff effect authority. Prebirth scheduler admission does not issue DispatchCurrent.",
+  "methods": [
+    {
+      "method": "owner.executor.native.admit_first_attempt.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/FirstAttemptAdmissionArgument"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/FirstAttemptAdmittedInput"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8",
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7"
+      ],
+      "post_all_helpers_final_predicates": "identical independently evaluated complete source, complete candidates and actual native owner capabilities; no helper gap",
+      "native_participants_required": true,
+      "publication": "actual original scheduler admission and its complete original input capture/origin coissued before attempt birth; no capacity reservation, dispatch, handoff, WorkNode/Attempt mutation or execution effect",
+      "protocol": "protocol.md",
+      "result_phase": "genuinely issued first-attempt admission input; current birth prerequisite only, never effect-dispatch authority",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle"
+      ],
+      "combined_entry_predicate": "All original current-native source, Goal, original Start, scheduler/effect owner and publication predicates remain required. Post-Replan native first-attempt/progress/provisional/Standard uses the disjoint current-generation source and complete all-generation inventories.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.executor.native.capture_original_input.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/OriginalCaptureArgument"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/OriginalInput"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "result_phase": "OriginalCaptureSource is actual original owner input; complete capture/origin candidates are not issued until one real native transaction and readback.",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle"
+      ],
+      "combined_entry_predicate": "All original current-native source, Goal, original Start, scheduler/effect owner and publication predicates remain required. Post-Replan native first-attempt/progress/provisional/Standard uses the disjoint current-generation source and complete all-generation inventories.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.executor.native.begin_attempt.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/BeginAttemptArgument"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/NativePublication"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "first_attempt_predicates": "For BeginAttempt branch independently enforce F1-F7 and whole original admitted source equality at entry and final after all helpers. Postbirth DispatchCurrent is not a prebirth source.",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle"
+      ],
+      "combined_entry_predicate": "All original current-native source, Goal, original Start, scheduler/effect owner and publication predicates remain required. Post-Replan native first-attempt/progress/provisional/Standard uses the disjoint current-generation source and complete all-generation inventories.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.executor.native.submit_verification.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/SubmitVerificationArgument"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/NativePublication"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle"
+      ],
+      "combined_entry_predicate": "All original current-native source, Goal, original Start, scheduler/effect owner and publication predicates remain required. Post-Replan native first-attempt/progress/provisional/Standard uses the disjoint current-generation source and complete all-generation inventories.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.executor.native.record_verified.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/RecordVerifiedArgument"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/NativePublication"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle"
+      ],
+      "combined_entry_predicate": "All original current-native source, Goal, original Start, scheduler/effect owner and publication predicates remain required. Post-Replan native first-attempt/progress/provisional/Standard uses the disjoint current-generation source and complete all-generation inventories.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.executor.native.complete_worknode.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/CompleteWorkNodeArgument"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/NativePublication"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle"
+      ],
+      "combined_entry_predicate": "All original current-native source, Goal, original Start, scheduler/effect owner and publication predicates remain required. Post-Replan native first-attempt/progress/provisional/Standard uses the disjoint current-generation source and complete all-generation inventories.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.workflow.standard.publish_execution.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/ExecutionPublicationArgument"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/PublishedWorkflow"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "first_attempt_predicates": "For BeginAttempt branch independently enforce F1-F7 and whole original admitted source equality at entry and final after all helpers. Postbirth DispatchCurrent is not a prebirth source.",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle"
+      ],
+      "combined_entry_predicate": "All original current-native source, Goal, original Start, scheduler/effect owner and publication predicates remain required. Post-Replan native first-attempt/progress/provisional/Standard uses the disjoint current-generation source and complete all-generation inventories.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.workflow.standard.publish_provisional_success.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/ProvisionalSuccessArgument"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/PublishedWorkflow"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "DocumentPackaging"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle"
+      ],
+      "combined_entry_predicate": "All original current-native source, Goal, original Start, scheduler/effect owner and publication predicates remain required. Post-Replan native first-attempt/progress/provisional/Standard uses the disjoint current-generation source and complete all-generation inventories.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.workflow.standard.issue_final_decision.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/FinalDecisionArgument"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/FinalDecisionResult"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "DocumentPackaging"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle"
+      ],
+      "combined_entry_predicate": "All original current-native source, Goal, original Start, scheduler/effect owner and publication predicates remain required. Post-Replan native first-attempt/progress/provisional/Standard uses the disjoint current-generation source and complete all-generation inventories.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "storage.goal_receipt.capture_standard.v2",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/CaptureStandardNativeArgument"
+        },
+        {
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json#/$defs/OriginalStandardArgument"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "standard",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json#/$defs/DurableStandardRead"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "DocumentPackaging"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "result_phase": "Only after actual coissued receipt+capture-origin durability and independent native readback; no pre-existing output required.",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle"
+      ],
+      "combined_entry_predicate": "All original current-native source, Goal, original Start, scheduler/effect owner and publication predicates remain required. Post-Replan native first-attempt/progress/provisional/Standard uses the disjoint current-generation source and complete all-generation inventories.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.workflow.standard.prepare_certified.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/CertificationNativeArgument"
+        },
+        {
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/CertificationCandidateResult"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "DocumentPackaging"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "no_mutation",
+      "protocol": "protocol.md",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle",
+        "certified:claimed"
+      ],
+      "combined_entry_predicate": "Complete candidate-only original Standard preparation may run under idle or as the matching original certified coordinator private source/candidate phase. No native certification, Event append, receipt fabrication or action release occurs here.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.workflow.standard.publish_certified_joint.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/CertificationNativeArgument"
+        },
+        {
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v5.schema.json#/$defs/OriginalEventPrerequisite"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/PublishedWorkflow"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "DocumentPackaging"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "certified:appended_held"
+      ],
+      "combined_entry_predicate": "Actual lower native publication inside the one certified commit transaction, all full original Standard predicates and source/candidates independently repeated.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.workflow.standard.read_retained.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/RetainedWorkflowRequest"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/RetainedWorkflowResult"
+      },
+      "entry_predicates": [
+        "original_retained_route_and_owner",
+        "exact_original_result_origin_and_version",
+        "no_action_authority"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": false,
+      "publication": "no_mutation",
+      "protocol": "protocol.md",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "any:retained_original_only"
+      ],
+      "combined_entry_predicate": "Original retained metadata disclosure only with exact original installed profile and lifetime. No currentness or new admission follows.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "storage.goal_receipt.read_standard.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json#/$defs/RetainedStandardRequest"
+        }
+      ],
+      "result": {
+        "realm": "standard",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json#/$defs/RetainedStandardRead"
+      },
+      "entry_predicates": [
+        "original_retained_route_and_owner",
+        "exact_original_result_origin_and_version",
+        "no_action_authority"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": false,
+      "publication": "no_mutation",
+      "protocol": "protocol.md",
+      "result_phase": "Unchanged complete retained standard_certification metadata only; never a current source or durable-origin read.",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle",
+        "certified:claimed",
+        "certified:prepared",
+        "certified:appended_held",
+        "certified:completed"
+      ],
+      "combined_entry_predicate": "Whole original source read with actual native provenance. Held access is the fixed matching certified coordinator private source query; it grants no released public current certification or action. Every old source/currentness/retention predicate remains required; a missing or overwritten original source is unavailable.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.executor.workflow_standard.update_execution.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/ExecutionPublicationArgument"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/PublishedWorkflow"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "first_attempt_predicates": "For BeginAttempt branch independently enforce F1-F7 and whole original admitted source equality at entry and final after all helpers. Postbirth DispatchCurrent is not a prebirth source.",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle"
+      ],
+      "combined_entry_predicate": "All original current-native source, Goal, original Start, scheduler/effect owner and publication predicates remain required. Post-Replan native first-attempt/progress/provisional/Standard uses the disjoint current-generation source and complete all-generation inventories.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.executor.workflow_standard.update_provisional.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/ProvisionalSuccessArgument"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/PublishedWorkflow"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "DocumentPackaging"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle"
+      ],
+      "combined_entry_predicate": "All original current-native source, Goal, original Start, scheduler/effect owner and publication predicates remain required. Post-Replan native first-attempt/progress/provisional/Standard uses the disjoint current-generation source and complete all-generation inventories.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.executor.workflow_standard.update_certified.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/CertificationNativeArgument"
+        },
+        {
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json#/$defs/DurableStandardRead"
+        },
+        {
+          "realm": "event",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v5.schema.json#/$defs/OriginalEventPrerequisite"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "native",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/PublishedWorkflow"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "DocumentPackaging"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "joint_original_native_transaction",
+      "protocol": "protocol.md",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "certified:appended_held"
+      ],
+      "combined_entry_predicate": "Actual lower native publication inside the one certified commit transaction, all full original Standard predicates and source/candidates independently repeated.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    },
+    {
+      "method": "owner.storage.workflow_standard.read_current.v1",
+      "profile": "pm.executor.workflow_source.all_writers.v8",
+      "arguments": [
+        {
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/CurrentStandardNativeReadArgument"
+        },
+        {
+          "realm": "standard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json#/$defs/CurrentStandardReadRequest"
+        },
+        {
+          "realm": "goal",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json#/$defs/CurrentGoalArgument"
+        }
+      ],
+      "result": {
+        "realm": "standard",
+        "schema_ref": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json#/$defs/DurableStandardRead"
+      },
+      "entry_predicates": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7",
+        "U8",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "DocumentPackaging"
+      ],
+      "post_all_helpers_final_predicates": "identical_to_independent_entry_predicates; whole actual inputs/candidates/native participants; no helper gap",
+      "native_participants_required": true,
+      "publication": "no_mutation",
+      "protocol": "protocol.md",
+      "result_phase": "Full current original v2 row and actual immutable capture-origin from native Storage; U/G apply; not retained metadata disclosure.",
+      "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+      "mandatory_combined_arguments": [
+        {
+          "name": "whole_combined_guard",
+          "realm": "combined_guard",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/GuardResult",
+          "required": true,
+          "acquisition": "combined.read_guard.v1 via actual native Storage handle",
+          "selection": "actual installed native owner, method and slot state; never caller selection"
+        },
+        {
+          "name": "current_original_run_execution_revocation",
+          "realm": "native",
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+          "required": true,
+          "acquisition": "owner.executor.native.read_run_execution_revocation.v1 through actual original same-instance native handle; complete key census and native issuance, never caller truth"
+        }
+      ],
+      "combined_allowed_actual_phases": [
+        "idle",
+        "certified:claimed",
+        "certified:prepared",
+        "certified:appended_held",
+        "certified:completed"
+      ],
+      "combined_entry_predicate": "Whole original source read with actual native provenance. Held access is the fixed matching certified coordinator private source query; it grants no released public current certification or action. Every old source/currentness/retention predicate remains required; a missing or overwritten original source is unavailable.",
+      "combined_final_predicate": "After the last returning helper, independently repeat every complete original source/candidate/result predicate and the exact combined acquisition/slot/currentness predicates under the actual native mutation/read fence, with no callback/logger/helper gap before this own publication or disclosure.",
+      "execution_revocation_entry_final": "STOP-PROTOCOL.md R01-R12 and stop-positive-route-obligations.json. Independently authentic Goal Stop is a current acquisition in every authentic slot phase, including held/unrevoked first Stop; it does not assert prior slot revocation or lower issuance. Already-revoked requires exact existing immutable revoked SlotRevision/SlotOrigin plus actual current native invalidation. Execution remains denied. read_stop uses the separate complete held/released-idle current readback union; original cancellation/D06 remains distinct."
+    }
+  ],
+  "unknown_or_missing_native_participant": "unavailable; no publication",
+  "native_implementation": "NOT_RUN",
+  "event_coordinator": "separate required integration; no producer or consumer implemented",
+  "entry_stage_rule": "Source/candidates/issued phase is fixed by actual method and native descriptor, not a caller tag. All complete input and candidate schemas and independent final whole-union predicates apply. See protocol.md and commitment-domains.json.",
+  "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+  "combined_contract": "Plans/workflow_combined_source_contracts/protocol.md",
+  "combined_whole_occurrences": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+  "execution_revocation_contract": "Plans/workflow_combined_source_contracts/stop-protocol.md"
+}

@@ -1,0 +1,38 @@
+{
+  "status": "AUTHORED_FROM_AUTHENTICATED_CORRECTED_PREDECESSORS",
+  "predecessor_correction": "Accepted v3 manifest dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe; six exact joins per native profile corrected before installation. All prior frozen coordinate banks preserved.",
+  "new_body_grammar_changes": [
+    {
+      "definition": "StorageWorkflowBirth",
+      "header": "pm.storage_value.executor_workflow_workflow_birth.v9",
+      "reason": "writer_contract const now combined v8; old header cannot describe this new body grammar."
+    },
+    {
+      "definition": "StorageWorkflowMutationOrigin",
+      "header": "pm.storage_value.executor_workflow_lineage_origin.v9",
+      "reason": "Method-specific birth afterimage selector now references genuine new v9 birth."
+    },
+    {
+      "definition": "StoredOriginalProfileEnrollment",
+      "header": "pm.storage_value.workflow_replan_original_profile_enrollment.v1",
+      "reason": "Full original birth/profile body changes to combined v8."
+    },
+    {
+      "definition": "StorageReplanObserverOrigin",
+      "header": "pm.storage_value.executor_workflow_replan_observer_origin.v1",
+      "reason": "New explicit genuine stored observer origin including exact inventory and registration-origin selectors."
+    }
+  ],
+  "unchanged_native_headers": [
+    "normal WorkflowUpdate v8 (StorageWorkflowUpdate explicitly binds OriginalWorkflowUpdate)",
+    "WorkflowHead v8",
+    "current pointer v2",
+    "InventoryHead v2",
+    "native 24-field WorkNode record original header",
+    "ordinary D06 result v7 and origin v7 with corrected original result afterimage join",
+    "compact Standard result/origin v4",
+    "compact original Start candidates/origins original current headers"
+  ],
+  "old_profiles": "All frozen whole old resources/headers/keys remain separately pinned, never reinterpreted or installed late. Fresh role dispatch is exact installed profile+family+key+codec+schema_id+schema_version+whole resource+origin/currentness.",
+  "selectors": "WorkflowBirthAfterimages birth9/update8/head8/pointer2; WorkflowUpdateAfterimages update8/head8/pointer2; D06 PublishAfterimages.result exactly StorageResult7."
+}

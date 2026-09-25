@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_combined_generation_source.v1.schema.json",
+  "$defs": {
+    "ImmutableReplacementSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "NativeCompileSource",
+        "NativeRequestSource",
+        "CertifiedGraphSource",
+        "NativeIntakeSource",
+        "ProvisioningReceipt",
+        "ActivationDecisionSource",
+        "CompletionRequirementSource",
+        "BornWorkNodeRecord",
+        "WorkNodeMaterializationReceipt",
+        "InstalledWorkGraph",
+        "RequiredSet"
+      ],
+      "properties": {
+        "NativeCompileSource": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/IssuedNativeCompileSource"
+        },
+        "NativeRequestSource": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/IssuedNativeRequestSource"
+          },
+          "minItems": 1
+        },
+        "CertifiedGraphSource": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/IssuedCertifiedGraphSource"
+        },
+        "NativeIntakeSource": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/IssuedNativeIntakeSource"
+        },
+        "ProvisioningReceipt": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/IssuedProvisioningReceipt"
+        },
+        "ActivationDecisionSource": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/IssuedActivationDecisionSource"
+        },
+        "CompletionRequirementSource": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/IssuedCompletionRequirementSource"
+        },
+        "BornWorkNodeRecord": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/IssuedBornWorkNodeRecord"
+          },
+          "minItems": 1
+        },
+        "WorkNodeMaterializationReceipt": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/IssuedWorkNodeMaterializationReceipt"
+          },
+          "minItems": 1
+        },
+        "InstalledWorkGraph": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/IssuedInstalledWorkGraph"
+        },
+        "RequiredSet": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/IssuedRequiredSet"
+        }
+      }
+    },
+    "NativeBirthCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_birth",
+        "native_physical_sha256",
+        "native_record_sha256",
+        "native_issuance"
+      ],
+      "properties": {
+        "original_birth": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/IssuedBornWorkNodeRecord"
+        },
+        "native_physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "native_record_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "native_issuance": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StorageReplanNativePublicationOrigin"
+        }
+      }
+    },
+    "CurrentReplanGenerationSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_route",
+        "scope",
+        "original_manager_authority",
+        "immutable_replacements",
+        "native_birth_commitments",
+        "native_application",
+        "native_application_origin",
+        "completion",
+        "completion_origin",
+        "release",
+        "current_d01_lineage"
+      ],
+      "properties": {
+        "source_route": {
+          "const": "post_replan_generation"
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/Scope"
+        },
+        "original_manager_authority": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredManagerDecisionAuthority"
+        },
+        "immutable_replacements": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_generation_source.v1.schema.json#/$defs/ImmutableReplacementSources"
+        },
+        "native_birth_commitments": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_combined_generation_source.v1.schema.json#/$defs/NativeBirthCommitment"
+          },
+          "minItems": 1
+        },
+        "native_application": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredNativeApplicationRecord"
+        },
+        "native_application_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredNativeApplicationOrigin"
+        },
+        "completion": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredCompletionRecord"
+        },
+        "completion_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredCompletionOrigin"
+        },
+        "release": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/StoredReleaseReceipt"
+        },
+        "current_d01_lineage": {
+          "$ref": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/WorkflowLineageResult"
+        }
+      },
+      "$comment": "Authentic surviving original source values and compact issuance facts. Native birth hashes authenticate historical issuance; never reconstruct a historical physical value from the materialization projection. Current native values are independently acquired. Completion/release establishes only that the publication fence was discharged; no current Event read or action authority is implied."
+    },
+    "PostReplanRequirementSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "installed_graph",
+        "required_set",
+        "completion_requirements",
+        "original_requirement_authority_values",
+        "original_requests",
+        "current_original_workgraph",
+        "replacement_generation"
+      ],
+      "properties": {
+        "installed_graph": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/ReplanInstalledWorkGraphPhysical"
+        },
+        "required_set": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/ReplanRequiredSetPhysical"
+        },
+        "completion_requirements": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/ReplanCompletionRequirementSourcePhysical"
+        },
+        "original_requirement_authority_values": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json#/$defs/OriginalArtifact"
+          },
+          "minItems": 1
+        },
+        "original_requests": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/worknode_request"
+          },
+          "minItems": 1
+        },
+        "current_original_workgraph": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/workgraph_draft"
+        },
+        "replacement_generation": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_combined_generation_source.v1.schema.json#/$defs/CurrentReplanGenerationSource"
+        }
+      }
+    }
+  }
+}

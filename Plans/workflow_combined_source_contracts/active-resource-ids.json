@@ -1,0 +1,21 @@
+{
+  "workflow-start-arguments.v7.schema.json": "https://puppetmaster.local/proposals/executor_workflow_start_arguments.v7.schema.json",
+  "workflow-cancel-positive-arguments.v3.schema.json": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v3.schema.json",
+  "workflow-start-custody.v7.schema.json": "https://puppetmaster.local/proposals/workflow_start_original_custody.v7.schema.json",
+  "workflow-original-start.v7.schema.json": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json",
+  "workflow-standard-certification-argument.v5.schema.json": "https://puppetmaster.local/proposals/workflow_standard_certification_argument.v5.schema.json",
+  "workflow-standard-event-prerequisite.v5.schema.json": "https://puppetmaster.local/proposals/workflow_standard_event_prerequisite.v5.schema.json",
+  "workflow-cancel-start-profile.v7.schema.json": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v7.schema.json",
+  "workflow-standard-current-source.v5.schema.json": "https://puppetmaster.local/proposals/workflow_standard_current_source.v5.schema.json",
+  "safestop-start-arguments.v3.schema.json": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v3.schema.json",
+  "replan-source.v4.schema.json": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json",
+  "executor-replan-observer.v4.schema.json": "https://puppetmaster.local/proposals/executor_workflow_replan_observer.v1.schema.json",
+  "coordinator.v2.schema.json": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v2.schema.json",
+  "identity.v2.schema.json": "https://puppetmaster.local/proposals/goal_certified_event_identity.v2.schema.json",
+  "append-phase.v2.schema.json": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v2.schema.json",
+  "native-worknode-combined-current.v1.schema.json": "https://puppetmaster.local/proposals/native_worknode_combined_current.v1.schema.json",
+  "workflow-combined-generation-source.v1.schema.json": "https://puppetmaster.local/proposals/workflow_combined_generation_source.v1.schema.json",
+  "workflow-combined-guard.v1.schema.json": "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json",
+  "replan-consumer.v4.schema.json": "https://puppetmaster.local/proposals/goal_run_started_cancelled_replanned_consumer.v1.schema.json",
+  "workflow-combined-stop-execution-revocation.v2.schema.json": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json"
+}

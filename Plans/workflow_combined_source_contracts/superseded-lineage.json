@@ -1,0 +1,439 @@
+{
+  "census_scope": {
+    "rule": "A selection is any reference to a superseded definition from a method map, participant or tuple map, binding companion, occurrence file (complete_combined_declaration only; complete_original_declaration is lineage), or from any placed-root $ref outside the superseded definitions themselves.",
+    "selection_files": [
+      "Plans/workflow_standard_source_contracts/native-v8/methods.json",
+      "Plans/workflow_standard_source_contracts/native-v8/fresh-profile-methods.json",
+      "Plans/workflow_combined_source_contracts/coordinator/methods.json",
+      "Plans/workflow_combined_source_contracts/producer/methods.json",
+      "Plans/workflow_combined_source_contracts/replan/methods.json",
+      "Plans/workflow_combined_source_contracts/new-original-methods.json",
+      "Plans/workflow_combined_source_contracts/stop-native-participants.json",
+      "Plans/workflow_combined_source_contracts/method-root-bindings.json",
+      "Plans/workflow_combined_source_contracts/actual-registration-map.json",
+      "Plans/workflow_combined_source_contracts/coordinator/participant-method-tuples.json",
+      "Plans/workflow_combined_source_contracts/coordinator/native-participants.json",
+      "Plans/workflow_combined_source_contracts/producer/native-participants.json",
+      "Plans/workflow_combined_source_contracts/replan/all-writer-adoption.json",
+      "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+      "Plans/workflow_combined_source_contracts/birth-native-correspondence.json",
+      "Plans/workflow_combined_source_contracts/resource-realms.json"
+    ]
+  },
+  "dispositions": [
+    "AMENDED_IN_CANONICAL_EDITION",
+    "KEPT_UNSELECTED_ZERO_SELECTIONS",
+    "NOT_PLACED",
+    "LINEAGE_PROSE_NOT_A_RULE"
+  ],
+  "items": [
+    {
+      "canonical": {
+        "line": 98,
+        "path": "Plans/workflow_combined_source_contracts/protocol.md"
+      },
+      "canonical_inverse_delta": "14.002",
+      "disposition": "AMENDED_IN_CANONICAL_EDITION",
+      "id": "S1",
+      "source": {
+        "line": 98,
+        "member": "PROTOCOL.md",
+        "sha256": "c7467dfa055dbba60ea6551f1b658861a7b1b6300226a7e2d470f21b14fcc0e0"
+      },
+      "text_kind": "prose",
+      "treatment": "The superseded first sentence becomes a cross-reference to stop-protocol.md R02 to R04, R07 and R08 (StopAcceptedRevocation for a first Stop only after the lower result validates, StopRevocationReadback for a repeated Stop, unavailable for a contradictory or incomplete original); 'Its authority is revocation only.' and the paragraph's true remainder are kept."
+    },
+    {
+      "canonical": null,
+      "disposition": "NOT_PLACED",
+      "id": "S2",
+      "source": {
+        "line": 98,
+        "member": "native-v8/PROTOCOL.md",
+        "sha256": "ebd98ca7db27eb484921e2fce7407479c8c436d10068ad689890c4455a3a108c"
+      },
+      "text_kind": "prose",
+      "treatment": "Byte-identical alias of native-v8/protocol.md; dropped."
+    },
+    {
+      "canonical": {
+        "line": 98,
+        "path": "Plans/workflow_standard_source_contracts/native-v8/protocol.md"
+      },
+      "canonical_inverse_delta": "03.003",
+      "disposition": "AMENDED_IN_CANONICAL_EDITION",
+      "id": "S3",
+      "source": {
+        "line": 98,
+        "member": "native-v8/protocol.md",
+        "sha256": "ebd98ca7db27eb484921e2fce7407479c8c436d10068ad689890c4455a3a108c"
+      },
+      "text_kind": "prose",
+      "treatment": "The superseded first sentence becomes a cross-reference to stop-protocol.md R02 to R04, R07 and R08 (StopAcceptedRevocation for a first Stop only after the lower result validates, StopRevocationReadback for a repeated Stop, unavailable for a contradictory or incomplete original); 'Its authority is revocation only.' and the paragraph's true remainder are kept."
+    },
+    {
+      "canonical": null,
+      "disposition": "NOT_PLACED",
+      "id": "S4",
+      "source": {
+        "line": 98,
+        "member": "coordinator/PROTOCOL.md",
+        "sha256": "7002a4fe7f5e82a093e328ea5b117186250aecaa81f13be684a220ca0b7e68ad"
+      },
+      "text_kind": "prose",
+      "treatment": "Byte-identical alias of coordinator/protocol.md; dropped."
+    },
+    {
+      "canonical": {
+        "line": 98,
+        "path": "Plans/workflow_combined_source_contracts/coordinator/protocol.md"
+      },
+      "canonical_inverse_delta": "46.003",
+      "disposition": "AMENDED_IN_CANONICAL_EDITION",
+      "id": "S5",
+      "source": {
+        "line": 98,
+        "member": "coordinator/protocol.md",
+        "sha256": "7002a4fe7f5e82a093e328ea5b117186250aecaa81f13be684a220ca0b7e68ad"
+      },
+      "text_kind": "prose",
+      "treatment": "The superseded first sentence becomes a cross-reference to stop-protocol.md R02 to R04, R07 and R08 (StopAcceptedRevocation for a first Stop only after the lower result validates, StopRevocationReadback for a repeated Stop, unavailable for a contradictory or incomplete original); 'Its authority is revocation only.' and the paragraph's true remainder are kept."
+    },
+    {
+      "canonical": null,
+      "disposition": "NOT_PLACED",
+      "id": "S6",
+      "source": {
+        "line": 98,
+        "member": "producer-combined/PROTOCOL.md",
+        "sha256": "b00939f3d8342fb14182453fa869d86e411142a338e959c1b6547afb9a18990e"
+      },
+      "text_kind": "prose",
+      "treatment": "Byte-identical alias of producer-combined/protocol.md; dropped."
+    },
+    {
+      "canonical": {
+        "line": 98,
+        "path": "Plans/workflow_combined_source_contracts/producer/protocol.md"
+      },
+      "canonical_inverse_delta": "52.003",
+      "disposition": "AMENDED_IN_CANONICAL_EDITION",
+      "id": "S7",
+      "source": {
+        "line": 98,
+        "member": "producer-combined/protocol.md",
+        "sha256": "b00939f3d8342fb14182453fa869d86e411142a338e959c1b6547afb9a18990e"
+      },
+      "text_kind": "prose",
+      "treatment": "The superseded first sentence becomes a cross-reference to stop-protocol.md R02 to R04, R07 and R08 (StopAcceptedRevocation for a first Stop only after the lower result validates, StopRevocationReadback for a repeated Stop, unavailable for a contradictory or incomplete original); 'Its authority is revocation only.' and the paragraph's true remainder are kept."
+    },
+    {
+      "canonical": {
+        "line": 98,
+        "path": "Plans/workflow_combined_source_contracts/replan/protocol.md"
+      },
+      "canonical_inverse_delta": "56.003",
+      "disposition": "AMENDED_IN_CANONICAL_EDITION",
+      "id": "S8",
+      "source": {
+        "line": 98,
+        "member": "replan/PROTOCOL.md",
+        "sha256": "72cc5792fef3292c70c6b3827a0d599afe0c525125025521163e98ab4e3f404d"
+      },
+      "text_kind": "prose",
+      "treatment": "The superseded first sentence becomes a cross-reference to stop-protocol.md R02 to R04, R07 and R08 (StopAcceptedRevocation for a first Stop only after the lower result validates, StopRevocationReadback for a repeated Stop, unavailable for a contradictory or incomplete original); 'Its authority is revocation only.' and the paragraph's true remainder are kept."
+    },
+    {
+      "canonical": null,
+      "disposition": "NOT_PLACED",
+      "id": "S9",
+      "source": {
+        "line": 94,
+        "member": "replan/protocol.md",
+        "sha256": "feef15abfeccb0c82f2a15eb7d6ab13164ae19915c8f86c113948e03f16e7ff3"
+      },
+      "text_kind": "prose",
+      "treatment": "The stale pre-preface copy (S10) that carries this paragraph; not placed."
+    },
+    {
+      "canonical": null,
+      "disposition": "NOT_PLACED",
+      "id": "S10",
+      "source": {
+        "member": "replan/protocol.md",
+        "sha256": "feef15abfeccb0c82f2a15eb7d6ab13164ae19915c8f86c113948e03f16e7ff3"
+      },
+      "text_kind": "whole file",
+      "treatment": "Stale copy without either Stop-supersession preface, absent from whole-protocol-lineage.json; not placed. The operative replan/PROTOCOL.md is placed as replan/protocol.md."
+    },
+    {
+      "canonical": {
+        "path": "Plans/workflow_combined_source_contracts/guard-acquisition-predicates.json",
+        "pointer": "/release/1"
+      },
+      "canonical_inverse_delta": "23.001",
+      "disposition": "AMENDED_IN_CANONICAL_EDITION",
+      "id": "S11",
+      "source": {
+        "member": "guard-acquisition-predicates.json",
+        "pointer": "/release/1",
+        "sha256": "ca1a4d94d606802e8c3240a10dfb52c1ec678d6542cc091a3b27e71a282c1d39"
+      },
+      "text_kind": "prose rule",
+      "treatment": "Amended: a missing D06 source never delays the limited revocation (R02); a first Stop returns StopAcceptedRevocation only after the lower NativeExecutionRevocationResult validates (R03, R04), a repeated Stop StopRevocationReadback (R07), a contradictory or incomplete original is unavailable (R02), and full D06 stays unavailable (R08)."
+    },
+    {
+      "canonical": {
+        "definitions": [
+          "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/StopAcceptedPending"
+        ],
+        "path": "Plans/workflow_combined_source_contracts/schemas/workflow-combined-guard.v1.schema.json"
+      },
+      "disposition": "KEPT_UNSELECTED_ZERO_SELECTIONS",
+      "id": "S12",
+      "source": {
+        "definitions": [
+          "StopAcceptedPending"
+        ],
+        "member": "schemas/workflow-combined-guard.v1.schema.json"
+      },
+      "text_kind": "schema definition",
+      "treatment": "Kept byte-exact (modulo the rename map) as unselected definitions; removing them would break the shared-root invariant for no gain.",
+      "zero_selection_census": {
+        "method_map_and_binding_references": {
+          "Plans/workflow_combined_source_contracts/actual-registration-map.json": 0,
+          "Plans/workflow_combined_source_contracts/birth-native-correspondence.json": 0,
+          "Plans/workflow_combined_source_contracts/complete-method-occurrences.json": 0,
+          "Plans/workflow_combined_source_contracts/coordinator/methods.json": 0,
+          "Plans/workflow_combined_source_contracts/coordinator/native-participants.json": 0,
+          "Plans/workflow_combined_source_contracts/coordinator/participant-method-tuples.json": 0,
+          "Plans/workflow_combined_source_contracts/method-root-bindings.json": 0,
+          "Plans/workflow_combined_source_contracts/new-original-methods.json": 0,
+          "Plans/workflow_combined_source_contracts/producer/methods.json": 0,
+          "Plans/workflow_combined_source_contracts/producer/native-participants.json": 0,
+          "Plans/workflow_combined_source_contracts/replan/all-writer-adoption.json": 0,
+          "Plans/workflow_combined_source_contracts/replan/methods.json": 0,
+          "Plans/workflow_combined_source_contracts/resource-realms.json": 0,
+          "Plans/workflow_combined_source_contracts/stop-native-participants.json": 0,
+          "Plans/workflow_standard_source_contracts/native-v8/fresh-profile-methods.json": 0,
+          "Plans/workflow_standard_source_contracts/native-v8/methods.json": 0
+        },
+        "root_references_from_other_definitions": [],
+        "root_references_inside_the_unselected_set": [
+          {
+            "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-original-start.v7.schema.json",
+            "pointer": "/$defs/CombinedStopResult/oneOf/1/$ref"
+          }
+        ],
+        "selections": 0
+      }
+    },
+    {
+      "canonical": {
+        "definitions": [
+          "https://puppetmaster.local/proposals/workflow_combined_guard.v1.schema.json#/$defs/PendingStopSource"
+        ],
+        "path": "Plans/workflow_combined_source_contracts/schemas/workflow-combined-guard.v1.schema.json"
+      },
+      "disposition": "KEPT_UNSELECTED_ZERO_SELECTIONS",
+      "id": "S13",
+      "source": {
+        "definitions": [
+          "PendingStopSource"
+        ],
+        "member": "schemas/workflow-combined-guard.v1.schema.json"
+      },
+      "text_kind": "schema definition",
+      "treatment": "Kept byte-exact (modulo the rename map) as unselected definitions; removing them would break the shared-root invariant for no gain.",
+      "zero_selection_census": {
+        "method_map_and_binding_references": {
+          "Plans/workflow_combined_source_contracts/actual-registration-map.json": 0,
+          "Plans/workflow_combined_source_contracts/birth-native-correspondence.json": 0,
+          "Plans/workflow_combined_source_contracts/complete-method-occurrences.json": 0,
+          "Plans/workflow_combined_source_contracts/coordinator/methods.json": 0,
+          "Plans/workflow_combined_source_contracts/coordinator/native-participants.json": 0,
+          "Plans/workflow_combined_source_contracts/coordinator/participant-method-tuples.json": 0,
+          "Plans/workflow_combined_source_contracts/method-root-bindings.json": 0,
+          "Plans/workflow_combined_source_contracts/new-original-methods.json": 0,
+          "Plans/workflow_combined_source_contracts/producer/methods.json": 0,
+          "Plans/workflow_combined_source_contracts/producer/native-participants.json": 0,
+          "Plans/workflow_combined_source_contracts/replan/all-writer-adoption.json": 0,
+          "Plans/workflow_combined_source_contracts/replan/methods.json": 0,
+          "Plans/workflow_combined_source_contracts/resource-realms.json": 0,
+          "Plans/workflow_combined_source_contracts/stop-native-participants.json": 0,
+          "Plans/workflow_standard_source_contracts/native-v8/fresh-profile-methods.json": 0,
+          "Plans/workflow_standard_source_contracts/native-v8/methods.json": 0
+        },
+        "root_references_from_other_definitions": [],
+        "root_references_inside_the_unselected_set": [
+          {
+            "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-original-start.v7.schema.json",
+            "pointer": "/$defs/CombinedStopCurrentInput/oneOf/1/properties/source/$ref"
+          }
+        ],
+        "selections": 0
+      }
+    },
+    {
+      "canonical": {
+        "definitions": [
+          "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/CombinedStopCurrentInput",
+          "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json#/$defs/CombinedStopResult"
+        ],
+        "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-original-start.v7.schema.json"
+      },
+      "disposition": "KEPT_UNSELECTED_ZERO_SELECTIONS",
+      "id": "S14",
+      "source": {
+        "definitions": [
+          "CombinedStopCurrentInput",
+          "CombinedStopResult"
+        ],
+        "member": "schemas/workflow-original-start.v7.schema.json"
+      },
+      "text_kind": "schema definition",
+      "treatment": "Kept byte-exact (modulo the rename map) as unselected definitions; removing them would break the shared-root invariant for no gain.",
+      "zero_selection_census": {
+        "method_map_and_binding_references": {
+          "Plans/workflow_combined_source_contracts/actual-registration-map.json": 0,
+          "Plans/workflow_combined_source_contracts/birth-native-correspondence.json": 0,
+          "Plans/workflow_combined_source_contracts/complete-method-occurrences.json": 0,
+          "Plans/workflow_combined_source_contracts/coordinator/methods.json": 0,
+          "Plans/workflow_combined_source_contracts/coordinator/native-participants.json": 0,
+          "Plans/workflow_combined_source_contracts/coordinator/participant-method-tuples.json": 0,
+          "Plans/workflow_combined_source_contracts/method-root-bindings.json": 0,
+          "Plans/workflow_combined_source_contracts/new-original-methods.json": 0,
+          "Plans/workflow_combined_source_contracts/producer/methods.json": 0,
+          "Plans/workflow_combined_source_contracts/producer/native-participants.json": 0,
+          "Plans/workflow_combined_source_contracts/replan/all-writer-adoption.json": 0,
+          "Plans/workflow_combined_source_contracts/replan/methods.json": 0,
+          "Plans/workflow_combined_source_contracts/resource-realms.json": 0,
+          "Plans/workflow_combined_source_contracts/stop-native-participants.json": 0,
+          "Plans/workflow_standard_source_contracts/native-v8/fresh-profile-methods.json": 0,
+          "Plans/workflow_standard_source_contracts/native-v8/methods.json": 0
+        },
+        "root_references_from_other_definitions": [],
+        "root_references_inside_the_unselected_set": [],
+        "selections": 0
+      }
+    },
+    {
+      "canonical": null,
+      "disposition": "NOT_PLACED",
+      "id": "S15",
+      "source": {
+        "manifest_ref": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+        "member": "inputs/stop-v2-original/workflow-combined-stop-execution-revocation.v1.schema.json",
+        "sha256": "4bd294607c3a94bbd1ed269fa1904a1b10e5485119855551fb20dd8fae2e7e22"
+      },
+      "text_kind": "whole schema root",
+      "treatment": "External lineage only; the placed Stop root is v2."
+    },
+    {
+      "canonical": {
+        "lines_naming_R10": [
+          92
+        ],
+        "path": "Plans/workflow_combined_source_contracts/stop-protocol.md"
+      },
+      "disposition": "LINEAGE_PROSE_NOT_A_RULE",
+      "id": "R10",
+      "source": {
+        "member": "STOP-PROTOCOL.md",
+        "sha256": "c999b547bd78e697af7eea749b932f7612b245eabfa96b8238237af80b095320"
+      },
+      "text_kind": "precedence sentence",
+      "treatment": "Canon cannot hold a rule that one of its own texts wins over another; R10's precedence sentence is compiled as lineage prose only, and the successor rules are compiled instead."
+    },
+    {
+      "canonical": {
+        "line": 7,
+        "path": "Plans/workflow_combined_source_contracts/protocol.md"
+      },
+      "disposition": "LINEAGE_PROSE_NOT_A_RULE",
+      "id": "S16",
+      "source": {
+        "line": 7,
+        "member": "PROTOCOL.md",
+        "sha256": "c7467dfa055dbba60ea6551f1b658861a7b1b6300226a7e2d470f21b14fcc0e0"
+      },
+      "text_kind": "precedence sentence (Stop-successor preface)",
+      "treatment": "The replaced assertion is amended in this edition (S1, S3, S5, S7, S8); the preface records lineage and is not a precedence rule."
+    },
+    {
+      "canonical": {
+        "line": 3,
+        "path": "Plans/workflow_standard_source_contracts/native-v8/protocol.md"
+      },
+      "disposition": "LINEAGE_PROSE_NOT_A_RULE",
+      "id": "S17",
+      "source": {
+        "line": 3,
+        "member": "native-v8/protocol.md",
+        "sha256": "ebd98ca7db27eb484921e2fce7407479c8c436d10068ad689890c4455a3a108c"
+      },
+      "text_kind": "precedence sentence (Stop-successor preface)",
+      "treatment": "The replaced assertion is amended in this edition (S1, S3, S5, S7, S8); the preface records lineage and is not a precedence rule."
+    },
+    {
+      "canonical": {
+        "line": 3,
+        "path": "Plans/workflow_combined_source_contracts/coordinator/protocol.md"
+      },
+      "disposition": "LINEAGE_PROSE_NOT_A_RULE",
+      "id": "S18",
+      "source": {
+        "line": 3,
+        "member": "coordinator/protocol.md",
+        "sha256": "7002a4fe7f5e82a093e328ea5b117186250aecaa81f13be684a220ca0b7e68ad"
+      },
+      "text_kind": "precedence sentence (Stop-successor preface)",
+      "treatment": "The replaced assertion is amended in this edition (S1, S3, S5, S7, S8); the preface records lineage and is not a precedence rule."
+    },
+    {
+      "canonical": {
+        "line": 3,
+        "path": "Plans/workflow_combined_source_contracts/producer/protocol.md"
+      },
+      "disposition": "LINEAGE_PROSE_NOT_A_RULE",
+      "id": "S19",
+      "source": {
+        "line": 3,
+        "member": "producer-combined/protocol.md",
+        "sha256": "b00939f3d8342fb14182453fa869d86e411142a338e959c1b6547afb9a18990e"
+      },
+      "text_kind": "precedence sentence (Stop-successor preface)",
+      "treatment": "The replaced assertion is amended in this edition (S1, S3, S5, S7, S8); the preface records lineage and is not a precedence rule."
+    },
+    {
+      "canonical": {
+        "line": 3,
+        "path": "Plans/workflow_combined_source_contracts/replan/protocol.md"
+      },
+      "disposition": "LINEAGE_PROSE_NOT_A_RULE",
+      "id": "S20",
+      "source": {
+        "line": 3,
+        "member": "replan/PROTOCOL.md",
+        "sha256": "72cc5792fef3292c70c6b3827a0d599afe0c525125025521163e98ab4e3f404d"
+      },
+      "text_kind": "precedence sentence (Stop-successor preface)",
+      "treatment": "The replaced assertion is amended in this edition (S1, S3, S5, S7, S8); the preface records lineage and is not a precedence rule."
+    }
+  ],
+  "profile": "pm.executor.workflow_source.all_writers.v8",
+  "rule": "STOP-PROTOCOL.md R10 supersedes the earlier pending-Stop routing and unsupported cancellation-issuer assertion. The canonical edition amends the placed prose (AMENDED_IN_CANONICAL_EDITION, each amendment recorded in canonical-inverse.json), keeps the superseded schema definitions byte-exact modulo the rename map with zero selections (KEPT_UNSELECTED_ZERO_SELECTIONS), and leaves unplaced copies and the v1 Stop root as external lineage (NOT_PLACED). R10's precedence sentence and the Stop-successor prefaces of the five placed protocols (S16 to S20) are lineage prose, not precedence rules (LINEAGE_PROSE_NOT_A_RULE). None of them is operative.",
+  "schema": "pm.workflow_combined_source.superseded_lineage.v1",
+  "source_edition": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+  "status": "SUPERSEDED_STOP_TEXT_NOT_OPERATIVE",
+  "summary": {
+    "by_disposition": {
+      "AMENDED_IN_CANONICAL_EDITION": 6,
+      "KEPT_UNSELECTED_ZERO_SELECTIONS": 3,
+      "LINEAGE_PROSE_NOT_A_RULE": 6,
+      "NOT_PLACED": 6
+    },
+    "items": 21,
+    "zero_selection_total": 0
+  }
+}

@@ -1,0 +1,827 @@
+{
+  "frozen_external_literals": [
+    {
+      "classification": "A3_PAYLOAD_SUCCESSOR_PENDING_NOT_REGISTRY_SELECTION",
+      "literal_sha256": "8ddd87dafbff45c4a724561e4550c62e0a15c6a9863e869c9aedbe83ae9361ee",
+      "occurrences": [
+        {
+          "file": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+          "pointer": "/$defs/WholeProducerSubmission/properties/payload_schema_id/const"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+          "pointer": "/$defs/WholeProducerSubmission/properties/payload/$ref"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+          "pointer": "/$defs/WholeOriginalEvent/allOf/1/properties/payload_schema_id/const"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+          "pointer": "/$defs/WholeOriginalEvent/allOf/1/properties/payload/$ref"
+        },
+        {
+          "file": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+          "pointer": "/$defs/ProducerEventChoices/properties/payload_schema_id/const"
+        }
+      ],
+      "owner": "A3 (replanned payload successor)",
+      "rule": "Frozen external literal; not renamed, not resolved in canon, not a registry selection (CV-354). Recorded here by the SHA-256 of its UTF-8 bytes: the literal text occurs in canon only at the listed occurrences, and original-reference-routing.json payload_literals carries the same SHA-256 with its external member."
+    },
+    {
+      "classification": "A3_PAYLOAD_SUCCESSOR_PENDING_NOT_REGISTRY_SELECTION",
+      "literal_sha256": "7cb2f25c256ee2ed941fe8a74fb1aa5bdde9e24204a5885a7585d934eebaaa8b",
+      "occurrences": [
+        {
+          "file": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+          "pointer": "/$defs/ProducerPayloadChoices/properties/schema_version/const"
+        }
+      ],
+      "owner": "A3 (replanned payload successor)",
+      "rule": "Frozen external literal (payload schema_version const); not renamed, not resolved in canon, not a registry selection (CV-354). Recorded here by the SHA-256 of its UTF-8 bytes: the literal text occurs in canon only at the listed occurrences, and original-reference-routing.json payload_literals carries the same SHA-256 with its external member."
+    }
+  ],
+  "identities_not_placed": "The stored-header constants that occur only in the six deleted legacy wrappers (O-07) and the two validation-namespace URI prefixes of the external edition are not placed and have no canonical successor (design §3.3). The wrappers' bytes are lineage in canonical-inverse.json (class deletion); the one placed validation-namespace reference was rebound to its original identifier (repair RP-D1-NATIVE-SCHEMA, class D-1).",
+  "kept_byte_exact": [
+    "all 16 https://puppetmaster.local/proposals/ $ids of the active roots",
+    "combined.read_guard.v1, combined.birth.v1, combined.claim.v1 (O-08)",
+    "owner.executor.native.revoke_run_execution.v1, owner.executor.native.read_run_execution_revocation.v1",
+    "pm.executor.workflow_source.all_writers.v8, pm.goal_run_certified.producer_source.v3",
+    "workflow_combined_enrollment, workflow_combined_slot, workflow_combined_slot_revision, workflow_combined_slot_origin, executor_workflow_replan_observer_origin",
+    "all v7-inherited method ids",
+    "the canon property name source_draft_graph (SP-308 record grammar; not a draft marker)"
+  ],
+  "lineage_positions_kept_byte_exact": [
+    {
+      "file": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+      "pointer_glob": "/*/complete_original_declaration",
+      "rule": "complete original declaration of each occurrence: lineage, kept byte-exact so that its original_declaration_sha256 pin (sorted-key compact JSON) holds; never renamed or resolved"
+    },
+    {
+      "file": "Plans/workflow_combined_source_contracts/whole-successor-lineage.json",
+      "pointer_glob": "/*/source_id",
+      "rule": "predecessor identity of each whole-successor lineage row: lineage, kept byte-exact so that it names the predecessor whose bytes source_sha256 pins; never renamed or resolved"
+    }
+  ],
+  "marker_forms": [
+    "drafts/ URI host",
+    "draft. method or const prefix",
+    "pm.draft. const prefix",
+    "draft_ family prefix",
+    "date stamps _20260921 .20260921 .20260920"
+  ],
+  "match_rules": {
+    "json": "Applied to parsed JSON string values and object keys: a whole-string exact match, a schema_id followed by '#' (a $ref or URI with fragment keeps its fragment), or an exact token inside a prose string. Tokens are matched longest-first; a token whose first/last character is an identifier character [A-Za-z0-9_] must not be preceded/followed by one (a following '.' must not start another identifier segment). No regular expression runs over prose.",
+    "markdown": "The same exact-token replacement over the Markdown text."
+  },
+  "profile": "pm.executor.workflow_source.all_writers.v8",
+  "rows": [
+    {
+      "canonical": "goal_run_started_cancelled_replanned_projector.v1",
+      "draft": "draft.goal_run_started_cancelled_replanned_projector.20260920.v2",
+      "draft_version": "20260920.v2",
+      "kind": "const"
+    },
+    {
+      "canonical": "pm.workflow_replan.original_clock_split_delivery.v1",
+      "draft": "draft.original_replan_clock_split.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "const"
+    },
+    {
+      "canonical": "pm.goal_run_started_cancelled_replanned_checkpoint.v1",
+      "draft": "pm.draft.goal_run_replan_checkpoint.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "const"
+    },
+    {
+      "canonical": "pm.workflow_replan.birth_native_correspondence.v1",
+      "draft": "pm.draft.replan_birth_native_correspondence.v3",
+      "draft_version": "v3",
+      "kind": "const"
+    },
+    {
+      "canonical": "pm.workflow_replan.producer_intent.v1",
+      "draft": "pm.draft.replan_producer_intent.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "const"
+    },
+    {
+      "canonical": "executor_workflow_replan_update",
+      "draft": "draft_executor_workflow_replan_update",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_activation_decision_source",
+      "draft": "draft_replan_ActivationDecisionSource",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_born_worknode_record",
+      "draft": "draft_replan_BornWorkNodeRecord",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_certified_graph_source",
+      "draft": "draft_replan_CertifiedGraphSource",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_completion_requirement_source",
+      "draft": "draft_replan_CompletionRequirementSource",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_graph_patch_issued_snapshot",
+      "draft": "draft_replan_GraphPatchIssuedSnapshot",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_installed_workgraph",
+      "draft": "draft_replan_InstalledWorkGraph",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_manager_decision_authority",
+      "draft": "draft_replan_ManagerDecisionAuthority",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_native_compile_source",
+      "draft": "draft_replan_NativeCompileSource",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_native_intake_source",
+      "draft": "draft_replan_NativeIntakeSource",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_native_request_source",
+      "draft": "draft_replan_NativeRequestSource",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_original_profile_enrollment",
+      "draft": "draft_replan_OriginalProfileEnrollment",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_provisioning_receipt",
+      "draft": "draft_replan_ProvisioningReceipt",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_recovery_summary",
+      "draft": "draft_replan_RecoverySummary",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_required_set",
+      "draft": "draft_replan_RequiredSet",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_worknode_materialization_receipt",
+      "draft": "draft_replan_WorkNodeMaterializationReceipt",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_append_link",
+      "draft": "draft_replan_append_link",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_completion",
+      "draft": "draft_replan_completion",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_completion_origin",
+      "draft": "draft_replan_completion_origin",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_control",
+      "draft": "draft_replan_control",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_native_application",
+      "draft": "draft_replan_native_application",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_native_origin",
+      "draft": "draft_replan_native_origin",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_native_publication_origin",
+      "draft": "draft_replan_native_publication_origin",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_owner_issue_origin",
+      "draft": "draft_replan_owner_issue_origin",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_prepared",
+      "draft": "draft_replan_prepared",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_producer",
+      "draft": "draft_replan_producer",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_producer_finalization",
+      "draft": "draft_replan_producer_finalization",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "goal_run_started_cancelled_replanned_checkpoint",
+      "draft": "draft_replan_projection_checkpoint",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_release",
+      "draft": "draft_replan_release",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "workflow_replan_source",
+      "draft": "draft_replan_source",
+      "draft_version": null,
+      "kind": "family_id"
+    },
+    {
+      "canonical": "executor_workflow_replan_update.v1:",
+      "draft": "draft_executor_workflow_replan_update.v2:",
+      "draft_version": "v2",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_activation_decision_source.v1:",
+      "draft": "draft_replan_ActivationDecisionSource.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_born_worknode_record.v1:",
+      "draft": "draft_replan_BornWorkNodeRecord.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_certified_graph_source.v1:",
+      "draft": "draft_replan_CertifiedGraphSource.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_completion_requirement_source.v1:",
+      "draft": "draft_replan_CompletionRequirementSource.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_graph_patch_issued_snapshot.v1:",
+      "draft": "draft_replan_GraphPatchIssuedSnapshot.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_installed_workgraph.v1:",
+      "draft": "draft_replan_InstalledWorkGraph.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_manager_decision_authority.v1:",
+      "draft": "draft_replan_ManagerDecisionAuthority.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_native_compile_source.v1:",
+      "draft": "draft_replan_NativeCompileSource.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_native_intake_source.v1:",
+      "draft": "draft_replan_NativeIntakeSource.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_native_request_source.v1:",
+      "draft": "draft_replan_NativeRequestSource.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_original_profile_enrollment.v1:",
+      "draft": "draft_replan_OriginalProfileEnrollment.v4:",
+      "draft_version": "v4",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_provisioning_receipt.v1:",
+      "draft": "draft_replan_ProvisioningReceipt.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_recovery_summary.v1:",
+      "draft": "draft_replan_RecoverySummary.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_required_set.v1:",
+      "draft": "draft_replan_RequiredSet.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_worknode_materialization_receipt.v1:",
+      "draft": "draft_replan_WorkNodeMaterializationReceipt.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_append_link.v1:",
+      "draft": "draft_replan_append_link.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_completion.v1:",
+      "draft": "draft_replan_completion.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_completion_origin.v1:",
+      "draft": "draft_replan_completion_origin.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_control.v1:",
+      "draft": "draft_replan_control.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_native_application.v1:",
+      "draft": "draft_replan_native_application.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_native_origin.v1:",
+      "draft": "draft_replan_native_origin.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_native_publication_origin.v1:",
+      "draft": "draft_replan_native_publication_origin.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_owner_issue_origin.v1:",
+      "draft": "draft_replan_owner_issue_origin.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_prepared.v1:",
+      "draft": "draft_replan_prepared.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_producer.v1:",
+      "draft": "draft_replan_producer.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_producer_finalization.v1:",
+      "draft": "draft_replan_producer_finalization.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "goal_run_started_cancelled_replanned_checkpoint.v1:",
+      "draft": "draft_replan_projection_checkpoint.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_release.v1:",
+      "draft": "draft_replan_release.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "workflow_replan_source.v1:",
+      "draft": "draft_replan_source.v3:",
+      "draft_version": "v3",
+      "kind": "key_prefix"
+    },
+    {
+      "canonical": "owner.workflow.replan.append_original.v1",
+      "draft": "draft.replan.append_original.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.apply_native.v1",
+      "draft": "draft.replan.apply_native.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.compile_original.v1",
+      "draft": "draft.replan.compile_original.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.complete.v1",
+      "draft": "draft.replan.complete.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.enroll_profile.v1",
+      "draft": "draft.replan.enroll_profile.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.finalize_producer.v1",
+      "draft": "draft.replan.finalize_producer.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.issue_decision.v1",
+      "draft": "draft.replan.issue_decision.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.issue_graph_patch_request.v1",
+      "draft": "draft.replan.issue_graph_patch_request.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.issue_replan_sources.v1",
+      "draft": "draft.replan.issue_replan_sources.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.observe.v1",
+      "draft": "draft.replan.observe.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.prepare.v1",
+      "draft": "draft.replan.prepare.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.project.v1",
+      "draft": "draft.replan.project.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.read_original.v1",
+      "draft": "draft.replan.read_original.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.reconcile.v1",
+      "draft": "draft.replan.reconcile.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.release.v1",
+      "draft": "draft.replan.release.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.source_activation_decision_source.v1",
+      "draft": "draft.replan.source_ActivationDecisionSource.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.source_born_worknode_record.v1",
+      "draft": "draft.replan.source_BornWorkNodeRecord.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.source_certified_graph_source.v1",
+      "draft": "draft.replan.source_CertifiedGraphSource.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.source_completion_requirement_source.v1",
+      "draft": "draft.replan.source_CompletionRequirementSource.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.source_installed_workgraph.v1",
+      "draft": "draft.replan.source_InstalledWorkGraph.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.source_native_compile_source.v1",
+      "draft": "draft.replan.source_NativeCompileSource.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.source_native_intake_source.v1",
+      "draft": "draft.replan.source_NativeIntakeSource.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.source_native_request_source.v1",
+      "draft": "draft.replan.source_NativeRequestSource.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.source_provisioning_receipt.v1",
+      "draft": "draft.replan.source_ProvisioningReceipt.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.source_required_set.v1",
+      "draft": "draft.replan.source_RequiredSet.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.source_worknode_materialization_receipt.v1",
+      "draft": "draft.replan.source_WorkNodeMaterializationReceipt.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "owner.workflow.replan.validate_graph_patch.v1",
+      "draft": "draft.replan.validate_graph_patch.v3",
+      "draft_version": "v3",
+      "kind": "method_id"
+    },
+    {
+      "canonical": "https://puppetmaster.local/proposals/executor_workflow_replan_observer.v1.schema.json",
+      "draft": "https://puppetmaster.local/drafts/executor_replan_observer_20260921.v4.schema.json",
+      "draft_version": "20260921.v4",
+      "kind": "schema_id"
+    },
+    {
+      "canonical": "https://puppetmaster.local/proposals/goal_run_started_cancelled_replanned_consumer.v1.schema.json",
+      "draft": "https://puppetmaster.local/drafts/goal_run_replanned_consumer_20260921.v4.schema.json",
+      "draft_version": "20260921.v4",
+      "kind": "schema_id"
+    },
+    {
+      "canonical": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json",
+      "draft": "https://puppetmaster.local/drafts/goal_run_replanned_source_20260921.v4.schema.json",
+      "draft_version": "20260921.v4",
+      "kind": "schema_id"
+    },
+    {
+      "canonical": "pm.storage_value.executor_workflow_replan_update.v1",
+      "draft": "pm.draft.executor_workflow_replan_update.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_activation_decision_source.v1",
+      "draft": "pm.draft.replan_ActivationDecisionSource.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_born_worknode_record.v1",
+      "draft": "pm.draft.replan_BornWorkNodeRecord.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_certified_graph_source.v1",
+      "draft": "pm.draft.replan_CertifiedGraphSource.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_completion_requirement_source.v1",
+      "draft": "pm.draft.replan_CompletionRequirementSource.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_graph_patch_issued_snapshot.v1",
+      "draft": "pm.draft.replan_GraphPatchIssuedSnapshot.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_installed_workgraph.v1",
+      "draft": "pm.draft.replan_InstalledWorkGraph.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_manager_decision_authority.v1",
+      "draft": "pm.draft.replan_ManagerDecisionAuthority.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_native_compile_source.v1",
+      "draft": "pm.draft.replan_NativeCompileSource.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_native_intake_source.v1",
+      "draft": "pm.draft.replan_NativeIntakeSource.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_native_request_source.v1",
+      "draft": "pm.draft.replan_NativeRequestSource.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_original_profile_enrollment.v1",
+      "draft": "pm.draft.replan_OriginalProfileEnrollment.20260921.v4",
+      "draft_version": "20260921.v4",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_provisioning_receipt.v1",
+      "draft": "pm.draft.replan_ProvisioningReceipt.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_recovery_summary.v1",
+      "draft": "pm.draft.replan_RecoverySummary.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_required_set.v1",
+      "draft": "pm.draft.replan_RequiredSet.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_worknode_materialization_receipt.v1",
+      "draft": "pm.draft.replan_WorkNodeMaterializationReceipt.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_append_link.v1",
+      "draft": "pm.draft.replan_append_link.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_completion.v1",
+      "draft": "pm.draft.replan_completion.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_completion_origin.v1",
+      "draft": "pm.draft.replan_completion_origin.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_control.v1",
+      "draft": "pm.draft.replan_control.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_native_application.v1",
+      "draft": "pm.draft.replan_native_application.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_native_origin.v1",
+      "draft": "pm.draft.replan_native_origin.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_native_publication_origin.v1",
+      "draft": "pm.draft.replan_native_publication_origin.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_owner_issue_origin.v1",
+      "draft": "pm.draft.replan_owner_issue_origin.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_prepared.v1",
+      "draft": "pm.draft.replan_prepared.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_producer.v1",
+      "draft": "pm.draft.replan_producer.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_producer_finalization.v1",
+      "draft": "pm.draft.replan_producer_finalization.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_release.v1",
+      "draft": "pm.draft.replan_release.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    },
+    {
+      "canonical": "pm.storage_value.workflow_replan_source.v1",
+      "draft": "pm.draft.replan_source.20260921.v3",
+      "draft_version": "20260921.v3",
+      "kind": "stored_header"
+    }
+  ],
+  "rule": "Rename exactly the identifiers that carry a draft marker and that A1 owns; keep every other identifier byte-exact; leave A2/A3-owned draft identities as frozen external literals (design §1.3). Versions of renamed identifiers reset to .v1; the draft version is recorded per row.",
+  "schema": "pm.workflow_combined.rename_map.v1",
+  "status": "CANONICAL_DRAFT_RENAME_MAP_NOT_INSTALLED"
+}

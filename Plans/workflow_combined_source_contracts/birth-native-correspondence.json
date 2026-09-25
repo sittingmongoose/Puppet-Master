@@ -1,0 +1,169 @@
+{
+  "schema": "pm.workflow_replan.birth_native_correspondence.v1",
+  "status": "SOURCE_ONLY_NOT_INSTALLED",
+  "source_schema": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/ReplanBornWorkNodeRecordPhysical",
+  "native_schema": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageWorkNodeRecord",
+  "transient_whole_result": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/NativeBirthPublication",
+  "joint_writer": "owner.workflow.replan.apply_native.v1",
+  "original_birth_issuer": "owner.workflow.replan.source_born_worknode_record.v1",
+  "mapping": [
+    {
+      "source": "/original_birth/original_value/record/worknode_id",
+      "target": "/native_value/record/worknode_id",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/goal_run_id",
+      "target": "/native_value/record/goal_run_id",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/workgraph_id",
+      "target": "/native_value/record/workgraph_id",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/revision",
+      "target": "/native_value/record/revision",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/source_request_id",
+      "target": "/native_value/record/source_request_id",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/source_plan_unit_refs",
+      "target": "/native_value/record/source_plan_unit_refs",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/source_acceptance_refs",
+      "target": "/native_value/record/source_acceptance_refs",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/objective",
+      "target": "/native_value/record/objective",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/surfaces",
+      "target": "/native_value/record/surfaces",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/readiness_predicates",
+      "target": "/native_value/record/readiness_predicates",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/lifecycle",
+      "target": "/native_value/record/lifecycle",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/attempts",
+      "target": "/native_value/record/attempts",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/retries",
+      "target": "/native_value/record/retries",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/authority",
+      "target": "/native_value/record/authority",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/model",
+      "target": "/native_value/record/model",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/tests",
+      "target": "/native_value/record/tests",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/repository_ref",
+      "target": "/native_value/record/repository_ref",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/worktree_ref",
+      "target": "/native_value/record/worktree_ref",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/safe_point_ref",
+      "target": "/native_value/record/safe_point_ref",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/evidence",
+      "target": "/native_value/record/evidence",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/currentness",
+      "target": "/native_value/record/currentness",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/cancellation",
+      "target": "/native_value/record/cancellation",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/invalidation",
+      "target": "/native_value/record/invalidation",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    },
+    {
+      "source": "/original_birth/original_value/record/replan_generation",
+      "target": "/native_value/record/replan_generation",
+      "operation": "exact complete JSON value equality, preserving nested order, explicit nulls and all original fields"
+    }
+  ],
+  "source_only_fields": [
+    "source_phase",
+    "replan_operation_id",
+    "original_manager_decision_ref"
+  ],
+  "native_additional_properties": false,
+  "native_wrapper": {
+    "schema_id": "pm.storage_value.executor_worknode.v1",
+    "schema_version": "1.0.0",
+    "record": "exact 24-field mapping, no extra source metadata"
+  },
+  "native_key": "executor_worknode.v1:k(scope.storage_instance_id):k(scope.project_id):k(scope.goal_id):k(scope.goal_run_id):k(original_birth.original_value.record.worknode_id)",
+  "native_key_codec_owner": "inputs/Plans/workflow_activation_contracts/physical-families.json#/native_key_components",
+  "native_codec": "pm.executor.native_source_json.v1",
+  "source_codec": "pm.workflow.activation_source_json.v1",
+  "source_guard_roots": {
+    "input": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/NativeApplyInput",
+    "sources": "/original_source/compiler_sources/replan_owner_sources",
+    "decision": "/original_source/decision",
+    "scope": "/original_source/scope"
+  },
+  "guards": [
+    "For each prospective born member select exactly one authentic full original request by record.source_request_id = request.record.request_id and exactly one authenticated certified graph by workgraph_id and current certified graph revision. Read complete request/graph/acceptance/intake/provisioning/requirements and each original origin from original_source.compiler_sources.replan_owner_sources, never from candidate aliases. Graph request_bindings must identify that exact whole request and compile lineage; all duplicated project/run/compile/graph/activation identities and original source hashes agree.",
+    "Independently compare source_phase on born candidate, authentic selected request, authentic certified graph, acceptance and requirements to original_replan. Independently compare each replan_operation_id to original_source.scope.replan_operation_id and actual native operation identity. Independently compare each original_manager_decision_ref to original_source.decision.original_decision_id and authenticated complete manager capture/authority/result. Compare all three extra source fields again on the actually issued birth original. No caller label supplies original authority.",
+    "Original request payload, original graph membership and genuine accepted/provisioned source decide all native semantic fields under unchanged owner materialization predicates. The 24-field mapping only projects an already independently checked complete original birth value; it grants no permission to invent objective/model/test/authority/readiness/lineage values. Validate the entire native closed record, not only matching field names.",
+    "Before and at the final native commit, independently recheck authentic source currentness, exact before revisions and graph lock, original permission/Stop/cancellation/child/recovery/all-writer admission, graph/request/decision lineage and operation provenance. Every new worknode_id is genuinely absent under original native authority; no overwrite of a preexisting WorkNode. Top-level and nested currentness replan_generation equal checked g+1, with queued lifecycle, empty attempts/retries, null cancellation/invalidation. Reject missing/duplicate/extra original source or member.",
+    "Within the one real native transaction derive both original birth wrapper and closed native wrapper, publish both and their distinct authentic owner/native origins, and publish controls/results/required set/application/fence. Candidate equality is checked against actual full outputs. Transaction-local birth source issuance precedes native origin commitment; neither origin hashes itself or an output-containing input. Source_input_sha256 remains the full pure NativeApplySource, and prepared commitment separately authenticates the whole prospective proposal.",
+    "For each born member the source owner origin issued_value_key equals source physical_key; issued_record_sha256 hashes the complete 27-field source record with source codec; issued_physical_sha256 hashes complete original birth physical wrapper. Native origin issued_key is the independently derived native key, issued_record_sha256 hashes the complete 24-field native record with native codec, issued_physical_sha256 hashes complete StorageWorkNodeRecord with native codec. Native origin original_preimage_refs include exact immutable birth source physical_key and its actual owner origin physical_key plus original request/graph/decision source selectors. Both complete origins have the same actual native transaction and replan operation/scope, distinct genuine issuer role, and unchanged complete owner identity and original Stop/permission/cancellation source obligations.",
+    "AppliedNativeValues.birth_publications is a bijection by worknode_id to born_members, materialization receipts and born subset of worknodes. original_birth equals the whole corresponding born member and its genuine owner origin; native_value equals the whole corresponding worknodes value; native_origin equals the whole corresponding native_output_origins member. Other existing changed WorkNodes retain their separate original transitions. MaterializationReceipt.born_worknode_key and born_worknode_record_sha256 continue to bind the complete immutable 27-field source, never the native key/hash. Compact application output commitments independently cover both distinct original values/origins with exact family/key/codec/hash/issuer; no hash is reused across domains.",
+    "Whole readback re-reads both complete originals and both complete origins by their actual keys in the same transaction read view, verifies physical bytes and semantic hashes independently, repeats every field equality and source-only guard, and checks exact current native row. ReplanAwareNativeCurrentSnapshot.worknode and observer MaterializedCurrent.record receive only the actual closed native record. No 27-field source cast, stripping by a reader or source-schema relaxation is permitted. Later current updates use genuine current native records and origins; immutable birth never masquerades as current.",
+    "NativeBirthPublication and full readback remain transient. Existing mutable native WorkNode custody remains its unchanged owner policy; it does not gain a historical full-body archive. The original immutable birth source remains its separately declared source family, with independent deletion/redaction/hold/backup obligations; references and compact origins never recreate removed source content. Missing surviving full originals makes historical paired readback unavailable, never synthesized from a current record or hash."
+  ],
+  "native_value_issuer": "owner.workflow.replan.apply_native.v1",
+  "original_birth_key": "workflow_replan_born_worknode_record.v1:H(scope.storage_instance_id):H(scope.project_id):H(scope.goal_id):H(scope.goal_run_id):H(scope.replan_operation_id):H(record.worknode_id)",
+  "native_origin_family": "workflow_replan_native_publication_origin (exact physical-families.json declaration, not legacy executor_original_publication_origin)",
+  "source_origin_family": "workflow_replan_owner_issue_origin (exact physical-families.json declaration)",
+  "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+  "current_native_source": "Actual original native value in CombinedNativeCurrentSnapshot; immutable birth comparisons and independent native lifecycle/control origin checks are separate; no historical body reconstruction."
+}

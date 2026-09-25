@@ -1,0 +1,1005 @@
+{
+  "birth_rule": "Actual native WorkflowBirth.writer_contract is exactly all_writers.v8; installed_contract_digest and the combined Enrollment.installed_descriptor_sha256 equal SHA-256 of this entire sorted-key compact UTF-8 JSON preimage with no prefix or trailing LF, and StorageAcquisitionSource.installed_descriptor_bytes_base64 transports exactly that serialization. Birth only: no existing Workflow birth is enrolled, cast or re-read as v8. Every real participant, queue, method, schema, key, codec, physical family and custody rule is installed before a genuine fresh birth. No constituent hashes this descriptor, its digest file or an enclosing composition or manifest.",
+  "bound_certified_profiles": [
+    {
+      "descriptor": {
+        "bytes": 10417,
+        "path": "Plans/goal_certified_event_coordinator_contracts/installed-profile.json",
+        "sha256": "0f71cf4a5fa992489ca217c110417f126d63b46e26e92eb95e2ab48a233517f5"
+      },
+      "digest": "0055de6c0e113173d2c4f1a1b2a3d9268681241b528ab6f24304fcfb4b163845",
+      "profile": "pm.executor.workflow_source.all_writers.v7"
+    },
+    {
+      "descriptor": {
+        "bytes": 6002,
+        "path": "Plans/goal_certified_producer_source_contracts/native-v7/installed-profile.json",
+        "sha256": "fc776660042f0257053554f5da6a5ba25ce7a3e9ed9edd29c346174cb755e22f"
+      },
+      "digest": "599315856a4ed180623b7b7ac68e64eaa8ae92c8be2c0f0fcc44d2eab94f97cc",
+      "profile": "pm.goal_run_certified.producer_source.v2"
+    }
+  ],
+  "certified_storage": "v8-born certified values use the seven goal_certified_event_* physical names, headers and keys under the v2 roots; their Storage admission is unavailable until a separate Storage revision; SP-316 is unchanged.",
+  "consumer": "None admitted. The certified v8, Replan and started/cancelled combined-profile consumers and the projector, checkpoint, backfill and retention declarations are A2's.",
+  "digest_codec": "SHA256_SORTED_KEY_COMPACT_UTF8_NO_PREFIX_NO_LF",
+  "digest_exclusions": [
+    "installed-profile-digest.txt (this digest)",
+    "composition.json (encloses this digest)",
+    "canonical-draft package manifest, SHA256SUMS and check outputs",
+    "runtime native values, original operation IDs and original issuance results"
+  ],
+  "external_lineage": {
+    "source_descriptor_receipt": "external-source-evidence:sha256:316eacf719d3a2eddf8d03baa7964a304d35524cee28193279c721798e678e5a",
+    "source_edition_manifest": "external-source-evidence:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+    "source_installed_contract_digest": "external-source-evidence:sha256:2d69459c1e5ff9c39c3ed234f8b21cd68621b9420b80c1ac9442794a1e4e4155",
+    "source_producer_component_digest": "external-source-evidence:sha256:5eed2713286ea610cb57be70e8b86411b6ed303c4ff0af25fe6a26172254c150",
+    "source_producer_descriptor_receipt": "external-source-evidence:sha256:6cbe4ea29c16e4539c52458abd3e4aca208bd8d6e4618e8e94e516c241c8b116"
+  },
+  "instances": "NOT_RUN",
+  "members": [
+    {
+      "bytes": 15668,
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3"
+    },
+    {
+      "bytes": 9344,
+      "path": "Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+    },
+    {
+      "bytes": 92199,
+      "path": "Plans/event_record_index_checkpoint.schema.json",
+      "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af"
+    },
+    {
+      "bytes": 42851,
+      "path": "Plans/evidence.schema.json",
+      "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86"
+    },
+    {
+      "bytes": 5717,
+      "path": "Plans/execution_unit_context.schema.json",
+      "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25"
+    },
+    {
+      "bytes": 181130,
+      "path": "Plans/executor_cancellation_contracts/methods.json",
+      "sha256": "0fbb8d53064eaffd091cb0a1f071453e8cf9e460f897a41369f2b284b1cc08d1"
+    },
+    {
+      "bytes": 399294,
+      "path": "Plans/executor_cancellation_contracts/physical-families.json",
+      "sha256": "782a05664faaf36dcbaf92c0b0f9d162a67c48b6da687a05b2b9de86ba382a6a"
+    },
+    {
+      "bytes": 18648,
+      "path": "Plans/executor_cancellation_contracts/realm-entry-boundaries.json",
+      "sha256": "a02eccc62ee30b58066a91c810421c33c8c3babdd91041bcbf509ee937417848"
+    },
+    {
+      "bytes": 107719,
+      "path": "Plans/executor_cancellation_contracts/schemas/bounded-safestop.v2.schema.json",
+      "sha256": "a500726cbf15548663c03f80a13353a9674f5677201e4018fc0a5b90cc54d338"
+    },
+    {
+      "bytes": 39616,
+      "path": "Plans/executor_cancellation_contracts/schemas/filesafe-effect-sources.v2.schema.json",
+      "sha256": "cb4e863836060ba06c8c17c8a3c3cc791aae93409a0cdc339984278cbb128354"
+    },
+    {
+      "bytes": 40008,
+      "path": "Plans/executor_cancellation_contracts/schemas/filesafe-injective-key-sources.v1.schema.json",
+      "sha256": "8a42fa18bbe6ffb9d3a87f037b85c3fa380e0aae0269a0aa4aa9dd713f52eec0"
+    },
+    {
+      "bytes": 20104,
+      "path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+      "sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f"
+    },
+    {
+      "bytes": 19855,
+      "path": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+      "sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f"
+    },
+    {
+      "bytes": 20165,
+      "path": "Plans/executor_cancellation_contracts/schemas/original-event-append-custody.v2.schema.json",
+      "sha256": "505bdb5d702546637b80dfddc1d7f32abe411665f88ca193ca5af105c6b69a31"
+    },
+    {
+      "bytes": 5646,
+      "path": "Plans/executor_cancellation_contracts/schemas/original-mcp-lifecycle.v1.schema.json",
+      "sha256": "081d50dbaef96ce8c5e56b8bc743752943920b9727fdba03583592c6904dcef6"
+    },
+    {
+      "bytes": 9069,
+      "path": "Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json",
+      "sha256": "91656f1e79355ad7ac7b6144ead1724c46222aea054fefdc07f4b56a49f87ed9"
+    },
+    {
+      "bytes": 5203,
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
+      "sha256": "b6d192c96c552880e7f5e8041c12888e2c3f016076c3aeaef7661c74dbca1e47"
+    },
+    {
+      "bytes": 3002,
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
+      "sha256": "062e302fe0805f330c99c470df5c20cc247de7032cb424eecca2844b1b2f700e"
+    },
+    {
+      "bytes": 922,
+      "path": "Plans/executor_cancellation_contracts/schemas/original-seglog-current.v1.schema.json",
+      "sha256": "f5b1f19aee3876e6c8fdc4ac8418c10941f13e7a56741f31056d2eb37bac9c7f"
+    },
+    {
+      "bytes": 17685,
+      "path": "Plans/executor_cancellation_contracts/schemas/original-seglog-manifest.v1.schema.json",
+      "sha256": "51b95bc7346c643a21a7f10791c2f78258dfad95d4e44777abba2ba238b02c49"
+    },
+    {
+      "bytes": 9080,
+      "path": "Plans/executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json",
+      "sha256": "a1e9a055f48c4917adcbce9fe9cf240363e429a5d0fd9dd3806eaaf0a7ecfd47"
+    },
+    {
+      "bytes": 98084,
+      "path": "Plans/executor_cancellation_contracts/schemas/process-shutdown-sources.v1.schema.json",
+      "sha256": "e0dcd4d5e782cd6344a3039b922a61fddf560a2bd9ec76b7ca2fdcda648959e0"
+    },
+    {
+      "bytes": 2441,
+      "path": "Plans/executor_cancellation_contracts/schemas/safestop-current-goal-arguments.v1.schema.json",
+      "sha256": "3eaa8578efff917e8665efee8bd808a47d18c4e87704b11c75aafe45acafa39e"
+    },
+    {
+      "bytes": 108702,
+      "path": "Plans/executor_cancellation_contracts/schemas/safestop-original-start.v1.schema.json",
+      "sha256": "a738fbb17ad658417a472a1d670205d2c401be236dd6865af5c5d5b4f797de18"
+    },
+    {
+      "bytes": 1968,
+      "path": "Plans/executor_cancellation_contracts/schemas/safestop-start-arguments.v1.schema.json",
+      "sha256": "8d8b15144fdbf04adba95ab6992767fb0450b3f980a886fc0366f34fd3221637"
+    },
+    {
+      "bytes": 1397,
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-current-controls.v3.schema.json",
+      "sha256": "c75fb9f9f8596182b667c38239feac604a09d489326fd0034833ce1058c4730e"
+    },
+    {
+      "bytes": 39356,
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-disposition.v3.schema.json",
+      "sha256": "44bae9a5df18ca8e368b276c6e167645705dc63d6ec2f71c7aaa2f7e2c2aea9e"
+    },
+    {
+      "bytes": 4885,
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-arguments.v1.schema.json",
+      "sha256": "8064368badc33286a0a871695b670c854e7bcde30090da5c3389c3ec174bda63"
+    },
+    {
+      "bytes": 38658,
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-positive-safestop.v1.schema.json",
+      "sha256": "46b7e64d3c2fbfafcc5d66ab28c3f12d91b6523bdf57a31ac53db5eb2c6a9d90"
+    },
+    {
+      "bytes": 9284,
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json",
+      "sha256": "3764857827d36270b40c8adecbd2ce8ce4cb87f2e88803d35f953f32a42e1839"
+    },
+    {
+      "bytes": 38527,
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-cancel-start-profile.v2.schema.json",
+      "sha256": "563eb6b8df611954690a6bb306d1f43f26b4371331358361e9246c29563073aa"
+    },
+    {
+      "bytes": 77027,
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-original-start.v2.schema.json",
+      "sha256": "9e0b863dde63528b1ea44f7bbc22f2483b78baac3ccc7b0e1b9242946de72b81"
+    },
+    {
+      "bytes": 45553,
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v2.schema.json",
+      "sha256": "f03fb4a96cc262274ce9d6413daf368fcaae93a7f8c797bb2990a1f69304d453"
+    },
+    {
+      "bytes": 79478,
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-sources.v3.schema.json",
+      "sha256": "2b5107675393d694299efb0de9acbf2f19de169dfed2dcd53b0013328129fc54"
+    },
+    {
+      "bytes": 44305,
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json",
+      "sha256": "99c81558695d812761a9a108657134b4caf3652f33124db675b88e6959897406"
+    },
+    {
+      "bytes": 690,
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-start-goal-argument.v2.schema.json",
+      "sha256": "aefd025c4b463c1b3e886cae93370b19e66094854a03a65ba724b8f23ef41a8e"
+    },
+    {
+      "bytes": 19156,
+      "path": "Plans/goal_body_custody.schema.json",
+      "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8"
+    },
+    {
+      "bytes": 120132,
+      "path": "Plans/goal_cancel_command_custody.schema.json",
+      "sha256": "3a9477a8a41b273f589e6fc12a492a04a20ac2af5c0382d0ba0445c9a35799e8"
+    },
+    {
+      "bytes": 19088,
+      "path": "Plans/goal_certification_custody.schema.json",
+      "sha256": "50687ee0c5d335898ce9ce98fe6e258ac69f344ab3ba7086dba787623201c00b"
+    },
+    {
+      "bytes": 4393,
+      "path": "Plans/goal_certified_event_coordinator_contracts/commitment-domains.json",
+      "sha256": "0382f823c4db4a4a6137071354344ebead91513a66a557ea659d5612472360b6"
+    },
+    {
+      "bytes": 65,
+      "path": "Plans/goal_certified_event_coordinator_contracts/installed-profile-digest.txt",
+      "sha256": "f7ccef73dc5fa18bc57b7eeddb4ed91bb932f43e497969887bbcdc2f643ff148"
+    },
+    {
+      "bytes": 10417,
+      "path": "Plans/goal_certified_event_coordinator_contracts/installed-profile.json",
+      "sha256": "0f71cf4a5fa992489ca217c110417f126d63b46e26e92eb95e2ab48a233517f5"
+    },
+    {
+      "bytes": 54713,
+      "path": "Plans/goal_certified_event_coordinator_contracts/methods.json",
+      "sha256": "aa6d683e414cc7a0119acd6f7bf630f3533db6a94113be081945bf0c4c0e257d"
+    },
+    {
+      "bytes": 10262,
+      "path": "Plans/goal_certified_event_coordinator_contracts/native-participants.json",
+      "sha256": "d55fd2a116d4a4c1b7da37134901e13063cd2b1aeb9c7b35715ce9b4b103f354"
+    },
+    {
+      "bytes": 3375,
+      "path": "Plans/goal_certified_event_coordinator_contracts/original-reference-routing.json",
+      "sha256": "abbbd9624103eb50b763c6e45d53fe62647d363402eb5460b607b4d3dd54b911"
+    },
+    {
+      "bytes": 19199,
+      "path": "Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json",
+      "sha256": "2051bdf65c434e4a385c48717c7d3eb469bfa23227ea2e554b98f63dad478887"
+    },
+    {
+      "bytes": 39451,
+      "path": "Plans/goal_certified_event_coordinator_contracts/protocol.md",
+      "sha256": "c09da5740d0e3f1dfb0ab9ec38ca2d3a17df6d8dd838e51b71bfba0997ad0a0a"
+    },
+    {
+      "bytes": 314410,
+      "path": "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
+      "sha256": "86498dd16e4966d2a7e6924746a1bab28cab533ca78e1bf4907b4ce39ab024a7"
+    },
+    {
+      "bytes": 2435,
+      "path": "Plans/goal_certified_event_coordinator_contracts/schemas/append-phase.v1.schema.json",
+      "sha256": "81958febf169253ce6349c29ddf2bde98df5182df1c2aa74a01d7be72ac316fd"
+    },
+    {
+      "bytes": 54273,
+      "path": "Plans/goal_certified_event_coordinator_contracts/schemas/coordinator.v1.schema.json",
+      "sha256": "274bb7363140e13769bd75a1fdf6eaa6688f2d8699b271182fc90bce0ee88140"
+    },
+    {
+      "bytes": 4222,
+      "path": "Plans/goal_certified_event_coordinator_contracts/schemas/identity.v1.schema.json",
+      "sha256": "c684141ada201397dce84c6f738c89b15d5951466804b185308e3edc92e12212"
+    },
+    {
+      "bytes": 2846,
+      "path": "Plans/goal_certified_producer_source_contracts/commitment-domains.json",
+      "sha256": "3ceb8b8e3d2b2ae846cf4801526f966761a22fc0819baf3c334bb7e336bb1701"
+    },
+    {
+      "bytes": 2765,
+      "path": "Plans/goal_certified_producer_source_contracts/frozen-installed-profile.json",
+      "sha256": "e6184271a0b8129af84bc7481217edbaddfffbc0171643c486adde825a19dc0b"
+    },
+    {
+      "bytes": 33334,
+      "path": "Plans/goal_certified_producer_source_contracts/methods.json",
+      "sha256": "93507a913f1c68bb6ad5b388db9721292d53f63513b8e324e5d8b0f3cf673ff7"
+    },
+    {
+      "bytes": 5805,
+      "path": "Plans/goal_certified_producer_source_contracts/native-participants.json",
+      "sha256": "d0bddd86f2ea4c91c7898c08d1110995f08e2dfd62084913d316b463dbc64748"
+    },
+    {
+      "bytes": 65,
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/installed-profile-digest.txt",
+      "sha256": "44b5edce277ac56e00443c922ba2098eee4eb52dd0c163ccffa81eccb285a11a"
+    },
+    {
+      "bytes": 6002,
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/installed-profile.json",
+      "sha256": "fc776660042f0257053554f5da6a5ba25ce7a3e9ed9edd29c346174cb755e22f"
+    },
+    {
+      "bytes": 33513,
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/methods.json",
+      "sha256": "bf82bcf31ba15a10ccb33cebecae6e89e217bdf706b6dc7bc007ce7acbf02877"
+    },
+    {
+      "bytes": 28898,
+      "path": "Plans/goal_certified_producer_source_contracts/native-v7/protocol.md",
+      "sha256": "02434e35116950935b412a0b0b1b0c414e811d3259d4f69d756028a09fc0ab1d"
+    },
+    {
+      "bytes": 1955,
+      "path": "Plans/goal_certified_producer_source_contracts/physical-retention-install.json",
+      "sha256": "7384988a5eef52fc00bbc6d34a9c5fe0ae400954fca70c517db111329d4ea67d"
+    },
+    {
+      "bytes": 77181,
+      "path": "Plans/goal_certified_producer_source_contracts/preinstallation-originals/3e5c0607e05739633b089a836058f47cc558de87946ddfb990a1382755a1896e/whole-field-bindings.json",
+      "sha256": "3e5c0607e05739633b089a836058f47cc558de87946ddfb990a1382755a1896e"
+    },
+    {
+      "bytes": 27787,
+      "path": "Plans/goal_certified_producer_source_contracts/protocol.md",
+      "sha256": "71e143d36bfb77cd9db6b6a2bc1fd24631af60006aa9336eb441106cfc313534"
+    },
+    {
+      "bytes": 113672,
+      "path": "Plans/goal_certified_producer_source_contracts/resource-realms.json",
+      "sha256": "a1f03a5322010e49dbfb8c83030d6859b1fa78c131ae9331d05eb9717bd004b0"
+    },
+    {
+      "bytes": 34675,
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/assignment-invocation.v1.schema.json",
+      "sha256": "37d7482694855e6505b860358dbee074b69c51bba6662a172e24df2689ab37cd"
+    },
+    {
+      "bytes": 23104,
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/original-sources.v1.schema.json",
+      "sha256": "6b19f24a3d923923a70084d5f1a16a2b3fc4af62fa211ef8e7f39a0c867187cf"
+    },
+    {
+      "bytes": 11623,
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-source.v1.schema.json",
+      "sha256": "6c552dbe5556163397ef40b9377831bda27d2455220f61f5d79214ebe1368284"
+    },
+    {
+      "bytes": 8725,
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-submission.v1.schema.json",
+      "sha256": "24300fe310faeec412a362a39128d870f57a4b19ba82affce7f7c1a59daccc0e"
+    },
+    {
+      "bytes": 35316,
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/resolver-references.v1.schema.json",
+      "sha256": "ecaf63c9c68140ee698e219c02cb953b0900bc5cd082e5f8a9c2c7498593b704"
+    },
+    {
+      "bytes": 70234,
+      "path": "Plans/goal_certified_producer_source_contracts/whole-field-bindings.json",
+      "sha256": "17289d7fd6a5a47c6a5e6f6f04845ae99e7b333f1c451502d9628fa8f072cc20"
+    },
+    {
+      "bytes": 15443,
+      "path": "Plans/goal_run_cancelled_consumer_contracts/cancelled-causal-arguments.schema.json",
+      "sha256": "4b147c1b69aef2cf57f92b49a9d5382ce28346a34092f4a3d7ab301d1494b72e"
+    },
+    {
+      "bytes": 90258,
+      "path": "Plans/goal_run_cancelled_consumer_schema_resources.json",
+      "sha256": "b616a2b1c219dceb152f1d67fee0b23a00afe8c98c0e821bff04a2592704869c"
+    },
+    {
+      "bytes": 28772,
+      "path": "Plans/goal_run_started_consumer_contracts/consumer.schema.json",
+      "sha256": "626cfe1aff57bbfcf67c2ab70a3b12c55ca4e137bfbe2c0fd54a3534bc359392"
+    },
+    {
+      "bytes": 126196,
+      "path": "Plans/plans_to_code_handoff.schema.json",
+      "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2"
+    },
+    {
+      "bytes": 7356,
+      "path": "Plans/project_plan_node.schema.json",
+      "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15"
+    },
+    {
+      "bytes": 15878,
+      "path": "Plans/requested_effective_runtime.schema.json",
+      "sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6"
+    },
+    {
+      "bytes": 152594,
+      "path": "Plans/source_control_contracts.schema.json",
+      "sha256": "4070038bcaef4539d6d669f2a57618599487e73b2588d79e122fde2b41ed8518"
+    },
+    {
+      "bytes": 281395,
+      "path": "Plans/storage_compaction_native_contracts.schema.json",
+      "sha256": "d979220b712f1eb58c9bb83b039aacb71269912eac66f6869da464ce7ade6f0f"
+    },
+    {
+      "bytes": 80353,
+      "path": "Plans/workflow_activation_contracts/methods.json",
+      "sha256": "cd24a81a13977ce343f270c253923d194ba3a660024f671d330e4fcc7bb19727"
+    },
+    {
+      "bytes": 161658,
+      "path": "Plans/workflow_activation_contracts/physical-families.json",
+      "sha256": "ac338df39f9d1d54a0e3a6602cf3e114e261a3d9aa6aa78c0fdb3203f6c55e7f"
+    },
+    {
+      "bytes": 22087,
+      "path": "Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json",
+      "sha256": "cd55ad417c9ae11097fe2f0655755b63bef5c887b88486c4dc468b21b26d0522"
+    },
+    {
+      "bytes": 39676,
+      "path": "Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json",
+      "sha256": "0d3b50752870853d7fbaac6b5673ffdccded6328ba49a92eb82a22ed13046c9c"
+    },
+    {
+      "bytes": 4603,
+      "path": "Plans/workflow_activation_contracts/schemas/current-goal-guard.v1.schema.json",
+      "sha256": "8a4f2af3db93c882656a0777dc87a188611ada9e2b5874d069203dba0d85d9d5"
+    },
+    {
+      "bytes": 14463,
+      "path": "Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+      "sha256": "fdf7cd63359aeae8284121395e464cd8b6547204abe1d7aab45a858439fb525d"
+    },
+    {
+      "bytes": 18053,
+      "path": "Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
+      "sha256": "777ff3bc17c153fa7310c749b624664002164e27e2b6fa1d894a7d9566eed874"
+    },
+    {
+      "bytes": 120821,
+      "path": "Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+      "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c"
+    },
+    {
+      "bytes": 125623,
+      "path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json",
+      "sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+    },
+    {
+      "bytes": 36170,
+      "path": "Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+      "sha256": "c11a123590b8d281f2b3682f591268af6fd719c9ef8b52037a7b15a7852bbad7"
+    },
+    {
+      "bytes": 102607,
+      "path": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+      "sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79"
+    },
+    {
+      "bytes": 76101,
+      "path": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
+      "sha256": "5a876253a29cc83ee5eadc4ae4da5b7cffc001711f27fb9b2b98627286a3e8ec"
+    },
+    {
+      "bytes": 29348,
+      "path": "Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+      "sha256": "30cc5fc70474d8ce069be8d776519c2d2354d4e5635de0140d7e612fee3097c2"
+    },
+    {
+      "bytes": 53965,
+      "path": "Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json",
+      "sha256": "2c64fd916ec26aff73d09bcd7532f2cb690951cc9437509c2b2650b2bd708b06"
+    },
+    {
+      "bytes": 121377,
+      "path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json",
+      "sha256": "80597d53aada9af04c84ac7f501d22516a797c0240f85bdd610287a7e82d01f0"
+    },
+    {
+      "bytes": 18197,
+      "path": "Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+      "sha256": "7c13a5e166aca2d2545e39561f904d2ea1134d690f192d76443a8871c8588fa4"
+    },
+    {
+      "bytes": 10805,
+      "path": "Plans/workflow_combined_source_contracts/README.md",
+      "sha256": "55ce8212ae33a6c2f7c9f03a160805e96981ccee120ee6683b824b3a7d5ba68c"
+    },
+    {
+      "bytes": 2582,
+      "path": "Plans/workflow_combined_source_contracts/active-resource-ids.json",
+      "sha256": "9bb7911b0827ad5619f1852babb5b128364eaace0abe4318f42bae483bcfdc00"
+    },
+    {
+      "bytes": 1664,
+      "path": "Plans/workflow_combined_source_contracts/actual-registration-map.json",
+      "sha256": "335e3d5c963ec993e4a8f69bd57c7a76ae022a608e6f5cdc0c23e68b4112e585"
+    },
+    {
+      "bytes": 14363,
+      "path": "Plans/workflow_combined_source_contracts/birth-native-correspondence.json",
+      "sha256": "08bb712c2fce2b0ca2084f48289926c82c33d0943c18ead2d6972d8f9b5c95b1"
+    },
+    {
+      "bytes": 844192,
+      "path": "Plans/workflow_combined_source_contracts/canonical-inverse.json",
+      "sha256": "cd4998efd7bb8318cb3f27b30ce4c6458623d8c0ce47e486a7626424d722c08b"
+    },
+    {
+      "bytes": 5975,
+      "path": "Plans/workflow_combined_source_contracts/combined-commitment-domains.json",
+      "sha256": "7d5952b6e4e54054f17aca9e745e3a44d84e3010702c1fad536743e304317f9f"
+    },
+    {
+      "bytes": 2312539,
+      "path": "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+      "sha256": "2ebc7d2bcc8da7cb97ef6152fe884ad1bc1fce9b958babb8f4a002bf5d0c25a2"
+    },
+    {
+      "bytes": 82337,
+      "path": "Plans/workflow_combined_source_contracts/coordinator/methods.json",
+      "sha256": "0fcbaf3ac2d8e3ada439942d35313bc8568c9f0abe70195f41e7607d8246d723"
+    },
+    {
+      "bytes": 11190,
+      "path": "Plans/workflow_combined_source_contracts/coordinator/native-participants.json",
+      "sha256": "c806c7abcfd1271b0221dc279172a0652acce22a89eb70db59d5087f4acd3578"
+    },
+    {
+      "bytes": 383065,
+      "path": "Plans/workflow_combined_source_contracts/coordinator/participant-method-tuples.json",
+      "sha256": "a5bd71e576b850d251b19a361297cc1170a10e538fcc0be6497601166221cacc"
+    },
+    {
+      "bytes": 67358,
+      "path": "Plans/workflow_combined_source_contracts/coordinator/protocol.md",
+      "sha256": "89ae58ad282ef641ab171f4a8ea057ac71365129269b2f0cec48cde67fbc495b"
+    },
+    {
+      "bytes": 2435,
+      "path": "Plans/workflow_combined_source_contracts/coordinator/schemas/append-phase.v2.schema.json",
+      "sha256": "98364566e9043ef225807b3d122dac1ca6badda1660cd3a8910fe816fa026995"
+    },
+    {
+      "bytes": 54273,
+      "path": "Plans/workflow_combined_source_contracts/coordinator/schemas/coordinator.v2.schema.json",
+      "sha256": "8b22c0bd7451c76b4328ed80963196fcd845aa0c637f6d813853f389e0d03a43"
+    },
+    {
+      "bytes": 4222,
+      "path": "Plans/workflow_combined_source_contracts/coordinator/schemas/identity.v2.schema.json",
+      "sha256": "42a8d96a8dcc6a7aa271884b770dc480e02e18b276c3e00287fda5a34b75444a"
+    },
+    {
+      "bytes": 2165,
+      "path": "Plans/workflow_combined_source_contracts/external-consumer-adoption-boundary.json",
+      "sha256": "1372f35199216ca120fc7dd8fe1f5860332550448d0c9fc716d890eebabdfe1a"
+    },
+    {
+      "bytes": 3723,
+      "path": "Plans/workflow_combined_source_contracts/generation-correspondence.json",
+      "sha256": "d397677785f1bfb9a9c00a28a8a6c59fdca50cda6841518f0b5b9770a8a2bd04"
+    },
+    {
+      "bytes": 4271,
+      "path": "Plans/workflow_combined_source_contracts/guard-acquisition-predicates.json",
+      "sha256": "23f56fed7bded13c598a00f25133a0c40863eb1023aede47f45fd91d034dc7d2"
+    },
+    {
+      "bytes": 1526178,
+      "path": "Plans/workflow_combined_source_contracts/method-root-bindings.json",
+      "sha256": "133945db95f5baa569f461b7048a6da90f48e12131763a44b9c525ff4ea4da38"
+    },
+    {
+      "bytes": 4827,
+      "path": "Plans/workflow_combined_source_contracts/new-original-methods.json",
+      "sha256": "ef89b37c2dfc558dc83d5732de5377d41f6cab4cb33307989dddc0dd7b4192e6"
+    },
+    {
+      "bytes": 3718,
+      "path": "Plans/workflow_combined_source_contracts/observer-physical-joins.json",
+      "sha256": "950a8aaddc425db36511da8cf4b0320565e8da8c79945eeee03a29cd841d33eb"
+    },
+    {
+      "bytes": 113343,
+      "path": "Plans/workflow_combined_source_contracts/original-reference-routing.json",
+      "sha256": "a44aae4e35c8efb9376fe0171f65d62a20eb48bb2c20fed61bacbe648972bdbd"
+    },
+    {
+      "bytes": 5838,
+      "path": "Plans/workflow_combined_source_contracts/owner-sources.json",
+      "sha256": "ab232d91b13c4867e1c66b40310882b9af8b437a339a10260addf8f24a4824fe"
+    },
+    {
+      "bytes": 2531,
+      "path": "Plans/workflow_combined_source_contracts/pending-source-boundaries.json",
+      "sha256": "58702fb1ca5536ea2536ad65821bdec4e2a9d42f03617217623357a7dfcaf421"
+    },
+    {
+      "bytes": 34207,
+      "path": "Plans/workflow_combined_source_contracts/physical-families.json",
+      "sha256": "b876fc662262ecf7d2b95ada243b0a5e1348f964363e8ebbf5dc26406135ccbf"
+    },
+    {
+      "bytes": 2196,
+      "path": "Plans/workflow_combined_source_contracts/physical-header-decisions.json",
+      "sha256": "672d1252c6bf1aa5ff57a11cea0121b89e6d3c82ef6bc5c357bde384e5e1c400"
+    },
+    {
+      "bytes": 65,
+      "path": "Plans/workflow_combined_source_contracts/producer/installed-profile-digest.txt",
+      "sha256": "536da861906626430a6089a16a03eb3f286249cf96306c668e1bfb980fc726a0"
+    },
+    {
+      "bytes": 5814,
+      "path": "Plans/workflow_combined_source_contracts/producer/installed-profile.json",
+      "sha256": "a3f175119b569e29e174c86d191c4be663a5a06a0f9e5627c71fd3d00d729b12"
+    },
+    {
+      "bytes": 65690,
+      "path": "Plans/workflow_combined_source_contracts/producer/methods.json",
+      "sha256": "d873c2e4502f40cf724fb37c3c62ed715a066f374aa7e279277a2d1afb267eb0"
+    },
+    {
+      "bytes": 7196,
+      "path": "Plans/workflow_combined_source_contracts/producer/native-participants.json",
+      "sha256": "0ca0aeae58eb22a03983d3ecd9179353ac0d8dcc77e7a081db6aa501c1a99e02"
+    },
+    {
+      "bytes": 1181,
+      "path": "Plans/workflow_combined_source_contracts/producer/producer-component-succession.json",
+      "sha256": "131f11af18352c2e08886ed4876b6b375c649ea858b14fbe262eaf4741914fdc"
+    },
+    {
+      "bytes": 56813,
+      "path": "Plans/workflow_combined_source_contracts/producer/protocol.md",
+      "sha256": "a8e4c100ee97564c9241887458968764a321e0abc9c11e3fb18a0473d5a4587f"
+    },
+    {
+      "bytes": 26707,
+      "path": "Plans/workflow_combined_source_contracts/protocol.md",
+      "sha256": "002e1d521654deb1db59f37291fcb08d00083e29e25219219b1c314a8ce8864a"
+    },
+    {
+      "bytes": 29916,
+      "path": "Plans/workflow_combined_source_contracts/rename-map.json",
+      "sha256": "bbf9729371e6df64553df75eef69ad0d79aabf5d77d0aae554ac0cb43f34a3bc"
+    },
+    {
+      "bytes": 2728,
+      "path": "Plans/workflow_combined_source_contracts/replan/all-writer-adoption.json",
+      "sha256": "a614269e4bac6291088dc8ba15960a45f64c201cd625cfc2d353a995945a5866"
+    },
+    {
+      "bytes": 85123,
+      "path": "Plans/workflow_combined_source_contracts/replan/methods.json",
+      "sha256": "69c4ef9db5228d2814c3a80b03d25c373e56f5a30d59b615fbbef420b36cfa13"
+    },
+    {
+      "bytes": 71932,
+      "path": "Plans/workflow_combined_source_contracts/replan/protocol.md",
+      "sha256": "e1d2f2955077fc4a00f7c18b0727cbbc6b6fc3dbe5d694e2cb96585c195d550e"
+    },
+    {
+      "bytes": 92077,
+      "path": "Plans/workflow_combined_source_contracts/replan/schemas/executor-workflow-replan-observer.v1.schema.json",
+      "sha256": "415e3b2b3dfd46876d225cb787635e3170889fe9d279eaf9b1c4b86fffc8e804"
+    },
+    {
+      "bytes": 66636,
+      "path": "Plans/workflow_combined_source_contracts/replan/schemas/goal-run-started-cancelled-replanned-consumer.v1.schema.json",
+      "sha256": "7602020e969e3b6c2c7b3c3c2af9fafbad592a6999b50cc08cd7a5caf62fc9d3"
+    },
+    {
+      "bytes": 309740,
+      "path": "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+      "sha256": "384bdf44f4aa502aa819f2bdad42aa3439c45dade950a7619ea632f1934ab7d4"
+    },
+    {
+      "bytes": 2065805,
+      "path": "Plans/workflow_combined_source_contracts/resource-realms.json",
+      "sha256": "60b0f6a373d7b66754903e4d953ef26f04aa07fe57cff8a8cb53ca4f5ff435af"
+    },
+    {
+      "bytes": 8763,
+      "path": "Plans/workflow_combined_source_contracts/runtime-commitment-dag.json",
+      "sha256": "bd348e317668f35cf46a7e3ce6e6797488e6247f3094d58d3bd3d4c3cf8c2e36"
+    },
+    {
+      "bytes": 106120,
+      "path": "Plans/workflow_combined_source_contracts/schemas/native-worknode-combined-current.v1.schema.json",
+      "sha256": "22f62b961b980a948c59c99feb5ca679753e8b3f7df320b2f5022d9dfd54ca26"
+    },
+    {
+      "bytes": 8305,
+      "path": "Plans/workflow_combined_source_contracts/schemas/workflow-combined-generation-source.v1.schema.json",
+      "sha256": "2e756f1b1b889a58266c112596ba4f8c810cd1ccfbd2e70fbb3c29002884ba3d"
+    },
+    {
+      "bytes": 40655,
+      "path": "Plans/workflow_combined_source_contracts/schemas/workflow-combined-guard.v1.schema.json",
+      "sha256": "b0f3c3289657475ead77985b721ab7c5f3c430c1477bfa2d141e5f277ed81227"
+    },
+    {
+      "bytes": 33268,
+      "path": "Plans/workflow_combined_source_contracts/schemas/workflow-combined-stop-execution-revocation.v2.schema.json",
+      "sha256": "4eb2bf686979c4f6d670fcfc9c4a32b433955e70ad55abadada45fb9a3c42482"
+    },
+    {
+      "bytes": 4445,
+      "path": "Plans/workflow_combined_source_contracts/slot-control-phase-joins.json",
+      "sha256": "c118b06468d6d2fc4af97a8257e1aa8ce4ae6b5c4881b0031f921b6ec52e53d7"
+    },
+    {
+      "bytes": 26078,
+      "path": "Plans/workflow_combined_source_contracts/slot-transition-contracts.json",
+      "sha256": "f8ec1f1ffda6cc39d5d1cc3eeb93c0f675e82b8f6645497c5e9229809628afd1"
+    },
+    {
+      "bytes": 320400,
+      "path": "Plans/workflow_combined_source_contracts/source-citations.json",
+      "sha256": "9ab7f7d77fedd3ecad9f24651bb3fbbed9d64d0dfe36894575e1fb86a73ea3ce"
+    },
+    {
+      "bytes": 1169,
+      "path": "Plans/workflow_combined_source_contracts/specific-native-current-routing.json",
+      "sha256": "8f9b72cf704a7df84f6d1b2fd333e312ef9954989f72c7585222c79637a06a4e"
+    },
+    {
+      "bytes": 1991,
+      "path": "Plans/workflow_combined_source_contracts/stop-correction-boundary.json",
+      "sha256": "83496601316d7f3d0058e46d791fd7b08b41309286a4738c23f8c4a15b7b6c7a"
+    },
+    {
+      "bytes": 12832,
+      "path": "Plans/workflow_combined_source_contracts/stop-native-participants.json",
+      "sha256": "acbc27d212b6ab83964439a182d3a18ad06318d48895ecdd6e027590ca28787a"
+    },
+    {
+      "bytes": 1702,
+      "path": "Plans/workflow_combined_source_contracts/stop-phase-source-contract.json",
+      "sha256": "2b30103109e9c3829e4ce02468104aebbb2279884779c6488fc2ac1068feb196"
+    },
+    {
+      "bytes": 12946,
+      "path": "Plans/workflow_combined_source_contracts/stop-positive-route-obligations.json",
+      "sha256": "a55345e97780a32a1b0ac76a211b6868a8cbd1d5224c7dbf8685134e71249968"
+    },
+    {
+      "bytes": 26858,
+      "path": "Plans/workflow_combined_source_contracts/stop-protocol.md",
+      "sha256": "c999b547bd78e697af7eea749b932f7612b245eabfa96b8238237af80b095320"
+    },
+    {
+      "bytes": 21924,
+      "path": "Plans/workflow_combined_source_contracts/superseded-lineage.json",
+      "sha256": "25c5679fad63c97b9d09351f774bd1be01d0bb225c98ee4b960b0be4b8a49441"
+    },
+    {
+      "bytes": 5480,
+      "path": "Plans/workflow_combined_source_contracts/upstream-correction-adoption.json",
+      "sha256": "5261f4e2e294d6895367df710058f8bb4d6b0d8eb91ccbb18b48645b270ddb29"
+    },
+    {
+      "bytes": 11067,
+      "path": "Plans/workflow_combined_source_contracts/whole-successor-lineage.json",
+      "sha256": "5e0ee2f835f281771826bbe8ceb545649bc64893cef37d83f5ed704b8e9a828d"
+    },
+    {
+      "bytes": 181130,
+      "path": "Plans/workflow_standard_source_contracts/fresh-profile-methods.json",
+      "sha256": "a5b19f77fa43d30e9949f986cf0fc6ce9c440538aa7234bf0c44ddd1657106ff"
+    },
+    {
+      "bytes": 26246,
+      "path": "Plans/workflow_standard_source_contracts/methods.json",
+      "sha256": "e835aa4fcfaa0b560751ac7b359899b42613745038b7b0aa6f9ce0660c1165a5"
+    },
+    {
+      "bytes": 9231,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/commitment-domains.json",
+      "sha256": "b4b54fa50a0da4c2c0fd0cb7a800e85add86ae056ffec357364f0476f7f2ad13"
+    },
+    {
+      "bytes": 4160,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/first-attempt-stage-map.json",
+      "sha256": "3f75795716df0c1aea3691e4d8a7ebc487210fa46ac8958c6b39f12d6d9e144d"
+    },
+    {
+      "bytes": 181220,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/fresh-profile-methods.json",
+      "sha256": "f23bee216c0871c7d5205c85bf2706eedc8c778a59fc84958199709dcf981cea"
+    },
+    {
+      "bytes": 13388,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/identity-map.json",
+      "sha256": "c4cd8ab7e877791838a93f20ed836ccb78cbb13bf9726896bc91a3282f19e601"
+    },
+    {
+      "bytes": 26208,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/methods.json",
+      "sha256": "b701cbab89146fb5103e957d7173e55ced79f91c318524d4e627c2b823042bc0"
+    },
+    {
+      "bytes": 21952,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/native-field-map.json",
+      "sha256": "3dd640512f1472457a75fae3094e885d3165b66959500048851e5a040ec81cce"
+    },
+    {
+      "bytes": 8803,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/physical-contracts.json",
+      "sha256": "d7b7fee9c1bb95b72877430e0887fc316ecde1f570a3ca7c0a0e4aecbc3d8b15"
+    },
+    {
+      "bytes": 71464,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+      "sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
+    },
+    {
+      "bytes": 1968,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/safestop-start-arguments.v2.schema.json",
+      "sha256": "5431b28e798b726aef7994ae46e51df164ed4c1719317f14bc2a07fda544f24a"
+    },
+    {
+      "bytes": 4910,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-positive-arguments.v2.schema.json",
+      "sha256": "ec8c346caffabb0bbb06285197e5ed04bfb44ffa8b6dfa02a038aef8a5b9bdd8"
+    },
+    {
+      "bytes": 38600,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+      "sha256": "747100bb06ed4c718f4f38a0fee7133b1e45d10a3c04c5d8f25a3bfd7683386c"
+    },
+    {
+      "bytes": 79884,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-original-start.v6.schema.json",
+      "sha256": "8e82034b4874fa7397c3ea44d7785b290ed2253281731648846505516914d376"
+    },
+    {
+      "bytes": 6672,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-certification-argument.v4.schema.json",
+      "sha256": "830d20024033a6e1edc32c847363a523a44fe47acd2abcd84413f8a58f4131fa"
+    },
+    {
+      "bytes": 101666,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-current-source.v4.schema.json",
+      "sha256": "7bd88c4a7cc2b7f32af173d18c470d64e13e296170e358fcd39fe8e64b6bbbb0"
+    },
+    {
+      "bytes": 6581,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-standard-event-prerequisite.v4.schema.json",
+      "sha256": "ab8350e1f7b60c2c8b37fcb3ddb29da43a003d5b032aef145a0b220ef47f6274"
+    },
+    {
+      "bytes": 4120,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-arguments.v6.schema.json",
+      "sha256": "3f9b2fc8d768d462db1b4ac950854e0d7f2fc13982e0bbc1422e5ecb81bdbd88"
+    },
+    {
+      "bytes": 44259,
+      "path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json",
+      "sha256": "9209a5b923cb279c4176ccf3b648a8381c4afae541220cd397329558db5266d2"
+    },
+    {
+      "bytes": 471791,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/fresh-profile-methods.json",
+      "sha256": "44b98ea7b7f07e3b87af76c8a294bd2e0741ca3635c350e74c10a2953bdbeb16"
+    },
+    {
+      "bytes": 19958,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/identity-map.json",
+      "sha256": "0a72f06b08eab5ae38c5662fc1bc56f98b88b7ef420b01298c6b360108401d07"
+    },
+    {
+      "bytes": 68457,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/methods.json",
+      "sha256": "323e0bdaf58317e8d19e50b1c9f15ae2e5eb09b1bbc3f2501933ed27d0d161bd"
+    },
+    {
+      "bytes": 80326,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/protocol.md",
+      "sha256": "3b9ac07c16c666747bfa72c0f3d8b9578c9209c647a7891aa5e94c5517fbc8c1"
+    },
+    {
+      "bytes": 1968,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/safestop-start-arguments.v3.schema.json",
+      "sha256": "befde59aebc9b7d13b030dbc2a562affcaa28220901d070f9bade510f2ad0d65"
+    },
+    {
+      "bytes": 4910,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-cancel-positive-arguments.v3.schema.json",
+      "sha256": "d28108aa0a301bb230c0b981b90c277c010c50335fe367a855718cef705358a2"
+    },
+    {
+      "bytes": 38600,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-cancel-start-profile.v7.schema.json",
+      "sha256": "af2e11b7d6c4d6917b00c9730e62b5326ee1198acd434b6f5bea73c25b210264"
+    },
+    {
+      "bytes": 84332,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-original-start.v7.schema.json",
+      "sha256": "f352fda339f60313b67833fc4ef691fc1759aecafcf625128610a487356b1d7d"
+    },
+    {
+      "bytes": 6672,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-standard-certification-argument.v5.schema.json",
+      "sha256": "6e139345a94cb212d5db24c16a30482a569c8edad9b4e3f5f665486db2186b8b"
+    },
+    {
+      "bytes": 103314,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-standard-current-source.v5.schema.json",
+      "sha256": "170016ba2cebf49c3a8850c07604acd66e3077359916ce83ff0c0efc9bec4dcd"
+    },
+    {
+      "bytes": 6581,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-standard-event-prerequisite.v5.schema.json",
+      "sha256": "f7337e23f953b3da65d4930dc14d807f859ad5e4560cba30980f0bad33685350"
+    },
+    {
+      "bytes": 4120,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-start-arguments.v7.schema.json",
+      "sha256": "a205b6a0886aae43b143859b73812cb92e6b9a22e359d60c29b842f8950df203"
+    },
+    {
+      "bytes": 46382,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-start-custody.v7.schema.json",
+      "sha256": "47730f75a57a04520cb5989f141e06cc6a3f79dcebb6b8c5e5898d2251b7755b"
+    },
+    {
+      "bytes": 189954,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/stored-profile-routes.json",
+      "sha256": "adc55336bc29b44c920cc400ead9c670577581823e64daa00bbe686af3572d6d"
+    },
+    {
+      "bytes": 2756,
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444/installed-profile.json",
+      "sha256": "06310d70ceced923656d6c328f0556bdf1b5f4f6e96cb273bb97795718bf9444"
+    },
+    {
+      "bytes": 41766,
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/29f110a733d6fb5dd313c605881b0e85760fc593e1bfcfee020b644951557eac/installation-composition.json",
+      "sha256": "29f110a733d6fb5dd313c605881b0e85760fc593e1bfcfee020b644951557eac"
+    },
+    {
+      "bytes": 60837,
+      "path": "Plans/workflow_standard_source_contracts/preinstallation-originals/580b6b349bd41f7361aee6982ef7632f4b46fe4a61c806d294fb3a44a81ef757/stored-profile-routes.json",
+      "sha256": "580b6b349bd41f7361aee6982ef7632f4b46fe4a61c806d294fb3a44a81ef757"
+    },
+    {
+      "bytes": 69892,
+      "path": "Plans/workflow_standard_source_contracts/protocol.md",
+      "sha256": "df228389fe435056ea84b9038c525aa5a9661460b68bc4cf445cf42a2937b51c"
+    },
+    {
+      "bytes": 400542,
+      "path": "Plans/workflow_standard_source_contracts/reversible-deltas.json",
+      "sha256": "32ebd02fd79a8dea581813324b2d3d3f8e8e9aa291cdc7c9857eb660219b39a3"
+    },
+    {
+      "bytes": 22240,
+      "path": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+      "sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895"
+    }
+  ],
+  "native": "NOT_RUN",
+  "predecessor_native_profile": "pm.executor.workflow_source.all_writers.v7",
+  "predecessor_native_profile_descriptor": {
+    "bytes": 10417,
+    "path": "Plans/goal_certified_event_coordinator_contracts/installed-profile.json",
+    "sha256": "0f71cf4a5fa992489ca217c110417f126d63b46e26e92eb95e2ab48a233517f5"
+  },
+  "predecessor_native_profile_digest": "0055de6c0e113173d2c4f1a1b2a3d9268681241b528ab6f24304fcfb4b163845",
+  "producer_source_profile": "pm.goal_run_certified.producer_source.v3",
+  "producer_source_profile_descriptor": {
+    "bytes": 5814,
+    "path": "Plans/workflow_combined_source_contracts/producer/installed-profile.json",
+    "sha256": "a3f175119b569e29e174c86d191c4be663a5a06a0f9e5627c71fd3d00d729b12"
+  },
+  "producer_source_profile_digest": "1157877714ff6c1ebf799610e696e0af92f43a2fba5902ce5535552007339548",
+  "profile": "pm.executor.workflow_source.all_writers.v8",
+  "registry_selection": "Storage: 34 families at /families/294-/families/327 under SP-321 (30 Replan) and SP-322 (4 combined guard); the per-run projection checkpoint is not registered (A2). Event registry: no row; goal_run.replanned stays v2 and unselected and the payload identity is a frozen A3 literal.",
+  "status": "CANONICAL_COMPLETE_SOURCE_PROFILE_NOT_INSTALLED"
+}

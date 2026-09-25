@@ -1,0 +1,26 @@
+{
+  "profile": "pm.executor.workflow_source.all_writers.v8",
+  "status": "EXTERNAL_SOURCE_NOT_INSTALLED",
+  "actual_current_method_maps": [
+    "native-v8/methods.json",
+    "native-v8/fresh-profile-methods.json",
+    "coordinator/methods.json",
+    "producer-combined/methods.json",
+    "replan/methods.json",
+    "new-original-methods.json",
+    "stop-native-participants.json"
+  ],
+  "complete_phase_tuple_maps": [
+    "coordinator/participant-method-tuples.json",
+    "coordinator/native-participants.json",
+    "producer-combined/native-participants.json",
+    "replan/all-writer-adoption.json",
+    "complete-method-occurrences.json",
+    "stop-native-participants.json"
+  ],
+  "historical_occurrence_treatment": "All 323 complete original occurrences remain separately preserved and have explicit successor/phase treatment. The frozen native-v6 maps are historical source lineage and retain their original compatibility interpretation; actual fresh registration uses the complete native-v7-derived v8 successors listed here. No old native profile is enrolled or reinterpreted.",
+  "original_protocols": "All whole original protocols pinned in input-pins.json and inherited-whole-contract-pins.json remain conjunctive except the explicitly authored disjoint current/pending/generation routing and exact header corrections. New source rules are in PROTOCOL.md and the named whole boundary maps.",
+  "no_late_enrollment": true,
+  "caller_selectable_profile_or_phase": false,
+  "mandatory_revocation": "STOP-PROTOCOL.md R01-R12 and new complete Stop root; all 323 occurrence additive guards plus actual native adapters and final callbacks at original birth."
+}

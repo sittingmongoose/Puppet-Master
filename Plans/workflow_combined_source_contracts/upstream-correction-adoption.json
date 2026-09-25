@@ -1,0 +1,72 @@
+{
+  "status": "AUTHENTICATED_ACCEPTED_SOURCE_CORRECTION",
+  "source_manifest_sha256": "external-source-evidence:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe",
+  "independent_review_manifest_sha256": "external-source-evidence:sha256:214aea65be73b362d49cd3a7e75adadc875de032db37fd19b2bd795ab76c4ec4",
+  "corrected_coordinator_manifest_sha256": "external-source-evidence:sha256:19822a42be34079b5b0816613d646e54bf04cff72e5b22e661a5847fc7b716cf",
+  "corrected_native_descriptor_digest": "3e2b3017bd048f0c5666c547b9ae1d8d9db1db256f865cb2993fac96a267620f",
+  "corrected_coordinator_descriptor_digest": "48c8ae3b507de7a4f2daca74335b756c31478753304956078a3cebf1c3dfa8df",
+  "rebound_whole_successor_lineage": [
+    {
+      "before": {
+        "source_path": "external-source-evidence:sha256:3b345f46b139e2f0d53614f1e2276308737aa7e15f0dd1733aac9f696755d0ed",
+        "source_sha256": "3b345f46b139e2f0d53614f1e2276308737aa7e15f0dd1733aac9f696755d0ed",
+        "source_id": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json",
+        "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-original-start.v7.schema.json",
+        "new_id": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json",
+        "source_realm": "certified_native"
+      },
+      "after": {
+        "source_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-original-start.v6.schema.json",
+        "source_sha256": "8e82034b4874fa7397c3ea44d7785b290ed2253281731648846505516914d376",
+        "source_id": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json",
+        "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-original-start.v7.schema.json",
+        "new_id": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json",
+        "source_realm": "certified_corrected_native",
+        "frozen_original_pre_correction_lineage": {
+          "source_path": "external-source-evidence:sha256:3b345f46b139e2f0d53614f1e2276308737aa7e15f0dd1733aac9f696755d0ed",
+          "source_sha256": "3b345f46b139e2f0d53614f1e2276308737aa7e15f0dd1733aac9f696755d0ed",
+          "source_id": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json",
+          "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-original-start.v7.schema.json",
+          "new_id": "https://puppetmaster.local/proposals/executor_workflow_original_start.v7.schema.json",
+          "source_realm": "certified_native"
+        },
+        "accepted_preinstallation_correction_manifest_sha256": "external-source-evidence:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe"
+      }
+    },
+    {
+      "before": {
+        "source_path": "external-source-evidence:sha256:f3dfe92c5943e1ddeeab334c41834357cef97c3715f8232dc5828cde99df68ca",
+        "source_sha256": "f3dfe92c5943e1ddeeab334c41834357cef97c3715f8232dc5828cde99df68ca",
+        "source_id": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json",
+        "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-cancel-start-profile.v7.schema.json",
+        "new_id": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v7.schema.json",
+        "source_realm": "certified_native"
+      },
+      "after": {
+        "source_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+        "source_sha256": "747100bb06ed4c718f4f38a0fee7133b1e45d10a3c04c5d8f25a3bfd7683386c",
+        "source_id": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json",
+        "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-cancel-start-profile.v7.schema.json",
+        "new_id": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v7.schema.json",
+        "source_realm": "certified_corrected_native",
+        "frozen_original_pre_correction_lineage": {
+          "source_path": "external-source-evidence:sha256:f3dfe92c5943e1ddeeab334c41834357cef97c3715f8232dc5828cde99df68ca",
+          "source_sha256": "f3dfe92c5943e1ddeeab334c41834357cef97c3715f8232dc5828cde99df68ca",
+          "source_id": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json",
+          "new_path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-cancel-start-profile.v7.schema.json",
+          "new_id": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v7.schema.json",
+          "source_realm": "certified_native"
+        },
+        "accepted_preinstallation_correction_manifest_sha256": "external-source-evidence:sha256:dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe"
+      }
+    }
+  ],
+  "frozen_prior_sixteen_banks": "PRESERVED_EXACT",
+  "current_banks_added": [
+    "certified_corrected_native",
+    "certified_corrected_current_d05_source"
+  ],
+  "rule": "Current operative imports select corrected current banks; prior whole original inverse metadata and coordinate banks remain original immutable lineage. Corrected child v2 absolute paths are intentional exact immutable coordinates, not an inferred current overlay.",
+  "native": "NOT_RUN",
+  "instances": "NOT_RUN"
+}

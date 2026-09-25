@@ -1,0 +1,113 @@
+{
+  "digest_codec": "SHA256_SORTED_KEY_COMPACT_UTF8_NO_PREFIX_NO_LF",
+  "external_lineage": {
+    "source_component_descriptor_receipt": "external-source-evidence:sha256:6cbe4ea29c16e4539c52458abd3e4aca208bd8d6e4618e8e94e516c241c8b116",
+    "source_component_preimage_digest": "external-source-evidence:sha256:5eed2713286ea610cb57be70e8b86411b6ed303c4ff0af25fe6a26172254c150"
+  },
+  "members": [
+    {
+      "bytes": 690,
+      "path": "Plans/executor_cancellation_contracts/schemas/workflow-start-goal-argument.v2.schema.json",
+      "sha256": "aefd025c4b463c1b3e886cae93370b19e66094854a03a65ba724b8f23ef41a8e"
+    },
+    {
+      "bytes": 2846,
+      "path": "Plans/goal_certified_producer_source_contracts/commitment-domains.json",
+      "sha256": "3ceb8b8e3d2b2ae846cf4801526f966761a22fc0819baf3c334bb7e336bb1701"
+    },
+    {
+      "bytes": 5805,
+      "path": "Plans/goal_certified_producer_source_contracts/native-participants.json",
+      "sha256": "d0bddd86f2ea4c91c7898c08d1110995f08e2dfd62084913d316b463dbc64748"
+    },
+    {
+      "bytes": 1955,
+      "path": "Plans/goal_certified_producer_source_contracts/physical-retention-install.json",
+      "sha256": "7384988a5eef52fc00bbc6d34a9c5fe0ae400954fca70c517db111329d4ea67d"
+    },
+    {
+      "bytes": 34675,
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/assignment-invocation.v1.schema.json",
+      "sha256": "37d7482694855e6505b860358dbee074b69c51bba6662a172e24df2689ab37cd"
+    },
+    {
+      "bytes": 23104,
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/original-sources.v1.schema.json",
+      "sha256": "6b19f24a3d923923a70084d5f1a16a2b3fc4af62fa211ef8e7f39a0c867187cf"
+    },
+    {
+      "bytes": 11623,
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-source.v1.schema.json",
+      "sha256": "6c552dbe5556163397ef40b9377831bda27d2455220f61f5d79214ebe1368284"
+    },
+    {
+      "bytes": 8725,
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/producer-submission.v1.schema.json",
+      "sha256": "24300fe310faeec412a362a39128d870f57a4b19ba82affce7f7c1a59daccc0e"
+    },
+    {
+      "bytes": 35316,
+      "path": "Plans/goal_certified_producer_source_contracts/schemas/resolver-references.v1.schema.json",
+      "sha256": "ecaf63c9c68140ee698e219c02cb953b0900bc5cd082e5f8a9c2c7498593b704"
+    },
+    {
+      "bytes": 70234,
+      "path": "Plans/goal_certified_producer_source_contracts/whole-field-bindings.json",
+      "sha256": "17289d7fd6a5a47c6a5e6f6f04845ae99e7b333f1c451502d9628fa8f072cc20"
+    },
+    {
+      "bytes": 65690,
+      "path": "Plans/workflow_combined_source_contracts/producer/methods.json",
+      "sha256": "d873c2e4502f40cf724fb37c3c62ed715a066f374aa7e279277a2d1afb267eb0"
+    },
+    {
+      "bytes": 7196,
+      "path": "Plans/workflow_combined_source_contracts/producer/native-participants.json",
+      "sha256": "0ca0aeae58eb22a03983d3ecd9179353ac0d8dcc77e7a081db6aa501c1a99e02"
+    },
+    {
+      "bytes": 1181,
+      "path": "Plans/workflow_combined_source_contracts/producer/producer-component-succession.json",
+      "sha256": "131f11af18352c2e08886ed4876b6b375c649ea858b14fbe262eaf4741914fdc"
+    },
+    {
+      "bytes": 56813,
+      "path": "Plans/workflow_combined_source_contracts/producer/protocol.md",
+      "sha256": "a8e4c100ee97564c9241887458968764a321e0abc9c11e3fb18a0473d5a4587f"
+    },
+    {
+      "bytes": 2065805,
+      "path": "Plans/workflow_combined_source_contracts/resource-realms.json",
+      "sha256": "60b0f6a373d7b66754903e4d953ef26f04aa07fe57cff8a8cb53ca4f5ff435af"
+    },
+    {
+      "bytes": 40655,
+      "path": "Plans/workflow_combined_source_contracts/schemas/workflow-combined-guard.v1.schema.json",
+      "sha256": "b0f3c3289657475ead77985b721ab7c5f3c430c1477bfa2d141e5f277ed81227"
+    },
+    {
+      "bytes": 33268,
+      "path": "Plans/workflow_combined_source_contracts/schemas/workflow-combined-stop-execution-revocation.v2.schema.json",
+      "sha256": "4eb2bf686979c4f6d670fcfc9c4a32b433955e70ad55abadada45fb9a3c42482"
+    },
+    {
+      "bytes": 6672,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-standard-certification-argument.v5.schema.json",
+      "sha256": "6e139345a94cb212d5db24c16a30482a569c8edad9b4e3f5f665486db2186b8b"
+    },
+    {
+      "bytes": 103314,
+      "path": "Plans/workflow_standard_source_contracts/native-v8/schemas/workflow-standard-current-source.v5.schema.json",
+      "sha256": "170016ba2cebf49c3a8850c07604acd66e3077359916ce83ff0c0efc9bec4dcd"
+    }
+  ],
+  "native": "NOT_RUN",
+  "native_binding": "Exact leaf members only here. Actual native capability must independently authenticate the full all_writers.v8 descriptor at birth. No enclosing profile, composition or manifest digest is in this preimage.",
+  "native_profile": "pm.executor.workflow_source.all_writers.v8",
+  "original_field_and_predicate_rule": "All original P/R, owner, runtime, complete source/candidate, current/retained, first-original/replay and numeric codec requirements remain mandatory. Fixed actual combined registration supplies independently complete native/Goal/Standard/guard tuples.",
+  "predecessor_profile": "pm.goal_run_certified.producer_source.v2",
+  "predecessor_profile_digest": "599315856a4ed180623b7b7ac68e64eaa8ae92c8be2c0f0fcc44d2eab94f97cc",
+  "profile": "pm.goal_run_certified.producer_source.v3",
+  "status": "CANONICAL_COMPLETE_SOURCE_PROFILE_NOT_INSTALLED",
+  "whole_field_bindings": "Member whole-field-bindings.json binds canon's transformed ninety-field producer map, as CV-352 requires for producer_source.v2 (CV-354). The original map stays at Plans/goal_certified_producer_source_contracts/preinstallation-originals/3e5c0607e05739633b089a836058f47cc558de87946ddfb990a1382755a1896e/whole-field-bindings.json."
+}

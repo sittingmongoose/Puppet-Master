@@ -1,0 +1,22 @@
+{
+  "status": "NEW_PREBIRTH_PROFILE_REQUIRED",
+  "whole_original_method_map": "inputs/Plans/workflow_activation_contracts/methods.json",
+  "whole_executor_method_map": "inputs/Plans/executor_cancellation_contracts/methods.json",
+  "whole_new_companion": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/WholeCurrentSources",
+  "whole_control": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/PublicationControl",
+  "rule": "At actual original birth, all independently callable original and v2 writer/current-reader/scheduler/dispatch/Stop/recovery/restore/hold/deletion participants install the exact phase-aware profile. Coherent current uses WholeCurrentSources; pending publication uses PendingNativeCurrent, authentic before-observer authority and actual after-native union under real control. Ordinary actions stay fenced. Actual Stop/cancellation may revoke action capability and must preserve original immutable authority. New issuances use disjoint true-v2 origins, old ones keep their own whole schemas. No schema-valid serialized companion proves native capability; incomplete/unlisted profile refuses original birth.",
+  "new_current_reader_schema": "https://puppetmaster.local/proposals/executor_workflow_replan_observer.v1.schema.json#/$defs/ReplanAwareCurrentSource",
+  "old_profiles_unchanged": true,
+  "whole_pending_companion": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/PendingNativeCurrent",
+  "whole_phase_companion": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/PhaseCurrent",
+  "whole_native_current_companion": "https://puppetmaster.local/proposals/workflow_replan_source.v1.schema.json#/$defs/ReplanAwareNativeCurrentSnapshot",
+  "combined_profile": "pm.executor.workflow_source.all_writers.v8",
+  "combined_guard_rule": "Every exact actual method occurrence requires its complete original phase tuple, including prior certified guard arguments, AND complete-method-occurrences.json mandatory combined guard and actual-phase rule. This is fixed by genuine prebirth native registration; no caller-selected or optional supplement.",
+  "combined_current_pending_rule": "pending-source-boundaries.json",
+  "mandatory_stop_execution_revocation": {
+    "source": "stop-native-participants.json",
+    "guard": "https://puppetmaster.local/proposals/workflow_combined_stop_execution_revocation.v2.schema.json#/$defs/RunRevocationCurrent",
+    "execution_authority": "Actual original Goal/slot/native adapter check, never metadata. No normal continuation after Stop; exact original recovery/cleanup authority only.",
+    "original_cancellation_unchanged": true
+  }
+}
