@@ -21,7 +21,7 @@ The thread runs in a cloud session, which cannot reach the NAS or the shared che
 - Q-12: may A1 install with D06 unavailable?
 - Where A1's canonical-draft package lives: proposed as a branch of PuppetMaster-Packages, which needs push access.
 
-That thread runs on the VM, and this cloud session cannot message it. Jared relays the questions. The answers come back as `reports/event-authority-20260911/replan-v8/process-answers-20260925.md` on the branch `reports/replan-v8-process-answers-20260925`, or through Jared. Until then this thread follows the recommendations in the questions and lands nothing that depends on them.
+That thread runs on the VM, and this cloud session cannot message it. Jared relays the questions. The answers come back as `reports/event-authority-20260911/replan-v8/process-answers-20260925.md` on the branch `plans/replan-v8-process-answers-20260925`, or through Jared. Until then this thread follows the recommendations in the questions and lands nothing that depends on them.
 
 ## Landing A0 (on the VM)
 
