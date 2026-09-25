@@ -14,6 +14,25 @@
   ],
   "form": "Step 9 batch 1 (reports/event-authority-20260911/step-09-card-answer-application-20260924.json): the retention cell is PASS citing the landed owner text by path and line; the full contract's structured retention_policy_ref and deletion reconciliation stay open admission preconditions stated in the cell note and the rationale.",
   "supersedes_cell_state": "The host ruling of 2026-09-25 (reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json, card4_and_retention_ruling_application) kept these 25 cells FAIL until the Storage owner binding was written; this application records that binding.",
+  "host_confirmation": {
+    "question": "The branch report's section 10 item 3, raised by blind review cycle 1 finding SR-02: the host ruling kept these 25 retention cells FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) is written, and this branch writes the Case L-3 assignment; does that move the cells to PASS, as in Step 9 batch 1, or do they stay FAIL?",
+    "ruling_condition_verbatim": "Retention decided by Jared in DL-08x (<plain policy>); the Storage owner binding (Case L-3 assignment and the family contract) is not written yet, so the cell stays FAIL until it lands.",
+    "ruling_source": "reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json, card4_and_retention_ruling_application.retention_cell_ruling (ruled_by \"the Event Authority program's host session, which runs this branch\")",
+    "answered_by": "the host, the Event Authority program's host session that made the ruling",
+    "answered_on": "2026-09-25",
+    "answer": "Confirmed",
+    "answer_verbatim": "Confirmed. The landed Case L-3 assignment and the Storage owner text move each retention cell to PASS, as in Step 9 batch 1, where the families' own contracts were also still to come. The family contract's structured retention_policy_ref stays an open admission precondition, and the other owner edits DL-084 and DL-085 name (Contracts CV-267 to CV-269 citing DL-084, the board rows carrying RP-COORDINATION-180D, the Orchestrator's child-run section and archived wording) stay open follow-ups.",
+    "answer_source": "relayed in the review cycle 1 repair task for this branch; copy /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/storage-retention-binding-repair-20260925/host-answer-sr02-20260925.txt",
+    "answer_source_sha256": "6e2acd627e79fc165f248e7a1e076377c51bb9fb5965bf51b2b96dbec38007eb",
+    "effect": "The 25 retention cells stay PASS on the landed Case L-3 assignment (Plans/storage-plan.md:17286, 17288 and 17290), and the rationales say so in review SR-02's words (review_cycle1_repair_application.repairs.SR-02).",
+    "open_admission_precondition": "Each family contract's structured retention_policy_ref, with its chat-deletion, text-protection or Run-anchor reconciliation, as every cell note states.",
+    "open_follow_ups": [
+      "Contracts: CV-267 to CV-269 cite DL-084 (Plans/Contracts_V0.md).",
+      "Contracts: the three crew board rows carry RP-COORDINATION-180D (DL-085; Plans/Contracts_V0.md:3067-3069).",
+      "Orchestrator: the child-run section cites DL-084 (Plans/orchestrator-subagent-integration.md).",
+      "Orchestrator: \"archived or deleted\" in the board lifecycle becomes \"archived\" (DL-085; Plans/orchestrator-subagent-integration.md:4747)."
+    ]
+  },
   "owner_text": {
     "DL-084": {
       "assignment": "Plans/storage-plan.md:17286",
@@ -4011,5 +4030,2541 @@
       "kind": "edited"
     }
   },
-  "other_branch_files_note": "Before is the base revision, after the owner-text revision (both committed). This record and the branch report cannot carry their own hashes; the branch report and the evidence directory's SHA256SUMS give them."
+  "other_branch_files_note": "Before is the base revision, after the owner-text revision (both committed). This record and the branch report cannot carry their own hashes; the branch report and the evidence directory's SHA256SUMS give them.",
+  "review_cycle1_repair_application": {
+    "application_id": "EA-STEP09-STORAGE-RETENTION-BINDING-REVIEW-CYCLE1-REPAIR",
+    "bound": "DL-066's one bounded repair round: one commit per finding, in the reviewer's suggested words",
+    "reviewed_tip": "c8afc7569e22ec2f64b0b487fc72f486ac49841e",
+    "review": {
+      "directory": "/mnt/Cursor/PM-Experiments/review-ea-storage-retention-20260925/",
+      "copy": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/storage-retention-binding-repair-20260925/review/",
+      "files_sha256": {
+        "REVIEW.md": "bb950f1519e559eafa9a60c9997380bef5ff4e2a21d1df5e97cfdaa542c24a63",
+        "findings.jsonl": "c26a4b3bc05327777efab8f25186180c876f911cbb2ebdb5886b2ba5c2c0ff4a",
+        "RECONCILIATION.md": "c090b7490828ca80c432b2c92958be16f4253f0ce4b0e98179b21b4b4a79fa92",
+        "proposed-edits.patch": "c493210950b263a9a1cb7e21c281cd3b1ea516d8f910d721d6bf742f0162a1c8"
+      },
+      "result": "not landing-ready: SR-01 blocking; SR-02 should fix; SR-03 to SR-07 notes"
+    },
+    "application_record_before_sha256": "c86e9f6e648d542026dd5b19b40da528fe22b22cba627293ca47069a485a51d1",
+    "files_rule": "Each repair gives the SHA-256 before (at its parent commit) and after of every file its commit changes, except this record and the branch report (reports/event-authority-20260911/storage-retention-binding-20260925.md), which cite this record's hash. The entries of the first application above are kept byte-identical; where a repair supersedes one of them, it says so. SR-04 and SR-05 change no file this record covers; the branch report records them.",
+    "repairs": {
+      "SR-01": {
+        "severity": "blocking",
+        "commit": "73883f479ab4f66ca0c1bee1ae060e9135303e02",
+        "parent_commit": "c8afc7569e22ec2f64b0b487fc72f486ac49841e",
+        "committed_at_utc": "2026-09-25T12:15:38Z",
+        "finding": "Two new SP-291 sentences (Plans/storage-plan.md:23604 and the acceptance criterion at :23689) counted every application-scoped record under RP-OPERATIONAL-2555D@1.0.0 in the DL-083 and DL-089 buckets, which covers storage_maintenance_operation, contradicts the binding's own rule at :23622 and widens both decisions.",
+        "repair": "The reviewer's tested proposed-edits.patch: both sentences now name only the families the next subsection assigns, and say no other application-scoped record under the policy is counted there. No line moves.",
+        "files": {
+          "Plans/.plan_index/acceptance_units.jsonl": {
+            "before_sha256": "4118196be5c3e1a306568e2fc77c53e9162f508e81793760b46a030cd8174e8f",
+            "after_sha256": "7c6ba8f904cd33f37f49cd4059afbdf3851719cc292733b48f192af37c8e9380",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/coverage_report.json": {
+            "before_sha256": "074ccad614f6c817055b2b7d68465bd55a544366355f2ed6a202b6ad057b8c9a",
+            "after_sha256": "39c88f7d65a6fc58bd59fa828b7ecebc3626849d1bbc416e15dbe5a5adfb7487",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/dependencies.json": {
+            "before_sha256": "adb7583b46508d4a60d15247afc945c75340459de4162f1135799812f16ab277",
+            "after_sha256": "c39e0ceb1538b8ec3ae5a95e23885db6e461ef50f3d7cf791aee5fc02cf376bd",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/doc_cards.json": {
+            "before_sha256": "a065e4aa607c781cedfeddbf110103cbb8b5b89f6327c70382d21661a5a5eb24",
+            "after_sha256": "bb948ac5f2695fa89663bf99dfb12fb4fcf6fa42345c6323b78eed15977c0cd9",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/node_readiness_report.json": {
+            "before_sha256": "fd797f480288a4cadc77ea7da6929bcb950d1e25f7180b2c28dad84ca4c91dc7",
+            "after_sha256": "603a5d83d1abdea6ff3850a9414b4c0516331d272b3edc6302cba2e4000d0a85",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/plan_units.jsonl": {
+            "before_sha256": "dda878ed96ea3f90c87c90fd5f18ed451ccba28957035b298efb4bf25b040844",
+            "after_sha256": "16cc51171f341152190b7f32e994acb6e1cc95845326cf1251017fde05ae6a8e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/00-index.md": {
+            "before_sha256": "e821156977ed5056096595d1e542b23bb9e9968f5a138a3e7049bd68832173a1",
+            "after_sha256": "8085a405efbd66a2d137493ae95b6516c6d06fe34c99d0603aac6c54d3a1a4f3",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/001-preamble.md": {
+            "before_sha256": "fc2afe98029a255475ab0ceb8135245baaa7b25db70520f836e98af57660f2c9",
+            "after_sha256": "f2724b5fcd6d338466c4ba1f4d0a2e1f718662e29bf7acf546972c9ee1f940da",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/002-canonical-owner-section-requirements.md": {
+            "before_sha256": "0800f5dc99fd7cc1531835816ec4d66e5a06b9ce35b1207ca10ea93d77000484",
+            "after_sha256": "0457398d3692884d97d739f14c63d55921d3b99f3ec270c8cce304353851ad66",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/003-summary.md": {
+            "before_sha256": "a6e644321eeeea884c937bcd17aa0f32368464e6a69536184396475826d88e44",
+            "after_sha256": "2300ce7f790ad7adde114a7759e8aa7cd89a6e2850ba48ecfd95c748d2dc5463",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/004-table-of-contents.md": {
+            "before_sha256": "89a1f6ceada5a3a01333371a2bca7cd49dce0ddb40228e10db368aed5ee80e95",
+            "after_sha256": "5e6bf383f31bcd332576a7f7d24620f64997425c02aa02844f79ae67cb3e4d9a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/005-1.-definitions-and-concepts.md": {
+            "before_sha256": "9a214994a0020c3e1475804888128fe82f67e0231e5c7fb3ceb716562db0af4c",
+            "after_sha256": "b3476d0b12c898cd57f02e839f6bcefd4e0d4bb4c7006ac821dfc2178e02493e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/006-2.-how-we-re-going-to-do-it.md": {
+            "before_sha256": "2f82af3a80fc225f263e60cc1938015f1983c04aec7d2ba0712bd72749d95036",
+            "after_sha256": "7967b4fdeb5cdc5e3911b3bebf87bf16121f01551f0ad94ac274f1d5422c6f27",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/007-3.-implementation-checklist.md": {
+            "before_sha256": "a55f35fc3c65e940cfaa8b9cf7bf7fb43ff9f4c9a3299e646879de64c711a410",
+            "after_sha256": "be4548b4d77038674729639b84804a18e801e62dd10644e3dd463d6e09d31ab0",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/008-4.-impact-on-chat-assistant-interview.md": {
+            "before_sha256": "047f20678c3dccce68d411d197fedb9dea52e56f2843ae84eee2adbabe017c43",
+            "after_sha256": "889443572ca721c388538d043e4851bee3c208d270bb633e2c0c247fa8ffee26",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/009-5.-gaps-and-how-we-address-them.md": {
+            "before_sha256": "821971d1d3f7015d77d3a8fd1baaa71974add3716efcf329e5e2829523fc7bec",
+            "after_sha256": "ed7d2642a46013447b52f97536d047176ee78d2829cdd0d0be92689734cf90e2",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/010-6.-potential-problems-and-solutions.md": {
+            "before_sha256": "8a11767100169ebc37ae4958be4a52186420644eccddd0ce28347d842ea9eace",
+            "after_sha256": "e3bc3637204d65efe80b6fa278e040e19b4f6d7bffdf9736a943b5df576d497c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/011-7.-backup-restore-compaction-and-optional-storage-enhancements.md": {
+            "before_sha256": "866f7b03dfa533aa6ceac108b62e6ee27f09c596512417133c551cb6332d71d2",
+            "after_sha256": "f61190e393fc5f33c139bc2c786b066a05a8a9163dab7f321d9ab614398a0e53",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/012-8.-implementation-order-and-testing.md": {
+            "before_sha256": "5c3729c0f655ac235da72206d68f441401db21f4673b213eb7e5153f70fb4d33",
+            "after_sha256": "1dd9f09810705823d31497fc92450fab621923313341e114358d78dbcb542ea0",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/013-version-history.md": {
+            "before_sha256": "4986a3b3c99dbd8d16887071c5070be9b7ef47e607401b5189bf70ad65763813",
+            "after_sha256": "5c6f80649a52487003ae1c1768e7a5634b3a4facfa663764090e6a00cbde7b03",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md": {
+            "before_sha256": "206fa62d6bb6312d3012d4cd2bbb0aeb145780559f77e92f98f2cbb877cbf1f8",
+            "after_sha256": "a372c7821967c07892b180d0f5bb7badb809a68ae5c93d077e8b49567b392821",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md": {
+            "before_sha256": "3f553e5ddde45412b2f4696ea1d9dc240c02291f57a2c94fc2389f6a392dd49f",
+            "after_sha256": "afa55312fac1f935e4102a30424fcdf7aeffa0c5e4900a97c83088a759320d3e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md": {
+            "before_sha256": "0cd6bc301fe2fbac453fe003460087d447b534eaa4a565a9bf0b40c34130f309",
+            "after_sha256": "cb9e464202f1713557e52a99727147322098f642023987a1efe30def142b122a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md": {
+            "before_sha256": "d757c49114f5b98c5124bc1928d719fbd0e35fda111600eb78a02cc624a520e5",
+            "after_sha256": "b31ea388ebb77b4668d9ae9b8a88e7c16f3cc7da505cded50b10cef53c5edbb7",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/018-permission-snapshot-storage-and-safe-point-namespace-addendum.md": {
+            "before_sha256": "711d560e0e84995f3969db3dc6659b6dcb2b54d0baa2e23d5973d775a01ff5be",
+            "after_sha256": "f509ed770f9d86ada592c2a304e632e7fc0e871a3d6846b0f91761539e741a4c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/019-assistant-worktree-binding-storage-addendum.md": {
+            "before_sha256": "1a654522069a0422d0671a89e36397e5439c866e9866f80aa79d94ad5059f4cf",
+            "after_sha256": "b345bedeb477fbadacb6a5af49a1e64a62fb9da7a25030a31d4665aef45b3fc5",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/020-8.-web-content-caching-persistence.md": {
+            "before_sha256": "c3d777159f0e696d36c668a48b1f70a564ad1957827c0f05e55af36d1a5c6fe4",
+            "after_sha256": "97ee5536b0677190105bcbf39195ac09aeb7b7fca843ac0d897613c27811d7b2",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/021-owner-consumer-map.md": {
+            "before_sha256": "fd3476dcd47ff94afab596fbde41bda84cfd90a9706cd19f5a60190856196c61",
+            "after_sha256": "a117049d00119e32239f0ba1d666dc870b60ee926abef56d56e1033cba527251",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/022-planunits.md": {
+            "before_sha256": "1bdfafcb52fc2b187c3cedd68b1290bdb21ac0e93619074fbe8c3fa9c4768821",
+            "after_sha256": "427bf19950c658b60342b0e90946526c224a701751e105c9afac3018ca9f562a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/023-migration-coverage.md": {
+            "before_sha256": "160510013c735cd74fa9270cac4ee0f256c12a4d533a904ba8af01a5b12f364f",
+            "after_sha256": "e59e5bce19939a7b6a38acd8e98f46072eb9711f3df67f3fe8605b2c5f405490",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/024-ledger-compile-addendum-pldg-20260614-001.md": {
+            "before_sha256": "47be23c532d7ad17c008341b1d84a7c3abe32c22444a3a542a474b209a748497",
+            "after_sha256": "ee71b8c6eb7e492ae1230daf7c767477e42e3465002c984ed36378988dd33c98",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/025-ledger-compile-addendum-pldg-20260616-001.md": {
+            "before_sha256": "67e026d34ed44e4f2c8af502a4558f435a59671418f8da8090670ab73fe1f205",
+            "after_sha256": "c223aaca42aa6f54c227bf948de89ee527e660624e1bf2a366acfa08f2ddf332",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/026-ledger-compile-addendum-pldg-20260616-002.md": {
+            "before_sha256": "c7accc73972d3f990aeb900d655f599447e9005e105ebad0bb5414d050562d84",
+            "after_sha256": "9f644921901a599bdc65122f0783d42fe9f7cfa029a96815bc392d9781e6f1eb",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md": {
+            "before_sha256": "1ec097637b83958ba1e64014bc47023432da1cb6fae535df1bbbdd5d5d3a5a9c",
+            "after_sha256": "2f618fb1a685a7651b5862809e27e2ba1eef00e83f5e8c99210df0bcb4e0d97f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/028-ledger-compile-addendum-pldg-20260622-001-fff.md": {
+            "before_sha256": "0b0d419802baa0e0707492ca10eb85436b35a40504cf1345390d3378b7ac7977",
+            "after_sha256": "154940891d43768b0828c5b062ecb959a4e3a4ff76201eb05f48a513950a3bdb",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/029-ledger-compile-addendum-pldg-20260626-001-feature-name.md": {
+            "before_sha256": "89a43e1b2a29f82c5328e854d330357cf1af510c4c94a2265e43da1844c1aac0",
+            "after_sha256": "42d419fc5f84373eef338731b6ac86783865221dc4004d07a7e3656c0086f53a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md": {
+            "before_sha256": "8f9241bfa8395c7f0589decd84bf99fe3df97ee423540a79b26406aa0ffad08a",
+            "after_sha256": "b55ad326c483f8af7d2cf17ed0de40c9a98b4afd8a6f4b50a46865542ad0cfd3",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md": {
+            "before_sha256": "f61db8b8eb91c820e2a37d78a48d85dde0bfb2b61272527ab91bf4d806967c67",
+            "after_sha256": "3e44961754b9f06450366fca09045374de10d8506459d7a809a3a23fdab4c782",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md": {
+            "before_sha256": "2399c729cc4c550846be855e5470356bd3722aee40c8547e9b66d01f1460567e",
+            "after_sha256": "2da6440d85ce8e22e891b776b6c0c2831587efc4e85f0321287685ef41dfd01a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md": {
+            "before_sha256": "a04b0a318c287a08163e1f119d926797dbb36a9198f152ca8b3154d259700054",
+            "after_sha256": "568c2554e4a7e9080b9d43c2d4c40feed30f0f3d6bb0f46fe7d080f06d086998",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/034-fable-deferred-action-concrete-repair-addendum-2026-07-08.md": {
+            "before_sha256": "8749fac8562644a9dfa910b30ff67844f34a4363fced3f8ba6cff09e765c9394",
+            "after_sha256": "4c297395a4ef6321005399e6d5d8b3c140a7a4a2bf7ee5aff751806d18312e0c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/035-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md": {
+            "before_sha256": "f7f929039785898744b8259a868dcc5d03949efc67bec1becc044c5685d26f3e",
+            "after_sha256": "045c9f7b2d7a3213a44f057ef10dd2bb9b7d4f3f517ece2ee9a5dafade7b17fa",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/036-usage-gui-propagation-addendum-2026-07-09.md": {
+            "before_sha256": "c47b7d058f98224ee212c26d38c0d7de35e85669f4ec940e4096422cfed2d4ac",
+            "after_sha256": "50b7450321aefd624cb83d4d4b7662bf8263158435760866074a32bf724f86ca",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/037-case-l-durable-state-owner-canon-2026-07-17.md": {
+            "before_sha256": "f860669244e145b65d8d94eefc9e10dc3195ae71f8eddf51117ef1dea522e538",
+            "after_sha256": "37c7cf19895fcc139d65d5569b8504a9eb725d8da670dca1caa769a9a3b7eecc",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/038-known-37-case-l-owner-materialization.md": {
+            "before_sha256": "af559d5377db153af2b88e042f4a4ab4b2c727afd20e1ce473d49ac6fd89db52",
+            "after_sha256": "e375f349611aab4ba0eec35be73a6b4ab837195c44c6191b26cf3b6d49f72870",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/039-pmconcept7-home-workspace-layout-2026-08-04.md": {
+            "before_sha256": "397a84f11469958ed79c4a6c003b016672ee6385beef6b18fc4d407830c31faa",
+            "after_sha256": "a3a395563a824279af37eb28b56e385061213bb93d42ed4234c6429cd788d7aa",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/040-run-debug-revival-addendum-2026-07-27.md": {
+            "before_sha256": "848d87e3f826d2a8e037aba868380f76534a00aa4d012d321ee103c141704b07",
+            "after_sha256": "282848ab4c64cc318b646c6676b66b94a6fcf34cb74804f5a10c0bccc39acf55",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/041-shared-integration-runtime-persistence-and-migration-addendum-20.md": {
+            "before_sha256": "08ac110c70979771d31c835af580500f011facbf9b13122ad39cb8733ad0ed79",
+            "after_sha256": "ace939d6ade0b427d2cd013b830c59854291016c942e40a51628b873450a5c11",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/042-u11-prism-ii-usage-view-state-addendum-2026-08-18.md": {
+            "before_sha256": "4a3353d4f55ee81c23ba790e44764563af9e1da46555884a01b5bafb58dad359",
+            "after_sha256": "1a754ebefb6490b00ce92a16819c283c802203396285f00f328457fb73ec254e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/043-pmconcept7-recovery-settled-layout-addendum-2026-08-27.md": {
+            "before_sha256": "e0345902e961b0836945effaeedbc0873a8af4abb90f56bf038bd02ddd024521",
+            "after_sha256": "e8a5d2d348222180dc6d58941e70037230345967ea38838a066ece00473ef69f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/044-packet-authoritative-storage-disposition-and-redaction-addendum-.md": {
+            "before_sha256": "4b60fdaa4eb643881e43bdc7894254e5e40dc1f3651f60cbe679cb52dd4d2259",
+            "after_sha256": "5566b9d0df3fefd89289ea0b7bc2fae15fe5b0a73d69c0835d08d808d25b14fd",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/045-back-seat-driver-contract-family-persistence-disposition-addendu.md": {
+            "before_sha256": "d3f12849601e9b3d82fdf1e76a7bfd301455c1d154b747c35d7040e6fcf46c35",
+            "after_sha256": "36000590734de20e6c041e3783b4d68b05932dbdb0a9b2633104f35319a26074",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/046-forge-backup-v2-and-go-tsnet-storage-redaction-transaction-2026-.md": {
+            "before_sha256": "d2a44738528056c65a4a88c08f03d4a54e02715fdfd134ed34ef24549abc36e4",
+            "after_sha256": "546996d359da81c988edc85305c29ff455ae6403f8067a19cb5ebc78bf70e1ef",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/047-additive-correction-v4-records-replay-and-migration-matrix-2026-.md": {
+            "before_sha256": "0c1edff1de909e4bad6308f99b62e2ad519fff1bdf806f3674d0ea5cf1d7656a",
+            "after_sha256": "e054fe3709e6b6d578f229535d83ad975df07db015eb9e80f7126a0c0c2a16e5",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/048-working-notebook-and-context-transition-storage-addendum-2026-09.md": {
+            "before_sha256": "e5025daa9b2561fc2a5d476bab2f3e4d0c0ab4524ce6921f3a247e893f2e7e73",
+            "after_sha256": "55a79696a4b56d6012d3fa77e3ea0edca582ff0d5c1f9e5a953a0c63198b94bd",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/049-research-decision-disposition-persistence.md": {
+            "before_sha256": "9e7170ee3142dc221d37d70f56353d40dec4a1e587a195da5df91da34d6241b3",
+            "after_sha256": "1e95c57716243e36d53b2c9485154f72ef14accaa1824bbc2b88f8a76d5ea330",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/050-compaction-completion-persistence-contract-dl-039-and-dl-040.md": {
+            "before_sha256": "568447f56084560a6cc6b780478d11177d93b45ffc700cf0226e7b8808fd695c",
+            "after_sha256": "79939802effde0b4533c0a3088c12ec0e430fcbcf34867829760222289cfff3b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/051-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md": {
+            "before_sha256": "97111ac6e2f0a2db55e750a67a526f62e04b09e32c8adb61d89941c05cb1c0d1",
+            "after_sha256": "b8cdc2e921ae79a5531dcd635e086b8cfbeff5139fc404e3e4ffca8ead793e2f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/052-scoped-browser-event-persistence-2026-09-10.md": {
+            "before_sha256": "623117cf966b0a2389678358ae9dd9df74682fc7b8c9f4d70abf3f614c0bd6ca",
+            "after_sha256": "4aa3882b1c02feaf2afe29f7f20d30e23608cbcfe93b030e7dc694a107206bb0",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/053-jujutsu-d5-owner-requirements-2026-09-11.md": {
+            "before_sha256": "1a988d8b04bc8da068ba2f054ed3effb12c6919f1a4c8fd820384282100280ca",
+            "after_sha256": "0f52b6369bf75eb7c6591097c30a5ee2ed6783c6f1c02f981174844d40456d76",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/054-run-start-index-consumers-and-checkpoint-2026-09-11.md": {
+            "before_sha256": "d4bf5b10a75f83781fdf829df79572f10c9b74a475d6fd3eae0e2ec940a12144",
+            "after_sha256": "ad98ba7d38cdd378f6f68205ed53624cf87e8d0ceb223251746de85752f0ee2f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/055-browser-workspace-created-index-and-checkpoint-2026-09-11.md": {
+            "before_sha256": "3f8062f9fcc14e54fc83e2edf4b4cf3251710b00afd5fb4211c83d5bc5a789ea",
+            "after_sha256": "741862d92866c269d27e2370a11d218a5120a7c059f92103b2c8bc520410a277",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/056-restore-point-created-consumer-checkpoint-contract.md": {
+            "before_sha256": "8d30fde05269bb5a9847ec5f5ed6f2330b422d5bdfb05355e98da5382ccb9a10",
+            "after_sha256": "47d9cce1c414c4142bb300846b686339dd2bc0c27f8d2c59e759e1bcc72079fa",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/057-restore-point-retention-summary-contract.md": {
+            "before_sha256": "cf12071bb644f937cbbdd100512e41814eb2aaac15f8949f54d03561b1aaf002",
+            "after_sha256": "d08ea29d7af0b6f1195e4ec594da53d674c74ca61d97b3c3eff8a262bfafae5f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/058-run-start-and-restore-created-versioned-index-adoption.md": {
+            "before_sha256": "7792b36796bb6e698b1f7ead32cb7d7935fb1d53915296bda288f4afb10b9412",
+            "after_sha256": "9e9bc72d3fd1a5a3c4adcdf6587d02a8ad3edc5adde5bfd0829a14dd757f7797",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/059-browser-workspace-reset-filtered-checkpoint-2026-09-11.md": {
+            "before_sha256": "6be7624fa4c8aa678a62c44eb427f2a6c33a7a79231b88e951ea4ac3527d408c",
+            "after_sha256": "98024a2ecefa77092020bdd7596040e116a32c0dc73f815644c81b25f1a0193e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/060-first-append-receipt-custody.md": {
+            "before_sha256": "7be19286a027e2f83db136f38adc100aae01ea59ed402ee6596844f570c7ebe0",
+            "after_sha256": "ee7718cecd37fa94c2614c0a71734a2e7cc31e1456faa1948eaa19b8f262df18",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/061-goal-body-storage-custody.md": {
+            "before_sha256": "a358fcec04dbb8c8c443dee89090d460fa0d4c5349d55cb7516140eab4b60d37",
+            "after_sha256": "2e65b102db4e71374deb0d285da09072d18f8e3823405a058a80a69151d2cec5",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/062-restore-point-deletion-custody-and-checkpoint.md": {
+            "before_sha256": "e6f48b95f75722ebed5ee7d9b35a534b34c431b673bf0aee29060fe3f1e32b0a",
+            "after_sha256": "5bf58ca0d75629dfd399c62fb460655c84b4be30f761dad995562ae9c3b21e00",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/063-restore-point-delete-original-result-custody.md": {
+            "before_sha256": "1202cae4aa48ade16604d7c489f7a9da002a5054fcc00ee8c6fd2c2fcfb236e5",
+            "after_sha256": "eba4fd3d4be098b76a5fcd20cb6f11826fa65721db0c651b5a9c50c7e2d98084",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/064-restore-point-expired-custody-and-checkpoint.md": {
+            "before_sha256": "7e874047eca779e1887472032fce89d2e536fcd0f574efe190b0679f806b887f",
+            "after_sha256": "31e8002611bed917bfafc7b4461e11d72bfb1f53bc187e072a35d41d42d8a65f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/065-restore-point-original-admission-and-retained-custody-read-phase.md": {
+            "before_sha256": "7118fe39a949e422dfeaeb83766d6e8d21beb4db1f9b49ec7cad451738a85cf3",
+            "after_sha256": "0a1690439b1d5efd8ac1f2b636e916b386c6992db42f61c3e10b6257c920e015",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/066-legal-hold-transition-custody-and-passive-history.md": {
+            "before_sha256": "c9a4f3972ffd676005be506692cc06cf04768ab760ecfeb00d0ee8d64f0895e6",
+            "after_sha256": "5dd94db226b6d52872dc691e678fb8e2d4d56aea04e93c9935cc37abad209c9b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/067-original-standard-certification-receipt-custody.md": {
+            "before_sha256": "7dbebc0c899805532bf4d4a8d34c8295235c2454fa5a0a0028b94dd633684be8",
+            "after_sha256": "ac8e39b7f17adf35d149b7ed97654273771e1a2e9deb73da842b3891b179cc23",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/068-storage-integrity-finding-custody-and-read-contract.md": {
+            "before_sha256": "511b5d87025bb0f1e297d5e4688ba3250347e279e83ed1bebcfd5e02a1d1b23a",
+            "after_sha256": "f8b96b455b46ccd34bfa91300e2481189633bc960790e0d565df9e844415770e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/069-platform-capability-decision-custody.md": {
+            "before_sha256": "52f9a721cdbf2ab7c9d0e62bd0958c2f1a96acf786aa2c5af6eedba6d13fd0f8",
+            "after_sha256": "f8cb85e2c956911e386ade712dd38ee5470e8728ad44d5fb691f6e00b0cac109",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/070-boot-recovery-aggregate-and-original-producer-custody.md": {
+            "before_sha256": "6ec56d0556f23d359551735cce1cc7296ca511c52bc1cda4ca6fc79ce6f52dab",
+            "after_sha256": "292b2306e3ea241614ca2aecbbc747d5f5ed894335242d3f197158095cc6b0f8",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/071-boot-earliest-receipt-continuity-and-activation.md": {
+            "before_sha256": "45dd1227f31efcef173af79eb5fa393d6b446704736acb627db4c00443d5c60b",
+            "after_sha256": "af318e8f168cfcdcc5c514132bba377c443993d16c8f0afc487b5a205f26bb7c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/072-recovery-original-action-custody-and-publication.md": {
+            "before_sha256": "7af287c614db48d32158966e82bb1b33603f3aa79bd1bd4849fa12f29b05c071",
+            "after_sha256": "94bf694b36a67364fd8883b39e49968a04e88c401a9f3ac7587523b1cd6e4ddd",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/073-goal-start-original-command-custody-and-publication.md": {
+            "before_sha256": "49d651e093d8d031fb85b732a2a39f5887e6cda93cab75c3248ac583870ae5dd",
+            "after_sha256": "0772197ca262e5710cd41ef7f12bf9aca271dc7ae543c910cd982d53cfed6a95",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/074-sp-294-goal-start-original-command-custody-and-publication.md": {
+            "before_sha256": "de763f633434ab27777b930b3a7e013bee888c15f34715dd47378bf1ca40c0f4",
+            "after_sha256": "8777ef419bff565ab437d81069174296bf62fdace8bca5fa96c776f252758e98",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/075-compaction-original-native-source-phase-custody-and-detail-retir.md": {
+            "before_sha256": "db5a9f7d961f4cfee908a501447dbb5a70d0b521bf7bfd7a93a0ff84fe6411b8",
+            "after_sha256": "5c7c692ab8f94555ec1e013162c5f39026aa61fcf317d768da06584a375a47f8",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/076-goal-created-passive-current-reader-and-original-command-members.md": {
+            "before_sha256": "8e54c55f452240d14101ebe32cb4c34235cfc5efe4766caceec5aca60f6f3042",
+            "after_sha256": "178251bfbbb3977a7f9acefd74b0ff6798bc5b97ce80311e9e5411d9f48921b4",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/077-original-goal-update-source-physical-custody-and-publication.md": {
+            "before_sha256": "f54880dce7b894378dc52e4bbf486c9dec597a4c4da366ae26fc4635255d6aba",
+            "after_sha256": "cb9563dbf15a5e426bcbe4ab528ad73bb3e5b264b51b365edf7806a5e9101279",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/078-sp-314-original-standard-authority-families-and-fresh-whole-stor.md": {
+            "before_sha256": "25c9e6a3f43510931df65f4320ff03afe76c5b725f9256e3bac0bd416eb8ad4b",
+            "after_sha256": "1361e0dc4892f5db4ec5af08a999280fb49b104c15e0ce7e0cd3915f398b052e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/079-sp-315-certified-producer-current-and-retained-source-disclosure.md": {
+            "before_sha256": "1ebb393702b7f7d9c1754e5747ba772382680ff3467c586853dfa94eb5efb5d2",
+            "after_sha256": "2c2c90566a139e1b4a3b958a020fb6062b022d72c96e7dd23eb2d2dd5525e5c1",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/080-sp-316-seven-compact-authority-families-eleven-v7-profile-qualif.md": {
+            "before_sha256": "51a312b0eeb4645413cb24f53a5aff885b7d6225767d7d4685b0d0f7d0a81c44",
+            "after_sha256": "0fe1868dc955822b52a6c02815361dc920036386e79efc8f489feb7a84c2d826",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/081-sp-317-two-projection-checkpoint-families-and-exact-rp-projectio.md": {
+            "before_sha256": "c69a9a3f2531620f068f230e23f09d991e20dd85d16ee78c782ba16ca0ee334f",
+            "after_sha256": "af12f1c99c9fea25d4533b3e1f19ba138eae64931f54aa858cc72fe7684ae703",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/082-terminal-workgroup-moved-exact-passive-source-read.md": {
+            "before_sha256": "d9ebcf8276842ac5f8605cddd1b4ccee8447669b19b18e1d2ce44447e0a762e0",
+            "after_sha256": "6be79774c57e30a5152095f24fb28284731cbbea19ad386983a1ef8fb242e603",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/083-coordination-event-persistence-binding-dl-045-2026-09-25.md": {
+            "before_sha256": "509b482a4df4b6544004e50c99986188251570cc0ea85be29a2f6f7e4a1ed713",
+            "after_sha256": "2bdf69ea34377b10ede71c0b3402a543a782d0c1063eb77dbd67fce1bc8f077b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/manifest.json": {
+            "before_sha256": "c29588f6b274e606b3b691220487392943af5efb3659ee3882213aab4526747a",
+            "after_sha256": "6c31963d46a7ca5545e4559f65b91822091fdd9c711795f22f53b78989397204",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/storage-plan.md": {
+            "before_sha256": "cefd36c74fe5ce86304f639be67b48196f592e533448aafa86f7a4b7c475cd82",
+            "after_sha256": "6bcb9a18c9d8e7ab8daec194142a9bcc20485b00c992da0b8dcc19d3183deaff",
+            "kind": "edited"
+          }
+        }
+      },
+      "SR-03": {
+        "severity": "note",
+        "commit": "4066d01cb24bca65a044da166598cf73dbee7d0b",
+        "parent_commit": "73883f479ab4f66ca0c1bee1ae060e9135303e02",
+        "committed_at_utc": "2026-09-25T12:18:34Z",
+        "finding": "Line 17288 deferred DL-085's coordination-family half to the admission landings without saying that they carry the DL-045 per-family search.",
+        "repair": "The reviewer's words: the admission landings complete DL-085's binding in the coordination family, each adding its key shape and member as a DL-045 definition with that family's documented search. No line moves.",
+        "files": {
+          "Plans/.plan_index/coverage_report.json": {
+            "before_sha256": "39c88f7d65a6fc58bd59fa828b7ecebc3626849d1bbc416e15dbe5a5adfb7487",
+            "after_sha256": "79b0bdda2a020902a2b25c2884561880467513abfc7e122f9211418ba1e3f9de",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/dependencies.json": {
+            "before_sha256": "c39e0ceb1538b8ec3ae5a95e23885db6e461ef50f3d7cf791aee5fc02cf376bd",
+            "after_sha256": "edb1a13ee9797c328f184283084ae9ac62b258c0dfde054095c447c8da44d93c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/doc_cards.json": {
+            "before_sha256": "bb948ac5f2695fa89663bf99dfb12fb4fcf6fa42345c6323b78eed15977c0cd9",
+            "after_sha256": "379c90dd67e19649f617e7cccb3fdd0b50d0edff04a8dabcd3b7a8703b683ac1",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/node_readiness_report.json": {
+            "before_sha256": "603a5d83d1abdea6ff3850a9414b4c0516331d272b3edc6302cba2e4000d0a85",
+            "after_sha256": "5bb6dcfc7ba2d75cb1b837de235f5332b890b7b82e89136fc31dce8107cd5a22",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/plan_units.jsonl": {
+            "before_sha256": "16cc51171f341152190b7f32e994acb6e1cc95845326cf1251017fde05ae6a8e",
+            "after_sha256": "ebeedf5d5dc48673d563f29e2265f5964d45d8ad289a9214fbdc0d5709f85773",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/00-index.md": {
+            "before_sha256": "8085a405efbd66a2d137493ae95b6516c6d06fe34c99d0603aac6c54d3a1a4f3",
+            "after_sha256": "15a4d5f9a6294d93375a3f402511037ee19dd7d4a77fc8b816d4005a5ea34763",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/001-preamble.md": {
+            "before_sha256": "f2724b5fcd6d338466c4ba1f4d0a2e1f718662e29bf7acf546972c9ee1f940da",
+            "after_sha256": "686528891d85e6667a8dfe25d08f1805ea9e2a6a48209242dc5dcba807c47331",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/002-canonical-owner-section-requirements.md": {
+            "before_sha256": "0457398d3692884d97d739f14c63d55921d3b99f3ec270c8cce304353851ad66",
+            "after_sha256": "c85a2b2b446bb59e5dd25a82f13bf8668d5863a53d53176541142c85a3837e3b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/003-summary.md": {
+            "before_sha256": "2300ce7f790ad7adde114a7759e8aa7cd89a6e2850ba48ecfd95c748d2dc5463",
+            "after_sha256": "c212dabc329e2ec39fc0e08d34af94caa48fb847f696262b744077f370df2714",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/004-table-of-contents.md": {
+            "before_sha256": "5e6bf383f31bcd332576a7f7d24620f64997425c02aa02844f79ae67cb3e4d9a",
+            "after_sha256": "7d6a5649ee59163648cdee4668db132b4ba135fbefc10a4d81ab5f8957609357",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/005-1.-definitions-and-concepts.md": {
+            "before_sha256": "b3476d0b12c898cd57f02e839f6bcefd4e0d4bb4c7006ac821dfc2178e02493e",
+            "after_sha256": "6ec0dad5ec51ccf09d184d11e2aaf6d76de80b3249688139f53442d5816fdd36",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/006-2.-how-we-re-going-to-do-it.md": {
+            "before_sha256": "7967b4fdeb5cdc5e3911b3bebf87bf16121f01551f0ad94ac274f1d5422c6f27",
+            "after_sha256": "eb47e67893d01d483f05aa54c4bcca4566c95e627c8a2c8fdb1dbcd2a5ab5cc5",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/007-3.-implementation-checklist.md": {
+            "before_sha256": "be4548b4d77038674729639b84804a18e801e62dd10644e3dd463d6e09d31ab0",
+            "after_sha256": "fb754cc13c8063d25fd47fa89d74e478fcf3e9922a897f2464a124d76e329055",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/008-4.-impact-on-chat-assistant-interview.md": {
+            "before_sha256": "889443572ca721c388538d043e4851bee3c208d270bb633e2c0c247fa8ffee26",
+            "after_sha256": "8cf380716819473601e5be49bd69341c0353c5e156af77350b5aec166db2b5cb",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/009-5.-gaps-and-how-we-address-them.md": {
+            "before_sha256": "ed7d2642a46013447b52f97536d047176ee78d2829cdd0d0be92689734cf90e2",
+            "after_sha256": "1dc7fe545128c8ba36fc679c82c05dd3f917265eb520a018805d8bc6397686e2",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/010-6.-potential-problems-and-solutions.md": {
+            "before_sha256": "e3bc3637204d65efe80b6fa278e040e19b4f6d7bffdf9736a943b5df576d497c",
+            "after_sha256": "a3e06c8212fc3e02d15e84f548655179699bb4ad9a0a99bb357be76188d0794e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/011-7.-backup-restore-compaction-and-optional-storage-enhancements.md": {
+            "before_sha256": "f61190e393fc5f33c139bc2c786b066a05a8a9163dab7f321d9ab614398a0e53",
+            "after_sha256": "002d9bc4324cf825c7cd6cacfd9f6980552c78f27c27065a7e8b06fde90a3b9b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/012-8.-implementation-order-and-testing.md": {
+            "before_sha256": "1dd9f09810705823d31497fc92450fab621923313341e114358d78dbcb542ea0",
+            "after_sha256": "a0bc7c9970fc891935dea582c301c19c7b43e1f98827e2816d85f9fcd2758396",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/013-version-history.md": {
+            "before_sha256": "5c6f80649a52487003ae1c1768e7a5634b3a4facfa663764090e6a00cbde7b03",
+            "after_sha256": "bb515015f413afdaa9fe7c6ff8ab07817d1c94ccfdcd357cd90a21dec14adaaf",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md": {
+            "before_sha256": "a372c7821967c07892b180d0f5bb7badb809a68ae5c93d077e8b49567b392821",
+            "after_sha256": "fd9fa730a8b8ba17bb96513725e50c8f5c4d604a2bf0bd3ebc3d0111b207bb5a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md": {
+            "before_sha256": "afa55312fac1f935e4102a30424fcdf7aeffa0c5e4900a97c83088a759320d3e",
+            "after_sha256": "3fe53781b84e72a8f5902f5f4f3eac6f255591c1cddfa66f473ebc53b6fa02f1",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md": {
+            "before_sha256": "cb9e464202f1713557e52a99727147322098f642023987a1efe30def142b122a",
+            "after_sha256": "9c6d775681764bd6a51604a395ca55d4d07a278d7d4eae9051bf00593be7a554",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md": {
+            "before_sha256": "b31ea388ebb77b4668d9ae9b8a88e7c16f3cc7da505cded50b10cef53c5edbb7",
+            "after_sha256": "1ba6651b185d959d1a149e465b8b9d6459720252c442f87e510407703414fd4b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/018-permission-snapshot-storage-and-safe-point-namespace-addendum.md": {
+            "before_sha256": "f509ed770f9d86ada592c2a304e632e7fc0e871a3d6846b0f91761539e741a4c",
+            "after_sha256": "04aace0f181c95d95d1303c110df5cef718fdeaf225e18f537b4a57766f64c28",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/019-assistant-worktree-binding-storage-addendum.md": {
+            "before_sha256": "b345bedeb477fbadacb6a5af49a1e64a62fb9da7a25030a31d4665aef45b3fc5",
+            "after_sha256": "7fef4e05cfdb5536a24399933c21294db63b5df4f951979e3d13fc27efd95bf9",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/020-8.-web-content-caching-persistence.md": {
+            "before_sha256": "97ee5536b0677190105bcbf39195ac09aeb7b7fca843ac0d897613c27811d7b2",
+            "after_sha256": "37eee9c5e36f719d80c1b56dfe6f55ff744a1cd97b7c1f6f91490acb3c235e73",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/021-owner-consumer-map.md": {
+            "before_sha256": "a117049d00119e32239f0ba1d666dc870b60ee926abef56d56e1033cba527251",
+            "after_sha256": "a2e57f194808058b988e250f0e832254408deaab69b110938784cb51ea53383f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/022-planunits.md": {
+            "before_sha256": "427bf19950c658b60342b0e90946526c224a701751e105c9afac3018ca9f562a",
+            "after_sha256": "a75c75506a2923f709056a5af5b5cf5731c01962cbf73493476dbb468f012922",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/023-migration-coverage.md": {
+            "before_sha256": "e59e5bce19939a7b6a38acd8e98f46072eb9711f3df67f3fe8605b2c5f405490",
+            "after_sha256": "93d03b2bca95a79756ea2cf4d6cfc68eff728f2e35a72cdaa093b0d91e29c789",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/024-ledger-compile-addendum-pldg-20260614-001.md": {
+            "before_sha256": "ee71b8c6eb7e492ae1230daf7c767477e42e3465002c984ed36378988dd33c98",
+            "after_sha256": "d757ef531ea28662737d946d322b699b4f1a2dd2afcad900793162c7d9f3d8ac",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/025-ledger-compile-addendum-pldg-20260616-001.md": {
+            "before_sha256": "c223aaca42aa6f54c227bf948de89ee527e660624e1bf2a366acfa08f2ddf332",
+            "after_sha256": "d2d4bb377a5ab8ca919148130e678ce4c2805e065afe4d415671da245ec06b5a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/026-ledger-compile-addendum-pldg-20260616-002.md": {
+            "before_sha256": "9f644921901a599bdc65122f0783d42fe9f7cfa029a96815bc392d9781e6f1eb",
+            "after_sha256": "0922cb9e187df0c649662c193bb7c2abe688de4a1614685491fa831d856da917",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md": {
+            "before_sha256": "2f618fb1a685a7651b5862809e27e2ba1eef00e83f5e8c99210df0bcb4e0d97f",
+            "after_sha256": "a4881f5aeef6d95b8f95ed86b19e6cf76802b8d203d80bdf6fa2e030fac0b1fb",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/028-ledger-compile-addendum-pldg-20260622-001-fff.md": {
+            "before_sha256": "154940891d43768b0828c5b062ecb959a4e3a4ff76201eb05f48a513950a3bdb",
+            "after_sha256": "9488aef1e9a27d6c312e97ffd2e1bdd7c8b0970111f9acf006ddccff4241e90c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/029-ledger-compile-addendum-pldg-20260626-001-feature-name.md": {
+            "before_sha256": "42d419fc5f84373eef338731b6ac86783865221dc4004d07a7e3656c0086f53a",
+            "after_sha256": "75634882c4d64cb3bd9026102efede8f21536268132bf201b7a9ec1fdbbf7a61",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md": {
+            "before_sha256": "b55ad326c483f8af7d2cf17ed0de40c9a98b4afd8a6f4b50a46865542ad0cfd3",
+            "after_sha256": "9cdee0d653fe28e165371dbee4332e3c44141c714d8680cf76d56742144549c3",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md": {
+            "before_sha256": "3e44961754b9f06450366fca09045374de10d8506459d7a809a3a23fdab4c782",
+            "after_sha256": "1575005027d4287404767cfb36e80692c8b6490113c778a5c89039860cfbb53b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md": {
+            "before_sha256": "2da6440d85ce8e22e891b776b6c0c2831587efc4e85f0321287685ef41dfd01a",
+            "after_sha256": "daac0ce74646cdbc49e45cbe053a1d089a7dbae3fa8c9cdeadb98588b195ab9c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md": {
+            "before_sha256": "568c2554e4a7e9080b9d43c2d4c40feed30f0f3d6bb0f46fe7d080f06d086998",
+            "after_sha256": "1824864a4dca4ab3000180f041ce6ba55815590791d750b0de4a18bd19933f42",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/034-fable-deferred-action-concrete-repair-addendum-2026-07-08.md": {
+            "before_sha256": "4c297395a4ef6321005399e6d5d8b3c140a7a4a2bf7ee5aff751806d18312e0c",
+            "after_sha256": "71e122dd2a079943ef02791f9955bc120cef353f0ad326ee911a838dca3c70bf",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/035-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md": {
+            "before_sha256": "045c9f7b2d7a3213a44f057ef10dd2bb9b7d4f3f517ece2ee9a5dafade7b17fa",
+            "after_sha256": "6f7b06e5d015ee463c1dd495cefb5503c47d3858246db4263ea826d3d30fc66b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/036-usage-gui-propagation-addendum-2026-07-09.md": {
+            "before_sha256": "50b7450321aefd624cb83d4d4b7662bf8263158435760866074a32bf724f86ca",
+            "after_sha256": "5195bbd6ee896d84bd9f8f8fc70c0ab03231c13d1d919cb5da9191741019ffaa",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/037-case-l-durable-state-owner-canon-2026-07-17.md": {
+            "before_sha256": "37c7cf19895fcc139d65d5569b8504a9eb725d8da670dca1caa769a9a3b7eecc",
+            "after_sha256": "2a54585a9d1d258b8900a85189b7f559b941cb879fc43291066dccf9acf036c1",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/038-known-37-case-l-owner-materialization.md": {
+            "before_sha256": "e375f349611aab4ba0eec35be73a6b4ab837195c44c6191b26cf3b6d49f72870",
+            "after_sha256": "bac1686d8423aaab5b072d10ea4e763f86a8f1bd03db52f674453c9be5f58f95",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/039-pmconcept7-home-workspace-layout-2026-08-04.md": {
+            "before_sha256": "a3a395563a824279af37eb28b56e385061213bb93d42ed4234c6429cd788d7aa",
+            "after_sha256": "0d77e31ed01a2872b997e0337a1a8e2543ad0a2f006a842265ea092f2b4563ed",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/040-run-debug-revival-addendum-2026-07-27.md": {
+            "before_sha256": "282848ab4c64cc318b646c6676b66b94a6fcf34cb74804f5a10c0bccc39acf55",
+            "after_sha256": "6622300e7d4a4b31f30079bc15ef7884552fbfed4716e10f325cd19bf080e485",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/041-shared-integration-runtime-persistence-and-migration-addendum-20.md": {
+            "before_sha256": "ace939d6ade0b427d2cd013b830c59854291016c942e40a51628b873450a5c11",
+            "after_sha256": "a990472bd5b9afb5ba71da01048683a875d03fd876d6901899bed3d78e333914",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/042-u11-prism-ii-usage-view-state-addendum-2026-08-18.md": {
+            "before_sha256": "1a754ebefb6490b00ce92a16819c283c802203396285f00f328457fb73ec254e",
+            "after_sha256": "ad093e67e12b3d14a604e7a7702aa858f57c1ff9c04e3dee358f8a3c17359b86",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/043-pmconcept7-recovery-settled-layout-addendum-2026-08-27.md": {
+            "before_sha256": "e8a5d2d348222180dc6d58941e70037230345967ea38838a066ece00473ef69f",
+            "after_sha256": "f25c2318f865109354000ea6bca8825ea7bc97d3e70be01f524293b06c7599db",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/044-packet-authoritative-storage-disposition-and-redaction-addendum-.md": {
+            "before_sha256": "5566b9d0df3fefd89289ea0b7bc2fae15fe5b0a73d69c0835d08d808d25b14fd",
+            "after_sha256": "97e9a8a0bf2ba7b5fa14263177ea65c60b210c6918f572b01b538ce85f81740f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/045-back-seat-driver-contract-family-persistence-disposition-addendu.md": {
+            "before_sha256": "36000590734de20e6c041e3783b4d68b05932dbdb0a9b2633104f35319a26074",
+            "after_sha256": "0550ceccdd2695af5e6da98e7f7445aecb5bb6c9fd42ca0ca53f3d631cf3e0c9",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/046-forge-backup-v2-and-go-tsnet-storage-redaction-transaction-2026-.md": {
+            "before_sha256": "546996d359da81c988edc85305c29ff455ae6403f8067a19cb5ebc78bf70e1ef",
+            "after_sha256": "76a5e2ee84caccc3cd331677b4fd9d7ec6757ee091ff66641d23c1f0ec0824d7",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/047-additive-correction-v4-records-replay-and-migration-matrix-2026-.md": {
+            "before_sha256": "e054fe3709e6b6d578f229535d83ad975df07db015eb9e80f7126a0c0c2a16e5",
+            "after_sha256": "e72adf2abdb39db522c1d9e0da01626e66a37d27ffd3e1f7499ec2933b45e1ea",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/048-working-notebook-and-context-transition-storage-addendum-2026-09.md": {
+            "before_sha256": "55a79696a4b56d6012d3fa77e3ea0edca582ff0d5c1f9e5a953a0c63198b94bd",
+            "after_sha256": "f53b577dc4f23723c39cf148c5ff9eeac31c1e79b3a421151c378a213ee43894",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/049-research-decision-disposition-persistence.md": {
+            "before_sha256": "1e95c57716243e36d53b2c9485154f72ef14accaa1824bbc2b88f8a76d5ea330",
+            "after_sha256": "daf64a098fb16ad0904ed6c11eca250c0d65aeff68af76529cfd81fc9b8e840f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/050-compaction-completion-persistence-contract-dl-039-and-dl-040.md": {
+            "before_sha256": "79939802effde0b4533c0a3088c12ec0e430fcbcf34867829760222289cfff3b",
+            "after_sha256": "c91efc154540f89d47ca07ca7560735fb11e8cb4b668dc4808466ef2d30a8bbf",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/051-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md": {
+            "before_sha256": "b8cdc2e921ae79a5531dcd635e086b8cfbeff5139fc404e3e4ffca8ead793e2f",
+            "after_sha256": "405a3beb947a1b71140e621673e43bb5cbdbd5814b027bbc8815a8fbb736f4ed",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/052-scoped-browser-event-persistence-2026-09-10.md": {
+            "before_sha256": "4aa3882b1c02feaf2afe29f7f20d30e23608cbcfe93b030e7dc694a107206bb0",
+            "after_sha256": "4593550e0f30b4bf4e1afcb1a0a62b3605cee80cfe76fc4c6991ba466ab706c9",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/053-jujutsu-d5-owner-requirements-2026-09-11.md": {
+            "before_sha256": "0f52b6369bf75eb7c6591097c30a5ee2ed6783c6f1c02f981174844d40456d76",
+            "after_sha256": "039822053236ff6fbee2906e298f4b4a196b0da4eb69c75230f2f0a0fa00f92d",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/054-run-start-index-consumers-and-checkpoint-2026-09-11.md": {
+            "before_sha256": "ad98ba7d38cdd378f6f68205ed53624cf87e8d0ceb223251746de85752f0ee2f",
+            "after_sha256": "d8313682e20d946f5334923fbc3327cd4c07e2bf6ab17c62c1846b1582aab29b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/055-browser-workspace-created-index-and-checkpoint-2026-09-11.md": {
+            "before_sha256": "741862d92866c269d27e2370a11d218a5120a7c059f92103b2c8bc520410a277",
+            "after_sha256": "2c961928e1ccc84a9a8ab355c0abd5b2bdcdcd7994a078290a8c3fb64eedf2d6",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/056-restore-point-created-consumer-checkpoint-contract.md": {
+            "before_sha256": "47d9cce1c414c4142bb300846b686339dd2bc0c27f8d2c59e759e1bcc72079fa",
+            "after_sha256": "93d7a99b048c34e9f4db4f20792296095daf87f6af3318ef063e5a13e4829b25",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/057-restore-point-retention-summary-contract.md": {
+            "before_sha256": "d08ea29d7af0b6f1195e4ec594da53d674c74ca61d97b3c3eff8a262bfafae5f",
+            "after_sha256": "3a5c5ef0dc108d7de5d2dba0b7d07a90b34ca9d38607f7698bd9afc175b34d96",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/058-run-start-and-restore-created-versioned-index-adoption.md": {
+            "before_sha256": "9e9bc72d3fd1a5a3c4adcdf6587d02a8ad3edc5adde5bfd0829a14dd757f7797",
+            "after_sha256": "2e0846e5788df8621aa34717dff435ed760e03cb49b8730569452c9888169863",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/059-browser-workspace-reset-filtered-checkpoint-2026-09-11.md": {
+            "before_sha256": "98024a2ecefa77092020bdd7596040e116a32c0dc73f815644c81b25f1a0193e",
+            "after_sha256": "2072b577e8068845e9a6240d9a403948945406addbad38b3d2dca44802121440",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/060-first-append-receipt-custody.md": {
+            "before_sha256": "ee7718cecd37fa94c2614c0a71734a2e7cc31e1456faa1948eaa19b8f262df18",
+            "after_sha256": "aea6e747bbce7041c8cbf126ad2db672e720966b4d5792fe13bacf7f28f7ab96",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/061-goal-body-storage-custody.md": {
+            "before_sha256": "2e65b102db4e71374deb0d285da09072d18f8e3823405a058a80a69151d2cec5",
+            "after_sha256": "7f0f6d7d67ea96e97b795ed75f7fff3cc1a1b7f78cb2775bf83c6f1f5ba73a31",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/062-restore-point-deletion-custody-and-checkpoint.md": {
+            "before_sha256": "5bf58ca0d75629dfd399c62fb460655c84b4be30f761dad995562ae9c3b21e00",
+            "after_sha256": "cc12b30a3c7fe61978cc14203dfc570189c024ded73feb57b6e66f5a20858895",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/063-restore-point-delete-original-result-custody.md": {
+            "before_sha256": "eba4fd3d4be098b76a5fcd20cb6f11826fa65721db0c651b5a9c50c7e2d98084",
+            "after_sha256": "80383c1be0e4d409511beb861914abb743f6962f1ba7b99734b2620b4d34e759",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/064-restore-point-expired-custody-and-checkpoint.md": {
+            "before_sha256": "31e8002611bed917bfafc7b4461e11d72bfb1f53bc187e072a35d41d42d8a65f",
+            "after_sha256": "fab99d4525e402f2fbca5dd9fd2a9dbae2aa0bd96069401265253f4d4040692f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/065-restore-point-original-admission-and-retained-custody-read-phase.md": {
+            "before_sha256": "0a1690439b1d5efd8ac1f2b636e916b386c6992db42f61c3e10b6257c920e015",
+            "after_sha256": "a58d3f6ee7683eb5cd9c37abeffad929d995ae5ebe4f2eeb8fd99d086769747b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/066-legal-hold-transition-custody-and-passive-history.md": {
+            "before_sha256": "5dd94db226b6d52872dc691e678fb8e2d4d56aea04e93c9935cc37abad209c9b",
+            "after_sha256": "6fcd1a17c7e3b972fe4748dc22080ba123871c9ff39e96c1748ab91638d8db6a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/067-original-standard-certification-receipt-custody.md": {
+            "before_sha256": "ac8e39b7f17adf35d149b7ed97654273771e1a2e9deb73da842b3891b179cc23",
+            "after_sha256": "d27d2bbe72350c5c99cac0ffa933ae323078e793ef4257718bea230987de3693",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/068-storage-integrity-finding-custody-and-read-contract.md": {
+            "before_sha256": "f8b96b455b46ccd34bfa91300e2481189633bc960790e0d565df9e844415770e",
+            "after_sha256": "5ac4b03ba8ea4a334b6770ad7b32823f6019f0a00323c52a4dfbc99597dffb42",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/069-platform-capability-decision-custody.md": {
+            "before_sha256": "f8cb85e2c956911e386ade712dd38ee5470e8728ad44d5fb691f6e00b0cac109",
+            "after_sha256": "c6c5d442bd5d9b31fc53adb8bde424dd9864e7d25b1ab43bfaac3522aded8078",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/070-boot-recovery-aggregate-and-original-producer-custody.md": {
+            "before_sha256": "292b2306e3ea241614ca2aecbbc747d5f5ed894335242d3f197158095cc6b0f8",
+            "after_sha256": "c70db2fecdf608987b2f97cb2e1b9b115ed57b1e791ec7324537c24c14d1e5d3",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/071-boot-earliest-receipt-continuity-and-activation.md": {
+            "before_sha256": "af318e8f168cfcdcc5c514132bba377c443993d16c8f0afc487b5a205f26bb7c",
+            "after_sha256": "9e8133f4db541213371ab070f944c4f123df8937e8eab7d758a1dd6ab706c26f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/072-recovery-original-action-custody-and-publication.md": {
+            "before_sha256": "94bf694b36a67364fd8883b39e49968a04e88c401a9f3ac7587523b1cd6e4ddd",
+            "after_sha256": "e9e6c80a23334a6fc22a0b2a3548cd45c8dbb6a02a220af7e5f1dbc0f3654de2",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/073-goal-start-original-command-custody-and-publication.md": {
+            "before_sha256": "0772197ca262e5710cd41ef7f12bf9aca271dc7ae543c910cd982d53cfed6a95",
+            "after_sha256": "b27a84b1a4a329ec04d3f889a794c3f4de3287b88f3442efdaa21e1abbf8efa3",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/074-sp-294-goal-start-original-command-custody-and-publication.md": {
+            "before_sha256": "8777ef419bff565ab437d81069174296bf62fdace8bca5fa96c776f252758e98",
+            "after_sha256": "c6126072b376cfb5dc3336bec58bfbbfd06651dd8a2c601cc332b27c9f4f67e5",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/075-compaction-original-native-source-phase-custody-and-detail-retir.md": {
+            "before_sha256": "5c7c692ab8f94555ec1e013162c5f39026aa61fcf317d768da06584a375a47f8",
+            "after_sha256": "463169df358beb857d98b86978a201374ac9407e3e1d0ebb02337b9df9978031",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/076-goal-created-passive-current-reader-and-original-command-members.md": {
+            "before_sha256": "178251bfbbb3977a7f9acefd74b0ff6798bc5b97ce80311e9e5411d9f48921b4",
+            "after_sha256": "ad960d038ee0d0b65c817dc2cabca87e714c91625231f93fff90c8917b541194",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/077-original-goal-update-source-physical-custody-and-publication.md": {
+            "before_sha256": "cb9563dbf15a5e426bcbe4ab528ad73bb3e5b264b51b365edf7806a5e9101279",
+            "after_sha256": "ab301d6af0753b102bc3106915d3eeb6c6c809258f82be71447f2a3449bc740a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/078-sp-314-original-standard-authority-families-and-fresh-whole-stor.md": {
+            "before_sha256": "1361e0dc4892f5db4ec5af08a999280fb49b104c15e0ce7e0cd3915f398b052e",
+            "after_sha256": "cd8aac59b2a0259d2df92b432b8a591f6782c9a3b0c37298a39aafdcf434e2ea",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/079-sp-315-certified-producer-current-and-retained-source-disclosure.md": {
+            "before_sha256": "2c2c90566a139e1b4a3b958a020fb6062b022d72c96e7dd23eb2d2dd5525e5c1",
+            "after_sha256": "5c463013427df54648edae6c3981ce81236a5c91c29a2480655ac4cb6fcd246a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/080-sp-316-seven-compact-authority-families-eleven-v7-profile-qualif.md": {
+            "before_sha256": "0fe1868dc955822b52a6c02815361dc920036386e79efc8f489feb7a84c2d826",
+            "after_sha256": "66f338ea2c5e49ef5b9e2c0f4cfd8001920061df3d58b3f3cebbb29c9535610c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/081-sp-317-two-projection-checkpoint-families-and-exact-rp-projectio.md": {
+            "before_sha256": "af12f1c99c9fea25d4533b3e1f19ba138eae64931f54aa858cc72fe7684ae703",
+            "after_sha256": "005647464e626d7e47c1ee4be7937ef06ac7ad537b494b47e11edeec543fa05f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/082-terminal-workgroup-moved-exact-passive-source-read.md": {
+            "before_sha256": "6be79774c57e30a5152095f24fb28284731cbbea19ad386983a1ef8fb242e603",
+            "after_sha256": "622446f6bb66e9323ed0cb9fec4a88f1991cae6196e6e99395a0ba77b09931bf",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/083-coordination-event-persistence-binding-dl-045-2026-09-25.md": {
+            "before_sha256": "2bdf69ea34377b10ede71c0b3402a543a782d0c1063eb77dbd67fce1bc8f077b",
+            "after_sha256": "49f75a7800a18dc9e3abcf48e1cae09e4b60f5d66879f3d02e56a860ed8799c3",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/manifest.json": {
+            "before_sha256": "6c31963d46a7ca5545e4559f65b91822091fdd9c711795f22f53b78989397204",
+            "after_sha256": "16bc68e72cc2f237e50792d1a17f4b736aa02f1fe3b243703d7b869a5ac8e8fb",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/storage-plan.md": {
+            "before_sha256": "6bcb9a18c9d8e7ab8daec194142a9bcc20485b00c992da0b8dcc19d3183deaff",
+            "after_sha256": "3f93bf2ba1abbb4e909a5116d747441ea809bebc18511b05a69b5f090faf0fe9",
+            "kind": "edited"
+          }
+        }
+      },
+      "SR-06": {
+        "severity": "note",
+        "commit": "b2397450e5815026d9b65a251635c44b4b0261ab",
+        "parent_commit": "4066d01cb24bca65a044da166598cf73dbee7d0b",
+        "committed_at_utc": "2026-09-25T12:20:15Z",
+        "finding": "The bucket binding's DL-045 search scope was one negative sentence and the branch had no search record.",
+        "repair": "The reviewer's sentence naming the search scope and its result is inserted in line 23608, after the search was re-run at the base (evidence sr06-search-at-base.txt). No line moves.",
+        "files": {
+          "Plans/.plan_index/coverage_report.json": {
+            "before_sha256": "79b0bdda2a020902a2b25c2884561880467513abfc7e122f9211418ba1e3f9de",
+            "after_sha256": "2d93badc04787e314934a0a32655ae621efb69e9d35e84b66fdbf74fe231f570",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/dependencies.json": {
+            "before_sha256": "edb1a13ee9797c328f184283084ae9ac62b258c0dfde054095c447c8da44d93c",
+            "after_sha256": "798bdba2e9f0d6b8d931336f94f313573a6ac6e9a15027eaa5f4ca1bdf4baf4f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/doc_cards.json": {
+            "before_sha256": "379c90dd67e19649f617e7cccb3fdd0b50d0edff04a8dabcd3b7a8703b683ac1",
+            "after_sha256": "351a6b6aab392efbc145d85fb758eb0c39334a187c6d1e3b137d9ef7b4e26d3d",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/node_readiness_report.json": {
+            "before_sha256": "5bb6dcfc7ba2d75cb1b837de235f5332b890b7b82e89136fc31dce8107cd5a22",
+            "after_sha256": "e87a59c90799f3c4b82db66bf90a4aa129d0ecffaeecaa6885377aeb79ff8bd1",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/plan_units.jsonl": {
+            "before_sha256": "ebeedf5d5dc48673d563f29e2265f5964d45d8ad289a9214fbdc0d5709f85773",
+            "after_sha256": "c9f27b367a15f1f4518b25ab4c69ee8bcd7d70e420681689c2f384d85027108a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/00-index.md": {
+            "before_sha256": "15a4d5f9a6294d93375a3f402511037ee19dd7d4a77fc8b816d4005a5ea34763",
+            "after_sha256": "f09eae9f595b39629f419ad0c2b0136a40fb14248a91371aab4c9044a1bb33cd",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/001-preamble.md": {
+            "before_sha256": "686528891d85e6667a8dfe25d08f1805ea9e2a6a48209242dc5dcba807c47331",
+            "after_sha256": "c1986777f1fcd189a61f0ec015745e592a13ee28a20220bd6e9d1476bf36bd25",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/002-canonical-owner-section-requirements.md": {
+            "before_sha256": "c85a2b2b446bb59e5dd25a82f13bf8668d5863a53d53176541142c85a3837e3b",
+            "after_sha256": "ae1370031d2bdfcf3e855973221d71eca99c9a1107d3bc94713efaa30c5ef9a6",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/003-summary.md": {
+            "before_sha256": "c212dabc329e2ec39fc0e08d34af94caa48fb847f696262b744077f370df2714",
+            "after_sha256": "41baeaf3a8716a81ffeda38f602ee4295be23e8e2a0ea3f9ec33561771bb22c4",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/004-table-of-contents.md": {
+            "before_sha256": "7d6a5649ee59163648cdee4668db132b4ba135fbefc10a4d81ab5f8957609357",
+            "after_sha256": "8f4651eefecb666b85b30b2840af8b136bf8bcedfcbca79277b99638cf1e5a0d",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/005-1.-definitions-and-concepts.md": {
+            "before_sha256": "6ec0dad5ec51ccf09d184d11e2aaf6d76de80b3249688139f53442d5816fdd36",
+            "after_sha256": "05785a1e7c8ec4cd91a4bf90ec69630077ef4b399dbe1c9a51a04e54b435909d",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/006-2.-how-we-re-going-to-do-it.md": {
+            "before_sha256": "eb47e67893d01d483f05aa54c4bcca4566c95e627c8a2c8fdb1dbcd2a5ab5cc5",
+            "after_sha256": "bc44908103721544af990affaaf34b5bbbc32ce7d6672019801ad189d9e06ae0",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/007-3.-implementation-checklist.md": {
+            "before_sha256": "fb754cc13c8063d25fd47fa89d74e478fcf3e9922a897f2464a124d76e329055",
+            "after_sha256": "bafe63eb8221f4b8f6a9ef3b98689b62870acbda2bfd4729233841ce2f755c7f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/008-4.-impact-on-chat-assistant-interview.md": {
+            "before_sha256": "8cf380716819473601e5be49bd69341c0353c5e156af77350b5aec166db2b5cb",
+            "after_sha256": "82fde6c5c036b198428ffc1e084f67294216f4ac156bf78b60d9eb15d5d4c91e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/009-5.-gaps-and-how-we-address-them.md": {
+            "before_sha256": "1dc7fe545128c8ba36fc679c82c05dd3f917265eb520a018805d8bc6397686e2",
+            "after_sha256": "d5740c424b4b1efc8ad9148cbdabd654b1e8a82e21a7e9ebb01e496acc2a057a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/010-6.-potential-problems-and-solutions.md": {
+            "before_sha256": "a3e06c8212fc3e02d15e84f548655179699bb4ad9a0a99bb357be76188d0794e",
+            "after_sha256": "6d44f2f33cc802ebf5a93373d4dca204cb69de690ce05a7eebb5e97344e02e7c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/011-7.-backup-restore-compaction-and-optional-storage-enhancements.md": {
+            "before_sha256": "002d9bc4324cf825c7cd6cacfd9f6980552c78f27c27065a7e8b06fde90a3b9b",
+            "after_sha256": "8f79aea195bc5bd840d4d78d1731eb6dc936f63b5ca1752f2e184eb988ec7d43",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/012-8.-implementation-order-and-testing.md": {
+            "before_sha256": "a0bc7c9970fc891935dea582c301c19c7b43e1f98827e2816d85f9fcd2758396",
+            "after_sha256": "f1e636f5ca63bf9a32b2b07ff148f3629f85c9146e3b962323ba1cc10bb4cf3f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/013-version-history.md": {
+            "before_sha256": "bb515015f413afdaa9fe7c6ff8ab07817d1c94ccfdcd357cd90a21dec14adaaf",
+            "after_sha256": "5051bad80447e96ca949899da5f7a0cfa1388765cdcf8b023e86dc991f0a0948",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md": {
+            "before_sha256": "fd9fa730a8b8ba17bb96513725e50c8f5c4d604a2bf0bd3ebc3d0111b207bb5a",
+            "after_sha256": "2697dd158235cbaadf7043780c30f410409dcce09160cd06f672c46a1b0204d2",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md": {
+            "before_sha256": "3fe53781b84e72a8f5902f5f4f3eac6f255591c1cddfa66f473ebc53b6fa02f1",
+            "after_sha256": "407231f663ba903905ce3d362e00bc3c96e1b522cab263758fe98d68a5103ce3",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md": {
+            "before_sha256": "9c6d775681764bd6a51604a395ca55d4d07a278d7d4eae9051bf00593be7a554",
+            "after_sha256": "305a2541b2477b6b5c11be861d6c50768a2bde4e3b216920ddeeb727b93eb660",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md": {
+            "before_sha256": "1ba6651b185d959d1a149e465b8b9d6459720252c442f87e510407703414fd4b",
+            "after_sha256": "1933cdbaf75946d3c8667937ca75ca2b15dd7c004cf8d9310c04c8e137e277eb",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/018-permission-snapshot-storage-and-safe-point-namespace-addendum.md": {
+            "before_sha256": "04aace0f181c95d95d1303c110df5cef718fdeaf225e18f537b4a57766f64c28",
+            "after_sha256": "9f032c34e70c99827393955ea645cd727d15ce21b07dd3c12650d41e8d8ffdee",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/019-assistant-worktree-binding-storage-addendum.md": {
+            "before_sha256": "7fef4e05cfdb5536a24399933c21294db63b5df4f951979e3d13fc27efd95bf9",
+            "after_sha256": "f0a9dbd9bbcfef8ff885b236b840f0b96cfdb8acd2d0344800dfeb0fc84aa5ee",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/020-8.-web-content-caching-persistence.md": {
+            "before_sha256": "37eee9c5e36f719d80c1b56dfe6f55ff744a1cd97b7c1f6f91490acb3c235e73",
+            "after_sha256": "730f470f1c326daff6b11d1056b8a98a0fbc5d6e62fb44e14afb068f1a19c7b7",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/021-owner-consumer-map.md": {
+            "before_sha256": "a2e57f194808058b988e250f0e832254408deaab69b110938784cb51ea53383f",
+            "after_sha256": "d0305da1ba6eef0ac7ff05cecda6359a5d20f9a490707eac451decf0248016a9",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/022-planunits.md": {
+            "before_sha256": "a75c75506a2923f709056a5af5b5cf5731c01962cbf73493476dbb468f012922",
+            "after_sha256": "adf8bd39cc989ef7f1a68633778b09ece307b94f7b6e66d5ed8d9aadbdf09ba6",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/023-migration-coverage.md": {
+            "before_sha256": "93d03b2bca95a79756ea2cf4d6cfc68eff728f2e35a72cdaa093b0d91e29c789",
+            "after_sha256": "43de80d8186393827bda36a0b3ff6efcbb840bc2a4dbf5df031c3c04de4c7c77",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/024-ledger-compile-addendum-pldg-20260614-001.md": {
+            "before_sha256": "d757ef531ea28662737d946d322b699b4f1a2dd2afcad900793162c7d9f3d8ac",
+            "after_sha256": "f9923c5e6b2460289fe46ec19335d38855742eedce1b1aea97dba9f8319b86e3",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/025-ledger-compile-addendum-pldg-20260616-001.md": {
+            "before_sha256": "d2d4bb377a5ab8ca919148130e678ce4c2805e065afe4d415671da245ec06b5a",
+            "after_sha256": "20f450acc99060fe43506139ffa59e01b773aeb5abb7d54e5d96844cefd8a0a0",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/026-ledger-compile-addendum-pldg-20260616-002.md": {
+            "before_sha256": "0922cb9e187df0c649662c193bb7c2abe688de4a1614685491fa831d856da917",
+            "after_sha256": "f1a6f0b7225f6162ffc880ac01c1f45548feb61267b59058472b05e51efc4ebf",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md": {
+            "before_sha256": "a4881f5aeef6d95b8f95ed86b19e6cf76802b8d203d80bdf6fa2e030fac0b1fb",
+            "after_sha256": "11c0c612eeb189b87acd745345e44ae1f0bdf3d9809dcff2dde1e4c338a142e1",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/028-ledger-compile-addendum-pldg-20260622-001-fff.md": {
+            "before_sha256": "9488aef1e9a27d6c312e97ffd2e1bdd7c8b0970111f9acf006ddccff4241e90c",
+            "after_sha256": "72f661822ab0ddef02bf88cff81f77189ed48cfb89a9d44a544120645cac9530",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/029-ledger-compile-addendum-pldg-20260626-001-feature-name.md": {
+            "before_sha256": "75634882c4d64cb3bd9026102efede8f21536268132bf201b7a9ec1fdbbf7a61",
+            "after_sha256": "51df86023a3182c7fdd0413f31153673578ab741218f786bd940b27fcd8e02a7",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md": {
+            "before_sha256": "9cdee0d653fe28e165371dbee4332e3c44141c714d8680cf76d56742144549c3",
+            "after_sha256": "0fb488a041752e32efe1ae88fcb74e5bdc2f68923c00d2cc741509e3674ae575",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md": {
+            "before_sha256": "1575005027d4287404767cfb36e80692c8b6490113c778a5c89039860cfbb53b",
+            "after_sha256": "86c38cddafc48031bd5ded5f97509d40660807c25d3657529147cc4c49c66517",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md": {
+            "before_sha256": "daac0ce74646cdbc49e45cbe053a1d089a7dbae3fa8c9cdeadb98588b195ab9c",
+            "after_sha256": "1adde128ec1e6851a323d5ebf5c6ee73fb94732ceac2ac205225ef8c42114cdd",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md": {
+            "before_sha256": "1824864a4dca4ab3000180f041ce6ba55815590791d750b0de4a18bd19933f42",
+            "after_sha256": "86ae945ba6fcf2352241f082af6fd0e733b9a7a2b617afd13a6056b71f6b9ae0",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/034-fable-deferred-action-concrete-repair-addendum-2026-07-08.md": {
+            "before_sha256": "71e122dd2a079943ef02791f9955bc120cef353f0ad326ee911a838dca3c70bf",
+            "after_sha256": "92ad353b18c66595c1e7c54e74887b6eb971e27eed329a9f66ada78dfc34762a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/035-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md": {
+            "before_sha256": "6f7b06e5d015ee463c1dd495cefb5503c47d3858246db4263ea826d3d30fc66b",
+            "after_sha256": "d923d196e7408a9f889b3825a8ffd1f7c05836a9aad0d313fe5fa8f571cda75e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/036-usage-gui-propagation-addendum-2026-07-09.md": {
+            "before_sha256": "5195bbd6ee896d84bd9f8f8fc70c0ab03231c13d1d919cb5da9191741019ffaa",
+            "after_sha256": "2c19ac0cff3f42e2d8a365d5e5086465bdc649da37aebcc48002e0ff9c72930e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/037-case-l-durable-state-owner-canon-2026-07-17.md": {
+            "before_sha256": "2a54585a9d1d258b8900a85189b7f559b941cb879fc43291066dccf9acf036c1",
+            "after_sha256": "519167bd6c5ba7e816886f757a817ce0cd62dc2d35781948d3cdee204c53a7d4",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/038-known-37-case-l-owner-materialization.md": {
+            "before_sha256": "bac1686d8423aaab5b072d10ea4e763f86a8f1bd03db52f674453c9be5f58f95",
+            "after_sha256": "3b32d4155161f4b4a12e55203bdf1257aeeab77f3bff309a79e3da6d00f14cf4",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/039-pmconcept7-home-workspace-layout-2026-08-04.md": {
+            "before_sha256": "0d77e31ed01a2872b997e0337a1a8e2543ad0a2f006a842265ea092f2b4563ed",
+            "after_sha256": "66b29abbb0ca5b712485c9e7ba196c48028a1e1ccf2e69b64c35f861509f708f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/040-run-debug-revival-addendum-2026-07-27.md": {
+            "before_sha256": "6622300e7d4a4b31f30079bc15ef7884552fbfed4716e10f325cd19bf080e485",
+            "after_sha256": "a3f29551182072b11b993136b79900e1f433083fa6f0f72762eee930574bde09",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/041-shared-integration-runtime-persistence-and-migration-addendum-20.md": {
+            "before_sha256": "a990472bd5b9afb5ba71da01048683a875d03fd876d6901899bed3d78e333914",
+            "after_sha256": "a0241f670d40ac0497c9520157930110b4802f0c9f0c91b08379e08f63d07007",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/042-u11-prism-ii-usage-view-state-addendum-2026-08-18.md": {
+            "before_sha256": "ad093e67e12b3d14a604e7a7702aa858f57c1ff9c04e3dee358f8a3c17359b86",
+            "after_sha256": "bc2530de3b057c7279d65ce1c467b7e27456896a5744614f993679643578afc9",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/043-pmconcept7-recovery-settled-layout-addendum-2026-08-27.md": {
+            "before_sha256": "f25c2318f865109354000ea6bca8825ea7bc97d3e70be01f524293b06c7599db",
+            "after_sha256": "11ec2cdd1620d906e2eb333de6158153dbb21bfc2395178b4f16d3a9a01fd623",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/044-packet-authoritative-storage-disposition-and-redaction-addendum-.md": {
+            "before_sha256": "97e9a8a0bf2ba7b5fa14263177ea65c60b210c6918f572b01b538ce85f81740f",
+            "after_sha256": "56e3c6dc658e8a9cb542625e6fe1a06d02265ee08869db4f329603b0de5fdbdb",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/045-back-seat-driver-contract-family-persistence-disposition-addendu.md": {
+            "before_sha256": "0550ceccdd2695af5e6da98e7f7445aecb5bb6c9fd42ca0ca53f3d631cf3e0c9",
+            "after_sha256": "5c7e5294747e6b1e0da953d36173da90fe26c777892015fff1a2d42ba0031eee",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/046-forge-backup-v2-and-go-tsnet-storage-redaction-transaction-2026-.md": {
+            "before_sha256": "76a5e2ee84caccc3cd331677b4fd9d7ec6757ee091ff66641d23c1f0ec0824d7",
+            "after_sha256": "8a70ec69e311c630fd7b6d2cf2fcc2ec93ded231682b6363447efaeb8061a8e1",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/047-additive-correction-v4-records-replay-and-migration-matrix-2026-.md": {
+            "before_sha256": "e72adf2abdb39db522c1d9e0da01626e66a37d27ffd3e1f7499ec2933b45e1ea",
+            "after_sha256": "b755167bdf26fda7df956a76f8a4a625f651faeb6f783b3274478faccf410a03",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/048-working-notebook-and-context-transition-storage-addendum-2026-09.md": {
+            "before_sha256": "f53b577dc4f23723c39cf148c5ff9eeac31c1e79b3a421151c378a213ee43894",
+            "after_sha256": "e1e7f4843f7f0745adea1463b7c44412924fce1c849419716e50566202e96746",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/049-research-decision-disposition-persistence.md": {
+            "before_sha256": "daf64a098fb16ad0904ed6c11eca250c0d65aeff68af76529cfd81fc9b8e840f",
+            "after_sha256": "a2c8deab14272580098f1e6e27b29229a9ea5d9cfd1425734eb12469ea535584",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/050-compaction-completion-persistence-contract-dl-039-and-dl-040.md": {
+            "before_sha256": "c91efc154540f89d47ca07ca7560735fb11e8cb4b668dc4808466ef2d30a8bbf",
+            "after_sha256": "c4f68cc1d20e466183522c308d1261951660d95c57084702faa233c09bea7429",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/051-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md": {
+            "before_sha256": "405a3beb947a1b71140e621673e43bb5cbdbd5814b027bbc8815a8fbb736f4ed",
+            "after_sha256": "ffa515ee1578d8af859d40d542422c5ae3b0e944cd65b7893fd63537d29928ed",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/052-scoped-browser-event-persistence-2026-09-10.md": {
+            "before_sha256": "4593550e0f30b4bf4e1afcb1a0a62b3605cee80cfe76fc4c6991ba466ab706c9",
+            "after_sha256": "afc334d6921372cad04dbed8d823f4bddea9cbddfad8f7e44c8a6b1772969046",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/053-jujutsu-d5-owner-requirements-2026-09-11.md": {
+            "before_sha256": "039822053236ff6fbee2906e298f4b4a196b0da4eb69c75230f2f0a0fa00f92d",
+            "after_sha256": "d9d9e82ef4dc4ac47297e364a119f6dbda53f009bdadb2b15180033c8a325692",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/054-run-start-index-consumers-and-checkpoint-2026-09-11.md": {
+            "before_sha256": "d8313682e20d946f5334923fbc3327cd4c07e2bf6ab17c62c1846b1582aab29b",
+            "after_sha256": "1e77f119b68ae6cff693cb82a4d575222cb16c0ab696ec0fb9ccb302c792dac3",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/055-browser-workspace-created-index-and-checkpoint-2026-09-11.md": {
+            "before_sha256": "2c961928e1ccc84a9a8ab355c0abd5b2bdcdcd7994a078290a8c3fb64eedf2d6",
+            "after_sha256": "14035951485682d7afa9bf2b6139a85749553f22f03ec0c6c672e3b0695adec4",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/056-restore-point-created-consumer-checkpoint-contract.md": {
+            "before_sha256": "93d7a99b048c34e9f4db4f20792296095daf87f6af3318ef063e5a13e4829b25",
+            "after_sha256": "09e682f1440e5aa4deb23d3d971293d858b64c9da37f05d87c90c14a04929abe",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/057-restore-point-retention-summary-contract.md": {
+            "before_sha256": "3a5c5ef0dc108d7de5d2dba0b7d07a90b34ca9d38607f7698bd9afc175b34d96",
+            "after_sha256": "d38d9e5fbcaec6df5703b6b8b91d04063083446f59cd7e55499f02677254f435",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/058-run-start-and-restore-created-versioned-index-adoption.md": {
+            "before_sha256": "2e0846e5788df8621aa34717dff435ed760e03cb49b8730569452c9888169863",
+            "after_sha256": "ef547433e9ab40861d5a29431bfccbda12da23dc6988a27c7646729f396b619d",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/059-browser-workspace-reset-filtered-checkpoint-2026-09-11.md": {
+            "before_sha256": "2072b577e8068845e9a6240d9a403948945406addbad38b3d2dca44802121440",
+            "after_sha256": "a550d80df25b7610b8f5c958430d0b8e2efbb47cf0742c70e7a1a6ce4a8f3a9c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/060-first-append-receipt-custody.md": {
+            "before_sha256": "aea6e747bbce7041c8cbf126ad2db672e720966b4d5792fe13bacf7f28f7ab96",
+            "after_sha256": "0f6d616df436f273064d74927e71dd2a1134a6234856d4417701ee0103c3f8f7",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/061-goal-body-storage-custody.md": {
+            "before_sha256": "7f0f6d7d67ea96e97b795ed75f7fff3cc1a1b7f78cb2775bf83c6f1f5ba73a31",
+            "after_sha256": "1d416f859caf341a0433800606459a44ad85735ab81eb5c1fc22654973267fa2",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/062-restore-point-deletion-custody-and-checkpoint.md": {
+            "before_sha256": "cc12b30a3c7fe61978cc14203dfc570189c024ded73feb57b6e66f5a20858895",
+            "after_sha256": "55ac6f864d8c0298db1f2d77372fabf7b56ebda8393176dcb0326bb91d38e9fd",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/063-restore-point-delete-original-result-custody.md": {
+            "before_sha256": "80383c1be0e4d409511beb861914abb743f6962f1ba7b99734b2620b4d34e759",
+            "after_sha256": "835fe3eee4534a394e54b1caf9cc49cadbaefbf88b696d1a380e0ba97e399f0c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/064-restore-point-expired-custody-and-checkpoint.md": {
+            "before_sha256": "fab99d4525e402f2fbca5dd9fd2a9dbae2aa0bd96069401265253f4d4040692f",
+            "after_sha256": "1b152d7feebd804f20488a9891562902a74ea2fcf1d568c4bbf18fbcb64a7129",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/065-restore-point-original-admission-and-retained-custody-read-phase.md": {
+            "before_sha256": "a58d3f6ee7683eb5cd9c37abeffad929d995ae5ebe4f2eeb8fd99d086769747b",
+            "after_sha256": "417102ae0c5fd01a2f1bedb10cead49a727391c29c6396c3ffd5817e53ea6562",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/066-legal-hold-transition-custody-and-passive-history.md": {
+            "before_sha256": "6fcd1a17c7e3b972fe4748dc22080ba123871c9ff39e96c1748ab91638d8db6a",
+            "after_sha256": "bf16868bb82d00e9dc8a87027bdadc63fa4b4988efb62cdf0f616c2946716df1",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/067-original-standard-certification-receipt-custody.md": {
+            "before_sha256": "d27d2bbe72350c5c99cac0ffa933ae323078e793ef4257718bea230987de3693",
+            "after_sha256": "fff6a91969d5278ec7a3c0a33501f041935c6fcad74ec230fae22f3b40ae8de2",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/068-storage-integrity-finding-custody-and-read-contract.md": {
+            "before_sha256": "5ac4b03ba8ea4a334b6770ad7b32823f6019f0a00323c52a4dfbc99597dffb42",
+            "after_sha256": "289a4feb1a9583ea926ff599b3138290b15a2754e460b21d2d0f017152835f68",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/069-platform-capability-decision-custody.md": {
+            "before_sha256": "c6c5d442bd5d9b31fc53adb8bde424dd9864e7d25b1ab43bfaac3522aded8078",
+            "after_sha256": "7136aaf58a3927308a37c0407568172a6ba043134c275fbeeaaaf0bbe745802c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/070-boot-recovery-aggregate-and-original-producer-custody.md": {
+            "before_sha256": "c70db2fecdf608987b2f97cb2e1b9b115ed57b1e791ec7324537c24c14d1e5d3",
+            "after_sha256": "92fe5a21e2425ca934a18afbe606031b28c04bbe8108e5141360703168e3ebfc",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/071-boot-earliest-receipt-continuity-and-activation.md": {
+            "before_sha256": "9e8133f4db541213371ab070f944c4f123df8937e8eab7d758a1dd6ab706c26f",
+            "after_sha256": "50bab594b02ec8ec4e7d0973284ec6efd2bce2825b5cb4b1105d5c1e8ca4f28b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/072-recovery-original-action-custody-and-publication.md": {
+            "before_sha256": "e9e6c80a23334a6fc22a0b2a3548cd45c8dbb6a02a220af7e5f1dbc0f3654de2",
+            "after_sha256": "2116bebef2c3014e023bffd929fe8c6763aec6e39ec82bada767aae54908818b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/073-goal-start-original-command-custody-and-publication.md": {
+            "before_sha256": "b27a84b1a4a329ec04d3f889a794c3f4de3287b88f3442efdaa21e1abbf8efa3",
+            "after_sha256": "f9b45491c1c628891dea829fb6c73632c9191cd31d8d67a9e5512a08afe7e30f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/074-sp-294-goal-start-original-command-custody-and-publication.md": {
+            "before_sha256": "c6126072b376cfb5dc3336bec58bfbbfd06651dd8a2c601cc332b27c9f4f67e5",
+            "after_sha256": "6f10bf54bf873d0c42a71563d46463288832d8c315a966598404246b73c05e12",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/075-compaction-original-native-source-phase-custody-and-detail-retir.md": {
+            "before_sha256": "463169df358beb857d98b86978a201374ac9407e3e1d0ebb02337b9df9978031",
+            "after_sha256": "11f756ccb048f532e353413adc88cca15f6741716d962f103671ccfc24457fb2",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/076-goal-created-passive-current-reader-and-original-command-members.md": {
+            "before_sha256": "ad960d038ee0d0b65c817dc2cabca87e714c91625231f93fff90c8917b541194",
+            "after_sha256": "021f863cac341dc13b8986939189ee63fac285f227c6206781fd649ad61b73ab",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/077-original-goal-update-source-physical-custody-and-publication.md": {
+            "before_sha256": "ab301d6af0753b102bc3106915d3eeb6c6c809258f82be71447f2a3449bc740a",
+            "after_sha256": "754ae7efab3d279cb8e62a9db909ccfed4d309b32905c89a85db609f7adc6c3f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/078-sp-314-original-standard-authority-families-and-fresh-whole-stor.md": {
+            "before_sha256": "cd8aac59b2a0259d2df92b432b8a591f6782c9a3b0c37298a39aafdcf434e2ea",
+            "after_sha256": "f3d05c613d13befbd0ce78b9b7505e815ddd1c105c58bfa14b5a2530574f1b11",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/079-sp-315-certified-producer-current-and-retained-source-disclosure.md": {
+            "before_sha256": "5c463013427df54648edae6c3981ce81236a5c91c29a2480655ac4cb6fcd246a",
+            "after_sha256": "e8598209234e23b57496777a1f5ce24014eea914af640b1471f0ec0abed49d01",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/080-sp-316-seven-compact-authority-families-eleven-v7-profile-qualif.md": {
+            "before_sha256": "66f338ea2c5e49ef5b9e2c0f4cfd8001920061df3d58b3f3cebbb29c9535610c",
+            "after_sha256": "00316f3f1b25e5a223e2c82efa34608e1d7aca2bae26dc513fc80120d03031c5",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/081-sp-317-two-projection-checkpoint-families-and-exact-rp-projectio.md": {
+            "before_sha256": "005647464e626d7e47c1ee4be7937ef06ac7ad537b494b47e11edeec543fa05f",
+            "after_sha256": "ae47326db3244647fe8151d267c19b947ef249218a0639ad93e79dce86146c3c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/082-terminal-workgroup-moved-exact-passive-source-read.md": {
+            "before_sha256": "622446f6bb66e9323ed0cb9fec4a88f1991cae6196e6e99395a0ba77b09931bf",
+            "after_sha256": "f6074fd41780bd0215f5e0f556e85247b090dabbef2e5024757ea8fe7bea464a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/083-coordination-event-persistence-binding-dl-045-2026-09-25.md": {
+            "before_sha256": "49f75a7800a18dc9e3abcf48e1cae09e4b60f5d66879f3d02e56a860ed8799c3",
+            "after_sha256": "9daf9aaaa5302d72ee36ad6eb957878de1bef70f8d39a73fc6749f5068a302d6",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/manifest.json": {
+            "before_sha256": "16bc68e72cc2f237e50792d1a17f4b736aa02f1fe3b243703d7b869a5ac8e8fb",
+            "after_sha256": "6a230f9270cee1ac581ee7baa3e1413f10d453c4b87e9e9854f8f0cdc40356a3",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/storage-plan.md": {
+            "before_sha256": "3f93bf2ba1abbb4e909a5116d747441ea809bebc18511b05a69b5f090faf0fe9",
+            "after_sha256": "05d4a27e7958199c7c852931154fac72043cb01111ef586dbd6bde116f10e894",
+            "kind": "edited"
+          }
+        }
+      },
+      "SR-07": {
+        "severity": "note",
+        "commit": "c1eed503c95acd4ae9758a8cf068a15640a6b658",
+        "parent_commit": "b2397450e5815026d9b65a251635c44b4b0261ab",
+        "committed_at_utc": "2026-09-25T12:21:57Z",
+        "finding": "The DL-084 assignment at line 17286 did not name its 19 families, so the line each of the 19 subagent rows cites did not contain that row's event type.",
+        "repair": "The reviewer's words name the 19 families by CV-267, CV-268 and CV-269 on line 17286, which the 19 rows cite; the line does not move, so no citation is re-pointed.",
+        "files": {
+          "Plans/.plan_index/coverage_report.json": {
+            "before_sha256": "2d93badc04787e314934a0a32655ae621efb69e9d35e84b66fdbf74fe231f570",
+            "after_sha256": "e02b22346d6865469d1d7f5aab08b8dc33988ee6f58a8d477e87680bc939571f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/dependencies.json": {
+            "before_sha256": "798bdba2e9f0d6b8d931336f94f313573a6ac6e9a15027eaa5f4ca1bdf4baf4f",
+            "after_sha256": "4381b4b6080a43c9485117925468b5c493afde32a011a0047a1fcd9822c1cec9",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/doc_cards.json": {
+            "before_sha256": "351a6b6aab392efbc145d85fb758eb0c39334a187c6d1e3b137d9ef7b4e26d3d",
+            "after_sha256": "74563eb3c3d76314fdb5a9aad616fe53fc3d7fcb357b5bd387b3b776d73593c6",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/node_readiness_report.json": {
+            "before_sha256": "e87a59c90799f3c4b82db66bf90a4aa129d0ecffaeecaa6885377aeb79ff8bd1",
+            "after_sha256": "e9545895a65f440131c4d03f25b40e4edf7187c5560723f1dab7ee308dcf3afc",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/plan_units.jsonl": {
+            "before_sha256": "c9f27b367a15f1f4518b25ab4c69ee8bcd7d70e420681689c2f384d85027108a",
+            "after_sha256": "c2be629504374af6977730b8676e664b2d128c17c0d3a5854a8451e5e9c18ee1",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/00-index.md": {
+            "before_sha256": "f09eae9f595b39629f419ad0c2b0136a40fb14248a91371aab4c9044a1bb33cd",
+            "after_sha256": "e4f26bab77fc857d9a851ec98914f75f9c2f537aa7ef41cf4a5cc561f97112e8",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/001-preamble.md": {
+            "before_sha256": "c1986777f1fcd189a61f0ec015745e592a13ee28a20220bd6e9d1476bf36bd25",
+            "after_sha256": "7e5c00f15932c09659285fa6fcc97796e3b49233e2a1aae06b78de630d7366fa",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/002-canonical-owner-section-requirements.md": {
+            "before_sha256": "ae1370031d2bdfcf3e855973221d71eca99c9a1107d3bc94713efaa30c5ef9a6",
+            "after_sha256": "b2d13e5d41815fb52711530f99059f1c044132218665a49ad4afa242d73caf20",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/003-summary.md": {
+            "before_sha256": "41baeaf3a8716a81ffeda38f602ee4295be23e8e2a0ea3f9ec33561771bb22c4",
+            "after_sha256": "0483d33145945750a4ff0f186d000de8d5d6ee41e96ec74d516c34b48b4aab29",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/004-table-of-contents.md": {
+            "before_sha256": "8f4651eefecb666b85b30b2840af8b136bf8bcedfcbca79277b99638cf1e5a0d",
+            "after_sha256": "e9668ac5c33f55e61f4cb81a5c12d895ef073e12dafca1e3942aa7d64b10f65c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/005-1.-definitions-and-concepts.md": {
+            "before_sha256": "05785a1e7c8ec4cd91a4bf90ec69630077ef4b399dbe1c9a51a04e54b435909d",
+            "after_sha256": "dd84c0d9b5ce2a326a75a9d966582b5870d405125d7e5c344e4d53664ee3786d",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/006-2.-how-we-re-going-to-do-it.md": {
+            "before_sha256": "bc44908103721544af990affaaf34b5bbbc32ce7d6672019801ad189d9e06ae0",
+            "after_sha256": "0fc0a227f21378c18c5301753d153b49c514392870ffaaf4c66b498e54cbcdd9",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/007-3.-implementation-checklist.md": {
+            "before_sha256": "bafe63eb8221f4b8f6a9ef3b98689b62870acbda2bfd4729233841ce2f755c7f",
+            "after_sha256": "12f3c8e629b005901a8174fa0a3763ec9d22a401c9c110fc112a555edca2dbbd",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/008-4.-impact-on-chat-assistant-interview.md": {
+            "before_sha256": "82fde6c5c036b198428ffc1e084f67294216f4ac156bf78b60d9eb15d5d4c91e",
+            "after_sha256": "b942c4e5117f64ed73c3d4a552f3c4a928c9fd19768fc6f679e6e7fdd63f0a72",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/009-5.-gaps-and-how-we-address-them.md": {
+            "before_sha256": "d5740c424b4b1efc8ad9148cbdabd654b1e8a82e21a7e9ebb01e496acc2a057a",
+            "after_sha256": "a0f182cd5a97ee75051cc9df917f33814473f912e6781f49c17a4f42eca5025a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/010-6.-potential-problems-and-solutions.md": {
+            "before_sha256": "6d44f2f33cc802ebf5a93373d4dca204cb69de690ce05a7eebb5e97344e02e7c",
+            "after_sha256": "b04f5addca6fa347205e2fc9d6a0315897868b198cff1f108d0b5298c6fa645f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/011-7.-backup-restore-compaction-and-optional-storage-enhancements.md": {
+            "before_sha256": "8f79aea195bc5bd840d4d78d1731eb6dc936f63b5ca1752f2e184eb988ec7d43",
+            "after_sha256": "40fdbbe28b44e66ad32809ab3c2369364f30a182d0b8e96f5f94f09b579c1f71",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/012-8.-implementation-order-and-testing.md": {
+            "before_sha256": "f1e636f5ca63bf9a32b2b07ff148f3629f85c9146e3b962323ba1cc10bb4cf3f",
+            "after_sha256": "4b267b22ea15c622c45dc4cb1a545b0d9aaa42e1edeb9b186235138f4fea3e19",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/013-version-history.md": {
+            "before_sha256": "5051bad80447e96ca949899da5f7a0cfa1388765cdcf8b023e86dc991f0a0948",
+            "after_sha256": "bf1303e579d467732c302226f915c6f8ec79af279463579849bf523d96431581",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md": {
+            "before_sha256": "2697dd158235cbaadf7043780c30f410409dcce09160cd06f672c46a1b0204d2",
+            "after_sha256": "d5d13c1779e871386857460e0c37566e251e9a910a0adc6d441fae91b3114084",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md": {
+            "before_sha256": "407231f663ba903905ce3d362e00bc3c96e1b522cab263758fe98d68a5103ce3",
+            "after_sha256": "e1fee8fbc18904565d111601c5c0018204afef550d247a846a2f4b3b92dba845",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md": {
+            "before_sha256": "305a2541b2477b6b5c11be861d6c50768a2bde4e3b216920ddeeb727b93eb660",
+            "after_sha256": "bbd8bdc69b55146e86726509e45fa89b932dd2ea754f4c4ad37dfdba7a6ecb0c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md": {
+            "before_sha256": "1933cdbaf75946d3c8667937ca75ca2b15dd7c004cf8d9310c04c8e137e277eb",
+            "after_sha256": "6def936be395c8cd2a8c2c71281e3deffd86511b2a2a511765a8cee278887376",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/018-permission-snapshot-storage-and-safe-point-namespace-addendum.md": {
+            "before_sha256": "9f032c34e70c99827393955ea645cd727d15ce21b07dd3c12650d41e8d8ffdee",
+            "after_sha256": "a67a8bd7282706dcb348f61293e0f0afc8fdee6ecc6ed4b253e4018e13498c80",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/019-assistant-worktree-binding-storage-addendum.md": {
+            "before_sha256": "f0a9dbd9bbcfef8ff885b236b840f0b96cfdb8acd2d0344800dfeb0fc84aa5ee",
+            "after_sha256": "9c3b526e73d1c7b2bf5832ad31dd03fbe4a847eab5ce69d80dd762c2d582d0aa",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/020-8.-web-content-caching-persistence.md": {
+            "before_sha256": "730f470f1c326daff6b11d1056b8a98a0fbc5d6e62fb44e14afb068f1a19c7b7",
+            "after_sha256": "e008b8498f1badad0b3a9d5742ffc20808e39dbc58a758c48c0d0203a56b721a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/021-owner-consumer-map.md": {
+            "before_sha256": "d0305da1ba6eef0ac7ff05cecda6359a5d20f9a490707eac451decf0248016a9",
+            "after_sha256": "fd0402b5642411000f4025ea7c7a59322ed6b201244540307b9b8824445c2453",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/022-planunits.md": {
+            "before_sha256": "adf8bd39cc989ef7f1a68633778b09ece307b94f7b6e66d5ed8d9aadbdf09ba6",
+            "after_sha256": "8c11b6c4d959f887e5f6df6062216c8cc440591edf6a9c7ea644651708472ab7",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/023-migration-coverage.md": {
+            "before_sha256": "43de80d8186393827bda36a0b3ff6efcbb840bc2a4dbf5df031c3c04de4c7c77",
+            "after_sha256": "e82d274126f24301ddae0d59151dc31c89066ccdb0986cd32ce6ea56dbd93d9b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/024-ledger-compile-addendum-pldg-20260614-001.md": {
+            "before_sha256": "f9923c5e6b2460289fe46ec19335d38855742eedce1b1aea97dba9f8319b86e3",
+            "after_sha256": "7152555e89d11a8269a212e657ea28840b14a6acc6b1f2fd2cb0eafdeae22d43",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/025-ledger-compile-addendum-pldg-20260616-001.md": {
+            "before_sha256": "20f450acc99060fe43506139ffa59e01b773aeb5abb7d54e5d96844cefd8a0a0",
+            "after_sha256": "b5a04f511d7c4b74b889b2dd1aa12078269866047de321cf1f53f6f1e0b95e76",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/026-ledger-compile-addendum-pldg-20260616-002.md": {
+            "before_sha256": "f1a6f0b7225f6162ffc880ac01c1f45548feb61267b59058472b05e51efc4ebf",
+            "after_sha256": "0b567eb418822848aad158567eef9f86ac610c8fa572c608641cbc5ae39889c3",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md": {
+            "before_sha256": "11c0c612eeb189b87acd745345e44ae1f0bdf3d9809dcff2dde1e4c338a142e1",
+            "after_sha256": "fa5580d1dd5b32ef9ce020ee52e64625c584613c2ac49814b708ff998ebeac61",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/028-ledger-compile-addendum-pldg-20260622-001-fff.md": {
+            "before_sha256": "72f661822ab0ddef02bf88cff81f77189ed48cfb89a9d44a544120645cac9530",
+            "after_sha256": "5f3960adf3b8d9b1d346ec1f3a70d51a4c83354376c9528c0388c47716f6701a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/029-ledger-compile-addendum-pldg-20260626-001-feature-name.md": {
+            "before_sha256": "51df86023a3182c7fdd0413f31153673578ab741218f786bd940b27fcd8e02a7",
+            "after_sha256": "3043b03603613044800aa8ba8ec2a734bb57610c7a8bb3ff65f1f13e4cd8101a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md": {
+            "before_sha256": "0fb488a041752e32efe1ae88fcb74e5bdc2f68923c00d2cc741509e3674ae575",
+            "after_sha256": "572be9874e381745f26a4497f93a5e625d69278b3b47690369bf80bb5a534be0",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md": {
+            "before_sha256": "86c38cddafc48031bd5ded5f97509d40660807c25d3657529147cc4c49c66517",
+            "after_sha256": "d574737d74781af9e31ed33e1388502b88e8009cd9de54aabf14b3307b0cd0a8",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md": {
+            "before_sha256": "1adde128ec1e6851a323d5ebf5c6ee73fb94732ceac2ac205225ef8c42114cdd",
+            "after_sha256": "3b5bf2ca1ee3e3ec54696816ddd0452c5269e61eff556f00dab4fdaff9bb0b2e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md": {
+            "before_sha256": "86ae945ba6fcf2352241f082af6fd0e733b9a7a2b617afd13a6056b71f6b9ae0",
+            "after_sha256": "8161ad31ca44e790edcb9bab52d897ff374488ce2d19d3d5269e1b8036a2784c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/034-fable-deferred-action-concrete-repair-addendum-2026-07-08.md": {
+            "before_sha256": "92ad353b18c66595c1e7c54e74887b6eb971e27eed329a9f66ada78dfc34762a",
+            "after_sha256": "0e130e959117a0d3ff6795218fa2ba37a64ab3e0e286a7b210c5a27c72c03040",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/035-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md": {
+            "before_sha256": "d923d196e7408a9f889b3825a8ffd1f7c05836a9aad0d313fe5fa8f571cda75e",
+            "after_sha256": "faf416d3eec811f8b477b39c737fa19e724c2e58560232cd1011a6642d0d3ba0",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/036-usage-gui-propagation-addendum-2026-07-09.md": {
+            "before_sha256": "2c19ac0cff3f42e2d8a365d5e5086465bdc649da37aebcc48002e0ff9c72930e",
+            "after_sha256": "ce4de55324cc3125f81e969a2d0ff12b7596fc7f2ad79cdf42f84b01d921e5ba",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/037-case-l-durable-state-owner-canon-2026-07-17.md": {
+            "before_sha256": "519167bd6c5ba7e816886f757a817ce0cd62dc2d35781948d3cdee204c53a7d4",
+            "after_sha256": "fd1999d1c3093378bf9624d3c190fc804ad55c54f6e5c572b28ed6844c55d14e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/038-known-37-case-l-owner-materialization.md": {
+            "before_sha256": "3b32d4155161f4b4a12e55203bdf1257aeeab77f3bff309a79e3da6d00f14cf4",
+            "after_sha256": "25a70f14995f85671a3253f121eaab5c4a096ec4c07954221fd70cbb8e1d34f4",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/039-pmconcept7-home-workspace-layout-2026-08-04.md": {
+            "before_sha256": "66b29abbb0ca5b712485c9e7ba196c48028a1e1ccf2e69b64c35f861509f708f",
+            "after_sha256": "f85aa9505fa0145e02061453e0289bca158aa6c8aca8207720fdbebe1e86f2c8",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/040-run-debug-revival-addendum-2026-07-27.md": {
+            "before_sha256": "a3f29551182072b11b993136b79900e1f433083fa6f0f72762eee930574bde09",
+            "after_sha256": "40c7747add0a249a48ac51bda7ca876b9fecfc7c357ca660411afa43f9695756",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/041-shared-integration-runtime-persistence-and-migration-addendum-20.md": {
+            "before_sha256": "a0241f670d40ac0497c9520157930110b4802f0c9f0c91b08379e08f63d07007",
+            "after_sha256": "4529a835c9394613bf3885a6c57efa279415dcf8fe803bb4c066e875debbc3ee",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/042-u11-prism-ii-usage-view-state-addendum-2026-08-18.md": {
+            "before_sha256": "bc2530de3b057c7279d65ce1c467b7e27456896a5744614f993679643578afc9",
+            "after_sha256": "0ea19748128943b6486bf94ce07bd161a0c09d81f1763b59fa47e9bc923e0c8a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/043-pmconcept7-recovery-settled-layout-addendum-2026-08-27.md": {
+            "before_sha256": "11ec2cdd1620d906e2eb333de6158153dbb21bfc2395178b4f16d3a9a01fd623",
+            "after_sha256": "49983f56d83699b3a9c8b74e987418baa944eb7987960a250349083707b50865",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/044-packet-authoritative-storage-disposition-and-redaction-addendum-.md": {
+            "before_sha256": "56e3c6dc658e8a9cb542625e6fe1a06d02265ee08869db4f329603b0de5fdbdb",
+            "after_sha256": "4032d7d51ceca720469fe7cd480f3324491bc6c27b857bc8de4d4923ca0d7a0e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/045-back-seat-driver-contract-family-persistence-disposition-addendu.md": {
+            "before_sha256": "5c7e5294747e6b1e0da953d36173da90fe26c777892015fff1a2d42ba0031eee",
+            "after_sha256": "b31307de4a4f108a055f4816b3ab4272523b3dea130fed4d9f142e828ac4e2f8",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/046-forge-backup-v2-and-go-tsnet-storage-redaction-transaction-2026-.md": {
+            "before_sha256": "8a70ec69e311c630fd7b6d2cf2fcc2ec93ded231682b6363447efaeb8061a8e1",
+            "after_sha256": "961a4fb2dc9f4de004e124880090663aefeb48af0f40eea391687e22f2052e71",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/047-additive-correction-v4-records-replay-and-migration-matrix-2026-.md": {
+            "before_sha256": "b755167bdf26fda7df956a76f8a4a625f651faeb6f783b3274478faccf410a03",
+            "after_sha256": "d3b0325cfd540e8f97745d0543360b3fc2f8753c1e754b7f44b4267f5eea222a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/048-working-notebook-and-context-transition-storage-addendum-2026-09.md": {
+            "before_sha256": "e1e7f4843f7f0745adea1463b7c44412924fce1c849419716e50566202e96746",
+            "after_sha256": "823a8335906e2c69118cc62486e19285ebf87a34a7ffd22b57b4c1b6dab376f8",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/049-research-decision-disposition-persistence.md": {
+            "before_sha256": "a2c8deab14272580098f1e6e27b29229a9ea5d9cfd1425734eb12469ea535584",
+            "after_sha256": "dbd3c32f8f87461e8250617b9f7600ec6fd3982ea90aa92314c79429aa0cb138",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/050-compaction-completion-persistence-contract-dl-039-and-dl-040.md": {
+            "before_sha256": "c4f68cc1d20e466183522c308d1261951660d95c57084702faa233c09bea7429",
+            "after_sha256": "fbd24b8eb2d42cb6ed11488037a91b717f9fc4fc1d9d9d4a86c4f7169578affb",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/051-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md": {
+            "before_sha256": "ffa515ee1578d8af859d40d542422c5ae3b0e944cd65b7893fd63537d29928ed",
+            "after_sha256": "340b0d54db223f4e476a3e107c87fd851095cf87b8f743a02c9c93959163617a",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/052-scoped-browser-event-persistence-2026-09-10.md": {
+            "before_sha256": "afc334d6921372cad04dbed8d823f4bddea9cbddfad8f7e44c8a6b1772969046",
+            "after_sha256": "7f4d13d9f83524331ff9c288638ec857d2b11bc9eaaa4fa5ee563fe8daa820f4",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/053-jujutsu-d5-owner-requirements-2026-09-11.md": {
+            "before_sha256": "d9d9e82ef4dc4ac47297e364a119f6dbda53f009bdadb2b15180033c8a325692",
+            "after_sha256": "0d4604011bd3aaf0b183bdb4c7b82bcceed14636f3ab14244f9c9ce7380d0d8c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/054-run-start-index-consumers-and-checkpoint-2026-09-11.md": {
+            "before_sha256": "1e77f119b68ae6cff693cb82a4d575222cb16c0ab696ec0fb9ccb302c792dac3",
+            "after_sha256": "1baae70ad92154ce70bc0a1959d1507ef1c974e6f8da8d8389144d32cc0193ed",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/055-browser-workspace-created-index-and-checkpoint-2026-09-11.md": {
+            "before_sha256": "14035951485682d7afa9bf2b6139a85749553f22f03ec0c6c672e3b0695adec4",
+            "after_sha256": "e6b7746aef8efb55711406183d21564ee80fdeccfc8efffa50ab2358d3c6824b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/056-restore-point-created-consumer-checkpoint-contract.md": {
+            "before_sha256": "09e682f1440e5aa4deb23d3d971293d858b64c9da37f05d87c90c14a04929abe",
+            "after_sha256": "5f61ca637e07bfd81bcdfacc8df5fba6e0b6c183e7392c17e04e1aeb144ce132",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/057-restore-point-retention-summary-contract.md": {
+            "before_sha256": "d38d9e5fbcaec6df5703b6b8b91d04063083446f59cd7e55499f02677254f435",
+            "after_sha256": "76c981815b50cb10ab84e4181c3f4489ec428490cc396c34d03cd997646db0e0",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/058-run-start-and-restore-created-versioned-index-adoption.md": {
+            "before_sha256": "ef547433e9ab40861d5a29431bfccbda12da23dc6988a27c7646729f396b619d",
+            "after_sha256": "c85bd6501b4edccfb8e73e6e5de289af7cf6428990f4619bd5d966449cb8bf58",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/059-browser-workspace-reset-filtered-checkpoint-2026-09-11.md": {
+            "before_sha256": "a550d80df25b7610b8f5c958430d0b8e2efbb47cf0742c70e7a1a6ce4a8f3a9c",
+            "after_sha256": "80904285a7b5bf57297acd08250a5f9647da2bac5b0d83d4efdbae7615446860",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/060-first-append-receipt-custody.md": {
+            "before_sha256": "0f6d616df436f273064d74927e71dd2a1134a6234856d4417701ee0103c3f8f7",
+            "after_sha256": "834fd366057dcea00f46b9fcd396756461485c28252d29c3a0e58d55445a3461",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/061-goal-body-storage-custody.md": {
+            "before_sha256": "1d416f859caf341a0433800606459a44ad85735ab81eb5c1fc22654973267fa2",
+            "after_sha256": "46f97b1ba7303593c1dca344be96bcfe57802144a87e1eb76fea0ac715316ad6",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/062-restore-point-deletion-custody-and-checkpoint.md": {
+            "before_sha256": "55ac6f864d8c0298db1f2d77372fabf7b56ebda8393176dcb0326bb91d38e9fd",
+            "after_sha256": "ad6db61c171e10c97bc4a23efc72017a90dba0d16d3c32261bf39099b9e7a634",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/063-restore-point-delete-original-result-custody.md": {
+            "before_sha256": "835fe3eee4534a394e54b1caf9cc49cadbaefbf88b696d1a380e0ba97e399f0c",
+            "after_sha256": "8a7d0841b4ae72f26762031fb954959f4bbc89382e4f2a8574dad68b87bfa677",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/064-restore-point-expired-custody-and-checkpoint.md": {
+            "before_sha256": "1b152d7feebd804f20488a9891562902a74ea2fcf1d568c4bbf18fbcb64a7129",
+            "after_sha256": "315a2fa3603eb219ebe223a4e1e5e144fa6ee59b408f37b5f5352dd37271a250",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/065-restore-point-original-admission-and-retained-custody-read-phase.md": {
+            "before_sha256": "417102ae0c5fd01a2f1bedb10cead49a727391c29c6396c3ffd5817e53ea6562",
+            "after_sha256": "3358e6e1405fc9d1c3832812e35bc3ac2281ae34abe7ac3e67f9ef3d9ed7e537",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/066-legal-hold-transition-custody-and-passive-history.md": {
+            "before_sha256": "bf16868bb82d00e9dc8a87027bdadc63fa4b4988efb62cdf0f616c2946716df1",
+            "after_sha256": "226be6fb6f4fef2f927491edfc95ea3ab77fd2bcc6f5581951e467c0735a61ad",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/067-original-standard-certification-receipt-custody.md": {
+            "before_sha256": "fff6a91969d5278ec7a3c0a33501f041935c6fcad74ec230fae22f3b40ae8de2",
+            "after_sha256": "e5c7e48d3eaf8a70880311db7ae101fddb2a4dc2a73bc14a94e9086a9443e7fd",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/068-storage-integrity-finding-custody-and-read-contract.md": {
+            "before_sha256": "289a4feb1a9583ea926ff599b3138290b15a2754e460b21d2d0f017152835f68",
+            "after_sha256": "efd7554753acecf53007c7ffaea40d279a9a1659619323ce2e1fe55d7a13ef89",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/069-platform-capability-decision-custody.md": {
+            "before_sha256": "7136aaf58a3927308a37c0407568172a6ba043134c275fbeeaaaf0bbe745802c",
+            "after_sha256": "142f6dab6e985260902db4143a4cd21fcc6ece5eeda627ec7212e4969c452382",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/070-boot-recovery-aggregate-and-original-producer-custody.md": {
+            "before_sha256": "92fe5a21e2425ca934a18afbe606031b28c04bbe8108e5141360703168e3ebfc",
+            "after_sha256": "8b0b136938976b18af6e729b63db708f2f84b4b01592904335b722b1d3a27718",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/071-boot-earliest-receipt-continuity-and-activation.md": {
+            "before_sha256": "50bab594b02ec8ec4e7d0973284ec6efd2bce2825b5cb4b1105d5c1e8ca4f28b",
+            "after_sha256": "83f009d956c2a14e0068676dd24ff65a374a4db3973f741766e8f8b6405073e9",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/072-recovery-original-action-custody-and-publication.md": {
+            "before_sha256": "2116bebef2c3014e023bffd929fe8c6763aec6e39ec82bada767aae54908818b",
+            "after_sha256": "3ef582869a505ba46e18128e6958efedfd76e251bc5d654b13139c628e5d88b6",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/073-goal-start-original-command-custody-and-publication.md": {
+            "before_sha256": "f9b45491c1c628891dea829fb6c73632c9191cd31d8d67a9e5512a08afe7e30f",
+            "after_sha256": "146ee4958b07853c4e742570e29bedaa72b6335ff129aaa59bff96d74509aa3d",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/074-sp-294-goal-start-original-command-custody-and-publication.md": {
+            "before_sha256": "6f10bf54bf873d0c42a71563d46463288832d8c315a966598404246b73c05e12",
+            "after_sha256": "af1e457406ce4fe6cc6a5a87ac596cb08fa382b1231ca386ee0f9c7911d4b1a6",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/075-compaction-original-native-source-phase-custody-and-detail-retir.md": {
+            "before_sha256": "11f756ccb048f532e353413adc88cca15f6741716d962f103671ccfc24457fb2",
+            "after_sha256": "61732e76605482d4f4fc56aecd132a089cd5da4958e9a9d45956880df928b898",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/076-goal-created-passive-current-reader-and-original-command-members.md": {
+            "before_sha256": "021f863cac341dc13b8986939189ee63fac285f227c6206781fd649ad61b73ab",
+            "after_sha256": "e16f692c1b03d46c78650d939d47b0d385422da7be019be654e3b6572bf0bcbb",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/077-original-goal-update-source-physical-custody-and-publication.md": {
+            "before_sha256": "754ae7efab3d279cb8e62a9db909ccfed4d309b32905c89a85db609f7adc6c3f",
+            "after_sha256": "2f06239ab423f2bc7afd523bffdcaa62230d45ccc8d610df3ae26b864320bd10",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/078-sp-314-original-standard-authority-families-and-fresh-whole-stor.md": {
+            "before_sha256": "f3d05c613d13befbd0ce78b9b7505e815ddd1c105c58bfa14b5a2530574f1b11",
+            "after_sha256": "db59fb50e50f938a7e4a5724132e782c7dd8749c7c9db40b488d29f9063019a3",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/079-sp-315-certified-producer-current-and-retained-source-disclosure.md": {
+            "before_sha256": "e8598209234e23b57496777a1f5ce24014eea914af640b1471f0ec0abed49d01",
+            "after_sha256": "090647bd036f396db6c478733a1b810be1ac0e4c1dcc6411b935650f6ba6f7af",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/080-sp-316-seven-compact-authority-families-eleven-v7-profile-qualif.md": {
+            "before_sha256": "00316f3f1b25e5a223e2c82efa34608e1d7aca2bae26dc513fc80120d03031c5",
+            "after_sha256": "176574c2d75cc318088f5a72a1e81a7041d25d8ed1954d11d254faec92663f72",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/081-sp-317-two-projection-checkpoint-families-and-exact-rp-projectio.md": {
+            "before_sha256": "ae47326db3244647fe8151d267c19b947ef249218a0639ad93e79dce86146c3c",
+            "after_sha256": "5ad88489eb2e26b679e736ef60c4db591a474197ffd49acb94d08eed13c53ac1",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/082-terminal-workgroup-moved-exact-passive-source-read.md": {
+            "before_sha256": "f6074fd41780bd0215f5e0f556e85247b090dabbef2e5024757ea8fe7bea464a",
+            "after_sha256": "0a72761f21099c08bc411ad9b11b24467837fef3f4186a7fdcd6f579938d846e",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/083-coordination-event-persistence-binding-dl-045-2026-09-25.md": {
+            "before_sha256": "9daf9aaaa5302d72ee36ad6eb957878de1bef70f8d39a73fc6749f5068a302d6",
+            "after_sha256": "7acf3caae027928723aae52d3e3b389d8038ac19e8e68e9de9eaa819a67b3f15",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/storage-plan/manifest.json": {
+            "before_sha256": "6a230f9270cee1ac581ee7baa3e1413f10d453c4b87e9e9854f8f0cdc40356a3",
+            "after_sha256": "6d23c1f7c912674aa2e6d7847365b09124eb3c17d874f76d0408b3c754d7a234",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/storage-plan.md": {
+            "before_sha256": "05d4a27e7958199c7c852931154fac72043cb01111ef586dbd6bde116f10e894",
+            "after_sha256": "8c0eec4eda308cdb3431d25e065aac739b86fdbdaf3315449e98aacfa46a414c",
+            "kind": "edited"
+          }
+        }
+      },
+      "SR-02": {
+        "severity": "should_fix",
+        "applied_at_utc": "2026-09-25T12:25:36Z",
+        "parent_commit": "c1eed503c95acd4ae9758a8cf068a15640a6b658",
+        "finding": "The 25 appended rationales said \"the host ruling's FAIL applied until this binding was written\", and the application record's supersedes_cell_state likewise dropped the ruling's parenthesis, while the ruling named the Case L-3 assignment and the family contract; the durable records stated the PASS reading as settled before the host answered the branch report's section 10 item 3.",
+        "repair": "The host confirmed (host_confirmation above). In the reviewer's words the sentence is replaced in the 25 appended disposition_rationale passages; only disposition_rationale changes, the 25 individual-ledger lines are rewritten from the row objects, and the census ledger, which does not carry the sentence, is unchanged. This step supersedes, for these 25 rows and the individual ledger, the after-hashes of the first application (rows[] and files above), which are kept as history. supersedes_cell_state is kept as written; host_confirmation quotes the ruling's condition in full.",
+        "owner_text_anchor_check": {
+          "revision": "c1eed503c95acd4ae9758a8cf068a15640a6b658",
+          "anchors": {
+            "reuse": {
+              "path": "Plans/storage-plan.md",
+              "line": 17282,
+              "starts": "**Chat content policy object and reuse check (DL-084, DL-092).** DL-084 and DL-092 keep their famili"
+            },
+            "cap": {
+              "path": "Plans/storage-plan.md",
+              "line": 17284,
+              "starts": "The cap and the successor rule are those of PD-L005-02. A thread holds at most 250,000 records under"
+            },
+            "DL-084": {
+              "path": "Plans/storage-plan.md",
+              "line": 17286,
+              "starts": "The 19 child-run histories named in DL-084, the eight lifecycle families of CV-267 (`subagent.spawne",
+              "names_every_row_event_type": true
+            },
+            "DL-085": {
+              "path": "Plans/storage-plan.md",
+              "line": 17288,
+              "starts": "The three crew board families of DL-085, `crew.board_message_posted`, `crew.board_message_read` and ",
+              "names_every_row_event_type": true
+            },
+            "DL-086": {
+              "path": "Plans/storage-plan.md",
+              "line": 17290,
+              "starts": "The three orchestrator diagnostics of DL-086, `phase.force_completed`, `config.validation.failed` an",
+              "names_every_row_event_type": true
+            },
+            "DL-092": {
+              "path": "Plans/storage-plan.md",
+              "line": 17292,
+              "starts": "The 18 collaborative workflow families of DL-090 and DL-091 are assigned `RP-CHAT-THREAD-LIFETIME@1."
+            },
+            "svr_chat": {
+              "path": "Plans/storage_value_registry.json",
+              "line": 557,
+              "starts": "\"policy_id\": \"RP-CHAT-THREAD-LIFETIME\","
+            },
+            "svr_coord": {
+              "path": "Plans/storage_value_registry.json",
+              "line": 329,
+              "starts": "\"policy_id\": \"RP-COORDINATION-180D\","
+            },
+            "svr_runtime": {
+              "path": "Plans/storage_value_registry.json",
+              "line": 456,
+              "starts": "\"policy_id\": \"RP-RUNTIME-365D\","
+            }
+          }
+        },
+        "rows": [
+          {
+            "event_type": "subagent.spawned",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawned.json",
+            "before_sha256": "15373c84ab7e461efcfaca253a566b6385945a5a22ea457d1e1d1e0b03be0299",
+            "after_sha256": "a95283972443fc92776337c01952c8fbedd4df951890071e74ae2e3203db6ead",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.started",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.started.json",
+            "before_sha256": "cae168e95d8ce993943d39e13a82e2edca7dd1004e8163960601a86a45d6b1eb",
+            "after_sha256": "cfb4bf8dfb42dbdfa025bf6b0a6c408d3a357b5b1238109ec14f13af1ed60102",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.completed",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.completed.json",
+            "before_sha256": "1d19aa5b9c7388272eba269fcaf65ab1fd27d63fb106508bc85cb1ce0c76e30e",
+            "after_sha256": "c10b8dfd44cef3fd8e8d4507070148e8f28e541695f3a3364ab1e46268a227c9",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.failed",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.failed.json",
+            "before_sha256": "90b24b707ce3e64971be0f52e8c664f999f81a1b47fa74af9eb04f7eac0e4366",
+            "after_sha256": "7d233a73cb12281b20d5bf2446efa4f23552935251f9eedacbc3016dfcf21a44",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.cancelled",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.cancelled.json",
+            "before_sha256": "e560b5b88db0d5fcbf0d28ba4eb506df0f22cf960e8a1d2e558069b97672aa6f",
+            "after_sha256": "c4407c8442704a7eeacdb2ee86d63760c3357366c627a430a2d5ef38a5317a37",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.timeout",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.timeout.json",
+            "before_sha256": "29c5767d496201a13e7d4024c4243e96052e17fe5a611f87a8a58fd73502126c",
+            "after_sha256": "94f58df3a73acb65b67a72321b07fe8134cc2de944dd03b79ee2b8f9a10298b7",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.paused",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.paused.json",
+            "before_sha256": "17fde92877c1819342b8069eb8a34be55d90d6f72d33f2a44b5c6542c645b23f",
+            "after_sha256": "2572726eea2bdeac87ce3fd95d3a0aaf2d973278dce9a4d131d10b0d183d0a75",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.resumed",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.resumed.json",
+            "before_sha256": "10e0c023b9ed75d28bf97845d285c85f0ce145ab5abcf6d94c7e07128a672186",
+            "after_sha256": "a991c2fd37cbc58de7998b5ce65f4bb6a3863f4a7ee20b3d023d690f9752ef71",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.progress",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.progress.json",
+            "before_sha256": "87db8b71e404c035d7995eb3133d13ab0006bea14eb8bcceb9ba13891bb6700f",
+            "after_sha256": "cb19f0cc03a64343fed429f7cc4626d6a799ce555b2d4eeb979d3b942f5ada80",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.tool_called",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.tool_called.json",
+            "before_sha256": "934f1b2fc9d5e81e9a43448a2a499b90e9b3f92f04f950c2ad2c200e43ae5715",
+            "after_sha256": "4e87cc1a6ef4d4790db0c12aa3fe52fe0822e18758b9aac7c3afbb181f2c2233",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.tool_completed",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.tool_completed.json",
+            "before_sha256": "d639b90f6511896464d545d6e825870825336bf9f7831cf6d2c5ce0a5590ae40",
+            "after_sha256": "4f8bac4ffee1ea83db9f560fad2d11c085e8e25f3fa4352e99ae0dfa89500298",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.message_sent",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.message_sent.json",
+            "before_sha256": "da7ff5916f9493d2523e36a80362a8ba27ecaa9a8fa90faf19e0a40dae94c8ba",
+            "after_sha256": "7e535fca49876d16ce2b72d22499f3b6eb3e3d4800c301d234884f79adee6947",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.message_received",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.message_received.json",
+            "before_sha256": "02bc1e9994f448e8d133214159e63db1cdf7b4f83b85a8f49614acc5caf82af4",
+            "after_sha256": "8733aa07a364ed692239374754e8cd95544ae82984bb7c29dedbaca729542cb2",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.output_truncated",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.output_truncated.json",
+            "before_sha256": "a6950354391395ebc174317f8958e302fb7a7f717fdc9daa602782271914816d",
+            "after_sha256": "9c589fe3885f7f055157461257a974a6a0e0d1c98fe70169f0ae7c74ade9cf9d",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.retried",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.retried.json",
+            "before_sha256": "40ad6fb4a873b6d1cb04cadd7cc6a5b937f4d142683e560a35320c79190a680a",
+            "after_sha256": "6bc2bb9c9d514d0867a1852d8710c4e9481641cac799c971b8123c89f5622eca",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.context_warning",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.context_warning.json",
+            "before_sha256": "93c7a7c7329ac6fe3fa2183fc8fa1ea8608991358f7e74f1fb346e9b37e0215c",
+            "after_sha256": "2a6c706fdf24acc830ed62186e45d7c1cea777a65c198eba511be5bb85884c0a",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.model_switched",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.model_switched.json",
+            "before_sha256": "6e0519df6ffd94ec24f482c0671e77659f6e91f482aacb577463f286d15cd62a",
+            "after_sha256": "4ca6b179e733ada1cdd1a8b92f340b296978b973095020733907f3eaceaecf2c",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.budget_warning",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.budget_warning.json",
+            "before_sha256": "89d8064d7e5a701a57b241dc878857cf80860dc6e073007058bbc828c79ca1e2",
+            "after_sha256": "8f9de1fc2a1ca5b652e0a26da32650f7e0712db8a4179782bfb6c89d0483ed26",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "subagent.escalated",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.escalated.json",
+            "before_sha256": "836f47f296735bf0de3acec01a7b4c822358a74a086b6ba1989c9fe1a719e755",
+            "after_sha256": "d9d984ed2a8b5730df6df69374b9c022a62a923634f6e5bd6105e433f85ec397",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17286"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "crew.board_message_posted",
+            "decision": "DL-085",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_message_posted.json",
+            "before_sha256": "06ca1d4a9ba51876dc103b5b84fd222ee20d3e275e449e4c9bbc3c15f197835d",
+            "after_sha256": "04a108f6e46d103d3eff93e53aca87eb8ec9f1e2d58efb19df5b8423c6c0f4e3",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17288"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17288"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "crew.board_message_read",
+            "decision": "DL-085",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_message_read.json",
+            "before_sha256": "fbc8bb1435c07cbade4f61c91dc69c5c9f248891764604b672ae4f802b14f3d2",
+            "after_sha256": "c8e3f4f12b7e418a223cb54dd81540f73e3c6fde64d33fd4ad67b3ca654ce260",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17288"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17288"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "crew.board_messages_archived",
+            "decision": "DL-085",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_messages_archived.json",
+            "before_sha256": "5fdf812fe7103a4e8718036abe124bb48a28ff71cb341b5fe11a4b5f5b35a8f4",
+            "after_sha256": "40066191587592c0623c8e9d1e2de7854ad288769b7ee54c5d5679426eca98f7",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17288"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17288"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "phase.force_completed",
+            "decision": "DL-086",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_phase.force_completed.json",
+            "before_sha256": "4870a2d5bd3518c67d780b8fbd5c429919b7310b319d9544d7e0a4b6b4abdc40",
+            "after_sha256": "86c64e904d18944301a441365142696bb1fb3d9ea2afbc5a5a29261894b100fe",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17290"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17290"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "config.validation.failed",
+            "decision": "DL-086",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_config.validation.failed.json",
+            "before_sha256": "07cee61b2459c1ff31230c83c1ca0daa329921c3baf234c1745d50595081cdc7",
+            "after_sha256": "914f8f78ecb5718bef52236c0740fe3fffeee0e409526e4ffcdf11c39dc9b84d",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17290"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17290"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          },
+          {
+            "event_type": "parser.error",
+            "decision": "DL-086",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_parser.error.json",
+            "before_sha256": "decf9a2a5464360d3620339ac0c2177fe9bae822aae23e479b9be1705ff272d8",
+            "after_sha256": "f26ae930ffe299aa87fbb50631ca96a6d99257ef090ef79c6c7504db8d6b1c0e",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17290"
+            },
+            "retention_after": {
+              "status": "PASS",
+              "citation": "Plans/storage-plan.md:17290"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "the host ruling's FAIL applied until this binding was written.",
+            "sentence_after": "the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition."
+          }
+        ],
+        "untouched_batch2_rows": [
+          {
+            "event_type": "coordination.agent_registered",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_registered.json",
+            "sha256_before_and_after": "e990debac213073de4d9a970b1072b807edfe55d8abab5f0547b3326bd1d8da6"
+          },
+          {
+            "event_type": "coordination.agent_status_updated",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_status_updated.json",
+            "sha256_before_and_after": "266e6752cda5b254e2818995edc0eabbdc4ceaff324664cfc35d8dfa0a37093b"
+          },
+          {
+            "event_type": "coordination.agent_operation_updated",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_operation_updated.json",
+            "sha256_before_and_after": "cf0fee1bd113e829aaad05a735d2fd82dcec04f69835c446c286c7933874a922"
+          },
+          {
+            "event_type": "coordination.agent_file_ownership_updated",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_file_ownership_updated.json",
+            "sha256_before_and_after": "eb4d9cf65087961842079d548aa336c4b48ab08a8d70f04808b51c0d2a6ddc10"
+          },
+          {
+            "event_type": "coordination.agent_unregistered",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_unregistered.json",
+            "sha256_before_and_after": "a20ed35a36b3e1b9d5748963d70505ca102c05c5918cda9792adfb936c2481f9"
+          },
+          {
+            "event_type": "coordination.agent_crashed",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_crashed.json",
+            "sha256_before_and_after": "ec685b8e67ec5b74f9647c251965a05ad55e5532feeee86ed561bde08757f6f9"
+          },
+          {
+            "event_type": "coordination.agent_aborted",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_aborted.json",
+            "sha256_before_and_after": "8af83e23a692a63f9358265931a07c254a36d6d05015f2d81b7f4c215429052e"
+          },
+          {
+            "event_type": "crew.formed",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.formed.json",
+            "sha256_before_and_after": "9b9f428563e3af6c88d9f540e392a624931192cd16f73369a54663c9d5f81790"
+          },
+          {
+            "event_type": "crew.member_added",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.member_added.json",
+            "sha256_before_and_after": "30d3b2eff6fa0cd5504da323181025f025f143354936091873ef440eb9882f30"
+          },
+          {
+            "event_type": "crew.member_removed",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.member_removed.json",
+            "sha256_before_and_after": "600c68e12263fd866c4118df80b559de99522781836aacbda7799deb54039f65"
+          },
+          {
+            "event_type": "crew.coordination",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.coordination.json",
+            "sha256_before_and_after": "a9dd3ab6d5702eeca046442168d5d2321704c82ed16eda2c73c96918fea498c0"
+          },
+          {
+            "event_type": "crew.completed",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.completed.json",
+            "sha256_before_and_after": "5ea99dc1c9da0d3d539ccc116b85888e2ee921b2b7ad583fda0c5824924d2e7c"
+          },
+          {
+            "event_type": "crew.disbanded",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.disbanded.json",
+            "sha256_before_and_after": "fd1f32b72dd46ae536d6c15a6992cdf2174f476a87417381812b9d9a0c3a3ad6"
+          },
+          {
+            "event_type": "subagent.spawn_requested",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawn_requested.json",
+            "sha256_before_and_after": "a2736784d9454ad738df273d9dacbf02e11d92d3ebbe2f4eb09a41e67ce42e2d"
+          },
+          {
+            "event_type": "subagent.spawn_completed",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawn_completed.json",
+            "sha256_before_and_after": "002172d30d9c19c099f4880967a192102a0d999a51c104f90af9718c563c3a7d"
+          }
+        ],
+        "unchanged_files_sha256": {
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": "73ffa7a20fb15c21178cb63d8254eb211fc42eed7a01ffd1c66f6e02fc2af0ac",
+          "Plans/.audits/event-authority-2026-08-12/individual-disposition/OWNER_VETOES.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "files": {
+          "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+            "before_sha256": "e8245a31770306b6a26730db1f42d7155bbb03b8ab37f962a5d3dc4fded85b54",
+            "after_sha256": "b96110a44db753015a1fce6107f1265e0b537c268e74d2c37325f742a880022b",
+            "lines_changed": 25,
+            "kind": "edited"
+          }
+        }
+      }
+    }
+  }
 }
