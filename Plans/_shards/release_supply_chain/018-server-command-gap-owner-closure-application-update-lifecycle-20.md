@@ -2,9 +2,9 @@
 
 Source: `Plans/Release_Supply_Chain.md`
 
-Source lines: L1170-L1239
+Source lines: L1170-L1277
 
-Source SHA256: `a3fc96705ece03e411c6566bdf968b6bae2c89814d9a0550a96bc807632c3e8d`
+Source SHA256: `a1a2b6bda689ac576b7438f55cab1285e633ee449f076cf72ed38c7d46dea005`
 
 ---
 
@@ -53,7 +53,9 @@ canonical_text: >-
   handler_unavailable until its named sole handler and complete integration exist; verified provenance, recovery,
   generation, restart, rollback, exact-return, and secret-exclusion gates fail closed. Internal channel-aware checks
   retain Stable about 24 hours, Canary 6–12 hours and Nightly 1–6 hours; exact Server/installation/source/channel
-  custody distinguishes original successful source validation from failed attempts and cached display.
+  custody distinguishes original successful source validation from failed attempts and cached display. The two
+  Doctor application-update source occurrences consume one read-only owner fact at the exact Server, installation,
+  source and channel scope; neither a command result nor a copied cache is authentic current owner-read evidence.
 gui_related: true
 gui_classification_reason: Update lifecycle and local details/logs/release-notes projections are visible in four named consumers.
 depends_on: [RSC-008, RSC-009, RSC-013]
@@ -66,6 +68,7 @@ acceptance_criteria:
   - Application phase disclosure preserves the complete owner vocabulary separately from command outcomes; updates do not target every host simultaneously by default.
   - Application-check fixtures cover due arithmetic and channel bounds, persisted jitter, success versus attempt, conditional validation, scope/policy currentness, coalescing, restart reconstruction, offline backoff and automatic-off/manual availability.
   - Physical storage and original source/installation admission remain prerequisites; static check settlement is not native proof or handler availability.
+  - Doctor source occurrences sep03-doctor-008 and sep03-doctor-043 keep separate identities and dimensions but share one application-update owner read, with no second check or mutation. Full-dimension binding requires a typed current owner result including separately sourced installed version and Server protocol compatibility; absent authentic read cannot be reported as healthy or owner-reported unsupported.
 validation_surfaces: [Plans/release_update_contracts.schema.json, Plans/release_update_contract_fixtures.json, Plans/application_update_check_contracts.schema.json, Plans/application_update_check_contract_fixtures.json, tests/test_pm_application_update_checks.py, focused Server owner-bundle-A validator]
 risk_class: application_update_unverified_activation_or_false_success
 reasoning_tier: high
@@ -78,3 +81,38 @@ negative_constraints:
   - Do not activate an unverified download or treat partial restart/migration as success.
   - Do not create domain handlers or EventRecords for local details, logs, or release-notes actions.
 ```
+
+<a id="doctor-application-update-owner-read"></a>
+### Doctor application-update owner-read contract (static prose; two source occurrences)
+
+The two `app_update` source occurrences of `Plans/doctor_source_coverage.json` are `sep03-doctor-008` (`/groups/0/checks/7`, group Puppet Master Server; dimensions version, channel, install source, available update, restart requirement) and `sep03-doctor-043` (`/groups/5/checks/0`, group Updates; dimensions version, channel, install source, restart, protocol). Both keep their own occurrence identity, source pointer, source label, dimension list and existing `shared_fact_key: application_update`; one owner fact projects twice, so neither occurrence gains a second check, query, probe, scheduler, cache, storage value, command, event or policy. An occurrence is not bound until the typed request/result, descriptor, catalog join and authentic current owner-read evidence exist. This owner contract does not itself assert native issuer, resolver, permission, persistence, source observation or runtime result.
+
+**Read target.** Exactly one application-installation target per member query, bound as the exact `ApplicationCheckScope` tuple — `server_id`, `installation_id`, `installation_generation`, `source_id`, `source_generation`, `channel_id`. The Doctor target uses existing `target_kind: application`, with `identity_ref` naming the installation and `server_id` naming its Server; the complete scope tuple is compared independently. A Server-owned protocol field joins by that `server_id` and the same installation scope, not by relabeling the application target as `server`. Route, focus, visible page, cached panel text, manager selection, Client session and a caller-supplied coalesce key are never target identity, and a different Server, installation, installation generation, source, source generation or channel is a different fact that cannot answer these occurrences.
+
+**Request.** One request binds the Doctor member identity (`batch_id`, `member_id`, `query_id` and the admitted `pm.doctor.owner_query_request.v1` refs), the exact scope tuple above, the authentic `descriptor_revision` of the single authored descriptor, `expected_owner_generation`, `expected_cache_generation`, the expected `ApplicationCheckState.revision`, the expected `policy_version`, the requested field subset, the Permissions-owned read admission ref, the RuntimeResourceGovernor admission ref, the redaction profile ref and the deadline. Serialized caller values are requests to compare, never proof of authority. The request is read-only for both occurrences: it MUST NOT dispatch `cmd.update.app.check`, `cmd.update.app.download`, `cmd.update.app.install_restart`, `cmd.update.app.rollback`, `cmd.update.app.cancel_download`, `cmd.update.app.remind_later` or `cmd.update.app.automatic.set_enabled`, and MUST NOT fetch, download, stage, install, restart, roll back, migrate or toggle automatic checking in order to learn any field. A `cmd.update.app.check` invocation or `ApplicationUpdateCommandOutput`, a cached projection, a stored ref, a copied hash or a schema-valid boolean is not evidence of an authentic owner read, of a current issuer, or of source currentness.
+
+**Result.** One result returns the original query identity and the union of both occurrences' dimensions, each field carrying its own owner source, observation and redacted bounded evidence refs:
+
+- `version`: the currently installed application/installation version of the exact target, and, separately, the candidate version carried by the available publication. The two values never derive from each other. No companion in this stage names a typed installed-version field on the existing owner fact, so that half remains an owner gap until the owner or its typed companion supplies it; it may not be synthesized from `ApplicationSourceResult`, a package filename, a command output, a Client banner or a fixture.
+- `channel`: the exact `channel_id` of the scope (`stable`/`canary`/`nightly`) and, for a candidate publication, the RSC-008 `UpdateMetadata.channel` of that publication. A channel label copied from a settings or panel projection is not this field.
+- `install source`: the scope's `source_id`/`source_generation` pair together with the actual install-source owner's current installation authority for that installation. A source identity alone is not a validated publication, and transport is not trust.
+- `available update` (`sep03-doctor-008`): the terminal source-result projection — `outcome` (`validated`/`not_modified`/`cache_only`/`offline`/`failed`), `publication_revision`, the RSC-008 `UpdateMetadata` objects and the submitted conditional validator. `validated` with an empty release list is a successful source validation with no published candidates; `not_modified` binds the exact validator submitted for the prior admitted publication. An available update is availability evidence only and never download, installation or activation authority.
+- restart requirement / restart (`sep03-doctor-008` and `sep03-doctor-043`): the RSC-014 application lifecycle phase disclosure for the exact operation, installation, source and generation, where the restart requirement is the `restart-required` phase of that one vocabulary, resolved against the durable update journal that survives restart. A displayed phase is never activation, installation, migration or completion proof, and no outcome enum value substitutes for the phase vocabulary.
+- `protocol` (`sep03-doctor-043`): the Server owner's current protocol/version compatibility fact for the same Server and installation, joined with the Server-owned connection projection state that names `protocol_mismatch`. Protocol or version text captured from a Client cache, endpoint string, banner or handler default is not that fact.
+
+**Owner source and observation/currentness.** The owner is `ApplicationUpdateService` (RSC-014) with `UpdateSource` for the admitted successful source validation, the actual install-source owner for installation authority, the `Plans/Server_System.md` owner for Server identity and protocol/version compatibility, and the Permissions owner for read admission. The result discloses the observation itself: `last_success.validated_at_utc`, `source_evidence_ref`, `publication_revision`, the submitted conditional validator, `policy_version`, the answering `ApplicationCheckState.revision`, `in_flight_operation_id` and `last_attempt_at_utc` where present, plus start/finish time and the observed owner and cache generations. These reuse the RSC-014 currentness semantics exactly: a successful `validated` result establishes source currentness only; a changed installation, source or channel scope cannot reuse the old cache, validator or success anchor; a policy change requires a new current-policy due selection over the same valid success; a clock earlier than the last success or last attempt refuses automatic due evaluation until trustworthy time is reacquired and never rewrites success. This read evaluates no due decision, resamples no jitter, and starts no check; it grants no download, installation, restart, rollback or activation authority.
+
+**Bounded redacted fields.** Typed non-secret owner values (including scope, version, channel, lifecycle phase, source result and generations) may appear inline when required by the request/result contract. Evidence references are non-secret refs within the existing 512-character bound; lists are bounded and paged. Neither requests, results nor evidence carry signing keys, update credentials, raw tokens, protected authentication state, unrestricted filesystem paths, package bytes, artifact content or release-note bodies (refs only). Human-facing text is derived projection, not a field of this fact.
+
+**Absent, stale and unmapped values.** The catalog's design-time `full_dimension_query_binding: unbound` is not a runtime result or reason code. At runtime, the existing Doctor query-result status and finding vocabularies govern failed, cancelled, interrupted, stale, blocked and unknown projections; no additional reason enum is introduced here. A field lacking an authentic owner read or current source observation cannot be filled from a command output, cache, ref or another scope. An unimplemented query, absent owner read or stale generation is not a fabricated runtime `unsupported` health result, not a completed result, and never healthy or green. Owner-reported unsupported requires the actual owner support and applicability evidence.
+
+**Negative constraints (causal).**
+
+- A wrong Server, installation, installation generation, source, source generation or channel refuses the read and never answers from another scope's cache, validator, success anchor or phase.
+- Dispatch of a mutating update command to learn state refuses; command output and command receipts remain command outcomes.
+- A copied ref, a cached projection, a self-asserted issuer, a permission/currentness assertion and a schema-valid boolean cannot authenticate the read or the answering generation.
+- Doctor consumes this fact; it never becomes update authority and a routed remediation is not remediation success.
+- No second descriptor, check id, query, scheduler, cache, storage value, event or policy is created for the second occurrence, and the other 15 Doctor source dimensions and all 52 catalog occurrences remain unchanged.
+- The source catalog remains unbound unless its exact typed and current owner-read join is supplied; this prose alone is not a `full_dimension_query_binding`.
+
+ContractRef: ContractName:Plans/Release_Supply_Chain.md#RSC-014, ContractName:Plans/Release_Supply_Chain.md#RSC-008, ContractName:Plans/doctor_source_coverage.json, ContractName:Plans/doctor_query_controller_contracts.schema.json, ContractName:Plans/application_update_check_contracts.schema.json, ContractName:Plans/newtools.md#N2-152, ContractName:Plans/Server_System.md

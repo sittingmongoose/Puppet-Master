@@ -4,7 +4,7 @@ Source: `Plans/newtools.md`
 
 Source lines: L34-L68
 
-Source SHA256: `9475c5c4449d541a68068ce0c60a9be5d632adf6f0ac552c1288de0ba6d084b8`
+Source SHA256: `1bce487b7d1d90c28942d99a8b1c7e9f4f06d9da0698e048b2a084dfa225f91f`
 
 ---
 
