@@ -1,0 +1,1384 @@
+{
+ "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+ "assessment_id": "EA-STEP09-DEPTH-REGRADE-COORDINATION-AGENT-REGISTERED-20260925",
+ "assessment_kind": "independent_regrade_one_family",
+ "rubric": {
+  "report": "reports/event-authority-20260911/step-08-depth42-assessment-20260924.md",
+  "report_sha256_at_tip": "cbf5debccd15135e2e769a39f201a26f59e96929fe6e6d7a61367fad5012c9e2",
+  "row_format": "reports/event-authority-20260911/step-08-depth42-assessment-20260924.json",
+  "row_format_sha256_at_tip": "ba9b84f99e0e0761a8b435a16602d4c88d14589ef273f789fd5b92bdbd5849fd",
+  "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+  "rubric_md_sha256": "81f1d8b25ee407975fea50d14ecf44f94127608b912e08b27edd7f62f9b10221",
+  "criteria": [
+   "membership_version",
+   "owner_doc",
+   "producer",
+   "closed_payload_schema",
+   "scope_identity",
+   "replay_idempotency",
+   "retention",
+   "redaction_custody",
+   "transitions",
+   "consumers_checkpoints",
+   "compatibility_withdrawal",
+   "positive_negative_oracles"
+  ],
+  "clarifications_applied": [
+   "1: owner anchors (stale or disclaiming only)",
+   "2: pinned external oracle suites (none pinned for this family)",
+   "3: DL-076 nine-field durable token for stored checkpoint tokens"
+  ],
+  "evidence_rule": "Every cell cites Plans/ text by path, unit, line range and an exact quote; quotes verified as exact substrings of the cited lines with the compile_depth42.py method."
+ },
+ "assessed_tree": {
+  "branch": "plans/ea-s09-coord-registered-20260925",
+  "commit": "3abdf9fe3fbdc9e216b80f0ac5224aa9ffd98c91",
+  "merge_base_with_origin_main": "63cf2cb97f936c91dd7bb5c585d9a35d8409ed61",
+  "read_method": "git show <tip>:<path> only; ~/pm-worktrees not read"
+ },
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-09-25.1",
+  "sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+  "families": 43,
+  "row_pointer": "#/families/42",
+  "row_canonical_sha256": "1602bb6d33b63f79b7dc1daf4502c0aadbb26a4aa871a2963b2510a5d0353b40",
+  "row_equals_ledger_prepared_row": true
+ },
+ "status_meaning": {
+  "PASS": "Current owner text explicitly supports the criterion for this exact family at its registered version, including explicit adoption of any shared prerequisite it depends on. Never native or runtime proof.",
+  "PARTIAL": "Some exact or listed evidence exists, but a required part is unbound, unadopted, or explicitly left open by owner text.",
+  "ABSENT": "No binding for the criterion in the inspected owner surfaces; generic rules and broad labels do not count.",
+  "CONFLICT": "The only exact contract conflicts with current owner precedence, and no current disposition resolves it."
+ },
+ "status_counts": {
+  "PASS": 12
+ },
+ "native_execution": "NOT_RUN",
+ "static_suites_run_by_grader": false,
+ "rows": [
+  {
+   "event_type": "coordination.agent_registered",
+   "family_id": "event-family-coordination-agent-registered",
+   "family_revision": "1.0.0",
+   "registry_pointer": "#/families/42",
+   "disposition": "CURRENT_WRITER",
+   "disposition_evidence": [
+    {
+     "path": "Plans/orchestrator-subagent-integration.md",
+     "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+     "line_start": 3816,
+     "line_end": 3816,
+     "quote": "| `coordination.agent_registered` | `register_agent(RegisterAgent)` | the Orchestrator | once, before node execution; execution starts only after its first receipt returns |",
+     "excerpt_sha256": "c62c840ff0ccc6fb02740a77895b1d794232c22d0b324d7e5d5b58446188b952",
+     "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+     "quote_check": "exact"
+    },
+    {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+     "line_start": 27028,
+     "line_end": 27028,
+     "quote": "Until then an admitted family is contract-only and nothing is appended.",
+     "excerpt_sha256": "a6ca58d4bbfde4a6e4f8c503c66c79415153e11a8606a6c13f60c6123e6e425b",
+     "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+     "quote_check": "exact"
+    },
+    {
+     "path": "Plans/coordination_event_admission.json",
+     "unit": "#/rows/0",
+     "line_start": 40,
+     "line_end": 40,
+     "quote": "\"admission_status\": \"admitted_static_contract\",",
+     "excerpt_sha256": "c0762c727e335eb55f459cf25878c1b359713d35fda7e165e94c7ab62fc5af36",
+     "file_sha256": "97bfdfbd518ddd8775cf3db3e598f7736957a233ba453a73205df761c0929295",
+     "quote_check": "exact"
+    }
+   ],
+   "pass_count": 12,
+   "normative_depth_complete": true,
+   "native_execution": "NOT_RUN",
+   "current_owner_units": [
+    "OSI-438",
+    "CV-353",
+    "SP-320",
+    "ATS-058",
+    "SP-278",
+    "SP-286",
+    "CV-339",
+    "SP-232",
+    "DL-045",
+    "DL-076",
+    "DL-078",
+    "DL-093"
+   ],
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Registry 2026-09-25.1 row #/families/42 registers event-family-coordination-agent-registered at 1.0.0, project_only, no aliases or extensions; #/$defs/agent_registered carries $id pm.coordination_event.agent_registered.schema.v1 and schema_version 1.0.0. The row equals the ledger's prepared row (canonical SHA-256 1602bb6d...3b40, recomputed here); the six sibling rows stay prepared_not_admitted and unregistered.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "registry header",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-09-25.1\",",
+       "excerpt_sha256": "343a1cf9b3223169887967dbde1a5aae79a3ca48cbcc7065e77b342a08339f69",
+       "file_sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/42",
+       "line_start": 2576,
+       "line_end": 2579,
+       "quote": "\"family_id\": \"event-family-coordination-agent-registered\",",
+       "excerpt_sha256": "6b1140fe7fb7632711cd0f1ac308ccbe40c8d46e1c65cf88a613d0206fc93f14",
+       "file_sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/42",
+       "line_start": 2577,
+       "line_end": 2577,
+       "quote": "\"family_revision\": \"1.0.0\",",
+       "excerpt_sha256": "391eeecbbd189dc66f652115bd305389300dda63e9339272586e7eb6b6f8157c",
+       "file_sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/42",
+       "line_start": 2579,
+       "line_end": 2579,
+       "quote": "\"scope_policy\": \"project_only\",",
+       "excerpt_sha256": "8472a5d51eb53462551949130f1f8bd4f09280814f6c7f854cccadb4de30bc95",
+       "file_sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/42",
+       "line_start": 2582,
+       "line_end": 2586,
+       "quote": "\"schema_id\": \"pm.coordination_event.agent_registered.schema.v1\"",
+       "excerpt_sha256": "372ff8390b1e4747c25fc0c4edeb6a8c970080321cd2b66bd223bf4113bb38e0",
+       "file_sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/42",
+       "line_start": 2589,
+       "line_end": 2590,
+       "quote": "\"aliases\": [],",
+       "excerpt_sha256": "ef57ef8df54bee00a417e34fb5cfe2abbfab1006cf72ce46c8407d091e5f594b",
+       "file_sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_payloads.schema.json",
+       "unit": "#/$defs/agent_registered",
+       "line_start": 131,
+       "line_end": 131,
+       "quote": "\"$id\": \"pm.coordination_event.agent_registered.schema.v1\",",
+       "excerpt_sha256": "6633f021ba1eacf35fc769ad2c0a5b95696cc740ba754ea411143a942ec99a24",
+       "file_sha256": "3f97c1a674a29fbfa67c965f83176121ed6bb0b05be3bfc7f239da33a2d0ac18",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_payloads.schema.json",
+       "unit": "#/$defs/agent_registered",
+       "line_start": 153,
+       "line_end": 155,
+       "quote": "\"const\": \"1.0.0\"",
+       "excerpt_sha256": "3b7c4504fa7d3058d16568da658b953192177b7192a3a3fe8f6365f5fbd76b16",
+       "file_sha256": "3f97c1a674a29fbfa67c965f83176121ed6bb0b05be3bfc7f239da33a2d0ac18",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_admission.json",
+       "unit": "#/rows/0",
+       "line_start": 40,
+       "line_end": 40,
+       "quote": "\"admission_status\": \"admitted_static_contract\",",
+       "excerpt_sha256": "c0762c727e335eb55f459cf25878c1b359713d35fda7e165e94c7ab62fc5af36",
+       "file_sha256": "97bfdfbd518ddd8775cf3db3e598f7736957a233ba453a73205df761c0929295",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_admission.json",
+       "unit": "#/rows/0",
+       "line_start": 172,
+       "line_end": 172,
+       "quote": "\"registry_row_sha256\": \"1602bb6d33b63f79b7dc1daf4502c0aadbb26a4aa871a2963b2510a5d0353b40\"",
+       "excerpt_sha256": "c972663bd5773e442065cf49579847b03442083ea022a8589b8dd75f67ab5615",
+       "file_sha256": "97bfdfbd518ddd8775cf3db3e598f7736957a233ba453a73205df761c0929295",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27026,
+       "line_end": 27026,
+       "quote": "Admitting a family never back-fills, aliases or re-reads a sibling.",
+       "excerpt_sha256": "0a4e7e83e97eee96cd394761003b7e3974a076c6f2cd0d4279c1683fb4530ceb",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": null,
+     "change": "new",
+     "change_reason": "Not among the 42 families of the Step 8 assessment; first graded here at registry 2026-09-25.1. A branch-local grading outside the repository was deliberately not read, to keep this regrade independent."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "semantic_owner_doc resolves to the OSI anchor coordination-event-authority-dl-045-2026-09-25, the section that holds OSI-438 and names itself the semantic owner of this family; payload_owner_doc resolves to the Contracts anchor holding CV-353, whose table maps agent_registered to the registered schema ID. Neither anchor is stale or disclaims its role (clarification 1).",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/42",
+       "line_start": 2580,
+       "line_end": 2580,
+       "quote": "\"semantic_owner_doc\": \"Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25\",",
+       "excerpt_sha256": "97595ec14c1ac41afc0257be6bbd8c3a05f78b52edc71652bfe7ba97a4be7b62",
+       "file_sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/42",
+       "line_start": 2581,
+       "line_end": 2581,
+       "quote": "\"payload_owner_doc\": \"Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25\",",
+       "excerpt_sha256": "d47471231707f11776645600e10b5dc807971d9529a45fb964dc48b657cbfd8e",
+       "file_sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3801,
+       "line_end": 3802,
+       "quote": "<a id=\"coordination-event-authority-dl-045-2026-09-25\"></a>",
+       "excerpt_sha256": "016a88c4233a3ac93ec2d678d4c1ed1acceead8c21001134672cedecec3c5ffd",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3804,
+       "line_end": 3804,
+       "quote": "It is the semantic owner text for exactly seven families: `coordination.agent_registered`",
+       "excerpt_sha256": "7c7db3c29735ba3165904ef3bfdc9b9384627affad4eb070014c23014dbc5668",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438",
+       "line_start": 3886,
+       "line_end": 3886,
+       "quote": "`coordination.agent_registered`: \"records agent registration before execution\" in the canonical records list",
+       "excerpt_sha256": "da421c46a34007c795fbc725593bf88e3ce0ab15aae081e99e1121cc32370804",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-353 section (Closed coordination payload schema, DL-045, 2026-09-25)",
+       "line_start": 3075,
+       "line_end": 3076,
+       "quote": "<a id=\"closed-coordination-payload-schema-dl-045-2026-09-25\"></a>",
+       "excerpt_sha256": "f0ebe3148747259be5a5644740132924c005348edad54b79d690770f237ad592",
+       "file_sha256": "5b62717db4954cfe215a41e8cac3c636791b9fb887698c6aa85b42f809df4a50",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-353 section (Closed coordination payload schema, DL-045, 2026-09-25)",
+       "line_start": 3086,
+       "line_end": 3086,
+       "quote": "| `agent_registered` | `pm.coordination_event.agent_registered.schema.v1` | `coordination.agent_registered` |",
+       "excerpt_sha256": "d79db4f187d81dd367277505e4e97c43a18ef0b35b1a4c56b9aefde5e713e600",
+       "file_sha256": "5b62717db4954cfe215a41e8cac3c636791b9fb887698c6aa85b42f809df4a50",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": null,
+     "change": "new",
+     "change_reason": "Not among the 42 families of the Step 8 assessment; first graded here at registry 2026-09-25.1. A branch-local grading outside the repository was deliberately not read, to keep this regrade independent."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Sole appender AgentCoordinator.register_agent(RegisterAgent), called by the Orchestrator once before node execution, through storage.coordination_append.v1@1.0.0. No owner body precedes the append; Storage admits, appends and issues the first AppendReceipt; execution starts only after it returns, with a join recheck at that boundary. OSI-438 and SP-320 adopt SP-286/CV-339 resolve.v2 by name; SP-320 disclaims reliance on resolve_full_value.v1.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3812,
+       "line_end": 3812,
+       "quote": "Every coordination event is appended by `AgentCoordinator` through Storage's coordination append admission, `storage.coordination_append.v1@1.0.0` (SP-320).",
+       "excerpt_sha256": "3fa17301a7351c9b706e1c7426086b9575504ed8d825716461033837498878e0",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3816,
+       "line_end": 3816,
+       "quote": "| `coordination.agent_registered` | `register_agent(RegisterAgent)` | the Orchestrator | once, before node execution; execution starts only after its first receipt returns |",
+       "excerpt_sha256": "c62c840ff0ccc6fb02740a77895b1d794232c22d0b324d7e5d5b58446188b952",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3826,
+       "line_end": 3826,
+       "quote": "Coordination has no owner body apart from the event: the EventRecord is the coordination fact, so no body commit precedes the append.",
+       "excerpt_sha256": "b1fe87125f35e6d5e1ce351713183466c837a0cad85d316858d2d39cf9ce4488",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3826,
+       "line_end": 3826,
+       "quote": "Storage admits the event, appends it and issues its first AppendReceipt. The coordinator returns that receipt, and only then does the caller continue.",
+       "excerpt_sha256": "b1fe87125f35e6d5e1ce351713183466c837a0cad85d316858d2d39cf9ce4488",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3826,
+       "line_end": 3826,
+       "quote": "the coordinator resolves the original append only through the explicitly adopted SP-286/CV-339 `storage.first_append_receipt.resolve.v2`, as SP-320 binds it, and never asks for a first mint",
+       "excerpt_sha256": "b1fe87125f35e6d5e1ce351713183466c837a0cad85d316858d2d39cf9ce4488",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26951,
+       "line_end": 26951,
+       "quote": "`storage.coordination_append.v1@1.0.0` admits one event at a time, under the existing Storage append-writer lock, in this order:",
+       "excerpt_sha256": "901d8ad437efe8e9b3b802d9b07d90d2f51ea4e051985e5d9d0053ea66c3c0f6",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26995,
+       "line_end": 26995,
+       "quote": "For every append of the seven families, `storage.coordination_append.v1@1.0.0` and its caller `AgentCoordinator` explicitly adopt SP-286/CV-339's `storage.first_append_receipt.resolve.v2`.",
+       "excerpt_sha256": "2dc1747a9f268d3502c24249d0112191540ee27984b8762f60f535c13d29551c",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27001,
+       "line_end": 27001,
+       "quote": "At the final publication boundary, when the receipt is returned to the caller, the coordinator rechecks that the resolved receipt and `original_append_result` still join the original request and event",
+       "excerpt_sha256": "88375f8ffa109b0d214ee6d432dcafc9c4e56ff382bcf0913f2ce08b01a20ca9",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27001,
+       "line_end": 27001,
+       "quote": "so it does not rely on `storage.first_append_receipt.resolve_full_value.v1`",
+       "excerpt_sha256": "88375f8ffa109b0d214ee6d432dcafc9c4e56ff382bcf0913f2ce08b01a20ca9",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_admission.json",
+       "unit": "#/rows/0",
+       "line_start": 44,
+       "line_end": 44,
+       "quote": "\"producer_component\": \"AgentCoordinator.register_agent(RegisterAgent)\",",
+       "excerpt_sha256": "ea025e66d94839113ceea9a3c5933b08001a52e51b3c1b4d842b607e2d097823",
+       "file_sha256": "97bfdfbd518ddd8775cf3db3e598f7736957a233ba453a73205df761c0929295",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": null,
+     "change": "new",
+     "change_reason": "Not among the 42 families of the Step 8 assessment; first graded here at registry 2026-09-25.1. A branch-local grading outside the repository was deliberately not read, to keep this regrade independent."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "#/$defs/agent_registered is closed (additionalProperties false over the envelope fields plus model_id and started_at_utc), requires schema_version 1.0.0, agent_type and started_at_utc, fixes agent_revision to 1 and a key ending :1, and admits no expected_previous_revision, last_applied_event_id, operation field or null (CV-353 rules 1-5; OSI-438: registration carries no operation).",
+     "evidence": [
+      {
+       "path": "Plans/coordination_event_payloads.schema.json",
+       "unit": "#/$defs/agent_registered",
+       "line_start": 129,
+       "line_end": 140,
+       "quote": "\"additionalProperties\": false,",
+       "excerpt_sha256": "f5d1d00ea2aa4702c1ee804ffec360480a991fadf70ddcbc57fe3a96fc8ceba1",
+       "file_sha256": "3f97c1a674a29fbfa67c965f83176121ed6bb0b05be3bfc7f239da33a2d0ac18",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_payloads.schema.json",
+       "unit": "#/$defs/agent_registered",
+       "line_start": 133,
+       "line_end": 133,
+       "quote": "The first event of an agent: agent_revision is 1 and neither expected_previous_revision nor last_applied_event_id is present (CV-353 rule 4).",
+       "excerpt_sha256": "8cdfbec099d396f6965874d60c0e4aee67c554ee579b8037b574d48e0fff17dd",
+       "file_sha256": "3f97c1a674a29fbfa67c965f83176121ed6bb0b05be3bfc7f239da33a2d0ac18",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_payloads.schema.json",
+       "unit": "#/$defs/agent_registered",
+       "line_start": 167,
+       "line_end": 169,
+       "quote": "\"const\": 1",
+       "excerpt_sha256": "9e63da6c9a64afe72fbc6fb18d09f5c3084516cb21aa33e375ca97d28068c8c7",
+       "file_sha256": "3f97c1a674a29fbfa67c965f83176121ed6bb0b05be3bfc7f239da33a2d0ac18",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_payloads.schema.json",
+       "unit": "#/$defs/agent_registered",
+       "line_start": 170,
+       "line_end": 173,
+       "quote": "\"pattern\": \"^coordination:coordination\\\\.agent_registered:[\\\\s\\\\S]+:1$\"",
+       "excerpt_sha256": "ec72d352406e5f7e3ec8d2bc61c6479ecbfcd76d7a6c89270d94d71053535893",
+       "file_sha256": "3f97c1a674a29fbfa67c965f83176121ed6bb0b05be3bfc7f239da33a2d0ac18",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-353 section (Closed coordination payload schema, DL-045, 2026-09-25)",
+       "line_start": 3095,
+       "line_end": 3095,
+       "quote": "Each family definition is a closed object (`additionalProperties: false`).",
+       "excerpt_sha256": "a65aa6ca5fb28cf34c59a62cd74f8857c34a4465f2e664e9ee561772b5b2ffbc",
+       "file_sha256": "5b62717db4954cfe215a41e8cac3c636791b9fb887698c6aa85b42f809df4a50",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-353 section (Closed coordination payload schema, DL-045, 2026-09-25)",
+       "line_start": 3099,
+       "line_end": 3099,
+       "quote": "An optional field without a value is omitted; `null` is never used.",
+       "excerpt_sha256": "a341d094e23b3d52f044f5b6ac2cfc99e3bc44d2a5b0412aa01492a03b2d953c",
+       "file_sha256": "5b62717db4954cfe215a41e8cac3c636791b9fb887698c6aa85b42f809df4a50",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-353 section (Closed coordination payload schema, DL-045, 2026-09-25)",
+       "line_start": 3100,
+       "line_end": 3100,
+       "quote": "`coordination.agent_registered` has `agent_revision` 1 and carries neither `expected_previous_revision` nor `last_applied_event_id`.",
+       "excerpt_sha256": "1168b579ab59de9c3ee6aff819680ae223f71a8ddba9cdf400ca67a862dc0ea7",
+       "file_sha256": "5b62717db4954cfe215a41e8cac3c636791b9fb887698c6aa85b42f809df4a50",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "Contracts coordination rows",
+       "line_start": 3036,
+       "line_end": 3036,
+       "quote": "| `coordination.agent_registered` | `project_id`, `run_id`, `thread_id?`, `agent_id`, `agent_type`,",
+       "excerpt_sha256": "716e12b9ebf105f7e4e28405c528dd7481eee79edc0ea817af53fa23ee4d39ab",
+       "file_sha256": "5b62717db4954cfe215a41e8cac3c636791b9fb887698c6aa85b42f809df4a50",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3847,
+       "line_end": 3847,
+       "quote": "Registration carries no operation, because the Contracts row for `coordination.agent_registered` has no operation field, and no field is added.",
+       "excerpt_sha256": "664b9b0a70895fb9f433d55d57c7028abcc7a9b0becf69f89e6d1ba53d1f0906",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": null,
+     "change": "new",
+     "change_reason": "Not among the 42 families of the Step 8 assessment; first graded here at registry 2026-09-25.1. A branch-local grading outside the repository was deliberately not read, to keep this regrade independent."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "project_only with envelope pointers for project, thread, run and node; CV-353 rule 8 fixes scope_kind project, envelope identity equal to the payload, null attempt, the family schema ID and occurred_at_utc = started_at_utc. SP-320 defines the idempotency key with recovery epoch and revision, the evt_coordination_ SHA-256 event ID, fixed lineage, and agent_id allocation from fresh entropy (OSI-438: never registered again).",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/42",
+       "line_start": 2579,
+       "line_end": 2579,
+       "quote": "\"scope_policy\": \"project_only\",",
+       "excerpt_sha256": "8472a5d51eb53462551949130f1f8bd4f09280814f6c7f854cccadb4de30bc95",
+       "file_sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/42",
+       "line_start": 2591,
+       "line_end": 2594,
+       "quote": "\"/payload/project_id\"",
+       "excerpt_sha256": "610527e9334cedbf529879dd7eb164038b307afefc5925a4a87c7c6fedba86b4",
+       "file_sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-353 section (Closed coordination payload schema, DL-045, 2026-09-25)",
+       "line_start": 3104,
+       "line_end": 3104,
+       "quote": "A coordination EventRecord has `scope_kind` `project` and the payload's `project_id` and `run_id`.",
+       "excerpt_sha256": "c79347154bf3d3bb1ed6b802170df2573a1afe3fe1060a7c120b252c94379747",
+       "file_sha256": "5b62717db4954cfe215a41e8cac3c636791b9fb887698c6aa85b42f809df4a50",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-353 section (Closed coordination payload schema, DL-045, 2026-09-25)",
+       "line_start": 3104,
+       "line_end": 3104,
+       "quote": "`occurred_at_utc` equals the payload's family timestamp: `started_at_utc`",
+       "excerpt_sha256": "c79347154bf3d3bb1ed6b802170df2573a1afe3fe1060a7c120b252c94379747",
+       "file_sha256": "5b62717db4954cfe215a41e8cac3c636791b9fb887698c6aa85b42f809df4a50",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26963,
+       "line_end": 26963,
+       "quote": "`idempotency_key` is `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}`",
+       "excerpt_sha256": "15f3001d40d008eb3b1b71cab4f9badae8e7a94b995191a6d5cf89ddbd5716f3",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26964,
+       "line_end": 26964,
+       "quote": "`event_id` is `evt_coordination_` followed by the lowercase hex SHA-256 of the RFC 8785 JSON array of strings `[storage_instance_id, recovery_epoch, project_id, event_type, agent_id, agent_revision]`",
+       "excerpt_sha256": "d8dd81e06e158d494544ea47c731b6c2cc8ca3724025105a96c4244a0335b378",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26965,
+       "line_end": 26965,
+       "quote": "The registering component allocates it from fresh entropy, or derives it only from owner-issued identities that are themselves never reused.",
+       "excerpt_sha256": "926aee564c5b08908cb11101a4337914f895603c79d51f12c703aeab354fd9e7",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3810,
+       "line_end": 3810,
+       "quote": "A registered `agent_id` is never registered again, even after its terminal event.",
+       "excerpt_sha256": "2a95792fba12e3c3eb4e85b8a1418036d345c79b1bb578086301b334e48654b0",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26966,
+       "line_end": 26966,
+       "quote": "Every later event repeats the lineage its registration fixed.",
+       "excerpt_sha256": "ee8f85f85dfe3ffd856a927c6d77acea93af7a160b14c850753d63968e97a5dd",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": null,
+     "change": "new",
+     "change_reason": "Not among the 42 families of the Step 8 assessment; first graded here at registry 2026-09-25.1. A branch-local grading outside the repository was deliberately not read, to keep this regrade independent."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Dedupe identity (scope_partition, event_type, idempotency_key) plus producer digest: an exact retry returns the original event and result, a changed digest is idempotency_conflict and never appends. A lost acknowledgement returns the resolve.v2 receipt with nothing new appended; an uncertain append stays fenced; retries carry the same prepared bytes; replay rebuilds projection rows only and re-runs no effect.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26953,
+       "line_end": 26953,
+       "quote": "The existing dedupe policy resolves an exact retry, with the same `(scope_partition, event_type, idempotency_key)` and producer semantic digest, to the original event and result",
+       "excerpt_sha256": "f33a4b134848e4e573e2d65ef49535122ab92933f42641728cc753b91c37ef20",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26953,
+       "line_end": 26953,
+       "quote": "The same identity with a different digest is `idempotency_conflict` and never appends.",
+       "excerpt_sha256": "f33a4b134848e4e573e2d65ef49535122ab92933f42641728cc753b91c37ef20",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26997,
+       "line_end": 26997,
+       "quote": "After a lost acknowledgement, the coordinator returns the resolved original receipt and appends nothing new.",
+       "excerpt_sha256": "001d1b35b3b1c4031839ec274abcf1bef4d3e7ee0a763acb05710dbe3645ccdf",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26997,
+       "line_end": 26997,
+       "quote": "An uncertain append stays fenced until Storage resolves the original identity",
+       "excerpt_sha256": "001d1b35b3b1c4031839ec274abcf1bef4d3e7ee0a763acb05710dbe3645ccdf",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3826,
+       "line_end": 3826,
+       "quote": "The coordinator keeps the prepared payload for its retries, so a retry carries the same bytes. After a restart it does not rebuild a lost request; it reloads the agent's projection.",
+       "excerpt_sha256": "b1fe87125f35e6d5e1ce351713183466c837a0cad85d316858d2d39cf9ce4488",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27024,
+       "line_end": 27024,
+       "quote": "It only rebuilds projection rows and never re-runs an effect: no scheduling, prompt, notification, mirror write, command or append follows from replay.",
+       "excerpt_sha256": "e500d7af46a998d70aa13e6b7d417eadcc0d4dbff1f7d7aeba8ff54a01c5b222",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26983,
+       "line_end": 26983,
+       "quote": "Replay after a terminal event is a no-op: an exact retry returns the original result.",
+       "excerpt_sha256": "36b94986ca12bcbc40ef3790830ec3f5a2731758bbdac00422181de7d9015785",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_admission.json",
+       "unit": "#/rows/0",
+       "line_start": 47,
+       "line_end": 47,
+       "quote": "A repeated registration of the same agent_id under the same recovery epoch repeats the idempotency key, which always ends in revision 1, so it is an exact retry or idempotency_conflict.",
+       "excerpt_sha256": "6049e1354f5e91d6cfb4885fa8943ebbb6f100bf936a73751da1a1c0f1f00069",
+       "file_sha256": "97bfdfbd518ddd8775cf3db3e598f7736957a233ba453a73205df761c0929295",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": null,
+     "change": "new",
+     "change_reason": "Not among the 42 families of the Step 8 assessment; first graded here at registry 2026-09-25.1. A branch-local grading outside the repository was deliberately not read, to keep this regrade independent."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The row binds RP-COORDINATION-180D@1.0.0 (fixed TTL 15552000 s from run_completion, 1,000,000 per project, compact). SP-320 binds run_completion to the Run's first durable terminal canonical record and keeps records of an unresolved Run unexpired; the projections and checkpoint use RP-PROJECTION-3GEN@1.0.0 with bounded same-key generations. No policy changes and no open retention choice.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/42",
+       "line_start": 2625,
+       "line_end": 2629,
+       "quote": "\"policy_id\": \"RP-COORDINATION-180D\",",
+       "excerpt_sha256": "18e0bf78e1fd0ac8aa720177d84ef752b61a24f134be63ea4802993fe751bbb1",
+       "file_sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "#/retention_policies RP-COORDINATION-180D",
+       "line_start": 329,
+       "line_end": 333,
+       "quote": "\"anchor_kind\": \"run_completion\",",
+       "excerpt_sha256": "8c1d57b7094dbf39650a46cf92816d48e8b9e68bbbe1e4c66c4d54c463cdc8cb",
+       "file_sha256": "89b03cc5cf961c24d432b5acc825552fc556b3e8e2bf0681131570792da90a8c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "#/retention_policies RP-COORDINATION-180D",
+       "line_start": 333,
+       "line_end": 336,
+       "quote": "\"ttl_seconds\": 15552000,",
+       "excerpt_sha256": "5a7f0602580eb178c229f4d0fdd59e7e4e014b31c4158726c6471a7e74ad52cb",
+       "file_sha256": "89b03cc5cf961c24d432b5acc825552fc556b3e8e2bf0681131570792da90a8c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "#/retention_policies RP-COORDINATION-180D",
+       "line_start": 335,
+       "line_end": 336,
+       "quote": "\"cardinality_scope\": \"project\",",
+       "excerpt_sha256": "6c36f1af98bfc2238b3f2b2dae33012adcedbb8d0b678cb4c4356f85e7df535f",
+       "file_sha256": "89b03cc5cf961c24d432b5acc825552fc556b3e8e2bf0681131570792da90a8c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "coordination_event_records",
+       "line_start": 8011,
+       "line_end": 8011,
+       "quote": "\"retention_policy_ref\": \"RP-COORDINATION-180D\",",
+       "excerpt_sha256": "220682429e7cf6e0741bc39976076871822c44b7621ac0ae8a3a5d42d439ce79",
+       "file_sha256": "89b03cc5cf961c24d432b5acc825552fc556b3e8e2bf0681131570792da90a8c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27017,
+       "line_end": 27017,
+       "quote": "The seven families use `RP-COORDINATION-180D@1.0.0`, as the registry family `coordination_event_records` already binds it.",
+       "excerpt_sha256": "7e2fef38899fedc054b7b0169786e0c0cb82ba9b67edd5d512fe69a4744ed2d4",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27018,
+       "line_end": 27018,
+       "quote": "`run_completion` binds the first durable terminal canonical record of the Run that the event's `run_id` names",
+       "excerpt_sha256": "4bf667ad92c3d9e6d2ef5c8d7ff77d288947d8649af88782eda9bb9c48b81e22",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27018,
+       "line_end": 27018,
+       "quote": "Until the Run's terminal record resolves, its coordination records are not eligible for expiry.",
+       "excerpt_sha256": "4bf667ad92c3d9e6d2ef5c8d7ff77d288947d8649af88782eda9bb9c48b81e22",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27019,
+       "line_end": 27019,
+       "quote": "They use `RP-PROJECTION-3GEN@1.0.0`",
+       "excerpt_sha256": "8b8c2cf3c103834b89de8d90356d51da62384e370b7835612c73da1a09fc3385",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "coordination_read_model_projections",
+       "line_start": 8899,
+       "line_end": 8899,
+       "quote": "\"retention_policy_ref\": \"RP-PROJECTION-3GEN\",",
+       "excerpt_sha256": "cf89394157ab87f2def1e06838bc325cae2b2f9b3230f11ce0172a1f33f60342",
+       "file_sha256": "89b03cc5cf961c24d432b5acc825552fc556b3e8e2bf0681131570792da90a8c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3845,
+       "line_end": 3845,
+       "quote": "This is an event contract, not a retention choice.",
+       "excerpt_sha256": "f466211cd7f5c99e1893f4513e97a9cb8ae7a5b35f055af57ef847b5179c6139",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": null,
+     "change": "new",
+     "change_reason": "Not among the 42 families of the Step 8 assessment; first graded here at registry 2026-09-25.1. A branch-local grading outside the repository was deliberately not read, to keep this regrade independent."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "reject_unhandled_secrets and no_secrets; the payload holds IDs, platform, model_id and a timestamp only, and worktree_path becomes worktree_id. SP-320: the EventRecords are the only, canonical history in the mandatory backup, first receipts sit in SP-286 custody, projections are derived and rebuilt after restore, restored work is never fresh, and readers apply current Project and thread permission and deletion tombstones before disclosure.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/42",
+       "line_start": 2606,
+       "line_end": 2610,
+       "quote": "\"mode\": \"reject_unhandled_secrets\",",
+       "excerpt_sha256": "16ab2a0e0b644eabb8bea60bbadf052f7bd7389e5976b33abeac834f26cfdaf1",
+       "file_sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-353 section (Closed coordination payload schema, DL-045, 2026-09-25)",
+       "line_start": 3104,
+       "line_end": 3104,
+       "quote": "`payload_ref` is null, `redaction_profile` is `no_secrets` and `replay_policy` is `dedupe_by_idempotency_key`.",
+       "excerpt_sha256": "c79347154bf3d3bb1ed6b802170df2573a1afe3fe1060a7c120b252c94379747",
+       "file_sha256": "5b62717db4954cfe215a41e8cac3c636791b9fb887698c6aa85b42f809df4a50",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27005,
+       "line_end": 27005,
+       "quote": "The seven families' EventRecords in seglog are the only coordination history. They are canonical, belong to the canonical backup, and are never rebuilt from projections.",
+       "excerpt_sha256": "ca101b5c0fc4a25cb5b3fde7ccfb0988928bff7a3efa65811840e60599d8d991",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27005,
+       "line_end": 27005,
+       "quote": "First receipts live in SP-286's `event_append_receipt_custody`.",
+       "excerpt_sha256": "ca101b5c0fc4a25cb5b3fde7ccfb0988928bff7a3efa65811840e60599d8d991",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27006,
+       "line_end": 27006,
+       "quote": "No prompt, model output, file content, diff, tool argument, command line, environment value, credential, account identifier, token or local absolute path is stored.",
+       "excerpt_sha256": "d272b552d36e024ec67d92a80a7c641d4404451571c45fb42056b25447e2834f",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27013,
+       "line_end": 27013,
+       "quote": "Every reader applies current Project and thread permission and the existing deletion tombstones before disclosing a row.",
+       "excerpt_sha256": "1cdf2eb130481abf78e5d8fdefd4e3da444a3fd5622e00982550ef066ca8ad6e",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26999,
+       "line_end": 26999,
+       "quote": "A verified older restore does not make omitted coordination work fresh.",
+       "excerpt_sha256": "a60ad63b1657e1f29946a2d3bff619575325e2d39edecbf102bc581ceb904bae",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "coordination_event_records",
+       "line_start": 7978,
+       "line_end": 7981,
+       "quote": "\"strategy\": \"restore_from_mandatory_backup\",",
+       "excerpt_sha256": "459c1ecf7fd4488070f146f5b08a1baf1340a4ca28350f9b71ef3d531b0731d2",
+       "file_sha256": "89b03cc5cf961c24d432b5acc825552fc556b3e8e2bf0681131570792da90a8c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3869,
+       "line_end": 3869,
+       "quote": "| `worktree_path` | the `RegisterAgent` example and the projection JSON example | `worktree_id`; no path is stored |",
+       "excerpt_sha256": "f6eeae346d4d41e7c1d1aa10fde8e985e20680fb8473fb84d5ee40b76f4289a9",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": null,
+     "change": "new",
+     "change_reason": "Not among the 42 families of the Step 8 assessment; first graded here at registry 2026-09-25.1. A branch-local grading outside the repository was deliberately not read, to keep this regrade independent."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-320's table admits registration only as an agent's first event (revision 1, no expected previous revision), creating the row as queued with lineage fixed; a repeat is already_registered, or already_terminal after the terminal event, before the revision rule, unless an exact retry. Barriers: execution and the revision-2 initial operation wait for the first receipt; read-back waits for coverage; admission is one event at a time under the writer lock.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26974,
+       "line_end": 26974,
+       "quote": "| no event | `coordination.agent_registered` | `agent_revision` 1, with no `expected_previous_revision` | agent row created with status `queued`; lineage fixed |",
+       "excerpt_sha256": "c7a96d55cf3a35fb3419fb8b5612ec349cb987d848b832a229221f3be934aff1",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26976,
+       "line_end": 26976,
+       "quote": "| registered, not terminal | `coordination.agent_registered` | never, unless it is an exact retry | `already_registered` |",
+       "excerpt_sha256": "ea4e098f42f6d4233140fbf76fd19d6534fc0ac73338e84b94d57fe3e5603718",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26981,
+       "line_end": 26981,
+       "quote": "| terminal | any event | never, unless it is an exact retry | `already_terminal` |",
+       "excerpt_sha256": "c3c905808528e9a3a51ae777f62de9338968de5d1d9dc8a240d725e61460ce83",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26957,
+       "line_end": 26957,
+       "quote": "for a registration of an agent that already has one, `already_terminal` when the agent is terminal and `already_registered` otherwise, before the revision rule",
+       "excerpt_sha256": "67bacbd9b221535793955cf9962ee0dba55594a9450d533ddf26429790c277e6",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3847,
+       "line_end": 3847,
+       "quote": "it appends it as `coordination.agent_operation_updated` right after registration returns its first receipt, at `agent_revision` 2.",
+       "excerpt_sha256": "664b9b0a70895fb9f433d55d57c7028abcc7a9b0becf69f89e6d1ba53d1f0906",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3826,
+       "line_end": 3826,
+       "quote": "a caller that must read it back waits until checkpoint coverage reaches the receipt's sequence (SP-320)",
+       "excerpt_sha256": "b1fe87125f35e6d5e1ce351713183466c837a0cad85d316858d2d39cf9ce4488",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27032,
+       "line_end": 27032,
+       "quote": "a missing registration never creates an agent.",
+       "excerpt_sha256": "8cd64db411a642d689f7421e4c28716830770dd042cd14e217871fd036672fd3",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27028,
+       "line_end": 27028,
+       "quote": "the `AgentCoordinator` append path is activated natively only when all seven families are admitted, because the transition table needs registration and every terminal family.",
+       "excerpt_sha256": "a6ca58d4bbfde4a6e4f8c503c66c79415153e11a8606a6c13f60c6123e6e425b",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": null,
+     "change": "new",
+     "change_reason": "Not among the 42 families of the Step 8 assessment; first graded here at registry 2026-09-25.1. A branch-local grading outside the repository was deliberately not read, to keep this regrade independent."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "storage.coordination_projector.v1@1.0.0 is the only direct consumer and adopts SP-278's checkpoint and reader by name; key projector.checkpoint.coordination:{project_id}, closed value coordination_projector_checkpoint.v1@1.0.0 storing the nine-field durable token (no redb_snapshot_id, DL-076); rows and checkpoint commit in one redb transaction under prior-value CAS; five versioned readers check state, admitted types, coverage and publication; governed rebuild.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26895,
+       "line_end": 26895,
+       "quote": "`storage.coordination_projector.v1@1.0.0` is the only direct consumer of the seven families' events.",
+       "excerpt_sha256": "9a68ead1c35612fd4b7f1607d794aff6faa04ac964620b9df4ad980e324e957f",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26897,
+       "line_end": 26901,
+       "quote": "`storage.coordination_reader.scheduler.v1@1.0.0` for the Orchestrator scheduler;",
+       "excerpt_sha256": "a2fbdc6ff2ff0b1c1c6cd243a0643ed07eb8ea7f5e1812f7fe313ec56566a672",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26907,
+       "line_end": 26907,
+       "quote": "The key stays `projector.checkpoint.coordination:{project_id}`, one per Project, in redb's existing `checkpoints` table.",
+       "excerpt_sha256": "078fdc954a4cc0280e248e05659a229d32300b06c07d991596efc5415f449656",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26907,
+       "line_end": 26907,
+       "quote": "The value is canonical MessagePack `pm.storage_value.coordination_projector_checkpoint.v1@1.0.0`, defined at `Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint`.",
+       "excerpt_sha256": "078fdc954a4cc0280e248e05659a229d32300b06c07d991596efc5415f449656",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26927,
+       "line_end": 26927,
+       "quote": "The projector explicitly adopts SP-278's generic index checkpoint and its reader.",
+       "excerpt_sha256": "ca01d60d850ea12d4e18404657eb35377c20b29c110c85cafccb3aaf294923c6",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26931,
+       "line_end": 26931,
+       "quote": "The projector commits the changed projection rows and the checkpoint in one redb write transaction, with exact prior-value compare-and-swap on the checkpoint",
+       "excerpt_sha256": "122d2b6398f08d42d9beed7f1bc48701cad388b637d634519e585f830fe78233",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26934,
+       "line_end": 26934,
+       "quote": "`index_read_token` stores the nine-field durable read token that SP-278 defines on 2026-09-24, so no `redb_snapshot_id` is stored (DL-076).",
+       "excerpt_sha256": "1fadbeea6e90a1e3788bdbecbe0de9836b0a045c5c209ab09a5f322d9da9e79e",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26987,
+       "line_end": 26987,
+       "quote": "the registration's lineage, `agent_type`, `platform`, `model_id` and `started_at_utc`",
+       "excerpt_sha256": "a747898da82b577a845e16380eb524c17742c337c48b0c482f5e36f07f69edff",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_projection_contracts.schema.json",
+       "unit": "#/$defs/checkpoint",
+       "line_start": 820,
+       "line_end": 822,
+       "quote": "\"$ref\": \"#/$defs/durable_read_token\"",
+       "excerpt_sha256": "2fc656f1f92ac55d17709f549c1c4fc449cdd0ef39ca112a58a17ef07c17d62e",
+       "file_sha256": "c4b3a52492d23b5325e07e3fb97a6d04f785d3beff3a81465dc9ed3653b3963d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_projection_contracts.schema.json",
+       "unit": "#/$defs/durable_read_token",
+       "line_start": 1246,
+       "line_end": 1259,
+       "quote": "\"source_selection\"",
+       "excerpt_sha256": "3cc01a861777f348d123bc258456c7d57bad9e37a13b8380607ac6bed6711529",
+       "file_sha256": "c4b3a52492d23b5325e07e3fb97a6d04f785d3beff3a81465dc9ed3653b3963d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "coordination_read_model_projections",
+       "line_start": 8858,
+       "line_end": 8858,
+       "quote": "storage.coordination_projector.v1@1.0.0 explicitly adopts SP-278",
+       "excerpt_sha256": "9044442a12297266b69807918c621a0ad2623655b2a912608032850619922af7",
+       "file_sha256": "89b03cc5cf961c24d432b5acc825552fc556b3e8e2bf0681131570792da90a8c",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": null,
+     "change": "new",
+     "change_reason": "Not among the 42 families of the Step 8 assessment; first graded here at registry 2026-09-25.1. A branch-local grading outside the repository was deliberately not read, to keep this regrade independent."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Compatibility: no aliases, legacy extensions or sketch fields; the JSON state files are mirror inputs, never migration authority; a later payload needs a new CV-353 definition and version, and readers reject unsupported versions. Withdrawal (SP-320, per family): new registrations refused, current core withdrawn once, projector and readers fenced, successor rebuilt from kept seglog and custody; no zero-cursor reset, sibling reuse or seglog deletion.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-353 section (Closed coordination payload schema, DL-045, 2026-09-25)",
+       "line_start": 3097,
+       "line_end": 3097,
+       "quote": "A later payload change needs a new definition and version, and readers reject an unsupported one.",
+       "excerpt_sha256": "9a2f199f809701c9a3751c7face8bc6e58e3bde40d9c9027323fc8b29a9d989a",
+       "file_sha256": "5b62717db4954cfe215a41e8cac3c636791b9fb887698c6aa85b42f809df4a50",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-438 section (Coordination event authority, DL-045, 2026-09-25)",
+       "line_start": 3865,
+       "line_end": 3865,
+       "quote": "**Legacy sketch fields.** These do not govern:",
+       "excerpt_sha256": "3892357277090e8d58d4014bb9e041c859faf4c07a23b545e3d1814a8c1cb1e3",
+       "file_sha256": "8a7325bdfbe0f9c91b72df8c3cc24fa3f0ee6ea8a5c5d209d251b120e4742902",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "coordination_event_records",
+       "line_start": 7973,
+       "line_end": 7973,
+       "quote": "Legacy active-agents.json and .puppet-master/state/*.json coordination paths are compatibility or debug mirror inputs only, never migration authority",
+       "excerpt_sha256": "e75a6001e5683f18c0924d6217b09be7e1b9347c33bebc65d261ddd17f356b83",
+       "file_sha256": "89b03cc5cf961c24d432b5acc825552fc556b3e8e2bf0681131570792da90a8c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 26944,
+       "line_end": 26944,
+       "quote": "accepts only rows whose `publication_id` equals the current checkpoint core's, and only schema IDs and versions it supports;",
+       "excerpt_sha256": "d8f10d0576229d7b73b4c3a89b685e7d9979305d26e431cce1712aec66aec6bb",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27027,
+       "line_end": 27027,
+       "quote": "First the writer is cut off: the append admission refuses new events of that family, and because the lifecycle needs all seven, it also refuses new registrations.",
+       "excerpt_sha256": "ab71d21469e51533fc474899566c233ab57331f43600a5c114d69372c62212a2",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27027,
+       "line_end": 27027,
+       "quote": "Then the projector and readers are fenced: the current checkpoint core is withdrawn, with `withdrawn_at_utc` set once, the projector stops ordinary advance, and every reader returns unavailable.",
+       "excerpt_sha256": "ab71d21469e51533fc474899566c233ab57331f43600a5c114d69372c62212a2",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27027,
+       "line_end": 27027,
+       "quote": "No silent zero-cursor reset, sibling reuse, history rewrite or deletion of seglog records follows.",
+       "excerpt_sha256": "ab71d21469e51533fc474899566c233ab57331f43600a5c114d69372c62212a2",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-320 section (Coordination event persistence binding, DL-045, 2026-09-25)",
+       "line_start": 27026,
+       "line_end": 27026,
+       "quote": "`admitted_event_types` changes only through a governed rebuild",
+       "excerpt_sha256": "0a4e7e83e97eee96cd394761003b7e3974a076c6f2cd0d4279c1683fb4530ceb",
+       "file_sha256": "e22879f0b7da1e27228cdad35e18943acc48a217ce871fa4236d4170844a033e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": null,
+     "change": "new",
+     "change_reason": "Not among the 42 families of the Step 8 assessment; first graded here at registry 2026-09-25.1. A branch-local grading outside the repository was deliberately not read, to keep this regrade independent."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "ATS-058 and the fixtures give this family 10 positive and 12 negative payloads by layer, its own valid EventRecord with 4 join negatives, identity vectors (revision 1, new recovery epoch) and 5 transition sequences, all named in its ledger row; static checker scripts/pm_coordination_events.py; COORD-APPEND-01 and the shared obligations authored NOT_RUN. This grader re-derived the registration cases without a discrepancy.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-058",
+       "line_start": 5203,
+       "line_end": 5203,
+       "quote": "| `coordination.agent_registered` | 10 | 12. Schema, 10: a sketch field, the legacy `worktree_path`, no `project_id`, no `agent_type`,",
+       "excerpt_sha256": "2a27998a89c61f29b4117d278e8daa7b93e961c132fdc681b26ec0b1a6a6943c",
+       "file_sha256": "86d7739c405a3d78a104ba84164a2aad597b89b4fa8571860eb92fef9e81ae65",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-058",
+       "line_start": 5203,
+       "line_end": 5203,
+       "quote": "`registration_retry_and_conflict`, `repeat_registration_of_registered_agent_refused`, `repeat_registration_of_terminal_agent_refused`, `registration_not_admitted`",
+       "excerpt_sha256": "2a27998a89c61f29b4117d278e8daa7b93e961c132fdc681b26ec0b1a6a6943c",
+       "file_sha256": "86d7739c405a3d78a104ba84164a2aad597b89b4fa8571860eb92fef9e81ae65",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-058",
+       "line_start": 5217,
+       "line_end": 5217,
+       "quote": "| `coordination.agent_registered` | `event_valid_agent_registered`, on `a7_registered_full` | 4: `occurred_at_join`, `payload_schema_id`, `identity_recipe`,",
+       "excerpt_sha256": "fa21053b5ee6ab1ae15b5dc244425ddd1c10f2ef7838a76d4ac066136f0832c7",
+       "file_sha256": "86d7739c405a3d78a104ba84164a2aad597b89b4fa8571860eb92fef9e81ae65",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-058",
+       "line_start": 5196,
+       "line_end": 5196,
+       "quote": "The checker, `python3 scripts/pm_coordination_events.py`, and its unittest module `tests/test_pm_coordination_events.py`.",
+       "excerpt_sha256": "37738bbba0fbef080bf952f1d5c2c0d1d790294d3a312fc4719588b0421cf25f",
+       "file_sha256": "86d7739c405a3d78a104ba84164a2aad597b89b4fa8571860eb92fef9e81ae65",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-058",
+       "line_start": 5229,
+       "line_end": 5229,
+       "quote": "| `COORD-APPEND-01` | An admitted registration from the Orchestrator before node execution |",
+       "excerpt_sha256": "7213d0848d25df1b3b84b7f4a8f58c5b4ad3be9dfad695afdbbc9a0c2b7a448b",
+       "file_sha256": "86d7739c405a3d78a104ba84164a2aad597b89b4fa8571860eb92fef9e81ae65",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_contract_fixtures.json",
+       "unit": "#/invalid_payloads registered_with_expected_previous_revision",
+       "line_start": 868,
+       "line_end": 875,
+       "quote": "\"case_id\": \"registered_with_expected_previous_revision\",",
+       "excerpt_sha256": "462d375eaccd482d7433a89b45c44718ef0e578277f89634b323ce3e5c04562d",
+       "file_sha256": "8a7b247966926b213fce134cbc48c9836bacfe7972830c50e45262b744bcfe37",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_contract_fixtures.json",
+       "unit": "#/invalid_payloads registered_key_other_agent",
+       "line_start": 908,
+       "line_end": 914,
+       "quote": "\"expected_rejection\": \"identity_recipe\",",
+       "excerpt_sha256": "f9f2534092d7b3e38e83db07be69f016d5d311137cf67477eceec80ad6028c38",
+       "file_sha256": "8a7b247966926b213fce134cbc48c9836bacfe7972830c50e45262b744bcfe37",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_contract_fixtures.json",
+       "unit": "#/identity_vectors identity_registered_rev1",
+       "line_start": 2171,
+       "line_end": 2178,
+       "quote": "\"expected_event_id\": \"evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91\"",
+       "excerpt_sha256": "2f7dfcf97f5d5f1b08937cea5aa35033c7dcc17775f0ff1ff2dca50673bcb533",
+       "file_sha256": "8a7b247966926b213fce134cbc48c9836bacfe7972830c50e45262b744bcfe37",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_contract_fixtures.json",
+       "unit": "#/transition_sequences repeat_registration_of_terminal_agent_refused",
+       "line_start": 2559,
+       "line_end": 2561,
+       "quote": "\"expected\": \"coordination_conflict:already_terminal\"",
+       "excerpt_sha256": "3244d868a9e9f3c9965a78273fb4fc6ef83d7d2a200c1177f43983fa12fa0338",
+       "file_sha256": "8a7b247966926b213fce134cbc48c9836bacfe7972830c50e45262b744bcfe37",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_contract_fixtures.json",
+       "unit": "#/transition_sequences registration_not_admitted",
+       "line_start": 3308,
+       "line_end": 3310,
+       "quote": "\"expected\": \"quarantined_before_append\"",
+       "excerpt_sha256": "f69fc40265ddf9106851b1bd35f9148d3f2252b8ecd14fc33b71efa853a896d7",
+       "file_sha256": "8a7b247966926b213fce134cbc48c9836bacfe7972830c50e45262b744bcfe37",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_contract_fixtures.json",
+       "unit": "#/required_native_oracles COORD-APPEND-01",
+       "line_start": 4286,
+       "line_end": 4289,
+       "quote": "\"execution_status\": \"NOT_RUN\"",
+       "excerpt_sha256": "9e465b97672fe02c42bb85ac21ac09ae0142d447e50182b8f7c1f6342be32488",
+       "file_sha256": "8a7b247966926b213fce134cbc48c9836bacfe7972830c50e45262b744bcfe37",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/coordination_event_admission.json",
+       "unit": "#/rows/0",
+       "line_start": 80,
+       "line_end": 83,
+       "quote": "\"a7_registered_other_recovery_epoch\",",
+       "excerpt_sha256": "d8cca4d95e50524f61e7231ab7c9cc56a775f84c8d46a92f3e34dbbef85143e6",
+       "file_sha256": "97bfdfbd518ddd8775cf3db3e598f7736957a233ba453a73205df761c0929295",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": null,
+     "change": "new",
+     "change_reason": "Not among the 42 families of the Step 8 assessment; first graded here at registry 2026-09-25.1. A branch-local grading outside the repository was deliberately not read, to keep this regrade independent."
+    }
+   },
+   "remaining_gaps": [
+    "Landing condition, not a grade defect: at 3abdf9fe3f the DL-077 admission record reports/event-authority-20260911/admission-records/coordination.agent_registered.json and the DL-078 Decision Log entry naming this family (its decision_ref under DL-093) are not yet written (the tip commit says they follow). Until the record lands, tests/test_event_authority_holding_bucket.py fails closed at import (lines 266-285), so one test of tests.test_pm_coordination_events errors and ATS-058's acceptance criterion that the unittest module passes is not yet met. The landing must re-run it after the record lands; any other failure reopens positive_negative_oracles.",
+    "Optional hardening, not a grade defect (ATS-058, fixtures): CV-353 rule 8's family-independent joins (scope, inline payload, attempt, project/run/key identity, redaction profile, replay policy) are negated only on the status family's record, by ATS-058's design. This grade counts none of those sibling cases; it relies on this family's own record passing every join and on its own four join negatives. Registration-record negatives for them would remove the question.",
+    "Optional hardening, not a grade defect (fixtures evaluation.producer_digest): the fixture producer digest is the SHA-256 of {event_type, payload}, narrower than Contracts_V0's producer_semantic_digest (line 1029) over the envelope's semantic fields, and no case retries with an envelope-only difference. SP-320's rule that the prepared event keeps its values for every retry is the owner text relied on.",
+    "Optional hardening, not a grade defect (ATS-058): SP-320's rule that the registering component allocates agent_id from fresh entropy, so that a registration a verified older restore removed is never reissued (OSI-438: never registered again; an agent started after the restart gets a new agent_id), has no native obligation of its own; the static repeat-registration sequences only cover a store that still holds the agent.",
+    "Editorial, not a grade defect (CV-353 or OSI-438): CV-353 rule 8 lets actor_ref for registration name 'the Orchestrator or scheduler path', while OSI-438's producer table names only the Orchestrator as register_agent's caller; no exact actor_ref value is fixed for coordination events.",
+    "Native, NOT_RUN (does not lower a grade): COORD-APPEND-01 and the shared COORD-RETRY-01, COORD-UNCERTAIN-01, COORD-CAS-01, COORD-TOKEN-01, COORD-QUARANTINE-01, COORD-READER-01, COORD-WITHDRAW-01, COORD-RETENTION-01 and COORD-MIRROR-01. SP-320's activation gate appends nothing natively until all seven families are admitted, so the family is contract-only until the six siblings land."
+   ],
+   "static_checks_seen": [
+    "scripts/pm_coordination_events.py (named by OSI-438, CV-353, SP-320 and ATS-058; not run by this grader, per the rubric's constraints; the tip commit reports a pass with 0 failures, admitted_rows [coordination.agent_registered])",
+    "tests/test_pm_coordination_events.py (50 tests; not run by this grader; the tip commit reports one error, the holding-bucket import test, fail-closed until the DL-077 admission record lands)",
+    "Plans/coordination_event_contract_fixtures.json (the family's cases; its registration payload layer, identity vectors and event-ID negatives were re-derived independently by this grader, see notes)"
+   ],
+   "notes": "Graded read-only from git show 3abdf9fe3fbdc9e216b80f0ac5224aa9ffd98c91:<path> (scratch copies verified byte-identical to the tip blobs); ~/pm-worktrees and the earlier branch-local grading were not read. Siblings are used only as transition partners, never as evidence (DL-039). Independent re-derivation by this grader, not the owner's suite: the registry row's canonical SHA-256 equals the ledger's registry_row_sha256 1602bb6d...3b40; the registry file SHA-256 is 4227be36...3e70 with 43 families, no duplicate event type, family ID or payload schema ID, and validates against Plans/event_family_registry.schema.json; the 10 registration positives validate against the closed definition (Draft 2020-12) and the 12 negatives fail at their stated layers (schema 10, identity_recipe 1, valid_utc_datetime 1); probes confirm last_applied_event_id, an operation field, a missing started_at_utc, schema_version 1.0.1 and a 257-character agent_type are rejected; SP-320's event-ID recipe reproduces evt_coordination_49a4...4d91 for the registration record and 8728...7857 for the sibling-ID negative; the durable_read_token is SP-278's read_token less redb_snapshot_id. Disposition CURRENT_WRITER: the owner contract defines the current producer; SP-320's activation gate keeps it contract-only natively until all seven families are admitted. Native execution is NOT_RUN and lowers no grade.",
+   "grading_batch": "independent_regrade"
+  }
+ ]
+}
