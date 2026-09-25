@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16984-L17944
+Source lines: L16984-L17948
 
-Source SHA256: `9d00ca32e97f9131d31c8fa5572d005a7d4613e03372eedf55b1d0c69ade6192`
+Source SHA256: `d7e3e9f6e397b997a1ed7c9f06a77170d75afcdfe517d3d56e15271eeafe7472`
 
 ---
 
@@ -305,6 +305,10 @@ Minimum event-class defaults:
 The retained SafePoint hash summary's anchor is the instant of its first successful durable publication (DL-069): preparation, retries, recovery and re-observation never start or reset it, and existing holds and dependencies still override age eligibility. The 90-day full-SafePoint minimum is unchanged.
 
 The 19 `runtime_artifact.*` event histories named in DL-075 are assigned `RP-AUTHORITY-INDEFINITE` for the time their full contracts are admitted. This is a retention assignment only: it admits no family, defines no binding, and leaves artifact bodies, original receipts, restore points, Usage and source records under their own policies. Text embedded in those events is retained with them; each full contract must make that and any applicable deletion requirement explicit before admission, and retention never grants access to a linked body.
+
+**Chat content policy object and reuse check (DL-084, DL-092).** DL-084 and DL-092 keep their families as long as the chat exists and name `RP-GOAL-THREAD-LIFETIME@1.0.0`, subject to this owner's reuse check under DL-045, which allows reuse only when the object's owner defines the required role, version and scope, and never from a sibling or a descriptive role. The lifetimes match: both keep records while the chat exists and end them when it is deleted, with the same tombstone and purge limits. The role and the count rule do not. The owner text of `RP-GOAL-THREAD-LIFETIME@1.0.0`, "DL-047 lifetime and deletion" under SP-287, defines it as the machine assignment of the Goal content families and applies "no imported 250,000-message Goal-revision cap"; DL-047 decides Goal text only and does not select sibling event admission. The histories of DL-084 and DL-092 belong to a chat and are shown in its history, so they are chat content, the Chat content class of the table above: PD-L005-02 keeps chat content while its thread exists, caps it at 250,000 per thread and rolls it into a linked successor rather than evicting it. Reusing the Goal object would drop that cap and successor rule from chat history, so the reuse is not justified. The Chat content class is materialized exactly as `RP-CHAT-THREAD-LIFETIME@1.0.0` in `Plans/storage_value_registry.json`: `indefinite`, `explicit_delete` anchor (the chat's deletion), `retain_indefinitely=true`, null TTL, `max_cardinality=250000` with `cardinality_scope=thread`, no byte cap, `roll_successor` overflow, hold eligible and `tombstone_then_compact` expiry. It is the only new policy object DL-092 allows. `RP-GOAL-THREAD-LIFETIME@1.0.0` keeps its Goal families and its values.
+
+The cap and the successor rule are those of PD-L005-02. A thread holds at most 250,000 records under `RP-CHAT-THREAD-LIFETIME@1.0.0`, counted over every family assigned to it in that thread, in the existing count order. At the cap the thread's history continues in a linked successor instead of evicting anything: no record is removed to make room, and the count never deletes content. A successor belongs to the same chat, lasts as long as it and is deleted with it. Deleting the chat follows Thread/project deletion below (PD-L015-04): the content-free tombstone is persisted at once, unheld active copies are purged within 24 hours and deleted backup bytes within 30 days, and a hold delays physical purge but never restores visibility. The successor's physical form is not defined here; it is technical work for the first admission of a family bound to this policy. No family other than those of DL-084 and DL-092 is assigned to it here.
 
 Expiry is inclusive at `anchor + ttl`. Count order is `(retention_anchor_at_utc, sequence_id?, stable_object_id)`. Legal hold, recovery/preserved/recent-run anchor, live ref, backup, rollback, or maintenance ref overrides age/count eligibility. Latest 25 terminal runs/project receive the automatic `recent_run` anchor; becoming 26th clears only that automatic anchor.
 

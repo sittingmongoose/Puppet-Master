@@ -331,7 +331,10 @@ class OnboardingStorageTests(unittest.TestCase):
         browser = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(browser)
         self.assertEqual(browser_checkpoint[0], browser.expected_storage_family())
-        self.assertEqual(len(self.registry["retention_policies"]), 27)
+        # Re-pinned 2026-09-25 (Plans/storage-plan.md Case L-3, DL-084 and DL-092; branch
+        # plans/ea-storage-retention-20260925): RP-CHAT-THREAD-LIFETIME@1.0.0 materializes the Chat content
+        # class, so the registry has 28 retention policies. The family rows pinned above are unchanged.
+        self.assertEqual(len(self.registry["retention_policies"]), 28)
         self.assertEqual(self.storage.validate(self.registry), [])
         failures, counts = GATE.validate_onboarding_storage_contract()
         self.assertEqual(failures, [])

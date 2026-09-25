@@ -552,6 +552,22 @@
       "hold_eligible": true,
       "expiry_action": "delete_sidecar",
       "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-CHAT-THREAD-LIFETIME",
+      "retention_mode": "indefinite",
+      "anchor_kind": "explicit_delete",
+      "retain_indefinitely": true,
+      "ttl_seconds": null,
+      "source_policy_ref": null,
+      "max_cardinality": 250000,
+      "cardinality_scope": "thread",
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "roll_successor",
+      "hold_eligible": true,
+      "expiry_action": "tombstone_then_compact",
+      "policy_version": "1.0.0"
     }
   ],
   "redaction_transform_registry_ref": "Plans/redaction_transform_registry.json",

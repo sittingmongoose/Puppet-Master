@@ -758,8 +758,12 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # deferred coordination families coordination_event_records and coordination_read_model_projections
 # are materialized in place as SP-320 keyed value compositions, so 272 materialized and 21 deferred
 # become 274 and 19. The family count, the retention-policy count and the tiers are unchanged.
+# Re-pinned 2026-09-25 on branch plans/ea-storage-retention-20260925 (Plans/storage-plan.md Case L-3, DL-084 and
+# DL-092): the Storage owner's reuse check did not reuse RP-GOAL-THREAD-LIFETIME and materialized the Chat content
+# class as RP-CHAT-THREAD-LIFETIME@1.0.0, so the retention-policy count moves from 27 to 28. The family, status
+# and tier counts are unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 294
-STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
+STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 28
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
     "materialized": 274,
     "deferred_not_build_blocking": 19,

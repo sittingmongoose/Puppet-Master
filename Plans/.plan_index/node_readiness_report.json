@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T10:54:10Z",
+  "generated_at_utc": "2026-09-25T10:56:32Z",
   "gui_related_units": {
     "count": 3197,
     "units": [
@@ -29744,8 +29744,8 @@
         "source_location": {
           "heading": "SP-235 - Case L Migration Backup And Canonical Redb Recovery",
           "heading_level": 3,
-          "heading_line": 17591,
-          "line": 17593,
+          "heading_line": 17595,
+          "line": 17597,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29755,8 +29755,8 @@
         "source_location": {
           "heading": "SP-236 - Case L SeglogFrameV2 Durability And Recovery",
           "heading_level": 3,
-          "heading_line": 17632,
-          "line": 17634,
+          "heading_line": 17636,
+          "line": 17638,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29766,8 +29766,8 @@
         "source_location": {
           "heading": "SP-237 - Case L Retention Compaction Deletion And Quarantine",
           "heading_level": 3,
-          "heading_line": 17675,
-          "line": 17677,
+          "heading_line": 17679,
+          "line": 17681,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29777,8 +29777,8 @@
         "source_location": {
           "heading": "SP-238 - Case L Storage IO Admission And Recovery",
           "heading_level": 3,
-          "heading_line": 17715,
-          "line": 17717,
+          "heading_line": 17719,
+          "line": 17721,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29788,8 +29788,8 @@
         "source_location": {
           "heading": "SP-239 - Case L Aggregate Lock And Viewer Envelope",
           "heading_level": 3,
-          "heading_line": 17751,
-          "line": 17753,
+          "heading_line": 17755,
+          "line": 17757,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29799,8 +29799,8 @@
         "source_location": {
           "heading": "SP-240 - Case L Root Continuity Relocation And Fallback Branch",
           "heading_level": 3,
-          "heading_line": 17787,
-          "line": 17789,
+          "heading_line": 17791,
+          "line": 17793,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29810,8 +29810,8 @@
         "source_location": {
           "heading": "SP-242 - Case L Safe Point Restore Transaction And Restore Point Storage",
           "heading_level": 3,
-          "heading_line": 17866,
-          "line": 17868,
+          "heading_line": 17870,
+          "line": 17872,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29821,8 +29821,8 @@
         "source_location": {
           "heading": "SP-244 - Debug Workspace Persistence Keys",
           "heading_level": 3,
-          "heading_line": 18122,
-          "line": 18124,
+          "heading_line": 18126,
+          "line": 18128,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29832,8 +29832,8 @@
         "source_location": {
           "heading": "SP-245 - Home Workspace Layout Transaction And Recovery",
           "heading_level": 3,
-          "heading_line": 18074,
-          "line": 18076,
+          "heading_line": 18078,
+          "line": 18080,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29843,8 +29843,8 @@
         "source_location": {
           "heading": "SP-248 - Usage View-State Persistence Surface",
           "heading_level": 3,
-          "heading_line": 18365,
-          "line": 18367,
+          "heading_line": 18369,
+          "line": 18371,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29854,8 +29854,8 @@
         "source_location": {
           "heading": "SP-249 - Settled Widget Layout Versioning Migration And Write Boundary",
           "heading_level": 3,
-          "heading_line": 18461,
-          "line": 18463,
+          "heading_line": 18465,
+          "line": 18467,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29865,8 +29865,8 @@
         "source_location": {
           "heading": "SP-250 - Home Workspace Cross-Axis And Semantic Preset Persistence",
           "heading_level": 3,
-          "heading_line": 18531,
-          "line": 18533,
+          "heading_line": 18535,
+          "line": 18537,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29876,8 +29876,8 @@
         "source_location": {
           "heading": "SP-252 - Product Onboarding Draft-First Storage Migration",
           "heading_level": 3,
-          "heading_line": 18678,
-          "line": 18680,
+          "heading_line": 18682,
+          "line": 18684,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29887,8 +29887,8 @@
         "source_location": {
           "heading": "Slot migration-generation custody and activation",
           "heading_level": 3,
-          "heading_line": 21818,
-          "line": 21840,
+          "heading_line": 21822,
+          "line": 21844,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29898,8 +29898,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 23312,
-          "line": 23314,
+          "heading_line": 23316,
+          "line": 23318,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -39225,7 +39225,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "b316255fdd7bf3f6b793500e3d9498723b4ed2be824c37b1d84aacb892cb37d6",
+        "expected": "b3b053ca8a9d4d3880f939eff2f2852d17276237bd3a8079aafb14591b79fa8a",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
