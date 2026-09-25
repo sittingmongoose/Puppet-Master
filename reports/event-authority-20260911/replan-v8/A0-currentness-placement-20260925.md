@@ -206,6 +206,7 @@ The exports repair the plan makes A1 wait for has landed (`8bc898648`).
 | `a0/readjudication-findings.json` | 107 findings from four readers, each re-checked by an adversarial verifier (97 confirmed, 10 corrected, none refuted), with 23 verifier additions, open questions and what each did not check |
 | `a0/selfcheck.json` | The package-check re-runs, with the real library and with the stand-in |
 | `a0/review-cycle-1.json` | The cycle-1 blind review form on `c0e9644a57` (23 findings: 1 blocking, 16 should_fix, 6 notes), each applied in its own commit |
+| `a0/review-cycle-2.json` | The cycle-2 re-review of the repaired rows on `f29ca48b75`: verdict ready (3 should_fix, 5 notes), each applied in its own commit; the cycle cap is reached |
 
 ## Cost
 

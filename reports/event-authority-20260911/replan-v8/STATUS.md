@@ -12,7 +12,10 @@ The thread runs in a cloud session, which cannot reach the NAS or the shared che
 - **Placement: CONDITIONAL.** Eighteen conditions for A1 are listed in section 8. Three are marked "decide first" because they change the v8 digest.
 - **The package's own checks reproduce.** With the real `jsonschema`/`referencing`, every counted figure matches and every PASS output is byte-identical to its frozen file.
 
-**Review.** One blind form-driven review, capped at two cycles: cycle 1 is `a0/review-cycle-1.json`; cycle 2 re-reviews the repaired rows.
+**Review.** One blind form-driven review, capped at two cycles: cycle 1 is `a0/review-cycle-1.json`; cycle 2 re-reviews the repaired rows (`a0/review-cycle-2.json`).
+- Cycle 1 on `c0e9644a57`: repairs required. 1 blocking finding (the verdict named two of the three decide-first choices), 16 should_fix and 6 notes. Each was applied in the reviewer's wording in its own commit; A0-C1-23 needed no change.
+- Cycle 2 on `f29ca48b75`: **ready**, with no blocking finding. Its 3 should_fix findings and 5 notes were applied the same way.
+- The cycle cap is reached. No review finding is left open; the report's open questions Q-01 to Q-12 stand as written.
 
 **Open questions.** Q-01 to Q-12 in the report. On 2026-09-25 Jared routed (by instruction to this thread, not recorded in the repository) five process questions to the PM Low cost/complexity process thread, which has authority on them:
 - Q-02: DL-078 and row revisions.
@@ -22,6 +25,8 @@ The thread runs in a cloud session, which cannot reach the NAS or the shared che
 - Where A1's canonical-draft package lives: proposed as a branch of PuppetMaster-Packages, which needs push access.
 
 That thread runs on the VM, and this cloud session cannot message it. Jared relays the questions. The answers come back as `reports/event-authority-20260911/replan-v8/process-answers-20260925.md` on the branch `plans/replan-v8-process-answers-20260925`, or through Jared. Until then this thread follows the recommendations in the questions as relayed (not in the repository) and lands nothing that depends on them.
+
+**Cost.** A0 used about 5.5 agent-hours and about 0.95M output tokens: the re-adjudication workflow (9 subagents, 2.6 agent-hours, 0.83M output tokens), the blind reviewer (2 cycles, 0.6 agent-hours, 0.04M output tokens) and the host (about 2.3 hours). Jared cleared the thread on 2026-09-25 to run over the plan's estimates, which for A0 were half an agent-day and 150K to 250K output tokens.
 
 ## Landing A0 (on the VM)
 
