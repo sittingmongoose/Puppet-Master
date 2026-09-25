@@ -202,7 +202,7 @@
   "task_2_checks": {
     "placement": "PASS: 74 files, 0 pre-existing; each byte-identical to PKG after/Plans on disk and as committed blob; 10357413 B",
     "registry": "PASS: before 32d267dd (= 63cf2cb97f); committed 45e383b2 (= C07); /families/0-293 unchanged; only key families changed; 34 new rows materialized and later_gui_or_feature_projection; 33 RP-AUTHORITY-INDEFINITE, workflow_replan_producer RP-RUNTIME-365D",
-    "census_repins": "PASS: 8 of 8 applied; storage-plan.md line 523 is the SP-notes section 4 sentence with DATE 2026-09-25",
+    "census_repins": "PASS: 8 of 8 applied; storage-plan.md line 523 is the SP-notes section 4 sentence with DATE 2026-09-25; reworded after the canon-branch review by A1-C1-08 to tell the current pin from the earlier 2026-09-25 pin (counts unchanged)",
     "index_section": "PASS: appended after line 6013 (6013 -> 6020 lines); every Plans/ path it names exists",
     "files_committed": "74 placed, Plans/00-plans-index.md, Plans/storage-plan.md, Plans/storage_value_registry.json, scripts/pm-implementation-readiness.py, 3 test files, 701 shard files, 4 Plans/.plan_index files",
     "shards_changed": {
