@@ -26,7 +26,8 @@ The missing reference is
 Its entire referring paragraph is unchanged across branch, main, merge-base and
 baseline; the target is absent from all four Git trees. This is inherited content,
 not permission to fabricate evidence, rewrite the historical pointer or waive the
-checker. The baseline/path-resolution discrepancy remains unresolved.
+checker. The later local-input check below resolves the path-availability cause;
+it does not rewrite the captured aggregate result.
 
 The registry defect was introduced by branch commit `5e160348d`:
 `scd.usage.command_transport.v2` violates the existing disposition namespace.
@@ -53,9 +54,34 @@ storage-registry shard root changes. Index generation passes with 6,734 stable
 PlanUnits and 26,476 acceptance units; no WorkNodes or NodeSeeds are created.
 
 The full aggregate check was not rerun after this single-field correction. Its
-exit 2 is not relabelled as passing. The inherited reference, Settings hash hold,
+exit 2 is not relabelled as passing. The Settings hash hold,
 review-cap decisions and product/source-input questions remain open. No main
 fetch/push, lock acquisition, governance binding refresh or baseline refresh occurred.
+
+## Follow-up: authentic ignored audit input restored
+
+The historical audit directory is present in the shared checkout and absent from
+Git by `.gitignore:41`, explaining why a clean local worktree lacked it even though
+the reference is unchanged. `lint-contractrefs` resolves against the live filesystem,
+not Git objects. `LANDING_20260923_BSD_LIFECYCLE.md` records the same clean-checkout
+failure. Two independent read-only checks confirmed the shared audit identity and
+unchanged report; all 11 embedded local receipt paths match their declared hashes.
+
+Only an ignored worktree-local directory symlink was added, pointing to
+`/mnt/Cursor/PuppetMaster/Plans/.audits/audit-20260829-001-pmconcept7-widget-followup`.
+No evidence bytes, historical reference, verdict, binding or baseline were edited.
+The report still explicitly denies readiness and retains its failure/blocker verdict.
+This is local input restoration, not an audit refresh or portable-checkout repair.
+Future clean worktrees need this same authentic input made available.
+
+The targeted full `lint-contractrefs` rerun passes, exit 0 in 50.55 seconds, with
+zero failures. This resolves the two aggregates' shared missing-reference cause
+locally; neither aggregate was rerun, and no landing permission is inferred.
+Source audit report SHA-256:
+`ef4eeb5f4c13a9baa23ed08f37c04a19c758dedc1dc84508b77169701ed2d294`.
+Captured verification:
+`/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/audit-input-contractrefs-restored-001/stdout`,
+SHA-256 `d22d3fecc6920dd22b61809f415b3bc0998fc29fb506e41dfd12a518236a0322`.
 
 ## Evidence
 

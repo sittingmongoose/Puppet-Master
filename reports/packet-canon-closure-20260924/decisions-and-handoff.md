@@ -75,8 +75,10 @@ No further Azure scope is added.
 
 Latest branch preflight completed with four blocking rows (two distinct causes).
 The branch-introduced Usage disposition-ID schema defect is now corrected and
-independently verified; the inherited missing historical audit reference remains
-unresolved. Complete standalone readiness failures decrease from 69 to 68 with
+independently verified. The inherited historical audit reference now resolves after
+restoring an ignored local symlink to the authentic shared audit directory; the
+targeted reference check passes without changing evidence or bindings.
+Complete standalone readiness failures decrease from 69 to 68 with
 no added failure keys. See `final-preflight-and-usage-id-repair.md` for exact keys,
 full-report receipts and the branch/main divergence caveat. This does not make
 the aggregate check green or replace a fresh-main comparison.
