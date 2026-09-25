@@ -1,0 +1,34 @@
+task_id,agent,model,turns,output_tokens,cache_creation_tokens,cache_read_tokens,wall_hours,first_utc,last_utc
+aa3de944d9e65f079,event-authority-step8-9 (author+lander, 6 landings),claude-opus-5-5,1724,985744,8787096,855367362,5.0,2026-09-24T20:35:39.875Z,2026-09-25T01:37:00.121Z
+a9b4a1065435957fb,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,926,551997,21545377,442130292,4.7,2026-09-23T20:12:22.244Z,2026-09-24T00:53:38.400Z
+a53776cceb15acacc,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,717,417847,11198748,301983153,13.1,2026-09-24T02:03:51.593Z,2026-09-24T15:11:02.483Z
+a7752285f05c9de22,landing-check-exports (author+lander),claude-opus-5-5,393,349955,7051099,169852277,2.5,2026-09-24T22:20:37.235Z,2026-09-25T00:51:37.369Z
+a243e087fa82a6264,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,473,333415,7011040,176027824,1.8,2026-09-24T18:01:55.856Z,2026-09-24T19:50:38.095Z
+ad6bb2f3504b58262,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,436,318596,3126963,97955948,12.1,2026-09-24T02:03:11.813Z,2026-09-24T14:06:24.448Z
+a40f2f36a038e387b,landing-check-followups (author+lander),claude-opus-5-5,342,310712,4538236,93606850,2.0,2026-09-24T19:52:19.564Z,2026-09-24T21:54:07.641Z
+a42c3b3907d9c5827,review-landing-check-exports,claude-opus-5-5,399,296406,2711102,128995334,1.0,2026-09-24T23:01:42.931Z,2026-09-24T23:58:58.395Z
+a8e7a548fb44f3136,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,566,278404,6184953,183777795,11.6,2026-09-24T02:04:04.927Z,2026-09-24T13:42:13.289Z
+aa9cda945be4ec468,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,367,261584,5223417,128412362,12.3,2026-09-24T02:29:35.483Z,2026-09-24T14:45:27.427Z
+a5e10e092ed285710,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,509,250637,2882430,175924623,2.4,2026-09-24T15:11:42.422Z,2026-09-24T17:35:00.493Z
+a7c881656881e43f3,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,393,250483,1246046,151937005,0.7,2026-09-24T20:48:15.623Z,2026-09-24T21:31:21.300Z
+a21a612e848bbe402,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,322,236057,1379974,95910537,0.6,2026-09-24T20:48:06.858Z,2026-09-24T21:24:48.572Z
+a3a7bf8f57262520e,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,375,219129,1435112,166978974,0.6,2026-09-24T20:47:49.189Z,2026-09-24T21:25:27.809Z
+abfe0af5581ebc583,review-ea-compaction-pm7,claude-opus-5-5,285,211782,942819,58028164,0.5,2026-09-24T23:42:08.440Z,2026-09-25T00:12:30.098Z
+ae422430ef1d63ac1,review-ea-browser-sp286,claude-opus-5-5,302,201501,862916,90474535,0.9,2026-09-24T23:17:00.252Z,2026-09-25T00:09:41.689Z
+ac19636ee0d19a118,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,263,190062,976894,77547587,0.5,2026-09-24T20:48:28.516Z,2026-09-24T21:20:11.229Z
+a2fd204a5191bf85e,review-ea-validator-amendment,claude-opus-5-5,260,188821,2025515,69593905,0.8,2026-09-24T23:02:34.974Z,2026-09-24T23:52:35.204Z
+a2e5911262405575f,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,384,181945,1199753,109616157,0.5,2026-09-24T20:48:33.204Z,2026-09-24T21:19:31.794Z
+a2a9a283abe51734f,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,398,179728,3397649,118708004,1.7,2026-09-24T19:51:38.298Z,2026-09-24T21:31:36.632Z
+ac44c8d3b870674c7,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,215,173955,931189,56675341,0.5,2026-09-24T20:47:56.549Z,2026-09-24T21:15:06.322Z
+a999169e3c2a2836e,review-depth42,claude-opus-5-5,271,167166,2206914,71170433,1.7,2026-09-24T21:38:03.532Z,2026-09-24T23:21:46.759Z
+aff6784f58e85cb40,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,308,160408,1127560,98936743,0.5,2026-09-25T00:14:36.963Z,2026-09-25T00:44:16.197Z
+a7d00cb2ae6c6424c,review-ea-anchors,claude-opus-5-5,218,146682,1133770,41036248,1.0,2026-09-24T21:12:41.073Z,2026-09-24T22:15:18.477Z
+ab07c8c2fb5fd5521,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,223,139731,1264560,61411442,0.4,2026-09-24T23:17:21.081Z,2026-09-24T23:43:16.615Z
+ab0b063ec31e1b89c,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,224,135400,641443,47842280,0.4,2026-09-24T15:52:08.899Z,2026-09-24T16:17:43.128Z
+a148bfc18cd98614e,review-dl077-078,claude-opus-5-5,152,121792,905451,24126002,0.8,2026-09-24T21:26:49.832Z,2026-09-24T22:15:45.409Z
+afac8c3a14566c29c,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,174,117862,546472,32103990,0.4,2026-09-24T02:03:26.738Z,2026-09-24T02:28:51.370Z
+a7f430294514f55cc,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,194,113434,557743,36416607,0.3,2026-09-24T21:12:58.723Z,2026-09-24T21:33:58.050Z
+a20cadd393ae7b395,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,168,109455,655539,35291387,0.4,2026-09-23T22:36:19.759Z,2026-09-23T22:58:32.671Z
+a99a88edae663d061,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,97,105215,489376,15757381,0.3,2026-09-24T19:01:12.133Z,2026-09-24T19:19:21.986Z
+a0745e1bbffc43d43,(earlier agent of the same wave: reseal, baseline, storage repairs, reviews),claude-opus-5-5,176,68950,879708,20167030,0.5,2026-09-24T17:59:12.150Z,2026-09-24T18:28:34.286Z
+a238cdb9cde2c7e0c,replan-v8-cloud (killed after minutes),claude-opus-5-5,105,44641,404119,13996910,0.2,2026-09-25T01:06:29.699Z,2026-09-25T01:15:54.569Z
