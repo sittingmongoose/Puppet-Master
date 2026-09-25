@@ -98,6 +98,9 @@ canonical_text: >-
   backup/update-configuration, integration-reference, and aggregate-health records. Endpoint observations deduplicate
   only after verified server_id and certificate/fingerprint continuity; mismatch creates a blocked observation and
   never merges, changes Project authority, or creates a second Server.
+  Normal aggregate Projects, Usage and search reads consume compact Catalog/materialized summaries before
+  Vault hydration rather than fully opening all Vaults; summaries remain bounded owner projections and
+  do not move mutable Project payload or writable authority into the Catalog.
 gui_related: false
 gui_classification_reason: Stable identity, Catalog, and deduplication are domain data contracts rather than GUI implementation work.
 depends_on: [SRV-001, SIR-002]
@@ -106,6 +109,7 @@ acceptance_criteria:
   - Changing a label, URL, address, route, or preferred endpoint preserves server_id.
   - Identity or certificate mismatch fails closed with both observations retained and no automatic merge.
   - Project registration is reconstructable from Vault manifests while non-reconstructable trust/global secure state is classified for Full Server Backup.
+  - Aggregate Projects/Usage/search reads are summary-first and open only specifically needed, admitted Vaults; missing or stale summaries remain disclosed and do not imply current authority or require an eager open-all fallback.
 validation_surfaces: [Plans/server_system_contract_fixtures.json, future identity collision and deduplication tests]
 risk_class: server_identity_collision_or_catalog_corruption
 reasoning_tier: high
@@ -115,6 +119,7 @@ node_compile_hint: {mode: stable_server_identity_contract, create_worknodes: fal
 source_lineage:
   - source_ref:normalized-register:server-first-2026-08-31:S01-S05
   - source_ref:packet:10_SERVER_REMOTE_ACCESS_DEPLOYMENT_CONTRACT.md
+  - source_packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08:source_inputs/01_prior_full_thread_decision_register.md:16.3
 preserved_exact_tokens: [server_id, server_endpoint_id, client_id, pairing_session_id, ServerCatalog]
 negative_constraints: [Do not use hostname URL IP label or path as identity., Do not auto-merge an identity mismatch., Do not put Project mutable payload in the Catalog.]
 owner_hints: [Plans/Server_System.md, Plans/Shared_Integration_Runtime.md, Plans/storage-plan.md]
@@ -293,6 +298,9 @@ canonical_text: >-
   unauthorized, protocol_mismatch, identity_mismatch, degraded, blocked, and recovery_required without converting a
   transport observation into durable success. Client caches are bounded and read-only. Slow or malicious Clients use
   bounded queues and cannot backpressure Goals, duplicate work, or force eager hydration of every Project or manager.
+  Ordinary aggregate reads are also summary-first: bounded Catalog/materialized projections serve Projects,
+  Usage and search without fully opening every physical Vault. Selected detail hydration uses Storage-owned
+  lazy Vault admission and keeps existing permission, freshness and exact Server/Project identity checks.
 gui_related: true
 gui_classification_reason: Currentness, disabled reasons, connection health, progress, retry, and recovery states are visible on every Client.
 depends_on: [SRV-004, SRV-005, SIR-004, SIR-005, SIR-006]
@@ -302,6 +310,7 @@ acceptance_criteria:
   - Reconnect/resume returns the requested/effective mode and exact prior-session cursor or snapshot continuation without replaying work.
   - Cached or stale data is never labeled current or Synced.
   - Bounded queues and projections preserve Server work under slow or malicious Client pressure.
+  - Normal aggregate consumers do not open all Vaults; selected hydration reuses Storage admission and cannot promote a cached, stale or unauthorized summary to current truth.
 validation_surfaces: [Plans/server_system_contract_fixtures.json, future reconnect storm and malicious backpressure tests]
 risk_class: duplicate_command_or_false_currentness
 reasoning_tier: high
@@ -311,6 +320,7 @@ node_compile_hint: {mode: server_continuity_contract, create_worknodes: false, c
 source_lineage:
   - source_ref:normalized-register:server-first-2026-08-31:C01-C06
   - source_ref:packet:B5/22_SECURITY_AND_FAILURE_TEST_MATRIX.md
+  - source_packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08:source_inputs/01_prior_full_thread_decision_register.md:16.3
 preserved_exact_tokens: [cached, current, stale, offline, protocol_mismatch, identity_mismatch, recovery_required, connect, reconnect, resume]
 negative_constraints: [Do not label cached state current., Do not let Client queues backpressure Goals., Do not execute a replayed command twice.]
 owner_hints: [Plans/Server_System.md, Plans/Shared_Integration_Runtime.md]

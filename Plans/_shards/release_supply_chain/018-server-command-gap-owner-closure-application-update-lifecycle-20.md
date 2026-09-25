@@ -2,9 +2,9 @@
 
 Source: `Plans/Release_Supply_Chain.md`
 
-Source lines: L1167-L1231
+Source lines: L1170-L1239
 
-Source SHA256: `4e1d589dc1a63817976dbe2cd67e29a39030ee8a46f47c3763103ffab10019de`
+Source SHA256: `a3fc96705ece03e411c6566bdf968b6bae2c89814d9a0550a96bc807632c3e8d`
 
 ---
 
@@ -17,6 +17,10 @@ The exact consumers are Settings > Updates, the bottom Update Available item, Se
 Idempotency and operation/update/catalog generations prevent duplicate or racing check/download/install/rollback effects. Restart converges from the durable update journal; partial install, migration, restart, or verification never becomes success. Exact initiating surface/route/focus/generation is restored or `caller_unavailable` is reported. Requests, results, receipts, logs, notes, and projections contain hashes and non-secret refs only—never signing keys, update credentials, raw tokens, protected authentication state, or unrestricted filesystem paths.
 
 ### Application check policy and settlement
+
+The application lifecycle phase vocabulary is `idle/checking/available/downloading/downloaded/verifying/awaiting-user/quiescing/pre-update-backup/installing/restart-required/migrating/post-verify/complete/rollback-available/rolling-back/blocked`. These are domain phases, not replacements for the existing command-result outcome enum and not a requirement that every admitted operation traverse every phase. Phase disclosure preserves the exact operation, installation, source and generation; a displayed phase is never activation or completion proof.
+
+Application and PM content updates remain host-scoped, signed/provenance-checked, staged, version-compatible, restart-aware and rollback/recovery-capable. They do not update every host simultaneously by default. This default neither creates a fleet scheduler nor supplies authority to update any additional host; the exact install-source and content owner gates still apply.
 
 Automatic application checks use a hidden channel-aware policy: Stable checks asynchronously at launch when the last successful check is about 24 hours old; Canary checks at launch/background when about 6–12 hours old; Nightly checks at launch/background when about 1–6 hours old. The Server-owned check uses persisted last-success time, randomized jitter, conditional/cached requests, offline backoff and coalescing. This is the application policy, independent of installed-tool maintenance preferences. Manual Check remains available with automatic checking disabled, under ordinary command/permission admission; neither a frequency picker nor a second scheduler is introduced.
 
@@ -59,6 +63,7 @@ acceptance_criteria:
   - Local actions have no domain handler or EventRecord and expose bounded redacted content only.
   - Fixtures cover coalescing, cache, download verification, cancel scope, safe install/restart, migration, post-verify, retained rollback, duplicate/race, restart recovery, permission, FileSafe, exact return, and secret negatives.
   - Static validation never claims an update was downloaded, installed, restarted, verified, or rolled back.
+  - Application phase disclosure preserves the complete owner vocabulary separately from command outcomes; updates do not target every host simultaneously by default.
   - Application-check fixtures cover due arithmetic and channel bounds, persisted jitter, success versus attempt, conditional validation, scope/policy currentness, coalescing, restart reconstruction, offline backoff and automatic-off/manual availability.
   - Physical storage and original source/installation admission remain prerequisites; static check settlement is not native proof or handler availability.
 validation_surfaces: [Plans/release_update_contracts.schema.json, Plans/release_update_contract_fixtures.json, Plans/application_update_check_contracts.schema.json, Plans/application_update_check_contract_fixtures.json, tests/test_pm_application_update_checks.py, focused Server owner-bundle-A validator]

@@ -101,6 +101,12 @@ canonical_text: >-
   Goals. A migration is not complete until the source/target `server_endpoint_id` values, expected and observed Server
   fingerprint, Server/endpoint/route generations, and source/target currentness refs are durably fenced as the same
   existing Server and the expected current generations.
+  Route selection reuses cached verified endpoint-health observations with their exact existing
+  Server/endpoint/route identities, generations and freshness, and uses hysteresis to avoid health-driven
+  route flapping. Hysteresis applies only among currently eligible routes; identity/trust/security invalidation,
+  policy denial or stale currentness fences remove eligibility without waiting for a performance preference.
+  A private-route failure never enables public exposure. Any resulting preference change still uses the
+  existing staged, verified and durably fenced route migration, not another supervisor or mutation path.
 gui_related: true
 gui_classification_reason: Preferred route, migration progress, actual connection route, failures, and rollback are visible status and details behavior.
 depends_on: [RAS-001, SRV-002, SRV-007]
@@ -110,6 +116,8 @@ acceptance_criteria:
   - Identity or certificate mismatch blocks route activation and Server deduplication.
   - Completion requires `identity_fence_status=matched_existing_server` and `currentness_fence_status=expected_generations_current`; mismatch or stale evidence cannot commit preference.
   - Process death at each durable migration phase converges to resume, commit, rollback, disabled, or recovery_required without duplicate command execution.
+  - Cached verified endpoint health and selection hysteresis prevent flapping without treating a stale observation as current identity, trust, security or route authority.
+  - Security/identity/trust invalidation and currentness rejection take precedence over hysteresis; a failed private route cannot enable a public route or bypass the existing fenced migration.
 validation_surfaces: [Plans/remote_access_system_contract_fixtures.json, future route migration and failure-injection tests]
 risk_class: route_identity_split_or_migration_command_loss
 reasoning_tier: high
@@ -119,6 +127,7 @@ node_compile_hint: {mode: remote_route_identity_contract, create_worknodes: fals
 source_lineage:
   - source_ref:normalized-register:server-first-2026-08-31:R01-R04
   - source_ref:packet:18_FINAL_WAN_REMOTE_ACCESS_AUTHORITY.md
+  - source_packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08:source_inputs/01_prior_full_thread_decision_register.md:16.4
 preserved_exact_tokens: [remote_route_id, loopback, LAN, private Tailscale, Funnel, Remote Link direct, Remote Link relay]
 negative_constraints: [Do not change Home Server during route migration., Do not restart a Goal for route change., Do not call an unverified route active.]
 owner_hints: [Plans/Remote_Access_System.md, Plans/Server_System.md, Plans/Shared_Integration_Runtime.md]

@@ -1,5 +1,10 @@
 # Packet-wide closure status — 2026-09-24, updated 2026-09-25
 
+Latest reconciliation: `finite-remaining-queue.md` supersedes stale repair-pending
+entries below. Completed logical requirements retain credit; unresolved Storage
+specification/authority questions, native implementation and landing remain
+distinct. This historical queue is not a current defect count.
+
 Latest bounded steps: `runtime-doctor-browser-companions.md` records original
 capability continuation, finite Doctor query composition and Browser typed
 control-flow repairs, with their remaining physical/owner/native prerequisites.

@@ -188,6 +188,8 @@ The packet source base for every line above is `PM_Server_First_Backbone_Deliver
 
 ### PSB-005 - Project Move And Content Update Command Closure
 
+PM content lifecycle phases are `checking/downloading/validating/staging/activating/active/quarantined/rollback/failed`. Retain the last-known-good generation and require no restart unless the applicable content contract requires it. This vocabulary describes domain progress, not additional public commands or a replacement command-result outcome enum; phase labels alone establish neither verified activation nor successful rollback. Content updates retain exact host scope and do not update every host simultaneously by default.
+
 ```yaml
 plan_unit_id: PSB-005
 unit_type: requirement
@@ -206,6 +208,7 @@ acceptance_criteria:
   - The owner schema and fixtures cover exactly eleven commands and two local actions from adjudication rows 109-116 and 167-171.
   - Every command binds one named sole handler and remains handler_unavailable without exact native integration evidence.
   - Project Move and Content Update remain separate typed families and preserve exact packet semantics and source refs.
+  - Content phase disclosure retains the complete owner vocabulary and last-known-good state, with no restart unless required by the applicable contract and no default simultaneous update of every host.
   - Local details actions mutate no domain state, invoke no semantic-domain handler, and emit no domain EventRecord.
   - Permission, FileSafe, idempotency, currentness, ObservableWork, restart/race, redaction, and exact-return negatives fail closed.
 validation_surfaces: [Plans/project_sync_backbone_contracts.schema.json, Plans/project_sync_backbone_contract_fixtures.json, focused Server owner-bundle-B validator]

@@ -1587,6 +1587,9 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Too
 **Transaction and index scheduling:**
 - Use short, bounded redb write transactions and batched projection revisions. Never hold a storage transaction or its transaction lock across UI/network/provider awaits.
 - Open per-Project/Vault indexes lazily when their owned work requires them; unrelated cold indexes do not become a startup or visible-surface loading barrier.
+- Physical Project Vault opening/admission is lazy too, not merely index opening. Before opening another Vault, Storage accounts for simultaneously open Vaults against a bounded shared open-Vault allowance under the existing RuntimeResourceGovernor; pending opens wait or remain explicitly unavailable rather than bypassing admission. Catalog/materialized-summary reads do not eagerly open every Vault.
+- Account for rebuildable per-Vault views and index-reader caches by bytes, with idle eviction under the existing shared resource budgets. Eviction closes only safely releasable idle readers/views, respecting live reader references and owned work; it never deletes canonical seglog, non-rebuildable redb values, required source evidence or held backup/recovery material. Reopening an evicted derived view uses its existing rebuild/currentness rules.
+- Keep logical per-Vault append, projector and index queues under shared permits. Preserve canonical per-stream order, the existing single-writer rules and checkpoint-after-durability barriers; a Vault does not get a dedicated thread or process by default. Shared admission does not create a second scheduler, writer or resource governor.
 - Batch Tantivy commit/merge work under existing maintenance permits from the single `RuntimeResourceGovernor`, respecting its bounded storage/index and CPU/blocking admission rather than introducing a separate scheduler or ungoverned pool.
 - Skip unchanged projection/index content by stable identity/hash. This optimization does not suppress required canonical events, advance a checkpoint past incomplete owned writes, or treat a content match as proof of current permission or source ownership.
 - The existing single seglog writer, ordered/grouped append and durable-tail rules remain authoritative. Releasing a transaction lock is not permission to publish a half-committed canonical operation: owned projection writes become durable before checkpoint advancement, and canonical commit/publication barriers remain intact.
@@ -10358,6 +10361,10 @@ canonical_text: >-
   projection/index content by stable identity/hash. These scheduling optimizations preserve the single seglog writer,
   ordered/grouped append, durable-tail correctness, canonical commit/publication barriers and checkpoint advancement
   only after owned writes are durable; they introduce no separate scheduler, pool or storage authority.
+  Physical Vault opens also use lazy shared admission with a bounded simultaneous-open allowance; rebuildable
+  per-Vault views/index readers are byte-accounted and idle-evictable only after safe reference release.
+  Logical per-Vault append/projector/index queues consume shared permits with no dedicated thread/process per
+  Vault by default, preserving canonical order, writer ownership, held authority and recovery material.
 gui_related: false
 gui_classification_reason: This unit preserves backend projection rebuild and checkpoint ownership boundaries.
 split_recommended: false
@@ -10374,6 +10381,9 @@ acceptance_criteria:
 - redb writes use short bounded transactions and grouped projection revisions, with no transaction or transaction lock retained across UI/network/provider awaits.
 - Per-Project/Vault index opening is lazy, and Tantivy commit/merge batches consume existing RuntimeResourceGovernor maintenance permits rather than a new scheduler or pool.
 - Stable identity/hash avoids unchanged projection/index work without skipping canonical events or relaxing source authority, durable-tail correctness or checkpoint-after-durable-write ordering.
+- Physical Vault admission bounds simultaneously open Vaults under existing shared resource authority; opening an aggregate Projects/Usage/search surface does not open every Vault.
+- Byte-budgeted idle eviction applies only to safely releasable rebuildable views/index readers, never canonical state, active readers, source authority or held backup/recovery evidence.
+- Per-Vault append/projector/index queues use shared permits and preserve existing ordering and durable checkpoint rules without default per-Vault thread/process fan-out.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -10389,6 +10399,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0086
 - source_packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08:02_FINAL_DECISION_REGISTER.md:95-105
 - source_packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08:source_inputs/01_prior_full_thread_decision_register.md:439-449
+- source_packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08:source_inputs/01_prior_full_thread_decision_register.md:16.3
 preserved_exact_tokens:
 - Tantivy indices
 - analytics rollups
@@ -10409,6 +10420,10 @@ preserved_exact_tokens:
 - per-Project/Vault
 - maintenance permits
 - stable identity/hash
+- lazy shared admission
+- bounded simultaneous-open allowance
+- byte-accounted
+- shared permits
 negative_constraints:
 - Partial projection writes do not advance checkpoints.
 - Rebuild after schema-version change clears only the derived projection state being regenerated; the canonical seglog and unrelated redb families remain untouched.

@@ -1081,6 +1081,9 @@ acceptance_criteria:
   - LTO/PGO and any assembly path bind reproducible toolchain/config/profile/ABI/fallback evidence.
   - Release artifacts and tests preserve and verify SLINT_BACKEND explicit override, persisted renderer preference, Winit plus Skia compiled/default, Winit plus FemtoVG-wgpu fallback, then Winit software emergency selection without letting the default override operator choice or reopening a Release-owned renderer bakeoff.
   - Installed size separates PM core, CEF, renderers, Safe UI, on-demand tools, provider tools, plugins/data, project toolchains, and symbols.
+  - CI measures both download size and installed size for the admitted release artifacts and supported configurations; neither measurement substitutes for the other.
+  - Avoid duplicate tool versions through content-addressed shared component storage under the existing tool acquisition and installation owners; deduplication never grants acquisition, provenance, permission, activation or cross-Vault data-sharing authority.
+  - Production artifacts exclude test fixtures, source maps and development assets unless explicitly needed; an exception requires an explicit package need, not merely a referenced payload.
   - Unsupported platform or benchmark lanes remain not_run with residual risk, and static artifact/schema proof cannot become runtime performance evidence.
 validation_surfaces: [future release artifact matrix, size-budget receipts, architecture-dispatch tests, selected renderer-order and fallback-path verification, full-thread benchmark and 24-hour-soak receipts]
 risk_class: release_platform_or_performance_false_claim
@@ -1174,6 +1177,10 @@ Idempotency and operation/update/catalog generations prevent duplicate or racing
 
 ### Application check policy and settlement
 
+The application lifecycle phase vocabulary is `idle/checking/available/downloading/downloaded/verifying/awaiting-user/quiescing/pre-update-backup/installing/restart-required/migrating/post-verify/complete/rollback-available/rolling-back/blocked`. These are domain phases, not replacements for the existing command-result outcome enum and not a requirement that every admitted operation traverse every phase. Phase disclosure preserves the exact operation, installation, source and generation; a displayed phase is never activation or completion proof.
+
+Application and PM content updates remain host-scoped, signed/provenance-checked, staged, version-compatible, restart-aware and rollback/recovery-capable. They do not update every host simultaneously by default. This default neither creates a fleet scheduler nor supplies authority to update any additional host; the exact install-source and content owner gates still apply.
+
 Automatic application checks use a hidden channel-aware policy: Stable checks asynchronously at launch when the last successful check is about 24 hours old; Canary checks at launch/background when about 6–12 hours old; Nightly checks at launch/background when about 1–6 hours old. The Server-owned check uses persisted last-success time, randomized jitter, conditional/cached requests, offline backoff and coalescing. This is the application policy, independent of installed-tool maintenance preferences. Manual Check remains available with automatic checking disabled, under ordinary command/permission admission; neither a frequency picker nor a second scheduler is introduced.
 
 `Plans/application_update_check_contracts.schema.json` materializes this bounded part of RSC-014. `ApplicationCheckScope` binds the original Server, application installation and installation generation, source and source generation, and channel. `ApplicationCheckState` is a proposed durable value, not a registered physical store. Its last successful source validation, cached publication and conditional validator, selected next-due calculation, failure backoff, state revision and in-flight operation belong to that exact scope. Clients consume projections and join the same Server operation; caller-selected coalesce keys do not establish ownership. The Server serializes starts and settlements against the state revision, permitting only one in-flight operation per scope. Repeated result delivery is idempotent only after exact result identity and original settlement read-back; it does not create a new successful check.
@@ -1215,6 +1222,7 @@ acceptance_criteria:
   - Local actions have no domain handler or EventRecord and expose bounded redacted content only.
   - Fixtures cover coalescing, cache, download verification, cancel scope, safe install/restart, migration, post-verify, retained rollback, duplicate/race, restart recovery, permission, FileSafe, exact return, and secret negatives.
   - Static validation never claims an update was downloaded, installed, restarted, verified, or rolled back.
+  - Application phase disclosure preserves the complete owner vocabulary separately from command outcomes; updates do not target every host simultaneously by default.
   - Application-check fixtures cover due arithmetic and channel bounds, persisted jitter, success versus attempt, conditional validation, scope/policy currentness, coalescing, restart reconstruction, offline backoff and automatic-off/manual availability.
   - Physical storage and original source/installation admission remain prerequisites; static check settlement is not native proof or handler availability.
 validation_surfaces: [Plans/release_update_contracts.schema.json, Plans/release_update_contract_fixtures.json, Plans/application_update_check_contracts.schema.json, Plans/application_update_check_contract_fixtures.json, tests/test_pm_application_update_checks.py, focused Server owner-bundle-A validator]

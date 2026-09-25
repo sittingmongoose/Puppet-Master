@@ -2,9 +2,9 @@
 
 Source: `Plans/Release_Supply_Chain.md`
 
-Source lines: L964-L1100
+Source lines: L964-L1103
 
-Source SHA256: `4e1d589dc1a63817976dbe2cd67e29a39030ee8a46f47c3763103ffab10019de`
+Source SHA256: `a3fc96705ece03e411c6566bdf968b6bae2c89814d9a0550a96bc807632c3e8d`
 
 ---
 
@@ -128,6 +128,9 @@ acceptance_criteria:
   - LTO/PGO and any assembly path bind reproducible toolchain/config/profile/ABI/fallback evidence.
   - Release artifacts and tests preserve and verify SLINT_BACKEND explicit override, persisted renderer preference, Winit plus Skia compiled/default, Winit plus FemtoVG-wgpu fallback, then Winit software emergency selection without letting the default override operator choice or reopening a Release-owned renderer bakeoff.
   - Installed size separates PM core, CEF, renderers, Safe UI, on-demand tools, provider tools, plugins/data, project toolchains, and symbols.
+  - CI measures both download size and installed size for the admitted release artifacts and supported configurations; neither measurement substitutes for the other.
+  - Avoid duplicate tool versions through content-addressed shared component storage under the existing tool acquisition and installation owners; deduplication never grants acquisition, provenance, permission, activation or cross-Vault data-sharing authority.
+  - Production artifacts exclude test fixtures, source maps and development assets unless explicitly needed; an exception requires an explicit package need, not merely a referenced payload.
   - Unsupported platform or benchmark lanes remain not_run with residual risk, and static artifact/schema proof cannot become runtime performance evidence.
 validation_surfaces: [future release artifact matrix, size-budget receipts, architecture-dispatch tests, selected renderer-order and fallback-path verification, full-thread benchmark and 24-hour-soak receipts]
 risk_class: release_platform_or_performance_false_claim
