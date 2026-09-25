@@ -97,14 +97,30 @@ def result_route(command):
 def validate_usage_result(request_ref, result_ref, response_ref, *, resolve_record,
                           verify_original_admission, verify_permission, verify_sources,
                           verify_delivery, check_current_disclosure, canonical_owner_digest):
+    return _validate_usage_result(request_ref, result_ref, response_ref,
+        resolve_record=resolve_record, verify_original_admission=verify_original_admission,
+        verify_permission=verify_permission, verify_sources=verify_sources,
+        verify_delivery=verify_delivery, check_current_disclosure=check_current_disclosure,
+        canonical_owner_digest=canonical_owner_digest,
+        contract_shape=lambda definition, value, filename=None: shape(definition, value, filename or SCHEMA),
+        contract_projection_failures=projection_failures, contract_result_route=result_route,
+        contract_export_profile="usage_core_selection.v1")
+
+
+def _validate_usage_result(request_ref, result_ref, response_ref, *, resolve_record,
+                          verify_original_admission, verify_permission, verify_sources,
+                          verify_delivery, check_current_disclosure, canonical_owner_digest,
+                          contract_shape, contract_projection_failures, contract_result_route,
+                          contract_export_profile):
     """Resolve complete original records; every proof callback is mandatory.
 
     Callbacks return a list of failure strings, never an allowed/verified boolean.
     Native adapters must span actual source/currentness/disclosure fences; this
     finite pure oracle cannot establish atomic native issuance or delivery.
     """
+    shape, projection_failures, result_route = contract_shape, contract_projection_failures, contract_result_route
     failures, snapshots = [], []
-    def resolve(kind, ref, definition, filename=SCHEMA):
+    def resolve(kind, ref, definition, filename=None):
         value = resolve_record(kind, ref)
         if shape(definition, value, filename):
             raise ValueError("resolved_shape:" + kind)
@@ -175,7 +191,7 @@ def validate_usage_result(request_ref, result_ref, response_ref, *, resolve_reco
                                     parse_constant=lambda x: (_ for _ in ()).throw(ValueError("nonfinite_json")))
                 if shape("export_view", parsed): failures.append("output_view_shape")
                 if parsed != output["view"]: failures.append("output_view_bytes")
-                expected = {"profile":"usage_core_selection.v1", "export_scope":request["export_scope"],
+                expected = {"profile":contract_export_profile, "export_scope":request["export_scope"],
                             "query":q, "projection_ref":before["projection_ref"],
                             "projection_revision":before["owner_revision"], "freshness":before["freshness"],
                             "health":before["health"], "rows":before["rows"]}

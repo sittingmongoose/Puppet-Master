@@ -65,6 +65,20 @@ SHA-256 `a001532389872f44ba7ffebca87acd154f70fef49466cda6b7b436518b44594b`.
 This makes 18 of the original 21 comparisons adjudicated, with three still
 comparison-unknown: MGR-011, MGR-019 and raw:desktop. It is not eighteen closures.
 
+The subsequent bounded three-item pass adjudicates those final comparisons:
+MGR-011 is explicitly covered by LSPSupport sections 13 and 14.9; raw:desktop's
+tray/startup/restore/limits are covered and its composite headings resolve to
+existing IDs, not new backend machines. MGR-019's core identity, ownership,
+export/redaction and hold-protected cleanup are specified, but generalized
+user-requested Reveal/cleanup for non-file-backed or provider-native artifacts
+retains a narrow action-applicability question. Do not invent paths or authorize
+external deletion. All 21 comparisons now have explicit adjudications, not
+21 closures; the original 199-item inventory is unchanged. Receipt:
+`/mnt/Cursor/PM-Experiments/settings-compound-overlay-20260925/POST-V4-THREE-COMPARISONS.md`,
+SHA-256 `f6b8cf4eeb8ed88551d946005e10e0db251149292a340eae5848fef23e8f4e39`.
+Root re-read the cited LSP, artifact-identity/provider-ownership and tray owner
+passages before accepting this refinement. No owner changes accompany it.
+
 Verification: all 31 CLI Bridge and 139 Models PlanUnit YAML blocks parse;
 git diff whitespace check PASS; shard generation/check PASS (99 docs / 2,746
 shards), with only cli_bridged_providers and models_system roots changed.

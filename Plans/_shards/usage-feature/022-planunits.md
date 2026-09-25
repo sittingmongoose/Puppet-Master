@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L944-L5040
+Source lines: L950-L5047
 
-Source SHA256: `11e08427addbbc954f853049f43204ddf8f1bb835ebfeb0166cedbbbbf452a93`
+Source SHA256: `3a0d4e31f6e476718bd30ad18eba5d513cbc4308aae524ac250d853abc8e38cd`
 
 ---
 
@@ -2172,6 +2172,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UF-041 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- The additive usage_quota_selection.v2 profile preserves UF-041 exact window kinds/scopes, separates execution-free quota rows from unchanged attempt rows, resolves typed original route/account/window sources, and refuses quota rows in Ledger exports without changing v1 or inventing execution identity.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:

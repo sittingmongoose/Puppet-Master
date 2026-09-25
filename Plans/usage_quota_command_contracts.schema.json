@@ -1,0 +1,1366 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/usage-quota/2.0.0/usage_quota_command_contracts.schema.json",
+  "title": "Usage attempt/quota selection successor; typed owner-source joins, no native proof",
+  "description": "Closed view profile, not an accounting store. Additional Ledger filters are unclosed and refuse; no opaque schema escape, provider engine or native proof.",
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nullable_text": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "identity": {
+      "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+    },
+    "sha256": {
+      "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256"
+    },
+    "timestamp": {
+      "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/UtcTimestamp"
+    },
+    "quantity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "value",
+        "unit"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "reported",
+            "estimated",
+            "unknown",
+            "not_exposed",
+            "disabled",
+            "hidden"
+          ]
+        },
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "reported",
+                  "estimated"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "number",
+                "minimum": 0
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "query": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "query_ref",
+        "owner_revision",
+        "server_id",
+        "project_id",
+        "scope_kind",
+        "time_range",
+        "interval_start",
+        "interval_end",
+        "filter_kind",
+        "provider_id",
+        "additional_ledger_filters"
+      ],
+      "properties": {
+        "profile": {
+          "const": "usage_quota_selection.v2"
+        },
+        "query_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "time_range": {
+          "enum": [
+            "5h",
+            "24h",
+            "7d",
+            "30d"
+          ]
+        },
+        "interval_start": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "interval_end": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "filter_kind": {
+          "enum": [
+            "all",
+            "provider",
+            "work",
+            "personal"
+          ]
+        },
+        "provider_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "additional_ledger_filters": {
+          "type": "array",
+          "maxItems": 0,
+          "items": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "filter_kind": {
+                "const": "provider"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "provider_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "provider_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "caller": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "client_ref",
+        "source_surface",
+        "return_route_ref",
+        "focus_ref",
+        "caller_context_ref",
+        "caller_revision",
+        "continuation_generation"
+      ],
+      "properties": {
+        "client_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_surface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "return_route_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "focus_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "caller_context_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "caller_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "continuation_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "row": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "row_kind",
+            "usage"
+          ],
+          "properties": {
+            "row_kind": {
+              "const": "attempt_usage"
+            },
+            "usage": {
+              "$ref": "https://puppetmaster.local/schemas/usage_command_contracts.schema.json#/$defs/row"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/quota_row"
+        }
+      ]
+    },
+    "projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projection_ref",
+        "owner_revision",
+        "query",
+        "freshness",
+        "health",
+        "observed_at",
+        "rows"
+      ],
+      "properties": {
+        "projection_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "query": {
+          "$ref": "#/$defs/query"
+        },
+        "freshness": {
+          "enum": [
+            "current",
+            "refreshing",
+            "stale"
+          ]
+        },
+        "health": {
+          "enum": [
+            "healthy",
+            "degraded",
+            "unavailable"
+          ]
+        },
+        "observed_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/row"
+          }
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "request_ref",
+        "identity",
+        "idempotency_key",
+        "actor_ref",
+        "permission_ref",
+        "query",
+        "projection_ref",
+        "projection_revision",
+        "provider_route_refs",
+        "caller",
+        "export_scope",
+        "format"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.usage.command_request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.usage.refresh",
+            "cmd.usage.export"
+          ]
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "query": {
+          "$ref": "#/$defs/query"
+        },
+        "projection_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "projection_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_route_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "caller": {
+          "$ref": "#/$defs/caller"
+        },
+        "export_scope": {
+          "enum": [
+            "snapshot",
+            "ledger",
+            null
+          ]
+        },
+        "format": {
+          "enum": [
+            "json",
+            null
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.usage.export"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "export_scope": {
+                "enum": [
+                  "snapshot",
+                  "ledger"
+                ]
+              },
+              "format": {
+                "const": "json"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "export_scope": {
+                "type": "null"
+              },
+              "format": {
+                "type": "null"
+              },
+              "provider_route_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "export_view": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "export_scope",
+        "query",
+        "projection_ref",
+        "projection_revision",
+        "freshness",
+        "health",
+        "rows"
+      ],
+      "properties": {
+        "profile": {
+          "const": "usage_quota_selection.v2"
+        },
+        "export_scope": {
+          "enum": [
+            "snapshot",
+            "ledger"
+          ]
+        },
+        "query": {
+          "$ref": "#/$defs/query"
+        },
+        "projection_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "projection_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "freshness": {
+          "enum": [
+            "current",
+            "refreshing",
+            "stale"
+          ]
+        },
+        "health": {
+          "enum": [
+            "healthy",
+            "degraded",
+            "unavailable"
+          ]
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/row"
+          }
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_ref",
+        "delivery_receipt_ref",
+        "media_type",
+        "content_sha256",
+        "byte_length",
+        "view"
+      ],
+      "properties": {
+        "artifact_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "delivery_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "media_type": {
+          "const": "application/json"
+        },
+        "content_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "byte_length": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "view": {
+          "$ref": "#/$defs/export_view"
+        }
+      }
+    },
+    "route_outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_ref",
+        "status",
+        "evidence_ref"
+      ],
+      "properties": {
+        "route_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "failed",
+            "cancelled",
+            "unavailable"
+          ]
+        },
+        "evidence_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "identity",
+        "request",
+        "status",
+        "command_outcome_ref",
+        "projection",
+        "route_outcomes",
+        "output",
+        "error_ref",
+        "caller"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.usage.command_result.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.usage.refresh",
+            "cmd.usage.export"
+          ]
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "failed",
+            "cancelled",
+            "rejected",
+            "terminal_unknown"
+          ]
+        },
+        "command_outcome_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "projection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/projection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "route_outcomes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/route_outcome"
+          }
+        },
+        "output": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/output"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "caller": {
+          "$ref": "#/$defs/caller"
+        }
+      }
+    },
+    "usage_refresh_request": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/request"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.usage.refresh"
+            }
+          }
+        }
+      ]
+    },
+    "usage_export_request": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/request"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.usage.export"
+            }
+          }
+        }
+      ]
+    },
+    "usage_refresh_result": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/result"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.usage.refresh"
+            },
+            "output": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "usage_export_result": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/result"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.usage.export"
+            },
+            "route_outcomes": {
+              "maxItems": 0
+            }
+          }
+        }
+      ]
+    },
+    "usage_command_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "runtime_evidence",
+        "request",
+        "before",
+        "result",
+        "outcome",
+        "response",
+        "output_json",
+        "source_records"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.usage.quota_command_fixture.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "runtime_evidence": {
+          "const": false
+        },
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "before": {
+          "$ref": "#/$defs/projection"
+        },
+        "result": {
+          "$ref": "#/$defs/result"
+        },
+        "outcome": {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"
+        },
+        "response": {
+          "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json"
+        },
+        "output_json": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_records": {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/route_source"
+              },
+              {
+                "$ref": "#/$defs/account_source"
+              },
+              {
+                "$ref": "#/$defs/window_source"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "route_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "source_ref",
+        "owner_revision",
+        "provider_id",
+        "provider_route_ref",
+        "credential_route_epoch_ref",
+        "provider_capability_epoch_ref",
+        "source_evidence_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.usage.quota_route_source.v1"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_route_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "credential_route_epoch_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "provider_capability_epoch_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "source_evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "account_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "source_ref",
+        "owner_revision",
+        "provider_id",
+        "provider_route_ref",
+        "requested_account_id",
+        "requested_account_binding",
+        "requested_account_policy",
+        "effective_account_id",
+        "provider_account_id",
+        "requested_auth_mode",
+        "effective_auth_mode",
+        "selected_billing_entity_id",
+        "configured_project_id",
+        "requested_provider_project_id",
+        "effective_provider_project_id",
+        "auth_resolution_ref",
+        "billing_resolution_ref",
+        "project_context_resolution_ref",
+        "account_scope"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.usage.quota_account_source.v1"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_route_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_account_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "requested_account_binding": {
+          "enum": [
+            "none",
+            "preferred",
+            "required",
+            null
+          ]
+        },
+        "requested_account_policy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "effective_account_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "provider_account_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "requested_auth_mode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "effective_auth_mode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "selected_billing_entity_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "configured_project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "requested_provider_project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "effective_provider_project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "auth_resolution_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "billing_resolution_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "project_context_resolution_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "account_scope": {
+          "enum": [
+            "work",
+            "personal",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "window_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "source_ref",
+        "owner_revision",
+        "provider_id",
+        "provider_route_ref",
+        "window_kind",
+        "window_scope",
+        "window_key",
+        "window_label",
+        "account_id",
+        "model_id",
+        "org_id",
+        "server_profile_id",
+        "source_class",
+        "source_confidence",
+        "source_authority",
+        "signal_kind",
+        "source_evidence_refs",
+        "remaining",
+        "used",
+        "limit",
+        "reset_at",
+        "reset_evidence_refs",
+        "cooldown_until",
+        "cooldown_evidence_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.usage.quota_window_source.v1"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_route_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "window_kind": {
+          "enum": [
+            "rolling",
+            "fixed_reset",
+            "billing_cycle",
+            "session_only",
+            "unknown"
+          ]
+        },
+        "window_scope": {
+          "enum": [
+            "provider",
+            "account",
+            "account+model",
+            "org",
+            "server_profile"
+          ]
+        },
+        "window_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "window_label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "account_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "model_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "org_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "server_profile_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "source_class": {
+          "enum": [
+            "provider_reported",
+            "provider_header",
+            "cli_reported",
+            "local_estimated",
+            "pricing_estimated",
+            "unknown"
+          ]
+        },
+        "source_confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "unknown"
+          ]
+        },
+        "source_authority": {
+          "enum": [
+            "authoritative_provider_quota",
+            "authoritative_local_session_stats",
+            "inferred_estimated",
+            "unknown"
+          ]
+        },
+        "signal_kind": {
+          "enum": [
+            "provider_signal",
+            "structured_runtime",
+            "provider_heuristic",
+            "error_hint",
+            "local_rollup",
+            "unknown"
+          ]
+        },
+        "source_evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "remaining": {
+          "$ref": "#/$defs/quantity"
+        },
+        "used": {
+          "$ref": "#/$defs/quantity"
+        },
+        "limit": {
+          "$ref": "#/$defs/quantity"
+        },
+        "reset_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reset_evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "cooldown_until": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cooldown_evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "reset_countdown": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "remaining_seconds",
+                "observed_at_utc"
+              ],
+              "properties": {
+                "remaining_seconds": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "observed_at_utc": {
+                  "$ref": "#/$defs/timestamp"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "quota_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "row_kind",
+        "row_ref",
+        "owner_revision",
+        "scope_kind",
+        "server_id",
+        "project_id",
+        "observed_at_utc",
+        "freshness",
+        "health",
+        "reason",
+        "route_source",
+        "account_source",
+        "window_source"
+      ],
+      "properties": {
+        "row_kind": {
+          "const": "quota_window"
+        },
+        "row_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "freshness": {
+          "enum": [
+            "current",
+            "refreshing",
+            "stale"
+          ]
+        },
+        "health": {
+          "enum": [
+            "healthy",
+            "degraded",
+            "unavailable"
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "route_source": {
+          "$ref": "#/$defs/route_source"
+        },
+        "account_source": {
+          "$ref": "#/$defs/account_source"
+        },
+        "window_source": {
+          "$ref": "#/$defs/window_source"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/result"
+    },
+    {
+      "$ref": "#/$defs/usage_command_fixture"
+    }
+  ]
+}

@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L8334-L8524
 
-Source SHA256: `85cac9ef73d19589db937b8c3a2a3925ba18502d386fefff7d844b373c6ed147`
+Source SHA256: `980134eb7b231afda75205f3303e40420e960e4caeff8a4b696467d177413d4f`
 
 ---
 
@@ -113,7 +113,7 @@ ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Section15_M
 | `cmd.usage.export` | Export Usage Projection | Exports the current usage projection as JSON with `scope` `snapshot` or `ledger`; ledger scope preserves `usage_event_refs` per row. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules; behavior unchanged. | `usage_projection_loaded` | `domain_action` |
 | `cmd.usage.refresh` | Refresh Usage Projections | Re-reads usage projections from provider routes on demand; background refresh continues independently and the UI never blocks. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules; behavior unchanged. | `provider_routes_configured` | `domain_action` |
 
-Core-selection machine bindings: `cmd.usage.refresh`: `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_result`; `cmd.usage.export`: `Plans/usage_command_contracts.schema.json#/$defs/usage_export_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_export_result`. Existing handlers, availability and disabled reasons are unchanged; this binding grants no native handler availability. Additional Ledger filters and execution-free quota-only projections are outside this profile and must refuse rather than silently lose filters or rows.
+Current quota-aware selection bindings: `cmd.usage.refresh`: `Plans/usage_quota_command_contracts.schema.json#/$defs/usage_refresh_request` -> `Plans/usage_quota_command_contracts.schema.json#/$defs/usage_refresh_result`; `cmd.usage.export`: `Plans/usage_quota_command_contracts.schema.json#/$defs/usage_export_request` -> `Plans/usage_quota_command_contracts.schema.json#/$defs/usage_export_result`. Existing handlers, availability and disabled reasons are unchanged; this binding grants no native handler availability. The v2 profile admits disjoint attempt and execution-free quota rows for refresh/snapshot export, with actual typed original source resolution; quota rows refuse Ledger export rather than acquiring fake event/Attempt/Run identities. Additional Ledger filters remain outside this profile and must refuse rather than silently lose filters or rows. The historical v1 core-selection contracts remain unchanged; native source/permission/caller authentication and physical custody are not proved by this binding.
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
 

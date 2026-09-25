@@ -2773,6 +2773,76 @@
         "Plans/forge_review_decisions.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.usage.command_transport.v2",
+      "system_id": "usage",
+      "owner_doc": "Plans/usage-feature.md",
+      "schema_ref": "Plans/usage_quota_command_contracts.schema.json",
+      "record_kinds": [
+        "pm.usage.command_request.v2",
+        "pm.usage.command_result.v2"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Original command outcomes, owner projections and actual output artifacts retain their existing independent custody, retention and replay holds.",
+        "expiry_rule": "Discard transient request/result copies after dispatch or response; disposal cannot erase the independently retained original result/output required by existing command replay. Never reconstruct replay from a new projection or export."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Current quota-aware transport uses the explicit v2 profile; v1 stays historical without reinterpretation. Preserve original selection/caller/outcome/output custody; refuse unsupported Ledger filters and quota-to-Ledger coercion. No physical transport migration or new store.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Versioned transport permits execution-free quota views while preserving original command/outcome/output bindings. Request/result wrappers and fixture evidence maps create no accounting authority or physical value family.",
+      "source_refs": [
+        "Plans/usage-feature.md#UF-041",
+        "Plans/UI_Command_Catalog.md#UCC-116",
+        "Plans/usage_quota_command_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.usage.quota_source_reads.v1",
+      "system_id": "usage",
+      "owner_doc": "Plans/usage-feature.md",
+      "schema_ref": "Plans/usage_quota_command_contracts.schema.json",
+      "record_kinds": [
+        "pm.usage.quota_route_source.v1",
+        "pm.usage.quota_account_source.v1",
+        "pm.usage.quota_window_source.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Original route/account/auth/billing/provider-project/window evidence retains its actual owner custody and holds needed for query snapshots, replay, export, audit and recovery. These read projections do not replace that authority.",
+        "expiry_rule": "Release transient read copies after the consuming validation/response. Never erase held originals or reconstruct a historical view from current account/window state; missing original source custody fails closed."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "These newly typed owner read projections have no physical writer/key/migration. Derive only from the same authenticated retained originals and owner revisions; do not migrate secrets, create a quota store, or insert these shapes into UsageRecord.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Explicit transient read interfaces materialize route, requested/effective account/auth/billing/provider-project context and native window evidence without fabricating execution identity or a persistent family. Native source adapters and exact backing-owner custody are not proved by this disposition.",
+      "source_refs": [
+        "Plans/usage-feature.md#UF-041",
+        "Plans/Multi-Account.md",
+        "Plans/Models_System.md",
+        "Plans/usage_quota_command_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [
