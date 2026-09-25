@@ -330,11 +330,12 @@ def('a3', 'fresh', 'A cloud computer is reached by its address and is not called
 });
 def('a4', 'fresh', 'On a new Server an existing folder is on the Server, keeps its place and keeps its online copy', async (d, A) => {
   await toNewServer(d); await d.act('pick', 'existing');
-  A.ok(await d.state(() => /A folder on Home NAS/.test(document.querySelector('#pm-o55-onboarding').textContent)), 'the folder choice names the Server');
+  const srv = await d.state(() => window.O55.project.serverName(window.O55.S)); /* the Server's own name (never a name already in use) */
+  A.ok(await d.page.evaluate((n) => document.querySelector('#pm-o55-onboarding').textContent.includes('A folder on ' + n), srv), 'the folder choice names the Server (' + srv + ')');
   await d.act('sub', 'folder'); await d.primary(); A.eq(await d.screen(), 'ex-folder', 'folder');
   await d.act('pick', '/mnt/tank/projects/recipe-app'); await until(d, "(window.O55.S.sess.ops['folder:/mnt/tank/projects/recipe-app']||{}).state === 'done'", 'checked', 5000);
   await d.primary(); A.eq(await d.screen(), 'name', 'name');
-  A.ok(await d.state(() => /Stays in \/mnt\/tank\/projects\/recipe-app on Home NAS/.test(document.querySelector('#pm-o55-onboarding').textContent) && !document.querySelector('#pm-o55-onboarding [data-o55-do="storage"]')), 'kept in place, no storage question');
+  A.ok(await d.page.evaluate((n) => document.querySelector('#pm-o55-onboarding').textContent.includes('Stays in /mnt/tank/projects/recipe-app on ' + n) && !document.querySelector('#pm-o55-onboarding [data-o55-do="storage"]'), srv), 'kept in place, no storage question');
   await d.primary(); if ((await d.screen()) === 'like') await d.primary();
   A.eq(await d.screen(), 'safe', 'keep your work safe');
   A.ok(await d.state(() => /already linked/.test(document.querySelector('#pm-o55-onboarding [data-key="r-online"]').textContent) && !document.querySelector('#pm-o55-onboarding [data-key="r-online"] [data-o55-do="online"]')), 'its online copy is shown, no second copy offered');

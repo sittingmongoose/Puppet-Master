@@ -175,3 +175,34 @@ Still open:
 - "Keep this layout" keeps the Guided example thread in Chat; the plan removes the practice surface at the end, so the
   practice conversation should probably leave with the tour either way (a decision for Jared).
 
+## Third pass (2026-09-25, afternoon): Jared's asks, the art review, the other worlds
+Jared's asks, done: the theme no longer changes at the end of onboarding or entering the tour (x3 samples every painted
+frame); a look button beside the sound button, in the window and the tour bar (x5); the puppets cheer when a choice is
+made and the troupe celebrates the Project and the end, behind a real curtain per family; the sound follows the journey
+(a chord per chapter, climbing with progress, rotating choices, left-right placement) with a voice per helper, a
+celebration crackle and quiet typing; the scene art is "more alive" (the marionette rig: the bar tilts, puppets lift,
+lean and wave on strings that stay attached) and its lines connect (every string and connector ends on the art's
+measured outline; Retro keeps whole-pixel sizes).
+Also found and fixed on the way:
+- C42 Low-resource mode switched itself on 0.3 s after the window opened (building it is two long tasks) and never let
+  go, so every ambient loop stopped for good on this VM. Opening and screen changes no longer count, three tasks over
+  200 ms are needed, and it recovers after twenty calm seconds. Reactions and celebrations play in it.
+- C43 The protect screen's second `bind:` replaced its first (JavaScript keeps the later key): build.py --check now
+  fails on a duplicate key. Basic's rings had two class attributes (the parser drops the second): they never pulsed.
+
+The other worlds (logic subagent: returning 804 states, keyWorks 793; R1-R13 hold on every state; 0 dead ends, 0 page
+errors), findings fixed with a scenario each: lc1 (C24) a Connect route switch keeps a Server found through the old
+route; lc2 an abandoned folder becomes the new Project's folder, and its history and GitHub link are applied to a NAS
+folder; lc3 a restore sets a backup place nobody chose and it outlives the restore; lc4 on a Server the NAS key step
+used this laptop's keys; lc5 a new Server is named "Home NAS" beside the existing Home NAS; lc6 a new Server's restore
+never asks "Use it away from home?"; x4 a look picked with the Connect draft active is lost at the end.
+
+Still open:
+- Pairing with a Puppet Master that runs on the NAS (homeNasPm) needs no approval and is recorded as an SSH key install;
+  the draft then records project_transport "ssh" for a connection that was a pairing. The setup plan has no transport
+  for "files read through another Puppet Master" (project_transport is local | ssh | mounted): a canon gap for Jared.
+- homeNasPm and copiedUnavailable crawls were still running at this writing; noAi not crawled.
+- Art review items not yet done: the share screens (SMB / NFS / mounted) still show the SSH key exchange; Friendly props
+  near the drapes; Basic's fixed-width badge; Friendly dark identity words contrast; AI sparks off the bar; the lock
+  should open (not snap shut) on success; name and begin could use more life of their own.
+

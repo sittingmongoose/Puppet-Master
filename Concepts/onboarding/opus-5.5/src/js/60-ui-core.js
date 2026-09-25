@@ -105,6 +105,21 @@
     }).catch(() => {});
     vt.finished.finally(() => { if (S.vt === vt) { S.vt = null; document.documentElement.removeAttribute('data-o55-vt'); } });
   }
+  /* Input never waits for the look reveal. While a view transition plays, the browser hands every click to the page
+     root, and on a heavy page on a slow computer the reveal outlasted a second: an early Continue was lost. A press
+     during the reveal ends it at once, and the click goes to whatever was under the pointer. */
+  document.addEventListener('pointerdown', (e) => {
+    if (!S.vt) return;
+    try { S.vt.skipTransition(); } catch (_) {}
+    S.vtPress = { x: e.clientX, y: e.clientY, t: performance.now() };
+  }, true);
+  document.addEventListener('click', (e) => {
+    const k = S.vtPress; if (!k) return;
+    S.vtPress = null;
+    if (performance.now() - k.t > 1500 || e.target !== document.documentElement) return;
+    const el = document.elementFromPoint(k.x, k.y);
+    if (el && el !== document.documentElement) { e.stopPropagation(); e.preventDefault(); el.click(); }
+  }, true);
 
   /* ---------------------------------------------------------------- rail */
   function renderRail() {
