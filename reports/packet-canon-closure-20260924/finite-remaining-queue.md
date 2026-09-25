@@ -1,5 +1,27 @@
 # Current finite remaining queue — 2026-09-25
 
+## Latest verified state (supersedes historical queue labels below)
+
+- Six neutral Source Control routes are integrated and independently reviewed:
+  `scm-six-neutral-integration.md`. Public Git fetch/push remains a distinct
+  specification gap after its final authorized review; four reproduced defects
+  and the unanswered extra-cycle card are in `scm-public-git-final-cycle2-residual.md`.
+- Guided Tour authentic Chat/layout original custody is integrated as owner prose:
+  `tour-original-owner-integration.md`. Typed companion sufficiency is under
+  bounded review; native adapters and physical admission remain unproved.
+- Stash's typed companion passed independent review after temporal proof repair;
+  it is not yet integrated. Usage Ledger, checkout, Settings import and
+  DRY/formatter companion corrections remain in external review/authoring.
+- Project dictionary policy is answered and integrated; it is not an open choice.
+  The Server clarification card is still unanswered. No newer protected design
+  is reopened by these historical packet comparisons.
+- Repair commits are branch-pushed, not landed on main. Current-main rebase,
+  Decision Log collision reconciliation and full failure-key comparison remain.
+
+The numeric inventories and pending labels below are historical snapshots, not
+current completion percentages or a request to implement every pending physical
+storage family. The latest verified steps do not imply whole-packet closure.
+
 Current-state override: `decisions-and-handoff.md` and
 `jj-operation-recovery-integration.md` record the later JJ ACT037/038 static
 integration, leaving eight selected occurrences, not ten. Dictionary now follows
