@@ -174,8 +174,15 @@ canon and forbids treating this review record as a seal or readiness unlock.
   remains prose-only; typed actions, exact Settings mappings and dictionary
   custody remain open. See `spellcheck-currentness.md`; no new canonical edit
   or command admission follows from this review.
+- Follow-up owner audits identify actual Backup result prerequisites, the
+  Personal dictionary scope question, and application-update cadence/custody
+  candidates with superseded sidecar rules excluded. See
+  `follow-up-owner-prerequisites.md`. BRS-004's configuration-versus-proof
+  correction is separately verified; no four-action closure follows from it.
 
-No follow-up above touches the frozen assistant-chat topics. Standard index
-validation now exposes 20 unchanged legacy decision errors plus DL-076 absent
-relative to newer main; these are reported, not repaired or waived here. Branch
+No follow-up above touches the frozen assistant-chat topics. The latest paired
+index validation exposes 20 unchanged legacy decision errors plus DL-076,
+SMPFS-170 and SP-319 absent relative to its inspected newer main; all 23 complete
+failure rows are unchanged by the BRS-004 correction. These are reported, not
+repaired or waived here. Branch
 pushes are not main landings, and the full packet goal remains open.
