@@ -33,7 +33,8 @@ external review and application hashes. Their typed companions still require
 separate reconciliation, so this does not close the selected-command occurrences.
 Amended DL-097 is also integrated into Forge §3.4 and indexed FGI-008; see
 `review-checkout-owner-decision.md`. Its selected-request/result/preview companion
-remains separate work. Settings DL-095 owner reconciliation, the dictionary sharing
+remains separate work. Settings DL-095 owner reconciliation is now integrated;
+see `settings-replace-ego-reference.md`. Its typed companion, the dictionary sharing
 boundary, and native implementation remain pending. Newer spellcheck,
 Help/Teacher and assistant/platform designs remain protected.
 
@@ -72,8 +73,9 @@ package import, adapter or deployment dependency. The earlier v2 import proposal
 was withdrawn without application. The old original-source request and missing
 native-Ego-app/admission concerns are not blockers for this task. Archive custody
 facts remain useful for idea evaluation; no installation was performed. The
-branch's existing named mandatory-import example in Plugins_System must be
-corrected without weakening unrelated generic plugin admission rules.
+branch's erroneous named mandatory-import example in Plugins_System is now removed,
+and Section15 expressly marks Ego as reference-only, without weakening generic
+plugin admission or optional-adapter safeguards; see `settings-replace-ego-reference.md`.
 
 This was already explicit in the packet, not a newly missing product choice:
 `sources/01_EGO_EVALUATION.md` Executive decision says to adopt architectural
@@ -104,6 +106,16 @@ covered by current owners; MGR007 alternatives are explicitly implementation cho
 No further Azure scope is added.
 
 ## Landing hold
+
+The three remaining product/authorization cards are queued and unanswered in
+`remaining-boundary-cards-20260925.md`; the presentation report pins the frozen
+Markdown and interactive HTML hashes. Dictionary and Server choices and further
+capped SCM work wait for explicit answers; other authorized contract work continues.
+
+The clean aggregate run at committed 306f6c8e8 failed overall, with readiness 68
+and the known Touch mismatch among its findings. Its exact full report hash and
+scope are in `settings-replace-ego-reference.md`; it predates the Settings/Ego
+owner edits and is not a fresh-main full-delta comparison.
 
 Latest branch preflight completed with four blocking rows (two distinct causes).
 The branch-introduced Usage disposition-ID schema defect is now corrected and

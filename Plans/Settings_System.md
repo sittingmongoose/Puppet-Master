@@ -853,6 +853,12 @@ canonical_text: >-
   nothing. Apply accepts only the bound preview ID, generation, hash, and expected Project revision; it creates the restore
   point, validates, commits atomically, reads back, and returns one typed result. Rollback requires the transaction ID,
   rollback token, and expected current revision. Export emits a detached, secret-free, exact-ID manifest and artifact.
+  Under Decision_Log DL-095 (card PCC-SETTINGS-REPLACE-001, answered 2026-09-25), a Replace-mode
+  import preview additionally resolves every eligible ordinary setting within the chosen import categories
+  that the import source omits and shows each as an explicit before/after reset to its current registry
+  default (the SSYS-009 Restore Defaults source); the reset set is fixed at preview and never expands during
+  apply. Merge imports gain no reset semantics, and settings outside the chosen categories plus excluded
+  local or credential values remain untouched; the decision authorizes no silent reset or broader deletion.
   Plans/settings_system_contracts.schema.json owns strict Draft 2020-12 shapes and
   Plans/settings_system_contract_fixtures.json freezes the command/UI-action/manager registries and valid/invalid cases.
   Commands_System, UI_Command_Catalog, UI_Wiring_Rules, and production Wiring Matrix must register the identical IDs,
@@ -865,6 +871,8 @@ acceptance_criteria:
   - Draft 2020-12 validation accepts the fixture pack and every positive case and rejects every negative case.
   - The machine command registry contains exactly the five canonical Settings command IDs and no Bloom alias.
   - Preview is non-mutating; apply and rollback are revision/hash/idempotency bound; export is detached and secret-free.
+  - Replace-mode import previews every omitted eligible ordinary setting within the chosen categories as an explicit before/after reset to its current registry default; the reset set is fixed at preview and never expands during apply.
+  - Merge-mode import, settings outside the chosen categories, and excluded local or credential values gain no reset; no silent reset or broader deletion is authorized.
   - Missing central registration or handler remains command_not_registered or handler_unavailable and dispatches nothing.
 validation_surfaces: [Plans/settings_system_contracts.schema.json, Plans/settings_system_contract_fixtures.json, future central command/catalog/wiring parity validator]
 risk_class: settings_command_schema_or_handler_drift
@@ -876,6 +884,7 @@ source_lineage:
   - source_ref:chat:settings-command-contract-lane-2026-08-31
   - Plans/Settings_System.md#SSYS-007
   - Plans/Settings_System.md#SSYS-009
+  - Plans/Decision_Log.md#DL-095
 preserved_exact_tokens: [cmd.settings.open, cmd.settings.transaction.preview, cmd.settings.transaction.apply, cmd.settings.transaction.rollback, cmd.settings.export, command_not_registered, handler_unavailable]
 negative_constraints: [Do not treat semantic registration in Settings as a production handler., Do not apply an unpreviewed or stale ID set., Do not include credentials in export., Do not resurrect cmd.settings.bloom.open.]
 owner_hints: [Plans/Settings_System.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/UI_Wiring_Rules.md]
@@ -1210,7 +1219,7 @@ The appearance projection is derived from exactly `general.visual.theme`, `gener
 
 ### 3.3 Transfer preview
 
-Transfer, Restore Defaults, import, and migration use the same transaction preview. Transfer selector categories resolve once to the exact sorted IDs and never expand during apply. Export is separate: `cmd.settings.export` accepts `pm.settings_export_request.v1` and returns `pm.settings_export_manifest.v1`, a detached exact-ID artifact manifest with source revision, exclusions, format, artifact ref, hash, size, timestamp, receipt, and `credential_material_included=false`.
+Transfer, Restore Defaults, import, and migration use the same transaction preview. Transfer selector categories resolve once to the exact sorted IDs and never expand during apply. Import runs in an explicitly chosen mode, Merge or Replace, and the preview records the chosen mode before anything applies. Merge applies only the IDs the import source contains and acquires no reset semantics. Under Decision_Log DL-095 (card PCC-SETTINGS-REPLACE-001), Replace additionally resets every eligible ordinary setting that the chosen import categories select and the import source omits to its current registry default, the same default source the SSYS-009 Restore Defaults transaction resolves; the reset ID set is resolved exactly at preview time, every reset appears in the existing explicit preview as a before/after entry, and the resolution never expands during apply. Replace resets nothing outside the chosen import categories and leaves excluded local or credential values untouched under the existing SSYS-007 and SSYS-008 exclusions; this authorizes no silent reset, broader deletion, or change to Merge. Export is separate: `cmd.settings.export` accepts `pm.settings_export_request.v1` and returns `pm.settings_export_manifest.v1`, a detached exact-ID artifact manifest with source revision, exclusions, format, artifact ref, hash, size, timestamp, receipt, and `credential_material_included=false`.
 
 `pm.settings_migration_preview.v1` permits only `legacy_global_snapshot`, `legacy_singleton_settings`, `legacy_browser_concept_fixture`, or `settings_export_v1` sources. It records source hash, destination Project/revision, detected/mappable/excluded IDs, unmapped keys, normalized theme pair, and transaction-preview ref. `confirmation_required=true`, `auto_apply=false`, and `legacy_source_authoritative=false` are invariant. Discovery, app startup, or concept state cannot overwrite an existing Project.
 
@@ -1299,7 +1308,7 @@ Minimum production coverage includes:
 - fuzzy search, facet combinations, keyboard/pointer parity, match highlighting, and stable variable-height anchors;
 - all row renderers, long/localized text, help/details, owner-derived status, unavailable and managed states;
 - atomic single changes, theme-pair CAS, Restore Defaults, appearance preview/revert, tooltip-off accessibility, reduced-motion feedback, cancellation, stale revision, read-back failure, and rollback;
-- transfer exact-ID selection, redacted preview/diff/provenance, credentials excluded, stale preview refusal, atomic apply, rollback, detached export, and explicit non-auto legacy migration;
+- transfer exact-ID selection, redacted preview/diff/provenance, credentials excluded, Replace-mode reset preview and disclosure within the chosen categories, Merge-mode non-reset, stale preview refusal, atomic apply, rollback, detached export, and explicit non-auto legacy migration;
 - provider Install/Repair/Verify selectors, exact target, continuation, idempotent replay, and proof that Uninstall is absent;
 - full 38-manager registry census, lazy hydration, Teacher/Help, Project Search Index, and DRY owner-projection coverage, requested/effective/action/operation separation, and missing-owner disabled states;
 - the exact twelve Plugins System command consumers, fail-closed handler_unavailable behavior, complete owner-fact projection, eight plugin Doctor routes, bounded redaction, and proof that no generic K3 plugin mutation path survives;

@@ -1,0 +1,150 @@
+<style>#pm-boundary-cards-20260925{overflow-wrap:anywhere}#pm-boundary-cards-20260925 dd{margin-inline-start:0}#pm-boundary-cards-20260925 dt{font-weight:500}</style>
+<div id="pm-boundary-cards-20260925">
+  <h2>Remaining boundary decision cards</h2>
+  <p>Status: queued, unanswered.</p>
+  <p>Approve selects the recommendation. Deny with changes must state the change. Ask leaves the question open. Draft selections are not answers.</p>
+  <div class="viz-controls"><button class="btn" type="button" data-nav="prev">Previous</button><span id="pm-card-position" aria-live="polite">Card 1 of 3</span><button class="btn" type="button" data-nav="next">Next</button><button class="btn" type="button" id="pm-show-all">Show all</button></div>
+
+  <section data-card="PCC-DICTIONARY-BOUNDARY-001" aria-labelledby="pm-title-1">
+    <h3 id="pm-title-1">Assistant Chat — Card 1</h3>
+    <dl>
+      <dt>Name:</dt><dd>Which installations may share your personal words</dd>
+      <dt>Question:</dt><dd>Should personal words be shared only between installations you explicitly link as belonging to you?</dd>
+      <dt>Why it came up:</dt><dd>Your dictionary decision chose same-user sharing but left its boundary open. Assistant Chat separates personal and Project dictionaries; Server pairing proves device trust, not that two devices belong to one person.</dd>
+      <dt>What you get:</dt><dd>You choose which of your installations may share personal words; using the same Server never automatically shares them.</dd>
+      <dt>What it costs:</dt><dd>Explicit linking needs setup and secure ownership checks. A new sign-in identity needs additional account design. Deferring keeps sharing disabled.</dd>
+      <dt>Options:</dt><dd><ul>
+        <li>Recommended — Explicitly link your installations, with secure ownership proof before sharing is enabled.</li>
+        <li>Define a Puppet Master user sign-in identity first and share within that identity.</li>
+        <li>Defer this boundary; sharing stays disabled.</li>
+      </ul></dd>
+      <dt>Recommendation:</dt><dd>Explicit linking preserves your same-user choice without treating a shared Server as one person or requiring a new account. This does not choose a synchronization protocol or enable sharing yet.</dd>
+      <dt>Answer:</dt><dd></dd>
+    </dl>
+    <p class="text-small">Sources: Plans/Decision_Log.md#DL-094; Plans/assistant-chat-design.md, “Passive Spelling And Dictionary Routing”; Plans/Server_System.md#SRV-002.</p>
+    <label class="form-label" for="pm-answer-1">Your response</label><select class="form-select" id="pm-answer-1" data-answer><option value="">Unanswered</option><option>Approve</option><option>Deny</option><option>Deny with changes</option><option>Ask</option></select>
+    <label class="form-label" for="pm-note-1">Your change or question</label><textarea class="form-control" id="pm-note-1" data-note rows="2"></textarea>
+  </section>
+
+  <section data-card="PCC-SERVER-ENVIRONMENT-001" aria-labelledby="pm-title-2" hidden>
+    <h3 id="pm-title-2">Server System — Card 2</h3>
+    <dl>
+      <dt>Name:</dt><dd>One Server connection across your environments</dd>
+      <dt>Question:</dt><dd>Should you connect once to a Server and use its permitted execution environments through that session, with each environment showing its own availability?</dd>
+      <dt>Why it came up:</dt><dd>Server System defines one connection and reconnect story per Client–Server relation. Shared Integration Runtime separately manages each environment's connection, but the owners leave the relationship between them undefined.</dd>
+      <dt>What you get:</dt><dd>One Server login/session, while an individual environment can be offline or reconnecting without pretending the others are unavailable or online.</dd>
+      <dt>What it costs:</dt><dd>One session needs an exact, permission-checked connection to each environment. Separate sessions need more connection controls and change today's Server login/reconnect behavior.</dd>
+      <dt>Options:</dt><dd><ul>
+        <li>Recommended — One Server session, with separately checked access and availability for each environment.</li>
+        <li>Separate connections and sessions for each environment, even on the same Server.</li>
+        <li>Defer this connection-scope choice.</li>
+      </ul></dd>
+      <dt>Recommendation:</dt><dd>One Server session best preserves the existing connection command. Connecting grants no environment access by itself; existing permissions and identities remain distinct, and no second connection manager is added.</dd>
+      <dt>Answer:</dt><dd></dd>
+    </dl>
+    <p class="text-small">Sources: Plans/Server_System.md §3.2 and SRV-005; Plans/Shared_Integration_Runtime.md §5 and SIR-004; reviewed client-server-environment-01 proposal.</p>
+    <label class="form-label" for="pm-answer-2">Your response</label><select class="form-select" id="pm-answer-2" data-answer><option value="">Unanswered</option><option>Approve</option><option>Deny</option><option>Deny with changes</option><option>Ask</option></select>
+    <label class="form-label" for="pm-note-2">Your change or question</label><textarea class="form-control" id="pm-note-2" data-note rows="2"></textarea>
+  </section>
+
+  <section data-card="PCC-SCM-CLOSURE-AUTH-001" aria-labelledby="pm-title-3" hidden>
+    <h3 id="pm-title-3">Source Control — Card 3</h3>
+    <dl>
+      <dt>Name:</dt><dd>Finish the remaining Source Control specification connections</dd>
+      <dt>Question:</dt><dd>May I complete the remaining six actions' request-to-result connections and run up to two bounded review cycles without reopening their approved core behavior?</dd>
+      <dt>Why it came up:</dt><dd>Source Control still needs complete connections between the original request, the actual result, and the calling interface. The prior targeted repair passed its tests but explicitly capped further work; it did not complete these connections.</dd>
+      <dt>What you get:</dt><dd>The remaining specification connections and tests can be finished and independently checked, rather than counted as complete from narrower tests.</dd>
+      <dt>What it costs:</dt><dd>Approval adds contract work and at most two review cycles. Keeping the cap leaves this part of packet closure unfinished. Unresolved findings after the cap return to you; they do not start another silent loop.</dd>
+      <dt>Options:</dt><dd><ul>
+        <li>Recommended — Finish the missing connections with up to two review cycles, preserving approved behavior.</li>
+        <li>Keep the existing cap and leave these connections explicitly unresolved.</li>
+      </ul></dd>
+      <dt>Recommendation:</dt><dd>Approve the bounded follow-up. It completes existing specification work; it does not authorize a new feature, native implementation, governance reseal, or changes to reviewed core semantics.</dd>
+      <dt>Answer:</dt><dd></dd>
+    </dl>
+    <p class="text-small">Sources: Plans/Source_Control_System.md#SCS-003; scm-selected-operands-20260925-LN2w1A/ADDITIONAL-CYCLE-HANDOFF.md and ADDITIONAL-CYCLE-INDEPENDENT-REVIEW.md; reports/packet-canon-closure-20260924/decisions-and-handoff.md.</p>
+    <label class="form-label" for="pm-answer-3">Your response</label><select class="form-select" id="pm-answer-3" data-answer><option value="">Unanswered</option><option>Approve</option><option>Deny</option><option>Deny with changes</option><option>Ask</option></select>
+    <label class="form-label" for="pm-note-3">Your change or question</label><textarea class="form-control" id="pm-note-3" data-note rows="2"></textarea>
+  </section>
+
+  <hr>
+  <h3>Your answers, ready to paste</h3>
+  <textarea class="form-control" id="pm-answer-summary" rows="5" readonly aria-label="Answers ready to paste">Card 1 (PCC-DICTIONARY-BOUNDARY-001):
+Card 2 (PCC-SERVER-ENVIRONMENT-001):
+Card 3 (PCC-SCM-CLOSURE-AUTH-001):</textarea>
+  <button class="btn btn-primary" type="button" id="pm-send-answers">Send selected answers to chat</button>
+  <p id="pm-answer-status" aria-live="polite">Unanswered. Only an explicitly sent chat response counts as an answer.</p>
+  <p class="text-small">Frozen Markdown SHA-256: 0e2cee08dfdba5c798b63ecf9cd1b51cf3c339c5657389c88648c03eddd39a38</p>
+</div>
+<script>
+(() => {
+  const root = document.getElementById('pm-boundary-cards-20260925');
+  const cards = Array.from(root.querySelectorAll('[data-card]'));
+  const hash = '0e2cee08dfdba5c798b63ecf9cd1b51cf3c339c5657389c88648c03eddd39a38';
+  const summary = root.querySelector('#pm-answer-summary');
+  const status = root.querySelector('#pm-answer-status');
+  let index = 0, showAll = false;
+  function rows() {
+    return cards.map((card, i) => ({id: card.dataset.card, index: i + 1,
+      answer: card.querySelector('[data-answer]').value,
+      note: card.querySelector('[data-note]').value}));
+  }
+  function line(row) {
+    return 'Card ' + row.index + ' (' + row.id + '): ' + row.answer +
+      (row.note ? ' — ' + row.note : '');
+  }
+  function render() {
+    cards.forEach((card, i) => { card.hidden = !showAll && i !== index; });
+    root.querySelector('#pm-card-position').textContent = showAll ? 'All 3 cards' : 'Card ' + (index + 1) + ' of 3';
+    root.querySelector('[data-nav="prev"]').disabled = showAll || index === 0;
+    root.querySelector('[data-nav="next"]').disabled = showAll || index === cards.length - 1;
+    root.querySelector('#pm-show-all').textContent = showAll ? 'One at a time' : 'Show all';
+    summary.value = rows().map(line).join('\n');
+  }
+  function saveDraft() {
+    const snapshot = {version: 1, hash, index, showAll, rows: rows()};
+    if (window.openai && window.openai.setWidgetState) {
+      window.openai.setWidgetState({modelContent: {status: 'unsubmitted draft', cardFileSha256: hash}, privateContent: snapshot}).catch(() => {});
+    }
+  }
+  function restore(state) {
+    const saved = state && state.privateContent;
+    if (!saved || saved.version !== 1 || saved.hash !== hash || !Array.isArray(saved.rows)) return;
+    index = Math.min(2, Math.max(0, Number(saved.index) || 0));
+    showAll = saved.showAll === true;
+    cards.forEach(card => {
+      const row = saved.rows.find(item => item.id === card.dataset.card);
+      if (!row) return;
+      card.querySelector('[data-answer]').value = ['', 'Approve', 'Deny', 'Deny with changes', 'Ask'].includes(row.answer) ? row.answer : '';
+      card.querySelector('[data-note]').value = typeof row.note === 'string' ? row.note : '';
+    });
+    render();
+  }
+  root.querySelector('[data-nav="prev"]').addEventListener('click', () => { index = Math.max(0, index - 1); render(); saveDraft(); });
+  root.querySelector('[data-nav="next"]').addEventListener('click', () => { index = Math.min(2, index + 1); render(); saveDraft(); });
+  root.querySelector('#pm-show-all').addEventListener('click', () => { showAll = !showAll; render(); saveDraft(); });
+  root.querySelectorAll('[data-answer], [data-note]').forEach(control => control.addEventListener('input', () => {
+    render(); saveDraft(); status.textContent = 'Draft only. Nothing has been submitted.';
+  }));
+  root.querySelector('#pm-send-answers').addEventListener('click', async () => {
+    const selected = rows().filter(row => row.answer);
+    if (!selected.length) { status.textContent = 'Choose a response before sending.'; return; }
+    if (selected.some(row => (row.answer === 'Deny with changes' || row.answer === 'Ask') && !row.note.trim())) {
+      status.textContent = 'Include your change or question for each Deny with changes or Ask response.'; return;
+    }
+    if (!window.openai || !window.openai.sendFollowUpMessage) {
+      status.textContent = 'Copy the answer text above into chat. No answer has been sent.'; return;
+    }
+    try {
+      await window.openai.sendFollowUpMessage({title: 'Send decision-card answers', prompt:
+        'I am submitting these decision-card answers for remaining-boundary-cards-20260925.md, SHA-256 ' + hash + ':\n' + selected.map(line).join('\n')});
+      status.textContent = 'Send requested. The explicit response posted in chat is the answer record; unsent selections remain drafts.';
+    } catch (_) { status.textContent = 'Nothing confirmed sent. Copy the answer text into chat if needed.'; }
+  });
+  window.addEventListener('openai:set_globals', event => {
+    if (event.detail && event.detail.globals && event.detail.globals.widgetState) restore(event.detail.globals.widgetState);
+  });
+  restore(window.openai && window.openai.widgetState);
+  render();
+})();
+</script>
