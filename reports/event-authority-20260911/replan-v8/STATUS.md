@@ -55,4 +55,4 @@ The 2026-09-25 landing record names the `Goal_Runtime_System.md` member and note
 
 ## Next
 
-A1 (install v8 with the Stop route, through a new canonical-draft package) is cut from `origin/main` after A0's review. Its authority to start is this thread's charter, Jared's decision of 2026-09-24 to run Group A. DL-080 records only that the work is needed. The three "decide first" choices (P-09, P-10, P-11) are settled in the canonical-draft package and its review.
+A1 (install v8 with the Stop route, through a new canonical-draft package) is cut from `origin/main` after A0's review. Its authority to start is Jared's go of 2026-09-24 for Group A, given in this thread's charter and not yet recorded in the repository; the plan's Part 2 status requires that go before package work starts. DL-080 records only that the work is needed. The three "decide first" choices (P-09, P-10, P-11) are settled in the canonical-draft package and its review.
