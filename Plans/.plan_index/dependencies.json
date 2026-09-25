@@ -6545,6 +6545,7 @@
     "SSYS-020",
     "CS-069",
     "BRS-019",
+    "BRS-030",
     "C-043",
     "C-044",
     "ATS-044",
@@ -13546,6 +13547,36 @@
       "edge_type": "depends_on",
       "from": "BRS-029",
       "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-030",
+      "to": "BRS-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-030",
+      "to": "BRS-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-030",
+      "to": "BRS-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-030",
+      "to": "BRS-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-030",
+      "to": "BRS-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-030",
+      "to": "SP-251"
     },
     {
       "edge_type": "depends_on",
@@ -98743,7 +98774,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-25T05:06:29Z",
+  "generated_at_utc": "2026-09-25T05:07:01Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -112185,8 +112216,8 @@
       "source_location": {
         "heading": "BRS-009 - Shared Primitives, Migration, And DRY Boundary",
         "heading_level": 3,
-        "heading_line": 418,
-        "line": 420,
+        "heading_line": 419,
+        "line": 421,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112202,8 +112233,8 @@
       "source_location": {
         "heading": "BRS-010 - Backup Restore Acceptance And Proof Boundary",
         "heading_level": 3,
-        "heading_line": 467,
-        "line": 469,
+        "heading_line": 468,
+        "line": 470,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112219,8 +112250,8 @@
       "source_location": {
         "heading": "BRS-011 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 961,
-        "line": 963,
+        "heading_line": 962,
+        "line": 964,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112236,8 +112267,8 @@
       "source_location": {
         "heading": "BRS-012 - RecoverySet, Recovery Kit, Key Slots, And Human Custody",
         "heading_level": 3,
-        "heading_line": 507,
-        "line": 509,
+        "heading_line": 508,
+        "line": 510,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112253,8 +112284,8 @@
       "source_location": {
         "heading": "BRS-013 - Eleven Destination Families And Shared Authentication Consumption",
         "heading_level": 3,
-        "heading_line": 547,
-        "line": 549,
+        "heading_line": 548,
+        "line": 550,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112270,8 +112301,8 @@
       "source_location": {
         "heading": "BRS-014 - Snapshot Browse, Retrieve, Compare, Export, And Archive Delivery",
         "heading_level": 3,
-        "heading_line": 588,
-        "line": 590,
+        "heading_line": 589,
+        "line": 591,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112287,8 +112318,8 @@
       "source_location": {
         "heading": "BRS-015 - Scheduler, Retention, Prune, Verification, And Drill Policy",
         "heading_level": 3,
-        "heading_line": 635,
-        "line": 637,
+        "heading_line": 636,
+        "line": 638,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112304,8 +112335,8 @@
       "source_location": {
         "heading": "BRS-016 - Serialized Supersession, Fresh Recovery, And Consumer Truth",
         "heading_level": 3,
-        "heading_line": 694,
-        "line": 696,
+        "heading_line": 695,
+        "line": 697,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112321,8 +112352,8 @@
       "source_location": {
         "heading": "BRS-017 - Coordinator, Capture Barrier, Independent Repositories, And Durable Authority",
         "heading_level": 3,
-        "heading_line": 1012,
-        "line": 1014,
+        "heading_line": 1013,
+        "line": 1015,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112338,8 +112369,8 @@
       "source_location": {
         "heading": "BRS-018 - Destination, Headless Authentication, Recovery Key, And Human Delivery Safety",
         "heading_level": 3,
-        "heading_line": 1055,
-        "line": 1057,
+        "heading_line": 1056,
+        "line": 1058,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112355,8 +112386,8 @@
       "source_location": {
         "heading": "BRS-019 - Locate, Browse, Restore, Retention, And Durable Operational Safety",
         "heading_level": 3,
-        "heading_line": 1099,
-        "line": 1101,
+        "heading_line": 1100,
+        "line": 1102,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112372,8 +112403,8 @@
       "source_location": {
         "heading": "Working Notebook Backup Participation Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 1152,
-        "line": 1156,
+        "heading_line": 1153,
+        "line": 1157,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112389,8 +112420,8 @@
       "source_location": {
         "heading": "BRS-021 - Jujutsu History Index Rebuild Verification Policy",
         "heading_level": 3,
-        "heading_line": 1238,
-        "line": 1240,
+        "heading_line": 1239,
+        "line": 1241,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112406,8 +112437,8 @@
       "source_location": {
         "heading": "BRS-022 - Separately Authorized Missing Repository Data Completion",
         "heading_level": 3,
-        "heading_line": 1293,
-        "line": 1295,
+        "heading_line": 1294,
+        "line": 1296,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112423,8 +112454,8 @@
       "source_location": {
         "heading": "BRS-023 - Phase-Local Restore Evidence And Bound Emergency Consent",
         "heading_level": 3,
-        "heading_line": 1192,
-        "line": 1194,
+        "heading_line": 1193,
+        "line": 1195,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112440,8 +112471,8 @@
       "source_location": {
         "heading": "Retention and evidence limits",
         "heading_level": 4,
-        "heading_line": 1385,
-        "line": 1397,
+        "heading_line": 1386,
+        "line": 1398,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112457,8 +112488,8 @@
       "source_location": {
         "heading": "Event and native qualification boundary",
         "heading_level": 4,
-        "heading_line": 1481,
-        "line": 1487,
+        "heading_line": 1482,
+        "line": 1488,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112474,8 +112505,8 @@
       "source_location": {
         "heading": "BRS-026 - Coherent original Workflow Goal cancellation backup and restore",
         "heading_level": 3,
-        "heading_line": 1545,
-        "line": 1566,
+        "heading_line": 1546,
+        "line": 1567,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112491,8 +112522,8 @@
       "source_location": {
         "heading": "BRS-027 - Source-coupled started projection recovery and disclosure",
         "heading_level": 3,
-        "heading_line": 1633,
-        "line": 1647,
+        "heading_line": 1634,
+        "line": 1648,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112508,8 +112539,8 @@
       "source_location": {
         "heading": "BRS-028 - Whole original cancellation source retention and combined projection recovery",
         "heading_level": 3,
-        "heading_line": 1690,
-        "line": 1706,
+        "heading_line": 1691,
+        "line": 1707,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112525,12 +112556,29 @@
       "source_location": {
         "heading": "BRS-029 — Mandatory original phase custody; optional coherent derived generation, source lifetime and restore ordering (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 1753,
-        "line": 1755,
+        "heading_line": 1754,
+        "line": 1756,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "four_backup_action_owner_protocol",
+      "gui_related": false,
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "plan_unit_id": "BRS-030",
+      "reasoning_tier": "high",
+      "risk_class": "substituted_backup_operation_or_false_result_custody",
+      "source_location": {
+        "heading": "BRS-030 - Four-Action Original Operation And Owner Result Protocol",
+        "heading_level": 3,
+        "heading_line": 1823,
+        "line": 1825,
+        "path": "Plans/Backup_Restore_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
     },
     {
       "context_scope": "plan_standardization",
@@ -213179,10 +213227,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15702,
+    "depends_on_edge_count": 15708,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18401,
-    "node_count": 6731,
+    "edge_count": 18407,
+    "node_count": 6732,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0

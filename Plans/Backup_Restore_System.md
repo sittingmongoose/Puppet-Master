@@ -386,7 +386,8 @@ canonical_text: >-
   authority and resolved operation/result evidence. Historical requests lacking these operands remain readable;
   reading, replay or migration cannot invent a patch, verification level, snapshot set, drill target/coverage or
   comparison revision, or admit such a historical request as a current effect. The other 37 command contracts
-  and the exact 41 command IDs remain unchanged by this input-depth requirement.
+  and the exact 41 command IDs remain unchanged by this input-depth requirement. BRS-030 owns the corresponding
+  original-operation, source resolution, result custody and replay protocol; an input schema alone does not satisfy it.
 gui_related: true
 gui_classification_reason: This unit defines all visible backup/restore actions, compact cards, advanced manager fields, progress, receipts, and disabled states.
 depends_on: [BRS-004, BRS-005, BRS-006, BRS-007]
@@ -1818,3 +1819,97 @@ gui_classification_reason: Original source, native authority/custody, schema, st
 ```
 
 ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-029, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
+
+### BRS-030 - Four-Action Original Operation And Owner Result Protocol
+
+```yaml
+plan_unit_id: BRS-030
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: >-
+  cmd.backup.destination.update, cmd.backup.verify, cmd.backup.test_restore and cmd.backup.file.compare bind the
+  original admitted domain input to actual owner-resolved sources, effects and outcomes under the protocol below.
+  BackupCoordinator owns destination update and verification;
+  RestoreCoordinator owns disposable drill target admission and lifecycle; Backup browse/compare consumes real
+  File or Source Control target resolution without creating another command handler. Separately typed owner
+  metadata, BackupVerificationReceipt and BackupBrowseOperation retain only admitted redacted operation facts,
+  never the command transport.
+  Historical read compatibility, schema validity, matching references and caller-supplied facts are not current
+  admission, authentic source custody or execution proof. Companions and central bindings must satisfy this
+  protocol before enablement; absent materialization remains a specification prerequisite, not a completed feature.
+gui_related: false
+gui_classification_reason: Defines backend operation identity, source resolution, result custody and replay without changing visual presentation.
+depends_on: [BRS-004, BRS-007, BRS-014, BRS-015, BRS-017, SP-251]
+unblocks: []
+acceptance_criteria:
+  - All four results join the original admitted operation input and real owner output; swapped instances, operands, sources or evidence fail the join.
+  - Destination update preserves identity and unedited configuration, rejects stale concurrent updates, and never preserves an inapplicable test or readiness claim.
+  - Verification accounts for every selected snapshot exactly once, including unresolved or failed members, and distinguishes requested from achieved scope.
+  - A drill uses a versioned BackupVerificationReceipt branch, not a fabricated live RestoreReceipt or a fifth RestoreRun mode; requested coverage never waives mandatory source closure.
+  - Compare preserves both actual operands and supports File-owned targets independently of Git or Jujutsu; it cannot perform checkout, restore or activation.
+  - Replay uses genuine retained owner facts with current disclosure permission; missing evidence never causes implicit reexecution or fabricated completion.
+  - Transport remains nonpersisted, versioned domain records require explicit storage admission, and all native proof remains NOT_RUN.
+validation_surfaces: [Plans/backup_restore_system_contracts.schema.json, Plans/backup_restore_system_contract_fixtures.json, Plans/storage_value_registry.json, future joined-owner source and result validation]
+risk_class: substituted_backup_operation_or_false_result_custody
+reasoning_tier: high
+context_scope: four_backup_action_owner_protocol
+implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/backup_restore_system_contracts.schema.json, future BackupCoordinator and RestoreCoordinator]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false, runtime_enabled: false}
+source_lineage:
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json:ACT-089
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json:ACT-101
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json:ACT-102
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json:ACT-110
+preserved_exact_tokens: [cmd.backup.destination.update, cmd.backup.verify, cmd.backup.test_restore, cmd.backup.file.compare, BackupCoordinator, RestoreCoordinator, BackupVerificationReceipt, BackupBrowseOperation]
+negative_constraints: [Do not persist raw command transport., Do not authenticate an owner through caller facts or matching strings., Do not create a sixth receipt family or fifth restore mode., Do not enable an action from static validation.]
+owner_hints: [Plans/Backup_Restore_System.md, Plans/storage-plan.md, Plans/FileManager.md, Plans/Source_Control_System.md, Plans/FileSafe.md, Plans/Permissions_System.md]
+```
+
+#### Original operation and custody
+
+For `cmd.backup.destination.update`, `cmd.backup.verify`, `cmd.backup.test_restore` and `cmd.backup.file.compare`, the sole handler passes the admitted typed action input to its actual domain owner. That owner binds `operation_id`, original `command_id`, `command_instance_id`, `idempotency_key`, actor and permission context, expected currentness, source surface and return route to the exact selected action operands. The binding is immutable for that operation. Later focus, current checkout, latest snapshot, a replacement target or refreshed authority cannot rewrite what was requested or what actually happened.
+
+The owner compares the typed domain input, not a caller's assertion that two hashes or references match. Reusing an idempotency identity with different action operands is rejected. Objects compare by their typed fields, not JSON key order; snapshot selection is a duplicate-free set. An original command instance remains distinguishable from a later transport retry. Retrying disclosure under current read permission does not replace the original effect's actor, permission/currentness evidence or selected input. The actual owner independently resolves and validates its complete inputs and applicable permission, source, target and currentness fences before an effect and before releasing a result; any race must be fenced by that owner's existing concurrency mechanism. Late refusal records genuine prior effects and partial work, not a fictitious no-effect result.
+
+An accepted response identifies work, not completed verification or mutation. Existing ObservableWork correlation applies without changing its owner vocabulary. Completed, failed, cancelled, no-change and partial domain facts must come from the actual operation. Transport responses may be reconstructed from genuine retained owner facts after current disclosure checks; this is not reexecution. Missing original source or outcome evidence yields unavailable/unproved. A receipt list, test-only facts map or serialized `authorized`/`isolated`/`current` claim cannot authenticate an owner or authorize an effect.
+
+`scd.backup_restore.command_transport.v1` remains nonpersisted: request/result/error/availability transport is discarded at terminal or invalidation, and protected payloads expire earlier. Successor transport versions require explicit disposition coverage. Any restart/replay binding is a separately typed, versioned field in the appropriate destination metadata, BackupVerificationReceipt or BackupBrowseOperation, not a nested copy of the public command envelope. Retain only the nonsecret selected operands, original correlation/authority references and actual result facts needed by that domain record. Raw keys, protected submissions, absolute paths/private host locators, capture bodies and browser/auth material remain excluded. No new command-history archive or sixth receipt family is introduced.
+
+The exact versioned record kinds require explicit storage disposition and physical admission under SP-251 before dependent runtime persistence or enablement. The existing Backup durable disposition remains `physical_family_registration_pending`; this protocol does not register a physical writer. Existing Backup retention and authentic holds apply independently to each retained source. A retained reference neither extends another source lifetime nor reconstructs disposed evidence. Repository/snapshot/export bytes remain in external Backup custody, not ordinary command metadata.
+
+#### Destination update producer and result
+
+BackupCoordinator's destination owner retrieves the actual `backup_destination` for the selected Server/destination and checks the expected generation, editable field contract and referenced configuration/auth owners. It applies only the explicit patch under its concurrent-state fence. Its typed result binds the original operation, actual before identity/generation, requested patch, disposition and resulting identity/generation. The separately versioned destination metadata must bind its actual owner-applied result to that operation; a fresh transport result may consume that binding without persisting the transport body. If historical output is no longer retained, a newer current destination does not stand in for it.
+
+No-change is an explicit owner outcome, not a fabricated increment or test. Applied and no-change results preserve identity and all unedited configuration. Health, capabilities, test disposition and currentness are derived from the resulting effective configuration under BRS-004; old test proof survives only if its authentic scope remains applicable. Label-only edits need not force a test. Neither result grants credentials, reassigns repositories, deletes backend data or declares readiness from an old reference. Failure after an actual effect retains its real result/recovery facts and cannot be reported as a rejected pre-effect request.
+
+#### Snapshot resolution and verification producer
+
+BackupCoordinator resolves each selected `(repository_id, backup_destination_id, snapshot_id)` through its actual repository binding, committed destination attempt and commit evidence, originating BackupRun/BackupReceipt and immutable BackupManifest. The join must agree on the actual backup, manifest, capture set, RecoverySet, Server/Project boundary and source custody applicable to that repository. `repository_snapshot_refs` are resolved by their owner to that committed relationship; parsing a suffix or equating opaque strings does not establish membership. Selected path and capture-set claims must match the resolved manifest where applicable. Missing or incompatible source is a resolution failure, never a synthesized manifest.
+
+For `cmd.backup.verify`, the version-pinned BackupEngineAdapter performs the requested structural, sampled-data or full-data check against those resolved bytes. A versioned BackupVerificationReceipt binds the original operation and full selected set, repository/destination, and one outcome per selected snapshot. Each outcome records requested scope, actual achieved scope (or none), status, actual coverage/check evidence and resolved manifest/capture identity when resolution succeeded. Unresolved members retain their selected identity and failure reason with absent resolved evidence. They are not dropped, assigned a borrowed manifest or silently replaced by another snapshot. No unrequested member may inflate coverage. A selected-set pass requires every selected member to pass its requested level with genuine evidence; a weaker check, cancellation, not-run or missing member cannot produce that pass. Verification does not imply an isolated restore drill.
+
+#### Isolated drill target, lifecycle and result
+
+For `cmd.backup.test_restore`, RestoreCoordinator consumes BackupCoordinator's actual resolved snapshot and owns admission and lifecycle of the explicitly selected disposable target. Its internal typed target-admission output binds original operation and selection, actual target identity, Server/Host/Environment and applicable Project/path containment, owner generations/lease, permission and FileSafe decisions, and applicable cost/network/resource admission. The actual topology, FileSafe and Permissions owners supply these decisions. This output is not a transferable authorization token: current owner fences must hold before staging, native verification and cleanup. No focused Project, default path or caller isolation flag supplies the target.
+
+RestoreCoordinator stages only within that authorized disposable target, never activates a live Project and never executes untrusted restored hooks. It records attempted effects, interruption/failure, retained partial artifacts and the actual cleanup disposition. Cleanup cannot claim success without evidence or delete outside the admitted target; inability to clean up remains an explicit residual obligation. Restart reconciles genuine original operation and target custody before any continuation; missing custody does not authorize a replacement target or an automatic fresh drill.
+
+The isolated-drill branch of versioned BackupVerificationReceipt binds original operation input, selected and resolved snapshot/manifest, target admission, requested versus attempted/achieved family/path coverage, actual owner verification evidence, partial effects and cleanup disposition. A passed drill requires completed genuine isolated verification of requested coverage and every mandatory dependency; cleanup disposition remains separately truthful and an outstanding cleanup obligation cannot be presented as an entirely successful operation. Consume SCS-014 and JJI-008 native source-closure/verification evidence where applicable, including `backup_jj_restore_verification_receipt`, and BRS-021 rebuild/retained-operation proof. Narrow requested coverage cannot waive BRS-024 through BRS-029's coherent original-custody, lifetime and disclosure boundaries, nor start BRS-022 separately authorized completion. Requested coverage, verified bytes and required native closure remain distinct facts.
+
+This is a versioned branch of BackupVerificationReceipt, not a completed live RestoreReceipt. No fifth RestoreRun mode is added; the existing four modes and their mutation/activation semantics remain exact. Existing RestoreRun or RestorePreview records are consumed only when genuinely produced under their own contracts, never fabricated merely to satisfy a drill result shape.
+
+#### Compare operands and result
+
+For `cmd.backup.file.compare`, BackupCoordinator resolves the exact immutable snapshot/capture/path source above. The actual File owner resolves a selected file or editor-buffer identity/revision and authorized content; the Source Control/native owner resolves a selected repository target through its `repository_context` and native `git_revision` or `jujutsu_revision` contract when applicable. These are distinct target branches: an ordinary File target does not require fabricated SCM identity. Backup's `target_revision` remains opaque and is validated by the selected target owner, not reinterpreted as a universal Git revision grammar. Unsupported or stale target kinds fail explicitly rather than falling back to current focus or checkout.
+
+A versioned BackupBrowseOperation and its result bind the original operation, both actual resolved operand identities/content revisions, owner evidence, original topology, permission/FileSafe context and return route/focus. The bounded result identifies comparison evidence or the real failure; matching target strings alone cannot substitute for actual authorized operand content. Neither compare nor replay performs checkout, restore, activation or other Project mutation. Replaying an old comparison under current disclosure permission may describe that original comparison only; it cannot relabel old bytes or revisions as a new current comparison.
+
+#### Companion and enablement boundary
+
+These are owner requirements for the successor source/result schemas, joined-record checks and negative fixtures. Current materialization must cover original-operation mismatch, swapped repository/snapshot/manifest, missing selected outcomes, weaker achieved scope, stale destination proof, live/stale drill targets, missing native closure, interrupted cleanup, wrong File/SCM target, and replay after source loss. Static fixtures demonstrate those predicates over supplied records only, not authentic native issuance, real bytes, isolation, concurrency, crash/restart or storage execution; all such proof remains NOT_RUN.
+
+The current admission union must route exactly these four operand-bearing requests to their complete successor contracts while preserving historical v1 read compatibility and the other 37 current commands. Decoder membership alone is not that union. Until exact companions, version dispositions, central request/result bindings and actual owner/storage admission exist, the affected handlers remain unavailable. No new command ID, sole handler, EventRecord, readiness unlock, WorkNode, NodeSeed or governance binding is created here.
+
+ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-030, ContractName:Plans/Backup_Restore_System.md#BRS-008, ContractName:Plans/storage-plan.md#SP-251, ContractName:Plans/Source_Control_System.md#SCS-014, ContractName:Plans/Jujutsu_Integration.md#JJI-008

@@ -163,7 +163,10 @@ canon and forbids treating this review record as a seal or readiness unlock.
 - Backup: currentness-reviewed owner prose for ACT-089/101/102/110 is repaired.
   Additive typed input shapes and their regression fixtures now follow that
   repair; see `backup-four-operands-owner-repair.md` and `backup-input-shapes.md`.
-  Current admission, result companions and actual owner joins remain open.
+  BRS-030 now specifies the actual source/result producer responsibilities and
+  nonpersisted-transport versus domain-custody boundary; see
+  `backup-four-action-owner-protocol.md`. Current admission, result companions
+  and executable actual owner joins remain open.
   The four findings are not closed.
 - Home/widgets: ordinary return behavior already exists in production wiring.
   Only the two Tour-only summary strings needed reconciliation; see
@@ -180,9 +183,10 @@ canon and forbids treating this review record as a seal or readiness unlock.
   `follow-up-owner-prerequisites.md`. BRS-004's configuration-versus-proof
   correction is separately verified; no four-action closure follows from it.
 
-No follow-up above touches the frozen assistant-chat topics. The latest paired
-index validation exposes 20 unchanged legacy decision errors plus DL-076,
-SMPFS-170 and SP-319 absent relative to its inspected newer main; all 23 complete
-failure rows are unchanged by the BRS-004 correction. These are reported, not
-repaired or waived here. Branch
+No follow-up above touches the frozen assistant-chat topics. The BRS-004 paired
+index validation retained the same 23 failures. The later BRS-030 check reports
+30: the same 20 legacy decision errors and missing DL-076/SMPFS-170/SP-319, plus
+exactly DL-077 through DL-083 from advancing main in the unchanged Decision Log.
+The full delta is recorded in `backup-four-action-owner-protocol.md`; it is not
+an index pass or a landing waiver. Branch
 pushes are not main landings, and the full packet goal remains open.
