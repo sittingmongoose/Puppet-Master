@@ -802,8 +802,9 @@ status: accepted
 owner_doc: Plans/Remote_Access_System.md
 canonical_text: >-
   Connecting this Client to an existing Puppet Master selects the route before discovery, Server identification, and
-  pairing. Before Review, Local or VPN may perform owner-bounded read-only discovery across LAN interfaces and, when
-  explicitly included, already-enabled VPN interfaces; hosted Tailscale may reuse current component/session/tailnet and
+  pairing. Before Review, Local or VPN may perform owner-bounded read-only discovery across LAN interfaces and any VPN
+  this device is already connected to, with no VPN switch, because the person turns a VPN on or off on their own
+  device; hosted Tailscale may reuse current component/session/tailnet and
   peer projections without signing in; every route may consume cached known-endpoint data. Headscale control URL,
   reverse-proxy HTTPS URL, Remote Link/QR/short code, and manual identity/address entry remain local draft inputs in this
   phase. Review/Apply is the sole execution boundary: protected sign-in, Headscale enrollment, endpoint add/test,
@@ -816,7 +817,7 @@ depends_on: [RAS-001, RAS-003, RAS-005, RAS-006, SRV-004]
 unblocks: [PWIZ-024]
 acceptance_criteria:
   - The connect-existing chooser separates `Local or VPN` from the three remote route families and never places a generic Find one I already use step before route selection; Tailscale then selects hosted Tailscale or Headscale as its control-plane variant.
-  - After route selection and before Review, Local or VPN may run owner-bounded read-only LAN discovery; `Include connected VPN networks` only adds already-enabled VPN interfaces, never asks for a private address by default, installs/configures no VPN, and reveals manual Server name/address only when safe discovery cannot find the intended target.
+  - After route selection and before Review, Local or VPN may run owner-bounded read-only LAN discovery; it also covers any VPN this device is already connected to, without a switch, and the line `You can connect through a VPN too` says so; it never asks for a private address by default, installs/configures no VPN, and reveals manual Server name/address only when safe discovery cannot find the intended target.
   - Hosted Tailscale first consumes cached/current component, session, tailnet, and peer projections; a usable active tailnet needs no sign-in and may expose read-only candidate endpoints before Review, while a missing/expired session offers exactly one built-in protected sign-in only after Review/Apply. `Use existing connection` and `Use official page` are not competing setup choices.
   - Headscale records the normalized HTTPS control URL and may consume cached known-endpoint projections before Review; owner-managed approval/enrollment, authenticated discovery, and Server identity verification begin only after Review/Apply, and Headscale never asks for hosted-Tailscale account sign-in.
   - Existing-client Reverse proxy asks only for the existing protected HTTPS Puppet Master URL and the chosen pairing method; proxy kind, hosting, certificate, Caddy, NGINX, Traefik, and NGINX Proxy Manager generation belong only to a new-Server/configuration branch.
@@ -830,12 +831,13 @@ reasoning_tier: high
 context_scope: onboarding_connect_existing_remote_access
 implementation_surfaces: [Plans/Remote_Access_System.md, future Remote Access route service, future Product Onboarding owner adapter]
 node_compile_hint: {mode: remote_access_onboarding_projection_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [user-correction:2026-09-01-connect-existing-route-semantics, Plans/product_onboarding_contracts.schema.json, Concepts/pm7-tools/onboarding_cinematic_source.py]
-preserved_exact_tokens: [Local or VPN, Include connected VPN networks, Tailscale, Headscale, Reverse proxy, Puppet Master Remote Link, approval, code, QR]
+source_lineage: [user-correction:2026-09-01-connect-existing-route-semantics, user-instruction:2026-09-25-no-vpn-switch, Plans/product_onboarding_contracts.schema.json, Concepts/pm7-tools/onboarding_cinematic_source.py]
+preserved_exact_tokens: [Local or VPN, You can connect through a VPN too, Tailscale, Headscale, Reverse proxy, Puppet Master Remote Link, approval, code, QR]
 negative_constraints:
   - Do not discover before route selection or mutate before Review confirmation.
   - Do not hide authentication, enrollment, endpoint mutation/testing, identity acceptance, pairing, trust, or network configuration inside pre-Review discovery/projection.
   - Do not require a private VPN address when local-style discovery works.
+  - Do not show a switch for VPN discovery; turning a VPN on or off belongs to the person's own device.
   - Do not show redundant Tailscale sign-in, existing-connection, or official-page choices.
   - Do not generate or administer a reverse proxy for an existing-client connection.
   - Do not hide Remote Link or add a recognition checkbox.

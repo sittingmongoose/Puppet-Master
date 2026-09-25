@@ -14596,7 +14596,8 @@
                 "type": "boolean"
               },
               "include_vpn_networks": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Recorded by discovery: true when a VPN this device was already connected to was included in Local or VPN discovery. It is never a visible switch; the person turns a VPN on or off on their own device."
               },
               "connection_pairing": {
                 "enum": [
@@ -15550,7 +15551,7 @@
               "history_backend=git|jujutsu is a local Safe History choice independent from online_mode and forge; Git and Jujutsu never require an account",
               "an online copy binds both forge_account_ref and repository_ref; already_connected means reuse that explicit account and repository binding and is never a no-op",
               "connect_existing chooses a route first, then the owner discovers or accepts the selected server_ref and performs connection_pairing=approval|code|qr; server_trust_confirmed is compatibility state only and never creates a visible recognition-checkbox gate",
-              "local_or_vpn uses LAN discovery and optionally scans already-enabled VPN interfaces when include_vpn_networks=true; it never requires a private endpoint or configures a VPN",
+              "local_or_vpn discovers on the LAN and on any VPN this device is already connected to, with no VPN switch; include_vpn_networks=true records that such a VPN was included, and discovery never requires a private endpoint or configures a VPN",
               "hosted Tailscale checks current owner state before at most one protected sign-in; live signed-in and peer-discovery status remains an owner projection rather than a durable setup choice",
               "Headscale consumes headscale_url before owner-managed enrollment and subsequent Server discovery; it never uses hosted-Tailscale account sign-in",
               "connect_existing reverse_proxy consumes only the existing HTTPS proxy_hostname plus Server pairing; null proxy_kind, proxy_hosting, and proxy_tls prove that it does not configure Caddy, NGINX, Traefik, certificates, or another proxy",
