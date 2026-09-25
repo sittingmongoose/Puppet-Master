@@ -3170,7 +3170,7 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/orchestrator-subagent-integration.md#OSI-438, ContractName:Plans/storage-plan.md#SP-320, ContractName:Plans/Contracts_V0.md#CV-310, SchemaID:pm.event.v0
+ContractRef: ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/orchestrator-subagent-integration.md#OSI-438, ContractName:Plans/storage-plan.md#SP-320, ContractName:Plans/Contracts_V0.md#CV-310, ContractName:Plans/coordination_event_payloads.schema.json, SchemaID:pm.event.v0
 
 ### Dynamic context shrinking and effective-context projection
 
