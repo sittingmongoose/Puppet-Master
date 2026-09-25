@@ -14,14 +14,14 @@ The thread runs in a cloud session, which cannot reach the NAS or the shared che
 
 **Review.** Pending: one blind form-driven review, capped at two cycles.
 
-**Open questions.** Q-01 to Q-12 in the report. On 2026-09-25 Jared routed five process questions to the PM Low cost/complexity process thread, which has authority on them:
+**Open questions.** Q-01 to Q-12 in the report. On 2026-09-25 Jared routed (by instruction to this thread, not recorded in the repository) five process questions to the PM Low cost/complexity process thread, which has authority on them:
 - Q-02: DL-078 and row revisions.
 - Q-03: DL-077 records for families among the original 37.
 - Q-09: what "B01" is.
 - Q-12: may A1 install with D06 unavailable?
 - Where A1's canonical-draft package lives: proposed as a branch of PuppetMaster-Packages, which needs push access.
 
-That thread runs on the VM, and this cloud session cannot message it. Jared relays the questions. The answers come back as `reports/event-authority-20260911/replan-v8/process-answers-20260925.md` on the branch `plans/replan-v8-process-answers-20260925`, or through Jared. Until then this thread follows the recommendations in the questions and lands nothing that depends on them.
+That thread runs on the VM, and this cloud session cannot message it. Jared relays the questions. The answers come back as `reports/event-authority-20260911/replan-v8/process-answers-20260925.md` on the branch `plans/replan-v8-process-answers-20260925`, or through Jared. Until then this thread follows the recommendations in the questions as relayed (not in the repository) and lands nothing that depends on them.
 
 ## Landing A0 (on the VM)
 
