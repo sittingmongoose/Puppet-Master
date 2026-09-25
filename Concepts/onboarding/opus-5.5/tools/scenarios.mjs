@@ -526,6 +526,63 @@ def('x5', 'fresh', 'The look can be changed at any point from beside the sound b
   A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding .o55-lookmenu') && window.O55.S.open), 'Escape closes the menu, not the window');
 });
 
+/* ---------------------------------------------------------------------------------------------- logic crawl findings */
+def('lc1', 'fresh', 'C24: switching the Connect route back does not keep a Server found through the old route', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
+  await d.act('more'); await d.act('route', 'reverse_proxy'); await d.type('proxy', 'https://pm.example.net'); await d.settle(500);
+  A.eq(await d.state(() => window.O55.S.sess.drafts.connect.server_ref), 'pm:home', 'the web address found Home NAS');
+  await d.act('route', 'local_or_vpn'); await d.settle(500);
+  const dr = await d.state(() => ({ ref: window.O55.S.sess.drafts.connect.server_ref, proxy: window.O55.S.sess.drafts.connect.proxy_hostname, link: window.O55.S.sess.drafts.connect.remote_endpoint }));
+  A.eq(JSON.stringify(dr), JSON.stringify({ ref: '', proxy: '', link: '' }), 'back on this network nothing is chosen and the web address is gone');
+  A.ok((await d.primaryInfo()).disabled, 'Continue waits for a choice from the list');
+});
+def('lc2', 'fresh', 'An abandoned folder does not follow a new Project: no kept place, no borrowed name', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'existing'); await d.act('sub', 'folder'); await d.primary();
+  await d.act('pick', '~/Documents/recipe-app'); await d.primary(); A.eq(await d.screen(), 'name', 'the folder named the Project');
+  await d.back(); await d.back(); A.eq(await d.screen(), 'begin', 'back at the beginning');
+  await d.act('pick', 'new'); await d.primary();
+  const dr = await d.draft('main');
+  A.eq(JSON.stringify([dr.project_mode, dr.local_location_mode, dr.local_location, dr.project_name]), JSON.stringify(['new', 'automatic', '', '']), 'a new Project starts clean');
+  A.ok(await d.state(() => window.O55.S.sess.folderInfo == null), "the folder's history and online copy are forgotten");
+});
+def('lc3', 'fresh', 'A backup place suggested by a restore leaves with the restore', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary(); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys', 5000); await d.primary();
+  await d.type('user', 'jared'); await d.type('pw', 'correct horse'); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:new']||{}).state === 'done'", 'key', 9000); await d.primary();
+  A.eq(await d.screen(), 'r-pick', 'backups'); await d.page.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pick"]'); await d.settle(500); await d.primary();
+  A.eq(await d.state(() => window.O55.S.sess.backup.dest), 'nas', 'the restore suggested Home NAS for backups');
+  for (let i = 0; i < 12 && (await d.screen()) !== 'begin'; i++) await d.back();
+  A.eq(await d.screen(), 'begin', 'back at the beginning'); await d.act('pick', 'new'); await d.primary();
+  const dr = await d.draft('main');
+  A.eq(JSON.stringify([await d.state(() => window.O55.S.sess.backup.dest), dr.backup_source_ref]), JSON.stringify([null, '']), 'no backup place and no backup source');
+});
+def('lc4', 'keyWorks', "On a Server the NAS key is the Server's own, not this computer's", async (d, A) => {
+  await toNewServer(d); A.eq(await d.screen(), 'begin', 'Project chapter'); await d.primary();
+  await d.type('name', 'Book club website'); await d.act('storage', 'network_location'); A.eq(await d.screen(), 'nas-find', 'a network drive');
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary(); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys', 5000);
+  A.ok(await d.state(() => !document.querySelector('.o55-card[data-arg="k-ed"]') && !!document.querySelector('.o55-card.o55-on[data-arg="new"]')), "this laptop's keys are not offered; a key is made on the Server");
+  A.ok(!/this computer/.test(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-lead').textContent)), 'the lead names the Server');
+});
+def('lc5', 'fresh', 'A new Server is not offered a name already used on the network', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary(); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:new\"]')", 'found truenas.local', 6000); await d.act('pick', 'pm:new'); await d.primary();
+  const name = await d.state(() => (document.querySelector('#pm-o55-onboarding [data-o55-bind="sname"], #pm-o55-onboarding [data-o55-bind="name"]') || {}).value || '');
+  A.ok(name && name.toLowerCase() !== 'home nas', 'the suggested name is not Home NAS (' + name + ')');
+});
+def('lc6', 'fresh', 'Bringing old data onto a new Server asks how to reach it away from home, and sets that up', async (d, A) => {
+  await toNewServer(d); await d.back(); A.eq(await d.screen(), 's-ready', 'the Server is ready');
+  await d.act('restore'); await d.act('source', 'kit'); await d.primary(); await d.type('phrase', 'river candle orbit maple quiet lantern'); await d.primary();
+  await d.page.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pick"]'); await d.settle(400); await d.primary();
+  A.eq(await d.screen(), 'away', 'asked about away from home first');
+  await d.act('pick', 'anywhere'); await d.primary(); A.eq(await d.screen(), 'r-preview', 'then the preview');
+  await d.primary(); await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('restore:') && v.state === 'done')", 'restored', 12000);
+  A.ok(await d.state(() => Object.entries(window.O55.S.sess.ops).some(([k, v]) => k.startsWith('restore:') && v.phases.some((p) => p.key === 'remote'))), 'the access is set up as part of the restore');
+});
+
 /* ---------------------------------------------------------------------------------------------- runner */
 const report = [], drafts = [];
 for (const sc of SC) {

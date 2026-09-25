@@ -420,7 +420,8 @@
       hosting(S, v) { O55.draft.set(md(S), { proxy_hosting: v, proxy_tls: v === 'existing_proxy' ? null : md(S).proxy_tls || 'lets_encrypt', proxy_kind: v === 'existing_proxy' ? null : md(S).proxy_kind || 'caddy' }); S.save(); O55.ui.refresh(); },
       tls(S, v) { O55.draft.set(md(S), { proxy_tls: v }); S.save(); O55.ui.refresh(); },
       kind(S, v) { O55.draft.set(md(S), { proxy_kind: v }); S.save(); O55.ui.refresh(); },
-      next(S) { O55.ui.go('review'); }
+      /* reached from a Server's restore: back to its preview; otherwise on to Review */
+      next(S) { const back = S.sess.ui.awayReturn; if (back) { S.sess.ui.awayReturn = null; S.save(); return O55.ui.go(back); } O55.ui.go('review'); }
     },
     bind: {
       headscale(S, v) { O55.draft.set(md(S), { headscale_url: v.trim() }); S.save(); O55.ui.refresh(); },

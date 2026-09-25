@@ -93,13 +93,18 @@
       pickServer(S, id, el) { const s = server(S, id); choose(S, s, { server_connection_mode: 'discover' }); O55.ui.refresh(); O55.ui.charm(el, s.name, 'server'); },
       vpn(S) { O55.draft.set(cd(S), { include_vpn_networks: !cd(S).include_vpn_networks }); S.save(); O55.sound.play(cd(S).include_vpn_networks ? 'toggleOn' : 'toggleOff'); scan(S); O55.ui.refresh(); },
       manualOn(S) { S.sess.connect.manual = true; S.save(); O55.ui.refresh(); const i = S.root.querySelector('#o55f-addr'); if (i) i.focus(); },
-      manualOff(S) { S.sess.connect.manual = false; S.save(); O55.ui.refresh(); },
+      /* back to the list: a Server found only through the typed address is not chosen any more (C24) */
+      manualOff(S) { const c = S.sess.connect; if (c.manual) choose(S, null, { server_connection_mode: 'discover' }); c.manual = false; S.save(); O55.ui.refresh(); },
       more(S) { O55.draft.set(cd(S), { remote_more: !cd(S).remote_more }); S.save(); O55.ui.refresh(); },
+      /* A different route starts clean (C24): the Server found through the old one is not chosen any more, and the
+         other routes' details (a web address, a Remote Link) leave the draft. The same route again changes nothing. */
       route(S, mode) {
-        const patch = { remote_mode: mode, remote_more: true };
-        if (mode === 'tailscale' && !cd(S).tailscale_control) patch.tailscale_control = 'hosted';
-        if (mode === 'reverse_proxy' || mode === 'remote_link') { patch.server_connection_mode = 'manual'; choose(S, null, patch); }
-        else { O55.draft.set(cd(S), Object.assign(patch, { server_connection_mode: 'discover' })); S.save(); }
+        const d = cd(S); if (d.remote_mode === mode) { O55.draft.set(d, { remote_more: true }); S.save(); return O55.ui.refresh(); }
+        const patch = { remote_mode: mode, remote_more: true, proxy_hostname: '', remote_endpoint: '' };
+        if (mode === 'tailscale' && !d.tailscale_control) patch.tailscale_control = 'hosted';
+        patch.server_connection_mode = mode === 'reverse_proxy' || mode === 'remote_link' ? 'manual' : 'discover';
+        S.sess.connect.manual = false;
+        choose(S, null, patch);
         O55.ui.refresh();
       },
       tsControl(S, v) { O55.draft.set(cd(S), { tailscale_control: v }); S.save(); O55.ui.refresh(); },

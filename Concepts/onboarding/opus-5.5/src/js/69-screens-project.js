@@ -22,6 +22,18 @@
     if (ui.begin) return ui.begin;
     return { new: 'new', existing_local: 'existing', existing_online: 'existing', restore: 'restore', later: 'new' }[d.project_mode] || 'new';
   };
+  /* A folder's place, its history and online copy, a backup's source and the destination it suggested, a NAS folder,
+     and a name taken from any of them (never one the person typed) belong to the beginning that filled them in: they
+     were carried into a new Project planned inside the old folder, and into a NAS folder's history (logic crawl).
+     Facts about the person's devices (a trusted NAS, a key added to it) stay. */
+  function resetBeginning(S, d) {
+    O55.draft.set(d, Object.assign({ local_location_mode: 'automatic', local_location: '', project_source_ref: '', backup_source_ref: '', backup_transport: 'local' },
+      S.sess.ui.nameTouched ? {} : { project_name: '' }));
+    S.sess.folderInfo = null;
+    if (S.sess.nas) { delete S.sess.nas.at; delete S.sess.nas.folderLabel; }
+    if (S.sess.backup && S.sess.backup.fromRestore) { S.sess.backup.dest = null; S.sess.backup.fromRestore = false; }
+    S.sess.restore = null;
+  }
   def('begin', {
     chapter: 'project', stage: 'first_project', charmSlot: 'begin',
     scene: (S) => ({ id: 'begin', beat: choiceOf(S) === 'existing' ? (S.sess.ui.beginSub || 'folder') : choiceOf(S) }),
@@ -64,6 +76,10 @@
       later(S) { O55.draft.set(md(S), { project_mode: 'later', source_more: false, online_mode: 'none' }); S.sess.ui.begin = null; S.save(); O55.ui.go(md(S).server_mode === 'new_server' ? 'away' : 'review'); },
       next(S) {
         const d = md(S), sel = choiceOf(S), sub = S.sess.ui.beginSub;
+        /* switching how the Project begins drops what the abandoned beginning filled in */
+        const began = sel === 'existing' ? 'existing:' + sub : sel;
+        if (S.sess.ui.beganAs && S.sess.ui.beganAs !== began) resetBeginning(S, d);
+        S.sess.ui.beganAs = began;
         const clearOnline = d.project_mode === 'existing_online' ? { online_mode: 'none', repository_ref: '' } : {};
         if (sel === 'new') { O55.draft.set(d, Object.assign({ project_mode: 'new', project_transport: 'local', project_source_ref: '', source_more: false }, clearOnline)); S.save(); return O55.ui.go('name'); }
         if (sel === 'restore') { S.sess.restore = { scope: 'project' }; S.save(); return O55.ui.go('r-source'); }

@@ -413,14 +413,16 @@
       "accounts": "{n} AI accounts (you sign in again)",
       "settings": "Your settings and look",
       "never": "Passwords and keys never come back from a backup. You sign in again where needed.",
-      "button": "Restore"
+      "button": "Restore",
+      "away": "Access away from home is set up: {how}"
     },
     "apply": {
       "phases": {
         "fetch": "Getting the backup",
         "check": "Checking it is complete",
         "projects": "Bringing back Projects",
-        "settings": "Bringing back settings"
+        "settings": "Bringing back settings",
+        "remote": "Setting up access away from home"
       }
     },
     "done": {
@@ -1043,7 +1045,7 @@
     "key": {
       "eyebrow": "Secure connection",
       "title": "Choose a key",
-      "lead": "A key lets Puppet Master connect without a password. These keys are already on this computer.",
+      "lead": "A key lets Puppet Master connect without a password. These keys are already on {where}.",
       "looking": "Looking for your keys…",
       "testing": "Testing with {name}…",
       "where": {
@@ -1060,7 +1062,7 @@
       "old": "Older key type — not recommended",
       "new": "Make a new key just for Puppet Master",
       "newSub": "Easy to remove later. Doesn't touch your other keys.",
-      "none": "No keys found on this computer. Puppet Master will make one.",
+      "none": "No keys found on {where}. Puppet Master will make one there.",
       "detailsLabel": "What does Puppet Master read?",
       "details": "Only the public half of each key. Private keys are never read, copied or stored — the key stays where it is, and Puppet Master remembers which one you chose.",
       "passTitle": "Unlock {key}",
@@ -1068,7 +1070,8 @@
       "passNote": "In the app your SSH agent asks for this. It unlocks the key on this computer and isn't saved.",
       "passCancel": "Cancel",
       "passOk": "Unlock",
-      "passEmpty": "Enter the passphrase for {key}."
+      "passEmpty": "Enter the passphrase for {key}.",
+      "thisComputer": "this computer"
     },
     "signin": {
       "eyebrow": "Secure connection",
@@ -1112,7 +1115,8 @@
         "not_added": "The key isn't on {name} yet.",
         "showKey": "Show the key again"
       },
-      "done": "Connected securely with your key. No password saved."
+      "done": "Connected securely with your key. No password saved.",
+      "donePaired": "Paired with Puppet Master on {name}. No key or password needed."
     },
     "folder": {
       "eyebrow": "Choose a folder",

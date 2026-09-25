@@ -14,7 +14,14 @@
   const cloud = (S) => (S.sess.server.kind || 'nas') === 'cloud';
   const unclaimed = (S) => (cloud(S) ? S.env.unclaimedCloud : S.env.unclaimed);
   /* names that fit the kind of computer (a cloud computer is not a Home NAS) */
-  const suggestions = (S) => O55.tx('server.confirm.suggest' + { nas: 'Nas', cloud: 'Cloud', pc: 'Pc' }[S.sess.server.kind || 'nas']);
+  /* names already on this network (the NAS found there, other Puppet Masters) are never suggested for a new Server: a
+     second "Home NAS" beside the first made every later screen ambiguous (logic crawl). A taken name gets a " 2". */
+  const takenNames = (S) => new Set(S.env.devices.map((d) => d.name).concat(S.env.pmServers.map((p) => p.name)).map((x) => x.toLowerCase()));
+  const suggestions = (S) => {
+    const base = O55.tx('server.confirm.suggest' + { nas: 'Nas', cloud: 'Cloud', pc: 'Pc' }[S.sess.server.kind || 'nas']) || [], taken = takenNames(S);
+    const free = base.filter((x) => !taken.has(x.toLowerCase()));
+    return free.length ? free : base.map((x) => x + ' 2');
+  };
   const serverNameOf = (S) => (S.sess.server.name == null ? suggestions(S)[0] : S.sess.server.name);
   const PLATFORM_NAMES = { truenas: 'TrueNAS', unraid: 'Unraid', synology: 'Synology', qnap: 'QNAP', linux: 'Linux', windows: 'Windows', macos: 'macOS' };
 
@@ -172,6 +179,8 @@
   /* ================================================================== Restore (shared) */
   const R = (S) => (S.sess.restore = S.sess.restore || { scope: 'full' });
   const racc = (S) => (R(S).access = R(S).access || {});
+  /* the away-from-home route a new Server's restore sets up, if it needs setting up */
+  const awayOf = (S) => { const d = md(S); return R(S).scope === 'server' && d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn' && d.remote_mode !== 'none' ? d.remote_mode : null; };
   const restoreChapter = (S) => (R(S).scope === 'project' ? 'project' : 'computer');
   def('r-source', {
     chapter: 'computer', stage: 'first_project',
@@ -282,11 +291,15 @@
         if (r.scope === 'project') {
           const [bid] = r.pick.split('#'), b = S.env.backups.find((x) => x.id === bid);
           const transport = r.source === 'nas' ? 'ssh' : r.source === 'cloud' ? 'mounted' : 'local';
-          if (!S.sess.backup.dest && (r.source === 'nas' || r.source === 'cloud')) S.sess.backup.dest = r.source === 'nas' ? 'nas' : (r.cloud || 'gdrive');
+          /* the place the backup came from is suggested as the new backup's place (marked, so it leaves with the restore) */
+          if (!S.sess.backup.dest && (r.source === 'nas' || r.source === 'cloud')) { S.sess.backup.dest = r.source === 'nas' ? 'nas' : (r.cloud || 'gdrive'); S.sess.backup.fromRestore = true; }
           O55.draft.set(md(S), { project_mode: 'restore', backup_source_ref: 'backup:' + U.slug(b.where) + '/' + U.slug(b.project) + '#' + r.pick.split('#')[1], backup_transport: transport, project_name: md(S).project_name || b.project });
           if (r.source === 'cloud') S.sess.gaps = Object.assign(S.sess.gaps || {}, { cloudBackupTransport: true });
           S.save(); return O55.ui.go('name');
         }
+        /* a Server being set up now is asked how to reach it away from home before its restore is confirmed (it was set
+           silently to local only; logic crawl); the answer is set up as part of the restore */
+        if (r.scope === 'server' && md(S).server_mode === 'new_server' && !r.awayAsked) { r.awayAsked = true; S.sess.ui.awayReturn = 'r-preview'; S.save(); return O55.ui.go('away'); }
         O55.ui.go('r-preview');
       }
     }
@@ -301,10 +314,13 @@
     body(S) {
       const r = R(S), b = S.env.fullBackups.find((x) => x.id === r.pick) || S.env.fullBackups[0];
       let out = `<ul class="o55-will" data-key="what">`
-        + [['stack', T('restore.preview.projects', { n: b.projects })], ['spark', T('restore.preview.accounts', { n: b.accounts })], ['history', T('restore.preview.settings')]].map(([g, t]) => `<li>${C.small(g, 14)}<span>${U.esc(t)}</span></li>`).join('') + '</ul>';
+        + [['stack', T('restore.preview.projects', { n: b.projects })], ['spark', T('restore.preview.accounts', { n: b.accounts })], ['history', T('restore.preview.settings')]]
+          /* on a new Server, the access chosen away from home is part of what Restore confirms */
+          .concat(awayOf(S) ? [['globe', T('restore.preview.away', { how: awayOf(S) === 'tailscale' ? 'Tailscale' : awayOf(S) === 'reverse_proxy' ? md(S).proxy_hostname : T('away.link.title') })]] : []).map(([g, t]) => `<li>${C.small(g, 14)}<span>${U.esc(t)}</span></li>`).join('') + '</ul>';
       out += C.note(T('restore.preview.never'), 'info', 'lock');
       const st = F.state(S, 'restore:' + r.pick);
-      if (st) out += F.phases(S, 'restore:' + r.pick, ['fetch', 'check', 'projects', 'settings'], { fetch: T('restore.apply.phases.fetch'), check: T('restore.apply.phases.check'), projects: T('restore.apply.phases.projects'), settings: T('restore.apply.phases.settings') });
+      const rp = (st && st.phases || []).some((x) => x.key === 'remote') ? ['remote'] : [];
+      if (st) out += F.phases(S, 'restore:' + r.pick, ['fetch', 'check', 'projects', 'settings'].concat(rp), { remote: T('restore.apply.phases.remote'), fetch: T('restore.apply.phases.fetch'), check: T('restore.apply.phases.check'), projects: T('restore.apply.phases.projects'), settings: T('restore.apply.phases.settings') });
       return out;
     },
     foot(S) {
@@ -317,8 +333,11 @@
         const r = R(S);
         r.confirmed = true; /* the Restore button is the restore preflow's own confirmation */
         S.save();
-        F.op(S, 'restore:' + r.pick, 'cmd.restore.apply', [{ key: 'fetch', ms: 900 }, { key: 'check', ms: 700 }, { key: 'projects', ms: 1100 }, { key: 'settings', ms: 600 }], {
-          payload: { scope: r.scope, backup: r.pick },
+        const d = md(S), remote = r.scope === 'server' && d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn' && d.remote_mode !== 'none';
+        /* the Restore button stands in for Review on this path: the preview listed the access being set up */
+        if (remote) O55.owners.dispatch(d.remote_mode === 'tailscale' ? 'cmd.remote_access.tailscale.setup.start' : d.remote_mode === 'reverse_proxy' ? 'cmd.remote_access.proxy.generate' : 'cmd.remote_access.remote_link.setup', { draft: d.project_draft_ref, restore: r.pick }, Object.assign(S.ctx(), { reviewConfirmed: true }), () => ({ ok: true }));
+        F.op(S, 'restore:' + r.pick, 'cmd.restore.apply', [{ key: 'fetch', ms: 900 }, { key: 'check', ms: 700 }, { key: 'projects', ms: 1100 }, { key: 'settings', ms: 600 }].concat(remote ? [{ key: 'remote', ms: 900 }] : []), {
+          payload: { scope: r.scope, backup: r.pick, remote_mode: remote ? d.remote_mode : null },
           onDone: () => { r.done = true; S.save(); O55.motion.after(O55.motion.T.success, () => { if (S.sess.screen === 'r-preview') O55.ui.go('r-done'); }); }
         });
       },
