@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L2166-L7678
 
-Source SHA256: `8baf80de1f2735f194fea323c4b8ee0c6033c32766b1c1dc20599dceb6e773fc`
+Source SHA256: `0ca4f10131297113a0413c3bfb0d9d3481a8bd7301aea3aac7c3eafa8c2db506`
 
 ---
 
@@ -5224,10 +5224,10 @@ canonical_text: >-
   collaboration.cancelled. It is registered with the others under DL-090's permission, so
   that permission's exact list is 18 names, the 17 of DL-090 and collaboration.failed;
   DL-090's text is not edited. Its contract and its own Storage admission landing join
-  DL-090's set, one family per landing. Waiting and blocked get no events, and a failed
-  participant is recorded by its collaboration.participant_completed event. It is new
-  campaign scope outside the 252 J248 rows. Nothing is registered or admitted and no
-  registry row changes.
+  DL-090's set, one family per landing. This entry adds no events for the waiting and
+  blocked states, and a failed participant is recorded by its
+  collaboration.participant_completed event. It is new campaign scope outside the 252 J248
+  rows. Nothing is registered or admitted and no registry row changes.
 gui_related: false
 gui_classification_reason: Adds a recorded run ending; the failed run state is already shown.
 split_recommended: false

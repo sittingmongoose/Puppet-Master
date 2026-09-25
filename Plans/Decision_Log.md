@@ -2093,7 +2093,7 @@ Answered on 2026-09-25 by Jared, in the Event Authority program's host session, 
 
 **Answer:** Approve (option 1).
 
-`Plans/Collaborative_Workflows.md` section 13 gains `collaboration.failed`, the recorded ending of a collaborative run that fails, with its reason, as `collaboration.completed` and `collaboration.cancelled` record the other two endings; `failed` is already one of the closed run states (section 2.1). `collaboration.failed` is registered with the others under the permission DL-090 grants, so that permission's exact list is 18 names: the 17 names of DL-090 and `collaboration.failed`. DL-090's text is not edited; this entry adds the eighteenth name. Its contract and its own Storage admission landing join DL-090's set, one family per landing, on the same terms. Waiting and blocked get no events, and a participant that fails is recorded by its `collaboration.participant_completed` event, whose contents are technical work; this entry is about the run as a whole. The Collaborative Workflows owner writes the name into section 13. Like the other 17, it is new campaign scope outside the 252 J248 rows. This entry itself edits no owner text, registers or admits nothing, and changes no registry row.
+`Plans/Collaborative_Workflows.md` section 13 gains `collaboration.failed`, the recorded ending of a collaborative run that fails, with its reason, as `collaboration.completed` and `collaboration.cancelled` record the other two endings; `failed` is already one of the closed run states (section 2.1). `collaboration.failed` is registered with the others under the permission DL-090 grants, so that permission's exact list is 18 names: the 17 names of DL-090 and `collaboration.failed`. DL-090's text is not edited; this entry adds the eighteenth name. Its contract and its own Storage admission landing join DL-090's set, one family per landing, on the same terms. This entry adds no events for the waiting and blocked states, which the run record and the live view show, and a participant that fails is recorded by its `collaboration.participant_completed` event, whose contents are technical work; this entry is about the run as a whole. The Collaborative Workflows owner writes the name into section 13. Like the other 17, it is new campaign scope outside the 252 J248 rows. This entry itself edits no owner text, registers or admits nothing, and changes no registry row.
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_CARD4_ADDENDUM.md`, SHA-256 `b09b2afdaed355e1170ef0a96db1d468fa00a35ef185cb8fddeed16b1bbea8c8`; card `reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md` (Card 4b); application record `reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json`.
 
@@ -7379,10 +7379,10 @@ canonical_text: >-
   collaboration.cancelled. It is registered with the others under DL-090's permission, so
   that permission's exact list is 18 names, the 17 of DL-090 and collaboration.failed;
   DL-090's text is not edited. Its contract and its own Storage admission landing join
-  DL-090's set, one family per landing. Waiting and blocked get no events, and a failed
-  participant is recorded by its collaboration.participant_completed event. It is new
-  campaign scope outside the 252 J248 rows. Nothing is registered or admitted and no
-  registry row changes.
+  DL-090's set, one family per landing. This entry adds no events for the waiting and
+  blocked states, and a failed participant is recorded by its
+  collaboration.participant_completed event. It is new campaign scope outside the 252 J248
+  rows. Nothing is registered or admitted and no registry row changes.
 gui_related: false
 gui_classification_reason: Adds a recorded run ending; the failed run state is already shown.
 split_recommended: false
