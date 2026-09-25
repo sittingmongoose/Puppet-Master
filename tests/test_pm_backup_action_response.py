@@ -43,20 +43,34 @@ class BackupActionResponseTests(unittest.TestCase):
     def test_fresh_response_consumes_real_domain_relation_validator(self):
         self.assertEqual([], self.check())
 
-    def test_current_union_preserves_other_37_and_rejects_four_legacy_shapes(self):
+    def test_current_union_preserves_other_32_and_rejects_nine_legacy_shapes(self):
+        # The current union includes external owner schemas; use the actual
+        # closed gate's offline registry, not a local-only legacy shape helper.
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('backup_action_gate', ROOT / 'scripts/pm-new-contracts-verify.py')
+        gate = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(gate)
+        schema = SEM._schema()
+        registry = gate.offline_schema_registry()
+        current = gate.validator_for(schema, {'$ref': '#/$defs/backup_current_command_request'}, registry)
+        historical = gate.validator_for(schema, {'$ref': '#/$defs/backup_restore_command_request'}, registry)
         four = set(SEM._schema()['$defs']['backup_action_request_v2']['properties']['command_id']['enum'])
+        successors = four | {'cmd.backup.destination.discover', 'cmd.backup.browse',
+                             'cmd.backup.destination.test', 'cmd.backup.destination.remove',
+                             'cmd.backup.delete'}
+        self.assertEqual(9, len(successors))
         seen = set()
         for row in self.valid:
             value = row['value']
             if value.get('schema_id') == 'pm.backup_restore_system.command_request.v1':
                 seen.add(value['command_id'])
-                errors = SEM.structural_errors('backup_current_command_request', value)
-                self.assertEqual(value['command_id'] in four, bool(errors), row['name'])
-                self.assertEqual([], SEM.structural_errors('backup_restore_command_request', value))
+                errors = list(current.iter_errors(value))
+                self.assertEqual(value['command_id'] in successors, bool(errors), row['name'])
+                self.assertEqual([], list(historical.iter_errors(value)))
             elif value.get('schema_id') == 'pm.backup_restore_system.action_request.v2':
-                self.assertEqual([], SEM.structural_errors('backup_current_command_request', value))
+                self.assertEqual([], list(current.iter_errors(value)))
         self.assertEqual(41, len(seen))
-        self.assertEqual(37, len(seen - four))
+        self.assertEqual(32, len(seen - successors))
 
     def test_replay_keeps_original_operation_despite_fresh_disclosure_invocation(self):
         self.request['command_instance_id'] = self.response['command_instance_id'] = 'command:replay'

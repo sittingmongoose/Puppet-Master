@@ -3593,6 +3593,239 @@
         "Plans/forge_thread_reply_contracts.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.backup.destination_lifecycle_transport.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_destination_lifecycle_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.destination_lifecycle.request.v1",
+        "pm.backup.destination_lifecycle.scratch_admission.v1",
+        "pm.backup.destination_lifecycle.cleanup_observation.v1",
+        "pm.backup.destination_lifecycle.test_observation.v1",
+        "pm.backup.destination_lifecycle.removal_preview.v1",
+        "pm.backup.destination_lifecycle.registry_observation.v1",
+        "pm.backup.destination_lifecycle.remove_observation.v1",
+        "pm.backup.destination_lifecycle.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No durable authority or content hold is created by these internal lifecycle exchanges; authentic scratch, capability, dependency, registry and effect sources retain their existing owners.",
+        "expiry_rule": "Discard on terminal exchange disposal or actual source-owner invalidation/expiry; transient disposal cannot erase known effects, cleanup obligations or retained original/lifecycle receipt authority. No TTL or peer store is admitted."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Preserve historical Backup decoders and original owners. Do not synthesize destination test/removal admission, canary/effects, receipt, caller or replay authority from predecessors. No new physical writer/migration is admitted.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Internal nonpersisted request/result and scratch/test/cleanup/preview/registry projections backed by authentic owners; no physical family or fixture authority.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_destination_lifecycle_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup.destination_lifecycle_receipt.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_destination_lifecycle_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.destination_lifecycle.receipt.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve authentic original, lifecycle receipt and source/effect references while response, replay, reconciliation, cleanup, backup or audit requires them. Exact physical retention and per-kind owner assignment remain pending; no unrelated Project/run anchor is invented.",
+        "expiry_rule": "No cleanup writer or retention interval is admitted. Register exact physical key/value, producer/readers, source dependency holds, retention/deletion, coherent backup and original replay custody before durable writes; transient projection disposal neither manufactures nor releases authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Preserve historical Backup decoders and original owners. Do not synthesize destination test/removal admission, canary/effects, receipt, caller or replay authority from predecessors. No new physical writer/migration is admitted.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Actual original-bound DestinationLifecycleReceipt with safe nullable disclosure and known/unknown effects. Logical custody only; physical keys, lifetime/holds, readers, migration and coherent backup remain pending.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_destination_lifecycle_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.backup_destination_lifecycle_dispatch.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/backup_destination_lifecycle_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.backup_destination_lifecycle_dispatch.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve authentic original, lifecycle receipt and source/effect references while response, replay, reconciliation, cleanup, backup or audit requires them. Exact physical retention and per-kind owner assignment remain pending; no unrelated Project/run anchor is invented.",
+        "expiry_rule": "No cleanup writer or retention interval is admitted. Register exact physical key/value, producer/readers, source dependency holds, retention/deletion, coherent backup and original replay custody before durable writes; transient projection disposal neither manufactures nor releases authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Preserve historical Backup decoders and original owners. Do not synthesize destination test/removal admission, canary/effects, receipt, caller or replay authority from predecessors. No new physical writer/migration is admitted.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Authentic original SIR request/identity/caller and acceptance snapshot. Logical custody only; physical admission and native producer/replay proof remain pending.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/backup_destination_lifecycle_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup.selected_delete_transport.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_selected_delete_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.selected_delete.request.v1",
+        "pm.backup.selected_delete.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold is created; actual originals/errors/effects remain under their own required custody.",
+        "expiry_rule": "Discard transport/disclosure copies when delivery ends or actual source/current disclosure is invalidated. No TTL, durable cache or replay authority is introduced."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target. Missing authentic original/error/effect remains unavailable, not reconstructed from a transient transport or safe disclosure projection.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted exact-action command transport; disposal cannot release actual original, observation, receipt or reconciliation custody.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_selected_delete_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.backup_selected_delete_error_projection.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/backup_selected_delete_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.backup_selected_delete_error_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold is created; actual originals/errors/effects remain under their own required custody.",
+        "expiry_rule": "Discard transport/disclosure copies when delivery ends or actual source/current disclosure is invalidated. No TTL, durable cache or replay authority is introduced."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target. Missing authentic original/error/effect remains unavailable, not reconstructed from a transient transport or safe disclosure projection.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Internal nonpersisted safe error disclosure, preserving exact actual owner error/original/caller. Nullable cancelled UI error does not erase owner effects; not a new error store.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/backup_selected_delete_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.backup_selected_delete_dispatch.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/backup_selected_delete_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.backup_selected_delete_dispatch.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve actual original, immutable selection, effect observation, receipt and unresolved reconciliation under existing owner replay/audit/hold obligations. Exact physical lifetime and per-kind policy assignment remain pending; no new anchor or duration.",
+        "expiry_rule": "No cleanup writer or numeric retention is admitted. Register actual keys/values, source-coupled holds, current and historical readers, deletion/migration and coherent backup before persistence. Transport/projection disposal cannot release retained authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never synthesize selected-delete original, selection, per-member effects or receipt from capture/verification/restore records. Preserve historical decoders; exact physical writer/readers/migration and coherent backup admission remain pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Authenticated retained original request/identity/arguments/caller. Exact physical enrollment and native original issuer/replay remain pending.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/backup_selected_delete_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup.selected_delete_effect_metadata.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_selected_delete_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.selected_delete.observation.v1",
+        "pm.backup.selected_delete.receipt.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve actual original, immutable selection, effect observation, receipt and unresolved reconciliation under existing owner replay/audit/hold obligations. Exact physical lifetime and per-kind policy assignment remain pending; no new anchor or duration.",
+        "expiry_rule": "No cleanup writer or numeric retention is admitted. Register actual keys/values, source-coupled holds, current and historical readers, deletion/migration and coherent backup before persistence. Transport/projection disposal cannot release retained authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never synthesize selected-delete original, selection, per-member effects or receipt from capture/verification/restore records. Preserve historical decoders; exact physical writer/readers/migration and coherent backup admission remain pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained selected snapshot effects and dedicated deletion receipt; preserve unresolved/unknown and known partial effects. Not capture receipt or prune authority. Physical admission remains pending.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_selected_delete_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [

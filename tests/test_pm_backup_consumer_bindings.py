@@ -9,10 +9,14 @@ FOUR = {'cmd.backup.destination.update', 'cmd.backup.verify',
         'cmd.backup.test_restore', 'cmd.backup.file.compare'}
 READS = {'cmd.backup.destination.discover', 'cmd.backup.browse'}
 READ_PREFIX = 'Plans/backup_bounded_read_contracts.schema.json#/$defs/'
+LIFECYCLE = {'cmd.backup.destination.test','cmd.backup.destination.remove'}
+LIFECYCLE_PREFIX = 'Plans/backup_destination_lifecycle_contracts.schema.json#/$defs/'
+SELECTED_DELETE = {'cmd.backup.delete'}
+DELETE_PREFIX = 'Plans/backup_selected_delete_contracts.schema.json#/$defs/'
 
 
 class BackupConsumerBindings(unittest.TestCase):
-    def test_all_41_production_consumers_preserve_handlers_events_and_other_35(self):
+    def test_all_41_production_consumers_preserve_handlers_events_and_other_32(self):
         schema = json.loads((ROOT / 'Plans/backup_restore_system_contracts.schema.json').read_text())
         commands = set(schema['$defs']['backup_restore_command_id']['enum'])
         wiring = json.loads((ROOT / 'Plans/Wiring_Matrix.production.json').read_text())
@@ -20,14 +24,14 @@ class BackupConsumerBindings(unittest.TestCase):
         self.assertEqual(41, len(commands))
         self.assertEqual(41, len(rows))
         self.assertEqual(commands, {r['ui_command_id'] for r in rows})
-        self.assertEqual(35, len(commands - FOUR - READS))
+        self.assertEqual(32, len(commands - FOUR - READS - LIFECYCLE - SELECTED_DELETE))
         for row in rows:
             command = row['ui_command_id']
             with self.subTest(command=command):
                 request, result = (('backup_action_request_v2', 'backup_action_result_v2')
                     if command in FOUR else ('backup_restore_command_request', 'backup_restore_command_result'))
-                self.assertEqual(READ_PREFIX+'request' if command in READS else PREFIX+request, row['request_schema_ref'])
-                self.assertEqual(READ_PREFIX+'result' if command in READS else PREFIX+result, row['result_schema_ref'])
+                self.assertEqual(DELETE_PREFIX+'request' if command in SELECTED_DELETE else LIFECYCLE_PREFIX+'request' if command in LIFECYCLE else READ_PREFIX+'request' if command in READS else PREFIX+request, row['request_schema_ref'])
+                self.assertEqual(DELETE_PREFIX+'result' if command in SELECTED_DELETE else LIFECYCLE_PREFIX+'result' if command in LIFECYCLE else READ_PREFIX+'result' if command in READS else PREFIX+result, row['result_schema_ref'])
                 if command in READS:
                     self.assertEqual([READ_PREFIX+'result', READ_PREFIX+'read_receipt'], row['effect_contract']['receipt_or_event_refs'])
                 if command in FOUR:

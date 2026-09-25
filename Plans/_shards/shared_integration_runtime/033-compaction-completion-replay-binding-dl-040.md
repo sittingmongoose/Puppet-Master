@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2572
+Source lines: L2164-L2580
 
-Source SHA256: `0c2498b9274fbea56d4156f67557c90435e0e09e586720b8eff1d8508eafa391`
+Source SHA256: `a0751d356a7a7046121f1b36ba02890911dd92dfcbac558a81aff13b0445c73a`
 
 ---
 
@@ -184,6 +184,14 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+For exactly `cmd.backup.delete`, `Plans/backup_selected_delete_contracts.schema.json` materializes `pm.sir.backup_selected_delete_dispatch.v1` from the existing authenticated dispatcher and `pm.sir.backup_selected_delete_error_projection.v1` as a nonpersisted safe disclosure projection. Retain the real original IdentityEnvelope, request/operation/instance/dispatch/frame/target, actor/permission, admission time, idempotency, full typed arguments and existing canonical payload digest. Original caller uses the existing nullable return_context value grammar, not Source Control producer authority; actual delivery must equal the independently retained original value. No normalized caller bag, invented Project or new Full Thread field is introduced.
+
+The selected-delete response adapter resolves the actual `pm.backup.selected_delete.request.v1`, `pm.backup.selected_delete.observation.v1`, `pm.backup.selected_delete.result.v1` and terminal `pm.backup.selected_delete.receipt.v1`. These are new explicitly scoped Backup contracts, not capture BackupReceipt records. Original selection, genuine RetentionPreview and BackupPolicy revisions, exact immutable source identities and actual retention decisions join through their existing owners; the actual Backup candidate-hash callback is mandatory, not an invented serialization codec. Native admission, retention/currentness, source custody, actual effects and current caller/error disclosure remain mandatory. The effect adapter receives the actual observation, receipt and work records. Snapshot before resolver/adapters and reject input mutation; recheck current disclosure after domain resolution.
+
+Completed maps to succeeded only when every selected snapshot is known deleted; failed and cancelled retain actual per-member effects. Unknown effects map to terminal_unknown/recovery_required with a retained reconciliation reference, not retriable resubmission. Cancelled UI error remains null while the actual typed Backup error and safe projection remain joined. The actual accepted work snapshot is nonterminal and has no terminal result receipt; neither a later terminal work record nor agreeing caller references establish acceptance. Original response replay never deletes again. No no_op, hold override, prune/cascade, new EventRecord, native handler proof or physical storage admission is implied. Original dispatch, deletion observations and deletion receipts require explicit custody enrollment separately; do not fold them into capture receipt custody or invent a retention interval.
+
+For exactly `cmd.backup.destination.test` and `cmd.backup.destination.remove`, `pm.sir.backup_destination_lifecycle_dispatch.v1` retains the genuine original request/whole IdentityEnvelope, actor, permission snapshot, idempotency key, canonical argument digest, independent dispatcher frame/target generation and exact nullable caller-return value. The common response resolves that original and its actual DestinationLifecycleReceipt/error, never a caller-supplied grant. The receipt's safe nullable UI error is an authenticated projection of the actual unchanged Backup error record under final disclosure; cancellation may keep UI error null without dropping its owner error/effects. The accepted asynchronous branch resolves actual nonterminal original ObservableWork with no terminal receipt; later terminal work is not an acceptance snapshot. A terminal response resolves the original receipt and actual observed effect; replay preserves that response and cannot repeat canary creation or removal. Original, native source/effect, canonical digest and current disclosure adapters are mandatory, not schema-issued authority.
 
 For exactly `cmd.forge.review.thread.reply`, `Plans/forge_thread_reply_contracts.schema.json#/$defs/dispatch_binding` is a disjoint authentic SIR original containing unchanged full IdentityEnvelope, exact selected arguments/canonical digest, permission and original nullable caller. Current delivery is independently authenticated and preserves the actual caller; RepositoryBinding or current panel state cannot fabricate identity. Domain/central composition resolves actual whole thread/revision window, original body/version, issued reply observation and common receipt/work/outcome. Accepted work is an actual nonterminal acceptance snapshot without terminal receipt; unknown effects remain reconciliation-only and replay cannot repost. Live original/resolved-value mutation fails closed. Physical original/observation custody and native authority remain independently pending.
 
