@@ -1,0 +1,1102 @@
+{
+  "schema_id": "pm.backup_drill_results.contract_fixtures.v1",
+  "contract_schema_id": "pm.backup_drill_results.contracts.v1",
+  "evidence_level": "schema_fixture_only",
+  "owner_schema": "Plans/backup_drill_result_contracts.schema.json",
+  "valid": [
+    {
+      "name": "actual_owner_drill_admission",
+      "definition": "backup_drill_target_admission",
+      "value": {
+        "schema_id": "pm.backup_restore_system.drill_target_admission.v1",
+        "schema_version": "1.0.0",
+        "original_operation": {
+          "operation_id": "operation:drill-selected",
+          "command_id": "cmd.backup.test_restore",
+          "command_instance_id": "command:drill-selected",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:backup:01",
+          "idempotency_key": "idempotency:drill-selected",
+          "expected_currentness_ref": "currentness:backup:01",
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_surface": "settings",
+          "return_route_ref": "route:settings:backup",
+          "selected_input": {
+            "repository_id": "backup-repository:project-alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:project-alpha-nas-02",
+            "isolated_destination_ref": "isolated-destination:disposable",
+            "coverage": {
+              "selected_family_ids": [
+                "project.settings"
+              ],
+              "path_selection": "all_paths_in_selected_families",
+              "selected_path_refs": []
+            },
+            "cost_approval_ref": null
+          }
+        },
+        "snapshot_selection": {
+          "repository_id": "backup-repository:project-alpha",
+          "backup_destination_id": "backup-destination:nas",
+          "snapshot_id": "snapshot:project-alpha-nas-02"
+        },
+        "isolated_destination_ref": "isolated-destination:disposable",
+        "target_identity_ref": "target:disposable-01",
+        "server_id": "server:home-01",
+        "host_id": "execution-host:home-01",
+        "environment_id": "execution-environment:native-linux-01",
+        "project_id": null,
+        "containment_ref": "containment:drill-01",
+        "target_generation": 1,
+        "lease_ref": "lease:drill-01",
+        "permission_decision_ref": "permission:drill-01",
+        "filesafe_decision_ref": "filesafe:drill-01",
+        "resource_admission_ref": "resources:drill-01",
+        "cost_network_admission_ref": "cost-network:drill-01",
+        "admitted_at_utc": "2026-09-24T12:00:00Z"
+      }
+    },
+    {
+      "name": "isolated_settings_drill_completed_and_cleaned",
+      "definition": "backup_drill_verification_receipt_v2",
+      "value": {
+        "schema_id": "pm.backup_restore_system.backup_verification_receipt.drill.v2",
+        "schema_version": "2.0.0",
+        "receipt_id": "receipt:drill-01",
+        "operation_id": "operation:drill-selected",
+        "command_id": "cmd.backup.test_restore",
+        "idempotency_key": "idempotency:drill-selected",
+        "correlation_id": "correlation:verify",
+        "server_id": "server:home-01",
+        "project_ids": [
+          "project:alpha"
+        ],
+        "started_at_utc": "2026-09-24T12:00:00Z",
+        "completed_at_utc": "2026-09-24T12:01:00Z",
+        "evidence_refs": [
+          "evidence:structure"
+        ],
+        "failure_refs": [],
+        "redaction_profile": "no_secret_values_no_absolute_paths",
+        "original_operation": {
+          "operation_id": "operation:drill-selected",
+          "command_id": "cmd.backup.test_restore",
+          "command_instance_id": "command:drill-selected",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:backup:01",
+          "idempotency_key": "idempotency:drill-selected",
+          "expected_currentness_ref": "currentness:backup:01",
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_surface": "settings",
+          "return_route_ref": "route:settings:backup",
+          "selected_input": {
+            "repository_id": "backup-repository:project-alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:project-alpha-nas-02",
+            "isolated_destination_ref": "isolated-destination:disposable",
+            "coverage": {
+              "selected_family_ids": [
+                "project.settings"
+              ],
+              "path_selection": "all_paths_in_selected_families",
+              "selected_path_refs": []
+            },
+            "cost_approval_ref": null
+          }
+        },
+        "source_resolution": {
+          "schema_id": "pm.backup_restore_system.snapshot_resolution.v1",
+          "schema_version": "1.0.0",
+          "operation_binding": {
+            "operation_id": "operation:drill-selected",
+            "command_id": "cmd.backup.test_restore",
+            "command_instance_id": "command:drill-selected",
+            "actor_ref": "actor:user:01",
+            "permission_snapshot_ref": "permission:backup:01",
+            "idempotency_key": "idempotency:drill-selected",
+            "expected_currentness_ref": "currentness:backup:01",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "settings",
+            "return_route_ref": "route:settings:backup",
+            "selected_input": {
+              "repository_id": "backup-repository:project-alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:project-alpha-nas-02",
+              "isolated_destination_ref": "isolated-destination:disposable",
+              "coverage": {
+                "selected_family_ids": [
+                  "project.settings"
+                ],
+                "path_selection": "all_paths_in_selected_families",
+                "selected_path_refs": []
+              },
+              "cost_approval_ref": null
+            }
+          },
+          "selection": {
+            "repository_id": "backup-repository:project-alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:project-alpha-nas-02"
+          },
+          "disposition": "resolved",
+          "resolved_source": {
+            "repository_binding_id": "repository-binding:project-alpha",
+            "origin_kind": "backup_run",
+            "origin_ref": "original:run-alpha-02",
+            "backup_run_id": "backup-run:project-alpha-02",
+            "backup_id": "backup:project-alpha-02",
+            "capture_set_id": "capture-set:project-alpha-02",
+            "destination_attempt_id": "destination-attempt:nas-02",
+            "commit_receipt_ref": "receipt:destination-commit:nas-02",
+            "repository_snapshot_ref": "snapshot-ref:opaque-selected",
+            "manifest_ref": "immutable:manifest-alpha-02",
+            "manifest_id": "backup-manifest:project-alpha-02",
+            "manifest_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "recovery_set_id": "recovery-set:home-01",
+            "server_id": "server:home-01",
+            "boundary_kind": "project",
+            "project_id": "project:alpha",
+            "project_vault_id": "project-vault:alpha"
+          },
+          "failure_reason": null
+        },
+        "target_admission": {
+          "schema_id": "pm.backup_restore_system.drill_target_admission.v1",
+          "schema_version": "1.0.0",
+          "original_operation": {
+            "operation_id": "operation:drill-selected",
+            "command_id": "cmd.backup.test_restore",
+            "command_instance_id": "command:drill-selected",
+            "actor_ref": "actor:user:01",
+            "permission_snapshot_ref": "permission:backup:01",
+            "idempotency_key": "idempotency:drill-selected",
+            "expected_currentness_ref": "currentness:backup:01",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "settings",
+            "return_route_ref": "route:settings:backup",
+            "selected_input": {
+              "repository_id": "backup-repository:project-alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:project-alpha-nas-02",
+              "isolated_destination_ref": "isolated-destination:disposable",
+              "coverage": {
+                "selected_family_ids": [
+                  "project.settings"
+                ],
+                "path_selection": "all_paths_in_selected_families",
+                "selected_path_refs": []
+              },
+              "cost_approval_ref": null
+            }
+          },
+          "snapshot_selection": {
+            "repository_id": "backup-repository:project-alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:project-alpha-nas-02"
+          },
+          "isolated_destination_ref": "isolated-destination:disposable",
+          "target_identity_ref": "target:disposable-01",
+          "server_id": "server:home-01",
+          "host_id": "execution-host:home-01",
+          "environment_id": "execution-environment:native-linux-01",
+          "project_id": null,
+          "containment_ref": "containment:drill-01",
+          "target_generation": 1,
+          "lease_ref": "lease:drill-01",
+          "permission_decision_ref": "permission:drill-01",
+          "filesafe_decision_ref": "filesafe:drill-01",
+          "resource_admission_ref": "resources:drill-01",
+          "cost_network_admission_ref": "cost-network:drill-01",
+          "admitted_at_utc": "2026-09-24T12:00:00Z"
+        },
+        "requested_coverage": {
+          "selected_family_ids": [
+            "project.settings"
+          ],
+          "path_selection": "all_paths_in_selected_families",
+          "selected_path_refs": []
+        },
+        "attempted_coverage": {
+          "selected_family_ids": [
+            "project.settings"
+          ],
+          "path_selection": "all_paths_in_selected_families",
+          "selected_path_refs": [],
+          "evidence_refs": [
+            "evidence:attempted"
+          ]
+        },
+        "achieved_coverage": {
+          "selected_family_ids": [
+            "project.settings"
+          ],
+          "path_selection": "all_paths_in_selected_families",
+          "selected_path_refs": [],
+          "evidence_refs": [
+            "evidence:achieved"
+          ]
+        },
+        "verification_status": "passed",
+        "operation_status": "completed",
+        "effects": [
+          {
+            "effect_id": "effect:drill-0",
+            "phase": "staging",
+            "target_identity_ref": "target:disposable-01",
+            "outcome": "completed",
+            "artifact_refs": [
+              "artifact:disposable"
+            ],
+            "evidence_refs": [
+              "evidence:phase-0"
+            ],
+            "failure_refs": []
+          },
+          {
+            "effect_id": "effect:drill-1",
+            "phase": "isolated_verification",
+            "target_identity_ref": "target:disposable-01",
+            "outcome": "completed",
+            "artifact_refs": [
+              "artifact:disposable"
+            ],
+            "evidence_refs": [
+              "evidence:phase-1"
+            ],
+            "failure_refs": []
+          },
+          {
+            "effect_id": "effect:drill-2",
+            "phase": "cleanup",
+            "target_identity_ref": "target:disposable-01",
+            "outcome": "completed",
+            "artifact_refs": [],
+            "evidence_refs": [
+              "evidence:phase-2"
+            ],
+            "failure_refs": []
+          }
+        ],
+        "native_source_closure_refs": [],
+        "jj_verification_receipt_ref": null,
+        "rebuild_retained_operation_proof_refs": [],
+        "cleanup_status": "completed",
+        "cleanup_evidence_refs": [
+          "evidence:cleanup"
+        ],
+        "residual_artifact_refs": [],
+        "recovery_ref": null
+      }
+    },
+    {
+      "name": "verified_but_cleanup_obligation_retained",
+      "definition": "backup_drill_verification_receipt_v2",
+      "value": {
+        "schema_id": "pm.backup_restore_system.backup_verification_receipt.drill.v2",
+        "schema_version": "2.0.0",
+        "receipt_id": "receipt:drill-cleanup-failed",
+        "operation_id": "operation:drill-selected",
+        "command_id": "cmd.backup.test_restore",
+        "idempotency_key": "idempotency:drill-selected",
+        "correlation_id": "correlation:verify",
+        "server_id": "server:home-01",
+        "project_ids": [
+          "project:alpha"
+        ],
+        "started_at_utc": "2026-09-24T12:00:00Z",
+        "completed_at_utc": "2026-09-24T12:01:00Z",
+        "evidence_refs": [
+          "evidence:structure"
+        ],
+        "failure_refs": [
+          "failure:cleanup"
+        ],
+        "redaction_profile": "no_secret_values_no_absolute_paths",
+        "original_operation": {
+          "operation_id": "operation:drill-selected",
+          "command_id": "cmd.backup.test_restore",
+          "command_instance_id": "command:drill-selected",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:backup:01",
+          "idempotency_key": "idempotency:drill-selected",
+          "expected_currentness_ref": "currentness:backup:01",
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_surface": "settings",
+          "return_route_ref": "route:settings:backup",
+          "selected_input": {
+            "repository_id": "backup-repository:project-alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:project-alpha-nas-02",
+            "isolated_destination_ref": "isolated-destination:disposable",
+            "coverage": {
+              "selected_family_ids": [
+                "project.settings"
+              ],
+              "path_selection": "all_paths_in_selected_families",
+              "selected_path_refs": []
+            },
+            "cost_approval_ref": null
+          }
+        },
+        "source_resolution": {
+          "schema_id": "pm.backup_restore_system.snapshot_resolution.v1",
+          "schema_version": "1.0.0",
+          "operation_binding": {
+            "operation_id": "operation:drill-selected",
+            "command_id": "cmd.backup.test_restore",
+            "command_instance_id": "command:drill-selected",
+            "actor_ref": "actor:user:01",
+            "permission_snapshot_ref": "permission:backup:01",
+            "idempotency_key": "idempotency:drill-selected",
+            "expected_currentness_ref": "currentness:backup:01",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "settings",
+            "return_route_ref": "route:settings:backup",
+            "selected_input": {
+              "repository_id": "backup-repository:project-alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:project-alpha-nas-02",
+              "isolated_destination_ref": "isolated-destination:disposable",
+              "coverage": {
+                "selected_family_ids": [
+                  "project.settings"
+                ],
+                "path_selection": "all_paths_in_selected_families",
+                "selected_path_refs": []
+              },
+              "cost_approval_ref": null
+            }
+          },
+          "selection": {
+            "repository_id": "backup-repository:project-alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:project-alpha-nas-02"
+          },
+          "disposition": "resolved",
+          "resolved_source": {
+            "repository_binding_id": "repository-binding:project-alpha",
+            "origin_kind": "backup_run",
+            "origin_ref": "original:run-alpha-02",
+            "backup_run_id": "backup-run:project-alpha-02",
+            "backup_id": "backup:project-alpha-02",
+            "capture_set_id": "capture-set:project-alpha-02",
+            "destination_attempt_id": "destination-attempt:nas-02",
+            "commit_receipt_ref": "receipt:destination-commit:nas-02",
+            "repository_snapshot_ref": "snapshot-ref:opaque-selected",
+            "manifest_ref": "immutable:manifest-alpha-02",
+            "manifest_id": "backup-manifest:project-alpha-02",
+            "manifest_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "recovery_set_id": "recovery-set:home-01",
+            "server_id": "server:home-01",
+            "boundary_kind": "project",
+            "project_id": "project:alpha",
+            "project_vault_id": "project-vault:alpha"
+          },
+          "failure_reason": null
+        },
+        "target_admission": {
+          "schema_id": "pm.backup_restore_system.drill_target_admission.v1",
+          "schema_version": "1.0.0",
+          "original_operation": {
+            "operation_id": "operation:drill-selected",
+            "command_id": "cmd.backup.test_restore",
+            "command_instance_id": "command:drill-selected",
+            "actor_ref": "actor:user:01",
+            "permission_snapshot_ref": "permission:backup:01",
+            "idempotency_key": "idempotency:drill-selected",
+            "expected_currentness_ref": "currentness:backup:01",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "settings",
+            "return_route_ref": "route:settings:backup",
+            "selected_input": {
+              "repository_id": "backup-repository:project-alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:project-alpha-nas-02",
+              "isolated_destination_ref": "isolated-destination:disposable",
+              "coverage": {
+                "selected_family_ids": [
+                  "project.settings"
+                ],
+                "path_selection": "all_paths_in_selected_families",
+                "selected_path_refs": []
+              },
+              "cost_approval_ref": null
+            }
+          },
+          "snapshot_selection": {
+            "repository_id": "backup-repository:project-alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:project-alpha-nas-02"
+          },
+          "isolated_destination_ref": "isolated-destination:disposable",
+          "target_identity_ref": "target:disposable-01",
+          "server_id": "server:home-01",
+          "host_id": "execution-host:home-01",
+          "environment_id": "execution-environment:native-linux-01",
+          "project_id": null,
+          "containment_ref": "containment:drill-01",
+          "target_generation": 1,
+          "lease_ref": "lease:drill-01",
+          "permission_decision_ref": "permission:drill-01",
+          "filesafe_decision_ref": "filesafe:drill-01",
+          "resource_admission_ref": "resources:drill-01",
+          "cost_network_admission_ref": "cost-network:drill-01",
+          "admitted_at_utc": "2026-09-24T12:00:00Z"
+        },
+        "requested_coverage": {
+          "selected_family_ids": [
+            "project.settings"
+          ],
+          "path_selection": "all_paths_in_selected_families",
+          "selected_path_refs": []
+        },
+        "attempted_coverage": {
+          "selected_family_ids": [
+            "project.settings"
+          ],
+          "path_selection": "all_paths_in_selected_families",
+          "selected_path_refs": [],
+          "evidence_refs": [
+            "evidence:attempted"
+          ]
+        },
+        "achieved_coverage": {
+          "selected_family_ids": [
+            "project.settings"
+          ],
+          "path_selection": "all_paths_in_selected_families",
+          "selected_path_refs": [],
+          "evidence_refs": [
+            "evidence:achieved"
+          ]
+        },
+        "verification_status": "passed",
+        "operation_status": "recovery_required",
+        "effects": [
+          {
+            "effect_id": "effect:drill-0",
+            "phase": "staging",
+            "target_identity_ref": "target:disposable-01",
+            "outcome": "completed",
+            "artifact_refs": [
+              "artifact:disposable"
+            ],
+            "evidence_refs": [
+              "evidence:phase-0"
+            ],
+            "failure_refs": []
+          },
+          {
+            "effect_id": "effect:drill-1",
+            "phase": "isolated_verification",
+            "target_identity_ref": "target:disposable-01",
+            "outcome": "completed",
+            "artifact_refs": [
+              "artifact:disposable"
+            ],
+            "evidence_refs": [
+              "evidence:phase-1"
+            ],
+            "failure_refs": []
+          },
+          {
+            "effect_id": "effect:drill-2",
+            "phase": "cleanup",
+            "target_identity_ref": "target:disposable-01",
+            "outcome": "failed",
+            "artifact_refs": [],
+            "evidence_refs": [],
+            "failure_refs": [
+              "failure:cleanup"
+            ]
+          }
+        ],
+        "native_source_closure_refs": [],
+        "jj_verification_receipt_ref": null,
+        "rebuild_retained_operation_proof_refs": [],
+        "cleanup_status": "failed",
+        "cleanup_evidence_refs": [],
+        "residual_artifact_refs": [
+          "artifact:disposable"
+        ],
+        "recovery_ref": "recovery:cleanup"
+      }
+    },
+    {
+      "name": "jj_native_disposable_context_without_fake_live_restore",
+      "definition": "backup_jj_context_verification_receipt_v2",
+      "value": {
+        "schema_id": "pm.jujutsu.backup_restore_verification_receipt.v2",
+        "verification_receipt_id": "receipt:jj-drill-context-v2",
+        "source_closure_ref": "jj-closure:colocated:alpha:41",
+        "isolated_repository_context_ref": "repository-context:jj:project-alpha:isolated",
+        "native_toolchain_identity": {
+          "schema_id": "pm.source_control.native_toolchain_identity.v1",
+          "jj_executable_version": "0.44.0",
+          "jj_build_ref": "jj-build:0.44.0-release",
+          "adapter_version": "0.44.0",
+          "git_version": "2.55.0",
+          "repository_format_generation": "jj-store-format:2",
+          "minimum_readable_format_generation": "jj-store-format:2",
+          "execution_host_id": "execution-host:home-01",
+          "execution_environment_id": "execution-environment:native-linux-01",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "official_source_ref": "official-source:jj:0.44.0",
+          "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "toolchain_compatibility": "verified_compatible",
+        "read_pinning": {
+          "load_mode": "pinned_operation",
+          "pinned_operation_id": "op-drill-1",
+          "ignore_working_copy": true
+        },
+        "operation_heads_after_refs": [
+          "operation-head:alpha:restored:41"
+        ],
+        "verification_authored_operation": false,
+        "pointer_resolutions": [
+          {
+            "pointer_kind": "jj_repo_pointer",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:drill:repo",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "drill-path:jj:drill:repo",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "store_git_target",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:drill:git-target",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "drill-path:git:drill:common",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "git_commondir",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:git:drill:commondir",
+            "resolution_base": "git_directory",
+            "resolved_target_ref": "drill-path:git:drill:common",
+            "resolved_inside_boundary": true
+          }
+        ],
+        "layout_profile": "colocated",
+        "verified_revision": {
+          "kind": "jujutsu",
+          "change_id": "change:alpha:restored",
+          "commit_id": "commit:alpha:restored:41",
+          "operation_id": "jj-op:alpha:restored:41",
+          "workspace_id": "jj-workspace:alpha:isolated",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "operation_head_refs": [
+          "operation-head:alpha:restored:41"
+        ],
+        "selected_historical_operation_id": "jj-op:alpha:12",
+        "historical_operation_result": "verified_on_disposable_copy",
+        "object_closure_result": "complete",
+        "object_verification_depth": "full_data_read_passed",
+        "workspace_map_result": "verified",
+        "working_copy_relation": "dirty_files_preserved_separately",
+        "colocation_activation_disposition": "restored_colocated_single_writer",
+        "conflict_refs": [],
+        "collision_refs": [],
+        "activation_config_disposition": "sanitized_inactive",
+        "credential_resolution": "excluded_reconnect_required",
+        "credential_resolution_ref": null,
+        "remote_validation_receipt_ref": "restore-reconciliation:as-new:1",
+        "repository_forge_binding_ref": "forge-binding:forgejo:instance-a:project-alpha",
+        "automation_binding_ref": "automation-binding:github:ci-for-project-alpha",
+        "owner_route_refs": [
+          "route:cmd.backup.browse",
+          "route:cmd.jujutsu.operation.show",
+          "route:cmd.source_control.repository.bind"
+        ],
+        "isolated_verification": true,
+        "hook_execution_performed": false,
+        "remote_write_performed": false,
+        "expected_event_types": [],
+        "outcome": "sign_in_required",
+        "recorded_at_utc": "2026-09-01T14:30:00Z",
+        "verification_context": {
+          "kind": "isolated_drill",
+          "original_operation": {
+            "operation_id": "operation:drill-selected",
+            "command_id": "cmd.backup.test_restore",
+            "command_instance_id": "command:drill-selected",
+            "actor_ref": "actor:user:01",
+            "permission_snapshot_ref": "permission:backup:01",
+            "idempotency_key": "idempotency:drill-selected",
+            "expected_currentness_ref": "currentness:backup:01",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "settings",
+            "return_route_ref": "route:settings:backup",
+            "selected_input": {
+              "repository_id": "backup-repository:project-alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:project-alpha-nas-02",
+              "isolated_destination_ref": "isolated-destination:disposable",
+              "coverage": {
+                "selected_family_ids": [
+                  "project.settings"
+                ],
+                "path_selection": "all_paths_in_selected_families",
+                "selected_path_refs": []
+              },
+              "cost_approval_ref": null
+            }
+          },
+          "source_resolution": {
+            "schema_id": "pm.backup_restore_system.snapshot_resolution.v1",
+            "schema_version": "1.0.0",
+            "operation_binding": {
+              "operation_id": "operation:drill-selected",
+              "command_id": "cmd.backup.test_restore",
+              "command_instance_id": "command:drill-selected",
+              "actor_ref": "actor:user:01",
+              "permission_snapshot_ref": "permission:backup:01",
+              "idempotency_key": "idempotency:drill-selected",
+              "expected_currentness_ref": "currentness:backup:01",
+              "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "source_surface": "settings",
+              "return_route_ref": "route:settings:backup",
+              "selected_input": {
+                "repository_id": "backup-repository:project-alpha",
+                "backup_destination_id": "backup-destination:nas",
+                "snapshot_id": "snapshot:project-alpha-nas-02",
+                "isolated_destination_ref": "isolated-destination:disposable",
+                "coverage": {
+                  "selected_family_ids": [
+                    "project.settings"
+                  ],
+                  "path_selection": "all_paths_in_selected_families",
+                  "selected_path_refs": []
+                },
+                "cost_approval_ref": null
+              }
+            },
+            "selection": {
+              "repository_id": "backup-repository:project-alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:project-alpha-nas-02"
+            },
+            "disposition": "resolved",
+            "resolved_source": {
+              "repository_binding_id": "repository-binding:project-alpha",
+              "origin_kind": "backup_run",
+              "origin_ref": "original:run-alpha-02",
+              "backup_run_id": "backup-run:project-alpha-02",
+              "backup_id": "backup:project-alpha-02",
+              "capture_set_id": "capture-set:project-alpha-02",
+              "destination_attempt_id": "destination-attempt:nas-02",
+              "commit_receipt_ref": "receipt:destination-commit:nas-02",
+              "repository_snapshot_ref": "snapshot-ref:opaque-selected",
+              "manifest_ref": "immutable:manifest-alpha-02",
+              "manifest_id": "backup-manifest:project-alpha-02",
+              "manifest_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "recovery_set_id": "recovery-set:home-01",
+              "server_id": "server:home-01",
+              "boundary_kind": "project",
+              "project_id": "project:alpha",
+              "project_vault_id": "project-vault:alpha"
+            },
+            "failure_reason": null
+          },
+          "target_admission": {
+            "schema_id": "pm.backup_restore_system.drill_target_admission.v1",
+            "schema_version": "1.0.0",
+            "original_operation": {
+              "operation_id": "operation:drill-selected",
+              "command_id": "cmd.backup.test_restore",
+              "command_instance_id": "command:drill-selected",
+              "actor_ref": "actor:user:01",
+              "permission_snapshot_ref": "permission:backup:01",
+              "idempotency_key": "idempotency:drill-selected",
+              "expected_currentness_ref": "currentness:backup:01",
+              "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+              "source_surface": "settings",
+              "return_route_ref": "route:settings:backup",
+              "selected_input": {
+                "repository_id": "backup-repository:project-alpha",
+                "backup_destination_id": "backup-destination:nas",
+                "snapshot_id": "snapshot:project-alpha-nas-02",
+                "isolated_destination_ref": "isolated-destination:disposable",
+                "coverage": {
+                  "selected_family_ids": [
+                    "project.settings"
+                  ],
+                  "path_selection": "all_paths_in_selected_families",
+                  "selected_path_refs": []
+                },
+                "cost_approval_ref": null
+              }
+            },
+            "snapshot_selection": {
+              "repository_id": "backup-repository:project-alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:project-alpha-nas-02"
+            },
+            "isolated_destination_ref": "isolated-destination:disposable",
+            "target_identity_ref": "target:disposable-01",
+            "server_id": "server:home-01",
+            "host_id": "execution-host:home-01",
+            "environment_id": "execution-environment:native-linux-01",
+            "project_id": null,
+            "containment_ref": "containment:drill-01",
+            "target_generation": 1,
+            "lease_ref": "lease:drill-01",
+            "permission_decision_ref": "permission:drill-01",
+            "filesafe_decision_ref": "filesafe:drill-01",
+            "resource_admission_ref": "resources:drill-01",
+            "cost_network_admission_ref": "cost-network:drill-01",
+            "admitted_at_utc": "2026-09-24T12:00:00Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "jj_native_live_context_retains_genuine_refs",
+      "definition": "backup_jj_context_verification_receipt_v2",
+      "value": {
+        "schema_id": "pm.jujutsu.backup_restore_verification_receipt.v2",
+        "verification_receipt_id": "receipt:jj-live-context-v2",
+        "source_closure_ref": "jj-closure:colocated:alpha:41",
+        "isolated_repository_context_ref": "repository-context:jj:project-alpha:isolated",
+        "native_toolchain_identity": {
+          "schema_id": "pm.source_control.native_toolchain_identity.v1",
+          "jj_executable_version": "0.44.0",
+          "jj_build_ref": "jj-build:0.44.0-release",
+          "adapter_version": "0.44.0",
+          "git_version": "2.55.0",
+          "repository_format_generation": "jj-store-format:2",
+          "minimum_readable_format_generation": "jj-store-format:2",
+          "execution_host_id": "host:local",
+          "execution_environment_id": "environment:native",
+          "certification_catalog_ref": "catalog:jj:current",
+          "catalog_generation": 4,
+          "official_source_ref": "official-source:jj:0.44.0",
+          "recorded_at_utc": "2026-08-31T20:00:00Z"
+        },
+        "toolchain_compatibility": "verified_compatible",
+        "read_pinning": {
+          "load_mode": "pinned_operation",
+          "pinned_operation_id": "op-drill-1",
+          "ignore_working_copy": true
+        },
+        "operation_heads_after_refs": [
+          "operation-head:alpha:restored:41"
+        ],
+        "verification_authored_operation": false,
+        "pointer_resolutions": [
+          {
+            "pointer_kind": "jj_repo_pointer",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:drill:repo",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "drill-path:jj:drill:repo",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "store_git_target",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:jj:drill:git-target",
+            "resolution_base": "native_store_root",
+            "resolved_target_ref": "drill-path:git:drill:common",
+            "resolved_inside_boundary": true
+          },
+          {
+            "pointer_kind": "git_commondir",
+            "hop_index": 0,
+            "declared_target_ref": "store-pointer:git:drill:commondir",
+            "resolution_base": "git_directory",
+            "resolved_target_ref": "drill-path:git:drill:common",
+            "resolved_inside_boundary": true
+          }
+        ],
+        "layout_profile": "colocated",
+        "verified_revision": {
+          "kind": "jujutsu",
+          "change_id": "change:alpha:restored",
+          "commit_id": "commit:alpha:restored:41",
+          "operation_id": "jj-op:alpha:restored:41",
+          "workspace_id": "jj-workspace:alpha:isolated",
+          "bookmarks": [
+            "main"
+          ]
+        },
+        "operation_head_refs": [
+          "operation-head:alpha:restored:41"
+        ],
+        "selected_historical_operation_id": "jj-op:alpha:12",
+        "historical_operation_result": "verified_on_disposable_copy",
+        "object_closure_result": "complete",
+        "object_verification_depth": "full_data_read_passed",
+        "workspace_map_result": "verified",
+        "working_copy_relation": "dirty_files_preserved_separately",
+        "colocation_activation_disposition": "restored_colocated_single_writer",
+        "conflict_refs": [],
+        "collision_refs": [],
+        "activation_config_disposition": "sanitized_inactive",
+        "credential_resolution": "excluded_reconnect_required",
+        "credential_resolution_ref": null,
+        "remote_validation_receipt_ref": "restore-reconciliation:as-new:1",
+        "repository_forge_binding_ref": "forge-binding:forgejo:instance-a:project-alpha",
+        "automation_binding_ref": "automation-binding:github:ci-for-project-alpha",
+        "owner_route_refs": [
+          "route:cmd.backup.browse",
+          "route:cmd.jujutsu.operation.show",
+          "route:cmd.source_control.repository.bind"
+        ],
+        "isolated_verification": true,
+        "hook_execution_performed": false,
+        "remote_write_performed": false,
+        "expected_event_types": [],
+        "outcome": "sign_in_required",
+        "recorded_at_utc": "2026-09-01T14:30:00Z",
+        "verification_context": {
+          "kind": "live_restore",
+          "restore_run_ref": "restore-run:project-alpha:as-new:1",
+          "restore_preview_ref": "restore-preview:project-alpha:as-new:1"
+        }
+      }
+    }
+  ],
+  "invalid": [
+    {"name":"achieved_all_paths_without_attempted_all_paths", "base_valid":"isolated_settings_drill_completed_and_cleaned", "patch":{"attempted_coverage.path_selection":"selected_paths", "attempted_coverage.selected_path_refs":["path:other"]}, "semantic_rule":"achieved_paths_without_attempt"},
+    {"name":"native_pointer_hop_gap", "base_valid":"jj_native_disposable_context_without_fake_live_restore", "patch":{"pointer_resolutions.0.hop_index":2}, "semantic_rule":"jujutsu_pointer_resolution_incomplete_for_layout"},
+    {
+      "name": "outstanding_cleanup_cannot_complete",
+      "base_valid": "verified_but_cleanup_obligation_retained",
+      "patch": {
+        "operation_status": "completed"
+      },
+      "semantic_rule": "completed_with_cleanup_obligation"
+    },
+    {
+      "name": "drill_cannot_claim_activation_readiness",
+      "base_valid": "jj_native_disposable_context_without_fake_live_restore",
+      "patch": {
+        "outcome": "ready_for_owner_activation"
+      }
+    },
+    {
+      "name": "cross_branch_context_field_rejected",
+      "base_valid": "jj_native_disposable_context_without_fake_live_restore",
+      "patch": {
+        "verification_context.restore_run_ref": "restore:invented"
+      }
+    },
+    {
+      "name": "weak_native_object_depth_rejected",
+      "base_valid": "jj_native_disposable_context_without_fake_live_restore",
+      "patch": {
+        "object_verification_depth": "structure_passed"
+      }
+    }
+  ],
+  "static_join_sources": {
+    "description": "Explicit TEST ONLY mock resolver records, not public runtime authority or a durable contract. Existing historical independent fixtures are unchanged.",
+    "operation": {
+      "operation_id": "operation:drill-selected",
+      "command_id": "cmd.backup.test_restore",
+      "command_instance_id": "command:drill-selected",
+      "actor_ref": "actor:user:01",
+      "permission_snapshot_ref": "permission:backup:01",
+      "idempotency_key": "idempotency:drill-selected",
+      "expected_currentness_ref": "currentness:backup:01",
+      "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "source_surface": "settings",
+      "return_route_ref": "route:settings:backup",
+      "selected_input": {
+        "repository_id": "backup-repository:project-alpha",
+        "backup_destination_id": "backup-destination:nas",
+        "snapshot_id": "snapshot:project-alpha-nas-02",
+        "isolated_destination_ref": "isolated-destination:disposable",
+        "coverage": {
+          "selected_family_ids": [
+            "project.settings"
+          ],
+          "path_selection": "all_paths_in_selected_families",
+          "selected_path_refs": []
+        },
+        "cost_approval_ref": null
+      }
+    },
+    "repository_binding": {
+      "schema_id": "pm.backup_restore_system.backup_repository_binding.v2",
+      "schema_version": "2.0.0",
+      "repository_binding_id": "repository-binding:project-alpha",
+      "repository_id": "backup-repository:project-alpha",
+      "boundary_kind": "project",
+      "server_id": "server:home-01",
+      "project_id": "project:alpha",
+      "project_vault_id": "project-vault:alpha",
+      "recovery_set_id": "recovery-set:home-01",
+      "destination_binding_ids": [
+        "backup-destination:nas",
+        "backup-destination:b2"
+      ],
+      "writer_server_id": "server:home-01",
+      "maintenance_authority_ref": "maintenance-authority:project-alpha",
+      "source_location_refs": [
+        "source-location:alpha"
+      ],
+      "state": "ready",
+      "retention_policy_ref": "backup-policy:project-alpha",
+      "last_complete_snapshot_ref": "snapshot:project-alpha-01",
+      "quarantine_ref": null,
+      "currentness_ref": "currentness:repository:project-alpha"
+    },
+    "origin": {
+      "schema_id": "pm.backup_restore_system.backup_run.v2",
+      "schema_version": "2.0.0",
+      "backup_run_id": "backup-run:project-alpha-02",
+      "backup_id": "backup:project-alpha-02",
+      "capture_set_id": "capture-set:project-alpha-02",
+      "backup_type": "project_backup",
+      "server_id": "server:home-01",
+      "project_ids": [
+        "project:alpha"
+      ],
+      "project_vault_ids": [
+        "project-vault:alpha"
+      ],
+      "repository_binding_ids": [
+        "repository-binding:project-alpha"
+      ],
+      "repository_snapshot_refs": [
+        "snapshot-ref:opaque-selected"
+      ],
+      "recovery_set_id": "recovery-set:home-01",
+      "backup_policy_id": "backup-policy:project-alpha",
+      "expected_policy_revision": 1,
+      "state": "partial",
+      "capture_completeness": "complete",
+      "destination_attempts": [
+        {
+          "attempt_id": "destination-attempt:nas-02",
+          "backup_destination_id": "backup-destination:nas",
+          "repository_id": "backup-repository:project-alpha",
+          "upload_state": "committed",
+          "remote_snapshot_id": "snapshot:project-alpha-nas-02",
+          "commit_receipt_ref": "receipt:destination-commit:nas-02",
+          "failure_ref": null,
+          "started_at_utc": "2026-09-01T00:00:00Z",
+          "updated_at_utc": "2026-09-01T00:03:00Z",
+          "terminal_at_utc": "2026-09-01T00:03:00Z"
+        },
+        {
+          "attempt_id": "destination-attempt:b2-02",
+          "backup_destination_id": "backup-destination:b2",
+          "repository_id": "backup-repository:project-alpha",
+          "upload_state": "failed",
+          "remote_snapshot_id": null,
+          "commit_receipt_ref": null,
+          "failure_ref": "failure:destination-quota:b2-02",
+          "started_at_utc": "2026-09-01T00:00:00Z",
+          "updated_at_utc": "2026-09-01T00:04:00Z",
+          "terminal_at_utc": "2026-09-01T00:04:00Z"
+        }
+      ],
+      "integrity_verification_level": "structure_passed",
+      "restore_test_status": "not_run",
+      "catalog_revision": null,
+      "vault_generation_refs": [
+        "generation:vault-alpha:8"
+      ],
+      "recovery_point_receipt_ref": null,
+      "manifest_ref": "manifest:project-alpha-02",
+      "portable_secret_envelope_id": null,
+      "verification_receipt_ref": "receipt:verification:project-alpha-02",
+      "observable_work_ref": "observable-work:backup-project-alpha-02",
+      "phase_journal": {
+        "journal_ref": "journal:backup-project-alpha-02",
+        "phase_sequence": 12,
+        "phase_revision": 1,
+        "resume_ref": null,
+        "commit_marker_ref": "commit-marker:nas-02",
+        "rollback_marker_ref": null,
+        "quarantine_ref": null,
+        "last_reconciled_at_utc": "2026-09-01T00:04:00Z"
+      },
+      "idempotency_key": "backup-project-alpha-02",
+      "failure_ref": "failure:multi-destination-partial:project-alpha-02",
+      "started_at_utc": "2026-09-01T00:00:00Z",
+      "updated_at_utc": "2026-09-01T00:04:00Z",
+      "terminal_at_utc": "2026-09-01T00:04:00Z"
+    },
+    "manifest": {
+      "schema_id": "pm.backup_restore_system.backup_manifest.v2",
+      "schema_version": "2.0.0",
+      "manifest_id": "backup-manifest:project-alpha-02",
+      "manifest_version": "2.0.0",
+      "backup_id": "backup:project-alpha-02",
+      "capture_set_id": "capture-set:project-alpha-02",
+      "recovery_set_id": "recovery-set:home-01",
+      "repository_snapshot_refs": [
+        "snapshot-ref:opaque-selected"
+      ],
+      "backup_type": "project_backup",
+      "created_at_utc": "2026-08-31T12:00:00Z",
+      "server_id": "server:home-01",
+      "project_ids": [
+        "project:alpha"
+      ],
+      "project_vault_ids": [
+        "project-vault:alpha"
+      ],
+      "app_version": "0.1.0",
+      "storage_version": "1",
+      "protocol_version": 1,
+      "compatible_app_range": ">=0.1.0 <0.2.0",
+      "compatible_storage_range": ">=1 <2",
+      "consistency_boundaries": [
+        {
+          "consistency_boundary_id": "consistency-boundary:vault-alpha-7",
+          "boundary_kind": "project_vault",
+          "server_id": "server:home-01",
+          "project_id": "project:alpha",
+          "project_vault_id": "project-vault:alpha",
+          "catalog_revision": null,
+          "vault_generation_ref": "generation:vault-alpha:7",
+          "fence_receipt_ref": "receipt:consistency-fence:vault-alpha-7"
+        }
+      ],
+      "family_dispositions": [
+        {
+          "family_id": "project.settings",
+          "disposition": "included",
+          "reason_code": "selected_project_family",
+          "consistency_boundary_id": "consistency-boundary:vault-alpha-7"
+        }
+      ],
+      "objects": [
+        {
+          "object_id": "backup-object:vault-alpha-settings",
+          "family_id": "project.settings",
+          "consistency_boundary_id": "consistency-boundary:vault-alpha-7",
+          "relative_path": "projects/alpha/settings.canonical",
+          "byte_size": 4096,
+          "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "storage_encoding": "compressed_encrypted",
+          "encryption_metadata_ref": "encryption-metadata:backup-server-01:vault-alpha"
+        }
+      ],
+      "source_host_id": "execution-host:home-01",
+      "source_environment_id": "execution-environment:native-linux-01",
+      "source_code_inclusion_mode": "complete_project_source_git_jj",
+      "source_capture_completeness": "complete",
+      "portable_secret_envelope_id": null,
+      "parent_backup_id": null,
+      "incremental": false,
+      "verification_status": "passed",
+      "verification_receipt_ref": "receipt:backup-verification:server-01",
+      "manifest_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "redaction_profile": "no_secret_values"
+    }
+  }
+}

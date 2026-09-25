@@ -28,6 +28,12 @@ if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
 from pm_full_thread_semantics import full_thread_semantic_failures
 from pm_restore_semantics import restore_semantic_failures
+from pm_backup_action_semantics import backup_action_semantic_failures
+from pm_backup_snapshot_semantics import backup_snapshot_semantic_failures
+from pm_backup_compare_semantics import backup_compare_semantic_failures
+from pm_application_update_semantics import application_update_semantic_failures
+from pm_backup_drill_semantics import backup_drill_semantic_failures
+from pm_jujutsu_backup_semantics import jj_backup_pointer_failures, jj_backup_verification_failures
 from pm_browser_program_semantics import browser_program_semantic_failures
 from pm_onboarding_semantics import onboarding_semantic_failures, settings_draft_semantic_failures
 from pm_settings_search_semantics import settings_search_semantic_failures
@@ -42,6 +48,10 @@ from pm_forge_creation_semantics import forge_creation_semantic_failures
 # change, not an ambient glob that silently changes the validation denominator.
 CONTRACT_PAIRS = (
     ("Plans/backup_restore_system_contracts.schema.json", "Plans/backup_restore_system_contract_fixtures.json"),
+    ("Plans/backup_snapshot_result_contracts.schema.json", "Plans/backup_snapshot_result_contract_fixtures.json"),
+    ("Plans/backup_compare_result_contracts.schema.json", "Plans/backup_compare_result_contract_fixtures.json"),
+    ("Plans/backup_drill_result_contracts.schema.json", "Plans/backup_drill_result_contract_fixtures.json"),
+    ("Plans/application_update_check_contracts.schema.json", "Plans/application_update_check_contract_fixtures.json"),
     ("Plans/doctor_contracts.schema.json", "Plans/doctor_contract_fixtures.json"),
     ("Plans/egolite_retained_requirement_contracts.schema.json", "Plans/egolite_retained_requirement_contract_fixtures.json"),
     ("Plans/external_research_contracts.schema.json", "Plans/external_research_contract_fixtures.json"),
@@ -75,7 +85,7 @@ CONTRACT_PAIRS = (
     ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 32
+EXPECTED_CONTRACT_PAIR_COUNT = 36
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1130,40 +1140,13 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
     # JJI-008: the pointer chain a layout implies is resolved in full, and each
     # kind's hops are a complete 0..n-1 sequence.  A chain that stops early
     # resolves against whatever the process inherited.
-    if definition_name in {"backup_jj_closure_record", "backup_jj_restore_verification_receipt"}:
-        resolutions = value.get("pointer_resolutions")
-        layout = value.get("layout_profile")
-        if isinstance(resolutions, list) and isinstance(layout, str):
-            required = JUJUTSU_LAYOUT_REQUIRED_POINTER_KINDS.get(layout)
-            hops: dict[str, list[int]] = {}
-            present: set[str] = set()
-            for resolution in resolutions:
-                if not isinstance(resolution, dict):
-                    continue
-                kind = resolution.get("pointer_kind")
-                if not isinstance(kind, str):
-                    continue
-                present.add(kind)
-                index = resolution.get("hop_index")
-                if isinstance(index, int) and not isinstance(index, bool):
-                    hops.setdefault(kind, []).append(index)
-            if required is not None and not required.issubset(present):
-                failures.append("jujutsu_pointer_resolution_incomplete_for_layout")
-            for kind, indices in hops.items():
-                if sorted(indices) != list(range(len(indices))):
-                    failures.append("jujutsu_pointer_resolution_incomplete_for_layout")
-                    break
+    if definition_name == "backup_jj_closure_record":
+        failures.extend(jj_backup_pointer_failures(value))
 
     # JJI-008: a read-only verification observes the operation heads it was
     # given and authors none, so the two recorded sets are equal.
     if definition_name == "backup_jj_restore_verification_receipt":
-        before_refs = value.get("operation_head_refs")
-        after_refs = value.get("operation_heads_after_refs")
-        if isinstance(before_refs, list) and isinstance(after_refs, list):
-            before_set = {ref for ref in before_refs if isinstance(ref, str)}
-            after_set = {ref for ref in after_refs if isinstance(ref, str)}
-            if before_set != after_set:
-                failures.append("jujutsu_operation_heads_changed_during_read_only_verification")
+        failures.extend(jj_backup_verification_failures(value))
 
     # JJI-008: dependency objects are persisted before any referring head is
     # published, and activation markers are last.
@@ -1221,6 +1204,17 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/backup_drill_result_contracts.schema.json":
+        failures = backup_drill_semantic_failures(definition_name, value)
+        if definition_name == "backup_jj_context_verification_receipt_v2":
+            failures += jujutsu_semantic_failures("backup_jj_restore_verification_receipt", value)
+        return sorted(set(failures))
+    if schema_rel == "Plans/backup_snapshot_result_contracts.schema.json":
+        return backup_snapshot_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/backup_compare_result_contracts.schema.json":
+        return backup_compare_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/application_update_check_contracts.schema.json":
+        return application_update_semantic_failures(definition_name, value)
     if schema_rel == "Plans/forge_integration_contracts.schema.json":
         return forge_creation_semantic_failures(definition_name, value)
     if schema_rel == "Plans/named_plan_system_contracts.schema.json":
@@ -1250,7 +1244,8 @@ def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any
             )
         return browser_program_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_restore_system_contracts.schema.json":
-        return restore_semantic_failures(definition_name, value)
+        return sorted(set(restore_semantic_failures(definition_name, value)
+                          + backup_action_semantic_failures(definition_name, value)))
     if schema_rel == "Plans/full_thread_runtime_contracts.schema.json":
         if definition_name == "<root>" and isinstance(value, dict):
             definition_name = {

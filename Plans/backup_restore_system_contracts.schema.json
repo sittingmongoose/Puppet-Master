@@ -6,6 +6,7 @@
   "description": "Plans-only discriminated v2 contracts for independently recoverable Project and Catalog repositories, multi-destination encrypted backup, eleven destination families, RecoverySet/Recovery Kit custody, scheduling/retention, browse/retrieve, four mutating restore modes, migrations, health projections, and truthful evidence. These shapes are not runtime backup or recovery proof.",
   "oneOf": [
     {"$ref": "#/$defs/backup_destination"},
+    {"$ref": "#/$defs/backup_destination_v3"},
     {"$ref": "#/$defs/backup_policy"},
     {"$ref": "#/$defs/backup_run"},
     {"$ref": "#/$defs/backup_manifest"},
@@ -32,6 +33,7 @@
     {"$ref": "#/$defs/backup_restore_command_request"},
     {"$ref": "#/$defs/backup_action_request_v2"},
     {"$ref": "#/$defs/backup_restore_command_result"},
+    {"$ref": "#/$defs/backup_action_result_v2"},
     {"$ref": "#/$defs/backup_restore_command_error"},
     {"$ref": "#/$defs/backup_restore_command_availability"},
     {"$ref": "#/$defs/backup_architecture_admission_record"},
@@ -2581,6 +2583,137 @@
         {"if": {"properties": {"command_id": {"const": "cmd.backup.verify"}}, "required": ["command_id"]}, "then": {"properties": {"action_input": {"$ref": "#/$defs/backup_verify_input"}}}},
         {"if": {"properties": {"command_id": {"const": "cmd.backup.test_restore"}}, "required": ["command_id"]}, "then": {"properties": {"action_input": {"$ref": "#/$defs/backup_test_restore_input"}}}},
         {"if": {"properties": {"command_id": {"const": "cmd.backup.file.compare"}}, "required": ["command_id"]}, "then": {"properties": {"action_input": {"$ref": "#/$defs/backup_compare_input"}}}}
+      ]
+    },
+    "backup_operation_binding": {
+      "description": "BRS-030 immutable nonsecret domain selection/correlation, embedded only in an explicitly admitted owner record. Not a saved request transport, authority token or standalone physical family. Authentic original admission and source custody are supplied by the actual owner, not this JSON.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation_id", "command_id", "command_instance_id", "idempotency_key", "actor_ref", "permission_snapshot_ref", "expected_currentness_ref", "expected_currentness_sha256", "source_surface", "return_route_ref", "selected_input"],
+      "properties": {
+        "operation_id": {"$ref": "#/$defs/stable_id"},
+        "command_id": {"$ref": "#/$defs/backup_action_request_v2/properties/command_id"},
+        "command_instance_id": {"$ref": "#/$defs/stable_id"},
+        "idempotency_key": {"$ref": "#/$defs/non_empty_string"},
+        "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "permission_snapshot_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "expected_currentness_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "expected_currentness_sha256": {"$ref": "#/$defs/sha256"},
+        "source_surface": {"$ref": "#/$defs/backup_action_request_v2/properties/source_surface"},
+        "return_route_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "selected_input": {"type": "object"}
+      },
+      "allOf": [
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.destination.update"}}}, "then": {"properties": {"selected_input": {"$ref": "#/$defs/backup_destination_update_input"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.verify"}}}, "then": {"properties": {"selected_input": {"$ref": "#/$defs/backup_verify_input"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.test_restore"}}}, "then": {"properties": {"selected_input": {"$ref": "#/$defs/backup_test_restore_input"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.file.compare"}}}, "then": {"properties": {"selected_input": {"$ref": "#/$defs/backup_compare_input"}}}}
+      ]
+    },
+    "backup_destination_update_result": {
+      "description": "Redacted domain outcome embedded in versioned destination metadata; not a sixth receipt family or public transport response. State refs resolve genuine owner-retained snapshots, not current/latest aliases. Unknown or partial reconciliation cannot be reported as a completed update. Native owner authentication, original effect fencing and derived test applicability remain independently mandatory.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result_kind", "original_operation", "before_state_ref", "before_generation", "outcome", "effect_status", "after_state_ref", "after_generation", "failure_refs", "recovery_ref", "completed_at_utc"],
+      "properties": {
+        "result_kind": {"const": "destination_update"},
+        "original_operation": {"allOf": [{"$ref": "#/$defs/backup_operation_binding"}, {"properties": {"command_id": {"const": "cmd.backup.destination.update"}}}]},
+        "before_state_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "before_generation": {"$ref": "#/$defs/backup_destination/properties/destination_generation"},
+        "outcome": {"enum": ["completed", "no_change", "failed", "cancelled"]},
+        "effect_status": {"enum": ["applied", "not_applied", "partial", "unknown"]},
+        "after_state_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "after_generation": {"oneOf": [{"$ref": "#/$defs/backup_destination/properties/destination_generation"}, {"type": "null"}]},
+        "failure_refs": {"$ref": "#/$defs/ref_list"},
+        "recovery_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "completed_at_utc": {"$ref": "#/$defs/timestamp"}
+      },
+      "allOf": [
+        {"if": {"properties": {"outcome": {"const": "completed"}}}, "then": {"properties": {"effect_status": {"const": "applied"}, "failure_refs": {"maxItems": 0}, "recovery_ref": {"type": "null"}}}},
+        {"if": {"properties": {"outcome": {"const": "no_change"}}}, "then": {"properties": {"effect_status": {"const": "not_applied"}, "failure_refs": {"maxItems": 0}, "recovery_ref": {"type": "null"}}}},
+        {"if": {"properties": {"outcome": {"enum": ["failed", "cancelled"]}}}, "then": {"properties": {"failure_refs": {"minItems": 1}}}},
+        {"if": {"properties": {"effect_status": {"const": "unknown"}}}, "then": {"properties": {"after_state_ref": {"type": "null"}, "after_generation": {"type": "null"}, "recovery_ref": {"$ref": "#/$defs/non_secret_ref"}}}, "else": {"properties": {"after_state_ref": {"$ref": "#/$defs/non_secret_ref"}, "after_generation": {"$ref": "#/$defs/backup_destination/properties/destination_generation"}}}},
+        {"if": {"properties": {"outcome": {"enum": ["failed", "cancelled"]}, "effect_status": {"enum": ["applied", "partial"]}}}, "then": {"properties": {"recovery_ref": {"$ref": "#/$defs/non_secret_ref"}}}}
+      ]
+    },
+    "backup_destination_v3": {
+      "title": "BackupDestination original update custody edition",
+      "description": "Update-custody edition produced only after a genuine update attempt, retaining the established v2 state shape and actual outcome. Never automatically migrate a never-updated or unavailable-history v2 destination into a fabricated update. For unknown effects destination is explicitly the last known pre-attempt state, not current/resulting truth. Not a history archive; loss of original outcome/state makes replay unavailable. Physical registration remains pending; shape alone cannot authenticate custody.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "destination", "destination_state_role", "last_update"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.backup_destination.v3"},
+        "schema_version": {"const": "3.0.0"},
+        "destination": {"$ref": "#/$defs/backup_destination"},
+        "destination_state_role": {"enum": ["observed_result", "last_known_before_unresolved_effect"]},
+        "last_update": {"$ref": "#/$defs/backup_destination_update_result"}
+      },
+      "allOf": [
+        {"if": {"properties": {"last_update": {"properties": {"effect_status": {"const": "unknown"}}}}}, "then": {"properties": {"destination_state_role": {"const": "last_known_before_unresolved_effect"}}}, "else": {"properties": {"destination_state_role": {"const": "observed_result"}}}}
+      ]
+    },
+    "backup_destination_update_validation_input": {
+      "description": "Static joined-record fixture only, never an owner source, command transport, storage record or authority. Native code must resolve original admission, original outcome and state snapshots independently and run actual proof/disclosure callbacks. It must not accept this caller facts container.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "runtime_evidence", "original_operation", "resolved_metadata", "before_state", "after_state"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.destination_update_validation_input.v1"},
+        "runtime_evidence": {"const": false},
+        "original_operation": {"allOf": [{"$ref": "#/$defs/backup_operation_binding"}, {"properties": {"command_id": {"const": "cmd.backup.destination.update"}}}]},
+        "resolved_metadata": {"$ref": "#/$defs/backup_destination_v3"},
+        "before_state": {"$ref": "#/$defs/backup_destination"},
+        "after_state": {"oneOf": [{"$ref": "#/$defs/backup_destination"}, {"type": "null"}]}
+      }
+    },
+    "backup_current_command_request": {
+      "description": "Current shape admission only: exactly four BRS-030 successor inputs plus the other 37 legacy command shapes. Does not enable handlers or establish owner/storage/permission admission. Old four v1 shapes remain in the historical root decoder but not this current union.",
+      "oneOf": [
+        {"$ref": "#/$defs/backup_action_request_v2"},
+        {"allOf": [{"$ref": "#/$defs/backup_restore_command_request"}, {"not": {"properties": {"command_id": {"$ref": "#/$defs/backup_action_request_v2/properties/command_id"}}, "required": ["command_id"]}}]}
+      ]
+    },
+    "backup_action_result_v2": {
+      "description": "Nonpersisted four-action transport. Terminal truth is independently resolved from original versioned destination/verification/drill/browse owner metadata, never from reference presence. Current disclosure and exact original-operation joins are mandatory. Accepted is not completed. Fresh transport command_instance_id may describe a replay invocation; original_operation retains the first owner identity.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "command_id", "command_instance_id", "outcome", "original_operation", "domain_result_kind", "domain_result_ref", "observable_work_ref", "currentness_ref", "currentness_sha256", "error_ref", "disabled_reason", "replayed"],
+      "properties": {
+        "schema_id": {"const": "pm.backup_restore_system.action_result.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "command_id": {"$ref": "#/$defs/backup_action_request_v2/properties/command_id"},
+        "command_instance_id": {"$ref": "#/$defs/stable_id"},
+        "outcome": {"enum": ["accepted", "completed", "no_change", "failed", "partial", "cancelled", "disabled", "rejected", "unavailable"]},
+        "original_operation": {"oneOf": [{"$ref": "#/$defs/backup_operation_binding"}, {"type": "null"}]},
+        "domain_result_kind": {"enum": ["destination_update", "verification", "isolated_drill", "compare", null]},
+        "domain_result_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "observable_work_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "currentness_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "currentness_sha256": {"$ref": "#/$defs/sha256"},
+        "error_ref": {"$ref": "#/$defs/nullable_non_secret_ref"},
+        "disabled_reason": {"oneOf": [{"$ref": "#/$defs/backup_restore_disabled_reason"}, {"type": "null"}]},
+        "replayed": {"type": "boolean"}
+      },
+      "allOf": [
+        {"if": {"properties": {"outcome": {"const": "accepted"}}}, "then": {"properties": {"original_operation": {"$ref": "#/$defs/backup_operation_binding"}, "domain_result_kind": {"type": "null"}, "domain_result_ref": {"type": "null"}, "observable_work_ref": {"$ref": "#/$defs/non_secret_ref"}, "error_ref": {"type": "null"}, "disabled_reason": {"type": "null"}}}},
+        {"if": {"properties": {"outcome": {"enum": ["completed", "no_change", "failed", "partial", "cancelled"]}}}, "then": {"properties": {"original_operation": {"$ref": "#/$defs/backup_operation_binding"}, "domain_result_kind": {"enum": ["destination_update", "verification", "isolated_drill", "compare"]}, "domain_result_ref": {"$ref": "#/$defs/non_secret_ref"}, "disabled_reason": {"type": "null"}}}},
+        {"if": {"properties": {"outcome": {"enum": ["completed", "no_change"]}}}, "then": {"properties": {"error_ref": {"type": "null"}}}},
+        {"if": {"properties": {"outcome": {"enum": ["failed", "partial", "cancelled", "disabled", "rejected", "unavailable"]}}}, "then": {"properties": {"error_ref": {"$ref": "#/$defs/non_secret_ref"}}}},
+        {"if": {"properties": {"outcome": {"enum": ["disabled", "rejected", "unavailable"]}}}, "then": {"properties": {"domain_result_kind": {"type": "null"}, "domain_result_ref": {"type": "null"}, "replayed": {"const": false}}}},
+        {"if": {"properties": {"outcome": {"const": "disabled"}}}, "then": {"properties": {"disabled_reason": {"$ref": "#/$defs/backup_restore_disabled_reason"}}}, "else": {"properties": {"disabled_reason": {"type": "null"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.destination.update"}, "domain_result_kind": {"type": "string"}}}, "then": {"properties": {"domain_result_kind": {"const": "destination_update"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.verify"}, "domain_result_kind": {"type": "string"}}}, "then": {"properties": {"domain_result_kind": {"const": "verification"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.test_restore"}, "domain_result_kind": {"type": "string"}}}, "then": {"properties": {"domain_result_kind": {"const": "isolated_drill"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.backup.file.compare"}, "domain_result_kind": {"type": "string"}}}, "then": {"properties": {"domain_result_kind": {"const": "compare"}}}},
+        {"if": {"properties": {"outcome": {"const": "no_change"}}}, "then": {"properties": {"command_id": {"const": "cmd.backup.destination.update"}}}}
+      ]
+    },
+    "backup_current_command_result": {
+      "description": "Current result shape union, not runtime enablement. Legacy four results remain historically readable outside this union.",
+      "oneOf": [
+        {"$ref": "#/$defs/backup_action_result_v2"},
+        {"allOf": [{"$ref": "#/$defs/backup_restore_command_result"}, {"not": {"properties": {"command_id": {"$ref": "#/$defs/backup_action_request_v2/properties/command_id"}}, "required": ["command_id"]}}]}
       ]
     },
     "backup_restore_command_request": {

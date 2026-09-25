@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6013,
+      "line_count": 6016,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "cb30c059749992fbb13703b93a3b7d6fda0f36daa70a2dab2cb22f4632369929",
+      "sha256": "ef243c4a1e70a6652b49179cd09db4efdf10736e14ad5dbb5cc328b403a3db56",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -2398,7 +2398,7 @@
         "future restore coordinator",
         "future security adapter registry"
       ],
-      "line_count": 1915,
+      "line_count": 1923,
       "path": "Plans/Backup_Restore_System.md",
       "plan_unit_count": 30,
       "plan_unit_ids": [
@@ -2468,7 +2468,7 @@
         "unsafe_restore_or_false_operational_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "bf9834d11091eb7284df55dcf2d3945cac0d4ddcda0c9561ae5745d791b60944",
+      "sha256": "0f3a7dc0e8d28ff709730bd150c9072d8cb0e1c20542c920697eeef1d6ac3308",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 30
@@ -3772,7 +3772,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "cde3ded4bb6905026188fb85f40e428ea7d0f215f6f9bef779ec4d7b374d1de2",
+      "sha256": "3e57ee1922adc92e4fb63c505d620e8446c30aa308f713920a602df6a2857a6b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80
@@ -6497,10 +6497,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 12,
+        "False": 13,
         "True": 72
       },
-      "heading_count": 167,
+      "heading_count": 168,
       "implementation_surfaces": [
         "Concepts/pm6-build/parts/12-html-side-panels.part.html",
         "Concepts/pm6-build/parts/29x-pm6-js-cozy-shelves.part.html",
@@ -6517,12 +6517,13 @@
         "future File Manager panel",
         "future File Manager snapshot browser and compare surfaces",
         "future File Manager type-ahead UI",
+        "future File owner compare read producer",
         "future editor viewer renderer",
         "future file tree renderer"
       ],
-      "line_count": 5234,
+      "line_count": 5274,
       "path": "Plans/FileManager.md",
-      "plan_unit_count": 84,
+      "plan_unit_count": 85,
       "plan_unit_ids": [
         "F-002",
         "F-003",
@@ -6607,7 +6608,8 @@
         "F-081",
         "F-084",
         "F-082",
-        "F-083"
+        "F-083",
+        "F-085"
       ],
       "reasoning_tiers": [
         "high",
@@ -6629,15 +6631,15 @@
         "migration_lineage",
         "source_history_identity_safety_or_false_recovery"
       ],
-      "sha256": "2028f5e06eadbcc9af325d3d66d6ee34046880b8f348d6923d855e6f5131fbfd",
+      "sha256": "33eee4047344b9fac5d0f051c94db21cb0e31b39f9b4389d3e6bacb538e16c13",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 84
+        "accepted": 85
       },
       "title": "File Manager & IDE-style Editor -- Plan",
       "unit_type_counts": {
         "compatibility_disposition": 2,
-        "integration_contract": 2,
+        "integration_contract": 3,
         "requirement": 80
       },
       "validation_surfaces": [
@@ -6652,6 +6654,8 @@
         "Plans/Backup_Restore_System.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
+        "Plans/backup_compare_result_contract_fixtures.json",
+        "Plans/backup_compare_result_contracts.schema.json",
         "Plans/backup_restore_system_contracts.schema.json",
         "Plans/touch_closure.json",
         "future Files snapshot topology FileSafe currentness reverse-route archive-consent and event-silence tests",
@@ -6663,7 +6667,8 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-        "scripts/pm-assistant-contract-check.py"
+        "scripts/pm-assistant-contract-check.py",
+        "tests/test_pm_backup_compare_results.py"
       ]
     },
     {
@@ -9232,7 +9237,7 @@
         "future qualified owner adapter and typed contract extensions",
         "future signed compatibility catalog and qualified owner adapter"
       ],
-      "line_count": 1640,
+      "line_count": 1664,
       "path": "Plans/Jujutsu_Integration.md",
       "plan_unit_count": 22,
       "plan_unit_ids": [
@@ -9286,7 +9291,7 @@
         "verified_group_undo_redo_and_selected_operation_reversal",
         "version_comparison_and_focused_change_evolution"
       ],
-      "sha256": "711a663f05cca358d04c3b5e1b99bb2050fe1095a47b052eb2c75f4c272697a8",
+      "sha256": "eca08e057648bc1f0072422173cde655d46e027372f23d9be5c7770c0b252113",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 22
@@ -9306,6 +9311,8 @@
         "Git compatibility preflight fixtures",
         "JJ repository context fixtures",
         "JJ setup fixtures",
+        "Plans/backup_drill_result_contract_fixtures.json",
+        "Plans/backup_drill_result_contracts.schema.json",
         "Plans/backup_restore_system_contract_fixtures.json",
         "Plans/backup_restore_system_contracts.schema.json",
         "Plans/jujutsu_integration_contract_fixtures.json",
@@ -9342,6 +9349,7 @@
         "future setup, cancellation and exact-version positive and negative fixtures; static prose is not runtime proof",
         "late mutation quarantine tests",
         "move and resume fixtures",
+        "python3 -m unittest discover -s tests -p test_pm_backup_drill_results.py",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-touch-closure-verify.py --json",
@@ -14867,7 +14875,7 @@
         "False": 8,
         "True": 10
       },
-      "heading_count": 46,
+      "heading_count": 47,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -14892,7 +14900,7 @@
         "future ApplicationUpdateService handler",
         "future release/supply-chain receipt contracts"
       ],
-      "line_count": 1466,
+      "line_count": 1490,
       "path": "Plans/Release_Supply_Chain.md",
       "plan_unit_count": 18,
       "plan_unit_ids": [
@@ -14937,7 +14945,7 @@
         "release_platform_or_performance_false_claim",
         "unproved_or_incompatible_reader_installation"
       ],
-      "sha256": "12a0786d3c9f3afa7b43b24796ffc62366c3a7e9548dffa599237635b281145c",
+      "sha256": "4e1d589dc1a63817976dbe2cd67e29a39030ee8a46f47c3763103ffab10019de",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -14971,6 +14979,8 @@
         "Package ownership/mode mismatches fail install validation",
         "Package/update artifacts require signed provenance/SBOM/hash/attestation checks and latest-tag drift detection.",
         "Plans/Automated_Testing_System.md#ATS-024",
+        "Plans/application_update_check_contract_fixtures.json",
+        "Plans/application_update_check_contracts.schema.json",
         "Plans/goal_created_reader_contracts/resource-bindings.json",
         "Plans/goal_created_reader_support_map.schema.json",
         "Plans/platform_package_support_map.schema.json",
@@ -15016,6 +15026,7 @@
         "rollback",
         "selected renderer-order and fallback-path verification",
         "size-budget receipts",
+        "tests/test_pm_application_update_checks.py",
         "update",
         "update diff"
       ]
@@ -19974,7 +19985,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T01:57:32Z",
+  "generated_at_utc": "2026-09-25T04:15:15Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19982,13 +19993,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3523,
+      "False": 3524,
       "True": 3199
     },
-    "plan_unit_count": 6722,
+    "plan_unit_count": 6723,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6531,
+      "accepted": 6532,
       "retired": 182,
       "superseded": 9
     },
@@ -20035,7 +20046,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 83,
+      "integration_contract": 84,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,

@@ -78,7 +78,7 @@
   ],
   "next_repair_batch": {
     "area": "Backup input contracts and owner composition",
-    "status": "owner_prose_and_additive_input_shapes_repaired_current_admission_and_owner_result_joins_pending",
+    "status": "owner_inputs_results_and_current_admission_materialized_physical_specification_and_native_execution_pending",
     "canonical_writes_started": true,
     "owner_step_report": "reports/packet-canon-closure-20260924/backup-four-operands-owner-repair.md",
     "input_shape_step_report": "reports/packet-canon-closure-20260924/backup-input-shapes.md",
@@ -86,6 +86,7 @@
     "actual_owner_prerequisites_report": "reports/packet-canon-closure-20260924/follow-up-owner-prerequisites.md",
     "destination_proof_correction_report": "reports/packet-canon-closure-20260924/backup-destination-proof-correction.md",
     "four_action_owner_protocol_report": "reports/packet-canon-closure-20260924/backup-four-action-owner-protocol.md",
+    "companion_step_report": "reports/packet-canon-closure-20260924/backup-and-update-companions.md",
     "cases": [
       {"case_id": "ACT-089", "requirement": "selected destination update configuration/patch"},
       {"case_id": "ACT-101", "requirement": "selected verification snapshot set and verification level"},

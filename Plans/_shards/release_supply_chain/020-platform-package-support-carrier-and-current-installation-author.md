@@ -2,9 +2,9 @@
 
 Source: `Plans/Release_Supply_Chain.md`
 
-Source lines: L1290-L1366
+Source lines: L1314-L1390
 
-Source SHA256: `12a0786d3c9f3afa7b43b24796ffc62366c3a7e9548dffa599237635b281145c`
+Source SHA256: `4e1d589dc1a63817976dbe2cd67e29a39030ee8a46f47c3763103ffab10019de`
 
 ---
 

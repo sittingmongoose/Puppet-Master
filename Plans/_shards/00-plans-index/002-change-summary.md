@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L91
+Source lines: L7-L94
 
-Source SHA256: `cb30c059749992fbb13703b93a3b7d6fda0f36daa70a2dab2cb22f4632369929`
+Source SHA256: `ef243c4a1e70a6652b49179cd09db4efdf10736e14ad5dbb5cc328b403a3db56`
 
 ---
 
 ## Change Summary
+
+- 2026-09-25: BRS-030 machine companions bind original Backup selection to destination outcomes, immutable snapshot resolution and selected-set verification, isolated-drill target/cleanup and JJI-008 native context, and File/SCM comparison under F-085. Four current request/result bindings evolve; the other 37 remain exact and all handlers stay unavailable. RSC-014 application-check cadence and successful-source settlement are materialized separately, preserving existing RSC-008 metadata and bundled connector ownership. The closed static gate adds `backup_snapshot_result_contracts`, `backup_compare_result_contracts`, `backup_drill_result_contracts` and `application_update_check_contracts` schema/fixture pairs. Storage dispositions distinguish internal nonpersisted reads/transport from pending redacted domain metadata; no physical family or EventRecord is added. Original native source admission, physical persistence, execution and runtime proof remain prerequisites. Newer assistant-chat, Help/Teacher, Back Seat Driver and Context Lens designs are unchanged.
+  ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-030, ContractName:Plans/FileManager.md#F-085, ContractName:Plans/Jujutsu_Integration.md#JJI-008, ContractName:Plans/Release_Supply_Chain.md#RSC-014
 
 - 2026-09-23: Registered `Plans/back_seat_driver_contracts.schema.json` as the typed machine companion for the six `pm.bsd.*` record families declared by `Plans/Back_Seat_Driver.md` §16, with the central storage disposition row `scd.back_seat_driver.durable.v1` under new storage-plan unit `SP-318`. Routing/contract-materialization only: no physical family, no storage key, no EventRecord registration, no writer, and no handler availability or readiness change; the CS-078 `cmd.bsd.*` rows keep `handler_unavailable` and the command request/result definitions remain future owner-authored artifacts. The legacy `pm.shared_runtime.bsd_runtime_record.v1` completed-review summary is not extended.
   ContractRef: ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/storage-plan.md#SP-318, ContractName:Plans/Commands_System.md#CS-078

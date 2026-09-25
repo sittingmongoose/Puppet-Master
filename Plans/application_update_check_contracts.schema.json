@@ -1,0 +1,568 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/application_update_check_contracts.schema.json",
+  "title": "RSC-014 application check policy and settlement contracts",
+  "x-schema-id": "pm.application_update_check.contracts.v1",
+  "x-claim-boundary": "Static contract only. No native original source admission, command handler, physical storage or runtime proof.",
+  "$defs": {
+    "ApplicationCheckScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "server_id",
+        "installation_id",
+        "installation_generation",
+        "source_id",
+        "source_generation",
+        "channel_id"
+      ],
+      "properties": {
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "installation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "installation_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "source_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "channel_id": {
+          "enum": [
+            "stable",
+            "canary",
+            "nightly"
+          ]
+        }
+      }
+    },
+    "UpdateMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "channel",
+        "version",
+        "previous_version",
+        "minimum_supported_version",
+        "rollout_percentage",
+        "migration_plan_ref",
+        "rollback_ref",
+        "release_notes_ref",
+        "failure_state_copy_ref"
+      ],
+      "properties": {
+        "channel": {
+          "enum": [
+            "stable",
+            "canary",
+            "nightly"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "previous_version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "minimum_supported_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "rollout_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "migration_plan_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "rollback_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "release_notes_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "failure_state_copy_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      },
+      "description": "Typed materialization of existing RSC-008 UpdateMetadata, not a competing metadata family. Strings and shape are not source/provenance admission."
+    },
+    "ApplicationPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "publication_revision",
+        "metadata",
+        "conditional_validator",
+        "source_result_id"
+      ],
+      "properties": {
+        "publication_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UpdateMetadata"
+          }
+        },
+        "conditional_validator": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_result_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      }
+    },
+    "ApplicationSuccessfulCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result_id",
+        "validated_at_utc",
+        "publication_revision",
+        "source_evidence_ref"
+      ],
+      "properties": {
+        "result_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "validated_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        },
+        "publication_revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "source_evidence_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      }
+    },
+    "ApplicationCheckDue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_version",
+        "anchor_result_id",
+        "interval_seconds",
+        "jitter_seconds",
+        "jitter_sample_ref",
+        "due_at_utc"
+      ],
+      "properties": {
+        "policy_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "anchor_result_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "interval_seconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "jitter_seconds": {
+          "type": "integer"
+        },
+        "jitter_sample_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "due_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        }
+      }
+    },
+    "ApplicationCheckState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "scope",
+        "revision",
+        "automatic_enabled",
+        "policy_version",
+        "last_attempt_at_utc",
+        "last_success",
+        "cache",
+        "due",
+        "retry_not_before_utc",
+        "in_flight_operation_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.application_update_check.state.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_kind": {
+          "const": "ApplicationCheckState"
+        },
+        "scope": {
+          "$ref": "#/$defs/ApplicationCheckScope"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "automatic_enabled": {
+          "type": "boolean"
+        },
+        "policy_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "last_attempt_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_success": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApplicationSuccessfulCheck"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cache": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApplicationPublication"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "due": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApplicationCheckDue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retry_not_before_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "in_flight_operation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ApplicationCheckAttempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "scope",
+        "policy_version",
+        "operation_id",
+        "admitted_invocation_ref",
+        "expected_revision",
+        "trigger",
+        "started_at_utc",
+        "submitted_validator"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.application_update_check.attempt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_kind": {
+          "const": "ApplicationCheckAttempt"
+        },
+        "scope": {
+          "$ref": "#/$defs/ApplicationCheckScope"
+        },
+        "policy_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "admitted_invocation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "trigger": {
+          "enum": [
+            "launch",
+            "background",
+            "manual"
+          ]
+        },
+        "started_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        },
+        "submitted_validator": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ApplicationSourceResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "scope",
+        "policy_version",
+        "operation_id",
+        "result_id",
+        "completed_at_utc",
+        "outcome",
+        "publication",
+        "source_evidence_ref",
+        "submitted_validator"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.application_update_check.source_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_kind": {
+          "const": "ApplicationSourceResult"
+        },
+        "scope": {
+          "$ref": "#/$defs/ApplicationCheckScope"
+        },
+        "policy_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "result_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "completed_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        },
+        "outcome": {
+          "enum": [
+            "validated",
+            "not_modified",
+            "cache_only",
+            "offline",
+            "failed"
+          ]
+        },
+        "publication": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApplicationPublication"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_evidence_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "submitted_validator": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ApplicationCheckTransition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "before",
+        "attempt",
+        "result",
+        "after"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.application_update_check.transition.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_kind": {
+          "const": "ApplicationCheckTransition"
+        },
+        "before": {
+          "$ref": "#/$defs/ApplicationCheckState"
+        },
+        "attempt": {
+          "$ref": "#/$defs/ApplicationCheckAttempt"
+        },
+        "result": {
+          "$ref": "#/$defs/ApplicationSourceResult"
+        },
+        "after": {
+          "$ref": "#/$defs/ApplicationCheckState"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ApplicationCheckState"
+    },
+    {
+      "$ref": "#/$defs/ApplicationCheckAttempt"
+    },
+    {
+      "$ref": "#/$defs/ApplicationSourceResult"
+    },
+    {
+      "$ref": "#/$defs/ApplicationCheckTransition"
+    }
+  ]
+}
