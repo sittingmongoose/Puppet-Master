@@ -91,6 +91,10 @@ Remaining selected-input/result composition uses these existing source IDs:
 | Backup | ACT090,091,092,099,105,111,118,119,120 |
 | CredentialBroker | ACT087 |
 
+The historical credential-command deferred inventory is now explicitly subordinated
+to the current SIR owner/registration status; see `credential-current-owner-status.md`.
+That clarification does not close ACT087's selected submission/scope/receipt contract.
+
 These are overlapping source occurrences, not a new feature denominator.
 Backup ACT094/109/124 already have actual typed owner values; do not add duplicates.
 JJ undo/restore already carry selected operation IDs; their remaining obligation

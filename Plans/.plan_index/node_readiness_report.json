@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T08:22:06Z",
+  "generated_at_utc": "2026-09-25T08:35:46Z",
   "gui_related_units": {
     "count": 3200,
     "units": [
@@ -20240,8 +20240,8 @@
         "source_location": {
           "heading": "MACS-003 - Official Page Sole Future Handler",
           "heading_level": 3,
-          "heading_line": 159,
-          "line": 161,
+          "heading_line": 161,
+          "line": 163,
           "path": "Plans/Multi-Account_Connection_Spec.md"
         }
       },
@@ -20251,8 +20251,8 @@
         "source_location": {
           "heading": "MACS-004 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 207,
-          "line": 209,
+          "heading_line": 209,
+          "line": 211,
           "path": "Plans/Multi-Account_Connection_Spec.md"
         }
       },
@@ -20262,8 +20262,8 @@
         "source_location": {
           "heading": "MACS-005 - First-Time Source Authentication Without A Fabricated Project",
           "heading_level": 3,
-          "heading_line": 258,
-          "line": 260,
+          "heading_line": 260,
+          "line": 262,
           "path": "Plans/Multi-Account_Connection_Spec.md"
         }
       },
@@ -39387,6 +39387,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Multi-Account.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Multi-Account_Connection_Spec.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
