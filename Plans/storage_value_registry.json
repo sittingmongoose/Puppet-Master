@@ -3202,6 +3202,137 @@
         "Plans/forge_log_selection_contracts.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.credential.source_add_transport.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/credential_source_add_contracts.schema.json",
+      "record_kinds": [
+        "pm.credential.source_add.request.v1",
+        "pm.credential.source_add.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No new durable authority or protected-input content hold. ProtectedInputContract.persistence_allowed=false remains exact; source/connection projections are authenticated reads of existing owners.",
+        "expiry_rule": "Dispose transport/projections at terminal session disposal or actual owner invalidation/expiry. No new retention duration or secret persistence is admitted."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not reinterpret generic historical expansion results, auth-code protected sessions or another credential owner as complete source-add originals/receipts. No secret bytes or protected browser payload are migrated; native issuer/readers and physical custody remain separately unproved.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted transport or owner-read projections only, not a credential store, attachment or lease. No native authentication proof.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-024",
+        "Plans/credential_source_add_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.credential.source_add_projections.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/credential_source_add_contracts.schema.json",
+      "record_kinds": [
+        "pm.credential.connection_projection.v1",
+        "pm.credential.protected_submission.v1",
+        "pm.credential.source_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No new durable authority or protected-input content hold. ProtectedInputContract.persistence_allowed=false remains exact; source/connection projections are authenticated reads of existing owners.",
+        "expiry_rule": "Dispose transport/projections at terminal session disposal or actual owner invalidation/expiry. No new retention duration or secret persistence is admitted."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not reinterpret generic historical expansion results, auth-code protected sessions or another credential owner as complete source-add originals/receipts. No secret bytes or protected browser payload are migrated; native issuer/readers and physical custody remain separately unproved.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted transport or owner-read projections only, not a credential store, attachment or lease. No native authentication proof.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-024",
+        "Plans/credential_source_add_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.credential.source_add_receipt.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/credential_source_add_contracts.schema.json",
+      "record_kinds": [
+        "pm.credential.secure_interaction_receipt.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve authentic redacted original/secure-receipt references required for original-result replay, reconciliation and audit. Exact physical retention/key/readers policy remains pending; no secret-session hold or Project completion anchor is invented.",
+        "expiry_rule": "No durable writer/cleanup or numeric TTL is admitted. Physical custody must specify exact original/receipt reference holds, retention, deletion and migration before writes; never reconstruct missing original secret submission or repeat its effect."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not reinterpret generic historical expansion results, auth-code protected sessions or another credential owner as complete source-add originals/receipts. No secret bytes or protected browser payload are migrated; native issuer/readers and physical custody remain separately unproved.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "New redacted logical original/secure receipt intent, explicitly pending physical-family registration; no new store or native producer.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-024",
+        "Plans/credential_source_add_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.credential.source_add_original.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/credential_source_add_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.credential_source_add_dispatch.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve authentic redacted original/secure-receipt references required for original-result replay, reconciliation and audit. Exact physical retention/key/readers policy remains pending; no secret-session hold or Project completion anchor is invented.",
+        "expiry_rule": "No durable writer/cleanup or numeric TTL is admitted. Physical custody must specify exact original/receipt reference holds, retention, deletion and migration before writes; never reconstruct missing original secret submission or repeat its effect."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not reinterpret generic historical expansion results, auth-code protected sessions or another credential owner as complete source-add originals/receipts. No secret bytes or protected browser payload are migrated; native issuer/readers and physical custody remain separately unproved.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "New redacted logical original/secure receipt intent, explicitly pending physical-family registration; no new store or native producer.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-024",
+        "Plans/credential_source_add_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [

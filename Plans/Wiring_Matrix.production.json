@@ -19450,7 +19450,7 @@
     "catalog.credential_source_add": {
       "acceptance_checks": [
         "cmd.credential_source.add names exactly one specified target handlers::credential_broker::source_add; the target string is not implementation or dispatch proof.",
-        "Validate the exact request/result pair Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest -> Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult and reject unknown, stale, conflicting, or authority-widening fields.",
+        "Validate the exact source-add request/result pair Plans/credential_source_add_contracts.schema.json#/$defs/request -> Plans/credential_source_add_contracts.schema.json#/$defs/result, authentic original/secure receipt/source readback and actual central response composition; reject unknown, stale, conflicting or authority-widening fields.",
         "Read state.commands.credential_source_add.availability and state.commands.credential_source_add.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
         "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return."
@@ -19466,7 +19466,7 @@
         "description": "Receipt/projection-only static intent; dispatch acceptance is not completion and no unregistered EventRecord is admitted.",
         "effect_kind": "receipt",
         "receipt_or_event_refs": [
-          "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult",
+          "Plans/credential_source_add_contracts.schema.json#/$defs/receipt",
           "missing_event_registration"
         ]
       },
@@ -19476,8 +19476,8 @@
       "evidence_required": "Future production evidence for cmd.credential_source.add: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::credential_broker::source_add",
-      "request_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest",
-      "result_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult",
+      "request_schema_ref": "Plans/credential_source_add_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/credential_source_add_contracts.schema.json#/$defs/result",
       "state_selector": "state.commands.credential_source_add.availability",
       "test_evidence": [
         {

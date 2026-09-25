@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L5200-L5458
 
-Source SHA256: `65ef1e261c09d769665d79f0cca0c3cf7d67fa78da461268265bda7d3a1e514e`
+Source SHA256: `7fb382bd2eb626eff83f1c2b64246094d24afe4121595aac1f0e3ce913509ba6`
 
 ---
 
@@ -36,7 +36,7 @@ The 103 unique central obligations resolve to 100 distinct primary definitions i
 | `cmd.credential_attachment.test` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_test` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
 | `cmd.credential_attachment.transfer.apply` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_transfer_apply` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
 | `cmd.credential_attachment.transfer.preview` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::attachment_transfer_preview` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
-| `cmd.credential_source.add` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::source_add` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
+| `cmd.credential_source.add` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::source_add` | `Plans/credential_source_add_contracts.schema.json#/$defs/request` -> `Plans/credential_source_add_contracts.schema.json#/$defs/result` |
 | `cmd.credential_source.remove` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::source_remove` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
 | `cmd.credential_source.test` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::source_test` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
 | `cmd.doctor.export_report` | `Plans/newtools.md` / `N2-155` | `handlers::doctor_report::export_report` | `Plans/doctor_contracts.schema.json#/$defs/DoctorReportExportRequest` -> `Plans/doctor_contracts.schema.json#/$defs/DoctorReportExportResult` |

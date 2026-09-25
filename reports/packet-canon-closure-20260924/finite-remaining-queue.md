@@ -16,11 +16,11 @@ composition, Forge ACT051/052 and their SIR response binding, and Usage quota-aw
 refresh/export are now specified and statically tested. Remaining exact selections
 are listed below; this is not native implementation or whole-family completion.
 
-1. Exact Storage specification integration: the current registry has 32 explicitly
-   pending disposition rows (31 physical-family and one external-store pending),
+1. Exact Storage specification integration: the current registry has 34 explicitly
+   pending disposition rows (33 physical-family and one external-store pending),
    including Guided Tour, pairing, original Forge dispatch and Backup read originals/receipts. Its
-   74 dispositions leave the 294 physical families unchanged. These are not
-   32 engines to build. Determine owner key/value/retention/migration
+   78 dispositions leave the 294 physical families unchanged. These are not
+   34 engines to build. Determine owner key/value/retention/migration
    decisions separately from deployment of already specified native writers.
 2. Narrow authority adjudications: Settings exposure/import semantics, Vault
    sharing and supervisor scope, and remaining plugin applicability clauses.
@@ -86,14 +86,26 @@ Remaining selected-input/result composition uses these existing source IDs:
 | --- | --- |
 | Neutral SCM, final-review open | ACT006,008,009,012,013,045 |
 | Git | ACT017,019 |
-| JJ | ACT037,038 |
+| JJ, final-review open | ACT037,038 |
 | Forge | ACT048,053,060,062,067,070,071,072,156 |
 | Backup | ACT090,091,105,111,118,119,120 |
-| CredentialBroker | ACT087 |
+| CredentialBroker | ACT087 selected source-add is integrated; native/custody obligations remain |
 
 The historical credential-command deferred inventory is now explicitly subordinated
 to the current SIR owner/registration status; see `credential-current-owner-status.md`.
-That clarification does not close ACT087's selected submission/scope/receipt contract.
+The selected submission/scope/receipt contract is now separately integrated in
+`credential-source-add-companion.md`; the clarification alone did not supply it.
+
+JJ recovery ACT037/038 remains outside canon after its final second review. The
+first three findings (Plan/Goal lineage, actual error projection/reference and
+unknown conflict-side content) were corrected and 44 tests pass. One introduced
+composition gap remains: the new projection requires a nonnull UI error while
+the existing common cancelled response requires null, preventing truthful cancelled
+partial-effect disclosure with the genuine owner error retained. The minimal
+nullable-projection correction is documented, not silently applied or reviewed a
+third time. Final OPEN receipt:
+`/mnt/Cursor/PM-Experiments/jj-operation-recovery-20260925-yE6t1H/INDEPENDENT-REVIEW-FINAL.md`,
+SHA-256 `5178c3f1b124ffc97f4a5d35a7499775c2273cda249cbd71339ace0df5ff9fc9`.
 
 These are overlapping source occurrences, not a new feature denominator.
 Backup ACT094/109/124 already have actual typed owner values; do not add duplicates.
@@ -122,5 +134,5 @@ hooks/tools migration fixture cannot stand in for that package.
 Consolidation snapshot before the additional Forge original-binding row:
 `/mnt/Cursor/PM-Experiments/settings-compound-overlay-20260925/FINITE-QUEUE-CONSOLIDATION.md`,
 SHA-256 `78a5711e8bf91bcfa7090ee9e674113db29c618880e8e7daa1958de689c243c8`.
-Its 25-pending count is historical; the current 32 above includes the subsequent
-Forge, Backup, JJ publication and selected-log original/receipt rows.
+Its 25-pending count is historical; the current 34 above includes the subsequent
+Forge, Backup, JJ publication, selected-log and CredentialBroker original/receipt rows.

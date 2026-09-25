@@ -11776,6 +11776,8 @@ Every primary row below is static central intent. A named `handler_location` is 
 
 ### Exact 100 primary catalog rows
 
+For exactly `cmd.credential_source.add`, the current terminal source-add binding is `Plans/credential_source_add_contracts.schema.json#/$defs/request` -> `#/$defs/result` with the actual `#/$defs/receipt` and authentic SIR original/current-disclosure composition. Other CredentialBroker commands retain their existing expansion bindings; `cmd.credential.add` remains normalization-only. Source registration does not attach, activate, authenticate or issue a lease. Handler availability and receipt-only event policy are unchanged.
+
 The 103 unique central obligations resolve to 100 distinct primary definitions in this section plus the three existing `cmd.authentication.start`, `cmd.authentication.cancel`, and `cmd.authentication.resume` primaries in `Plans/Commands_System.md#CS-066` and `Plans/UI_Command_Catalog.md#UCC-145`. Those authentication primaries are referenced, not duplicated; the normalization-only alias rows below reuse them. This materialization does not change the 171-row packet partition or its 93-primary denominator.
 
 | Exact primary command | Human label | Owner / PlanUnit | Sole future handler target | Complete intended GUI consumers |

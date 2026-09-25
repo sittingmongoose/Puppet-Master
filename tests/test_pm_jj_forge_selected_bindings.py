@@ -20,7 +20,7 @@ class SelectedBindings(unittest.TestCase):
             'cmd.forge.review.approve':('TCP-FORGE-REVIEW-DECISIONS','Plans/forge_review_decisions.schema.json'),
             'cmd.forge.review.request_changes':('TCP-FORGE-REVIEW-DECISIONS','Plans/forge_review_decisions.schema.json'),
         }
-        self.assertEqual((643,138),(len(data['rows']),len(profiles)))
+        self.assertEqual((643,139),(len(data['rows']),len(profiles)))
         for command,(profile,path) in expected.items():
             with self.subTest(command=command):
                 self.assertEqual([profile,'command',command,'partial'],rows[command][1:5])

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11769-L12023
+Source lines: L11769-L12025
 
-Source SHA256: `a49f16f6fd28e541262e1df2b2b36a5e8b1c8c5e8c927bec863140a35ba1aa71`
+Source SHA256: `1e21c7981a576ada2fb134fbcae45474a9c2a1d4a15c5b9f8458c97ed4cefbe9`
 
 ---
 
@@ -17,6 +17,8 @@ Every primary row below is static central intent. A named `handler_location` is 
 
 
 ### Exact 100 primary catalog rows
+
+For exactly `cmd.credential_source.add`, the current terminal source-add binding is `Plans/credential_source_add_contracts.schema.json#/$defs/request` -> `#/$defs/result` with the actual `#/$defs/receipt` and authentic SIR original/current-disclosure composition. Other CredentialBroker commands retain their existing expansion bindings; `cmd.credential.add` remains normalization-only. Source registration does not attach, activate, authenticate or issue a lease. Handler availability and receipt-only event policy are unchanged.
 
 The 103 unique central obligations resolve to 100 distinct primary definitions in this section plus the three existing `cmd.authentication.start`, `cmd.authentication.cancel`, and `cmd.authentication.resume` primaries in `Plans/Commands_System.md#CS-066` and `Plans/UI_Command_Catalog.md#UCC-145`. Those authentication primaries are referenced, not duplicated; the normalization-only alias rows below reuse them. This materialization does not change the 171-row packet partition or its 93-primary denominator.
 

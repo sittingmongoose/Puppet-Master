@@ -1894,7 +1894,8 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # composition; eleven generic locals remain unchanged. No new rows.
         # Five JJ operand commands, JJ publication, Forge review decisions and
         # selected logs use four bounded successor profiles. No new Touch rows.
-        "profile_count": 138,
+        # Credential source-add has one exact successor, leaving nine peers intact.
+        "profile_count": 139,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1142,

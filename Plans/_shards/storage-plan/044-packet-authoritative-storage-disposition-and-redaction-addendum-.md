@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18680-L18929
+Source lines: L18680-L18934
 
-Source SHA256: `8453bfc41e8a8f9d31457e885bb0836c408c28edc7a9072bb6273ef3b5df0d77`
+Source SHA256: `061a32972fd4db5fd4c5be3ce7f13a9710c541e01000930067786e4a36d29ee8`
 
 ---
 
@@ -49,6 +49,11 @@ canonical_text: >-
   pending, not a serialized live session or an onboarding_state extension. Its original layout/Chat snapshots remain
   owner-held references; a schema or disposition alone permits no checkpoint write or resume claim. The current physical
   family census and 24 retention policies remain unchanged in membership by this disposition layer.
+  The exact CredentialBroker source-add successor has nonpersisted request/result transport and ephemeral
+  connection, protected-submission metadata and source-read projections. Its redacted secure-interaction receipt
+  and authentic SIR original have separate logical durable dispositions with physical-family registration pending.
+  No protected input content, credential store, attachment, lease, numeric TTL or native writer is admitted;
+  exact original/receipt retention, deletion and migration must be owned before physical writes.
 gui_related: false
 gui_classification_reason: This PlanUnit governs storage and contract custody rather than presentation.
 depends_on: [SP-222, SSYS-001, PWIZ-021, PWIZ-023, N2-151]

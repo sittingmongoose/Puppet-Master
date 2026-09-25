@@ -6374,6 +6374,60 @@
     {
       "availability_rule": "The exact target remains unavailable with handler_unavailable until the named native handler, current owner projection, permission/FileSafe decision, and exact runtime evidence exist.",
       "disabled_reason_rule": "Expose the exact owner disabled reason, including handler_unavailable or stale projection, and never simulate success.",
+      "dry_contract_ref": "Plans/credential_source_add_contracts.schema.json",
+      "error_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandError",
+      "event_refs": [
+        "none_pending_event_authority"
+      ],
+      "evidence_refs": [
+        "static_owner_schema_and_fixture_only"
+      ],
+      "gui_triggers": [
+        "Doctor remediation",
+        "Project copy/move readiness",
+        "Settings > Integrations/Credentials",
+        "connection managers"
+      ],
+      "handler_owner": "Sole future target handlers::credential_broker::source_add; handler_unavailable remains, native proof absent.",
+      "handler_status": "specified",
+      "migration_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-024"
+      ],
+      "observable_work": [
+        "Terminal immediate source-add profile only; no inferred asynchronous acceptance or work."
+      ],
+      "owner_plan": "Plans/Shared_Integration_Runtime.md",
+      "payload_schema_ref": "Plans/credential_source_add_contracts.schema.json#/$defs/request",
+      "permission_gate": "Consume the owner-defined permission and FileSafe decision without widening identity, scope, credential, topology, or destructive authority.",
+      "persistence_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-024"
+      ],
+      "plan_unit": "SIR-024",
+      "production_or_simulation": "Production-intent contract only; a handler path names the sole future target and is not native implementation or runtime proof.",
+      "profile_id": "TCP-CREDENTIAL-SOURCE-ADD",
+      "receipt_refs": [
+        "Plans/credential_source_add_contracts.schema.json#/$defs/receipt"
+      ],
+      "requirement_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-024"
+      ],
+      "result_schema_ref": "Plans/credential_source_add_contracts.schema.json#/$defs/result",
+      "return_route": "Settle the exact initiating route, surface, focus, invocation, continuation, and currentness context.",
+      "reverse_consumers": [
+        "Doctor remediation",
+        "Project copy/move readiness",
+        "Settings > Integrations/Credentials",
+        "connection managers"
+      ],
+      "test_refs": [
+        "Plans/credential_source_add_fixtures.json",
+        "tests/test_pm_credential_source_add.py"
+      ],
+      "wiring_status": "specified"
+    },
+    {
+      "availability_rule": "The exact target remains unavailable with handler_unavailable until the named native handler, current owner projection, permission/FileSafe decision, and exact runtime evidence exist.",
+      "disabled_reason_rule": "Expose the exact owner disabled reason, including handler_unavailable or stale projection, and never simulate success.",
       "dry_contract_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
       "error_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandError",
       "event_refs": [
@@ -11710,7 +11764,7 @@
     ],
     [
       "TOUCH-SGAPCMD-038",
-      "TCP-INTEGRATION-CREDENTIAL",
+      "TCP-CREDENTIAL-SOURCE-ADD",
       "command",
       "cmd.credential_source.add",
       "partial",
