@@ -53,7 +53,7 @@ Record `RECLASSIFY_TO_EXCLUDED` on the row in `Plans/.audits/event-authority-202
 |---|---:|---:|---:|---:|
 | 2026-09-11 (review packet) | 0 | 6 | 20 | 226 |
 | 2026-09-24, batch 1 (DL-074 and DL-075 applied to their 20 rows), landed at `41fbecb612` (landing record `bc1d99c11e`) | 0 | 7 | 0 | 245 |
-| 2026-09-25, batch 2 card answers (DL-084, DL-085 and DL-086 settle retention for 25 rows, which stay technical work; DL-087 and DL-088 exclude the 6 crew lifecycle rows and the 2 spawn request rows as retired; the 7 coordination rows had no card), on `plans/ea-step09-batch2-answers-20260925`, not yet landed | 0 | 15 | 0 | 237 |
+| 2026-09-25, batch 2 card answers (DL-084, DL-085 and DL-086 decide retention for 25 rows, which stay technical work with their retention cells FAIL until the Storage owner binding lands; DL-087 and DL-088 exclude the 6 crew lifecycle rows and the 2 spawn request rows as retired; the 7 coordination rows had no card), on `plans/ea-step09-batch2-answers-20260925`, not yet landed | 0 | 15 | 0 | 237 |
 
 DL-090 and DL-091 (2026-09-25) add 18 collaborative workflow families to the campaign as new scope outside the 252: the 17 names of `Plans/Collaborative_Workflows.md` section 13 and `collaboration.failed`. They are worked as their own batch and are not counted in this table.
 

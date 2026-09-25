@@ -2844,6 +2844,20 @@
             "kind": "edited"
           }
         }
+      },
+      "B2-07": {
+        "severity": "note",
+        "applied_at_utc": "2026-09-25T06:16:47Z",
+        "parent_commit": "60a435988c061d73f0f21fbb6af07096f4b7ace0",
+        "finding": "The procedure record's batch 2 count row said \"DL-084, DL-085 and DL-086 settle retention for 25 rows, which stay technical work\", while after the host ruling those 25 retention cells are FAIL until the Storage owner binding lands.",
+        "repair": "The count row now says \"DL-084, DL-085 and DL-086 decide retention for 25 rows, which stay technical work with their retention cells FAIL until the Storage owner binding lands\"; its counts (0, 15, 0, 237) are unchanged.",
+        "files": {
+          "reports/event-authority-20260911/step-09-procedure-20260924.md": {
+            "before_sha256": "04febd4c03dafd77d4be3ac79bced7ed0655329c78c4e434f0aa51a9b3afedeb",
+            "after_sha256": "29bf03a35cbe0f580e94b539a813f1aee617dd5303dd70b242b5ca6728c8ecb2",
+            "kind": "edited"
+          }
+        }
       }
     }
   }
