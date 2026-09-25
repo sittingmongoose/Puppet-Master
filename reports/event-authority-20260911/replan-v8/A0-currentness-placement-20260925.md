@@ -186,6 +186,21 @@ v8's active files carry none of the retired constructs, which appear only in its
 | Q-11 | R-05: should `original-bank-checks.json` be regenerated in a successor edition, or recorded as a known stale diagnostic? | A1 canonical-draft author |
 | Q-12 | May A1 install v8 while D06 stays an explicitly unavailable dependency? The plan lists D06 among A1's blocking gaps, not as a prerequisite. | PM Low cost/complexity process thread (routed by Jared on 2026-09-25; see STATUS.md) |
 
+## Process answers (2026-09-25)
+
+The PM Low cost/complexity process thread answered Q-02, Q-03, Q-09 and Q-12, and where A1's package lives, on Jared's delegation. The answers are in `reports/event-authority-20260911/replan-v8/process-answers-20260925.md` on branch `plans/replan-v8-process-answers-20260925` (commit `616f12bfd`).
+
+- **Q-02.** DL-078 does not cover a revision of an existing row. Every A3 landing that changes a registry row needs its own checkpoint card to Jared, in the DL-036 form, before it lands. The card carries the exact before and after rows and the registry SHA-256 before and after. Each landing's card is answered separately, and each answer is recorded as a Decision Log entry.
+- **Q-03.** Write the DL-077-form records, one per family. Each record's first line says that the seal check does not read it. Its depth part cites a new dated assessment of that family alone, pinned by SHA-256, because the depth42 row stops being current once the row is revised.
+- **Q-09.** B01 is the package's own label, not an identifier in canon (v3 `PROTOCOL.md` line 80, `inputs/plan/PLAN.md` line 38). It stands for the question of which condition puts a run into the blocked state, and the package treats that as a product-policy decision.
+  - A3 first reads the owner text (D-R19 and GRS-085) for an existing definition.
+  - If canon has none, a DL-036 card goes to Jared, and `goal_run.stopped` lands first so the card holds nothing else up.
+- **Q-12.** A1 may install v8 with D06 explicitly unavailable. Its owner text must say four things: the D06 grammar is carried; its issuer is an unbound dependency; nothing activates `record_cancellation.v1` by implication; and the Stop route rests on `revoke_run_execution.v1`. The A3 `goal_run.stopped` contract must not depend on D06.
+- **Package home.** A1's canonical-draft package goes to `sittingmongoose/PuppetMaster-Packages` at `replan-v8/goal-replan-v8-canonical-draft-20260925/v1`. It stays on a branch until its reviews accept it, then merges with a `SHA256SUMS`.
+- **Landing.** The cloud thread never lands a branch. A local session that Jared designates lands each reviewed branch.
+
+These four questions are answered; Q-01, Q-04 to Q-08, Q-10 and Q-11 stand. This section was added after the review cycles and records the answers only.
+
 ## Reseal and landing
 
 This branch edits only `reports/event-authority-20260911/replan-v8/`. It makes no governance artifact stale. It carries forward one reseal item that is already true on `main`:
