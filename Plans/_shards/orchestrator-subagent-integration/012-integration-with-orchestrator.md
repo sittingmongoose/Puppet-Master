@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L349-L31810
 
-Source SHA256: `85fbc30630fcf307a2c1870bf8272fa0865bea484ed8a4929d721aff62b0f1f5`
+Source SHA256: `e32f5d0b0778f41bb08294714781a4fbad3f2fb122c2b9c11a9339373a83c03c`
 
 ---
 
@@ -3485,7 +3485,7 @@ Where earlier text in this document differs, this section governs. That covers t
 
 The `unregister_agent(&agent_id)` calls in the tier execution sketch under "Orchestrator Modifications" and in the `RegisterAgent` example are source lineage. The entry point takes an `AgentTerminalUpdate`.
 
-Each entry point builds one complete closed payload, including the next `agent_revision` and the idempotency key that SP-320 defines, and submits it once. Storage admits it, appends it and issues its first AppendReceipt. The coordinator returns that receipt, and only then does the caller continue. After a lost acknowledgement or an uncertain append, the coordinator resolves the original append only through the explicitly adopted SP-286/CV-339 `storage.first_append_receipt.resolve.v2`, as SP-320 binds it, and never asks for a first mint. The coordinator keeps the prepared payload for its retries, so a retry carries the same bytes. After a restart it does not rebuild a lost request; it reloads the agent's projection. A stale revision returns `coordination_conflict`. The caller then reloads the projection and appends a successor event, or stops if the agent is terminal.
+Each entry point builds one complete closed payload, including the next `agent_revision` and the idempotency key that SP-320 defines, and submits it once. Coordination has no owner body apart from the event: the EventRecord is the coordination fact, so no body commit precedes the append. Storage admits the event, appends it and issues its first AppendReceipt. The coordinator returns that receipt, and only then does the caller continue. The projection shows the event after the projector's next advance; a caller that must read it back waits until checkpoint coverage reaches the receipt's sequence (SP-320). After a lost acknowledgement or an uncertain append, the coordinator resolves the original append only through the explicitly adopted SP-286/CV-339 `storage.first_append_receipt.resolve.v2`, as SP-320 binds it, and never asks for a first mint. The coordinator keeps the prepared payload for its retries, so a retry carries the same bytes. After a restart it does not rebuild a lost request; it reloads the agent's projection. A stale revision returns `coordination_conflict`. The caller then reloads the projection and appends a successor event, or stops if the agent is terminal.
 
 **Crash and abort resolution.** Gap #30's "Automatic cleanup" rule governs over the "After execution" bullet of "Coordination event updates". An agent never appends `coordination.agent_crashed` or `coordination.agent_aborted` about itself, because it cannot observe its own crash. `record_crash` and `record_abort` append through the same admission and revision check as the other entry points. When a crash races a normal unregister or an abort, the first terminal event to append wins. The other gets `coordination_conflict` and appends nothing (SP-320).
 
