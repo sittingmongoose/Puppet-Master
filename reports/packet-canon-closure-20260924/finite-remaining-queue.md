@@ -82,6 +82,9 @@ unbuilt. See the companion reports; frozen earlier overlays remain history.
 
 Remaining selected-input/result composition uses these existing source IDs:
 
+Plain-language boundaries and the exact 26-source-occurrence snapshot are in
+`remaining-command-boundaries.md`; those are not 26 engines or a whole-packet count.
+
 | Owner | Exact remaining IDs |
 | --- | --- |
 | Neutral SCM, final-review open | ACT006,008,009,012,013,045 |
@@ -90,6 +93,11 @@ Remaining selected-input/result composition uses these existing source IDs:
 | Forge | ACT048,053,060,062,067,070,071,072,156 |
 | Backup | ACT090,091,105,111,118,119,120 |
 | CredentialBroker | ACT087 selected source-add is integrated; native/custody obligations remain |
+
+Forge cancellation ACT071 is not adopted despite its initial review pass: root
+integration probes found unbound common error reference/text and accepted work
+already carrying terminal state/receipt. Its corrections await the final second
+review. ACT156 reply has the same two first-review findings and is also external.
 
 The historical credential-command deferred inventory is now explicitly subordinated
 to the current SIR owner/registration status; see `credential-current-owner-status.md`.
