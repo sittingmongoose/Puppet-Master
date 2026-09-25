@@ -122,6 +122,7 @@
       + ['normal', 'eli5'].map((v) => `<button type="button" role="radio" aria-checked="${st.tips === v}" class="${st.tips === v ? 'o55t-on' : ''}" data-o55t="tips" data-arg="${v}" data-pm-hover-exempt="true">${U.esc(T('tour.bar.' + v))}</button>`).join('') + '</span>'
       + `<button type="button" class="o55t-barbtn" data-o55t="pause" data-pm-hover-exempt="true">${U.esc(st.paused ? T('tour.bar.resume') : T('tour.bar.pause'))}</button>`
       + `<button type="button" class="o55t-barbtn" data-o55t="skip" data-pm-hover-exempt="true">${U.esc(T('tour.bar.skip'))}</button>`
+      + (O55.lookMenu ? `<span class="o55t-lookslot">${O55.lookMenu.button('o55t-barbtn o55t-sound', 'data-o55t', st.lookOpen)}${st.lookOpen ? O55.lookMenu.panel('data-o55t') : ''}</span>` : '')
       + O55.sound.buttonHtml('o55t-barbtn o55t-sound').replace('data-o55-do="sound"', 'data-o55t="sound"');
   }
 
@@ -427,6 +428,7 @@
   TR.complete = () => st.step && complete(st.step);
 
   function onClick(e) {
+    if (st.lookOpen && !e.target.closest('.o55t-lookslot')) { st.lookOpen = false; renderBar(); }
     const b = e.target.closest('[data-o55t]'); if (!b) return;
     e.preventDefault(); e.stopPropagation();
     const a = b.getAttribute('data-o55t'), arg = b.getAttribute('data-arg');
@@ -438,6 +440,10 @@
     if (a === 'pause') return togglePause();
     if (a === 'tips') { st.tips = arg; st.sess.tips = arg; save(); O55.sound.play('select'); renderBar(); renderCallout(false); return; }
     if (a === 'sound') { O55.sound.toggle('tour'); renderBar(); return; }
+    /* the look, after setup: saved through Settings at once (the tour follows the change) */
+    if (a === 'lookMenu') { st.lookOpen = !st.lookOpen; renderBar(); return; }
+    if (a === 'lookFamily') { O55.lookMenu.save(arg, O55.theme().mode); return; }
+    if (a === 'lookMode') { O55.lookMenu.save(O55.theme().family, arg); return; }
     if (a === 'takeMe') { if (st.step.goTo) st.step.goTo(st); st.missing = false; st.missingSince = 0; renderCallout(false); return; }
     if (a === 'skipStep') return goStep(st.step.index + 1);
     if (a === 'finish') return finish(arg === 'keep');
@@ -620,5 +626,5 @@
   window.addEventListener('pm:dispatch-receipt', () => setTimeout(syncChatIcon, 0));
 
   /* keep the look in step while the tour runs */
-  new MutationObserver(() => { if (TR.running) { syncTheme(); TR.refresh(); } }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  new MutationObserver(() => { if (TR.running) { syncTheme(); TR.refresh(); if (st.lookOpen) renderBar(); } }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 })();

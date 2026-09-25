@@ -512,6 +512,20 @@ def('x4', 'fresh', 'A look picked after going into Connect and back is the one k
   A.eq(await d.state(() => [window.O55.S.sess.drafts.main.theme_family, window.O55.S.sess.drafts.connect.theme_family].join()), 'retro,retro', 'both journeys carry the look');
 });
 
+def('x5', 'fresh', 'The look can be changed at any point from beside the sound button', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'begin', 'mid-flow');
+  await d.page.click('#pm-o55-onboarding .o55-lookbtn'); await d.settle(400);
+  A.ok(await d.state(() => document.querySelectorAll('#pm-o55-onboarding .o55-lookopt').length === 4), 'four looks offered');
+  if (process.env.O55_SNAP) await d.snap(process.env.O55_SNAP);
+  await d.page.click('#pm-o55-onboarding .o55-lookopt[data-arg="retro"]'); await d.settle(1400);
+  A.eq(await d.state(() => document.documentElement.getAttribute('data-theme').split('-')[0]), 'retro', 'the look changed');
+  A.eq(await d.state(() => window.O55.S.sess.drafts.main.theme_family), 'retro', 'and is the chosen look');
+  A.eq(await d.screen(), 'begin', 'without leaving the screen');
+  await d.page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27 }); await d.settle(300);
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding .o55-lookmenu') && window.O55.S.open), 'Escape closes the menu, not the window');
+});
+
 /* ---------------------------------------------------------------------------------------------- runner */
 const report = [], drafts = [];
 for (const sc of SC) {

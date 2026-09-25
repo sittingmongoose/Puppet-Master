@@ -166,3 +166,29 @@ html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demo { left: 0; bott
 html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demopill { width: 20px; height: 44px; padding: 0; justify-content: center; border-radius: 0 10px 10px 0; border-left: 0; }
 html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demopill > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demomenu { left: 26px; bottom: auto; top: 50%; transform: translateY(-50%); width: min(300px, calc(100vw - 40px)); }
+
+/* the look menu beside the sound button (onboarding header; the tour bar opens it upward) */
+.o55-lookslot, .o55t-lookslot { position: relative; display: inline-flex; }
+.o55-lookbtn.o55-on { color: var(--o55-accent, var(--accent-blue)); background: color-mix(in srgb, var(--o55-accent, var(--accent-blue)) 14%, transparent); }
+.o55-lookmenu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 30; width: 244px; padding: 8px; display: grid; gap: 8px; border-radius: 14px; border: 1px solid var(--border);
+  background: linear-gradient(var(--surface), var(--surface)), var(--background); color: var(--text-primary); box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.5); animation: o55-lookin 180ms cubic-bezier(0.2, 0, 0, 1) both; }
+.o55t-lookslot .o55-lookmenu { top: auto; bottom: calc(100% + 12px); }
+@keyframes o55-lookin { from { opacity: 0; transform: translateY(-6px) scale(0.98); } }
+.o55t-lookslot .o55-lookmenu { animation-name: o55-lookup; }
+@keyframes o55-lookup { from { opacity: 0; transform: translateY(6px) scale(0.98); } }
+.o55-lookopts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.o55-lookopt { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: 10px; border: 1px solid transparent; background: transparent; color: var(--text-primary); font: 600 13px/1.1 var(--body-font); cursor: pointer; text-align: left; }
+.o55-lookopt:hover { background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
+.o55-lookopt.o55-on { border-color: var(--o55-accent, var(--accent-blue)); background: color-mix(in srgb, var(--o55-accent, var(--accent-blue)) 12%, transparent); }
+/* each swatch carries its own look's tokens (data-theme on the swatch) */
+.o55-lookswatch { flex: none; display: inline-flex; gap: 2px; padding: 4px; border-radius: 7px; background: var(--background); border: 1px solid var(--border); }
+.o55-lookswatch[data-theme^="retro"] { border-radius: 0; }
+.o55-lookswatch i { width: 7px; height: 14px; border-radius: 3px; background: var(--accent-blue); }
+.o55-lookswatch i:nth-child(2) { background: var(--accent-magenta); }
+.o55-lookswatch i:nth-child(3) { background: var(--surface); border: 1px solid var(--border); }
+.o55-lookswatch[data-theme^="retro"] i { border-radius: 0; }
+.o55-lookmodes { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 3px; border-radius: 10px; background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
+.o55-lookmodes button { height: 28px; border: 0; border-radius: 8px; background: transparent; color: var(--text-secondary); font: 600 12.5px/1 var(--body-font); cursor: pointer; }
+.o55-lookmodes button.o55-on { background: var(--surface); color: var(--text-primary); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); }
+#pm-o55-onboarding[data-family="retro"] .o55-lookmenu, .o55t-root[data-family="retro"] .o55-lookmenu { border-radius: 0; border: 2px solid var(--text-primary); animation-timing-function: steps(3, end); }
+#pm-o55-onboarding[data-family="retro"] .o55-lookopt, #pm-o55-onboarding[data-family="retro"] .o55-lookmodes, #pm-o55-onboarding[data-family="retro"] .o55-lookmodes button { border-radius: 0; }

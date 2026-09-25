@@ -37,7 +37,7 @@
       + `<div class="o55-win" role="dialog" aria-modal="true" aria-labelledby="o55-h">`
       + `<header class="o55-head"><div class="o55-brand" aria-hidden="true">${logo()}<span>${U.esc(T('chrome.brand'))}</span></div>`
       + `<nav class="o55-rail" aria-label="${U.esc(T('chrome.progressLabel'))}"></nav>`
-      + `<div class="o55-headctl"><span class="o55-soundslot"></span>`
+      + `<div class="o55-headctl"><span class="o55-lookslot"></span><span class="o55-soundslot"></span>`
       + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(T('chrome.closeHint'))}">`
       + `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>${U.esc(T('chrome.close'))}</span></button></div></header>`
       + `<div class="o55-body"><div class="o55-stage o55-scene-host" aria-hidden="true"></div><section class="o55-pane"></section></div>`
@@ -78,7 +78,7 @@
     const look = th.family + '-' + th.mode;
     S.root.setAttribute('data-family', th.family); S.root.setAttribute('data-mode', th.mode);
     S.root.querySelector('.o55-stage').setAttribute('data-family', th.family);
-    if (lastLook && lastLook !== look && fromObserver) { renderScene(true); renderRail(); refresh(); }
+    if (lastLook && lastLook !== look && fromObserver) { renderScene(true); renderRail(); refresh(); renderLook(); }
     lastLook = look;
   }
   /* Look reveal: a circular (Retro: stepped) reveal of the new world from the chosen tile. Browser View Transitions
@@ -234,7 +234,18 @@
     def.mounted && def.mounted(S, layer, true);
   }
 
+  /* the look menu beside the sound button (O55.lookMenu): open until a click lands outside it or Escape */
+  function renderLook() {
+    const slot = S.root && S.root.querySelector('.o55-lookslot'); if (!slot || !O55.lookMenu) return;
+    const html = O55.lookMenu.button('o55-iconbtn', 'data-o55-do', S.lookOpen) + (S.lookOpen ? O55.lookMenu.panel('data-o55-do') : '');
+    if (slot.innerHTML === html) return;
+    /* redrawing keeps focus where it was (the option just chosen), so keys still reach the window */
+    const a = document.activeElement, had = a && slot.contains(a) ? (a.getAttribute('data-arg') || 'btn') : null;
+    slot.innerHTML = html;
+    if (had) { const el = had === 'btn' ? slot.querySelector('.o55-lookbtn') : slot.querySelector(`[data-arg="${had}"]`); if (el) el.focus({ preventScroll: true }); }
+  }
   function renderSound() {
+    renderLook();
     const slot = S.root.querySelector('.o55-soundslot');
     const html = O55.sound.buttonHtml('o55-iconbtn');
     if (slot.innerHTML !== html) slot.innerHTML = html;
@@ -265,6 +276,7 @@
 
   /* ---------------------------------------------------------------- events */
   function onClick(e) {
+    if (S.lookOpen && !e.target.closest('.o55-lookslot')) { S.lookOpen = false; renderLook(); }
     const t = e.target.closest('[data-o55-do]');
     if (!t || !S.root.contains(t)) return;
     const action = t.getAttribute('data-o55-do'), arg = t.getAttribute('data-arg');
@@ -281,6 +293,9 @@
     if (action === 'close') return close('close');
     if (action === 'back') return back();
     if (action === 'sound') { O55.sound.toggle('onboarding'); renderSound(); return; }
+    if (action === 'lookMenu') { S.lookOpen = !S.lookOpen; O55.sound.play(S.lookOpen ? 'toggleOn' : 'toggleOff'); renderLook(); return; }
+    if (action === 'lookFamily') { applyLook(arg, O55.theme().mode, t); return; }
+    if (action === 'lookMode') { applyLook(O55.theme().family, arg, t); return; }
     if (action === 'go') return go(arg);
     const def = SCREENS.defs[S.sess.screen];
     const fn = def && def.do && def.do[action];
@@ -308,6 +323,7 @@
     e.stopPropagation(); /* shell trap: typed keys never reach the app's global shortcuts */
     if (e.type !== 'keydown') return;
     if (e.key === 'Escape') {
+      if (S.lookOpen) { S.lookOpen = false; renderLook(); e.preventDefault(); const b = S.root.querySelector('.o55-lookbtn'); if (b) b.focus(); return; }
       const pop = S.root.querySelector('.o55-sheet[data-open="true"], .o55-popover[data-open="true"]');
       if (pop) { const c = pop.querySelector('[data-o55-do="sheet-close"]'); if (c) c.click(); e.preventDefault(); return; }
       e.preventDefault(); close('escape'); return;
