@@ -616,6 +616,13 @@ class ClosedWorldGuardTests(unittest.TestCase):
         relabelled = copy.deepcopy(foreign)
         relabelled["rows"][0].update(event_type="crew.formed", family_id="event-family-crew-formed")
         self.assertIn("unexpected_central_event_family", self.browser_failures(with_row(PREP_REGISTRY, other), relabelled))
+        # Cycle-2 residual R4-02: one of the seven event types under a family ID other than its prepared one.
+        renamed = copy.deepcopy(self.first)
+        moved = dict(renamed["rows"][0]["registry_row"], family_id="event-family-something-else")
+        renamed["rows"][0]["registry_row"] = moved
+        renamed["rows"][0]["family_id"] = "event-family-something-else"
+        self.assertEqual(moved["event_type"], "coordination.agent_registered")
+        self.assertIn("unexpected_central_event_family", self.browser_failures(with_row(PREP_REGISTRY, moved), renamed))
 
     def test_browser_gate_fails_closed_without_a_readable_ledger(self):
         def unreadable(path):
