@@ -59,7 +59,7 @@ The plan says four v8-pinned owner files differ from the reviewed base. Among th
 
 ## 4. Adjudication of every change
 
-Full rows, each with verbatim evidence and a verifier verdict, are in `a0/readjudication-findings.json` (findings R1-01 to R1-22 and R2-01 to R2-20).
+Full rows, each with verbatim evidence and a verifier verdict, are in `a0/readjudication-findings.json` (findings R1-01 to R1-22 and R2-01 to R2-20). Passage numbers such as #136 are 0-based indices into the v3 member `inputs/replan-v3/exact-passages.json`.
 
 | Changed item | What changed on `main` | Class | Bearing on v8 |
 |---|---|---|---|
