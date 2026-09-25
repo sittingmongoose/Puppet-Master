@@ -7,7 +7,7 @@
   ],
   "working_bucket": "confirmed_persisted_unregistered",
   "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to coordination.agent_registered. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to coordination.agent_registered. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-09-25.1 in its own Storage admission landing under DL-078 and DL-045 (decision Plans/Decision_Log.md#DL-094); DL-077 admission record reports/event-authority-20260911/admission-records/coordination.agent_registered.json. The seal check judges this family by that record (INDIVIDUAL_DISPOSITION_SCHEMA.md, DL-077 note); the bucket, disposition, cohort pins and retained evidence stay as written, since the frozen schema has no registered J248 value.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",

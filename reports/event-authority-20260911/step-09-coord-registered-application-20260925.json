@@ -1,0 +1,121 @@
+{
+  "application_id": "EA-STEP09-COORD-REGISTERED-J248-ROW-FORM-R-20260925",
+  "applied_at_utc": "2026-09-25T13:26:05Z",
+  "branch": "plans/ea-s09-coord-registered-20260925",
+  "base_revision": "5c4c7c217c7f5a6ee54045cf03950e186250d817",
+  "authority_refs": [
+    "Plans/Decision_Log.md#DL-039",
+    "Plans/Decision_Log.md#DL-045",
+    "Plans/Decision_Log.md#DL-077",
+    "Plans/Decision_Log.md#DL-078",
+    "Plans/Decision_Log.md#DL-093",
+    "Plans/Decision_Log.md#DL-094"
+  ],
+  "procedure_step": "reports/event-authority-20260911/step-09-procedure-20260924.md, \"Per registration\" step 3: the row's disposition records are updated in the same landing, with the admission record cited.",
+  "schema_note": "Plans/.audits/event-authority-2026-08-12/INDIVIDUAL_DISPOSITION_SCHEMA.md, DL-077 note: DL-077 adds no bucket and no row field, and the row of a family with a complete admission record stays as written.",
+  "form": {
+    "name": "R (R6 recommended form)",
+    "ruling": "Host ruling (c), 2026-09-25: R6 form R approved for the admission record step.",
+    "finding": "R6 simulation, evidence /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-coord-registered-prep-20260925/r6/ (analysis.json SHA-256 75e61f98c7095074de689d3d16566f4eb9439e4798a9327cbd9231f844d5701c; the directory's SHA256SUMS b4ffbbad73f822cb09a12a002aa07c5fb7c2f3383f551dd387a1b0cbc20dafa3): the seal check reads the same failures for form R as for the unchanged row, and a completely recorded family is excluded from every blocking and depth check.",
+    "kept_byte_for_byte": {
+      "row_file_and_ledger_line": "every field except disposition_rationale, including bucket, working_bucket, july_classification, disposition, cohort_pins, the retained evidence cells, citations_checked, provisional, the inference flags and phase1_application",
+      "census_line": "every field except notes and evidence_refs, including category, disposition, cohort_pins and phase1_application"
+    },
+    "fields_added": [],
+    "changed": [
+      "disposition_rationale of the row file and of its identical individual-disposition LEDGER.jsonl line: the sentence below appended",
+      "notes of the census-adjudication line: the same sentence appended",
+      "evidence_refs of the census-adjudication line: the admission record path appended"
+    ],
+    "sentence": " Registered at registry revision 2026-09-25.1 in its own Storage admission landing under DL-078 and DL-045 (decision Plans/Decision_Log.md#DL-094); DL-077 admission record reports/event-authority-20260911/admission-records/coordination.agent_registered.json. The seal check judges this family by that record (INDIVIDUAL_DISPOSITION_SCHEMA.md, DL-077 note); the bucket, disposition, cohort pins and retained evidence stay as written, since the frozen schema has no registered J248 value.",
+    "sentence_note": "The simulation's sentence said \"Registered on <date>\"; the registry revision stands in for the date, so the sentence stays true whatever day the branch lands."
+  },
+  "admission_record": {
+    "path": "reports/event-authority-20260911/admission-records/coordination.agent_registered.json",
+    "sha256": "c3bfe5b28ece79a6222fe14cb91ae1b7ae817d0e3a142ab70b8d4baf024c45d7",
+    "decision_ref": "Plans/Decision_Log.md#DL-094",
+    "decision_section_sha256": "e8e2404f028e426c6e69572ab848eae668ea095baf7389b3ae21ba85f151587f",
+    "depth_assessment": {
+      "path": "reports/event-authority-20260911/step-09-depth-coordination.agent_registered.json",
+      "sha256": "54346d8b231b7080b487ed5a8e7332cc0d6202a8177309a10d772b796266509c"
+    },
+    "registry_after": {
+      "revision": "2026-09-25.1",
+      "sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+      "family_count": 43
+    }
+  },
+  "rows": [
+    {
+      "event_type": "coordination.agent_registered",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_registered.json",
+      "before_sha256": "e990debac213073de4d9a970b1072b807edfe55d8abab5f0547b3326bd1d8da6",
+      "after_sha256": "37dbe02fd0b31fdef9a5269ab64d12fc2480d85a3c66c66c61a8a89d0018959f",
+      "bucket": "confirmed_persisted_unregistered",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "cohort_pins": [
+        "july248"
+      ],
+      "ledger_line": 78,
+      "census_line": 113,
+      "census_category": "persisted_unregistered_quarantine",
+      "outcome": "REGISTERED_ROW_CITES_ADMISSION_RECORD"
+    }
+  ],
+  "files": {
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_registered.json": {
+      "before_sha256": "e990debac213073de4d9a970b1072b807edfe55d8abab5f0547b3326bd1d8da6",
+      "after_sha256": "37dbe02fd0b31fdef9a5269ab64d12fc2480d85a3c66c66c61a8a89d0018959f",
+      "encoding": "CRLF, indent 2 (kept)"
+    },
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+      "before_sha256": "abea8410fdeeafcc2bd74b5a3f9b6d1e13602d911475d194230cc983d007623c",
+      "after_sha256": "37ea8147878040e62b6ff76981c440a679e002d055ffb7bc5d256573454b5265",
+      "lines_changed": 1,
+      "line": 78,
+      "line_terminator": "CRLF"
+    },
+    "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": {
+      "before_sha256": "2d35c1e4d69e8f471ac9ba3906bc3c924eb70272ace3302ccc478d6c2ac4183c",
+      "after_sha256": "83a1698ac3dfe2795fec2f10aed3eaabfae6f4074966ed5e6806f756ddf15af0",
+      "lines_changed": 1,
+      "line": 113,
+      "line_terminator": "CRLF"
+    },
+    "reports/event-authority-20260911/step-09-procedure-20260924.md": {
+      "before_sha256": "29bf03a35cbe0f580e94b539a813f1aee617dd5303dd70b242b5ca6728c8ecb2",
+      "after_sha256": "46752ec5113bf5a9e7eca3233cdb492df92e3d08695ae511324edf128415de17",
+      "change": "count table: a row for this registration (1 registered, 15 excluded, 0 carded, 236 remaining); the batch 2 row's \"not yet landed\" now names its landing (bf2a9e877b, landing record cd46487bf0)"
+    }
+  },
+  "campaign_count": {
+    "after_batch2_landing": {
+      "registered": 0,
+      "excluded": 15,
+      "carded": 0,
+      "remaining": 237,
+      "total": 252
+    },
+    "after_this_registration": {
+      "registered": 1,
+      "excluded": 15,
+      "carded": 0,
+      "remaining": 236,
+      "total": 252
+    },
+    "note": "The 18 collaborative workflow families of DL-090 and DL-091 are new scope outside the 252 and are not counted here."
+  },
+  "boundaries": {
+    "registry_changed_by_this_application": false,
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "validator_changed": false,
+    "cohort_pins_changed": false,
+    "denominator_removal_claimed": false,
+    "row_field_added": false,
+    "owner_vetoes_file_changed": false,
+    "other_rows_changed": false
+  }
+}
