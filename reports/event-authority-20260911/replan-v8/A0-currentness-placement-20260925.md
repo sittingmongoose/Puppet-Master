@@ -180,7 +180,7 @@ v8's active files carry none of the retired constructs, which appear only in its
 | Q-06 | Is `ReleaseReceipt.source_token` meant as stored provenance of the whole token, the reading DL-076 rejected for Browser reset, or as a live fence? | Storage owner (P-01) |
 | Q-07 | Should the Runtime Replan action and its wiring move from the historical-only `goal.replanned` to `goal_run.replanned`? | A3 / wiring owner |
 | Q-08 | The registry's `goal_run.certified` source ref `identity.v1.schema.json#/$defs/EventRecord` does not resolve: `identity.v1` defines only `Recipe`, `IdentityInput`, `IdentityResult` and `IdentityOutcome`. Which definition is meant? An A3 replanned row must not copy the pattern. | Event and Storage owners |
-| Q-09 | What is "B01's blocked trigger" (scope adjudication `v1/ADJUDICATION.md` line 15)? It bears on the A3 `goal_run.blocked` contract. | coordinator / Jared |
+| Q-09 | What is "B01's blocked trigger" (scope adjudication `v1/ADJUDICATION.md` line 15)? It bears on the A3 `goal_run.blocked` contract. Main already records B01 as unidentified: plan line 136 and `step-08-source-handoff-and-composition-review-20260921.md` line 26 ("B01 remains the sole pending question"). | coordinator / Jared |
 | Q-10 | The narrow Replan v3 root review `13437dc7…` and the full prebirth plan are only on the NAS. A1's canonical-draft review should read them there, or cite them by hash only. | A1, on the VM |
 | Q-11 | R-05: should `original-bank-checks.json` be regenerated in a successor edition, or recorded as a known stale diagnostic? | A1 canonical-draft author |
 | Q-12 | May A1 install v8 while D06 stays an explicitly unavailable dependency? The plan lists D06 among A1's blocking gaps, not as a prerequisite. | coordinator / Jared |
