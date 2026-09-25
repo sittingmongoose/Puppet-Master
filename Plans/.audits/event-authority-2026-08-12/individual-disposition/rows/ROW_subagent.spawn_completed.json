@@ -2,8 +2,8 @@
   "event_type": "subagent.spawn_completed",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to subagent.spawn_completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "DL-039 Step 9 individual semantic adjudication at 2026-09-25T03:50:05Z: Jared answered EA-S09B2-SPAWN-REQUEST-001 with option 1 on 2026-09-25 (Plans/Decision_Log.md#DL-088): subagent.spawn_requested and subagent.spawn_completed are retired, and Puppet Master records no start request separately from the subagent it creates. A waiting start is a child in the queued state (Plans/assistant-chat-design.md:1836; Plans/Contracts_V0.md:2923), and a start refused before any child exists keeps its existing outcome reason. subagent.spawn_completed was named only for a dispatcher that distinguishes a request from child creation (Plans/Contracts_V0.md:2983); it has no payload row (Plans/Contracts_V0.md:2987-3007), no Plans document names a producer for it, and nothing writes it. The Contracts owner edit that removes the name from Plans/Contracts_V0.md:1469, 2983, CV-116 and CV-266 is still pending. This records the exclusion of this exact token from the persisted-family campaign as retired; it creates no alias, deletes no history and changes no registered family. Application: reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json. The legacy CPU bucket and cohort pins remain because the frozen schema and validator have no J248 exclusion category. No denominator removal, contract-depth pass or seal is claimed.",
   "evidence": {
     "owner_doc": {
       "status": "OWNER_REQUIRED",
@@ -81,6 +81,31 @@
       "citation": "Plans/Contracts_V0.md:1466",
       "status": "ok",
       "notes": "Retires legacy chat.subagent aliases and preserves the canonical subagent namespace and producer-specific spawn names."
+    },
+    {
+      "citation": "Plans/Decision_Log.md#DL-088",
+      "status": "ok",
+      "notes": "Jared's answer to EA-S09B2-SPAWN-REQUEST-001: Approve, option 1 (retire both names), 2026-09-25."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2983",
+      "status": "ok",
+      "notes": "The name applies only when a dispatcher distinguishes a request from child creation; DL-088's Contracts owner edit removes it here and at 1469, CV-116 and CV-266 (pending)."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2987-3007",
+      "status": "ok",
+      "notes": "The subagent payload table has 19 rows and none for this event."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:1836",
+      "status": "ok",
+      "notes": "A queued child already exists before it starts; a waiting start is recorded as that child."
+    },
+    {
+      "citation": "Plans/Run_Modes.md:195",
+      "status": "ok",
+      "notes": "\"New crew spawn requests queue until a slot is free\": the row that gains DL-088's clarifying sentence (Run Modes owner edit pending)."
     }
   ],
   "owner_veto": null,

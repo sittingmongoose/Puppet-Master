@@ -3,7 +3,7 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to subagent.progress. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to subagent.progress. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Step 9 batch 2: Jared answered EA-S09B2-CHILDRUN-RETENTION-001 with option 1 on 2026-09-25 (Plans/Decision_Log.md#DL-084): the history of the 19 child-run families is kept as long as its chat exists, with RP-GOAL-THREAD-LIFETIME subject to the Storage owner's DL-045 reuse check against the Chat content class. Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work. The Storage owner's retention assignment and the family contract's structured retention_policy_ref are still to be written, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json.",
   "evidence": {
     "owner_doc": {
       "status": "OWNER_REQUIRED",
@@ -36,9 +36,9 @@
       "note": "No citation defines replay keys, duplicate handling, or idempotency for `subagent.progress`."
     },
     "retention": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No citation fixes retention class, anchor, TTL, legal hold, or cleanup for `subagent.progress`."
+      "status": "PASS",
+      "citation": "Plans/Decision_Log.md#DL-084",
+      "note": "DL-084 (Jared, 2026-09-25, option 1) keeps subagent.progress as long as its chat exists, the lifetime of Goal text (DL-047) and chat messages: deleting the chat removes it within 24 hours unless it is on hold. The policy object is RP-GOAL-THREAD-LIFETIME (Plans/storage_value_registry.json:509), subject to the Storage owner's DL-045 reuse check against the Chat content class (Plans/storage-plan.md:17269, 250,000 per thread with a linked successor roll); which count rule applies is a Storage owner follow-up the answer leaves open. Retention only: the Case L-3 assignment line and this family's structured retention_policy_ref are not yet written in owner text, and no registry row, binding or admission follows."
     },
     "redaction_custody": {
       "status": "OWNER_REQUIRED",
@@ -81,6 +81,21 @@
       "citation": "Plans/Contracts_V0.md:1466",
       "status": "ok",
       "notes": "Retires legacy chat.subagent aliases and preserves the canonical subagent namespace and producer-specific spawn names."
+    },
+    {
+      "citation": "Plans/Decision_Log.md#DL-084",
+      "status": "ok",
+      "notes": "Jared's answer to EA-S09B2-CHILDRUN-RETENTION-001: Approve, option 1, 2026-09-25."
+    },
+    {
+      "citation": "Plans/storage_value_registry.json:509",
+      "status": "ok",
+      "notes": "RP-GOAL-THREAD-LIFETIME@1.0.0: indefinite, explicit_delete anchor, no count cap, fail_closed overflow; the policy object DL-084 names, subject to the Storage owner's DL-045 reuse check."
+    },
+    {
+      "citation": "Plans/storage-plan.md:17269",
+      "status": "ok",
+      "notes": "Chat content class: indefinite while the thread exists, 250,000 per thread, linked successor roll. No policy object exists for it; the count rule for a very busy chat is the Storage owner follow-up DL-084 leaves open."
     }
   ],
   "owner_veto": null,

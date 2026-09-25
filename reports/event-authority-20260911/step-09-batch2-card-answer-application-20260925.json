@@ -1,0 +1,908 @@
+{
+  "application_id": "EA-STEP09-BATCH2-CARD-ANSWERS-DL084-DL085-DL086-DL088-DL089",
+  "applied_at_utc": "2026-09-25T03:50:05Z",
+  "base_revision": "1e5d9b097b46aa58e7af488a9c38a87efb780d5f",
+  "authority_refs": [
+    "Plans/Decision_Log.md#DL-039",
+    "Plans/Decision_Log.md#DL-084",
+    "Plans/Decision_Log.md#DL-085",
+    "Plans/Decision_Log.md#DL-086",
+    "Plans/Decision_Log.md#DL-088",
+    "Plans/Decision_Log.md#DL-089"
+  ],
+  "answers": {
+    "DL-084": {
+      "decision_log": "Plans/Decision_Log.md#DL-084",
+      "card_id": "EA-S09B2-CHILDRUN-RETENTION-001",
+      "chosen_option": "1",
+      "answer": "Approve",
+      "decided_by": "Jared",
+      "answered_on": "2026-09-25",
+      "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md",
+      "answer_source_sha256": "e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af",
+      "card_copy": "reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md",
+      "card_copy_sha256": "f1b6ddda4a05c10839f0f985fb480728ced5d0e3fb75f2448d42ab3e4b4d73d6",
+      "owner_edits_pending": [
+        "Storage: Case L-3 retention text assigns the chat lifetime to the 19 families (RP-GOAL-THREAD-LIFETIME after the DL-045 reuse check, or a materialized Chat content class with the same lifetime) and says which count rule applies to a very busy chat",
+        "Each of the 19 family contracts: structured retention_policy_ref and chat-deletion behavior",
+        "Contracts CV-267, CV-268 and CV-269 and the orchestrator child-run section cite DL-084"
+      ],
+      "j248_rows": [
+        "subagent.spawned",
+        "subagent.started",
+        "subagent.completed",
+        "subagent.failed",
+        "subagent.cancelled",
+        "subagent.timeout",
+        "subagent.paused",
+        "subagent.resumed",
+        "subagent.progress",
+        "subagent.tool_called",
+        "subagent.tool_completed",
+        "subagent.message_sent",
+        "subagent.message_received",
+        "subagent.output_truncated",
+        "subagent.retried",
+        "subagent.context_warning",
+        "subagent.model_switched",
+        "subagent.budget_warning",
+        "subagent.escalated"
+      ]
+    },
+    "DL-085": {
+      "decision_log": "Plans/Decision_Log.md#DL-085",
+      "card_id": "EA-S09B2-BOARD-RETENTION-001",
+      "chosen_option": "1",
+      "answer": "Approve",
+      "decided_by": "Jared",
+      "answered_on": "2026-09-25",
+      "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md",
+      "answer_source_sha256": "e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af",
+      "card_copy": "reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md",
+      "card_copy_sha256": "f1b6ddda4a05c10839f0f985fb480728ced5d0e3fb75f2448d42ab3e4b4d73d6",
+      "owner_edits_pending": [
+        "Orchestrator: board lifecycle wording 'archived or deleted' becomes 'archived' (Plans/orchestrator-subagent-integration.md:4587 and 3865-3869)",
+        "Storage: coordination family and retention table bind RP-COORDINATION-180D for the three board families",
+        "Contracts: the board rows carry the retention reference"
+      ],
+      "j248_rows": [
+        "crew.board_message_posted",
+        "crew.board_message_read",
+        "crew.board_messages_archived"
+      ]
+    },
+    "DL-086": {
+      "decision_log": "Plans/Decision_Log.md#DL-086",
+      "card_id": "EA-S09B2-DIAGNOSTIC-RETENTION-001",
+      "chosen_option": "1",
+      "answer": "Approve",
+      "decided_by": "Jared",
+      "answered_on": "2026-09-25",
+      "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md",
+      "answer_source_sha256": "e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af",
+      "card_copy": "reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md",
+      "card_copy_sha256": "f1b6ddda4a05c10839f0f985fb480728ced5d0e3fb75f2448d42ab3e4b4d73d6",
+      "owner_edits_pending": [
+        "Storage: retention assignment of RP-RUNTIME-365D to the three families",
+        "Each of the three family contracts: structured retention_policy_ref",
+        "Orchestrator: reconcile 'first 500 characters' with 'All raw output is preserved' (Plans/orchestrator-subagent-integration.md:1222, 1226)"
+      ],
+      "j248_rows": [
+        "phase.force_completed",
+        "config.validation.failed",
+        "parser.error"
+      ]
+    },
+    "DL-088": {
+      "decision_log": "Plans/Decision_Log.md#DL-088",
+      "card_id": "EA-S09B2-SPAWN-REQUEST-001",
+      "chosen_option": "1",
+      "answer": "Approve",
+      "decided_by": "Jared",
+      "answered_on": "2026-09-25",
+      "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md",
+      "answer_source_sha256": "e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af",
+      "card_copy": "reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md",
+      "card_copy_sha256": "f1b6ddda4a05c10839f0f985fb480728ced5d0e3fb75f2448d42ab3e4b4d73d6",
+      "owner_edits_pending": [
+        "Contracts: remove the two names from the payload text (Plans/Contracts_V0.md:1469), the envelope sentence (2983, keeping the chat.subagent_* alias rule), CV-116 and CV-266 (accepted text)",
+        "Run Modes: clarify the crew queue row (Plans/Run_Modes.md:195)"
+      ],
+      "j248_rows": [
+        "subagent.spawn_requested",
+        "subagent.spawn_completed"
+      ]
+    },
+    "DL-089": {
+      "decision_log": "Plans/Decision_Log.md#DL-089",
+      "card_id": "EA-S09-PLATFORM-CARDINALITY-001",
+      "chosen_option": "1",
+      "answer": "Approve",
+      "decided_by": "Jared",
+      "answered_on": "2026-09-25",
+      "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md",
+      "answer_source_sha256": "e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af",
+      "card_copy": "reports/event-authority-20260911/step-09-platform-cardinality-card-20260925.md",
+      "card_copy_sha256": "2dca8e3a6e2a63ec5e0f3fa0c83b3ebbbf4dc5851b8de408f322a0cbafbfc89f",
+      "owner_edits_pending": [
+        "Storage: extend the SP-291 aggregate custody text (Plans/storage-plan.md:23565) with a second application-wide bucket for the application-scoped evaluations of platform.capability_evaluated, together with DL-083's still-pending edit, with no new policy object and no RP-OPERATIONAL-2555D value changed",
+        "Step 8 depth assessment: the family's retention cell can leave PARTIAL after that owner edit; its remaining-gaps text still says the count stays open for Jared"
+      ],
+      "j248_rows": []
+    }
+  },
+  "not_applied": {
+    "DL-087": {
+      "status": "reserved, not written",
+      "card_id": "EA-S09B2-CREW-HISTORY-001",
+      "answer_verbatim": "no answer | retire them but register the shared collaborative workflow events, so adding scope to this.",
+      "reason": "Jared gave no answer and added scope; the entry and its rows wait for his answer to the Card 4 addendum.",
+      "j248_rows_left_unchanged": [
+        "crew.formed",
+        "crew.member_added",
+        "crew.member_removed",
+        "crew.coordination",
+        "crew.completed",
+        "crew.disbanded"
+      ]
+    },
+    "coordination_rows": {
+      "status": "no card; technical work under DL-045",
+      "j248_rows_left_unchanged": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ]
+    }
+  },
+  "rows": [
+    {
+      "event_type": "subagent.spawned",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawned.json",
+      "before_sha256": "f681602a534ec765211657b00f04d2fea79761d294d35e53eed4f7dae5a0438c",
+      "after_sha256": "4398df65e292780c578e6ea48678b2b69df81255effcddcdcbce740fc4302bce",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.started",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.started.json",
+      "before_sha256": "ff1d0f7ab221c3af83cbd2329435cf0eb9f2c1b391ff02ad22af0ebed1ddda4b",
+      "after_sha256": "58b011921af2f829e95867602982695ceaf19feb535cb2d6f9ade3ec75444131",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.completed",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.completed.json",
+      "before_sha256": "1beedbc6fc4c8ce654b1c68e83bf6c423ed0b700d6d556d74208001b33b6fde8",
+      "after_sha256": "684d04dbd7b9ee4233a030a962a6bd7141bb851a64abc3d9633ed823a086f5a7",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "FAIL",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.failed",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.failed.json",
+      "before_sha256": "c4b3c4d7d18c7299238423cc7b5296dea8d752d222a287a2cdae0ed19a18144b",
+      "after_sha256": "52997c409c708d53753f07a5f0cd673c740f7ec417c647705afb5c6470908661",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "FAIL",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.cancelled",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.cancelled.json",
+      "before_sha256": "855785cebbb25d32bd6866c25df394553a3779abdb89dd6b1632ef0b7a1fce5b",
+      "after_sha256": "69ec990f2b2358e3f286f3d4c9a225b54cc3c15517bdc57cccdff835ce2c908c",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "FAIL",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.timeout",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.timeout.json",
+      "before_sha256": "e035953a9771574caf1e96f13ca143d46e28e234cd5633d51bf7e5ea5cd517ba",
+      "after_sha256": "0677ced7f88ed54b6c1a740b3c0d6c21948cdd44b64abb44dbfc13fabe5a2cfa",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.paused",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.paused.json",
+      "before_sha256": "0e86eb9a59d50fe42ca42c95df4e1b88360a2264600b2122a8efa11a6524f157",
+      "after_sha256": "668c0e6696d1690c020b698fe432271a7cb79f53b5199b5d1efc1be2c1a96a9b",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.resumed",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.resumed.json",
+      "before_sha256": "ae78cef57bf07c80d574bccf9434e3b75947a92b88c49edbdda28d67a973fc95",
+      "after_sha256": "f2c9a2d6687e18201827c9b19c673e09302024a4be25c2ce7683d5c5bac7bdf1",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.progress",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.progress.json",
+      "before_sha256": "2496aed8d14fb0f9d92285e3609b219bf355426a3cfa1d2d70c70aa7daeb8582",
+      "after_sha256": "1d2ed95a154f76a9bb2e13194fa353beee8964126e929dabe4b23fb3a260d0f5",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.tool_called",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.tool_called.json",
+      "before_sha256": "e26cfd2cd96935ab422c372ad6a29d7659fbb43e20200eaae8b4bd7b805f67f7",
+      "after_sha256": "59d909ad51ba976d26fa924dcc8f50a782ca39e425e8b5dbcb2214671867f2d6",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.tool_completed",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.tool_completed.json",
+      "before_sha256": "b9267554d30053d9383af892d958f7b7ffec8984a6106a5875f70dafd5bc9512",
+      "after_sha256": "ac12586ea7a04a4eb54ac6aab883a05f75f22f4159ce10856fe6739e0ac4b5d1",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.message_sent",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.message_sent.json",
+      "before_sha256": "987b6b813b251653d8064022e40fe82a2a7c7f6eb80a8e79878018c9ad585c8d",
+      "after_sha256": "b42455647f99bc3009b86060e6d5beda064af176880dd82681299ccbfc9751f5",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.message_received",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.message_received.json",
+      "before_sha256": "c1c7848a8ae229dca70670ddb6d87f3626e0229b68b965fa542a129408a25106",
+      "after_sha256": "9d40b31e9071059abc31117be2c1dec5b1da30f9936aa07fe5bc8e057d89c651",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "FAIL",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.output_truncated",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.output_truncated.json",
+      "before_sha256": "239737ed2dfe44beab052732ad9970028190f4ec161a04116ee8a33f7cdd56ef",
+      "after_sha256": "83b283ff4c77730938c92f06838afed8ce08d823a87ff5761c4ef1c0f0c948f3",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.retried",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.retried.json",
+      "before_sha256": "2a9ec853433bfc7440242819e543ff4efe5fcb493f5708f23aa0062ff0cdcf6b",
+      "after_sha256": "1d3a64c2e3d7757ee4ac97e2b0f2fa8779b058f677b463b5f34cfde6264ceba7",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.context_warning",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.context_warning.json",
+      "before_sha256": "e6376acaa5521104eb9c90c5c8952ec22ca514364f5f8ea7e37b176344e0d14e",
+      "after_sha256": "0aed842d682e04688a1b70e9b480f426b426283cacb146eaaa94249656029402",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "FAIL",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.model_switched",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.model_switched.json",
+      "before_sha256": "8876adef8953fee8c9a9c02cf47e6352f4a93b6b90fe215b916134e80777d406",
+      "after_sha256": "ead0428b983e8d94cee5449df1faed1d79013ef04ef3b77eabb8db1f5c0b918f",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.budget_warning",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.budget_warning.json",
+      "before_sha256": "8d878810c8a3e7162f3d30e5dea0f03329c3381c44336bbdcaf3841ae35ab1c4",
+      "after_sha256": "65bae4dd4705068403023653fa2b7466b6e93e5ee7feb23ae1a0bb245a1ea9b1",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "FAIL",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.escalated",
+      "decision": "DL-084",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.escalated.json",
+      "before_sha256": "4a5fcd60f1b9a99b75ec9c4da0d374077450731a126f55a98559005b130f5512",
+      "after_sha256": "28babaf31060b6d98d3cd32e31d9f0aac61f5edc9f05aeb5633bf0eb273dee00",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "FAIL",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-084"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "crew.board_message_posted",
+      "decision": "DL-085",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_message_posted.json",
+      "before_sha256": "3b5768132ad95fce098457cbf6490b0f55ba5b0874995578e3fea47ab10a48c8",
+      "after_sha256": "2b832141993d847715c290c24623491ddd21b59421917e5397a45b75cea3b10f",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "PASS",
+        "citation": "Plans/orchestrator-subagent-integration.md:3813-3869"
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-085"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "crew.board_message_read",
+      "decision": "DL-085",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_message_read.json",
+      "before_sha256": "713ce11efd49e784f9273131b10d381740a046e080d8dbcf1f805ded91c5e5d3",
+      "after_sha256": "19c83eadaf716ac47836554ad228fbc5c1949e7a023dbec2e0cca1ad88a73acf",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "PASS",
+        "citation": "Plans/orchestrator-subagent-integration.md:3813-3869"
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-085"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "crew.board_messages_archived",
+      "decision": "DL-085",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_messages_archived.json",
+      "before_sha256": "1cb9b50a8f2f7d6ec27678ec84579cf7ff2384c53c4788bbcbf1d8e6e06e5b9a",
+      "after_sha256": "9c8e51df9a6054303c60c873440e03f7c2fa6ef9aee58b02a740d14b6638ca19",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "PASS",
+        "citation": "Plans/orchestrator-subagent-integration.md:3865-3873,4581-4587"
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-085"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "phase.force_completed",
+      "decision": "DL-086",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_phase.force_completed.json",
+      "before_sha256": "085a13d228171d2c1ad463954bb10a87cff182e0e2c3e433f2e2fb4d48ee0ca8",
+      "after_sha256": "e735ad326eed7dab9cf1a8853c2d74acfbd9d0c6d32812d45935c0f868cad38e",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-086"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "config.validation.failed",
+      "decision": "DL-086",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_config.validation.failed.json",
+      "before_sha256": "c083551606c9a79d81758539e1b2dcd2a4e7c5aeb6b7d42c6ee0104b6244a342",
+      "after_sha256": "8be48e5e91b07020b4fda76b87b53673bf6c224a6046caa12a96f66a0bc9d3c5",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-086"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "parser.error",
+      "decision": "DL-086",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_parser.error.json",
+      "before_sha256": "fcf04458aabf537515ebecd3b9211fcb2ad695dc1b8d6fbb90ae320346aabb19",
+      "after_sha256": "cddb317ab62a6204d2ae7d6b36af3c9eeb22e6495e555488c1eb2f22ed524cde",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "KEEP_QUARANTINED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "PASS",
+        "citation": "Plans/Decision_Log.md#DL-086"
+      },
+      "outcome": "REMAINING_TECHNICAL_RETENTION_SETTLED"
+    },
+    {
+      "event_type": "subagent.spawn_requested",
+      "decision": "DL-088",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawn_requested.json",
+      "before_sha256": "30c58ed523539d18276bedb6e6a093181d65d9cce60664ca6bfa73962e822bc1",
+      "after_sha256": "a2736784d9454ad738df273d9dacbf02e11d92d3ebbe2f4eb09a41e67ce42e2d",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "outcome": "EXCLUDED_RETIRED"
+    },
+    {
+      "event_type": "subagent.spawn_completed",
+      "decision": "DL-088",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawn_completed.json",
+      "before_sha256": "543111521094857af91844855671ab2424d26ad2b60938f8c2b1f38d5089a0ad",
+      "after_sha256": "002172d30d9c19c099f4880967a192102a0d999a51c104f90af9718c563c3a7d",
+      "disposition_before": "KEEP_QUARANTINED",
+      "disposition_after": "RECLASSIFY_TO_EXCLUDED",
+      "retention_before": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "retention_after": {
+        "status": "OWNER_REQUIRED",
+        "citation": null
+      },
+      "outcome": "EXCLUDED_RETIRED"
+    }
+  ],
+  "untouched_batch2_rows": [
+    {
+      "event_type": "crew.formed",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.formed.json",
+      "sha256_before_and_after": "30aa14d2a4c0a475f9b20f065d3476987b5a40b05838a82c3989d41f20465d4e",
+      "reason": "Card 4 addendum pending (DL-087 reserved)"
+    },
+    {
+      "event_type": "crew.member_added",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.member_added.json",
+      "sha256_before_and_after": "bfc476902d2fd3cffc409a8fd01ce3a80fa44d6900f0e847602402104e06014a",
+      "reason": "Card 4 addendum pending (DL-087 reserved)"
+    },
+    {
+      "event_type": "crew.member_removed",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.member_removed.json",
+      "sha256_before_and_after": "49beba77f2de1d19cd7ac05230c231ff6ce920735f1700ae61147b93db75f47d",
+      "reason": "Card 4 addendum pending (DL-087 reserved)"
+    },
+    {
+      "event_type": "crew.coordination",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.coordination.json",
+      "sha256_before_and_after": "a17316217772d2865c440423235c6b2922b7d8bcb4695c3b839fc2b2308ab14a",
+      "reason": "Card 4 addendum pending (DL-087 reserved)"
+    },
+    {
+      "event_type": "crew.completed",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.completed.json",
+      "sha256_before_and_after": "a120fed2a80e1935183a62da7221abc580dbe110733ec48fd8612c4ee131857e",
+      "reason": "Card 4 addendum pending (DL-087 reserved)"
+    },
+    {
+      "event_type": "crew.disbanded",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.disbanded.json",
+      "sha256_before_and_after": "0b6bd4bad717dbc9d15e3bcb52b66096f6d42e2c23534e1328800b39a8ab8c19",
+      "reason": "Card 4 addendum pending (DL-087 reserved)"
+    },
+    {
+      "event_type": "coordination.agent_registered",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_registered.json",
+      "sha256_before_and_after": "e990debac213073de4d9a970b1072b807edfe55d8abab5f0547b3326bd1d8da6",
+      "reason": "no card; technical work"
+    },
+    {
+      "event_type": "coordination.agent_status_updated",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_status_updated.json",
+      "sha256_before_and_after": "266e6752cda5b254e2818995edc0eabbdc4ceaff324664cfc35d8dfa0a37093b",
+      "reason": "no card; technical work"
+    },
+    {
+      "event_type": "coordination.agent_operation_updated",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_operation_updated.json",
+      "sha256_before_and_after": "cf0fee1bd113e829aaad05a735d2fd82dcec04f69835c446c286c7933874a922",
+      "reason": "no card; technical work"
+    },
+    {
+      "event_type": "coordination.agent_file_ownership_updated",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_file_ownership_updated.json",
+      "sha256_before_and_after": "eb4d9cf65087961842079d548aa336c4b48ab08a8d70f04808b51c0d2a6ddc10",
+      "reason": "no card; technical work"
+    },
+    {
+      "event_type": "coordination.agent_unregistered",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_unregistered.json",
+      "sha256_before_and_after": "a20ed35a36b3e1b9d5748963d70505ca102c05c5918cda9792adfb936c2481f9",
+      "reason": "no card; technical work"
+    },
+    {
+      "event_type": "coordination.agent_crashed",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_crashed.json",
+      "sha256_before_and_after": "ec685b8e67ec5b74f9647c251965a05ad55e5532feeee86ed561bde08757f6f9",
+      "reason": "no card; technical work"
+    },
+    {
+      "event_type": "coordination.agent_aborted",
+      "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_aborted.json",
+      "sha256_before_and_after": "8af83e23a692a63f9358265931a07c254a36d6d05015f2d81b7f4c215429052e",
+      "reason": "no card; technical work"
+    }
+  ],
+  "files": {
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+      "before_sha256": "90661e86d772ec83507b1f468d26c85e06819332fdfcea33b265eca8dbe1878c",
+      "after_sha256": "313545d22286dea665a0c6e35bc8d53ee34ff721dc8ef7858c8efbafaf25fc88",
+      "lines_changed": 27
+    },
+    "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": {
+      "before_sha256": "d952c79315d576a1ea3fcf260c16325c4d00f484cad8c42dea81dd69be732266",
+      "after_sha256": "31e0124f04a0baeb19ff8e684b60089248853012bb27d2701ff76149e685d73c",
+      "lines_changed": 27
+    },
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/OWNER_VETOES.jsonl": {
+      "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "changed": false
+    }
+  },
+  "campaign_count": {
+    "after_batch1_landing": {
+      "registered": 0,
+      "excluded": 7,
+      "carded": 0,
+      "remaining": 245,
+      "total": 252
+    },
+    "after_batch2_cards_presented": {
+      "registered": 0,
+      "excluded": 7,
+      "carded": 33,
+      "remaining": 212,
+      "total": 252
+    },
+    "after_this_application": {
+      "registered": 0,
+      "excluded": 9,
+      "carded": 6,
+      "remaining": 237,
+      "total": 252
+    },
+    "note": "The 6 still carded are the crew lifecycle rows awaiting the Card 4 addendum. The batch 2 rows were never set to NEEDS_OWNER_VETO: the cards were presented from the evidence map, so the row files had no owner veto to remove and OWNER_VETOES.jsonl is unchanged (empty)."
+  },
+  "boundaries": {
+    "registry_changed": false,
+    "bulk_registration": false,
+    "analogy_used": false,
+    "inference_used": false,
+    "validator_changed": false,
+    "cohort_pins_changed": false,
+    "denominator_removal_claimed": false,
+    "depth_pass_claimed": false,
+    "owner_documents_changed": false,
+    "owner_vetoes_file_changed": false
+  },
+  "other_branch_files": {
+    "Plans/.plan_index/acceptance_units.jsonl": {
+      "before_sha256": "4c822a47e961a53daecbb4de94ae9223fd7a1b2e4c4151c9c370af2734f59f1a",
+      "after_sha256": "0575ba1036aab38ce0279d29350f8a6252df4f59df78b90eb550646988f467a6",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/.plan_index/coverage_report.json": {
+      "before_sha256": "ccefb7b9b61efb3f60c7b6a94878cc9c4e5da6aabdbccc4614b75de82dd99335",
+      "after_sha256": "88682fbd09f9e05a57f081222cf9eb7ffd2127025883131626f18163d2f269ef",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/.plan_index/dependencies.json": {
+      "before_sha256": "18113c58eed5dffbbbf74f2a98e1d81ecf834de7bf86d3ee92088ed744677c45",
+      "after_sha256": "abfc0ad647c21662082d8f1f8071c24e725b2f59bd57657e40379197eeeeeaba",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/.plan_index/doc_cards.json": {
+      "before_sha256": "df69d3ccf3641cfa7c9fcc71f96c8225f8fb2454d0e6d04671f2865896bdd818",
+      "after_sha256": "1357bfdce7e4c8b4c38fffd3a20bd0207b5f51bead4ab9dd2bd0a6107836abe3",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/.plan_index/node_readiness_report.json": {
+      "before_sha256": "668a8fdc6da620765a3a181f3fae9ebb376a8434f576bd0f5263b2624442e711",
+      "after_sha256": "80e88f1f7c55e95cec2766061cd210ece4539b56a8187c3f0aaa6456a58f4137",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/.plan_index/plan_units.jsonl": {
+      "before_sha256": "fb70287dfe705fdd3c7bb721d47c54e91fdb0591468cc5504f51b06458e6f64c",
+      "after_sha256": "277bfd65c2d220de604e2f64a80351c8df80ac0430e05a664c9ac8adc8f25cdd",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/Decision_Log.md": {
+      "before_sha256": "0493c6ce5e30a40f063ad1c4ebe2706fda55369512d82ef6c62b3e20799c4e0a",
+      "after_sha256": "bb3332032c23b5840bcf9763a3e62451e19b20ceaf6bd82617aab3bf1524ca8b",
+      "kind": "edited"
+    },
+    "Plans/_shards/decision_log/00-index.md": {
+      "before_sha256": "5b736662da55e02b3690ae9950790a03e29d7b3798b58b8671ccad6da042d76d",
+      "after_sha256": "de1691b26d20e62c6e5d6c6ea5a16e1470495c325fa89ccab73d025992d7b171",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/_shards/decision_log/001-preamble.md": {
+      "before_sha256": "54d170a9eba3c105e30cdac81b7b9a97a18f6f62f3f3c269bbb4ed8ff993ab8d",
+      "after_sha256": "bdb31fc2b798fc1cae8f37e1eb7226897e416f6af6e698c7e5d520c3f70428c7",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/_shards/decision_log/002-purpose.md": {
+      "before_sha256": "19a4e886177e7739f3773de949253cb89822cec55e9a3f0ad135c86afb39c192",
+      "after_sha256": "bfcf43c4e3c9d966d008f343b4967b866511a0c4e92d576fb5035ba656b4faec",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/_shards/decision_log/003-entries.md": {
+      "before_sha256": "c6ed778540e38b8b1abe1d11dbc815bb1b43497d5152006c7b5eb6ccf1ec32f1",
+      "after_sha256": "e8eb8387c77abf0d8cc92be0506e284c8908eb01574689d4b50c560f0be989f6",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/_shards/decision_log/004-owner-consumer-map.md": {
+      "before_sha256": "bdc6bbfaed8af3dbb3b8372e12b23eada16f684ac8b067d9cfdf281a3c064844",
+      "after_sha256": "596da57ef30dcce36f64c3c1ae75b386c2fcdedf6772c6ad2ca9aca37a53397e",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/_shards/decision_log/005-planunits.md": {
+      "before_sha256": "62e639066a779825474cac158a5934a1a384c824f2f97434dd4eb2b629f93e8c",
+      "after_sha256": "2e03097a9b7ef6aacc6cbdf41a70de6f2ff3fbfbde456acccce22594f894931c",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/_shards/decision_log/006-migration-coverage.md": {
+      "before_sha256": "1ad93fae6e2613311c18675b1d2020f713b5623e41fd48d0dc3c94609056332d",
+      "after_sha256": "383e9b700f3333e64f7f9cdb705bda9d9f937baf850d0dcc9d8a6d63082a5b3a",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/_shards/decision_log/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md": {
+      "before_sha256": "32223d5b6f0447c249cc774151c40a26f4dd594f410a1d948576bf3d61fc3cbe",
+      "after_sha256": "1b3b18d26c666eddfe230a83901cb61d4b4fbc053807dda7e272f9627c67e977",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/_shards/decision_log/008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md": {
+      "before_sha256": "690ccd70cb63dbee6acd289fd052affe102c02d4bacce243a2393d65c1230638",
+      "after_sha256": "2b5863e88f4198d9c5b4ab1c103a7b8fe977c1dbcdd2819076460e3a03a131ea",
+      "kind": "derived (regenerated)"
+    },
+    "Plans/_shards/decision_log/manifest.json": {
+      "before_sha256": "3a705a6e386417e5155c7352dbae2440cd8fd93396f1f5e4c76ade6a8e653368",
+      "after_sha256": "66291e310eb4b05e14d287417737fb33a509d0fb79191545cef4d6b36438be03",
+      "kind": "derived (regenerated)"
+    },
+    "reports/event-authority-20260911/decision-responses.jsonl": {
+      "before_sha256": "352a6d95ebede38456d069c5d1a4728c2e02498196202eec02a06f2c57cc37e0",
+      "after_sha256": "3a435c02b11c91f401712d07169c812a72aa3a8381e6b56dede8dc7db4956324",
+      "kind": "edited"
+    },
+    "reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md": {
+      "before_sha256": null,
+      "after_sha256": "f1b6ddda4a05c10839f0f985fb480728ced5d0e3fb75f2448d42ab3e4b4d73d6",
+      "kind": "edited"
+    },
+    "reports/event-authority-20260911/step-09-platform-cardinality-card-20260925.md": {
+      "before_sha256": null,
+      "after_sha256": "2dca8e3a6e2a63ec5e0f3fa0c83b3ebbbf4dc5851b8de408f322a0cbafbfc89f",
+      "kind": "edited"
+    },
+    "reports/event-authority-20260911/step-09-procedure-20260924.md": {
+      "before_sha256": "717945aac2a6b9f55997b30e3b79d7624c8411bbf476bb344995c243ec173505",
+      "after_sha256": "0f5a9866f7584a6b264c3ab1e2ca8bbdc03cf648ae7372b0f70f2998b896eb33",
+      "kind": "edited"
+    }
+  },
+  "citation_anchor_revision": {
+    "new_line_citations": "1e5d9b097b46aa58e7af488a9c38a87efb780d5f",
+    "applies_to": [
+      "Plans/Contracts_V0.md:2983",
+      "Plans/Contracts_V0.md:2987-3007",
+      "Plans/Run_Modes.md:195",
+      "Plans/assistant-chat-design.md:1836",
+      "Plans/orchestrator-subagent-integration.md:1222-1226",
+      "Plans/orchestrator-subagent-integration.md:4587",
+      "Plans/storage-plan.md:17268",
+      "Plans/storage-plan.md:17269",
+      "Plans/storage-plan.md:17272",
+      "Plans/storage_value_registry.json:329",
+      "Plans/storage_value_registry.json:456",
+      "Plans/storage_value_registry.json:509"
+    ],
+    "note": "Line numbers this application adds refer to main at the base revision; Plans/Contracts_V0.md, storage-plan.md, storage_value_registry.json, orchestrator-subagent-integration.md, assistant-chat-design.md and Run_Modes.md are byte-identical there to 9986aeabe5, where the cards' technical companion read them. The Decision Log anchors DL-084 to DL-089 are the entries this branch adds. Citations already in the rows keep the revisions they were written against and are not refreshed here."
+  }
+}

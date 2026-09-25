@@ -7,7 +7,7 @@
   ],
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to config.validation.failed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to config.validation.failed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Step 9 batch 2: Jared answered EA-S09B2-DIAGNOSTIC-RETENTION-001 with option 1 on 2026-09-25 (Plans/Decision_Log.md#DL-086): phase.force_completed, config.validation.failed and parser.error are kept one year after the run finishes under RP-RUNTIME-365D. Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work. The Storage owner's retention assignment and the family contract's structured retention_policy_ref are still to be written, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json.",
   "evidence": {
     "membership_version": {
       "status": "OWNER_REQUIRED",
@@ -40,9 +40,9 @@
       "note": "No citation defines duplicate recognition, replay behavior, ordering, or idempotent application for this exact persisted event."
     },
     "retention": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No event-specific retention class, duration, compaction, or deletion authority is cited; the accountable owner must supply it."
+      "status": "PASS",
+      "citation": "Plans/Decision_Log.md#DL-086",
+      "note": "DL-086 (Jared, 2026-09-25, option 1) keeps config.validation.failed one year after the run finishes under RP-RUNTIME-365D (Plans/storage_value_registry.json:456; Plans/storage-plan.md:17268): at most 1,000,000 records per run and 5,000,000 per project, with a successor roll. Retention only: the Storage assignment line and this family's structured retention_policy_ref are not yet written in owner text, and no registry row, binding or admission follows."
     },
     "redaction_custody": {
       "status": "OWNER_REQUIRED",
@@ -80,6 +80,21 @@
       "citation": "Plans/.audits/event-authority-2026-08-12/cohort-pins/EVENT_TO_COHORTS.json:182-184",
       "status": "ok",
       "notes": "Immutable cohort map assigns config.validation.failed to july248; retained independently of working bucket."
+    },
+    {
+      "citation": "Plans/Decision_Log.md#DL-086",
+      "status": "ok",
+      "notes": "Jared's answer to EA-S09B2-DIAGNOSTIC-RETENTION-001: Approve, option 1, 2026-09-25."
+    },
+    {
+      "citation": "Plans/storage_value_registry.json:456",
+      "status": "ok",
+      "notes": "RP-RUNTIME-365D@1.0.0: run_completion anchor, 31,536,000 s, 1,000,000 per run and 5,000,000 per project, roll_successor; the policy DL-086 binds."
+    },
+    {
+      "citation": "Plans/storage-plan.md:17268",
+      "status": "ok",
+      "notes": "Runtime/run/node/attempt class: 365 days after run completion; 1,000,000 per run and 5,000,000 per project."
     }
   ],
   "owner_veto": null,
