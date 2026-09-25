@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T11:00:19Z",
+  "generated_at_utc": "2026-09-25T11:12:52Z",
   "gui_related_units": {
     "count": 3200,
     "units": [
@@ -4797,7 +4797,7 @@
           "heading": "BRS-018 - Destination, Headless Authentication, Recovery Key, And Human Delivery Safety",
           "heading_level": 3,
           "heading_line": 1109,
-          "line": 1111,
+          "line": 1123,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4807,8 +4807,8 @@
         "source_location": {
           "heading": "BRS-019 - Locate, Browse, Restore, Retention, And Durable Operational Safety",
           "heading_level": 3,
-          "heading_line": 1159,
-          "line": 1161,
+          "heading_line": 1174,
+          "line": 1176,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4818,8 +4818,8 @@
         "source_location": {
           "heading": "BRS-023 - Phase-Local Restore Evidence And Bound Emergency Consent",
           "heading_level": 3,
-          "heading_line": 1252,
-          "line": 1254,
+          "heading_line": 1267,
+          "line": 1269,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -39249,7 +39249,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "c0f7d40453a72f58f9104610e8e929e3de065446e4af2f133e37162e09ae9cf0",
+        "expected": "95ba302582e854ad78e43f07a35e41a58cd682cd2e68b8a601789391583cf075",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -39297,7 +39297,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "87fb413008c5469f31f2ec17ddbd0afd7a0072f69828760f976dfc91de7788d8",
+        "expected": "be3c1353a702547d9cb654ac25d733c1d247ee612fffdf9abab98a7939d3cc9f",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {

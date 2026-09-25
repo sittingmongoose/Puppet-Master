@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2592
+Source lines: L2164-L2594
 
-Source SHA256: `f20dc0c2c1d22883d88fbbfe14e08d40012101838f42331f1a1e1a63675f47f1`
+Source SHA256: `5701200857832110de22ba792ba9339f93af42bd3dbbf8ea40d9eeed495e7d58`
 
 ---
 
@@ -184,6 +184,8 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+For exactly `cmd.backup.recovery_key.reencrypt`, SIR's internal companion retains authentic original full IdentityEnvelope, complete authority and reviewed arguments, payload digest, original dispatch/frame/generation, idempotency, actor/permission and nullable actual return context. The domain adapter resolves the actual review, source/target records, re-encryption observation/receipt and work before mapping to CommandOutcome/UICommandResponse. Safe error projection joins the unchanged actual Backup error to original identity/caller; cancelled common UI error may be null without erasing the owner error or known effects. Unknown effects map to terminal_unknown/recovery_required, accepted work cannot be relabelled terminal, and replay never repeats cryptographic effects. Mandatory actual original/current disclosure and immutable input guards remain; no protected FullThread field or native producer is created by static validation.
 
 For exactly `cmd.backup.recovery_key.rotate`, the SIR binding in `Plans/backup_key_rotation_contracts.schema.json` retains authentic full IdentityEnvelope, original request/operation/instance/dispatch/frame/independent target, actor/permission, initiating Client, exact arguments/digest and genuine nullable caller. Current delivery independently authenticates the same caller and protected audience. Actual session-owned nonterminal progress maps accepted/pending with no terminal receipt and no invented ObservableWork; session delivery does not mean engine rotation completion. Terminal dedicated redacted rotation receipt joins actual original, protected use, per-repository causal engine facts, unchanged Backup error and nullable safe UI error. Failure/cancellation retain known effects, including null UI error for genuine cancellation; unknown use/effects remain terminal_unknown/reconciliation-only. Snapshot original and live resolved records and reject late mutation. Replay cannot redeem consumed input or repeat rotation. No Full Thread/UI schema widening, key bytes, new event or native proof follows from static composition.
 

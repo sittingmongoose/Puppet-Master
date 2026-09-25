@@ -104,10 +104,10 @@ class ForgeProviderFixtureGateTests(unittest.TestCase):
         for fixture in PROVIDER_PACKS:
             with self.subTest(fixture=fixture):
                 self.assertEqual(GATE.CONTRACT_PAIRS.count((FORGE_SCHEMA, fixture)), 1)
-        self.assertEqual(len(GATE.CONTRACT_PAIRS), 64)
-        self.assertEqual(len(set(GATE.CONTRACT_PAIRS)), 64)
-        self.assertEqual(GATE.EXPECTED_CONTRACT_PAIR_COUNT, 64)
-        self.assertEqual(len({schema for schema, _ in GATE.CONTRACT_PAIRS}), 60)
+        self.assertEqual(len(GATE.CONTRACT_PAIRS), 65)
+        self.assertEqual(len(set(GATE.CONTRACT_PAIRS)), 65)
+        self.assertEqual(GATE.EXPECTED_CONTRACT_PAIR_COUNT, 65)
+        self.assertEqual(len({schema for schema, _ in GATE.CONTRACT_PAIRS}), 61)
         self.assertEqual(
             {fixture for schema, fixture in GATE.CONTRACT_PAIRS if schema == FORGE_SCHEMA},
             set(PROVIDER_PACKS) | {"Plans/forge_integration_contract_fixtures.json"},

@@ -24,7 +24,7 @@ class Bindings(unittest.TestCase):
    self.assertEqual({'$ref':'#/$defs/backup_action_'+kind+'_v2'},arms[0])
    self.assertEqual({'$ref':'https://puppetmaster.local/schemas/backup_bounded_reads/1.0.0/backup_bounded_read_contracts.schema.json#/$defs/'+kind},arms[1])
    self.assertEqual({'$ref':json.loads((ROOT/SCHEMA).read_text())['$id']+'#/$defs/'+kind},arms[2])
-   exclusions=arms[-1]['allOf'][1]['not']['properties']['command_id']['anyOf'];self.assertIn({'enum':sorted(CMDS)},exclusions);self.assertEqual(6,len(exclusions))
+   exclusions=arms[-1]['allOf'][1]['not']['properties']['command_id']['anyOf'];self.assertIn({'enum':sorted(CMDS)},exclusions);self.assertEqual(7,len(exclusions))
  def test_actual_current_values_and_historical_decoder(self):
   sys.path.insert(0,str(ROOT/'scripts'));spec=importlib.util.spec_from_file_location('lifecycle_binding_gate',ROOT/'scripts/pm-new-contracts-verify.py');gate=importlib.util.module_from_spec(spec);spec.loader.exec_module(gate)
   schema=json.loads((ROOT/OLD).read_text());registry=gate.offline_schema_registry();new=json.loads((ROOT/'Plans/backup_destination_lifecycle_contract_fixtures.json').read_text());old=json.loads((ROOT/'Plans/backup_restore_system_contract_fixtures.json').read_text());reads=json.loads((ROOT/'Plans/backup_bounded_read_fixtures.json').read_text())

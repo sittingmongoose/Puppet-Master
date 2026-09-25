@@ -2668,7 +2668,7 @@
       }
     },
     "backup_current_command_request": {
-      "description": "Current shape routing only: four prior action successors, two bounded reads, two destination lifecycle successors, selected snapshot deletion, portable encrypted export, protected recovery-key rotation and 30 other legacy commands. Historical decoders remain unchanged; no handler, native authority or physical custody is enabled.",
+      "description": "Current shape routing only: four prior action successors, two bounded reads, two destination lifecycle successors, selected snapshot deletion, portable encrypted export, protected recovery-key rotation, reviewed repository re-encryption and 29 other legacy commands. Historical decoders remain unchanged; no handler, native authority or physical custody is enabled.",
       "oneOf": [
         {
           "$ref": "#/$defs/backup_action_request_v2"
@@ -2687,6 +2687,9 @@
         },
         {
           "$ref": "urn:puppetmaster:backup:key-rotation:contracts:v1#/$defs/request"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/backup-reencrypt/1.0.0/backup_reencrypt_contracts.schema.json#/$defs/request"
         },
         {
           "allOf": [
@@ -2721,6 +2724,9 @@
                       },
                       {
                         "const": "cmd.backup.recovery_key.rotate"
+                      },
+                      {
+                        "const": "cmd.backup.recovery_key.reencrypt"
                       }
                     ]
                   }
@@ -2770,7 +2776,7 @@
       ]
     },
     "backup_current_command_result": {
-      "description": "Current shape routing only: four prior action successors, two bounded reads, two destination lifecycle successors, selected snapshot deletion, portable encrypted export, protected recovery-key rotation and 30 other legacy commands. Historical decoders remain unchanged; no handler, native authority or physical custody is enabled.",
+      "description": "Current shape routing only: four prior action successors, two bounded reads, two destination lifecycle successors, selected snapshot deletion, portable encrypted export, protected recovery-key rotation, reviewed repository re-encryption and 29 other legacy commands. Historical decoders remain unchanged; no handler, native authority or physical custody is enabled.",
       "oneOf": [
         {
           "$ref": "#/$defs/backup_action_result_v2"
@@ -2789,6 +2795,9 @@
         },
         {
           "$ref": "urn:puppetmaster:backup:key-rotation:contracts:v1#/$defs/result"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/backup-reencrypt/1.0.0/backup_reencrypt_contracts.schema.json#/$defs/result"
         },
         {
           "allOf": [
@@ -2823,6 +2832,9 @@
                       },
                       {
                         "const": "cmd.backup.recovery_key.rotate"
+                      },
+                      {
+                        "const": "cmd.backup.recovery_key.reencrypt"
                       }
                     ]
                   }

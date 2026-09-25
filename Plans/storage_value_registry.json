@@ -4419,6 +4419,170 @@
         "Plans/backup_key_rotation_contracts.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.backup.reencrypt_transport.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_reencrypt_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.reencrypt.request.v1",
+        "pm.backup.reencrypt.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold; actual original, review and effects retain their own custody.",
+        "expiry_rule": "Discard transient transport/error projection when delivery ends or disclosure is invalidated; no durable replay authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target; missing genuine original/error/effect stays unavailable, not reconstructed from transport.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted exact reencryption request/result transport, never effect or replay authority.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_reencrypt_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.backup_reencrypt_error_projection.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/backup_reencrypt_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.backup_reencrypt_error_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold; actual original, review and effects retain their own custody.",
+        "expiry_rule": "Discard transient transport/error projection when delivery ends or disclosure is invalidated; no durable replay authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target; missing genuine original/error/effect stays unavailable, not reconstructed from transport.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted authentic original/actual error/current caller projection, including legal cancelled null UI error.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/backup_reencrypt_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.backup_reencrypt_dispatch.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/backup_reencrypt_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.backup_reencrypt_dispatch.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual original/review/source/target/effect and unresolved reconciliation under existing owner audit/replay/hold obligations; exact per-kind physical assignment remains pending.",
+        "expiry_rule": "No numeric TTL or cleanup writer admitted. Physical keys/values, current/historical readers, source-coupled holds and coherent migration/backup require owner enrollment; no source lifetime extension or old-key/copy disposal."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct reencryption original/review/native creation/verification from rotation, export or restore evidence. Historical decoders remain; actual physical writer/readers/migration and coherent backup remain pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained genuine original full identity/arguments/protected-admission references/caller; physical enrollment pending.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/backup_reencrypt_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup.reencrypt_review.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_reencrypt_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.reencrypt.review.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual original/review/source/target/effect and unresolved reconciliation under existing owner audit/replay/hold obligations; exact per-kind physical assignment remains pending.",
+        "expiry_rule": "No numeric TTL or cleanup writer admitted. Physical keys/values, current/historical readers, source-coupled holds and coherent migration/backup require owner enrollment; no source lifetime extension or old-key/copy disposal."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct reencryption original/review/native creation/verification from rotation, export or restore evidence. Historical decoders remain; actual physical writer/readers/migration and coherent backup remain pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained actual reviewed original history and intended target map; not created-target evidence or protected secret material.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_reencrypt_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup.reencrypt_effect_metadata.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_reencrypt_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.reencrypt.observation.v1",
+        "pm.backup.reencrypt.receipt.v1",
+        "pm.backup.reencrypt.domain_evidence.v1",
+        "pm.backup.reencrypt.verification.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual original/review/source/target/effect and unresolved reconciliation under existing owner audit/replay/hold obligations; exact per-kind physical assignment remains pending.",
+        "expiry_rule": "No numeric TTL or cleanup writer admitted. Physical keys/values, current/historical readers, source-coupled holds and coherent migration/backup require owner enrollment; no source lifetime extension or old-key/copy disposal."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct reencryption original/review/native creation/verification from rotation, export or restore evidence. Historical decoders remain; actual physical writer/readers/migration and coherent backup remain pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained actual created target membership, native new-domain evidence, copy verification and BackupReencryptReceipt; preserve partial/unknown truth without old-copy deletion or key retirement.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_reencrypt_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [
