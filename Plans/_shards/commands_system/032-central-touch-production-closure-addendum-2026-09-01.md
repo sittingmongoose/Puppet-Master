@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L5460-L5741
 
-Source SHA256: `931ee1cb5c17bb3259f545ba280ba30410ded74295cf4cd4890e75c9f33cd2a8`
+Source SHA256: `d730273e2041266ba0def56b7646d5d90cce26cdeb68112ef4d9a14f53b8d91a`
 
 ---
 
@@ -72,7 +72,7 @@ The following exact 231 primary commands complete the remaining actionable Touch
 | `cmd.forge.review.approve` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_approve` | `Plans/forge_review_decisions.schema.json#/$defs/request` -> `Plans/forge_review_decisions.schema.json#/$defs/result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.checkout` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_checkout` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.close` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_close` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
-| `cmd.forge.review.comment` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_comment` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.comment` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_comment` | `Plans/forge_review_comment_contracts.schema.json#/$defs/request` -> `Plans/forge_review_comment_contracts.schema.json#/$defs/result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.create` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_create` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.mark_ready` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_mark_ready` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.merge` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_merge` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |

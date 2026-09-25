@@ -10857,7 +10857,15 @@
               "not": {
                 "properties": {
                   "command_id": {
-                    "const": "cmd.forge.repository.create"
+                    "enum": [
+                      "cmd.forge.pipeline.cancel",
+                      "cmd.forge.pipeline.open_logs",
+                      "cmd.forge.repository.create",
+                      "cmd.forge.review.approve",
+                      "cmd.forge.review.comment",
+                      "cmd.forge.review.request_changes",
+                      "cmd.forge.review.thread.reply"
+                    ]
                   }
                 },
                 "required": [
@@ -10869,6 +10877,21 @@
         },
         {
           "$ref": "#/$defs/repository_create_command_request_v2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/forge-review-decisions/1.0.0/forge_review_decisions.schema.json#/$defs/request"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/forge-log-selection/1.0.0/forge_log_selection_contracts.schema.json#/$defs/request"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/forge-cancel-selected/1.0.0/forge_cancel_selected_contracts.schema.json#/$defs/request"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/forge-thread-reply/1.0.0/forge_thread_reply_contracts.schema.json#/$defs/request"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/forge-review-comment/1.0.0/forge_review_comment_contracts.schema.json#/$defs/request"
         }
       ]
     },

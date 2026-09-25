@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11771-L12031
+Source lines: L11771-L12033
 
-Source SHA256: `561632c3681cf6baf90391922b4d8d5b1f159ea4efa78176c618115734842db6`
+Source SHA256: `0b67f4e2a650b5d82f3e29df2a647c8be873e5b593af1f203294ad0c6fa39d99`
 
 ---
 
@@ -17,6 +17,8 @@ Every primary row below is static central intent. A named `handler_location` is 
 
 
 ### Exact 100 primary catalog rows
+
+For exactly `cmd.forge.review.comment`, the selected binding is `Plans/forge_review_comment_contracts.schema.json#/$defs/request` -> `Plans/forge_review_comment_contracts.schema.json#/$defs/result`. It preserves exact submitted body, nullable original revision/line anchor, authentic SIR original/current caller and provider-issued comment/result/receipt. It requires no pre-existing thread, invents no tracking identity, and never falls back from anchored to unanchored posting. Accepted is not posted; uncertain effects require reconciliation and replay cannot repost. Existing handler, confirmation, availability and event policy remain unchanged.
 
 For exactly `cmd.forge.review.thread.reply`, the selected binding is `Plans/forge_thread_reply_contracts.schema.json#/$defs/request` -> `#/$defs/result`. It preserves actual original body/version, whole immutable thread/revision window, authentic SIR original/current caller and genuine provider receipt/work/error disclosure. Accepted is not posted; unknown is reconciliation-only and replay does not repost. The sole handler, availability and event policy remain unchanged.
 

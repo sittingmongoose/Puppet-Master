@@ -473,11 +473,13 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     forge_logs = {"cmd.forge.pipeline.open_logs"}
     forge_cancel = {"cmd.forge.pipeline.cancel"}
     forge_thread_reply = {"cmd.forge.review.thread.reply"}
+    forge_review_comment = {"cmd.forge.review.comment"}
     add("TCP-FORGE-REVIEW-DECISIONS", "command", forge_decisions)
     add("TCP-FORGE-LOG-SELECTION", "command", forge_logs)
     add("TCP-FORGE-CANCEL-SELECTED", "command", forge_cancel)
     add("TCP-FORGE-THREAD-REPLY", "command", forge_thread_reply)
-    add("TCP-FORGE", "command", {item for item in forge if item.startswith("cmd.forge.")} - forge_decisions - forge_logs - forge_cancel - forge_thread_reply)
+    add("TCP-FORGE-REVIEW-COMMENT", "command", forge_review_comment)
+    add("TCP-FORGE", "command", {item for item in forge if item.startswith("cmd.forge.")} - forge_decisions - forge_logs - forge_cancel - forge_thread_reply - forge_review_comment)
     add(
         "TCP-REPOSITORY-LOCAL",
         "ui_action",
@@ -1908,7 +1910,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # selected logs use four bounded successor profiles. No new Touch rows.
         # Credential source-add has one exact successor, leaving nine peers intact.
         # Exact Forge cancellation consumes its bounded successor, no new row.
-        "profile_count": 142,
+        "profile_count": 143,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1142,

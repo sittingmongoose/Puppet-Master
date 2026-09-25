@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2584
+Source lines: L2164-L2586
 
-Source SHA256: `30cdffbc37e481e7bbdedb105be0e108c4b2dc5790820974953bfc02a64e16b1`
+Source SHA256: `76e125955ee1243b9d4af02b9a20605d2bf3eab7c1cf9d051f4426a8ccea0d1c`
 
 ---
 
@@ -184,6 +184,8 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+For exactly `cmd.forge.review.comment`, the SIR dispatch binding in `Plans/forge_review_comment_contracts.schema.json` retains the authenticated original full IdentityEnvelope, exact arguments and argument-only digest, request/dispatch/frame, independent target generation, idempotency, actor/permission and genuine nullable caller. The actual delivery owner independently supplies its nullable current caller; null/foreign substitution is not equivalent. The actual provider comment result composes the unchanged common outcome with nonterminal accepted work, genuine original receipt/error and no inferred no_op. Explicit error projection resolves the unchanged owner error and exact command/instance/identity/caller to nullable existing UICommandError; cancellation may retain known applied owner effects with null UI error. Unknown owner error/effect is not failed success/failure certainty; degraded mapping remains unsupported. Snapshot inputs before dependent owner reads and reject late mutation. No Full Thread identity/UI envelope schema widening, fabricated thread, automatic replay, physical store or native authentication/disclosure proof follows from static fixtures.
 
 For exactly `cmd.git.pull`, `Plans/sir_git_pull_dispatch.schema.json` binds the authenticated dispatcher original full IdentityEnvelope, selected arguments and canonical argument-only digest, request/dispatch/frame, independent target generation, idempotency, actor/permission and actual nullable caller. The actual delivery owner independently supplies its nullable current caller value; missing, foreign and null substitution do not pass as equivalent. RepositoryContext contributes only its existing Project/Plan/Goal/topology lineage, never fabricated Server/Run/agent identity. Accepted genuine ObservableWork cannot already be terminal or carry a terminal receipt. Actual terminal receipt facts and unresolved native effects govern the unchanged common response; no_op is not inferred.
 
