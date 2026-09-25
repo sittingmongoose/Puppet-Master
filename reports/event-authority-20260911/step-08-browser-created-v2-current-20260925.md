@@ -2,7 +2,7 @@
 
 The `browser.workspace.created` v2 checkpoint successor landed on 2026-09-24 (`22e516b456`) as `conditional_not_admitted`: canon kept v1 as the current route. So the family's consumers and oracles cells stayed PARTIAL in the Step 8(a) depth assessment. SP-266 names what its admission needs: "its closed registered schema, explicit reader/admission revisions and native migration, source, permission and crash proofs before activation". This branch supplies the canon part, under DL-046 and the coordinator's go of 2026-09-24, given under the Step 8 authority Jared gave. The native proofs stay NOT_RUN, which never lowers a grade.
 
-The branch is built on `plans/ea-browser-pair-sp286-20260924` (`2df56dd8a9`, the first half of 8(c)), because both edit SMPFS-167. It lands after that branch.
+The branch was built on `plans/ea-browser-pair-sp286-20260924` (`2df56dd8a9`, the first half of 8(c)), because both edit SMPFS-167. That first half landed at `main` `a3d6bb616b` (record `1e5d9b097b`), and this branch is rebased onto `1e5d9b097b`: SMPFS-167 keeps this branch's v2 sentence and criterion 5 and `main`'s SP-286 sentence, criterion 6 and validation entry.
 
 ## What changes
 
@@ -20,20 +20,21 @@ The branch is built on `plans/ea-browser-pair-sp286-20260924` (`2df56dd8a9`, the
 
 Derived files are regenerated with the currentness edition present: the `storage-plan`, `section15_mvp_promoted_features_spec` and `storage_value_registry` shard trees and `Plans/.plan_index`. The registry JSON is a sharded source, so a change to one row rewrites its shard tree.
 
-## Checks (worktree, based on `2df56dd8a9`)
+## Checks (rebased onto `1e5d9b097b`)
 
 - **Created tests.** `test_pm_browser_workspace_created`: 65 OK. `pm_browser_workspace_created_v2.py`: PASS on its three positive cases, status `newly_authored_owner_contract`, native NOT_RUN.
 - **Other Browser checks.** `test_pm_browser_workspace_reset`, `test_pm_browser_event_admission` and `test_pm_onboarding_phases` pass, and `pm-browser-event-admission.py` passes.
 - **Readiness self-test.** The same three failing checks as on the base, and no new ones.
-- **Readiness validate: 24 failures on the base, 30 here.** Every one of the 6 new rows is staleness:
+- **Readiness validate: 28 failures on the base, 33 here.** Every one of the 5 new rows is staleness:
   - the Spec Lock hashes of `Plans/storage_value_registry.json` and `scripts/pm-implementation-readiness.py` (three readiness rows read the latter);
-  - the PNC-019 receipt's pin of `Plans/storage_value_registry.json`;
-  - currentness drift for `Plans/storage-plan.md` and `Plans/storage_value_registry.json`.
-- **Shards and index.** The shard check passes. `pm-plan-index.py validate` reports only the five Decision Log units (DL-079 to DL-083) that `main` added after this branch's base. They clear at the rebase.
+  - currentness drift for `Plans/storage_value_registry.json`.
+
+  The PNC-019 receipt's pin of `Plans/storage_value_registry.json` and the currentness drift of `Plans/storage-plan.md` and Section 15 are already on `main`; the first changes value.
+- **Shards and index.** The shard check passes (99 documents, 2,726 shards). The index has 6,728 PlanUnits and 26,260 acceptance units; against `1e5d9b097b` no unit is added or removed, and only SMPFS-167 and SP-266 change content.
 
 ## Landing
 
-- **Order.** After `plans/ea-browser-pair-sp286-20260924`, and after the landing-check exports repair. The branch edits `Plans/storage-plan.md` (85 plan-sharding rows) and `Plans/storage_value_registry.json` (554 rows including its shards), both well over the print cap.
+- **Order.** Both preconditions are met: the first half is on `main` (`a3d6bb616b`, record `1e5d9b097b`), and so is the landing-check exports repair, so evidence and plan graph are keyed from their complete exports. The branch edits `Plans/storage-plan.md` (85 plan-sharding rows, already stale on `main`) and `Plans/storage_value_registry.json` (554 rows including its shards, all new).
 - **At landing.** Rebase onto `main`, and regenerate the derived files with the currentness edition present, never hand-merged. Then rerun the checks above.
 - **Reseal request:**
   - the Spec Lock entries of `Plans/storage_value_registry.json`, `Plans/storage-plan.md`, `Plans/Section15_MVP_Promoted_Features_Spec.md` and `scripts/pm-implementation-readiness.py`;
