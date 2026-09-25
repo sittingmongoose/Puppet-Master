@@ -14378,14 +14378,16 @@
                 "enum": [
                   "local",
                   "mounted",
-                  "ssh"
+                  "ssh",
+                  "puppet_master"
                 ]
               },
               "backup_transport": {
                 "enum": [
                   "local",
                   "mounted",
-                  "ssh"
+                  "ssh",
+                  "puppet_master"
                 ]
               },
               "local_location_mode": {
@@ -14571,7 +14573,8 @@
                   "mounted",
                   "smb",
                   "nfs",
-                  "ssh"
+                  "ssh",
+                  "puppet_master"
                 ]
               },
               "storage_location": {
@@ -14827,6 +14830,49 @@
                   "properties": {
                     "storage_location": {
                       "$ref": "#/$defs/onboarding__bounded_nonsecret_non_empty_string"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "anyOf": [
+                    {
+                      "properties": {
+                        "project_transport": {
+                          "const": "puppet_master"
+                        }
+                      },
+                      "required": [
+                        "project_transport"
+                      ]
+                    },
+                    {
+                      "properties": {
+                        "backup_transport": {
+                          "const": "puppet_master"
+                        }
+                      },
+                      "required": [
+                        "backup_transport"
+                      ]
+                    },
+                    {
+                      "properties": {
+                        "storage_transport": {
+                          "const": "puppet_master"
+                        }
+                      },
+                      "required": [
+                        "storage_transport"
+                      ]
+                    }
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "source_access_authorization_refs": {
+                      "minItems": 1
                     }
                   }
                 }
@@ -15500,6 +15546,7 @@
             ],
             "x-puppet-master-assertions": [
               "project_transport and backup_transport describe how an existing folder or backup is reached; storage_transport independently describes the chosen network storage protocol",
+              "puppet_master in project_transport, backup_transport or storage_transport means the folder is reached through the Puppet Master already running on that device after Server-owned pairing: cmd.client.pair.start by approval, code or QR on the device's verified identity, with approve, reject and cancel as distinct owner transitions; the pairing result is bound in source_access_authorization_refs, it is never recorded as ssh or as an SSH key install, and it leaves server_mode, server_ref, connection_pairing and remote_mode unchanged because the device stays a Source Location, never the Connected Server, Project Home Server or Execution Host",
               "history_backend=git|jujutsu is a local Safe History choice independent from online_mode and forge; Git and Jujutsu never require an account",
               "an online copy binds both forge_account_ref and repository_ref; already_connected means reuse that explicit account and repository binding and is never a no-op",
               "connect_existing chooses a route first, then the owner discovers or accepts the selected server_ref and performs connection_pairing=approval|code|qr; server_trust_confirmed is compatibility state only and never creates a visible recognition-checkbox gate",

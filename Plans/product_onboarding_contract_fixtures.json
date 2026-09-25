@@ -38,21 +38,21 @@
     "valid_rejected_result_count": 1,
     "valid_session_count": 5,
     "valid_migration_receipt_count": 4,
-    "invalid_case_count": 194,
-    "valid_setup_plan_count": 14,
-    "invalid_setup_plan_count": 41,
+    "invalid_case_count": 196,
+    "valid_setup_plan_count": 15,
+    "invalid_setup_plan_count": 43,
     "connect_existing_setup_plan_count": 6,
     "local_or_vpn_setup_plan_count": 2,
     "tailscale_hosted_setup_plan_count": 1,
     "headscale_setup_plan_count": 1,
     "reverse_proxy_connect_setup_plan_count": 1,
     "remote_link_connect_setup_plan_count": 1,
-    "local_safe_history_without_online_copy_setup_plan_count": 1,
+    "local_safe_history_without_online_copy_setup_plan_count": 2,
     "local_safe_history_with_online_copy_setup_plan_count": 3,
     "cursor_origin_setup_plan_count": 1,
     "setup_plan_exact_field_negative_count": 8,
     "setup_plan_connection_semantics_negative_count": 16,
-    "setup_plan_source_semantics_negative_count": 17,
+    "setup_plan_source_semantics_negative_count": 19,
     "retired_origin_preview_action_negative_count": 1,
     "optional_scope_skip_request_count": 2,
     "optional_scope_skip_applied_result_count": 2,
@@ -4136,6 +4136,87 @@
         },
         "preflight_result_refs": [],
         "source_access_authorization_refs": [],
+        "project_created": false
+      }
+    },
+    {
+      "name": "valid.setup_plan.existing_folder_through_paired_puppet_master",
+      "definition": "onboarding_setup_plan",
+      "value": {
+        "schema_id": "pm.product_onboarding.setup_plan.v2",
+        "planned_only": true,
+        "applied": false,
+        "journey": "new_or_local",
+        "theme_family": "basic",
+        "theme_mode": "light",
+        "project_mode": "existing_local",
+        "project_name": "Existing project",
+        "project_source_ref": "pm://home-nas/volume1/projects/existing",
+        "backup_source_ref": "",
+        "project_transport": "puppet_master",
+        "backup_transport": "puppet_master",
+        "local_location_mode": "automatic",
+        "local_location": "",
+        "local_history": true,
+        "history_backend": "git",
+        "filesafe": true,
+        "online_mode": "none",
+        "forge": "none",
+        "forge_provider_variant": null,
+        "forge_instance_url": "",
+        "forge_instance_profile": null,
+        "forge_account_action": null,
+        "forge_account_ref": "",
+        "repository_name": "",
+        "repository_description": "",
+        "repository_visibility": null,
+        "repository_owner_scope": "personal",
+        "repository_ref": "",
+        "repository_container": "",
+        "repository_project": "",
+        "repository_default_branch": "main",
+        "repository_initialize_readme": false,
+        "repository_gitignore": "automatic",
+        "repository_license": "none",
+        "server_mode": "this_device",
+        "server_connection_mode": "discover",
+        "server_ref": "server:this-device",
+        "server_trust_confirmed": false,
+        "storage_mode": "network_location",
+        "storage_transport": "puppet_master",
+        "storage_location": "pm://home-nas/volume1/projects",
+        "client_mode": "this_device",
+        "remote_mode": "none",
+        "remote_more": false,
+        "include_vpn_networks": false,
+        "connection_pairing": "approval",
+        "tailscale_control": null,
+        "tailscale_account_action": null,
+        "headscale_url": "",
+        "remote_endpoint": "",
+        "proxy_kind": null,
+        "proxy_hosting": null,
+        "proxy_hostname": "",
+        "proxy_tls": null,
+        "source_more": true,
+        "review_confirmed": false,
+        "project_draft_ref": "draft:onboarding-project-1",
+        "project_draft_revision": 3,
+        "settings_transfer": {
+          "mode": "start_fresh",
+          "source_project_id": null,
+          "source_revision": null,
+          "draft_preview_ref": null,
+          "draft_preview_sha256": null,
+          "explicit_choice_setting_ids": [],
+          "settings_applied": false
+        },
+        "preflight_result_refs": [
+          "preflight:paired-source:home-nas"
+        ],
+        "source_access_authorization_refs": [
+          "pairing:home-nas:source-read"
+        ],
         "project_created": false
       }
     },
@@ -9909,7 +9990,7 @@
     {
       "name": "invalid.setup_plan.project_transport.rejects_smb",
       "definition": "onboarding_setup_plan",
-      "expected_error": "project_transport is exactly local, mounted, or ssh",
+      "expected_error": "project_transport is exactly local, mounted, ssh, or puppet_master",
       "base_valid": "valid.setup_plan.local_git_without_online_copy.ssh_transports",
       "patch": {
         "project_transport": "smb"
@@ -9918,7 +9999,7 @@
     {
       "name": "invalid.setup_plan.backup_transport.rejects_nfs",
       "definition": "onboarding_setup_plan",
-      "expected_error": "backup_transport is exactly local, mounted, or ssh",
+      "expected_error": "backup_transport is exactly local, mounted, ssh, or puppet_master",
       "base_valid": "valid.setup_plan.local_git_without_online_copy.ssh_transports",
       "patch": {
         "backup_transport": "nfs"
@@ -9945,10 +10026,30 @@
     {
       "name": "invalid.setup_plan.storage_transport.rejects_local",
       "definition": "onboarding_setup_plan",
-      "expected_error": "storage_transport is exactly mounted, smb, nfs, or ssh",
+      "expected_error": "storage_transport is exactly mounted, smb, nfs, ssh, or puppet_master",
       "base_valid": "valid.setup_plan.local_git_without_online_copy.ssh_transports",
       "patch": {
         "storage_transport": "local"
+      }
+    },
+    {
+      "name": "invalid.setup_plan.puppet_master_transport_requires_pairing_result",
+      "definition": "onboarding_setup_plan",
+      "expected_error": "a folder reached through another Puppet Master binds the Server-owned pairing result before the draft records it",
+      "base_valid": "valid.setup_plan.existing_folder_through_paired_puppet_master",
+      "patch": {
+        "source_access_authorization_refs": []
+      }
+    },
+    {
+      "name": "invalid.setup_plan.puppet_master_storage_requires_pairing_result",
+      "definition": "onboarding_setup_plan",
+      "expected_error": "storage reached through another Puppet Master binds the Server-owned pairing result even when the project source is local",
+      "base_valid": "valid.setup_plan.existing_folder_through_paired_puppet_master",
+      "patch": {
+        "project_transport": "local",
+        "backup_transport": "local",
+        "source_access_authorization_refs": []
       }
     },
     {

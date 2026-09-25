@@ -6484,6 +6484,7 @@
     "PWIZ-017",
     "SP-251",
     "UCC-106",
+    "PWIZ-029",
     "ACD-449",
     "ACD-452",
     "F3-516",
@@ -50468,6 +50469,21 @@
       "edge_type": "depends_on",
       "from": "PWIZ-028",
       "to": "PWIZ-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-029",
+      "to": "PWIZ-024"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-029",
+      "to": "SRV-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-029",
+      "to": "SRV-006"
     },
     {
       "edge_type": "depends_on",
@@ -98945,7 +98961,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-25T13:21:23Z",
+  "generated_at_utc": "2026-09-25T19:02:29Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -187501,6 +187517,23 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "onboarding_setup_plan_semantics",
+      "gui_related": true,
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "plan_unit_id": "PWIZ-029",
+      "reasoning_tier": "high",
+      "risk_class": "onboarding_hidden_route_or_pre_review_side_effect",
+      "source_location": {
+        "heading": "PWIZ-029 - Files reached through another Puppet Master",
+        "heading_level": 3,
+        "heading_line": 2582,
+        "line": 2584,
+        "path": "Plans/Planning_Wizard.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
       "context_scope": "runtime_artifacts_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
@@ -213585,10 +213618,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15740,
+    "depends_on_edge_count": 15743,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18439,
-    "node_count": 6743,
+    "edge_count": 18442,
+    "node_count": 6744,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0

@@ -13603,9 +13603,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 7,
-        "True": 21
+        "True": 22
       },
-      "heading_count": 65,
+      "heading_count": 67,
       "implementation_surfaces": [
         "Plans/.implementation_readiness/buildability_gate_report.json",
         "Plans/.implementation_readiness/readiness_blockers.jsonl",
@@ -13640,14 +13640,15 @@
         "Plans/prd_planning_runtime_contracts.schema.json",
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/storage-plan.md",
+        "Plans/storage_value_registry.json",
         "future Planning Wizard output records",
         "future Planning Wizard source picker",
         "future Product Onboarding and Bootstrap projection controllers",
         "future Product Onboarding native controller"
       ],
-      "line_count": 2552,
+      "line_count": 2655,
       "path": "Plans/Planning_Wizard.md",
-      "plan_unit_count": 28,
+      "plan_unit_count": 29,
       "plan_unit_ids": [
         "PWIZ-001",
         "PWIZ-002",
@@ -13676,7 +13677,8 @@
         "PWIZ-025",
         "PWIZ-026",
         "PWIZ-027",
-        "PWIZ-028"
+        "PWIZ-028",
+        "PWIZ-029"
       ],
       "reasoning_tiers": [
         "high",
@@ -13700,16 +13702,16 @@
         "tour_fake_shell_or_layout_loss",
         "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "60b87b69635821bcf9ed89fa516a22e53955046cc4e8dcf34a2128127da34679",
+      "sha256": "9d517875ab7a5c6dfc9d7b88537fea140961e2fe95ec4ad5175bf6cad4e243c6",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 27,
+        "accepted": 28,
         "retired": 1
       },
       "title": "Planning Wizard",
       "unit_type_counts": {
         "constraint": 1,
-        "integration_contract": 2,
+        "integration_contract": 3,
         "owner_boundary": 1,
         "requirement": 23,
         "source_lineage_disposition": 1
@@ -13750,6 +13752,8 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-implementation-readiness.py validate",
+        "python3 scripts/pm-new-contracts-verify.py",
+        "python3 scripts/pm-onboarding-contracts.py --check",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
@@ -20047,7 +20051,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T13:21:23Z",
+  "generated_at_utc": "2026-09-25T19:02:29Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20056,12 +20060,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3546,
-      "True": 3197
+      "True": 3198
     },
-    "plan_unit_count": 6743,
+    "plan_unit_count": 6744,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6552,
+      "accepted": 6553,
       "retired": 182,
       "superseded": 9
     },
@@ -20108,7 +20112,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 80,
+      "integration_contract": 81,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,

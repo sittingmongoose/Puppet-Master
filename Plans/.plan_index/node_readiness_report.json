@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15740,
+    "depends_on_edge_count": 15743,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18439,
-    "node_count": 6743,
+    "edge_count": 18442,
+    "node_count": 6744,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T13:21:23Z",
+  "generated_at_utc": "2026-09-25T19:02:29Z",
   "gui_related_units": {
-    "count": 3197,
+    "count": 3198,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -25922,6 +25922,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Planning_Wizard.md",
+        "plan_unit_id": "PWIZ-029",
+        "source_location": {
+          "heading": "PWIZ-029 - Files reached through another Puppet Master",
+          "heading_level": 3,
+          "heading_line": 2582,
+          "line": 2584,
+          "path": "Plans/Planning_Wizard.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
         "plan_unit_id": "RAP-002",
         "source_location": {
@@ -35191,10 +35202,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6743,
+  "plan_unit_count": 6744,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2194,
+      "high": 2195,
       "low": 5,
       "medium": 8,
       "standard": 4536
@@ -37184,7 +37195,7 @@
       "onboarding_fake_command_or_parallel_owner_wiring": 1,
       "onboarding_forge_account_repository_or_provider_requirement_drift": 1,
       "onboarding_handoff_state_drift": 1,
-      "onboarding_hidden_route_or_pre_review_side_effect": 1,
+      "onboarding_hidden_route_or_pre_review_side_effect": 2,
       "onboarding_local_action_or_result_wiring_drift": 1,
       "onboarding_local_history_forge_conflation_or_false_account_claim": 1,
       "onboarding_motion_or_resume_state_loss": 1,
@@ -39070,7 +39081,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6552,
+      "accepted": 6553,
       "retired": 182,
       "superseded": 9
     },
@@ -39117,7 +39128,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 80,
+      "integration_contract": 81,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,
@@ -39226,7 +39237,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "89b03cc5cf961c24d432b5acc825552fc556b3e8e2bf0681131570792da90a8c",
+        "expected": "9716728aa3e4c0f0dccb8e54cb951ed286421dc6ddccd1717ba3b6db02f19cc4",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -39238,7 +39249,7 @@
       {
         "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
         "error": "pnc019_source_hash_stale",
-        "expected": "60b87b69635821bcf9ed89fa516a22e53955046cc4e8dcf34a2128127da34679",
+        "expected": "9d517875ab7a5c6dfc9d7b88537fea140961e2fe95ec4ad5175bf6cad4e243c6",
         "source_path": "Plans/Planning_Wizard.md"
       },
       {
@@ -39296,49 +39307,12 @@
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "actual": null,
-        "error": "pnc019_source_hash_stale",
-        "expected": "ac790cc6c02571a36b9772890d7c707c35021168b384dc80943ef49488dad3c9",
+        "error": "pnc019_source_hash_path_missing",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Automated_Testing_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Contracts_V0.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Decision_Log.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Goal_Runtime_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_family_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/orchestrator-subagent-integration.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage-plan.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage_value_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_live_registry_drift"
+        "detail": "[Errno 2] No such file or directory: 'Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "error": "event_authority_currentness_audit_unavailable"
       },
       {
         "bulk_registration_allowed": false,
