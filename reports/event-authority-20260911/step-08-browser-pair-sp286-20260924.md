@@ -6,7 +6,7 @@
 - The owner never calls `storage.first_append_receipt.issue.v2` and makes no full-value claim, so it does not adopt `resolve_full_value.v1`.
 - Nothing about SP-266 v2, SP-278 or the v1 reader changes: "Until that replacement the v1 checkpoint and reader remain the current route" is intact. Making the v2 checkpoint current is the second half of 8(c), on its own branch.
 
-**Authority.** DL-046, per family, under the coordinator's Step 8 instruction of 2026-09-24, which relays Jared's authorization. The gap answered is depth42's producer finding for both families: SP-286/CV-339 was "not adopted by SMPFS-167/168" (`reports/event-authority-20260911/step-08-depth42-assessment-20260924.md`, on `main` since `3ce6eb882c`).
+**Authority.** DL-046, per family, under the coordinator's Step 8 instruction of 2026-09-24, which relays Jared's authorization. The gap answered is depth42's producer finding for both families: SP-286/CV-339 "is not adopted by SMPFS-167 or SP-266" (created) and "is not adopted by SMPFS-168 or SP-282" (reset) (`reports/event-authority-20260911/step-08-depth42-assessment-20260924.md`, on `main` since `3ce6eb882c`).
 
 **Review.** A blind review ran in `/home/sittingmongoose/PM-Experiments/review-ea-browser-sp286-20260924/`. Cycle 1 returned fix-then-land, with 0 blocking findings, 5 should-fix and 5 notes. Each repair is its own commit, in the reviewer's wording:
 - **S-01** needed no text change. The depth42 assessment landed during the review, and the rebase makes the citation resolve.
