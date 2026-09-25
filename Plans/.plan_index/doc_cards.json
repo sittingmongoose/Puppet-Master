@@ -2356,10 +2356,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 10,
+        "False": 11,
         "True": 19
       },
-      "heading_count": 57,
+      "heading_count": 64,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -2387,6 +2387,7 @@
         "Plans/touch_closure.json",
         "Plans/workflow_standard_source_contracts/native-v7",
         "future BackupCoordinator and BackupEngineAdapter",
+        "future BackupCoordinator and RestoreCoordinator",
         "future RecoverySetKeyService",
         "future backup coordinator",
         "future backup planner",
@@ -2397,9 +2398,9 @@
         "future restore coordinator",
         "future security adapter registry"
       ],
-      "line_count": 1820,
+      "line_count": 1915,
       "path": "Plans/Backup_Restore_System.md",
-      "plan_unit_count": 29,
+      "plan_unit_count": 30,
       "plan_unit_ids": [
         "BRS-001",
         "BRS-002",
@@ -2429,7 +2430,8 @@
         "BRS-026",
         "BRS-027",
         "BRS-028",
-        "BRS-029"
+        "BRS-029",
+        "BRS-030"
       ],
       "reasoning_tiers": [
         "high",
@@ -2461,20 +2463,21 @@
         "restore_authority_leak",
         "source_history_identity_safety_or_false_recovery",
         "static_backup_contract_promoted_to_recovery_readiness",
+        "substituted_backup_operation_or_false_result_custody",
         "unsafe_migration_false_recovery_or_consumer_overclaim",
         "unsafe_restore_or_false_operational_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "76cf1822600132e60c29a1089818dc67b132c6d4582131204560c2ed3a3bd0df",
+      "sha256": "bf9834d11091eb7284df55dcf2d3945cac0d4ddcda0c9561ae5745d791b60944",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 29
+        "accepted": 30
       },
       "title": "Backup And Restore System",
       "unit_type_counts": {
         "command_binding": 1,
         "contract_requirement": 1,
-        "integration_contract": 5,
+        "integration_contract": 6,
         "migration_requirement": 2,
         "operational_policy": 1,
         "owner_boundary": 1,
@@ -2534,6 +2537,7 @@
         "future destructive restore/retention/provider/GUI/runtime tests",
         "future focused BRS-021 acceptance fixtures",
         "future focused BRS-022 acceptance fixtures",
+        "future joined-owner source and result validation",
         "future key-slot rotation compromise re-encryption no-store and tsnet-exclusion tests",
         "future migration fresh-install Doctor Settings GUI semantic and native runtime tests",
         "future native per-phase crash and human-authority validation traces",
@@ -19970,7 +19974,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-24T20:41:37Z",
+  "generated_at_utc": "2026-09-25T01:57:32Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19978,13 +19982,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3522,
+      "False": 3523,
       "True": 3199
     },
-    "plan_unit_count": 6721,
+    "plan_unit_count": 6722,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6530,
+      "accepted": 6531,
       "retired": 182,
       "superseded": 9
     },
@@ -20031,7 +20035,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 82,
+      "integration_contract": 83,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,
