@@ -148,6 +148,35 @@ acceptance_criteria:
   - Accepted async commands point to ObservableWork; terminal receipts carry before/after native revisions and event refs.
   - Command scopes preserve exact Project/Home Server/Host/Environment/Source Location/repository/backend/workspace/revision/currentness/lease/credential identities as applicable, while path/focus/newest/remote text and generic provider fields cannot satisfy identity.
   - Read-only and pre-repository commands do not inherit mutation-only writer or transport requirements; command-specific requirements are selected only by the exact command_id discriminator.
+  - >-
+    Existing cmd.source_control.backend.select, remote.fetch, remote.publish, diff.open, history.open and
+    workspace.remove retain the exact original selected operands independently of expected_revision and currentness.
+    Backend select binds the selected repository/backend and owner adoption preview; fetch binds the selected remote
+    and ref selector; diff binds both backend-native endpoints and selected paths; history distinguishes an explicit
+    selected historical revision from no selection; workspace removal binds the exact workspace and owner removal
+    preview, including dependency/data disposition. A current head, focus, display path or unresolved reference cannot
+    substitute for the submitted selection. No new public command or backend engine is introduced.
+  - >-
+    Remote publication reuses RemoteOperationTarget plus ExternalEffectReconciliation, not a second publication-preview
+    owner. The original command binds the selected target, its exact push URLs/refspecs and per-target previews,
+    expected remote heads and selection generation. Resolve and authenticate those owner values and preconditions;
+    a reference or confirmation hash alone is not proof of their contents. Preserve per-target partial and unknown
+    outcomes, no blind retry, and current credential/permission/lease revalidation immediately before effects.
+  - >-
+    These selected operands require an explicitly enrolled closed successor request and original-result binding;
+    the historical v1 request remains unchanged and cannot be reinterpreted as containing omitted operands.
+    Read-only diff/history do not acquire write authority from their selection. Preview-required mutations consume
+    an owner-issued preview for the exact command, original selection, repository/workspace and expected native state;
+    native admission separately authenticates its disclosures and current authority. Result/replay preserves that
+    original selection and actual owner receipt without redispatching or replacing it with current UI selection.
+  - >-
+    Existing Git commands cmd.git.commit, cmd.git.pull, cmd.source_control.stash.create,
+    cmd.source_control.stash.apply and cmd.source_control.branch.create retain their current owners and handlers.
+    Their pending typed operand bindings respectively carry message plus expected index tree; remote, branch,
+    merge/rebase/ff_only strategy plus pull preview; include_untracked plus message; selected stash object plus apply
+    preview; and selected branch name plus immutable base. These concrete commands are not silently inserted into
+    the neutral command family. Stash apply is not pop/drop, branch creation does not admit branch deletion, and
+    historical candidate cmd.git.stash.* or cmd.git.branch.create names do not create peer public commands.
   - A succeeded result cannot have effect_state=effect_unknown; an effect_unknown error cannot disguise itself as a known effect. Unknown effects keep retry_allowed=false and offer reconciliation without any retry action until effects are known.
   - Every established terminal source_control_command_result carries a non-secret operation_receipt_ref, including blocked, failed, cancelled, recovery_required and effect_unknown. This is not a requirement for pre-attempt availability or error records.
   - The CV-333 central response consumes only the exact source_control_command_result family for these nineteen commands and joins the original typed request's command instance, discriminated scope, applicable lineage, idempotency key and exact return context to the result and its terminal receipt. A local projection or another owner's result cannot substitute for this join.

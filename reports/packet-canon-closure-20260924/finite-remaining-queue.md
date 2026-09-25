@@ -9,6 +9,11 @@ is claimed.
 
 Remaining categories are distinct:
 
+Latest owner-prose step and corrected Backup credits are in
+`selected-operation-prose-boundaries.md`. The selected-operation machine
+companions remain pending; prose and pre-existing typed-owner credit must not be
+reported as new native implementation or as whole-family completion.
+
 1. Exact Storage specification integration: the current registry has 22 explicitly
    pending disposition rows after capability integration, including Guided Tour
    and pairing custody. These are not 22 engines to build. Determine owner key/value/retention/migration

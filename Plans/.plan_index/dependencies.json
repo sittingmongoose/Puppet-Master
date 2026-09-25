@@ -98800,7 +98800,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-25T07:00:00Z",
+  "generated_at_utc": "2026-09-25T07:08:55Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -112174,8 +112174,8 @@
       "source_location": {
         "heading": "BRS-005 - Backup State, Consistency, Safe Points, And Crash Convergence",
         "heading_level": 3,
-        "heading_line": 260,
-        "line": 262,
+        "heading_line": 262,
+        "line": 264,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112191,8 +112191,8 @@
       "source_location": {
         "heading": "BRS-006 - Restore Preview, Modes, Quarantine, Derived Rebuild, And Rollback",
         "heading_level": 3,
-        "heading_line": 303,
-        "line": 305,
+        "heading_line": 305,
+        "line": 307,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112208,8 +112208,8 @@
       "source_location": {
         "heading": "BRS-007 - Required Receipts And Post-Restore Readiness",
         "heading_level": 3,
-        "heading_line": 346,
-        "line": 348,
+        "heading_line": 349,
+        "line": 351,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112225,8 +112225,8 @@
       "source_location": {
         "heading": "BRS-008 - Canonical Backup Restore Commands, Events, And UI",
         "heading_level": 3,
-        "heading_line": 384,
-        "line": 386,
+        "heading_line": 387,
+        "line": 389,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112242,8 +112242,8 @@
       "source_location": {
         "heading": "BRS-009 - Shared Primitives, Migration, And DRY Boundary",
         "heading_level": 3,
-        "heading_line": 438,
-        "line": 440,
+        "heading_line": 441,
+        "line": 443,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112259,8 +112259,8 @@
       "source_location": {
         "heading": "BRS-010 - Backup Restore Acceptance And Proof Boundary",
         "heading_level": 3,
-        "heading_line": 487,
-        "line": 489,
+        "heading_line": 490,
+        "line": 492,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112276,8 +112276,8 @@
       "source_location": {
         "heading": "BRS-011 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 982,
-        "line": 984,
+        "heading_line": 987,
+        "line": 989,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112293,8 +112293,8 @@
       "source_location": {
         "heading": "BRS-012 - RecoverySet, Recovery Kit, Key Slots, And Human Custody",
         "heading_level": 3,
-        "heading_line": 527,
-        "line": 529,
+        "heading_line": 530,
+        "line": 532,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112310,8 +112310,8 @@
       "source_location": {
         "heading": "BRS-013 - Eleven Destination Families And Shared Authentication Consumption",
         "heading_level": 3,
-        "heading_line": 568,
-        "line": 570,
+        "heading_line": 571,
+        "line": 573,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112327,8 +112327,8 @@
       "source_location": {
         "heading": "BRS-014 - Snapshot Browse, Retrieve, Compare, Export, And Archive Delivery",
         "heading_level": 3,
-        "heading_line": 609,
-        "line": 611,
+        "heading_line": 612,
+        "line": 614,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112344,8 +112344,8 @@
       "source_location": {
         "heading": "BRS-015 - Scheduler, Retention, Prune, Verification, And Drill Policy",
         "heading_level": 3,
-        "heading_line": 656,
-        "line": 658,
+        "heading_line": 660,
+        "line": 662,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112361,8 +112361,8 @@
       "source_location": {
         "heading": "BRS-016 - Serialized Supersession, Fresh Recovery, And Consumer Truth",
         "heading_level": 3,
-        "heading_line": 715,
-        "line": 717,
+        "heading_line": 719,
+        "line": 721,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112378,8 +112378,8 @@
       "source_location": {
         "heading": "BRS-017 - Coordinator, Capture Barrier, Independent Repositories, And Durable Authority",
         "heading_level": 3,
-        "heading_line": 1033,
-        "line": 1035,
+        "heading_line": 1038,
+        "line": 1040,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112395,8 +112395,8 @@
       "source_location": {
         "heading": "BRS-018 - Destination, Headless Authentication, Recovery Key, And Human Delivery Safety",
         "heading_level": 3,
-        "heading_line": 1076,
-        "line": 1078,
+        "heading_line": 1081,
+        "line": 1083,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112412,8 +112412,8 @@
       "source_location": {
         "heading": "BRS-019 - Locate, Browse, Restore, Retention, And Durable Operational Safety",
         "heading_level": 3,
-        "heading_line": 1123,
-        "line": 1125,
+        "heading_line": 1129,
+        "line": 1131,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112429,8 +112429,8 @@
       "source_location": {
         "heading": "Working Notebook Backup Participation Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 1176,
-        "line": 1180,
+        "heading_line": 1182,
+        "line": 1186,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112446,8 +112446,8 @@
       "source_location": {
         "heading": "BRS-021 - Jujutsu History Index Rebuild Verification Policy",
         "heading_level": 3,
-        "heading_line": 1262,
-        "line": 1264,
+        "heading_line": 1268,
+        "line": 1270,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112463,8 +112463,8 @@
       "source_location": {
         "heading": "BRS-022 - Separately Authorized Missing Repository Data Completion",
         "heading_level": 3,
-        "heading_line": 1317,
-        "line": 1319,
+        "heading_line": 1323,
+        "line": 1325,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112480,8 +112480,8 @@
       "source_location": {
         "heading": "BRS-023 - Phase-Local Restore Evidence And Bound Emergency Consent",
         "heading_level": 3,
-        "heading_line": 1216,
-        "line": 1218,
+        "heading_line": 1222,
+        "line": 1224,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112497,8 +112497,8 @@
       "source_location": {
         "heading": "Retention and evidence limits",
         "heading_level": 4,
-        "heading_line": 1409,
-        "line": 1421,
+        "heading_line": 1415,
+        "line": 1427,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112514,8 +112514,8 @@
       "source_location": {
         "heading": "Event and native qualification boundary",
         "heading_level": 4,
-        "heading_line": 1505,
-        "line": 1511,
+        "heading_line": 1511,
+        "line": 1517,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112531,8 +112531,8 @@
       "source_location": {
         "heading": "BRS-026 - Coherent original Workflow Goal cancellation backup and restore",
         "heading_level": 3,
-        "heading_line": 1569,
-        "line": 1590,
+        "heading_line": 1575,
+        "line": 1596,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112548,8 +112548,8 @@
       "source_location": {
         "heading": "BRS-027 - Source-coupled started projection recovery and disclosure",
         "heading_level": 3,
-        "heading_line": 1657,
-        "line": 1671,
+        "heading_line": 1663,
+        "line": 1677,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112565,8 +112565,8 @@
       "source_location": {
         "heading": "BRS-028 - Whole original cancellation source retention and combined projection recovery",
         "heading_level": 3,
-        "heading_line": 1714,
-        "line": 1730,
+        "heading_line": 1720,
+        "line": 1736,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112582,8 +112582,8 @@
       "source_location": {
         "heading": "BRS-029 — Mandatory original phase custody; optional coherent derived generation, source lifetime and restore ordering (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 1777,
-        "line": 1779,
+        "heading_line": 1783,
+        "line": 1785,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112599,8 +112599,8 @@
       "source_location": {
         "heading": "BRS-030 - Four-Action Original Operation And Owner Result Protocol",
         "heading_level": 3,
-        "heading_line": 1846,
-        "line": 1848,
+        "heading_line": 1852,
+        "line": 1854,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -147772,8 +147772,8 @@
       "source_location": {
         "heading": "FGI-009 - Forge Repository Create Sole Future Handler",
         "heading_level": 3,
-        "heading_line": 571,
-        "line": 573,
+        "heading_line": 592,
+        "line": 594,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147789,8 +147789,8 @@
       "source_location": {
         "heading": "FGI-010 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 655,
-        "line": 657,
+        "heading_line": 676,
+        "line": 678,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147806,8 +147806,8 @@
       "source_location": {
         "heading": "FGI-011 - Verified account and repository binding requirements by forge",
         "heading_level": 3,
-        "heading_line": 749,
-        "line": 751,
+        "heading_line": 771,
+        "line": 773,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147823,8 +147823,8 @@
       "source_location": {
         "heading": "FGI-012 - Distinct Self-Hosted Providers And Independent Automation Authority",
         "heading_level": 3,
-        "heading_line": 826,
-        "line": 828,
+        "heading_line": 848,
+        "line": 850,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147840,8 +147840,8 @@
       "source_location": {
         "heading": "FGI-013 - Nine Distinct Event-Silent Forge Command Admissions",
         "heading_level": 3,
-        "heading_line": 867,
-        "line": 869,
+        "heading_line": 889,
+        "line": 891,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147857,8 +147857,8 @@
       "source_location": {
         "heading": "FGI-014 - Origin And Provider-Specific Operation Profiles",
         "heading_level": 3,
-        "heading_line": 912,
-        "line": 914,
+        "heading_line": 934,
+        "line": 936,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147874,8 +147874,8 @@
       "source_location": {
         "heading": "FGI-015 - Exact Provider Capability, Authentication, Trust, And Administration Matrix",
         "heading_level": 3,
-        "heading_line": 978,
-        "line": 980,
+        "heading_line": 1000,
+        "line": 1002,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147891,8 +147891,8 @@
       "source_location": {
         "heading": "FGI-016 - Conditional Ordered Review Stack Workflow",
         "heading_level": 3,
-        "heading_line": 1071,
-        "line": 1073,
+        "heading_line": 1093,
+        "line": 1095,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147908,8 +147908,8 @@
       "source_location": {
         "heading": "FGI-017 - Conditional Additional Review Service Admission",
         "heading_level": 3,
-        "heading_line": 1141,
-        "line": 1143,
+        "heading_line": 1163,
+        "line": 1165,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147925,8 +147925,8 @@
       "source_location": {
         "heading": "FGI-018 - Typed Merge Strategy On The Forge Merge Request",
         "heading_level": 3,
-        "heading_line": 1215,
-        "line": 1217,
+        "heading_line": 1237,
+        "line": 1239,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147942,8 +147942,8 @@
       "source_location": {
         "heading": "FGI-019 - Policy Evaluation Requeue That Degrades Truthfully",
         "heading_level": 3,
-        "heading_line": 1260,
-        "line": 1262,
+        "heading_line": 1282,
+        "line": 1284,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147959,8 +147959,8 @@
       "source_location": {
         "heading": "FGI-020 - Provider Neutral Vote And Reviewer Carrier",
         "heading_level": 3,
-        "heading_line": 1303,
-        "line": 1305,
+        "heading_line": 1325,
+        "line": 1327,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -147976,8 +147976,8 @@
       "source_location": {
         "heading": "FGI-021 - Team-Project Create Child Route And Admission",
         "heading_level": 3,
-        "heading_line": 1348,
-        "line": 1350,
+        "heading_line": 1370,
+        "line": 1372,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -153178,8 +153178,8 @@
       "source_location": {
         "heading": "JJI-004 - Colocated Repository Mutation Authority And Git Fencing",
         "heading_level": 3,
-        "heading_line": 242,
-        "line": 244,
+        "heading_line": 249,
+        "line": 251,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153195,8 +153195,8 @@
       "source_location": {
         "heading": "JJI-005 - Undo, Operation Restore, Conflicts, FileSafe, And Recovery",
         "heading_level": 3,
-        "heading_line": 285,
-        "line": 287,
+        "heading_line": 292,
+        "line": 294,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153212,8 +153212,8 @@
       "source_location": {
         "heading": "JJI-006 - JJ Setup, GUI Projection, Compatibility, And Migration",
         "heading_level": 3,
-        "heading_line": 317,
-        "line": 319,
+        "heading_line": 324,
+        "line": 326,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153229,8 +153229,8 @@
       "source_location": {
         "heading": "JJI-007 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 533,
-        "line": 535,
+        "heading_line": 540,
+        "line": 542,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153246,8 +153246,8 @@
       "source_location": {
         "heading": "JJI-008 - Complete JJ Backup Closure Across Layouts And Safe Restore Handoff",
         "heading_level": 3,
-        "heading_line": 584,
-        "line": 586,
+        "heading_line": 591,
+        "line": 593,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153263,8 +153263,8 @@
       "source_location": {
         "heading": "JJI-009 - Private PM Owned Adapter Service",
         "heading_level": 3,
-        "heading_line": 768,
-        "line": 770,
+        "heading_line": 775,
+        "line": 777,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153280,8 +153280,8 @@
       "source_location": {
         "heading": "JJI-010 - Read Only And Earlier State Browsing",
         "heading_level": 3,
-        "heading_line": 834,
-        "line": 836,
+        "heading_line": 841,
+        "line": 843,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153297,8 +153297,8 @@
       "source_location": {
         "heading": "JJI-011 - Named Checkpoints And Receipt Based History Metadata",
         "heading_level": 3,
-        "heading_line": 902,
-        "line": 904,
+        "heading_line": 909,
+        "line": 911,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153314,8 +153314,8 @@
       "source_location": {
         "heading": "JJI-012 - Verified Group Undo Redo And Selected Operation Reversal",
         "heading_level": 3,
-        "heading_line": 967,
-        "line": 969,
+        "heading_line": 974,
+        "line": 976,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153331,8 +153331,8 @@
       "source_location": {
         "heading": "JJI-013 - Explicit History Storage Maintenance",
         "heading_level": 3,
-        "heading_line": 1035,
-        "line": 1037,
+        "heading_line": 1042,
+        "line": 1044,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153348,8 +153348,8 @@
       "source_location": {
         "heading": "JJI-014 - Explicit Workspace Adoption Repair And Visibility",
         "heading_level": 3,
-        "heading_line": 1094,
-        "line": 1096,
+        "heading_line": 1101,
+        "line": 1103,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153365,8 +153365,8 @@
       "source_location": {
         "heading": "JJI-015 - Managed Rewrite Preview And Apply Lifecycle",
         "heading_level": 3,
-        "heading_line": 1160,
-        "line": 1162,
+        "heading_line": 1167,
+        "line": 1169,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153382,8 +153382,8 @@
       "source_location": {
         "heading": "JJI-016 - Qualified Native Change Editing Semantics",
         "heading_level": 3,
-        "heading_line": 1225,
-        "line": 1227,
+        "heading_line": 1232,
+        "line": 1234,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153399,8 +153399,8 @@
       "source_location": {
         "heading": "JJI-017 - Version Comparison And Focused Change Evolution",
         "heading_level": 3,
-        "heading_line": 1301,
-        "line": 1303,
+        "heading_line": 1308,
+        "line": 1310,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153416,8 +153416,8 @@
       "source_location": {
         "heading": "JJI-018 - Exact Hunk Selection And Graph Rewrite Intent",
         "heading_level": 3,
-        "heading_line": 1361,
-        "line": 1363,
+        "heading_line": 1368,
+        "line": 1370,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153433,8 +153433,8 @@
       "source_location": {
         "heading": "JJI-019 - Conditional Conflict Publication And Bookmark Resolution",
         "heading_level": 3,
-        "heading_line": 1428,
-        "line": 1430,
+        "heading_line": 1435,
+        "line": 1437,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153450,8 +153450,8 @@
       "source_location": {
         "heading": "JJI-020 - History Annotation And Recovery Retention Boundary",
         "heading_level": 3,
-        "heading_line": 1503,
-        "line": 1505,
+        "heading_line": 1510,
+        "line": 1512,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153467,8 +153467,8 @@
       "source_location": {
         "heading": "JJI-021 - Typed New Repository Object Format Extension",
         "heading_level": 3,
-        "heading_line": 1579,
-        "line": 1581,
+        "heading_line": 1586,
+        "line": 1588,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -153484,8 +153484,8 @@
       "source_location": {
         "heading": "JJI-022 - Certified Object Format Profiles And Owner Owned Format Evidence",
         "heading_level": 3,
-        "heading_line": 1639,
-        "line": 1641,
+        "heading_line": 1646,
+        "line": 1648,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -190680,8 +190680,8 @@
       "source_location": {
         "heading": "SCS-004 - Exact-Environment Setup And Capability Certification",
         "heading_level": 3,
-        "heading_line": 176,
-        "line": 178,
+        "heading_line": 205,
+        "line": 207,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190697,8 +190697,8 @@
       "source_location": {
         "heading": "SCS-005 - Adaptive Source Control And Settings Projections",
         "heading_level": 3,
-        "heading_line": 209,
-        "line": 211,
+        "heading_line": 238,
+        "line": 240,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190714,8 +190714,8 @@
       "source_location": {
         "heading": "SCS-006 - Migration, Degradation, And Security Fail Closure",
         "heading_level": 3,
-        "heading_line": 266,
-        "line": 268,
+        "heading_line": 295,
+        "line": 297,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190731,8 +190731,8 @@
       "source_location": {
         "heading": "SCS-007 - Included Git/Jujutsu Baselines And Cross-Domain Workspace Conflict Plan",
         "heading_level": 3,
-        "heading_line": 458,
-        "line": 460,
+        "heading_line": 487,
+        "line": 489,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190748,8 +190748,8 @@
       "source_location": {
         "heading": "SCS-008 - Backend-Native Checkpoints And Checkout Alias Normalization",
         "heading_level": 3,
-        "heading_line": 529,
-        "line": 531,
+        "heading_line": 558,
+        "line": 560,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190765,8 +190765,8 @@
       "source_location": {
         "heading": "SCS-009 - Neutral Backend And Workspace Sole Future Handlers",
         "heading_level": 3,
-        "heading_line": 567,
-        "line": 569,
+        "heading_line": 596,
+        "line": 598,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190782,8 +190782,8 @@
       "source_location": {
         "heading": "SCS-010 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 616,
-        "line": 618,
+        "heading_line": 645,
+        "line": 647,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190799,8 +190799,8 @@
       "source_location": {
         "heading": "SCS-011 - Independent Local Safe History And Optional Forge Online Copy",
         "heading_level": 3,
-        "heading_line": 667,
-        "line": 669,
+        "heading_line": 696,
+        "line": 698,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190816,8 +190816,8 @@
       "source_location": {
         "heading": "SCS-012 - Local history, FileSafe, hosted binding, and source-transport separation",
         "heading_level": 3,
-        "heading_line": 744,
-        "line": 746,
+        "heading_line": 773,
+        "line": 775,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190833,8 +190833,8 @@
       "source_location": {
         "heading": "SCS-013 - Distinct Hosted Providers And Forge-Owned Automation Reference",
         "heading_level": 3,
-        "heading_line": 832,
-        "line": 834,
+        "heading_line": 861,
+        "line": 863,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190850,8 +190850,8 @@
       "source_location": {
         "heading": "SCS-014 - Backup Closure, Rebind, Merge, Remote Validation, And Owner Routes",
         "heading_level": 3,
-        "heading_line": 884,
-        "line": 886,
+        "heading_line": 913,
+        "line": 915,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190867,8 +190867,8 @@
       "source_location": {
         "heading": "SCS-015 - Effective Capability, Remote Target, And Native Backend Semantics",
         "heading_level": 3,
-        "heading_line": 981,
-        "line": 983,
+        "heading_line": 1010,
+        "line": 1012,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190884,8 +190884,8 @@
       "source_location": {
         "heading": "SCS-016 - Lossless Remote Records, Effect Reconciliation, Observation, And Agent Routing",
         "heading_level": 3,
-        "heading_line": 1055,
-        "line": 1057,
+        "heading_line": 1084,
+        "line": 1086,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190901,8 +190901,8 @@
       "source_location": {
         "heading": "SCS-017 - Bounded Backend-Native Source Graph Projection",
         "heading_level": 3,
-        "heading_line": 1123,
-        "line": 1125,
+        "heading_line": 1152,
+        "line": 1154,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190918,8 +190918,8 @@
       "source_location": {
         "heading": "SCS-018 - D5 Planning Admission And Exact Effect Envelope",
         "heading_level": 3,
-        "heading_line": 1238,
-        "line": 1240,
+        "heading_line": 1267,
+        "line": 1269,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190935,8 +190935,8 @@
       "source_location": {
         "heading": "SCS-019 - Bounded Graph Priorities Queries And Pinned Comparison",
         "heading_level": 3,
-        "heading_line": 1378,
-        "line": 1380,
+        "heading_line": 1407,
+        "line": 1409,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190952,8 +190952,8 @@
       "source_location": {
         "heading": "SCS-020 - Bounded Attribution File History And Conservative Review Matching",
         "heading_level": 3,
-        "heading_line": 1446,
-        "line": 1448,
+        "heading_line": 1475,
+        "line": 1477,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190969,8 +190969,8 @@
       "source_location": {
         "heading": "SCS-021 - Sanitized Diagnostic Export And Optional Technical Log",
         "heading_level": 3,
-        "heading_line": 1514,
-        "line": 1516,
+        "heading_line": 1543,
+        "line": 1545,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -190986,8 +190986,8 @@
       "source_location": {
         "heading": "SCS-022 - New Repository Object Format Choice In The Setup Flow",
         "heading_level": 3,
-        "heading_line": 1587,
-        "line": 1589,
+        "heading_line": 1616,
+        "line": 1618,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -191003,8 +191003,8 @@
       "source_location": {
         "heading": "SCS-023 - One Gate List With A Source Column And An Enforcement Column",
         "heading_level": 3,
-        "heading_line": 1658,
-        "line": 1660,
+        "heading_line": 1687,
+        "line": 1689,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -191411,8 +191411,8 @@
       "source_location": {
         "heading": "SIR-025 - Execution Host And Environment Commands",
         "heading_level": 3,
-        "heading_line": 1561,
-        "line": 1563,
+        "heading_line": 1562,
+        "line": 1564,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191428,8 +191428,8 @@
       "source_location": {
         "heading": "SIR-026 - Project Host And Source Location Commands",
         "heading_level": 3,
-        "heading_line": 1590,
-        "line": 1592,
+        "heading_line": 1591,
+        "line": 1593,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191445,8 +191445,8 @@
       "source_location": {
         "heading": "SIR-027 - Installation Ownership Extension Commands",
         "heading_level": 3,
-        "heading_line": 1619,
-        "line": 1621,
+        "heading_line": 1620,
+        "line": 1622,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191462,8 +191462,8 @@
       "source_location": {
         "heading": "SIR-028 - Local Action And Compatibility Normalization Boundary",
         "heading_level": 3,
-        "heading_line": 1648,
-        "line": 1650,
+        "heading_line": 1649,
+        "line": 1651,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191479,8 +191479,8 @@
       "source_location": {
         "heading": "SIR-029 - Shared Connection Sole Future Handlers",
         "heading_level": 3,
-        "heading_line": 1681,
-        "line": 1683,
+        "heading_line": 1682,
+        "line": 1684,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191496,8 +191496,8 @@
       "source_location": {
         "heading": "SIR-030 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 1723,
-        "line": 1725,
+        "heading_line": 1724,
+        "line": 1726,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191513,8 +191513,8 @@
       "source_location": {
         "heading": "SIR-031 - DRY Expansion Compatibility And Local-Action Materialization",
         "heading_level": 3,
-        "heading_line": 1774,
-        "line": 1776,
+        "heading_line": 1775,
+        "line": 1777,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191530,8 +191530,8 @@
       "source_location": {
         "heading": "SIR-032 - Post-Integration Shared Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 1883,
-        "line": 1885,
+        "heading_line": 1884,
+        "line": 1886,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191547,8 +191547,8 @@
       "source_location": {
         "heading": "SIR-033 - Post-Integration Auth Candidate Normalization",
         "heading_level": 3,
-        "heading_line": 1931,
-        "line": 1933,
+        "heading_line": 1932,
+        "line": 1934,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191564,8 +191564,8 @@
       "source_location": {
         "heading": "SIR-034 - Backup Shared Primitives And Common External-Effect Envelope",
         "heading_level": 3,
-        "heading_line": 1965,
-        "line": 1967,
+        "heading_line": 1966,
+        "line": 1968,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191581,8 +191581,8 @@
       "source_location": {
         "heading": "SIR-035 - ConnectionDraft Lifecycle And ACT-148..153 Reconciliation",
         "heading_level": 3,
-        "heading_line": 2032,
-        "line": 2034,
+        "heading_line": 2033,
+        "line": 2035,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191598,8 +191598,8 @@
       "source_location": {
         "heading": "Working Notebook Transition Runtime Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 2083,
-        "line": 2091,
+        "heading_line": 2084,
+        "line": 2092,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191615,8 +191615,8 @@
       "source_location": {
         "heading": "Working Notebook Transition Runtime Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 2083,
-        "line": 2126,
+        "heading_line": 2084,
+        "line": 2127,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191632,8 +191632,8 @@
       "source_location": {
         "heading": "SIR-038 - Compaction Completion Replay Binding",
         "heading_level": 3,
-        "heading_line": 2167,
-        "line": 2169,
+        "heading_line": 2168,
+        "line": 2170,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191649,8 +191649,8 @@
       "source_location": {
         "heading": "SIR-039 - Adaptive Physical-Core And Multi-Resource Admission",
         "heading_level": 3,
-        "heading_line": 2235,
-        "line": 2237,
+        "heading_line": 2236,
+        "line": 2238,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191666,8 +191666,8 @@
       "source_location": {
         "heading": "SIR-040 - Staged Native Startup And Selected-Surface Hydration",
         "heading_level": 3,
-        "heading_line": 2266,
-        "line": 2268,
+        "heading_line": 2267,
+        "line": 2269,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191683,8 +191683,8 @@
       "source_location": {
         "heading": "SIR-041 - Hot Warm Cold Residency And Bounded Representations",
         "heading_level": 3,
-        "heading_line": 2297,
-        "line": 2299,
+        "heading_line": 2298,
+        "line": 2300,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191700,8 +191700,8 @@
       "source_location": {
         "heading": "SIR-042 - Full Thread Typed Result Binding And Central Response Projection",
         "heading_level": 3,
-        "heading_line": 2333,
-        "line": 2335,
+        "heading_line": 2334,
+        "line": 2336,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191717,8 +191717,8 @@
       "source_location": {
         "heading": "SIR-043 - Profile-First Optimization And Portable Kernels",
         "heading_level": 3,
-        "heading_line": 2205,
-        "line": 2207,
+        "heading_line": 2206,
+        "line": 2208,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191734,8 +191734,8 @@
       "source_location": {
         "heading": "SIR-044 - Original create-command outcome delegated custody",
         "heading_level": 3,
-        "heading_line": 2369,
-        "line": 2371,
+        "heading_line": 2370,
+        "line": 2372,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191751,8 +191751,8 @@
       "source_location": {
         "heading": "SIR-045 — Original delete-command delegated custody",
         "heading_level": 3,
-        "heading_line": 2551,
-        "line": 2553,
+        "heading_line": 2552,
+        "line": 2554,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191768,8 +191768,8 @@
       "source_location": {
         "heading": "Original Home command outcome custody",
         "heading_level": 3,
-        "heading_line": 2447,
-        "line": 2464,
+        "heading_line": 2448,
+        "line": 2465,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191785,8 +191785,8 @@
       "source_location": {
         "heading": "SIR-047 - Original Legal Hold Pending And Terminal Delegated Custody",
         "heading_level": 3,
-        "heading_line": 2639,
-        "line": 2641,
+        "heading_line": 2640,
+        "line": 2642,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191802,8 +191802,8 @@
       "source_location": {
         "heading": "SIR-048 - Original Goal start pending and terminal source custody",
         "heading_level": 2,
-        "heading_line": 2722,
-        "line": 2724,
+        "heading_line": 2723,
+        "line": 2725,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191819,8 +191819,8 @@
       "source_location": {
         "heading": "SIR-049 - Original Goal Update Capture And Immutable Terminal Join",
         "heading_level": 3,
-        "heading_line": 2801,
-        "line": 2802,
+        "heading_line": 2802,
+        "line": 2803,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191836,8 +191836,8 @@
       "source_location": {
         "heading": "SIR-050 - Original Cancel acknowledgement terminal and replay",
         "heading_level": 3,
-        "heading_line": 2872,
-        "line": 2874,
+        "heading_line": 2873,
+        "line": 2875,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191853,8 +191853,8 @@
       "source_location": {
         "heading": "SIR-051 - Original bound Plan acknowledgement, terminal and retained replay custody",
         "heading_level": 3,
-        "heading_line": 2939,
-        "line": 2961,
+        "heading_line": 2940,
+        "line": 2962,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191870,8 +191870,8 @@
       "source_location": {
         "heading": "SIR-052 - Original Workflow cancellation acceptance, terminal and retained replay",
         "heading_level": 3,
-        "heading_line": 3012,
-        "line": 3034,
+        "heading_line": 3013,
+        "line": 3035,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -191887,8 +191887,8 @@
       "source_location": {
         "heading": "SIR-053 - Explicit private Workflow cancellation inspector selection",
         "heading_level": 3,
-        "heading_line": 3104,
-        "line": 3114,
+        "heading_line": 3105,
+        "line": 3115,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",

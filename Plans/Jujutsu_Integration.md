@@ -128,6 +128,13 @@ canonical_text: >-
   Plans/jujutsu_change_operand_contracts.schema.json. It embeds the unchanged v1 request as authority metadata,
   not as a sufficient standalone current effect request for those five commands. All other commands retain
   their existing request contract; split remains deferred and unavailable.
+  Existing operation.undo, operation.restore and git.push retain those identities and their current owner bindings.
+  Their pending selected-operand companions are separate from the five change-command v2 successor: undo/restore
+  bind the exact selected native operation and owner preview against the expected current operation head; push binds
+  the complete selected bookmark set and publication preview through Source Control's existing RemoteOperationTarget
+  and ExternalEffectReconciliation. Confirmation target hashes and a single bookmark field do not stand in for
+  resolving the complete submitted selection. Historical v1 and the completed five-command v2 definitions remain
+  unchanged; these prose requirements do not enroll another schema variant, public command or native capability.
 gui_related: true
 gui_classification_reason: The commands map to user-visible actions, progress, disabled states, and receipts.
 depends_on: [JJI-002, SCS-003]

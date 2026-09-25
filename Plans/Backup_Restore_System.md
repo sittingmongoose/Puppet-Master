@@ -230,6 +230,7 @@ depends_on: [BRS-002, BRS-003]
 unblocks: [BRS-005, BRS-006, BRS-007, BRS-008]
 acceptance_criteria:
   - Destination test verifies declared capabilities and write/read/delete or protection behavior without destructive guessing.
+  - Destination test preserves the explicit read_only or approved_canary selection and, for a canary, the approved scratch-prefix binding; the existing bounded-safe-test and cleanup rules apply. Destination removal reviews the exact configuration/generation and removes only that binding, never repository data. Discovery binds the selected destination and approved prefix; any continuation remains scoped to that same selection rather than discovering an implicit different destination.
   - Each Project repository and the separate Catalog repository can be unlocked, verified, quarantined, retained, pruned, and restored without coupling an unrelated Project.
   - A multi-destination run preserves each attempt's immutable snapshot ID, upload state, failure, and evidence independently.
   - Destination update requires the actual typed nonsecret patch and exact current destination/Server/generation; a missing operand, stale target or unauthorized referenced configuration cannot apply.
@@ -237,6 +238,7 @@ acceptance_criteria:
   - A changed locator or authorization premise cannot inherit an inapplicable ready, capability or test claim; a label-only edit may retain authentic applicable evidence without implying a new test or fixed generation increment.
   - Manifest covers every included object with relative path, byte size, digest, family, and consistency boundary and names exclusions.
   - Retention cannot delete protected, held, active-parent, last-known-good, or recovery-required generations.
+  - Explicit snapshot deletion consumes the existing RetentionPreview for the exact selected immutable candidate set and repository/policy revisions, candidate hash, current confirmation and maintenance lease. A backup label or confirmation alone cannot choose a different set. Existing protected/held/required-generation exclusions remain mandatory; this contract introduces no hold override.
   - The Doctor repository metadata query binds exact repository, binding, Server and currentness to the authentic returned binding and cannot unlock, scan, verify, mutate or label Backup healthy merely because its read completed.
 validation_surfaces: [Plans/backup_restore_system_contract_fixtures.json, Plans/doctor_query_controller_contracts.schema.json, Plans/doctor_query_controller_contract_fixtures.json, future offline partial-write protection and retention tests]
 risk_class: destination_partial_write_or_manifest_omission
@@ -324,6 +326,7 @@ depends_on: [BRS-003, BRS-004, BRS-005]
 unblocks: [BRS-007, BRS-008, BRS-009]
 acceptance_criteria:
   - Browse/retrieve operations perform no activation and emit bounded read/delivery evidence independently of RestoreRun.
+  - Restore preview production preserves the original selected immutable snapshots, mode, target and requested path/identity mapping in the actual RestorePreview and its typed source/target changes. Execution consumes that same approved preview; server_full uses its existing identity_policy and fenced identity-resolution contract, never a duplicate conflicting request policy or a fifth mode.
   - Every mode requires the BRS-023 pre-staging recovery prerequisite; emergency consent never creates a recovery point or rollback capability, and activation truth follows BRS-019.
   - All nineteen phases persist without requiring evidence from a future phase; completed and mutation-applied states retain their actual prerequisites and verification evidence.
   - as_new rewrites every identity-bearing reference and cannot collide with an existing project_id.
@@ -636,6 +639,7 @@ acceptance_criteria:
   - Archive retrieval reports waiting, external prerequisite, and cost-consent state without hard-coded prices.
   - Reverse navigation returns to the exact immutable snapshot and original Project/repository/filter/focus, never silently latest.
   - Client download and Host extract preserve topology and FileSafe containment; raw keys and foreign absolute paths never enter ordinary evidence.
+  - Host extraction resolves its existing target_path_authorization_ref and filesafe_decision_ref against the same original snapshot, selected paths and Host destination before effects. These owner authorizations carry the reviewed extraction boundary; no duplicate generic preview grants additional authority. Browse continuation stays bound to its original repository/snapshot/path selection. Export preserves the explicitly selected snapshot set, destination and dependency scope rather than deriving them from the current view or expanding them silently.
   - Compare rejects a missing or substituted target_revision, wrong target owner/path or stale target binding; its actual owner result joins both immutable selected operands without checkout, restore, activation or other Project mutation.
 validation_surfaces: [Plans/backup_restore_system_contracts.schema.json, Plans/backup_restore_system_contract_fixtures.json, future traversal symlink archive cost Client Host and reverse-route tests]
 risk_class: browse_delivery_mutation_or_wrong_target
@@ -739,6 +743,7 @@ depends_on: [BRS-009, BRS-012, BRS-013, BRS-014, BRS-015]
 unblocks: []
 acceptance_criteria:
   - Every legacy value has deterministic migrated, compatibility, quarantined, or blocked disposition; no inferred key, history completeness, verification, or provider readiness is created.
+  - Project backup creation consumes the exact requested BackupPolicy revision, including its existing scope_review_status and scope_review_receipt_ref where applicable. It preserves that policy's actual Project/family/source/destination scope; it does not require a fabricated fresh scope preview for every run or expand an existing unreviewed policy.
   - Fresh recovery needs no old Catalog or model-provider account and precedes normal Product Onboarding; foreign-machine restore uses new identity and re-pairing.
   - Doctor cannot unlock, decrypt, export, prune, restore, or execute; optional unused destinations/sources are non-degrading unless policy requires them.
   - Settings, Bootstrap, Onboarding, Doctor, Files, Projects, Source Control/JJ, notifications/status, palette, API, and accessibility consumers preserve exact object identity and reverse focus.
@@ -1098,6 +1103,7 @@ acceptance_criteria:
   - Repository/destination addition or relocation preserves stable IDs and offers an Updated Recovery Kit when locator, format or key scope changes. Existing kits remain useful through repository discovery where supported; a stale locator is not a lost encryption key. This does not broaden ordinary backup inclusion or the existing Server/connector identity exclusions.
   - Key export sessions are short-lived, audience-bound, one-use where practical, creation/redemption authorized, revocable, and no-store; later export requires step-up and protected attachment. Scheduler unlock uses protected Server/OS/admin secret attachment and projects Unlock required when unavailable.
   - Key-slot rotation adds and verifies every new engine slot before retiring an old slot; compromise uses a new encryption domain/repository or explicit copy/re-encryption and never claims to repair already exposed copies.
+  - Rotation binds the human-reviewed original RecoverySet generation/repository/key-slot scope before protected delivery or engine effects. Re-encryption additionally binds the explicitly selected new destination references and new RecoverySet to that review. Existing protected submission, step-up, confirmation, maintenance lease and native engine proofs remain independent requirements; the review contains no raw credential and changes no cryptographic algorithm.
 validation_surfaces: [Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_recovery_admission_record, Plans/backup_restore_system_contract_fixtures.json, future provider/OAuth/key-delivery/rotation/capture-isolation runtime tests]
 risk_class: destination_credential_exfiltration_or_recovery_key_loss
 reasoning_tier: high

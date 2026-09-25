@@ -514,6 +514,27 @@ Family-level conditionals select repository, mirror, review, immutable review th
 
 Results distinguish `accepted`, `succeeded`, `blocked`, `degraded`, `failed`, `cancelled`, `recovery_required`, and `effect_unknown`. Acceptance requires `ObservableWork`; success requires a separate terminal provider result and receipt; `effect_unknown` requires a typed error and reconciliation-only retry. Availability and error codes are closed owner vocabularies. No request may infer provider/repository identity from remote text. No schema defines a native/provider handler, provider-specific peer common command namespace, persisted event binding, central registration, or runtime proof.
 
+### 3.4 Original selected-operation values
+
+The following existing commands preserve the user's original selected values in addition to section 3.3's authority/currentness envelope. Current focus, a binding's latest revision, an opaque reference without its authenticated owner contents, or a generic free-text intent cannot substitute for that selection. This requirement does not reinterpret historical v1 requests, enroll a successor schema, add a command, change a provider route, or enable a handler; typed request/result companions remain required where the current carrier omits these values.
+
+| Existing command | Original selected values and existing-owner join |
+| --- | --- |
+| `cmd.forge.review.create` | Head and base refs with immutable object IDs, exact title/body and draft choice, and an approved publication reference when selected; preserve the provider-owner route and Source Control context rather than inventing a thread. |
+| `cmd.forge.review.approve` | Exact review/head plus the optional submitted review body. |
+| `cmd.forge.review.request_changes` | Exact review/head and submitted body. |
+| `cmd.forge.review.comment` | Exact review and body plus any selected revision/line anchor, using the existing revision-window/tracking semantics rather than treating displayed line numbers as permanent identity. |
+| `cmd.forge.review.thread.reply` | Exact review/thread, submitted body and any selected change version; preserve the existing immutable review revision and thread owner. |
+| `cmd.forge.review.checkout` | Selected Source Location and exact Source Control checkout preview/handoff, with FileSafe and current local-write authority; this is not merely opening a review. |
+| `cmd.forge.repository.list` | Original repository filter within the admitted account/container or repository scope; the existing precommit account-list scope remains read-only and does not create or bind a Project. |
+| `cmd.forge.pipeline.list` | Original run filter within the selected AutomationBinding, not the latest visible panel filter. |
+| `cmd.forge.pipeline.run` | Selected definition, immutable revision, actual provider-validated inputs and exact run preview. Provider input validation belongs to the admitted provider definition, not an invented universal argument bag. |
+| `cmd.forge.pipeline.cancel` | Exact run and expected provider state/revision authenticated at execution; approval's separate required revision rule does not implicitly supply cancellation's missing selected-state binding. |
+| `cmd.forge.pipeline.retry` | Selected supported failed-jobs, all, or selected retry scope and its exact preview; unsupported provider scopes remain unavailable rather than silently broadening to all. |
+| `cmd.forge.pipeline.open_logs` | Exact run, optional selected job/stage and original pagination cursor; current permission and redaction still govern disclosure. |
+
+Selected inputs, any owner-issued preview and actual results must correlate to the same original command, provider/account, repository or automation binding and generation. A changed input invalidates its preview. Effectful commands revalidate current authority immediately before dispatch; read-only commands gain no write authority from filters or cursors. Accepted work is not terminal success. Result/replay preserves original selection, actual provider receipts and reconciliation of uncertain effects, without resubmitting an external effect or replacing original values with current UI state. No new persisted event, credential payload, provider capability or Azure-specific behavior is introduced.
+
 ## 4. Integration Surfaces
 
 ### 4.1 Source Control
@@ -667,6 +688,7 @@ depends_on: [FGI-008, FGI-009]
 unblocks: []
 acceptance_criteria:
 - Every exact command ID in this 43-command set maps one-to-one to the table's sole future handler target and no competing handler path exists.
+- Existing commands covered by section 3.4 preserve original selected values and genuine owner preview/result joins; an incomplete historical request or unresolved reference is not evidence that its selected-operand companion exists or that a native effect is admitted.
 - Every request, result, error, availability, permission, disabled-reason, receipt, ObservableWork, return-route, persistence, migration, and negative-security obligation remains owner-DRY.
 - Every central production-intent row starts handler_unavailable, expected_event_types is empty, and static wiring is never represented as native implementation evidence.
 - Commands System, UI Command Catalog, production wiring, Touch Closure, and every intended GUI consumer preserve exact reverse coverage without synthetic controls.
