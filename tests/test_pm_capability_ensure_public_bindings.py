@@ -1,10 +1,12 @@
 """Static public-route/owner composition; synthetic fixtures are not native proof."""
 from copy import deepcopy
+import importlib.util
 import json
 from pathlib import Path
 import subprocess
 import sys
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -16,6 +18,14 @@ SCHEMA = "Plans/capability_ensure_custody_contracts.schema.json"
 FIXTURES = "Plans/capability_ensure_custody_contract_fixtures.json"
 REQUEST = SCHEMA + "#/$defs/capability_ensure_request_v2"
 RESULT = SCHEMA + "#/$defs/capability_ensure_result_v2"
+
+
+def shared_binding_validator():
+    spec = importlib.util.spec_from_file_location(
+        "shared_binding_check", ROOT / "scripts/pm-shared-runtime-command-contracts.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 class CapabilityEnsurePublicBindings(unittest.TestCase):
@@ -45,6 +55,31 @@ class CapabilityEnsurePublicBindings(unittest.TestCase):
         for row in self.pack["valid"]:
             self.assertEqual([], UI.contracts().contract_semantic_failures(
                 SCHEMA, row["definition"], deepcopy(row["value"])))
+
+    def test_shared_runtime_binding_uses_same_current_successor(self):
+        bindings = json.loads((ROOT / "Plans/shared_runtime_command_bindings.json").read_text())
+        rows = [row for row in bindings["bindings"] if row["command_id"] == "cmd.capability.ensure"]
+        self.assertEqual(1, len(rows))
+        self.assertEqual(REQUEST, rows[0]["request_schema_ref"])
+        self.assertEqual(RESULT, rows[0]["result_schema_ref"])
+        self.assertEqual("handlers::capability::ensure", rows[0]["handler"])
+        self.assertEqual("catalog.capability_ensure", rows[0]["wiring_entry_id"])
+
+    def test_shared_binding_resolver_admits_only_exact_successor_pair(self):
+        validator = shared_binding_validator()
+        historical = json.loads((ROOT / "Plans/shared_runtime_command_contracts.schema.json").read_text())
+        for ref in (REQUEST, RESULT):
+            self.assertEqual(ref.split("/")[-1], validator.resolve_definition(ref, historical))
+        for ref in (SCHEMA + "#/$defs/capability_provisioning_operation_v2",
+                    SCHEMA + "#/$defs/not_a_definition",
+                    "Plans/../Plans/capability_ensure_custody_contracts.schema.json#/$defs/capability_ensure_request_v2",
+                    "https://example.invalid/schema#/$defs/capability_ensure_request_v2"):
+            with self.subTest(ref=ref), self.assertRaises(ValueError):
+                validator.resolve_definition(ref, historical)
+        successor = json.loads((ROOT / SCHEMA).read_text())
+        del successor["$defs"]["capability_ensure_request_v2"]
+        with patch.object(validator, "read_json", return_value=successor), self.assertRaises(ValueError):
+            validator.resolve_definition(REQUEST, historical)
 
     def test_central_entry_rejects_schema_valid_foreign_work_original(self):
         v = deepcopy(self.pack["valid"][2]["value"])

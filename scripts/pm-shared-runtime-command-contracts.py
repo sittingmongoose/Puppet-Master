@@ -38,6 +38,21 @@ def read_json(path: Path) -> Any:
 
 
 def resolve_definition(ref: str, schema: dict[str, Any]) -> str:
+    # The approved current capability route has a versioned owner companion.
+    # Keep the historical definitions/fixtures intact and admit only its exact
+    # request/result pair here, never arbitrary paths or network references.
+    successor_path = "Plans/capability_ensure_custody_contracts.schema.json"
+    successors = {
+        successor_path + "#/$defs/capability_ensure_request_v2": "capability_ensure_request_v2",
+        successor_path + "#/$defs/capability_ensure_result_v2": "capability_ensure_result_v2",
+    }
+    if ref in successors:
+        name = successors[ref]
+        successor = read_json(ROOT / successor_path)
+        if name not in successor.get("$defs", {}):
+            raise ValueError(f"missing command schema definition {name}")
+        Draft202012Validator.check_schema(successor)
+        return name
     prefix = "Plans/shared_runtime_command_contracts.schema.json#/$defs/"
     if not ref.startswith(prefix):
         raise ValueError(f"unsupported command schema ref {ref}")

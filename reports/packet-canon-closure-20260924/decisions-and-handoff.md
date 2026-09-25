@@ -114,6 +114,13 @@ No further Azure scope is added.
 
 ## Landing hold
 
+The clean branch preflight at `38a7816d5` completed with 25/36 checks passing;
+all 11 failing totals equal the earlier branch run, including readiness 68.
+That does not prove equal failure keys or current-main safety. The remaining
+PM7 failure exposed a missed capability v2 shared binding, now repaired and
+independently reviewed; its exact subcheck rerun passes. See
+`capability-shared-binding-reconciliation.md` for both report hashes and limits.
+
 The frozen three-card batch has explicit responses: dictionary changed to per
 Project (DL-099), Server question deferred as Ask (DL-100), and bounded SCM follow-up
 approved (DL-101). See `remaining-boundary-answers-20260925.md` for exact answer and
