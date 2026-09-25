@@ -272,6 +272,7 @@ class ReadinessRegistryRepresentationTest(unittest.TestCase):
         "keyed_composition_live_rows_accepted",
         "keyed_composition_synthetic_single_header_rejected",
         "keyed_composition_dropped_member_rejected",
+        "keyed_composition_member_order_drift_rejected",
         "keyed_composition_identity_as_stored_header_rejected",
         "keyed_composition_payload_member_stored_header_rejected",
         "keyed_composition_open_member_rejected",

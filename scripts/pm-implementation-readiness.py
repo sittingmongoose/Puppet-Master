@@ -940,6 +940,26 @@ STORAGE_VALUE_KEYED_COMPOSITION_MEMBER_IDENTITY = {
     "coordination_read_model_projections": "stored_schema_id",
 }
 STORAGE_VALUE_KEYED_COMPOSITION_KEYWORDS = frozenset({"$id", "$comment", "oneOf", "$defs"})
+# The members of each keyed composition by $defs name, one per key shape, in the row's key-shape order.
+STORAGE_VALUE_KEYED_COMPOSITION_MEMBERS = {
+    "coordination_event_records": (
+        "agent_registered",
+        "agent_status_updated",
+        "agent_operation_updated",
+        "agent_file_ownership_updated",
+        "agent_unregistered",
+        "agent_crashed",
+        "agent_aborted",
+        "debug_mirror_exported",
+    ),
+    "coordination_read_model_projections": (
+        "agent_projection",
+        "file_projection",
+        "operation_projection",
+        "snapshot_projection",
+        "checkpoint",
+    ),
+}
 # SP-278 read token (Plans/storage-plan.md section 2.3.1, 2026-09-23; amended 2026-09-24, DL-076):
 # a closed, non-secret read selector of Storage identity, relative control names, hashes,
 # generation and frontier. The whole token adds the live redb_snapshot_id of one read transaction;
@@ -6526,6 +6546,13 @@ def storage_value_keyed_composition_failures(family: dict[str, Any], *, row_path
             members=len(members),
             entries=len(entries) if isinstance(entries, list) else None,
         )
+    expected_members = list(STORAGE_VALUE_KEYED_COMPOSITION_MEMBERS.get(str(family_id), ()))
+    if [name for name, _member in members] != expected_members:
+        fail(
+            "storage_value_registry_keyed_composition_member_order_mismatch",
+            expected=expected_members,
+            actual=[name for name, _member in members],
+        )
     if family.get("compatibility_key_shapes") != []:
         fail("storage_value_registry_keyed_composition_compatibility_keys_present")
     owner_path = str(family.get("value_schema_ref", "")).split("#", 1)[0]
@@ -8723,6 +8750,14 @@ def storage_value_representation_self_test_checks(
         errors(keyed_dropped, "keyed-dropped-member"),
         "storage_value_registry_keyed_composition_members_mismatch",
         family_id="coordination_event_records",
+    )
+    keyed_order = clone_registry()
+    order_entries = family_of(keyed_order, "coordination_read_model_projections")["value_schema"]["oneOf"]
+    order_entries[0], order_entries[4] = order_entries[4], order_entries[0]
+    checks["keyed_composition_member_order_drift_rejected"] = has(
+        errors(keyed_order, "keyed-member-order"),
+        "storage_value_registry_keyed_composition_member_order_mismatch",
+        family_id="coordination_read_model_projections",
     )
     keyed_relabelled = clone_registry()
     relabelled_row = family_of(keyed_relabelled, "coordination_read_model_projections")
