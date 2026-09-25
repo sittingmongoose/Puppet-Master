@@ -59,7 +59,11 @@ class PairingIssuanceTests(unittest.TestCase):
             'git', '-C', str(ROOT), 'show',
             'bad5718eede2686cc573cbc200c771f232a45815:Plans/storage_value_registry.json',
         ], text=True))
-        self.assertEqual(registry['families'], before['families'])
+        # Independently validated same-family v2 successors belong to capability
+        # custody, not this pairing transport companion. Preserve every other row.
+        capability_families = {'capability_provisioning_operation', 'installation_lifecycle_record'}
+        self.assertEqual([r for r in registry['families'] if r['family_id'] not in capability_families],
+                         [r for r in before['families'] if r['family_id'] not in capability_families])
         self.assertEqual(registry['retention_policies'], before['retention_policies'])
         added = {row['disposition_id']: row for row in registry['contract_family_dispositions']
                  if row['disposition_id'].startswith('scd.server_pairing.')}
@@ -67,9 +71,10 @@ class PairingIssuanceTests(unittest.TestCase):
                                       'scd.server_pairing.issuance_custody.v1'})
         # Preserve every pre-existing disposition, while independent later
         # companions own their own newly added rows and validation.
-        original_ids = {row['disposition_id'] for row in before['contract_family_dispositions']}
+        original_ids = {row['disposition_id'] for row in before['contract_family_dispositions']} - {'scd.capability.continuation_custody.v1'}
         self.assertEqual([row for row in registry['contract_family_dispositions']
-                          if row['disposition_id'] in original_ids], before['contract_family_dispositions'])
+                          if row['disposition_id'] in original_ids],
+                         [row for row in before['contract_family_dispositions'] if row['disposition_id'] in original_ids])
         transport = added['scd.server_pairing.issuance_transport.v1']
         custody = added['scd.server_pairing.issuance_custody.v1']
         self.assertEqual(transport['physical_family_status'], 'not_applicable_nonpersisted')

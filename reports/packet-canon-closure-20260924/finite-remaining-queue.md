@@ -3,14 +3,15 @@
 This supersedes older repair-pending descriptions, not their historical evidence.
 Doctor catalog, provider manifest/readiness/search, five Jujutsu operands and the
 bounded Vault/route/update/size prose are integrated on the repair branch. The
-capability public/Permissions/same-family successor passed two-cycle review and
-still awaits root integration. No main landing or whole-packet closure is claimed.
+capability public/Permissions/same-family successor is now integrated; see
+`capability-ensure-custody-integration.md`. No main landing or whole-packet closure
+is claimed.
 
 Remaining categories are distinct:
 
-1. Exact Storage specification integration: the current inventory has 23 explicitly
-   pending disposition rows, including capability, Guided Tour and pairing custody.
-   These are not 23 engines to build. Determine owner key/value/retention/migration
+1. Exact Storage specification integration: the current registry has 22 explicitly
+   pending disposition rows after capability integration, including Guided Tour
+   and pairing custody. These are not 22 engines to build. Determine owner key/value/retention/migration
    decisions separately from deployment of already specified native writers.
 2. Narrow authority adjudications: Settings exposure/import semantics; ordinary
    Vault isolation/sharing and supervisor scope; four plugin applicability clauses;
@@ -38,3 +39,9 @@ Its Markdown explanation has SHA-256
 `2e2f9dc3ea7b0069941cb6a0ec1cd26e27a4e08b9ba08210fd1f217e4a261ed8`.
 The eleven owner-prose clauses listed there as candidates are now integrated;
 the remaining distinctions above still apply.
+
+Refined Backup, pairing, application-check and Tour custody proposals remain
+external owner-review evidence, not newly admitted policies or physical writers.
+Tour original Chat/layout capture custody remains a protected-owner dependency;
+no generic reference or fixture claims to supply it. Settings and Server residual
+source IDs are being reopened explicitly rather than silently credited as covered.

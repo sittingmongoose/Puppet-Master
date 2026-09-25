@@ -18264,6 +18264,14 @@ provider-network dispatch.
 
 ### Forward-only migration and recovery
 
+The existing `capability_provisioning_operation` and `installation_lifecycle_record` families have explicit same-owner v2 successors in `Plans/capability_ensure_custody_contracts.schema.json`. Current keys are `capability_provisioning_operation.v2:{host_id}:{environment_id}:{operation_id}` and `installation_lifecycle_record.v2:{host_id}:{environment_id}:{operation_id}`; their exact v1 keys remain lookup-only historical aliases. Current values use the respective `*_current_write` definitions; historical reads use the unchanged `*_historical_reader` definitions. All unrelated family rows, producers/consumers, `RP-RUNTIME-365D`, stronger holds, mandatory backup and recovery ownership remain unchanged.
+
+Provisioning embeds original per-origin CP004 demand/waiter/readiness/currentness/settlement and its Permissions decision plus exact request binding and full original shared-work identity. The genuine lifecycle family embeds its own internal capability admission value and permission binding; ordinary attempt-bound lifecycle callers keep their actual snapshot branch. Public ensure transport and original command/result/outbox custody stay with existing owners. No peer command archive, permission-decision key, lifecycle mirror or new retention policy is created. Original source/request/result/decision/verification references remain held for the full lifetime of every dependent outcome, continuation, replay, audit or recovery record; absent originals cannot be reconstructed from current policy or projections.
+
+The row-local materializer refuses unexpected key/version state instead of overwriting another successor. StorageMigrationCoordinator admits fresh v2 writers only after original preflight, maintenance fencing, verified backup/readback, journaled validation and version-last completion. Never copy/default-fill a v1 value into v2: unknown original demand, decision, admission or settlement cannot be invented. Active/uncertain historical effects stay held for their actual owner reconciliation. Exact historical bytes remain read-only under their own grammar and never authorize current effects. No lazy rewrite, dual write, cancellation/replay by migration or new store-version integer is inferred. Native writer installation, atomicity, authenticated storage, crash/restart and migration execution remain NOT_RUN.
+
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-003, ContractName:Plans/Permissions_System.md#PS-133, ContractName:Plans/capability_ensure_custody_contracts.schema.json, ContractName:Plans/storage_value_registry.json
+
 `StorageMigrationCoordinator` is the only actor allowed to materialize or upgrade
 these families. The mandatory order is:
 

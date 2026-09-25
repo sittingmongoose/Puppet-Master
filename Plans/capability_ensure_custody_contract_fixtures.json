@@ -1,0 +1,2174 @@
+{
+  "schema_id": "pm.capability_ensure_custody.fixtures.v2",
+  "schema_version": "2.0.0",
+  "evidence_level": "static_only",
+  "valid": [
+    {
+      "name": "application_existing_connection_off",
+      "definition": "capability_ensure_fixture",
+      "value": {
+        "record_kind": "capability_ensure_fixture",
+        "runtime_evidence": false,
+        "request": {
+          "schema_id": "pm.shared_runtime.capability_ensure_request.v2",
+          "schema_version": "2.0.0",
+          "command_id": "cmd.capability.ensure",
+          "command_instance_id": "command:ensure",
+          "idempotency": {
+            "schema_id": "pm.shared_runtime.command_idempotency.v1",
+            "idempotency_key": "idem:ensure",
+            "scope_ref": "scope:ensure",
+            "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "replay_policy": "return_original_result",
+            "conflict_behavior": "reject_same_key_different_binding"
+          },
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": null,
+          "goal_id": null,
+          "plan_id": null,
+          "run_id": null,
+          "thread_id": null,
+          "agent_id": null,
+          "crew_id": null,
+          "source_location_id": null,
+          "deadline_utc": null,
+          "recovery_of_operation_id": null,
+          "capability_id": "capability:formatter",
+          "provisioning_mode": "Off",
+          "requirement_ref": "demand:1",
+          "origin_operation_id": "origin:1",
+          "demand": {
+            "record_ref": "demand:1",
+            "generation": 1,
+            "sha256": "bb7c4dc8a9a1be7d1756fcc43b27678f6c6d762de9d7b62321a8a11cf0e7b5c5"
+          },
+          "scope_kind": "application",
+          "server_id": "server:1",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "execution_host_id": "host:1",
+          "execution_environment_id": "environment:1",
+          "topology_generation": 2
+        },
+        "operation": {
+          "schema_id": "pm.shared_runtime.capability_provisioning_operation.v2",
+          "schema_version": "2.0.0",
+          "operation_ref": "operation:1",
+          "operation_generation": 1,
+          "server_id": "server:1",
+          "topology_generation": 2,
+          "operation": {
+            "schema_id": "pm.shared_runtime.capability_provisioning_operation.v1",
+            "schema_version": "1.0.0",
+            "operation_id": "provision:1",
+            "capability_id": "capability:formatter",
+            "provider_cli": false,
+            "prior_provider_consent_ref": null,
+            "host_id": "host:1",
+            "environment_id": "environment:1",
+            "phase": "ready",
+            "reconciliation_disposition": "terminal_no_change",
+            "policy_ref": "policy:1",
+            "permission_snapshot_ref": null,
+            "resource_admission_ref": "resource:1",
+            "installation_operation_ref": null,
+            "observable_work_id": "work:1",
+            "reason_code": null,
+            "started_at_utc": "2026-09-25T12:00:00Z",
+            "updated_at_utc": "2026-09-25T12:00:40Z",
+            "terminal_at_utc": "2026-09-25T12:00:40Z"
+          },
+          "origins": [
+            {
+              "request": {
+                "record_ref": "request:ensure",
+                "generation": 1,
+                "sha256": "73a95e56c18e932c8b105a4fdb401a05b14dd6003543f6553f2ccdb34636179c"
+              },
+              "demand": {
+                "schema_id": "pm.shared_runtime.capability_demand.v1",
+                "schema_version": "1.0.0",
+                "demand_ref": "demand:1",
+                "origin_identity": {
+                  "scope_kind": "application",
+                  "operation_id": "origin:1",
+                  "operation_generation": 3,
+                  "server_id": "server:1",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:1",
+                  "execution_environment_id": "environment:1",
+                  "topology_generation": 2
+                },
+                "source": {
+                  "kind": "project_metadata",
+                  "owner_ref": "owner:project",
+                  "source": {
+                    "record_ref": "source:1",
+                    "generation": 1,
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "capability_id": "capability:formatter",
+                "compatibility_requirement": {
+                  "record_ref": "requirement:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "requested_mode": "Off",
+                "requested_effect_scope": "host",
+                "plan_lineage_ref": null,
+                "origin_lineage": {
+                  "plan_id": null,
+                  "run_id": null,
+                  "agent_id": null,
+                  "crew_id": null
+                },
+                "continuation": {
+                  "continuation_ref": "continuation:1",
+                  "generation": 1,
+                  "return_context_ref": "return:1",
+                  "origin_payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                  "expires_at_utc": "2026-09-25T13:00:00Z"
+                }
+              },
+              "waiter": {
+                "schema_id": "pm.shared_runtime.capability_waiter_binding.v1",
+                "schema_version": "1.0.0",
+                "waiter_ref": "waiter:1",
+                "shared_operation_id": "provision:1",
+                "demand": {
+                  "record_ref": "demand:1",
+                  "generation": 1,
+                  "sha256": "bb7c4dc8a9a1be7d1756fcc43b27678f6c6d762de9d7b62321a8a11cf0e7b5c5"
+                },
+                "admitted_policy": {
+                  "record_ref": "policy:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "effective_mode": "Off",
+                "original_admission_ref": "admission:1",
+                "original_invocation_ref": "invocation:1",
+                "requested_at_utc": "2026-09-25T12:00:00Z"
+              },
+              "permission": {
+                "schema_id": "pm.permissions.capability_operation_decision.v1",
+                "schema_version": "1.0.0",
+                "decision_ref": "decision:ensure",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "provision:1",
+                  "operation_generation": 1,
+                  "server_id": "server:1",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:1",
+                  "execution_environment_id": "environment:1",
+                  "topology_generation": 2,
+                  "command_instance_id": "command:ensure"
+                },
+                "request": {
+                  "record_ref": "request:ensure",
+                  "generation": 1,
+                  "sha256": "73a95e56c18e932c8b105a4fdb401a05b14dd6003543f6553f2ccdb34636179c"
+                },
+                "actor_ref": "actor:human",
+                "effect": {
+                  "capability_id": "capability:formatter",
+                  "compatibility_requirement": {
+                    "record_ref": "requirement:1",
+                    "generation": 1,
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "effect_scope": "host",
+                  "target": {
+                    "record_ref": "target:1",
+                    "generation": 1,
+                    "sha256": "80a3cb083f43db162014b165daa57bd6f0d1b8e8f4cba1dc0fbf8c6f29c281d1"
+                  },
+                  "lifecycle_request": null
+                },
+                "policy": {
+                  "record_ref": "policy:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "effective_mode": "Off",
+                "authority_generation": 1,
+                "approval": null,
+                "attempt_snapshot": null,
+                "audit": {
+                  "record_ref": "audit:1",
+                  "generation": 1,
+                  "sha256": "14026e2f591316efbef19545fadba962c121acd3c97563154755c77d7f285d8b"
+                },
+                "decision": "allow",
+                "captured_at_utc": "2026-09-25T12:00:00Z",
+                "expires_at_utc": "2026-09-25T13:00:00Z"
+              },
+              "readiness": {
+                "schema_id": "pm.shared_runtime.capability_readiness_result.v1",
+                "schema_version": "1.0.0",
+                "result_ref": "ready:1",
+                "shared_operation_id": "provision:1",
+                "capability_id": "capability:formatter",
+                "compatibility_requirement": {
+                  "record_ref": "requirement:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "execution_host_id": "host:1",
+                "execution_environment_id": "environment:1",
+                "topology_generation": 2,
+                "subject": {
+                  "kind": "Connection",
+                  "record_ref": "subject:fixture",
+                  "generation": 1
+                },
+                "readiness_basis": "existing_verified_capability",
+                "verification": {
+                  "record_ref": "verification:fixture",
+                  "generation": 1,
+                  "sha256": "7b56efdc5b0d8a0ae8845bb936c332bd37ac153daf5570cbd3f13152d3d169f5"
+                },
+                "effect_result": null,
+                "verified_at_utc": "2026-09-25T12:00:30Z",
+                "expires_at_utc": "2026-09-25T13:00:00Z"
+              },
+              "currentness": {
+                "schema_id": "pm.shared_runtime.capability_origin_currentness.v1",
+                "schema_version": "1.0.0",
+                "snapshot_ref": "snapshot:1",
+                "waiter_ref": "waiter:1",
+                "origin_identity": {
+                  "scope_kind": "application",
+                  "operation_id": "origin:1",
+                  "operation_generation": 3,
+                  "server_id": "server:1",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:1",
+                  "execution_environment_id": "environment:1",
+                  "topology_generation": 2
+                },
+                "source": {
+                  "record_ref": "source:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "policy": {
+                  "record_ref": "policy:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "effective_mode": "Off",
+                "continuation": {
+                  "continuation_ref": "continuation:1",
+                  "generation": 1,
+                  "return_context_ref": "return:1",
+                  "origin_payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                  "expires_at_utc": "2026-09-25T13:00:00Z"
+                },
+                "origin_state": "completed",
+                "waiter_state": "active",
+                "observed_at_utc": "2026-09-25T12:01:00Z"
+              },
+              "settlement": {
+                "schema_id": "pm.shared_runtime.capability_continuation_settlement.v1",
+                "schema_version": "1.0.0",
+                "settlement_ref": "settlement:1",
+                "waiter_ref": "waiter:1",
+                "provisioning_operation_ref": "operation:1",
+                "readiness_result_ref": "ready:1",
+                "currentness_snapshot_ref": "snapshot:1",
+                "outcome": "ready_without_resume",
+                "reason": "origin_inactive",
+                "continuation_result_ref": null,
+                "settled_at_utc": "2026-09-25T12:01:01Z"
+              }
+            }
+          ],
+          "work_identity": {
+            "scope_kind": "application",
+            "operation_id": "provision:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          }
+        },
+        "result": {
+          "schema_id": "pm.shared_runtime.capability_ensure_result.v2",
+          "schema_version": "2.0.0",
+          "result_type": "CapabilityEnsureResult",
+          "command_id": "cmd.capability.ensure",
+          "operation_id": "provision:1",
+          "command_instance_id": "command:ensure",
+          "outcome": "no_change",
+          "observable_work_id": "work:1",
+          "current_revision_or_epoch": 1,
+          "projection_ref": null,
+          "receipt_refs": [
+            "ready:1"
+          ],
+          "artifact_refs": [],
+          "disabled_reason": null,
+          "error": null,
+          "recovery_actions": [],
+          "replayed": false,
+          "original_operation_id": null,
+          "terminal_owner_result_ref": "ready:1",
+          "command_outcome_ref": "outcome:ensure",
+          "subject_ref": "operation:1",
+          "request": {
+            "record_ref": "request:ensure",
+            "generation": 1,
+            "sha256": "73a95e56c18e932c8b105a4fdb401a05b14dd6003543f6553f2ccdb34636179c"
+          },
+          "operation_record": {
+            "record_ref": "operation:1",
+            "generation": 1,
+            "sha256": "13cf7c4f3e514c4b2575fc140970aedfba0eea4520138caa3e54c0793a1df862"
+          },
+          "waiter_ref": "waiter:1",
+          "readiness_ref": "ready:1",
+          "settlement_ref": "settlement:1",
+          "work_record": {
+            "record_ref": "work:1",
+            "generation": 1,
+            "sha256": "a123bb55660a81e0d9bb2593a31de5308c39ee7b0a7ba12e142ad794c7fca7de"
+          }
+        },
+        "work": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "observable_work",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "provision:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          },
+          "observable_work_id": "work:1",
+          "owner_domain": "installation",
+          "title": "Capability ensure",
+          "subject_refs": [
+            "operation:1"
+          ],
+          "blocking_scope": "none",
+          "work_state": "completed",
+          "phase": "ready",
+          "progress_kind": "none",
+          "progress_source": "unknown",
+          "last_activity_at": "2026-09-25T12:01:01Z",
+          "heartbeat_at": null,
+          "activity_evidence_ref": "ready:1",
+          "parent_work_id": null,
+          "child_work_ids": [],
+          "freshness": "current",
+          "projection_generation": 1,
+          "cancel_available": false,
+          "background_available": false,
+          "retry_available": false,
+          "dedupe_key": "dedupe:ensure",
+          "result_receipt_ref": "ready:1",
+          "observed_at": "2026-09-25T12:01:02Z"
+        },
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "provision:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          },
+          "command_id": "cmd.capability.ensure",
+          "payload_sha256": "73a95e56c18e932c8b105a4fdb401a05b14dd6003543f6553f2ccdb34636179c",
+          "idempotency_key": "idem:ensure",
+          "target_generation": 2,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame:1",
+          "acknowledgement_frame_id": "frame:1",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack:1",
+          "result_receipt_ref": "ready:1",
+          "error_ref": null,
+          "owner_result_ref": "result:ensure",
+          "owner_result_schema_ref": {
+            "path": "Plans/capability_ensure_custody_contracts.schema.json",
+            "json_pointer": "#/$defs/capability_ensure_result_v2",
+            "schema_id": "pm.shared_runtime.capability_ensure_result.v2"
+          },
+          "owner_result_sha256": "599f7ebb80990a6c63fe7afc37edc8ecb37355887d19a814688c2c731b2eb160",
+          "observed_at": "2026-09-25T12:01:02Z"
+        },
+        "effect": null,
+        "admission": null,
+        "effect_work": null
+      }
+    },
+    {
+      "name": "application_verified_installation",
+      "definition": "capability_ensure_fixture",
+      "value": {
+        "record_kind": "capability_ensure_fixture",
+        "runtime_evidence": false,
+        "request": {
+          "schema_id": "pm.shared_runtime.capability_ensure_request.v2",
+          "schema_version": "2.0.0",
+          "command_id": "cmd.capability.ensure",
+          "command_instance_id": "command:ensure",
+          "idempotency": {
+            "schema_id": "pm.shared_runtime.command_idempotency.v1",
+            "idempotency_key": "idem:ensure",
+            "scope_ref": "scope:ensure",
+            "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "replay_policy": "return_original_result",
+            "conflict_behavior": "reject_same_key_different_binding"
+          },
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": null,
+          "goal_id": null,
+          "plan_id": null,
+          "run_id": null,
+          "thread_id": null,
+          "agent_id": null,
+          "crew_id": null,
+          "source_location_id": null,
+          "deadline_utc": null,
+          "recovery_of_operation_id": null,
+          "capability_id": "capability:formatter",
+          "provisioning_mode": "Auto",
+          "requirement_ref": "demand:1",
+          "origin_operation_id": "origin:1",
+          "demand": {
+            "record_ref": "demand:1",
+            "generation": 1,
+            "sha256": "4665a56869902d78b6830395f69a46705cb4c4a81e2ac1f1a7d4f1ddf996ddba"
+          },
+          "scope_kind": "application",
+          "server_id": "server:1",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "execution_host_id": "host:1",
+          "execution_environment_id": "environment:1",
+          "topology_generation": 2
+        },
+        "operation": {
+          "schema_id": "pm.shared_runtime.capability_provisioning_operation.v2",
+          "schema_version": "2.0.0",
+          "operation_ref": "operation:1",
+          "operation_generation": 1,
+          "server_id": "server:1",
+          "topology_generation": 2,
+          "operation": {
+            "schema_id": "pm.shared_runtime.capability_provisioning_operation.v1",
+            "schema_version": "1.0.0",
+            "operation_id": "provision:1",
+            "capability_id": "capability:formatter",
+            "provider_cli": false,
+            "prior_provider_consent_ref": null,
+            "host_id": "host:1",
+            "environment_id": "environment:1",
+            "phase": "ready",
+            "reconciliation_disposition": "terminal_no_change",
+            "policy_ref": "policy:1",
+            "permission_snapshot_ref": null,
+            "resource_admission_ref": "resource:1",
+            "installation_operation_ref": "effect:fixture",
+            "observable_work_id": "work:1",
+            "reason_code": null,
+            "started_at_utc": "2026-09-25T12:00:00Z",
+            "updated_at_utc": "2026-09-25T12:00:40Z",
+            "terminal_at_utc": "2026-09-25T12:00:40Z"
+          },
+          "origins": [
+            {
+              "request": {
+                "record_ref": "request:ensure",
+                "generation": 1,
+                "sha256": "bf174d0c5acb909748502a6e5bd9a0fd6ac3229592443ea2e2d64745ce187636"
+              },
+              "demand": {
+                "schema_id": "pm.shared_runtime.capability_demand.v1",
+                "schema_version": "1.0.0",
+                "demand_ref": "demand:1",
+                "origin_identity": {
+                  "scope_kind": "application",
+                  "operation_id": "origin:1",
+                  "operation_generation": 3,
+                  "server_id": "server:1",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:1",
+                  "execution_environment_id": "environment:1",
+                  "topology_generation": 2
+                },
+                "source": {
+                  "kind": "project_metadata",
+                  "owner_ref": "owner:project",
+                  "source": {
+                    "record_ref": "source:1",
+                    "generation": 1,
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "capability_id": "capability:formatter",
+                "compatibility_requirement": {
+                  "record_ref": "requirement:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "requested_mode": "Auto",
+                "requested_effect_scope": "host",
+                "plan_lineage_ref": null,
+                "origin_lineage": {
+                  "plan_id": null,
+                  "run_id": null,
+                  "agent_id": null,
+                  "crew_id": null
+                },
+                "continuation": {
+                  "continuation_ref": "continuation:1",
+                  "generation": 1,
+                  "return_context_ref": "return:1",
+                  "origin_payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                  "expires_at_utc": "2026-09-25T13:00:00Z"
+                }
+              },
+              "waiter": {
+                "schema_id": "pm.shared_runtime.capability_waiter_binding.v1",
+                "schema_version": "1.0.0",
+                "waiter_ref": "waiter:1",
+                "shared_operation_id": "provision:1",
+                "demand": {
+                  "record_ref": "demand:1",
+                  "generation": 1,
+                  "sha256": "4665a56869902d78b6830395f69a46705cb4c4a81e2ac1f1a7d4f1ddf996ddba"
+                },
+                "admitted_policy": {
+                  "record_ref": "policy:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "effective_mode": "Auto",
+                "original_admission_ref": "admission:1",
+                "original_invocation_ref": "invocation:1",
+                "requested_at_utc": "2026-09-25T12:00:00Z"
+              },
+              "permission": {
+                "schema_id": "pm.permissions.capability_operation_decision.v1",
+                "schema_version": "1.0.0",
+                "decision_ref": "decision:ensure",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "provision:1",
+                  "operation_generation": 1,
+                  "server_id": "server:1",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:1",
+                  "execution_environment_id": "environment:1",
+                  "topology_generation": 2,
+                  "command_instance_id": "command:ensure"
+                },
+                "request": {
+                  "record_ref": "request:ensure",
+                  "generation": 1,
+                  "sha256": "bf174d0c5acb909748502a6e5bd9a0fd6ac3229592443ea2e2d64745ce187636"
+                },
+                "actor_ref": "actor:human",
+                "effect": {
+                  "capability_id": "capability:formatter",
+                  "compatibility_requirement": {
+                    "record_ref": "requirement:1",
+                    "generation": 1,
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "effect_scope": "host",
+                  "target": {
+                    "record_ref": "target:1",
+                    "generation": 1,
+                    "sha256": "80a3cb083f43db162014b165daa57bd6f0d1b8e8f4cba1dc0fbf8c6f29c281d1"
+                  },
+                  "lifecycle_request": {
+                    "record_ref": "admission:lifecycle",
+                    "generation": 1,
+                    "sha256": "db9e6f98c6c2ee1c269ea52a40fd53376c3be38e8030f4e2b625722247e762c6"
+                  }
+                },
+                "policy": {
+                  "record_ref": "policy:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "effective_mode": "Auto",
+                "authority_generation": 1,
+                "approval": null,
+                "attempt_snapshot": null,
+                "audit": {
+                  "record_ref": "audit:1",
+                  "generation": 1,
+                  "sha256": "14026e2f591316efbef19545fadba962c121acd3c97563154755c77d7f285d8b"
+                },
+                "decision": "allow",
+                "captured_at_utc": "2026-09-25T12:00:00Z",
+                "expires_at_utc": "2026-09-25T13:00:00Z"
+              },
+              "readiness": {
+                "schema_id": "pm.shared_runtime.capability_readiness_result.v1",
+                "schema_version": "1.0.0",
+                "result_ref": "ready:1",
+                "shared_operation_id": "provision:1",
+                "capability_id": "capability:formatter",
+                "compatibility_requirement": {
+                  "record_ref": "requirement:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "execution_host_id": "host:1",
+                "execution_environment_id": "environment:1",
+                "topology_generation": 2,
+                "subject": {
+                  "kind": "Installation",
+                  "record_ref": "subject:fixture",
+                  "generation": 1
+                },
+                "readiness_basis": "verified_provisioning",
+                "verification": {
+                  "record_ref": "verification:fixture",
+                  "generation": 1,
+                  "sha256": "7b56efdc5b0d8a0ae8845bb936c332bd37ac153daf5570cbd3f13152d3d169f5"
+                },
+                "effect_result": {
+                  "record_ref": "effect:fixture",
+                  "generation": 1,
+                  "sha256": "868726685e120f140366b3128e22abe1a5f5993e0428f82bb9275135f1119328"
+                },
+                "verified_at_utc": "2026-09-25T12:00:30Z",
+                "expires_at_utc": "2026-09-25T13:00:00Z"
+              },
+              "currentness": {
+                "schema_id": "pm.shared_runtime.capability_origin_currentness.v1",
+                "schema_version": "1.0.0",
+                "snapshot_ref": "snapshot:1",
+                "waiter_ref": "waiter:1",
+                "origin_identity": {
+                  "scope_kind": "application",
+                  "operation_id": "origin:1",
+                  "operation_generation": 3,
+                  "server_id": "server:1",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:1",
+                  "execution_environment_id": "environment:1",
+                  "topology_generation": 2
+                },
+                "source": {
+                  "record_ref": "source:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "policy": {
+                  "record_ref": "policy:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "effective_mode": "Auto",
+                "continuation": {
+                  "continuation_ref": "continuation:1",
+                  "generation": 1,
+                  "return_context_ref": "return:1",
+                  "origin_payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                  "expires_at_utc": "2026-09-25T13:00:00Z"
+                },
+                "origin_state": "completed",
+                "waiter_state": "active",
+                "observed_at_utc": "2026-09-25T12:01:00Z"
+              },
+              "settlement": {
+                "schema_id": "pm.shared_runtime.capability_continuation_settlement.v1",
+                "schema_version": "1.0.0",
+                "settlement_ref": "settlement:1",
+                "waiter_ref": "waiter:1",
+                "provisioning_operation_ref": "operation:1",
+                "readiness_result_ref": "ready:1",
+                "currentness_snapshot_ref": "snapshot:1",
+                "outcome": "ready_without_resume",
+                "reason": "origin_inactive",
+                "continuation_result_ref": null,
+                "settled_at_utc": "2026-09-25T12:01:01Z"
+              }
+            }
+          ],
+          "work_identity": {
+            "scope_kind": "application",
+            "operation_id": "provision:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          }
+        },
+        "result": {
+          "schema_id": "pm.shared_runtime.capability_ensure_result.v2",
+          "schema_version": "2.0.0",
+          "result_type": "CapabilityEnsureResult",
+          "command_id": "cmd.capability.ensure",
+          "operation_id": "provision:1",
+          "command_instance_id": "command:ensure",
+          "outcome": "succeeded",
+          "observable_work_id": "work:1",
+          "current_revision_or_epoch": 1,
+          "projection_ref": null,
+          "receipt_refs": [
+            "ready:1"
+          ],
+          "artifact_refs": [],
+          "disabled_reason": null,
+          "error": null,
+          "recovery_actions": [],
+          "replayed": false,
+          "original_operation_id": null,
+          "terminal_owner_result_ref": "ready:1",
+          "command_outcome_ref": "outcome:ensure",
+          "subject_ref": "operation:1",
+          "request": {
+            "record_ref": "request:ensure",
+            "generation": 1,
+            "sha256": "bf174d0c5acb909748502a6e5bd9a0fd6ac3229592443ea2e2d64745ce187636"
+          },
+          "operation_record": {
+            "record_ref": "operation:1",
+            "generation": 1,
+            "sha256": "bdf3950ce6b560809c2ec402b88cc487e756deafa379a97f50c9073712f93675"
+          },
+          "waiter_ref": "waiter:1",
+          "readiness_ref": "ready:1",
+          "settlement_ref": "settlement:1",
+          "work_record": {
+            "record_ref": "work:1",
+            "generation": 1,
+            "sha256": "15b1476e034b86e4905b26c8c609b479b42cce49c8139aa49cedc6c5906b8a39"
+          }
+        },
+        "work": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "observable_work",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "provision:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          },
+          "observable_work_id": "work:1",
+          "owner_domain": "installation",
+          "title": "Capability ensure",
+          "subject_refs": [
+            "operation:1"
+          ],
+          "blocking_scope": "none",
+          "work_state": "completed",
+          "phase": "ready",
+          "progress_kind": "none",
+          "progress_source": "unknown",
+          "last_activity_at": "2026-09-25T12:01:01Z",
+          "heartbeat_at": null,
+          "activity_evidence_ref": "ready:1",
+          "parent_work_id": null,
+          "child_work_ids": [
+            "work:lifecycle"
+          ],
+          "freshness": "current",
+          "projection_generation": 1,
+          "cancel_available": false,
+          "background_available": false,
+          "retry_available": false,
+          "dedupe_key": "dedupe:ensure",
+          "result_receipt_ref": "ready:1",
+          "observed_at": "2026-09-25T12:01:02Z"
+        },
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "provision:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          },
+          "command_id": "cmd.capability.ensure",
+          "payload_sha256": "bf174d0c5acb909748502a6e5bd9a0fd6ac3229592443ea2e2d64745ce187636",
+          "idempotency_key": "idem:ensure",
+          "target_generation": 2,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame:1",
+          "acknowledgement_frame_id": "frame:1",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack:1",
+          "result_receipt_ref": "ready:1",
+          "error_ref": null,
+          "owner_result_ref": "result:ensure",
+          "owner_result_schema_ref": {
+            "path": "Plans/capability_ensure_custody_contracts.schema.json",
+            "json_pointer": "#/$defs/capability_ensure_result_v2",
+            "schema_id": "pm.shared_runtime.capability_ensure_result.v2"
+          },
+          "owner_result_sha256": "a8aaa97d5fad5098a5c1950774b0af84a3f73a87be38c659bbb3cd7ee4d65334",
+          "observed_at": "2026-09-25T12:01:02Z"
+        },
+        "effect": {
+          "schema_id": "pm.shared_runtime.installation_lifecycle_record.v2",
+          "schema_version": "2.0.0",
+          "operation_id": "lifecycle:1",
+          "installation_id": "installation:1",
+          "subject_kind": "tool_package",
+          "subject_id": "package:1",
+          "provider_cli": false,
+          "acquisition_basis": "non_provider_demand",
+          "host_id": "host:1",
+          "environment_id": "environment:1",
+          "requested_action": "install",
+          "phase": "ready",
+          "source_ref": "source:package",
+          "provenance_ref": "provenance:1",
+          "permission_snapshot_id": null,
+          "resource_lease_id": "lease:1",
+          "observable_work_id": "work:lifecycle",
+          "from_installation_ref": null,
+          "to_installation_ref": "subject:fixture",
+          "verification_ref": "verification:fixture",
+          "rollback_ref": null,
+          "failure_fingerprint": null,
+          "started_at_utc": "2026-09-25T12:00:00Z",
+          "updated_at_utc": "2026-09-25T12:00:35Z",
+          "terminal_at_utc": "2026-09-25T12:00:35Z",
+          "redaction_profile": "redaction:refs",
+          "permission_authority_kind": "capability_operation_decision",
+          "capability_admission": {
+            "record_ref": "admission:lifecycle",
+            "generation": 1,
+            "sha256": "db9e6f98c6c2ee1c269ea52a40fd53376c3be38e8030f4e2b625722247e762c6"
+          },
+          "capability_admission_value": {
+            "schema_id": "pm.shared_runtime.capability_lifecycle_admission.v1",
+            "schema_version": "1.0.0",
+            "admission_ref": "admission:lifecycle",
+            "identity": {
+              "scope_kind": "application",
+              "operation_id": "lifecycle:1",
+              "operation_generation": 1,
+              "server_id": "server:1",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "topology_generation": 2,
+              "command_instance_id": "command:ensure"
+            },
+            "ensure_request": {
+              "record_ref": "request:ensure",
+              "generation": 1,
+              "sha256": "bf174d0c5acb909748502a6e5bd9a0fd6ac3229592443ea2e2d64745ce187636"
+            },
+            "ensure_operation_id": "provision:1",
+            "permission_decision_ref": "decision:ensure",
+            "requested_action": "install",
+            "installation_id": "installation:1",
+            "target": {
+              "record_ref": "target:1",
+              "generation": 1,
+              "sha256": "80a3cb083f43db162014b165daa57bd6f0d1b8e8f4cba1dc0fbf8c6f29c281d1"
+            },
+            "source": {
+              "record_ref": "source:package",
+              "generation": 1,
+              "sha256": "5c2c437096ebf4bc411560588fac2a82cd0ec1d22964dab537bb0fdac2061e6f"
+            },
+            "provenance": {
+              "record_ref": "provenance:1",
+              "generation": 1,
+              "sha256": "e7a62b454e507131fe4a9d6edfb31937cfa7899ec51b330b79ea61913a5a5f94"
+            }
+          },
+          "capability_permission_decision": {
+            "record_ref": "decision:ensure",
+            "generation": 1,
+            "sha256": "e1285fc32680aea4aead5aad10e7c238a95636fb836a3a46c4a2b0884f097491"
+          }
+        },
+        "admission": {
+          "schema_id": "pm.shared_runtime.capability_lifecycle_admission.v1",
+          "schema_version": "1.0.0",
+          "admission_ref": "admission:lifecycle",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "lifecycle:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          },
+          "ensure_request": {
+            "record_ref": "request:ensure",
+            "generation": 1,
+            "sha256": "bf174d0c5acb909748502a6e5bd9a0fd6ac3229592443ea2e2d64745ce187636"
+          },
+          "ensure_operation_id": "provision:1",
+          "permission_decision_ref": "decision:ensure",
+          "requested_action": "install",
+          "installation_id": "installation:1",
+          "target": {
+            "record_ref": "target:1",
+            "generation": 1,
+            "sha256": "80a3cb083f43db162014b165daa57bd6f0d1b8e8f4cba1dc0fbf8c6f29c281d1"
+          },
+          "source": {
+            "record_ref": "source:package",
+            "generation": 1,
+            "sha256": "5c2c437096ebf4bc411560588fac2a82cd0ec1d22964dab537bb0fdac2061e6f"
+          },
+          "provenance": {
+            "record_ref": "provenance:1",
+            "generation": 1,
+            "sha256": "e7a62b454e507131fe4a9d6edfb31937cfa7899ec51b330b79ea61913a5a5f94"
+          }
+        },
+        "effect_work": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "observable_work",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "lifecycle:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          },
+          "observable_work_id": "work:lifecycle",
+          "owner_domain": "installation",
+          "title": "Capability ensure",
+          "subject_refs": [
+            "effect:fixture"
+          ],
+          "blocking_scope": "none",
+          "work_state": "completed",
+          "phase": "ready",
+          "progress_kind": "none",
+          "progress_source": "unknown",
+          "last_activity_at": "2026-09-25T12:01:01Z",
+          "heartbeat_at": null,
+          "activity_evidence_ref": "ready:1",
+          "parent_work_id": "work:1",
+          "child_work_ids": [],
+          "freshness": "current",
+          "projection_generation": 1,
+          "cancel_available": false,
+          "background_available": false,
+          "retry_available": false,
+          "dedupe_key": "dedupe:ensure",
+          "result_receipt_ref": "effect:fixture",
+          "observed_at": "2026-09-25T12:01:02Z"
+        }
+      }
+    },
+    {
+      "name": "project_verified_installation",
+      "definition": "capability_ensure_fixture",
+      "value": {
+        "record_kind": "capability_ensure_fixture",
+        "runtime_evidence": false,
+        "request": {
+          "schema_id": "pm.shared_runtime.capability_ensure_request.v2",
+          "schema_version": "2.0.0",
+          "command_id": "cmd.capability.ensure",
+          "command_instance_id": "command:ensure",
+          "idempotency": {
+            "schema_id": "pm.shared_runtime.command_idempotency.v1",
+            "idempotency_key": "idem:ensure",
+            "scope_ref": "scope:ensure",
+            "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "replay_policy": "return_original_result",
+            "conflict_behavior": "reject_same_key_different_binding"
+          },
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": null,
+          "goal_id": null,
+          "plan_id": null,
+          "run_id": null,
+          "thread_id": null,
+          "agent_id": null,
+          "crew_id": null,
+          "source_location_id": null,
+          "deadline_utc": null,
+          "recovery_of_operation_id": null,
+          "capability_id": "capability:formatter",
+          "provisioning_mode": "Auto",
+          "requirement_ref": "demand:1",
+          "origin_operation_id": "origin:1",
+          "demand": {
+            "record_ref": "demand:1",
+            "generation": 1,
+            "sha256": "3c447765047f0664deb162c458f69a2caa1b124ea702268cd21166f33d225ac7"
+          },
+          "scope_kind": "project",
+          "server_id": "server:1",
+          "project_id": "project:1",
+          "project_home_server_id": "server:1",
+          "named_plan_id": null,
+          "execution_host_id": "host:1",
+          "execution_environment_id": "environment:1",
+          "topology_generation": 2
+        },
+        "operation": {
+          "schema_id": "pm.shared_runtime.capability_provisioning_operation.v2",
+          "schema_version": "2.0.0",
+          "operation_ref": "operation:1",
+          "operation_generation": 1,
+          "server_id": "server:1",
+          "topology_generation": 2,
+          "operation": {
+            "schema_id": "pm.shared_runtime.capability_provisioning_operation.v1",
+            "schema_version": "1.0.0",
+            "operation_id": "provision:1",
+            "capability_id": "capability:formatter",
+            "provider_cli": false,
+            "prior_provider_consent_ref": null,
+            "host_id": "host:1",
+            "environment_id": "environment:1",
+            "phase": "ready",
+            "reconciliation_disposition": "terminal_no_change",
+            "policy_ref": "policy:1",
+            "permission_snapshot_ref": null,
+            "resource_admission_ref": "resource:1",
+            "installation_operation_ref": "effect:fixture",
+            "observable_work_id": "work:1",
+            "reason_code": null,
+            "started_at_utc": "2026-09-25T12:00:00Z",
+            "updated_at_utc": "2026-09-25T12:00:40Z",
+            "terminal_at_utc": "2026-09-25T12:00:40Z"
+          },
+          "origins": [
+            {
+              "request": {
+                "record_ref": "request:ensure",
+                "generation": 1,
+                "sha256": "a870e57490150aa01434811ad169bd2a87c7438b851fd151b00fbde67a3d7012"
+              },
+              "demand": {
+                "schema_id": "pm.shared_runtime.capability_demand.v1",
+                "schema_version": "1.0.0",
+                "demand_ref": "demand:1",
+                "origin_identity": {
+                  "scope_kind": "project",
+                  "operation_id": "origin:1",
+                  "operation_generation": 3,
+                  "server_id": "server:1",
+                  "project_id": "project:1",
+                  "project_home_server_id": "server:1",
+                  "named_plan_id": null,
+                  "execution_host_id": "host:1",
+                  "execution_environment_id": "environment:1",
+                  "topology_generation": 2
+                },
+                "source": {
+                  "kind": "project_metadata",
+                  "owner_ref": "owner:project",
+                  "source": {
+                    "record_ref": "source:1",
+                    "generation": 1,
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "capability_id": "capability:formatter",
+                "compatibility_requirement": {
+                  "record_ref": "requirement:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "requested_mode": "Auto",
+                "requested_effect_scope": "project",
+                "plan_lineage_ref": null,
+                "origin_lineage": {
+                  "plan_id": null,
+                  "run_id": null,
+                  "agent_id": null,
+                  "crew_id": null
+                },
+                "continuation": {
+                  "continuation_ref": "continuation:1",
+                  "generation": 1,
+                  "return_context_ref": "return:1",
+                  "origin_payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                  "expires_at_utc": "2026-09-25T13:00:00Z"
+                }
+              },
+              "waiter": {
+                "schema_id": "pm.shared_runtime.capability_waiter_binding.v1",
+                "schema_version": "1.0.0",
+                "waiter_ref": "waiter:1",
+                "shared_operation_id": "provision:1",
+                "demand": {
+                  "record_ref": "demand:1",
+                  "generation": 1,
+                  "sha256": "3c447765047f0664deb162c458f69a2caa1b124ea702268cd21166f33d225ac7"
+                },
+                "admitted_policy": {
+                  "record_ref": "policy:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "effective_mode": "Auto",
+                "original_admission_ref": "admission:1",
+                "original_invocation_ref": "invocation:1",
+                "requested_at_utc": "2026-09-25T12:00:00Z"
+              },
+              "permission": {
+                "schema_id": "pm.permissions.capability_operation_decision.v1",
+                "schema_version": "1.0.0",
+                "decision_ref": "decision:ensure",
+                "identity": {
+                  "scope_kind": "project",
+                  "operation_id": "provision:1",
+                  "operation_generation": 1,
+                  "server_id": "server:1",
+                  "project_id": "project:1",
+                  "project_home_server_id": "server:1",
+                  "named_plan_id": null,
+                  "execution_host_id": "host:1",
+                  "execution_environment_id": "environment:1",
+                  "topology_generation": 2,
+                  "command_instance_id": "command:ensure"
+                },
+                "request": {
+                  "record_ref": "request:ensure",
+                  "generation": 1,
+                  "sha256": "a870e57490150aa01434811ad169bd2a87c7438b851fd151b00fbde67a3d7012"
+                },
+                "actor_ref": "actor:human",
+                "effect": {
+                  "capability_id": "capability:formatter",
+                  "compatibility_requirement": {
+                    "record_ref": "requirement:1",
+                    "generation": 1,
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "effect_scope": "project",
+                  "target": {
+                    "record_ref": "target:1",
+                    "generation": 1,
+                    "sha256": "80a3cb083f43db162014b165daa57bd6f0d1b8e8f4cba1dc0fbf8c6f29c281d1"
+                  },
+                  "lifecycle_request": {
+                    "record_ref": "admission:lifecycle",
+                    "generation": 1,
+                    "sha256": "ded3d7ec30a023b8bf5e9ba7b41a2bfdd748feebd222905565f22d9bd12900af"
+                  }
+                },
+                "policy": {
+                  "record_ref": "policy:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "effective_mode": "Auto",
+                "authority_generation": 1,
+                "approval": null,
+                "attempt_snapshot": null,
+                "audit": {
+                  "record_ref": "audit:1",
+                  "generation": 1,
+                  "sha256": "14026e2f591316efbef19545fadba962c121acd3c97563154755c77d7f285d8b"
+                },
+                "decision": "allow",
+                "captured_at_utc": "2026-09-25T12:00:00Z",
+                "expires_at_utc": "2026-09-25T13:00:00Z"
+              },
+              "readiness": {
+                "schema_id": "pm.shared_runtime.capability_readiness_result.v1",
+                "schema_version": "1.0.0",
+                "result_ref": "ready:1",
+                "shared_operation_id": "provision:1",
+                "capability_id": "capability:formatter",
+                "compatibility_requirement": {
+                  "record_ref": "requirement:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "execution_host_id": "host:1",
+                "execution_environment_id": "environment:1",
+                "topology_generation": 2,
+                "subject": {
+                  "kind": "Installation",
+                  "record_ref": "subject:fixture",
+                  "generation": 1
+                },
+                "readiness_basis": "verified_provisioning",
+                "verification": {
+                  "record_ref": "verification:fixture",
+                  "generation": 1,
+                  "sha256": "7b56efdc5b0d8a0ae8845bb936c332bd37ac153daf5570cbd3f13152d3d169f5"
+                },
+                "effect_result": {
+                  "record_ref": "effect:fixture",
+                  "generation": 1,
+                  "sha256": "bc7b272e7bae26236406e0ea291f0e17617950ecbbdf4c399c0ea67b000c315b"
+                },
+                "verified_at_utc": "2026-09-25T12:00:30Z",
+                "expires_at_utc": "2026-09-25T13:00:00Z"
+              },
+              "currentness": {
+                "schema_id": "pm.shared_runtime.capability_origin_currentness.v1",
+                "schema_version": "1.0.0",
+                "snapshot_ref": "snapshot:1",
+                "waiter_ref": "waiter:1",
+                "origin_identity": {
+                  "scope_kind": "project",
+                  "operation_id": "origin:1",
+                  "operation_generation": 3,
+                  "server_id": "server:1",
+                  "project_id": "project:1",
+                  "project_home_server_id": "server:1",
+                  "named_plan_id": null,
+                  "execution_host_id": "host:1",
+                  "execution_environment_id": "environment:1",
+                  "topology_generation": 2
+                },
+                "source": {
+                  "record_ref": "source:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "policy": {
+                  "record_ref": "policy:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "effective_mode": "Auto",
+                "continuation": {
+                  "continuation_ref": "continuation:1",
+                  "generation": 1,
+                  "return_context_ref": "return:1",
+                  "origin_payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                  "expires_at_utc": "2026-09-25T13:00:00Z"
+                },
+                "origin_state": "completed",
+                "waiter_state": "active",
+                "observed_at_utc": "2026-09-25T12:01:00Z"
+              },
+              "settlement": {
+                "schema_id": "pm.shared_runtime.capability_continuation_settlement.v1",
+                "schema_version": "1.0.0",
+                "settlement_ref": "settlement:1",
+                "waiter_ref": "waiter:1",
+                "provisioning_operation_ref": "operation:1",
+                "readiness_result_ref": "ready:1",
+                "currentness_snapshot_ref": "snapshot:1",
+                "outcome": "ready_without_resume",
+                "reason": "origin_inactive",
+                "continuation_result_ref": null,
+                "settled_at_utc": "2026-09-25T12:01:01Z"
+              }
+            }
+          ],
+          "work_identity": {
+            "scope_kind": "project",
+            "operation_id": "provision:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "project_home_server_id": "server:1",
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          }
+        },
+        "result": {
+          "schema_id": "pm.shared_runtime.capability_ensure_result.v2",
+          "schema_version": "2.0.0",
+          "result_type": "CapabilityEnsureResult",
+          "command_id": "cmd.capability.ensure",
+          "operation_id": "provision:1",
+          "command_instance_id": "command:ensure",
+          "outcome": "succeeded",
+          "observable_work_id": "work:1",
+          "current_revision_or_epoch": 1,
+          "projection_ref": null,
+          "receipt_refs": [
+            "ready:1"
+          ],
+          "artifact_refs": [],
+          "disabled_reason": null,
+          "error": null,
+          "recovery_actions": [],
+          "replayed": false,
+          "original_operation_id": null,
+          "terminal_owner_result_ref": "ready:1",
+          "command_outcome_ref": "outcome:ensure",
+          "subject_ref": "operation:1",
+          "request": {
+            "record_ref": "request:ensure",
+            "generation": 1,
+            "sha256": "a870e57490150aa01434811ad169bd2a87c7438b851fd151b00fbde67a3d7012"
+          },
+          "operation_record": {
+            "record_ref": "operation:1",
+            "generation": 1,
+            "sha256": "34ac651dd6b258ce36bc78848e6eaceb49b4e7e3283c1c64c79e841b142264cf"
+          },
+          "waiter_ref": "waiter:1",
+          "readiness_ref": "ready:1",
+          "settlement_ref": "settlement:1",
+          "work_record": {
+            "record_ref": "work:1",
+            "generation": 1,
+            "sha256": "1fe3c3a49a854b47f67ec6a9410614e3dcc41facbead0130f1b1425bd261fca9"
+          }
+        },
+        "work": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "observable_work",
+          "identity": {
+            "scope_kind": "project",
+            "operation_id": "provision:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "project_home_server_id": "server:1",
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          },
+          "observable_work_id": "work:1",
+          "owner_domain": "installation",
+          "title": "Capability ensure",
+          "subject_refs": [
+            "operation:1"
+          ],
+          "blocking_scope": "none",
+          "work_state": "completed",
+          "phase": "ready",
+          "progress_kind": "none",
+          "progress_source": "unknown",
+          "last_activity_at": "2026-09-25T12:01:01Z",
+          "heartbeat_at": null,
+          "activity_evidence_ref": "ready:1",
+          "parent_work_id": null,
+          "child_work_ids": [
+            "work:lifecycle"
+          ],
+          "freshness": "current",
+          "projection_generation": 1,
+          "cancel_available": false,
+          "background_available": false,
+          "retry_available": false,
+          "dedupe_key": "dedupe:ensure",
+          "result_receipt_ref": "ready:1",
+          "observed_at": "2026-09-25T12:01:02Z"
+        },
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "project",
+            "operation_id": "provision:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "project_home_server_id": "server:1",
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          },
+          "command_id": "cmd.capability.ensure",
+          "payload_sha256": "a870e57490150aa01434811ad169bd2a87c7438b851fd151b00fbde67a3d7012",
+          "idempotency_key": "idem:ensure",
+          "target_generation": 2,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame:1",
+          "acknowledgement_frame_id": "frame:1",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack:1",
+          "result_receipt_ref": "ready:1",
+          "error_ref": null,
+          "owner_result_ref": "result:ensure",
+          "owner_result_schema_ref": {
+            "path": "Plans/capability_ensure_custody_contracts.schema.json",
+            "json_pointer": "#/$defs/capability_ensure_result_v2",
+            "schema_id": "pm.shared_runtime.capability_ensure_result.v2"
+          },
+          "owner_result_sha256": "8df22ea4d14e74e91fbab69b6b102a1384fbff1eca7cd8bed59bdc2de9181984",
+          "observed_at": "2026-09-25T12:01:02Z"
+        },
+        "effect": {
+          "schema_id": "pm.shared_runtime.installation_lifecycle_record.v2",
+          "schema_version": "2.0.0",
+          "operation_id": "lifecycle:1",
+          "installation_id": "installation:1",
+          "subject_kind": "tool_package",
+          "subject_id": "package:1",
+          "provider_cli": false,
+          "acquisition_basis": "non_provider_demand",
+          "host_id": "host:1",
+          "environment_id": "environment:1",
+          "requested_action": "install",
+          "phase": "ready",
+          "source_ref": "source:package",
+          "provenance_ref": "provenance:1",
+          "permission_snapshot_id": null,
+          "resource_lease_id": "lease:1",
+          "observable_work_id": "work:lifecycle",
+          "from_installation_ref": null,
+          "to_installation_ref": "subject:fixture",
+          "verification_ref": "verification:fixture",
+          "rollback_ref": null,
+          "failure_fingerprint": null,
+          "started_at_utc": "2026-09-25T12:00:00Z",
+          "updated_at_utc": "2026-09-25T12:00:35Z",
+          "terminal_at_utc": "2026-09-25T12:00:35Z",
+          "redaction_profile": "redaction:refs",
+          "permission_authority_kind": "capability_operation_decision",
+          "capability_admission": {
+            "record_ref": "admission:lifecycle",
+            "generation": 1,
+            "sha256": "ded3d7ec30a023b8bf5e9ba7b41a2bfdd748feebd222905565f22d9bd12900af"
+          },
+          "capability_admission_value": {
+            "schema_id": "pm.shared_runtime.capability_lifecycle_admission.v1",
+            "schema_version": "1.0.0",
+            "admission_ref": "admission:lifecycle",
+            "identity": {
+              "scope_kind": "project",
+              "operation_id": "lifecycle:1",
+              "operation_generation": 1,
+              "server_id": "server:1",
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "named_plan_id": null,
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "topology_generation": 2,
+              "command_instance_id": "command:ensure"
+            },
+            "ensure_request": {
+              "record_ref": "request:ensure",
+              "generation": 1,
+              "sha256": "a870e57490150aa01434811ad169bd2a87c7438b851fd151b00fbde67a3d7012"
+            },
+            "ensure_operation_id": "provision:1",
+            "permission_decision_ref": "decision:ensure",
+            "requested_action": "install",
+            "installation_id": "installation:1",
+            "target": {
+              "record_ref": "target:1",
+              "generation": 1,
+              "sha256": "80a3cb083f43db162014b165daa57bd6f0d1b8e8f4cba1dc0fbf8c6f29c281d1"
+            },
+            "source": {
+              "record_ref": "source:package",
+              "generation": 1,
+              "sha256": "5c2c437096ebf4bc411560588fac2a82cd0ec1d22964dab537bb0fdac2061e6f"
+            },
+            "provenance": {
+              "record_ref": "provenance:1",
+              "generation": 1,
+              "sha256": "e7a62b454e507131fe4a9d6edfb31937cfa7899ec51b330b79ea61913a5a5f94"
+            }
+          },
+          "capability_permission_decision": {
+            "record_ref": "decision:ensure",
+            "generation": 1,
+            "sha256": "e96b2e2d2581c589d0a74718918d789e14dab84301f3231731fe8da1fd9c1e0c"
+          }
+        },
+        "admission": {
+          "schema_id": "pm.shared_runtime.capability_lifecycle_admission.v1",
+          "schema_version": "1.0.0",
+          "admission_ref": "admission:lifecycle",
+          "identity": {
+            "scope_kind": "project",
+            "operation_id": "lifecycle:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "project_home_server_id": "server:1",
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          },
+          "ensure_request": {
+            "record_ref": "request:ensure",
+            "generation": 1,
+            "sha256": "a870e57490150aa01434811ad169bd2a87c7438b851fd151b00fbde67a3d7012"
+          },
+          "ensure_operation_id": "provision:1",
+          "permission_decision_ref": "decision:ensure",
+          "requested_action": "install",
+          "installation_id": "installation:1",
+          "target": {
+            "record_ref": "target:1",
+            "generation": 1,
+            "sha256": "80a3cb083f43db162014b165daa57bd6f0d1b8e8f4cba1dc0fbf8c6f29c281d1"
+          },
+          "source": {
+            "record_ref": "source:package",
+            "generation": 1,
+            "sha256": "5c2c437096ebf4bc411560588fac2a82cd0ec1d22964dab537bb0fdac2061e6f"
+          },
+          "provenance": {
+            "record_ref": "provenance:1",
+            "generation": 1,
+            "sha256": "e7a62b454e507131fe4a9d6edfb31937cfa7899ec51b330b79ea61913a5a5f94"
+          }
+        },
+        "effect_work": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "observable_work",
+          "identity": {
+            "scope_kind": "project",
+            "operation_id": "lifecycle:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "project_home_server_id": "server:1",
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          },
+          "observable_work_id": "work:lifecycle",
+          "owner_domain": "installation",
+          "title": "Capability ensure",
+          "subject_refs": [
+            "effect:fixture"
+          ],
+          "blocking_scope": "none",
+          "work_state": "completed",
+          "phase": "ready",
+          "progress_kind": "none",
+          "progress_source": "unknown",
+          "last_activity_at": "2026-09-25T12:01:01Z",
+          "heartbeat_at": null,
+          "activity_evidence_ref": "ready:1",
+          "parent_work_id": "work:1",
+          "child_work_ids": [],
+          "freshness": "current",
+          "projection_generation": 1,
+          "cancel_available": false,
+          "background_available": false,
+          "retry_available": false,
+          "dedupe_key": "dedupe:ensure",
+          "result_receipt_ref": "effect:fixture",
+          "observed_at": "2026-09-25T12:01:02Z"
+        }
+      }
+    },
+    {
+      "name": "project_existing_installation_off",
+      "definition": "capability_ensure_fixture",
+      "value": {
+        "record_kind": "capability_ensure_fixture",
+        "runtime_evidence": false,
+        "request": {
+          "schema_id": "pm.shared_runtime.capability_ensure_request.v2",
+          "schema_version": "2.0.0",
+          "command_id": "cmd.capability.ensure",
+          "command_instance_id": "command:ensure",
+          "idempotency": {
+            "schema_id": "pm.shared_runtime.command_idempotency.v1",
+            "idempotency_key": "idem:ensure",
+            "scope_ref": "scope:ensure",
+            "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "replay_policy": "return_original_result",
+            "conflict_behavior": "reject_same_key_different_binding"
+          },
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": null,
+          "goal_id": null,
+          "plan_id": null,
+          "run_id": null,
+          "thread_id": null,
+          "agent_id": null,
+          "crew_id": null,
+          "source_location_id": null,
+          "deadline_utc": null,
+          "recovery_of_operation_id": null,
+          "capability_id": "capability:formatter",
+          "provisioning_mode": "Off",
+          "requirement_ref": "demand:1",
+          "origin_operation_id": "origin:1",
+          "demand": {
+            "record_ref": "demand:1",
+            "generation": 1,
+            "sha256": "e34d9292054d4b2bf3499d6392777b96cf83009a8586c2d3791117420ea09cad"
+          },
+          "scope_kind": "project",
+          "server_id": "server:1",
+          "project_id": "project:1",
+          "project_home_server_id": "server:1",
+          "named_plan_id": null,
+          "execution_host_id": "host:1",
+          "execution_environment_id": "environment:1",
+          "topology_generation": 2
+        },
+        "operation": {
+          "schema_id": "pm.shared_runtime.capability_provisioning_operation.v2",
+          "schema_version": "2.0.0",
+          "operation_ref": "operation:1",
+          "operation_generation": 1,
+          "server_id": "server:1",
+          "topology_generation": 2,
+          "operation": {
+            "schema_id": "pm.shared_runtime.capability_provisioning_operation.v1",
+            "schema_version": "1.0.0",
+            "operation_id": "provision:1",
+            "capability_id": "capability:formatter",
+            "provider_cli": false,
+            "prior_provider_consent_ref": null,
+            "host_id": "host:1",
+            "environment_id": "environment:1",
+            "phase": "ready",
+            "reconciliation_disposition": "terminal_no_change",
+            "policy_ref": "policy:1",
+            "permission_snapshot_ref": null,
+            "resource_admission_ref": "resource:1",
+            "installation_operation_ref": null,
+            "observable_work_id": "work:1",
+            "reason_code": null,
+            "started_at_utc": "2026-09-25T12:00:00Z",
+            "updated_at_utc": "2026-09-25T12:00:40Z",
+            "terminal_at_utc": "2026-09-25T12:00:40Z"
+          },
+          "origins": [
+            {
+              "request": {
+                "record_ref": "request:ensure",
+                "generation": 1,
+                "sha256": "27ef6806b0253d373c0b9f37c6411fedacde9a21f919e84764ff854f2c9fe561"
+              },
+              "demand": {
+                "schema_id": "pm.shared_runtime.capability_demand.v1",
+                "schema_version": "1.0.0",
+                "demand_ref": "demand:1",
+                "origin_identity": {
+                  "scope_kind": "project",
+                  "operation_id": "origin:1",
+                  "operation_generation": 3,
+                  "server_id": "server:1",
+                  "project_id": "project:1",
+                  "project_home_server_id": "server:1",
+                  "named_plan_id": null,
+                  "execution_host_id": "host:1",
+                  "execution_environment_id": "environment:1",
+                  "topology_generation": 2
+                },
+                "source": {
+                  "kind": "project_metadata",
+                  "owner_ref": "owner:project",
+                  "source": {
+                    "record_ref": "source:1",
+                    "generation": 1,
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "capability_id": "capability:formatter",
+                "compatibility_requirement": {
+                  "record_ref": "requirement:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "requested_mode": "Off",
+                "requested_effect_scope": "project",
+                "plan_lineage_ref": null,
+                "origin_lineage": {
+                  "plan_id": null,
+                  "run_id": null,
+                  "agent_id": null,
+                  "crew_id": null
+                },
+                "continuation": {
+                  "continuation_ref": "continuation:1",
+                  "generation": 1,
+                  "return_context_ref": "return:1",
+                  "origin_payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                  "expires_at_utc": "2026-09-25T13:00:00Z"
+                }
+              },
+              "waiter": {
+                "schema_id": "pm.shared_runtime.capability_waiter_binding.v1",
+                "schema_version": "1.0.0",
+                "waiter_ref": "waiter:1",
+                "shared_operation_id": "provision:1",
+                "demand": {
+                  "record_ref": "demand:1",
+                  "generation": 1,
+                  "sha256": "e34d9292054d4b2bf3499d6392777b96cf83009a8586c2d3791117420ea09cad"
+                },
+                "admitted_policy": {
+                  "record_ref": "policy:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "effective_mode": "Off",
+                "original_admission_ref": "admission:1",
+                "original_invocation_ref": "invocation:1",
+                "requested_at_utc": "2026-09-25T12:00:00Z"
+              },
+              "permission": {
+                "schema_id": "pm.permissions.capability_operation_decision.v1",
+                "schema_version": "1.0.0",
+                "decision_ref": "decision:ensure",
+                "identity": {
+                  "scope_kind": "project",
+                  "operation_id": "provision:1",
+                  "operation_generation": 1,
+                  "server_id": "server:1",
+                  "project_id": "project:1",
+                  "project_home_server_id": "server:1",
+                  "named_plan_id": null,
+                  "execution_host_id": "host:1",
+                  "execution_environment_id": "environment:1",
+                  "topology_generation": 2,
+                  "command_instance_id": "command:ensure"
+                },
+                "request": {
+                  "record_ref": "request:ensure",
+                  "generation": 1,
+                  "sha256": "27ef6806b0253d373c0b9f37c6411fedacde9a21f919e84764ff854f2c9fe561"
+                },
+                "actor_ref": "actor:human",
+                "effect": {
+                  "capability_id": "capability:formatter",
+                  "compatibility_requirement": {
+                    "record_ref": "requirement:1",
+                    "generation": 1,
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "effect_scope": "project",
+                  "target": {
+                    "record_ref": "target:1",
+                    "generation": 1,
+                    "sha256": "80a3cb083f43db162014b165daa57bd6f0d1b8e8f4cba1dc0fbf8c6f29c281d1"
+                  },
+                  "lifecycle_request": null
+                },
+                "policy": {
+                  "record_ref": "policy:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "effective_mode": "Off",
+                "authority_generation": 1,
+                "approval": null,
+                "attempt_snapshot": null,
+                "audit": {
+                  "record_ref": "audit:1",
+                  "generation": 1,
+                  "sha256": "14026e2f591316efbef19545fadba962c121acd3c97563154755c77d7f285d8b"
+                },
+                "decision": "allow",
+                "captured_at_utc": "2026-09-25T12:00:00Z",
+                "expires_at_utc": "2026-09-25T13:00:00Z"
+              },
+              "readiness": {
+                "schema_id": "pm.shared_runtime.capability_readiness_result.v1",
+                "schema_version": "1.0.0",
+                "result_ref": "ready:1",
+                "shared_operation_id": "provision:1",
+                "capability_id": "capability:formatter",
+                "compatibility_requirement": {
+                  "record_ref": "requirement:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "execution_host_id": "host:1",
+                "execution_environment_id": "environment:1",
+                "topology_generation": 2,
+                "subject": {
+                  "kind": "Installation",
+                  "record_ref": "subject:fixture",
+                  "generation": 1
+                },
+                "readiness_basis": "existing_verified_capability",
+                "verification": {
+                  "record_ref": "verification:fixture",
+                  "generation": 1,
+                  "sha256": "7b56efdc5b0d8a0ae8845bb936c332bd37ac153daf5570cbd3f13152d3d169f5"
+                },
+                "effect_result": null,
+                "verified_at_utc": "2026-09-25T12:00:30Z",
+                "expires_at_utc": "2026-09-25T13:00:00Z"
+              },
+              "currentness": {
+                "schema_id": "pm.shared_runtime.capability_origin_currentness.v1",
+                "schema_version": "1.0.0",
+                "snapshot_ref": "snapshot:1",
+                "waiter_ref": "waiter:1",
+                "origin_identity": {
+                  "scope_kind": "project",
+                  "operation_id": "origin:1",
+                  "operation_generation": 3,
+                  "server_id": "server:1",
+                  "project_id": "project:1",
+                  "project_home_server_id": "server:1",
+                  "named_plan_id": null,
+                  "execution_host_id": "host:1",
+                  "execution_environment_id": "environment:1",
+                  "topology_generation": 2
+                },
+                "source": {
+                  "record_ref": "source:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "policy": {
+                  "record_ref": "policy:1",
+                  "generation": 1,
+                  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "effective_mode": "Off",
+                "continuation": {
+                  "continuation_ref": "continuation:1",
+                  "generation": 1,
+                  "return_context_ref": "return:1",
+                  "origin_payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                  "expires_at_utc": "2026-09-25T13:00:00Z"
+                },
+                "origin_state": "completed",
+                "waiter_state": "active",
+                "observed_at_utc": "2026-09-25T12:01:00Z"
+              },
+              "settlement": {
+                "schema_id": "pm.shared_runtime.capability_continuation_settlement.v1",
+                "schema_version": "1.0.0",
+                "settlement_ref": "settlement:1",
+                "waiter_ref": "waiter:1",
+                "provisioning_operation_ref": "operation:1",
+                "readiness_result_ref": "ready:1",
+                "currentness_snapshot_ref": "snapshot:1",
+                "outcome": "ready_without_resume",
+                "reason": "origin_inactive",
+                "continuation_result_ref": null,
+                "settled_at_utc": "2026-09-25T12:01:01Z"
+              }
+            }
+          ],
+          "work_identity": {
+            "scope_kind": "project",
+            "operation_id": "provision:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "project_home_server_id": "server:1",
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          }
+        },
+        "result": {
+          "schema_id": "pm.shared_runtime.capability_ensure_result.v2",
+          "schema_version": "2.0.0",
+          "result_type": "CapabilityEnsureResult",
+          "command_id": "cmd.capability.ensure",
+          "operation_id": "provision:1",
+          "command_instance_id": "command:ensure",
+          "outcome": "no_change",
+          "observable_work_id": "work:1",
+          "current_revision_or_epoch": 1,
+          "projection_ref": null,
+          "receipt_refs": [
+            "ready:1"
+          ],
+          "artifact_refs": [],
+          "disabled_reason": null,
+          "error": null,
+          "recovery_actions": [],
+          "replayed": false,
+          "original_operation_id": null,
+          "terminal_owner_result_ref": "ready:1",
+          "command_outcome_ref": "outcome:ensure",
+          "subject_ref": "operation:1",
+          "request": {
+            "record_ref": "request:ensure",
+            "generation": 1,
+            "sha256": "27ef6806b0253d373c0b9f37c6411fedacde9a21f919e84764ff854f2c9fe561"
+          },
+          "operation_record": {
+            "record_ref": "operation:1",
+            "generation": 1,
+            "sha256": "096054d47659bc1eadc4f2f75dbe362f3a73e788607d71e6ccd1ecd45675d083"
+          },
+          "waiter_ref": "waiter:1",
+          "readiness_ref": "ready:1",
+          "settlement_ref": "settlement:1",
+          "work_record": {
+            "record_ref": "work:1",
+            "generation": 1,
+            "sha256": "f308cf5a436141c509c559931ab29a1a1f4eca7b8c52641e3a1c9066e88b5831"
+          }
+        },
+        "work": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "observable_work",
+          "identity": {
+            "scope_kind": "project",
+            "operation_id": "provision:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "project_home_server_id": "server:1",
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          },
+          "observable_work_id": "work:1",
+          "owner_domain": "installation",
+          "title": "Capability ensure",
+          "subject_refs": [
+            "operation:1"
+          ],
+          "blocking_scope": "none",
+          "work_state": "completed",
+          "phase": "ready",
+          "progress_kind": "none",
+          "progress_source": "unknown",
+          "last_activity_at": "2026-09-25T12:01:01Z",
+          "heartbeat_at": null,
+          "activity_evidence_ref": "ready:1",
+          "parent_work_id": null,
+          "child_work_ids": [],
+          "freshness": "current",
+          "projection_generation": 1,
+          "cancel_available": false,
+          "background_available": false,
+          "retry_available": false,
+          "dedupe_key": "dedupe:ensure",
+          "result_receipt_ref": "ready:1",
+          "observed_at": "2026-09-25T12:01:02Z"
+        },
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "project",
+            "operation_id": "provision:1",
+            "operation_generation": 1,
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "project_home_server_id": "server:1",
+            "named_plan_id": null,
+            "execution_host_id": "host:1",
+            "execution_environment_id": "environment:1",
+            "topology_generation": 2,
+            "command_instance_id": "command:ensure"
+          },
+          "command_id": "cmd.capability.ensure",
+          "payload_sha256": "27ef6806b0253d373c0b9f37c6411fedacde9a21f919e84764ff854f2c9fe561",
+          "idempotency_key": "idem:ensure",
+          "target_generation": 2,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame:1",
+          "acknowledgement_frame_id": "frame:1",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack:1",
+          "result_receipt_ref": "ready:1",
+          "error_ref": null,
+          "owner_result_ref": "result:ensure",
+          "owner_result_schema_ref": {
+            "path": "Plans/capability_ensure_custody_contracts.schema.json",
+            "json_pointer": "#/$defs/capability_ensure_result_v2",
+            "schema_id": "pm.shared_runtime.capability_ensure_result.v2"
+          },
+          "owner_result_sha256": "3dcf9fde94479be5108da37f92eab1e54c0e7f3a1edc6d2fb454c7726a3325a2",
+          "observed_at": "2026-09-25T12:01:02Z"
+        },
+        "effect": null,
+        "admission": null,
+        "effect_work": null
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "application_cannot_fake_project",
+      "definition": "capability_ensure_request_v2",
+      "value": {
+        "schema_id": "pm.shared_runtime.capability_ensure_request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.capability.ensure",
+        "command_instance_id": "command:ensure",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idem:ensure",
+          "scope_ref": "scope:ensure",
+          "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "actor_ref": "actor:human",
+        "permission_snapshot_ref": null,
+        "goal_id": null,
+        "plan_id": null,
+        "run_id": null,
+        "thread_id": null,
+        "agent_id": null,
+        "crew_id": null,
+        "source_location_id": null,
+        "deadline_utc": null,
+        "recovery_of_operation_id": null,
+        "capability_id": "capability:formatter",
+        "provisioning_mode": "Off",
+        "requirement_ref": "demand:1",
+        "origin_operation_id": "origin:1",
+        "demand": {
+          "record_ref": "demand:1",
+          "generation": 1,
+          "sha256": "bb7c4dc8a9a1be7d1756fcc43b27678f6c6d762de9d7b62321a8a11cf0e7b5c5"
+        },
+        "scope_kind": "application",
+        "server_id": "server:1",
+        "project_id": "fake:project",
+        "project_home_server_id": null,
+        "named_plan_id": null,
+        "execution_host_id": "host:1",
+        "execution_environment_id": "environment:1",
+        "topology_generation": 2
+      }
+    },
+    {
+      "name": "legacy_authority_cannot_omit_snapshot",
+      "definition": "installation_lifecycle_record_v2",
+      "value": {
+        "schema_id": "pm.shared_runtime.installation_lifecycle_record.v2",
+        "schema_version": "2.0.0",
+        "operation_id": "lifecycle:1",
+        "installation_id": "installation:1",
+        "subject_kind": "tool_package",
+        "subject_id": "package:1",
+        "provider_cli": false,
+        "acquisition_basis": "non_provider_demand",
+        "host_id": "host:1",
+        "environment_id": "environment:1",
+        "requested_action": "install",
+        "phase": "ready",
+        "source_ref": "source:package",
+        "provenance_ref": "provenance:1",
+        "permission_snapshot_id": null,
+        "resource_lease_id": "lease:1",
+        "observable_work_id": "work:lifecycle",
+        "from_installation_ref": null,
+        "to_installation_ref": "subject:fixture",
+        "verification_ref": "verification:fixture",
+        "rollback_ref": null,
+        "failure_fingerprint": null,
+        "started_at_utc": "2026-09-25T12:00:00Z",
+        "updated_at_utc": "2026-09-25T12:00:35Z",
+        "terminal_at_utc": "2026-09-25T12:00:35Z",
+        "redaction_profile": "redaction:refs",
+        "permission_authority_kind": "attempt_snapshot",
+        "capability_admission": null,
+        "capability_admission_value": null,
+        "capability_permission_decision": null
+      }
+    },
+    {
+      "name": "historical_value_is_not_current_write",
+      "definition": "capability_provisioning_operation_current_write",
+      "value": {
+        "schema_id": "pm.shared_runtime.capability_provisioning_operation.v1",
+        "schema_version": "1.0.0",
+        "operation_id": "provision:1",
+        "capability_id": "capability:formatter",
+        "provider_cli": false,
+        "prior_provider_consent_ref": null,
+        "host_id": "host:1",
+        "environment_id": "environment:1",
+        "phase": "ready",
+        "reconciliation_disposition": "terminal_no_change",
+        "policy_ref": "policy:1",
+        "permission_snapshot_ref": null,
+        "resource_admission_ref": "resource:1",
+        "installation_operation_ref": null,
+        "observable_work_id": "work:1",
+        "reason_code": null,
+        "started_at_utc": "2026-09-25T12:00:00Z",
+        "updated_at_utc": "2026-09-25T12:00:40Z",
+        "terminal_at_utc": "2026-09-25T12:00:40Z"
+      }
+    }
+  ]
+}

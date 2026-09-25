@@ -13646,8 +13646,8 @@
       "ui_location": "Runtime setup > Capabilities",
       "ui_command_id": "cmd.capability.ensure",
       "handler_location": "handlers::capability::ensure",
-      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/capability_ensure_request",
-      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/capability_ensure_result",
+      "request_schema_ref": "Plans/capability_ensure_custody_contracts.schema.json#/$defs/capability_ensure_request_v2",
+      "result_schema_ref": "Plans/capability_ensure_custody_contracts.schema.json#/$defs/capability_ensure_result_v2",
       "expected_event_types": [],
       "acceptance_checks": [
         "Dispatching cmd.capability.ensure reaches only handlers::capability::ensure with CapabilityEnsureRequest and returns CapabilityEnsureResult.",

@@ -400,6 +400,33 @@ def expected_registry(registry: dict[str, Any]) -> dict[str, Any]:
     registry = copy.deepcopy(registry)
     registry_schema = read_json(REGISTRY_SCHEMA_PATH)
     replacements = {spec.family_id: family_row(spec) for spec in FAMILY_SPECS}
+    # These two same-family successors have a separately reviewed owner bundle.
+    # Never regenerate an admitted v2 row from the historical v1 FamilySpec.
+    capability_ids = {"installation_lifecycle_record", "capability_provisioning_operation"}
+    predecessor_identity_fields = ("schema_version", "key_shape", "value_schema_id", "value_schema_ref")
+    successor_rows = [row for row in registry["families"]
+                      if row["family_id"] in capability_ids
+                      and any(row.get(field) != replacements[row["family_id"]][field]
+                              for field in predecessor_identity_fields)]
+    if successor_rows:
+        from pm_capability_custody_storage import registry_candidate
+
+        # Use the exact existing predecessor materialization as the transformation
+        # input. The helper's disposition is irrelevant here: this tool owns only
+        # the two family rows and must not rewrite the live disposition registry.
+        candidate = registry_candidate({
+            "families": [replacements[name] for name in sorted(capability_ids)],
+            "contract_family_dispositions": [{
+                "disposition_id": "scd.capability.continuation_custody.v1",
+                "physical_family_status": "physical_family_registration_pending",
+                "source_refs": [],
+            }],
+        })
+        reviewed = {row["family_id"]: row for row in candidate["families"]}
+        for row in successor_rows:
+            if row != reviewed[row["family_id"]]:
+                raise ValueError("capability successor requires readjudication: " + row["family_id"])
+            replacements[row["family_id"]] = reviewed[row["family_id"]]
     original_ids = [row["family_id"] for row in registry["families"]]
     base_rows = [
         hardened_migration_receipt_row(row)

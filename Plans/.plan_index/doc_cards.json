@@ -3780,7 +3780,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "bec29ffa15775299efdafaebff45b0014801abc9ed3e7ebcb60fe186321b0944",
+      "sha256": "dfb05ec06d6151528e59fcf0e67852079ca40783ac546c357a45893e9374fa96",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80
@@ -12731,7 +12731,7 @@
         "future notification credential custody",
         "future permission settings"
       ],
-      "line_count": 9733,
+      "line_count": 9738,
       "path": "Plans/Permissions_System.md",
       "plan_unit_count": 143,
       "plan_unit_ids": [
@@ -12916,7 +12916,7 @@
         "visualizer_sandbox_escape",
         "wholesale_browser_state_or_auth_export"
       ],
-      "sha256": "704772231957d514d5fa0d5f747aa41dbba3406d21a267629834b40bfe5b76d6",
+      "sha256": "48815a17511c29d076f3213a11db4ecae2a6b6832bb1ba88afccc81c9b1ef42d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 143
@@ -12942,6 +12942,8 @@
         "Inline visualizer sandbox and library-denial fixtures",
         "Live probe authority and redaction fixtures",
         "Notification secret custody and live-send permission fixtures",
+        "Plans/capability_ensure_custody_contract_fixtures.json",
+        "Plans/capability_ensure_custody_contracts.schema.json",
         "Plans/doctor_query_controller_contract_fixtures.json",
         "Plans/doctor_query_controller_contracts.schema.json",
         "Plans/egolite_retained_requirement_contract_fixtures.json",
@@ -12982,7 +12984,8 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "tests/test_pm_capability_ensure_custody.py"
       ]
     },
     {
@@ -16744,7 +16747,7 @@
         "False": 28,
         "True": 24
       },
-      "heading_count": 120,
+      "heading_count": 121,
       "implementation_surfaces": [
         "Concepts/pm7-tools/full_thread_performance_source.py",
         "Concepts/pm7-tools/verify/full_thread_performance.mjs",
@@ -16799,7 +16802,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 3170,
+      "line_count": 3182,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 52,
       "plan_unit_ids": [
@@ -16913,7 +16916,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "10b6707f928c5744c0d5918da1063fe98ddc11977edbae14c0afb5faf0f80c61",
+      "sha256": "19a55547c30930ffe6fbcd970f22fc1f0694a0d4822e0489a5a5e0aacc7a9a83",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -16947,6 +16950,8 @@
         "Plans/assistant_plan_cancel_bound_entry.schema.json",
         "Plans/assistant_plan_cancel_contracts/bound-method-adoptions.json",
         "Plans/assistant_plan_cancel_contracts/bound-semantic-obligations.json",
+        "Plans/capability_ensure_custody_contract_fixtures.json",
+        "Plans/capability_ensure_custody_contracts.schema.json",
         "Plans/context_compaction_completion_contract_fixtures.json",
         "Plans/egolite_retained_requirement_contract_fixtures.json",
         "Plans/egolite_retained_requirement_contracts.schema.json",
@@ -17094,6 +17099,7 @@
         "stale-generation",
         "storage schema tests",
         "tests/test_pm_auth_handoff_contracts.py",
+        "tests/test_pm_capability_ensure_custody.py",
         "tests/test_pm_full_thread_contracts.py",
         "tests/test_pm_installation_update_preferences.py",
         "tests/test_pm_runtime_identity_scope.py",
@@ -17462,7 +17468,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 26898,
+      "line_count": 26906,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 313,
       "plan_unit_ids": [
@@ -17880,7 +17886,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "b19ade6f6a1fec0c028433688ec5930a6c8e522355f39dd9d179dcf8760bf5bd",
+      "sha256": "f91e21867f151dee9381285aa30c8f975bb8857128d1f02ec43555f30ae75e4e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 310,
@@ -18988,7 +18994,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "feff9abc059c361083dac5f14342dc3d5e2d9c3f331b66b4743132e4342fba3c",
+      "sha256": "08c0f5b537d0974acaf0261ad8b537168055a51e06b25cd4ce033258b752227b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163,
@@ -20054,7 +20060,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T06:13:30Z",
+  "generated_at_utc": "2026-09-25T06:34:03Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

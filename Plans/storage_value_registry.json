@@ -557,7 +557,7 @@
   "redaction_transform_registry_ref": "Plans/redaction_transform_registry.json",
   "contract_family_dispositions": [
     {
-      "disposition_id": "scd.jujutsu.change_operands_transport.v2",
+      "disposition_id": "scd.jujutsu.change_operands_transport.v1",
       "system_id": "jujutsu",
       "owner_doc": "Plans/Jujutsu_Integration.md",
       "schema_ref": "Plans/jujutsu_change_operand_contracts.schema.json",
@@ -575,7 +575,9 @@
         "hold_rule": "Original command/result/Source Control receipt custody and stronger holds remain with their existing owners; this validation composition introduces no archive.",
         "expiry_rule": "Discard transient views after invocation or currentness invalidation; preserve original retained owner evidence independently."
       },
-      "redaction_transform_ids": ["rt.no_secret_refs.v1"],
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1"
+      ],
       "migration_rule": "Existing five current command consumers require v2 operands. Historical v1 authority/result records remain exact readers and cannot be silently promoted into new effect requests.",
       "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
       "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
@@ -926,29 +928,142 @@
         "pm.shared_runtime.capability_continuation_settlement.v1"
       ],
       "persistence_disposition": "durable",
-      "physical_family_status": "physical_family_registration_pending",
+      "physical_family_status": "materialized_existing_family",
       "existing_family_refs": [
         "Plans/storage_value_registry.json#/families/capability_provisioning_operation"
       ],
       "retention_disposition": {
-        "mode": "physical_registration_pending",
-        "refs": [],
-        "hold_rule": "Existing provisioning-operation retention, backup, audit, evidence and recovery holds remain authoritative. Original demand/waiter/source/readiness/currentness/settlement custody requires exact same-family versioned writer admission before retention; this disposition creates no physical write authority.",
-        "expiry_rule": "No independent expiry or peer store. The exact successor physical value and writer/reader/migration contract must preserve applicable existing family holds and historical outcome identity before any production persistence."
+        "mode": "existing_catalog_policy",
+        "refs": [
+          "RP-RUNTIME-365D"
+        ],
+        "hold_rule": "Preserve existing provisioning-operation retention and every stronger audit, original source/result, continuation, replay, recovery or legal hold; originals are not synthesized.",
+        "expiry_rule": "No independent expiry or peer store. The existing policy and stronger holds govern embedded demand/waiter/readiness/currentness/settlement and decision evidence."
       },
       "redaction_transform_ids": [
         "rt.no_secret_refs.v1",
         "rt.auth_browser_session_exclusion.v1"
       ],
-      "migration_rule": "The existing closed capability_provisioning_operation.v1 physical value remains unchanged and does not admit these five companion values. Specify a same-owner, same-family versioned writer/historical reader integration before persistence; never fabricate old original demand or settlement on migration.",
+      "migration_rule": "The v2 same-family writer admits the five original CP004 values. Unchanged v1 key/value is a historical reader only; never fabricate old demand, permission or settlement. StorageMigrationCoordinator owns version admission and original-lifetime/hold preservation.",
       "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
       "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
       "runtime_evidence": false,
-      "rationale": "Additive original readiness/continuation custody obligations for the existing provisioning operation family, not a peer key, registry, queue or admitted physical value. Native issuance, effect fences and crash/readback proof remain separate.",
+      "rationale": "Exact same-owner existing-family v2 value composition; not native writer, migration, crash/readback or continuation proof. No new physical family or retention policy.",
       "source_refs": [
         "Plans/Shared_Integration_Runtime.md#SIR-003",
         "Plans/capability_provisioning_continuation_contracts.schema.json",
-        "Plans/storage_value_registry.json"
+        "Plans/storage_value_registry.json",
+        "Plans/capability_ensure_custody_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.capability.lifecycle_custody.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/capability_ensure_custody_contracts.schema.json",
+      "record_kinds": [
+        "pm.shared_runtime.installation_lifecycle_record.v2",
+        "pm.shared_runtime.capability_lifecycle_admission.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "materialized_existing_family",
+      "existing_family_refs": [
+        "Plans/storage_value_registry.json#/families/installation_lifecycle_record"
+      ],
+      "retention_disposition": {
+        "mode": "existing_catalog_policy",
+        "refs": [
+          "RP-RUNTIME-365D"
+        ],
+        "hold_rule": "Preserve existing lifecycle retention and every stronger audit, original source/result, continuation, replay, recovery or legal hold; originals are not synthesized.",
+        "expiry_rule": "Embedded values share the existing installation_lifecycle_record retention and stronger source/result, audit, replay, recovery and legal holds; no independent expiry or peer store."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Same-family strict v2 current writer; unchanged v1 key/value remains historical lookup-only. StorageMigrationCoordinator owns version admission; no backfilled original request, permission or admission authority, effect replay or lazy rewrite.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Exact owner schema is bundled into the existing installation_lifecycle_record family; embedded decision/admission has no separate writer. Static contract registration is not native persistence, original-evidence availability, migration or crash-recovery proof.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-003",
+        "Plans/Permissions_System.md#PS-133",
+        "Plans/storage-plan.md",
+        "Plans/capability_ensure_custody_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.capability.operation_custody.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/capability_ensure_custody_contracts.schema.json",
+      "record_kinds": [
+        "pm.shared_runtime.capability_provisioning_operation.v2",
+        "pm.permissions.capability_operation_decision.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "materialized_existing_family",
+      "existing_family_refs": [
+        "Plans/storage_value_registry.json#/families/capability_provisioning_operation"
+      ],
+      "retention_disposition": {
+        "mode": "existing_catalog_policy",
+        "refs": [
+          "RP-RUNTIME-365D"
+        ],
+        "hold_rule": "Preserve existing provisioning-operation retention and every stronger audit, original source/result, continuation, replay, recovery or legal hold; originals are not synthesized.",
+        "expiry_rule": "Embedded values share the existing capability_provisioning_operation retention and stronger source/result, audit, replay, recovery and legal holds; no independent expiry or peer store."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Same-family strict v2 current writer; unchanged v1 key/value remains historical lookup-only. StorageMigrationCoordinator owns version admission; no backfilled original request, permission or admission authority, effect replay or lazy rewrite.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Exact owner schema is bundled into the existing capability_provisioning_operation family; embedded decision/admission has no separate writer. Static contract registration is not native persistence, original-evidence availability, migration or crash-recovery proof.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-003",
+        "Plans/Permissions_System.md#PS-133",
+        "Plans/storage-plan.md",
+        "Plans/capability_ensure_custody_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.capability.ensure_transport.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/capability_ensure_custody_contracts.schema.json",
+      "record_kinds": [
+        "pm.shared_runtime.capability_ensure_request.v2",
+        "pm.shared_runtime.capability_ensure_result.v2"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Original command/work and owner operation retain their existing independent custody and replay holds.",
+        "expiry_rule": "Discard transport after dispatch or response; immutable original result lineage remains in its existing command outcome owner, never reconstructed from current readiness."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Existing cmd.capability.ensure uses the strict v2 request/result; unchanged v1 definitions are historical readers only. No new command, permission grant, writer or handler availability.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Public request/result transport is not a second durable operation store or proof of native dispatch.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-003",
+        "Plans/Permissions_System.md#PS-133",
+        "Plans/storage-plan.md",
+        "Plans/capability_ensure_custody_contracts.schema.json"
       ]
     },
     {
@@ -20678,10 +20793,12 @@
       "storage_kind": "redb",
       "status": "materialized",
       "tier": "later_gui_or_feature_projection",
-      "key_shape": "installation_lifecycle_record.v1:{host_id}:{environment_id}:{operation_id}",
-      "compatibility_key_shapes": [],
-      "value_schema_id": "pm.shared_runtime.installation_lifecycle_record.v1",
-      "value_schema_ref": "Plans/shared_runtime_contracts.schema.json#/$defs/installation_lifecycle_record",
+      "key_shape": "installation_lifecycle_record.v2:{host_id}:{environment_id}:{operation_id}",
+      "compatibility_key_shapes": [
+        "installation_lifecycle_record.v1:{host_id}:{environment_id}:{operation_id}"
+      ],
+      "value_schema_id": "pm.shared_runtime.installation_lifecycle_record.v2",
+      "value_schema_ref": "Plans/capability_ensure_custody_contracts.schema.json#/$defs/installation_lifecycle_record_current_write",
       "owner_doc": "Plans/Shared_Integration_Runtime.md#4-installation-capability-and-readiness-lifecycle",
       "producer": [
         "InstallationLifecycleManager"
@@ -20692,7 +20809,7 @@
         "Settings",
         "restart recovery"
       ],
-      "schema_version": "1.0.0",
+      "schema_version": "2.0.0",
       "encoding": "messagepack_canonical",
       "required_fields": [
         "schema_id",
@@ -20720,29 +20837,44 @@
         "started_at_utc",
         "updated_at_utc",
         "terminal_at_utc",
-        "redaction_profile"
+        "redaction_profile",
+        "permission_authority_kind",
+        "capability_admission",
+        "capability_permission_decision",
+        "capability_admission_value"
       ],
       "optional_fields": [],
       "nullable_fields": [
+        "capability_admission",
+        "capability_admission_value",
+        "capability_permission_decision",
         "failure_fingerprint",
         "from_installation_ref",
+        "permission_snapshot_id",
         "resource_lease_id",
         "rollback_ref",
         "terminal_at_utc",
         "to_installation_ref",
         "verification_ref"
       ],
-      "replay_behavior": "Restore exact canonical bytes from a verified mandatory backup; absence or corruption stays a disclosed recovery failure.",
-      "migration": "StorageMigrationCoordinator creates or copy-forwards this exact-key family transactionally, validates the bundled owner schema and backup/rebuild basis, records verification, and writes the store version last. No lazy rewrite-on-read or SQLite path is permitted.",
+      "replay_behavior": "Restore exact v2 current or v1 historical bytes only under the matching reader/key and verified mandatory backup. Original referenced evidence retains existing stronger operation/audit/recovery holds. Missing originals or unresolved legacy effects remain disclosed; historical permission/readiness cannot authorize current effects or continuation.",
+      "migration": "StorageMigrationCoordinator admits the v2 writer only after preflight, maintenance fencing, verified backup/readback, journaled validation and version-last completion. Exact v1 keys/values remain lookup-only historical readers under their unchanged owner schemas; never backfill demand, request, permission, lifecycle admission, readiness or settlement to copy them forward. Active or indeterminate v1 effects remain held for actual owner reconciliation. No lazy rewrite, dual write, fabricated historical authority, effect replay or SQLite path.",
       "migration_disposition": {
-        "mode": "current_schema",
+        "mode": "store_coordinator",
         "canonical_write_key_only": true,
-        "compatibility_keys_read_only": false,
-        "ambiguity_policy": "not_applicable",
+        "compatibility_keys_read_only": true,
+        "ambiguity_policy": "fail_closed",
         "source_refs": [
           "Plans/Shared_Integration_Runtime.md#4-installation-capability-and-readiness-lifecycle",
           "Plans/storage-plan.md#shared-integration-runtime-persistence-and-migration-addendum-2026-08-13",
-          "Plans/shared_runtime_contracts.schema.json#/$defs/installation_lifecycle_record"
+          "Plans/shared_runtime_contracts.schema.json#/$defs/installation_lifecycle_record",
+          "Plans/capability_ensure_custody_contracts.schema.json#/$defs/installation_lifecycle_record_current_write"
+        ],
+        "alias_dispositions": [
+          {
+            "key_shape": "installation_lifecycle_record.v1:{host_id}:{environment_id}:{operation_id}",
+            "disposition": "lookup_only"
+          }
         ]
       },
       "restore_disposition": {
@@ -20772,10 +20904,316 @@
       "retention_compaction": "Retain under the named policy and stronger holds. Compaction preserves identity, generation/epoch, terminal truth, source/currentness refs, and recovery evidence; canonical records are never reconstructed from a UI projection.",
       "retention_policy_ref": "RP-RUNTIME-365D",
       "redaction_no_secret_rule": "Store canonical IDs, hashes, decisions, and non-secret refs only. Reject raw credentials, tokens, auth values, provider-visible bytes, local absolute paths, and protected AuthBrowserSession content.",
-      "legacy_canonical_crosswalk_status": "First exact materialization of the accepted owner schema. Any grouped inventory mention remains source lineage only and cannot substitute for this family.",
+      "legacy_canonical_crosswalk_status": "Same existing family: strict v2 current writer and unchanged v1 historical reader. No fabricated migration lineage or additional family.",
       "value_schema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "$id": "https://puppetmaster.local/schemas/storage_value/installation_lifecycle_record/1.0.0/installation_lifecycle_record.schema.json",
+        "$defs": {
+          "capability_ensure_custody_contracts__capability_lifecycle_admission": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "admission_ref",
+              "identity",
+              "ensure_request",
+              "ensure_operation_id",
+              "permission_decision_ref",
+              "requested_action",
+              "installation_id",
+              "target",
+              "source",
+              "provenance"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.shared_runtime.capability_lifecycle_admission.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "admission_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "identity": {
+                "$ref": "#/$defs/full_thread_runtime_contracts__IdentityEnvelope"
+              },
+              "ensure_request": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "ensure_operation_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "permission_decision_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "requested_action": {
+                "enum": [
+                  "install",
+                  "update",
+                  "repair",
+                  "verify",
+                  "rollback"
+                ]
+              },
+              "installation_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "target": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "source": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "provenance": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              }
+            }
+          },
+          "capability_provisioning_continuation_contracts__capability_bound_reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "record_ref",
+              "sha256",
+              "generation"
+            ],
+            "properties": {
+              "record_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "sha256": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__sha256"
+              },
+              "generation": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "capability_provisioning_continuation_contracts__non_secret_ref": {
+            "$ref": "#/$defs/shared_runtime_contracts__non_secret_ref"
+          },
+          "capability_provisioning_continuation_contracts__sha256": {
+            "$ref": "#/$defs/shared_runtime_contracts__sha256"
+          },
+          "full_thread_runtime_contracts__Id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "full_thread_runtime_contracts__IdentityEnvelope": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Explicit application-or-Project operation scope with exact controlling Server, execution Host, Environment, and topology bindings. named_plan_id is only a NamedPlan identity and is nullable when no NamedPlan participates.",
+            "required": [
+              "scope_kind",
+              "operation_id",
+              "operation_generation",
+              "server_id",
+              "project_id",
+              "project_home_server_id",
+              "named_plan_id",
+              "execution_host_id",
+              "execution_environment_id",
+              "topology_generation"
+            ],
+            "properties": {
+              "scope_kind": {
+                "enum": [
+                  "application",
+                  "project"
+                ]
+              },
+              "operation_id": {
+                "$ref": "#/$defs/full_thread_runtime_contracts__Id"
+              },
+              "operation_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "command_instance_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "server_id": {
+                "$ref": "#/$defs/full_thread_runtime_contracts__Id"
+              },
+              "project_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "project_home_server_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "named_plan_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "thread_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "goal_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "execution_host_id": {
+                "$ref": "#/$defs/full_thread_runtime_contracts__Id"
+              },
+              "execution_environment_id": {
+                "$ref": "#/$defs/full_thread_runtime_contracts__Id"
+              },
+              "source_location_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "topology_generation": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    },
+                    "project_home_server_id": {
+                      "type": "null"
+                    },
+                    "named_plan_id": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "project_home_server_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "shared_runtime_contracts__non_empty_string": {
+            "type": "string",
+            "minLength": 1
+          },
+          "shared_runtime_contracts__non_secret_ref": {
+            "description": "Stable non-secret reference. Raw credentials, tokens, auth values, credential paths, file contents, and provider-visible bytes are forbidden.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+          },
+          "shared_runtime_contracts__nullable_non_empty_string": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "shared_runtime_contracts__nullable_non_secret_ref": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/shared_runtime_contracts__non_secret_ref"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "shared_runtime_contracts__nullable_timestamp": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/shared_runtime_contracts__timestamp"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "shared_runtime_contracts__sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "shared_runtime_contracts__timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
         "title": "InstallationLifecycleRecord",
         "type": "object",
         "additionalProperties": false,
@@ -20805,26 +21243,30 @@
           "started_at_utc",
           "updated_at_utc",
           "terminal_at_utc",
-          "redaction_profile"
+          "redaction_profile",
+          "permission_authority_kind",
+          "capability_admission",
+          "capability_permission_decision",
+          "capability_admission_value"
         ],
         "properties": {
           "schema_id": {
-            "const": "pm.shared_runtime.installation_lifecycle_record.v1"
+            "const": "pm.shared_runtime.installation_lifecycle_record.v2"
           },
           "schema_version": {
-            "const": "1.0.0"
+            "const": "2.0.0"
           },
           "operation_id": {
-            "$ref": "#/$defs/non_empty_string"
+            "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
           },
           "installation_id": {
-            "$ref": "#/$defs/non_empty_string"
+            "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
           },
           "subject_kind": {
-            "$ref": "#/$defs/non_empty_string"
+            "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
           },
           "subject_id": {
-            "$ref": "#/$defs/non_empty_string"
+            "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
           },
           "provider_cli": {
             "type": "boolean"
@@ -20837,10 +21279,10 @@
             ]
           },
           "host_id": {
-            "$ref": "#/$defs/non_empty_string"
+            "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
           },
           "environment_id": {
-            "$ref": "#/$defs/non_empty_string"
+            "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
           },
           "requested_action": {
             "enum": [
@@ -20869,46 +21311,89 @@
             ]
           },
           "source_ref": {
-            "$ref": "#/$defs/non_secret_ref"
+            "$ref": "#/$defs/shared_runtime_contracts__non_secret_ref"
           },
           "provenance_ref": {
-            "$ref": "#/$defs/non_secret_ref"
+            "$ref": "#/$defs/shared_runtime_contracts__non_secret_ref"
           },
           "permission_snapshot_id": {
-            "$ref": "#/$defs/non_empty_string"
+            "oneOf": [
+              {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "resource_lease_id": {
-            "$ref": "#/$defs/nullable_non_empty_string"
+            "$ref": "#/$defs/shared_runtime_contracts__nullable_non_empty_string"
           },
           "observable_work_id": {
-            "$ref": "#/$defs/non_empty_string"
+            "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
           },
           "from_installation_ref": {
-            "$ref": "#/$defs/nullable_non_secret_ref"
+            "$ref": "#/$defs/shared_runtime_contracts__nullable_non_secret_ref"
           },
           "to_installation_ref": {
-            "$ref": "#/$defs/nullable_non_secret_ref"
+            "$ref": "#/$defs/shared_runtime_contracts__nullable_non_secret_ref"
           },
           "verification_ref": {
-            "$ref": "#/$defs/nullable_non_secret_ref"
+            "$ref": "#/$defs/shared_runtime_contracts__nullable_non_secret_ref"
           },
           "rollback_ref": {
-            "$ref": "#/$defs/nullable_non_secret_ref"
+            "$ref": "#/$defs/shared_runtime_contracts__nullable_non_secret_ref"
           },
           "failure_fingerprint": {
-            "$ref": "#/$defs/nullable_non_empty_string"
+            "$ref": "#/$defs/shared_runtime_contracts__nullable_non_empty_string"
           },
           "started_at_utc": {
-            "$ref": "#/$defs/timestamp"
+            "$ref": "#/$defs/shared_runtime_contracts__timestamp"
           },
           "updated_at_utc": {
-            "$ref": "#/$defs/timestamp"
+            "$ref": "#/$defs/shared_runtime_contracts__timestamp"
           },
           "terminal_at_utc": {
-            "$ref": "#/$defs/nullable_timestamp"
+            "$ref": "#/$defs/shared_runtime_contracts__nullable_timestamp"
           },
           "redaction_profile": {
-            "$ref": "#/$defs/non_empty_string"
+            "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
+          },
+          "permission_authority_kind": {
+            "enum": [
+              "attempt_snapshot",
+              "capability_operation_decision"
+            ]
+          },
+          "capability_admission": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "capability_permission_decision": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "capability_admission_value": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/capability_ensure_custody_contracts__capability_lifecycle_admission"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "allOf": [
@@ -20981,55 +21466,49 @@
                 }
               }
             }
+          },
+          {
+            "if": {
+              "properties": {
+                "permission_authority_kind": {
+                  "const": "attempt_snapshot"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "permission_snapshot_id": {
+                  "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+                },
+                "capability_admission": {
+                  "type": "null"
+                },
+                "capability_permission_decision": {
+                  "type": "null"
+                },
+                "capability_admission_value": {
+                  "type": "null"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "provider_cli": {
+                  "const": false
+                },
+                "capability_admission": {
+                  "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+                },
+                "capability_permission_decision": {
+                  "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+                },
+                "capability_admission_value": {
+                  "$ref": "#/$defs/capability_ensure_custody_contracts__capability_lifecycle_admission"
+                }
+              }
+            }
           }
-        ],
-        "$defs": {
-          "non_empty_string": {
-            "type": "string",
-            "minLength": 1
-          },
-          "non_secret_ref": {
-            "description": "Stable non-secret reference. Raw credentials, tokens, auth values, credential paths, file contents, and provider-visible bytes are forbidden.",
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 512,
-            "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
-          },
-          "nullable_non_empty_string": {
-            "oneOf": [
-              {
-                "$ref": "#/$defs/non_empty_string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "nullable_non_secret_ref": {
-            "oneOf": [
-              {
-                "$ref": "#/$defs/non_secret_ref"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "nullable_timestamp": {
-            "oneOf": [
-              {
-                "$ref": "#/$defs/timestamp"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
+        ]
       }
     },
     {
@@ -23629,10 +24108,12 @@
       "storage_kind": "redb",
       "status": "materialized",
       "tier": "later_gui_or_feature_projection",
-      "key_shape": "capability_provisioning_operation.v1:{host_id}:{environment_id}:{operation_id}",
-      "compatibility_key_shapes": [],
-      "value_schema_id": "pm.shared_runtime.capability_provisioning_operation.v1",
-      "value_schema_ref": "Plans/shared_runtime_contracts.schema.json#/$defs/capability_provisioning_operation",
+      "key_shape": "capability_provisioning_operation.v2:{host_id}:{environment_id}:{operation_id}",
+      "compatibility_key_shapes": [
+        "capability_provisioning_operation.v1:{host_id}:{environment_id}:{operation_id}"
+      ],
+      "value_schema_id": "pm.shared_runtime.capability_provisioning_operation.v2",
+      "value_schema_ref": "Plans/capability_ensure_custody_contracts.schema.json#/$defs/capability_provisioning_operation_current_write",
       "owner_doc": "Plans/Shared_Integration_Runtime.md#46-closed-inventory-and-provisioning-vocabularies",
       "producer": [
         "CapabilityProvisioner"
@@ -23643,49 +24124,39 @@
         "Settings",
         "ObservableWork"
       ],
-      "schema_version": "1.0.0",
+      "schema_version": "2.0.0",
       "encoding": "messagepack_canonical",
       "required_fields": [
         "schema_id",
         "schema_version",
-        "operation_id",
-        "capability_id",
-        "provider_cli",
-        "prior_provider_consent_ref",
-        "host_id",
-        "environment_id",
-        "phase",
-        "reconciliation_disposition",
-        "policy_ref",
-        "permission_snapshot_ref",
-        "resource_admission_ref",
-        "installation_operation_ref",
-        "observable_work_id",
-        "reason_code",
-        "started_at_utc",
-        "updated_at_utc",
-        "terminal_at_utc"
+        "operation_ref",
+        "operation_generation",
+        "server_id",
+        "topology_generation",
+        "operation",
+        "origins",
+        "work_identity"
       ],
       "optional_fields": [],
-      "nullable_fields": [
-        "installation_operation_ref",
-        "permission_snapshot_ref",
-        "prior_provider_consent_ref",
-        "reason_code",
-        "resource_admission_ref",
-        "terminal_at_utc"
-      ],
-      "replay_behavior": "Restore exact canonical bytes from a verified mandatory backup; absence or corruption stays a disclosed recovery failure.",
-      "migration": "StorageMigrationCoordinator creates or copy-forwards this exact-key family transactionally, validates the bundled owner schema and backup/rebuild basis, records verification, and writes the store version last. No lazy rewrite-on-read or SQLite path is permitted.",
+      "nullable_fields": [],
+      "replay_behavior": "Restore exact v2 current or v1 historical bytes only under the matching reader/key and verified mandatory backup. Original referenced evidence retains existing stronger operation/audit/recovery holds. Missing originals or unresolved legacy effects remain disclosed; historical permission/readiness cannot authorize current effects or continuation.",
+      "migration": "StorageMigrationCoordinator admits the v2 writer only after preflight, maintenance fencing, verified backup/readback, journaled validation and version-last completion. Exact v1 keys/values remain lookup-only historical readers under their unchanged owner schemas; never backfill demand, request, permission, lifecycle admission, readiness or settlement to copy them forward. Active or indeterminate v1 effects remain held for actual owner reconciliation. No lazy rewrite, dual write, fabricated historical authority, effect replay or SQLite path.",
       "migration_disposition": {
-        "mode": "current_schema",
+        "mode": "store_coordinator",
         "canonical_write_key_only": true,
-        "compatibility_keys_read_only": false,
-        "ambiguity_policy": "not_applicable",
+        "compatibility_keys_read_only": true,
+        "ambiguity_policy": "fail_closed",
         "source_refs": [
           "Plans/Shared_Integration_Runtime.md#46-closed-inventory-and-provisioning-vocabularies",
           "Plans/storage-plan.md#shared-integration-runtime-persistence-and-migration-addendum-2026-08-13",
-          "Plans/shared_runtime_contracts.schema.json#/$defs/capability_provisioning_operation"
+          "Plans/shared_runtime_contracts.schema.json#/$defs/capability_provisioning_operation",
+          "Plans/capability_ensure_custody_contracts.schema.json#/$defs/capability_provisioning_operation_current_write"
+        ],
+        "alias_dispositions": [
+          {
+            "key_shape": "capability_provisioning_operation.v1:{host_id}:{environment_id}:{operation_id}",
+            "disposition": "lookup_only"
+          }
         ]
       },
       "restore_disposition": {
@@ -23715,191 +24186,1235 @@
       "retention_compaction": "Retain under the named policy and stronger holds. Compaction preserves identity, generation/epoch, terminal truth, source/currentness refs, and recovery evidence; canonical records are never reconstructed from a UI projection.",
       "retention_policy_ref": "RP-RUNTIME-365D",
       "redaction_no_secret_rule": "Store canonical IDs, hashes, decisions, and non-secret refs only. Reject raw credentials, tokens, auth values, provider-visible bytes, local absolute paths, and protected AuthBrowserSession content.",
-      "legacy_canonical_crosswalk_status": "First exact materialization of the accepted owner schema. Any grouped inventory mention remains source lineage only and cannot substitute for this family.",
+      "legacy_canonical_crosswalk_status": "Same existing family: strict v2 current writer and unchanged v1 historical reader. No fabricated migration lineage or additional family.",
       "value_schema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "$id": "https://puppetmaster.local/schemas/storage_value/capability_provisioning_operation/1.0.0/capability_provisioning_operation.schema.json",
-        "title": "CapabilityProvisioningOperation",
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "schema_id",
-          "schema_version",
-          "operation_id",
-          "capability_id",
-          "provider_cli",
-          "prior_provider_consent_ref",
-          "host_id",
-          "environment_id",
-          "phase",
-          "reconciliation_disposition",
-          "policy_ref",
-          "permission_snapshot_ref",
-          "resource_admission_ref",
-          "installation_operation_ref",
-          "observable_work_id",
-          "reason_code",
-          "started_at_utc",
-          "updated_at_utc",
-          "terminal_at_utc"
-        ],
-        "properties": {
-          "schema_id": {
-            "const": "pm.shared_runtime.capability_provisioning_operation.v1"
-          },
-          "schema_version": {
-            "const": "1.0.0"
-          },
-          "operation_id": {
-            "$ref": "#/$defs/non_empty_string"
-          },
-          "capability_id": {
-            "$ref": "#/$defs/non_empty_string"
-          },
-          "provider_cli": {
-            "type": "boolean"
-          },
-          "prior_provider_consent_ref": {
-            "$ref": "#/$defs/nullable_non_secret_ref"
-          },
-          "host_id": {
-            "$ref": "#/$defs/non_empty_string"
-          },
-          "environment_id": {
-            "$ref": "#/$defs/non_empty_string"
-          },
-          "phase": {
-            "enum": [
-              "requested",
-              "resolving",
-              "awaiting_policy",
-              "awaiting_permission",
-              "awaiting_resource",
-              "provisioning",
-              "verifying",
-              "ready",
-              "blocked",
-              "failed",
-              "cancelled",
-              "rolling_back",
-              "rolled_back",
-              "recovery_required"
-            ]
-          },
-          "reconciliation_disposition": {
-            "enum": [
-              "resume",
-              "retry_bounded",
-              "rollback",
-              "quarantine",
-              "manual_recovery_required",
-              "terminal_no_change"
-            ]
-          },
-          "policy_ref": {
-            "$ref": "#/$defs/non_secret_ref"
-          },
-          "permission_snapshot_ref": {
-            "$ref": "#/$defs/nullable_non_secret_ref"
-          },
-          "resource_admission_ref": {
-            "$ref": "#/$defs/nullable_non_secret_ref"
-          },
-          "installation_operation_ref": {
-            "$ref": "#/$defs/nullable_non_secret_ref"
-          },
-          "observable_work_id": {
-            "$ref": "#/$defs/non_empty_string"
-          },
-          "reason_code": {
-            "$ref": "#/$defs/nullable_non_empty_string"
-          },
-          "started_at_utc": {
-            "$ref": "#/$defs/timestamp"
-          },
-          "updated_at_utc": {
-            "$ref": "#/$defs/timestamp"
-          },
-          "terminal_at_utc": {
-            "$ref": "#/$defs/nullable_timestamp"
-          }
-        },
-        "allOf": [
-          {
-            "if": {
-              "properties": {
-                "provider_cli": {
-                  "const": true
-                },
-                "prior_provider_consent_ref": {
-                  "type": "null"
-                }
+        "$defs": {
+          "capability_ensure_custody_contracts__capability_operation_decision": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "decision_ref",
+              "identity",
+              "request",
+              "actor_ref",
+              "effect",
+              "policy",
+              "effective_mode",
+              "authority_generation",
+              "approval",
+              "attempt_snapshot",
+              "audit",
+              "decision",
+              "captured_at_utc",
+              "expires_at_utc"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.permissions.capability_operation_decision.v1"
               },
-              "required": [
-                "provider_cli",
-                "prior_provider_consent_ref"
-              ]
-            },
-            "then": {
-              "properties": {
-                "phase": {
-                  "const": "blocked"
-                },
-                "reason_code": {
-                  "const": "explicit_provider_cli_acquisition_required"
-                },
-                "installation_operation_ref": {
-                  "type": "null"
-                }
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "decision_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "identity": {
+                "$ref": "#/$defs/full_thread_runtime_contracts__IdentityEnvelope"
+              },
+              "request": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "actor_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "effect": {
+                "$ref": "#/$defs/capability_ensure_custody_contracts__resolved_effect"
+              },
+              "policy": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "effective_mode": {
+                "enum": [
+                  "Off",
+                  "Auto",
+                  "On"
+                ]
+              },
+              "authority_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "approval": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "attempt_snapshot": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "audit": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "decision": {
+                "enum": [
+                  "allow",
+                  "ask",
+                  "deny"
+                ]
+              },
+              "captured_at_utc": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__timestamp"
+              },
+              "expires_at_utc": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__timestamp"
               }
             }
-          }
-        ],
-        "$defs": {
-          "non_empty_string": {
+          },
+          "capability_ensure_custody_contracts__origin_entry": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "request",
+              "demand",
+              "waiter",
+              "permission",
+              "readiness",
+              "currentness",
+              "settlement"
+            ],
+            "properties": {
+              "request": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "demand": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_demand_value"
+              },
+              "waiter": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_waiter_binding"
+              },
+              "permission": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/capability_ensure_custody_contracts__capability_operation_decision"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "readiness": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_readiness_result"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "currentness": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_origin_currentness"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "settlement": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_continuation_settlement"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "capability_ensure_custody_contracts__resolved_effect": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "capability_id",
+              "compatibility_requirement",
+              "effect_scope",
+              "target",
+              "lifecycle_request"
+            ],
+            "properties": {
+              "capability_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "compatibility_requirement": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "effect_scope": {
+                "enum": [
+                  "run_sandbox",
+                  "project",
+                  "host",
+                  "global"
+                ]
+              },
+              "target": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "lifecycle_request": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "capability_provisioning_continuation_contracts__capability_bound_reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "record_ref",
+              "sha256",
+              "generation"
+            ],
+            "properties": {
+              "record_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "sha256": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__sha256"
+              },
+              "generation": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "capability_provisioning_continuation_contracts__capability_continuation_binding": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "continuation_ref",
+              "generation",
+              "return_context_ref",
+              "origin_payload_sha256",
+              "expires_at_utc"
+            ],
+            "properties": {
+              "continuation_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "return_context_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "origin_payload_sha256": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__sha256"
+              },
+              "expires_at_utc": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__timestamp"
+              }
+            }
+          },
+          "capability_provisioning_continuation_contracts__capability_continuation_settlement": {
+            "description": "Resumed means actual admitted continuation dispatch/result, not downstream success. Failed includes original failed or rolled_back provisioning phase; rollback never implies capability ready.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "settlement_ref",
+              "waiter_ref",
+              "provisioning_operation_ref",
+              "readiness_result_ref",
+              "currentness_snapshot_ref",
+              "outcome",
+              "reason",
+              "continuation_result_ref",
+              "settled_at_utc"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.shared_runtime.capability_continuation_settlement.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "settlement_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "waiter_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "provisioning_operation_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "readiness_result_ref": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "currentness_snapshot_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "outcome": {
+                "enum": [
+                  "resumed",
+                  "ready_without_resume",
+                  "detached",
+                  "blocked",
+                  "failed",
+                  "cancelled",
+                  "recovery_required"
+                ]
+              },
+              "reason": {
+                "enum": [
+                  null,
+                  "waiter_detached",
+                  "origin_inactive",
+                  "origin_changed",
+                  "source_changed",
+                  "policy_changed",
+                  "continuation_changed",
+                  "continuation_expired",
+                  "admission_refused",
+                  "operation_not_ready"
+                ]
+              },
+              "continuation_result_ref": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "settled_at_utc": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__timestamp"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "const": "resumed"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "readiness_result_ref": {
+                      "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+                    },
+                    "continuation_result_ref": {
+                      "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+                    },
+                    "reason": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "continuation_result_ref": {
+                      "type": "null"
+                    },
+                    "reason": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "const": "ready_without_resume"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "readiness_result_ref": {
+                      "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+                    },
+                    "reason": {
+                      "enum": [
+                        "waiter_detached",
+                        "origin_inactive",
+                        "origin_changed",
+                        "source_changed",
+                        "policy_changed",
+                        "continuation_changed",
+                        "continuation_expired",
+                        "admission_refused"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "const": "detached"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "reason": {
+                      "const": "waiter_detached"
+                    },
+                    "readiness_result_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "enum": [
+                        "blocked",
+                        "failed",
+                        "cancelled",
+                        "recovery_required"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "reason": {
+                      "const": "operation_not_ready"
+                    },
+                    "readiness_result_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "capability_provisioning_continuation_contracts__capability_demand_source": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "owner_ref",
+              "source"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "project_metadata",
+                  "file_language_tool",
+                  "requested_test_debug_build_visual_media",
+                  "approved_plan_validation",
+                  "browser_native_mobile_device",
+                  "attachment_artifact_media",
+                  "capability_health_change"
+                ]
+              },
+              "owner_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "source": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              }
+            }
+          },
+          "capability_provisioning_continuation_contracts__capability_demand_value": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "demand_ref",
+              "origin_identity",
+              "source",
+              "capability_id",
+              "compatibility_requirement",
+              "requested_mode",
+              "requested_effect_scope",
+              "plan_lineage_ref",
+              "origin_lineage",
+              "continuation",
+              "schema_version"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.shared_runtime.capability_demand.v1"
+              },
+              "demand_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "origin_identity": {
+                "$ref": "#/$defs/full_thread_runtime_contracts__IdentityEnvelope"
+              },
+              "source": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_demand_source"
+              },
+              "capability_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_empty_string"
+              },
+              "compatibility_requirement": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "requested_mode": {
+                "enum": [
+                  "Off",
+                  "Auto",
+                  "On"
+                ]
+              },
+              "requested_effect_scope": {
+                "enum": [
+                  "run_sandbox",
+                  "project",
+                  "host",
+                  "global"
+                ]
+              },
+              "plan_lineage_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__nullable_non_secret_ref"
+              },
+              "origin_lineage": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_origin_lineage"
+              },
+              "continuation": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_continuation_binding"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              }
+            }
+          },
+          "capability_provisioning_continuation_contracts__capability_origin_currentness": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "snapshot_ref",
+              "waiter_ref",
+              "origin_identity",
+              "source",
+              "policy",
+              "effective_mode",
+              "continuation",
+              "origin_state",
+              "waiter_state",
+              "observed_at_utc"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.shared_runtime.capability_origin_currentness.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "snapshot_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "waiter_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "origin_identity": {
+                "$ref": "#/$defs/full_thread_runtime_contracts__IdentityEnvelope"
+              },
+              "source": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "policy": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "effective_mode": {
+                "enum": [
+                  "Off",
+                  "Auto",
+                  "On"
+                ]
+              },
+              "continuation": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_continuation_binding"
+              },
+              "origin_state": {
+                "enum": [
+                  "active",
+                  "cancelled",
+                  "completed",
+                  "replaced"
+                ]
+              },
+              "waiter_state": {
+                "enum": [
+                  "active",
+                  "detached"
+                ]
+              },
+              "observed_at_utc": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__timestamp"
+              }
+            }
+          },
+          "capability_provisioning_continuation_contracts__capability_origin_lineage": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "plan_id",
+              "run_id",
+              "agent_id",
+              "crew_id"
+            ],
+            "properties": {
+              "plan_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__nullable_non_secret_ref"
+              },
+              "run_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__nullable_non_secret_ref"
+              },
+              "agent_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__nullable_non_secret_ref"
+              },
+              "crew_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__nullable_non_secret_ref"
+              }
+            }
+          },
+          "capability_provisioning_continuation_contracts__capability_readiness_result": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "result_ref",
+              "shared_operation_id",
+              "capability_id",
+              "compatibility_requirement",
+              "execution_host_id",
+              "execution_environment_id",
+              "topology_generation",
+              "subject",
+              "readiness_basis",
+              "verification",
+              "effect_result",
+              "verified_at_utc",
+              "expires_at_utc"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.shared_runtime.capability_readiness_result.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "result_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "shared_operation_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_empty_string"
+              },
+              "capability_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_empty_string"
+              },
+              "compatibility_requirement": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "execution_host_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_empty_string"
+              },
+              "execution_environment_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_empty_string"
+              },
+              "topology_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "subject": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "record_ref",
+                  "generation"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "Installation",
+                      "Connection"
+                    ]
+                  },
+                  "record_ref": {
+                    "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+                  },
+                  "generation": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              },
+              "readiness_basis": {
+                "enum": [
+                  "existing_verified_capability",
+                  "verified_provisioning"
+                ]
+              },
+              "verification": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "effect_result": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "verified_at_utc": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__timestamp"
+              },
+              "expires_at_utc": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__timestamp"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "readiness_basis": {
+                      "const": "existing_verified_capability"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "effect_result": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "effect_result": {
+                      "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "capability_provisioning_continuation_contracts__capability_waiter_binding": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "waiter_ref",
+              "shared_operation_id",
+              "demand",
+              "admitted_policy",
+              "effective_mode",
+              "original_admission_ref",
+              "original_invocation_ref",
+              "requested_at_utc"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.shared_runtime.capability_waiter_binding.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "waiter_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "shared_operation_id": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_empty_string"
+              },
+              "demand": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "admitted_policy": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__capability_bound_reference"
+              },
+              "effective_mode": {
+                "enum": [
+                  "Off",
+                  "Auto",
+                  "On"
+                ]
+              },
+              "original_admission_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "original_invocation_ref": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+              },
+              "requested_at_utc": {
+                "$ref": "#/$defs/capability_provisioning_continuation_contracts__timestamp"
+              }
+            }
+          },
+          "capability_provisioning_continuation_contracts__non_empty_string": {
+            "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
+          },
+          "capability_provisioning_continuation_contracts__non_secret_ref": {
+            "$ref": "#/$defs/shared_runtime_contracts__non_secret_ref"
+          },
+          "capability_provisioning_continuation_contracts__nullable_non_secret_ref": {
+            "$ref": "#/$defs/shared_runtime_contracts__nullable_non_secret_ref"
+          },
+          "capability_provisioning_continuation_contracts__sha256": {
+            "$ref": "#/$defs/shared_runtime_contracts__sha256"
+          },
+          "capability_provisioning_continuation_contracts__timestamp": {
+            "$ref": "#/$defs/shared_runtime_contracts__timestamp"
+          },
+          "full_thread_runtime_contracts__Id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "full_thread_runtime_contracts__IdentityEnvelope": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Explicit application-or-Project operation scope with exact controlling Server, execution Host, Environment, and topology bindings. named_plan_id is only a NamedPlan identity and is nullable when no NamedPlan participates.",
+            "required": [
+              "scope_kind",
+              "operation_id",
+              "operation_generation",
+              "server_id",
+              "project_id",
+              "project_home_server_id",
+              "named_plan_id",
+              "execution_host_id",
+              "execution_environment_id",
+              "topology_generation"
+            ],
+            "properties": {
+              "scope_kind": {
+                "enum": [
+                  "application",
+                  "project"
+                ]
+              },
+              "operation_id": {
+                "$ref": "#/$defs/full_thread_runtime_contracts__Id"
+              },
+              "operation_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "command_instance_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "server_id": {
+                "$ref": "#/$defs/full_thread_runtime_contracts__Id"
+              },
+              "project_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "project_home_server_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "named_plan_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "thread_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "goal_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "execution_host_id": {
+                "$ref": "#/$defs/full_thread_runtime_contracts__Id"
+              },
+              "execution_environment_id": {
+                "$ref": "#/$defs/full_thread_runtime_contracts__Id"
+              },
+              "source_location_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "topology_generation": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    },
+                    "project_home_server_id": {
+                      "type": "null"
+                    },
+                    "named_plan_id": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "project_home_server_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "shared_runtime_contracts__capability_provisioning_operation": {
+            "title": "CapabilityProvisioningOperation",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "operation_id",
+              "capability_id",
+              "provider_cli",
+              "prior_provider_consent_ref",
+              "host_id",
+              "environment_id",
+              "phase",
+              "reconciliation_disposition",
+              "policy_ref",
+              "permission_snapshot_ref",
+              "resource_admission_ref",
+              "installation_operation_ref",
+              "observable_work_id",
+              "reason_code",
+              "started_at_utc",
+              "updated_at_utc",
+              "terminal_at_utc"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.shared_runtime.capability_provisioning_operation.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "operation_id": {
+                "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
+              },
+              "capability_id": {
+                "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
+              },
+              "provider_cli": {
+                "type": "boolean"
+              },
+              "prior_provider_consent_ref": {
+                "$ref": "#/$defs/shared_runtime_contracts__nullable_non_secret_ref"
+              },
+              "host_id": {
+                "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
+              },
+              "environment_id": {
+                "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
+              },
+              "phase": {
+                "enum": [
+                  "requested",
+                  "resolving",
+                  "awaiting_policy",
+                  "awaiting_permission",
+                  "awaiting_resource",
+                  "provisioning",
+                  "verifying",
+                  "ready",
+                  "blocked",
+                  "failed",
+                  "cancelled",
+                  "rolling_back",
+                  "rolled_back",
+                  "recovery_required"
+                ]
+              },
+              "reconciliation_disposition": {
+                "enum": [
+                  "resume",
+                  "retry_bounded",
+                  "rollback",
+                  "quarantine",
+                  "manual_recovery_required",
+                  "terminal_no_change"
+                ]
+              },
+              "policy_ref": {
+                "$ref": "#/$defs/shared_runtime_contracts__non_secret_ref"
+              },
+              "permission_snapshot_ref": {
+                "$ref": "#/$defs/shared_runtime_contracts__nullable_non_secret_ref"
+              },
+              "resource_admission_ref": {
+                "$ref": "#/$defs/shared_runtime_contracts__nullable_non_secret_ref"
+              },
+              "installation_operation_ref": {
+                "$ref": "#/$defs/shared_runtime_contracts__nullable_non_secret_ref"
+              },
+              "observable_work_id": {
+                "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
+              },
+              "reason_code": {
+                "$ref": "#/$defs/shared_runtime_contracts__nullable_non_empty_string"
+              },
+              "started_at_utc": {
+                "$ref": "#/$defs/shared_runtime_contracts__timestamp"
+              },
+              "updated_at_utc": {
+                "$ref": "#/$defs/shared_runtime_contracts__timestamp"
+              },
+              "terminal_at_utc": {
+                "$ref": "#/$defs/shared_runtime_contracts__nullable_timestamp"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "provider_cli": {
+                      "const": true
+                    },
+                    "prior_provider_consent_ref": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "provider_cli",
+                    "prior_provider_consent_ref"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "phase": {
+                      "const": "blocked"
+                    },
+                    "reason_code": {
+                      "const": "explicit_provider_cli_acquisition_required"
+                    },
+                    "installation_operation_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "shared_runtime_contracts__non_empty_string": {
             "type": "string",
             "minLength": 1
           },
-          "non_secret_ref": {
+          "shared_runtime_contracts__non_secret_ref": {
             "description": "Stable non-secret reference. Raw credentials, tokens, auth values, credential paths, file contents, and provider-visible bytes are forbidden.",
             "type": "string",
             "minLength": 1,
             "maxLength": 512,
             "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
           },
-          "nullable_non_empty_string": {
+          "shared_runtime_contracts__nullable_non_empty_string": {
             "oneOf": [
               {
-                "$ref": "#/$defs/non_empty_string"
+                "$ref": "#/$defs/shared_runtime_contracts__non_empty_string"
               },
               {
                 "type": "null"
               }
             ]
           },
-          "nullable_non_secret_ref": {
+          "shared_runtime_contracts__nullable_non_secret_ref": {
             "oneOf": [
               {
-                "$ref": "#/$defs/non_secret_ref"
+                "$ref": "#/$defs/shared_runtime_contracts__non_secret_ref"
               },
               {
                 "type": "null"
               }
             ]
           },
-          "nullable_timestamp": {
+          "shared_runtime_contracts__nullable_timestamp": {
             "oneOf": [
               {
-                "$ref": "#/$defs/timestamp"
+                "$ref": "#/$defs/shared_runtime_contracts__timestamp"
               },
               {
                 "type": "null"
               }
             ]
           },
-          "timestamp": {
+          "shared_runtime_contracts__sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "shared_runtime_contracts__timestamp": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "operation_ref",
+          "operation_generation",
+          "server_id",
+          "topology_generation",
+          "operation",
+          "origins",
+          "work_identity"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.shared_runtime.capability_provisioning_operation.v2"
+          },
+          "schema_version": {
+            "const": "2.0.0"
+          },
+          "operation_ref": {
+            "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+          },
+          "operation_generation": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "server_id": {
+            "$ref": "#/$defs/capability_provisioning_continuation_contracts__non_secret_ref"
+          },
+          "topology_generation": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "operation": {
+            "$ref": "#/$defs/shared_runtime_contracts__capability_provisioning_operation"
+          },
+          "origins": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/capability_ensure_custody_contracts__origin_entry"
+            }
+          },
+          "work_identity": {
+            "$ref": "#/$defs/full_thread_runtime_contracts__IdentityEnvelope"
           }
         }
       }
