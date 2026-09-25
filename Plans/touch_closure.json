@@ -8376,6 +8376,60 @@
       "evidence_refs": [
         "static_schema_and_fixture_only"
       ]
+    },
+    {
+      "profile_id": "TCP-FORGE-RUN-SELECTED",
+      "requirement_refs": [
+        "Plans/Forge_Integrations.md#FGI-005",
+        "Plans/Forge_Integrations.md#FGI-010",
+        "Plans/Shared_Integration_Runtime.md#SIR-042"
+      ],
+      "owner_plan": "Plans/Forge_Integrations.md",
+      "plan_unit": "FGI-010",
+      "dry_contract_ref": "Plans/forge_run_selected_contracts.schema.json",
+      "payload_schema_ref": "Plans/forge_run_selected_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/forge_run_selected_contracts.schema.json#/$defs/result",
+      "error_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_error_record",
+      "availability_rule": "Exact original native definition/revision/typed inputs and preview, genuine current admission, native returned work, receipt/caller/disclosure required. Unsupported forms refuse, no PM default or provider guarantee; accepted work remains nonterminal and unknown effects reconciliation-only.",
+      "permission_gate": "Actual remote-effect Permissions, independent AutomationBinding and provider capability/credential authority, original definition/preview and direct native revalidation; no fixture allow boolean.",
+      "disabled_reason_rule": "Retain actual unavailable input form, definition/revision/preview/currentness, permission and reconciliation blockers without dropping inputs or inventing defaults.",
+      "handler_owner": "Existing handlers::forge::pipeline_run only; handler_unavailable until native evidence.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static selected run definition/input/preview/effect/SIR composition only; no native execution, issuer authentication or physical custody proof.",
+      "gui_triggers": [
+        "Actions & Pipelines selected run",
+        "Command palette and authorized automation"
+      ],
+      "return_route": "Exact authentic original/current delivery caller and selected native definition context.",
+      "reverse_consumers": [
+        "Plans/Source_Control_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "event_refs": [
+        "No admitted Forge EventRecord for this delta; expected_event_types=[] until Event Authority admission."
+      ],
+      "receipt_refs": [
+        "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt",
+        "Plans/forge_run_selected_contracts.schema.json#/$defs/observation"
+      ],
+      "observable_work": [
+        "Genuine nonterminal accepted run work; cancellation before submission permits no work and never fabricates a resulting run."
+      ],
+      "persistence_refs": [
+        "Plans/storage_value_registry.json"
+      ],
+      "migration_refs": [
+        "Plans/Forge_Integrations.md#7.1"
+      ],
+      "test_refs": [
+        "Plans/forge_run_selected_contract_fixtures.json",
+        "tests/test_pm_forge_run_selected.py",
+        "tests/test_pm_forge_run_bindings.py"
+      ],
+      "evidence_refs": [
+        "static_schema_and_fixture_only"
+      ]
     }
   ],
   "row_columns": [
@@ -10685,7 +10739,7 @@
     ],
     [
       "TOUCH-FGI-029",
-      "TCP-FORGE",
+      "TCP-FORGE-RUN-SELECTED",
       "command",
       "cmd.forge.pipeline.run",
       "partial",

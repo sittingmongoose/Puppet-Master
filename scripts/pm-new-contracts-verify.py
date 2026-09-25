@@ -70,6 +70,7 @@ from pm_backup_reencrypt import reencrypt_semantic_failures
 from pm_restore_selected_preview import selected_preview_semantic_failures
 from pm_forge_list_query import list_query_semantic_failures
 from pm_forge_retry_selected_semantics import retry_selected_semantic_failures
+from pm_forge_run_selected_semantics import run_selected_semantic_failures
 from pm_jj_publication_selected import publication_semantic_failures
 from pm_jj_publication_response import jj_publication_dispatch_semantic_failures
 from pm_forge_log_selection_semantics import log_selection_semantic_failures
@@ -148,9 +149,10 @@ CONTRACT_PAIRS = (
     ("Plans/restore_selected_preview_contracts.schema.json", "Plans/restore_selected_preview_contract_fixtures.json"),
     ("Plans/forge_list_query_contracts.schema.json", "Plans/forge_list_query_contract_fixtures.json"),
     ("Plans/forge_retry_selected_contracts.schema.json", "Plans/forge_retry_selected_contract_fixtures.json"),
+    ("Plans/forge_run_selected_contracts.schema.json", "Plans/forge_run_selected_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 68
+EXPECTED_CONTRACT_PAIR_COUNT = 69
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1285,6 +1287,8 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
     if schema_rel == "Plans/forge_retry_selected_contracts.schema.json":
         return retry_selected_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/forge_run_selected_contracts.schema.json":
+        return run_selected_semantic_failures(definition_name, value)
     if schema_rel == "Plans/forge_list_query_contracts.schema.json":
         return list_query_semantic_failures(definition_name, value)
     if schema_rel == "Plans/restore_selected_preview_contracts.schema.json":

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11771-L12037
+Source lines: L11771-L12039
 
-Source SHA256: `bed2fc43e3198ba12648d0fdbd70740d86d5497a697d551236b4f67be5b41c6a`
+Source SHA256: `6ca873718dfa6c4f09c2fd5ebbaeddbaff48fb5cc4034486786f4b50a820b115`
 
 ---
 
@@ -17,6 +17,8 @@ Every primary row below is static central intent. A named `handler_location` is 
 
 
 ### Exact 100 primary catalog rows
+
+Exactly `cmd.forge.pipeline.run` uses `Plans/forge_run_selected_contracts.schema.json#/$defs/request` -> `Plans/forge_run_selected_contracts.schema.json#/$defs/result`. Original definition, immutable revision, typed submitted inputs and actual provider-resolved omission bind the genuine preview/current admission and returned work. No universal input grammar, PM defaults, secret route, new provider or handler availability is implied. Unsupported required native forms remain explicitly unadmitted; accepted work is nonterminal and failed/cancelled results preserve actual partial or unknown effects through original caller/receipt/error composition.
 
 Exactly `cmd.forge.pipeline.retry` uses `Plans/forge_retry_selected_contracts.schema.json#/$defs/request` -> `Plans/forge_retry_selected_contracts.schema.json#/$defs/result`. The original explicit retry scope, actual native selection and preview bind current admission, genuine work, partial/unknown effects and the authentic caller/receipt/error. No default scope, provider support, automatic retry, new event or handler availability is introduced. Cancellation before submission does not fabricate work; accepted work remains nonterminal.
 

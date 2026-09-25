@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2606
+Source lines: L2164-L2610
 
-Source SHA256: `75009faabcc9921c2d6720f45c7c2a45a9d28826c3cef1e9905d422e1cba1d10`
+Source SHA256: `d1f7642285e10a93009f3ac2d2d3297c096dd5ccc9622b8d53c0c501879eaf48`
 
 ---
 
@@ -188,6 +188,10 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 For exactly `cmd.forge.pipeline.retry`, request/result composition reuses actual common Forge authority/result/receipt/error, authentic original SIR IdentityEnvelope/CommandOutcome and current caller/return context. Explicit new SIR dispatch and nullable error projections bind their genuine owner records, including cancelled-null UI error. Inputs and resolved originals are pinned across all callbacks; a fresh final disclosure check is mandatory. Canonical digests come from the owner callback, not a newly chosen wire codec. The exact central response adapter must invoke this full composition, not only validate a bare result shape.
 
 ContractRef: ContractName:Plans/forge_retry_selected_contracts.schema.json
+
+For cmd.forge.pipeline.run, the new exact dispatch binding retains whole typed original arguments, complete existing IdentityEnvelope, dispatcher/frame/generation, actor/permission, idempotency/digest and actual nullable caller context. The result resolves that original and genuine common outcome/response; preview and actual provider work remain tied to the same operation. The new safe-error projection binds genuine owner error/reference and original full identity/caller to the unchanged UI error grammar, including legal cancelled-null output. This is not a new public request, permission proof or physical store, and does not widen FullThread identity semantics.
+
+ContractRef: ContractName:Plans/forge_run_selected_contracts.schema.json
 
 Exactly `cmd.forge.repository.list` and `cmd.forge.pipeline.list` retain an authentic SIR original request/digest, full unchanged IdentityEnvelope, independent dispatch/target generations, actor/permission/idempotency and genuine nullable caller. The existing precommit authority uses its actual Server/Host/Environment/Client scope without inventing Project/run/agent identity. Actual current delivery is independently supplied. The adapter joins authentic descriptor/selection, original read admission, typed source window and read receipt before composing current CommandOutcome/UI response and safe errors.
 

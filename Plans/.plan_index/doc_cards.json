@@ -3790,7 +3790,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "280111b79568075587c0a02fc410b53ce8f3afe68e1b524861088cb0f7f8b87c",
+      "sha256": "5b0dadef4acbf980a9aa69aa3ea524cac21aebac956ea40bfc8283cfde41be17",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80
@@ -8067,7 +8067,7 @@
         "future signed provider catalog",
         "future webhook ingress"
       ],
-      "line_count": 1521,
+      "line_count": 1543,
       "path": "Plans/Forge_Integrations.md",
       "plan_unit_count": 21,
       "plan_unit_ids": [
@@ -8119,7 +8119,7 @@
         "stale_review_evidence_or_agent_publication",
         "unbindable_vote_promise"
       ],
-      "sha256": "04fe123332194bb69b6f9d040693a66b2f0b7578b4a2ce205875074e68d7bbe8",
+      "sha256": "8ffc806a1341802d6ce336b9d241187cf910dd1db69f59e31659fdab8ce5892d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 21
@@ -8145,6 +8145,8 @@
         "Plans/forge_list_query_contracts.schema.json",
         "Plans/forge_retry_selected_contract_fixtures.json",
         "Plans/forge_retry_selected_contracts.schema.json",
+        "Plans/forge_run_selected_contract_fixtures.json",
+        "Plans/forge_run_selected_contracts.schema.json",
         "Plans/product_onboarding_contract_fixtures.json",
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/protected_auth_browser_contract_fixtures.json",
@@ -8202,7 +8204,9 @@
         "stale-head gate tests",
         "tests/test_pm_forge_list_query.py",
         "tests/test_pm_forge_retry_bindings.py",
-        "tests/test_pm_forge_retry_selected.py"
+        "tests/test_pm_forge_retry_selected.py",
+        "tests/test_pm_forge_run_bindings.py",
+        "tests/test_pm_forge_run_selected.py"
       ]
     },
     {
@@ -16822,7 +16826,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 3250,
+      "line_count": 3254,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 52,
       "plan_unit_ids": [
@@ -16936,7 +16940,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "75009faabcc9921c2d6720f45c7c2a45a9d28826c3cef1e9905d422e1cba1d10",
+      "sha256": "d1f7642285e10a93009f3ac2d2d3297c096dd5ccc9622b8d53c0c501879eaf48",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -18779,7 +18783,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13298,
+      "line_count": 13300,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 164,
       "plan_unit_ids": [
@@ -19014,7 +19018,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "bed2fc43e3198ba12648d0fdbd70740d86d5497a697d551236b4f67be5b41c6a",
+      "sha256": "6ca873718dfa6c4f09c2fd5ebbaeddbaff48fb5cc4034486786f4b50a820b115",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163,
@@ -20080,7 +20084,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T11:53:30Z",
+  "generated_at_utc": "2026-09-25T12:02:08Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
