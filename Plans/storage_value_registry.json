@@ -7902,30 +7902,25 @@
     {
       "family_id": "coordination_event_records",
       "storage_kind": "seglog",
-      "status": "deferred_not_build_blocking",
+      "status": "materialized",
       "tier": "later_gui_or_feature_projection",
       "key_shape": "coordination.agent_registered | coordination.agent_status_updated | coordination.agent_operation_updated | coordination.agent_file_ownership_updated | coordination.agent_unregistered | coordination.agent_crashed | coordination.agent_aborted | coordination.debug_mirror_exported",
       "value_schema_id": "pm.storage_value.coordination_event_records.v1",
-      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/coordination_event_records",
-      "owner_doc": "Plans/Contracts_V0.md#stable-active-agent-coordination-event-families",
+      "value_schema_ref": "Plans/coordination_event_payloads.schema.json",
+      "owner_doc": "Plans/storage-plan.md#SP-320",
       "producer": [
-        "AgentCoordinator",
-        "platform hook/event adapters",
-        "coordination mirror exporter"
+        "storage.coordination_append.v1@1.0.0"
       ],
       "consumers": [
-        "coordination projector",
-        "Orchestrator scheduler",
-        "prompt context assembler",
-        "debug mirror exporter"
+        "storage.coordination_projector.v1@1.0.0"
       ],
       "schema_version": "1.0.0",
       "encoding": "seglog_messagepack",
       "required_fields": [
-        "schema_version"
+        "schema_version",
+        "project_id"
       ],
       "optional_fields": [
-        "project_id",
         "run_id",
         "thread_id",
         "agent_id",
@@ -7937,131 +7932,2308 @@
         "worktree_id",
         "platform",
         "agent_revision",
+        "idempotency_key",
+        "model_id",
+        "started_at_utc",
         "expected_previous_revision",
         "last_applied_event_id",
-        "idempotency_key",
+        "status",
+        "status_reason",
+        "observed_at_utc",
         "operation_id",
+        "operation_summary",
+        "progress_pct",
+        "operation_refs",
         "path_ref",
         "path_hash",
+        "claim_kind",
+        "claim_confidence",
+        "terminal_status",
+        "finished_at_utc",
+        "result_ref",
+        "crash_reason",
+        "detected_at_utc",
+        "heartbeat_age_ms",
+        "process_ref",
+        "worktree_ref",
+        "abort_reason",
+        "aborted_by_ref",
+        "aborted_at_utc",
         "mirror_path",
-        "source_checkpoint"
+        "mirror_kind",
+        "source_checkpoint",
+        "source_sequence_id",
+        "export_status",
+        "exported_at_utc",
+        "error_code",
+        "quarantine_ref"
       ],
       "nullable_fields": [],
-      "replay_behavior": "Coordination events replay in seglog order into coordination redb projections; idempotency keys and expected revisions prevent duplicate or stale updates.",
-      "migration": "Legacy active-agents.json and .puppet-master/state/*.json coordination paths migrate only as compatibility/debug mirror inputs; new writers emit EventRecord values.",
-      "retention_compaction": "Coordination EventRecords retain under runtime audit policy; projections and mirrors are rebuildable from seglog plus checkpoints.",
-      "redaction_no_secret_rule": "Store refs, hashes, ids, paths under normal path-redaction policy, and status metadata only; no raw credentials, provider tokens, OAuth values, local credential paths, or machine secrets.",
-      "legacy_canonical_crosswalk_status": "canonical_event_family_deferred_payload_schema",
-      "deferred_owner": "Plans/Contracts_V0.md",
-      "deferred_reason": "Coordination event families are named for FABLE canon repair; executable runtime fixtures and full payload schemas remain outside this bounded repair.",
-      "reopen_condition": "Reopen when runtime lifecycle implementation or buildability claims depend on concrete coordination event payload schemas.",
+      "replay_behavior": "Coordination EventRecords replay in canonical seglog order through storage.coordination_projector.v1@1.0.0 only (SP-320). The dedupe identity is (scope_partition, event_type, idempotency_key), with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}; an exact retry returns the original event and its first AppendReceipt through storage.first_append_receipt.resolve.v2, and the same identity with a different digest is idempotency_conflict. A stale revision returns coordination_conflict. Replay rebuilds projection rows only and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "migration": "Legacy active-agents.json and .puppet-master/state/*.json coordination paths are compatibility or debug mirror inputs only, never migration authority; new writers append EventRecord values through storage.coordination_append.v1@1.0.0. StorageMigrationCoordinator installs the family through the actual migration graph and ceilings, and no store-version integer is invented. A later payload version needs a new CV-353 definition and version; readers reject an unsupported one.",
+      "retention_compaction": "Exact RP-COORDINATION-180D@1.0.0, the structured retention_policy_ref, which governs this text (DL-029 PD-SCHEMA-01): a fixed TTL of 15552000 seconds from run_completion, which SP-320 binds to the first durable terminal canonical record of the Run that run_id names; records of a Run whose terminal record has not resolved are not eligible for expiry; at most 1,000,000 records per Project with evict_oldest_eligible on overflow; compact on expiry; holds apply. Events are appended at registration, on an actual change and at termination, and heartbeats are runtime liveness, not records (OSI-438). coordination.debug_mirror_exported is not admitted, and its anchor is settled in its own landing. Projections, checkpoints and mirrors are rebuildable from seglog and keep their own policies.",
+      "redaction_no_secret_rule": "Only IDs, refs, hashes, enums, integers, timestamps and CV-353's bounded status and operation text. No prompt, model output, file content, diff, tool argument, command line, environment value, credential, provider token, OAuth value, account identifier or local absolute path; path_ref is the normalized project-relative path and path_hash its SHA-256 (SP-320). The planned registry rows reject unhandled secrets, and current Project and thread permission and deletion tombstones gate every read.",
+      "legacy_canonical_crosswalk_status": "Materialized in place by SP-320 (DL-045) from the CV-353 payload definitions, as a nonstored keyed value composition with one member per key shape (Plans/storage-plan.md section 2.3.1). Materializing admits no event: every coordination family stays quarantined before append or projection, and absent from the event family registry, until its own Storage admission landing. coordination.debug_mirror_exported is prepared, not admitted, and has no producer here.",
       "compatibility_key_shapes": [],
       "recovery_disposition": {
-        "authority_class": "compatibility_or_deferred",
-        "strategy": "deferred_owner_contract",
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
         "source_family_ids": [],
         "source_refs": [
-          "Plans/Contracts_V0.md#stable-active-agent-coordination-event-families"
+          "Plans/storage-plan.md#SP-320",
+          "Plans/Contracts_V0.md#CV-353",
+          "SchemaID:pm.event.v0"
         ],
-        "backup_required": false,
+        "backup_required": true,
         "data_loss_if_unavailable": true,
         "user_disclosure_required": true
       },
       "migration_disposition": {
-        "mode": "deferred_owner_contract",
+        "mode": "current_schema",
         "canonical_write_key_only": true,
         "compatibility_keys_read_only": false,
-        "ambiguity_policy": "not_applicable",
+        "ambiguity_policy": "fail_closed",
         "source_refs": [
-          "Plans/Contracts_V0.md#stable-active-agent-coordination-event-families"
+          "Plans/storage-plan.md#SP-320",
+          "Plans/Contracts_V0.md#CV-353"
         ]
       },
       "restore_disposition": {
-        "mode": "deferred_owner_contract",
+        "mode": "mandatory_backup",
         "transaction_family_id": null,
-        "outcome_owner_ref": null,
-        "mutation_fence_on_unresolved": false,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-320",
+        "mutation_fence_on_unresolved": true,
         "source_refs": [
-          "Plans/Contracts_V0.md#stable-active-agent-coordination-event-families"
+          "Plans/storage-plan.md#SP-320",
+          "Plans/storage-plan.md#SP-286"
         ]
       },
-      "retention_policy_ref": "RP-COORDINATION-180D"
+      "retention_policy_ref": "RP-COORDINATION-180D",
+      "value_schema": {
+        "$id": "pm.storage_value.coordination_event_records.v1",
+        "$comment": "Nonstored validation composition (SP-320 keyed value composition, Plans/storage-plan.md section 2.3.1): one closed member per key shape, in key-shape order, copied from Plans/coordination_event_payloads.schema.json with its $schema and $id removed and its references made local. A stored value is the EventRecord payload; the envelope's payload_schema_id names its member, so members carry no stored schema_id.",
+        "oneOf": [
+          {
+            "$ref": "#/$defs/agent_registered"
+          },
+          {
+            "$ref": "#/$defs/agent_status_updated"
+          },
+          {
+            "$ref": "#/$defs/agent_operation_updated"
+          },
+          {
+            "$ref": "#/$defs/agent_file_ownership_updated"
+          },
+          {
+            "$ref": "#/$defs/agent_unregistered"
+          },
+          {
+            "$ref": "#/$defs/agent_crashed"
+          },
+          {
+            "$ref": "#/$defs/agent_aborted"
+          },
+          {
+            "$ref": "#/$defs/debug_mirror_exported"
+          }
+        ],
+        "$defs": {
+          "lineage_envelope": {
+            "description": "The PM lineage envelope that every coordination agent payload preserves (Plans/Contracts_V0.md, \"Stable active-agent coordination event families\"; CV-353 rules 1 to 5). A shared part, never a payload by itself: each agent family definition includes it and closes the object. Optional fields are omitted, never null.",
+            "type": "object",
+            "required": [
+              "schema_version",
+              "project_id",
+              "run_id",
+              "agent_id",
+              "platform",
+              "idempotency_key"
+            ],
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "run_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "thread_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "agent_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "agent_type": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "parent_run_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "child_run_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "node_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "lane_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "worktree_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "platform": {
+                "enum": [
+                  "codex",
+                  "claude",
+                  "cursor",
+                  "gemini",
+                  "copilot"
+                ]
+              },
+              "agent_revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "expected_previous_revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "last_applied_event_id": {
+                "type": "string",
+                "pattern": "^evt_coordination_[0-9a-f]{64}$"
+              },
+              "idempotency_key": {
+                "type": "string",
+                "pattern": "^coordination:coordination\\.agent_[a-z_]+:[\\s\\S]+:[1-9][0-9]*$"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              }
+            }
+          },
+          "non_secret_ref": {
+            "description": "CV-353 rule 6: a reference of the form kind:value. The kind is lowercase letters, digits and underscores, starting with a letter; the whole reference has at most 256 characters and no whitespace. It names an object, grants no access and holds no credential, account identifier, local absolute path or content.",
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 256,
+            "pattern": "^(?![\\s\\S]*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[a-z][a-z0-9_]*:(?![A-Za-z]:[\\\\/])(?![/\\\\~])(?!file:)(?!sk-[A-Za-z0-9_-]{8,})\\S+$"
+          },
+          "agent_registered": {
+            "title": "coordination.agent_registered payload",
+            "description": "Agent registration before execution (OSI-438). The first event of an agent: agent_revision is 1 and neither expected_previous_revision nor last_applied_event_id is present (CV-353 rule 4). It carries no operation; the initial operation is its own coordination.agent_operation_updated event at agent_revision 2.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/$defs/lineage_envelope"
+              }
+            ],
+            "additionalProperties": false,
+            "required": [
+              "schema_version",
+              "project_id",
+              "run_id",
+              "agent_id",
+              "agent_type",
+              "started_at_utc",
+              "platform",
+              "agent_revision",
+              "idempotency_key"
+            ],
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "project_id": true,
+              "run_id": true,
+              "thread_id": true,
+              "agent_id": true,
+              "agent_type": true,
+              "parent_run_id": true,
+              "child_run_id": true,
+              "node_id": true,
+              "lane_id": true,
+              "worktree_id": true,
+              "platform": true,
+              "agent_revision": {
+                "const": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "pattern": "^coordination:coordination\\.agent_registered:[\\s\\S]+:1$"
+              },
+              "model_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "started_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+              }
+            }
+          },
+          "agent_status_updated": {
+            "title": "coordination.agent_status_updated payload",
+            "description": "An actual change of status or status_reason (OSI-438). status takes only the four non-terminal members of the canonical child lifecycle enum; complete, failed and cancelled arise only from the three terminal families. status_reason is bounded plain text with no prompt, model output, file content, diff, tool argument or secret.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/$defs/lineage_envelope"
+              }
+            ],
+            "additionalProperties": false,
+            "required": [
+              "schema_version",
+              "project_id",
+              "run_id",
+              "agent_id",
+              "status",
+              "observed_at_utc",
+              "platform",
+              "agent_revision",
+              "idempotency_key"
+            ],
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "project_id": true,
+              "run_id": true,
+              "thread_id": true,
+              "agent_id": true,
+              "agent_type": true,
+              "parent_run_id": true,
+              "child_run_id": true,
+              "node_id": true,
+              "lane_id": true,
+              "worktree_id": true,
+              "platform": true,
+              "agent_revision": {
+                "type": "integer",
+                "minimum": 2
+              },
+              "expected_previous_revision": true,
+              "last_applied_event_id": true,
+              "idempotency_key": {
+                "type": "string",
+                "pattern": "^coordination:coordination\\.agent_status_updated:[\\s\\S]+:(?:[2-9]|[1-9][0-9]+)$"
+              },
+              "status": {
+                "enum": [
+                  "queued",
+                  "running",
+                  "awaiting_parent",
+                  "blocked"
+                ]
+              },
+              "status_reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[^\\u0000-\\u001F\\u007F]+$",
+                "not": {
+                  "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+                }
+              },
+              "observed_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+              }
+            }
+          },
+          "agent_operation_updated": {
+            "title": "coordination.agent_operation_updated payload",
+            "description": "A new operation, or an actual change of its summary, progress or refs (OSI-438). The latest event for an operation_id wins in the operation projection (SP-320). operation_summary is bounded plain text with no prompt, model output, file content, diff, tool argument or secret. operation_refs, when present, holds 1 to 16 distinct typed non-secret references.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/$defs/lineage_envelope"
+              }
+            ],
+            "additionalProperties": false,
+            "required": [
+              "schema_version",
+              "project_id",
+              "run_id",
+              "agent_id",
+              "operation_id",
+              "operation_summary",
+              "observed_at_utc",
+              "platform",
+              "agent_revision",
+              "idempotency_key"
+            ],
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "project_id": true,
+              "run_id": true,
+              "thread_id": true,
+              "agent_id": true,
+              "agent_type": true,
+              "parent_run_id": true,
+              "child_run_id": true,
+              "node_id": true,
+              "lane_id": true,
+              "worktree_id": true,
+              "platform": true,
+              "agent_revision": {
+                "type": "integer",
+                "minimum": 2
+              },
+              "expected_previous_revision": true,
+              "last_applied_event_id": true,
+              "idempotency_key": {
+                "type": "string",
+                "pattern": "^coordination:coordination\\.agent_operation_updated:[\\s\\S]+:(?:[2-9]|[1-9][0-9]+)$"
+              },
+              "operation_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "operation_summary": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512,
+                "pattern": "^[^\\u0000-\\u001F\\u007F]+$",
+                "not": {
+                  "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+                }
+              },
+              "progress_pct": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "operation_refs": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 16,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/non_secret_ref"
+                }
+              },
+              "observed_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+              }
+            }
+          },
+          "agent_file_ownership_updated": {
+            "title": "coordination.agent_file_ownership_updated payload",
+            "description": "A new file-activity claim, or a changed claim_kind, claim_confidence or operation_id for the same path (OSI-438). A claim warns and sequences agents; it is not a FileSafe lock or lease. path_ref is the normalized worktree-relative path of SP-320's recipe and path_hash the lowercase hex SHA-256 of its UTF-8 bytes. Only high and medium confidence claims are appended; there is no release value.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/$defs/lineage_envelope"
+              }
+            ],
+            "additionalProperties": false,
+            "required": [
+              "schema_version",
+              "project_id",
+              "run_id",
+              "agent_id",
+              "path_ref",
+              "path_hash",
+              "claim_kind",
+              "claim_confidence",
+              "observed_at_utc",
+              "platform",
+              "agent_revision",
+              "idempotency_key"
+            ],
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "project_id": true,
+              "run_id": true,
+              "thread_id": true,
+              "agent_id": true,
+              "agent_type": true,
+              "parent_run_id": true,
+              "child_run_id": true,
+              "node_id": true,
+              "lane_id": true,
+              "worktree_id": true,
+              "platform": true,
+              "agent_revision": {
+                "type": "integer",
+                "minimum": 2
+              },
+              "expected_previous_revision": true,
+              "last_applied_event_id": true,
+              "idempotency_key": {
+                "type": "string",
+                "pattern": "^coordination:coordination\\.agent_file_ownership_updated:[\\s\\S]+:(?:[2-9]|[1-9][0-9]+)$"
+              },
+              "path_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024,
+                "pattern": "^(?!\\.{1,2}(?:/|$))(?![\\s\\S]*/\\.{1,2}(?:/|$))[^/]+(?:/[^/]+)*$"
+              },
+              "path_hash": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "claim_kind": {
+                "enum": [
+                  "editing",
+                  "reviewing",
+                  "generated_output",
+                  "read_dependency"
+                ]
+              },
+              "claim_confidence": {
+                "enum": [
+                  "high",
+                  "medium"
+                ]
+              },
+              "operation_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "observed_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+              }
+            }
+          },
+          "agent_unregistered": {
+            "title": "coordination.agent_unregistered payload",
+            "description": "Normal terminal unregister with a known outcome (OSI-438). One of the three terminal families: each agent has exactly one terminal event, and it releases every claim of the agent (SP-320). terminal_status takes the terminal members of the canonical child lifecycle enum.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/$defs/lineage_envelope"
+              }
+            ],
+            "additionalProperties": false,
+            "required": [
+              "schema_version",
+              "project_id",
+              "run_id",
+              "agent_id",
+              "terminal_status",
+              "finished_at_utc",
+              "platform",
+              "agent_revision",
+              "idempotency_key"
+            ],
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "project_id": true,
+              "run_id": true,
+              "thread_id": true,
+              "agent_id": true,
+              "agent_type": true,
+              "parent_run_id": true,
+              "child_run_id": true,
+              "node_id": true,
+              "lane_id": true,
+              "worktree_id": true,
+              "platform": true,
+              "agent_revision": {
+                "type": "integer",
+                "minimum": 2
+              },
+              "expected_previous_revision": true,
+              "last_applied_event_id": true,
+              "idempotency_key": {
+                "type": "string",
+                "pattern": "^coordination:coordination\\.agent_unregistered:[\\s\\S]+:(?:[2-9]|[1-9][0-9]+)$"
+              },
+              "terminal_status": {
+                "enum": [
+                  "complete",
+                  "failed",
+                  "cancelled"
+                ]
+              },
+              "finished_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+              },
+              "result_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          },
+          "agent_crashed": {
+            "title": "coordination.agent_crashed payload",
+            "description": "Crash resolution by the scheduler or the crash detector, never by the agent (OSI-438). One of the three terminal families. crash_reason records the direct evidence. A heartbeat_expired crash records the observed heartbeat_age_ms, never the runtime policy threshold coordination_heartbeat_expiry_ms.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/$defs/lineage_envelope"
+              },
+              {
+                "if": {
+                  "properties": {
+                    "crash_reason": {
+                      "const": "heartbeat_expired"
+                    }
+                  },
+                  "required": [
+                    "crash_reason"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "heartbeat_age_ms"
+                  ]
+                }
+              }
+            ],
+            "additionalProperties": false,
+            "required": [
+              "schema_version",
+              "project_id",
+              "run_id",
+              "agent_id",
+              "crash_reason",
+              "detected_at_utc",
+              "platform",
+              "agent_revision",
+              "idempotency_key"
+            ],
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "project_id": true,
+              "run_id": true,
+              "thread_id": true,
+              "agent_id": true,
+              "agent_type": true,
+              "parent_run_id": true,
+              "child_run_id": true,
+              "node_id": true,
+              "lane_id": true,
+              "worktree_id": true,
+              "platform": true,
+              "agent_revision": {
+                "type": "integer",
+                "minimum": 2
+              },
+              "expected_previous_revision": true,
+              "last_applied_event_id": true,
+              "idempotency_key": {
+                "type": "string",
+                "pattern": "^coordination:coordination\\.agent_crashed:[\\s\\S]+:(?:[2-9]|[1-9][0-9]+)$"
+              },
+              "crash_reason": {
+                "enum": [
+                  "process_exit",
+                  "heartbeat_expired",
+                  "process_lost",
+                  "worktree_lost"
+                ]
+              },
+              "detected_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+              },
+              "heartbeat_age_ms": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "process_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "worktree_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          },
+          "agent_aborted": {
+            "title": "coordination.agent_aborted payload",
+            "description": "Abort resolution by the component that resolves the abort (OSI-438). One of the three terminal families. aborted_by_ref names that authority, and its kind follows abort_reason (CV-353 rule 6): run and the parent run ID for parent, with parent_run_id present and equal; actor for user; component for runtime.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/$defs/lineage_envelope"
+              },
+              {
+                "if": {
+                  "properties": {
+                    "abort_reason": {
+                      "const": "parent"
+                    }
+                  },
+                  "required": [
+                    "abort_reason"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "parent_run_id"
+                  ],
+                  "properties": {
+                    "aborted_by_ref": {
+                      "pattern": "^run:"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "abort_reason": {
+                      "const": "user"
+                    }
+                  },
+                  "required": [
+                    "abort_reason"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "aborted_by_ref": {
+                      "pattern": "^actor:"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "abort_reason": {
+                      "const": "runtime"
+                    }
+                  },
+                  "required": [
+                    "abort_reason"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "aborted_by_ref": {
+                      "pattern": "^component:"
+                    }
+                  }
+                }
+              }
+            ],
+            "additionalProperties": false,
+            "required": [
+              "schema_version",
+              "project_id",
+              "run_id",
+              "agent_id",
+              "abort_reason",
+              "aborted_by_ref",
+              "aborted_at_utc",
+              "platform",
+              "agent_revision",
+              "idempotency_key"
+            ],
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "project_id": true,
+              "run_id": true,
+              "thread_id": true,
+              "agent_id": true,
+              "agent_type": true,
+              "parent_run_id": true,
+              "child_run_id": true,
+              "node_id": true,
+              "lane_id": true,
+              "worktree_id": true,
+              "platform": true,
+              "agent_revision": {
+                "type": "integer",
+                "minimum": 2
+              },
+              "expected_previous_revision": true,
+              "last_applied_event_id": true,
+              "idempotency_key": {
+                "type": "string",
+                "pattern": "^coordination:coordination\\.agent_aborted:[\\s\\S]+:(?:[2-9]|[1-9][0-9]+)$"
+              },
+              "abort_reason": {
+                "enum": [
+                  "parent",
+                  "user",
+                  "runtime"
+                ]
+              },
+              "aborted_by_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "aborted_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+              }
+            }
+          },
+          "debug_mirror_exported": {
+            "title": "coordination.debug_mirror_exported payload (prepared, not admitted)",
+            "description": "Prepared from its Contracts row with schema_version only, so that the Storage record family coordination_event_records covers every key shape (CV-353 rule 10). Outside Step 9 batch 2: it belongs to DL-045's Storage batch, is not admitted, and has no producer binding, identity recipe or retention anchor here. The value domains of mirror_kind, export_status and error_code stay open until its own landing binds them. mirror_path is a project-relative mirror location.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_version",
+              "project_id",
+              "mirror_path",
+              "mirror_kind",
+              "source_checkpoint",
+              "source_sequence_id",
+              "export_status",
+              "exported_at_utc"
+            ],
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "mirror_path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024,
+                "pattern": "^(?![A-Za-z]:[\\\\/])(?![/\\\\~])(?!file:)[^\\u0000-\\u001F\\u007F]+$"
+              },
+              "mirror_kind": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "source_checkpoint": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024,
+                "pattern": "^\\S+$"
+              },
+              "source_sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "export_status": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "exported_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+              },
+              "error_code": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "quarantine_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              }
+            }
+          }
+        }
+      }
     },
     {
       "family_id": "coordination_read_model_projections",
       "storage_kind": "redb_projection",
-      "status": "deferred_not_build_blocking",
+      "status": "materialized",
       "tier": "later_gui_or_feature_projection",
       "key_shape": "coordination_agent_projection.v1:{project_id}:{agent_id} | coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id} | coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id} | coordination_snapshot_projection.v1:{project_id}:{projection_scope} | projector.checkpoint.coordination:{project_id}",
       "value_schema_id": "pm.storage_value.coordination_read_model_projections.v1",
-      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/coordination_read_model_projections",
-      "owner_doc": "Plans/storage-plan.md#coordination-record-projection-and-mirror-export-families",
+      "value_schema_ref": "Plans/coordination_projection_contracts.schema.json",
+      "owner_doc": "Plans/storage-plan.md#SP-320",
       "producer": [
-        "coordination projector"
+        "storage.coordination_projector.v1@1.0.0"
       ],
       "consumers": [
-        "Orchestrator scheduler",
-        "AgentCoordinator",
-        "prompt context assembler",
-        "debug mirror exporter",
-        "inspection views"
+        "storage.coordination_reader.scheduler.v1@1.0.0",
+        "storage.coordination_reader.agent_coordinator.v1@1.0.0",
+        "storage.coordination_reader.prompt_context.v1@1.0.0",
+        "storage.coordination_reader.mirror_export.v1@1.0.0",
+        "storage.coordination_reader.inspection.v1@1.0.0"
       ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
       "required_fields": [
-        "schema_version"
+        "schema_id",
+        "schema_version",
+        "publication_id",
+        "project_id"
       ],
       "optional_fields": [
-        "project_id",
         "agent_id",
-        "path_hash",
-        "operation_id",
-        "projection_scope",
+        "run_id",
+        "thread_id",
+        "agent_type",
+        "parent_run_id",
+        "child_run_id",
+        "node_id",
+        "lane_id",
+        "worktree_id",
+        "platform",
+        "model_id",
+        "started_at_utc",
+        "status",
+        "status_reason",
+        "current_operation_id",
+        "active_claim_count",
         "agent_revision",
         "last_applied_event_id",
-        "source_sequence_id",
-        "checkpoint"
+        "terminal",
+        "path_ref",
+        "path_hash",
+        "claim_kind",
+        "claim_confidence",
+        "operation_id",
+        "observed_at_utc",
+        "source_event_id",
+        "operation_summary",
+        "progress_pct",
+        "operation_refs",
+        "first_observed_at_utc",
+        "last_observed_at_utc",
+        "projection_scope",
+        "agents",
+        "storage_instance_id",
+        "scope_partition",
+        "projector_id",
+        "projector_version",
+        "admitted_event_types",
+        "index_read_token",
+        "first_retained_sequence_id",
+        "index_through_sequence_id",
+        "source_cursor",
+        "filter_complete",
+        "state",
+        "health",
+        "updated_at_utc",
+        "withdrawn_at_utc",
+        "published_at_utc",
+        "hold_refs",
+        "retired_generations"
       ],
-      "nullable_fields": [],
-      "replay_behavior": "Projection rows rebuild from coordination EventRecords; authoritative readers verify projector checkpoint coverage before scheduling or prompt use.",
-      "migration": "File-backed coordination state is not migration authority. Projections rebuild from seglog and may optionally export debug mirrors.",
-      "retention_compaction": "Projection rows are disposable and compactable by scope; canonical coordination history remains in seglog EventRecords.",
-      "redaction_no_secret_rule": "Projection values contain coordination metadata, refs, and redacted path hashes only; no raw provider secret or credential data persists.",
-      "legacy_canonical_crosswalk_status": "canonical_projection_deferred_value_schema",
-      "deferred_owner": "Plans/storage-plan.md",
-      "deferred_reason": "Read-model key families are named for canon repair; materialized projection schemas remain part of later runtime implementation.",
-      "reopen_condition": "Reopen when scheduler, prompt injection, or runtime lifecycle implementation depends on concrete coordination projection schemas.",
+      "nullable_fields": [
+        "first_retained_sequence_id",
+        "index_through_sequence_id",
+        "source_cursor",
+        "withdrawn_at_utc"
+      ],
+      "replay_behavior": "storage.coordination_projector.v1@1.0.0 explicitly adopts SP-278: it establishes the CURRENT-selected, globally complete generic index snapshot through reader.storage.event_record_index@1.0.0, scans the complete captured range with the exact Project and admitted_event_types filter, applies matching events in canonical sequence order through SP-320's transition table, and commits changed rows and the checkpoint in one redb write transaction under exact prior-value compare-and-swap. The checkpoint stores the nine-field durable read token; every advance, read and recovery joins the snapshot ID of its own live read and revalidates the whole token, and no redb_snapshot_id is stored (DL-076). Readers require state current, the admitted families they depend on, coverage of the needed sequence and the current publication_id, or return unavailable.",
+      "migration": "StorageMigrationCoordinator installs the coordination_read_model_projections table and the checkpoint value through the actual migration graph and ceilings; no store-version integer is invented. An unsupported value version, a cursor regression, a changed scope or admission growth leads to a governed rebuild from CURRENT-selected source under a new publication; no silent zero-cursor reset, sibling reuse or history rewrite. File-backed coordination state is not migration authority.",
+      "retention_compaction": "Exact RP-PROJECTION-3GEN@1.0.0: the checkpoint's same-key generation set is its current core plus at most two retired cores in retired_generations; a retired core's terminal anchor is its first withdrawal time, set once; ordinary advance keeps publication_id, birth, holds and history; a fourth publication waits for the lawful cleanup of a retired core. Projection rows keep only their current value, and a rebuild rewrites every row under the new publication and deletes every row it does not rewrite. Existing rebuild_projection overflow and rebuild expiry. Canonical coordination history stays in coordination_event_records under RP-COORDINATION-180D.",
+      "redaction_no_secret_rule": "Projection and checkpoint values hold only IDs, refs, hashes, enums, integers, timestamps, cursors and CV-353's bounded text; no prompt, output, file content, diff, credential, local absolute path or redb_snapshot_id. Readers apply current Project and thread permission and deletion tombstones before disclosing a row; opaque refs, IDs, hashes and cursors confer no access.",
+      "legacy_canonical_crosswalk_status": "Materialized in place by SP-320 (DL-045) as a nonstored keyed value composition with one closed value per key shape, each with its own schema_id (Plans/storage-plan.md section 2.3.1). File-backed coordination state is not migration authority. Materializing admits no event and advances no checkpoint.",
       "compatibility_key_shapes": [],
       "recovery_disposition": {
-        "authority_class": "compatibility_or_deferred",
-        "strategy": "deferred_owner_contract",
-        "source_family_ids": [],
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_canonical_events_and_snapshot",
+        "source_family_ids": [
+          "coordination_event_records",
+          "event_record_index",
+          "event_record_index_checkpoint"
+        ],
         "source_refs": [
-          "Plans/storage-plan.md#coordination-record-projection-and-mirror-export-families"
+          "Plans/storage-plan.md#SP-320",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/Contracts_V0.md#EventRecord"
         ],
         "backup_required": false,
-        "data_loss_if_unavailable": true,
+        "data_loss_if_unavailable": false,
         "user_disclosure_required": true
       },
       "migration_disposition": {
-        "mode": "deferred_owner_contract",
+        "mode": "rebuild_on_schema_change",
         "canonical_write_key_only": true,
         "compatibility_keys_read_only": false,
-        "ambiguity_policy": "not_applicable",
+        "ambiguity_policy": "fail_closed",
         "source_refs": [
-          "Plans/storage-plan.md#coordination-record-projection-and-mirror-export-families"
+          "Plans/storage-plan.md#SP-320"
         ]
       },
       "restore_disposition": {
-        "mode": "deferred_owner_contract",
+        "mode": "rebuild_from_authority",
         "transaction_family_id": null,
-        "outcome_owner_ref": null,
-        "mutation_fence_on_unresolved": false,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-320",
+        "mutation_fence_on_unresolved": true,
         "source_refs": [
-          "Plans/storage-plan.md#coordination-record-projection-and-mirror-export-families"
+          "Plans/storage-plan.md#SP-320"
         ]
       },
-      "retention_policy_ref": "RP-PROJECTION-3GEN"
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
+      "value_schema": {
+        "$id": "pm.storage_value.coordination_read_model_projections.v1",
+        "$comment": "Nonstored validation composition (SP-320 keyed value composition, Plans/storage-plan.md section 2.3.1): one closed member per key shape, in key-shape order, copied from Plans/coordination_projection_contracts.schema.json, with SP-278's coverage.last_frame copied as generic_source_cursor. Each member keeps its own literal stored schema_id; this composition identity is never a stored header.",
+        "oneOf": [
+          {
+            "$ref": "#/$defs/agent_projection"
+          },
+          {
+            "$ref": "#/$defs/file_projection"
+          },
+          {
+            "$ref": "#/$defs/operation_projection"
+          },
+          {
+            "$ref": "#/$defs/snapshot_projection"
+          },
+          {
+            "$ref": "#/$defs/checkpoint"
+          }
+        ],
+        "$defs": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+          },
+          "event_id": {
+            "type": "string",
+            "pattern": "^evt_coordination_[0-9a-f]{64}$"
+          },
+          "non_secret_ref": {
+            "description": "CV-353 rule 6: a reference of the form kind:value. The kind is lowercase letters, digits and underscores, starting with a letter; the whole reference has at most 256 characters and no whitespace. It names an object, grants no access and holds no credential, account identifier, local absolute path or content.",
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 256,
+            "pattern": "^(?![\\s\\S]*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[a-z][a-z0-9_]*:(?![A-Za-z]:[\\\\/])(?![/\\\\~])(?!file:)(?!sk-[A-Za-z0-9_-]{8,})\\S+$"
+          },
+          "path_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "pattern": "^(?!\\.{1,2}(?:/|$))(?![\\s\\S]*/\\.{1,2}(?:/|$))[^/]+(?:/[^/]+)*$"
+          },
+          "status_reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[^\\u0000-\\u001F\\u007F]+$",
+            "not": {
+              "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+            }
+          },
+          "operation_summary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^[^\\u0000-\\u001F\\u007F]+$",
+            "not": {
+              "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+            }
+          },
+          "agent_projection": {
+            "description": "coordination_agent_projection.v1:{project_id}:{agent_id} (SP-320 projection rules). The registration's lineage, the current status, the current operation, the count of active claims, the revision and the last applied event; once terminal, the terminal family, its reason or status and its time. Registration sets queued; coordination.agent_unregistered sets its terminal_status, coordination.agent_crashed sets failed and coordination.agent_aborted sets cancelled (OSI-438). The row stays after the terminal event, with no active claims.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "publication_id",
+              "project_id",
+              "agent_id",
+              "run_id",
+              "agent_type",
+              "platform",
+              "started_at_utc",
+              "status",
+              "active_claim_count",
+              "agent_revision",
+              "last_applied_event_id"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.coordination_agent_projection.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "publication_id": {
+                "$ref": "#/$defs/id"
+              },
+              "project_id": {
+                "$ref": "#/$defs/id"
+              },
+              "agent_id": {
+                "$ref": "#/$defs/id"
+              },
+              "run_id": {
+                "$ref": "#/$defs/id"
+              },
+              "thread_id": {
+                "$ref": "#/$defs/id"
+              },
+              "agent_type": {
+                "$ref": "#/$defs/id"
+              },
+              "parent_run_id": {
+                "$ref": "#/$defs/id"
+              },
+              "child_run_id": {
+                "$ref": "#/$defs/id"
+              },
+              "node_id": {
+                "$ref": "#/$defs/id"
+              },
+              "lane_id": {
+                "$ref": "#/$defs/id"
+              },
+              "worktree_id": {
+                "$ref": "#/$defs/id"
+              },
+              "platform": {
+                "enum": [
+                  "codex",
+                  "claude",
+                  "cursor",
+                  "gemini",
+                  "copilot"
+                ]
+              },
+              "model_id": {
+                "$ref": "#/$defs/id"
+              },
+              "started_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "status": {
+                "enum": [
+                  "queued",
+                  "running",
+                  "awaiting_parent",
+                  "blocked",
+                  "complete",
+                  "failed",
+                  "cancelled"
+                ]
+              },
+              "status_reason": {
+                "$ref": "#/$defs/status_reason"
+              },
+              "current_operation_id": {
+                "$ref": "#/$defs/id"
+              },
+              "active_claim_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "agent_revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "last_applied_event_id": {
+                "$ref": "#/$defs/event_id"
+              },
+              "terminal": {
+                "$ref": "#/$defs/agent_terminal"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "required": [
+                    "terminal"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "complete",
+                        "failed",
+                        "cancelled"
+                      ]
+                    },
+                    "active_claim_count": {
+                      "const": 0
+                    },
+                    "agent_revision": {
+                      "minimum": 2
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "queued",
+                        "running",
+                        "awaiting_parent",
+                        "blocked"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "required": [
+                    "terminal"
+                  ],
+                  "properties": {
+                    "terminal": {
+                      "properties": {
+                        "event_type": {
+                          "const": "coordination.agent_crashed"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "status": {
+                      "const": "failed"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "required": [
+                    "terminal"
+                  ],
+                  "properties": {
+                    "terminal": {
+                      "properties": {
+                        "event_type": {
+                          "const": "coordination.agent_aborted"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "status": {
+                      "const": "cancelled"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "required": [
+                    "terminal"
+                  ],
+                  "properties": {
+                    "terminal": {
+                      "properties": {
+                        "event_type": {
+                          "const": "coordination.agent_unregistered"
+                        },
+                        "outcome": {
+                          "const": "complete"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "status": {
+                      "const": "complete"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "required": [
+                    "terminal"
+                  ],
+                  "properties": {
+                    "terminal": {
+                      "properties": {
+                        "event_type": {
+                          "const": "coordination.agent_unregistered"
+                        },
+                        "outcome": {
+                          "const": "failed"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "status": {
+                      "const": "failed"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "required": [
+                    "terminal"
+                  ],
+                  "properties": {
+                    "terminal": {
+                      "properties": {
+                        "event_type": {
+                          "const": "coordination.agent_unregistered"
+                        },
+                        "outcome": {
+                          "const": "cancelled"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "status": {
+                      "const": "cancelled"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "agent_terminal": {
+            "description": "The agent's one terminal event: its family, its terminal_status or reason, and its time.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_type",
+              "outcome",
+              "occurred_at_utc"
+            ],
+            "properties": {
+              "event_type": {
+                "enum": [
+                  "coordination.agent_unregistered",
+                  "coordination.agent_crashed",
+                  "coordination.agent_aborted"
+                ]
+              },
+              "outcome": {
+                "type": "string"
+              },
+              "occurred_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              }
+            },
+            "oneOf": [
+              {
+                "properties": {
+                  "event_type": {
+                    "const": "coordination.agent_unregistered"
+                  },
+                  "outcome": {
+                    "enum": [
+                      "complete",
+                      "failed",
+                      "cancelled"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "event_type": {
+                    "const": "coordination.agent_crashed"
+                  },
+                  "outcome": {
+                    "enum": [
+                      "process_exit",
+                      "heartbeat_expired",
+                      "process_lost",
+                      "worktree_lost"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "event_type": {
+                    "const": "coordination.agent_aborted"
+                  },
+                  "outcome": {
+                    "enum": [
+                      "parent",
+                      "user",
+                      "runtime"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "file_projection": {
+            "description": "coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}: the agent's latest claim on that path. A newer claim by the same agent on the same path replaces it, and the agent's terminal event deletes every file row of the agent in the same transaction. There is no release value (SP-320).",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "publication_id",
+              "project_id",
+              "agent_id",
+              "path_ref",
+              "path_hash",
+              "claim_kind",
+              "claim_confidence",
+              "observed_at_utc",
+              "source_event_id"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.coordination_file_projection.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "publication_id": {
+                "$ref": "#/$defs/id"
+              },
+              "project_id": {
+                "$ref": "#/$defs/id"
+              },
+              "agent_id": {
+                "$ref": "#/$defs/id"
+              },
+              "path_ref": {
+                "$ref": "#/$defs/path_ref"
+              },
+              "path_hash": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "claim_kind": {
+                "enum": [
+                  "editing",
+                  "reviewing",
+                  "generated_output",
+                  "read_dependency"
+                ]
+              },
+              "claim_confidence": {
+                "enum": [
+                  "high",
+                  "medium"
+                ]
+              },
+              "operation_id": {
+                "$ref": "#/$defs/id"
+              },
+              "observed_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "source_event_id": {
+                "$ref": "#/$defs/event_id"
+              }
+            }
+          },
+          "operation_projection": {
+            "description": "coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}: the latest event for that operation_id wins, with its summary, progress, refs, first and latest observation times and source event ID. Rows stay after the terminal event (SP-320).",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "publication_id",
+              "project_id",
+              "agent_id",
+              "operation_id",
+              "operation_summary",
+              "first_observed_at_utc",
+              "last_observed_at_utc",
+              "source_event_id"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.coordination_operation_projection.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "publication_id": {
+                "$ref": "#/$defs/id"
+              },
+              "project_id": {
+                "$ref": "#/$defs/id"
+              },
+              "agent_id": {
+                "$ref": "#/$defs/id"
+              },
+              "operation_id": {
+                "$ref": "#/$defs/id"
+              },
+              "operation_summary": {
+                "$ref": "#/$defs/operation_summary"
+              },
+              "progress_pct": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "operation_refs": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 16,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/non_secret_ref"
+                }
+              },
+              "first_observed_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "last_observed_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "source_event_id": {
+                "$ref": "#/$defs/event_id"
+              }
+            }
+          },
+          "snapshot_projection": {
+            "description": "coordination_snapshot_projection.v1:{project_id}:{projection_scope}: the non-terminal agents in scope. projection_scope is project, or run~{b}, worktree~{b}, lane~{r}~{b} or node~{r}~{b}, where b is the unpadded base64url of the exact UTF-8 run_id, worktree_id, lane_id or node_id, and r that of the run_id for lane and node scopes. A scoped row exists only while at least one non-terminal agent names its scope (SP-320).",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "publication_id",
+              "project_id",
+              "projection_scope",
+              "agents"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.coordination_snapshot_projection.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "publication_id": {
+                "$ref": "#/$defs/id"
+              },
+              "project_id": {
+                "$ref": "#/$defs/id"
+              },
+              "projection_scope": {
+                "type": "string",
+                "pattern": "^(?:project|run~[A-Za-z0-9_-]+|worktree~[A-Za-z0-9_-]+|lane~[A-Za-z0-9_-]+~[A-Za-z0-9_-]+|node~[A-Za-z0-9_-]+~[A-Za-z0-9_-]+)$"
+              },
+              "agents": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/snapshot_agent"
+                }
+              }
+            },
+            "if": {
+              "properties": {
+                "projection_scope": {
+                  "const": "project"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "agents": {
+                  "minItems": 1
+                }
+              }
+            }
+          },
+          "snapshot_agent": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "agent_id",
+              "agent_type",
+              "platform",
+              "status",
+              "claims"
+            ],
+            "properties": {
+              "agent_id": {
+                "$ref": "#/$defs/id"
+              },
+              "agent_type": {
+                "$ref": "#/$defs/id"
+              },
+              "platform": {
+                "enum": [
+                  "codex",
+                  "claude",
+                  "cursor",
+                  "gemini",
+                  "copilot"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "queued",
+                  "running",
+                  "awaiting_parent",
+                  "blocked"
+                ]
+              },
+              "operation_summary": {
+                "$ref": "#/$defs/operation_summary"
+              },
+              "progress_pct": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "claims": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/snapshot_claim"
+                }
+              }
+            }
+          },
+          "snapshot_claim": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path_ref",
+              "claim_kind",
+              "claim_confidence"
+            ],
+            "properties": {
+              "path_ref": {
+                "$ref": "#/$defs/path_ref"
+              },
+              "claim_kind": {
+                "enum": [
+                  "editing",
+                  "reviewing",
+                  "generated_output",
+                  "read_dependency"
+                ]
+              },
+              "claim_confidence": {
+                "enum": [
+                  "high",
+                  "medium"
+                ]
+              }
+            }
+          },
+          "checkpoint": {
+            "description": "The value at projector.checkpoint.coordination:{project_id} in redb's checkpoints table: pm.storage_value.coordination_projector_checkpoint.v1@1.0.0 (SP-320). It explicitly adopts SP-278's generic EventRecord index checkpoint and stores the nine-field durable read token, never redb_snapshot_id (DL-076). admitted_event_types is the sorted exact list of coordination event types that were admitted in the registry when this publication was built. A proven empty source has null bounds and cursor; a nonempty source with no coordination event keeps its examined bounds and cursor. The same-key generation set is the current core plus at most two retired cores (RP-PROJECTION-3GEN).",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "publication_id",
+              "project_id",
+              "storage_instance_id",
+              "scope_partition",
+              "projector_id",
+              "projector_version",
+              "admitted_event_types",
+              "index_read_token",
+              "first_retained_sequence_id",
+              "index_through_sequence_id",
+              "source_cursor",
+              "filter_complete",
+              "state",
+              "health",
+              "updated_at_utc",
+              "withdrawn_at_utc",
+              "published_at_utc",
+              "hold_refs",
+              "retired_generations"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.coordination_projector_checkpoint.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "publication_id": {
+                "$ref": "#/$defs/id"
+              },
+              "project_id": {
+                "$ref": "#/$defs/id"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "scope_partition": {
+                "type": "string",
+                "pattern": "^project~[A-Za-z0-9_-]+$"
+              },
+              "projector_id": {
+                "const": "storage.coordination_projector.v1"
+              },
+              "projector_version": {
+                "const": "1.0.0"
+              },
+              "admitted_event_types": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 7,
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "coordination.agent_registered",
+                    "coordination.agent_status_updated",
+                    "coordination.agent_operation_updated",
+                    "coordination.agent_file_ownership_updated",
+                    "coordination.agent_unregistered",
+                    "coordination.agent_crashed",
+                    "coordination.agent_aborted"
+                  ]
+                }
+              },
+              "index_read_token": {
+                "$ref": "#/$defs/durable_read_token"
+              },
+              "first_retained_sequence_id": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "index_through_sequence_id": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "source_cursor": {
+                "$ref": "#/$defs/generic_source_cursor"
+              },
+              "filter_complete": {
+                "type": "boolean"
+              },
+              "state": {
+                "enum": [
+                  "current",
+                  "degraded",
+                  "withdrawn"
+                ]
+              },
+              "health": {
+                "enum": [
+                  "healthy",
+                  "degraded"
+                ]
+              },
+              "updated_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "withdrawn_at_utc": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/timestamp"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "published_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "hold_refs": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/non_secret_ref"
+                }
+              },
+              "retired_generations": {
+                "type": "array",
+                "maxItems": 2,
+                "items": {
+                  "$ref": "#/$defs/retired_generation"
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "current"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "filter_complete": {
+                      "const": true
+                    },
+                    "health": {
+                      "const": "healthy"
+                    },
+                    "withdrawn_at_utc": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "degraded"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "health": {
+                      "const": "degraded"
+                    },
+                    "withdrawn_at_utc": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "withdrawn"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "withdrawn_at_utc": {
+                      "$ref": "#/$defs/timestamp"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "source_cursor": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "source_cursor"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "first_retained_sequence_id": {
+                      "type": "null"
+                    },
+                    "index_through_sequence_id": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "first_retained_sequence_id": {
+                      "type": "integer"
+                    },
+                    "index_through_sequence_id": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "checkpoint_core": {
+            "description": "A checkpoint publication without its retired generations; a retired core is always withdrawn.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "publication_id",
+              "project_id",
+              "storage_instance_id",
+              "scope_partition",
+              "projector_id",
+              "projector_version",
+              "admitted_event_types",
+              "index_read_token",
+              "first_retained_sequence_id",
+              "index_through_sequence_id",
+              "source_cursor",
+              "filter_complete",
+              "state",
+              "health",
+              "updated_at_utc",
+              "withdrawn_at_utc",
+              "published_at_utc",
+              "hold_refs"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.coordination_projector_checkpoint.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "publication_id": {
+                "$ref": "#/$defs/id"
+              },
+              "project_id": {
+                "$ref": "#/$defs/id"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "scope_partition": {
+                "type": "string",
+                "pattern": "^project~[A-Za-z0-9_-]+$"
+              },
+              "projector_id": {
+                "const": "storage.coordination_projector.v1"
+              },
+              "projector_version": {
+                "const": "1.0.0"
+              },
+              "admitted_event_types": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 7,
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "coordination.agent_registered",
+                    "coordination.agent_status_updated",
+                    "coordination.agent_operation_updated",
+                    "coordination.agent_file_ownership_updated",
+                    "coordination.agent_unregistered",
+                    "coordination.agent_crashed",
+                    "coordination.agent_aborted"
+                  ]
+                }
+              },
+              "index_read_token": {
+                "$ref": "#/$defs/durable_read_token"
+              },
+              "first_retained_sequence_id": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "index_through_sequence_id": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "source_cursor": {
+                "$ref": "#/$defs/generic_source_cursor"
+              },
+              "filter_complete": {
+                "type": "boolean"
+              },
+              "state": {
+                "enum": [
+                  "current",
+                  "degraded",
+                  "withdrawn"
+                ]
+              },
+              "health": {
+                "enum": [
+                  "healthy",
+                  "degraded"
+                ]
+              },
+              "updated_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "withdrawn_at_utc": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/timestamp"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "published_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "hold_refs": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/non_secret_ref"
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "current"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "filter_complete": {
+                      "const": true
+                    },
+                    "health": {
+                      "const": "healthy"
+                    },
+                    "withdrawn_at_utc": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "degraded"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "health": {
+                      "const": "degraded"
+                    },
+                    "withdrawn_at_utc": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "withdrawn"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "withdrawn_at_utc": {
+                      "$ref": "#/$defs/timestamp"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "source_cursor": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "source_cursor"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "first_retained_sequence_id": {
+                      "type": "null"
+                    },
+                    "index_through_sequence_id": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "first_retained_sequence_id": {
+                      "type": "integer"
+                    },
+                    "index_through_sequence_id": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "retired_generation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "checkpoint_core",
+              "successor_publication_id"
+            ],
+            "properties": {
+              "checkpoint_core": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/checkpoint_core"
+                  },
+                  {
+                    "properties": {
+                      "state": {
+                        "const": "withdrawn"
+                      }
+                    }
+                  }
+                ]
+              },
+              "successor_publication_id": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          },
+          "durable_read_token": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "checkpoint_key",
+              "checkpoint_ref",
+              "generation_id",
+              "generation_anchor_sha256",
+              "frontier_revision",
+              "frontier_sha256",
+              "index_dataset_name",
+              "source_selection"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "checkpoint_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "checkpoint_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "generation_id": {
+                "type": "string",
+                "pattern": "^eig_[0-9a-f]{64}$"
+              },
+              "generation_anchor_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "frontier_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "frontier_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "index_dataset_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_selection": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "storage_instance_id",
+                  "current_ref",
+                  "current_bytes_sha256",
+                  "selected_segment_generation",
+                  "manifest_ref",
+                  "manifest_bytes_sha256",
+                  "manifest_generation",
+                  "recovery_epoch",
+                  "manifest_survivor_prefix_sha256",
+                  "retained_inventory_sha256",
+                  "durable_watermarks_sha256",
+                  "excluded_ranges_sha256",
+                  "retired_inputs_sha256"
+                ],
+                "properties": {
+                  "storage_instance_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "current_ref": {
+                    "const": "storage/seglog/CURRENT"
+                  },
+                  "current_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "selected_segment_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_ref": {
+                    "const": "storage/seglog/manifest.v1.msgpack"
+                  },
+                  "manifest_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "manifest_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "recovery_epoch": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_survivor_prefix_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retained_inventory_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "durable_watermarks_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "excluded_ranges_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retired_inputs_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          },
+          "generic_source_cursor": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "segment_generation",
+                  "segment_name",
+                  "byte_offset",
+                  "frame_end_offset",
+                  "last_sequence_id",
+                  "last_event_id"
+                ],
+                "properties": {
+                  "segment_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "segment_name": {
+                    "type": "string",
+                    "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                  },
+                  "byte_offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "frame_end_offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "last_sequence_id": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "last_event_id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      }
     },
     {
       "family_id": "coordination_debug_mirror_exports",

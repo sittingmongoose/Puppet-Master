@@ -209,13 +209,17 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
         # Addendum, SP-255 to SP-257), giving 88. The 26 recorded commits af6856d039 to f6350caf27
         # named in the census comment of scripts/pm-implementation-readiness.py then added 206
         # materialized families and removed none; f6350caf27 moved the count last.
+        # Re-pinned 2026-09-25 (SP-320, DL-045; branch plans/ea-s09-coordination-prep-20260925):
+        # coordination_event_records and coordination_read_model_projections are materialized in place
+        # as SP-320 keyed value compositions, so 272 materialized and 21 deferred become 274 and 19.
+        # The family count stays 294.
         self.assertEqual(len(self.registry["families"]), 294)
         self.assertEqual(
             Counter(row["status"] for row in self.registry["families"]),
             Counter(
                 {
-                    "materialized": 272,
-                    "deferred_not_build_blocking": 21,
+                    "materialized": 274,
+                    "deferred_not_build_blocking": 19,
                     "compatibility_alias": 1,
                 }
             ),

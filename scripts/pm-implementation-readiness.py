@@ -754,11 +754,15 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # (tests/test_pm_runtime_vocabulary_migration.py). The canon it implements, the
 # Shared_Integration_Runtime full-thread addendum of 2026-08-31, arrived in the sweep 3e1842da40.
 # reports/storage-registry-repairs-20260923/REPORT.md lists each commit.
+# Re-pinned 2026-09-25 on branch plans/ea-s09-coordination-prep-20260925 (SP-320, DL-045): the two
+# deferred coordination families coordination_event_records and coordination_read_model_projections
+# are materialized in place as SP-320 keyed value compositions, so 272 materialized and 21 deferred
+# become 274 and 19. The family count, the retention-policy count and the tiers are unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 294
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 272,
-    "deferred_not_build_blocking": 21,
+    "materialized": 274,
+    "deferred_not_build_blocking": 19,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
@@ -925,6 +929,17 @@ STORAGE_VALUE_STORED_PROFILE_UNION_CONTRACT = {
     "composition_schema_version": "1.0.0",
 }
 STORAGE_VALUE_STORED_PROFILE_UNION_COMPOSITION_KEYWORDS = frozenset({"$id", "$comment", "oneOf"})
+# SP-320 keyed value compositions (Plans/storage-plan.md section 2.3.1, 2026-09-25; DL-045). For
+# exactly these two coordination families the registry value_schema_id, schema_version and inline
+# value_schema name a nonstored validation composition: one closed member per key shape, in
+# key-shape order. Projection members carry their own literal stored schema_id. Event-record members
+# are EventRecord payloads, which carry schema_version but no schema_id: the envelope's
+# payload_schema_id names the member. The composition identity is never a stored header.
+STORAGE_VALUE_KEYED_COMPOSITION_MEMBER_IDENTITY = {
+    "coordination_event_records": "event_payload_schema_id",
+    "coordination_read_model_projections": "stored_schema_id",
+}
+STORAGE_VALUE_KEYED_COMPOSITION_KEYWORDS = frozenset({"$id", "$comment", "oneOf", "$defs"})
 # SP-278 read token (Plans/storage-plan.md section 2.3.1, 2026-09-23; amended 2026-09-24, DL-076):
 # a closed, non-secret read selector of Storage identity, relative control names, hashes,
 # generation and frontier. The whole token adds the live redb_snapshot_id of one read transaction;
@@ -2355,12 +2370,20 @@ def storage_value_field_name_failures(
     path_label: str,
     field_list_name: str,
     value_schema: Any = None,
+    properties: Any = None,
 ) -> list[dict[str, Any]]:
+    """Secret-material check of a row's field lists.
+
+    A read-token-named field is exempt only when the property of that name is an SP-278 read token,
+    resolved inside value_schema. The properties are value_schema's own unless the caller passes the
+    member properties of an SP-320 keyed value composition.
+    """
     failures: list[dict[str, Any]] = []
     if not isinstance(fields, list):
         failures.append({"path": path_label, "error": "storage_value_field_list_invalid", "field": field_list_name})
         return failures
-    properties = value_schema.get("properties") if isinstance(value_schema, dict) else None
+    if properties is None:
+        properties = value_schema.get("properties") if isinstance(value_schema, dict) else None
     properties = properties if isinstance(properties, dict) else {}
     for field in fields:
         if not isinstance(field, str) or not field:
@@ -6421,6 +6444,149 @@ def storage_value_stored_profile_union_failures(
     return failures
 
 
+def storage_value_keyed_composition_members(value_schema: Any) -> list[tuple[str, dict[str, Any]]]:
+    """The (definition name, definition) members of an SP-320 keyed value composition, in oneOf order.
+
+    Only an entry that is exactly one local "#/$defs/<name>" reference to an object definition is a
+    member; storage_value_keyed_composition_failures reports every other entry.
+    """
+    members: list[tuple[str, dict[str, Any]]] = []
+    if not isinstance(value_schema, dict):
+        return members
+    definitions = value_schema.get("$defs") if isinstance(value_schema.get("$defs"), dict) else {}
+    entries = value_schema.get("oneOf") if isinstance(value_schema.get("oneOf"), list) else []
+    for entry in entries:
+        reference = entry.get("$ref") if isinstance(entry, dict) and set(entry) == {"$ref"} else None
+        if not isinstance(reference, str) or not reference.startswith("#/$defs/"):
+            continue
+        name = reference[len("#/$defs/"):]
+        if name and "/" not in name and isinstance(definitions.get(name), dict):
+            members.append((name, definitions[name]))
+    return members
+
+
+def storage_value_keyed_composition_member_properties(value_schema: Any) -> dict[str, Any]:
+    """Every property the members of an SP-320 keyed value composition declare; the first declaration wins."""
+    properties: dict[str, Any] = {}
+    for _name, member in storage_value_keyed_composition_members(value_schema):
+        member_properties = member.get("properties")
+        if isinstance(member_properties, dict):
+            for field, schema in member_properties.items():
+                properties.setdefault(field, schema)
+    return properties
+
+
+def storage_value_keyed_composition_failures(family: dict[str, Any], *, row_path: str) -> list[dict[str, Any]]:
+    """Check one SP-320 keyed value composition row (Plans/storage-plan.md section 2.3.1, 2026-09-25).
+
+    The inline value_schema has only the keywords $id, $comment, oneOf and $defs; its $id is the row's
+    value_schema_id. oneOf holds exactly one local #/$defs reference per key shape of the row, in
+    key-shape order, each to a distinct closed object definition that requires schema_version with the
+    row's schema_version as its constant. A stored_schema_id member requires schema_id with its own
+    literal constant, distinct across members and never the composition identity. An
+    event_payload_schema_id member declares no schema_id, because the EventRecord envelope's
+    payload_schema_id names it. The row's required_fields are the fields every member requires, in the
+    first member's order, and required_fields plus optional_fields are exactly the member properties.
+    value_schema_ref names an existing owner schema file. Secret material and a stored
+    redb_snapshot_id are rejected as for every inline value schema.
+    """
+    family_id = family.get("family_id")
+    failures: list[dict[str, Any]] = []
+
+    def fail(error: str, **detail: Any) -> None:
+        failures.append({"path": row_path, "error": error, "family_id": family_id, **detail})
+
+    identity = STORAGE_VALUE_KEYED_COMPOSITION_MEMBER_IDENTITY.get(str(family_id))
+    value_schema = family.get("value_schema")
+    if identity is None or not isinstance(value_schema, dict):
+        fail("storage_value_registry_keyed_composition_not_declared")
+        return failures
+    extra_keywords = sorted(set(value_schema) - STORAGE_VALUE_KEYED_COMPOSITION_KEYWORDS)
+    if extra_keywords or not {"$id", "oneOf", "$defs"} <= set(value_schema):
+        fail("storage_value_registry_keyed_composition_not_exact_composition", keywords=extra_keywords)
+        return failures
+    if value_schema.get("$id") != family.get("value_schema_id"):
+        fail(
+            "storage_value_registry_keyed_composition_identity_mismatch",
+            expected=family.get("value_schema_id"),
+            actual=value_schema.get("$id"),
+        )
+    key_shapes = [part.strip() for part in str(family.get("key_shape", "")).split("|") if part.strip()]
+    entries = value_schema.get("oneOf")
+    members = storage_value_keyed_composition_members(value_schema)
+    if (
+        not isinstance(entries, list)
+        or len(members) != len(entries)
+        or len(members) != len(key_shapes)
+        or len({name for name, _member in members}) != len(members)
+    ):
+        fail(
+            "storage_value_registry_keyed_composition_members_mismatch",
+            key_shapes=len(key_shapes),
+            members=len(members),
+            entries=len(entries) if isinstance(entries, list) else None,
+        )
+    if family.get("compatibility_key_shapes") != []:
+        fail("storage_value_registry_keyed_composition_compatibility_keys_present")
+    owner_path = str(family.get("value_schema_ref", "")).split("#", 1)[0]
+    if not owner_path or not (ROOT / owner_path).is_file():
+        fail(
+            "storage_value_registry_keyed_composition_owner_schema_missing",
+            value_schema_ref=family.get("value_schema_ref"),
+        )
+    stored_ids: list[str] = []
+    for name, member in members:
+        properties = member.get("properties") if isinstance(member.get("properties"), dict) else {}
+        required = member.get("required") if isinstance(member.get("required"), list) else []
+        if member.get("type") != "object" or member.get("additionalProperties") is not False:
+            fail("storage_value_registry_keyed_composition_member_not_closed_object", member=name)
+        version = properties.get("schema_version") if isinstance(properties.get("schema_version"), dict) else {}
+        if "schema_version" not in required or version.get("const") != family.get("schema_version"):
+            fail(
+                "storage_value_registry_keyed_composition_member_schema_version_mismatch",
+                member=name,
+                expected=family.get("schema_version"),
+                actual=version.get("const"),
+            )
+        header = properties.get("schema_id")
+        if identity == "stored_schema_id":
+            header_const = header.get("const") if isinstance(header, dict) else None
+            if "schema_id" not in required or not isinstance(header_const, str) or not header_const:
+                fail("storage_value_registry_keyed_composition_member_schema_id_missing", member=name)
+            else:
+                stored_ids.append(header_const)
+        elif header is not None:
+            fail("storage_value_registry_keyed_composition_payload_member_has_stored_header", member=name)
+    if len(set(stored_ids)) != len(stored_ids) or family.get("value_schema_id") in stored_ids:
+        fail("storage_value_registry_keyed_composition_member_identities_not_distinct", stored_schema_ids=stored_ids)
+    required_lists = [
+        member.get("required") if isinstance(member.get("required"), list) else [] for _name, member in members
+    ]
+    common = [
+        field for field in (required_lists[0] if required_lists else []) if all(field in other for other in required_lists[1:])
+    ]
+    if family.get("required_fields") != common:
+        fail(
+            "storage_value_registry_keyed_composition_required_fields_mismatch",
+            expected=common,
+            actual=family.get("required_fields"),
+        )
+    declared = set(storage_value_keyed_composition_member_properties(value_schema))
+    required_fields = family.get("required_fields") if isinstance(family.get("required_fields"), list) else []
+    optional_fields = family.get("optional_fields") if isinstance(family.get("optional_fields"), list) else []
+    listed = set(required_fields) | set(optional_fields)
+    if declared != listed:
+        fail(
+            "storage_value_registry_keyed_composition_field_lists_mismatch",
+            missing=sorted(declared - listed),
+            extra=sorted(listed - declared),
+        )
+    failures.extend(storage_value_secret_key_failures(value_schema, path_label=row_path))
+    for pointer in storage_value_live_snapshot_fence_pointers(value_schema):
+        fail("storage_value_registry_live_snapshot_fence_persisted", pointer=pointer)
+    return failures
+
+
 def storage_value_legacy_import_only_reader(family: dict[str, Any]) -> bool:
     """One of the named rows the owner retired to a one-time owner-boundary import reader.
 
@@ -6739,12 +6905,18 @@ def storage_value_registry_data_failures(
 
         required_fields = family.get("required_fields", [])
         row_value_schema = family.get("value_schema")
+        row_field_properties = (
+            storage_value_keyed_composition_member_properties(row_value_schema)
+            if family_id in STORAGE_VALUE_KEYED_COMPOSITION_MEMBER_IDENTITY
+            else None
+        )
         failures.extend(
             storage_value_field_name_failures(
                 required_fields,
                 path_label=row_path,
                 field_list_name="required_fields",
                 value_schema=row_value_schema,
+                properties=row_field_properties,
             )
         )
         failures.extend(
@@ -6753,6 +6925,7 @@ def storage_value_registry_data_failures(
                 path_label=row_path,
                 field_list_name="optional_fields",
                 value_schema=row_value_schema,
+                properties=row_field_properties,
             )
         )
         failures.extend(
@@ -6761,6 +6934,7 @@ def storage_value_registry_data_failures(
                 path_label=row_path,
                 field_list_name="nullable_fields",
                 value_schema=row_value_schema,
+                properties=row_field_properties,
             )
         )
         optional_fields = family.get("optional_fields", [])
@@ -6795,6 +6969,11 @@ def storage_value_registry_data_failures(
                 # SP-310 nonstored composition: checked member by member against the owner
                 # declaration instead of as one inline stored header.
                 failures.extend(storage_value_stored_profile_union_failures(family, row_path=row_path))
+                continue
+            if family_id in STORAGE_VALUE_KEYED_COMPOSITION_MEMBER_IDENTITY:
+                # SP-320 keyed value composition: one closed member per key shape, checked member by
+                # member instead of as one inline stored header.
+                failures.extend(storage_value_keyed_composition_failures(family, row_path=row_path))
                 continue
             if value_schema.get("type") != "object":
                 failures.append({"path": row_path, "error": "storage_value_registry_value_schema_not_object"})
@@ -8514,6 +8693,103 @@ def storage_value_representation_self_test_checks(
         errors(bare_reference, "single-wrapper-bare-reference"), "storage_value_registry_value_schema_not_object"
     ) and has(errors(bare_reference, "single-wrapper-bare-reference"), "storage_value_registry_value_schema_not_closed")
 
+    # SP-320 keyed value compositions (2026-09-25; DL-045).
+    keyed_ids = tuple(STORAGE_VALUE_KEYED_COMPOSITION_MEMBER_IDENTITY)
+    checks["keyed_composition_live_rows_accepted"] = not any(
+        storage_value_keyed_composition_failures(family_of(live_registry, family_id), row_path=f"self-test:keyed:{family_id}")
+        for family_id in keyed_ids
+    ) and not any(failure.get("family_id") in keyed_ids for failure in live_failures)
+    keyed_header = clone_registry()
+    keyed_header_row = family_of(keyed_header, "coordination_read_model_projections")
+    keyed_header_row["value_schema"] = {
+        "type": "object",
+        "additionalProperties": False,
+        "required": list(keyed_header_row["required_fields"]),
+        "properties": {
+            "schema_id": {"const": keyed_header_row["value_schema_id"]},
+            "schema_version": {"const": keyed_header_row["schema_version"]},
+            "publication_id": {"type": "string"},
+            "project_id": {"type": "string"},
+        },
+    }
+    checks["keyed_composition_synthetic_single_header_rejected"] = has(
+        errors(keyed_header, "keyed-single-header"),
+        "storage_value_registry_keyed_composition_not_exact_composition",
+        family_id="coordination_read_model_projections",
+    )
+    keyed_dropped = clone_registry()
+    family_of(keyed_dropped, "coordination_event_records")["value_schema"]["oneOf"].pop()
+    checks["keyed_composition_dropped_member_rejected"] = has(
+        errors(keyed_dropped, "keyed-dropped-member"),
+        "storage_value_registry_keyed_composition_members_mismatch",
+        family_id="coordination_event_records",
+    )
+    keyed_relabelled = clone_registry()
+    relabelled_row = family_of(keyed_relabelled, "coordination_read_model_projections")
+    relabelled_row["value_schema"]["$defs"]["checkpoint"]["properties"]["schema_id"] = {
+        "const": relabelled_row["value_schema_id"]
+    }
+    checks["keyed_composition_identity_as_stored_header_rejected"] = has(
+        errors(keyed_relabelled, "keyed-relabelled"),
+        "storage_value_registry_keyed_composition_member_identities_not_distinct",
+        family_id="coordination_read_model_projections",
+    )
+    keyed_payload_header = clone_registry()
+    payload_member = family_of(keyed_payload_header, "coordination_event_records")["value_schema"]["$defs"]["agent_registered"]
+    payload_member["properties"]["schema_id"] = {"const": "pm.coordination_event.agent_registered.schema.v1"}
+    checks["keyed_composition_payload_member_stored_header_rejected"] = has(
+        errors(keyed_payload_header, "keyed-payload-header"),
+        "storage_value_registry_keyed_composition_payload_member_has_stored_header",
+        family_id="coordination_event_records",
+        member="agent_registered",
+    )
+    keyed_open = clone_registry()
+    family_of(keyed_open, "coordination_read_model_projections")["value_schema"]["$defs"]["file_projection"][
+        "additionalProperties"
+    ] = True
+    checks["keyed_composition_open_member_rejected"] = has(
+        errors(keyed_open, "keyed-open-member"),
+        "storage_value_registry_keyed_composition_member_not_closed_object",
+        member="file_projection",
+    )
+    keyed_version = clone_registry()
+    family_of(keyed_version, "coordination_event_records")["value_schema"]["$defs"]["agent_crashed"]["properties"][
+        "schema_version"
+    ] = {"const": "2.0.0"}
+    checks["keyed_composition_member_version_drift_rejected"] = has(
+        errors(keyed_version, "keyed-version-drift"),
+        "storage_value_registry_keyed_composition_member_schema_version_mismatch",
+        member="agent_crashed",
+    )
+    keyed_fields = clone_registry()
+    family_of(keyed_fields, "coordination_event_records")["optional_fields"].remove("path_hash")
+    checks["keyed_composition_field_list_drift_rejected"] = has(
+        errors(keyed_fields, "keyed-field-lists"),
+        "storage_value_registry_keyed_composition_field_lists_mismatch",
+        family_id="coordination_event_records",
+    )
+    keyed_fence = clone_registry()
+    fenced_token = family_of(keyed_fence, "coordination_read_model_projections")["value_schema"]["$defs"]["durable_read_token"]
+    fenced_token["required"].append(STORAGE_VALUE_LIVE_SNAPSHOT_FENCE)
+    fenced_token["properties"][STORAGE_VALUE_LIVE_SNAPSHOT_FENCE] = {"type": "string", "minLength": 1}
+    checks["keyed_composition_member_snapshot_fence_rejected"] = has(
+        errors(keyed_fence, "keyed-fence"),
+        "storage_value_registry_live_snapshot_fence_persisted",
+        family_id="coordination_read_model_projections",
+    )
+    keyed_unlisted = clone_registry()
+    family_of(keyed_unlisted, "approved_plan_pack")["value_schema"] = json.loads(
+        json.dumps(family_of(live_registry, "coordination_read_model_projections")["value_schema"])
+    )
+    unlisted_index = next(
+        index for index, row in enumerate(keyed_unlisted["families"], start=1) if row.get("family_id") == "approved_plan_pack"
+    )
+    checks["keyed_composition_unlisted_family_rejected"] = any(
+        failure.get("error") == "storage_value_registry_value_schema_not_object"
+        and failure.get("path") == f"self-test:keyed-unlisted:families[{unlisted_index}]"
+        for failure in errors(keyed_unlisted, "keyed-unlisted")
+    )
+
     # SP-278 read tokens.
     read_token_families = (
         "retention_hold_record",
@@ -8522,6 +8798,7 @@ def storage_value_representation_self_test_checks(
         "seglog_observability_reader_checkpoint",
         "home_layout_event_reader_checkpoint",
         "restore_point_expired_checkpoint",
+        "coordination_read_model_projections",
     )
     read_token_rows = {
         f"Plans/storage_value_registry.json:families[{index}]"
@@ -8575,6 +8852,7 @@ def storage_value_representation_self_test_checks(
         "seglog_observability_reader_checkpoint": ("properties", "index_read_token"),
         "home_layout_event_reader_checkpoint": ("properties", "generic_read_token"),
         "restore_point_expired_checkpoint": ("properties", "generic_read_token"),
+        "coordination_read_model_projections": ("$defs", "durable_read_token"),
     }
     retention_hold_schema = family_of(live_registry, "retention_hold_record")["value_schema"]
     checks["sp278_persisted_read_tokens_are_durable"] = (

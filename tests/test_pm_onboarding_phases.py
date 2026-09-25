@@ -301,7 +301,10 @@ class OnboardingStorageTests(unittest.TestCase):
         # - three retention policies, at 0fed14e345, 74c5485e3b and 6621d9dc1d;
         # - four of the 88 rows: event_record_index (d21fd2cf23), restore_point_record (7fa3b65df7),
         #   retention_hold_record (2080658ff8) and goal_receipt (679e066a2a, 274c681e43);
-        # - run_started_index_checkpoint, at 38d896d3f0.
+        # - run_started_index_checkpoint, at 38d896d3f0;
+        # - two of the 88 rows, coordination_event_records and coordination_read_model_projections,
+        #   materialized in place as SP-320 keyed value compositions (DL-045, 2026-09-25, branch
+        #   plans/ea-s09-coordination-prep-20260925); no other row of the 88 changed.
         families = self.registry["families"]
         self.assertEqual(len(families), 294)
         self.assertEqual(len({row["family_id"] for row in families}), 294)
@@ -319,7 +322,7 @@ class OnboardingStorageTests(unittest.TestCase):
         self.assertEqual(len(prior), 88)
         def canonical_digest(value):
             return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-        self.assertEqual(canonical_digest(prior), "de1461c6617b69ff9345c7723c24bc41ca89253a84f50d4351613efa37ae7617")
+        self.assertEqual(canonical_digest(prior), "6dcdbfede3110fa918000f060957599c04b04f43a97ebff03c83191ccd29b200")
         self.assertEqual(canonical_digest(added[0]), "24060bdb4077754dc609915d59ffd6357f3ae042e4ff34e75f91683937055842")
         spec = importlib.util.spec_from_file_location("browser_created_storage_pin", ROOT / "scripts/pm_browser_workspace_created.py")
         browser = importlib.util.module_from_spec(spec)

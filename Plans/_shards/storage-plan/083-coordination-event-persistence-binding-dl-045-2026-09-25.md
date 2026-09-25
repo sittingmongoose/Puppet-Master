@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L26881-L27097
+Source lines: L26882-L27100
 
-Source SHA256: `f8ab5f8bb21010631c2aa9f80223e98fa8f30d2d883399f3069620c9fe395ce8`
+Source SHA256: `512042eb770f2f54feb5e34936e2db13925976b5634599d32e5806ccf62d11b7`
 
 ---
 
@@ -48,6 +48,8 @@ The registry's role names ("coordination projector", "Orchestrator scheduler" an
 **Binding record.** The same schema file carries `x-pm-event-authority-binding`, this section's binding in machine form for the admission ledger and the checkers: the semantic, payload and Storage owners, `AgentCoordinator` and `storage.coordination_append.v1@1.0.0`, the first-receipt resolver, the projector and the five readers, the two registry families, the checkpoint key, schema and stored read token, both retention policies, and each family's payload schema and entry point. It restates the identities above and adds none.
 
 **Registry.** Storage materializes the two deferred registry families in place from these definitions. `coordination_event_records` takes the CV-353 payload definitions of `Plans/coordination_event_payloads.schema.json`, one for each event type of its key shape. `coordination_read_model_projections` takes one closed value per key shape from `Plans/coordination_projection_contracts.schema.json`. Their producer and consumer lists name the identities above. The family count does not change, and materializing the registry rows admits no event.
+
+Both rows are SP-320 keyed value compositions, the registry shape section 2.3.1 describes: each row's `value_schema_id` names a nonstored validation composition with one closed member per key shape, and each projection member keeps its own `schema_id`. The records row is canonical, restored from the mandatory backup and never rebuilt; the projections row is derived and rebuilt from seglog through SP-278. The census moves to 274 materialized and 19 deferred. The records row's retention text now restates `RP-COORDINATION-180D@1.0.0` and SP-320's anchor rule. Its earlier wording, "retain under runtime audit policy", contradicted the structured reference, which governs (DL-029 PD-SCHEMA-01).
 
 ### SP-278 adoption and atomic advance
 
