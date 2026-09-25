@@ -192,6 +192,8 @@ This branch edits only `reports/event-authority-20260911/replan-v8/`. It makes n
 
 - **R-1.** The certified-family pins in P-17 were already stale before this branch. Four composition members are affected, and the landing record `LANDING_20260925_EA_CERTIFIED_ANCHORS.md` names two of them: the `Goal_Runtime_System.md` member, and the `storage-plan.md` member as already stale. The certified consumer's `owner-sources.json` pins the same three stale values in its current-selection `sha256` fields (lines 5, 17 and 53: `Goal_Runtime_System.md` `ccedade9…`, `storage-plan.md` `32885861…`, `storage_value_registry.json` `8556e243…`), and `physical-retention-install.json` line 49 pins the registry at `8556e243…`; all need the same reseal. Its `original_source_lineage` hashes are historical by design.
 
+The exports repair the plan makes A1 wait for has landed (`8bc898648`).
+
 ## Evidence
 
 | File | What it is |
