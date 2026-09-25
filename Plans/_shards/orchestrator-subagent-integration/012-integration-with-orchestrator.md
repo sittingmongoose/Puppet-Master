@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L349-L31814
 
-Source SHA256: `16c42454f7697c609ee4f8e672864bb3170be5535c7e479ba56c568622e5204d`
+Source SHA256: `b8c18a07e9af4bf20c2b449afe2cbf87c71a124aac69cddd58bd7800ccfc8a79`
 
 ---
 
@@ -3502,7 +3502,7 @@ The threshold is the runtime policy value `coordination_heartbeat_expiry_ms`. Ga
 - an operation event when the operation is new, or when its summary, progress or refs differ from the operation's projection row;
 - a file claim when the agent holds no claim on that path, or when the claim's `claim_kind`, `claim_confidence` or `operation_id` differs.
 
-An observation that changes nothing is not appended. Storage's admission returns `coordination_unchanged` for it and advances no revision (SP-320). Liveness heartbeats are runtime liveness. The runtime keeps each agent's last liveness signal for the crash detector, and no heartbeat is a coordination record. The "every 30 seconds" of "Coordination event updates" and of Gap #30 is an example of how often agents are observed, and `last_update` is a sketch field that no Contracts row has.
+An observation that changes nothing is not appended. Storage's admission returns `coordination_unchanged` for it and advances no revision (SP-320). Liveness heartbeats are runtime liveness. The runtime keeps each agent's last liveness signal for the crash detector, and no heartbeat is a coordination record. The "every 30 seconds" of "Coordination event updates" is an example of how often agents are observed. Gap #30's 30-second heartbeat stays the runtime liveness cadence: it refreshes the liveness signal and appends nothing. `last_update` is a sketch field that no Contracts row has.
 
 This is an event contract, not a retention choice. It states which facts these families record, and Storage already describes those facts as changes ("records status/lifecycle changes", "records current operation/progress state"). It changes nothing about how long records are kept, how many are kept or what is deleted. `RP-COORDINATION-180D`'s 180-day window, its cap of 1,000,000 per project, its overflow rule and its expiry apply unchanged to every appended record.
 
