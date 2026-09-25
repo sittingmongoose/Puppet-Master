@@ -27009,7 +27009,7 @@ At the final publication boundary, when the receipt is returned to the caller, t
   2. Resolve it inside the agent's worktree, following symbolic links only inside that worktree. A path that resolves outside the worktree or the project produces no claim.
   3. Make it relative to the worktree root. A `.puppet-master/worktrees/{name}/` prefix is removed, so the path names the main repository location.
   4. Write it with `/` separators and without `.` segments, `..` segments, empty segments, a leading `/` or `./`, or a trailing `/`. Keep the exact case and the exact Unicode characters the file system reports; do not normalize Unicode.
-  5. The result is `path_ref`, a UTF-8 string of 1 to 1,024 characters. `path_hash` is the lowercase hex SHA-256 of the UTF-8 bytes of `path_ref`. Claims are compared only by `path_hash`.
+  5. The result is `path_ref`, a UTF-8 string of 1 to 1,024 characters. `path_hash` is the lowercase hex SHA-256 of the UTF-8 bytes of `path_ref`. Claims are compared only by `path_hash`. A result that begins with `~` or `\`, or with a letter, a colon and `/` or `\`, produces no claim, because CV-353's `path_ref` form rejects it as a home, drive or UNC path.
 - **Access at read.** Every reader applies current Project and thread permission and the existing deletion tombstones before disclosing a row. Opaque refs, IDs, hashes and cursors confer no access. Coordination records carry no chat content, and `thread_id` is only a lineage join. This contract adds no deletion rule: existing Project deletion and tombstone rules apply as written.
 
 ### Retention

@@ -226,7 +226,9 @@ def path_hash(path_ref: str) -> str:
 def normalize_observed_path(worktree_root: str, observed: str) -> str | None:
     """Lexical form of SP-320's path_ref recipe (no file system, so no symbolic links).
 
-    Returns None when the path leaves the worktree: that observation produces no claim.
+    Returns None when the path leaves the worktree: that observation produces no claim. Cycle-2 residual R4-03
+    (SP-320 step 5): a result that begins with "~" or "\\", or with a letter, a colon and "/" or "\\", also
+    produces no claim, because CV-353's path_ref form rejects it as a home, drive or UNC path.
     """
     root = worktree_root.rstrip("/")
     path = observed
@@ -249,6 +251,8 @@ def normalize_observed_path(worktree_root: str, observed: str) -> str | None:
     if not segments:
         return None
     result = "/".join(segments)
+    if re.match(r"[~\\]|[A-Za-z]:[\\/]", result):
+        return None
     return result if len(result) <= 1024 else None
 
 

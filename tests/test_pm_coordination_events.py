@@ -241,6 +241,21 @@ class PayloadSchemaTests(unittest.TestCase):
             with self.subTest(projection=path):
                 self.assertEqual(CHECK.projection_value_failures("file_projection", dict(row, path_ref=path, path_hash=CHECK.path_hash(path))), ["schema"])
 
+    def test_normalized_home_drive_or_unc_result_produces_no_claim(self):
+        # Cycle-2 residual R4-03: SP-320 step 5; such a result would fail CV-353's path_ref form, so it is not a claim.
+        claim = PAYLOADS["a7_file_editing_r4"]
+        for observed, raw in (("/w/~drafts/a.md", "~drafts/a.md"), ("/w/~$Report.docx", "~$Report.docx"),
+                              ("/w/C:/odd/a.rs", "C:/odd/a.rs"), ("/w/\\\\server\\share\\a.rs", "\\\\server\\share\\a.rs")):
+            with self.subTest(observed=observed):
+                self.assertIsNone(CHECK.normalize_observed_path("/w", observed))
+                value = dict(claim["payload"], path_ref=raw, path_hash=CHECK.path_hash(raw))
+                self.assertEqual(CHECK.payload_rejection(claim["event_type"], value), "schema")
+        for observed, expected in (("/w/src/~backup/a.rs", "src/~backup/a.rs"), ("/w/docs/a~b.md", "docs/a~b.md"), ("/w/C:", "C:")):
+            with self.subTest(observed=observed):
+                self.assertEqual(CHECK.normalize_observed_path("/w", observed), expected)
+                value = dict(claim["payload"], path_ref=expected, path_hash=CHECK.path_hash(expected))
+                self.assertIsNone(CHECK.payload_rejection(claim["event_type"], value))
+
     def test_secret_path_and_null_shapes_are_rejected(self):
         operation = PAYLOADS["a7_operation_progress_r5"]
         for summary in ("token sk-abcdefghijklmnop123", "Bearer abcdefghijklmnop", "line one\nline two"):
