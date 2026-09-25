@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L1416-L1675
+Source lines: L1416-L1676
 
-Source SHA256: `19a55547c30930ffe6fbcd970f22fc1f0694a0d4822e0489a5a5e0aacc7a9a83`
+Source SHA256: `086e22172c69772f4209ca44cc7db729dd818fce7787d9f4abb9bb37aed562c7`
 
 ---
 
@@ -142,6 +142,7 @@ acceptance_criteria:
   - All ten commands use IntegrationCredential request/result/error/availability/permission contracts and the sole handlers listed above.
   - Transfer never copies secret bytes; it uses compatible references or a separately encrypted user-controlled recovery-envelope reference.
   - Attachment test remains distinct from connection reachability, and revoke-active never deletes the attachment definition.
+  - Credential source add binds the selected connection, protected secure-submission reference and requested permission scope through CredentialBroker's actual owner contract. The current credential.add normalization does not supply those operands or widen their scope. A generic target/parameter key bag is not the operation-specific binding; protected content remains inside the existing credential owner and no raw secret enters requests, receipts or projections.
   - Every command remains handler_unavailable until its exact native handler has evidence.
 validation_surfaces: [Plans/shared_integration_runtime_expansion_contracts.schema.json, Plans/shared_integration_runtime_expansion_fixtures.json, focused SIR expansion validator]
 risk_class: credential_scope_or_secret_material_leak

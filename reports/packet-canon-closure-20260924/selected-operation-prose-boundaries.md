@@ -45,8 +45,9 @@ review is `/mnt/Cursor/PM-Experiments/server-residual-review-20260925-OW9xkKzA/s
 
 Verification: shard generation/check PASS (99 documents / 2,746 shards);
 plan-index generation/validation PASS (6,733 units / 26,429 acceptance units).
-The edited newer owner documents are not configured shard sources, so no shard
-root changes; their PlanUnits are included in the regenerated index. No new
+Only Shared_Integration_Runtime among the five edited owners is a configured
+shard source; its regenerated root is the only changed shard root. All five
+owners' PlanUnits are included in the regenerated index. No new
 machine companion or runtime result is credited by these prose checks.
 
 Main landing and its full-delta hold are separate. Governance bindings are not
