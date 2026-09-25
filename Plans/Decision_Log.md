@@ -1961,6 +1961,18 @@ SourceRef: frozen `reports/packet-canon-closure-20260924/scm-public-git-repair-d
 
 ContractRef: ContractName:Plans/Source_Control_System.md
 
+### DL-103: Bind each public Git push safeguard to its selected remote target
+
+Recorded from Jared's explicit response on 2026-09-25 to the frozen safeguard-target card. Status: approved_one_guard_target_repair_independent_review_final_check.
+
+**Answer:** Approve
+
+**Decision:** Authorize one Sol repair limited to binding each public Git push safeguard to its own selected remote target and fixes needed for that same safeguard-to-remote mismatch. A different Sol independently reviews the repair, followed by the final root check. This is the specific exception to the residual-return boundary in DL-102, not a broad rewrite or another automatic review cycle. The six accepted Source Control routes and their approved core behavior stay unchanged. A genuinely different gap returns to Jared for a new decision. This answer does not select new product behavior, prove public Git fetch/push closure or native effects, or authorize native implementation, governance reseal or unreviewed integration.
+
+SourceRef: frozen `reports/packet-canon-closure-20260924/scm-public-git-guard-target-decision-card-20260925.md`, SHA-256 `563bad84fb872d92c7a64fe75f52d92117459d1cab2cb2af067aca794ef73a78`; verbatim `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-SCM-PUBLIC-GIT-GUARD-TARGET.md`, SHA-256 `d0bc92b1d4750feff9bf3cafdda6fd2feeaaf9626817e29807a0b348d06261da`.
+
+ContractRef: ContractName:Plans/Source_Control_System.md
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -7056,6 +7068,45 @@ negative_constraints:
   - Do not alter the frozen card or verbatim answer.
   - Do not treat this as another automatic review loop after its one independent review.
   - Do not claim native implementation, runtime proof, governance seal or unreviewed merge from this record.
+owner_hints: [Plans/Source_Control_System.md]
+```
+
+### DL-103 - Bind Each Public Git Push Safeguard To Its Selected Remote Target
+
+```yaml
+plan_unit_id: DL-103
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Approve one narrow Sol repair binding each public Git push safeguard to its own selected remote target, including fixes needed for that same safeguard-to-remote mismatch. Require independent review by a different Sol and a final root check. Retain the six accepted Source Control routes and their approved core behavior. A genuinely different gap returns to Jared for a new decision; this is not an automatic further cycle. No broad rewrite, new product behavior, native implementation or proof, governance reseal, or unreviewed integration is authorized.
+gui_related: false
+gui_classification_reason: Records bounded specification repair and review authority, not GUI implementation.
+split_recommended: false
+depends_on: [DL-102]
+unblocks: []
+acceptance_criteria:
+  - "Repair scope is only the safeguard-to-selected-remote mismatch and fixes needed for that same defect."
+  - "A different Sol independently reviews the repair and the root performs its final check."
+  - "The six accepted Source Control routes and approved core behavior remain unchanged."
+  - "Any genuinely different gap returns to Jared for a new decision, without an automatic further cycle."
+  - "No broad rewrite, new product behavior, native implementation or proof, governance reseal or unreviewed integration is authorized."
+validation_surfaces:
+  - reports/packet-canon-closure-20260924/decision-responses.jsonl
+  - python3 scripts/pm-plan-index.py validate
+risk_class: packet_product_decision_scope_drift
+reasoning_tier: high
+context_scope: packet_boundary_response_recording
+implementation_surfaces: [Plans/Source_Control_System.md]
+node_compile_hint: {mode: owner_decision_record, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "SourceRef: reports/packet-canon-closure-20260924/scm-public-git-guard-target-decision-card-20260925.md SHA-256 563bad84fb872d92c7a64fe75f52d92117459d1cab2cb2af067aca794ef73a78"
+  - "SourceRef: /mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-SCM-PUBLIC-GIT-GUARD-TARGET.md SHA-256 d0bc92b1d4750feff9bf3cafdda6fd2feeaaf9626817e29807a0b348d06261da"
+preserved_exact_tokens: ["PCC-SCM-PUBLIC-GIT-GUARD-TARGET-001", "Approve"]
+negative_constraints:
+  - Do not edit the frozen card or verbatim answer.
+  - Do not broaden a safeguard-target mismatch repair into a new product behavior or another automatic cycle.
+  - Do not claim native implementation, runtime proof, governance seal or unreviewed integration from this answer.
 owner_hints: [Plans/Source_Control_System.md]
 ```
 

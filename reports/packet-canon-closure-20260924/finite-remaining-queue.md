@@ -4,16 +4,21 @@
 
 - Six neutral Source Control routes are integrated and independently reviewed:
   `scm-six-neutral-integration.md`. Public Git fetch/push remains a distinct
-  specification gap after its final authorized review; four reproduced defects
-  and the unanswered extra-cycle card are in `scm-public-git-final-cycle2-residual.md`.
+  specification gap: the four prior counterexamples now reject, but independent
+  review found a remaining safeguard-to-selected-remote mismatch. Jared approved
+  the frozen guard-target card for a narrow Sol correction, different-Sol review
+  and root final check. See `scm-public-git-guard-target-residual-20260925.md`;
+  the candidate is not yet integrated.
 - Guided Tour authentic Chat/layout original custody is integrated as owner prose:
   `tour-original-owner-integration.md`. Typed companion sufficiency is under
   bounded review; native adapters and physical admission remain unproved.
 - Stash's typed companion is integrated after independent temporal-proof and
   composed-route review; see `stash-selected-companion-integration.md`.
   Usage Ledger is also integrated; see `usage-ledger-integration.md`.
-  Checkout, Settings import and
-  DRY/formatter companion corrections remain in external review/authoring.
+  Checkout is integrated with both explicitly chosen placements and typed
+  Source Control-owned preview/target authority; 215 focused tests pass. See
+  `checkout-selected-integration.md`. Settings import and DRY/formatter companion
+  corrections remain in external review/authoring.
 - Project dictionary policy is answered and integrated; it is not an open choice.
   The Server clarification card is still unanswered. No newer protected design
   is reopened by these historical packet comparisons.

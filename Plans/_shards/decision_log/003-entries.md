@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L1962
+Source lines: L13-L1974
 
-Source SHA256: `d5993d3ecf913cd9c89d20967a43b73410136a5315c4c5f217005fb855fbfd17`
+Source SHA256: `88c00a5ab8986fdd10e8e98a1d093a9918b855c5b6b9d54248bfa5974bef5391`
 
 ---
 
@@ -1956,5 +1956,17 @@ Recorded from Jared's explicit response on 2026-09-25 to the frozen public Git r
 **Decision:** Authorize one narrowly scoped repair and one independent review of the four reproduced public Git fetch/push defects remaining after DL-101's two-cycle limit: a repository original changing during owner resolution, a changed force-with-lease guard, an unknown fetch effect reported as success, and a push success without observed remote heads. The six accepted Source Control routes stay in place. This is one additional bounded correction/review, not an automatic third iteration of the prior cycle or an open-ended loop. Any residual after this review returns to Jared for another decision. The answer does not choose a new command alias, adapter, policy or product behavior, and does not authorize native implementation, runtime proof, governance reseal or an unreviewed candidate merge.
 
 SourceRef: frozen `reports/packet-canon-closure-20260924/scm-public-git-repair-decision-card-20260925.md`, SHA-256 `e4a1ab5dcd0f7de3871d7250dae635b56b0c56e00f93eef12e45097a34ccb2d2`; verbatim `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-SCM-PUBLIC-GIT-REPAIR.md`, SHA-256 `d0bc92b1d4750feff9bf3cafdda6fd2feeaaf9626817e29807a0b348d06261da`.
+
+ContractRef: ContractName:Plans/Source_Control_System.md
+
+### DL-103: Bind each public Git push safeguard to its selected remote target
+
+Recorded from Jared's explicit response on 2026-09-25 to the frozen safeguard-target card. Status: approved_one_guard_target_repair_independent_review_final_check.
+
+**Answer:** Approve
+
+**Decision:** Authorize one Sol repair limited to binding each public Git push safeguard to its own selected remote target and fixes needed for that same safeguard-to-remote mismatch. A different Sol independently reviews the repair, followed by the final root check. This is the specific exception to the residual-return boundary in DL-102, not a broad rewrite or another automatic review cycle. The six accepted Source Control routes and their approved core behavior stay unchanged. A genuinely different gap returns to Jared for a new decision. This answer does not select new product behavior, prove public Git fetch/push closure or native effects, or authorize native implementation, governance reseal or unreviewed integration.
+
+SourceRef: frozen `reports/packet-canon-closure-20260924/scm-public-git-guard-target-decision-card-20260925.md`, SHA-256 `563bad84fb872d92c7a64fe75f52d92117459d1cab2cb2af067aca794ef73a78`; verbatim `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-SCM-PUBLIC-GIT-GUARD-TARGET.md`, SHA-256 `d0bc92b1d4750feff9bf3cafdda6fd2feeaaf9626817e29807a0b348d06261da`.
 
 ContractRef: ContractName:Plans/Source_Control_System.md
