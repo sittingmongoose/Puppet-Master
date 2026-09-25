@@ -419,7 +419,7 @@ class BoundedGapRepairInventoryTests(unittest.TestCase):
         self.assertEqual(sum(c.startswith("cmd.chat.context_lens.") for c in admitted), 7)
         self.assertNotIn("cmd.bsd.set", admitted)
         self.assertEqual(len(rows), 646)
-        self.assertEqual(len(profiles), 151)  # JJ recovery, neutral selected-operand routes, and Checkout add profiles, not rows or commands.
+        self.assertEqual(len(profiles), 151)  # Git selected replaces legacy; JJ recovery, neutral selected operands, and Checkout add profiles, not rows or commands.
         for command, (profile_id, owner, unit) in admitted.items():
             with self.subTest(command=command):
                 self.assertEqual(rows[command][1:5], [profile_id, "command", command, "partial"])

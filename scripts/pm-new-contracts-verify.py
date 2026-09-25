@@ -81,6 +81,8 @@ from pm_jj_publication_response import jj_publication_dispatch_semantic_failures
 from pm_jj_recovery_response import jj_recovery_dispatch_semantic_failures
 from pm_source_control_selected_operands import selected_operand_semantic_failures
 from pm_source_control_selected_response import selected_dispatch_semantic_failures
+from pm_git_remote_selected import git_remote_semantic_failures
+from pm_git_remote_response import git_remote_dispatch_semantic_failures
 from pm_forge_log_selection_semantics import log_selection_semantic_failures
 from pm_git_selected_three import git_selected_semantic_failures
 from pm_git_stash_apply_selected import stash_apply_semantic_failures
@@ -167,11 +169,13 @@ CONTRACT_PAIRS = (
     ("Plans/forge_review_checkout_selected_contracts.schema.json", "Plans/forge_review_checkout_selected_contract_fixtures.json"),
     ("Plans/source_control_selected_operands.schema.json", "Plans/source_control_selected_operand_fixtures.json"),
     ("Plans/sir_source_control_selected_dispatch.schema.json", "Plans/sir_source_control_selected_dispatch_fixtures.json"),
+    ("Plans/git_remote_selected.schema.json", "Plans/git_remote_selected_fixtures.json"),
+    ("Plans/sir_git_remote_dispatch.schema.json", "Plans/sir_git_remote_dispatch_fixtures.json"),
     ("Plans/git_stash_apply_selected.schema.json", "Plans/git_stash_apply_selected_fixtures.json"),
     ("Plans/sir_git_stash_apply_dispatch.schema.json", "Plans/sir_git_stash_apply_dispatch_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 78
+EXPECTED_CONTRACT_PAIR_COUNT = 80
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1362,6 +1366,10 @@ def contract_semantic_failures(
         # Fixture cases compose the actual central response path; bare owner records
         # are joined by the runtime adapter, not by fixture-only equality.
         return selected_dispatch_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/git_remote_selected.schema.json":
+        return git_remote_semantic_failures(definition_name, value, canon_root=ROOT)
+    if schema_rel == "Plans/sir_git_remote_dispatch.schema.json":
+        return git_remote_dispatch_semantic_failures(definition_name, value)
     if schema_rel == "Plans/forge_log_selection_contracts.schema.json":
         return log_selection_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_bounded_read_contracts.schema.json":

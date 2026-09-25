@@ -47,7 +47,7 @@ class Bindings(unittest.TestCase):
   for k in ('alias_bindings','excluded_tokens','external_disposition_registries'):self.assertEqual(old[k],d[k])
   self.assertEqual(SCHEMA+'#/$defs/result',next(p for p in d['profiles'] if p['profile_id']=='TCP-FORGE-LIST-QUERY')['result_schema_ref'])
  def test_all_kinds_owner_separated_no_physical_admission(self):
-  p='Plans/storage_value_registry.json';d=load(p);old=baseline(p);self.assertEqual(old['families'],d['families']);self.assertEqual(294,len(d['families']));rows=d['contract_family_dispositions'];self.assertEqual(163,len(rows));self.assertEqual('scd.usage.ledger_query_transport.v1',rows[64]['disposition_id']);self.assertEqual(with_recorded_usage_id_correction(old['contract_family_dispositions']),rows[:64]+rows[65:122]);new=rows[122:128]
+  p='Plans/storage_value_registry.json';d=load(p);old=baseline(p);self.assertEqual(old['families'],d['families']);self.assertEqual(294,len(d['families']));rows=d['contract_family_dispositions'];self.assertEqual(166,len(rows));self.assertEqual('scd.usage.ledger_query_transport.v1',rows[64]['disposition_id']);self.assertEqual(with_recorded_usage_id_correction(old['contract_family_dispositions']),rows[:64]+rows[65:122]);new=rows[122:128]
   expected={v['properties']['schema_id']['const'] for k,v in load(SCHEMA)['$defs'].items() if k!='fixture_case' and 'schema_id' in v.get('properties',{})};actual=[k for r in new for k in r['record_kinds']];self.assertEqual(expected,set(actual));self.assertEqual(11,len(actual))
   for r in new:
    self.assertFalse(r['runtime_evidence']);self.assertEqual([],r['existing_family_refs'])

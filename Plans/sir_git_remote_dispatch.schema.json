@@ -1,0 +1,290 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/sir-git-remote-dispatch/1.0.0/sir_git_remote_dispatch.schema.json",
+  "title": "SIR exact public Git remote original/error binding for exactly cmd.git.fetch and cmd.git.push; no physical admission",
+  "description": "Closed SIR companion for the two existing public Git remote adapter commands. The authenticated dispatcher produces dispatch_binding from the exact Git adapter request; the adapter result stays the unchanged pm.source_control.git_remote.result.v1 reached through Plans/git_remote_selected.schema.json, and the nullable error projection resolves the actual git_remote error. Static shape proves no native issuance, permission, lease, effect or custody and changes no handler availability or planned handler target.",
+  "$defs": {
+    "delivery_return_context": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/return_context"
+        }
+      ]
+    },
+    "dispatch_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "identity",
+        "request_ref",
+        "dispatch_id",
+        "dispatch_frame_id",
+        "target_generation",
+        "idempotency_key",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "accepted_at_utc",
+        "arguments",
+        "payload_sha256",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.sir.git_remote_dispatch_binding.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "identity": {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+        },
+        "request_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "dispatch_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "dispatch_frame_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "accepted_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "arguments": {
+          "$ref": "https://puppetmaster.local/schemas/git-remote-selected/1.0.0/git_remote_selected.schema.json#/$defs/request"
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "return_context": {
+          "$ref": "#/$defs/delivery_return_context"
+        }
+      }
+    },
+    "error_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "projection_id",
+        "owner_error_ref",
+        "owner_error",
+        "command_id",
+        "command_instance_id",
+        "ui_error",
+        "return_context",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.sir.git_remote_error_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "projection_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_error_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_error": {
+          "$ref": "https://puppetmaster.local/schemas/git-remote-selected/1.0.0/git_remote_selected.schema.json#/$defs/error"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.git.fetch",
+            "cmd.git.push"
+          ]
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ui_error": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json#/$defs/UICommandError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "$ref": "#/$defs/delivery_return_context"
+        },
+        "recorded_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "fixture_case": {
+      "x-fixture-only": true,
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bundle",
+        "records"
+      ],
+      "properties": {
+        "bundle": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "response",
+            "outcome",
+            "owner_request",
+            "owner_result",
+            "normalized_request",
+            "resolved_outcome_ref",
+            "resolved_owner_result_ref",
+            "original_binding_ref",
+            "delivery_return_context"
+          ],
+          "properties": {
+            "response": {
+              "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json"
+            },
+            "outcome": {
+              "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"
+            },
+            "owner_request": {
+              "$ref": "https://puppetmaster.local/schemas/git-remote-selected/1.0.0/git_remote_selected.schema.json#/$defs/request"
+            },
+            "owner_result": {
+              "$ref": "https://puppetmaster.local/schemas/git-remote-selected/1.0.0/git_remote_selected.schema.json#/$defs/result"
+            },
+            "normalized_request": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "request_ref",
+                "command_id",
+                "command_instance_id",
+                "operation_id",
+                "owner_identity",
+                "payload_sha256",
+                "idempotency_key",
+                "target_generation",
+                "dispatch_frame_id"
+              ],
+              "properties": {
+                "request_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "command_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "command_instance_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "operation_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "owner_identity": {
+                  "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+                },
+                "payload_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "idempotency_key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "target_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "dispatch_frame_id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "resolved_outcome_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "resolved_owner_result_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "original_binding_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "delivery_return_context": {
+              "$ref": "#/$defs/delivery_return_context"
+            },
+            "original_response": {
+              "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json"
+            }
+          }
+        },
+        "records": {
+          "type": "object",
+          "description": "Fixture-only synthetic resolver dictionary; every selected real record is independently owner-validated.",
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/dispatch_binding"
+    },
+    {
+      "$ref": "#/$defs/delivery_return_context"
+    },
+    {
+      "$ref": "#/$defs/error_projection"
+    },
+    {
+      "$ref": "#/$defs/fixture_case"
+    }
+  ]
+}

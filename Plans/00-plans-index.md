@@ -6,6 +6,25 @@
 
 ## Change Summary
 
+- 2026-09-25: Resolved the remaining public Git edge of the capped DL-101 SCM cycle: the existing registered public
+  Git remote commands `cmd.git.fetch` and `cmd.git.push` keep their own identities and their existing sole planned
+  handlers `handlers::git::fetch` / `handlers::git::push`, and receive the closed selected companion
+  `Plans/git_remote_selected.schema.json` with `Plans/git_remote_selected_fixtures.json` plus the authentic SIR
+  original/error binding `Plans/sir_git_remote_dispatch.schema.json` with
+  `Plans/sir_git_remote_dispatch_fixtures.json`, joined through `scripts/pm_git_remote_selected.py` and
+  `scripts/pm_git_remote_response.py` and checked by `tests/test_pm_git_remote_selected.py` and
+  `tests/test_pm_git_remote_response.py`. SCS-025 and CS-081 record that neither command is a blanket alias of, or a
+  before-dispatch normalization into, `cmd.source_control.remote.fetch` or `cmd.source_control.remote.publish`; both
+  compose the same existing owners (RemoteOperationTarget, ExternalEffectReconciliation, the per-target ordinary-Git
+  publication preview/observation values under the existing `preview_ref`, the disjoint fetch observations and the
+  unchanged `pm.source_control.operation_receipt.v1`), so no second publication-preview owner, no seventh neutral
+  route, no duplicate publication, no inferred refspec/default force and no new effect policy is introduced. Both
+  remain `handler_unavailable` with `expected_event_types=[]`; the explicit selected_force_target_id binds the one
+  selected push guard to its retained target preview without reading target identity from opaque head or lease refs;
+  partial and unknown effects stay truthful, unknown
+  effect remains reconciliation-only without retry, replay never re-pushes, and no static value proves a dispatcher,
+  issuer, permission, lease, publication target generation, effect, receipt writer or physical custody.
+  ContractRef: ContractName:Plans/Source_Control_System.md#SCS-025, ContractName:Plans/Shared_Integration_Runtime.md#SIR-042, ContractName:Plans/git_remote_selected.schema.json, ContractName:Plans/sir_git_remote_dispatch.schema.json, ContractName:Plans/Commands_System.md#CS-081, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/touch_closure.json, ContractName:Plans/storage_value_registry.json
 - 2026-09-25: Completed the bounded six-route neutral Source Control original/request/result/caller composition for exactly `cmd.source_control.backend.select`, `remote.fetch`, `remote.publish`, `diff.open`, `history.open` and `workspace.remove`: the reviewed selected-operands companion (`Plans/source_control_selected_operands.schema.json` with `Plans/source_control_selected_operand_fixtures.json`, `scripts/pm_source_control_selected_operands.py`) is enrolled at those public routes together with the authentic SIR original/result/error binding `Plans/sir_source_control_selected_dispatch.schema.json` with `Plans/sir_source_control_selected_dispatch_fixtures.json`, composed through `scripts/pm_source_control_selected_response.py`, the existing central response validator and `tests/test_pm_source_control_selected_response.py`. SCS-003 and SIR-042 name those exact surfaces; the six Commands and UI catalog rows, six production-intent wiring entries, the Touch `TCP-SCM-SELECTED` profile and three logical custody dispositions move with them, while every other row, `handler_unavailable`, `expected_event_types=[]`, the historical thirteen-route v1 binding and all 294 physical families stay unchanged. Native dispatcher, issuer, permission, lease, effect and physical custody remain unproved.
   ContractRef: ContractName:Plans/Source_Control_System.md#SCS-003, ContractName:Plans/Shared_Integration_Runtime.md#SIR-042, ContractName:Plans/source_control_selected_operands.schema.json, ContractName:Plans/sir_source_control_selected_dispatch.schema.json, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/touch_closure.json, ContractName:Plans/storage_value_registry.json
 

@@ -5869,268 +5869,368 @@
         "Plans/storage-plan.md"
       ],
       "system_id": "shared_integration_runtime"
+    },
+    {
+      "disposition_id": "scd.source_control.selected_operands_transport.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/source_control_selected_operands.schema.json",
+      "record_kinds": [
+        "pm.source_control.selected_operands.request.v1",
+        "pm.source_control.selected_operands.preview.v1",
+        "pm.source_control.selected_operands.result_binding.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Exact independently retained originals, owner-issued previews, native disclosure sources, qualification values, owner receipts and effect-unknown reconciliation references needed for replay, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original, preview or observation required for replay. Never reconstruct a mutation from current UI selection or from a reissued preview."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No reinterpretation of historical neutral command requests or results as containing these selected operands. No transport migration reconstructs original selection, preview content, native qualification or caller facts; fixture wrappers are not runtime records. Existing source-control owner records keep their existing custody.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Closed transient transport for exactly the six neutral selected-operand routes; not another repository, preview or receipt store. Fixture wrappers are not runtime records. Native admission, dispatcher implementation and original replay custody are not proved.",
+      "source_refs": [
+        "Plans/Source_Control_System.md#SCS-003",
+        "Plans/source_control_selected_operands.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.source_control_selected_dispatch_binding.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/sir_source_control_selected_dispatch.schema.json",
+      "record_kinds": [
+        "pm.sir.source_control_selected_dispatch_binding.v1",
+        "pm.sir.source_control_selected_result_binding.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain the actual independently authenticated SIR original (full identity, selected arguments and canonical digest, dispatch/frame/target generation, actor/permission, admission time and nullable caller) plus the retained owner-result reference while response, replay, reconciliation, backup or audit requires them. Exact physical owner and per-kind retention assignment remain pending; no completion anchor or source-lifetime extension is inferred.",
+        "expiry_rule": "No cleanup writer or retention interval is admitted. Register exact physical key/value, producer/readers, active reference holds, deletion and original replay/backup custody before writes; transient transport disposal is not release of original authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not cast historical neutral command requests/results or unchanged owner receipts into this complete successor binding. No selected identity, permission, lease, native qualification, effect or caller provenance is synthesized; versioned writer/reader/migration admission remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Authentic SIR original and retained-result binding for exactly the six neutral selected-operand routes. No inferred dispatcher, issuer, native handler, peer store or physical admission.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-042",
+        "Plans/sir_source_control_selected_dispatch.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.source_control_selected_error_projection.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/sir_source_control_selected_dispatch.schema.json",
+      "record_kinds": [
+        "pm.sir.source_control_selected_error_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold or replay authority. The unchanged actual pm.source_control.command_error record, its outcome error_ref, its retry/reconciliation facts and the known partial effects remain retained under their authentic owner custody.",
+        "expiry_rule": "Dispose of the safe disclosure when delivery ends or the source/current disclosure is invalidated; disposing of a projection never releases the retained original error, reference or effect authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target. A missing authentic original, owner error, reference or effect remains unavailable rather than reconstructed from a transient projection.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Internal nonpersisted safe error disclosure binding the exact actual owner error to the original request/identity/caller. A truthful cancelled route may keep projection.ui_error and the common UI error null without erasing the owner error, its reference or known effects; not a new error store.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-042",
+        "Plans/sir_source_control_selected_dispatch.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.review_checkout_transport.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_review_checkout_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.review_checkout_selected.request.v1",
+        "pm.forge.review_checkout_selected.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Transport and safe disclosure create no independent durable hold or replay authority; original/error/effect custody stays with authentic owners.",
+        "expiry_rule": "Discard when actual delivery ends or current source/disclosure becomes invalid; disposal cannot release retained originals, errors or known/unknown effect authority."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No synthesis of original review/placement/preview digest, target workspace, dirty-state truth, error/caller or admission from historical records. No historical decoder changes, peer store, TTL or physical migration writer.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Authentic original review/placement/SCM handoff and actual local checkout effect/disclosure; static metadata does not establish native admission or physical custody.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_review_checkout_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.source_control.review_checkout_preview.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/forge_review_checkout_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.source_control.review_checkout.preview.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve the qualified handoff for preview-digest revalidation, replay invalidation and unknown-effect reconciliation; exact physical per-kind policy remains pending.",
+        "expiry_rule": "No physical cleanup or numeric TTL admitted. Register exact keys, producers/current-history readers, source holds, deletion/migration and coherent backup before persistence."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No synthesis of RepositoryContext, native revision, lease, permission/FileSafe, before/after effect or path dispositions from historical records. No historical decoder changes, peer store, TTL, physical migration writer, or neutral-command implementation-route choice.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained backend-qualified SCM handoff for the exact checkout selection; cites existing neutral workspace/repository/status authority without choosing an implementation route.",
+      "source_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/forge_review_checkout_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.review_checkout_observation.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_review_checkout_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.review_checkout_selected.observation.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve actual original selection and local checkout effects for existing receipt/replay/reconciliation/audit dependencies; exact physical per-kind policy remains pending.",
+        "expiry_rule": "No physical cleanup or numeric TTL admitted. Register exact keys, producers/current-history readers, source holds, deletion/migration and coherent backup before persistence."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No synthesis of original review/placement/preview digest, target workspace, dirty-state truth, error/caller or admission from historical records. No historical decoder changes, peer store, TTL or physical migration writer.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained genuine checked-out/rejected/cancelled/unknown local effect with preserved dirty-state truth; physical owner custody remains pending.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_review_checkout_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.forge_review_checkout_dispatch.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/forge_review_checkout_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.forge_review_checkout_selected_dispatch.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve actual original selection and local checkout effects for existing receipt/replay/reconciliation/audit dependencies; exact physical per-kind policy remains pending.",
+        "expiry_rule": "No physical cleanup or numeric TTL admitted. Register exact keys, producers/current-history readers, source holds, deletion/migration and coherent backup before persistence."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No synthesis of original review/placement/preview digest, target workspace, dirty-state truth, error/caller or admission from historical records. No historical decoder changes, peer store, TTL or physical migration writer.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained actual original identity/arguments/caller; physical custody pending.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/forge_review_checkout_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.forge_review_checkout_error_projection.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/forge_review_checkout_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.forge_review_checkout_selected_error_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Transport and safe disclosure create no independent durable hold or replay authority; original/error/effect custody stays with authentic owners.",
+        "expiry_rule": "Discard when actual delivery ends or current source/disclosure becomes invalid; disposal cannot release retained originals, errors or known/unknown effect authority."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No synthesis of original review/placement/preview digest, target workspace, dirty-state truth, error/caller or admission from historical records. No historical decoder changes, peer store, TTL or physical migration writer.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted exact genuine owner error disclosure including cancelled-null UI.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/forge_review_checkout_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.source_control.git_remote_selected_transport.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/git_remote_selected.schema.json",
+      "record_kinds": [
+        "pm.source_control.git_remote_selected.request.v1",
+        "pm.source_control.git_remote_target_binding.v1",
+        "pm.source_control.git_fetch_preview.v1",
+        "pm.source_control.git_fetch_observation.v1",
+        "pm.source_control.git_remote.result.v1",
+        "pm.source_control.git_remote.error.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "The exact selected Git adapter request, the owner-issued per-target publication previews under the existing RemoteOperationTarget preview_ref, the disjoint fetch observations, the reconciliation facts and the unchanged operation receipt needed for replay, reconciliation, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; never reconstruct a publication or fetch from current UI selection, a reissued preview, a git command exit code or a caller-supplied target."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No reinterpretation of historical neutral command requests/results, of the reviewed six-route selected-operands companion or of the existing ordinary-Git publication values as containing these Git adapter operands; no converter promotes a neutral route record into a Git adapter record.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Closed transient transport for exactly cmd.git.fetch and cmd.git.push, which remain distinct registered Git adapter commands with their existing planned handlers and no availability change. Not a publication, preview, reconciliation or receipt store; native admission, dispatcher implementation and physical custody are not proved.",
+      "source_refs": [
+        "Plans/Source_Control_System.md#SCS-025",
+        "Plans/git_remote_selected.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.git_remote_dispatch_binding.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/sir_git_remote_dispatch.schema.json",
+      "record_kinds": [
+        "pm.sir.git_remote_dispatch_binding.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain the actual independently authenticated SIR original (full identity, exact selected Git adapter arguments and canonical digest, dispatch/frame/target generation, actor/permission, admission time and genuine nullable caller) while response, replay, reconciliation, backup or audit requires it. Exact physical owner, key/value, producer/readers and per-kind retention assignment remain pending.",
+        "expiry_rule": "No cleanup writer or retention interval is admitted. Transient transport disposal is not release of original authority, and a replay may not be re-dispatched to re-push or re-fetch."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not cast historical neutral command requests/results, git-pull records, Jujutsu publication records or unchanged operation receipts into this binding. No selected identity, permission, lease, publication target generation, effect or caller provenance is synthesized; versioned writer/reader/migration admission remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Authentic SIR original for exactly cmd.git.fetch and cmd.git.push. No inferred dispatcher, issuer, native handler, peer store or physical admission.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-042",
+        "Plans/sir_git_remote_dispatch.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.git_remote_error_projection.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/sir_git_remote_dispatch.schema.json",
+      "record_kinds": [
+        "pm.sir.git_remote_error_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold or replay authority. The unchanged actual pm.source_control.git_remote.error.v1 record, its outcome error_ref, its retry/reconciliation facts and the known partial or unknown effects remain retained under their authentic owner custody.",
+        "expiry_rule": "Dispose of the safe disclosure when delivery ends or the source/current disclosure is invalidated; disposing of a projection never releases the retained original error, reference or effect authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target. A missing authentic original, owner error, reference or effect remains unavailable rather than reconstructed from a transient projection.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Internal nonpersisted safe error disclosure binding the exact actual Git adapter error to the original request/identity/caller. A truthful cancelled disclosure may keep projection.ui_error and the common UI error null without erasing the owner error, its reference or known effects; not a new error store.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-042",
+        "Plans/sir_git_remote_dispatch.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
-,
-{
-    "disposition_id": "scd.source_control.selected_operands_transport.v1",
-    "system_id": "source_control",
-    "owner_doc": "Plans/Source_Control_System.md",
-    "schema_ref": "Plans/source_control_selected_operands.schema.json",
-    "record_kinds": [
-      "pm.source_control.selected_operands.request.v1",
-      "pm.source_control.selected_operands.preview.v1",
-      "pm.source_control.selected_operands.result_binding.v1"
-    ],
-    "persistence_disposition": "request_or_preview_nonpersisted",
-    "physical_family_status": "not_applicable_nonpersisted",
-    "existing_family_refs": [],
-    "retention_disposition": {
-      "mode": "not_applicable_nonpersisted",
-      "refs": [],
-      "hold_rule": "Exact independently retained originals, owner-issued previews, native disclosure sources, qualification values, owner receipts and effect-unknown reconciliation references needed for replay, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
-      "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original, preview or observation required for replay. Never reconstruct a mutation from current UI selection or from a reissued preview."
-    },
-    "redaction_transform_ids": [
-      "rt.scm_forge_metadata.v1",
-      "rt.auth_browser_session_exclusion.v1"
-    ],
-    "migration_rule": "No reinterpretation of historical neutral command requests or results as containing these selected operands. No transport migration reconstructs original selection, preview content, native qualification or caller facts; fixture wrappers are not runtime records. Existing source-control owner records keep their existing custody.",
-    "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
-    "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
-    "runtime_evidence": false,
-    "rationale": "Closed transient transport for exactly the six neutral selected-operand routes; not another repository, preview or receipt store. Fixture wrappers are not runtime records. Native admission, dispatcher implementation and original replay custody are not proved.",
-    "source_refs": [
-      "Plans/Source_Control_System.md#SCS-003",
-      "Plans/source_control_selected_operands.schema.json",
-      "Plans/storage-plan.md"
-    ]
-  },
-  {
-    "disposition_id": "scd.sir.source_control_selected_dispatch_binding.v1",
-    "system_id": "shared_integration_runtime",
-    "owner_doc": "Plans/Shared_Integration_Runtime.md",
-    "schema_ref": "Plans/sir_source_control_selected_dispatch.schema.json",
-    "record_kinds": [
-      "pm.sir.source_control_selected_dispatch_binding.v1",
-      "pm.sir.source_control_selected_result_binding.v1"
-    ],
-    "persistence_disposition": "durable",
-    "physical_family_status": "physical_family_registration_pending",
-    "existing_family_refs": [],
-    "retention_disposition": {
-      "mode": "physical_registration_pending",
-      "refs": [],
-      "hold_rule": "Retain the actual independently authenticated SIR original (full identity, selected arguments and canonical digest, dispatch/frame/target generation, actor/permission, admission time and nullable caller) plus the retained owner-result reference while response, replay, reconciliation, backup or audit requires them. Exact physical owner and per-kind retention assignment remain pending; no completion anchor or source-lifetime extension is inferred.",
-      "expiry_rule": "No cleanup writer or retention interval is admitted. Register exact physical key/value, producer/readers, active reference holds, deletion and original replay/backup custody before writes; transient transport disposal is not release of original authority."
-    },
-    "redaction_transform_ids": [
-      "rt.no_secret_refs.v1",
-      "rt.auth_browser_session_exclusion.v1"
-    ],
-    "migration_rule": "Do not cast historical neutral command requests/results or unchanged owner receipts into this complete successor binding. No selected identity, permission, lease, native qualification, effect or caller provenance is synthesized; versioned writer/reader/migration admission remains pending.",
-    "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
-    "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
-    "runtime_evidence": false,
-    "rationale": "Authentic SIR original and retained-result binding for exactly the six neutral selected-operand routes. No inferred dispatcher, issuer, native handler, peer store or physical admission.",
-    "source_refs": [
-      "Plans/Shared_Integration_Runtime.md#SIR-042",
-      "Plans/sir_source_control_selected_dispatch.schema.json",
-      "Plans/storage-plan.md"
-    ]
-  },
-  {
-    "disposition_id": "scd.sir.source_control_selected_error_projection.v1",
-    "system_id": "shared_integration_runtime",
-    "owner_doc": "Plans/Shared_Integration_Runtime.md",
-    "schema_ref": "Plans/sir_source_control_selected_dispatch.schema.json",
-    "record_kinds": [
-      "pm.sir.source_control_selected_error_projection.v1"
-    ],
-    "persistence_disposition": "ephemeral_nonpersisted",
-    "physical_family_status": "not_applicable_nonpersisted",
-    "existing_family_refs": [],
-    "retention_disposition": {
-      "mode": "not_applicable_nonpersisted",
-      "refs": [],
-      "hold_rule": "No independent durable hold or replay authority. The unchanged actual pm.source_control.command_error record, its outcome error_ref, its retry/reconciliation facts and the known partial effects remain retained under their authentic owner custody.",
-      "expiry_rule": "Dispose of the safe disclosure when delivery ends or the source/current disclosure is invalidated; disposing of a projection never releases the retained original error, reference or effect authority."
-    },
-    "redaction_transform_ids": [
-      "rt.no_secret_refs.v1",
-      "rt.auth_browser_session_exclusion.v1"
-    ],
-    "migration_rule": "No persisted migration target. A missing authentic original, owner error, reference or effect remains unavailable rather than reconstructed from a transient projection.",
-    "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
-    "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
-    "runtime_evidence": false,
-    "rationale": "Internal nonpersisted safe error disclosure binding the exact actual owner error to the original request/identity/caller. A truthful cancelled route may keep projection.ui_error and the common UI error null without erasing the owner error, its reference or known effects; not a new error store.",
-    "source_refs": [
-      "Plans/Shared_Integration_Runtime.md#SIR-042",
-      "Plans/sir_source_control_selected_dispatch.schema.json",
-      "Plans/storage-plan.md"
-    ]
-  },
-  {
-    "disposition_id": "scd.forge.review_checkout_transport.v1",
-    "system_id": "forge",
-    "owner_doc": "Plans/Forge_Integrations.md",
-    "schema_ref": "Plans/forge_review_checkout_selected_contracts.schema.json",
-    "record_kinds": [
-      "pm.forge.review_checkout_selected.request.v1",
-      "pm.forge.review_checkout_selected.result.v1"
-    ],
-    "persistence_disposition": "request_or_preview_nonpersisted",
-    "physical_family_status": "not_applicable_nonpersisted",
-    "existing_family_refs": [],
-    "retention_disposition": {
-      "mode": "not_applicable_nonpersisted",
-      "refs": [],
-      "hold_rule": "Transport and safe disclosure create no independent durable hold or replay authority; original/error/effect custody stays with authentic owners.",
-      "expiry_rule": "Discard when actual delivery ends or current source/disclosure becomes invalid; disposal cannot release retained originals, errors or known/unknown effect authority."
-    },
-    "redaction_transform_ids": [
-      "rt.scm_forge_metadata.v1",
-      "rt.auth_browser_session_exclusion.v1"
-    ],
-    "migration_rule": "No synthesis of original review/placement/preview digest, target workspace, dirty-state truth, error/caller or admission from historical records. No historical decoder changes, peer store, TTL or physical migration writer.",
-    "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
-    "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
-    "runtime_evidence": false,
-    "rationale": "Authentic original review/placement/SCM handoff and actual local checkout effect/disclosure; static metadata does not establish native admission or physical custody.",
-    "source_refs": [
-      "Plans/Forge_Integrations.md",
-      "Plans/forge_review_checkout_selected_contracts.schema.json",
-      "Plans/storage-plan.md"
-    ]
-  },
-  {
-    "disposition_id": "scd.source_control.review_checkout_preview.v1",
-    "system_id": "source_control",
-    "owner_doc": "Plans/Source_Control_System.md",
-    "schema_ref": "Plans/forge_review_checkout_selected_contracts.schema.json",
-    "record_kinds": [
-      "pm.source_control.review_checkout.preview.v1"
-    ],
-    "persistence_disposition": "durable",
-    "physical_family_status": "physical_family_registration_pending",
-    "existing_family_refs": [],
-    "retention_disposition": {
-      "mode": "physical_registration_pending",
-      "refs": [],
-      "hold_rule": "Preserve the qualified handoff for preview-digest revalidation, replay invalidation and unknown-effect reconciliation; exact physical per-kind policy remains pending.",
-      "expiry_rule": "No physical cleanup or numeric TTL admitted. Register exact keys, producers/current-history readers, source holds, deletion/migration and coherent backup before persistence."
-    },
-    "redaction_transform_ids": [
-      "rt.scm_forge_metadata.v1",
-      "rt.auth_browser_session_exclusion.v1"
-    ],
-    "migration_rule": "No synthesis of RepositoryContext, native revision, lease, permission/FileSafe, before/after effect or path dispositions from historical records. No historical decoder changes, peer store, TTL, physical migration writer, or neutral-command implementation-route choice.",
-    "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
-    "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
-    "runtime_evidence": false,
-    "rationale": "Retained backend-qualified SCM handoff for the exact checkout selection; cites existing neutral workspace/repository/status authority without choosing an implementation route.",
-    "source_refs": [
-      "Plans/Source_Control_System.md",
-      "Plans/forge_review_checkout_selected_contracts.schema.json",
-      "Plans/storage-plan.md"
-    ]
-  },
-  {
-    "disposition_id": "scd.forge.review_checkout_observation.v1",
-    "system_id": "forge",
-    "owner_doc": "Plans/Forge_Integrations.md",
-    "schema_ref": "Plans/forge_review_checkout_selected_contracts.schema.json",
-    "record_kinds": [
-      "pm.forge.review_checkout_selected.observation.v1"
-    ],
-    "persistence_disposition": "durable",
-    "physical_family_status": "physical_family_registration_pending",
-    "existing_family_refs": [],
-    "retention_disposition": {
-      "mode": "physical_registration_pending",
-      "refs": [],
-      "hold_rule": "Preserve actual original selection and local checkout effects for existing receipt/replay/reconciliation/audit dependencies; exact physical per-kind policy remains pending.",
-      "expiry_rule": "No physical cleanup or numeric TTL admitted. Register exact keys, producers/current-history readers, source holds, deletion/migration and coherent backup before persistence."
-    },
-    "redaction_transform_ids": [
-      "rt.scm_forge_metadata.v1",
-      "rt.auth_browser_session_exclusion.v1"
-    ],
-    "migration_rule": "No synthesis of original review/placement/preview digest, target workspace, dirty-state truth, error/caller or admission from historical records. No historical decoder changes, peer store, TTL or physical migration writer.",
-    "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
-    "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
-    "runtime_evidence": false,
-    "rationale": "Retained genuine checked-out/rejected/cancelled/unknown local effect with preserved dirty-state truth; physical owner custody remains pending.",
-    "source_refs": [
-      "Plans/Forge_Integrations.md",
-      "Plans/forge_review_checkout_selected_contracts.schema.json",
-      "Plans/storage-plan.md"
-    ]
-  },
-  {
-    "disposition_id": "scd.sir.forge_review_checkout_dispatch.v1",
-    "system_id": "shared_integration_runtime",
-    "owner_doc": "Plans/Shared_Integration_Runtime.md",
-    "schema_ref": "Plans/forge_review_checkout_selected_contracts.schema.json",
-    "record_kinds": [
-      "pm.sir.forge_review_checkout_selected_dispatch.v1"
-    ],
-    "persistence_disposition": "durable",
-    "physical_family_status": "physical_family_registration_pending",
-    "existing_family_refs": [],
-    "retention_disposition": {
-      "mode": "physical_registration_pending",
-      "refs": [],
-      "hold_rule": "Preserve actual original selection and local checkout effects for existing receipt/replay/reconciliation/audit dependencies; exact physical per-kind policy remains pending.",
-      "expiry_rule": "No physical cleanup or numeric TTL admitted. Register exact keys, producers/current-history readers, source holds, deletion/migration and coherent backup before persistence."
-    },
-    "redaction_transform_ids": [
-      "rt.no_secret_refs.v1",
-      "rt.auth_browser_session_exclusion.v1"
-    ],
-    "migration_rule": "No synthesis of original review/placement/preview digest, target workspace, dirty-state truth, error/caller or admission from historical records. No historical decoder changes, peer store, TTL or physical migration writer.",
-    "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
-    "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
-    "runtime_evidence": false,
-    "rationale": "Retained actual original identity/arguments/caller; physical custody pending.",
-    "source_refs": [
-      "Plans/Shared_Integration_Runtime.md",
-      "Plans/forge_review_checkout_selected_contracts.schema.json",
-      "Plans/storage-plan.md"
-    ]
-  },
-  {
-    "disposition_id": "scd.sir.forge_review_checkout_error_projection.v1",
-    "system_id": "shared_integration_runtime",
-    "owner_doc": "Plans/Shared_Integration_Runtime.md",
-    "schema_ref": "Plans/forge_review_checkout_selected_contracts.schema.json",
-    "record_kinds": [
-      "pm.sir.forge_review_checkout_selected_error_projection.v1"
-    ],
-    "persistence_disposition": "ephemeral_nonpersisted",
-    "physical_family_status": "not_applicable_nonpersisted",
-    "existing_family_refs": [],
-    "retention_disposition": {
-      "mode": "not_applicable_nonpersisted",
-      "refs": [],
-      "hold_rule": "Transport and safe disclosure create no independent durable hold or replay authority; original/error/effect custody stays with authentic owners.",
-      "expiry_rule": "Discard when actual delivery ends or current source/disclosure becomes invalid; disposal cannot release retained originals, errors or known/unknown effect authority."
-    },
-    "redaction_transform_ids": [
-      "rt.scm_forge_metadata.v1",
-      "rt.auth_browser_session_exclusion.v1"
-    ],
-    "migration_rule": "No synthesis of original review/placement/preview digest, target workspace, dirty-state truth, error/caller or admission from historical records. No historical decoder changes, peer store, TTL or physical migration writer.",
-    "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
-    "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
-    "runtime_evidence": false,
-    "rationale": "Nonpersisted exact genuine owner error disclosure including cancelled-null UI.",
-    "source_refs": [
-      "Plans/Shared_Integration_Runtime.md",
-      "Plans/forge_review_checkout_selected_contracts.schema.json",
-      "Plans/storage-plan.md"
-    ]
-  }
   ],
   "families": [
     {

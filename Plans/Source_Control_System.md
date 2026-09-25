@@ -1965,3 +1965,165 @@ owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/GitHub_Integration.md
 ```
+
+## DL-101 Git Public Remote Adapter Typed Bindings - 2026-09-25
+
+The two existing registered public Git remote commands `cmd.git.fetch` and `cmd.git.push` keep their own command
+identity, their existing catalog registration and their existing sole planned handler targets `handlers::git::fetch`
+and `handlers::git::push`. `Plans/UI_Command_Catalog.md` adjudicates them as newly registered commands (2026-07-27
+Cozy Shelves reconciliation), not as alias-of a recorded target, and their production-intent rows still require a
+typed request/result contract that reaches the Git target. Under this section's own rule that existing Git commands
+remain Git adapter commands unless the command owner explicitly normalizes them, and because no owner statement
+normalizes either remote verb to `cmd.source_control.remote.fetch` or `cmd.source_control.remote.publish`, neither is a
+blanket alias and neither is a before-dispatch normalization. They remain `handler_unavailable` with
+`expected_event_types=[]`; no availability, handler target, event, command or physical family changes.
+
+Their typed admission consumes the same existing Source Control owners that ordinary-Git fetch and publication already
+use, so no second effect policy, no second publication-preview owner and no duplicate publication is introduced:
+
+- `Plans/git_remote_selected.schema.json` is the closed selected request/binding/preview/observation/result/error
+  companion for exactly these two routes. `cmd.git.fetch` binds the selected remote and ref selectors, fetch URL,
+  transport and host identity, the independently generated remote selection generation, the actual RepositoryContext
+  and expected Git revision, the writer and credential leases, the permission and FileSafe decisions and the exact
+  caller context. `cmd.git.push` binds the selected RemoteOperationTarget and ExternalEffectReconciliation, the
+  complete explicit target set with exact push URLs and refspecs, per-target expected remote heads that stay
+  absent/known/unknown, the independent target-selection generation, the exact selected_force_target_id (null without
+  selected force), and the unchanged force guard. The selected force guard stays on exactly that target's retained
+  preview; every other target keeps the unchanged no-force guard. The target is never inferred from an opaque head or
+  lease reference. No refspec, default force, lease or head is inferred, and a per-target preview may not request force
+  that exceeds the approved guard.
+- Per-target push preview contents and per-target observations are the existing ordinary-Git publication values located
+  under the existing `RemoteOperationTarget.preview_ref` (`pm.source_control.git_publication_preview.v1` and
+  `pm.source_control.git_publication_observation.v1`); Git and Jujutsu mappings are never relabelled. Fan-out stays
+  non-atomic and `mirror_duplicate_push_allowed=false` remains exact. Fetch observations are the disjoint
+  `pm.source_control.git_fetch_observation.v1` per-ref and per-object effect values; an already-local object never
+  fabricates a fetch receipt and a claimed applied effect always names its genuinely observed objects and native receipt.
+- Terminal effects retain the unchanged `pm.source_control.operation_receipt.v1`, and every terminal route keeps a
+  non-secret receipt reference. Partial and unknown per-target effects survive failure and cancellation; unknown effect
+  stays `effect_unknown` and reconciliation-only with no retry action, success requires genuinely observed heads plus
+  the reconciliation owner's observed-success evidence, and a replay preserves the original dispatch, result and receipt
+  without re-pushing or replacing the original selection with current UI state.
+- `Plans/sir_git_remote_dispatch.schema.json` owns the authentic SIR original dispatch binding and the nullable SIR
+  error projection under SIR-042, and the composed result reaches the existing CV-333 central response and the genuine
+  nullable caller return context through the actual `Plans/ui_command_response.schema.json` path.
+
+Relation to the six enrolled neutral routes: `cmd.source_control.remote.fetch` and `cmd.source_control.remote.publish`
+remain the backend-neutral ordinary-Git routes with their own enrolled selected-operands binding, and the Git adapter
+commands are distinct identities that compose the same owner records. Neither pair normalizes to the other, and this
+section introduces no seventh neutral route, no second handler for a neutral command, no widening of the nineteen
+neutral command scope or its historical v1 request/result binding, and no native, permission, lease, effect, receipt or
+physical-custody proof. Logical original/preview/observation custody remains separate from physical admission.
+
+### SCS-025 - Git Public Remote Adapter Typed Bindings
+
+```yaml
+plan_unit_id: SCS-025
+unit_type: command_binding
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: >-
+  The existing public Git remote commands cmd.git.fetch and cmd.git.push keep their own identities and their existing
+  sole planned handlers handlers::git::fetch and handlers::git::push, and are not blanket aliases of, or before-dispatch
+  normalizations into, cmd.source_control.remote.fetch or cmd.source_control.remote.publish. Their closed selected
+  companion Plans/git_remote_selected.schema.json binds the exact selected remote/refs or RemoteOperationTarget and
+  ExternalEffectReconciliation, the complete explicit target set with exact push URLs/refspecs, per-target expected
+  heads that stay absent/known/unknown, the independent selection generation and the unchanged force guard; per-target
+  force is bound to the explicit selected_force_target_id rather than inferred from an opaque head or lease reference;
+  previews and observations reuse the existing ordinary-Git publication values under the existing preview_ref, fetch
+  observations are the disjoint per-ref/object effect values, and the unchanged operation receipt carries terminal
+  effect truth. Partial and unknown outcomes stay truthful, unknown effect remains reconciliation-only without retry,
+  a later callback that mutates an already returned owner record refuses the composition, replay never re-pushes, and
+  the authentic SIR original/error binding plus the existing central response path carry the caller return. Handler
+  availability, expected_event_types, the neutral command scope and physical custody are unchanged, and no static
+  value proves a native issuer, permission, lease, effect or receipt.
+gui_related: true
+gui_classification_reason: Source Control remote surfaces, palette/API and their disabled reasons expose these two commands.
+depends_on: [SCS-003, SIR-042]
+unblocks: []
+acceptance_criteria:
+  - >-
+    Exactly cmd.git.fetch and cmd.git.push consume Plans/git_remote_selected.schema.json; no other command, neutral
+    route or compatibility spelling is admitted by this companion.
+  - >-
+    Both keep their existing planned handler targets handlers::git::fetch and handlers::git::push, remain
+    handler_unavailable with expected_event_types=[], and receive no peer handler, event, wiring or availability row.
+  - >-
+    Neither command is an alias of, or a before-dispatch normalization into, cmd.source_control.remote.fetch or
+    cmd.source_control.remote.publish; the neutral routes keep their own enrolled selected-operands binding and the
+    nineteen neutral command scope is not widened.
+  - >-
+    Per-target publication previews and observations reuse the existing ordinary-Git publication values under the
+    existing RemoteOperationTarget preview_ref; no second publication-preview owner, no new push command and no
+    duplicate or mirror publication is introduced, and fan-out stays non-atomic.
+  - >-
+    No refspec, force, lease, expected head or strategy is inferred; a force request requires the approved force guard
+    with its lease reference and an explicit selected_force_target_id among the exact target set (null with no force).
+    The retained preview for that target, and only that target, carries the selected guard; every other preview keeps
+    the unchanged no-force guard (force_requested false with no force references). Reconciliation keeps the selected
+    request guard. No preview or reconciliation value may silently drop the selected force request or add force the
+    selection did not request, and opaque head or lease reference spelling never supplies target identity.
+  - >-
+    Partial and unknown effects stay truthful: succeeded requires genuinely observed heads for every proposed
+    destination of the target's complete explicit mapping set plus reconciliation evidence, a fetch observation or
+    per-ref effect that is unknown or partial cannot pair with a succeeded/effects_reconciled result or receipt,
+    unknown effect remains effect_unknown/reconciliation-only with no retry action, and a replayed result
+    reuses the original dispatch, result and receipt without re-pushing.
+  - >-
+    The SIR original binding and nullable error projection in Plans/sir_git_remote_dispatch.schema.json preserve the
+    authentic identity, arguments, digest, dispatch/frame/target generation, idempotency, permission snapshot,
+    admission time and genuine nullable caller return context; the central response and caller return are not replaced
+    by a local projection or current UI selection.
+  - >-
+    Static shape and fixture composition authenticate no dispatcher, native issuer, permission, lease, publication
+    target generation, native effect, receipt writer or physical custody; logical custody remains separate from
+    physical admission and no store, key, retention interval or migration is admitted.
+validation_surfaces:
+  - Plans/git_remote_selected.schema.json
+  - Plans/git_remote_selected_fixtures.json
+  - Plans/sir_git_remote_dispatch.schema.json
+  - Plans/sir_git_remote_dispatch_fixtures.json
+  - scripts/pm_git_remote_selected.py
+  - scripts/pm_git_remote_response.py
+  - tests/test_pm_git_remote_selected.py
+  - tests/test_pm_git_remote_response.py
+  - tests/test_pm_git_remote_touch_bindings.py
+  - python3 scripts/pm-new-contracts-verify.py
+  - python3 scripts/pm-touch-closure-verify.py --json
+risk_class: git_remote_alias_duplicate_publication_or_false_effect_closure
+reasoning_tier: high
+context_scope: git_public_remote_adapter_bindings
+implementation_surfaces:
+  - Plans/Source_Control_System.md
+  - Plans/git_remote_selected.schema.json
+  - Plans/sir_git_remote_dispatch.schema.json
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/touch_closure.json
+  - future command handlers
+node_compile_hint:
+  mode: static_git_remote_adapter_binding_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Source_Control_System.md#SCS-003
+  - Plans/Shared_Integration_Runtime.md#SIR-042
+  - Plans/UI_Command_Catalog.md#UCC-127
+  - Plans/Decision_Log.md#DL-103
+  - "SourceRef: reports/packet-canon-closure-20260924/decisions-and-handoff.md"
+  - "SourceRef: /home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/jobs/scm-public-git-guard-target-sol-01/REVIEW.md sha256:d0890c6a4245c74e29c1478c64c796aa4f92b48075bc6623f834bf87fea9fa27"
+preserved_exact_tokens: [cmd.git.fetch, cmd.git.push, handlers::git::fetch, handlers::git::push, handler_unavailable, "expected_event_types=[]", cmd.source_control.remote.fetch, cmd.source_control.remote.publish, RemoteOperationTarget, ExternalEffectReconciliation, force guard, effect_unknown]
+negative_constraints:
+  - Do not turn either Git remote command into a blanket alias of, or a silent normalization into, a neutral Source Control command.
+  - Do not mint a seventh neutral route, a peer handler, an event, a store, a retention interval or a native capability.
+  - Do not copy Jujutsu publication semantics into Git, infer a refspec or default force, or duplicate a publication.
+  - Do not widen the historical neutral command scope, request/result enum or the reviewed six-route successor binding.
+  - Do not claim native dispatcher, issuer, permission, lease, effect, receipt or physical-custody evidence from static values.
+owner_hints:
+  - Plans/Source_Control_System.md
+  - Plans/Shared_Integration_Runtime.md
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/touch_closure.json
+```

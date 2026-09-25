@@ -3,12 +3,11 @@
 ## Latest verified state (supersedes historical queue labels below)
 
 - Six neutral Source Control routes are integrated and independently reviewed:
-  `scm-six-neutral-integration.md`. Public Git fetch/push remains a distinct
-  specification gap: the four prior counterexamples now reject, but independent
-  review found a remaining safeguard-to-selected-remote mismatch. Jared approved
-  the frozen guard-target card for a narrow Sol correction, different-Sol review
-  and root final check. See `scm-public-git-guard-target-residual-20260925.md`;
-  the candidate is not yet integrated.
+  `scm-six-neutral-integration.md`. Public Git fetch/push is now integrated after
+  the approved narrow safeguard-to-selected-remote repair, different-Sol review
+  and root final check. The 38 focused tests and final 80-pair contract gate pass;
+  see `scm-public-git-integration.md`. Native availability, effects and physical
+  custody remain unproved; these are not claimed by static companion closure.
 - Guided Tour Chat/layout original custody owner prose and typed companion are
   integrated: `tour-original-owner-integration.md` and
   `tour-original-custody-companion-integration.md`. Root's 53 focused tests and

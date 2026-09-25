@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6025,
+      "line_count": 6044,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "f29173fdb0d903f8e033c688df3891953f78751e20bd7cb2a7b4f5ca1d76e9b3",
+      "sha256": "f50098186689d6d15bb7cb67aed77a6f02ab85c0e5f9b850dc77121978edc8fb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -3565,9 +3565,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 34,
-        "True": 46
+        "True": 47
       },
-      "heading_count": 192,
+      "heading_count": 194,
       "implementation_surfaces": [
         "Plans/BinaryLocator_Spec.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -3618,9 +3618,9 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 6357,
+      "line_count": 6427,
       "path": "Plans/Commands_System.md",
-      "plan_unit_count": 80,
+      "plan_unit_count": 81,
       "plan_unit_ids": [
         "CS-002",
         "CS-003",
@@ -3701,7 +3701,8 @@
         "CS-077",
         "CS-078",
         "CS-079",
-        "CS-080"
+        "CS-080",
+        "CS-081"
       ],
       "reasoning_tiers": [
         "high",
@@ -3735,6 +3736,7 @@
         "command_reserved_name_drift",
         "command_response_identity_or_false_completion",
         "command_restore_or_baseline_substitution",
+        "command_route_authority_or_false_git_remote_closure",
         "command_runtime_identity_drift",
         "command_save_validation_drift",
         "command_schema_drift",
@@ -3790,10 +3792,10 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "239dc6c72a134ed9ca2fadbc950cefb2025cb63593917bce362a2d9d070ba0c4",
+      "sha256": "a79022bbc83c008fee0a83e0ac56200067306b372c4b8726e4d94d785d1edf74",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 80
+        "accepted": 81
       },
       "title": "Commands System (Canonical SSOT)",
       "unit_type_counts": {
@@ -3802,7 +3804,7 @@
         "command_contract": 3,
         "command_disposition": 1,
         "command_registration": 1,
-        "command_registry": 4,
+        "command_registry": 5,
         "compatibility_disposition": 1,
         "constraint": 19,
         "reference": 1,
@@ -3814,6 +3816,7 @@
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.exclusions.json",
         "Plans/Wiring_Matrix.production.json",
+        "Plans/git_remote_selected.schema.json",
         "Plans/guided_tour_contract_fixtures.json",
         "Plans/guided_tour_contracts.schema.json",
         "Plans/plugin_contract_fixtures.json",
@@ -3823,6 +3826,7 @@
         "Plans/shared_integration_runtime_expansion_fixtures.json",
         "Plans/shared_integration_runtime_fixtures.json",
         "Plans/shared_runtime_command_contract_fixtures.json",
+        "Plans/sir_git_remote_dispatch.schema.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
         "Plans/touch_closure.json",
@@ -16858,7 +16862,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 3272,
+      "line_count": 3274,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 52,
       "plan_unit_ids": [
@@ -16972,7 +16976,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "48bddcc3310dfd05b43dc85c0bbff23336991a6efbd3664bef9fc01b9de50a26",
+      "sha256": "f7df1da29e4fdfebdbf8dd5f05b0653563ae6b32cd672b00c63c56b3fb255d60",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -17260,9 +17264,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 2,
-        "True": 22
+        "True": 23
       },
-      "heading_count": 56,
+      "heading_count": 58,
       "implementation_surfaces": [
         "Plans/Commands_System.md",
         "Plans/FinalGUISpec.md",
@@ -17272,9 +17276,11 @@
         "Plans/Source_Control_System.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
+        "Plans/git_remote_selected.schema.json",
         "Plans/git_stash_apply_selected.schema.json",
         "Plans/git_stash_apply_selected_fixtures.json",
         "Plans/product_onboarding_contracts.schema.json",
+        "Plans/sir_git_remote_dispatch.schema.json",
         "Plans/sir_git_stash_apply_dispatch.schema.json",
         "Plans/sir_git_stash_apply_dispatch_fixtures.json",
         "Plans/sir_source_control_selected_dispatch.schema.json",
@@ -17307,9 +17313,9 @@
         "future source-control facade",
         "future source-control migration"
       ],
-      "line_count": 1967,
+      "line_count": 2129,
       "path": "Plans/Source_Control_System.md",
-      "plan_unit_count": 24,
+      "plan_unit_count": 25,
       "plan_unit_ids": [
         "SCS-001",
         "SCS-002",
@@ -17334,7 +17340,8 @@
         "SCS-021",
         "SCS-022",
         "SCS-023",
-        "SCS-024"
+        "SCS-024",
+        "SCS-025"
       ],
       "reasoning_tiers": [
         "high"
@@ -17345,6 +17352,7 @@
         "command_route_authority_and_runtime_claim_boundary",
         "concurrent_mutation_or_credential_escape",
         "d5_planning_admission_and_exact_effect_envelope",
+        "git_remote_alias_duplicate_publication_or_false_effect_closure",
         "gui_backend_or_owner_misrepresentation",
         "incomplete_source_recovery_or_implicit_remote_mutation",
         "local_history_hosting_or_transport_conflation",
@@ -17365,14 +17373,14 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "003b207721847e0262308f151a717be98d5a465fe0a13733219aa9d5c335c673",
+      "sha256": "accc9d294aee7aa90df185d161a4bcbcc494fb38c038a6caa44247bfedddefbe",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 24
+        "accepted": 25
       },
       "title": "Source Control System",
       "unit_type_counts": {
-        "command_binding": 2,
+        "command_binding": 3,
         "integration_contract": 12,
         "owner_boundary": 1,
         "requirement": 8,
@@ -17389,10 +17397,14 @@
         "Plans/final_gui_interaction_contracts.schema.json#/$defs/post_integration_dry_component_reconciliation",
         "Plans/forge_integration_contract_fixtures.json",
         "Plans/forge_integration_contracts.schema.json",
+        "Plans/git_remote_selected.schema.json",
+        "Plans/git_remote_selected_fixtures.json",
         "Plans/jujutsu_integration_contract_fixtures.json",
         "Plans/jujutsu_integration_contracts.schema.json",
         "Plans/product_onboarding_contract_fixtures.json",
         "Plans/product_onboarding_contracts.schema.json",
+        "Plans/sir_git_remote_dispatch.schema.json",
+        "Plans/sir_git_remote_dispatch_fixtures.json",
         "Plans/sir_source_control_selected_dispatch_fixtures.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
@@ -17441,6 +17453,8 @@
         "remote fan-out",
         "repository_context schema fixtures",
         "routing",
+        "scripts/pm_git_remote_response.py",
+        "scripts/pm_git_remote_selected.py",
         "scripts/pm_source_control_selected_operands.py",
         "scripts/pm_source_control_selected_response.py",
         "setup state fixtures",
@@ -17448,6 +17462,9 @@
         "source_control_projection fixtures",
         "stale lease tests",
         "stash-apply tests: unset choice, file-changes-only, file-changes-plus-saved-staged-selections, staged selections not restorable, retained-stash result, no separately acquired stash source, a completed success only with a verified post-apply stash source, and no pop/drop behavior",
+        "tests/test_pm_git_remote_response.py",
+        "tests/test_pm_git_remote_selected.py",
+        "tests/test_pm_git_remote_touch_bindings.py",
         "tests/test_pm_onboarding_phases.py",
         "tests/test_pm_source_control_response.py",
         "tests/test_pm_source_control_selected_operands.py",
@@ -18841,7 +18858,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13308,
+      "line_count": 13311,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 164,
       "plan_unit_ids": [
@@ -19076,7 +19093,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "6af1874f910d80adb018db85e7c84146166b4401c65f0cc81e1c87933122eb2b",
+      "sha256": "5d646f1f86c182f6c43a2f9e99ecbe0234cd1ac5a79cdd0669b15c90872efd8b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163,
@@ -20142,7 +20159,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T19:57:34Z",
+  "generated_at_utc": "2026-09-25T20:32:21Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20151,12 +20168,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3538,
-      "True": 3207
+      "True": 3209
     },
-    "plan_unit_count": 6745,
+    "plan_unit_count": 6747,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6554,
+      "accepted": 6556,
       "retired": 182,
       "superseded": 9
     },
@@ -20173,12 +20190,12 @@
       "baseline_reference": 1,
       "boundary_contract": 1,
       "capability_matrix": 1,
-      "command_binding": 17,
+      "command_binding": 18,
       "command_catalog": 3,
       "command_contract": 38,
       "command_disposition": 2,
       "command_registration": 1,
-      "command_registry": 4,
+      "command_registry": 5,
       "compatibility_contract": 1,
       "compatibility_disposition": 137,
       "compatibility_note": 2,

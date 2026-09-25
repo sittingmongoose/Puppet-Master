@@ -8432,58 +8432,6 @@
       ]
     },
     {
-      "profile_id": "TCP-GIT-REMOTE-LEGACY",
-      "requirement_refs": [
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Source_Control_System.md#SCS-003",
-        "Plans/GitHub_Integration.md",
-        "Plans/WorktreeGitImprovement.md"
-      ],
-      "owner_plan": "Plans/Source_Control_System.md",
-      "plan_unit": "SCS-003",
-      "dry_contract_ref": "Plans/Source_Control_System.md",
-      "payload_schema_ref": "unbound_exact_git_push_fetch_request",
-      "result_schema_ref": "unbound_exact_git_push_fetch_result",
-      "error_schema_ref": "unbound_exact_git_push_fetch_error",
-      "availability_rule": "Existing Git remote owner requirements govern availability; exact push/fetch typed admission remains unbound. No stash-selected availability or replacement confirmation policy is asserted.",
-      "permission_gate": "Existing Permissions, repository currentness, remote credential and applicable lease owner requirements remain mandatory; this census grants no execution authority.",
-      "disabled_reason_rule": "Project actual owner-defined availability and disabled reasons; exact selected push/fetch bindings remain pending, with no borrowed stash-only closed reason set.",
-      "handler_owner": "Source Control Git adapter; existing planned handlers::git::push and handlers::git::fetch. Native execution remains unproved.",
-      "handler_status": "specified",
-      "wiring_status": "specified",
-      "production_or_simulation": "Static census and existing production-intent wiring only; no native, simulation or concept proof.",
-      "gui_triggers": [
-        "Existing Source Control remote command surfaces and command palette"
-      ],
-      "return_route": "Existing command caller and return-route owners remain authoritative; exact typed original/delivery binding is pending.",
-      "reverse_consumers": [
-        "Plans/Jujutsu_Integration.md",
-        "Plans/Forge_Integrations.md",
-        "Plans/Settings_System.md"
-      ],
-      "event_refs": [
-        "No new EventRecord; expected_event_types=[] until Event Authority admission."
-      ],
-      "receipt_refs": [
-        "Plans/Source_Control_System.md"
-      ],
-      "observable_work": [
-        "Required for remote and long repository operations."
-      ],
-      "persistence_refs": [
-        "Plans/storage_value_registry.json"
-      ],
-      "migration_refs": [
-        "Plans/UI_Command_Catalog.md"
-      ],
-      "test_refs": [
-        "tests/test_pm_git_remote_touch_bindings.py"
-      ],
-      "evidence_refs": [
-        "static_census_and_copy_repair_only"
-      ]
-    },
-    {
       "profile_id": "TCP-FORGE-REVIEW-CREATE",
       "requirement_refs": [
         "Plans/Forge_Integrations.md#FGI-004",
@@ -8591,9 +8539,8 @@
       "evidence_refs": [
         "static_schema_fixture_and_concept_only"
       ]
-    }
-,
-{
+    },
+    {
       "availability_rule": "Consume SCS-003's exact command_id-discriminated scope and current capability together with the enrolled selected operands: repository/backend/revision/workspace, writer and credential leases only where that command's owner scope requires them, and the owner-issued preview plus its independently retained native disclosure source for the mutation routes. A current head, focus, display path or replaced preview cannot substitute for the submitted selection; native admission and current authority remain required.",
       "disabled_reason_rule": "Expose backend/repository/workspace missing, stale revision, selection or preview mismatch, lease conflict, permission, credential, setup, degraded, or recovery blocker, including handler_unavailable.",
       "dry_contract_ref": "Plans/source_control_selected_operands.schema.json",
@@ -8699,6 +8646,65 @@
       ],
       "evidence_refs": [
         "static_schema_and_fixture_only"
+      ]
+    },
+    {
+      "profile_id": "TCP-GIT-REMOTE-SELECTED",
+      "requirement_refs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Source_Control_System.md#SCS-025",
+        "Plans/Shared_Integration_Runtime.md#SIR-042",
+        "Plans/GitHub_Integration.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "owner_plan": "Plans/Source_Control_System.md",
+      "plan_unit": "SCS-025",
+      "dry_contract_ref": "Plans/git_remote_selected.schema.json",
+      "payload_schema_ref": "Plans/git_remote_selected.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/git_remote_selected.schema.json#/$defs/result",
+      "error_schema_ref": "Plans/git_remote_selected.schema.json#/$defs/error",
+      "availability_rule": "Consume the exact selected Git adapter operands with the existing Git remote owner requirements, current capability and repository currentness; the two routes remain handler_unavailable. No stash-selected availability or replacement confirmation policy is asserted.",
+      "permission_gate": "Existing Permissions, repository currentness, remote credential and applicable writer/credential lease owner requirements remain mandatory; the enrolled typed binding grants no execution authority.",
+      "disabled_reason_rule": "Project actual owner-defined availability and disabled reasons, including handler_unavailable; no borrowed stash-only closed reason set.",
+      "handler_owner": "Source Control Git adapter; the existing sole planned handlers::git::push and handlers::git::fetch remain target strings and are not native proof. The enrolled sibling is joined by scripts/pm_git_remote_selected.py and scripts/pm_git_remote_response.py.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static exact-route schema/fixture/original-result-response composition and future production-intent wiring only; native issuer authentication, effects and physical custody remain absent.",
+      "gui_triggers": [
+        "Existing Source Control remote command surfaces and command palette"
+      ],
+      "return_route": "Exact original and independently authenticated current delivery caller; null or foreign substitution is refused.",
+      "reverse_consumers": [
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Forge_Integrations.md",
+        "Plans/Settings_System.md"
+      ],
+      "event_refs": [
+        "No new EventRecord; expected_event_types=[] until Event Authority admission."
+      ],
+      "receipt_refs": [
+        "Plans/git_remote_selected.schema.json#/$defs/result",
+        "Plans/source_control_contracts.schema.json#/$defs/operation_receipt"
+      ],
+      "observable_work": [
+        "Required for remote and long repository operations."
+      ],
+      "persistence_refs": [
+        "Plans/storage_value_registry.json"
+      ],
+      "migration_refs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "test_refs": [
+        "Plans/git_remote_selected_fixtures.json",
+        "Plans/sir_git_remote_dispatch_fixtures.json",
+        "tests/test_pm_git_remote_selected.py",
+        "tests/test_pm_git_remote_response.py",
+        "tests/test_pm_git_remote_touch_bindings.py"
+      ],
+      "evidence_refs": [
+        "static_schema_fixture_and_exact_join_only",
+        "native_issuer_effect_and_physical_custody_absent"
       ]
     }
   ],
@@ -13865,19 +13871,19 @@
     ],
     [
       "TOUCH-GITREMOTE-001",
-      "TCP-GIT-REMOTE-LEGACY",
+      "TCP-GIT-REMOTE-SELECTED",
       "command",
       "cmd.git.push",
       "partial",
-      "Existing registered command and planned wiring only; exact request/result/error, original/currentness and native effect bindings remain unbound."
+      "Existing registered Git adapter command with the enrolled closed request/result/error binding and authentic SIR original; native issuer, permission, publication target generation, effect, receipt writer and physical custody remain unproved."
     ],
     [
       "TOUCH-GITREMOTE-002",
-      "TCP-GIT-REMOTE-LEGACY",
+      "TCP-GIT-REMOTE-SELECTED",
       "command",
       "cmd.git.fetch",
       "partial",
-      "Existing registered command and planned wiring only; exact request/result/error, original/currentness and native effect bindings remain unbound."
+      "Existing registered Git adapter command with the enrolled closed request/result/error binding and authentic SIR original; native issuer, permission, publication target generation, effect, receipt writer and physical custody remain unproved."
     ]
   ],
   "excluded_tokens": [

@@ -460,7 +460,15 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
                    if line.startswith("| `cmd.git.pull` / `cmd.git.push` / `cmd.git.fetch` |")]
     if len(remote_rows) != 1 or tokens(remote_rows[0].split("|")[1]) != {"cmd.git.pull", "cmd.git.push", "cmd.git.fetch"}:
         raise ValueError("core Git remote owner registration drift")
-    add("TCP-GIT-REMOTE-LEGACY", "command", tokens(remote_rows[0].split("|")[1]) - {pull_command})
+    # Exact public Git remote adapter routes come from the actual SIR successor
+    # discriminator, not from the Touch rows.
+    git_remote = schema_enum_actions(
+        "Plans/sir_git_remote_dispatch.schema.json",
+        "/$defs/error_projection/properties/command_id/enum",
+    )
+    if git_remote != {"cmd.git.fetch", "cmd.git.push"}:
+        raise ValueError("Git remote adapter owner discriminator drift")
+    add("TCP-GIT-REMOTE-SELECTED", "command", git_remote)
     scm_alias = {"cmd.source_control.select_worktree"}
     # Exact selected successor routes come from the actual SIR successor
     # discriminator, not from the Touch rows.
@@ -1967,8 +1975,8 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # existing undo/restore routes: profile total moves 148 -> 149 only.
         # The six neutral selected-operand routes consume their bounded
         # successor for existing rows: profile total moves 149 -> 150 only.
-        # Forge review checkout consumes its bounded successor for the existing
-        # checkout route: profile total moves 150 -> 151 only.
+        # The selected public Git binding replaces the now-unused legacy Git
+        # profile, leaving the profile count unchanged by that successor.
         "profile_count": 151,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
