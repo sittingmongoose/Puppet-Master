@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T19:09:31Z",
+  "generated_at_utc": "2026-09-25T19:19:48Z",
   "gui_related_units": {
     "count": 3207,
     "units": [
@@ -39328,7 +39328,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "b58147ed993db71d3198a8bc8b4955ea7db800436415459c4c54fd313470d3cb",
+        "expected": "c854b0241b19070d12528611a71bf9b899602029606535803fbc0bfbb50d39af",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -39370,13 +39370,13 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "5227ce400b12fbef17736aa5e1d2e14cd417be676ba0cedc18c3167b3d230c1f",
+        "expected": "7edbd66ffd386537b0bdf2fcadc53b3ce563fa52cdfb43294669200b4f667651",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "14999296c261c749e96ebff4627e2b9b0c9042b1c37c8864a3e131bf3ad306f2",
+        "expected": "62a710a230968276e4fbb968cfc8fdb5de59146c964ba5c1bb1e3bbf88f6e20a",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {
@@ -39542,6 +39542,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Wiring_Matrix.production.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Wiring_Matrix.schema.json"
       },
       {
         "error": "event_authority_currentness_source_drift",

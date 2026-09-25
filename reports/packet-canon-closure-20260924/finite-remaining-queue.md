@@ -11,7 +11,8 @@
   bounded review; native adapters and physical admission remain unproved.
 - Stash's typed companion is integrated after independent temporal-proof and
   composed-route review; see `stash-selected-companion-integration.md`.
-  Usage Ledger, checkout, Settings import and
+  Usage Ledger is also integrated; see `usage-ledger-integration.md`.
+  Checkout, Settings import and
   DRY/formatter companion corrections remain in external review/authoring.
 - Project dictionary policy is answered and integrated; it is not an open choice.
   The Server clarification card is still unanswered. No newer protected design

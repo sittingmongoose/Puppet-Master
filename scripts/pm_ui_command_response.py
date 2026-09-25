@@ -46,6 +46,34 @@ FORGE_REVIEW_COMMANDS = frozenset(("cmd.forge.review.approve", "cmd.forge.review
 FORGE_REVIEW_BINDING = {"path": "Plans/forge_review_decisions.schema.json", "json_pointer": "#/$defs/result", "schema_id": "pm.forge.review_decision.result.v1"}
 GIT_THREE_COMMANDS = frozenset(("cmd.git.commit", "cmd.source_control.stash.create", "cmd.source_control.branch.create"))
 GIT_THREE_BINDING = {"path": "Plans/git_selected_three.schema.json", "json_pointer": "#/$defs/result", "schema_id": "pm.source_control.git_selected.result.v1"}
+USAGE_COMMANDS = frozenset(("cmd.usage.refresh", "cmd.usage.export"))
+USAGE_SCHEMA_IDS = frozenset(("pm.usage.command_result.v1", "pm.usage.command_result.v2",
+                              "pm.usage.ledger_query.result.v1"))
+USAGE_REQUEST_SCHEMA_IDS = frozenset(("pm.usage.command_request.v1", "pm.usage.command_request.v2",
+                                      "pm.usage.ledger_query.request.v1"))
+LEDGER_SCHEMA_PATH = "Plans/usage_ledger_query_contracts.schema.json"
+LEDGER_RESULT_SCHEMA_ID = "pm.usage.ledger_query.result.v1"
+LEDGER_REQUEST_SCHEMA_ID = "pm.usage.ledger_query.request.v1"
+LEDGER_RESULT_POINTER = "#/$defs/ledger_result"
+LEDGER_REQUEST_POINTER = "#/$defs/ledger_request"
+LEDGER_PROFILE = "usage_ledger_selection.v1"
+
+
+def usage_binding_allowed(command_id: str, binding: Any) -> bool:
+    if not isinstance(binding, dict):
+        return False
+    pointer = "#/$defs/usage_refresh_result" if command_id == "cmd.usage.refresh" else "#/$defs/usage_export_result" if command_id == "cmd.usage.export" else None
+    if pointer is None:
+        return False
+    return binding in (
+        {"path": "Plans/usage_command_contracts.schema.json", "json_pointer": pointer, "schema_id": "pm.usage.command_result.v1"},
+        {"path": "Plans/usage_quota_command_contracts.schema.json", "json_pointer": pointer, "schema_id": "pm.usage.command_result.v2"},
+        {"path": LEDGER_SCHEMA_PATH, "json_pointer": LEDGER_RESULT_POINTER, "schema_id": LEDGER_RESULT_SCHEMA_ID},
+    )
+
+
+def usage_request_pointer(command_id: str) -> str:
+    return "#/$defs/usage_refresh_request" if command_id == "cmd.usage.refresh" else "#/$defs/usage_export_request"
 
 
 @lru_cache(maxsize=None)
@@ -127,7 +155,8 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
                     or result.get("schema_id") == SCM_SELECTED_BINDING["schema_id"])
     git_stash_apply = (response.get("command_id") in GIT_STASH_APPLY_COMMANDS
                        or result.get("schema_id") == GIT_STASH_APPLY_BINDING["schema_id"])
-    if not git_three and not forge_review and not backup_read and not jj_publication and not forge_log and not credential_source and not forge_cancel and not forge_reply and not backup_lifecycle and not backup_delete and not git_pull and not forge_comment and not backup_export and not backup_rotation and not backup_reencrypt and not selected_preview and not forge_list_query and not forge_retry and not forge_run and not forge_create_selected and not jj_recovery and not scm_selected and not git_stash_apply:
+    usage = (response.get("command_id") in USAGE_COMMANDS or result.get("schema_id") in USAGE_SCHEMA_IDS)
+    if not git_three and not forge_review and not backup_read and not jj_publication and not forge_log and not credential_source and not forge_cancel and not forge_reply and not backup_lifecycle and not backup_delete and not git_pull and not forge_comment and not backup_export and not backup_rotation and not backup_reencrypt and not selected_preview and not forge_list_query and not forge_retry and not forge_run and not forge_create_selected and not jj_recovery and not scm_selected and not git_stash_apply and not usage:
         return _response_bundle_failures(bundle)
     snapshot = deepcopy(bundle)
     failures = _response_bundle_failures(snapshot, resolve_owner_record=resolve_owner_record,
@@ -139,7 +168,7 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
                                          forge_log_dependencies=forge_log_dependencies, forge_list_query_dependencies=forge_list_query_dependencies, restore_preview_dependencies=restore_preview_dependencies, backup_reencrypt_dependencies=backup_reencrypt_dependencies, backup_rotation_dependencies=backup_rotation_dependencies, backup_export_dependencies=backup_export_dependencies, forge_comment_dependencies=forge_comment_dependencies, backup_delete_dependencies=backup_delete_dependencies, backup_lifecycle_dependencies=backup_lifecycle_dependencies, forge_reply_dependencies=forge_reply_dependencies, forge_cancel_dependencies=forge_cancel_dependencies, forge_create_selected_dependencies=forge_create_selected_dependencies, forge_run_dependencies=forge_run_dependencies, forge_retry_dependencies=forge_retry_dependencies,
                                          credential_source_dependencies=credential_source_dependencies)
     if bundle != snapshot:
-        failures.append("git_stash_apply_bundle_mutated_during_resolution" if git_stash_apply else "scm_selected_bundle_mutated_during_resolution" if scm_selected else "jj_recovery_bundle_mutated_during_resolution" if jj_recovery else "git_pull_bundle_mutated_during_resolution" if git_pull else "credential_bundle_mutated_during_resolution" if credential_source else "backup_read_bundle_mutated_during_resolution" if backup_read else "jj_publication_bundle_mutated_during_resolution" if jj_publication else "forge_log_bundle_mutated_during_resolution" if forge_log else "forge_bundle_mutated_during_resolution" if forge_review else "git3_bundle_mutated_during_resolution")
+        failures.append("git_stash_apply_bundle_mutated_during_resolution" if git_stash_apply else "scm_selected_bundle_mutated_during_resolution" if scm_selected else "jj_recovery_bundle_mutated_during_resolution" if jj_recovery else "git_pull_bundle_mutated_during_resolution" if git_pull else "credential_bundle_mutated_during_resolution" if credential_source else "backup_read_bundle_mutated_during_resolution" if backup_read else "jj_publication_bundle_mutated_during_resolution" if jj_publication else "forge_log_bundle_mutated_during_resolution" if forge_log else "forge_bundle_mutated_during_resolution" if forge_review else "usage_bundle_mutated_during_resolution" if usage else "git3_bundle_mutated_during_resolution")
     return sorted(set(failures))
 
 
@@ -203,6 +232,9 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
     if response.get('command_id') == 'cmd.forge.review.create':
         if response['response_kind'] != 'owner_operation' or response.get('owner_result_schema_ref') != {'path':'Plans/forge_review_create_selected_contracts.schema.json','json_pointer':'#/$defs/result','schema_id':'pm.forge.review_create_selected.result.v1'}:
             failures.append('forge_create_selected_owner_binding')
+    if response.get("command_id") in USAGE_COMMANDS:
+        if response["response_kind"] != "owner_operation" or not usage_binding_allowed(response["command_id"], response.get("owner_result_schema_ref")):
+            failures.append("usage_owner_binding")
     if response["response_kind"] != "owner_operation":
         if outcome is not None or owner_result is not None:
             failures.append("non_operation_has_owner_records")
@@ -211,7 +243,7 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
         if response["response_kind"] == "local_projection":
             commands = schema(SHARED_SCHEMA)["$defs"]["canonical_command_id"]["enum"]
             scm_commands = schema(SOURCE_CONTROL_SCHEMA)["$defs"]["source_control_command_id"]["enum"]
-            if response["command_id"] in commands or response["command_id"] in scm_commands or response["command_id"] in GIT_THREE_COMMANDS or response["command_id"] in FORGE_REVIEW_COMMANDS or response["command_id"] == CREDENTIAL_SOURCE_COMMAND or response["command_id"] in BACKUP_READ_COMMANDS or response["command_id"] in JJ_PUBLICATION_COMMANDS or response["command_id"] in GIT_PULL_COMMANDS or response["command_id"] in JJ_RECOVERY_COMMANDS or response["command_id"] in GIT_STASH_APPLY_COMMANDS:
+            if response["command_id"] in commands or response["command_id"] in scm_commands or response["command_id"] in GIT_THREE_COMMANDS or response["command_id"] in FORGE_REVIEW_COMMANDS or response["command_id"] == CREDENTIAL_SOURCE_COMMAND or response["command_id"] in BACKUP_READ_COMMANDS or response["command_id"] in JJ_PUBLICATION_COMMANDS or response["command_id"] in GIT_PULL_COMMANDS or response["command_id"] in JJ_RECOVERY_COMMANDS or response["command_id"] in GIT_STASH_APPLY_COMMANDS or response["command_id"] in USAGE_COMMANDS:
                 failures.append("durable_command_disguised_as_local_projection")
         return sorted(set(failures))
     if structural_failures(OUTCOME_SCHEMA, outcome, "#/$defs/CommandOutcomeRecord"):
@@ -265,6 +297,8 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
         failures.append("forge_review_owner_result_binding")
     if response["command_id"] in GIT_THREE_COMMANDS and response["owner_result_schema_ref"] != GIT_THREE_BINDING:
         failures.append("git3_owner_result_binding")
+    if response["command_id"] in USAGE_COMMANDS and not usage_binding_allowed(response["command_id"], response["owner_result_schema_ref"]):
+        failures.append("usage_owner_result_binding")
     if response["owner_result_ref"] is None:
         if owner_result is not None:
             failures.append("unbound_owner_result")
@@ -425,6 +459,8 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
                     bundle.get("original_binding_ref"), bundle.get("delivery_return_context"),
                     resolve_record=resolve_owner_record, canonical_request_digest=canonical_request_digest,
                     canon_root=ROOT, registry=registry()))
+            elif owner_result.get("schema_id") in USAGE_SCHEMA_IDS:
+                failures.extend(usage_owner_failures(response, outcome, owner_result, bundle.get("owner_request"), request, bundle))
             elif response["command_id"] == "cmd.project.new_github_repo":
                 from pm_project_forge_contract import response_failures as forge_response_failures
                 failures.extend(forge_response_failures(response, outcome, owner_result, bundle.get("owner_request"), bundle.get("owner_snapshot")))
@@ -594,3 +630,241 @@ def browser_owner_failures(response, outcome, owner_result):
     if outcome["result_receipt_ref"] is not None and outcome["result_receipt_ref"] not in owner_result["result_refs"]:
         failures.append("browser_owner_result_receipt_mismatch")
     return failures
+
+
+def usage_owner_failures(response, outcome, owner_result, owner_request, normalized_request, bundle):
+    """Real central join for cmd.usage.refresh/export over actual owner grammar.
+
+    Uses the existing v1 core-selection, v2 quota-aware, and DL-098 ledger
+    request/result shapes, the Full Thread CommandOutcomeRecord, and the v2
+    UICommandResponse. No new route, handler, or physical custody is invented;
+    native source, permission, delivery, and disclosure proof remain with the
+    owner validators. Full row/content recomputation stays with the owner
+    validators; central joins independently owned records and their binding.
+    """
+    binding = response.get("owner_result_schema_ref") or {}
+    owner_path = binding.get("path")
+    if owner_path not in ("Plans/usage_command_contracts.schema.json", "Plans/usage_quota_command_contracts.schema.json",
+                          LEDGER_SCHEMA_PATH):
+        return ["usage_owner_binding"]
+    if not isinstance(owner_request, dict):
+        return ["usage_owner_request_missing"]
+    if owner_path == LEDGER_SCHEMA_PATH:
+        if structural_failures(owner_path, owner_request, LEDGER_REQUEST_POINTER):
+            return ["usage_owner_request_schema"]
+        return sorted(set(usage_ledger_failures(response, outcome, owner_result, owner_request,
+                                                normalized_request, bundle)))
+    if structural_failures(owner_path, owner_request, usage_request_pointer(response.get("command_id") or "")):
+        return ["usage_owner_request_schema"]
+    failures = []
+    if owner_result.get("request") != owner_request:
+        failures.append("usage_original_request_mismatch")
+    expected_req_id = "pm.usage.command_request.v1" if owner_path == "Plans/usage_command_contracts.schema.json" else "pm.usage.command_request.v2"
+    if owner_request.get("schema_id") != expected_req_id:
+        failures.append("usage_owner_request_schema_identity_mismatch")
+    for field in ("command_id", "command_instance_id"):
+        if owner_request.get(field) != response.get(field) or owner_result.get(field) != response.get(field):
+            failures.append("usage_owner_command_mismatch")
+            break
+    if owner_request.get("request_ref") != response.get("request_ref"):
+        failures.append("usage_owner_request_ref_mismatch")
+    if outcome.get("command_id") != response.get("command_id"):
+        failures.append("usage_owner_command_mismatch")
+    req_ident = owner_request.get("identity") or {}
+    res_ident = owner_result.get("identity") or {}
+    if req_ident != res_ident:
+        failures.append("usage_owner_identity_mismatch")
+    if res_ident != outcome.get("identity") or res_ident != response.get("owner_identity"):
+        failures.append("usage_owner_scope_mismatch")
+    if owner_result.get("operation_id") != req_ident.get("operation_id"):
+        failures.append("usage_owner_operation_mismatch")
+    if req_ident.get("command_instance_id") != owner_request.get("command_instance_id"):
+        failures.append("usage_owner_instance_mismatch")
+    if owner_request.get("idempotency_key") != outcome.get("idempotency_key"):
+        failures.append("usage_owner_idempotency_mismatch")
+    if req_ident.get("operation_generation") != outcome.get("target_generation"):
+        failures.append("usage_owner_target_generation_mismatch")
+    if owner_result.get("command_outcome_ref") != response.get("command_outcome_ref"):
+        failures.append("usage_owner_outcome_ref_mismatch")
+    if owner_result.get("caller") != owner_request.get("caller"):
+        failures.append("usage_caller_substitution")
+    elif bundle.get("current_panel_context_ref") is not None and (owner_request.get("caller") or {}).get("caller_context_ref") == bundle.get("current_panel_context_ref"):
+        failures.append("usage_current_panel_substitution")
+    if outcome.get("outcome") != owner_result.get("status"):
+        failures.append("usage_owner_outcome_mismatch")
+    if outcome.get("error_ref") != owner_result.get("error_ref"):
+        failures.append("usage_owner_error_ref_mismatch")
+    status = owner_result.get("status")
+    if status == "succeeded" and owner_result.get("error_ref") is not None:
+        failures.append("usage_succeeded_error_ref_present")
+    if status == "succeeded" and response.get("error") is not None:
+        failures.append("usage_succeeded_ui_error_present")
+    if status == "cancelled" and response.get("error") is not None:
+        failures.append("usage_cancelled_ui_error_present")
+    if status == "failed":
+        if owner_result.get("error_ref") is None or outcome.get("error_ref") is None:
+            failures.append("usage_failed_error_ref_missing")
+        if response.get("error") is None:
+            failures.append("usage_failed_ui_error_missing")
+    if status == "terminal_unknown" and response.get("error") is None:
+        failures.append("usage_terminal_ui_error_missing")
+    is_export = response.get("command_id") == "cmd.usage.export"
+    if is_export:
+        # Export shape already requires maxItems 0; this is defense in depth.
+        if owner_result.get("route_outcomes"):
+            failures.append("usage_export_route_effect")
+        output = owner_result.get("output")
+        if status == "succeeded" and (output is None or owner_result.get("projection") is None):
+            failures.append("usage_export_no_output")
+        if output is not None:
+            view = output.get("view") or {}
+            if view.get("query") != owner_request.get("query"):
+                failures.append("usage_export_selection_mismatch")
+            if view.get("export_scope") != owner_request.get("export_scope"):
+                failures.append("usage_export_scope_mismatch")
+            if view.get("profile") != (owner_request.get("query") or {}).get("profile"):
+                failures.append("usage_export_profile_mismatch")
+            if view.get("projection_ref") != owner_request.get("projection_ref"):
+                failures.append("usage_export_projection_ref_mismatch")
+            if view.get("projection_revision") != owner_request.get("projection_revision"):
+                failures.append("usage_export_projection_revision_mismatch")
+    else:
+        # Refresh shape already requires output null; defense in depth.
+        if owner_result.get("output") is not None:
+            failures.append("usage_refresh_export_effect")
+        routes = [row.get("route_ref") for row in (owner_result.get("route_outcomes") or [])]
+        if len(set(routes)) != len(routes) or set(routes) != set(owner_request.get("provider_route_refs") or []):
+            failures.append("usage_refresh_route_selection")
+        if status == "succeeded" and (owner_result.get("projection") is None or any(row.get("status") != "completed" for row in (owner_result.get("route_outcomes") or []))):
+            failures.append("usage_refresh_not_completed")
+        projection = owner_result.get("projection")
+        if projection is not None and projection.get("query") != owner_request.get("query"):
+            failures.append("usage_refresh_projection_query_mismatch")
+    if response.get("event_refs") != []:
+        failures.append("usage_response_event_refs")
+    return sorted(set(failures))
+
+
+def usage_ledger_failures(response, outcome, owner_result, owner_request, normalized_request, bundle):
+    """Real central join for the DL-098 ledger-profile branch of cmd.usage.*.
+
+    Owner request/result shapes are already schema-validated by the caller.
+    The ledger pair carries no operation envelope of its own, so the operation
+    join is made through the independently owned outcome identity (instance,
+    scope, idempotency, payload digest) while the selection join pins the
+    original query, IDs, export mode, currentness, and caller to the result.
+    """
+    failures = []
+    if owner_result.get("request") != owner_request:
+        failures.append("usage_original_request_mismatch")
+    if owner_request.get("schema_id") != LEDGER_REQUEST_SCHEMA_ID:
+        failures.append("usage_owner_request_schema_identity_mismatch")
+    for field in ("command_id", "command_instance_id"):
+        if owner_request.get(field) != response.get(field) or owner_result.get(field) != response.get(field):
+            failures.append("usage_owner_command_mismatch")
+            break
+    if owner_request.get("request_ref") != response.get("request_ref"):
+        failures.append("usage_owner_request_ref_mismatch")
+    if outcome.get("command_id") != response.get("command_id"):
+        failures.append("usage_owner_command_mismatch")
+    identity = outcome.get("identity") or {}
+    if owner_request.get("command_instance_id") != identity.get("command_instance_id"):
+        failures.append("usage_owner_instance_mismatch")
+    query = owner_request.get("query") or {}
+    if (query.get("scope_kind") != identity.get("scope_kind")
+            or query.get("server_id") != identity.get("server_id")
+            or query.get("project_id") != identity.get("project_id")):
+        failures.append("usage_owner_scope_mismatch")
+    if owner_request.get("idempotency_key") != outcome.get("idempotency_key"):
+        failures.append("usage_owner_idempotency_mismatch")
+    try:
+        if outcome.get("payload_sha256") != owner_result_digest(owner_request):
+            failures.append("usage_owner_payload_mismatch")
+    except (TypeError, ValueError):
+        failures.append("usage_owner_payload_mismatch")
+    if owner_result.get("caller") != owner_request.get("caller"):
+        failures.append("usage_caller_substitution")
+    elif bundle.get("current_panel_context_ref") is not None and (owner_request.get("caller") or {}).get("caller_context_ref") == bundle.get("current_panel_context_ref"):
+        failures.append("usage_current_panel_substitution")
+    if outcome.get("outcome") != owner_result.get("status"):
+        failures.append("usage_owner_outcome_mismatch")
+    if outcome.get("error_ref") != owner_result.get("error_ref"):
+        failures.append("usage_owner_error_ref_mismatch")
+    status = owner_result.get("status")
+    if status == "succeeded" and owner_result.get("error_ref") is not None:
+        failures.append("usage_succeeded_error_ref_present")
+    if status == "succeeded" and response.get("error") is not None:
+        failures.append("usage_succeeded_ui_error_present")
+    if status == "cancelled" and response.get("error") is not None:
+        failures.append("usage_cancelled_ui_error_present")
+    if status == "failed":
+        if owner_result.get("error_ref") is None or outcome.get("error_ref") is None:
+            failures.append("usage_failed_error_ref_missing")
+        if response.get("error") is None:
+            failures.append("usage_failed_ui_error_missing")
+    if status not in ("succeeded", "failed", "cancelled", "rejected"):
+        failures.append("usage_owner_outcome_mismatch")
+    if status == "succeeded":
+        if owner_result.get("result_receipt_ref") is None:
+            failures.append("usage_owner_receipt_mismatch")
+        elif owner_result.get("result_receipt_ref") != outcome.get("result_receipt_ref"):
+            failures.append("usage_owner_receipt_mismatch")
+    elif owner_result.get("result_receipt_ref") is not None:
+        failures.append("usage_owner_receipt_mismatch")
+    applied = owner_result.get("applied_query") or {}
+    if applied != query:
+        failures.append("usage_ledger_applied_query_mismatch")
+    if applied.get("owner_revision") != query.get("owner_revision"):
+        failures.append("usage_ledger_stale_revision")
+    if owner_result.get("freshness") == "current" and applied != query:
+        failures.append("usage_ledger_stale_currentness")
+    selection = owner_result.get("selection") or {}
+    requested = selection.get("requested_record_ids")
+    if requested != query.get("requested_record_ids"):
+        failures.append("usage_ledger_selection_mismatch")
+    matched = owner_result.get("matched_record_ids") or []
+    ordered = owner_result.get("ordered_record_ids") or []
+    effective = selection.get("effective_record_ids") or []
+    if any(rid not in set(matched) for rid in ordered):
+        failures.append("usage_ledger_ordered_not_matched")
+    if any(rid not in set(ordered) for rid in effective) or any(rid not in set(requested or []) for rid in effective):
+        failures.append("usage_ledger_selection_mismatch")
+    is_export = response.get("command_id") == "cmd.usage.export"
+    export = owner_result.get("export")
+    if not is_export and export is not None:
+        failures.append("usage_refresh_export_effect")
+    if is_export and status == "succeeded" and export is None:
+        failures.append("usage_export_no_output")
+    if status in ("failed", "cancelled", "rejected") and export is not None:
+        failures.append("usage_terminal_export_present")
+    if export is not None:
+        if not is_export or export.get("mode") != owner_request.get("export_mode"):
+            failures.append("usage_export_mode_mismatch")
+        if export.get("total_match_count") != len(ordered):
+            failures.append("usage_export_total_mismatch")
+        export_rows = export.get("rows") or []
+        export_ids = [row.get("usage_record_id") for row in export_rows]
+        if export.get("mode") == "selected" and export_ids != effective:
+            failures.append("usage_export_selected_identity")
+        if export.get("mode") == "filtered" and export_ids != ordered:
+            failures.append("usage_export_filtered_truncated")
+            if len(export_rows) == export.get("drawn_viewport_row_count") < (export.get("total_match_count") or 0):
+                failures.append("usage_export_viewport_dump")
+        for row in export_rows:
+            if row.get("row_kind") != "attempt_usage":
+                failures.append("usage_quota_row_in_ledger_export")
+                break
+        if any(rid not in set(matched) for rid in export_ids):
+            failures.append("usage_export_unknown_identity")
+    page = owner_result.get("page")
+    if status == "succeeded" and page is None:
+        failures.append("usage_ledger_page_missing")
+    if page is not None:
+        total = len(ordered)
+        if page.get("total_match_count") != total or page.get("offset", 0) + page.get("returned_count", 0) > total:
+            failures.append("usage_ledger_page_dishonest")
+        if page.get("returned_count", 0) > page.get("limit", 0):
+            failures.append("usage_ledger_page_dishonest")
+    if response.get("event_refs") != []:
+        failures.append("usage_response_event_refs")
+    return sorted(set(failures))

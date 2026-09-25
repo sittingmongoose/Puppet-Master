@@ -3826,6 +3826,87 @@ USAGE_ROUTE_PASSTHROUGH_FIELDS = {
     "projection_freshness",
     "projection_health",
 }
+USAGE_LEDGER_WIRING_ROW_IDS = ("catalog.usage_refresh", "catalog.usage_export")
+USAGE_LEDGER_BRANCH_PROFILE = "usage_ledger_selection.v1"
+USAGE_QUOTA_SELECTION_PROFILE = "usage_quota_selection.v2"
+USAGE_LEDGER_BRANCH_REQUEST_REF = "Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_request"
+USAGE_LEDGER_BRANCH_RESULT_REF = "Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_result"
+
+
+def select_usage_schema_branch(row: dict[str, Any], profile: str) -> tuple[str | None, str | None] | None:
+    """Machine selection of a wiring row's typed request/result pair by query profile.
+
+    Exact profiles only: the ledger profile selects the row's declared ledger
+    branch pair, and the exact quota-selection v2 profile selects the row's
+    existing default (quota-v2) refs. Every other profile — including
+    usage_core_selection.v1 and unsupported profiles — returns None because no
+    explicit exact v1 pair is modeled on these Wiring rows; v1 keeps its
+    separate historical central path and must never silently select v2.
+    """
+    if profile == USAGE_LEDGER_BRANCH_PROFILE:
+        branches = row.get("profile_schema_branches") or []
+        if isinstance(branches, list):
+            for branch in branches:
+                if isinstance(branch, dict) and branch.get("profile") == profile:
+                    return (branch.get("request_schema_ref"), branch.get("result_schema_ref"))
+        return None
+    if profile == USAGE_QUOTA_SELECTION_PROFILE:
+        return (row.get("request_schema_ref"), row.get("result_schema_ref"))
+    return None
+
+
+def ledger_branch_schema_failures(ledger_schema: Any) -> list[str]:
+    """Pure check that a loaded ledger schema document admits the wired branch."""
+    if not isinstance(ledger_schema, dict):
+        return ["usage_ledger_wiring_branch_unresolvable_ref"]
+    defs = ledger_schema.get("$defs")
+    if not isinstance(defs, dict):
+        return ["usage_ledger_wiring_branch_unresolvable_ref"]
+    if "ledger_request" not in defs or "ledger_result" not in defs:
+        return ["usage_ledger_wiring_branch_unresolvable_ref"]
+    request = defs["ledger_request"]
+    query_ref = request.get("properties", {}).get("query", {}).get("$ref") if isinstance(request, dict) else None
+    query_name = query_ref.rsplit("/", 1)[-1] if isinstance(query_ref, str) else None
+    query = defs.get(query_name) if isinstance(query_name, str) else None
+    profile = query.get("properties", {}).get("profile", {}).get("const") if isinstance(query, dict) else None
+    if profile != USAGE_LEDGER_BRANCH_PROFILE:
+        return ["usage_ledger_wiring_branch_profile_mismatch"]
+    return []
+
+
+def validate_usage_ledger_wiring_branches(entries: dict[str, Any], plans_dir: Any = None) -> list[dict[str, Any]]:
+    """Bounded check that exactly the two usage rows carry the ledger branch.
+
+    Selection goes through select_usage_schema_branch, not free text. When
+    plans_dir (a Plans directory) is given, the branch refs are additionally
+    resolved to the ledger schema document and its profile predicate.
+    """
+    failures: list[dict[str, Any]] = []
+    for entry_id in USAGE_LEDGER_WIRING_ROW_IDS:
+        row = entries.get(entry_id)
+        if not isinstance(row, dict):
+            failures.append({"entry_id": entry_id, "error": "usage_ledger_wiring_row_missing"})
+            continue
+        branches = row.get("profile_schema_branches")
+        if not isinstance(branches, list) or len(branches) != 1 or not isinstance(branches[0], dict):
+            failures.append({"entry_id": entry_id, "error": "usage_ledger_wiring_branch_missing"})
+            continue
+        selected = select_usage_schema_branch(row, USAGE_LEDGER_BRANCH_PROFILE)
+        if selected != (USAGE_LEDGER_BRANCH_REQUEST_REF, USAGE_LEDGER_BRANCH_RESULT_REF):
+            failures.append({"entry_id": entry_id, "error": "usage_ledger_wiring_branch_mismatch"})
+    for entry_id, row in entries.items():
+        if entry_id not in USAGE_LEDGER_WIRING_ROW_IDS and isinstance(row, dict) and "profile_schema_branches" in row:
+            failures.append({"entry_id": entry_id, "error": "usage_ledger_wiring_branch_unexpected_row"})
+    if plans_dir is not None and not failures:
+        schema_name = USAGE_LEDGER_BRANCH_REQUEST_REF.split("#", 1)[0].rsplit("/", 1)[-1]
+        try:
+            ledger_schema = json.loads(Path(plans_dir, schema_name).read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            failures.append({"entry_id": USAGE_LEDGER_WIRING_ROW_IDS[0], "error": "usage_ledger_wiring_branch_unresolvable_ref"})
+            return failures
+        for code in ledger_branch_schema_failures(ledger_schema):
+            failures.append({"entry_id": USAGE_LEDGER_WIRING_ROW_IDS[0], "error": code})
+    return failures
 
 
 def validate_wiring_vocabulary(entries: dict[str, Any], forge_fixtures: dict[str, Any]) -> dict[str, Any]:
@@ -4027,6 +4108,8 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
     typed_contract_rows = 0
     vocabulary_report = validate_wiring_vocabulary(entries, load_json(forge_fixtures_path))
     failures.extend(vocabulary_report["failures"])
+    for branch_failure in validate_usage_ledger_wiring_branches(entries, PLANS):
+        failures.append({"path": f"{rel(matrix_path)}#/entries/{branch_failure['entry_id']}", **branch_failure})
 
     for key, row in entries.items():
         row_path = f"{rel(matrix_path)}#/entries/{key}"

@@ -2878,6 +2878,43 @@
       ]
     },
     {
+      "disposition_id": "scd.usage.ledger_query_transport.v1",
+      "system_id": "usage",
+      "owner_doc": "Plans/usage-feature.md",
+      "schema_ref": "Plans/usage_ledger_query_contracts.schema.json",
+      "record_kinds": [
+        "pm.usage.ledger_query.request.v1",
+        "pm.usage.ledger_query.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Genuine original requests, owner observations, result/error receipts, replay/reconciliation state and audit holds retain their existing independent custody and remain pending their physical owners; transient DL-098 query/view/export selections never replace them.",
+        "expiry_rule": "Discard transient ledger query/view/export selection copies after dispatch or response; disposal cannot erase the independently retained original result/output required by existing command replay. Never reconstruct replay from a new projection, current panel selection, or export."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Use the ledger-selection typed transport only for DL-098 representable conjunctive recorded-filter queries with literal display-only search and time/tokens/cost ordering; refuse legacy-identity guesses, invented run/event identity, quota-row coercion, and unsupported originals. No new physical store, command, handler availability, accounting, quota, or retention authority; existing outcome/artifact migration remains owner-governed.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Transient DL-098 Ledger query request/result transport enrolled on the ledger-profile central branch; not duplicate accounting, output storage, quota admission, or native dispatch proof. Fixture recorded rows and central-input snapshots are not production stored record kinds.",
+      "source_refs": [
+        "Plans/usage-feature.md#UF-010",
+        "Plans/usage-feature.md#UF-047",
+        "Plans/usage-feature.md#UF-070",
+        "Plans/Decision_Log.md#DL-098",
+        "Plans/UI_Command_Catalog.md#UCC-116",
+        "Plans/usage_ledger_query_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
       "disposition_id": "scd.backup.bounded_read_transport.v1",
       "system_id": "backup_restore",
       "owner_doc": "Plans/Backup_Restore_System.md",

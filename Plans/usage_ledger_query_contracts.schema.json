@@ -1,0 +1,994 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/usage_ledger_query_contracts.schema.json",
+  "title": "Usage Ledger DL-098 selection companion",
+  "description": "Closed static companion for the DL-098 Ledger query/export policy (PCC-USAGE-QUERY-001) over recorded attempt rows: conjunctive recorded project/provider/account/model/run/thread/event-type filters, literal case-insensitive search over displayed labels and identifiers only, time/tokens/cost sort with newest-or-largest-first initial order and an allowed user-selected reverse order, unknowns last and stable record-identity ties in both directions, exact Selected versus all-matching Filtered export. Static selection only: no dispatcher, native handler, accounting, quota, retention, or runtime proof. Legacy session/tier labels are never identity; quota-only rows are not Ledger rows.",
+  "$defs": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "minLength": 1
+    },
+    "recorded_value": {
+      "type": "string",
+      "minLength": 1
+    },
+    "value_set": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/recorded_value"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "record_id_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/recorded_value"
+      },
+      "uniqueItems": true
+    },
+    "ledger_filters": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "project_ids": {
+          "$ref": "#/$defs/value_set"
+        },
+        "provider_ids": {
+          "$ref": "#/$defs/value_set"
+        },
+        "account_refs": {
+          "$ref": "#/$defs/value_set"
+        },
+        "model_ids": {
+          "$ref": "#/$defs/value_set"
+        },
+        "run_ids": {
+          "$ref": "#/$defs/value_set"
+        },
+        "thread_ids": {
+          "$ref": "#/$defs/value_set"
+        },
+        "event_types": {
+          "$ref": "#/$defs/value_set"
+        }
+      }
+    },
+    "ledger_search": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "scope",
+        "pattern_kind"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "const": "displayed_labels_and_identifiers"
+        },
+        "pattern_kind": {
+          "const": "literal_substring"
+        }
+      }
+    },
+    "ledger_sort": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "DL-098 fixes newest-or-largest-first as the initial ordering only; oldest-or-smallest-first is the allowed user-selected reverse. Unknowns sort last and stable record identity breaks ties in both directions.",
+      "required": [
+        "key",
+        "order",
+        "unknown_values",
+        "tie_break"
+      ],
+      "properties": {
+        "key": {
+          "enum": [
+            "time",
+            "tokens",
+            "cost"
+          ]
+        },
+        "order": {
+          "enum": [
+            "newest_or_largest_first",
+            "oldest_or_smallest_first"
+          ],
+          "description": "Initial order is newest_or_largest_first; oldest_or_smallest_first is the user-selected reverse. No separate token/cost default is defined."
+        },
+        "unknown_values": {
+          "const": "last"
+        },
+        "tie_break": {
+          "const": "stable_record_identity"
+        }
+      }
+    },
+    "token_quantity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "value",
+        "unit"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "reported",
+            "estimated",
+            "unknown",
+            "not_exposed",
+            "disabled",
+            "hidden"
+          ]
+        },
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "reported",
+                  "estimated"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "number",
+                "minimum": 0
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "money_quantity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "value",
+        "unit"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "reported",
+            "estimated",
+            "unknown",
+            "not_exposed",
+            "disabled",
+            "hidden"
+          ]
+        },
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "reported",
+                  "estimated"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "number",
+                "minimum": 0
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "identity_provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_identity",
+        "event_identity"
+      ],
+      "properties": {
+        "run_identity": {
+          "enum": [
+            "recorded",
+            "legacy_guess",
+            "invented"
+          ]
+        },
+        "event_identity": {
+          "enum": [
+            "recorded",
+            "legacy_guess",
+            "invented"
+          ]
+        }
+      }
+    },
+    "ledger_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "row_kind",
+        "usage_record_id",
+        "usage_event_refs",
+        "event_type",
+        "server_id",
+        "project_id",
+        "provider_id",
+        "provider_account_ref",
+        "model_id",
+        "run_id",
+        "thread_id",
+        "attempt_id",
+        "observed_at_utc",
+        "token_total",
+        "cost_microdollars",
+        "currency",
+        "displayed_labels",
+        "identity_provenance"
+      ],
+      "properties": {
+        "row_kind": {
+          "const": "attempt_usage"
+        },
+        "usage_record_id": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "usage_event_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/recorded_value"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "event_type": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "server_id": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "provider_id": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "provider_account_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "model_id": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "run_id": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "attempt_id": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "token_total": {
+          "$ref": "#/$defs/token_quantity"
+        },
+        "cost_microdollars": {
+          "$ref": "#/$defs/money_quantity"
+        },
+        "currency": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "displayed_labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/recorded_value"
+          },
+          "minItems": 1
+        },
+        "non_displayed_admin_note": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "redacted_secret_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "identity_provenance": {
+          "$ref": "#/$defs/identity_provenance"
+        }
+      }
+    },
+    "ledger_query": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "query_ref",
+        "owner_revision",
+        "server_id",
+        "project_id",
+        "scope_kind",
+        "time_range",
+        "interval_start",
+        "interval_end",
+        "filters",
+        "search",
+        "sort",
+        "requested_record_ids"
+      ],
+      "properties": {
+        "profile": {
+          "const": "usage_ledger_selection.v1"
+        },
+        "query_ref": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "owner_revision": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "server_id": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "time_range": {
+          "enum": [
+            "5h",
+            "24h",
+            "7d",
+            "30d"
+          ]
+        },
+        "interval_start": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "interval_end": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "filters": {
+          "$ref": "#/$defs/ledger_filters"
+        },
+        "search": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ledger_search"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sort": {
+          "$ref": "#/$defs/ledger_sort"
+        },
+        "requested_record_ids": {
+          "$ref": "#/$defs/record_id_list"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ledger_caller": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "client_ref",
+        "source_surface",
+        "caller_context_ref",
+        "caller_revision"
+      ],
+      "properties": {
+        "client_ref": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "source_surface": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "caller_context_ref": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "caller_revision": {
+          "$ref": "#/$defs/recorded_value"
+        }
+      }
+    },
+    "ledger_page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "offset",
+        "limit",
+        "returned_count",
+        "total_match_count"
+      ],
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "returned_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_match_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "ledger_export": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "rows",
+        "drawn_viewport_row_count",
+        "total_match_count"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "selected",
+            "filtered"
+          ]
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ledger_row"
+          }
+        },
+        "drawn_viewport_row_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_match_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "ledger_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "request_ref",
+        "idempotency_key",
+        "actor_ref",
+        "permission_ref",
+        "query",
+        "caller",
+        "export_mode"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.usage.ledger_query.request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.usage.refresh",
+            "cmd.usage.export"
+          ]
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "request_ref": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "permission_ref": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "query": {
+          "$ref": "#/$defs/ledger_query"
+        },
+        "caller": {
+          "$ref": "#/$defs/ledger_caller"
+        },
+        "export_mode": {
+          "enum": [
+            "selected",
+            "filtered",
+            null
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.usage.export"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "export_mode": {
+                "enum": [
+                  "selected",
+                  "filtered"
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "export_mode": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ledger_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "request",
+        "status",
+        "error_ref",
+        "result_receipt_ref",
+        "caller",
+        "applied_query",
+        "freshness",
+        "matched_record_ids",
+        "ordered_record_ids",
+        "selection",
+        "page",
+        "export"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.usage.ledger_query.result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.usage.refresh",
+            "cmd.usage.export"
+          ]
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "request": {
+          "$ref": "#/$defs/ledger_request"
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "failed",
+            "cancelled",
+            "rejected"
+          ]
+        },
+        "error_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "result_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "caller": {
+          "$ref": "#/$defs/ledger_caller"
+        },
+        "applied_query": {
+          "$ref": "#/$defs/ledger_query"
+        },
+        "freshness": {
+          "enum": [
+            "current",
+            "refreshing",
+            "stale"
+          ]
+        },
+        "matched_record_ids": {
+          "$ref": "#/$defs/record_id_list"
+        },
+        "ordered_record_ids": {
+          "$ref": "#/$defs/record_id_list"
+        },
+        "selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "requested_record_ids",
+            "effective_record_ids"
+          ],
+          "properties": {
+            "requested_record_ids": {
+              "$ref": "#/$defs/record_id_list"
+            },
+            "effective_record_ids": {
+              "$ref": "#/$defs/record_id_list"
+            }
+          }
+        },
+        "page": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ledger_page"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "export": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ledger_export"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "central_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Static fixture note for ledger-only selection checks; carries no central claim in either direction. Real central composition for the v1/v2 refresh/export route and the DL-098 ledger-profile branch lives in the candidate central helper usage join and is covered by the candidate central tests against actual central grammar.",
+      "required": [
+        "command_id",
+        "command_instance_id",
+        "request_ref",
+        "owner_identity",
+        "caller",
+        "owner_result_ref",
+        "error_ref",
+        "ui_error",
+        "replayed",
+        "original_dispatch_id",
+        "original_effective_record_ids",
+        "original_export_row_ids",
+        "central_dispatch"
+      ],
+      "properties": {
+        "command_id": {
+          "enum": [
+            "cmd.usage.refresh",
+            "cmd.usage.export"
+          ]
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "request_ref": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "owner_identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "scope_kind",
+            "server_id",
+            "project_id"
+          ],
+          "properties": {
+            "scope_kind": {
+              "enum": [
+                "application",
+                "project"
+              ]
+            },
+            "server_id": {
+              "$ref": "#/$defs/recorded_value"
+            },
+            "project_id": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            }
+          }
+        },
+        "caller": {
+          "$ref": "#/$defs/ledger_caller"
+        },
+        "owner_result_ref": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "error_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "ui_error": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "code",
+                "reason"
+              ],
+              "properties": {
+                "code": {
+                  "$ref": "#/$defs/recorded_value"
+                },
+                "reason": {
+                  "$ref": "#/$defs/recorded_value"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "replayed": {
+          "type": "boolean"
+        },
+        "original_dispatch_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "original_effective_record_ids": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/record_id_list"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_export_row_ids": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/record_id_list"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "central_dispatch": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Static-note marker only; not a central route claim.",
+          "required": [
+            "status",
+            "reason"
+          ],
+          "properties": {
+            "status": {
+              "const": "static_note_only"
+            },
+            "reason": {
+              "$ref": "#/$defs/recorded_value"
+            }
+          }
+        }
+      }
+    },
+    "ledger_query_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "runtime_evidence",
+        "claim_boundary",
+        "request",
+        "recorded_rows",
+        "recorded_owner_revision",
+        "result",
+        "central_input",
+        "current_panel_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.usage.ledger_query.fixture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "runtime_evidence": {
+          "const": false
+        },
+        "claim_boundary": {
+          "const": "static_ledger_selection_only"
+        },
+        "request": {
+          "$ref": "#/$defs/ledger_request"
+        },
+        "recorded_rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ledger_row"
+          },
+          "minItems": 1
+        },
+        "recorded_owner_revision": {
+          "$ref": "#/$defs/recorded_value"
+        },
+        "result": {
+          "$ref": "#/$defs/ledger_result"
+        },
+        "central_input": {
+          "$ref": "#/$defs/central_input"
+        },
+        "current_panel_context_ref": {
+          "$ref": "#/$defs/recorded_value"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ledger_request"
+    },
+    {
+      "$ref": "#/$defs/ledger_result"
+    },
+    {
+      "$ref": "#/$defs/ledger_query_fixture"
+    }
+  ]
+}

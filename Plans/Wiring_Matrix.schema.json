@@ -126,6 +126,38 @@
           "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json#/\\$defs/[A-Za-z][A-Za-z0-9_]*$",
           "description": "Optional exact pre-build JSON Schema definition for the returned result. Shared-runtime command rows require it through their bounded validator."
         },
+        "profile_schema_branches": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "description": "Optional closed profile-qualified request/result branch mapping. The exact usage_ledger_selection.v1 profile selects the declared ledger branch pair; the default request_schema_ref/result_schema_ref apply only to the exact usage_quota_selection.v2 profile. usage_core_selection.v1 and unsupported profiles select nothing through this mapping and must never silently select the v2 pair. Only the DL-098 ledger-selection branch is admitted.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "profile",
+              "request_schema_ref",
+              "result_schema_ref"
+            ],
+            "properties": {
+              "profile": {
+                "type": "string",
+                "const": "usage_ledger_selection.v1",
+                "description": "Exact ledger-selection profile token discriminating the DL-098 branch."
+              },
+              "request_schema_ref": {
+                "type": "string",
+                "const": "Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_request",
+                "description": "Exact ledger request definition selected when profile == usage_ledger_selection.v1."
+              },
+              "result_schema_ref": {
+                "type": "string",
+                "const": "Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_result",
+                "description": "Exact ledger result definition selected when profile == usage_ledger_selection.v1."
+              }
+            }
+          }
+        },
         "expected_event_types": {
           "type": "array",
           "description": "List of event type strings emitted by the handler. May be empty for UI-only commands that declare no persisted domain event. Each entry should match an EventRecord type string.",

@@ -55,6 +55,7 @@ from pm_named_plan_semantics import named_plan_semantic_failures
 from pm_forge_creation_semantics import forge_creation_semantic_failures
 from pm_usage_command_semantics import usage_command_semantic_failures
 from pm_usage_quota_semantics import usage_quota_semantic_failures
+from pm_usage_ledger_query_semantics import usage_ledger_query_semantic_failures
 from pm_backup_bounded_reads import bounded_read_semantic_failures
 from pm_credential_source_add import credential_source_semantic_failures
 from pm_forge_cancel_selected_semantics import cancel_selected_semantic_failures
@@ -135,6 +136,7 @@ CONTRACT_PAIRS = (
     ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
     ("Plans/usage_command_contracts.schema.json", "Plans/usage_command_contract_fixtures.json"),
     ("Plans/usage_quota_command_contracts.schema.json", "Plans/usage_quota_command_fixtures.json"),
+    ("Plans/usage_ledger_query_contracts.schema.json", "Plans/usage_ledger_query_contract_fixtures.json"),
     ("Plans/git_selected_three.schema.json", "Plans/git_selected_three_fixtures.json"),
     ("Plans/forge_review_decisions.schema.json", "Plans/forge_review_decision_fixtures.json"),
     ("Plans/sir_forge_review_dispatch.schema.json", "Plans/sir_forge_review_dispatch_fixtures.json"),
@@ -166,7 +168,7 @@ CONTRACT_PAIRS = (
     ("Plans/sir_git_stash_apply_dispatch.schema.json", "Plans/sir_git_stash_apply_dispatch_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 76
+EXPECTED_CONTRACT_PAIR_COUNT = 77
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1369,6 +1371,8 @@ def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any
         return git_selected_semantic_failures(definition_name, value) if definition_name == "fixture_case" else []
     if schema_rel == "Plans/usage_command_contracts.schema.json":
         return usage_command_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/usage_ledger_query_contracts.schema.json":
+        return usage_ledger_query_semantic_failures(definition_name, value)
     if schema_rel == "Plans/capability_ensure_custody_contracts.schema.json":
         return capability_ensure_semantic_failures(definition_name, value)
     if schema_rel == "Plans/jujutsu_change_operand_contracts.schema.json":

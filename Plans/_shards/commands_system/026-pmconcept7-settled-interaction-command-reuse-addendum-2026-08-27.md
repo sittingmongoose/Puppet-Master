@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L4809-L4919
 
-Source SHA256: `4f0a48537884fa9896671469a228e9a602bdf4a87329f8cd922eb0eac0fb10bf`
+Source SHA256: `ed7fb050bd108e921bf770edb2e53ed949432771a8cefdde0088c39ee72a7c6c`
 
 ---
 
@@ -17,7 +17,7 @@ are local projections. A changed semantic release dispatches one existing comman
 returns without dispatch, and Escape or `pointercancel` restores the original projection without a
 command, receipt, persisted event, or storage write.
 
-Core-selection machine bindings: `cmd.usage.refresh`: `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_result`; `cmd.usage.export`: `Plans/usage_command_contracts.schema.json#/$defs/usage_export_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_export_result`. Existing handlers, availability and disabled reasons are unchanged; this binding grants no native handler availability. Additional Ledger filters and execution-free quota-only projections are outside this profile and must refuse rather than silently lose filters or rows.
+Core-selection machine bindings: `cmd.usage.refresh`: `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_result`; `cmd.usage.export`: `Plans/usage_command_contracts.schema.json#/$defs/usage_export_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_export_result`. Existing handlers, availability and disabled reasons are unchanged; this binding grants no native handler availability. Additional Ledger filters and execution-free quota-only projections are outside this profile and must refuse rather than silently lose filters or rows. Ledger-profile branch (DL-098, PCC-USAGE-QUERY-001): when the original query carries `profile == usage_ledger_selection.v1`, the admitted binding for the same `cmd.usage.refresh` and `cmd.usage.export` commands is `Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_request` -> `Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_result` over recorded attempt rows only (conjunctive recorded project/provider/account/model/run/thread/event-type filters, literal case-insensitive display-only search, time/tokens/cost ordering with newest-or-largest-first initial order and an allowed user-selected reverse, unknowns last, stable record-identity ties, exact Selected versus all-matching Filtered export). The v1 core-selection branch above is unchanged. Original Ledger query, requested/selected record IDs, export mode, `query_ref`/`owner_revision` currentness with `freshness`, caller, and the actual owner result stay one authenticated selection bound to the dispatch receipt; quota-only rows refuse Ledger export and acquire no invented run or event identity. No owner-issued mutation preview exists for this read-only operation and none is invented; handlers, availability, and disabled reasons are unchanged and no native dispatch is granted.
 
 The canonical dispositions are:
 

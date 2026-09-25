@@ -1,0 +1,2316 @@
+{
+  "schema_id": "pm.usage.ledger_query_fixtures.v1",
+  "schema_version": "1.0.0",
+  "claim_boundary": "static ledger selection only; no native proof",
+  "valid": [
+    {
+      "name": "ledger_filtered_time_newest_first",
+      "definition": "ledger_query_fixture",
+      "value": {
+        "schema_id": "pm.usage.ledger_query.fixture.v1",
+        "schema_version": "1.0.0",
+        "runtime_evidence": false,
+        "claim_boundary": "static_ledger_selection_only",
+        "request": {
+          "schema_id": "pm.usage.ledger_query.request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.usage.export",
+          "command_instance_id": "instance:p1",
+          "request_ref": "request:p1",
+          "idempotency_key": "idem:instance:p1",
+          "actor_ref": "actor:owner",
+          "permission_ref": "permission:usage:read",
+          "query": {
+            "profile": "usage_ledger_selection.v1",
+            "query_ref": "query:ledger:001",
+            "owner_revision": "rev:ledger:001",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "scope_kind": "project",
+            "time_range": "5h",
+            "interval_start": "2026-09-25T00:00:00Z",
+            "interval_end": "2026-09-25T05:00:00Z",
+            "filters": {
+              "provider_ids": [
+                "provider:acme"
+              ]
+            },
+            "search": null,
+            "sort": {
+              "key": "time",
+              "order": "newest_or_largest_first",
+              "unknown_values": "last",
+              "tie_break": "stable_record_identity"
+            },
+            "requested_record_ids": [
+              "rec:ledger:001",
+              "rec:ledger:003"
+            ]
+          },
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "export_mode": "filtered"
+        },
+        "recorded_rows": [
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:ledger:001",
+            "usage_event_refs": [
+              "event:001"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:alpha",
+            "run_id": "run:001",
+            "thread_id": "thread:common",
+            "attempt_id": "attempt:001",
+            "observed_at_utc": "2026-09-25T01:00:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 100,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "reported",
+              "value": 50,
+              "unit": "microdollars"
+            },
+            "currency": "USD",
+            "displayed_labels": [
+              "nightly sync ledger"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          },
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:ledger:002",
+            "usage_event_refs": [
+              "event:002"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:alpha",
+            "run_id": "run:002",
+            "thread_id": null,
+            "attempt_id": "attempt:002",
+            "observed_at_utc": "2026-09-25T02:00:00Z",
+            "token_total": {
+              "state": "unknown",
+              "value": null,
+              "unit": null
+            },
+            "cost_microdollars": {
+              "state": "unknown",
+              "value": null,
+              "unit": null
+            },
+            "currency": null,
+            "displayed_labels": [
+              "weekly rollup"
+            ],
+            "non_displayed_admin_note": "quarantine-note: hold for review",
+            "redacted_secret_ref": "secret:quarantine-token",
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          },
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:ledger:003",
+            "usage_event_refs": [
+              "event:003"
+            ],
+            "event_type": "embedding",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:beta",
+            "run_id": "run:003",
+            "thread_id": "thread:003",
+            "attempt_id": "attempt:003",
+            "observed_at_utc": "2026-09-25T03:00:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 200,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "reported",
+              "value": 40,
+              "unit": "microdollars"
+            },
+            "currency": "USD",
+            "displayed_labels": [
+              "daily embedding"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          }
+        ],
+        "recorded_owner_revision": "rev:ledger:001",
+        "result": {
+          "schema_id": "pm.usage.ledger_query.result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.usage.export",
+          "command_instance_id": "instance:p1",
+          "request": {
+            "schema_id": "pm.usage.ledger_query.request.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.usage.export",
+            "command_instance_id": "instance:p1",
+            "request_ref": "request:p1",
+            "idempotency_key": "idem:instance:p1",
+            "actor_ref": "actor:owner",
+            "permission_ref": "permission:usage:read",
+            "query": {
+              "profile": "usage_ledger_selection.v1",
+              "query_ref": "query:ledger:001",
+              "owner_revision": "rev:ledger:001",
+              "server_id": "server:1",
+              "project_id": "project:1",
+              "scope_kind": "project",
+              "time_range": "5h",
+              "interval_start": "2026-09-25T00:00:00Z",
+              "interval_end": "2026-09-25T05:00:00Z",
+              "filters": {
+                "provider_ids": [
+                  "provider:acme"
+                ]
+              },
+              "search": null,
+              "sort": {
+                "key": "time",
+                "order": "newest_or_largest_first",
+                "unknown_values": "last",
+                "tie_break": "stable_record_identity"
+              },
+              "requested_record_ids": [
+                "rec:ledger:001",
+                "rec:ledger:003"
+              ]
+            },
+            "caller": {
+              "client_ref": "client:usage-page",
+              "source_surface": "usage_ledger",
+              "caller_context_ref": "caller:ledger:001",
+              "caller_revision": "rev:caller:001"
+            },
+            "export_mode": "filtered"
+          },
+          "status": "succeeded",
+          "error_ref": null,
+          "result_receipt_ref": "receipt:ledger:001",
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "applied_query": {
+            "profile": "usage_ledger_selection.v1",
+            "query_ref": "query:ledger:001",
+            "owner_revision": "rev:ledger:001",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "scope_kind": "project",
+            "time_range": "5h",
+            "interval_start": "2026-09-25T00:00:00Z",
+            "interval_end": "2026-09-25T05:00:00Z",
+            "filters": {
+              "provider_ids": [
+                "provider:acme"
+              ]
+            },
+            "search": null,
+            "sort": {
+              "key": "time",
+              "order": "newest_or_largest_first",
+              "unknown_values": "last",
+              "tie_break": "stable_record_identity"
+            },
+            "requested_record_ids": [
+              "rec:ledger:001",
+              "rec:ledger:003"
+            ]
+          },
+          "freshness": "current",
+          "matched_record_ids": [
+            "rec:ledger:001",
+            "rec:ledger:002",
+            "rec:ledger:003"
+          ],
+          "ordered_record_ids": [
+            "rec:ledger:003",
+            "rec:ledger:002",
+            "rec:ledger:001"
+          ],
+          "selection": {
+            "requested_record_ids": [
+              "rec:ledger:001",
+              "rec:ledger:003"
+            ],
+            "effective_record_ids": [
+              "rec:ledger:003",
+              "rec:ledger:001"
+            ]
+          },
+          "page": {
+            "offset": 0,
+            "limit": 2,
+            "returned_count": 2,
+            "total_match_count": 3
+          },
+          "export": {
+            "mode": "filtered",
+            "rows": [
+              {
+                "row_kind": "attempt_usage",
+                "usage_record_id": "rec:ledger:003",
+                "usage_event_refs": [
+                  "event:003"
+                ],
+                "event_type": "embedding",
+                "server_id": "server:1",
+                "project_id": "project:1",
+                "provider_id": "provider:acme",
+                "provider_account_ref": "account:team",
+                "model_id": "model:beta",
+                "run_id": "run:003",
+                "thread_id": "thread:003",
+                "attempt_id": "attempt:003",
+                "observed_at_utc": "2026-09-25T03:00:00Z",
+                "token_total": {
+                  "state": "reported",
+                  "value": 200,
+                  "unit": "tokens"
+                },
+                "cost_microdollars": {
+                  "state": "reported",
+                  "value": 40,
+                  "unit": "microdollars"
+                },
+                "currency": "USD",
+                "displayed_labels": [
+                  "daily embedding"
+                ],
+                "non_displayed_admin_note": null,
+                "redacted_secret_ref": null,
+                "identity_provenance": {
+                  "run_identity": "recorded",
+                  "event_identity": "recorded"
+                }
+              },
+              {
+                "row_kind": "attempt_usage",
+                "usage_record_id": "rec:ledger:002",
+                "usage_event_refs": [
+                  "event:002"
+                ],
+                "event_type": "inference",
+                "server_id": "server:1",
+                "project_id": "project:1",
+                "provider_id": "provider:acme",
+                "provider_account_ref": "account:team",
+                "model_id": "model:alpha",
+                "run_id": "run:002",
+                "thread_id": null,
+                "attempt_id": "attempt:002",
+                "observed_at_utc": "2026-09-25T02:00:00Z",
+                "token_total": {
+                  "state": "unknown",
+                  "value": null,
+                  "unit": null
+                },
+                "cost_microdollars": {
+                  "state": "unknown",
+                  "value": null,
+                  "unit": null
+                },
+                "currency": null,
+                "displayed_labels": [
+                  "weekly rollup"
+                ],
+                "non_displayed_admin_note": "quarantine-note: hold for review",
+                "redacted_secret_ref": "secret:quarantine-token",
+                "identity_provenance": {
+                  "run_identity": "recorded",
+                  "event_identity": "recorded"
+                }
+              },
+              {
+                "row_kind": "attempt_usage",
+                "usage_record_id": "rec:ledger:001",
+                "usage_event_refs": [
+                  "event:001"
+                ],
+                "event_type": "inference",
+                "server_id": "server:1",
+                "project_id": "project:1",
+                "provider_id": "provider:acme",
+                "provider_account_ref": "account:team",
+                "model_id": "model:alpha",
+                "run_id": "run:001",
+                "thread_id": "thread:common",
+                "attempt_id": "attempt:001",
+                "observed_at_utc": "2026-09-25T01:00:00Z",
+                "token_total": {
+                  "state": "reported",
+                  "value": 100,
+                  "unit": "tokens"
+                },
+                "cost_microdollars": {
+                  "state": "reported",
+                  "value": 50,
+                  "unit": "microdollars"
+                },
+                "currency": "USD",
+                "displayed_labels": [
+                  "nightly sync ledger"
+                ],
+                "non_displayed_admin_note": null,
+                "redacted_secret_ref": null,
+                "identity_provenance": {
+                  "run_identity": "recorded",
+                  "event_identity": "recorded"
+                }
+              }
+            ],
+            "drawn_viewport_row_count": 2,
+            "total_match_count": 3
+          }
+        },
+        "central_input": {
+          "command_id": "cmd.usage.export",
+          "command_instance_id": "instance:p1",
+          "request_ref": "request:p1",
+          "owner_identity": {
+            "scope_kind": "project",
+            "server_id": "server:1",
+            "project_id": "project:1"
+          },
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "owner_result_ref": "result:ledger:001",
+          "error_ref": null,
+          "ui_error": null,
+          "replayed": false,
+          "original_dispatch_id": null,
+          "original_effective_record_ids": null,
+          "original_export_row_ids": null,
+          "central_dispatch": {
+            "status": "static_note_only",
+            "reason": "no central usage dispatch route in the copied source; static selection only"
+          }
+        },
+        "current_panel_context_ref": "panel:current:other"
+      }
+    },
+    {
+      "name": "ledger_selected_tokens_search",
+      "definition": "ledger_query_fixture",
+      "value": {
+        "schema_id": "pm.usage.ledger_query.fixture.v1",
+        "schema_version": "1.0.0",
+        "runtime_evidence": false,
+        "claim_boundary": "static_ledger_selection_only",
+        "request": {
+          "schema_id": "pm.usage.ledger_query.request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.usage.export",
+          "command_instance_id": "instance:p2",
+          "request_ref": "request:p2",
+          "idempotency_key": "idem:instance:p2",
+          "actor_ref": "actor:owner",
+          "permission_ref": "permission:usage:read",
+          "query": {
+            "profile": "usage_ledger_selection.v1",
+            "query_ref": "query:ledger:001",
+            "owner_revision": "rev:ledger:001",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "scope_kind": "project",
+            "time_range": "5h",
+            "interval_start": "2026-09-25T00:00:00Z",
+            "interval_end": "2026-09-25T05:00:00Z",
+            "filters": {
+              "event_types": [
+                "inference"
+              ]
+            },
+            "search": {
+              "text": "MODEL-beta",
+              "scope": "displayed_labels_and_identifiers",
+              "pattern_kind": "literal_substring"
+            },
+            "sort": {
+              "key": "tokens",
+              "order": "newest_or_largest_first",
+              "unknown_values": "last",
+              "tie_break": "stable_record_identity"
+            },
+            "requested_record_ids": [
+              "rec:search:003",
+              "rec:search:002"
+            ]
+          },
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "export_mode": "selected"
+        },
+        "recorded_rows": [
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:search:001",
+            "usage_event_refs": [
+              "event:s1"
+            ],
+            "event_type": "training",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:alpha",
+            "run_id": "run:s1",
+            "thread_id": "thread:s1",
+            "attempt_id": "attempt:s1",
+            "observed_at_utc": "2026-09-25T01:30:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 50,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "reported",
+              "value": 10,
+              "unit": "microdollars"
+            },
+            "currency": "USD",
+            "displayed_labels": [
+              "nightly training"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          },
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:search:002",
+            "usage_event_refs": [
+              "event:s2"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:beta",
+            "run_id": "run:s2",
+            "thread_id": null,
+            "attempt_id": "attempt:s2",
+            "observed_at_utc": "2026-09-25T02:30:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 300,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "unknown",
+              "value": null,
+              "unit": null
+            },
+            "currency": null,
+            "displayed_labels": [
+              "Model-Beta weekly digest"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          },
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:search:003",
+            "usage_event_refs": [
+              "event:s3"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:beta",
+            "run_id": "run:s3",
+            "thread_id": "thread:s3",
+            "attempt_id": "attempt:s3",
+            "observed_at_utc": "2026-09-25T00:30:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 300,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "reported",
+              "value": 5,
+              "unit": "microdollars"
+            },
+            "currency": "USD",
+            "displayed_labels": [
+              "model-beta daily"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          }
+        ],
+        "recorded_owner_revision": "rev:ledger:001",
+        "result": {
+          "schema_id": "pm.usage.ledger_query.result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.usage.export",
+          "command_instance_id": "instance:p2",
+          "request": {
+            "schema_id": "pm.usage.ledger_query.request.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.usage.export",
+            "command_instance_id": "instance:p2",
+            "request_ref": "request:p2",
+            "idempotency_key": "idem:instance:p2",
+            "actor_ref": "actor:owner",
+            "permission_ref": "permission:usage:read",
+            "query": {
+              "profile": "usage_ledger_selection.v1",
+              "query_ref": "query:ledger:001",
+              "owner_revision": "rev:ledger:001",
+              "server_id": "server:1",
+              "project_id": "project:1",
+              "scope_kind": "project",
+              "time_range": "5h",
+              "interval_start": "2026-09-25T00:00:00Z",
+              "interval_end": "2026-09-25T05:00:00Z",
+              "filters": {
+                "event_types": [
+                  "inference"
+                ]
+              },
+              "search": {
+                "text": "MODEL-beta",
+                "scope": "displayed_labels_and_identifiers",
+                "pattern_kind": "literal_substring"
+              },
+              "sort": {
+                "key": "tokens",
+                "order": "newest_or_largest_first",
+                "unknown_values": "last",
+                "tie_break": "stable_record_identity"
+              },
+              "requested_record_ids": [
+                "rec:search:003",
+                "rec:search:002"
+              ]
+            },
+            "caller": {
+              "client_ref": "client:usage-page",
+              "source_surface": "usage_ledger",
+              "caller_context_ref": "caller:ledger:001",
+              "caller_revision": "rev:caller:001"
+            },
+            "export_mode": "selected"
+          },
+          "status": "succeeded",
+          "error_ref": null,
+          "result_receipt_ref": "receipt:ledger:001",
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "applied_query": {
+            "profile": "usage_ledger_selection.v1",
+            "query_ref": "query:ledger:001",
+            "owner_revision": "rev:ledger:001",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "scope_kind": "project",
+            "time_range": "5h",
+            "interval_start": "2026-09-25T00:00:00Z",
+            "interval_end": "2026-09-25T05:00:00Z",
+            "filters": {
+              "event_types": [
+                "inference"
+              ]
+            },
+            "search": {
+              "text": "MODEL-beta",
+              "scope": "displayed_labels_and_identifiers",
+              "pattern_kind": "literal_substring"
+            },
+            "sort": {
+              "key": "tokens",
+              "order": "newest_or_largest_first",
+              "unknown_values": "last",
+              "tie_break": "stable_record_identity"
+            },
+            "requested_record_ids": [
+              "rec:search:003",
+              "rec:search:002"
+            ]
+          },
+          "freshness": "current",
+          "matched_record_ids": [
+            "rec:search:002",
+            "rec:search:003"
+          ],
+          "ordered_record_ids": [
+            "rec:search:002",
+            "rec:search:003"
+          ],
+          "selection": {
+            "requested_record_ids": [
+              "rec:search:003",
+              "rec:search:002"
+            ],
+            "effective_record_ids": [
+              "rec:search:002",
+              "rec:search:003"
+            ]
+          },
+          "page": {
+            "offset": 0,
+            "limit": 10,
+            "returned_count": 2,
+            "total_match_count": 2
+          },
+          "export": {
+            "mode": "selected",
+            "rows": [
+              {
+                "row_kind": "attempt_usage",
+                "usage_record_id": "rec:search:002",
+                "usage_event_refs": [
+                  "event:s2"
+                ],
+                "event_type": "inference",
+                "server_id": "server:1",
+                "project_id": "project:1",
+                "provider_id": "provider:acme",
+                "provider_account_ref": "account:team",
+                "model_id": "model:beta",
+                "run_id": "run:s2",
+                "thread_id": null,
+                "attempt_id": "attempt:s2",
+                "observed_at_utc": "2026-09-25T02:30:00Z",
+                "token_total": {
+                  "state": "reported",
+                  "value": 300,
+                  "unit": "tokens"
+                },
+                "cost_microdollars": {
+                  "state": "unknown",
+                  "value": null,
+                  "unit": null
+                },
+                "currency": null,
+                "displayed_labels": [
+                  "Model-Beta weekly digest"
+                ],
+                "non_displayed_admin_note": null,
+                "redacted_secret_ref": null,
+                "identity_provenance": {
+                  "run_identity": "recorded",
+                  "event_identity": "recorded"
+                }
+              },
+              {
+                "row_kind": "attempt_usage",
+                "usage_record_id": "rec:search:003",
+                "usage_event_refs": [
+                  "event:s3"
+                ],
+                "event_type": "inference",
+                "server_id": "server:1",
+                "project_id": "project:1",
+                "provider_id": "provider:acme",
+                "provider_account_ref": "account:team",
+                "model_id": "model:beta",
+                "run_id": "run:s3",
+                "thread_id": "thread:s3",
+                "attempt_id": "attempt:s3",
+                "observed_at_utc": "2026-09-25T00:30:00Z",
+                "token_total": {
+                  "state": "reported",
+                  "value": 300,
+                  "unit": "tokens"
+                },
+                "cost_microdollars": {
+                  "state": "reported",
+                  "value": 5,
+                  "unit": "microdollars"
+                },
+                "currency": "USD",
+                "displayed_labels": [
+                  "model-beta daily"
+                ],
+                "non_displayed_admin_note": null,
+                "redacted_secret_ref": null,
+                "identity_provenance": {
+                  "run_identity": "recorded",
+                  "event_identity": "recorded"
+                }
+              }
+            ],
+            "drawn_viewport_row_count": 2,
+            "total_match_count": 2
+          }
+        },
+        "central_input": {
+          "command_id": "cmd.usage.export",
+          "command_instance_id": "instance:p2",
+          "request_ref": "request:p2",
+          "owner_identity": {
+            "scope_kind": "project",
+            "server_id": "server:1",
+            "project_id": "project:1"
+          },
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "owner_result_ref": "result:ledger:001",
+          "error_ref": null,
+          "ui_error": null,
+          "replayed": false,
+          "original_dispatch_id": null,
+          "original_effective_record_ids": null,
+          "original_export_row_ids": null,
+          "central_dispatch": {
+            "status": "static_note_only",
+            "reason": "no central usage dispatch route in the copied source; static selection only"
+          }
+        },
+        "current_panel_context_ref": "panel:current:other"
+      }
+    },
+    {
+      "name": "ledger_refresh_cost_unknowns_last",
+      "definition": "ledger_query_fixture",
+      "value": {
+        "schema_id": "pm.usage.ledger_query.fixture.v1",
+        "schema_version": "1.0.0",
+        "runtime_evidence": false,
+        "claim_boundary": "static_ledger_selection_only",
+        "request": {
+          "schema_id": "pm.usage.ledger_query.request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.usage.refresh",
+          "command_instance_id": "instance:p3",
+          "request_ref": "request:p3",
+          "idempotency_key": "idem:instance:p3",
+          "actor_ref": "actor:owner",
+          "permission_ref": "permission:usage:read",
+          "query": {
+            "profile": "usage_ledger_selection.v1",
+            "query_ref": "query:ledger:001",
+            "owner_revision": "rev:ledger:001",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "scope_kind": "project",
+            "time_range": "5h",
+            "interval_start": "2026-09-25T00:00:00Z",
+            "interval_end": "2026-09-25T05:00:00Z",
+            "filters": {},
+            "search": null,
+            "sort": {
+              "key": "cost",
+              "order": "newest_or_largest_first",
+              "unknown_values": "last",
+              "tie_break": "stable_record_identity"
+            },
+            "requested_record_ids": []
+          },
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "export_mode": null
+        },
+        "recorded_rows": [
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:cost:001",
+            "usage_event_refs": [
+              "event:c1"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:alpha",
+            "run_id": "run:c1",
+            "thread_id": "thread:common",
+            "attempt_id": "attempt:c1",
+            "observed_at_utc": "2026-09-25T01:00:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 10,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "reported",
+              "value": 100,
+              "unit": "microdollars"
+            },
+            "currency": "USD",
+            "displayed_labels": [
+              "cost row one"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          },
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:cost:002",
+            "usage_event_refs": [
+              "event:c2"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:alpha",
+            "run_id": "run:c2",
+            "thread_id": "thread:common",
+            "attempt_id": "attempt:c2",
+            "observed_at_utc": "2026-09-25T02:00:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 20,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "unknown",
+              "value": null,
+              "unit": null
+            },
+            "currency": null,
+            "displayed_labels": [
+              "cost row two"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          },
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:cost:003",
+            "usage_event_refs": [
+              "event:c3"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:beta",
+            "run_id": "run:c3",
+            "thread_id": "thread:common",
+            "attempt_id": "attempt:c3",
+            "observed_at_utc": "2026-09-25T03:00:00Z",
+            "token_total": {
+              "state": "unknown",
+              "value": null,
+              "unit": null
+            },
+            "cost_microdollars": {
+              "state": "reported",
+              "value": 20,
+              "unit": "microdollars"
+            },
+            "currency": "USD",
+            "displayed_labels": [
+              "cost row three"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          }
+        ],
+        "recorded_owner_revision": "rev:ledger:001",
+        "result": {
+          "schema_id": "pm.usage.ledger_query.result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.usage.refresh",
+          "command_instance_id": "instance:p3",
+          "request": {
+            "schema_id": "pm.usage.ledger_query.request.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.usage.refresh",
+            "command_instance_id": "instance:p3",
+            "request_ref": "request:p3",
+            "idempotency_key": "idem:instance:p3",
+            "actor_ref": "actor:owner",
+            "permission_ref": "permission:usage:read",
+            "query": {
+              "profile": "usage_ledger_selection.v1",
+              "query_ref": "query:ledger:001",
+              "owner_revision": "rev:ledger:001",
+              "server_id": "server:1",
+              "project_id": "project:1",
+              "scope_kind": "project",
+              "time_range": "5h",
+              "interval_start": "2026-09-25T00:00:00Z",
+              "interval_end": "2026-09-25T05:00:00Z",
+              "filters": {},
+              "search": null,
+              "sort": {
+                "key": "cost",
+                "order": "newest_or_largest_first",
+                "unknown_values": "last",
+                "tie_break": "stable_record_identity"
+              },
+              "requested_record_ids": []
+            },
+            "caller": {
+              "client_ref": "client:usage-page",
+              "source_surface": "usage_ledger",
+              "caller_context_ref": "caller:ledger:001",
+              "caller_revision": "rev:caller:001"
+            },
+            "export_mode": null
+          },
+          "status": "succeeded",
+          "error_ref": null,
+          "result_receipt_ref": "receipt:ledger:001",
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "applied_query": {
+            "profile": "usage_ledger_selection.v1",
+            "query_ref": "query:ledger:001",
+            "owner_revision": "rev:ledger:001",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "scope_kind": "project",
+            "time_range": "5h",
+            "interval_start": "2026-09-25T00:00:00Z",
+            "interval_end": "2026-09-25T05:00:00Z",
+            "filters": {},
+            "search": null,
+            "sort": {
+              "key": "cost",
+              "order": "newest_or_largest_first",
+              "unknown_values": "last",
+              "tie_break": "stable_record_identity"
+            },
+            "requested_record_ids": []
+          },
+          "freshness": "current",
+          "matched_record_ids": [
+            "rec:cost:001",
+            "rec:cost:002",
+            "rec:cost:003"
+          ],
+          "ordered_record_ids": [
+            "rec:cost:001",
+            "rec:cost:003",
+            "rec:cost:002"
+          ],
+          "selection": {
+            "requested_record_ids": [],
+            "effective_record_ids": []
+          },
+          "page": {
+            "offset": 0,
+            "limit": 10,
+            "returned_count": 3,
+            "total_match_count": 3
+          },
+          "export": null
+        },
+        "central_input": {
+          "command_id": "cmd.usage.refresh",
+          "command_instance_id": "instance:p3",
+          "request_ref": "request:p3",
+          "owner_identity": {
+            "scope_kind": "project",
+            "server_id": "server:1",
+            "project_id": "project:1"
+          },
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "owner_result_ref": "result:ledger:001",
+          "error_ref": null,
+          "ui_error": null,
+          "replayed": false,
+          "original_dispatch_id": null,
+          "original_effective_record_ids": null,
+          "original_export_row_ids": null,
+          "central_dispatch": {
+            "status": "static_note_only",
+            "reason": "no central usage dispatch route in the copied source; static selection only"
+          }
+        },
+        "current_panel_context_ref": "panel:current:other"
+      }
+    },
+    {
+      "name": "ledger_cancelled_nullable_ui_error",
+      "definition": "ledger_query_fixture",
+      "value": {
+        "schema_id": "pm.usage.ledger_query.fixture.v1",
+        "schema_version": "1.0.0",
+        "runtime_evidence": false,
+        "claim_boundary": "static_ledger_selection_only",
+        "request": {
+          "schema_id": "pm.usage.ledger_query.request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.usage.export",
+          "command_instance_id": "instance:p4",
+          "request_ref": "request:p4",
+          "idempotency_key": "idem:instance:p4",
+          "actor_ref": "actor:owner",
+          "permission_ref": "permission:usage:read",
+          "query": {
+            "profile": "usage_ledger_selection.v1",
+            "query_ref": "query:ledger:001",
+            "owner_revision": "rev:ledger:001",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "scope_kind": "project",
+            "time_range": "5h",
+            "interval_start": "2026-09-25T00:00:00Z",
+            "interval_end": "2026-09-25T05:00:00Z",
+            "filters": {
+              "model_ids": [
+                "model:alpha"
+              ]
+            },
+            "search": null,
+            "sort": {
+              "key": "time",
+              "order": "newest_or_largest_first",
+              "unknown_values": "last",
+              "tie_break": "stable_record_identity"
+            },
+            "requested_record_ids": [
+              "rec:cancel:001"
+            ]
+          },
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "export_mode": "selected"
+        },
+        "recorded_rows": [
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:cancel:001",
+            "usage_event_refs": [
+              "event:x1"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:alpha",
+            "run_id": "run:x1",
+            "thread_id": "thread:common",
+            "attempt_id": "attempt:x1",
+            "observed_at_utc": "2026-09-25T01:00:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 5,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "reported",
+              "value": 1,
+              "unit": "microdollars"
+            },
+            "currency": "USD",
+            "displayed_labels": [
+              "cancel row one"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          },
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:cancel:002",
+            "usage_event_refs": [
+              "event:x2"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:alpha",
+            "run_id": "run:x2",
+            "thread_id": "thread:common",
+            "attempt_id": "attempt:x2",
+            "observed_at_utc": "2026-09-25T02:00:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 6,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "reported",
+              "value": 2,
+              "unit": "microdollars"
+            },
+            "currency": "USD",
+            "displayed_labels": [
+              "cancel row two"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          }
+        ],
+        "recorded_owner_revision": "rev:ledger:001",
+        "result": {
+          "schema_id": "pm.usage.ledger_query.result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.usage.export",
+          "command_instance_id": "instance:p4",
+          "request": {
+            "schema_id": "pm.usage.ledger_query.request.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.usage.export",
+            "command_instance_id": "instance:p4",
+            "request_ref": "request:p4",
+            "idempotency_key": "idem:instance:p4",
+            "actor_ref": "actor:owner",
+            "permission_ref": "permission:usage:read",
+            "query": {
+              "profile": "usage_ledger_selection.v1",
+              "query_ref": "query:ledger:001",
+              "owner_revision": "rev:ledger:001",
+              "server_id": "server:1",
+              "project_id": "project:1",
+              "scope_kind": "project",
+              "time_range": "5h",
+              "interval_start": "2026-09-25T00:00:00Z",
+              "interval_end": "2026-09-25T05:00:00Z",
+              "filters": {
+                "model_ids": [
+                  "model:alpha"
+                ]
+              },
+              "search": null,
+              "sort": {
+                "key": "time",
+                "order": "newest_or_largest_first",
+                "unknown_values": "last",
+                "tie_break": "stable_record_identity"
+              },
+              "requested_record_ids": [
+                "rec:cancel:001"
+              ]
+            },
+            "caller": {
+              "client_ref": "client:usage-page",
+              "source_surface": "usage_ledger",
+              "caller_context_ref": "caller:ledger:001",
+              "caller_revision": "rev:caller:001"
+            },
+            "export_mode": "selected"
+          },
+          "status": "cancelled",
+          "error_ref": "error:ledger:cancelled",
+          "result_receipt_ref": null,
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "applied_query": {
+            "profile": "usage_ledger_selection.v1",
+            "query_ref": "query:ledger:001",
+            "owner_revision": "rev:ledger:001",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "scope_kind": "project",
+            "time_range": "5h",
+            "interval_start": "2026-09-25T00:00:00Z",
+            "interval_end": "2026-09-25T05:00:00Z",
+            "filters": {
+              "model_ids": [
+                "model:alpha"
+              ]
+            },
+            "search": null,
+            "sort": {
+              "key": "time",
+              "order": "newest_or_largest_first",
+              "unknown_values": "last",
+              "tie_break": "stable_record_identity"
+            },
+            "requested_record_ids": [
+              "rec:cancel:001"
+            ]
+          },
+          "freshness": "current",
+          "matched_record_ids": [
+            "rec:cancel:001",
+            "rec:cancel:002"
+          ],
+          "ordered_record_ids": [
+            "rec:cancel:002",
+            "rec:cancel:001"
+          ],
+          "selection": {
+            "requested_record_ids": [
+              "rec:cancel:001"
+            ],
+            "effective_record_ids": [
+              "rec:cancel:001"
+            ]
+          },
+          "page": null,
+          "export": null
+        },
+        "central_input": {
+          "command_id": "cmd.usage.export",
+          "command_instance_id": "instance:p4",
+          "request_ref": "request:p4",
+          "owner_identity": {
+            "scope_kind": "project",
+            "server_id": "server:1",
+            "project_id": "project:1"
+          },
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "owner_result_ref": "result:ledger:001",
+          "error_ref": "error:ledger:cancelled",
+          "ui_error": {
+            "code": "cancelled",
+            "reason": "Owner cancelled the export; no output was produced"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "original_effective_record_ids": null,
+          "original_export_row_ids": null,
+          "central_dispatch": {
+            "status": "static_note_only",
+            "reason": "no central usage dispatch route in the copied source; static selection only"
+          }
+        },
+        "current_panel_context_ref": "panel:current:other"
+      }
+    },
+    {
+      "name": "ledger_replay_preserves_original_export",
+      "definition": "ledger_query_fixture",
+      "value": {
+        "schema_id": "pm.usage.ledger_query.fixture.v1",
+        "schema_version": "1.0.0",
+        "runtime_evidence": false,
+        "claim_boundary": "static_ledger_selection_only",
+        "request": {
+          "schema_id": "pm.usage.ledger_query.request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.usage.export",
+          "command_instance_id": "instance:p5",
+          "request_ref": "request:p5",
+          "idempotency_key": "idem:instance:p5",
+          "actor_ref": "actor:owner",
+          "permission_ref": "permission:usage:read",
+          "query": {
+            "profile": "usage_ledger_selection.v1",
+            "query_ref": "query:ledger:001",
+            "owner_revision": "rev:ledger:001",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "scope_kind": "project",
+            "time_range": "5h",
+            "interval_start": "2026-09-25T00:00:00Z",
+            "interval_end": "2026-09-25T05:00:00Z",
+            "filters": {},
+            "search": null,
+            "sort": {
+              "key": "time",
+              "order": "newest_or_largest_first",
+              "unknown_values": "last",
+              "tie_break": "stable_record_identity"
+            },
+            "requested_record_ids": [
+              "rec:replay:001"
+            ]
+          },
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "export_mode": "filtered"
+        },
+        "recorded_rows": [
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:replay:001",
+            "usage_event_refs": [
+              "event:y1"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:alpha",
+            "run_id": "run:y1",
+            "thread_id": "thread:common",
+            "attempt_id": "attempt:y1",
+            "observed_at_utc": "2026-09-25T01:00:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 7,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "reported",
+              "value": 3,
+              "unit": "microdollars"
+            },
+            "currency": "USD",
+            "displayed_labels": [
+              "replay row one"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          },
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:replay:002",
+            "usage_event_refs": [
+              "event:y2"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:alpha",
+            "run_id": "run:y2",
+            "thread_id": "thread:common",
+            "attempt_id": "attempt:y2",
+            "observed_at_utc": "2026-09-25T02:00:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 8,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "reported",
+              "value": 4,
+              "unit": "microdollars"
+            },
+            "currency": "USD",
+            "displayed_labels": [
+              "replay row two"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          }
+        ],
+        "recorded_owner_revision": "rev:ledger:001",
+        "result": {
+          "schema_id": "pm.usage.ledger_query.result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.usage.export",
+          "command_instance_id": "instance:p5",
+          "request": {
+            "schema_id": "pm.usage.ledger_query.request.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.usage.export",
+            "command_instance_id": "instance:p5",
+            "request_ref": "request:p5",
+            "idempotency_key": "idem:instance:p5",
+            "actor_ref": "actor:owner",
+            "permission_ref": "permission:usage:read",
+            "query": {
+              "profile": "usage_ledger_selection.v1",
+              "query_ref": "query:ledger:001",
+              "owner_revision": "rev:ledger:001",
+              "server_id": "server:1",
+              "project_id": "project:1",
+              "scope_kind": "project",
+              "time_range": "5h",
+              "interval_start": "2026-09-25T00:00:00Z",
+              "interval_end": "2026-09-25T05:00:00Z",
+              "filters": {},
+              "search": null,
+              "sort": {
+                "key": "time",
+                "order": "newest_or_largest_first",
+                "unknown_values": "last",
+                "tie_break": "stable_record_identity"
+              },
+              "requested_record_ids": [
+                "rec:replay:001"
+              ]
+            },
+            "caller": {
+              "client_ref": "client:usage-page",
+              "source_surface": "usage_ledger",
+              "caller_context_ref": "caller:ledger:001",
+              "caller_revision": "rev:caller:001"
+            },
+            "export_mode": "filtered"
+          },
+          "status": "succeeded",
+          "error_ref": null,
+          "result_receipt_ref": "receipt:ledger:001",
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "applied_query": {
+            "profile": "usage_ledger_selection.v1",
+            "query_ref": "query:ledger:001",
+            "owner_revision": "rev:ledger:001",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "scope_kind": "project",
+            "time_range": "5h",
+            "interval_start": "2026-09-25T00:00:00Z",
+            "interval_end": "2026-09-25T05:00:00Z",
+            "filters": {},
+            "search": null,
+            "sort": {
+              "key": "time",
+              "order": "newest_or_largest_first",
+              "unknown_values": "last",
+              "tie_break": "stable_record_identity"
+            },
+            "requested_record_ids": [
+              "rec:replay:001"
+            ]
+          },
+          "freshness": "current",
+          "matched_record_ids": [
+            "rec:replay:001",
+            "rec:replay:002"
+          ],
+          "ordered_record_ids": [
+            "rec:replay:002",
+            "rec:replay:001"
+          ],
+          "selection": {
+            "requested_record_ids": [
+              "rec:replay:001"
+            ],
+            "effective_record_ids": [
+              "rec:replay:001"
+            ]
+          },
+          "page": {
+            "offset": 0,
+            "limit": 1,
+            "returned_count": 1,
+            "total_match_count": 2
+          },
+          "export": {
+            "mode": "filtered",
+            "rows": [
+              {
+                "row_kind": "attempt_usage",
+                "usage_record_id": "rec:replay:002",
+                "usage_event_refs": [
+                  "event:y2"
+                ],
+                "event_type": "inference",
+                "server_id": "server:1",
+                "project_id": "project:1",
+                "provider_id": "provider:acme",
+                "provider_account_ref": "account:team",
+                "model_id": "model:alpha",
+                "run_id": "run:y2",
+                "thread_id": "thread:common",
+                "attempt_id": "attempt:y2",
+                "observed_at_utc": "2026-09-25T02:00:00Z",
+                "token_total": {
+                  "state": "reported",
+                  "value": 8,
+                  "unit": "tokens"
+                },
+                "cost_microdollars": {
+                  "state": "reported",
+                  "value": 4,
+                  "unit": "microdollars"
+                },
+                "currency": "USD",
+                "displayed_labels": [
+                  "replay row two"
+                ],
+                "non_displayed_admin_note": null,
+                "redacted_secret_ref": null,
+                "identity_provenance": {
+                  "run_identity": "recorded",
+                  "event_identity": "recorded"
+                }
+              },
+              {
+                "row_kind": "attempt_usage",
+                "usage_record_id": "rec:replay:001",
+                "usage_event_refs": [
+                  "event:y1"
+                ],
+                "event_type": "inference",
+                "server_id": "server:1",
+                "project_id": "project:1",
+                "provider_id": "provider:acme",
+                "provider_account_ref": "account:team",
+                "model_id": "model:alpha",
+                "run_id": "run:y1",
+                "thread_id": "thread:common",
+                "attempt_id": "attempt:y1",
+                "observed_at_utc": "2026-09-25T01:00:00Z",
+                "token_total": {
+                  "state": "reported",
+                  "value": 7,
+                  "unit": "tokens"
+                },
+                "cost_microdollars": {
+                  "state": "reported",
+                  "value": 3,
+                  "unit": "microdollars"
+                },
+                "currency": "USD",
+                "displayed_labels": [
+                  "replay row one"
+                ],
+                "non_displayed_admin_note": null,
+                "redacted_secret_ref": null,
+                "identity_provenance": {
+                  "run_identity": "recorded",
+                  "event_identity": "recorded"
+                }
+              }
+            ],
+            "drawn_viewport_row_count": 1,
+            "total_match_count": 2
+          }
+        },
+        "central_input": {
+          "command_id": "cmd.usage.export",
+          "command_instance_id": "instance:p5",
+          "request_ref": "request:p5",
+          "owner_identity": {
+            "scope_kind": "project",
+            "server_id": "server:1",
+            "project_id": "project:1"
+          },
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "owner_result_ref": "result:ledger:001",
+          "error_ref": null,
+          "ui_error": null,
+          "replayed": true,
+          "original_dispatch_id": "dispatch:ledger:original",
+          "original_effective_record_ids": [
+            "rec:replay:001"
+          ],
+          "original_export_row_ids": [
+            "rec:replay:002",
+            "rec:replay:001"
+          ],
+          "central_dispatch": {
+            "status": "static_note_only",
+            "reason": "no central usage dispatch route in the copied source; static selection only"
+          }
+        },
+        "current_panel_context_ref": "panel:current:other"
+      }
+    },
+    {
+      "name": "ledger_refresh_cost_oldest_first",
+      "definition": "ledger_query_fixture",
+      "value": {
+        "schema_id": "pm.usage.ledger_query.fixture.v1",
+        "schema_version": "1.0.0",
+        "runtime_evidence": false,
+        "claim_boundary": "static_ledger_selection_only",
+        "request": {
+          "schema_id": "pm.usage.ledger_query.request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.usage.refresh",
+          "command_instance_id": "instance:p6",
+          "request_ref": "request:p6",
+          "idempotency_key": "idem:instance:p6",
+          "actor_ref": "actor:owner",
+          "permission_ref": "permission:usage:read",
+          "query": {
+            "profile": "usage_ledger_selection.v1",
+            "query_ref": "query:ledger:001",
+            "owner_revision": "rev:ledger:001",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "scope_kind": "project",
+            "time_range": "5h",
+            "interval_start": "2026-09-25T00:00:00Z",
+            "interval_end": "2026-09-25T05:00:00Z",
+            "filters": {},
+            "search": null,
+            "sort": {
+              "key": "cost",
+              "order": "oldest_or_smallest_first",
+              "unknown_values": "last",
+              "tie_break": "stable_record_identity"
+            },
+            "requested_record_ids": []
+          },
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "export_mode": null
+        },
+        "recorded_rows": [
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:cost:001",
+            "usage_event_refs": [
+              "event:c1"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:alpha",
+            "run_id": "run:c1",
+            "thread_id": "thread:common",
+            "attempt_id": "attempt:c1",
+            "observed_at_utc": "2026-09-25T01:00:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 10,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "reported",
+              "value": 100,
+              "unit": "microdollars"
+            },
+            "currency": "USD",
+            "displayed_labels": [
+              "cost row one"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          },
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:cost:002",
+            "usage_event_refs": [
+              "event:c2"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:alpha",
+            "run_id": "run:c2",
+            "thread_id": "thread:common",
+            "attempt_id": "attempt:c2",
+            "observed_at_utc": "2026-09-25T02:00:00Z",
+            "token_total": {
+              "state": "reported",
+              "value": 20,
+              "unit": "tokens"
+            },
+            "cost_microdollars": {
+              "state": "unknown",
+              "value": null,
+              "unit": null
+            },
+            "currency": null,
+            "displayed_labels": [
+              "cost row two"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          },
+          {
+            "row_kind": "attempt_usage",
+            "usage_record_id": "rec:cost:003",
+            "usage_event_refs": [
+              "event:c3"
+            ],
+            "event_type": "inference",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "provider_id": "provider:acme",
+            "provider_account_ref": "account:team",
+            "model_id": "model:beta",
+            "run_id": "run:c3",
+            "thread_id": "thread:common",
+            "attempt_id": "attempt:c3",
+            "observed_at_utc": "2026-09-25T03:00:00Z",
+            "token_total": {
+              "state": "unknown",
+              "value": null,
+              "unit": null
+            },
+            "cost_microdollars": {
+              "state": "reported",
+              "value": 20,
+              "unit": "microdollars"
+            },
+            "currency": "USD",
+            "displayed_labels": [
+              "cost row three"
+            ],
+            "non_displayed_admin_note": null,
+            "redacted_secret_ref": null,
+            "identity_provenance": {
+              "run_identity": "recorded",
+              "event_identity": "recorded"
+            }
+          }
+        ],
+        "recorded_owner_revision": "rev:ledger:001",
+        "result": {
+          "schema_id": "pm.usage.ledger_query.result.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.usage.refresh",
+          "command_instance_id": "instance:p6",
+          "request": {
+            "schema_id": "pm.usage.ledger_query.request.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.usage.refresh",
+            "command_instance_id": "instance:p6",
+            "request_ref": "request:p6",
+            "idempotency_key": "idem:instance:p6",
+            "actor_ref": "actor:owner",
+            "permission_ref": "permission:usage:read",
+            "query": {
+              "profile": "usage_ledger_selection.v1",
+              "query_ref": "query:ledger:001",
+              "owner_revision": "rev:ledger:001",
+              "server_id": "server:1",
+              "project_id": "project:1",
+              "scope_kind": "project",
+              "time_range": "5h",
+              "interval_start": "2026-09-25T00:00:00Z",
+              "interval_end": "2026-09-25T05:00:00Z",
+              "filters": {},
+              "search": null,
+              "sort": {
+                "key": "cost",
+                "order": "oldest_or_smallest_first",
+                "unknown_values": "last",
+                "tie_break": "stable_record_identity"
+              },
+              "requested_record_ids": []
+            },
+            "caller": {
+              "client_ref": "client:usage-page",
+              "source_surface": "usage_ledger",
+              "caller_context_ref": "caller:ledger:001",
+              "caller_revision": "rev:caller:001"
+            },
+            "export_mode": null
+          },
+          "status": "succeeded",
+          "error_ref": null,
+          "result_receipt_ref": "receipt:ledger:001",
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "applied_query": {
+            "profile": "usage_ledger_selection.v1",
+            "query_ref": "query:ledger:001",
+            "owner_revision": "rev:ledger:001",
+            "server_id": "server:1",
+            "project_id": "project:1",
+            "scope_kind": "project",
+            "time_range": "5h",
+            "interval_start": "2026-09-25T00:00:00Z",
+            "interval_end": "2026-09-25T05:00:00Z",
+            "filters": {},
+            "search": null,
+            "sort": {
+              "key": "cost",
+              "order": "oldest_or_smallest_first",
+              "unknown_values": "last",
+              "tie_break": "stable_record_identity"
+            },
+            "requested_record_ids": []
+          },
+          "freshness": "current",
+          "matched_record_ids": [
+            "rec:cost:001",
+            "rec:cost:002",
+            "rec:cost:003"
+          ],
+          "ordered_record_ids": [
+            "rec:cost:003",
+            "rec:cost:001",
+            "rec:cost:002"
+          ],
+          "selection": {
+            "requested_record_ids": [],
+            "effective_record_ids": []
+          },
+          "page": {
+            "offset": 0,
+            "limit": 10,
+            "returned_count": 3,
+            "total_match_count": 3
+          },
+          "export": null
+        },
+        "central_input": {
+          "command_id": "cmd.usage.refresh",
+          "command_instance_id": "instance:p6",
+          "request_ref": "request:p6",
+          "owner_identity": {
+            "scope_kind": "project",
+            "server_id": "server:1",
+            "project_id": "project:1"
+          },
+          "caller": {
+            "client_ref": "client:usage-page",
+            "source_surface": "usage_ledger",
+            "caller_context_ref": "caller:ledger:001",
+            "caller_revision": "rev:caller:001"
+          },
+          "owner_result_ref": "result:ledger:001",
+          "error_ref": null,
+          "ui_error": null,
+          "replayed": false,
+          "original_dispatch_id": null,
+          "original_effective_record_ids": null,
+          "original_export_row_ids": null,
+          "central_dispatch": {
+            "status": "static_note_only",
+            "reason": "no central usage dispatch route in the copied source; static selection only"
+          }
+        },
+        "current_panel_context_ref": "panel:current:other"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "nonconjunctive_match_claim",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "nonconjunctive_match",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "result.matched_record_ids": [
+          "rec:ledger:001",
+          "rec:ledger:003"
+        ]
+      }
+    },
+    {
+      "name": "search_matches_admin_note_only",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "search_excluded_field_match",
+      "base_valid": "ledger_selected_tokens_search",
+      "patch": {
+        "request.query.search.text": "quarantine",
+        "result.request.query.search.text": "quarantine",
+        "result.applied_query.search.text": "quarantine",
+        "recorded_rows.1.non_displayed_admin_note": "quarantine hold note",
+        "result.export.rows.0.non_displayed_admin_note": "quarantine hold note"
+      }
+    },
+    {
+      "name": "search_matches_secret_ref_only",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "search_excluded_field_match",
+      "base_valid": "ledger_selected_tokens_search",
+      "patch": {
+        "request.query.search.text": "token-secret",
+        "result.request.query.search.text": "token-secret",
+        "result.applied_query.search.text": "token-secret",
+        "recorded_rows.2.redacted_secret_ref": "secret:token-secret-9",
+        "result.export.rows.1.redacted_secret_ref": "secret:token-secret-9"
+      }
+    },
+    {
+      "name": "sort_unknowns_first",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "sort_unknowns_first",
+      "base_valid": "ledger_refresh_cost_unknowns_last",
+      "patch": {
+        "result.ordered_record_ids": [
+          "rec:cost:002",
+          "rec:cost:001",
+          "rec:cost:003"
+        ]
+      }
+    },
+    {
+      "name": "sort_unstable_ties",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "sort_unstable_ties",
+      "base_valid": "ledger_selected_tokens_search",
+      "patch": {
+        "result.ordered_record_ids": [
+          "rec:search:003",
+          "rec:search:002"
+        ]
+      }
+    },
+    {
+      "name": "export_selected_drops_record",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "export_selected_identity",
+      "base_valid": "ledger_selected_tokens_search",
+      "remove": [
+        "result.export.rows.1"
+      ]
+    },
+    {
+      "name": "export_filtered_viewport_truncation",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "export_filtered_truncated",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "remove": [
+        "result.export.rows.2"
+      ]
+    },
+    {
+      "name": "invented_run_identity",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "invented_run_or_event_identity",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "recorded_rows.0.identity_provenance.run_identity": "invented",
+        "result.export.rows.2.identity_provenance.run_identity": "invented"
+      }
+    },
+    {
+      "name": "legacy_event_guess",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "legacy_identity_guess",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "recorded_rows.1.identity_provenance.event_identity": "legacy_guess",
+        "result.export.rows.1.identity_provenance.event_identity": "legacy_guess"
+      }
+    },
+    {
+      "name": "stale_applied_search",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "stale_applied_query",
+      "base_valid": "ledger_selected_tokens_search",
+      "patch": {
+        "result.applied_query.search.text": "model-alpha"
+      }
+    },
+    {
+      "name": "requested_selection_substituted",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "selection_requested_substituted",
+      "base_valid": "ledger_selected_tokens_search",
+      "patch": {
+        "result.selection.requested_record_ids": [
+          "rec:search:001"
+        ]
+      }
+    },
+    {
+      "name": "effective_selection_invents_record",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "selection_effective_mismatch",
+      "base_valid": "ledger_selected_tokens_search",
+      "patch": {
+        "result.selection.effective_record_ids": [
+          "rec:search:002",
+          "rec:search:003",
+          "rec:search:001"
+        ]
+      }
+    },
+    {
+      "name": "stale_query_revision",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "stale_query_revision",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "request.query.owner_revision": "rev:ledger:later",
+        "result.request.query.owner_revision": "rev:ledger:later",
+        "result.applied_query.owner_revision": "rev:ledger:later"
+      }
+    },
+    {
+      "name": "page_over_returns",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "page_dishonest",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "result.page.returned_count": 3
+      }
+    },
+    {
+      "name": "success_claims_error",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "receipt_error_binding",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "result.error_ref": "error:ledger:phantom"
+      }
+    },
+    {
+      "name": "ui_error_without_cancellation",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "ui_error_without_cancellation",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "central_input.ui_error": {
+          "code": "internal_error",
+          "reason": "Owner read failed"
+        }
+      }
+    },
+    {
+      "name": "caller_context_substituted",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "caller_substitution",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "central_input.caller.caller_context_ref": "panel:current:other"
+      }
+    },
+    {
+      "name": "replay_repeats_export",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "replay_second_export",
+      "base_valid": "ledger_replay_preserves_original_export",
+      "remove": [
+        "result.export.rows.1"
+      ]
+    },
+    {
+      "name": "result_caller_rewritten",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "result_request_mismatch",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "result.caller.caller_revision": "rev:caller:rogue"
+      }
+    },
+    {
+      "name": "central_error_ref_diverges",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "owner_error_ref_mismatch",
+      "base_valid": "ledger_cancelled_nullable_ui_error",
+      "patch": {
+        "central_input.error_ref": null
+      }
+    },
+    {
+      "name": "filter_value_never_recorded",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "filter_value_not_recorded",
+      "base_valid": "ledger_refresh_cost_unknowns_last",
+      "patch": {
+        "request.query.filters": {
+          "model_ids": [
+            "model:never-recorded"
+          ]
+        },
+        "result.request.query.filters": {
+          "model_ids": [
+            "model:never-recorded"
+          ]
+        },
+        "result.applied_query.filters": {
+          "model_ids": [
+            "model:never-recorded"
+          ]
+        },
+        "result.matched_record_ids": [],
+        "result.ordered_record_ids": [],
+        "result.page.total_match_count": 0,
+        "result.page.returned_count": 0
+      }
+    },
+    {
+      "name": "export_row_invents_cost",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "export_row_not_recorded",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "result.export.rows.0.cost_microdollars.value": 999
+      }
+    },
+    {
+      "name": "ordered_claims_phantom",
+      "definition": "ledger_query_fixture",
+      "semantic_rule": "unknown_record_identity",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "result.ordered_record_ids": [
+          "rec:ledger:003",
+          "rec:ledger:002",
+          "rec:ledger:001",
+          "rec:ledger:phantom"
+        ]
+      }
+    },
+    {
+      "name": "unknown_filter_axis",
+      "definition": "ledger_query_fixture",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "request.query.filters.session_ids": [
+          "session:old"
+        ]
+      }
+    },
+    {
+      "name": "regex_search_pattern",
+      "definition": "ledger_query_fixture",
+      "base_valid": "ledger_selected_tokens_search",
+      "patch": {
+        "request.query.search.pattern_kind": "regex"
+      }
+    },
+    {
+      "name": "legacy_label_field",
+      "definition": "ledger_query_fixture",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "recorded_rows.0.legacy_session_label": "session:old"
+      }
+    },
+    {
+      "name": "quota_row_kind",
+      "definition": "ledger_query_fixture",
+      "base_valid": "ledger_filtered_time_newest_first",
+      "patch": {
+        "recorded_rows.0.row_kind": "quota_window"
+      }
+    },
+    {
+      "name": "unknown_sort_first",
+      "definition": "ledger_query_fixture",
+      "base_valid": "ledger_refresh_cost_unknowns_last",
+      "patch": {
+        "request.query.sort.unknown_values": "first"
+      }
+    },
+    {
+      "name": "prompt_scope_search",
+      "definition": "ledger_query_fixture",
+      "base_valid": "ledger_selected_tokens_search",
+      "patch": {
+        "request.query.search.scope": "prompts_and_secrets"
+      }
+    }
+  ]
+}

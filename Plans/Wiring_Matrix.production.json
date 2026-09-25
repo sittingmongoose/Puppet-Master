@@ -62304,6 +62304,13 @@
       "handler_location": "handlers::usage::export",
       "request_schema_ref": "Plans/usage_quota_command_contracts.schema.json#/$defs/usage_export_request",
       "result_schema_ref": "Plans/usage_quota_command_contracts.schema.json#/$defs/usage_export_result",
+      "profile_schema_branches": [
+        {
+          "profile": "usage_ledger_selection.v1",
+          "request_schema_ref": "Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_request",
+          "result_schema_ref": "Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_result"
+        }
+      ],
       "expected_event_types": [],
       "acceptance_checks": [
         "Export scope is snapshot or ledger; ledger scope preserves usage_event_refs per row",
@@ -62311,7 +62318,8 @@
         "Export includes no secrets and no unauthorized provider/account details",
         "cmd.usage.export requires the bound quota-aware v2 selection request/result and genuine owner outcome; route/open alone is not success",
         "cmd.usage.export must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "Resolve the exact original route/account/window sources; quota-only rows require no fabricated execution identity and cannot enter Ledger export. Additional Ledger filters remain unadmitted; static schema binding proves no native source or physical custody."
+        "Resolve the exact original route/account/window sources; quota-only rows require no fabricated execution identity and cannot enter Ledger export. Additional Ledger filters are admitted only on the ledger-profile branch (`profile == usage_ledger_selection.v1`): `Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_request` -> `Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_result` over recorded attempt rows; static schema binding proves no native source or physical custody.",
+        "Ledger-profile export binds the original Ledger query, requested/selected record IDs, export mode (`selected`|`filtered`), `query_ref`/`owner_revision` currentness with `freshness`, caller, actual owner result, and dispatch receipt as one authenticated selection; Selected exports exactly the selected records and Filtered exports all matches, never a viewport dump; quota-only rows refuse Ledger export; no mutation preview exists for this read-only operation."
       ],
       "evidence_required": "Production wiring contract for cmd.usage.export; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.usage_export.availability",
@@ -62352,7 +62360,8 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.usage.export binds the original request, actual owner result and command receipt, refuses route-only success, and emits no unexpected persisted domain event."
+        "Assert cmd.usage.export binds the original request, actual owner result and command receipt, refuses route-only success, and emits no unexpected persisted domain event.",
+        "Assert the ledger-profile branch binds the original `ledger_request` selection (query, IDs, export mode, currentness, caller) to the actual `ledger_result` and receipt, refuses mutated/stale/viewport-truncated selections and quota-only rows, and emits no unexpected persisted domain event."
       ]
     },
     "catalog.usage_forecast_request": {
@@ -62418,6 +62427,13 @@
       "handler_location": "handlers::usage::refresh",
       "request_schema_ref": "Plans/usage_quota_command_contracts.schema.json#/$defs/usage_refresh_request",
       "result_schema_ref": "Plans/usage_quota_command_contracts.schema.json#/$defs/usage_refresh_result",
+      "profile_schema_branches": [
+        {
+          "profile": "usage_ledger_selection.v1",
+          "request_schema_ref": "Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_request",
+          "result_schema_ref": "Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_result"
+        }
+      ],
       "expected_event_types": [],
       "acceptance_checks": [
         "Refresh re-reads usage projections from provider routes on demand without blocking the UI",
@@ -62427,7 +62443,8 @@
         "cmd.usage.refresh must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "The PMConcept7 Refresh button dispatches only on explicit activation; room, scope, range, disclosure, and filter changes do not call this command.",
         "Refresh updates the existing Usage freshness/health projection and never writes a widget layout namespace or fabricates a Usage domain event.",
-        "Resolve the exact original route/account/window sources; quota-only rows require no fabricated execution identity and cannot enter Ledger export. Additional Ledger filters remain unadmitted; static schema binding proves no native source or physical custody."
+        "Resolve the exact original route/account/window sources; quota-only rows require no fabricated execution identity and cannot enter Ledger export. Additional Ledger filters are admitted only on the ledger-profile branch (`profile == usage_ledger_selection.v1`): `Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_request` -> `Plans/usage_ledger_query_contracts.schema.json#/$defs/ledger_result` over recorded attempt rows; static schema binding proves no native source or physical custody.",
+        "Ledger-profile refresh binds the original Ledger query, requested/selected record IDs, `query_ref`/`owner_revision` currentness with `freshness`, caller, actual owner result, and dispatch receipt as one authenticated selection with no export output; no mutation preview exists for this read-only operation."
       ],
       "evidence_required": "Production wiring contract for cmd.usage.refresh; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.usage_refresh.availability",
@@ -62474,7 +62491,8 @@
       ],
       "event_test_requirements": [
         "Assert cmd.usage.refresh binds the original request, actual owner result and command receipt, refuses route-only success, and emits no unexpected persisted domain event.",
-        "Assert PMConcept7 local Usage projection changes do not dispatch cmd.usage.refresh and explicit Refresh records one receipt with no fabricated event."
+        "Assert PMConcept7 local Usage projection changes do not dispatch cmd.usage.refresh and explicit Refresh records one receipt with no fabricated event.",
+        "Assert the ledger-profile branch binds the original `ledger_request` selection (query, IDs, export mode, currentness, caller) to the actual `ledger_result` and receipt, refuses mutated/stale/viewport-truncated selections and quota-only rows, and emits no unexpected persisted domain event."
       ]
     },
     "catalog.widget_add": {
