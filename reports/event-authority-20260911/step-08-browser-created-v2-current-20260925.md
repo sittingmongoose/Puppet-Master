@@ -61,3 +61,26 @@ This is a forecast for the next regrade, not a result. If the regrade accepts th
 - the oracles passing (the v2 oracles test the route in force).
 
 Two things can hold it lower. The depth42 grader's note for this family says "text alone does not make v2 current". SMPFS-167-A006 has a named native obligation but no executable oracle. `browser.workspace.reset` reaches 12 only if the regrade keeps its oracle cell for SMPFS-168-A005, which likewise has no executable oracle. The DL-077 admission records of both families fail closed until they are re-pinned to a regraded assessment with all twelve criteria passing. The grades themselves move only in that regrade.
+
+## Open questions
+
+The cycle 1 review (`/mnt/Cursor/PM-Experiments/review-ea-browser-created-v2-20260925/findings.jsonl`, SHA-256 `8c82f1985c139f1201f6865988fe3dfdc6d333e2875ab995b3feed2093c72248`) raised three optional notes that are not in its patch. This repair round leaves them open. The line numbers are the reviewer's, on `dcc29db585`; after the V2-01 repair, Section 15 lines from 11577 on are two higher.
+
+- **V2-09 (note): some v1 definitions still read as current, though a later dated sentence supersedes them.**
+  - The storage-plan v1 section says "Only the new Storage binding writes it", meaning v1.
+  - SMPFS-167's `canonical_text` keeps "`browser.workspace_inventory.created.v1@1.0.0` reads the historical creation fact" in the present tense, before "Since 2026-09-25 the current reader is ... v2".
+  - The v1 contracts schema's binding keeps `definition_status` `newly_authored_owner_contract`. It is unchanged, and the admission row no longer names it.
+  - The conditional subsection's opening, "The registered v1 value and binding above were the current definitions until ...", covers them, so this is not a contradiction. The heading "Conditional SP-266 v2 successor ..." is kept in both documents, because renaming it would rename shards.
+  - Citation: `Plans/storage-plan.md` lines 19735-19764; `Plans/Section15_MVP_Promoted_Features_Spec.md` lines 11609-11618 (`canonical_text`; the present-tense v1 sentence is at 11613); `Plans/browser_workspace_created_contracts.schema.json`, unchanged between `1e5d9b097b` and `dcc29db585`.
+  - The optional repair adds a dated "2026-09-25 amendment" paragraph after storage-plan line 19764.
+- **V2-12 (note): SMPFS-167's `depends_on` lacks SP-278.**
+  - It is still `[DL-046, SMPFS-166, CV-332, SP-286, CV-339]`, although its current reader relies on the SP-278 token, as criterion 5 says.
+  - The reset counterpart, SMPFS-168, lists SP-278. SP-266, which depends on SMPFS-167, lists it too, so the dependency is reached only indirectly.
+  - Citation: SMPFS-167's YAML (`depends_on` at Section 15 line 11622) and SMPFS-168's `depends_on`, `[DL-046, SMPFS-166, CV-332, SP-278, SP-286, CV-339]`.
+  - The optional repair adds SP-278. It changes `Plans/.plan_index/dependencies.json` on regeneration.
+- **V2-13 (note): the registry row's consumers do not name the StorageMigrationCoordinator handoff reader of the retained v1 value.**
+  - The row's `consumers` is only `browser.workspace_inventory.created.v2@2.0.0`. The handoff that reads the retained v1 value, the registered read dispatcher's only other user, appears only in the row's migration text.
+  - Precedents name coordinator readers as consumers: the MVP import rows ("StorageMigrationCoordinator one-time owner-boundary normalizer") and `restore_point_retention_summary` ("Storage restore-point retention/recovery").
+  - This does not break SP-266's "explicit reader" condition, since the versioned reader is explicit.
+  - Citation: the `browser_workspace_created_index_checkpoint` row of `Plans/storage_value_registry.json` (`consumers`, `migration`); the storage-plan section 2.3.1 bullet "MVP rows retired to import readers"; the `restore_point_retention_summary` consumers list.
+  - The optional repair adds "StorageMigrationCoordinator same-key v1 handoff" to `consumers`, in the row and in `expected_storage_family()` together.
