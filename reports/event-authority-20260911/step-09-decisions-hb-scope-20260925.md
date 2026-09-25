@@ -23,7 +23,7 @@ Branch `plans/ea-s09-decisions-hb-scope-20260925`, made from `main` `63cf2cb97f`
 
 Jared's own words, given in the Event Authority host session at about 13:39Z, are in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_HEARTBEAT_AND_DL093_SCOPE.md` (SHA-256 `5d0538a1...f889f`). The card he answered is frozen in `step-09-heartbeat-card-presented-20260925/` (SHA256SUMS `787f5e2d...d772`).
 
-DL-094 is reserved for the first coordination admission, on `plans/ea-s09-coord-registered-20260925`. At the fetch, no local or remote branch carried DL-095 or DL-096.
+DL-094 is reserved for the first coordination admission, on `plans/ea-s09-coord-registered-20260925`. At the review fetch (2026-09-25T14:11Z), `fix/server-pairing-issuance-20260925` and `origin/fix/server-pairing-issuance-rebased-20260925` (`73138c6a6`, committed 13:59:41Z) carry DL-094 to DL-098 for five unrelated decisions, so DL-095 and DL-096 are claimed twice and DL-094 three times. Whichever branch lands second renumbers its entries to the next free numbers and updates every reference to them (headings, PlanUnit ids, DL-096's own mentions of DL-096, the response rows' authority_ref, the procedure record paragraph and this report), and the lander re-checks `main` and the open branches at the landing fetch.
 
 ## Checks
 
