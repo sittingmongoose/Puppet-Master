@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11411-L11610
+Source lines: L11411-L11613
 
-Source SHA256: `bb9cfc5d05b040705deceeb9f26edec24ceed66283b709d08b14832e12478f79`
+Source SHA256: `df4c13be0cb9b017d021fd5d95684fafc294867819d6d3a39b2e42ed2dd44d27`
 
 ---
 
@@ -100,7 +100,10 @@ workspace or event.
 After a committed creation and lost acknowledgement, the owner returns the
 original identity and result from that resolution without preparing another
 resource. An uncertain append stays fenced, with the prepared resource unexposed,
-until Storage resolves the original identity. The Browser owner never asks for a
+until Storage resolves the original identity. If Storage's own reconciliation
+establishes that no original event exists, the existing pre-commit rule applies:
+the unexposed resource is disposed or stays fenced and no creation is published.
+The Browser owner never asks for a
 first mint from a missing receipt, lost delivery, tail absence or a supplied
 never-issued flag; only Storage's own writer reaches
 `storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
@@ -182,7 +185,7 @@ canonical_text: >-
   browser.workspace_inventory.created.v1@1.0.0 reads the historical creation fact through
   storage.browser_workspace_created_index.v1@1.0.0 and SP-266, with no independent durable
   effect and no authority to recreate or act on a live workspace. Lost-acknowledgement and
-  uncertain-append recovery resolves the original creation append only through the explicitly
+  uncertain-append recovery resolves an issued original creation append only through the explicitly
   adopted SP-286/CV-339 storage.first_append_receipt.resolve.v2.
 gui_related: false
 gui_classification_reason: This is event, scope, identity and replay authority, not presentation.
@@ -194,7 +197,7 @@ acceptance_criteria:
   - The one read consumer uses the complete SP-266 snapshot/checkpoint token; historical creation and index currentness never grant current Browser authority.
   - Replay, deletion, recovery and withdrawal cannot dispatch, recreate a process, restore a controller, attach prompt material or create UsageRecords.
   - A separately admitted v2 reader must use SP-266's full SP-278 frontier/source token and authenticated checkpoint handoff; this conditional target does not make v2 current.
-  - Lost-acknowledgement and uncertain-append recovery resolves the original creation append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
+  - Lost-acknowledgement and uncertain-append recovery resolves an issued original creation append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
 validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, Plans/browser_workspace_created_checkpoint_v2.schema.json]
 risk_class: browser_workspace_creation_or_replay_authority_escape
 reasoning_tier: high

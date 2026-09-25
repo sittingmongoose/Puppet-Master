@@ -11500,7 +11500,10 @@ workspace or event.
 After a committed creation and lost acknowledgement, the owner returns the
 original identity and result from that resolution without preparing another
 resource. An uncertain append stays fenced, with the prepared resource unexposed,
-until Storage resolves the original identity. The Browser owner never asks for a
+until Storage resolves the original identity. If Storage's own reconciliation
+establishes that no original event exists, the existing pre-commit rule applies:
+the unexposed resource is disposed or stays fenced and no creation is published.
+The Browser owner never asks for a
 first mint from a missing receipt, lost delivery, tail absence or a supplied
 never-issued flag; only Storage's own writer reaches
 `storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
@@ -11582,7 +11585,7 @@ canonical_text: >-
   browser.workspace_inventory.created.v1@1.0.0 reads the historical creation fact through
   storage.browser_workspace_created_index.v1@1.0.0 and SP-266, with no independent durable
   effect and no authority to recreate or act on a live workspace. Lost-acknowledgement and
-  uncertain-append recovery resolves the original creation append only through the explicitly
+  uncertain-append recovery resolves an issued original creation append only through the explicitly
   adopted SP-286/CV-339 storage.first_append_receipt.resolve.v2.
 gui_related: false
 gui_classification_reason: This is event, scope, identity and replay authority, not presentation.
@@ -11594,7 +11597,7 @@ acceptance_criteria:
   - The one read consumer uses the complete SP-266 snapshot/checkpoint token; historical creation and index currentness never grant current Browser authority.
   - Replay, deletion, recovery and withdrawal cannot dispatch, recreate a process, restore a controller, attach prompt material or create UsageRecords.
   - A separately admitted v2 reader must use SP-266's full SP-278 frontier/source token and authenticated checkpoint handoff; this conditional target does not make v2 current.
-  - Lost-acknowledgement and uncertain-append recovery resolves the original creation append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
+  - Lost-acknowledgement and uncertain-append recovery resolves an issued original creation append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
 validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, Plans/browser_workspace_created_checkpoint_v2.schema.json]
 risk_class: browser_workspace_creation_or_replay_authority_escape
 reasoning_tier: high
@@ -11728,7 +11731,11 @@ event ID and cannot create a second reset or event.
 
 Once a reset effect is known committed, a failed or uncertain append keeps the
 workspace/operation recovery-required until Storage resolves the original append
-identity through that resolver. A committed frame with lost acknowledgement then
+identity through that resolver. If Storage's own reconciliation establishes that
+no original event exists, resumption may retry only that original append identity
+through the unchanged shared idempotency route with the same original input; that
+retry is not a first-mint request and repeats no reset. A committed frame with
+lost acknowledgement then
 returns the original available result without a second reset or event. The
 Browser owner never asks for a first mint from a missing receipt, lost delivery,
 tail absence or a supplied never-issued flag; only Storage's own writer reaches
@@ -11789,8 +11796,9 @@ canonical_text: >-
   request/result/receipt and scope before publishing the committed reset fact.
   Failed or uncertain append after the reset effect requires original-operation
   recovery, never a second reset, no-effect claim or generation rollback. That recovery
-  resolves the original reset append only through the explicitly adopted SP-286/CV-339
-  storage.first_append_receipt.resolve.v2.
+  resolves an issued original reset append only through the explicitly adopted SP-286/CV-339
+  storage.first_append_receipt.resolve.v2 and, when no original event exists, retries only the
+  original append identity through the unchanged shared idempotency route.
 gui_related: false
 gui_classification_reason: Defines ownership, identity, replay and recovery, not presentation.
 depends_on: [DL-046, SMPFS-166, CV-332, SP-278, SP-286, CV-339]
@@ -11800,7 +11808,7 @@ acceptance_criteria:
   - Rejected or unchanged transitions emit nothing; known reset effect with failed/unknown append remains fenced until original identity resolution.
   - Original-result retry and historical replay cannot reset again, rewind a newer generation or recreate unavailable owner custody.
   - The sole historical reader adopts the complete SP-278 token through SP-282 without acquiring live Browser, Usage or Prompt authority.
-  - Failed, uncertain or lost-acknowledgement append recovery resolves the original reset append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
+  - Failed, uncertain or lost-acknowledgement append recovery resolves an issued original reset append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; when no original event exists, only the original append identity is retried through the unchanged shared idempotency route with the same original input; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
 validation_surfaces: [Plans/browser_workspace_reset_contracts.schema.json, Plans/browser_workspace_reset_contract_fixtures.json, tests/test_pm_browser_workspace_reset.py]
 risk_class: browser_reset_generation_replay_or_append_uncertainty
 reasoning_tier: high
