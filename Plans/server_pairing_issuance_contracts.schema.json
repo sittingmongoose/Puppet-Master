@@ -1,0 +1,713 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/server_pairing_issuance_contracts.schema.json",
+  "x-schema-id": "pm.server_pairing.contracts.v1",
+  "title": "Server-owned protected pairing invitation metadata; no secret carrier",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_ref",
+        "generation",
+        "sha256"
+      ],
+      "properties": {
+        "record_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "issuance_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_ref",
+        "operation_id",
+        "idempotency_key",
+        "server_id",
+        "server_fingerprint",
+        "actor_ref",
+        "action",
+        "pairing_session_id",
+        "expected_generation",
+        "expected_currentness_ref",
+        "audience",
+        "client_access_policy_id",
+        "policy_generation",
+        "pairing_run_ref",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.server_pairing.issuance_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/id"
+        },
+        "server_id": {
+          "$ref": "#/$defs/id"
+        },
+        "server_fingerprint": {
+          "$ref": "#/$defs/sha256"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "action": {
+          "enum": [
+            "issue",
+            "replace",
+            "cancel",
+            "consume",
+            "expire"
+          ]
+        },
+        "pairing_session_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_generation": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/generation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_currentness_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "audience": {
+          "$ref": "#/$defs/binding"
+        },
+        "client_access_policy_id": {
+          "$ref": "#/$defs/id"
+        },
+        "policy_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "pairing_run_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "const": "issue"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pairing_session_id": {
+                "type": "null"
+              },
+              "expected_generation": {
+                "type": "null"
+              },
+              "expected_currentness_ref": {
+                "type": "null"
+              },
+              "pairing_run_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "enum": [
+                  "replace",
+                  "cancel",
+                  "consume",
+                  "expire"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pairing_session_id": {
+                "$ref": "#/$defs/id"
+              },
+              "expected_generation": {
+                "$ref": "#/$defs/generation"
+              },
+              "expected_currentness_ref": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "const": "consume"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pairing_run_ref": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "not": {
+                  "const": "consume"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pairing_run_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "invitation_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "state_ref",
+        "pairing_session_id",
+        "server_id",
+        "server_fingerprint",
+        "generation",
+        "audience",
+        "client_access_policy_id",
+        "policy_generation",
+        "pairing_material_sha256",
+        "state",
+        "currentness_ref",
+        "issued_at_utc",
+        "expires_at_utc",
+        "updated_at_utc",
+        "terminal_at_utc",
+        "consumed_pairing_run_ref",
+        "secret_persisted"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.server_pairing.invitation_state.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "state_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "pairing_session_id": {
+          "$ref": "#/$defs/id"
+        },
+        "server_id": {
+          "$ref": "#/$defs/id"
+        },
+        "server_fingerprint": {
+          "$ref": "#/$defs/sha256"
+        },
+        "generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "audience": {
+          "$ref": "#/$defs/binding"
+        },
+        "client_access_policy_id": {
+          "$ref": "#/$defs/id"
+        },
+        "policy_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "pairing_material_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "cancelled",
+            "consumed",
+            "expired",
+            "recovery_required"
+          ]
+        },
+        "currentness_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "issued_at_utc": {
+          "$ref": "#/$defs/time"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/time"
+        },
+        "updated_at_utc": {
+          "$ref": "#/$defs/time"
+        },
+        "terminal_at_utc": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "consumed_pairing_run_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "secret_persisted": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "active"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "terminal_at_utc": {
+                "type": "null"
+              },
+              "consumed_pairing_run_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "not": {
+                  "const": "active"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "terminal_at_utc": {
+                "$ref": "#/$defs/time"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "consumed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "consumed_pairing_run_ref": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "not": {
+                  "const": "consumed"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "consumed_pairing_run_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "issuance_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_ref",
+        "operation_id",
+        "request_ref",
+        "before_state_ref",
+        "after_state_ref",
+        "outcome",
+        "admission_ref",
+        "transition_ref",
+        "failure_ref",
+        "settled_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.server_pairing.issuance_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "request_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "before_state_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_state_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "issued",
+            "replaced",
+            "cancelled",
+            "consumed",
+            "expired",
+            "blocked",
+            "recovery_required"
+          ]
+        },
+        "admission_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "transition_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "failure_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settled_at_utc": {
+          "$ref": "#/$defs/time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "issued",
+                  "replaced",
+                  "cancelled",
+                  "consumed",
+                  "expired"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "after_state_ref": {
+                "$ref": "#/$defs/id"
+              },
+              "transition_ref": {
+                "$ref": "#/$defs/id"
+              },
+              "failure_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "blocked",
+                  "recovery_required"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "failure_ref": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "blocked"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "transition_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "protected_display_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_ref",
+        "server_id",
+        "server_fingerprint",
+        "pairing_session_id",
+        "expected_generation",
+        "requesting_client_id",
+        "audience",
+        "client_access_policy_id",
+        "policy_generation",
+        "process_instance_ref",
+        "protected_channel_ref",
+        "view",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.server_pairing.protected_display_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "server_id": {
+          "$ref": "#/$defs/id"
+        },
+        "server_fingerprint": {
+          "$ref": "#/$defs/sha256"
+        },
+        "pairing_session_id": {
+          "$ref": "#/$defs/id"
+        },
+        "expected_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "requesting_client_id": {
+          "$ref": "#/$defs/id"
+        },
+        "audience": {
+          "$ref": "#/$defs/binding"
+        },
+        "client_access_policy_id": {
+          "$ref": "#/$defs/id"
+        },
+        "policy_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "process_instance_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "protected_channel_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "view": {
+          "enum": [
+            "code",
+            "link",
+            "qr"
+          ]
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/time"
+        }
+      }
+    },
+    "issuance_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "runtime_evidence",
+        "request",
+        "before",
+        "after",
+        "result"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.server_pairing.issuance_fixture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "runtime_evidence": {
+          "const": false
+        },
+        "request": {
+          "$ref": "#/$defs/issuance_request"
+        },
+        "before": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/invitation_state"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/invitation_state"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "result": {
+          "$ref": "#/$defs/issuance_result"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/issuance_request"
+    },
+    {
+      "$ref": "#/$defs/invitation_state"
+    },
+    {
+      "$ref": "#/$defs/issuance_result"
+    },
+    {
+      "$ref": "#/$defs/protected_display_request"
+    }
+  ]
+}
