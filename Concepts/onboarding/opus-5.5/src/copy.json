@@ -529,7 +529,6 @@
       "connected": "Use {account}",
       "connectedSub": "Already connected on this computer",
       "another": "Use a different account",
-      "opened": "Your browser opened {name}'s sign-in page",
       "waiting": "Waiting for you in your browser…",
       "noBrowser": "Browser didn't open?",
       "codeLead": "Go to {url} and enter this code:",
@@ -548,7 +547,9 @@
       "simNote": "Concept only: a real sign-up happens on {name}'s own website.",
       "simUser": "Username",
       "simEmail": "Email",
-      "simButton": "Create account"
+      "simButton": "Create account",
+      "linkCopied": "Sign-in link copied: {url}. Paste it into your browser.",
+      "linkCopiedNone": "Open your browser and sign in there, then come back."
     },
     "details": {
       "eyebrow": "Online copy",
@@ -1053,7 +1054,8 @@
       "passLabel": "Passphrase",
       "passNote": "In the app your SSH agent asks for this. It unlocks the key on this computer and isn't saved.",
       "passCancel": "Cancel",
-      "passOk": "Unlock"
+      "passOk": "Unlock",
+      "passEmpty": "Enter the passphrase for {key}."
     },
     "signin": {
       "eyebrow": "Secure connection",
@@ -1067,9 +1069,12 @@
       "wrong": "{name} didn't accept that username and password.",
       "lockout": "Some NAS devices block sign-in after several tries. If it stops working, wait a few minutes.",
       "self": "I'll add the key myself",
-      "selfLead": "Add this line to ~/.ssh/authorized_keys on {name}, then check again.",
+      "selfLead": "Add this line to ~/.ssh/authorized_keys on {name}. It is the public half of {key}.",
       "selfCheck": "I added it — check again",
-      "selfNot": "The key isn't on {name} yet."
+      "selfNot": "The key isn't on {name} yet. Check that the whole line was added, then check again.",
+      "selfTitle": "Add your key to {name} yourself",
+      "selfTop": "Puppet Master checks it right after. No password needed.",
+      "selfOff": "Add it for me with my password instead"
     },
     "install": {
       "eyebrow": "Secure connection",
@@ -1090,7 +1095,9 @@
         "not_allowed": "This account isn't allowed to use SSH on {name}.",
         "notAllowedFix": "Turn it on in {brand}: Control Panel › User › Edit › Applications › SSH, then try again",
         "cancelled": "The passphrase prompt was closed, so {key} stayed locked.",
-        "tryAgain": "Try again"
+        "tryAgain": "Try again",
+        "not_added": "The key isn't on {name} yet.",
+        "showKey": "Show the key again"
       },
       "done": "Connected securely with your key. No password saved."
     },
@@ -1382,5 +1389,11 @@
     "restoreFailed": "Your layout couldn’t be put back exactly. Open Settings › Home layout to reset it.",
     "landing": "Your Project is ready. Start with one sentence about what you want to make or change.",
     "resume": "Resume the Guided Tour"
+  },
+  "official": {
+    "signin": "Your browser opened {name}'s sign-in page",
+    "signup": "Your browser opened {name}'s sign-up page",
+    "guide": "Your browser opened the install guide for {name}",
+    "page": "Your browser opened {name}"
   }
 }

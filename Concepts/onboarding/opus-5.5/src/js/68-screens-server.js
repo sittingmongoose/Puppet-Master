@@ -81,7 +81,7 @@
       manualOn(S) { S.sess.server.manual = true; S.save(); O55.ui.refresh(); },
       manualOff(S) { S.sess.server.manual = false; S.save(); O55.ui.refresh(); },
       platform(S, v) { S.sess.server.platform = v; S.save(); O55.ui.refresh(); },
-      guide(S, plat) { O55.official.open(S, { kind: 'guide', name: 'Puppet Master', url: 'https://puppetmaster.app/install/' + plat }); },
+      guide(S, plat) { O55.official.open(S, { kind: 'guide', name: PLATFORM_NAMES[plat] || plat, url: 'https://puppetmaster.app/install/' + plat }); },
       next(S) { O55.ui.go('s-confirm'); }
     },
     bind: { addr(S, v) { S.sess.server.addr = v; if (String(v).trim().toLowerCase() !== unclaimed(S).address) S.sess.server.target = null; S.save(); O55.ui.refresh(); } }
@@ -233,12 +233,15 @@
         if (!r.unlocked) {
           const input = S.root.querySelector('#o55f-phrase');
           const v = input ? input.value.trim().toLowerCase().replace(/\s+/g, ' ') : '';
-          if (v !== S.env.recoveryPhrase) { r.bad = true; S.save(); O55.sound.play('error'); O55.ui.refresh(); return; }
+          if (v !== S.env.recoveryPhrase) { r.bad = true; S.save(); O55.sound.play('error'); O55.ui.refresh(); O55.ui.shake('phrase'); return; }
           r.unlocked = true; r.bad = false; if (input) input.value = '';
         }
         S.save(); O55.ui.go('r-pick');
       }
     },
+    /* the phrase field is empty whenever the screen is drawn afresh (after Back or a reload), so an earlier "typed" no
+       longer counts */
+    mounted(S, layer, fresh) { const r = R(S); if (fresh && r.typed && !r.unlocked) { r.typed = false; r.bad = false; S.save(); O55.ui.refresh(); } },
     /* the phrase is read from the field on submit and never stored in the session */
     bind: { phrase(S, v) { const r = R(S); const had = !!r.typed; r.typed = v.length > 0; r.bad = false; if (had !== r.typed) O55.ui.refresh(); } }
   });

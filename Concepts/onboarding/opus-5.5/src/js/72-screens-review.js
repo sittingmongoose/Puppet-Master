@@ -299,7 +299,7 @@
         const cmd = { signin: 'cmd.backup.destination.add', test: 'cmd.backup.destination.test', kit: 'cmd.backup.recovery_key.export', kitTest: 'cmd.backup.recovery_key.test', policy: 'cmd.backup.policy.update' }[next];
         if (next === 'kitTest') {
           const i = S.root.querySelector('#o55f-word'), v = i ? i.value.trim().toLowerCase() : '';
-          if (v !== kitWords(S)[3]) { b.wordBad = true; S.save(); O55.sound.play('error'); return O55.ui.refresh(); }
+          if (v !== kitWords(S)[3]) { b.wordBad = true; S.save(); O55.sound.play('error'); O55.ui.refresh(); return O55.ui.shake('word'); }
           b.wordBad = false;
         }
         if (next === 'signin') O55.official.open(S, { name: T('safe.backup.' + b.dest), url: { nas: 'https://home-nas.local', gdrive: 'https://accounts.google.com', onedrive: 'https://login.live.com', s3: 'https://console.aws.amazon.com', sftp: 'https://example.com' }[b.dest] || 'https://example.com' });

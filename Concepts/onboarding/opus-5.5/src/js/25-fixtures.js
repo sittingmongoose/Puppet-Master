@@ -32,14 +32,26 @@
 
   const FORGES = [
     { id: 'github', name: 'GitHub', variants: ['hosted', 'self_managed'], visibility: ['private', 'public', 'internal'], internalNeedsOrg: true, signup: 'https://github.com/signup', device: 'github.com/login/device', primary: true },
-    { id: 'gitlab', name: 'GitLab', variants: ['hosted', 'self_managed'], visibility: { hosted: ['private', 'public'], self_managed: ['private', 'public', 'internal'] }, signup: 'https://gitlab.com/users/sign_up' },
-    { id: 'azure_devops', name: 'Azure DevOps', variants: ['cloud', 'self_managed'], visibility: [], needsProject: true, signup: 'https://dev.azure.com' },
+    { id: 'gitlab', name: 'GitLab', variants: ['hosted', 'self_managed'], visibility: { hosted: ['private', 'public'], self_managed: ['private', 'public', 'internal'] }, signup: 'https://gitlab.com/users/sign_up', device: 'gitlab.com/oauth/device' },
+    { id: 'azure_devops', name: 'Azure DevOps', variants: ['cloud', 'self_managed'], visibility: [], needsProject: true, signup: 'https://azure.microsoft.com/products/devops', device: 'microsoft.com/devicelogin' },
     { id: 'bitbucket_cloud', name: 'Bitbucket', variants: ['cloud'], visibility: ['private', 'public'], signup: 'https://bitbucket.org/account/signup' },
     { id: 'bitbucket_data_center', name: 'Bitbucket Data Center', variants: ['data_center'], visibility: ['private', 'public'], needsAddress: true },
     { id: 'forgejo', name: 'Forgejo', variants: ['forgejo_self_managed', 'forgejo_cloud'], visibility: ['private', 'public', 'internal'], needsAddress: true, token: true },
     { id: 'gitea', name: 'Gitea', variants: ['gitea_self_managed', 'gitea_cloud'], visibility: ['private', 'public', 'internal'], needsAddress: true, token: true },
     { id: 'cursor_origin', name: 'Cursor Origin', variants: ['preview'], visibility: ['private', 'internal'], preview: true, address: 'https://origin.cursor.com' }
   ];
+
+  /* Official pages the onboarding opens in the browser. Only addresses the concept is sure of: a service missing here
+     opens its page without the concept naming an address, and a self-managed service uses the address the person typed.
+     A device code (Browser didn't open?) is offered only where the service has a device sign-in, on its hosted edition. */
+  const OFFICIAL = {
+    provider: { claude: 'https://claude.ai/login', codex: 'https://chatgpt.com/auth/login', antigravity: 'https://accounts.google.com', grok: 'https://accounts.x.ai', copilot: 'https://github.com/login', 'opencode-runtime': 'https://opencode.ai' },
+    signup: { Claude: 'https://claude.ai/login', ChatGPT: 'https://chatgpt.com', Anthropic: 'https://console.anthropic.com', 'Google AI Studio': 'https://aistudio.google.com' },
+    forge: { github: 'https://github.com/login', gitlab: 'https://gitlab.com/users/sign_in', azure_devops: 'https://dev.azure.com', bitbucket_cloud: 'https://bitbucket.org/account/signin/', cursor_origin: 'https://origin.cursor.com' },
+    forgePath: { github: '/login', gitlab: '/users/sign_in', bitbucket_data_center: '/login', forgejo: '/user/login', gitea: '/user/login', azure_devops: '' },
+    free: { 'free-openrouter': 'https://openrouter.ai', 'free-github-models': 'https://github.com/login', 'free-cerebras': 'https://cloud.cerebras.ai', 'free-groq': 'https://console.groq.com', 'free-hf': 'https://huggingface.co/login' },
+    backup: { gdrive: 'https://accounts.google.com', onedrive: 'https://login.live.com' }
+  };
 
   const FREE_ROUTES = [ /* mirrors the concept's Settings freeRoutes (Free Models owns no credential store) */
     { id: 'free-openrouter', name: 'OpenRouter free models', provider: 'OpenRouter', needs: 'signin' },
@@ -164,7 +176,7 @@
   };
 
   O55.fixtures = {
-    PROVIDERS, FORGES, FREE_ROUTES, SCENARIOS, folders,
+    PROVIDERS, FORGES, FREE_ROUTES, SCENARIOS, OFFICIAL, folders,
     make(scenario) {
       const e = base();
       const ids = String(scenario || 'fresh').split('+');

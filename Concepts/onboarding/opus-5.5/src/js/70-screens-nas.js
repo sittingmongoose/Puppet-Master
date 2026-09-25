@@ -128,7 +128,21 @@
   });
 
   /* ------------------------------------------------------------------ choose a key (discovered, silently tested) */
-  const PUB = 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHq7c1x0Zp4s8QmVb2k9Lr3TfYw6uNeJd5gHa0pX puppet-master@' + 'MacBook-Pro';
+  /* The public half of a key, as the person would paste it. The concept derives a stable body from the key's id; the
+     private half is never read. */
+  function pubLine(k) {
+    const b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/', rsa = /^rsa/.test(k.type);
+    let h = 2166136261, body = '';
+    for (const ch of k.id + (k.comment || '')) h = Math.imul(h ^ ch.charCodeAt(0), 16777619) >>> 0;
+    for (let i = 0; i < (rsa ? 64 : 43); i++) { h = Math.imul(h ^ (h >>> 13), 1274126177) >>> 0; body += b64[h % 64]; }
+    return (rsa ? 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ' : 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI') + body + ' ' + (k.pubComment || k.comment || 'puppet-master');
+  }
+  /* a new key made just for Puppet Master (made on this computer; only its public half ever leaves it) */
+  function makeNewKey(S) {
+    const n = N(S);
+    if (!S.env.here.sshKeys.some((x) => x.id === 'k-pm')) S.env.here.sshKeys.push({ id: 'k-pm', file: '~/.ssh/puppet_master_ed25519', comment: 'Puppet Master', pubComment: 'puppet-master@MacBook-Pro', type: 'ed25519', where: 'file' });
+    n.key = 'k-pm';
+  }
   function keyStatus(S, k) {
     const d = dev(S);
     if (d && d.authorized.includes(k.id)) return 'works';
@@ -160,7 +174,7 @@
       if (S.sess.ui.sheet === 'passphrase') {
         const k = S.env.here.sshKeys.find((x) => x.id === sel);
         out += C.sheet(S, 'passphrase', T('nas.key.passTitle', { key: k.file.split('/').pop() }),
-          C.field({ bind: 'pass', type: 'password', protected: true, label: T('nas.key.passLabel'), value: '', hint: T('nas.key.passNote') }),
+          C.field({ bind: 'pass', type: 'password', protected: true, label: T('nas.key.passLabel'), value: '', hint: N(S).passEmpty ? '' : T('nas.key.passNote'), error: N(S).passEmpty ? T('nas.key.passEmpty', { key: k.comment }) : '', invalid: !!N(S).passEmpty }),
           O55.ui.btn({ label: T('nas.key.passCancel'), do: 'passCancel' }, 'o55-ghost') + O55.ui.btn({ label: T('nas.key.passOk'), do: 'passOk' }, 'o55-primary'));
       }
       if (n.passCancelled) out += C.note(T('nas.install.fail.cancelled', { key: (S.env.here.sshKeys.find((x) => x.id === sel) || {}).comment || '' }), 'warn');
@@ -171,7 +185,7 @@
     do: {
       pick(S, v, el) { N(S).key = v; N(S).passCancelled = false; S.save(); O55.ui.refresh(); },
       passCancel(S) { N(S).passCancelled = true; S.sess.ui.sheet = null; S.save(); O55.sound.play('error'); O55.ui.refresh(); },
-      passOk(S) { const i = S.root.querySelector('#o55f-pass'); if (!i || !i.value) { O55.sound.play('error'); return; } i.value = ''; N(S).unlocked = true; S.sess.ui.sheet = null; S.save(); O55.screens.defs['nas-key'].do.next(S); },
+      passOk(S) { const i = S.root.querySelector('#o55f-pass'); if (!i || !i.value) { N(S).passEmpty = true; S.save(); O55.sound.play('error'); O55.ui.refresh(); O55.ui.shake('pass'); return; } N(S).passEmpty = false; i.value = ''; N(S).unlocked = true; S.sess.ui.sheet = null; S.save(); O55.screens.defs['nas-key'].do.next(S); },
       next(S) {
         const n = N(S); n.key = n.key || defaultKey(S);
         const k = S.env.here.sshKeys.find((x) => x.id === n.key);
@@ -181,7 +195,7 @@
         O55.ui.go('nas-signin');
       }
     },
-    bind: { pass() {} },
+    bind: { pass(S, v) { if (N(S).passEmpty && v) { N(S).passEmpty = false; S.save(); O55.ui.refresh(); } } },
     leave(S) { if (S.sess.ui.sheet === 'passphrase') { S.sess.ui.sheet = null; S.save(); } }
   });
 
@@ -190,13 +204,18 @@
     chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
     scene: (S) => ({ id: 'nas', beat: 'keys', params: sceneParams(S) }),
     eyebrow: () => T('nas.signin.eyebrow'),
-    title: (S) => T('nas.signin.title', { name: dname(S) }),
-    lead: () => T('nas.signin.lead'),
+    title: (S) => T(N(S).self ? 'nas.signin.selfTitle' : 'nas.signin.title', { name: dname(S) }),
+    lead: (S) => T(N(S).self ? 'nas.signin.selfTop' : 'nas.signin.lead', { name: dname(S) }),
     body(S) {
       const n = N(S), d = dev(S);
       if (n.self) {
-        return `<p class="o55-lead-sm">${U.esc(T('nas.signin.selfLead', { name: d.name }))}</p><div class="o55-codeline" data-key="pub"><code>${U.esc(PUB)}</code>${F.copyBtn(PUB, 'pub')}</div>`
-          + `<div class="o55-sublinks" data-key="back">${C.link(T('nas.signin.button'), 'selfOff')}</div>`;
+        /* a new key has to exist before its public half can be shown */
+        const mk = F.state(S, 'sshmake:' + d.id);
+        if (n.key === 'new' && !(mk && mk.state === 'done')) return F.phases(S, 'sshmake:' + d.id, ['make'], { make: T('nas.install.phases.make') });
+        const k = S.env.here.sshKeys.find((x) => x.id === n.key), line = k ? pubLine(k) : '';
+        let out = `<p class="o55-lead-sm">${U.esc(T('nas.signin.selfLead', { name: d.name, key: k ? k.comment : '' }))}</p><div class="o55-codeline" data-key="pub"><code>${U.esc(line)}</code>${F.copyBtn(line, 'pub')}</div>`;
+        if (n.selfMissing) out += C.note(T('nas.signin.selfNot', { name: d.name }), 'warn', 'key');
+        return out + `<div class="o55-sublinks" data-key="back">${C.link(T('nas.signin.selfOff'), 'selfOff')}</div>`;
       }
       let out = C.field({ bind: 'user', label: T('nas.signin.user'), value: n.user || '', placeholder: '', hint: T('nas.signin.userHint', { name: d.name }), autocomplete: 'username' });
       out += C.field({ bind: 'pw', type: 'password', protected: true, label: T('nas.signin.password'), value: '', hint: n.pwError ? '' : T('nas.signin.passwordHint'), error: n.pwError ? T('nas.signin.wrong', { name: d.name }) : '', invalid: !!n.pwError, autocomplete: 'current-password' });
@@ -206,14 +225,21 @@
     },
     foot(S) {
       const n = N(S);
-      if (n.self) return { primary: { label: T('nas.signin.selfCheck'), do: 'selfCheck' } };
+      if (n.self) { const mk = F.state(S, 'sshmake:' + dev(S).id); return { primary: { label: T('nas.signin.selfCheck'), do: 'selfCheck', disabled: n.key === 'new' && !(mk && mk.state === 'done'), reason: T('nas.install.phases.make') } }; }
       const ready = F.nonEmpty(n.user) && n.pwTyped;
       return { primary: { label: T('nas.signin.button'), do: 'add', disabled: !ready, reason: T('nas.signin.passwordHint') } };
     },
     do: {
-      selfOn(S) { N(S).self = true; S.save(); O55.ui.refresh(); },
-      selfOff(S) { N(S).self = false; S.save(); O55.ui.refresh(); },
-      selfCheck(S) { N(S).selfAdded = true; S.save(); O55.ui.go('nas-install', { verifyOnly: true, selfAdded: true }); },
+      selfOn(S) { N(S).self = true; N(S).selfMissing = false; S.save(); O55.ui.refresh(); makeIfNeeded(S); },
+      selfOff(S) { N(S).self = false; N(S).selfMissing = false; S.save(); O55.ui.refresh(); },
+      /* The person adds the line on the device themselves. The concept's device receives it at this click (the demo's
+         stand-in for their step) unless the scenario says it is not there yet; the check that follows is real either way. */
+      selfCheck(S) {
+        const n = N(S), d = dev(S);
+        if (S.env.failures.self_key_missing_once && !n.selfTried) n.selfTried = true;
+        else if (!d.authorized.includes(n.key)) d.authorized.push(n.key);
+        n.selfMissing = false; S.save(); O55.ui.go('nas-install', { verifyOnly: true, selfAdded: true });
+      },
       add(S) {
         const i = S.root.querySelector('#o55f-pw'), pw = i ? i.value : '';
         if (i) i.value = '';
@@ -221,6 +247,9 @@
         O55.ui.go('nas-install', { password: !!pw });
       }
     },
+    /* a protected field is always empty when the screen is drawn afresh (after Back or a reload), so a password typed
+       before does not count and the button waits for a new one */
+    mounted(S, layer, fresh) { const n = N(S); if (fresh && n.pwTyped) { n.pwTyped = false; S.save(); O55.ui.refresh(); } if (n.self) makeIfNeeded(S); },
     skipOnBack: (S) => !!N(S).installed,
     bind: {
       user(S, v) { N(S).user = v; S.save(); O55.ui.refresh(); },
@@ -228,6 +257,13 @@
       pw(S, v) { const had = !!N(S).pwTyped; N(S).pwTyped = v.length > 0; N(S).pwError = false; if (had !== N(S).pwTyped) { S.save(); O55.ui.refresh(); } }
     }
   });
+
+  function makeIfNeeded(S) {
+    const n = N(S), d = dev(S);
+    if (n.key !== 'new') return;
+    F.op(S, 'sshmake:' + d.id, 'cmd.ssh_connection.key.install', [{ key: 'make', ms: 700 }], { payload: { device: d.id, key: 'new', makeOnly: true, publicOnly: true },
+      onDone: () => { makeNewKey(S); S.save(); } });
+  }
 
   /* ------------------------------------------------------------------ automatic phases (selected-source auth) */
   def('nas-install', {
@@ -261,6 +297,7 @@
       retry(S) {
         const st = F.state(S, installKey(S));
         if (st && st.code === 'wrong_password') { N(S).pwError = true; N(S).pwFails = (N(S).pwFails || 0) + 1; F.reset(S, installKey(S)); N(S).opKey = null; S.save(); return O55.ui.back(); }
+        if (st && st.code === 'not_added') { N(S).selfMissing = true; F.reset(S, installKey(S)); N(S).opKey = null; S.save(); return O55.ui.back(); }
         F.reset(S, installKey(S)); N(S).opKey = null; O55.ui.refresh(); run(S);
       },
       fixPerms(S) { dev(S).homePermsOpen = false; F.reset(S, installKey(S)); N(S).opKey = null; S.save(); O55.ui.refresh(); run(S); },
@@ -278,7 +315,7 @@
   function phaseOrder(S) {
     const n = N(S), k = S.env.here.sshKeys.find((x) => x.id === n.key);
     if (n.viaPm) return ['pmpair', 'perms'];
-    if (n.verifyOnly) return ['verify', 'perms'];
+    if (n.verifyOnly) return (k && k.passphrase ? ['unlock'] : []).concat(['verify', 'perms']);
     return (n.key === 'new' || !k ? ['make'] : k.passphrase ? ['unlock'] : []).concat(['add', 'verify', 'perms']);
   }
   function run(S) {
@@ -286,19 +323,20 @@
     if (!n.opKey) { n.opKey = 'sshinstall:' + n.device + ':' + (n.key || 'new'); S.save(); }
     const failFor = {
       add: () => {
+        if (!n.pwOnce) return 'wrong_password';
         if (S.env.failures.nas_password_once && !n.pwFailedOnce) { n.pwFailedOnce = true; S.save(); return 'wrong_password'; }
         if ((d.sshDisallowed || []).includes(n.user)) return 'not_allowed';
         return null;
       },
-      verify: () => (d.homePermsOpen ? 'refused' : null)
+      /* the key must really be on the device: added just now by the add phase, already there, or added by the person */
+      verify: () => (n.verifyOnly && !d.authorized.includes(n.key) ? 'not_added' : d.homePermsOpen ? 'refused' : null)
     };
     const ms = { pmpair: 1200, make: 700, unlock: 500, add: 1100, verify: 800, perms: 700 };
     F.op(S, installKey(S), 'cmd.ssh_connection.key.install', order.map((k) => ({ key: k, ms: ms[k], fail: failFor[k] })), {
       payload: { device: d.id, key: n.key, publicOnly: true },
       onDone: () => {
         if (n.viaPm) { n.installed = true; S.save(); return; }
-        if (!d.authorized.includes(n.key)) d.authorized.push(n.key === 'new' ? 'k-pm' : n.key);
-        if (n.key === 'new') { n.key = 'k-pm'; if (!S.env.here.sshKeys.some((x) => x.id === 'k-pm')) S.env.here.sshKeys.push({ id: 'k-pm', file: '~/.ssh/puppet_master_ed25519', comment: 'Puppet Master', type: 'ed25519', where: 'file' }); }
+        if (!n.verifyOnly) { if (n.key === 'new') makeNewKey(S); if (!d.authorized.includes(n.key)) d.authorized.push(n.key); }
         n.installed = true;
         const dd = md(S);
         O55.draft.set(dd, { source_access_authorization_refs: Array.from(new Set(dd.source_access_authorization_refs.concat(['ssh-key:' + U.slug(d.name) + ':' + (n.key || 'new')]))).slice(0, 16), preflight_result_refs: Array.from(new Set(dd.preflight_result_refs.concat(['preflight:ssh:' + U.slug(d.name)]))).slice(0, 32) });
@@ -399,5 +437,5 @@
     if (n.key === 'k-pm' && !S.env.here.sshKeys.some((x) => x.id === 'k-pm')) S.env.here.sshKeys.push({ id: 'k-pm', file: '~/.ssh/puppet_master_ed25519', comment: 'Puppet Master', type: 'ed25519', where: 'file' });
     if (S.sess.ops && S.sess.ops['sshcheck:' + d.id] && S.sess.ops['sshcheck:' + d.id].state === 'done') d.ssh = true;
   }]);
-  O55.nas = { dev, N, PUB };
+  O55.nas = { dev, N, pubLine };
 })();

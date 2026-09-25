@@ -120,7 +120,7 @@
       signin(S, id) {
         const p = PROV().find((x) => x.id === id), acc = A(S).accounts[id] = Object.assign(A(S).accounts[id] || {}, { state: 'signingIn' });
         acc.attempt = (acc.attempt || 0) + 1; S.save();
-        O55.official.open(S, { name: p.vendor, url: 'https://' + p.vendor.toLowerCase().replace(/\W+/g, '') + '.com/login' });
+        O55.official.open(S, { name: p.vendor, url: O55.fixtures.OFFICIAL.provider[p.id] || null });
         O55.ui.refresh();
         F.op(S, 'signin:' + id + ':' + acc.attempt, 'cmd.integration.connection.add', [{ key: 'browser', ms: 2400 }, { key: 'verify', ms: 600 }], { quiet: true, payload: { provider: id, host: host(S), method: 'browser' }, onDone: () => { acc.state = 'ready'; acc.via = 'signin'; S.save(); O55.ui.refresh(); O55.ui.charm(S.root.querySelector(`[data-key="pv-${id}"]`), pname(p), 'spark'); } });
       },
@@ -188,7 +188,7 @@
     foot: (S) => ({ primary: { label: S.sess.ui.aiNone === 'free' ? T('ai.free.title') : T('chrome.continue'), do: 'next' } }),
     do: {
       pick(S, v) { S.sess.ui.aiNone = v; S.save(); O55.ui.refresh(); },
-      signup(S, name) { O55.official.open(S, { name, url: 'https://' + name.toLowerCase().replace(/\W+/g, '') + '.com/signup' }); },
+      signup(S, name) { O55.official.open(S, { kind: 'signup', name, url: O55.fixtures.OFFICIAL.signup[name] || null }); },
       next(S) { if (S.sess.ui.aiNone === 'free') return O55.ui.go('free'); O55.ui.back(); }
     }
   });
@@ -223,10 +223,10 @@
       route(S, id) {
         const r = O55.fixtures.FREE_ROUTES.find((x) => x.id === id), f = S.sess.ai.freeRoutes = S.sess.ai.freeRoutes || {};
         f[id] = 'working'; S.save(); O55.ui.refresh();
-        if (r.needs === 'signin') O55.official.open(S, { name: r.provider, url: 'https://' + r.provider.toLowerCase().replace(/\W+/g, '') + '.com/login' });
+        if (r.needs === 'signin') O55.official.open(S, { name: r.provider, url: O55.fixtures.OFFICIAL.free[r.id] || null });
         F.op(S, 'free:' + id + ':' + Date.now(), 'cmd.free_models.route.enable', [{ key: 'enable', ms: 1400 }], { quiet: true, payload: { route: id }, onDone: () => { f[id] = 'ready'; S.sess.ai.free = 'setup'; S.save(); O55.ui.refresh(); } });
       },
-      attribution(S) { O55.official.open(S, { name: 'free-coding-models', url: 'https://github.com/vava-nessa/free-coding-models' }); },
+      attribution(S) { O55.official.open(S, { kind: 'page', name: 'free-coding-models', url: 'https://github.com/vava-nessa/free-coding-models' }); },
       next(S) { O55.ui.go('ready'); }
     }
   });

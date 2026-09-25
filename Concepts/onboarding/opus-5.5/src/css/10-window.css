@@ -76,7 +76,7 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 .o55-body { display: grid; grid-template-columns: minmax(300px, 42%) minmax(0, 1fr); min-height: 0; }
 .o55-stage { position: relative; overflow: hidden; border-right: 1px solid var(--o55-line); background: var(--background); }
 .o55-pane { position: relative; overflow: hidden; min-height: 0; }
-.o55-pane > .o55-layer { position: absolute; inset: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; background: var(--o55-win-bg); }
+.o55-pane > .o55-layer { position: absolute; inset: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr); background: var(--o55-win-bg); } /* the footer's buttons never widen the column past the window */
 #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer { background: transparent; }
 .o55-scroll { display: flex; flex-direction: column; overflow: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; }
 .o55-content { margin-block: auto; padding: 32px var(--o55-pad) 28px; max-width: 640px; width: 100%; box-sizing: border-box; }
@@ -87,10 +87,13 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 #pm-o55-onboarding[data-family="retro"] .o55-title::after { content: '_'; margin-left: 2px; color: var(--o55-accent); animation: o55-caret 1s steps(1) infinite; }
 #pm-o55-onboarding[data-family="retro"] .o55-eyebrow::before { content: '> '; }
 @keyframes o55-caret { 50% { opacity: 0; } }
-.o55-main { display: grid; gap: 14px; }
+.o55-main { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; } /* one long unbreakable line (a key, an address) must never widen the column past the pane */
 
 /* footer + buttons */
 .o55-foot { position: relative; display: flex; align-items: center; gap: 10px; padding: 14px 22px 16px; border-top: 1px solid var(--o55-line); background: color-mix(in srgb, var(--surface) 96%, var(--text-primary) 2%); }
+/* a long primary label wraps inside its button rather than pushing past the window */
+.o55-foot > .o55-btn { min-width: 0; }
+.o55-foot > .o55-primary { white-space: normal; text-align: center; line-height: 1.2; padding-block: 8px; }
 #pm-o55-onboarding[data-family="glass"] .o55-foot { background: color-mix(in srgb, #fff 4%, transparent); }
 .o55-footgrow { flex: 1; }
 .o55-footnote { font-size: 12.5px; color: var(--text-muted); }
@@ -247,6 +250,10 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-raillabel { display: none; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-brand span, #pm-o55-onboarding[data-o55-layout="narrow"] .o55-close span { display: none; }
 #pm-o55-onboarding[data-o55-layout="narrow"] { --o55-pad: 22px; }
+/* at phone width Back is its chevron alone (its name stays for screen readers), so the primary keeps one line */
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-foot { padding-inline: 14px; gap: 8px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-back { padding-inline: 10px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-back > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-tileart { height: 84px; }
 #pm-o55-onboarding[data-o55-layout="short"] .o55-body { grid-template-columns: minmax(220px, 30%) minmax(0, 1fr); }

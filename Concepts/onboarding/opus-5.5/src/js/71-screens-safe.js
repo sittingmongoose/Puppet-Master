@@ -16,9 +16,18 @@
   O55.official = {
     handlers: {},
     signIn(S, o) { S.sess.signin = { service: o.service, name: o.name || o.service, kind: o.kind || 'cloud', then: o.then, done: o.done || null, state: 'idle' }; S.save(); O55.ui.go('online-signin'); },
+    /* kind: signin (default) | signup | guide | page. The notice says which kind of page opened, and shows the address
+       only when the concept knows the real one. */
     open(S, o) {
-      O55.owners.dispatch('cmd.auth_profile.open_official_page', { url: o.url }, S.ctx(), () => ({ ok: true }));
-      toast(S, T('online.signin.opened', { name: o.name }) + ' — ' + o.url.replace(/^https:\/\//, ''));
+      O55.owners.dispatch('cmd.auth_profile.open_official_page', { url: o.url || null, kind: o.kind || 'signin' }, S.ctx(), () => ({ ok: true }));
+      const what = T('official.' + (o.kind || 'signin'), { name: o.name });
+      toast(S, o.url ? what + ' — ' + o.url.replace(/^https:\/\//, '').replace(/\/$/, '') : what);
+    },
+    /* a source service's sign-in page: the typed address for a self-managed one, the known page for a hosted one */
+    forgeUrl(S, service, sub) {
+      const d = md(S), OF = O55.fixtures.OFFICIAL;
+      if (d.forge === service && d.forge_instance_url && needsAddress(service, d.forge_provider_variant)) return d.forge_instance_url.replace(/\/$/, '') + (sub === 'signup' ? '' : (OF.forgePath[service] || ''));
+      return sub === 'signup' ? ((O55.fixtures.forge(service) || {}).signup || null) : (OF.forge[service] || null);
     }
   };
   function toast(S, text) {
@@ -31,6 +40,13 @@
   O55.official.handlers.restoreCloud = (S) => { if (S.sess.restore) S.sess.restore.cloudSignedIn = true; };
 
   const SI = (S) => S.sess.signin || {};
+  /* where a sign-in opens: a source service's page, or (restore from a cloud account) the account's own page */
+  function signinUrl(S, si) { return si.kind === 'forge' ? O55.official.forgeUrl(S, si.service) : (O55.fixtures.OFFICIAL.backup[si.service] || null); }
+  function deviceFor(S, si) {
+    if (si.kind !== 'forge') return null;
+    const d = md(S), f = O55.fixtures.forge(si.service) || {};
+    return f.device && !(d.forge === si.service && needsAddress(si.service, d.forge_provider_variant)) ? f.device : null;
+  }
   function accountFor(S, service) {
     const acc = (S.env.forges[service] || { accounts: [] }).accounts;
     return (S.sess.forgeAccounts[service]) || (acc[0] && acc[0].login) || null;
@@ -84,10 +100,11 @@
         out += `<div class="o55-inline" data-key="tokbtn">${O55.ui.btn({ label: T('ai.verify'), do: 'tokenCheck', cls: 'o55-small', disabled: !si.tokenTyped, reason: T('online.signin.tokenLabel') }, 'o55-secondary')}</div>`;
       }
       if (si.state === 'waiting' || si.state === 'code') {
-        out += `<div class="o55-row o55-row-wait" data-key="wait"><span class="o55-spin" aria-hidden="true"></span><span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('online.signin.waiting'))}</span><span class="o55-rowmeta">${U.esc(T('online.signin.opened', { name: si.name }))}</span></span></div>`;
-        if (si.state === 'waiting') out += `<div class="o55-sublinks" data-key="nob">${C.link(T('online.signin.noBrowser'), 'code')}</div>`;
+        out += `<div class="o55-row o55-row-wait" data-key="wait"><span class="o55-spin" aria-hidden="true"></span><span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('online.signin.waiting'))}</span><span class="o55-rowmeta">${U.esc(T('official.signin', { name: si.name }))}</span></span></div>`;
+        /* a device code only where the service has a device sign-in; otherwise the sign-in link to paste */
+        if (si.state === 'waiting') out += `<div class="o55-sublinks" data-key="nob">${C.link(T('online.signin.noBrowser'), deviceFor(S, si) ? 'code' : 'copyLink')}</div>`;
         else {
-          const t = F.countdown(si.codeUntil || Date.now()), url = (f && f.device) || (si.service + '.example/device');
+          const t = F.countdown(si.codeUntil || Date.now()), url = deviceFor(S, si);
           out += `<div class="o55-devicecode" data-key="dc"><span class="o55-hint">${U.esc(T('online.signin.codeLead', { url }))}</span><span class="o55-paircode">${U.esc(si.code || 'WDJB-MJHT')}</span>`
             + `<span class="o55-hint">${U.esc(t.left ? T('chrome.expiresIn', { m: t.m, s: t.s }) : T('connect.pair.expired'))}</span>`
             + `<span class="o55-pairbtns">${F.copyBtn(si.code || 'WDJB-MJHT', 'dcode')}${O55.ui.btn({ label: T('chrome.newCode'), do: 'newCode', cls: 'o55-small' }, 'o55-secondary')}</span></div>`;
@@ -115,10 +132,11 @@
     do: {
       useKnown(S) {},
       another(S) { SI(S).another = true; S.save(); O55.ui.refresh(); },
-      signIn(S) { const si = SI(S); si.state = 'waiting'; si.attempt = (si.attempt || 0) + 1; S.save(); O55.official.open(S, { name: si.name, url: 'https://' + si.service + '.com/login' }); O55.ui.refresh(); waitForBrowser(S); },
+      signIn(S) { const si = SI(S); si.state = 'waiting'; si.attempt = (si.attempt || 0) + 1; S.save(); O55.official.open(S, { name: si.name, url: signinUrl(S, si) }); O55.ui.refresh(); waitForBrowser(S); },
+      copyLink(S) { const si = SI(S), url = signinUrl(S, si); if (url) U.copyText(url); O55.ui.toast(url ? T('online.signin.linkCopied', { url: url.replace(/^https:\/\//, '') }) : T('online.signin.linkCopiedNone')); },
       code(S) { const si = SI(S); si.state = 'code'; si.code = 'WDJB-MJHT'; si.codeUntil = Date.now() + 900000; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); F.ticker(S, 'online-signin', 1000, () => SI(S).state !== 'code'); waitForBrowser(S, 7000); },
       newCode(S) { const si = SI(S); si.code = ['WDJB', 'K3PX', 'R7QM', 'T2LN'][Math.floor(Math.random() * 4)] + '-' + ['MJHT', 'V9CZ', 'H4WE', 'B8KD'][Math.floor(Math.random() * 4)]; si.codeUntil = Date.now() + 900000; si.attempt = (si.attempt || 0) + 1; S.save(); O55.ui.refresh(); waitForBrowser(S, 7000); },
-      create(S) { const si = SI(S); si.state = 'create'; S.save(); O55.official.open(S, { name: si.name, url: (O55.fixtures.forge(si.service) || {}).signup || 'https://' + si.service + '.com/signup' }); O55.ui.refresh(); },
+      create(S) { const si = SI(S); si.state = 'create'; S.save(); O55.official.open(S, { kind: 'signup', name: si.name, url: si.kind === 'forge' ? O55.official.forgeUrl(S, si.service, 'signup') : null }); O55.ui.refresh(); },
       simCreate(S) { const si = SI(S); si.state = 'email'; si.newLogin = si.simUser.trim(); S.save(); O55.ui.refresh(); },
       confirmed(S) { const si = SI(S); completeSignIn(S, si.newLogin || 'jared-p', 'create_account_during_setup'); },
       tokenOn(S) { SI(S).state = 'token'; S.save(); O55.ui.refresh(); },
