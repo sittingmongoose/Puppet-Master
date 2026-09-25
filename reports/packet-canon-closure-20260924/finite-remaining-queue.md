@@ -24,8 +24,12 @@ are listed below; this is not native implementation or whole-family completion.
    bindings are required before a concrete writer is admitted; pending status alone
    does not reopen already specified product behavior. Separate that engineering
    integration from deployment of native writers.
-2. Narrow authority adjudications: Settings import semantics, Vault
-   sharing and supervisor scope, and remaining plugin applicability clauses.
+2. Narrow authority adjudications: Settings import semantics and the exact
+   Client–Server relation to Environment supervisor-generation association.
+   Plugin applicability is repaired or superseded by the newer closed manifest
+   owners; the named Ego import still lacks authentic source-input acceptance
+   evidence, not product behavior. Vault sharing remains a conditional privacy
+   constraint, not a required deduplication feature or unchosen sharing policy.
    Ordinary Vault isolation and four other Server prose omissions are now repaired;
    see `server-five-prose-and-usage-boundary.md`. The immediate-child package discovery,
    sound-pack category/collision/member rejection and built-in deletion clauses
@@ -70,6 +74,12 @@ second-cycle review also reproduced a resolver mutating the original request
 after earlier comparisons without detection. Both are recorded open, with no
 third review loop or public enrollment: `/mnt/Cursor/PM-Experiments/scm-selected-operands-20260925-LN2w1A/independent-final-cycle2.md`,
 SHA-256 `f0a270860e4d198c52304d9394ec53d7043e6bfe72067b913fe9cfaef97589e9`.
+
+Independent current inventory audit (not another whole-packet review):
+`/mnt/Cursor/PM-Experiments/finite-closure-inventory-independent-20260925.md`,
+SHA-256 `76e2d6c6da4aa25fc808e533932a6f92c54cc0932305689886365c5fd67887c1`.
+It narrows the stale opening plugin/Vault labels and preserves the exact selected
+denominator, actual decisions, capped-review findings and protected dependencies.
 
 ## Exact current residuals
 
