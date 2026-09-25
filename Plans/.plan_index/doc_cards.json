@@ -17271,7 +17271,11 @@
         "Plans/Source_Control_System.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
+        "Plans/git_stash_apply_selected.schema.json",
+        "Plans/git_stash_apply_selected_fixtures.json",
         "Plans/product_onboarding_contracts.schema.json",
+        "Plans/sir_git_stash_apply_dispatch.schema.json",
+        "Plans/sir_git_stash_apply_dispatch_fixtures.json",
         "Plans/sir_source_control_selected_dispatch.schema.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
@@ -17284,6 +17288,8 @@
         "future Source Control checkpoint native handlers",
         "future Source Control manager",
         "future Source Control setup surface and Slint consumer",
+        "future Source Control stash-apply Slint consumer",
+        "future Source Control stash-apply handler",
         "future SourceGraph projector and Slint consumer",
         "future SourceSnapshotAdapter and GitJJClosureValidator",
         "future acceptance harness",
@@ -17298,11 +17304,9 @@
         "future source-control capability resolver and adapters",
         "future source-control context resolver",
         "future source-control facade",
-        "future source-control migration",
-        "the `Plans/git_stash_apply_selected.schema.json` and `Plans/git_stash_apply_selected_fixtures.json` companion, and the `Plans/sir_git_stash_apply_dispatch.schema.json` and `Plans/sir_git_stash_apply_dispatch_fixtures.json` original/delivery/error binding",
-        "the existing UI_Command_Catalog row binding and Wiring_Matrix stash-apply registration; the future Source Control stash-apply surface, Slint consumer and handler"
+        "future source-control migration"
       ],
-      "line_count": 1941,
+      "line_count": 1947,
       "path": "Plans/Source_Control_System.md",
       "plan_unit_count": 24,
       "plan_unit_ids": [
@@ -17360,7 +17364,7 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "1437e3e3c1e3472f4ab0120b93019c9925ac09ee877d4390fd994e1bf8203b01",
+      "sha256": "d1bcc226180b7da62dac484305e12936617ea7944618dc4c342b9d499328fd4b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 24
@@ -20137,7 +20141,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T19:19:47Z",
+  "generated_at_utc": "2026-09-25T19:34:27Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

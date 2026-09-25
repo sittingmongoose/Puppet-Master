@@ -1916,8 +1916,14 @@ reasoning_tier: high
 context_scope: stash_apply_staged_state_choice
 implementation_surfaces:
   - Plans/Source_Control_System.md
-  - the `Plans/git_stash_apply_selected.schema.json` and `Plans/git_stash_apply_selected_fixtures.json` companion, and the `Plans/sir_git_stash_apply_dispatch.schema.json` and `Plans/sir_git_stash_apply_dispatch_fixtures.json` original/delivery/error binding
-  - the existing UI_Command_Catalog row binding and Wiring_Matrix stash-apply registration; the future Source Control stash-apply surface, Slint consumer and handler
+  - Plans/git_stash_apply_selected.schema.json
+  - Plans/git_stash_apply_selected_fixtures.json
+  - Plans/sir_git_stash_apply_dispatch.schema.json
+  - Plans/sir_git_stash_apply_dispatch_fixtures.json
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+  - future Source Control stash-apply Slint consumer
+  - future Source Control stash-apply handler
 node_compile_hint:
   mode: static_owner_contract_only
   create_worknodes: false
