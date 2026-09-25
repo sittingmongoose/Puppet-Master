@@ -307,7 +307,9 @@ class OnboardingStorageTests(unittest.TestCase):
         #   plans/ea-s09-coordination-prep-20260925); no other row of the 88 changed. The same two rows
         #   moved again with the cycle-1 review repairs on that branch: CP-01 (platform is an open runtime
         #   platform ID, not a closed list), CP-02 (the recovery epoch in the idempotency key) and CP-08
-        #   (path_ref rejects Windows drive, home-relative and backslash paths).
+        #   (path_ref rejects Windows drive, home-relative and backslash paths), and once more with the
+        #   cycle-2 residual R4-01 (the platform form admits hyphens), on branch
+        #   plans/ea-s09-coord-registered-20260925.
         families = self.registry["families"]
         self.assertEqual(len(families), 294)
         self.assertEqual(len({row["family_id"] for row in families}), 294)
@@ -325,7 +327,7 @@ class OnboardingStorageTests(unittest.TestCase):
         self.assertEqual(len(prior), 88)
         def canonical_digest(value):
             return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-        self.assertEqual(canonical_digest(prior), "2fcf8fcd360af8ad6d325120c18908d7c62de49f4cf04911098831fe3ccb5b6f")
+        self.assertEqual(canonical_digest(prior), "8f038450b828a724fdeebeb0500f7ba5110fd91db80e5cbb1b2345f33beb41a0")
         self.assertEqual(canonical_digest(added[0]), "24060bdb4077754dc609915d59ffd6357f3ae042e4ff34e75f91683937055842")
         spec = importlib.util.spec_from_file_location("browser_created_storage_pin", ROOT / "scripts/pm_browser_workspace_created.py")
         browser = importlib.util.module_from_spec(spec)

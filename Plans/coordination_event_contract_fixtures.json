@@ -751,6 +751,21 @@
       }
     },
     {
+      "case_id": "a14_registered_zai_coding_plan",
+      "event_type": "coordination.agent_registered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_14",
+        "agent_id": "agent_fixture_14",
+        "agent_type": "implementer",
+        "platform": "zai-coding-plan",
+        "agent_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_14:3:1",
+        "started_at_utc": "2026-09-25T04:56:00Z"
+      }
+    },
+    {
       "case_id": "debug_mirror_exported_written",
       "event_type": "coordination.debug_mirror_exported",
       "payload": {

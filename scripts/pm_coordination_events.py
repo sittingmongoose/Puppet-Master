@@ -125,8 +125,10 @@ CLOSED_DOMAINS = {
 }
 # CV-353 rule 5 (review repair CP-01): platform is the effective runtime platform ID that the Orchestrator takes
 # from node_config.platform (OSI-258), as Plans/Models_System.md section 1.2 names runtime platforms. It is
-# bounded by form only; no list of platforms is closed.
-PLATFORM_ID = {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[a-z][a-z0-9_]*$"}
+# bounded by form only; no list of platforms is closed. Cycle-2 residual R4-01: the form admits hyphens, so both
+# the tokens (antigravity_cli, zai_coding_plan) and the surface and provider-entry IDs (antigravity-cli,
+# zai-coding-plan, zhipuai-coding-plan) that Plans/Models_System.md names are accepted.
+PLATFORM_ID = {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[a-z][a-z0-9_-]*$"}
 # SP-320 path_ref and CV-353 rule 5 (review repair CP-08): a normalized project-relative path; no ".", ".." or empty
 # segment, and no Windows drive, home-relative or backslash (UNC) path, the shapes mirror_path and non_secret_ref
 # already reject.

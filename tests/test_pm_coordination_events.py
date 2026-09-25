@@ -119,7 +119,7 @@ class StaticReportTests(unittest.TestCase):
             "transition_sequences", "transition_steps", "positive_projection_cases", "negative_projection_cases",
             "native_oracles_not_run")}
         self.assertEqual(counts, {
-            "positive_payload_cases": 43, "negative_payload_cases": 69, "negative_event_cases": 12, "identity_vectors": 7,
+            "positive_payload_cases": 44, "negative_payload_cases": 69, "negative_event_cases": 12, "identity_vectors": 7,
             "path_vectors": 9, "transition_sequences": 22, "transition_steps": 83, "positive_projection_cases": 11,
             "negative_projection_cases": 20, "native_oracles_not_run": 13})
 
@@ -197,11 +197,12 @@ class PayloadSchemaTests(unittest.TestCase):
 
     def test_platform_is_an_open_runtime_platform_id(self):
         # Review repair CP-01: no list of platforms is closed (OSI-258, Models_System.md 1.2); only the form is bounded.
+        # Cycle-2 residual R4-01: the form admits hyphens, as the surface and provider-entry IDs of Models 10.4 use them.
         base = PAYLOADS["a8_registered_minimal"]
-        for value in ("opencode", "gemini_direct", "antigravity_cli", "codex"):
+        for value in ("opencode", "gemini_direct", "antigravity_cli", "codex", "open-code", "zai-coding-plan", "claude-code-cli"):
             with self.subTest(platform=value):
                 self.assertIsNone(CHECK.payload_rejection(base["event_type"], dict(base["payload"], platform=value)))
-        for value in ("Claude", "open code", "open-code", "1codex", "", "x" * 257):
+        for value in ("Claude", "open code", "1codex", "", "x" * 257):
             with self.subTest(platform=value):
                 self.assertEqual(CHECK.payload_rejection(base["event_type"], dict(base["payload"], platform=value)), "schema")
 
