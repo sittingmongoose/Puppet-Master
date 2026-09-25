@@ -201,7 +201,11 @@ canonical_text: >-
   typed nonsecret patch of destination-owned editable configuration. Identity alone or focused form state cannot
   supply the edit. The actual destination owner validates the patch and all referenced configuration against its
   current field, auth and permission contracts; caller-supplied health or capability claims are not configuration.
-  The result preserves destination identity and unedited fields and binds the applied patch and resulting generation.
+  The result preserves destination identity and unedited configuration fields and binds the applied patch and resulting generation.
+  Owner-derived health, capabilities, test disposition and currentness describe the actual resulting effective configuration;
+  a previous test remains current only when its authentic test scope remains applicable to that configuration.
+  A matching receipt reference or a formerly ready state cannot supply that applicability. This does not require a new test for a label-only edit
+  when the owner establishes that its existing proof remains applicable, and no fixed generation increment is implied.
   An edit grants no implicit credential issuance, repository reassignment, backend deletion or successful test.
 gui_related: true
 gui_classification_reason: Destination, policy, schedule/retention, selected data, storage use, verification, protection, and history are visible manager behavior.
@@ -212,7 +216,8 @@ acceptance_criteria:
   - Each Project repository and the separate Catalog repository can be unlocked, verified, quarantined, retained, pruned, and restored without coupling an unrelated Project.
   - A multi-destination run preserves each attempt's immutable snapshot ID, upload state, failure, and evidence independently.
   - Destination update requires the actual typed nonsecret patch and exact current destination/Server/generation; a missing operand, stale target or unauthorized referenced configuration cannot apply.
-  - An applied destination result resolves the actual owner output and preserves every unedited field; no-change is explicit and neither outcome creates readiness, credentials or remote data effects.
+  - An applied destination result resolves the actual owner output and preserves every unedited configuration field; no-change is explicit and neither outcome creates readiness, credentials or remote data effects.
+  - A changed locator or authorization premise cannot inherit an inapplicable ready, capability or test claim; a label-only edit may retain authentic applicable evidence without implying a new test or fixed generation increment.
   - Manifest covers every included object with relative path, byte size, digest, family, and consistency boundary and names exclusions.
   - Retention cannot delete protected, held, active-parent, last-known-good, or recovery-required generations.
 validation_surfaces: [Plans/backup_restore_system_contract_fixtures.json, future offline partial-write protection and retention tests]

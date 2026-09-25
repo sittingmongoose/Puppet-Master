@@ -98528,7 +98528,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-24T15:15:22Z",
+  "generated_at_utc": "2026-09-24T20:41:37Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -111902,8 +111902,8 @@
       "source_location": {
         "heading": "BRS-005 - Backup State, Consistency, Safe Points, And Crash Convergence",
         "heading_level": 3,
-        "heading_line": 236,
-        "line": 238,
+        "heading_line": 241,
+        "line": 243,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -111919,8 +111919,8 @@
       "source_location": {
         "heading": "BRS-006 - Restore Preview, Modes, Quarantine, Derived Rebuild, And Rollback",
         "heading_level": 3,
-        "heading_line": 279,
-        "line": 281,
+        "heading_line": 284,
+        "line": 286,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -111936,8 +111936,8 @@
       "source_location": {
         "heading": "BRS-007 - Required Receipts And Post-Restore Readiness",
         "heading_level": 3,
-        "heading_line": 322,
-        "line": 324,
+        "heading_line": 327,
+        "line": 329,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -111953,8 +111953,8 @@
       "source_location": {
         "heading": "BRS-008 - Canonical Backup Restore Commands, Events, And UI",
         "heading_level": 3,
-        "heading_line": 360,
-        "line": 362,
+        "heading_line": 365,
+        "line": 367,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -111970,8 +111970,8 @@
       "source_location": {
         "heading": "BRS-009 - Shared Primitives, Migration, And DRY Boundary",
         "heading_level": 3,
-        "heading_line": 413,
-        "line": 415,
+        "heading_line": 418,
+        "line": 420,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -111987,8 +111987,8 @@
       "source_location": {
         "heading": "BRS-010 - Backup Restore Acceptance And Proof Boundary",
         "heading_level": 3,
-        "heading_line": 462,
-        "line": 464,
+        "heading_line": 467,
+        "line": 469,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112004,8 +112004,8 @@
       "source_location": {
         "heading": "BRS-011 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 956,
-        "line": 958,
+        "heading_line": 961,
+        "line": 963,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112021,8 +112021,8 @@
       "source_location": {
         "heading": "BRS-012 - RecoverySet, Recovery Kit, Key Slots, And Human Custody",
         "heading_level": 3,
-        "heading_line": 502,
-        "line": 504,
+        "heading_line": 507,
+        "line": 509,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112038,8 +112038,8 @@
       "source_location": {
         "heading": "BRS-013 - Eleven Destination Families And Shared Authentication Consumption",
         "heading_level": 3,
-        "heading_line": 542,
-        "line": 544,
+        "heading_line": 547,
+        "line": 549,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112055,8 +112055,8 @@
       "source_location": {
         "heading": "BRS-014 - Snapshot Browse, Retrieve, Compare, Export, And Archive Delivery",
         "heading_level": 3,
-        "heading_line": 583,
-        "line": 585,
+        "heading_line": 588,
+        "line": 590,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112072,8 +112072,8 @@
       "source_location": {
         "heading": "BRS-015 - Scheduler, Retention, Prune, Verification, And Drill Policy",
         "heading_level": 3,
-        "heading_line": 630,
-        "line": 632,
+        "heading_line": 635,
+        "line": 637,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112089,8 +112089,8 @@
       "source_location": {
         "heading": "BRS-016 - Serialized Supersession, Fresh Recovery, And Consumer Truth",
         "heading_level": 3,
-        "heading_line": 689,
-        "line": 691,
+        "heading_line": 694,
+        "line": 696,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112106,8 +112106,8 @@
       "source_location": {
         "heading": "BRS-017 - Coordinator, Capture Barrier, Independent Repositories, And Durable Authority",
         "heading_level": 3,
-        "heading_line": 1007,
-        "line": 1009,
+        "heading_line": 1012,
+        "line": 1014,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112123,8 +112123,8 @@
       "source_location": {
         "heading": "BRS-018 - Destination, Headless Authentication, Recovery Key, And Human Delivery Safety",
         "heading_level": 3,
-        "heading_line": 1050,
-        "line": 1052,
+        "heading_line": 1055,
+        "line": 1057,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112140,8 +112140,8 @@
       "source_location": {
         "heading": "BRS-019 - Locate, Browse, Restore, Retention, And Durable Operational Safety",
         "heading_level": 3,
-        "heading_line": 1094,
-        "line": 1096,
+        "heading_line": 1099,
+        "line": 1101,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112157,8 +112157,8 @@
       "source_location": {
         "heading": "Working Notebook Backup Participation Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 1147,
-        "line": 1151,
+        "heading_line": 1152,
+        "line": 1156,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112174,8 +112174,8 @@
       "source_location": {
         "heading": "BRS-021 - Jujutsu History Index Rebuild Verification Policy",
         "heading_level": 3,
-        "heading_line": 1233,
-        "line": 1235,
+        "heading_line": 1238,
+        "line": 1240,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112191,8 +112191,8 @@
       "source_location": {
         "heading": "BRS-022 - Separately Authorized Missing Repository Data Completion",
         "heading_level": 3,
-        "heading_line": 1288,
-        "line": 1290,
+        "heading_line": 1293,
+        "line": 1295,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112208,8 +112208,8 @@
       "source_location": {
         "heading": "BRS-023 - Phase-Local Restore Evidence And Bound Emergency Consent",
         "heading_level": 3,
-        "heading_line": 1187,
-        "line": 1189,
+        "heading_line": 1192,
+        "line": 1194,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112225,8 +112225,8 @@
       "source_location": {
         "heading": "Retention and evidence limits",
         "heading_level": 4,
-        "heading_line": 1380,
-        "line": 1392,
+        "heading_line": 1385,
+        "line": 1397,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112242,8 +112242,8 @@
       "source_location": {
         "heading": "Event and native qualification boundary",
         "heading_level": 4,
-        "heading_line": 1476,
-        "line": 1482,
+        "heading_line": 1481,
+        "line": 1487,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112259,8 +112259,8 @@
       "source_location": {
         "heading": "BRS-026 - Coherent original Workflow Goal cancellation backup and restore",
         "heading_level": 3,
-        "heading_line": 1540,
-        "line": 1561,
+        "heading_line": 1545,
+        "line": 1566,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112276,8 +112276,8 @@
       "source_location": {
         "heading": "BRS-027 - Source-coupled started projection recovery and disclosure",
         "heading_level": 3,
-        "heading_line": 1628,
-        "line": 1642,
+        "heading_line": 1633,
+        "line": 1647,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112293,8 +112293,8 @@
       "source_location": {
         "heading": "BRS-028 - Whole original cancellation source retention and combined projection recovery",
         "heading_level": 3,
-        "heading_line": 1685,
-        "line": 1701,
+        "heading_line": 1690,
+        "line": 1706,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -112310,8 +112310,8 @@
       "source_location": {
         "heading": "BRS-029 — Mandatory original phase custody; optional coherent derived generation, source lifetime and restore ordering (2026-09-21)",
         "heading_level": 2,
-        "heading_line": 1748,
-        "line": 1750,
+        "heading_line": 1753,
+        "line": 1755,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
