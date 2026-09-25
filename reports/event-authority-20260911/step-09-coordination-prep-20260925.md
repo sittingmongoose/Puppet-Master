@@ -11,7 +11,7 @@ Branch `plans/ea-s09-coordination-prep-20260925`, cut from `origin/main` `1e5d9b
 
 It admits nothing. No row is added to `Plans/event_family_registry.json`, no checkpoint or pin moves, and no DL-077 admission record is written. Each family is admitted later in its own Storage admission landing: one family per landing (DL-045), with its own DL-077 admission record and the DL-078 checkpoint move.
 
-**Status.** Contracts, schemas, Storage rows, ledger, fixtures, checker, guards and oracles are written. The branch is rebased onto `main` `cd46487bf0`. In the first rebase its one source conflict, two hunks in `Plans/storage-plan.md` section 2.3.1, was merged with the text proposed before the rebase (see "The rebases"). Every check passes except the expected governance staleness. Not done yet: the one blind form-driven review (cap two cycles) has not run.
+**Status.** Contracts, schemas, Storage rows, ledger, fixtures, checker, guards and oracles are written. The branch is rebased onto `main` `cd46487bf0`. In the first rebase its one source conflict, two hunks in `Plans/storage-plan.md` section 2.3.1, was merged with the text proposed before the rebase (see "The rebases"). The one blind form-driven review ran its first cycle on 2026-09-25: two blocking findings, six should-fix and nine notes. Every one is repaired on this branch, one commit per finding, except the `.gitignore` line (see "Review cycle 1 and its repairs"). Every check passes except the expected governance staleness. Not done yet: the cycle-2 re-review, the last cycle the cap allows.
 
 The branch was written in three stages. The per-family search is `reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md`. The stage log is `/mnt/Cursor/PM-Experiments/ea-step09-batch2-20260925/prep-compile-log.md`. It also records both rebases and maps each commit to its rebased hashes. The hashes in this report are those after the second rebase, except in "The first rebase", which cites the commits as they were then.
 
@@ -20,27 +20,28 @@ The branch was written in three stages. The per-family search is `reports/event-
 | Surface | Paths | What | Commits |
 |---|---|---|---|
 | Per-family search | `reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md` | DL-045's documented search: one section per family, partial contracts cited, scoped negative evidence | `f73828055d` |
-| Semantic owner | `Plans/orchestrator-subagent-integration.md` | New section "Coordination event authority (DL-045, 2026-09-25)", OSI-438: producers and entry points, closed domains, agent identity, append on change, heartbeats as liveness, crash and abort resolution, legacy sketch fields, file claims, restart, readers | `ed3cae1db0`, `22c8c84e95`, `766e57816a` |
-| Payload owner | `Plans/Contracts_V0.md`, `Plans/coordination_event_payloads.schema.json` | CV-353: the closed payload schema, one definition per coordination row, shared lineage envelope and reference form, EventRecord joins; a pointer from the coordination rows | `0d90812f9b`, `0f22a25291`, `766e57816a` |
-| Storage owner | `Plans/storage-plan.md`, `Plans/coordination_projection_contracts.schema.json` | SP-320: append admission, projector, five readers, checkpoint value with SP-278 and the nine-field durable token, identity recipes, transition table, first-receipt custody, custody, retention anchor, replay, recovery, withdrawal; a pointer from section 2.3.2; section 2.3.1 rules | `bfa4b09724`, `4d4a38eff1`, `95cac05d79`, `6b198fd732`, `766e57816a` |
-| Storage value registry | `Plans/storage_value_registry.json` | `coordination_event_records` and `coordination_read_model_projections` materialized in place; the retention text contradiction (K8) fixed | `6b198fd732` |
-| Readiness | `scripts/pm-implementation-readiness.py` | The "SP-320 keyed value compositions" rule, the coordination checkpoint in the read-token lists, census 274 materialized and 19 deferred, 10 self-tests | `6b198fd732` |
-| Census pins | `tests/test_shared_runtime_storage_contracts.py`, `tests/test_pm_runtime_vocabulary_migration.py`, `tests/test_pm_onboarding_phases.py` | Moved for the two materialized rows only | `6b198fd732` |
-| Admission ledger | `Plans/coordination_event_admission.json` and `.schema.json` | Eight rows `prepared_not_admitted`; seven carry the final registry row and its SHA-256; `coordination.debug_mirror_exported` is outside the batch with no row | `7945f87b01` |
-| Fixtures | `Plans/coordination_event_contract_fixtures.json` | 42 positive and 67 negative payloads, 12 EventRecord join negatives, 6 identity and 9 path vectors, 22 transition sequences with final state, 11 positive and 20 negative projection values, 13 native obligations `NOT_RUN` | `e19e8e0723` |
-| Checker | `scripts/pm_coordination_events.py`, `tests/test_pm_coordination_events.py` | Static checker and 39 unittest tests (see "Checks") | `3928b2439a`, `2501c00a98`, `0ea33c4a94` |
-| Closed-world guards | `scripts/pm-browser-event-admission.py`, `tests/test_pm_testing_session_events.py`, `tests/test_pm_github_project_integration.py`, `tests/test_pm_browser_event_admission.py`, `tests/test_event_authority_holding_bucket.py` | Accept a row the coordination ledger marks admitted, only as its exact prepared row, and nothing else | `2501c00a98` |
-| Oracles | `Plans/Automated_Testing_System.md` | ATS-058, the oracle entry for the seven families | `0ea33c4a94` |
-| Derived | `Plans/_shards/` (Automated Testing 40, Contracts 62, Orchestrator 14, storage-plan 85, storage value registry 569) and `Plans/.plan_index` | Regenerated with each Plans edit; no other document's shards changed | with each edit |
+| Semantic owner | `Plans/orchestrator-subagent-integration.md` | New section "Coordination event authority (DL-045, 2026-09-25)", OSI-438: producers and entry points, closed domains, agent identity, append on change, heartbeats as liveness, crash and abort resolution, legacy sketch fields, file claims, restart, readers | `ed3cae1db0`, `22c8c84e95`, `766e57816a`; review repairs `8d2ca12791`, `1987208792`, `21ce2e7151`, `e3980c94f4`, `8ed4c93faf` |
+| Payload owner | `Plans/Contracts_V0.md`, `Plans/coordination_event_payloads.schema.json` | CV-353: the closed payload schema, one definition per coordination row, shared lineage envelope and reference form, EventRecord joins; a pointer from the coordination rows | `0d90812f9b`, `0f22a25291`, `766e57816a`; review repairs `8d2ca12791`, `a6cf800ca0` |
+| Storage owner | `Plans/storage-plan.md`, `Plans/coordination_projection_contracts.schema.json` | SP-320: append admission, projector, five readers, checkpoint value with SP-278 and the nine-field durable token, identity recipes, transition table, first-receipt custody, custody, retention anchor, replay, recovery, withdrawal; a pointer from section 2.3.2; section 2.3.1 rules | `bfa4b09724`, `4d4a38eff1`, `95cac05d79`, `6b198fd732`, `766e57816a`; review repairs `8d2ca12791`, `3ca0060e76`, `a6cf800ca0`, `458e6b5f9e`, `3d2bd02fed` |
+| Storage value registry | `Plans/storage_value_registry.json` | `coordination_event_records` and `coordination_read_model_projections` materialized in place; the retention text contradiction (K8) fixed | `6b198fd732`; re-materialized by `8d2ca12791`, `3ca0060e76`, `a6cf800ca0` |
+| Readiness | `scripts/pm-implementation-readiness.py` | The "SP-320 keyed value compositions" rule with its member order, the coordination checkpoint in the read-token lists, census 274 materialized and 19 deferred, 11 self-tests | `6b198fd732`, `c58157f9bb` |
+| Census pins | `tests/test_shared_runtime_storage_contracts.py`, `tests/test_pm_runtime_vocabulary_migration.py`, `tests/test_pm_onboarding_phases.py` | Moved for the two materialized rows only; the onboarding digest again with each re-materialization | `6b198fd732`, `c58157f9bb`, `8d2ca12791`, `3ca0060e76`, `a6cf800ca0` |
+| Admission ledger | `Plans/coordination_event_admission.json` and `.schema.json` | Eight rows `prepared_not_admitted`; seven carry the final registry row and its SHA-256; `coordination.debug_mirror_exported` is outside the batch with no row | `7945f87b01`; review repairs `8d2ca12791`, `3ca0060e76`, `a6cf800ca0`, `7dfa6d9856` (no registry row changed) |
+| Fixtures | `Plans/coordination_event_contract_fixtures.json` | 43 positive and 69 negative payloads, 12 EventRecord join negatives, 7 identity and 9 path vectors, 22 transition sequences with final state, 11 positive and 20 negative projection values, 13 native obligations `NOT_RUN` | `e19e8e0723`; review repairs `8d2ca12791`, `3ca0060e76`, `a6cf800ca0` |
+| Checker | `scripts/pm_coordination_events.py`, `tests/test_pm_coordination_events.py` | Static checker and 45 unittest tests (see "Checks") | `3928b2439a`, `2501c00a98`, `0ea33c4a94`; review repairs `8d2ca12791`, `3ca0060e76`, `846037fc35`, `a6cf800ca0` |
+| Closed-world guards | `scripts/pm-browser-event-admission.py`, `tests/test_pm_testing_session_events.py`, `tests/test_pm_github_project_integration.py`, `tests/test_pm_browser_event_admission.py`, `tests/test_event_authority_holding_bucket.py` | Accept a row the coordination ledger marks admitted, only as its exact prepared row of one of the seven families, and nothing else | `2501c00a98`, `846037fc35` |
+| Oracles | `Plans/Automated_Testing_System.md` | ATS-058, the oracle entry for the seven families | `0ea33c4a94`; review repairs `8d2ca12791`, `a6cf800ca0`, `a424c8ff82` |
+| Search report notes | `reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md` | Two dated notes: the platform domain (CP-01) and the K8 repair (CP-17) | `8d2ca12791`, `51d4dc829f` |
+| Derived | `Plans/_shards/` (Automated Testing 40, Contracts 62, Orchestrator 14, storage-plan 85, storage value registry 568) and `Plans/.plan_index` | Regenerated with each Plans edit; no other document's shards changed | with each edit |
 
-In numbers, against `c98cccb257` and without this report: 22 source files (12,775 lines added, 124 removed), 770 shard files and 6 index files. PlanUnits go from 6,728 to 6,732 (OSI-438, CV-353, SP-320, ATS-058), and acceptance units from 26,260 to 26,290. Against `1e5d9b097b` there were 765 shard files. The difference is the storage value registry: `main`'s Step 8(c) second half re-sharded it, and this branch's regeneration now rewrites 569 of its shard files instead of 564. The other counts are unchanged.
+In numbers, against `cd46487bf0` and without this report: 22 source files (12,995 lines added, 124 removed), 769 shard files and 6 index files. PlanUnits go from 6,738 to 6,742 (OSI-438, CV-353, SP-320, ATS-058), and acceptance units from 26,291 to 26,321. Before the review there were 770 shard files against `c98cccb257`, and 765 against `1e5d9b097b`. The storage value registry makes the difference each time: `main`'s Step 8(c) second half re-sharded it, and CP-01 shortened it by a few lines, so this branch now rewrites 568 of its shard files; its last new shard is `565-lines-112801-112995.md`.
 
 Untouched, as required: `Plans/event_family_registry.json`, `scripts/pm_pnc019_currentness.py`, the DL-078 pin lines of the two pinned tests, `Plans/Spec_Lock.json`, `Plans/.evidence/**`, `Plans/auto_decisions.jsonl`, `Plans/.implementation_readiness/**`, `Plans/Decision_Log.md` and the audit rows under `Plans/.audits/`. The independent validator and `pm-implementation-readiness.py generate` were not run.
 
 ### How the guards were generalized
 
 A later admission landing now has to move only the DL-078 pins. The branch changes these closed-world checks:
-- `scripts/pm-browser-event-admission.py`: `unexpected_central_event_family` also lets through a registry row whose identity and fingerprint equal a row the coordination ledger marks `admitted_static_contract` (new `admitted_coordination_rows()`). An unreadable ledger opens nothing. Browser rows behave as before.
+- `scripts/pm-browser-event-admission.py`: `unexpected_central_event_family` also lets through a registry row whose identity and fingerprint equal a row the coordination ledger marks `admitted_static_contract` (new `admitted_coordination_rows()`). Since review CP-03 that holds only for the seven coordination event types, and only when the registry row carries the ledger row's own family ID and event type. An unreadable ledger opens nothing. Browser rows behave as before.
 - `assert_registry_matches_upstream_plus_admitted_browser` in both pinned test files: an admitted coordination row is accepted only when it equals its prepared row byte for byte in canonical JSON, and it is counted in the returned total. The pin lines themselves are untouched. They moved down only because lines were added above them: `tests/test_pm_testing_session_events.py` lines 91 to 93 (were 80 to 82) and `tests/test_pm_github_project_integration.py` lines 261 and 265 (were 250 and 254).
 
 A simulated first admission found three more closed-world assumptions, and the branch fixes them too:
@@ -78,7 +79,7 @@ Every identifier below is labelled in its owner text as a newly authored owner c
 | Idempotency key `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}`, with the recovery epoch its event ID uses (review repair CP-02); event ID `evt_coordination_` plus SHA-256 of the RFC 8785 identity array; the `agent_revision` rule; `path_ref` normalization and `path_hash`; the `projection_scope` grammar | Recipes | SP-320 |
 | `Plans/coordination_event_payloads.schema.json`; `$defs` `lineage_envelope` and `non_secret_ref`; schema IDs `pm.coordination_event.<family>.schema.v1` (seven, plus the prepared `debug_mirror_exported`) | Payload schema | CV-353 |
 | `Plans/coordination_projection_contracts.schema.json`; `pm.storage_value.coordination_projector_checkpoint.v1` and the agent, file, operation and snapshot projection values, all `1.0.0`; `$defs/durable_read_token`; `x-pm-event-authority-binding` | Projection and checkpoint values, binding record | SP-320 |
-| "SP-320 keyed value compositions" (section 2.3.1) and readiness constant `STORAGE_VALUE_KEYED_COMPOSITION_MEMBER_IDENTITY` | Registry representation rule | SP-320, section 2.3.1 |
+| "SP-320 keyed value compositions" (section 2.3.1) and readiness constants `STORAGE_VALUE_KEYED_COMPOSITION_MEMBER_IDENTITY` and `STORAGE_VALUE_KEYED_COMPOSITION_MEMBERS` (review CP-04) | Registry representation rule | SP-320, section 2.3.1 |
 | `pm.coordination_event_admission.v1`, `COORDINATION-DL045-STEP09-BATCH2-20260925`, family IDs `event-family-coordination-agent-*` | Admission ledger | the ledger, under SP-320 and OSI-438 |
 | `pm.coordination_event_contract_fixtures.v1`; native obligations `COORD-APPEND-01` to `COORD-MIRROR-01` | Fixtures and oracle IDs | ATS-058 |
 | `scripts/pm_coordination_events.py`, report `pm.coordination_event_static_report.v1` | Checker and its output; not an owner contract | ATS-058 names it |
@@ -160,54 +161,92 @@ During the cycle-1 review `main` moved to `cd46487bf0`: Step 9 batch 2's answers
   - DL-085 keeps crew board messages with the coordination records under `RP-COORDINATION-180D`, 180 days after the run finishes. SP-320's binding of that policy and its `run_completion` anchor agree with it, and SP-320 and OSI-438 stay scoped to the seven agent families. Binding the three `crew.board_*` families into the coordination family is a later batch; it would extend the key shape and composition of `coordination_event_records`.
   - Nothing else in DL-084 to DL-093 or in the procedure record touches this branch.
 
+## Review cycle 1 and its repairs
+
+The one blind form-driven review ran its first cycle on 2026-09-25, against `c98cccb257` and the tip `5ca931e546`. Its output is `/mnt/Cursor/PM-Experiments/review-ea-s09-coordination-prep-20260925/`: `REVIEW.md`, `findings.jsonl`, `RECONCILIATION.md` and `proposed-edits.patch` (SHA-256 `7a9d369d…`), copied into the evidence below. Verdict: not landing-ready, with two blocking findings, six should-fix and nine notes. After the second rebase, the repair round made one commit per finding in the reviewer's suggested words, in the order the coordinator set (DL-066). A commit that edits a Plans document regenerates only that document's shards and the index.
+
+| Finding | Severity | What was wrong | Repair | Commit |
+|---|---|---|---|---|
+| CP-01 | blocking | `platform` was closed to five values, against the Orchestrator's own provider lists and `Plans/Models_System.md` section 1.2 | OSI-438's row and CV-353 rules 5 and 7 in the reviewer's words; the pattern `^[a-z][a-z0-9_]*$` in both schemas; fixtures, checker, both Storage rows, ATS-058 and the onboarding digest | `8d2ca12791` |
+| CP-02 | blocking | the idempotency key left out the recovery epoch that the event ID includes | SP-320's key bullet in the reviewer's words, with `{recovery_epoch}` before `{agent_revision}`; its canonical_text, the ledger's `replay_rule`, the Storage row's `replay_behavior`, the checker, every fixture key and a new-epoch vector | `3ca0060e76` |
+| CP-03 | should fix | the Browser gate let through any row the ledger marked admitted | the reviewer's patch: only the seven event types, with the ledger row's own identity, and its test | `846037fc35` |
+| CP-04 | should fix | readiness checked the member count, not the key-shape order section 2.3.1 states | the reviewer's patch: `STORAGE_VALUE_KEYED_COMPOSITION_MEMBERS`, the order failure and its self-test | `c58157f9bb` |
+| CP-06 | should fix | OSI-438 called Gap #30's 30-second heartbeat an example | the reviewer's sentences | `1987208792` |
+| CP-07 | should fix | the precedence rule named "earlier" text and left out OSI-260 and "When to use coordination modes" | the reviewer's two sentences and `last_update` row | `21ce2e7151` |
+| CP-08 | should fix | `path_ref` accepted Windows drive, home-relative and UNC paths | the reviewer's pattern in both schemas; two negative cases; checker, both Storage rows, ATS-058 and the onboarding digest | `a6cf800ca0` |
+| CP-05 | should fix | `coordination_heartbeat_expiry_ms` had no owner, no value and no card, and R-B was understated | the reviewer's OSI-438 sentence; R-B High, `coordination.agent_crashed` 10 of 12 unless the card is answered first; the card is the host's | `e3980c94f4` |
+| CP-09 | note | SP-320's status row admitted only a changed `status` | the reviewer's cell | `458e6b5f9e` |
+| CP-10 | note | section 2.3.1 said the addition adds no stored identity | the reviewer's sentence | `3d2bd02fed` |
+| CP-11 | note | the ledger's `admission_rule` left out `authority_contract_ref` | the reviewer's words | `7dfa6d9856` |
+| CP-12 | note | the `.gitignore` line for the new test | no change here; another thread handles `.gitignore` lines (".gitignore line needed" below) | none |
+| CP-13 | note | `main` moved during the review, and open question 5 cited an unlanded branch | the second rebase; open question 5 in the reviewer's words | `1f2986b11c` |
+| CP-14 | note | the forecast named no risk for CP-01, CP-02 or CP-08 | risks R-D and R-E | `287bf25e8e` |
+| CP-15 | note | ATS-058 did not state the transition sequences' scope | the reviewer's three sentences | `a424c8ff82` |
+| CP-16 | note | no producer rule for text over the bounds | the reviewer's sentence | `8ed4c93faf` |
+| CP-17 | note | the search report called the K8 repair separate work | the reviewer's dated note | `51d4dc829f` |
+
+Choices beyond the reviewer's literal words, for the cycle-2 re-review:
+- **CP-01.** The two negative cases are renamed `registered_platform_pattern_violation` ("Claude") and `operation_platform_pattern_violation` ("open code"), and the positive `a13_registered_opencode` registers a new fixture agent. OSI-438's canonical_text restates the closed domains without `platform`. The search report's registered section gains a dated note, because it listed "the closed `platform` domain" among what the owner prose defines.
+- **CP-02.** The key bullet keeps, after the reviewer's text, its two earlier statements: `replay_policy` is `dedupe_by_idempotency_key`, and the dedupe identity is `(scope_partition, event_type, idempotency_key)`. The checker's EventRecord join also requires the key's epoch to equal the event ID's, as the new bullet states ("the same one its event ID uses"). A unit test covers it; no fixture case was added. The existing epoch-4 vector now expects a new key as well. The new vector `identity_new_recovery_epoch_new_idempotency_key` (`coordination.agent_crashed` at revision 6) carries the prior epoch's key, which the checker requires to differ.
+- **CP-05.** One sentence precedes the reviewer's, so that "the card" has an antecedent: "Choosing the value is a runtime policy choice, so it goes to Jared on a DL-036 decision card."
+- **CP-13.** Open question 5 adds that DL-093 covers exactly these seven families.
+- **CP-16.** The sentence follows "Each entry point builds one complete closed payload, ... and submits it once.", the passage the finding cites.
+- **Registry rows.** No prepared registry row changed. Their `registry_row_sha256` values, recomputed by the DL-077 recipe after every commit, are those of the first preparation.
+
 ## Checks
 
-Run in the worktree at `aeb65ca459`, the rebased tip before this update. This update changes only this report. The comparison ran in a `git archive` export of `origin/main` `c98cccb257` at `/mnt/Cursor/PM-Experiments/ea-step09-batch2-20260925/main-export-c98`, with the currentness edition symlinked. The export was deleted afterwards.
+Run in the worktree at `51d4dc829f`, the tip after CP-17. This update changes only this report. The comparison ran in a `git archive` export of `origin/main` `cd46487bf0`, with the currentness edition symlinked. The export was deleted afterwards.
 
 | Check | Result |
 |---|---|
-| `python3 scripts/pm_coordination_events.py` | pass, 0 failures: 42 positive and 67 negative payload cases, 12 join negatives, 6 identity and 9 path vectors, 22 sequences with 83 steps, 11 positive and 20 negative projection values, 13 native obligations `NOT_RUN`, 7 prepared registry rows; admitted rows none. The report is byte-identical to the one before the rebase. |
-| `tests.test_pm_coordination_events` | 39 OK |
+| `python3 scripts/pm_coordination_events.py` | pass, 0 failures: 43 positive and 69 negative payload cases, 12 join negatives, 7 identity and 9 path vectors, 22 sequences with 83 steps, 11 positive and 20 negative projection values, 13 native obligations `NOT_RUN`, 7 prepared registry rows; admitted rows none |
+| `tests.test_pm_coordination_events` | 45 OK |
 | `tests.test_pm_browser_event_admission` | 38 OK |
 | `tests.test_pm_testing_session_events` | 11 OK |
 | `tests.test_pm_github_project_integration` | 15 OK |
-| `tests.test_pm_browser_workspace_created` | 65 OK (`main` added two) |
+| `tests.test_pm_browser_workspace_created` | 65 OK |
 | `tests.test_pm_browser_workspace_reset` | 53 OK |
 | `tests.test_shared_runtime_storage_contracts` | 15 OK |
 | `tests.test_event_authority_holding_bucket` | 34 OK |
 | `tests.test_pm_emit_only_event_boundaries` | 13 OK |
-| `tests.test_pm_onboarding_phases` | 42 OK, with this branch's 88-row prefix digest |
+| `tests.test_pm_onboarding_phases` | 42 OK, with this branch's 88-row prefix digest `2fcf8fcd…`; only the two coordination rows differ from `main` |
 | `tests.test_pm_runtime_vocabulary_migration` | 9 OK |
-| `python3 scripts/pm-browser-event-admission.py` | pass; the report is byte-identical to the one before the rebase |
-| `pm-implementation-readiness.py validate` | 36 failures here, 33 on `main`. The 3 new rows are currentness drift for Automated Testing, Contracts and Orchestrator. Six rows already fail on `main` and change value here: the 4 Spec Lock rows (the registry once, the readiness script in three lock groups) and the PNC-019 receipt rows for the storage value registry and Automated Testing. |
-| `pm-implementation-readiness.py self-test` | The same single failing scenario on both, `case_l_verification_integration`, with the same three checks false. The branch adds 10 storage checks, all true (67 against 57). |
-| Shard check | pass, 99 documents, 2,739 shards |
-| `pm-plan-index.py validate` | pass, 6,732 PlanUnits, 26,290 acceptance units |
 | `tests.test_pm_pnc019_currentness` | 8 OK and 1 failure, as expected, on drift rows only: 8 here, 5 on `main`. This branch adds Automated Testing, Contracts and Orchestrator. `main` already has the Decision Log, Goal Runtime, Section 15, storage-plan and the storage value registry, and this branch edits the last two as well. |
-| Lints, on exports of both | `lint-contractrefs`: only the existing `00-plans-index.md` line 81, as on `main`. `lint-path-refs`: the same 111 rows as `main`, apart from `plan_units.jsonl` line numbers. They all name paths outside the exports (`Concepts/`, `AGENTS.md`, `.claude/`, `.gitignore`), and none is on the four new units. `lint-banned-phrases`: pass. |
+| `python3 scripts/pm-browser-event-admission.py` | pass; the report is byte-identical to the one before the repairs and to the reviewer's |
+| `pm-implementation-readiness.py validate` | 36 failures here, 33 on `main`. The 3 new rows are currentness drift for Automated Testing, Contracts and Orchestrator. Six rows already fail on `main` and change value here: the 4 Spec Lock rows (the registry once, the readiness script in three lock groups) and the PNC-019 receipt rows for the storage value registry and Automated Testing. |
+| `pm-implementation-readiness.py self-test` | The same single failing scenario on both, `case_l_verification_integration`, with the same three checks false. The branch adds 11 storage checks, all true (68 against 57). |
+| Shard check | pass, 99 documents, 2,738 shards |
+| `pm-plan-index.py validate` | pass, 6,742 PlanUnits, 26,321 acceptance units |
+| Untouched | `Plans/event_family_registry.json` is byte-identical to `main` (SHA-256 `0be54418…`), and `scripts/pm_pnc019_currentness.py` is unchanged. The DL-078 pins still read `2026-09-11.2` and 42 (`!= 42` and `KERNEL_ROW_COUNT, 42` in the two tests). `Plans/Spec_Lock.json`, `Plans/.evidence`, `Plans/auto_decisions.jsonl`, `Plans/.implementation_readiness`, `Plans/Decision_Log.md`, `Plans/.audits` and the independent validator are unchanged, and no admission record was added. |
+| Lints, on exports of both | `lint-contractrefs`: only the existing `00-plans-index.md` line 81, as on `main`. `lint-path-refs`: the same 111 rows as `main`. `lint-banned-phrases`: pass. |
+| Generators | The stage 2 generator copies used by the repairs reproduce the two schema files, the fixtures, the ledger and both Storage rows (`--check` current). |
 
-**Simulated first admission, repeated after the rebase.** A scratch export of `aeb65ca459` took `coordination.agent_registered` through its landing. The prepared row was appended and the registry revision set to a simulated `2026-09-26.1`. The ledger row was flipped, the DL-078 pins were moved, and a simulated DL entry and DL-077 admission record were written. Every suite passes except the expected currentness drift (this tip's 8 drift rows, plus source drift for `Plans/event_family_registry.json` and the live-registry drift). The checker reports `coordination.agent_registered` as its one admitted row, and the Browser gate passes. Before the rebase, two lighter variants showed where the landing's own writes are needed:
+**Simulated first admission, repeated at the repaired tip.** A scratch export of `51d4dc829f` took `coordination.agent_registered` through its landing. The prepared row was appended and the registry revision set to a simulated `2026-09-26.1`. The ledger row was flipped, the DL-078 pins were moved, and a simulated DL entry and DL-077 admission record were written. Every suite passes except the expected currentness drift (this tip's 8 drift rows, plus source drift for `Plans/event_family_registry.json` and the live-registry drift). The checker reports `coordination.agent_registered` as its one admitted row, and the Browser gate passes with 43 families. Before the first rebase, two lighter variants showed where the landing's own writes are needed:
 - With only the row, the ledger and the revision, the holding-bucket tests and one guard test want the DL-077 admission record. Currentness also reports the unmoved checkpoint.
 - With the DL-078 pins moved as well, only the admission record is missing, besides the currentness drift.
 
 No guard or test outside the DL-078 pins needs an edit.
 
-Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-coordination-prep-rebased-20260925/`, 246 files, `SHA256SUMS` SHA-256 `48d579e9a2c61c7bd8505d20509cf618a750dae38ee8ad1dc9f823165aa3f0b7`. Its `README.txt` says what each file is. The trial merge, the pre-rebase checks and the two lighter simulation variants stay in `step-09-coordination-prep-checks-20260925/`.
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-coordination-prep-repair-20260925/`, 273 files, `SHA256SUMS` SHA-256 `a3ab3caae752b5e387d7f0bd120630034f5e7ed9f8eac7c5de7ba1fe0786e983`. Its `README.txt` says what each file is. The first rebase's evidence stays in `step-09-coordination-prep-rebased-20260925/`, and the trial merge, the pre-rebase checks and the two lighter simulation variants in `step-09-coordination-prep-checks-20260925/`.
 
 | File | SHA-256 |
 |---|---|
-| `rebased-tip/pm_coordination_events.json` | `e487ee5ded4f4a1d13723cea6adbed2ff4056bc5a4d15202a7e953f98bd202c0` |
-| `rebased-tip/readiness-validate.json` | `3c742ef3c0aeba91b128a7998c9a0faad4250315a5ec4e68d88531338eb10687` |
-| `main-c98cccb257/readiness-validate.json` | `94e6e1154ec68d8dbe4fc4aa53e2f3f3936b15fda73e8a60df068aa9a006c595` |
-| `rebased-tip/readiness-self-test.json` | `331cc532a0faa61be84c929a314fc3b71be4022f93ce7bf6c3eee214087e3eba` |
-| `main-c98cccb257/readiness-self-test.json` | `9aecdab8e2940bcb476bc3e8009b0eba58dd9b181a2c25d38c618280e08e53c2` |
-| `rebased-tip/currentness-rows.json` | `a4874a45342fd12598de1f986b4a532263dec88813ae2af5a1365b8478903346` |
-| `rebase/commit-map.txt` | `5245c9f110d55b99f4e3071268dda61a59d0a3b7f55c09ce1679c65ed0d3417b` |
-| `rebase/final-checks.txt` | `3ea8e426eee6b62cbca30bc2df7e4f7fc3862b7bd00c65dc32f6856a6ad125a0` |
-| `reread/binding-search-sto-svr.json` | `316558b9507d994685c5e686eb0c26aafc7b5f1d8d81c1e06f8e2d759b184284` |
+| `checks/tip-51d4dc829/pm_coordination_events.json` | `d028d895f62168e231a89afb3fa8f11a0a8f754e29e9b1dd11e7e4f81ebe7392` |
+| `checks/tip-51d4dc829/pm-browser-event-admission.json` | `8c61dcdf3f0052371f94411697ce3f3e7a53562844d8772ed247241c037817cb` |
+| `checks/tip-51d4dc829/readiness-validate.json` | `76197ed98d18cb48b9966fcd35be82dc944241ae83f85e882270a498ab967337` |
+| `checks/main-cd46487bf0/readiness-validate.json` | `73ecd95fee8fc224840e9d849b54a158b2d33f450b070b2a0a6e1d4b17b5c314` |
+| `checks/tip-51d4dc829/readiness-self-test.json` | `058ebf8f249c899fb28c51f3743aa117c3f517a1536a039078ea41ba72b46335` |
+| `checks/main-cd46487bf0/readiness-self-test.json` | `f41ae9bbb1cd97eaeb025d2a4239fbaeb7211aedf7dd569dcfcf2dcf724bf1dc` |
+| `checks/tip-51d4dc829/currentness-rows.json` | `a4874a45342fd12598de1f986b4a532263dec88813ae2af5a1365b8478903346` |
+| `checks/tip-51d4dc829/untouched-and-pins.txt` | `749a998ab9aaecfa4b88d02734ba71a16ac686cdd15290d6c82cbbe1d05440a9` |
+| `rebase/commit-map.txt` | `2af846bac9ca093f18aa25e4bd1dc10f58ceeb5b8329f04a1e9041f306bfeecc` |
+| `rebase/final-checks.txt` | `0111071265954c4264919f22b5839a6932ab14526fc41b0c73e51304a606ed53` |
+| `rebase/reread-cd46487bf0.txt` | `1ea04d038661f8c81e5614650ad682254d813dbd83626244eb9b8946e4293158` |
+| `repair/repair-commits.txt` | `3abcb7c5a3ef6e7f7685a64e4e06b3fb0d81623b76e448c7e1c4038d7f1242fa` |
+| `repair/generator-changes.diff` | `514a84d4c83673eb90ea609740942134a115d3dba95aa9565f75b73723150e06` |
 | `simulation/simF-admit-pins-writes/exit_codes.txt` | `c49aa1cfa0f3a7d1263aa20d0842b6b7bcb1b712079e21d9d31bc93075922287` |
-| `forecast-prep-landing-rebased.json` | `d7d7daa225a39ed43771823f976906fb3da34950e6bb29256b2e2889e6a772b8` |
-| `forecast-first-admission-rebased.json` | `89b604cabc828ae674d7212b32c44d58984b668ce506f6bb7c9d80add7139c87` |
+| `forecast-prep-landing-repair.json` | `e8832428137de5f24cb25ce2d243286e37ac9f35c981e8a7ad401053e1c1f14d` |
+| `forecast-first-admission-repair.json` | `50942a2c8f9cbaa356a0c5ce028448c1954312f50fe598b8b13c484e113259bd` |
 
 ## Expected at landing
 
@@ -220,7 +259,7 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-co
    - Rerun the readiness self-test.
 2. **Documents that go stale.** New with this landing: `Plans/Automated_Testing_System.md`, `Plans/Contracts_V0.md` and `Plans/orchestrator-subagent-integration.md`. Already stale on `main`, and moved again: `Plans/storage-plan.md` and `Plans/storage_value_registry.json`.
 3. **Spec-Locked files.** Newly stale: the same three documents. Already stale on `main` since the Step 8(c) landings, with hashes moved again: `Plans/storage-plan.md`, `Plans/storage_value_registry.json` and `scripts/pm-implementation-readiness.py`. Not in Spec Lock: the five new Plans JSON files, `scripts/pm-browser-event-admission.py`, `scripts/pm_coordination_events.py` and the tests.
-4. **Estimated landing-check rows.** Measured, not guessed: the governance subchecks ran on sparse exports of `main` `c98cccb257` and of the rebased tip `aeb65ca459`, and only the differences are used. They are the same as those measured on the trial merge before the rebase. Each aggregate (`run-gates` and `audit-governance`) should gain:
+4. **Estimated landing-check rows.** Measured, not guessed: the governance subchecks ran on sparse exports of `main` `cd46487bf0` and of the repaired tip `51d4dc829f`, and only the differences are used. They are the same as those measured before the review, on `c98cccb257` and `aeb65ca459`, and on the trial merge before the first rebase. Each aggregate (`run-gates` and `audit-governance`) should gain:
 
    | Subcheck | New rows | What |
    |---|---:|---|
@@ -242,12 +281,12 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-co
   - `EVENT_FAMILY_REGISTRY_REVISION` and `EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT` at `scripts/pm_pnc019_currentness.py` lines 50 and 51, and their provenance comment.
   - `40 + admitted_count != 42` and `KERNEL_ROW_COUNT, 42` at `tests/test_pm_testing_session_events.py` lines 91 to 93, and at `tests/test_pm_github_project_integration.py` lines 261 and 265.
   - The comments above them that still say a further admission needs fresh approval, at lines 89 and 90 and at lines 262 to 264.
-- **Measured for the first admission** against this branch's rebased tip, the same as before the rebase:
+- **Measured for the first admission** against the repaired tip, the same as before the review:
   - Spec Lock +1, `scripts/pm_pnc019_currentness.py`, which is Spec-Locked.
   - Implementation readiness +2: currentness drift for `Plans/event_family_registry.json`, and the live-registry drift.
   - Several existing readiness rows change value, such as the kernel row count, 42 to 43.
   - No new evidence, plan-graph or run-002 rows.
-  - Plan-migration current-snapshot rows for the new Decision Log entry's spans; the simulated entry was prose only, so these were not measured.
+  - No new current-run plan-migration rows with the simulated entry, which is prose only; the real entry's PlanUnit spans are not measured.
   - Later admissions mostly change values of the same rows, unless a reseal happens in between.
 - **Order.** `agent_registered` first, then status, operation, file ownership, unregistered, crashed and aborted (Step 9 plan D.1). Until all seven are admitted, SP-320 keeps the `AgentCoordinator` append path natively inactive: an admitted family is contract-only.
 
@@ -258,7 +297,7 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-co
   - The rows of the three new documents and their shard files: Contracts 62, Automated Testing 39, Orchestrator 14.
   - The storage-plan and storage value registry rows move again.
   - The file lists gain the new shard files: Automated Testing's `038-ats-058-...` and `storage-plan/083-coordination-event-persistence-binding-...`.
-  - The storage value registry's file list is already in the reseal list from `main`'s re-sharding: `551-lines-110001-110108.md` is gone, and `551-lines-110001-110200.md` to `555-lines-110801-110832.md` are new. After this landing, `555-lines-110801-110832.md` is gone as well, and `555-lines-110801-111000.md` to `566-lines-113001-113004.md` are new. No sealed name is removed by this branch, so it adds no `missing_ref` row.
+  - The storage value registry's file list is already in the reseal list from `main`'s re-sharding: `551-lines-110001-110108.md` is gone, and `551-lines-110001-110200.md` to `555-lines-110801-110832.md` are new. After this landing, `555-lines-110801-110832.md` is gone as well, and `555-lines-110801-111000.md` to `565-lines-112801-112995.md` are new. No sealed name is removed by this branch, so it adds no `missing_ref` row.
 - **PNC-019 certification receipt:** the source hashes of `Plans/storage_value_registry.json` and `Plans/Automated_Testing_System.md`. Their rows already fail on `main`, and their values move.
 - **Currentness edition:** an edition that includes Automated Testing, Contracts, Orchestrator, storage-plan and the storage value registry. Until then `test_pm_pnc019_currentness` fails with their drift rows.
 - **Run-002:** `refresh-batch-hashes` for batch report rows 32 to 40, 117 to 141 and 212, with `main`'s pending rows.
@@ -267,12 +306,12 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-co
 
 ## .gitignore line needed
 
-`tests/test_pm_coordination_events.py` is new. The `tests/` rule ignores it, so it was committed with `git add -f`. It needs the line `!/tests/test_pm_coordination_events.py` in `.gitignore`. Only Jared can approve that edit, and he is being asked.
+`tests/test_pm_coordination_events.py` is new. The `tests/` rule ignores it, so it was committed with `git add -f`. It needs the line `!/tests/test_pm_coordination_events.py` in `.gitignore`. Only Jared can approve that edit, and he is being asked. Review CP-12 records it; another thread handles `.gitignore` lines, so this branch does not change the file. If the line is not added by the landing, the landing record says that the file is force-added.
 
 ## Open questions
 
-1. **The blind review has not run.** The procedure asks for one blind form-driven review before landing, with a cap of two cycles. Each stage log lists the choices the review should look at, for example the new readiness rule, the schema encodings beyond CV-353's literal text, the eighth ledger row with no registry row, and the event ID including the recovery epoch. So do stage 3's choices: the guard generalization, including the holding-bucket test list, and the checker's pinning of the two storage value registry rows' prose (as the Browser checkers do).
-2. **The rebases are done**, onto `c98cccb257` and, after the cycle-1 review, onto `cd46487bf0` (see "The rebases"). The review should read section 2.3.1 as merged: the read-token bullet lists six rows, and the closing paragraph carries `main`'s created-v2 sentence as well as this branch's SP-320 sentences. If `main` moves again before the landing, the coordinator rebases again the same way.
+1. **The cycle-2 re-review.** Cycle 1 ran on 2026-09-25, and every finding is repaired except the `.gitignore` line (see "Review cycle 1 and its repairs"). Under DL-066 the re-review covers the rows the repairs changed and the rows they were supposed to change, and the deterministic checks pass before it. The choices beyond the reviewer's literal words are listed at the end of that section.
+2. **The rebases are done**, onto `c98cccb257` and, after the cycle-1 review, onto `cd46487bf0` (see "The rebases"). Cycle 1 confirmed section 2.3.1 as merged. If `main` moves again before the landing, the coordinator rebases again the same way.
 3. **The holding-bucket harness.** `PostAugustAdmissionTests` now reads each admitted coordination family's decision entry from its real DL-077 admission record. The test drives the frozen seal check in a temporary root. The change is test data only, but it touches the DL-077 harness, so the coordinator should confirm it.
 4. **R6, the disposition rows** at each admission (Step 9 plan): the procedure says to update the row, but the schema note says the row "stays as written". This still needs the coordinator's ruling before the first admission. The simulation did not touch disposition rows.
 5. **D-02, whose decision entry an admission record cites.** It is answered by DL-093, landed on main at bf2a9e877b. DL-093 covers exactly these seven families; D-02 stays open for every other Step 9 registration.
@@ -280,3 +319,4 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-co
 7. **Per-family join negatives and identity vectors** (risk R-C). Adding them to the fixtures is a small change for the fixture owner before the first admission.
 8. **`coordination.debug_mirror_exported`** keeps its open items from the ledger: owner binding and producer, identity recipe, retention anchor (its payload has no `run_id`), closed domains, and its own landing. SP-232's criterion that mirror recovery is recorded with it stays unmet until then.
 9. **The Step 9 plan's line references** to the pin lines are out of date by the lines added above them (see "Each admission landing").
+10. **OSI-273's cadence** (an observation from the repair round). OSI-273's canonical_text still says agents "update coordination state during execution about every 30 seconds or when file operations occur". It predates OSI-438, so OSI-438's precedence rule governs it, but the list after that rule (CP-07's words) does not name it.
