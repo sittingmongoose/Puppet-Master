@@ -24488,6 +24488,24 @@ html[data-motion="reduced"] .o55-it { transition-duration: 140ms !important; }
   .o55-it { transition-duration: 140ms !important; }
 }
 
+/* the finale's curtain (ready, and the pages that end Connect and restore): opens once, a quarter second in */
+.o55-cur { transform-box: fill-box; }
+.o55-f-friendly .o55-cur-l { transform-origin: left center; animation: o55-cur-gather 1500ms cubic-bezier(0.55, 0, 0.2, 1.1) 280ms both; }
+.o55-f-friendly .o55-cur-r { transform-origin: right center; animation: o55-cur-gather 1500ms cubic-bezier(0.55, 0, 0.2, 1.1) 280ms both; }
+@keyframes o55-cur-gather { 0% { transform: none; opacity: 1; } 80% { transform: scaleX(0.4); opacity: 1; } 100% { transform: scaleX(0.4); opacity: 0; } }
+.o55-f-basic .o55-cur-sheet { animation: o55-cur-lift 1200ms cubic-bezier(0.45, 0, 0.2, 1) 300ms both; }
+@keyframes o55-cur-lift { 0% { transform: none; } 20% { transform: translateY(6px); } 100% { transform: translateY(-640px); } }
+.o55-f-glass .o55-cur-l { animation: o55-cur-slide-l 1400ms cubic-bezier(0.05, 0.7, 0.1, 1) 350ms both; }
+.o55-f-glass .o55-cur-r { animation: o55-cur-slide-r 1400ms cubic-bezier(0.05, 0.7, 0.1, 1) 350ms both; }
+.o55-f-glass .o55-cur-flare { animation: o55-cur-flare 900ms ease-out 250ms both; }
+@keyframes o55-cur-slide-l { to { transform: translateX(-250px); opacity: 0.2; } }
+@keyframes o55-cur-slide-r { to { transform: translateX(250px); opacity: 0.2; } }
+@keyframes o55-cur-flare { 0% { opacity: 0; transform: scaleX(1); } 30% { opacity: 1; transform: scaleX(6); } 100% { opacity: 0; transform: scaleX(40); } }
+.o55-f-retro .o55-cur-px { animation: o55-cur-px 1ms steps(1, end) calc(300ms + var(--k, 0) * 110ms) both; }
+@keyframes o55-cur-px { to { opacity: 0; } }
+html[data-motion="reduced"] .o55-cur-all { display: none; }
+@media (prefers-reduced-motion: reduce) { .o55-cur-all { display: none; } }
+
 /* ---- css/40-tour.css ---- */
 /* ---- O55 Guided Tour: scrim + spotlight, callout, tour bar, Show Me pointer, ELI5 rewrite, Wizard practice ------
    The scrim is tinted by the theme (never black) and does not block the app unless a step asks it to. Families differ
@@ -82494,6 +82512,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         + dim(p, -112, -64, 112, -64, 'control · 224') + cross(p, 0, 0, 6) + '</g>';
     },
     helper,
+    /* the finale's curtain: the blueprint cover sheet, stamped ready, is lifted off the drawing */
+    curtain(ctx) {
+      const p = ctx.pal;
+      return `<g class="o55-cur-all"><g class="o55-cur o55-cur-sheet"><rect x="-240" y="-300" width="480" height="600" fill="${p.paper}"/><rect x="-240" y="-300" width="480" height="600" fill="${ctx.url('grid')}"/>`
+        + `<rect x="-240" y="-300" width="480" height="600" fill="${ctx.url('gridM')}"/><rect x="-150" y="-40" width="300" height="80" fill="none" stroke="${p.ink}" stroke-width="1.5"/>`
+        + txt(p, 0, -8, 'puppet master', 11, 'middle', p.ink) + txt(p, 0, 18, 'sheet 1:1 · ready to build', 8) + '</g></g>';
+    },
     stage(ctx) {
       const p = ctx.pal, w = 170, back = 120, h = 48;
       let lines = '';
@@ -82672,6 +82697,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         + [[-100, 0], [100, 0], [0, 30]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4" fill="${p.sun}" ${OL(p, 1.6)}/>`).join('') + '</g>';
     },
     helper,
+    /* the finale's curtain: two velvet halves meet in the middle, then part and gather into the side drapes */
+    curtain(ctx) {
+      const p = ctx.pal, half = (flip) => {
+        const X = (x) => (flip ? -x : x);
+        const folds = [-200, -150, -100, -50].map((x, i) => `<path d="M${X(x)} -300 C${X(x - 12)} -120 ${X(x + 10)} 60 ${X(x - 6)} 300" stroke="${i % 2 ? p.curtainDk : p.curtainHi}" stroke-width="${i % 2 ? 4 : 6}" fill="none" opacity="0.8"/>`).join('');
+        return `<g class="o55-cur o55-cur-${flip ? 'r' : 'l'}"><path d="M${X(-240)} -300 H${X(2)} C${X(-8)} -100 ${X(6)} 120 ${X(-2)} 300 H${X(-240)}Z" fill="${p.curtain}" ${OL(p)}/>${folds}</g>`;
+      };
+      return `<g class="o55-cur-all">${half(false)}${half(true)}</g>`;
+    },
     stage(ctx) {
       const p = ctx.pal, w = 200;
       let planks = '';
@@ -82860,6 +82894,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         + [[-100, 0, 'pink'], [100, 0, 'lav'], [0, 30, 'mint']].map(([x, y, c]) => `${glow(ctx, c, 12, x, y)}<circle cx="${x}" cy="${y}" r="3" fill="${p.core}"/>`).join('') + '</g>';
     },
     helper,
+    /* the finale's curtain: two frosted panes slide apart, light flaring at the seam */
+    curtain(ctx) {
+      const p = ctx.pal, pane = (flip) => `<g class="o55-cur o55-cur-${flip ? 'r' : 'l'}"><rect x="${flip ? 0 : -240}" y="-300" width="240" height="600" fill="${p.dark ? 'rgba(210,200,255,0.30)' : 'rgba(255,255,255,0.55)'}" stroke="${ctx.url('edge')}" stroke-width="2"/>`
+        + `<path d="M${flip ? 30 : -210} -260 L${flip ? 110 : -130} 260" stroke="#fff" stroke-width="10" opacity="0.18"/></g>`;
+      return `<g class="o55-cur-all">${pane(false)}${pane(true)}<rect class="o55-cur o55-cur-flare" x="-3" y="-300" width="6" height="600" fill="#fff"/></g>`;
+    },
     stage(ctx) {
       const p = ctx.pal;
       return `<g><path d="M-44 -330 H44 L170 -18 H-170Z" fill="${ctx.url('beam')}" class="o55-beam"/>`
@@ -83068,6 +83108,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const knot = o.rig ? `<rect x="-2" y="${-14 * px - 3}" width="4" height="4" fill="${p.text}" shape-rendering="crispEdges"/>` : '';
       return `<g>${str}<g transform="translate(0 ${-7 * px})">${body}</g>${knot}</g>`;
     },
+    /* the finale's curtain: a wall of pixel blocks that steps away from the middle outward */
+    curtain(ctx) {
+      const p = ctx.pal; let out = '';
+      for (let r = 0; r < 15; r++) for (let c = 0; c < 12; c++) {
+        const k = Math.max(Math.abs(c - 5.5), Math.abs(r - 7) * 0.8) | 0;
+        out += `<rect x="${-240 + c * 40}" y="${-300 + r * 40}" width="40" height="40" fill="${(r + c) % 2 ? p.mid : p.dim}" class="o55-cur o55-cur-px" style="--k:${k}"/>`;
+      }
+      return `<g class="o55-cur-all" shape-rendering="crispEdges">${out}</g>`;
+    },
     stage(ctx) {
       const p = ctx.pal, w = 380, bw = 20, bh = 10;
       let bricks = '';
@@ -83225,7 +83274,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       items.push(...sparks([[74, 262, 0], [410, 230, 1], [398, 352, 2], [88, 380, 3]]));
       items.push({ key: 'dim', prop: 'dimv', x: 414, y: m.barY, layer: 'back', anim: 'fade', delay: 700, opts: { h: m.floor - m.barY, label: L('strings', 'strings') } });
       items.push({ key: 'n-plan', prop: 'note', x: 252, y: m.floor - 62, layer: 'front', anim: 'fade', delay: 1300, opts: { text: L('plan', 'the plan'), dx: 64, dy: 116 } });
-      if (ctx.family === 'retro') items.push({ key: 'ready', prop: 'badge', x: 240, y: 574, layer: 'front', anim: 'type', delay: 1300, amb: 'blink', opts: { label: L('pressStart', 'press start'), accent: true } });
+      if (ctx.family === 'retro' && ctx.beat !== 'ready') items.push({ key: 'ready', prop: 'badge', x: 240, y: 574, layer: 'front', anim: 'type', delay: 1300, amb: 'blink', opts: { label: L('pressStart', 'press start'), accent: true } });
+      /* the pages that end Connect and restore ("… is ready", "… is back") open on the troupe too */
+      if (ctx.beat === 'ready') items.push({ key: 'curtain', prop: 'curtain', x: 240, y: 300, layer: 'front' });
       return items;
     }
   });
@@ -83497,6 +83548,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }].concat(A.ensemble(ctx, { poses: ['bow', 'wave', 'bow'] }));
       items.push({ key: 'sign', prop: 'badge', x: 240, y: 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
       items.push(...sparks([[80, 180, 0], [404, 160, 1], [96, 420, 2], [398, 410, 3], [240, 540, 0]], 900));
+      items.push({ key: 'curtain', prop: 'curtain', x: 240, y: 300, layer: 'front' }); /* it opens on the troupe */
       return items;
     }
   });

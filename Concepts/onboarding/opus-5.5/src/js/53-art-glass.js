@@ -53,6 +53,12 @@
         + [[-100, 0, 'pink'], [100, 0, 'lav'], [0, 30, 'mint']].map(([x, y, c]) => `${glow(ctx, c, 12, x, y)}<circle cx="${x}" cy="${y}" r="3" fill="${p.core}"/>`).join('') + '</g>';
     },
     helper,
+    /* the finale's curtain: two frosted panes slide apart, light flaring at the seam */
+    curtain(ctx) {
+      const p = ctx.pal, pane = (flip) => `<g class="o55-cur o55-cur-${flip ? 'r' : 'l'}"><rect x="${flip ? 0 : -240}" y="-300" width="240" height="600" fill="${p.dark ? 'rgba(210,200,255,0.30)' : 'rgba(255,255,255,0.55)'}" stroke="${ctx.url('edge')}" stroke-width="2"/>`
+        + `<path d="M${flip ? 30 : -210} -260 L${flip ? 110 : -130} 260" stroke="#fff" stroke-width="10" opacity="0.18"/></g>`;
+      return `<g class="o55-cur-all">${pane(false)}${pane(true)}<rect class="o55-cur o55-cur-flare" x="-3" y="-300" width="6" height="600" fill="#fff"/></g>`;
+    },
     stage(ctx) {
       const p = ctx.pal;
       return `<g><path d="M-44 -330 H44 L170 -18 H-170Z" fill="${ctx.url('beam')}" class="o55-beam"/>`

@@ -146,6 +146,7 @@
       const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }].concat(A.ensemble(ctx, { poses: ['bow', 'wave', 'bow'] }));
       items.push({ key: 'sign', prop: 'badge', x: 240, y: 64, s: R(ctx) ? 1 : 1.5, layer: 'front', anim: 'drop', delay: 700, opts: { label: L('ready', 'ready'), glyph: 'check', accent: true } });
       items.push(...sparks([[80, 180, 0], [404, 160, 1], [96, 420, 2], [398, 410, 3], [240, 540, 0]], 900));
+      items.push({ key: 'curtain', prop: 'curtain', x: 240, y: 300, layer: 'front' }); /* it opens on the troupe */
       return items;
     }
   });

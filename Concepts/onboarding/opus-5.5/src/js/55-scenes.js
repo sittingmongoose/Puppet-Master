@@ -47,7 +47,9 @@
       items.push(...sparks([[74, 262, 0], [410, 230, 1], [398, 352, 2], [88, 380, 3]]));
       items.push({ key: 'dim', prop: 'dimv', x: 414, y: m.barY, layer: 'back', anim: 'fade', delay: 700, opts: { h: m.floor - m.barY, label: L('strings', 'strings') } });
       items.push({ key: 'n-plan', prop: 'note', x: 252, y: m.floor - 62, layer: 'front', anim: 'fade', delay: 1300, opts: { text: L('plan', 'the plan'), dx: 64, dy: 116 } });
-      if (ctx.family === 'retro') items.push({ key: 'ready', prop: 'badge', x: 240, y: 574, layer: 'front', anim: 'type', delay: 1300, amb: 'blink', opts: { label: L('pressStart', 'press start'), accent: true } });
+      if (ctx.family === 'retro' && ctx.beat !== 'ready') items.push({ key: 'ready', prop: 'badge', x: 240, y: 574, layer: 'front', anim: 'type', delay: 1300, amb: 'blink', opts: { label: L('pressStart', 'press start'), accent: true } });
+      /* the pages that end Connect and restore ("… is ready", "… is back") open on the troupe too */
+      if (ctx.beat === 'ready') items.push({ key: 'curtain', prop: 'curtain', x: 240, y: 300, layer: 'front' });
       return items;
     }
   });

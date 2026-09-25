@@ -67,6 +67,15 @@
         + [[-100, 0], [100, 0], [0, 30]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4" fill="${p.sun}" ${OL(p, 1.6)}/>`).join('') + '</g>';
     },
     helper,
+    /* the finale's curtain: two velvet halves meet in the middle, then part and gather into the side drapes */
+    curtain(ctx) {
+      const p = ctx.pal, half = (flip) => {
+        const X = (x) => (flip ? -x : x);
+        const folds = [-200, -150, -100, -50].map((x, i) => `<path d="M${X(x)} -300 C${X(x - 12)} -120 ${X(x + 10)} 60 ${X(x - 6)} 300" stroke="${i % 2 ? p.curtainDk : p.curtainHi}" stroke-width="${i % 2 ? 4 : 6}" fill="none" opacity="0.8"/>`).join('');
+        return `<g class="o55-cur o55-cur-${flip ? 'r' : 'l'}"><path d="M${X(-240)} -300 H${X(2)} C${X(-8)} -100 ${X(6)} 120 ${X(-2)} 300 H${X(-240)}Z" fill="${p.curtain}" ${OL(p)}/>${folds}</g>`;
+      };
+      return `<g class="o55-cur-all">${half(false)}${half(true)}</g>`;
+    },
     stage(ctx) {
       const p = ctx.pal, w = 200;
       let planks = '';

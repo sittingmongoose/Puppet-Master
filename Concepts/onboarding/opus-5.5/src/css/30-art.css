@@ -123,3 +123,21 @@ html[data-motion="reduced"] .o55-it { transition-duration: 140ms !important; }
   .o55-an, .o55-draw, .o55-scene-wrap { animation-duration: 140ms !important; animation-name: o55-fade !important; animation-delay: 0ms !important; stroke-dashoffset: 0 !important; }
   .o55-it { transition-duration: 140ms !important; }
 }
+
+/* the finale's curtain (ready, and the pages that end Connect and restore): opens once, a quarter second in */
+.o55-cur { transform-box: fill-box; }
+.o55-f-friendly .o55-cur-l { transform-origin: left center; animation: o55-cur-gather 1500ms cubic-bezier(0.55, 0, 0.2, 1.1) 280ms both; }
+.o55-f-friendly .o55-cur-r { transform-origin: right center; animation: o55-cur-gather 1500ms cubic-bezier(0.55, 0, 0.2, 1.1) 280ms both; }
+@keyframes o55-cur-gather { 0% { transform: none; opacity: 1; } 80% { transform: scaleX(0.4); opacity: 1; } 100% { transform: scaleX(0.4); opacity: 0; } }
+.o55-f-basic .o55-cur-sheet { animation: o55-cur-lift 1200ms cubic-bezier(0.45, 0, 0.2, 1) 300ms both; }
+@keyframes o55-cur-lift { 0% { transform: none; } 20% { transform: translateY(6px); } 100% { transform: translateY(-640px); } }
+.o55-f-glass .o55-cur-l { animation: o55-cur-slide-l 1400ms cubic-bezier(0.05, 0.7, 0.1, 1) 350ms both; }
+.o55-f-glass .o55-cur-r { animation: o55-cur-slide-r 1400ms cubic-bezier(0.05, 0.7, 0.1, 1) 350ms both; }
+.o55-f-glass .o55-cur-flare { animation: o55-cur-flare 900ms ease-out 250ms both; }
+@keyframes o55-cur-slide-l { to { transform: translateX(-250px); opacity: 0.2; } }
+@keyframes o55-cur-slide-r { to { transform: translateX(250px); opacity: 0.2; } }
+@keyframes o55-cur-flare { 0% { opacity: 0; transform: scaleX(1); } 30% { opacity: 1; transform: scaleX(6); } 100% { opacity: 0; transform: scaleX(40); } }
+.o55-f-retro .o55-cur-px { animation: o55-cur-px 1ms steps(1, end) calc(300ms + var(--k, 0) * 110ms) both; }
+@keyframes o55-cur-px { to { opacity: 0; } }
+html[data-motion="reduced"] .o55-cur-all { display: none; }
+@media (prefers-reduced-motion: reduce) { .o55-cur-all { display: none; } }

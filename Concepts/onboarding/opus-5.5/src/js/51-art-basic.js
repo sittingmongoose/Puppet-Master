@@ -63,6 +63,13 @@
         + dim(p, -112, -64, 112, -64, 'control · 224') + cross(p, 0, 0, 6) + '</g>';
     },
     helper,
+    /* the finale's curtain: the blueprint cover sheet, stamped ready, is lifted off the drawing */
+    curtain(ctx) {
+      const p = ctx.pal;
+      return `<g class="o55-cur-all"><g class="o55-cur o55-cur-sheet"><rect x="-240" y="-300" width="480" height="600" fill="${p.paper}"/><rect x="-240" y="-300" width="480" height="600" fill="${ctx.url('grid')}"/>`
+        + `<rect x="-240" y="-300" width="480" height="600" fill="${ctx.url('gridM')}"/><rect x="-150" y="-40" width="300" height="80" fill="none" stroke="${p.ink}" stroke-width="1.5"/>`
+        + txt(p, 0, -8, 'puppet master', 11, 'middle', p.ink) + txt(p, 0, 18, 'sheet 1:1 · ready to build', 8) + '</g></g>';
+    },
     stage(ctx) {
       const p = ctx.pal, w = 170, back = 120, h = 48;
       let lines = '';

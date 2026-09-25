@@ -87,6 +87,15 @@
       const knot = o.rig ? `<rect x="-2" y="${-14 * px - 3}" width="4" height="4" fill="${p.text}" shape-rendering="crispEdges"/>` : '';
       return `<g>${str}<g transform="translate(0 ${-7 * px})">${body}</g>${knot}</g>`;
     },
+    /* the finale's curtain: a wall of pixel blocks that steps away from the middle outward */
+    curtain(ctx) {
+      const p = ctx.pal; let out = '';
+      for (let r = 0; r < 15; r++) for (let c = 0; c < 12; c++) {
+        const k = Math.max(Math.abs(c - 5.5), Math.abs(r - 7) * 0.8) | 0;
+        out += `<rect x="${-240 + c * 40}" y="${-300 + r * 40}" width="40" height="40" fill="${(r + c) % 2 ? p.mid : p.dim}" class="o55-cur o55-cur-px" style="--k:${k}"/>`;
+      }
+      return `<g class="o55-cur-all" shape-rendering="crispEdges">${out}</g>`;
+    },
     stage(ctx) {
       const p = ctx.pal, w = 380, bw = 20, bh = 10;
       let bricks = '';
