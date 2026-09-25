@@ -1,6 +1,6 @@
 # Why the Event Authority work is slow and expensive
 
-Written 2026-09-25 by the "PM Low cost/complexity process" thread for Jared, to hand to a reviewing agent that sees only this GitHub repository. It is a diagnosis, not a plan. Everything it relies on is either in this repository already (paths given) or copied into this bundle under `evidence/` from machines the reviewer cannot reach; `README.md` in this directory says what was copied from where and what could not be.
+Written 2026-09-25 by the "PM Low cost/complexity process" thread for Jared, to hand to a reviewing agent that sees only this GitHub repository. Figures are as of 2026-09-25 10:30 UTC; the Event Authority session started that morning from the handover keeps landing (see `evidence/TIMELINE.md`), so the counts move, the shape does not. It is a diagnosis, not a plan. Everything it relies on is either in this repository already (paths given) or copied into this bundle under `evidence/` from machines the reviewer cannot reach; `README.md` in this directory says what was copied from where and what could not be.
 
 ## 1. What the work is, and what two weeks produced
 
@@ -9,9 +9,9 @@ The Event Authority program (Decision Log entry DL-039 in `Plans/Decision_Log.md
 | Measure | Value | Where to verify |
 |---|---|---|
 | Program start | 2026-09-10 (answers to the owner sheet, DL-039) | `Plans/Decision_Log.md` DL-039 |
-| Step 9 rows settled | 7 excluded of 252; 245 remain; 0 registered | `reports/landing-checks/LANDING_20260924_EA_STEP09_BATCH1.md`; handover branch |
+| Step 9 rows settled | 15 excluded of 252; 237 remain; 0 registered (batch 1 on 2026-09-24, batch 2's answers on 2026-09-25) | `reports/landing-checks/LANDING_20260924_EA_STEP09_BATCH1.md`, `LANDING_20260925_EA_STEP09_BATCH2_ANSWERS.md` |
 | Depth cells at PASS | 335 of 504 (42 families x 12 criteria) | `reports/event-authority-20260911/step-08-depth42-assessment-20260924.md` |
-| Landings on main, 2026-09-24 to 25 | 25 landing records | `reports/landing-checks/LANDING_2026092[45]_*.md`; `evidence/TIMELINE.md` |
+| Landings on main, 2026-09-24 to 25 | 20 landing records | `reports/landing-checks/LANDING_2026092[45]_*.md`; `evidence/TIMELINE.md` |
 | Commits on main since 2026-09-10 | 694 | `git log --since=2026-09-10 origin/main` |
 | Agents dispatched by this thread in the wave | 33 agents, 7.8 million output tokens, 4.2 billion cache-read tokens | `evidence/agent-usage-20260924.csv` |
 | The Step 8/9 author agent alone | 5.0 hours wall clock, 1,724 model turns, 966 tool calls, 986,000 output tokens, 6 landings | same file, first row |
@@ -21,7 +21,7 @@ At this rate Step 9 alone needs months, and the depth work behind it (Replan v8,
 
 ## 2. Where a single change goes
 
-Anatomy of one canon edit, the Browser SP-286 branch: two paragraphs added to `Plans/Section15_MVP_Promoted_Features_Spec.md` so two producers adopt an existing contract by name. Its review is in `evidence/reviews/review-ea-browser-sp286/`.
+Anatomy of one canon edit, the Browser SP-286 branch (landed 2026-09-25 as a3d6bb616b): two paragraphs added to `Plans/Section15_MVP_Promoted_Features_Spec.md` so two producers adopt an existing contract by name. Its review is in `evidence/reviews/review-ea-browser-sp286/`.
 
 1. Orientation: the author reads AGENTS.md, DL-039, DL-045 to DL-083, the plan, the handover, the landing records. About 20 documents, roughly one million cached tokens before any work.
 2. The edit itself: under an hour.
