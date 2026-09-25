@@ -36,18 +36,33 @@ Git ACT019, JJ ACT037/038 and Forge ACT060. This denominator is not a total of
 missing product features. Core Git push/fetch exact typed effect admission remains
 separately unbound; repairing their census did not supply that contract.
 
+The bounded current-owner follow-up ties that unbound public Git edge to the
+existing capped SCM fetch/publication obligations, not two additional packet
+requirements. ACT048's reusable publication values do not establish public-command
+normalization. A new push/fetch package would not bypass the review cap.
+
 Narrow owner mappings remain DRY's exact ID/scope/writer, formatter ordinary-setting
-versus domain-definition fields before cross-scope migration, Pin's actual writer,
-and the Client–Server relation to Environment supervisor-generation authority.
+versus domain-definition fields before cross-scope migration, and the Client–Server
+relation to Environment supervisor-generation authority.
 Do not invent a new formatter store, identity equivalence or second supervisor.
 The named Ego import needs authentic original manifest/skill acceptance input;
-a synthetic PM migration fixture cannot replace it. Tour's original Chat/layout
+a synthetic PM migration fixture cannot replace it. A bounded hidden-inclusive
+check of the preserved packet and campaign inventory did not find the original
+evaluated Ego manifest/skill bytes. The user has been asked for the original
+ego-lite-1.3.1-beta.3 attachment or its exact authorized local location; no newer
+download, fabricated manifest or installation substitutes for that input.
+Tour's original Chat/layout
 custody remains a protected-owner dependency.
 
 The registry has 146 dispositions, including 70 pending admissions, while all
 294 physical families remain unchanged. Pending physical mapping and native writer
 implementation are not 70 unspecified product behaviors. Native authentication,
 execution, security/recovery and GUI/deployment proof remain separate obligations.
+
+Pin's selected-version meaning and unavailable-until-admitted boundary are already
+specified by CBP-028. Its concrete policy writer remains unbuilt/unadmitted; the
+absence of a pin field from the current update-preferences type is not another
+unmade product decision or authorization for a new packet-gap schema campaign.
 
 Newer Back Seat Driver, Context Lens, Help/Teacher, assistant Plan/Full Thread and
 platform designs remain protected. Project NamedPlan is not AssistantPlan.
@@ -65,3 +80,12 @@ was refreshed. The authorized Commands/UI Catalog/Touch source-hash exception is
 not automatically broadened to another owner. A later landing requires the lock,
 then-current fetch/rebase and a fresh complete failure-key/readiness comparison.
 Nothing here represents that comparison or permission to push main.
+
+## Bounded next-action evidence
+
+- `/mnt/Cursor/PM-Experiments/git-core-remote-next-action-20260925.md`, SHA-256
+  `99565dfa31f187a8a2210ccca6a3cc8c1a04f812d6614f652ecf7e93792f94b5`.
+- `/mnt/Cursor/PM-Experiments/dry-formatter-pin-next-action-20260925.md`, SHA-256
+  `7534d2bf847e2a327ad93e0ec73cb0244ed24a3e1daead6752b378d9a3ae5d13`.
+- `/mnt/Cursor/PM-Experiments/ego-original-input-custody-recheck-20260925.md`, SHA-256
+  `f32e0329334171e8047ae1ffaf73a6cc5ad7ff45967e4d5fbbe264f243451003`.
