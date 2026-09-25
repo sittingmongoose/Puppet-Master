@@ -16,7 +16,7 @@ Branch `plans/ea-s09-decisions-hb-scope-20260925`, made from `main` `63cf2cb97f`
   - `step-09-coordination-heartbeat-card-20260925.md`, a byte-identical copy of the presented card (artifact `M8GSmygZ1MXjYaA7osPcTh`, SHA-256 `530e7837...118b`).
   - Two rows in `decision-responses.jsonl`:
     - `EA-S09B2-HEARTBEAT-EXPIRY-001-RESPONSE-001`, with status `approved_recorded_owner_contract_pending` because the owner edit comes later.
-    - `HOST-Q4-DL093-SCOPE-RESPONSE-001`, with status `approved_recorded`. There was no card and no earlier row records a non-card answer, so `card_ref` is null.
+    - `HOST-Q4-DL093-SCOPE-RESPONSE-001`, with status `approved_recorded`. There was no card, so `card_ref` is null; the one earlier non-card row, `EA-S8-CHECKPOINT-2026-09-11.2-RESPONSE-001`, has no `card_ref` either.
   - One paragraph under open question 2 (D-02) of the Step 9 procedure record. Its count table does not change.
 
 ## Authority
