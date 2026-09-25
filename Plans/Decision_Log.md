@@ -2203,7 +2203,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#OSI-438, Co
 
 ### DL-096: Every Step 9 registration's own Decision Log entry is Jared's decision entry for its family
 
-Answered on 2026-09-25 by Jared, in the Event Authority program's host session: **"And yes I approve the DL-093 covering the families and later"**, to the host's question whether his DL-093 approval also covers the 18 collaborative workflow families and later Step 9 registrations.
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session: **"And yes I approve the DL-093 covering the families and later"**, to the host's question whether his DL-093 approval also covers the 18 collaborative workflow families and later registrations.
 
 **Question:** The host put it on 2026-09-25 at 05:53Z: "should the same rule also cover the 18 collaborative workflow families and later registrations? That's the rule that each admission's own Decision Log entry counts as your decision, so you don't approve each one separately. A yes means I record it as its own entry. A no means you approve those individually." The last reminder before the answer, at 12:10Z, asked "whether DL-093 also covers the 18 collaborative families and later registrations."
 
