@@ -11497,9 +11497,11 @@ or four-field dedupe result alone cannot satisfy it. An allowed scoped alternate
 incoming event ID resolves the original event ID and cannot create a second
 workspace or event.
 
-After a committed creation and lost acknowledgement, the owner returns the
-original identity and result from that resolution without preparing another
-resource. An uncertain append stays fenced, with the prepared resource unexposed,
+After a committed creation and lost acknowledgement, the owner joins that resolved
+receipt to its original committed creation identity and its own original
+`browser_command_result`, and returns them without preparing another resource;
+receipt resolution cannot manufacture a missing owner result. An uncertain append
+stays fenced, with the prepared resource unexposed,
 until Storage resolves the original identity. If Storage's own reconciliation
 establishes that no original event exists, the existing pre-commit rule applies:
 the unexposed resource is disposed or stays fenced and no creation is published.
