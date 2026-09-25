@@ -244,4 +244,4 @@ At the design base the census read 469/476 Replan v3 exact passages; at `63cf2cb
 
 ## Cost
 
-A1 used about 26 agent-hours and about 4.7M output tokens: 40 subagents (15.5 agent-hours, 4.54M output tokens) across scoping, the canonical-draft build, owner-prose drafting, the package's independent review in two cycles and its repairs, the rebase, the canon compile and the canon-branch review, plus about 11 hours of host time. Jared cleared the thread on 2026-09-25 to run over the plan's estimates (A1: 1.5 to 2.5 agent-days, 0.8M to 1.2M tokens).
+A1 used about 28 agent-hours and about 4.8M output tokens: 41 subagents (16 agent-hours, 4.63M output tokens) across scoping, the canonical-draft build, owner-prose drafting, the package's independent review in two cycles and its repairs, the rebase, the canon compile, and the canon-branch review in two cycles and its repairs, plus about 12 hours of host time. Jared cleared the thread on 2026-09-25 to run over the plan's estimates (A1: 1.5 to 2.5 agent-days, 0.8M to 1.2M tokens).
