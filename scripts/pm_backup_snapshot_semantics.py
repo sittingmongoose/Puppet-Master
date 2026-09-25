@@ -88,6 +88,20 @@ def validate_snapshot_resolution(original, resolution, *, resolve_record, verify
     if errors:
         return ['invalid_shape'] + errors
     errors += _selection_errors(original, resolution)
+    return errors + validate_snapshot_source_records(original, resolution,
+        resolve_record=resolve_record, verify_source_custody=verify_source_custody,
+        check_current_disclosure=check_current_disclosure)
+
+
+def validate_snapshot_source_records(original, resolution, *, resolve_record,
+                                     verify_source_custody, check_current_disclosure):
+    """Shared owner-record joins AFTER caller validates its own binding/selection.
+
+    This helper grants no action admission. Each caller must validate its exact
+    versioned request and resolution shapes and bind the selected snapshot first.
+    It deliberately does not fabricate an admitted verification operation.
+    """
+    errors = []
     if resolution['disposition'] == 'unresolved':
         errors += _callback_errors(verify_source_custody, 'source_custody',
                                    original, resolution, None, None, None, None)

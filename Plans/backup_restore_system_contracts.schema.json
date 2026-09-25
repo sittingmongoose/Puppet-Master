@@ -2668,10 +2668,11 @@
       }
     },
     "backup_current_command_request": {
-      "description": "Current shape admission only: exactly four BRS-030 successor inputs plus the other 37 legacy command shapes. Does not enable handlers or establish owner/storage/permission admission. Old four v1 shapes remain in the historical root decoder but not this current union.",
+      "description": "Current shape admission only: four BRS-030 action successors, exact-two discovery/browse bounded reads and the other 35 legacy command shapes. Does not enable handlers or establish owner/storage/permission admission. Historical v1 shapes remain in the root decoder but not as current fallback for these six commands.",
       "oneOf": [
         {"$ref": "#/$defs/backup_action_request_v2"},
-        {"allOf": [{"$ref": "#/$defs/backup_restore_command_request"}, {"not": {"properties": {"command_id": {"$ref": "#/$defs/backup_action_request_v2/properties/command_id"}}, "required": ["command_id"]}}]}
+        {"$ref": "https://puppetmaster.local/schemas/backup_bounded_reads/1.0.0/backup_bounded_read_contracts.schema.json#/$defs/request"},
+        {"allOf": [{"$ref": "#/$defs/backup_restore_command_request"}, {"not": {"properties": {"command_id": {"anyOf": [{"$ref": "#/$defs/backup_action_request_v2/properties/command_id"}, {"enum": ["cmd.backup.destination.discover", "cmd.backup.browse"]}]}}, "required": ["command_id"]}}]}
       ]
     },
     "backup_action_result_v2": {
@@ -2710,10 +2711,11 @@
       ]
     },
     "backup_current_command_result": {
-      "description": "Current result shape union, not runtime enablement. Legacy four results remain historically readable outside this union.",
+      "description": "Current result shape union: four action successors, exact-two terminal bounded reads, and the other 35 legacy results; not runtime enablement. Historical six v1 results remain readable outside this current union.",
       "oneOf": [
         {"$ref": "#/$defs/backup_action_result_v2"},
-        {"allOf": [{"$ref": "#/$defs/backup_restore_command_result"}, {"not": {"properties": {"command_id": {"$ref": "#/$defs/backup_action_request_v2/properties/command_id"}}, "required": ["command_id"]}}]}
+        {"$ref": "https://puppetmaster.local/schemas/backup_bounded_reads/1.0.0/backup_bounded_read_contracts.schema.json#/$defs/result"},
+        {"allOf": [{"$ref": "#/$defs/backup_restore_command_result"}, {"not": {"properties": {"command_id": {"anyOf": [{"$ref": "#/$defs/backup_action_request_v2/properties/command_id"}, {"enum": ["cmd.backup.destination.discover", "cmd.backup.browse"]}]}}, "required": ["command_id"]}}]}
       ]
     },
     "backup_restore_command_request": {

@@ -1,0 +1,737 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/backup_bounded_reads/1.0.0/backup_bounded_read_contracts.schema.json",
+  "x-schema-id": "pm.backup.bounded_read_contracts.v1",
+  "title": "Backup exact-two bounded reads; static contracts, not native authority",
+  "$defs": {
+    "discovery_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_server_id",
+        "backup_destination_id",
+        "expected_destination_generation",
+        "cursor",
+        "prior_page_ref",
+        "kind",
+        "approved_prefix"
+      ],
+      "properties": {
+        "target_server_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "backup_destination_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "expected_destination_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cursor": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prior_page_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "kind": {
+          "const": "discover"
+        },
+        "approved_prefix": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_empty_string"
+        }
+      }
+    },
+    "browse_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_server_id",
+        "backup_destination_id",
+        "expected_destination_generation",
+        "cursor",
+        "prior_page_ref",
+        "kind",
+        "backup_id",
+        "repository_id",
+        "snapshot_id",
+        "capture_set_id",
+        "relative_path",
+        "initiating_client_id",
+        "browse_operation_ref",
+        "focus_ref",
+        "selected_path_refs"
+      ],
+      "properties": {
+        "target_server_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "backup_destination_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "expected_destination_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cursor": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prior_page_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "kind": {
+          "const": "browse"
+        },
+        "backup_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "repository_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "snapshot_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "capture_set_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "relative_path": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/manifest_object/properties/relative_path"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "initiating_client_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "focus_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "selected_path_refs": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/ref_list"
+        },
+        "browse_operation_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_ref",
+        "operation_id",
+        "command_id",
+        "command_instance_id",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "expected_currentness_ref",
+        "expected_currentness_sha256",
+        "source_surface",
+        "return_route_ref",
+        "selected_input"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup.bounded_read_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.backup.destination.discover",
+            "cmd.backup.browse"
+          ]
+        },
+        "command_instance_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request/properties/command_instance_id"
+        },
+        "actor_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request/properties/actor_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request/properties/permission_snapshot_ref"
+        },
+        "idempotency_key": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request/properties/idempotency_key"
+        },
+        "expected_currentness_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request/properties/expected_currentness_ref"
+        },
+        "expected_currentness_sha256": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request/properties/expected_currentness_sha256"
+        },
+        "source_surface": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request/properties/source_surface"
+        },
+        "return_route_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request/properties/return_route_ref"
+        },
+        "selected_input": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/discovery_input"
+            },
+            {
+              "$ref": "#/$defs/browse_input"
+            }
+          ]
+        }
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selection",
+        "disposition",
+        "resolved_source",
+        "failure_reason"
+      ],
+      "properties": {
+        "selection": {
+          "$ref": "https://puppetmaster.local/schemas/backup_snapshot_results/1.0.0/backup_snapshot_result_contracts.schema.json#/$defs/selection"
+        },
+        "disposition": {
+          "enum": [
+            "resolved",
+            "unresolved"
+          ]
+        },
+        "resolved_source": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/backup_snapshot_results/1.0.0/backup_snapshot_result_contracts.schema.json#/$defs/resolved_source"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "failure_reason": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "discovery_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository_id",
+        "relative_locator"
+      ],
+      "properties": {
+        "repository_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "relative_locator": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_empty_string"
+        }
+      }
+    },
+    "browse_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relative_path",
+        "kind",
+        "byte_size"
+      ],
+      "properties": {
+        "relative_path": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/manifest_object/properties/relative_path"
+        },
+        "kind": {
+          "enum": [
+            "file",
+            "directory",
+            "symlink",
+            "other"
+          ]
+        },
+        "byte_size": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "page_ref",
+        "original_request",
+        "destination_ref",
+        "resolution",
+        "requested_cursor",
+        "next_cursor",
+        "exhausted",
+        "status",
+        "observed_at_utc",
+        "currentness_ref",
+        "entries",
+        "failure_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup.bounded_read_page.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "page_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original_request": {
+          "$ref": "#/$defs/request"
+        },
+        "destination_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "resolution": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/resolution"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requested_cursor": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "next_cursor": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exhausted": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "partial",
+            "unavailable",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "observed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/timestamp"
+        },
+        "currentness_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/discovery_entry"
+              },
+              {
+                "$ref": "#/$defs/browse_entry"
+              }
+            ]
+          }
+        },
+        "failure_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "original_request_ref",
+        "page_ref",
+        "outcome",
+        "return_route_ref",
+        "receipt_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup.bounded_read_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.backup.destination.discover",
+            "cmd.backup.browse"
+          ]
+        },
+        "command_instance_id": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "page_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "enum": [
+            "completed",
+            "partial",
+            "unavailable",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "return_route_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        }
+      }
+    },
+    "fixture_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "runtime_evidence",
+        "request",
+        "result",
+        "records"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup.bounded_read_fixture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "runtime_evidence": {
+          "const": "NOT_RUN"
+        },
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "result": {
+          "$ref": "#/$defs/result"
+        },
+        "records": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "dispatch_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "identity",
+        "request_ref",
+        "dispatch_id",
+        "dispatch_frame_id",
+        "target_generation",
+        "idempotency_key",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "accepted_at_utc",
+        "arguments",
+        "payload_sha256",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.sir.backup_bounded_read_dispatch.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "identity": {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+        },
+        "request_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "dispatch_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "dispatch_frame_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "accepted_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "arguments": {
+          "$ref": "#/$defs/request"
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "return_context": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/return_context"
+            }
+          ]
+        }
+      }
+    },
+    "delivery_return_context": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/return_context"
+        }
+      ]
+    },
+    "read_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "receipt_ref",
+        "original_binding_ref",
+        "original_request_ref",
+        "identity",
+        "command_id",
+        "page_ref",
+        "currentness_ref",
+        "observed_at_utc",
+        "outcome",
+        "failure_ref",
+        "error"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup.read_projection_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original_binding_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "identity": {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.backup.destination.discover",
+            "cmd.backup.browse"
+          ]
+        },
+        "page_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "currentness_ref": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "observed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/timestamp"
+        },
+        "outcome": {
+          "enum": [
+            "completed",
+            "partial",
+            "unavailable",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "failure_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json#/$defs/UICommandError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "response_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "runtime_evidence",
+        "bundle",
+        "records"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup.bounded_read_response_fixture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "runtime_evidence": {
+          "const": "NOT_RUN"
+        },
+        "bundle": {
+          "type": "object"
+        },
+        "records": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/page"
+    },
+    {
+      "$ref": "#/$defs/result"
+    },
+    {
+      "$ref": "#/$defs/fixture_case"
+    },
+    {
+      "$ref": "#/$defs/dispatch_binding"
+    },
+    {
+      "$ref": "#/$defs/read_receipt"
+    },
+    {
+      "$ref": "#/$defs/response_fixture"
+    }
+  ]
+}

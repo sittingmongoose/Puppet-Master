@@ -31,6 +31,8 @@ SHARED_SCHEMA = "Plans/shared_runtime_command_contracts.schema.json"
 BROWSER_SCHEMA = "Plans/section15_browser_program_contracts.schema.json"
 SERVER_SCHEMA = "Plans/server_system_contracts.schema.json"
 SOURCE_CONTROL_SCHEMA = "Plans/source_control_contracts.schema.json"
+from pm_backup_read_response import COMMANDS as BACKUP_READ_COMMANDS, BINDING as BACKUP_READ_BINDING
+
 FORGE_REVIEW_COMMANDS = frozenset(("cmd.forge.review.approve", "cmd.forge.review.request_changes"))
 FORGE_REVIEW_BINDING = {"path": "Plans/forge_review_decisions.schema.json", "json_pointer": "#/$defs/result", "schema_id": "pm.forge.review_decision.result.v1"}
 GIT_THREE_COMMANDS = frozenset(("cmd.git.commit", "cmd.source_control.stash.create", "cmd.source_control.branch.create"))
@@ -76,7 +78,9 @@ def structural_failures(path: str, value: Any, pointer: str = "#") -> list[str]:
 
 
 def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=None,
-                             canonical_request_digest=None) -> list[str]:
+                             canonical_request_digest=None, backup_read_admission=None,
+                             backup_page_source=None, backup_source_custody=None,
+                             backup_current_disclosure=None) -> list[str]:
     """Existing static bundle; Git-three additionally requires actual owner readers.
 
     Both callbacks are trusted native contracts, not issuer/caller authentication
@@ -88,18 +92,26 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
                  or result.get("schema_id") == GIT_THREE_BINDING["schema_id"])
     forge_review = (response.get("command_id") in FORGE_REVIEW_COMMANDS
                     or result.get("schema_id") == FORGE_REVIEW_BINDING["schema_id"])
-    if not git_three and not forge_review:
+    backup_read = (response.get("command_id") in BACKUP_READ_COMMANDS
+                   or result.get("schema_id") == BACKUP_READ_BINDING["schema_id"])
+    if not git_three and not forge_review and not backup_read:
         return _response_bundle_failures(bundle)
     snapshot = deepcopy(bundle)
     failures = _response_bundle_failures(snapshot, resolve_owner_record=resolve_owner_record,
-                                         canonical_request_digest=canonical_request_digest)
+                                         canonical_request_digest=canonical_request_digest,
+                                         backup_read_admission=backup_read_admission,
+                                         backup_page_source=backup_page_source,
+                                         backup_source_custody=backup_source_custody,
+                                         backup_current_disclosure=backup_current_disclosure)
     if bundle != snapshot:
-        failures.append("forge_bundle_mutated_during_resolution" if forge_review else "git3_bundle_mutated_during_resolution")
+        failures.append("backup_read_bundle_mutated_during_resolution" if backup_read else "forge_bundle_mutated_during_resolution" if forge_review else "git3_bundle_mutated_during_resolution")
     return sorted(set(failures))
 
 
 def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=None,
-                              canonical_request_digest=None) -> list[str]:
+                              canonical_request_digest=None, backup_read_admission=None,
+                              backup_page_source=None, backup_source_custody=None,
+                              backup_current_disclosure=None) -> list[str]:
     """Validate independently owned records and then their exact binding.
 
     normalized_request is a fixture snapshot of the authenticated dispatcher
@@ -122,7 +134,7 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
         if response["response_kind"] == "local_projection":
             commands = schema(SHARED_SCHEMA)["$defs"]["canonical_command_id"]["enum"]
             scm_commands = schema(SOURCE_CONTROL_SCHEMA)["$defs"]["source_control_command_id"]["enum"]
-            if response["command_id"] in commands or response["command_id"] in scm_commands or response["command_id"] in GIT_THREE_COMMANDS or response["command_id"] in FORGE_REVIEW_COMMANDS:
+            if response["command_id"] in commands or response["command_id"] in scm_commands or response["command_id"] in GIT_THREE_COMMANDS or response["command_id"] in FORGE_REVIEW_COMMANDS or response["command_id"] in BACKUP_READ_COMMANDS:
                 failures.append("durable_command_disguised_as_local_projection")
         return sorted(set(failures))
     if structural_failures(OUTCOME_SCHEMA, outcome, "#/$defs/CommandOutcomeRecord"):
@@ -158,6 +170,8 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
     for field in ("owner_result_ref", "owner_result_schema_ref"):
         if response[field] != outcome[field]:
             failures.append("outcome_" + field + "_mismatch")
+    if response["command_id"] in BACKUP_READ_COMMANDS and response["owner_result_schema_ref"] != BACKUP_READ_BINDING:
+        failures.append("backup_read_owner_result_binding")
     if response["command_id"] in FORGE_REVIEW_COMMANDS and response["owner_result_schema_ref"] != FORGE_REVIEW_BINDING:
         failures.append("forge_review_owner_result_binding")
     if response["command_id"] in GIT_THREE_COMMANDS and response["owner_result_schema_ref"] != GIT_THREE_BINDING:
@@ -195,6 +209,13 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
                 failures.extend(shared_owner_failures(response, outcome, owner_result))
             elif owner_result.get("record_kind") == "browser_command_result":
                 failures.extend(browser_owner_failures(response, outcome, owner_result))
+            elif owner_result.get("schema_id") == BACKUP_READ_BINDING["schema_id"]:
+                from pm_backup_read_response import response_failures as backup_read_response_failures
+                failures.extend(backup_read_response_failures(bundle,
+                    resolve_record=resolve_owner_record, canonical_request_digest=canonical_request_digest,
+                    verify_original_admission=backup_read_admission, verify_page_source=backup_page_source,
+                    verify_source_custody=backup_source_custody, check_current_disclosure=backup_current_disclosure,
+                    canon_root=ROOT))
             elif owner_result.get("schema_id") == FORGE_REVIEW_BINDING["schema_id"]:
                 if "delivery_return_context" not in bundle:
                     failures.append("forge_delivery_owner_value_missing")

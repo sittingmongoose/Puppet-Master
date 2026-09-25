@@ -2,15 +2,17 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12025-L12290
+Source lines: L12025-L12292
 
-Source SHA256: `980134eb7b231afda75205f3303e40420e960e4caeff8a4b696467d177413d4f`
+Source SHA256: `c978989278edd83d2f8cde42d68bedc01d8fed11b89a082cf037962c488df108`
 
 ---
 
 ## Central Touch Reverse-GUI Catalog Addendum - 2026-09-01
 
 These 227 rows are the reverse-GUI projection of CS-074. They register no synthetic control: an existing same-intent control may be rebound, an owner surface may expose the action when required, and headless-only reachability remains explicitly classifiable. Every visible control must read typed availability and disabled reason before dispatch and return to the exact initiating route/focus/continuation.
+
+For exactly `cmd.backup.destination.discover` and `cmd.backup.browse`, the typed binding is `Plans/backup_bounded_read_contracts.schema.json#/$defs/request` -> `Plans/backup_bounded_read_contracts.schema.json#/$defs/result`. Actual original destination/prefix or immutable snapshot/path/cursor selection joins the bounded source page, prior-page continuity, explicit BackupReadProjectionReceipt and SIR original caller/response. Missing source is not an empty successful listing; a completed page is not exhausted listing or recovery proof. These remain read-only terminal-page contracts with native source/Permissions/current-delivery authentication and original/receipt physical custody unbuilt. No capture/verification/restore receipt is substituted, and no new control, command, event or handler availability is admitted.
 
 For exactly `cmd.forge.review.approve` and `cmd.forge.review.request_changes`, the typed binding is `Plans/forge_review_decisions.schema.json#/$defs/request` -> `Plans/forge_review_decisions.schema.json#/$defs/result`. The unchanged common authority is nested under `authority`; original review/head/body selection joins actual RepositoryBinding, ReviewRevision, retained original, common receipt and provider-owned selected-decision observation. Null approval body differs from submitted empty text. Result/receipt operation, outcome, work, event references, recovery actions and optional AutomationBinding identity/generation remain consistent with the original. Static resolution is not native admission or provider authentication. Historical common v1 meanings, other routes, handlers, availability and event admission remain unchanged. Physical original/observation custody and replay/backup closure remain pending; no effect is automatically replayed.
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2159-L2548
+Source lines: L2159-L2552
 
-Source SHA256: `c1e53a55bb4fb027e625c63054ca646cd5cdd5c05e732d99e689949af89209dc`
+Source SHA256: `28a5cbdcd57591ddb3a31d8fa98593e26e044176762af820a39ab77999f2fbdf`
 
 ---
 
@@ -216,6 +216,10 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
+
+For exactly `cmd.backup.destination.discover` and `cmd.backup.browse`, `Plans/backup_bounded_read_contracts.schema.json#/$defs/dispatch_binding` explicitly materializes the narrow SIR-owned original read dispatch. The existing authenticated dispatcher is its sole producer; retain the actual full IdentityEnvelope, request/dispatch/frame/target identities, actor/permission, admission time, idempotency, complete typed read arguments and their native canonical payload digest. Application/Project scope comes from actual admission, never a discovered repository or an invented Project. The existing nullable Source Control return_context grammar represents original caller facts without borrowing Source Control producer authority. Explicit delivery_return_context from the actual delivery owner must equal that independently resolved original value; missing is distinct from authenticated null. No normalized_request caller/lineage bag or Full Thread field is added.
+
+The exact-two central UI response adapter invokes the genuine bounded-read original/page/previous-page/destination/immutable-source oracle and resolves the actual new BackupReadProjectionReceipt. Original identity, request/operation/instance/dispatch/frame/target, payload/idempotency, actual receipt/page/currentness, outcome and typed error join the actual CommandOutcomeRecord and UICommandResponse. Native source/receipt/caller authentication, canonical digest, original admission and current disclosure callbacks are mandatory; Boolean grants or fixture agreement do not replace them. Independent generations remain independent. Preserve completed/partial/unavailable/failed/cancelled page truth: completed maps to succeeded; partial/unavailable/failed to failed with the actual typed error; cancelled to cancelled with null common UI error and its retained reason reference. No no_op, async acceptance, new EventRecord, registration, mutation or recovery proof is inferred. Replay keeps original receipt/result/caller and zero reissued reads; lost original or prior-page custody fails closed, never selects latest. Inputs are snapshotted before dependent calls, current disclosure is rechecked at the end and mutation invalidates the composition. Original dispatch/receipt physical custody remains separately pending, with no new store or retention interval and no native handler claim.
 
 For exactly `cmd.forge.review.approve` and `cmd.forge.review.request_changes`, `Plans/sir_forge_review_dispatch.schema.json#/$defs/dispatch_binding` is the narrow SIR-owned original dispatch binding. The existing authenticated dispatcher is its sole producer: preserve the actual full IdentityEnvelope, request/dispatch/frame/target identities, original actor/permission, admission time, idempotency, exact closed Forge arguments and canonical argument payload digest. Actual application or Project scope comes from SIR admission, never hosted repository/provider-project identity. All independently owned generations remain independent. The original binding is separately resolved and authenticated; agreeing fixture snapshots, refs or hashes do not establish it. This adds no physical store, native proof, identity envelope, Full Thread shape change or reinterpretation of historical Forge requests.
 

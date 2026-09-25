@@ -2398,7 +2398,7 @@
         "future restore coordinator",
         "future security adapter registry"
       ],
-      "line_count": 1952,
+      "line_count": 1956,
       "path": "Plans/Backup_Restore_System.md",
       "plan_unit_count": 30,
       "plan_unit_ids": [
@@ -2468,7 +2468,7 @@
         "unsafe_restore_or_false_operational_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "0c501c6f9ec1a62b3ea57a10827702cd184398957930de8dd863a18a00b86dad",
+      "sha256": "9bfaac08455bfe0fa4a9848d29a5494efbfa21fdfc6c2754c1fc1bb95e69cb59",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 30
@@ -3780,7 +3780,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "e486b5ccf5adeb5f151f246b7d7b5c2c38cd4ea74be3f726943921bad67d312f",
+      "sha256": "3e5c339c7431403a69e8a19e6b1d75d7367cd8c2c748e69918ec80df41eacd1f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80
@@ -16805,7 +16805,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 3192,
+      "line_count": 3196,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 52,
       "plan_unit_ids": [
@@ -16919,7 +16919,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "c1e53a55bb4fb027e625c63054ca646cd5cdd5c05e732d99e689949af89209dc",
+      "sha256": "28a5cbdcd57591ddb3a31d8fa98593e26e044176762af820a39ab77999f2fbdf",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -18762,7 +18762,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13280,
+      "line_count": 13282,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 164,
       "plan_unit_ids": [
@@ -18997,7 +18997,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "980134eb7b231afda75205f3303e40420e960e4caeff8a4b696467d177413d4f",
+      "sha256": "c978989278edd83d2f8cde42d68bedc01d8fed11b89a082cf037962c488df108",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163,
@@ -20063,7 +20063,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T08:35:45Z",
+  "generated_at_utc": "2026-09-25T08:45:07Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

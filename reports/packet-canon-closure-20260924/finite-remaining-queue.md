@@ -16,11 +16,11 @@ composition, Forge ACT051/052 and their SIR response binding, and Usage quota-aw
 refresh/export are now specified and statically tested. Remaining exact selections
 are listed below; this is not native implementation or whole-family completion.
 
-1. Exact Storage specification integration: the current registry has 26 explicitly
-   pending disposition rows (25 physical-family and one external-store pending),
-   including Guided Tour, pairing and the original Forge dispatch binding. Its
-   64 dispositions leave the 294 physical families unchanged. These are not
-   26 engines to build. Determine owner key/value/retention/migration
+1. Exact Storage specification integration: the current registry has 28 explicitly
+   pending disposition rows (27 physical-family and one external-store pending),
+   including Guided Tour, pairing, original Forge dispatch and Backup read originals/receipts. Its
+   68 dispositions leave the 294 physical families unchanged. These are not
+   28 engines to build. Determine owner key/value/retention/migration
    decisions separately from deployment of already specified native writers.
 2. Narrow authority adjudications: Settings exposure/import semantics, Vault
    sharing and supervisor scope, and remaining plugin applicability clauses.
@@ -88,7 +88,7 @@ Remaining selected-input/result composition uses these existing source IDs:
 | Git | ACT017,019 |
 | JJ | ACT037,038,039 |
 | Forge | ACT048,053,060,062,067,070,071,072,075,156 |
-| Backup | ACT090,091,092,099,105,111,118,119,120 |
+| Backup | ACT090,091,105,111,118,119,120 |
 | CredentialBroker | ACT087 |
 
 The historical credential-command deferred inventory is now explicitly subordinated
@@ -98,9 +98,10 @@ That clarification does not close ACT087's selected submission/scope/receipt con
 These are overlapping source occurrences, not a new feature denominator.
 Backup ACT094/109/124 already have actual typed owner values; do not add duplicates.
 JJ undo/restore already carry selected operation IDs; their remaining obligation
-is qualified preview contents and original/result joins. Two external bounded
-successors are in preparation: Backup discovery/browse ACT092/099 and JJ publication
-ACT039. Proposals are not integrated or closure evidence.
+is qualified preview contents and original/result joins. Backup discovery/browse
+ACT092/099 is now integrated; see `backup-bounded-read-companion.md`. JJ publication
+ACT039 and Forge ACT075 log selection remain external reviewed candidates awaiting
+root integration. External proposals are not integrated closure evidence.
 
 Named decision blockers remain personal-dictionary custody; SET013 missing-ID
 merge/replace behavior; SET008 Expert/Risky facet; DRY application/Project writer
