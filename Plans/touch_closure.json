@@ -52,7 +52,7 @@
       "registry_id": "TCR-SETTINGS-PACKET-COMMANDS",
       "source_path": "Plans/settings_system_contract_fixtures.json",
       "json_pointer": "/packet_command_dispositions",
-    "source_sha256": "10e1ffd1062a9a3aebd5c418acc7289fb5bb3d0261ef08edc65a461a47685632",
+      "source_sha256": "10e1ffd1062a9a3aebd5c418acc7289fb5bb3d0261ef08edc65a461a47685632",
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-023",
       "expected_token_count": 80,
@@ -7126,25 +7126,39 @@
       "disabled_reason_rule": "Expose the exact owner disabled reason, including handler_unavailable or stale projection, and never simulate success.",
       "dry_contract_ref": "Plans/protected_auth_browser_contracts.schema.json",
       "error_schema_ref": "Plans/protected_auth_browser_contracts.schema.json#/$defs/ProtectedAuthLocalActionResult",
-      "event_refs": ["none_pending_event_authority"],
-      "evidence_refs": ["static_owner_schema_and_fixture_only"],
+      "event_refs": [
+        "none_pending_event_authority"
+      ],
+      "evidence_refs": [
+        "static_owner_schema_and_fixture_only"
+      ],
       "gui_triggers": [
         "human-only protected-auth local controller",
         "Settings and Doctor: launcher or redacted lifecycle-only consumer; never protected-content access"
       ],
       "handler_owner": "Owner-local typed protected-auth UI controller only; no semantic-domain handler.",
       "handler_status": "specified",
-      "migration_refs": ["Plans/Shared_Integration_Runtime.md#SIR-031"],
-      "observable_work": ["Local presentation only; no domain work or dispatch-completion claim."],
+      "migration_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-031"
+      ],
+      "observable_work": [
+        "Local presentation only; no domain work or dispatch-completion claim."
+      ],
       "owner_plan": "Plans/Shared_Integration_Runtime.md",
       "payload_schema_ref": "Plans/protected_auth_browser_contracts.schema.json#/$defs/ProtectedAuthLocalActionRequest",
       "permission_gate": "Human-only, non-recordable, non-inspectable, unavailable to agents and adapters, non-persistent, and incapable of protected-content exposure; no domain mutation authority.",
-      "persistence_refs": ["Plans/Shared_Integration_Runtime.md#SIR-031"],
+      "persistence_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-031"
+      ],
       "plan_unit": "SIR-031",
       "production_or_simulation": "Owner-local typed action contract only; no domain handler, production UICommand row, EventRecord, or runtime claim.",
       "profile_id": "TCP-PROTECTED-AUTH-LOCAL",
-      "receipt_refs": ["Plans/protected_auth_browser_contracts.schema.json#/$defs/ProtectedAuthLocalActionResult"],
-      "requirement_refs": ["Plans/Shared_Integration_Runtime.md#SIR-031"],
+      "receipt_refs": [
+        "Plans/protected_auth_browser_contracts.schema.json#/$defs/ProtectedAuthLocalActionResult"
+      ],
+      "requirement_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-031"
+      ],
       "result_schema_ref": "Plans/protected_auth_browser_contracts.schema.json#/$defs/ProtectedAuthLocalActionResult",
       "return_route": "Settle the exact initiating route, surface, focus, invocation, continuation, and currentness context without protected content.",
       "reverse_consumers": [
@@ -7757,6 +7771,195 @@
       "evidence_refs": [
         "static_alias_contract_and_fixture_only",
         "native_normalization_runtime_proof_absent"
+      ]
+    },
+    {
+      "profile_id": "TCP-JJ-PUBLICATION",
+      "requirement_refs": [
+        "Plans/Jujutsu_Integration.md#JJI-003",
+        "Plans/Jujutsu_Integration.md#JJI-007"
+      ],
+      "owner_plan": "Plans/Jujutsu_Integration.md",
+      "plan_unit": "JJI-003",
+      "dry_contract_ref": "Plans/jj_publication_selected.schema.json",
+      "payload_schema_ref": "Plans/jj_publication_selected.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/jj_publication_selected.schema.json#/$defs/result",
+      "error_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record",
+      "availability_rule": "Exact original complete bookmark selection, native-qualified per-target mappings/remote preconditions, actual resulting heads and receipt/reconciliation are required; accepted is not complete, unknown remains reconciliation-only. Native dispatcher, permission/lease/caller and physical original custody remain unproved.",
+      "permission_gate": "Permissions, FileSafe, writer/credential lease, setup, colocation fencing, and confirmation apply.",
+      "disabled_reason_rule": "Expose setup, unsupported capability, stale operation, lease, conflict, permission, degraded, quarantine, or recovery blocker.",
+      "handler_owner": "Jujutsu adapter under Source Control System; native JJ handlers are absent. The 30 commands added by the central Touch closure have sole future routes in Plans/Jujutsu_Integration.md#JJI-007; target strings are not native proof.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static exact-command schema/fixture/response composition and future production-intent route only; native execution, disclosure authentication and physical original/observation custody remain absent.",
+      "gui_triggers": [
+        "Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log"
+      ],
+      "return_route": "Exact repository/workspace/change/operation and caller focus.",
+      "reverse_consumers": [
+        "Plans/Source_Control_System.md",
+        "Plans/Forge_Integrations.md",
+        "Plans/Settings_System.md"
+      ],
+      "event_refs": [
+        "JJ owner events pending Event Authority"
+      ],
+      "receipt_refs": [
+        "JJ operation receipt extension"
+      ],
+      "observable_work": [
+        "Required for clone, fetch, push, import/export, rebase, restore, and long operations."
+      ],
+      "persistence_refs": [
+        "JJ backend, workspace, operation, change, bookmark refs"
+      ],
+      "migration_refs": [
+        "Plans/Jujutsu_Integration.md#7.1"
+      ],
+      "test_refs": [
+        "Plans/source_control_contract_fixtures.json",
+        "Plans/jujutsu_integration_contract_fixtures.json",
+        "Plans/jj_publication_selected_fixtures.json",
+        "Plans/sir_jj_publication_dispatch_fixtures.json",
+        "tests/test_pm_jj_publication_selected.py",
+        "tests/test_pm_jj_publication_response.py",
+        "tests/test_pm_jj_forge_selected_bindings.py"
+      ],
+      "evidence_refs": [
+        "static_schema_fixture_and_concept_only"
+      ]
+    },
+    {
+      "profile_id": "TCP-FORGE-LOG-SELECTION",
+      "requirement_refs": [
+        "Plans/Forge_Integrations.md#FGI-008",
+        "Plans/Forge_Integrations.md#FGI-009",
+        "Plans/Forge_Integrations.md#FGI-010",
+        "Plans/Forge_Integrations.md#FGI-013",
+        "Plans/Forge_Integrations.md#FGI-011"
+      ],
+      "owner_plan": "Plans/Forge_Integrations.md",
+      "plan_unit": "FGI-008",
+      "dry_contract_ref": "Plans/forge_log_selection_contracts.schema.json",
+      "payload_schema_ref": "Plans/forge_log_selection_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/forge_log_selection_contracts.schema.json#/$defs/result",
+      "error_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_error_record",
+      "availability_rule": "Exact genuine AutomationBinding/run/whole-run or job/stage/cursor, bounded source/readback/redaction/current disclosure and actual original caller/receipt are required. Partial page is not complete stream; missing source is unavailable, not empty success. Native source and physical original custody remain unproved.",
+      "permission_gate": "Permissions, credential/grant broker, provider authority, immutable revision, FileSafe, and confirmation apply.",
+      "disabled_reason_rule": "Expose connection/auth/setup, capability, rate, stale generation/revision, permission, mirror, degraded, or recovery blocker.",
+      "handler_owner": "Forge Integrations owns 46 primaries; the common central route set contains 43, including the nine FGI-013 admissions. Every planned target remains handler_unavailable without native/provider evidence.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static exact-command schema/fixture/response composition and future production-intent route only; native execution, disclosure authentication and physical original/observation custody remain absent.",
+      "gui_triggers": [
+        "Source Control forge sections, Settings connections, Project setup, official-page routes",
+        "Product Onboarding selected-source precommit read-only account/container repository list without a phantom repository"
+      ],
+      "return_route": "Exact provider/repository/review/pipeline and caller focus.",
+      "reverse_consumers": [
+        "Plans/Cursor_Origin_Integration.md",
+        "Plans/GitLab_Integration.md",
+        "Plans/Azure_DevOps_Integration.md",
+        "Plans/Bitbucket_Integration.md",
+        "Plans/Source_Control_System.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "event_refs": [
+        "No admitted Forge EventRecord for this delta; expected_event_types=[] until Event Authority admission."
+      ],
+      "receipt_refs": [
+        "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
+      ],
+      "observable_work": [
+        "Required for repository, mirror, review, pipeline, webhook, and connection work."
+      ],
+      "persistence_refs": [
+        "forge connection, repository binding, mirror, review, pipeline refs"
+      ],
+      "migration_refs": [
+        "Plans/Forge_Integrations.md#7.1"
+      ],
+      "test_refs": [
+        "Plans/forge_integration_contract_fixtures.json",
+        "Plans/cursor_origin_integration_fixtures.json",
+        "Plans/gitlab_integration_fixtures.json",
+        "Plans/azure_devops_integration_fixtures.json",
+        "Plans/bitbucket_integration_fixtures.json",
+        "tests/test_pm_onboarding_phases.py",
+        "Plans/forge_log_selection_contract_fixtures.json",
+        "tests/test_pm_forge_log_selection.py",
+        "tests/test_pm_jj_forge_selected_bindings.py"
+      ],
+      "evidence_refs": [
+        "static_schema_and_fixture_only"
+      ]
+    },
+    {
+      "profile_id": "TCP-FORGE-REVIEW-DECISIONS",
+      "requirement_refs": [
+        "Plans/Forge_Integrations.md#FGI-008",
+        "Plans/Forge_Integrations.md#FGI-009",
+        "Plans/Forge_Integrations.md#FGI-010",
+        "Plans/Forge_Integrations.md#FGI-013",
+        "Plans/Forge_Integrations.md#FGI-011"
+      ],
+      "owner_plan": "Plans/Forge_Integrations.md",
+      "plan_unit": "FGI-008",
+      "dry_contract_ref": "Plans/forge_review_decisions.schema.json",
+      "payload_schema_ref": "Plans/forge_review_decisions.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/forge_review_decisions.schema.json#/$defs/result",
+      "error_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_error_record",
+      "availability_rule": "Exact original selected review/head/body and authenticated RepositoryBinding/ReviewRevision/provider observation must join actual SIR original and receipt. Null approval body differs from submitted empty text; unknown effects remain reconciliation-only. Native provider/current permission/caller and physical original custody remain unproved.",
+      "permission_gate": "Permissions, credential/grant broker, provider authority, immutable revision, FileSafe, and confirmation apply.",
+      "disabled_reason_rule": "Expose connection/auth/setup, capability, rate, stale generation/revision, permission, mirror, degraded, or recovery blocker.",
+      "handler_owner": "Forge Integrations owns 46 primaries; the common central route set contains 43, including the nine FGI-013 admissions. Every planned target remains handler_unavailable without native/provider evidence.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static exact-command schema/fixture/response composition and future production-intent route only; native execution, disclosure authentication and physical original/observation custody remain absent.",
+      "gui_triggers": [
+        "Source Control forge sections, Settings connections, Project setup, official-page routes",
+        "Product Onboarding selected-source precommit read-only account/container repository list without a phantom repository"
+      ],
+      "return_route": "Exact provider/repository/review/pipeline and caller focus.",
+      "reverse_consumers": [
+        "Plans/Cursor_Origin_Integration.md",
+        "Plans/GitLab_Integration.md",
+        "Plans/Azure_DevOps_Integration.md",
+        "Plans/Bitbucket_Integration.md",
+        "Plans/Source_Control_System.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "event_refs": [
+        "No admitted Forge EventRecord for this delta; expected_event_types=[] until Event Authority admission."
+      ],
+      "receipt_refs": [
+        "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
+      ],
+      "observable_work": [
+        "Required for repository, mirror, review, pipeline, webhook, and connection work."
+      ],
+      "persistence_refs": [
+        "forge connection, repository binding, mirror, review, pipeline refs"
+      ],
+      "migration_refs": [
+        "Plans/Forge_Integrations.md#7.1"
+      ],
+      "test_refs": [
+        "Plans/forge_integration_contract_fixtures.json",
+        "Plans/cursor_origin_integration_fixtures.json",
+        "Plans/gitlab_integration_fixtures.json",
+        "Plans/azure_devops_integration_fixtures.json",
+        "Plans/bitbucket_integration_fixtures.json",
+        "tests/test_pm_onboarding_phases.py",
+        "Plans/forge_review_decision_fixtures.json",
+        "Plans/sir_forge_review_dispatch_fixtures.json",
+        "tests/test_pm_forge_review_decisions.py",
+        "tests/test_pm_jj_forge_selected_bindings.py"
+      ],
+      "evidence_refs": [
+        "static_schema_and_fixture_only"
       ]
     }
   ],
@@ -9819,7 +10022,7 @@
     ],
     [
       "TOUCH-JJI-029",
-      "TCP-JJ",
+      "TCP-JJ-PUBLICATION",
       "command",
       "cmd.jujutsu.git.push",
       "partial",
@@ -9939,7 +10142,7 @@
     ],
     [
       "TOUCH-FGI-013",
-      "TCP-FORGE",
+      "TCP-FORGE-REVIEW-DECISIONS",
       "command",
       "cmd.forge.review.approve",
       "partial",
@@ -9947,7 +10150,7 @@
     ],
     [
       "TOUCH-FGI-014",
-      "TCP-FORGE",
+      "TCP-FORGE-REVIEW-DECISIONS",
       "command",
       "cmd.forge.review.request_changes",
       "partial",
@@ -10099,7 +10302,7 @@
     ],
     [
       "TOUCH-FGI-033",
-      "TCP-FORGE",
+      "TCP-FORGE-LOG-SELECTION",
       "command",
       "cmd.forge.pipeline.open_logs",
       "partial",

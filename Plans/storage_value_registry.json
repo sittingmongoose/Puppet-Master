@@ -3005,6 +3005,203 @@
         "Plans/backup_bounded_read_contracts.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.source_control.jj_publication_transport.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "schema_ref": "Plans/jj_publication_selected.schema.json",
+      "record_kinds": [
+        "pm.jujutsu.publication_selected.request.v1",
+        "pm.jujutsu.publication_selected.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Exact independently retained originals, owner receipts and selected-effect observations needed for replay, effect-unknown reconciliation, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original or observation required for replay. Never reconstruct a mutation from current UI selection."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Historical predecessor request/result meanings remain unchanged. No transport migration reconstructs original selection, native qualification, provider source or caller facts; fixture wrappers are not runtime records.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Transient exact-command transport only. Nested authority values are not independent durable families. Genuine originals and observations have separately pending custody; no physical family, event or native proof.",
+      "source_refs": [
+        "Plans/Jujutsu_Integration.md",
+        "Plans/jj_publication_selected.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.log_selection_transport.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_log_selection_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.log_selection.request.v1",
+        "pm.forge.log_selection.result.v1",
+        "pm.forge.log_selection.authority.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Exact independently retained originals, owner receipts and selected-effect observations needed for replay, effect-unknown reconciliation, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original or observation required for replay. Never reconstruct a mutation from current UI selection."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Historical predecessor request/result meanings remain unchanged. No transport migration reconstructs original selection, native qualification, provider source or caller facts; fixture wrappers are not runtime records.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Transient exact-command transport only. Nested authority values are not independent durable families. Genuine originals and observations have separately pending custody; no physical family, event or native proof.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_log_selection_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.source_control.jj_publication_metadata.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/jj_publication_selected.schema.json",
+      "record_kinds": [
+        "pm.source_control.jj_publication_qualification.v1",
+        "pm.source_control.remote_publication_preview.v1",
+        "pm.source_control.remote_publication_observation.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual independently authenticated original and owner metadata while receipt, replay, reconciliation, backup or audit requires them. Exact physical owner and per-kind retention assignment remain pending; no completion anchor or source-lifetime extension is inferred.",
+        "expiry_rule": "No cleanup writer or retention interval is admitted. Register exact physical key/value, producer/readers, active reference holds, deletion and original replay/backup custody before writes; transient transport disposal is not release of original authority."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not cast unchanged predecessor originals, receipts or projections into these complete successor values. No selected identity, native qualification, provider observation or caller provenance is synthesized; versioned writer/reader/migration admission remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Actual native qualification, per-target preview and observation metadata for the existing RemoteOperationTarget/ExternalEffectReconciliation owners. Exact physical owner keys, per-kind retention and replay/backup custody remain pending; no parallel publication store.",
+      "source_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/jj_publication_selected.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.jj_publication_dispatch_binding.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/sir_jj_publication_dispatch.schema.json",
+      "record_kinds": [
+        "pm.sir.jj_publication_dispatch_binding.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual independently authenticated original and owner metadata while receipt, replay, reconciliation, backup or audit requires them. Exact physical owner and per-kind retention assignment remain pending; no completion anchor or source-lifetime extension is inferred.",
+        "expiry_rule": "No cleanup writer or retention interval is admitted. Register exact physical key/value, producer/readers, active reference holds, deletion and original replay/backup custody before writes; transient transport disposal is not release of original authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not cast unchanged predecessor originals, receipts or projections into these complete successor values. No selected identity, native qualification, provider observation or caller provenance is synthesized; versioned writer/reader/migration admission remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Authentic SIR original for exact JJ publication; no inferred full identity/caller, native dispatcher, peer store or physical admission.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/sir_jj_publication_dispatch.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.log_read_observation.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_log_selection_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.log_read_observation.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual independently authenticated original and owner metadata while receipt, replay, reconciliation, backup or audit requires them. Exact physical owner and per-kind retention assignment remain pending; no completion anchor or source-lifetime extension is inferred.",
+        "expiry_rule": "No cleanup writer or retention interval is admitted. Register exact physical key/value, producer/readers, active reference holds, deletion and original replay/backup custody before writes; transient transport disposal is not release of original authority."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not cast unchanged predecessor originals, receipts or projections into these complete successor values. No selected identity, native qualification, provider observation or caller provenance is synthesized; versioned writer/reader/migration admission remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Redacted log read observation and genuine source/content references only. Actual log bytes, run/child/cursor owner projections and their independent lifetimes are not copied into a new durable store. Physical original/source/readback custody remains pending.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_log_selection_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.forge_log_dispatch_binding.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/forge_log_selection_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.forge_log_dispatch_binding.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual independently authenticated original and owner metadata while receipt, replay, reconciliation, backup or audit requires them. Exact physical owner and per-kind retention assignment remain pending; no completion anchor or source-lifetime extension is inferred.",
+        "expiry_rule": "No cleanup writer or retention interval is admitted. Register exact physical key/value, producer/readers, active reference holds, deletion and original replay/backup custody before writes; transient transport disposal is not release of original authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not cast unchanged predecessor originals, receipts or projections into these complete successor values. No selected identity, native qualification, provider observation or caller provenance is synthesized; versioned writer/reader/migration admission remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Authentic SIR original for exact selected log read; nullable delivery context remains transient. No extension of the two-action review binding, Full Thread schema, native dispatcher, store or physical admission.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/forge_log_selection_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [

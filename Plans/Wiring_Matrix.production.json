@@ -28847,7 +28847,7 @@
     "catalog.forge_pipeline_open_logs": {
       "acceptance_checks": [
         "cmd.forge.pipeline.open_logs names exactly one owner-adjudicated future target handlers::forge::pipeline_open_logs in Plans/Forge_Integrations.md#FGI-010; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
+        "Validate Plans/forge_log_selection_contracts.schema.json#/$defs/request -> Plans/forge_log_selection_contracts.schema.json#/$defs/result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
         "Read state.commands.forge_pipeline_open_logs.availability and state.commands.forge_pipeline_open_logs.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -28863,7 +28863,7 @@
         "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
         "effect_kind": "receipt",
         "receipt_or_event_refs": [
-          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+          "Plans/forge_log_selection_contracts.schema.json#/$defs/result",
           "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
         ]
       },
@@ -28873,8 +28873,8 @@
       "evidence_required": "Future production evidence for cmd.forge.pipeline.open_logs: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::forge::pipeline_open_logs",
-      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
-      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "request_schema_ref": "Plans/forge_log_selection_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/forge_log_selection_contracts.schema.json#/$defs/result",
       "state_selector": "state.commands.forge_pipeline_open_logs.availability",
       "test_evidence": [
         {
@@ -36492,7 +36492,7 @@
     "catalog.jujutsu_git_push": {
       "acceptance_checks": [
         "cmd.jujutsu.git.push names exactly one owner-adjudicated future target handlers::jujutsu::git_push in Plans/Jujutsu_Integration.md#JJI-007; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request -> Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result and Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
+        "Validate Plans/jj_publication_selected.schema.json#/$defs/request -> Plans/jj_publication_selected.schema.json#/$defs/result and Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
         "Read state.commands.jujutsu_git_push.availability and state.commands.jujutsu_git_push.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -36508,7 +36508,7 @@
         "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
         "effect_kind": "receipt",
         "receipt_or_event_refs": [
-          "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result",
+          "Plans/jj_publication_selected.schema.json#/$defs/result",
           "JJ operation receipt extension"
         ]
       },
@@ -36518,8 +36518,8 @@
       "evidence_required": "Future production evidence for cmd.jujutsu.git.push: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::jujutsu::git_push",
-      "request_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request",
-      "result_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result",
+      "request_schema_ref": "Plans/jj_publication_selected.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/jj_publication_selected.schema.json#/$defs/result",
       "state_selector": "state.commands.jujutsu_git_push.availability",
       "test_evidence": [
         {

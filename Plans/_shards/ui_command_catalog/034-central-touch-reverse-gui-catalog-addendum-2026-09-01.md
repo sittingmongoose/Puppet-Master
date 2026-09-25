@@ -2,15 +2,17 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12025-L12292
+Source lines: L12025-L12294
 
-Source SHA256: `c978989278edd83d2f8cde42d68bedc01d8fed11b89a082cf037962c488df108`
+Source SHA256: `a49f16f6fd28e541262e1df2b2b36a5e8b1c8c5e8c927bec863140a35ba1aa71`
 
 ---
 
 ## Central Touch Reverse-GUI Catalog Addendum - 2026-09-01
 
 These 227 rows are the reverse-GUI projection of CS-074. They register no synthetic control: an existing same-intent control may be rebound, an owner surface may expose the action when required, and headless-only reachability remains explicitly classifiable. Every visible control must read typed availability and disabled reason before dispatch and return to the exact initiating route/focus/continuation.
+
+For exactly `cmd.jujutsu.git.push`, the request/result binding is `Plans/jj_publication_selected.schema.json#/$defs/request` -> `Plans/jj_publication_selected.schema.json#/$defs/result`. Preserve the original complete bookmark set, native-qualified per-target mappings, expected/observed heads, independent selection generation and actual receipt/reconciliation facts through the SIR original and common response. Mixed or unknown effects cannot become complete success; no-op and blind replay are not inferred. For exactly `cmd.forge.pipeline.open_logs`, the binding is `Plans/forge_log_selection_contracts.schema.json#/$defs/request` -> `Plans/forge_log_selection_contracts.schema.json#/$defs/result`; preserve genuine binding/run/job-or-stage/cursor, redacted source readback and explicit partial/truncated/unavailable truth through the original caller and common receipt/response. No fake job, complete-stream claim from a page, new provider route, event or enabled handler follows. Both retain native authentication/currentness and separately pending original/observation custody; their historical predecessor schemas remain unchanged.
 
 For exactly `cmd.backup.destination.discover` and `cmd.backup.browse`, the typed binding is `Plans/backup_bounded_read_contracts.schema.json#/$defs/request` -> `Plans/backup_bounded_read_contracts.schema.json#/$defs/result`. Actual original destination/prefix or immutable snapshot/path/cursor selection joins the bounded source page, prior-page continuity, explicit BackupReadProjectionReceipt and SIR original caller/response. Missing source is not an empty successful listing; a completed page is not exhausted listing or recovery proof. These remain read-only terminal-page contracts with native source/Permissions/current-delivery authentication and original/receipt physical custody unbuilt. No capture/verification/restore receipt is substituted, and no new control, command, event or handler availability is admitted.
 

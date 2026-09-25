@@ -163,6 +163,25 @@ acceptance_criteria:
     a reference or confirmation hash alone is not proof of their contents. Preserve per-target partial and unknown
     outcomes, no blind retry, and current credential/permission/lease revalidation immediately before effects.
   - >-
+    For the JJ publication-selected profile, materialize per-target preview contents under the same existing
+    RemoteOperationTarget preview_ref, never a second publication authority. The actual owner preview binds original
+    command/instance/operation/context/revision, target and independent selection generation; exact push URL/refspecs;
+    complete selected bookmark-to-native-qualified-Git-object/destination mappings; explicit absent/known/unknown
+    expected remote heads and proposed heads; and existing force-guard intent/references. Native qualification binds
+    actual selected JJ identities and exact Git mappings without assuming their IDs are interchangeable. Unknown
+    preconditions cannot authorize apply. Do not derive selection generation from topology, catalog or lease counters.
+    Resolve actual native qualification, current publication capability, target preconditions and resulting per-target
+    observations with the original request, unchanged JJ command_result and Source Control operation_receipt.
+    Per-target success requires actual observed heads matching the proposed heads plus the existing reconciliation
+    owner's observed_success evidence; a CLI exit or a preview does not supply it. Mixed target outcomes remain
+    partial; any unknown effect remains effect_unknown/reconciliation-only and may not be relabelled succeeded,
+    failed-known or retried blindly. Every result preserves original mappings and actual per-target evidence, never
+    current UI selection. Snapshot before dependent resolution and reject input mutation. Native issuance/current
+    permission/credential/lease/admission and physical original/preview/observation custody remain explicit prerequisites,
+    not facts produced by schema validation or synthetic fixtures. Fan-out is not atomic, no duplicate mirror push
+    is admitted, and publication never claims all JJ history is uploaded. No new store, event, TTL or import/export
+    capability is introduced.
+  - >-
     These selected operands require an explicitly enrolled closed successor request and original-result binding;
     the historical v1 request remains unchanged and cannot be reinterpreted as containing omitted operands.
     Read-only diff/history do not acquire write authority from their selection. Preview-required mutations consume

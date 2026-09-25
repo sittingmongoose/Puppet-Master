@@ -32,6 +32,10 @@ BROWSER_SCHEMA = "Plans/section15_browser_program_contracts.schema.json"
 SERVER_SCHEMA = "Plans/server_system_contracts.schema.json"
 SOURCE_CONTROL_SCHEMA = "Plans/source_control_contracts.schema.json"
 from pm_backup_read_response import COMMANDS as BACKUP_READ_COMMANDS, BINDING as BACKUP_READ_BINDING
+JJ_PUBLICATION_COMMANDS = frozenset(("cmd.jujutsu.git.push",))
+JJ_PUBLICATION_BINDING = {"path":"Plans/jj_publication_selected.schema.json", "json_pointer":"#/$defs/result", "schema_id":"pm.jujutsu.publication_selected.result.v1"}
+FORGE_LOG_COMMAND = "cmd.forge.pipeline.open_logs"
+FORGE_LOG_BINDING = {"path":"Plans/forge_log_selection_contracts.schema.json", "json_pointer":"#/$defs/result", "schema_id":"pm.forge.log_selection.result.v1"}
 
 FORGE_REVIEW_COMMANDS = frozenset(("cmd.forge.review.approve", "cmd.forge.review.request_changes"))
 FORGE_REVIEW_BINDING = {"path": "Plans/forge_review_decisions.schema.json", "json_pointer": "#/$defs/result", "schema_id": "pm.forge.review_decision.result.v1"}
@@ -80,7 +84,7 @@ def structural_failures(path: str, value: Any, pointer: str = "#") -> list[str]:
 def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=None,
                              canonical_request_digest=None, backup_read_admission=None,
                              backup_page_source=None, backup_source_custody=None,
-                             backup_current_disclosure=None) -> list[str]:
+                             backup_current_disclosure=None, forge_log_dependencies=None) -> list[str]:
     """Existing static bundle; Git-three additionally requires actual owner readers.
 
     Both callbacks are trusted native contracts, not issuer/caller authentication
@@ -94,7 +98,11 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
                     or result.get("schema_id") == FORGE_REVIEW_BINDING["schema_id"])
     backup_read = (response.get("command_id") in BACKUP_READ_COMMANDS
                    or result.get("schema_id") == BACKUP_READ_BINDING["schema_id"])
-    if not git_three and not forge_review and not backup_read:
+    jj_publication = (response.get("command_id") in JJ_PUBLICATION_COMMANDS
+                      or result.get("schema_id") == JJ_PUBLICATION_BINDING["schema_id"])
+    forge_log = (response.get("command_id") == FORGE_LOG_COMMAND
+                 or result.get("schema_id") == FORGE_LOG_BINDING["schema_id"])
+    if not git_three and not forge_review and not backup_read and not jj_publication and not forge_log:
         return _response_bundle_failures(bundle)
     snapshot = deepcopy(bundle)
     failures = _response_bundle_failures(snapshot, resolve_owner_record=resolve_owner_record,
@@ -102,16 +110,17 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
                                          backup_read_admission=backup_read_admission,
                                          backup_page_source=backup_page_source,
                                          backup_source_custody=backup_source_custody,
-                                         backup_current_disclosure=backup_current_disclosure)
+                                         backup_current_disclosure=backup_current_disclosure,
+                                         forge_log_dependencies=forge_log_dependencies)
     if bundle != snapshot:
-        failures.append("backup_read_bundle_mutated_during_resolution" if backup_read else "forge_bundle_mutated_during_resolution" if forge_review else "git3_bundle_mutated_during_resolution")
+        failures.append("backup_read_bundle_mutated_during_resolution" if backup_read else "jj_publication_bundle_mutated_during_resolution" if jj_publication else "forge_log_bundle_mutated_during_resolution" if forge_log else "forge_bundle_mutated_during_resolution" if forge_review else "git3_bundle_mutated_during_resolution")
     return sorted(set(failures))
 
 
 def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=None,
                               canonical_request_digest=None, backup_read_admission=None,
                               backup_page_source=None, backup_source_custody=None,
-                              backup_current_disclosure=None) -> list[str]:
+                              backup_current_disclosure=None, forge_log_dependencies=None) -> list[str]:
     """Validate independently owned records and then their exact binding.
 
     normalized_request is a fixture snapshot of the authenticated dispatcher
@@ -126,6 +135,9 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
         if response[field] != request.get(field):
             failures.append("response_request_" + field + "_mismatch")
     outcome, owner_result = bundle.get("outcome"), bundle.get("owner_result")
+    if response["command_id"] == FORGE_LOG_COMMAND:
+        if response["response_kind"] != "owner_operation" or response.get("owner_result_schema_ref") != FORGE_LOG_BINDING:
+            failures.append("forge_log_owner_binding")
     if response["response_kind"] != "owner_operation":
         if outcome is not None or owner_result is not None:
             failures.append("non_operation_has_owner_records")
@@ -134,7 +146,7 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
         if response["response_kind"] == "local_projection":
             commands = schema(SHARED_SCHEMA)["$defs"]["canonical_command_id"]["enum"]
             scm_commands = schema(SOURCE_CONTROL_SCHEMA)["$defs"]["source_control_command_id"]["enum"]
-            if response["command_id"] in commands or response["command_id"] in scm_commands or response["command_id"] in GIT_THREE_COMMANDS or response["command_id"] in FORGE_REVIEW_COMMANDS or response["command_id"] in BACKUP_READ_COMMANDS:
+            if response["command_id"] in commands or response["command_id"] in scm_commands or response["command_id"] in GIT_THREE_COMMANDS or response["command_id"] in FORGE_REVIEW_COMMANDS or response["command_id"] in BACKUP_READ_COMMANDS or response["command_id"] in JJ_PUBLICATION_COMMANDS:
                 failures.append("durable_command_disguised_as_local_projection")
         return sorted(set(failures))
     if structural_failures(OUTCOME_SCHEMA, outcome, "#/$defs/CommandOutcomeRecord"):
@@ -172,6 +184,8 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
             failures.append("outcome_" + field + "_mismatch")
     if response["command_id"] in BACKUP_READ_COMMANDS and response["owner_result_schema_ref"] != BACKUP_READ_BINDING:
         failures.append("backup_read_owner_result_binding")
+    if response["command_id"] in JJ_PUBLICATION_COMMANDS and response["owner_result_schema_ref"] != JJ_PUBLICATION_BINDING:
+        failures.append("jj_publication_owner_result_binding")
     if response["command_id"] in FORGE_REVIEW_COMMANDS and response["owner_result_schema_ref"] != FORGE_REVIEW_BINDING:
         failures.append("forge_review_owner_result_binding")
     if response["command_id"] in GIT_THREE_COMMANDS and response["owner_result_schema_ref"] != GIT_THREE_BINDING:
@@ -216,6 +230,18 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
                     verify_original_admission=backup_read_admission, verify_page_source=backup_page_source,
                     verify_source_custody=backup_source_custody, check_current_disclosure=backup_current_disclosure,
                     canon_root=ROOT))
+            elif owner_result.get("schema_id") == JJ_PUBLICATION_BINDING["schema_id"]:
+                if "delivery_return_context" not in bundle:
+                    failures.append("jj_publication_delivery_owner_value_missing")
+                from pm_jj_publication_response import response_failures as jj_publication_response_failures
+                failures.extend(jj_publication_response_failures(
+                    response, outcome, owner_result, bundle.get("owner_request"), request,
+                    bundle.get("original_binding_ref"), bundle.get("delivery_return_context"),
+                    resolve_record=resolve_owner_record, canonical_request_digest=canonical_request_digest,
+                    canon_root=ROOT, registry=registry()))
+            elif owner_result.get("schema_id") == FORGE_LOG_BINDING["schema_id"]:
+                from pm_forge_log_selection_semantics import response_failures as log_response_failures
+                failures.extend(log_response_failures(bundle, forge_log_dependencies))
             elif owner_result.get("schema_id") == FORGE_REVIEW_BINDING["schema_id"]:
                 if "delivery_return_context" not in bundle:
                     failures.append("forge_delivery_owner_value_missing")

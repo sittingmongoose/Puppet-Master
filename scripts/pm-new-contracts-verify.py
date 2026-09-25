@@ -56,6 +56,9 @@ from pm_forge_creation_semantics import forge_creation_semantic_failures
 from pm_usage_command_semantics import usage_command_semantic_failures
 from pm_usage_quota_semantics import usage_quota_semantic_failures
 from pm_backup_bounded_reads import bounded_read_semantic_failures
+from pm_jj_publication_selected import publication_semantic_failures
+from pm_jj_publication_response import jj_publication_dispatch_semantic_failures
+from pm_forge_log_selection_semantics import log_selection_semantic_failures
 from pm_git_selected_three import git_selected_semantic_failures
 from pm_forge_review_decisions import review_decision_semantic_failures
 from pm_forge_review_response import forge_dispatch_semantic_failures
@@ -114,9 +117,12 @@ CONTRACT_PAIRS = (
     ("Plans/forge_review_decisions.schema.json", "Plans/forge_review_decision_fixtures.json"),
     ("Plans/sir_forge_review_dispatch.schema.json", "Plans/sir_forge_review_dispatch_fixtures.json"),
     ("Plans/backup_bounded_read_contracts.schema.json", "Plans/backup_bounded_read_fixtures.json"),
+    ("Plans/jj_publication_selected.schema.json", "Plans/jj_publication_selected_fixtures.json"),
+    ("Plans/sir_jj_publication_dispatch.schema.json", "Plans/sir_jj_publication_dispatch_fixtures.json"),
+    ("Plans/forge_log_selection_contracts.schema.json", "Plans/forge_log_selection_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 51
+EXPECTED_CONTRACT_PAIR_COUNT = 54
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1249,6 +1255,12 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/jj_publication_selected.schema.json":
+        return publication_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/sir_jj_publication_dispatch.schema.json":
+        return jj_publication_dispatch_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/forge_log_selection_contracts.schema.json":
+        return log_selection_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_bounded_read_contracts.schema.json":
         return bounded_read_semantic_failures(definition_name, value)
     if schema_rel == "Plans/sir_forge_review_dispatch.schema.json":

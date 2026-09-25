@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2159-L2552
+Source lines: L2159-L2558
 
-Source SHA256: `28a5cbdcd57591ddb3a31d8fa98593e26e044176762af820a39ab77999f2fbdf`
+Source SHA256: `ee5fb2d87044ba4569ffd080ed6c9e211858d0d27b5852fbc6f6102ca14541bb`
 
 ---
 
@@ -184,6 +184,12 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+For exactly `cmd.forge.pipeline.open_logs`, `Plans/forge_log_selection_contracts.schema.json#/$defs/dispatch_binding` is a disjoint SIR original value produced by the established authenticated dispatcher. Its arguments are the exact selected log request, with genuine full identity, permission, canonical argument digest and nullable original caller context. The actual current delivery owner supplies the independently authenticated matching caller value. Resolve original run/child/cursor/content provenance and current redacted disclosure through mandatory native adapters; static matching is not authentication. Shared response composition retains actual receipts and work, preserves replay without reissued reads and rejects late resolver/callback mutation. Unknown effects remain terminal_unknown/recovery_required even when the owner label says failed; no_op and generic degraded terminal mapping are unadmitted for this profile. Do not widen the separate two-action Forge review binding or IdentityEnvelope. Original and observation custody remain separately pending, with no new store or retention interval.
+
+For exactly `cmd.jujutsu.git.push`, the authenticated dispatcher produces the closed original `pm.sir.jj_publication_dispatch_binding.v1` in `Plans/sir_jj_publication_dispatch.schema.json`. It preserves the authentic full IdentityEnvelope, exact original selected-publication arguments and their canonical payload digest, request/dispatch/frame identity, independent target generation, idempotency, actual actor/permission snapshot, admission time and nullable original caller return context. RepositoryContext supplies only its own lineage; it cannot invent Server, operation-generation, Run, agent or caller identity. Existing SCM return_context is reused only as value grammar, not SCM authority. The actual delivery owner independently supplies current nullable return_context; missing is not null, and foreign or null substitution fails. No UICommandEnvelope, IdentityEnvelope or historical JJ schema is widened.
+
+The exact result composes the actual original, per-target RemoteOperationTarget preview, native qualification, observations/reconciliation and Source Control receipt through `pm_jj_publication_selected`, then binds the CV-333 response and CommandOutcomeRecord through `pm_jj_publication_response`. Payload hash covers actual selected arguments, not the dispatch binding container. Accepted work resolves the genuine original ObservableWork and has no central terminal receipt. Known terminal outcomes preserve actual receipt facts; unknown effects and recovery-required remain terminal_unknown/recovery_required, never no_op or inferred success. Replay preserves the original response and effects. Input values and live resolved original/preview/receipt records are snapshotted before dependent reads and checked again for late mutation. Native producer/delivery authentication, effect admission and physical original custody remain independently required; matching static records or hashes prove none of them. No peer store, public command, event or retention interval is admitted by this logical binding.
 
 ```yaml
 plan_unit_id: SIR-042

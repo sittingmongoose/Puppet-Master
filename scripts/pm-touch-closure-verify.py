@@ -455,11 +455,19 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
 
     jj_text = read("Plans/Jujutsu_Integration.md")
     jj = tokens(between(jj_text, "### 3.1 Canonical command inventory", "### 3.2 JJ receipt extension"))
-    add("TCP-JJ", "command", {item for item in jj if item.startswith("cmd.jujutsu.") and item != "cmd.jujutsu"})
+    jj_operands = {f"cmd.jujutsu.change.{suffix}" for suffix in ("new", "describe", "abandon", "squash", "rebase")}
+    jj_publication = {"cmd.jujutsu.git.push"}
+    add("TCP-JJ-OPERANDS", "command", jj_operands)
+    add("TCP-JJ-PUBLICATION", "command", jj_publication)
+    add("TCP-JJ", "command", {item for item in jj if item.startswith("cmd.jujutsu.") and item != "cmd.jujutsu"} - jj_operands - jj_publication)
 
     forge_text = read("Plans/Forge_Integrations.md")
     forge = tokens(between(forge_text, "### 3.1 Canonical commands", "Setup reuses shared runtime commands:"))
-    add("TCP-FORGE", "command", {item for item in forge if item.startswith("cmd.forge.")})
+    forge_decisions = {"cmd.forge.review.approve", "cmd.forge.review.request_changes"}
+    forge_logs = {"cmd.forge.pipeline.open_logs"}
+    add("TCP-FORGE-REVIEW-DECISIONS", "command", forge_decisions)
+    add("TCP-FORGE-LOG-SELECTION", "command", forge_logs)
+    add("TCP-FORGE", "command", {item for item in forge if item.startswith("cmd.forge.")} - forge_decisions - forge_logs)
     add(
         "TCP-REPOSITORY-LOCAL",
         "ui_action",
@@ -1884,7 +1892,9 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # ten-ID schema. No row, command, handler or evidence promotion added.
         # SIR-031: three protected-auth locals select the existing protected
         # composition; eleven generic locals remain unchanged. No new rows.
-        "profile_count": 134,
+        # Five JJ operand commands, JJ publication, Forge review decisions and
+        # selected logs use four bounded successor profiles. No new Touch rows.
+        "profile_count": 138,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1142,

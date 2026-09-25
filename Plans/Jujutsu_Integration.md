@@ -135,6 +135,17 @@ canonical_text: >-
   and ExternalEffectReconciliation. Confirmation target hashes and a single bookmark field do not stand in for
   resolving the complete submitted selection. Historical v1 and the completed five-command v2 definitions remain
   unchanged; these prose requirements do not enroll another schema variant, public command or native capability.
+  For exactly cmd.jujutsu.git.push, Plans/jj_publication_selected.schema.json binds the complete original
+  bookmark name/change/immutable-commit set to actual per-target Git mappings under Source Control's existing
+  RemoteOperationTarget and ExternalEffectReconciliation owners. Each mapping is independently qualified by the
+  actual native adapter in the exact RepositoryContext, expected operation/workspace snapshot, toolchain and Host/
+  Environment; it is not inferred from shared commits or from the import/export-only interop gate. Existing
+  effective_operation_capability with operation=publish supplies publication capability, while native_toolchain_identity
+  supplies exact native/version/catalog facts. Neither a schema-valid record nor a static fixture authenticates
+  those producers. A single v1 bookmark field remains an optional explicit anchor, not the complete selection.
+  Historical v1 and the five-change v2 companion remain unchanged; Git pull/stash-apply and JJ undo/restore preview
+  companions remain separate pending work. No new public command, provider, physical store or native capability
+  is admitted by these values.
 gui_related: true
 gui_classification_reason: The commands map to user-visible actions, progress, disabled states, and receipts.
 depends_on: [JJI-002, SCS-003]
@@ -518,7 +529,7 @@ This owner adjudicates exactly 30 previously unbound primary commands. The table
 | `cmd.jujutsu.git.export` | `handlers::jujutsu::git_export` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
 | `cmd.jujutsu.git.fetch` | `handlers::jujutsu::git_fetch` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
 | `cmd.jujutsu.git.import` | `handlers::jujutsu::git_import` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
-| `cmd.jujutsu.git.push` | `handlers::jujutsu::git_push` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
+| `cmd.jujutsu.git.push` | `handlers::jujutsu::git_push` | `Plans/jj_publication_selected.schema.json#/$defs/request` -> `Plans/jj_publication_selected.schema.json#/$defs/result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
 | `cmd.jujutsu.history.open` | `handlers::jujutsu::history_open` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
 | `cmd.jujutsu.operation.log` | `handlers::jujutsu::operation_log` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
 | `cmd.jujutsu.operation.restore` | `handlers::jujutsu::operation_restore` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |

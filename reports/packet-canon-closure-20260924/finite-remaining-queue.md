@@ -16,11 +16,11 @@ composition, Forge ACT051/052 and their SIR response binding, and Usage quota-aw
 refresh/export are now specified and statically tested. Remaining exact selections
 are listed below; this is not native implementation or whole-family completion.
 
-1. Exact Storage specification integration: the current registry has 28 explicitly
-   pending disposition rows (27 physical-family and one external-store pending),
+1. Exact Storage specification integration: the current registry has 32 explicitly
+   pending disposition rows (31 physical-family and one external-store pending),
    including Guided Tour, pairing, original Forge dispatch and Backup read originals/receipts. Its
-   68 dispositions leave the 294 physical families unchanged. These are not
-   28 engines to build. Determine owner key/value/retention/migration
+   74 dispositions leave the 294 physical families unchanged. These are not
+   32 engines to build. Determine owner key/value/retention/migration
    decisions separately from deployment of already specified native writers.
 2. Narrow authority adjudications: Settings exposure/import semantics, Vault
    sharing and supervisor scope, and remaining plugin applicability clauses.
@@ -86,8 +86,8 @@ Remaining selected-input/result composition uses these existing source IDs:
 | --- | --- |
 | Neutral SCM, final-review open | ACT006,008,009,012,013,045 |
 | Git | ACT017,019 |
-| JJ | ACT037,038,039 |
-| Forge | ACT048,053,060,062,067,070,071,072,075,156 |
+| JJ | ACT037,038 |
+| Forge | ACT048,053,060,062,067,070,071,072,156 |
 | Backup | ACT090,091,105,111,118,119,120 |
 | CredentialBroker | ACT087 |
 
@@ -100,8 +100,10 @@ Backup ACT094/109/124 already have actual typed owner values; do not add duplica
 JJ undo/restore already carry selected operation IDs; their remaining obligation
 is qualified preview contents and original/result joins. Backup discovery/browse
 ACT092/099 is now integrated; see `backup-bounded-read-companion.md`. JJ publication
-ACT039 and Forge ACT075 log selection remain external reviewed candidates awaiting
-root integration. External proposals are not integrated closure evidence.
+ACT039 and Forge ACT075 log selection are now integrated; see
+`jj-publication-forge-log-companions.md`. Their native execution and custody are
+not supplied by the static companions. Other external proposals are not integrated
+closure evidence.
 
 Named decision blockers remain personal-dictionary custody; SET013 missing-ID
 merge/replace behavior; SET008 Expert/Risky facet; DRY application/Project writer
@@ -120,4 +122,5 @@ hooks/tools migration fixture cannot stand in for that package.
 Consolidation snapshot before the additional Forge original-binding row:
 `/mnt/Cursor/PM-Experiments/settings-compound-overlay-20260925/FINITE-QUEUE-CONSOLIDATION.md`,
 SHA-256 `78a5711e8bf91bcfa7090ee9e674113db29c618880e8e7daa1958de689c243c8`.
-Its 25-pending count is historical; the current 26 above includes that new row.
+Its 25-pending count is historical; the current 32 above includes the subsequent
+Forge, Backup, JJ publication and selected-log original/receipt rows.
