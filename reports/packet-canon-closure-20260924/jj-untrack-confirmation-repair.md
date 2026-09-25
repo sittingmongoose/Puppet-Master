@@ -17,4 +17,3 @@ Verification:
 External authority/probe: `/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/browser_scm_performance/jj-untrack-confirmation-probe.json`, SHA-256 `1196670cda0afd0bc32be2be1d66665ee0a9936e6967a6ba739d3e2830336455`. Authorized exact proposal: sibling `jj-untrack-and-touch-repair-proposal.json`, SHA-256 `2b25faf18af396dfa68e35fae8a2751ded5c0661ddb5b8e66c842ac9d04670f0`.
 
 No owner prose, generated indexes/shards, bindings, governance or main changes. No native, GUI, security, remote effect, readiness or all-packet closure claim. Independent review remains required before root integration.
-

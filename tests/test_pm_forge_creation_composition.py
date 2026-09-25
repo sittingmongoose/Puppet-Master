@@ -220,11 +220,18 @@ class CreationCompositionTests(unittest.TestCase):
             for name in ("product_onboarding_contracts.schema.json", "project_system_contracts.schema.json",
                          "settings_system_contracts.schema.json", "forge_integration_contracts.schema.json")
         ])
-        expected_families = materialized_v3_registry(previous, bundle)["families"]
+        # Physical custody includes the four reviewed main checkpoint-token
+        # updates. Keep the older Forge disposition baseline separately below.
+        reviewed_main = json.loads(subprocess.check_output([
+            "git", "show", "1e5d9b097b46aa58e7af488a9c38a87efb780d5f:Plans/storage_value_registry.json",
+        ], cwd=ROOT, text=True))
+        expected_families = materialized_v3_registry(reviewed_main, bundle)["families"]
+        self.assertEqual(294, len(storage["families"]))
+        self.assertEqual(27, len(storage["retention_policies"]))
         self.assertEqual(expected_families, storage["families"])
         self.assertEqual([r["family_id"] for r in previous["families"]],
                          [r["family_id"] for r in storage["families"]])
-        self.assertEqual(previous["retention_policies"], storage["retention_policies"])
+        self.assertEqual(reviewed_main["retention_policies"], storage["retention_policies"])
         key = "scd.forge.command_transport.v1"
         before = next(r for r in previous["contract_family_dispositions"] if r["disposition_id"] == key)
         after = next(r for r in storage["contract_family_dispositions"] if r["disposition_id"] == key)

@@ -13,7 +13,7 @@ BASE = "4c549b78be94654144a16723354c2ef72e5db8bf"
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "tests"))
 from onboarding_creation_fixtures import azure_existing_creation_fixture
-from pm_onboarding_creation_schema import build_onboarding_creation_defs, build_onboarding_v3_storage_bundle
+from pm_onboarding_creation_schema import build_onboarding_creation_defs, build_onboarding_v3_storage_bundle, materialized_v3_registry
 from jsonschema import Draft202012Validator
 
 
@@ -62,9 +62,20 @@ class AzureV3AbsenceTests(unittest.TestCase):
         bundle = build_onboarding_v3_storage_bundle(h.schemas["onboarding"], h.schemas["project"], h.schemas["settings"], h.schemas["forge"])
         self.assertEqual(bundle, row["value_schema"])
         self.assertEqual([], list(Draft202012Validator(bundle).iter_errors(h.session)))
+        # Assert the exact current physical union independently of the isolated
+        # Azure correction. Unrelated later dispositions are not Azure changes.
+        reviewed_main = json.loads(subprocess.check_output([
+            "git", "-C", REPO, "show",
+            "1e5d9b097b46aa58e7af488a9c38a87efb780d5f:Plans/storage_value_registry.json",
+        ], text=True))
+        expected = materialized_v3_registry(reviewed_main, bundle)
+        self.assertEqual(294, len(current["families"]))
+        self.assertEqual(27, len(current["retention_policies"]))
+        self.assertEqual(expected["families"], current["families"])
+        self.assertEqual(reviewed_main["retention_policies"], current["retention_policies"])
         name = "onboarding__onboarding_setup_plan_v3"
         row["value_schema"]["$defs"][name] = copy.deepcopy(old_row["value_schema"]["$defs"][name])
-        self.assertEqual(old, current)
+        self.assertEqual(old_row, row, "only the Azure conditional may change within the onboarding family")
 
     def test_actual_no_existing_project_is_writable_without_identity_or_readiness(self):
         h = new_project_fixture()

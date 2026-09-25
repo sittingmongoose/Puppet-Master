@@ -30,8 +30,8 @@ class GoalHandoffSemanticTests(unittest.TestCase):
     def test_explicit_closed_pair_registration_and_fixture_counts(self):
         self.assertEqual(self.schema["$id"], "https://puppetmaster.local/schemas/goal_handoff.schema.json")
         self.assertEqual(gate.CONTRACT_PAIRS.count((SCHEMA, FIXTURES)), 1)
-        self.assertEqual(len(gate.CONTRACT_PAIRS), 32)
-        self.assertEqual(gate.EXPECTED_CONTRACT_PAIR_COUNT, 32)
+        # The central manifest owns its growing census; this suite owns this pair.
+        self.assertEqual(len(gate.CONTRACT_PAIRS), gate.EXPECTED_CONTRACT_PAIR_COUNT)
         self.assertEqual(len(self.fixtures["valid"]), 27)
         self.assertEqual(len(self.fixtures["invalid"]), 95)
         self.assertEqual(self.fixtures["coverage"]["positive_cases"], 27)

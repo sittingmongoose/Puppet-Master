@@ -4,6 +4,7 @@ import json
 import os
 from dataclasses import replace
 from pathlib import Path
+import subprocess
 import sys
 import unittest
 
@@ -358,7 +359,18 @@ class CreationCompanionTests(unittest.TestCase):
         actual_registry = h.load("storage_value_registry.json")
         actual_row = next(r for r in actual_registry["families"] if r["family_id"] == "onboarding_state")
         if actual_row["key_shape"] == "onboarding_state.v4:{onboarding_session_id}":
-            self.assertEqual(updated, actual_registry, "actual current writer must equal owner-materialized v3 bundle")
+            # The reviewed main also owns four newer durable checkpoint-token
+            # rows. Preserve those exactly; later unrelated dispositions are
+            # checked by their own gates, not this predecessor migration test.
+            reviewed_main = json.loads(subprocess.check_output([
+                "git", "-C", str(ROOT), "show",
+                "1e5d9b097b46aa58e7af488a9c38a87efb780d5f:Plans/storage_value_registry.json",
+            ], text=True))
+            expected = materialized_v3_registry(reviewed_main, bundle)
+            self.assertEqual(294, len(actual_registry["families"]))
+            self.assertEqual(27, len(actual_registry["retention_policies"]))
+            self.assertEqual(expected["families"], actual_registry["families"])
+            self.assertEqual(reviewed_main["retention_policies"], actual_registry["retention_policies"])
         else:
             self.assertEqual(original, actual_registry, "external pre-integration baseline only")
         self.assertEqual([r["family_id"] for r in original["families"]], [r["family_id"] for r in updated["families"]])

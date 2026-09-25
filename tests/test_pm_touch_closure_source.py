@@ -871,6 +871,9 @@ class CentralArchivedProjectAdapterTests(unittest.TestCase):
     def test_verify_reconciles_optional_legacy_map(self):
         fixture_path = Path(__file__).resolve()
         original = validator.load_json
+        # An optional map must add no failures. Unrelated current governance
+        # drift remains visible to the full validator, not repaired by this test.
+        baseline_failures, _ = validator.verify()
 
         def load(path):
             if path == fixture_path:
@@ -882,8 +885,32 @@ class CentralArchivedProjectAdapterTests(unittest.TestCase):
                 mock.patch.object(validator, "central_ui_reference_failures", wraps=validator.central_ui_reference_failures) as check:
             failures, result = validator.verify()
         check.assert_called_once()
-        self.assertEqual(failures, [])
-        self.assertEqual(result["central_map_crosscheck"], "pass")
+        self.assertEqual(failures, baseline_failures)
+        self.assertIn(self.ADAPTER, check.call_args.args[0])
+        self.assertEqual(validator.central_ui_reference_failures(
+            *check.call_args.args, **check.call_args.kwargs), [])
+        # This existing statistic summarizes all verify() failures, not just
+        # the adapter call whose exact success is asserted above.
+        self.assertEqual(result["central_map_crosscheck"], "fail" if baseline_failures else "pass")
+
+    def test_verify_preserves_optional_map_adapter_failure(self):
+        fixture_path = Path(__file__).resolve()
+        original = validator.load_json
+        sentinel = "central archived-Project adapter: integration failure sentinel"
+
+        def load(path):
+            if path == fixture_path:
+                return {"registration_candidates": {"commands": [], "typed_local_ui_actions": [self.ADAPTER]}}
+            return original(path)
+
+        with mock.patch.object(validator, "CENTRAL_MAP_PATH", fixture_path), \
+                mock.patch.object(validator, "load_json", side_effect=load), \
+                mock.patch.object(validator, "central_ui_reference_failures", return_value=[sentinel]) as check:
+            failures, result = validator.verify()
+        check.assert_called_once()
+        self.assertIn(self.ADAPTER, check.call_args.args[0])
+        self.assertIn(sentinel, failures)
+        self.assertEqual(result["central_map_crosscheck"], "fail")
 
 
 class HoverTimingResidualTests(unittest.TestCase):
