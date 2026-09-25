@@ -11509,7 +11509,9 @@ The Browser owner never asks for a
 first mint from a missing receipt, lost delivery, tail absence or a supplied
 never-issued flag; only Storage's own writer reaches
 `storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
-protected group. Missing or conflicting custody keeps the operation
+current protected group, after the original source/manifest barriers and complete
+current group/source/dedupe/restore checks. Missing or conflicting custody keeps
+the operation
 recovery-required under the existing failure behavior. A proper subset, lost
 previously issued custody, restored old pending request or ambiguous original
 group stays fenced under that behavior. In-place restart after actual protected
@@ -11742,7 +11744,9 @@ returns the original available result without a second reset or event. The
 Browser owner never asks for a first mint from a missing receipt, lost delivery,
 tail absence or a supplied never-issued flag; only Storage's own writer reaches
 `storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
-protected group. Missing or conflicting custody keeps the path unavailable under
+current protected group, after the original source/manifest barriers and complete
+current group/source/dedupe/restore checks. Missing or conflicting custody keeps
+the path unavailable under
 the existing failure behavior; it never proves no effect, restores the old
 generation or repeats the reset. A proper subset, lost previously issued custody,
 restored old pending request or ambiguous original group stays fenced under that
