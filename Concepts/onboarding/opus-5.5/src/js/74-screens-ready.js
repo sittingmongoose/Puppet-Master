@@ -65,6 +65,8 @@
   def('ready', {
     chapter: 'ready', stage: 'ready',
     scene: () => ({ id: 'ready', beat: 'curtain' }),
+    /* the end of the flow: once the curtain scene has arrived, the troupe celebrates */
+    mounted(S, layer, fresh) { if (fresh) O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) { O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true, count: 46, at: [240, 260] }); O55.sound.play('commit'); } }); },
     eyebrow: () => T('ready.eyebrow'),
     title: () => T('ready.title'),
     lead: (S) => (md(S).project_mode !== 'later' && S.sess.commit && S.sess.commit.state === 'done' ? T('ready.lead', { name: md(S).project_name }) : T('ready.leadLater')),

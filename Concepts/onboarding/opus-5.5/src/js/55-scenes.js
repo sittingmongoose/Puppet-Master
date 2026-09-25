@@ -31,7 +31,7 @@
       items.push({ key: 'h' + i, prop: 'helper', x: cx + side * spread, y: floor - (side === 0 ? 14 : 0), s, layer: 'mid', anim: 'drop',
         delay: (o.delay || 0) + 260 + i * 90, amb: 'bob', ambd: 2400 + i * 380,
         opts: { variant: (o.variants || [0, 1, 2])[i], pose: poses[i], anchor: [cx + a[0], barY + a[1]], px: m.helperPx,
-          tie: ['a0', 'a1', 'a2'][side + 1], handTie: side > 0 ? 'w2' : 'w0', side } });
+          tie: ['a0', 'a1', 'a2'][side + 1], handTie: side < 0 ? 'w0' : 'w2', side } }); /* a raised right hand hangs from the bar's right side */
     });
     return items;
   };

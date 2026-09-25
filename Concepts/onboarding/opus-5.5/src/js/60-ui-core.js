@@ -127,6 +127,8 @@
 
   /* Choices become charms: the token flies from the card to the rail's current chapter node and hangs there. */
   function charm(fromEl, label, glyph) {
+    /* a choice made: a helper in the scene cheers for it */
+    if (O55.art.react) O55.motion.after(120, () => O55.art.react(S.root.querySelector('.o55-stage')));
     const def = SCREENS.defs[S.sess.screen] || {};
     const ch = (def.chapterFor ? def.chapterFor(S) : def.chapter) || 'welcome';
     const existing = S.sess.charms.findIndex((c) => c.chapter === ch && c.slot === (def.charmSlot || def.id));

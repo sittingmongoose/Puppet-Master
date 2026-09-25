@@ -215,6 +215,8 @@
         cm.state = 'done'; cm.code = null; S.save();
         window.dispatchEvent(new CustomEvent('o55:project-created', { detail: { id: cm.projectId, name: d.project_name, receipts: cm.receipts } }));
         O55.sound.play('commit');
+        /* the Project is made: the troupe celebrates (after the scene has taken its bow beat) */
+        O55.motion.after(650, () => { if (O55.art.celebrate && S.open) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true }); });
         O55.ui.refresh();
       }
     });

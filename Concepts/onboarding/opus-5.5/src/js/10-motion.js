@@ -147,7 +147,7 @@
   };
 
   /* Long-task watch. Opening the window and changing screens are expected heavy moments (building a screen, mounting
-     a scene) and never count: M.quiet(ms) marks them. Outside those, three long tasks over 150 ms inside ten seconds
+     a scene) and never count: M.quiet(ms) marks them. Outside those, three long tasks over 200 ms inside ten seconds
      while onboarding is open switch low-resource mode on (ambient loops and pre-warming stop; choices and receipts
      never change). A mode switched on this way switches itself off again after twenty calm seconds; one chosen by the
      setting or the scenario stays. */
@@ -159,7 +159,7 @@
     try {
       new PerformanceObserver((list) => {
         for (const e of list.getEntries()) {
-          if (e.duration < 150 || e.startTime < quietUntil) continue;
+          if (e.duration < 200 || e.startTime < quietUntil) continue;
           const t = performance.now(); seen.push(t); lastLong = t;
           while (seen.length && t - seen[0] > 10000) seen.shift();
           if (seen.length >= 3 && !M.lowResource && document.documentElement.hasAttribute('data-o55-open')) M.setLowResource(true, 'long_tasks');
