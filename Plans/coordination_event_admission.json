@@ -60,7 +60,7 @@
         "schema_id": "pm.coordination_event.agent_registered.schema.v1"
       },
       "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
-      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, whose recovery_epoch is the one the event ID uses. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
       "consumer_contract_refs": [
         "Plans/storage-plan.md#SP-320",
         "Plans/storage-plan.md#SP-278",
@@ -189,7 +189,7 @@
         "schema_id": "pm.coordination_event.agent_status_updated.schema.v1"
       },
       "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
-      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, whose recovery_epoch is the one the event ID uses. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
       "consumer_contract_refs": [
         "Plans/storage-plan.md#SP-320",
         "Plans/storage-plan.md#SP-278",
@@ -319,7 +319,7 @@
         "schema_id": "pm.coordination_event.agent_operation_updated.schema.v1"
       },
       "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
-      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, whose recovery_epoch is the one the event ID uses. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
       "consumer_contract_refs": [
         "Plans/storage-plan.md#SP-320",
         "Plans/storage-plan.md#SP-278",
@@ -447,7 +447,7 @@
         "schema_id": "pm.coordination_event.agent_file_ownership_updated.schema.v1"
       },
       "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
-      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, whose recovery_epoch is the one the event ID uses. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
       "consumer_contract_refs": [
         "Plans/storage-plan.md#SP-320",
         "Plans/storage-plan.md#SP-278",
@@ -572,7 +572,7 @@
         "schema_id": "pm.coordination_event.agent_unregistered.schema.v1"
       },
       "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
-      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, whose recovery_epoch is the one the event ID uses. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
       "consumer_contract_refs": [
         "Plans/storage-plan.md#SP-320",
         "Plans/storage-plan.md#SP-278",
@@ -693,7 +693,7 @@
         "schema_id": "pm.coordination_event.agent_crashed.schema.v1"
       },
       "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
-      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, whose recovery_epoch is the one the event ID uses. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
       "consumer_contract_refs": [
         "Plans/storage-plan.md#SP-320",
         "Plans/storage-plan.md#SP-278",
@@ -815,7 +815,7 @@
         "schema_id": "pm.coordination_event.agent_aborted.schema.v1"
       },
       "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
-      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, whose recovery_epoch is the one the event ID uses. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
       "consumer_contract_refs": [
         "Plans/storage-plan.md#SP-320",
         "Plans/storage-plan.md#SP-278",

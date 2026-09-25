@@ -181,9 +181,20 @@ def resolve_pointer(document: Any, ref: str) -> Any:
 # --- Identity, path and payload rules (SP-320, CV-353) -------------------------------------------------------
 
 
-def idempotency_key(event_type: str, project_id: str, agent_id: str, agent_revision: int) -> str:
-    """SP-320: coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}, revision in base 10."""
-    return f"coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}"
+def idempotency_key(event_type: str, project_id: str, agent_id: str, recovery_epoch: int, agent_revision: int) -> str:
+    """SP-320: coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, both in base 10.
+
+    The recovery epoch is the one the prepared event keeps for every retry, the same one its event ID uses
+    (review repair CP-02)."""
+    return f"coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}"
+
+
+def key_recovery_epoch(key: str) -> int | None:
+    """The key's recovery epoch: its second-to-last colon field, base 10 without sign or leading zeros."""
+    parts = key.rsplit(":", 2)
+    if len(parts) != 3 or not re.fullmatch(r"0|[1-9][0-9]*", parts[1]):
+        return None
+    return int(parts[1])
 
 
 def event_id_preimage(storage_instance_id: str, recovery_epoch: int, project_id: str, event_type: str,
@@ -255,7 +266,9 @@ def static_payload_rejection(event_type: str, payload: dict[str, Any]) -> str | 
             return "valid_utc_datetime"
     if event_type == MIRROR:
         return None
-    if payload["idempotency_key"] != idempotency_key(event_type, payload["project_id"], payload["agent_id"], payload["agent_revision"]):
+    epoch = key_recovery_epoch(payload["idempotency_key"])
+    if epoch is None or payload["idempotency_key"] != idempotency_key(event_type, payload["project_id"], payload["agent_id"], epoch,
+                                                                      payload["agent_revision"]):
         return "identity_recipe"
     if event_type == "coordination.agent_file_ownership_updated" and payload["path_hash"] != path_hash(payload["path_ref"]):
         return "path_hash_recipe"
@@ -823,7 +836,8 @@ def expected_svr_rows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
             "Coordination EventRecords replay in canonical seglog order through "
             "storage.coordination_projector.v1@1.0.0 only (SP-320). The dedupe identity is (scope_partition, "
             "event_type, idempotency_key), with idempotency_key "
-            "coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}; an exact retry returns the "
+            "coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, whose "
+            "recovery_epoch is the one the event ID uses; an exact retry returns the "
             "original event and its first AppendReceipt through storage.first_append_receipt.resolve.v2, and "
             "the same identity with a different digest is idempotency_conflict. A stale revision returns "
             "coordination_conflict. Replay rebuilds projection rows only and never re-runs scheduling, "
@@ -1180,7 +1194,9 @@ def envelope_rejection(record: dict[str, Any], storage_instance_id: str, recover
         return "replay_policy"
     if record["occurred_at_utc"] != body.get(FAMILY_TIME[event_type]):
         return "occurred_at_join"
-    if record["event_id"] != event_id(storage_instance_id, recovery_epoch, body["project_id"], event_type, body["agent_id"], body["agent_revision"]):
+    if (key_recovery_epoch(body["idempotency_key"]) != recovery_epoch
+            or record["event_id"] != event_id(storage_instance_id, recovery_epoch, body["project_id"], event_type, body["agent_id"],
+                                              body["agent_revision"])):
         return "identity_recipe"
     return None
 
@@ -1241,10 +1257,17 @@ def fixture_report(fixtures: dict[str, Any] | None = None, *, root: Path = ROOT)
     for vector in fixtures["identity_vectors"]:
         vector_epoch = vector.get("recovery_epoch", epoch)
         values = (vector["project_id"], vector["event_type"], vector["agent_id"], vector["agent_revision"])
-        if (idempotency_key(vector["event_type"], vector["project_id"], vector["agent_id"], vector["agent_revision"]) != vector["expected_idempotency_key"]
+        key = idempotency_key(vector["event_type"], vector["project_id"], vector["agent_id"], vector_epoch, vector["agent_revision"])
+        if (key != vector["expected_idempotency_key"]
                 or event_id_preimage(store_id, vector_epoch, *values) != vector["expected_event_id_preimage"]
                 or event_id(store_id, vector_epoch, *values) != vector["expected_event_id"]):
             failures.append({"error": "identity_vector_mismatch", "case_id": vector["case_id"]})
+        if "prior_recovery_epoch" in vector:
+            # A new recovery epoch gives a new key for the same agent, family and revision (SP-320, review repair CP-02).
+            prior = idempotency_key(vector["event_type"], vector["project_id"], vector["agent_id"], vector["prior_recovery_epoch"],
+                                    vector["agent_revision"])
+            if prior != vector["prior_idempotency_key"] or prior == key:
+                failures.append({"error": "identity_vector_mismatch", "case_id": vector["case_id"]})
     for vector in fixtures["path_vectors"]:
         normalized = normalize_observed_path(vector["worktree_root"], vector["observed_path"])
         expected = "no_claim" if normalized is None else {"path_ref": normalized, "path_hash": path_hash(normalized)}

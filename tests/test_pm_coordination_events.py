@@ -119,7 +119,7 @@ class StaticReportTests(unittest.TestCase):
             "transition_sequences", "transition_steps", "positive_projection_cases", "negative_projection_cases",
             "native_oracles_not_run")}
         self.assertEqual(counts, {
-            "positive_payload_cases": 43, "negative_payload_cases": 67, "negative_event_cases": 12, "identity_vectors": 6,
+            "positive_payload_cases": 43, "negative_payload_cases": 67, "negative_event_cases": 12, "identity_vectors": 7,
             "path_vectors": 9, "transition_sequences": 22, "transition_steps": 83, "positive_projection_cases": 11,
             "negative_projection_cases": 20, "native_oracles_not_run": 13})
 
@@ -181,7 +181,7 @@ class PayloadSchemaTests(unittest.TestCase):
         cases = {
             "schema": dict(base["payload"], platform="Claude"),
             "valid_utc_datetime": dict(base["payload"], started_at_utc="2026-02-30T04:10:00Z"),
-            "identity_recipe": dict(base["payload"], idempotency_key="coordination:coordination.agent_registered:project_fixture_alpha:agent_other:1"),
+            "identity_recipe": dict(base["payload"], idempotency_key="coordination:coordination.agent_registered:project_fixture_alpha:agent_other:3:1"),
         }
         for expected, payload in cases.items():
             with self.subTest(rule=expected):
@@ -202,6 +202,25 @@ class PayloadSchemaTests(unittest.TestCase):
             with self.subTest(platform=value):
                 self.assertEqual(CHECK.payload_rejection(base["event_type"], dict(base["payload"], platform=value)), "schema")
 
+    def test_key_without_a_well_formed_recovery_epoch_is_off_recipe(self):
+        base = PAYLOADS["a8_registered_minimal"]
+        prefix = "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_8:"
+        self.assertEqual(base["payload"]["idempotency_key"], prefix + "3:1")
+        for key in (prefix + "1", prefix + "03:1", prefix + "x:1"):
+            with self.subTest(key=key):
+                self.assertEqual(CHECK.payload_rejection(base["event_type"], dict(base["payload"], idempotency_key=key)), "identity_recipe")
+        self.assertIsNone(CHECK.payload_rejection(base["event_type"], dict(base["payload"], idempotency_key=prefix + "4:1")))
+
+    def test_event_record_key_uses_the_event_id_recovery_epoch(self):
+        record = copy.deepcopy(FIXTURES["valid_event"])
+        self.assertIsNone(CHECK.envelope_rejection(record, CONTEXT["storage_instance_id"], CONTEXT["recovery_epoch"]))
+        other = record["idempotency_key"].rsplit(":", 2)
+        key = f"{other[0]}:{CONTEXT['recovery_epoch'] + 1}:{other[2]}"
+        record["idempotency_key"] = key
+        record["payload"]["idempotency_key"] = key
+        self.assertIsNone(CHECK.payload_rejection(record["event_type"], record["payload"]))
+        self.assertEqual(CHECK.envelope_rejection(record, CONTEXT["storage_instance_id"], CONTEXT["recovery_epoch"]), "identity_recipe")
+
     def test_secret_path_and_null_shapes_are_rejected(self):
         operation = PAYLOADS["a7_operation_progress_r5"]
         for summary in ("token sk-abcdefghijklmnop123", "Bearer abcdefghijklmnop", "line one\nline two"):
@@ -214,8 +233,17 @@ class PayloadSchemaTests(unittest.TestCase):
         self.assertEqual(CHECK.payload_rejection(status["event_type"], dict(status["payload"], thread_id=None)), "schema")
 
     def test_identity_recipes(self):
-        self.assertEqual(CHECK.idempotency_key("coordination.agent_crashed", "project_a", "agent:with:colon", 12),
-                         "coordination:coordination.agent_crashed:project_a:agent:with:colon:12")
+        self.assertEqual(CHECK.idempotency_key("coordination.agent_crashed", "project_a", "agent:with:colon", 3, 12),
+                         "coordination:coordination.agent_crashed:project_a:agent:with:colon:3:12")
+        # Review repair CP-02: the recovery epoch is in the key, so a new epoch gives a new key.
+        self.assertNotEqual(CHECK.idempotency_key("coordination.agent_crashed", "project_a", "agent_a", 4, 6),
+                            CHECK.idempotency_key("coordination.agent_crashed", "project_a", "agent_a", 3, 6))
+        self.assertEqual(CHECK.key_recovery_epoch("coordination:coordination.agent_crashed:project_a:agent:with:colon:3:12"), 3)
+        self.assertEqual(CHECK.key_recovery_epoch("coordination:coordination.agent_crashed:project_a:agent_a:0:2"), 0)
+        for key in ("coordination:coordination.agent_crashed:project_a:agent_a:03:2", "coordination:coordination.agent_crashed:project_a:agent_a:-3:2",
+                    "coordination:coordination.agent_crashed:project_a:agent_a:2", "coordination:2"):
+            with self.subTest(key=key):
+                self.assertIsNone(CHECK.key_recovery_epoch(key))
         first = CHECK.event_id("4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f", 3, "project_a", "coordination.agent_registered", "agent_a", 1)
         later_epoch = CHECK.event_id("4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f", 4, "project_a", "coordination.agent_registered", "agent_a", 1)
         self.assertRegex(first, r"^evt_coordination_[0-9a-f]{64}$")
@@ -434,6 +462,16 @@ class FixtureTests(unittest.TestCase):
                 value = copy.deepcopy(FIXTURES)
                 mutation(value)
                 self.assertIn(expected, errors(CHECK.fixture_report(value)["failures"]))
+
+
+    def test_new_recovery_epoch_vector_must_give_a_new_key(self):
+        # Review repair CP-02: after a verified older restore a newly prepared event gets a new key.
+        vector = next(case for case in FIXTURES["identity_vectors"] if "prior_recovery_epoch" in case)
+        self.assertNotEqual(vector["prior_idempotency_key"], vector["expected_idempotency_key"])
+        value = copy.deepcopy(FIXTURES)
+        changed = next(case for case in value["identity_vectors"] if "prior_recovery_epoch" in case)
+        changed["prior_idempotency_key"] = changed["expected_idempotency_key"]
+        self.assertEqual(CHECK.fixture_report(value)["failures"], [{"error": "identity_vector_mismatch", "case_id": vector["case_id"]}])
 
 
 class TransitionModelTests(unittest.TestCase):

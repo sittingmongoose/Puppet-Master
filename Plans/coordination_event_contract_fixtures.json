@@ -26,7 +26,7 @@
     "schema": "Draft 2020-12 validation against the payload or projection definition, with the schema files and Plans/event_record_index_checkpoint.schema.json registered by $id and no remote retrieval. format is not asserted; calendar validity is the valid_utc_datetime rule.",
     "static_rules": {
       "valid_utc_datetime": "Every family timestamp is a real calendar date and time (CV-353 rule 5).",
-      "identity_recipe": "idempotency_key is coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}, and event_id is evt_coordination_ plus the lowercase hex SHA-256 of the RFC 8785 array of strings [storage_instance_id, recovery_epoch, project_id, event_type, agent_id, agent_revision] (SP-320).",
+      "identity_recipe": "idempotency_key is coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, with the recovery epoch read as its second-to-last colon field and equal to the one the event_id uses, and event_id is evt_coordination_ plus the lowercase hex SHA-256 of the RFC 8785 array of strings [storage_instance_id, recovery_epoch, project_id, event_type, agent_id, agent_revision] (SP-320).",
       "path_hash_recipe": "path_hash is the lowercase hex SHA-256 of the UTF-8 bytes of path_ref (SP-320).",
       "abort_ref_join": "A parent abort has aborted_by_ref run:{parent_run_id} (CV-353 rule 6)."
     },
@@ -68,7 +68,7 @@
         "worktree_id": "wt_fixture_7",
         "platform": "codex",
         "agent_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:1",
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:3:1",
         "model_id": "gpt-5-codex",
         "started_at_utc": "2026-09-25T04:00:00Z"
       }
@@ -90,7 +90,7 @@
         "worktree_id": "wt_fixture_7",
         "platform": "codex",
         "agent_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:1",
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:3:1",
         "model_id": "gpt-5-codex",
         "started_at_utc": "2026-09-25T04:00:30Z"
       }
@@ -106,7 +106,7 @@
         "platform": "codex",
         "agent_revision": 2,
         "expected_previous_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_7:2",
+        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_7:3:2",
         "operation_id": "op_fixture_1",
         "operation_summary": "Starting node 1.1.1",
         "observed_at_utc": "2026-09-25T04:01:00Z"
@@ -123,7 +123,7 @@
         "platform": "codex",
         "agent_revision": 3,
         "last_applied_event_id": "evt_coordination_d27e930b3a55013fec5262b125ad3319b64468765ba1405a803f99705f9aba3f",
-        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3",
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3:3",
         "status": "running",
         "observed_at_utc": "2026-09-25T04:02:00Z"
       }
@@ -140,7 +140,7 @@
         "agent_revision": 4,
         "expected_previous_revision": 3,
         "last_applied_event_id": "evt_coordination_154f6d09cf926b6f8a3f64023463e97d00ef9c358246d2585e7657e0235df8d1",
-        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:4",
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:3:4",
         "path_ref": "src/api.rs",
         "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b",
         "claim_kind": "editing",
@@ -160,7 +160,7 @@
         "platform": "codex",
         "agent_revision": 5,
         "expected_previous_revision": 4,
-        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_7:5",
+        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_7:3:5",
         "operation_id": "op_fixture_1",
         "operation_summary": "editing src/auth/password.rs",
         "progress_pct": 40,
@@ -182,7 +182,7 @@
         "platform": "codex",
         "agent_revision": 6,
         "expected_previous_revision": 5,
-        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:6",
+        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:3:6",
         "terminal_status": "complete",
         "finished_at_utc": "2026-09-25T04:05:00Z",
         "result_ref": "receipt:node_1.1.1"
@@ -199,7 +199,7 @@
         "platform": "codex",
         "agent_revision": 6,
         "expected_previous_revision": 5,
-        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_7:6",
+        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_7:3:6",
         "crash_reason": "process_exit",
         "detected_at_utc": "2026-09-25T04:05:01Z"
       }
@@ -215,7 +215,7 @@
         "platform": "codex",
         "agent_revision": 7,
         "expected_previous_revision": 6,
-        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_7:7",
+        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_7:3:7",
         "abort_reason": "runtime",
         "aborted_by_ref": "component:runtime_supervisor",
         "aborted_at_utc": "2026-09-25T04:06:00Z"
@@ -232,7 +232,7 @@
         "platform": "codex",
         "agent_revision": 2,
         "expected_previous_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:2",
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3:2",
         "status": "running",
         "observed_at_utc": "2026-09-25T04:01:00Z"
       }
@@ -248,7 +248,7 @@
         "platform": "codex",
         "agent_revision": 2,
         "expected_previous_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:2",
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3:2",
         "status": "running",
         "observed_at_utc": "2026-09-25T04:01:00Z"
       }
@@ -264,7 +264,7 @@
         "platform": "codex",
         "agent_revision": 2,
         "expected_previous_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:2",
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3:2",
         "status": "running",
         "observed_at_utc": "2026-09-25T04:01:00Z",
         "node_id": "node_other"
@@ -280,7 +280,7 @@
         "agent_id": "agent_fixture_7",
         "platform": "codex",
         "agent_revision": 2,
-        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:2",
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:3:2",
         "path_ref": "src/api.rs",
         "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b",
         "claim_kind": "editing",
@@ -298,7 +298,7 @@
         "agent_id": "agent_fixture_7",
         "platform": "codex",
         "agent_revision": 3,
-        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:3",
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:3:3",
         "path_ref": "src/api.rs",
         "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b",
         "claim_kind": "reviewing",
@@ -316,7 +316,7 @@
         "agent_id": "agent_fixture_7",
         "platform": "codex",
         "agent_revision": 4,
-        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:4",
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:3:4",
         "path_ref": "src/api.rs",
         "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b",
         "claim_kind": "reviewing",
@@ -334,7 +334,7 @@
         "agent_id": "agent_fixture_7",
         "platform": "codex",
         "agent_revision": 4,
-        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:4",
+        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:3:4",
         "terminal_status": "failed",
         "finished_at_utc": "2026-09-25T04:04:00Z"
       }
@@ -349,7 +349,7 @@
         "agent_id": "agent_fixture_7",
         "platform": "codex",
         "agent_revision": 3,
-        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_7:3",
+        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_7:3:3",
         "operation_id": "op_fixture_1",
         "operation_summary": "running cargo test",
         "progress_pct": 80,
@@ -367,7 +367,7 @@
         "agent_type": "test-writer",
         "platform": "claude",
         "agent_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_8:1",
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_8:3:1",
         "started_at_utc": "2026-09-25T04:10:00Z"
       }
     },
@@ -381,7 +381,7 @@
         "agent_id": "agent_fixture_8",
         "platform": "claude",
         "agent_revision": 2,
-        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:2",
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:3:2",
         "status": "running",
         "observed_at_utc": "2026-09-25T04:11:00Z"
       }
@@ -396,7 +396,7 @@
         "agent_id": "agent_fixture_8",
         "platform": "claude",
         "agent_revision": 3,
-        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_8:3",
+        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_8:3:3",
         "crash_reason": "heartbeat_expired",
         "detected_at_utc": "2026-09-25T04:17:00Z",
         "heartbeat_age_ms": 360000,
@@ -415,7 +415,7 @@
         "parent_run_id": "run_fixture_parent",
         "platform": "cursor",
         "agent_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_9:1",
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_9:3:1",
         "started_at_utc": "2026-09-25T04:20:00Z"
       }
     },
@@ -431,7 +431,7 @@
         "parent_run_id": "run_fixture_parent",
         "platform": "cursor",
         "agent_revision": 2,
-        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_9:2",
+        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_9:3:2",
         "abort_reason": "parent",
         "aborted_by_ref": "run:run_fixture_parent",
         "aborted_at_utc": "2026-09-25T04:21:00Z"
@@ -448,7 +448,7 @@
         "agent_type": "researcher",
         "platform": "gemini",
         "agent_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_10:1",
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_10:3:1",
         "started_at_utc": "2026-09-25T04:30:00Z"
       }
     },
@@ -462,7 +462,7 @@
         "agent_id": "agent_fixture_10",
         "platform": "gemini",
         "agent_revision": 2,
-        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_10:2",
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_10:3:2",
         "status": "blocked",
         "status_reason": "waiting for review",
         "observed_at_utc": "2026-09-25T04:31:00Z"
@@ -478,7 +478,7 @@
         "agent_id": "agent_fixture_10",
         "platform": "gemini",
         "agent_revision": 3,
-        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_10:3",
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_10:3:3",
         "status": "blocked",
         "status_reason": "waiting for review",
         "observed_at_utc": "2026-09-25T04:32:00Z"
@@ -494,7 +494,7 @@
         "agent_id": "agent_fixture_10",
         "platform": "gemini",
         "agent_revision": 3,
-        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_10:3",
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_10:3:3",
         "status": "running",
         "observed_at_utc": "2026-09-25T04:33:00Z"
       }
@@ -509,7 +509,7 @@
         "agent_id": "agent_fixture_10",
         "platform": "gemini",
         "agent_revision": 4,
-        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_10:4",
+        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_10:3:4",
         "abort_reason": "user",
         "aborted_by_ref": "actor:user_fixture",
         "aborted_at_utc": "2026-09-25T04:34:00Z"
@@ -526,7 +526,7 @@
         "agent_type": "doc-writer",
         "platform": "copilot",
         "agent_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_11:1",
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_11:3:1",
         "started_at_utc": "2026-09-25T04:40:00Z"
       }
     },
@@ -540,7 +540,7 @@
         "agent_id": "agent_fixture_11",
         "platform": "copilot",
         "agent_revision": 2,
-        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_11:2",
+        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_11:3:2",
         "abort_reason": "runtime",
         "aborted_by_ref": "component:runtime_supervisor",
         "aborted_at_utc": "2026-09-25T04:41:00Z"
@@ -556,7 +556,7 @@
         "agent_id": "agent_fixture_11",
         "platform": "copilot",
         "agent_revision": 3,
-        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_11:3",
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_11:3:3",
         "status": "running",
         "observed_at_utc": "2026-09-25T04:42:00Z"
       }
@@ -572,7 +572,7 @@
         "agent_type": "refactorer",
         "platform": "codex",
         "agent_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_12:1",
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_12:3:1",
         "started_at_utc": "2026-09-25T04:50:00Z"
       }
     },
@@ -586,7 +586,7 @@
         "agent_id": "agent_fixture_12",
         "platform": "codex",
         "agent_revision": 2,
-        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_12:2",
+        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_12:3:2",
         "crash_reason": "worktree_lost",
         "detected_at_utc": "2026-09-25T04:51:00Z",
         "worktree_ref": "worktree:wt_fixture_12"
@@ -602,7 +602,7 @@
         "agent_id": "agent_fixture_12",
         "platform": "codex",
         "agent_revision": 3,
-        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_12:3",
+        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_12:3:3",
         "operation_id": "op_fixture_12",
         "operation_summary": "moving helpers into util.rs",
         "observed_at_utc": "2026-09-25T04:52:00Z"
@@ -618,7 +618,7 @@
         "agent_id": "agent_fixture_12",
         "platform": "codex",
         "agent_revision": 2,
-        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_12:2",
+        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_12:3:2",
         "abort_reason": "runtime",
         "aborted_by_ref": "component:runtime_supervisor",
         "aborted_at_utc": "2026-09-25T04:51:01Z"
@@ -634,7 +634,7 @@
         "agent_id": "agent_fixture_8",
         "platform": "claude",
         "agent_revision": 3,
-        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_8:3",
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_8:3:3",
         "path_ref": "tests/api_test.rs",
         "path_hash": "ca585527d3a9fd0abee05a7e2b15a9597f0e7072f2001889ab3be781b90758b0",
         "claim_kind": "generated_output",
@@ -652,7 +652,7 @@
         "agent_id": "agent_fixture_8",
         "platform": "claude",
         "agent_revision": 4,
-        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_8:4",
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_8:3:4",
         "path_ref": "tests/api_test.rs",
         "path_hash": "ca585527d3a9fd0abee05a7e2b15a9597f0e7072f2001889ab3be781b90758b0",
         "claim_kind": "generated_output",
@@ -670,7 +670,7 @@
         "agent_id": "agent_fixture_9",
         "platform": "cursor",
         "agent_revision": 2,
-        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_9:2",
+        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_9:3:2",
         "terminal_status": "cancelled",
         "finished_at_utc": "2026-09-25T04:21:01Z"
       }
@@ -685,7 +685,7 @@
         "agent_id": "agent_fixture_9",
         "platform": "cursor",
         "agent_revision": 3,
-        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_9:3",
+        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_9:3:3",
         "crash_reason": "process_lost",
         "detected_at_utc": "2026-09-25T04:22:00Z"
       }
@@ -700,7 +700,7 @@
         "agent_id": "agent_fixture_9",
         "platform": "cursor",
         "agent_revision": 3,
-        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_9:3",
+        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_9:3:3",
         "terminal_status": "complete",
         "finished_at_utc": "2026-09-25T04:22:01Z"
       }
@@ -715,7 +715,7 @@
         "agent_id": "agent_fixture_7",
         "platform": "codex",
         "agent_revision": 3,
-        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:3",
+        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:3:3",
         "terminal_status": "failed",
         "finished_at_utc": "2026-09-25T04:02:00Z"
       }
@@ -730,7 +730,7 @@
         "agent_id": "agent_fixture_7",
         "platform": "codex",
         "agent_revision": 3,
-        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_7:3",
+        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_7:3:3",
         "crash_reason": "process_lost",
         "detected_at_utc": "2026-09-25T04:02:01Z"
       }
@@ -746,7 +746,7 @@
         "agent_type": "code-reviewer",
         "platform": "opencode",
         "agent_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_13:1",
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_13:3:1",
         "started_at_utc": "2026-09-25T04:55:00Z"
       }
     },
@@ -860,7 +860,7 @@
       "case_id": "registered_key_padded_revision",
       "base_case_id": "a8_registered_minimal",
       "patch": {
-        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_8:01"
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_8:3:01"
       },
       "remove": [],
       "expected_rejection": "schema",
@@ -870,7 +870,7 @@
       "case_id": "registered_key_other_agent",
       "base_case_id": "a8_registered_minimal",
       "patch": {
-        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_99:1"
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_99:3:1"
       },
       "remove": [],
       "expected_rejection": "identity_recipe",
@@ -931,7 +931,7 @@
       "base_case_id": "a8_status_running_r2",
       "patch": {
         "agent_revision": 1,
-        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:1"
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:3:1"
       },
       "remove": [],
       "expected_rejection": "schema",
@@ -971,7 +971,7 @@
       "case_id": "status_key_wrong_revision",
       "base_case_id": "a8_status_running_r2",
       "patch": {
-        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:3"
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:3:3"
       },
       "remove": [],
       "expected_rejection": "identity_recipe",
@@ -1489,7 +1489,7 @@
     "correlation_id": "correlation:fixture:coordination",
     "causation_event_id": null,
     "parent_event_id": null,
-    "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:2",
+    "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3:2",
     "payload_schema_id": "pm.coordination_event.agent_status_updated.schema.v1",
     "payload": {
       "schema_version": "1.0.0",
@@ -1499,7 +1499,7 @@
       "platform": "codex",
       "agent_revision": 2,
       "expected_previous_revision": 1,
-      "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:2",
+      "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3:2",
       "status": "running",
       "observed_at_utc": "2026-09-25T04:01:00Z"
     },
@@ -1567,7 +1567,7 @@
     {
       "case_id": "event_other_idempotency_key",
       "patch": {
-        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:9"
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:3:9"
       },
       "expected_rejection": "payload_envelope_identity"
     },
@@ -1607,7 +1607,7 @@
       "project_id": "project_fixture_alpha",
       "agent_id": "agent_fixture_7",
       "agent_revision": 1,
-      "expected_idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:1",
+      "expected_idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:3:1",
       "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"3\",\"project_fixture_alpha\",\"coordination.agent_registered\",\"agent_fixture_7\",\"1\"]",
       "expected_event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
     },
@@ -1617,7 +1617,7 @@
       "project_id": "project_fixture_alpha",
       "agent_id": "agent_fixture_7",
       "agent_revision": 3,
-      "expected_idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3",
+      "expected_idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3:3",
       "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"3\",\"project_fixture_alpha\",\"coordination.agent_status_updated\",\"agent_fixture_7\",\"3\"]",
       "expected_event_id": "evt_coordination_154f6d09cf926b6f8a3f64023463e97d00ef9c358246d2585e7657e0235df8d1"
     },
@@ -1627,7 +1627,7 @@
       "project_id": "project_fixture_alpha",
       "agent_id": "agent_fixture_7",
       "agent_revision": 12,
-      "expected_idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:12",
+      "expected_idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:3:12",
       "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"3\",\"project_fixture_alpha\",\"coordination.agent_unregistered\",\"agent_fixture_7\",\"12\"]",
       "expected_event_id": "evt_coordination_7da5a8960e113061bb8f77764d3043fc6efc41a197bfaeeb39aea0d7819d8b84"
     },
@@ -1637,7 +1637,7 @@
       "project_id": "project_fixture_alpha",
       "agent_id": "agent:with:colon",
       "agent_revision": 2,
-      "expected_idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent:with:colon:2",
+      "expected_idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent:with:colon:3:2",
       "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"3\",\"project_fixture_alpha\",\"coordination.agent_crashed\",\"agent:with:colon\",\"2\"]",
       "expected_event_id": "evt_coordination_3ceb3ef7ce821c012cea1423624e4ca998e58d69251c4d7b8234d887c1ea1c62"
     },
@@ -1647,7 +1647,7 @@
       "project_id": "projet_été",
       "agent_id": "agent_ü",
       "agent_revision": 5,
-      "expected_idempotency_key": "coordination:coordination.agent_aborted:projet_été:agent_ü:5",
+      "expected_idempotency_key": "coordination:coordination.agent_aborted:projet_été:agent_ü:3:5",
       "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"3\",\"projet_été\",\"coordination.agent_aborted\",\"agent_ü\",\"5\"]",
       "expected_event_id": "evt_coordination_327bced0e6706be56c3af6cc6a2ad7625938f9b9522c4e680947c64f79de6c91"
     },
@@ -1658,9 +1658,22 @@
       "agent_id": "agent_fixture_7",
       "agent_revision": 1,
       "recovery_epoch": 4,
-      "expected_idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:1",
+      "expected_idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:4:1",
       "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"4\",\"project_fixture_alpha\",\"coordination.agent_registered\",\"agent_fixture_7\",\"1\"]",
       "expected_event_id": "evt_coordination_835222aeaa0c2ad6fc55ab06d7521b3b72c1a51071bfa0cb710040f1ee015652"
+    },
+    {
+      "case_id": "identity_new_recovery_epoch_new_idempotency_key",
+      "event_type": "coordination.agent_crashed",
+      "project_id": "project_fixture_alpha",
+      "agent_id": "agent_fixture_7",
+      "agent_revision": 6,
+      "recovery_epoch": 4,
+      "expected_idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_7:4:6",
+      "expected_event_id_preimage": "[\"4f1c2d3e-5a6b-4c7d-8e9f-0a1b2c3d4e5f\",\"4\",\"project_fixture_alpha\",\"coordination.agent_crashed\",\"agent_fixture_7\",\"6\"]",
+      "expected_event_id": "evt_coordination_22c41f0df94f391a6f87f89e7c0b8fe20b7f1d41f952c5afc0c872877733c6cb",
+      "prior_recovery_epoch": 3,
+      "prior_idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_7:3:6"
     }
   ],
   "path_vectors": [

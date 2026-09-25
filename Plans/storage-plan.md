@@ -26960,7 +26960,7 @@ Otherwise the read returns typed unavailable or stale. A reader never reads mirr
 
 The identity recipe is newly defined here:
 - **Revision.** `agent_revision` is 1 at registration, and each later event of the same agent is exactly 1 higher than the agent's previous event. `expected_previous_revision`, when present, must equal `agent_revision` minus 1, and `last_applied_event_id`, when present, must equal the agent row's `last_applied_event_id`. Any other value is `stale_revision`.
-- **Idempotency key.** `idempotency_key` is `coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}`, with `agent_revision` written in base 10 without sign or leading zeros, and `replay_policy` is `dedupe_by_idempotency_key`. The dedupe identity is `(scope_partition, event_type, idempotency_key)`. The key is unambiguous within a Project even when an ID contains a colon, because the revision comes last and never contains one.
+- **Idempotency key.** `idempotency_key` is `coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}`, with `recovery_epoch` and `agent_revision` in base 10 without sign or leading zeros. `recovery_epoch` is the value the prepared event keeps for every retry, the same one its event ID uses. The epoch is in the key for the same reason as in the event ID: after a verified older restore, a newly prepared event never reuses the scoped idempotency identity of an event lost with the post-backup writes, which lasts for the lifetime of the app data root (Contracts_V0). The key stays unambiguous, because the epoch and the revision come last and never contain a colon. `replay_policy` is `dedupe_by_idempotency_key`, and the dedupe identity is `(scope_partition, event_type, idempotency_key)`.
 - **Event ID.** `event_id` is `evt_coordination_` followed by the lowercase hex SHA-256 of the RFC 8785 JSON array of strings `[storage_instance_id, recovery_epoch, project_id, event_type, agent_id, agent_revision]`, with `recovery_epoch` and `agent_revision` in base 10. `storage_instance_id` and `recovery_epoch` are Storage's actual values (Case L-2) when the coordinator prepares the event, and the prepared event keeps them for every retry. The epoch keeps an event prepared after a verified older restore from reusing the ID of an event lost with the post-backup writes. A retry that the dedupe policy matches returns the original event ID, as SP-286 resolves an alternate incoming ID. No clock, retry count, attempt or checkpoint generation enters either recipe.
 - **Agent identity.** A restore can remove registrations from the store, so the uniqueness of `agent_id` (OSI-438) cannot rest on a lookup of earlier registrations. The registering component allocates it from fresh entropy, or derives it only from owner-issued identities that are themselves never reused.
 - **Lineage.** Every later event repeats the lineage its registration fixed. `project_id`, `run_id` and `platform` must equal the registration's. `thread_id`, `agent_type`, `parent_run_id`, `child_run_id`, `node_id`, `lane_id` and `worktree_id` may be omitted, and must equal the registration's when present. A differing value is `lineage_mismatch`.
@@ -27056,13 +27056,14 @@ canonical_text: >-
   (DL-076), examined bounds, an inclusive cursor, filter completeness, state, health and same-key generation
   custody. Projection rows and the checkpoint advance in one redb transaction under prior-value compare-and-swap.
   agent_revision advances by exactly 1; the idempotency key is
-  coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}; the event ID is evt_coordination_ plus a
-  SHA-256 over RFC 8785 identity strings; stale writes return coordination_conflict. The transition table admits
-  registration first and exactly one terminal event, releases claims at the terminal event and makes replay after it
-  a no-op. The append path adopts SP-286/CV-339 storage.first_append_receipt.resolve.v2. Custody keeps refs,
-  hashes, IDs and bounded text, with an exact path_hash recipe. RP-COORDINATION-180D binds its run_completion anchor
-  to the Run's terminal canonical record and keeps records of unresolved Runs unexpired. Replay, recovery, admission
-  growth and per-family withdrawal are fenced and rebuild from seglog. Nothing is admitted.
+  coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, with the recovery epoch its
+  event ID uses; the event ID is evt_coordination_ plus a SHA-256 over RFC 8785 identity strings; stale writes return
+  coordination_conflict. The transition table admits registration first and exactly one terminal event, releases
+  claims at the terminal event and makes replay after it a no-op. The append path adopts SP-286/CV-339
+  storage.first_append_receipt.resolve.v2. Custody keeps refs, hashes, IDs and bounded text, with an exact path_hash
+  recipe. RP-COORDINATION-180D binds its run_completion anchor to the Run's terminal canonical record and keeps
+  records of unresolved Runs unexpired. Replay, recovery, admission growth and per-family withdrawal are fenced and
+  rebuild from seglog. Nothing is admitted.
 gui_related: false
 gui_classification_reason: Defines backend persistence, identity, replay and checkpoint authority, not presentation.
 depends_on: [DL-045, DL-076, SP-232, SP-278, SP-286, CV-339, OSI-438, CV-353]
