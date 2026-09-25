@@ -244,6 +244,12 @@
       "replan_v3_whole_definitions": "4102/4111"
     }
   },
+  "raw_evidence": {
+    "path": "/tmp/claude-0/-home-user-Puppet-Master/e8a4a4d6-d9cf-5608-ab1e-bc8842bb958d/scratchpad/a1-compile/",
+    "sha256_list": "a1/A1-full-outputs.SHA256SUMS",
+    "location": "the cloud session's scratchpad: ephemeral and not on the NAS, which the cloud session cannot reach; the files do not outlive the session, so a1/A1-full-outputs.SHA256SUMS is the durable record",
+    "consistency_rerun": "the task-1 consistency check (check_filled.py; 373 checks, 0 failed) was re-run on 2026-09-25 at 14:07Z on the unchanged filled drafts, which equal the text appended at 94585533b byte for byte; the original run's output was not kept"
+  },
   "scope_limits": [
     "Canonical source contracts only, for a genuine fresh all_writers.v8 birth and its producer_source.v3 component; all_writers.v6 and v7 births keep their closed scope.",
     "No Event registry row, payload successor, consumer, projector or checkpoint is supplied; the goal_run.replanned row stays at v2 and unselected.",
