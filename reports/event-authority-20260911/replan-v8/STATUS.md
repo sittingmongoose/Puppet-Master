@@ -93,15 +93,18 @@ A local session that Jared designates lands the branch. Prerequisites:
     #   git add Plans/.plan_index/node_readiness_report.json && git commit   # the regenerated readiness report
     #   python3 -m unittest tests.test_pm_onboarding_phases tests.test_shared_runtime_storage_contracts tests.test_pm_assistant_contract_closure
     #   sha256sum Plans/storage_value_registry.json   # 45e383b2aedf8056cc21d300d96d44c3088e91f93d0d8f3a46415e965db94c13 while main is at 63cf2cb97f
-    #   push the branch again (it moved)
+    #   git push --force-with-lease origin plans/replan-v8-a1-20260925   # the rebase rewrote it
     cd /mnt/Cursor/PuppetMaster && git status --short   # must show nothing in any file the branch touches
     git merge --ff-only origin/plans/replan-v8-a1-20260925
     python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
     python3 scripts/pm-landing-check.py --base origin/main --keep-check-reports /mnt/Cursor/PuppetMaster-Evidence/landing-checks/replan-v8-a1-20260925
     git push origin main        # or, if anything stops the landing: git reset --keep origin/main
     # landing record: reports/landing-checks/LANDING_<date>_REPLAN_V8_A1.md
-    rm -r /mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held
+    git -C <landing worktree path> restore Plans/.plan_index   # drop the generated_at_utc-only changes
+    git -C /mnt/Cursor/PuppetMaster worktree remove <landing worktree path>
+    git -C /mnt/Cursor/PuppetMaster branch -d plans/replan-v8-a1-20260925
     git push origin --delete plans/replan-v8-a1-20260925
+    rm -r /mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held
 
 **Expected landing check.** Exit 1 with 0 blocking items. The rows naming this branch's files should be governance staleness only: Spec Lock `stale_hash` for the edited documents, the registry and the readiness script; `artifact_hash_stale` evidence and plan-graph rows for the edited documents and their shards; currentness drift; the PNC-019 source hashes; run-002 batch rows; the readiness report; the current snapshot. Any other failure on the branch's files stops the landing. The node readiness report must be regenerated with the receipt present and committed before this check. A `stale_generated_index_artifact` on it means that step was skipped or ran without the receipt; redo it on the branch before pushing `main`.
 
