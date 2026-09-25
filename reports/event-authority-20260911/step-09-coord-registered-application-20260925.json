@@ -16,7 +16,7 @@
   "form": {
     "name": "R (R6 recommended form)",
     "ruling": "Host ruling (c), 2026-09-25: R6 form R approved for the admission record step.",
-    "finding": "R6 simulation, evidence /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-coord-registered-prep-20260925/r6/ (analysis.json SHA-256 75e61f98c7095074de689d3d16566f4eb9439e4798a9327cbd9231f844d5701c; the directory's SHA256SUMS b4ffbbad73f822cb09a12a002aa07c5fb7c2f3383f551dd387a1b0cbc20dafa3): the seal check reads the same failures for form R as for the unchanged row, and a completely recorded family is excluded from every blocking and depth check.",
+    "finding": "R6 simulation, evidence /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-coord-registered-prep-20260925/r6/ (analysis.json SHA-256 75e61f98c7095074de689d3d16566f4eb9439e4798a9327cbd9231f844d5701c; the evidence directory's SHA256SUMS, step-09-coord-registered-prep-20260925/SHA256SUMS, b4ffbbad73f822cb09a12a002aa07c5fb7c2f3383f551dd387a1b0cbc20dafa3): the seal check reads the same failures for form R as for the unchanged row, and a completely recorded family is excluded from every blocking and depth check.",
     "kept_byte_for_byte": {
       "row_file_and_ledger_line": "every field except disposition_rationale, including bucket, working_bucket, july_classification, disposition, cohort_pins, the retained evidence cells, citations_checked, provisional, the inference flags and phase1_application",
       "census_line": "every field except notes and evidence_refs, including category, disposition, cohort_pins and phase1_application"
