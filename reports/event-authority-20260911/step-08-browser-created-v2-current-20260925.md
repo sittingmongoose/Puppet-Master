@@ -37,10 +37,11 @@ Derived files are regenerated with the currentness edition present: the `storage
 - **Order.** Both preconditions are met: the first half is on `main` (`a3d6bb616b`, record `1e5d9b097b`), and so is the landing-check exports repair, so evidence and plan graph are keyed from their complete exports. The branch edits `Plans/storage-plan.md` (85 plan-sharding rows, already stale on `main`) and `Plans/storage_value_registry.json` (554 rows including its shards, all new).
 - **At landing.** Rebase onto `main`, and regenerate the derived files with the currentness edition present, never hand-merged. Then rerun the checks above.
 - **Reseal request:**
-  - the Spec Lock entries of `Plans/storage_value_registry.json`, `Plans/storage-plan.md`, `Plans/Section15_MVP_Promoted_Features_Spec.md` and `scripts/pm-implementation-readiness.py`;
+  - the Spec Lock entries of `Plans/storage_value_registry.json`, `Plans/storage-plan.md` and `scripts/pm-implementation-readiness.py` (Section 15 has no Spec Lock entry);
   - the PNC-019 receipt's pin of `Plans/storage_value_registry.json`;
-  - the plan-sharding evidence rows of the three documents and their shards;
+  - the plan-sharding evidence rows of the three documents and their shards; for `Plans/_shards/storage_value_registry` the file list changes too, because regeneration renamed the last shard: `551-lines-110001-110108.md` is gone and `551-lines-110001-110200.md` to `555-lines-110801-110832.md` are new;
   - a currentness edition covering them;
+  - run-002 `refresh-batch-hashes` for batch report rows 168 to 170 and 173 to 180 (already on the wave's list);
   - the readiness report and the migration snapshot.
 
 ## Effect on the depth grades
