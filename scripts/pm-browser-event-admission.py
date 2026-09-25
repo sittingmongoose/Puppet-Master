@@ -31,6 +31,17 @@ ORIGINAL40_SHA256 = "4f701c9598003d7c01a405f18f7991b373379eca8b182cf6222540a4746
 CURRENT39_SHA256 = "e2b5a433c668a36ffe3ffdc329f90a0f860b680bbc54fb9c596d1a302c6cd306"
 COMPACTION_FAMILY = "event-family-context-compaction-completed"
 COORDINATION_LEDGER = "Plans/coordination_event_admission.json"
+# The exact seven Step 9 batch 2 families (DL-045). The coordination ledger can open no other family,
+# whatever its rows say; the gate does not validate the ledger against its schema.
+COORDINATION_EVENT_TYPES = frozenset({
+    "coordination.agent_registered",
+    "coordination.agent_status_updated",
+    "coordination.agent_operation_updated",
+    "coordination.agent_file_ownership_updated",
+    "coordination.agent_unregistered",
+    "coordination.agent_crashed",
+    "coordination.agent_aborted",
+})
 # Whole-row pins independently taken from each adoption commit, never generated
 # from the live registry. Historical pins are from b09294e44b. No sibling or
 # field-level exemption follows from these exact six owner adoptions.
@@ -150,8 +161,10 @@ def admitted_coordination_rows():
 
     Step 9 batch 2 (DL-045): each coordination family is admitted in its own
     landing under DL-078, which appends its prepared registry_row unchanged.
-    A row is accepted only as that exact prepared row. A prepared, out-of-batch,
-    changed or unreadable row stays unexpected, and no other family is opened.
+    A row is accepted only as that exact prepared row, and only for one of the seven
+    coordination event types, with the ledger row's own family ID and event type. A
+    prepared, out-of-batch, changed, foreign or unreadable row stays unexpected, and no
+    other family is opened.
     """
     try:
         rows = load_json(COORDINATION_LEDGER)["rows"]
@@ -162,6 +175,9 @@ def admitted_coordination_rows():
         for row in rows
         if isinstance(row, dict) and row.get("admission_status") == "admitted_static_contract"
         and isinstance(row.get("registry_row"), dict)
+        and row.get("event_type") in COORDINATION_EVENT_TYPES
+        and row["registry_row"].get("event_type") == row.get("event_type")
+        and row["registry_row"].get("family_id") == row.get("family_id")
     }
 
 

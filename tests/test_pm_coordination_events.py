@@ -585,6 +585,16 @@ class ClosedWorldGuardTests(unittest.TestCase):
         mirror = dict(changed, family_revision="1.0.0", event_type=CHECK.MIRROR, family_id="event-family-coordination-debug-mirror-exported")
         self.assertIn("unexpected_central_event_family", self.browser_failures(with_row(self.first_registry, mirror), self.first))
 
+    def test_browser_gate_opens_no_family_outside_the_seven(self):
+        # A ledger row marked admitted can open only its own coordination family, never another one.
+        foreign = copy.deepcopy(self.first)
+        other = dict(foreign["rows"][0]["registry_row"], event_type="crew.formed", family_id="event-family-crew-formed")
+        foreign["rows"][0]["registry_row"] = other
+        self.assertIn("unexpected_central_event_family", self.browser_failures(with_row(PREP_REGISTRY, other), foreign))
+        relabelled = copy.deepcopy(foreign)
+        relabelled["rows"][0].update(event_type="crew.formed", family_id="event-family-crew-formed")
+        self.assertIn("unexpected_central_event_family", self.browser_failures(with_row(PREP_REGISTRY, other), relabelled))
+
     def test_browser_gate_fails_closed_without_a_readable_ledger(self):
         def unreadable(path):
             raise OSError(path)
