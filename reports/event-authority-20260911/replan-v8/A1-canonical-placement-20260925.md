@@ -97,7 +97,7 @@ It accepts source for canonical compilation only: `canonical_adoption`, `install
 | ATS-060 | `Automated_Testing_System.md` | Limited Stop revocation acceptance: the seven positive-route source obligations, the D06 negatives and native NOT_RUN |
 | BRS-031 | `Backup_Restore_System.md` | Mandatory coherent custody and restore of the enrollment, slot journal and Replan authority families; fenced partial restore; no rekey, backfill or reconstruction |
 
-Every unit carries the same `source_lineage`: the external source `9ed8ba4f…`, the package `bb6be609…`, the independent review `62d94dc1…`, the root review `a7f5bb5f…`, the Stop review v3 `c9271320…`, the Stop root acceptance `ab69b0a9…` and A0's report `297b0f29…` (its SHA-256 at `632f557c0`). The appended text is 1,747 lines: EP +376, GRS +418, CV +152, SP +268, ATS +401, BRS +132.
+Every unit carries the same `source_lineage`: the external source `9ed8ba4f…`, the package `bb6be609…`, the independent review `62d94dc1…`, the root review `a7f5bb5f…`, the Stop review v3 `c9271320…`, the Stop root acceptance `ab69b0a9…` (its `acceptance.json`; manifest `dc58f7d2…`) and A0's report `297b0f29…` (its SHA-256 at `632f557c0`). The appended text is 1,747 lines: EP +376, GRS +418, CV +152, SP +268, ATS +401, BRS +132.
 
 ## 5. The 74 files and the 34 rows
 
