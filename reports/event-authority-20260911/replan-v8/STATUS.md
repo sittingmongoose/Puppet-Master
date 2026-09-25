@@ -14,11 +14,14 @@ The thread runs in a cloud session, which cannot reach the NAS or the shared che
 
 **Review.** Pending: one blind form-driven review, capped at two cycles.
 
-**Open questions.** Q-01 to Q-12 in the report. Four need Jared:
+**Open questions.** Q-01 to Q-12 in the report. On 2026-09-25 Jared routed five process questions to the PM Low cost/complexity process thread, which has authority on them:
 - Q-02: DL-078 and row revisions.
 - Q-03: DL-077 records for families among the original 37.
 - Q-09: what "B01" is.
 - Q-12: may A1 install with D06 unavailable?
+- Where A1's canonical-draft package lives: proposed as a branch of PuppetMaster-Packages, which needs push access.
+
+That thread runs on the VM, and this cloud session cannot message it. Jared relays the questions. The answers come back as `reports/event-authority-20260911/replan-v8/process-answers-20260925.md` on the branch `reports/replan-v8-process-answers-20260925`, or through Jared. Until then this thread follows the recommendations in the questions and lands nothing that depends on them.
 
 ## Landing A0 (on the VM)
 
@@ -37,6 +40,12 @@ The branch touches only `reports/event-authority-20260911/replan-v8/`. It edits 
     git push origin --delete plans/replan-v8-a0-20260925
 
 **Expected landing check.** Exit 0 or 1. No failure can name a file this branch touches except the new report files, and no check reads them.
+
+**Cloud preview.** `pm-landing-check.py --base origin/main` ran on `c0e9644a57` in the cloud clone, a full checkout, in 3 minutes. It exited 1: nothing stops the landing. The baseline `792d2fb8b1` is current. No row names a path this branch touches. 647 rows are new since the baseline, and all of them are off-branch:
+- Staleness left on `main` by the Step 8(d) landing: Spec Lock `stale_hash` for `Goal_Runtime_System.md` and `storage-plan.md`, and the 143 plan-sharding evidence and plan-graph rows, keyed from their exports.
+- Rows from the cloud environment, for example `raw_capture_manifest_path_unresolved` on `tests/fixtures/governance/raw_evidence_capture_modes.json`. The NAS path behind `tests/agent_packet_restrictions` does not exist here.
+
+The landing check on the VM is the one that counts.
 
 **Reseal items.** None are caused by this branch. It carries forward R-1: the certified-family pins that were already stale on `main`.
 - `goal_certified_family_composition.json` members `00-plans-index.md`, `Goal_Runtime_System.md`, `storage-plan.md` and `storage_value_registry.json`.
