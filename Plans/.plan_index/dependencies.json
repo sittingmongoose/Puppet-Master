@@ -6654,6 +6654,7 @@
     "UIW-019",
     "F3-528",
     "SSYS-027",
+    "EP-125",
     "CV-351",
     "SP-314",
     "GRS-084",
@@ -6670,6 +6671,7 @@
     "C-052",
     "F3-529",
     "SSYS-028",
+    "EP-126",
     "CV-352",
     "ATS-055",
     "SP-315",
@@ -6688,8 +6690,10 @@
     "F3-561",
     "SCS-017",
     "SSYS-029",
+    "EP-127",
     "ATS-056",
     "SP-316",
+    "GRS-086",
     "SIR-053",
     "F3-545",
     "F3-547",
@@ -6706,6 +6710,8 @@
     "SSYS-030",
     "ATS-057",
     "SP-317",
+    "CV-354",
+    "GRS-087",
     "DL-053",
     "DL-054",
     "F3-531",
@@ -6717,6 +6723,8 @@
     "CV-330",
     "F3-555",
     "SSYS-031",
+    "SP-321",
+    "GRS-088",
     "F3-532",
     "F3-533",
     "F3-539",
@@ -6724,11 +6732,15 @@
     "F3-556",
     "CV-331",
     "SSYS-032",
+    "SP-322",
+    "GRS-089",
     "F3-534",
     "F3-535",
     "F3-541",
     "UCC-163",
     "SSYS-033",
+    "ATS-059",
+    "BRS-031",
     "F3-536",
     "F3-538",
     "F3-540",
@@ -6738,6 +6750,7 @@
     "BSD-028",
     "SSYS-034",
     "SSYS-035",
+    "ATS-060",
     "F3-543",
     "BSD-029",
     "ATS-047",
@@ -12855,6 +12868,41 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ATS-059",
+      "to": "ATS-057"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-059",
+      "to": "CV-354"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-059",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-059",
+      "to": "SP-322"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-060",
+      "to": "ATS-059"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-060",
+      "to": "EP-127"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-060",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "BBI-001",
       "to": "FGI-001"
     },
@@ -13522,6 +13570,26 @@
       "edge_type": "depends_on",
       "from": "BRS-029",
       "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-031",
+      "to": "BRS-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-031",
+      "to": "BRS-029"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-031",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-031",
+      "to": "SP-322"
     },
     {
       "edge_type": "depends_on",
@@ -21905,6 +21973,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-354",
+      "to": "CV-352"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-354",
+      "to": "EP-125"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-354",
+      "to": "GRS-086"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-354",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -25146,6 +25234,61 @@
     {
       "edge_type": "depends_on",
       "from": "EP-124",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-125",
+      "to": "EP-117"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-125",
+      "to": "EP-118"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-125",
+      "to": "EP-119"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-125",
+      "to": "EP-124"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-125",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-126",
+      "to": "EP-125"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-126",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-127",
+      "to": "EP-119"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-127",
+      "to": "EP-121"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-127",
+      "to": "EP-126"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-127",
       "to": "PDS-003"
     },
     {
@@ -30246,6 +30389,96 @@
     {
       "edge_type": "depends_on",
       "from": "GRS-085",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-086",
+      "to": "EP-126"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-086",
+      "to": "GRS-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-086",
+      "to": "GRS-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-086",
+      "to": "GRS-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-086",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-087",
+      "to": "DL-080"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-087",
+      "to": "GRS-070"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-087",
+      "to": "GRS-086"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-087",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-088",
+      "to": "EP-125"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-088",
+      "to": "GRS-084"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-088",
+      "to": "GRS-087"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-088",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-089",
+      "to": "EP-127"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-089",
+      "to": "GRS-073"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-089",
+      "to": "GRS-078"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-089",
+      "to": "GRS-088"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-089",
       "to": "PDS-003"
     },
     {
@@ -69865,6 +70098,56 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-321",
+      "to": "CV-354"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-321",
+      "to": "DL-076"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-321",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-321",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-321",
+      "to": "SP-308"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-321",
+      "to": "SP-316"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-321",
+      "to": "SP-319"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-322",
+      "to": "EP-127"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-322",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-322",
+      "to": "SP-321"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -98919,7 +99202,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-25T09:03:46Z",
+  "generated_at_utc": "2026-09-25T12:42:23Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -111961,6 +112244,40 @@
       "unit_type": "validation_criterion"
     },
     {
+      "context_scope": "ats-059_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-059",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "ATS-059 — Thirteen combined all_writers.v8 source-to-native acceptance facets, status-field check reading and truthful NOT_RUN boundaries (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 5305,
+        "line": 5307,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ats-060_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-060",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "ATS-060 — Limited Stop revocation acceptance: seven positive-route source obligations, D06 negatives and native NOT_RUN (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 5519,
+        "line": 5521,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -112686,6 +113003,23 @@
         "heading_level": 2,
         "heading_line": 1701,
         "line": 1703,
+        "path": "Plans/Backup_Restore_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "brs-031_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "plan_unit_id": "BRS-031",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "BRS-031 — Mandatory coherent custody of the all_writers.v8 enrollment, slot journal and Replan authority families; restore under the whole installed profile and a compatible birth, fenced partial restore, no rekey, backfill or reconstruction (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 1771,
+        "line": 1773,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -124150,6 +124484,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "cv-354_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-354",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "CV-354 — Whole all_writers.v8 schema roots, canonical identifiers and frozen literals, coordinator v2 successors, canonical realm bindings, method-root closure and descriptor digests (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 23489,
+        "line": 23491,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/chain-wizard.md",
@@ -133069,6 +133420,57 @@
         "heading_level": 2,
         "heading_line": 8609,
         "line": 8611,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ep-125_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-125",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "EP-125 — Fresh all_writers.v8 before-birth installation; combined descriptor, birth-only enrollment, combined guard and exclusive operation slot, disjoint generation sources and the 323-occurrence successor map (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 8684,
+        "line": 8686,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ep-126_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-126",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "EP-126 — Replan native-first application, graph-lock generation, D01 inventory observation and source-level release; Executor and D01 lower-owner obligations (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 8800,
+        "line": 8802,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ep-127_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-127",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "EP-127 — Limited run-execution revocation Stop route; revoke and read run-execution revocation, native phase selection, actual invalidation, exhaustive slot afterimages and readback; D06 carried with its issuer unbound (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 8915,
+        "line": 8917,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -152398,6 +152800,74 @@
         "heading_level": 2,
         "heading_line": 7875,
         "line": 7877,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "grs-086_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-086",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "GRS-086 — Workflow Replan original source for all_writers.v8 births: bounded manager decision, compile and impact sources, disposition bijection and unchosen next action (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 7945,
+        "line": 7947,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "grs-087_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-087",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "GRS-087 — Source-level goal_run.replanned publication without Event admission: ProducerIntent, producer finalization, separate clocks and exact idempotency; registry row and payload unchanged (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 8052,
+        "line": 8054,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "grs-088_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-088",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "GRS-088 — Certified v3 publication for all_writers.v8 births through coordinator, identity and append-phase v2 beside v1; the v7 row, projection, storage and consumer do not admit v8 births (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 8167,
+        "line": 8169,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "grs-089_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-089",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "GRS-089 — Goal Stop in the combined route: independent current Goal Stop, GoalStoppedCurrentAcquisition, no stopped or blocked Event and no new restart route (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 8267,
+        "line": 8269,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -200378,6 +200848,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "sp-321_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-321",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "SP-321 — Workflow Replan original source and compact authority families, durable release token and v8 version scope (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 27107,
+        "line": 27109,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "sp-322_whole_combined_v8_family",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-322",
+      "reasoning_tier": "high",
+      "risk_class": "original_source_authority_native_transaction_and_lifetime",
+      "source_location": {
+        "heading": "SP-322 — Combined Workflow operation-guard families, v8 profile-qualified stored routes and Stop revocation custody (2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 27264,
+        "line": 27266,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -213542,10 +214046,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15735,
+    "depends_on_edge_count": 15789,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18434,
-    "node_count": 6742,
+    "edge_count": 18488,
+    "node_count": 6755,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0

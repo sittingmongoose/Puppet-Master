@@ -1755,10 +1755,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 25,
+        "False": 27,
         "True": 33
       },
-      "heading_count": 124,
+      "heading_count": 126,
       "implementation_surfaces": [
         "Concepts/pm7-tools/global_hover_tags_source.py",
         "Concepts/pm7-tools/home_workspace_source.py",
@@ -1813,8 +1813,10 @@
         "Plans/testing_session_command_contracts.schema.json",
         "Plans/testing_session_event_payloads.schema.json",
         "Plans/touch_closure.json",
+        "Plans/workflow_combined_source_contracts",
         "Plans/workflow_standard_source_contracts",
         "Plans/workflow_standard_source_contracts/native-v7",
+        "Plans/workflow_standard_source_contracts/native-v8",
         "Plans/working_notebook_contract_fixtures.json",
         "Plans/working_notebook_contracts.schema.json",
         "future DRY Method tests",
@@ -1852,9 +1854,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 5302,
+      "line_count": 5703,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 58,
+      "plan_unit_count": 60,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -1913,7 +1915,9 @@
         "ATS-055",
         "ATS-056",
         "ATS-057",
-        "ATS-058"
+        "ATS-058",
+        "ATS-059",
+        "ATS-060"
       ],
       "reasoning_tiers": [
         "high",
@@ -1973,16 +1977,16 @@
         "web_gui_dev_test_authority_leak",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "77c423bd3bc6d7a7a59af0b4903e4ad76ef80b34d20f84dc8cc7a34ef635ef95",
+      "sha256": "a264c124b39b9aed1aca93380904bcb6b96837411fbc07a720d7277d7652e8f1",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 58
+        "accepted": 60
       },
       "title": "Automated Testing System",
       "unit_type_counts": {
         "acceptance_contract": 3,
         "constraint": 1,
-        "requirement": 24,
+        "requirement": 26,
         "schema_contract": 3,
         "validation_contract": 1,
         "validation_criterion": 26
@@ -2037,6 +2041,7 @@
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
+        "Plans/storage_value_registry.json",
         "Plans/workflow_activation_contracts/activation-field-map.json",
         "Plans/workflow_activation_contracts/association-hash-dependencies.json",
         "Plans/workflow_activation_contracts/compiler-field-map.json",
@@ -2046,8 +2051,19 @@
         "Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
         "Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
         "Plans/workflow_activation_contracts/source-control-field-map.json",
+        "Plans/workflow_combined_source_contracts/canonical-inverse.json",
+        "Plans/workflow_combined_source_contracts/composition.json",
+        "Plans/workflow_combined_source_contracts/installed-profile.json",
+        "Plans/workflow_combined_source_contracts/protocol.md",
+        "Plans/workflow_combined_source_contracts/replan/protocol.md",
+        "Plans/workflow_combined_source_contracts/schemas/workflow-combined-stop-execution-revocation.v2.schema.json",
+        "Plans/workflow_combined_source_contracts/stop-native-participants.json",
+        "Plans/workflow_combined_source_contracts/stop-positive-route-obligations.json",
+        "Plans/workflow_combined_source_contracts/stop-protocol.md",
+        "Plans/workflow_combined_source_contracts/superseded-lineage.json",
         "Plans/workflow_standard_source_contracts/installation-composition.json",
         "Plans/workflow_standard_source_contracts/literal-resource-realms.json",
+        "Plans/workflow_standard_source_contracts/native-v8/protocol.md",
         "Plans/workflow_standard_source_contracts/stored-profile-routes.json",
         "Plans/working_notebook_contract_fixtures.json",
         "Plans/working_notebook_contracts.schema.json",
@@ -2352,10 +2368,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 10,
+        "False": 11,
         "True": 19
       },
-      "heading_count": 57,
+      "heading_count": 58,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -2381,7 +2397,9 @@
         "Plans/newtools.md",
         "Plans/storage-plan.md",
         "Plans/touch_closure.json",
+        "Plans/workflow_combined_source_contracts",
         "Plans/workflow_standard_source_contracts/native-v7",
+        "Plans/workflow_standard_source_contracts/native-v8",
         "future BackupCoordinator and BackupEngineAdapter",
         "future RecoverySetKeyService",
         "future backup coordinator",
@@ -2393,9 +2411,9 @@
         "future restore coordinator",
         "future security adapter registry"
       ],
-      "line_count": 1768,
+      "line_count": 1900,
       "path": "Plans/Backup_Restore_System.md",
-      "plan_unit_count": 29,
+      "plan_unit_count": 30,
       "plan_unit_ids": [
         "BRS-001",
         "BRS-002",
@@ -2425,7 +2443,8 @@
         "BRS-026",
         "BRS-027",
         "BRS-028",
-        "BRS-029"
+        "BRS-029",
+        "BRS-031"
       ],
       "reasoning_tiers": [
         "high",
@@ -2461,10 +2480,10 @@
         "unsafe_restore_or_false_operational_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "c4f00ec4f86bee8f080b7defebc6d49311e86d1c4dc6a7bc66c827087a4e16c7",
+      "sha256": "2338d293bd269077482263ca5136d5023b525a003e0f82460452d4ab5a03df26",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 29
+        "accepted": 30
       },
       "title": "Backup And Restore System",
       "unit_type_counts": {
@@ -2475,7 +2494,7 @@
         "operational_policy": 1,
         "owner_boundary": 1,
         "recovery_requirement": 4,
-        "requirement": 6,
+        "requirement": 7,
         "schema_contract": 5,
         "security_requirement": 2,
         "validation_requirement": 1
@@ -2523,6 +2542,11 @@
         "Plans/workflow_activation_contracts/methods.json",
         "Plans/workflow_activation_contracts/physical-families.json",
         "Plans/workflow_activation_contracts/retention-field-classification.json",
+        "Plans/workflow_combined_source_contracts/composition.json",
+        "Plans/workflow_combined_source_contracts/physical-families.json",
+        "Plans/workflow_combined_source_contracts/protocol.md",
+        "Plans/workflow_combined_source_contracts/replan/protocol.md",
+        "Plans/workflow_combined_source_contracts/stop-protocol.md",
         "future DST catch-up hold lease prune corruption and isolated-drill tests",
         "future backup and restore drill receipts",
         "future crash/barrier/GC/source-host/move/staging-capacity/runtime tests",
@@ -4137,10 +4161,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 278,
+        "False": 279,
         "True": 73
       },
-      "heading_count": 544,
+      "heading_count": 545,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4223,8 +4247,10 @@
         "Plans/touch_closure.schema.json",
         "Plans/ui_command_response.schema.json",
         "Plans/usage-feature.md",
+        "Plans/workflow_combined_source_contracts",
         "Plans/workflow_standard_source_contracts",
         "Plans/workflow_standard_source_contracts/native-v7",
+        "Plans/workflow_standard_source_contracts/native-v8",
         "future Teacher activity and guided action records",
         "future canonical route schema and resolver",
         "future discovery receipt schemas",
@@ -4238,9 +4264,9 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 23486,
+      "line_count": 23638,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 351,
+      "plan_unit_count": 352,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4592,7 +4618,8 @@
         "CV-349",
         "CV-350",
         "CV-351",
-        "CV-352"
+        "CV-352",
+        "CV-354"
       ],
       "reasoning_tiers": [
         "high",
@@ -4948,10 +4975,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "56742a9c78668b4856133be6179aa1e3e162a7a9d28cbeacd6c78f88c7dae6c9",
+      "sha256": "e7296553babef18b777b1c02e00867d34b4f2eb32874410a39ac9fc2b9f3ebd5",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 351
+        "accepted": 352
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -4961,7 +4988,7 @@
         "future_scope_decision": 1,
         "integration_contract": 3,
         "owner_boundary": 1,
-        "requirement": 227,
+        "requirement": 228,
         "schema_contract": 27,
         "source_lineage_residual_disposition": 1
       },
@@ -5042,6 +5069,16 @@
         "Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
         "Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
         "Plans/workflow_activation_schema_resources.json",
+        "Plans/workflow_combined_source_contracts/active-resource-ids.json",
+        "Plans/workflow_combined_source_contracts/canonical-inverse.json",
+        "Plans/workflow_combined_source_contracts/composition.json",
+        "Plans/workflow_combined_source_contracts/installed-profile.json",
+        "Plans/workflow_combined_source_contracts/method-root-bindings.json",
+        "Plans/workflow_combined_source_contracts/original-reference-routing.json",
+        "Plans/workflow_combined_source_contracts/producer/installed-profile.json",
+        "Plans/workflow_combined_source_contracts/rename-map.json",
+        "Plans/workflow_combined_source_contracts/resource-realms.json",
+        "Plans/workflow_combined_source_contracts/superseded-lineage.json",
         "Plans/workflow_standard_source_contracts/installation-composition.json",
         "Plans/workflow_standard_source_contracts/literal-resource-realms.json",
         "Plans/workflow_standard_source_contracts/stored-profile-routes.json",
@@ -6114,10 +6151,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 107,
+        "False": 110,
         "True": 17
       },
-      "heading_count": 280,
+      "heading_count": 283,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -6151,15 +6188,17 @@
         "Plans/storage-plan.md",
         "Plans/storage_value_registry.json",
         "Plans/usage-feature.md",
+        "Plans/workflow_combined_source_contracts",
         "Plans/workflow_standard_source_contracts",
         "Plans/workflow_standard_source_contracts/native-v7",
+        "Plans/workflow_standard_source_contracts/native-v8",
         "future Executor Builder/Verifier routes",
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 8681,
+      "line_count": 9057,
       "path": "Plans/Executor_Protocol.md",
-      "plan_unit_count": 124,
+      "plan_unit_count": 127,
       "plan_unit_ids": [
         "EP-002",
         "EP-003",
@@ -6284,7 +6323,10 @@
         "EP-121",
         "EP-122",
         "EP-123",
-        "EP-124"
+        "EP-124",
+        "EP-125",
+        "EP-126",
+        "EP-127"
       ],
       "reasoning_tiers": [
         "high",
@@ -6319,15 +6361,15 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "53125b0e45132356d0d316a172676cde8e6737c78c43012c9713e34fcd303c89",
+      "sha256": "678a1f907845cb356373658edf4b70d5459d93076620cf539c03d4ee2921fe17",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 124
+        "accepted": 127
       },
       "title": "Overseer Protocol (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 2,
-        "requirement": 117,
+        "requirement": 120,
         "schema_contract": 5
       },
       "validation_surfaces": [
@@ -6381,8 +6423,27 @@
         "Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
         "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
         "Plans/workflow_activation_contracts/source-control-field-map.json",
+        "Plans/workflow_combined_source_contracts/birth-native-correspondence.json",
+        "Plans/workflow_combined_source_contracts/complete-method-occurrences.json",
+        "Plans/workflow_combined_source_contracts/composition.json",
+        "Plans/workflow_combined_source_contracts/generation-correspondence.json",
+        "Plans/workflow_combined_source_contracts/guard-acquisition-predicates.json",
+        "Plans/workflow_combined_source_contracts/installed-profile.json",
+        "Plans/workflow_combined_source_contracts/new-original-methods.json",
+        "Plans/workflow_combined_source_contracts/observer-physical-joins.json",
+        "Plans/workflow_combined_source_contracts/pending-source-boundaries.json",
+        "Plans/workflow_combined_source_contracts/replan/methods.json",
+        "Plans/workflow_combined_source_contracts/replan/protocol.md",
+        "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+        "Plans/workflow_combined_source_contracts/schemas/workflow-combined-stop-execution-revocation.v2.schema.json",
+        "Plans/workflow_combined_source_contracts/slot-transition-contracts.json",
+        "Plans/workflow_combined_source_contracts/stop-native-participants.json",
+        "Plans/workflow_combined_source_contracts/stop-positive-route-obligations.json",
+        "Plans/workflow_combined_source_contracts/stop-protocol.md",
+        "Plans/workflow_combined_source_contracts/superseded-lineage.json",
         "Plans/workflow_standard_source_contracts/installation-composition.json",
         "Plans/workflow_standard_source_contracts/literal-resource-realms.json",
+        "Plans/workflow_standard_source_contracts/native-v8/methods.json",
         "Plans/workflow_standard_source_contracts/stored-profile-routes.json",
         "Provider native item IDs are kept only where allowed by replay policy.",
         "Transport decision receipts include locality, auth, replay, backpressure, fallback, and provider support",
@@ -8578,10 +8639,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 51,
+        "False": 55,
         "True": 32
       },
-      "heading_count": 210,
+      "heading_count": 214,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
         "Plans/.plan_index",
@@ -8630,8 +8691,10 @@
         "Plans/storage-plan.md",
         "Plans/storage_value_registry.json",
         "Plans/usage-feature.md",
+        "Plans/workflow_combined_source_contracts",
         "Plans/workflow_standard_source_contracts",
         "Plans/workflow_standard_source_contracts/native-v7",
+        "Plans/workflow_standard_source_contracts/native-v8",
         "future Goal Mode scheduler",
         "future Goal Mode service",
         "future Goal handoff native handler",
@@ -8647,9 +8710,9 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 7942,
+      "line_count": 8360,
       "path": "Plans/Goal_Runtime_System.md",
-      "plan_unit_count": 83,
+      "plan_unit_count": 87,
       "plan_unit_ids": [
         "GRS-001",
         "GRS-048",
@@ -8733,7 +8796,11 @@
         "GRS-082",
         "GRS-083",
         "GRS-084",
-        "GRS-085"
+        "GRS-085",
+        "GRS-086",
+        "GRS-087",
+        "GRS-088",
+        "GRS-089"
       ],
       "reasoning_tiers": [
         "high",
@@ -8816,10 +8883,10 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "f233eb9c22c5dd14e711523f968a1dad75727542998ac7f926c578499e572ad9",
+      "sha256": "4e29386674ebd3cc904fa9217d066792a464e5a9d4a0e69ea5471709f26b59c2",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 74,
+        "accepted": 78,
         "superseded": 9
       },
       "title": "Goal Runtime System",
@@ -8827,7 +8894,7 @@
         "compatibility_disposition": 2,
         "constraint": 14,
         "owner_boundary": 2,
-        "requirement": 51,
+        "requirement": 55,
         "risk": 1,
         "schema_contract": 11,
         "validation_criterion": 2
@@ -8936,6 +9003,11 @@
         "Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
         "Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
         "Plans/workflow_activation_schema_resources.json",
+        "Plans/workflow_combined_source_contracts/composition.json",
+        "Plans/workflow_combined_source_contracts/installed-profile.json",
+        "Plans/workflow_combined_source_contracts/protocol.md",
+        "Plans/workflow_combined_source_contracts/replan/protocol.md",
+        "Plans/workflow_combined_source_contracts/stop-protocol.md",
         "Plans/workflow_standard_source_contracts/installation-composition.json",
         "Plans/workflow_standard_source_contracts/literal-resource-realms.json",
         "Plans/workflow_standard_source_contracts/stored-profile-routes.json",
@@ -17354,10 +17426,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 212,
+        "False": 214,
         "True": 102
       },
-      "heading_count": 781,
+      "heading_count": 783,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -17427,8 +17499,10 @@
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json",
         "Plans/usage-feature.md",
+        "Plans/workflow_combined_source_contracts",
         "Plans/workflow_standard_source_contracts",
         "Plans/workflow_standard_source_contracts/native-v7",
+        "Plans/workflow_standard_source_contracts/native-v8",
         "Plans/working_notebook_contracts.schema.json",
         "future DiscoveryIndex",
         "future History projection store",
@@ -17442,9 +17516,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 27104,
+      "line_count": 27372,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 314,
+      "plan_unit_count": 316,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -17759,7 +17833,9 @@
         "SP-316",
         "SP-317",
         "SP-319",
-        "SP-320"
+        "SP-320",
+        "SP-321",
+        "SP-322"
       ],
       "reasoning_tiers": [
         "high",
@@ -17862,10 +17938,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "011b88771f4a9fff2ed5448035e0b448232fcedfcc9eb51dcffbecfcc3fd67f7",
+      "sha256": "57d570b790eb6c47c9a6cb1c49a10ac7f6dbf63ca3fd667096ee4df22e015e76",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 311,
+        "accepted": 313,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
@@ -17874,7 +17950,7 @@
         "constraint": 4,
         "migration_contract": 2,
         "owner_boundary": 2,
-        "requirement": 257,
+        "requirement": 259,
         "schema_contract": 22,
         "security_contract": 1,
         "storage_contract": 22,
@@ -18074,8 +18150,15 @@
         "Plans/workflow_activation_contracts/methods.json",
         "Plans/workflow_activation_contracts/physical-families.json",
         "Plans/workflow_activation_contracts/retention-field-classification.json",
+        "Plans/workflow_combined_source_contracts/composition.json",
+        "Plans/workflow_combined_source_contracts/physical-families.json",
+        "Plans/workflow_combined_source_contracts/replan/protocol.md",
+        "Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json",
+        "Plans/workflow_combined_source_contracts/slot-transition-contracts.json",
+        "Plans/workflow_combined_source_contracts/stop-protocol.md",
         "Plans/workflow_standard_source_contracts/installation-composition.json",
         "Plans/workflow_standard_source_contracts/literal-resource-realms.json",
+        "Plans/workflow_standard_source_contracts/native-v8/stored-profile-routes.json",
         "Plans/workflow_standard_source_contracts/stored-profile-routes.json",
         "Plans/working_notebook_contract_fixtures.json",
         "Quota exceeded degrades with warning and exact subsystem, not crash.",
@@ -20042,7 +20125,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T09:03:46Z",
+  "generated_at_utc": "2026-09-25T12:42:23Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20050,13 +20133,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3545,
+      "False": 3558,
       "True": 3197
     },
-    "plan_unit_count": 6742,
+    "plan_unit_count": 6755,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6551,
+      "accepted": 6564,
       "retired": 182,
       "superseded": 9
     },
@@ -20123,7 +20206,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5296,
+      "requirement": 5309,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

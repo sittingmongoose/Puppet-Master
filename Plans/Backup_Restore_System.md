@@ -1766,3 +1766,135 @@ gui_classification_reason: Original source, native authority/custody, schema, st
 ```
 
 ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-029, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
+
+
+## BRS-031 — Mandatory coherent custody of the all_writers.v8 enrollment, slot journal and Replan authority families; restore under the whole installed profile and a compatible birth, fenced partial restore, no rekey, backfill or reconstruction (2026-09-25)
+
+```yaml
+plan_unit_id: BRS-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: 'Mandatory coherent backup covers the thirty-four families that SP-321 and SP-322 register for all_writers.v8
+  births: the thirty Workflow Replan original-source and compact authority families, among them the mutable workflow_replan_control
+  and the workflow_replan_release receipt, and the four combined operation-guard families workflow_combined_enrollment,
+  workflow_combined_slot, workflow_combined_slot_revision and workflow_combined_slot_origin, whose current Slot,
+  immutable SlotRevision records and SlotOrigin records form the slot journal. All are canonical_non_rebuildable
+  original authority. Backup preserves every originally issued row with its exact key, header, codec and value bytes,
+  its original issuer, native operation, transaction and origin binding, and the installed schema, method and resource
+  identity of the v8 profile. Registration as materialized is a source classification, not proof that backup participation
+  or a restore capability exists. Capture and restore keep whole native transaction cuts, including members in existing
+  registered families: the original birth transaction with every member it coissues, including Enrollment, Slot
+  revision zero, SlotRevision zero and SlotOrigin; each transaction in which a coordinator control change coissues
+  the matching Slot, SlotRevision and SlotOrigin; the Replan native application and D01 observer transactions; and
+  the limited Stop revocation transaction. A cut holding only part of such a transaction, a current Slot that is
+  not the latest record of its journal, a missing revision or a SlotOrigin without its revision is incoherent and
+  unavailable. Event append and SP-286 first custody stay separately durable and never atomic with the native store;
+  restore authenticates them separately, and a gap between an append and its native link is closed only by recovery
+  of the same original operation, never by a second Event, a replacement receipt or a value inferred from restored
+  rows. Restore admits these rows only with the whole installed v8 descriptor, Plans/workflow_combined_source_contracts/installed-profile.json,
+  whose digest both WorkflowBirth.installed_contract_digest and Enrollment.installed_descriptor_sha256 name, and
+  with a compatible genuine original v8 birth of the same scope, Storage instance and database. An old or foreign
+  birth, a different descriptor, an unknown version, a missing member or withdrawn route authority leaves the affected
+  path unavailable. Restore never performs a new fresh-profile birth, enrolls a Workflow late, initializes enrollment
+  from a restored absence or mixes restore generations. A partial restore is unavailable and mutation-fenced. Unknown,
+  missing or contradictory custody keeps its operation fenced and is neither a coherent current source nor proof
+  of nonapplication. No rekey, backfill, reconstruction from hashes or compact commitments, recreated origin, substitute
+  issuer or discarded required field obtains success. A row missing from restored custody never proves Unborn, idle,
+  not revoked or never applied; a phase counts as never having occurred only when the authentic slot journal and
+  census prove it, as for the null Replan control before prepare. workflow_replan_release stores source_read_token
+  as the nine-field durable read token. Backup keeps those nine fields exactly; no restored value holds, supplies
+  or manufactures redb_snapshot_id, and each read or recovery after restore forms the live ten-field token from
+  the stored fields and the snapshot ID of its own read transaction and revalidates it (DL-076). owner.workflow.replan.release.v1
+  stays unavailable until projection admission and an exact current Event read exist, so no release receipt can
+  yet be issued, restore never creates one, and a restored held Replan operation stays held. The limited Stop revocation
+  leaves no durable custody beyond the current Slot, the immutable revoked SlotRevision and the SlotOrigin issued
+  by owner.executor.workflow_source.record_stop.v1. Restore keeps the three together, and repeated Stop and revocation
+  readback after restore reacquire them with current Goal Stop and native sources, never an old mutable Slot body;
+  NativeExecutionRevocationResult is an ephemeral native return that is neither backed up nor reconstructed. Restored
+  slot custody never validates as a D06 StopSource, SchedulerStop or RunOperationResult with operation cancel, and
+  full original cancellation (D06) stays unavailable for v8 births. Restored bytes revive no lease, dispatch, attempt,
+  callback or effect capability, runnable release or wake: the Executor reacquires current Goal authority and complete
+  slot issuance before minting any run execution capability, recovery clears neither Stop nor source restrictions,
+  and missing or unavailable authority is never treated as nonrevocation. Thirty-three families keep RP-AUTHORITY-INDEFINITE.
+  workflow_replan_producer keeps RP-RUNTIME-365D under the original run-completion anchor, its limits and actual
+  holds; no backup copy, reference or checkpoint extends it, and when it ends, operations that need the intent are
+  unavailable rather than rebuilt from current Goal text. Full mutable native bodies, the transient source, candidate,
+  afterimage, Event and readback unions and the transient-only definitions of the physical contract are not durable
+  values: backup does not archive them and restore does not reconstruct them. Referenced mutable, native and Event
+  sources keep their own owners, lifetimes and backup. Existing hold, deletion, tombstone, permission and source-lifetime
+  controls apply to each complete typed value before restore admission; no reference creates a hold, and the owner
+  rejects unsafe material before issuance rather than trimming required fields. Rows of existing registered families
+  that a v8 birth writes through the eleven profile-qualified stored routes of Plans/workflow_standard_source_contracts/native-v8/stored-profile-routes.json
+  keep their registered mandatory backup and are restored only under their exact v8 route and header, including
+  the two .v9 headers, never reinterpreted under another route. The certified values of v8 births use the seven
+  goal_certified_event_* physical names, headers and keys under the coordinator, identity and append-phase v2 roots;
+  their Storage admission for v8 births is unavailable until a separate Storage revision, and neither this unit
+  nor BRS-029 covers their backup for v8 births. BRS-029 and SP-316 are unchanged and keep their all_writers.v7
+  scope. No projection or checkpoint family is registered for v8 births, so no optional derived generation is backed
+  up here: the Replan projection checkpoint the source authors is not a registry row and its backup belongs to its
+  separate adoption, and the mandatory run-history projection of GRS-085 and SP-317 does not admit v8 births. The
+  backup, restore, hold and deletion boundaries of these families are part of the static v8 descriptor registered
+  before genuine birth, and an unknown or incomplete restore, hold or deletion enrollment refuses birth. Backup
+  participation, restore verification and drills, and native execution of these rules remain NOT_RUN. This version-scoped
+  source applies only to a genuine fresh pm.executor.workflow_source.all_writers.v8 Workflow birth and its pm.goal_run_certified.producer_source.v3
+  component. Workflows born under all_writers.v6 or v7, and their editions, keep their closed scope; no existing
+  birth is enrolled, cast or re-read as v8. The complete source is the files under Plans/workflow_combined_source_contracts/
+  and Plans/workflow_standard_source_contracts/native-v8/, normative together. It supplies no Event registry row,
+  payload successor, consumer, projector or checkpoint. Source acceptance establishes neither installed native authority
+  nor execution, codec, transaction, durability, recovery, Event-depth or readiness proof; all such native evidence
+  and all schema instances remain NOT_RUN. No WorkNode or NodeSeed is created.'
+gui_related: false
+source_lineage:
+- external-combined-source:sha256:9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e
+- canonical-draft-package:sha256:bb6be609d20536be795bdaab41de179e85caec79e9d5973e16d6e0b3c2139ba5
+- independent-source-review:sha256:62d94dc1fa719157dc96effebcc6ad24ed7f2f8d5b5e49332eb70acbc3cc170f
+- root-placement-review:sha256:a7f5bb5fbebbc9a5794848140fafc38e08ad5784a5120d3ba801baec41f965c4
+- stop-independent-review-v3:sha256:c9271320b89fed97d76fd9b803efbd41b49e52ad6f9dad76deb9a6e69703b1c2
+- stop-root-acceptance:sha256:ab69b0a93063993f303000169c63c06b04d2b45e10935e2c6e4ae327048bae62
+- currentness-readjudication:sha256:297b0f292bf478846a40f8b8a96ea3db6a0e6d21591d08ca1be8881944fc8a9c
+depends_on:
+- PDS-003
+- BRS-029
+- BRS-025
+- SP-322
+unblocks: []
+acceptance_criteria:
+- Preserve the complete scoped v8 source and every original entry/final/phase/type/lifetime predicate; compile no
+  superseded Stop text as operative.
+- Use the canonical realm bindings and exact external lineage tokens; prove the canonical inverse to the v3 source
+  and the actual final acyclic commitment and descriptor hash graph.
+- Native installation, authentic original source capabilities, execution, schema instances, codec/transaction/durability/recovery
+  and end-to-end readiness remain NOT_RUN.
+- Back up and restore the thirty-four families in whole native transaction cuts, with the whole installed v8 descriptor
+  and a compatible genuine birth; a partial, mixed-generation or foreign restore stays unavailable and mutation-fenced,
+  and no rekey, backfill, reconstruction, recreated origin or substitute issuer is admitted; backup participation
+  and restore drills remain NOT_RUN.
+- Absence never proves Unborn, idle, not revoked or never applied; the release receipt keeps the nine-field durable
+  read token without redb_snapshot_id; restored slot custody never becomes a D06 cancellation source or an execution
+  capability.
+- v8 certified values and any projection or checkpoint stay outside this unit's backup until separately admitted;
+  BRS-029 and SP-316 keep their all_writers.v7 scope.
+validation_surfaces:
+- Plans/workflow_combined_source_contracts/physical-families.json
+- Plans/workflow_combined_source_contracts/protocol.md
+- Plans/workflow_combined_source_contracts/replan/protocol.md
+- Plans/workflow_combined_source_contracts/stop-protocol.md
+- Plans/workflow_combined_source_contracts/composition.json
+- Plans/storage_value_registry.json
+risk_class: original_source_authority_native_transaction_and_lifetime
+reasoning_tier: high
+context_scope: brs-031_whole_combined_v8_family
+implementation_surfaces:
+- Plans/Backup_Restore_System.md
+- Plans/workflow_combined_source_contracts
+- Plans/workflow_standard_source_contracts/native-v8
+node_compile_hint:
+  mode: source_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+gui_classification_reason: Original source, native authority/custody, schema, storage or passive consumer contract;
+  no new visual presentation.
+```
+
+ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-031, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/workflow_combined_source_contracts/protocol.md, ContractName:Plans/workflow_combined_source_contracts/replan/protocol.md, ContractName:Plans/workflow_combined_source_contracts/stop-protocol.md, ContractName:Plans/workflow_combined_source_contracts/physical-families.json, ContractName:Plans/workflow_combined_source_contracts/composition.json
