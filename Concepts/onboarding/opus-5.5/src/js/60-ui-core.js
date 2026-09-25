@@ -67,7 +67,14 @@
   /* ---------------------------------------------------------------- theme */
   let lastLook = null;
   function syncTheme(fromObserver) {
-    const th = O55.theme();
+    let th = O55.theme();
+    /* While the window is open its look is the one chosen here. Settings reapplies a Project's saved theme when a
+       Project is selected (Creating selects the new one), which undid the preview until the look was saved at the
+       end, so the look changed twice. Any change that is not the chosen look is put back in the same moment. */
+    const want = S.sess && S.sess.drafts && S.sess.drafts.main;
+    if (fromObserver && S.open && want && want.theme_family && (th.family !== want.theme_family || th.mode !== want.theme_mode)) {
+      try { window.PM_THEME.setFamily(want.theme_family, { persist: false }); window.PM_THEME.setMode(want.theme_mode, { persist: false }); th = O55.theme(); } catch (_) {}
+    }
     const look = th.family + '-' + th.mode;
     S.root.setAttribute('data-family', th.family); S.root.setAttribute('data-mode', th.mode);
     S.root.querySelector('.o55-stage').setAttribute('data-family', th.family);
@@ -81,7 +88,9 @@
       try { window.PM_THEME.setFamily(family, { persist: false }); window.PM_THEME.setMode(mode, { persist: false }); }
       catch (_) { document.documentElement.setAttribute('data-theme', family + '-' + mode); }
     };
-    const d = S.draft(); O55.draft.set(d, { theme_family: family, theme_mode: mode }); S.save();
+    /* the look belongs to the whole onboarding, not to one journey's draft (it was lost at the end when it was picked
+       while the Connect draft was active) */
+    Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: family, theme_mode: mode })); S.save();
     const now = O55.theme(); if (now.family === family && now.mode === mode) return;
     if (!document.startViewTransition || O55.motion.reduced() || O55.motion.lowResource) { apply(); return; }
     if (S.vt) { try { S.vt.skipTransition(); } catch (_) {} }
@@ -198,6 +207,7 @@
 
   function transition(dir) {
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
+    O55.motion.quiet(1400);
     const pane = S.root.querySelector('.o55-pane');
     const old = pane.querySelector('.o55-layer:not(.o55-out)');
     if (old) {
@@ -357,6 +367,7 @@
   }
   function open(opts) {
     opts = opts || {};
+    O55.motion.quiet(2200); /* building the window is expected to be heavy; it never counts as a slow computer */
     build();
     /* a Project that is being created is never abandoned half-made: starting over waits for it, on its own screen */
     let waitNote = false;

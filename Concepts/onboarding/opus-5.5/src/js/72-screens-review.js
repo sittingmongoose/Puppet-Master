@@ -163,6 +163,9 @@
     menu && menu.querySelectorAll('[data-project]').forEach((n) => n.classList.toggle('is-selected', n.getAttribute('data-project') === id));
     window.PM_ACTIVE_PROJECT_ID = id;
     cm.receipts = cm.receipts || {}; cm.receipts.project = cm.receipts.project || ('receipt:project:' + id);
+    /* the new Project starts with the look chosen here: Settings loads a new Project's own settings as it is selected
+       (after this task), so the look is saved into it once that load has run */
+    O55.motion.after(0, () => { if (O55.shell && O55.shell.commitLook) O55.shell.commitLook(S); });
     return id;
   }
   function applySettings(S) {

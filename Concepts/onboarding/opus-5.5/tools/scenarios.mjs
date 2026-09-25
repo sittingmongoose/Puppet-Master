@@ -490,6 +490,28 @@ def('b4', 'fresh', 'Restore from S3 or B2: access details, then the recovery phr
   A.ok(!(await d.state(() => JSON.stringify(window.O55.S.sess))).includes('not-a-real-secret'), 'the secret is never stored');
 });
 
+/* ---------------------------------------------------------------------------------------------- the look */
+def('x3', 'fresh', 'The chosen look never changes on screen: through Creating, the finish and into the tour', async (d, A) => {
+  await d.openOnboarding(); await d.primary();
+  await d.act('pickFamily', 'friendly', { settle: 1400 }); await d.primary();
+  /* every painted frame from here on records the look on screen */
+  await d.state(() => { window.__looks = new Set(); const f = () => { window.__looks.add(document.documentElement.getAttribute('data-theme')); if (!window.__lookStop) requestAnimationFrame(f); }; requestAnimationFrame(f); });
+  await d.primary(); await d.primary(); await d.type('name', 'Book club website'); await d.primary(); await d.primary();
+  await readyPrimary(d); await d.primary(); await until(d, "window.O55.S.sess.commit.state === 'done'", 'commit', 25000);
+  await readyPrimary(d); await d.primary(); await d.act('skip'); await readyPrimary(d); await d.primary();
+  await d.primary({ settle: 3500 }); /* Take the Guided Tour */
+  const seen = await d.state(() => { window.__lookStop = true; return [...window.__looks]; });
+  A.eq(JSON.stringify(seen), JSON.stringify(['friendly-dark']), 'only the chosen look was ever painted');
+  A.eq(await d.state(() => window.O55.tour.state().step), 'comfort_intro', 'the tour started');
+});
+def('x4', 'fresh', 'A look picked after going into Connect and back is the one kept at the end', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary();
+  await d.act('pick', 'connect'); await d.primary(); await d.back(); await d.back();
+  A.eq(await d.screen(), 'look', 'back on the look screen');
+  await d.act('pickFamily', 'retro');
+  A.eq(await d.state(() => [window.O55.S.sess.drafts.main.theme_family, window.O55.S.sess.drafts.connect.theme_family].join()), 'retro,retro', 'both journeys carry the look');
+});
+
 /* ---------------------------------------------------------------------------------------------- runner */
 const report = [], drafts = [];
 for (const sc of SC) {

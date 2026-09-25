@@ -146,20 +146,26 @@
     return el.animate(keyframes, opts);
   };
 
-  /* Long-task watch: two long tasks (>120 ms) inside ten seconds while onboarding is open switch low-resource mode on
-     (ambient loops and pre-warming stop; choices and receipts never change). */
+  /* Long-task watch. Opening the window and changing screens are expected heavy moments (building a screen, mounting
+     a scene) and never count: M.quiet(ms) marks them. Outside those, three long tasks over 150 ms inside ten seconds
+     while onboarding is open switch low-resource mode on (ambient loops and pre-warming stop; choices and receipts
+     never change). A mode switched on this way switches itself off again after twenty calm seconds; one chosen by the
+     setting or the scenario stays. */
+  let quietUntil = 0, lastLong = 0;
+  M.quiet = function quiet(ms) { quietUntil = Math.max(quietUntil, performance.now() + (ms || 1800)); };
   M.watchLongTasks = function watchLongTasks() {
     if (!('PerformanceObserver' in window)) return;
     const seen = [];
     try {
       new PerformanceObserver((list) => {
         for (const e of list.getEntries()) {
-          if (e.duration < 120) continue;
-          const t = performance.now(); seen.push(t);
+          if (e.duration < 150 || e.startTime < quietUntil) continue;
+          const t = performance.now(); seen.push(t); lastLong = t;
           while (seen.length && t - seen[0] > 10000) seen.shift();
-          if (seen.length >= 2 && !M.lowResource && document.documentElement.hasAttribute('data-o55-open')) M.setLowResource(true, 'long_tasks');
+          if (seen.length >= 3 && !M.lowResource && document.documentElement.hasAttribute('data-o55-open')) M.setLowResource(true, 'long_tasks');
         }
       }).observe({ entryTypes: ['longtask'] });
+      window.setInterval(() => { if (M.lowResource && M.lowResourceReason === 'long_tasks' && performance.now() - lastLong > 20000) M.setLowResource(false, null); }, 5000);
     } catch (_) {}
   };
   M.setLowResource = function setLowResource(on, reason) {
