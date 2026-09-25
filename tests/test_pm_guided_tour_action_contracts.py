@@ -12,6 +12,8 @@ from jsonschema import Draft202012Validator
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import pm_guided_tour_semantics as semantics
+from pm_guided_tour_fixture_coverage import tour_fixture_coverage_resolver
+from test_pm_guided_tour_original_custody import load_gate
 
 
 def materialize(base, case):
@@ -37,11 +39,17 @@ class TourActionContractTests(unittest.TestCase):
     def errors(self, definition, value):
         return list(Draft202012Validator({**self.schema, "$ref": "#/$defs/" + definition}).iter_errors(value))
 
+    def semantic_failures(self, definition, value, case=None):
+        resolver = tour_fixture_coverage_resolver(self.pack, case or {"name": "default"})
+        return semantics.guided_tour_semantic_failures(
+            definition, value, owner_coverage_resolver=resolver
+        )
+
     def test_all_joined_positives_are_structurally_and_semantically_valid(self):
         for case in self.valid.values():
             with self.subTest(case=case["name"]):
                 self.assertEqual([], self.errors(case["definition"], case["value"]))
-                self.assertEqual([], semantics.guided_tour_semantic_failures(case["definition"], case["value"]))
+                self.assertEqual([], self.semantic_failures(case["definition"], case["value"], case))
 
     def test_negatives_prove_the_named_kind_of_rejection(self):
         for case in self.invalid.values():
@@ -52,7 +60,7 @@ class TourActionContractTests(unittest.TestCase):
                 errors = self.errors(case["definition"], value)
                 if "semantic_rule" in case:
                     self.assertEqual([], errors, "semantic counterexample must stay schema-valid")
-                    self.assertIn(case["semantic_rule"], semantics.guided_tour_semantic_failures(case["definition"], value))
+                    self.assertIn(case["semantic_rule"], self.semantic_failures(case["definition"], value))
                 else:
                     self.assertTrue(errors, "structural counterexample must fail schema")
 
@@ -86,9 +94,9 @@ class TourActionContractTests(unittest.TestCase):
             value = materialize(self.valid[case["base_valid"]]["value"], case)
             with self.subTest(rule=rule):
                 self.assertEqual([], self.errors(case["definition"], value))
-                self.assertEqual([rule], semantics.guided_tour_semantic_failures(case["definition"], value))
+                self.assertEqual([rule], self.semantic_failures(case["definition"], value))
                 with patch.object(semantics, "RULES", tuple(item for item in semantics.RULES if item[0] != rule)):
-                    self.assertEqual([], semantics.guided_tour_semantic_failures(case["definition"], value))
+                    self.assertEqual([], self.semantic_failures(case["definition"], value))
 
     def test_initial_state_optional_intro_and_partial_practice_remain_distinct(self):
         for name, phase in (("joined_start", "comfort_intro"), ("joined_start_without_optional_intro", "open_chat")):
@@ -110,22 +118,22 @@ class TourActionContractTests(unittest.TestCase):
             value = materialize(self.valid[case["base_valid"]]["value"], case)
             with self.subTest(action=action):
                 self.assertEqual([], self.errors(case["definition"], value))
-                self.assertIn("tour.source_session", semantics.guided_tour_semantic_failures(case["definition"], value))
+                self.assertIn("tour.source_session", self.semantic_failures(case["definition"], value))
 
     def test_checkpoint_reconstruction_is_explicit_and_revalidated_not_a_null_bypass(self):
         base = self.valid["joined_checkpoint_reconstructs_without_live_controller"]["value"]
         self.assertIsNone(base["context"]["before"])
         self.assertEqual("checkpoint", base["request"]["resume_source"])
-        self.assertEqual([], semantics.guided_tour_semantic_failures("guided_tour_action_exchange", base))
+        self.assertEqual([], self.semantic_failures("guided_tour_action_exchange", base))
         for name, case in self.invalid.items():
             if not name.startswith("checkpoint_no_live_"):
                 continue
             value = materialize(base, case)
             with self.subTest(case=name):
                 self.assertEqual([], self.errors(case["definition"], value))
-                self.assertEqual(["tour.pause_resume"], semantics.guided_tour_semantic_failures(case["definition"], value))
+                self.assertEqual(["tour.pause_resume"], self.semantic_failures(case["definition"], value))
                 with patch.object(semantics, "RULES", tuple(item for item in semantics.RULES if item[0] != "tour.pause_resume")):
-                    self.assertEqual([], semantics.guided_tour_semantic_failures(case["definition"], value))
+                    self.assertEqual([], self.semantic_failures(case["definition"], value))
 
     def test_lifecycle_rejection_is_causal_and_preserves_safe_controls(self):
         for status in ("paused", "interrupted", "recovery_required", "skipped", "completed"):
@@ -136,12 +144,12 @@ class TourActionContractTests(unittest.TestCase):
                 value = materialize(self.valid[case["base_valid"]]["value"], case)
                 with self.subTest(action=action, status=status):
                     self.assertEqual([], self.errors(case["definition"], value))
-                    self.assertEqual(["tour.lifecycle_admission"], semantics.guided_tour_semantic_failures(case["definition"], value))
+                    self.assertEqual(["tour.lifecycle_admission"], self.semantic_failures(case["definition"], value))
                     with patch.object(semantics, "RULES", tuple(item for item in semantics.RULES if item[0] != "tour.lifecycle_admission")):
-                        self.assertEqual([], semantics.guided_tour_semantic_failures(case["definition"], value))
+                        self.assertEqual([], self.semantic_failures(case["definition"], value))
         for action in ("back", "focus_route", "toggle_eli5", "pause", "skip"):
             value = self.valid["joined_paused_" + action + "_stays_safe"]["value"]
-            self.assertEqual([], semantics.guided_tour_semantic_failures("guided_tour_action_exchange", value))
+            self.assertEqual([], self.semantic_failures("guided_tour_action_exchange", value))
             self.assertFalse(value["result"]["effect_boundary"]["choreography_running"])
 
     def test_each_of_eleven_actions_has_causal_correlation_and_currentness_rejection(self):
@@ -152,9 +160,9 @@ class TourActionContractTests(unittest.TestCase):
                 value = materialize(self.valid[case["base_valid"]]["value"], case)
                 with self.subTest(action=action, rule=rule):
                     self.assertEqual([], self.errors(case["definition"], value))
-                    self.assertEqual([rule], semantics.guided_tour_semantic_failures(case["definition"], value))
+                    self.assertEqual([rule], self.semantic_failures(case["definition"], value))
                     with patch.object(semantics, "RULES", tuple(item for item in semantics.RULES if item[0] != rule)):
-                        self.assertEqual([], semantics.guided_tour_semantic_failures(case["definition"], value))
+                        self.assertEqual([], self.semantic_failures(case["definition"], value))
 
     def test_pause_and_failed_restore_cannot_replace_original_capture_or_partial_practice(self):
         for name in ("joined_pause", "joined_skip_restore_recovery", "joined_finish_restore_recovery"):
@@ -163,7 +171,7 @@ class TourActionContractTests(unittest.TestCase):
                 value = materialize(base, {"patch": {dotted: replacement}})
                 with self.subTest(case=name, field=dotted):
                     self.assertEqual([], self.errors("guided_tour_action_exchange", value))
-                    self.assertIn("tour.partial_practice_retained", semantics.guided_tour_semantic_failures("guided_tour_action_exchange", value))
+                    self.assertIn("tour.partial_practice_retained", self.semantic_failures("guided_tour_action_exchange", value))
 
     def test_every_action_binds_the_current_actor_and_mounted_target_not_just_echoes(self):
         for action in self.schema["$defs"]["guided_tour_action_request"]["properties"]["action_id"]["enum"]:
@@ -172,7 +180,7 @@ class TourActionContractTests(unittest.TestCase):
                 value = materialize(base, {"patch": {"context." + field: "owner-context:other"}})
                 with self.subTest(action=action, field=field):
                     self.assertEqual([], self.errors("guided_tour_action_exchange", value))
-                    self.assertIn("tour.currentness_admission", semantics.guided_tour_semantic_failures("guided_tour_action_exchange", value))
+                    self.assertIn("tour.currentness_admission", self.semantic_failures("guided_tour_action_exchange", value))
 
     def test_durable_checkpoint_positive_is_only_a_hypothetical_fixture(self):
         value = self.valid["joined_hypothetical_checkpoint_resume_not_storage_admission"]["value"]
@@ -191,16 +199,17 @@ class TourActionContractTests(unittest.TestCase):
             self.assertEqual("select_teacher", value["result"]["state_after"]["phase"])
             self.assertEqual(value["context"]["original_capture"], value["result"]["state_after"]["captured_state"])
             self.assertEqual(value["context"]["partial_practice_owner_refs"], value["partial_practice_owner_refs_after"])
-            self.assertEqual([], semantics.guided_tour_semantic_failures("guided_tour_action_exchange", value))
+            self.assertEqual([], self.semantic_failures("guided_tour_action_exchange", value))
 
     def test_gate_routes_exact_tour_definition_and_fails_unknown(self):
-        spec = importlib.util.spec_from_file_location("tour_contract_gate_test", ROOT / "scripts/pm-new-contracts-verify.py")
-        gate = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(gate)
+        gate, _ = load_gate()
         case = self.invalid["show_me_other_owner"]
         value = materialize(self.valid[case["base_valid"]]["value"], case)
-        self.assertIn(case["semantic_rule"], gate.contract_semantic_failures("Plans/guided_tour_contracts.schema.json", case["definition"], value))
-        self.assertEqual(["tour.unknown_definition"], semantics.guided_tour_semantic_failures("unrecognized", {}))
+        self.assertIn(case["semantic_rule"], gate.contract_semantic_failures(
+            "Plans/guided_tour_contracts.schema.json", case["definition"], value,
+            owner_coverage_resolver=gate.tour_fixture_coverage_resolver(self.pack, case),
+        ))
+        self.assertEqual(["tour.unknown_definition"], self.semantic_failures("unrecognized", {}))
 
     def test_standalone_specialized_outcome_cannot_disagree_with_outer_status(self):
         for action in ("skip", "finish", "focus_route"):
@@ -217,11 +226,11 @@ class TourActionContractTests(unittest.TestCase):
         value = self.valid["joined_cached_next_after_live_revision_advanced"]["value"]
         self.assertGreater(value["context"]["revision"], value["request"]["expected_revision"])
         self.assertEqual(value["result"], value["context"]["prior_exchange"]["result"])
-        self.assertEqual([], semantics.guided_tour_semantic_failures("guided_tour_action_exchange", value))
+        self.assertEqual([], self.semantic_failures("guided_tour_action_exchange", value))
         recursive = copy.deepcopy(value)
         recursive["context"]["prior_exchange"]["context"]["prior_exchange"] = copy.deepcopy(value["context"]["prior_exchange"])
         self.assertTrue(self.errors("guided_tour_action_exchange", recursive))
-        self.assertEqual(["tour.replay_freshness"], semantics.guided_tour_semantic_failures("guided_tour_action_exchange", recursive))
+        self.assertEqual(["tour.replay_freshness"], self.semantic_failures("guided_tour_action_exchange", recursive))
 
 
 if __name__ == "__main__":

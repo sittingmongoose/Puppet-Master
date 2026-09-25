@@ -3,6 +3,10 @@ from __future__ import annotations
 
 from typing import Any
 
+from pm_guided_tour_custody_semantics import (
+    CUSTODY_RULES, OwnerCoverageResolver, guided_tour_custody_semantic_failures,
+)
+
 
 # Current authored phase order, not a new story. The comfort introduction is optional.
 CHAPTERS = (
@@ -384,9 +388,15 @@ RULES = (
     ("tour.exit_restore", exit_restore),
     ("tour.partial_practice_retained", partial_practice),
 )
+# The typed owner-original custody family (PWIZ-023 original admission) is
+# joined after these exchange rules; it rides the same exchange, so the same
+# consumer validates it and ``CUSTODY_RULES`` names its causal counterexamples.
 
 
-def guided_tour_semantic_failures(definition_name: str, value: Any) -> list[str]:
+def guided_tour_semantic_failures(
+    definition_name: str, value: Any,
+    *, owner_coverage_resolver: OwnerCoverageResolver | None = None,
+) -> list[str]:
     if definition_name not in KNOWN_DEFINITIONS:
         return ["tour.unknown_definition"]
     if definition_name != "guided_tour_action_exchange":
@@ -398,7 +408,10 @@ def guided_tour_semantic_failures(definition_name: str, value: Any) -> list[str]
         # allowed; recursive/self-attested receipt chains are not.
         if prior.get("context", {}).get("prior_exchange") is not None:
             return ["tour.replay_freshness"]
-        if guided_tour_semantic_failures("guided_tour_action_exchange", prior):
+        if guided_tour_semantic_failures(
+            "guided_tour_action_exchange", prior,
+            owner_coverage_resolver=owner_coverage_resolver,
+        ):
             return ["tour.replay_freshness"]
         if prior["request"] == value["request"]:
             c, q = value["context"], value["request"]
@@ -417,4 +430,5 @@ def guided_tour_semantic_failures(definition_name: str, value: Any) -> list[str]
             valid = False
         if not valid:
             failures.append(name)
+    failures.extend(guided_tour_custody_semantic_failures(value, owner_coverage_resolver))
     return failures

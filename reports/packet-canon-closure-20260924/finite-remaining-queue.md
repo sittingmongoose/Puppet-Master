@@ -9,9 +9,10 @@
   the frozen guard-target card for a narrow Sol correction, different-Sol review
   and root final check. See `scm-public-git-guard-target-residual-20260925.md`;
   the candidate is not yet integrated.
-- Guided Tour authentic Chat/layout original custody is integrated as owner prose:
-  `tour-original-owner-integration.md`. Typed companion sufficiency is under
-  bounded review; native adapters and physical admission remain unproved.
+- Guided Tour Chat/layout original custody owner prose and typed companion are
+  integrated: `tour-original-owner-integration.md` and
+  `tour-original-custody-companion-integration.md`. Root's 53 focused tests and
+  78-pair contract gate pass. Native adapters and physical admission remain unproved.
 - Stash's typed companion is integrated after independent temporal-proof and
   composed-route review; see `stash-selected-companion-integration.md`.
   Usage Ledger is also integrated; see `usage-ledger-integration.md`.

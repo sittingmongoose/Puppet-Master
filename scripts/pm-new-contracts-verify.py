@@ -51,6 +51,7 @@ from pm_evidence_command_semantics import evidence_command_semantic_failures
 from pm_doctor_export_semantics import doctor_export_semantic_failures
 from pm_goal_handoff_semantics import goal_handoff_semantic_failures
 from pm_guided_tour_semantics import guided_tour_semantic_failures
+from pm_guided_tour_fixture_coverage import tour_fixture_coverage_resolver
 from pm_named_plan_semantics import named_plan_semantic_failures
 from pm_forge_creation_semantics import forge_creation_semantic_failures
 from pm_usage_command_semantics import usage_command_semantic_failures
@@ -1302,7 +1303,10 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
     return sorted(set(failures))
 
 
-def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+def contract_semantic_failures(
+    schema_rel: str, definition_name: str, value: Any,
+    *, owner_coverage_resolver=None,
+) -> list[str]:
     if schema_rel == "Plans/forge_review_create_selected_contracts.schema.json":
         return review_create_selected_semantic_failures(definition_name, value)
     if schema_rel == "Plans/forge_review_checkout_selected_contracts.schema.json":
@@ -1421,7 +1425,9 @@ def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any
     if schema_rel == "Plans/doctor_contracts.schema.json":
         return doctor_export_semantic_failures(definition_name, value)
     if schema_rel == "Plans/guided_tour_contracts.schema.json":
-        return guided_tour_semantic_failures(definition_name, value)
+        return guided_tour_semantic_failures(
+            definition_name, value, owner_coverage_resolver=owner_coverage_resolver
+        )
     if schema_rel in {"Plans/testing_session_command_contracts.schema.json", "Plans/artifact_recording_command_contracts.schema.json"}:
         return evidence_command_semantic_failures(definition_name, value)
     if schema_rel == "Plans/product_onboarding_contracts.schema.json":
@@ -1733,7 +1739,11 @@ def main() -> int:
                 if errors:
                     findings.append({"code": "positive_fixture_rejected", "fixture": fixture_rel, "case": name, "definition": definition_name, "detail": errors[0].message})
                     continue
-                semantic_failures = contract_semantic_failures(schema_rel, definition_name, value)
+                semantic_failures = contract_semantic_failures(
+                    schema_rel, definition_name, value,
+                    owner_coverage_resolver=(tour_fixture_coverage_resolver(fixtures, case)
+                                             if schema_rel == "Plans/guided_tour_contracts.schema.json" else None),
+                )
                 if semantic_failures:
                     findings.append({"code": "positive_semantic_invariant_failure", "fixture": fixture_rel, "case": name, "definition": definition_name, "semantic_failures": semantic_failures})
                     continue
@@ -1776,7 +1786,11 @@ def main() -> int:
                 accepted = validator_for(schema, selected, schema_registry).is_valid(value)
                 semantic_rule = case.get("semantic_rule")
                 if semantic_rule is not None:
-                    semantic_failures = contract_semantic_failures(schema_rel, definition_name, value)
+                    semantic_failures = contract_semantic_failures(
+                        schema_rel, definition_name, value,
+                        owner_coverage_resolver=(tour_fixture_coverage_resolver(fixtures, case)
+                                                 if schema_rel == "Plans/guided_tour_contracts.schema.json" else None),
+                    )
                     if not accepted:
                         findings.append({"code": "semantic_negative_not_structurally_valid", "fixture": fixture_rel, "case": name, "definition": definition_name, "semantic_rule": semantic_rule})
                     elif semantic_rule not in semantic_failures:

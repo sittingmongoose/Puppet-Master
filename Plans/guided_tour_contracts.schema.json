@@ -2772,6 +2772,7 @@
         "safe_replay_baseline",
         "captured_state_ref",
         "original_capture",
+        "original_custody",
         "owner_state_revision_refs",
         "partial_practice_owner_refs",
         "explanation_mode",
@@ -2835,6 +2836,9 @@
         },
         "original_capture": {
           "$ref": "#/$defs/captured_state"
+        },
+        "original_custody": {
+          "$ref": "#/$defs/guided_tour_original_custody"
         },
         "owner_state_revision_refs": {
           "type": "array",
@@ -2937,6 +2941,289 @@
         "target_control_id": {
           "$ref": "#/$defs/nullable_safe_ref"
         }
+      }
+    },
+    "owner_original_readback_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref", "owner_identity", "original_ref", "original_state", "current_lifecycle",
+        "current_owner_revision", "current_currentness_sha256", "readback_ref"
+      ],
+      "properties": {
+        "owner_ref": {"$ref": "#/$defs/owner_ref"},
+        "owner_identity": {"$ref": "#/$defs/non_empty_string"},
+        "original_ref": {"$ref": "#/$defs/safe_ref"},
+        "original_state": {"enum": ["present_held", "missing", "released", "unavailable"]},
+        "current_lifecycle": {"enum": ["present", "deleted", "tombstoned", "permission_denied", "scope_denied", "unknown"]},
+        "current_owner_revision": {"type": "integer", "minimum": 0},
+        "current_currentness_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "readback_ref": {"$ref": "#/$defs/safe_ref"}
+      }
+    },
+    "owner_original_readback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "readback_ref", "boundary", "invocation_sequence", "owner_entries", "evidence_scope", "production_receipt_claim"
+      ],
+      "properties": {
+        "readback_ref": {"$ref": "#/$defs/safe_ref"},
+        "boundary": {"enum": ["admission", "final_restore_release_boundary"]},
+        "invocation_sequence": {"type": "integer", "minimum": 1},
+        "owner_entries": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/owner_original_readback_entry"}},
+        "evidence_scope": {"const": "contract_fixture_only"},
+        "production_receipt_claim": {"const": false}
+      }
+    },
+    "owner_original_resolver_binding": {
+      "type": "object",
+      "description": "Required injected issuing-owner resolver/readback interface. Every captured original resolves only through this interface, at admission and again at the final restore/release boundary, and an absent or failing resolver refuses any production claim. Static fixtures may carry only a controlled test double and never present it as native proof.",
+      "additionalProperties": false,
+      "required": [
+        "interface_ref", "injection", "authenticates_at", "authority_source", "availability", "absence_disposition",
+        "proof_class", "native_proof", "production_claim_allowed", "admission_readback", "final_boundary_readback",
+        "evidence_scope", "production_receipt_claim"
+      ],
+      "properties": {
+        "interface_ref": {"const": "owner_original_resolver"},
+        "injection": {"const": "required_injected"},
+        "authenticates_at": {
+          "type": "array",
+          "prefixItems": [{"const": "admission"}, {"const": "final_restore_release_boundary"}],
+          "minItems": 2,
+          "maxItems": 2,
+          "items": false
+        },
+        "authority_source": {"const": "issuing_owner_readback"},
+        "availability": {"enum": ["admitted", "absent", "failing"]},
+        "absence_disposition": {"const": "refuse_production_claim"},
+        "proof_class": {"const": "controlled_test_double"},
+        "native_proof": {"const": false},
+        "production_claim_allowed": {"const": false},
+        "admission_readback": {"oneOf": [{"$ref": "#/$defs/owner_original_readback"}, {"type": "null"}]},
+        "final_boundary_readback": {"oneOf": [{"$ref": "#/$defs/owner_original_readback"}, {"type": "null"}]},
+        "evidence_scope": {"const": "contract_fixture_only"},
+        "production_receipt_claim": {"const": false}
+      }
+    },
+    "chat_owner_original": {
+      "type": "object",
+      "description": "Assistant Chat-issued pre-mutation original of the exact covered Chat state: thread identity or explicit capture-time absence, selection, composer placeholder, unsent draft, and focus.",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref", "owner_identity", "original_ref", "original_selection", "authority_source", "chat_owner_snapshot_ref",
+        "scope", "thread_coverage", "thread_ref", "selection_ref", "placeholder_ref", "draft", "focus_ref",
+        "capture_sequence", "first_chat_mutation_sequence", "owner_revision_at_capture",
+        "owner_currentness_sha256_at_capture", "issuer_readback_ref", "evidence_scope", "production_receipt_claim"
+      ],
+      "properties": {
+        "owner_ref": {"const": "owner:assistant_chat"},
+        "owner_identity": {"const": "Assistant Chat"},
+        "original_ref": {"$ref": "#/$defs/safe_ref"},
+        "original_selection": {"const": "owner_issued_original"},
+        "authority_source": {"const": "issuing_owner_readback"},
+        "chat_owner_snapshot_ref": {"$ref": "#/$defs/chat_owner_snapshot_ref"},
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["project_ref", "chat_scope_ref"],
+          "properties": {
+            "project_ref": {"$ref": "#/$defs/safe_ref"},
+            "chat_scope_ref": {"$ref": "#/$defs/safe_ref"}
+          }
+        },
+        "thread_coverage": {"enum": ["captured_thread", "capture_time_absence"]},
+        "thread_ref": {"oneOf": [{"$ref": "#/$defs/safe_ref"}, {"type": "null"}]},
+        "selection_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "placeholder_ref": {"$ref": "#/$defs/safe_ref"},
+        "draft": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["coverage", "bytes_source", "readback_ref"],
+          "properties": {
+            "coverage": {"enum": ["captured_previously_empty_draft", "captured_user_edited_draft", "captured_unsent_draft"]},
+            "bytes_source": {"const": "owner_held_original_bytes"},
+            "readback_ref": {"$ref": "#/$defs/safe_ref"}
+          }
+        },
+        "focus_ref": {"$ref": "#/$defs/safe_ref"},
+        "capture_sequence": {"type": "integer", "minimum": 1},
+        "first_chat_mutation_sequence": {"type": "integer", "minimum": 1},
+        "owner_revision_at_capture": {"type": "integer", "minimum": 0},
+        "owner_currentness_sha256_at_capture": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "issuer_readback_ref": {"$ref": "#/$defs/safe_ref"},
+        "evidence_scope": {"const": "contract_fixture_only"},
+        "production_receipt_claim": {"const": false}
+      }
+    },
+    "layout_owner_original_entry": {
+      "type": "object",
+      "description": "One owner-scoped layout original in the complete affected set. A single Home row is never admitted as the whole set by assumption; every other affected owner record arrives through its own owner.",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref", "owner_identity", "record_kind", "owner_scoped_value_ref", "scope_ref", "original_ref",
+        "original_selection", "authority_source", "capture_sequence", "first_owner_mutation_sequence",
+        "owner_revision_at_capture", "owner_currentness_sha256_at_capture", "issuer_readback_ref",
+        "evidence_scope", "production_receipt_claim"
+      ],
+      "properties": {
+        "owner_ref": {"$ref": "#/$defs/owner_ref"},
+        "owner_identity": {"$ref": "#/$defs/non_empty_string"},
+        "record_kind": {"enum": ["home_workspace_layout_record", "widget_or_panel_layout_lane_record"]},
+        "owner_scoped_value_ref": {"$ref": "#/$defs/safe_ref"},
+        "scope_ref": {"$ref": "#/$defs/safe_ref"},
+        "original_ref": {"$ref": "#/$defs/safe_ref"},
+        "original_selection": {"const": "owner_issued_original"},
+        "authority_source": {"const": "issuing_owner_readback"},
+        "capture_sequence": {"type": "integer", "minimum": 1},
+        "first_owner_mutation_sequence": {"type": "integer", "minimum": 1},
+        "owner_revision_at_capture": {"type": "integer", "minimum": 0},
+        "owner_currentness_sha256_at_capture": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "issuer_readback_ref": {"$ref": "#/$defs/safe_ref"},
+        "evidence_scope": {"const": "contract_fixture_only"},
+        "production_receipt_claim": {"const": false}
+      }
+    },
+    "layout_owner_original_set": {
+      "type": "object",
+      "description": "Owner-issued binding that enumerates the complete exact set of affected owner-scoped layout originals. No cardinality, physical key, family or second layout store is introduced.",
+      "additionalProperties": false,
+      "required": [
+        "set_ref", "owner_binding_ref", "layout_owner_snapshot_ref", "entries", "affected_owner_refs",
+        "completeness", "evidence_scope", "production_receipt_claim"
+      ],
+      "properties": {
+        "set_ref": {"$ref": "#/$defs/safe_ref"},
+        "owner_binding_ref": {"$ref": "#/$defs/safe_ref"},
+        "layout_owner_snapshot_ref": {"$ref": "#/$defs/layout_owner_snapshot_ref"},
+        "entries": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/layout_owner_original_entry"}},
+        "affected_owner_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/owner_ref"}},
+        "completeness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "basis", "home_owner_coverage_ref", "single_home_row_claim", "practice_mutates_widget_or_panel_lane",
+            "declared_owner_count"
+          ],
+          "properties": {
+            "basis": {"const": "owner_current_coverage_proof"},
+            "home_owner_coverage_ref": {"$ref": "#/$defs/safe_ref"},
+            "single_home_row_claim": {"type": "boolean"},
+            "practice_mutates_widget_or_panel_lane": {"type": "boolean"},
+            "declared_owner_count": {"type": "integer", "minimum": 1}
+          }
+        },
+        "evidence_scope": {"const": "contract_fixture_only"},
+        "production_receipt_claim": {"const": false}
+      }
+    },
+    "custody_hold_lifecycle": {
+      "type": "object",
+      "description": "Owner custody hold. The original stays held through tour mutation, close/reload resume and failed-restoration retry, and is released only after terminal settlement or the recovery resolution that ends the session.",
+      "additionalProperties": false,
+      "required": [
+        "hold_ref", "hold_state", "held_across", "release_trigger", "release_sequence", "settlement_ref", "readback_ref",
+        "evidence_scope", "production_receipt_claim"
+      ],
+      "properties": {
+        "hold_ref": {"$ref": "#/$defs/safe_ref"},
+        "hold_state": {"enum": ["held", "released"]},
+        "held_across": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "tour_mutation"},
+            {"const": "close_reload_resume"},
+            {"const": "failed_restoration_retry"}
+          ],
+          "minItems": 3,
+          "maxItems": 3,
+          "items": false
+        },
+        "release_trigger": {"enum": ["none_yet", "terminal_settlement", "ending_recovery_resolution"]},
+        "release_sequence": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}]},
+        "settlement_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+        "readback_ref": {"$ref": "#/$defs/safe_ref"},
+        "evidence_scope": {"const": "contract_fixture_only"},
+        "production_receipt_claim": {"const": false}
+      }
+    },
+    "custody_owner_restore_entry": {
+      "type": "object",
+      "description": "One owner's restore of one held original at the final boundary, after that owner revalidates its own current lifecycle, deletion/tombstone, permission and scope.",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref", "owner_identity", "original_kind", "original_ref", "current_authority_readback_ref",
+        "apply_status", "applied", "mutation_metadata_issued", "recreation_attempted", "evidence_scope",
+        "production_receipt_claim"
+      ],
+      "properties": {
+        "owner_ref": {"$ref": "#/$defs/owner_ref"},
+        "owner_identity": {"$ref": "#/$defs/non_empty_string"},
+        "original_kind": {"enum": ["chat_state", "layout"]},
+        "original_ref": {"$ref": "#/$defs/safe_ref"},
+        "current_authority_readback_ref": {"$ref": "#/$defs/safe_ref"},
+        "apply_status": {"enum": ["applied", "not_applied_denied", "not_applied_unavailable", "skipped_layout_keep", "not_required"]},
+        "applied": {"type": "boolean"},
+        "mutation_metadata_issued": {"type": "boolean"},
+        "recreation_attempted": {"const": false},
+        "evidence_scope": {"const": "contract_fixture_only"},
+        "production_receipt_claim": {"const": false}
+      }
+    },
+    "custody_restore_boundary": {
+      "type": "object",
+      "description": "Final restore/release boundary for one terminal attempt: owner revalidation results plus same-original retry bookkeeping. A partial, denied or unavailable original is never reported as applied restoration.",
+      "additionalProperties": false,
+      "required": [
+        "boundary_ref", "boundary", "attempt_ref", "attempt_sequence", "resolver_readback_ref", "retry", "entries",
+        "evidence_scope", "production_receipt_claim"
+      ],
+      "properties": {
+        "boundary_ref": {"$ref": "#/$defs/safe_ref"},
+        "boundary": {"const": "final_restore_release_boundary"},
+        "attempt_ref": {"$ref": "#/$defs/safe_ref"},
+        "attempt_sequence": {"type": "integer", "minimum": 1},
+        "resolver_readback_ref": {"$ref": "#/$defs/safe_ref"},
+        "retry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "retry_of_attempt_ref", "retry_sequence", "retry_source", "retry_original_refs", "substituted_source_refused"
+          ],
+          "properties": {
+            "retry_of_attempt_ref": {"$ref": "#/$defs/nullable_safe_ref"},
+            "retry_sequence": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}]},
+            "retry_source": {"enum": ["held_same_original", null]},
+            "retry_original_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/safe_ref"}},
+            "substituted_source_refused": {"const": true}
+          }
+        },
+        "entries": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/custody_owner_restore_entry"}},
+        "evidence_scope": {"const": "contract_fixture_only"},
+        "production_receipt_claim": {"const": false}
+      }
+    },
+    "guided_tour_original_custody": {
+      "type": "object",
+      "description": "Typed PWIZ-023 owner-original admission binding carried by the existing Tour v3 action exchange: exact Chat original, complete affected layout original set, required injected resolver/readback interface, held lifecycle and the terminal restore boundary. Every record here is a fixture-scoped typed record; none of them authenticates issuance, hold or current authority by itself.",
+      "additionalProperties": false,
+      "required": [
+        "binding_ref", "captured_state_ref", "tour_session_id", "project_id", "chat_original", "layout_originals",
+        "resolver_binding", "hold_lifecycle", "restore_boundary", "evidence_scope", "production_receipt_claim"
+      ],
+      "properties": {
+        "binding_ref": {"$ref": "#/$defs/safe_ref"},
+        "captured_state_ref": {"$ref": "#/$defs/safe_ref"},
+        "tour_session_id": {"$ref": "#/$defs/safe_ref"},
+        "project_id": {"$ref": "#/$defs/safe_ref"},
+        "chat_original": {"$ref": "#/$defs/chat_owner_original"},
+        "layout_originals": {"$ref": "#/$defs/layout_owner_original_set"},
+        "resolver_binding": {"$ref": "#/$defs/owner_original_resolver_binding"},
+        "hold_lifecycle": {"$ref": "#/$defs/custody_hold_lifecycle"},
+        "restore_boundary": {"oneOf": [{"$ref": "#/$defs/custody_restore_boundary"}, {"type": "null"}]},
+        "evidence_scope": {"const": "contract_fixture_only"},
+        "production_receipt_claim": {"const": false}
       }
     },
     "guided_tour_action_exchange": {
