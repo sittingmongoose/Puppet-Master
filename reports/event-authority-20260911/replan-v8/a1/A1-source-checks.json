@@ -1,0 +1,306 @@
+{
+  "status": "A1_COMPILED_ON_BRANCH_PENDING_CANON_BRANCH_BLIND_REVIEW",
+  "base_commit": "63cf2cb97f936c91dd7bb5c585d9a35d8409ed61",
+  "branch": "plans/replan-v8-a1-20260925",
+  "source_review": {
+    "status": "ROOT_ACCEPTS_CANONICAL_DRAFT_FOR_A1_CANON_COMPILE",
+    "packages_repository": "sittingmongoose/PuppetMaster-Packages",
+    "packages_branch": "replan-v8-canonical-draft-20260925",
+    "packages_branch_tip": "3928dd6",
+    "packages_branch_merged_to_main": false,
+    "package": {
+      "path": "replan-v8/goal-replan-v8-canonical-draft-20260925/v1",
+      "manifest_sha256": "bb6be609d20536be795bdaab41de179e85caec79e9d5973e16d6e0b3c2139ba5",
+      "commit": "083be9a",
+      "members": 417,
+      "sha256sum_check": "PASS"
+    },
+    "independent_review": {
+      "path": "replan-v8/goal-replan-v8-canonical-draft-independent-review-20260925/v1",
+      "manifest_sha256": "62d94dc1fa719157dc96effebcc6ad24ed7f2f8d5b5e49332eb70acbc3cc170f",
+      "sha256sum_check": "PASS",
+      "cycle_1": {
+        "subject_manifest_sha256": "792bf55975cf28a9b6e433bdc8f285ef9de54334a73a0a0c3ee00cd8814ddb0f",
+        "commit": "13085dd",
+        "verdict": "repairs_required",
+        "blocking": 3,
+        "should_fix": 20,
+        "note": 15,
+        "repairs": "one commit per finding, 23f7aa9..6e2a45b; rebuild 660ccb5 (manifest 51c8df4d)"
+      },
+      "cycle_2": {
+        "subject_manifest_sha256": "51c8df4de61de150b8d6117a26b461962d57d60391168deb5dd157cfbbc727b9",
+        "commit": "81b3a1c",
+        "verdict": "accepted",
+        "blocking": 0,
+        "should_fix": 1,
+        "note": 4,
+        "repairs": "IR2-01 c58007a, IR2-02 e8d581e, IR2-04 4f3e0eb, IR2-05 ff42975; IR2-03 by the rebase 083be9a"
+      },
+      "cycle_cap_reached": true
+    },
+    "root_acceptance": {
+      "path": "replan-v8/goal-replan-v8-canonical-draft-root-review-20260925/v1",
+      "manifest_sha256": "a7f5bb5fbebbc9a5794848140fafc38e08ad5784a5120d3ba801baec41f965c4",
+      "commit": "d6cbbcb",
+      "sha256sum_check": "PASS",
+      "conditions_for_canon_compile": 5,
+      "remains_open_after_a1": 6,
+      "canonical_adoption": false,
+      "installation": false,
+      "event_admission": false
+    },
+    "external_source": {
+      "package": "goal-replan-combined-source-20260921/v3",
+      "manifest_sha256": "9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e"
+    },
+    "a0_report": {
+      "path": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+      "commit": "632f557c0",
+      "sha256": "297b0f292bf478846a40f8b8a96ea3db6a0e6d21591d08ca1be8881944fc8a9c"
+    },
+    "process_answers": {
+      "path": "reports/event-authority-20260911/replan-v8/process-answers-20260925.md",
+      "branch": "plans/replan-v8-process-answers-20260925",
+      "commit": "616f12bfd"
+    },
+    "author_decisions": {
+      "path": "reports/event-authority-20260911/replan-v8/a1/author-decisions-20260925.md",
+      "ratified_by": "Jared, 2026-09-25"
+    },
+    "descriptor_digests_cv352": {
+      "all_writers.v8": "7b22c1f471761caffd37319dd0ae4f5da07c5f3e6f5ac83828d07308df5aaf8b",
+      "all_writers.v8_members": {
+        "total": 189,
+        "placed": 71,
+        "canon": 118
+      },
+      "producer_source.v3": "1157877714ff6c1ebf799610e696e0af92f43a2fba5902ce5535552007339548",
+      "producer_source.v3_members": {
+        "total": 19,
+        "placed": 9,
+        "canon": 10
+      }
+    },
+    "package_checks": {
+      "run_all": "PASS",
+      "checks": "C01-C11 PASS",
+      "documented_exceptions": [
+        "OI-01",
+        "OI-02",
+        "OI-03"
+      ],
+      "rebase_check_at_base": "PASS (recorded by the package; not re-run by root or this report)"
+    }
+  },
+  "apply_receipt": {
+    "owner_units": [
+      "EP-125",
+      "EP-126",
+      "EP-127",
+      "GRS-086",
+      "GRS-087",
+      "GRS-088",
+      "GRS-089",
+      "CV-354",
+      "SP-321",
+      "SP-322",
+      "ATS-059",
+      "ATS-060",
+      "BRS-031"
+    ],
+    "owner_documents": {
+      "Plans/Executor_Protocol.md": 376,
+      "Plans/Goal_Runtime_System.md": 418,
+      "Plans/Contracts_V0.md": 152,
+      "Plans/storage-plan.md": 268,
+      "Plans/Automated_Testing_System.md": 401,
+      "Plans/Backup_Restore_System.md": 132
+    },
+    "owner_lines_appended": 1747,
+    "index_section": "Plans/00-plans-index.md: Combined Workflow v8 source family — 2026-09-25",
+    "placed_files": 74,
+    "placed_bytes": 10357413,
+    "placed_directories": [
+      "Plans/workflow_combined_source_contracts/",
+      "Plans/workflow_standard_source_contracts/native-v8/"
+    ],
+    "registry_rows": {
+      "count": 34,
+      "append_at": "/families/294",
+      "last": "/families/327",
+      "SP-321": 30,
+      "SP-322": 4,
+      "not_registered": [
+        "goal_run_started_cancelled_replanned_checkpoint"
+      ]
+    },
+    "registry_sha256_before": "32d267dd4f06f3dbec4b5319b49bff94c909c600d87c2a6dbed11e07e74c0f46",
+    "registry_sha256_after_expected": "45e383b2aedf8056cc21d300d96d44c3088e91f93d0d8f3a46415e965db94c13",
+    "registry_bytes_after_expected": 4510452,
+    "census_before": {
+      "families": 294,
+      "retention_policies": 27,
+      "materialized": 274,
+      "deferred_not_build_blocking": 19,
+      "compatibility_alias": 1,
+      "tier_0_launch_critical": 40,
+      "later_gui_or_feature_projection": 251,
+      "migration_only": 3
+    },
+    "census_after": {
+      "families": 328,
+      "retention_policies": 27,
+      "materialized": 308,
+      "deferred_not_build_blocking": 19,
+      "compatibility_alias": 1,
+      "tier_0_launch_critical": 40,
+      "later_gui_or_feature_projection": 285,
+      "migration_only": 3
+    },
+    "census_repins": 8,
+    "task_1_commit": "94585533b5a0408fab351719f3429a069296a7fb",
+    "task_2_commit": "48a2b68400aced2ef0d50e3c75e4001486105dda",
+    "registry_sha256_committed": "45e383b2aedf8056cc21d300d96d44c3088e91f93d0d8f3a46415e965db94c13",
+    "registry_bytes_committed": 4510452,
+    "placed_files_byte_identical_to_package": true,
+    "census_repin_lines": {
+      "scripts/pm-implementation-readiness.py": "761 (765) family 328; 764 (768) materialized 308; 770 (774) later GUI 285; comment 761-764 at the tip",
+      "tests/test_pm_assistant_contract_closure.py": "600 (601) 328",
+      "Plans/storage-plan.md": "523 census pin sentence 328/27; 308/19/1; 40/285/3",
+      "tests/test_pm_onboarding_phases.py": "312-313 (315-316) 328",
+      "tests/test_shared_runtime_storage_contracts.py": "216, 221 (219, 224) 328 and materialized 308",
+      "line_numbers": "at 63cf2cb97f (at 48a2b6840)"
+    },
+    "index_section_lines": "Plans/00-plans-index.md appended after line 6013 (6013 -> 6020 lines)"
+  },
+  "task_1_checks": {
+    "unit_ids_free": "PASS: origin/main 63cf2cb97f; 13 IDs unclaimed on 74 origin/* refs except the A1 branch",
+    "placeholders_remaining": 0,
+    "consistency_checks": "PASS 373/373",
+    "count_sources": {
+      "method_root_bindings_2035_and_unique_roots_240": "checks/c5/canonical/method-root-checks.json",
+      "commitment_dag_54_nodes_67_edges": "checks/c5/canonical/final-source-checks.json",
+      "agreement": "checks/C05.json",
+      "transient_only_definitions_24": "placed physical-families.json /transient_only_definitions; root ruling O-07"
+    },
+    "append_points_verified": true,
+    "shard_generate": "PASS",
+    "plan_index_generate": "PASS",
+    "shard_check": "PASS, 99 documents / 2750 shards",
+    "plan_index_validate": "PASS before the readiness report was restored (6755 PlanUnits, 0 failures); on the committed tree exactly 1 failure, stale_generated_index_artifact Plans/.plan_index/node_readiness_report.json (main's version kept by decision)",
+    "derived_changes_outside_edited_documents": "Plans/.plan_index/node_readiness_report.json only: 8 event_authority_currentness_source_drift rows removed, event_authority_currentness_audit_unavailable added, PNC-019 receipt row pnc019_source_hash_stale -> pnc019_source_hash_path_missing; environmental (gitignored VALIDATOR_RECEIPT.json absent from the cloud clone; reproduced at HEAD with no edits)",
+    "status": "PASS",
+    "plan_index_counts": {
+      "plan_units": "6742 -> 6755",
+      "acceptance_units": "26321 -> 26413"
+    },
+    "files_committed": "6 owner documents, 280 shard files (268 changed, 12 new unit shards; Backup_Restore_System.md is not sharded), 5 Plans/.plan_index files",
+    "regeneration_rerun_on_commit": "only generated_at_utc in coverage_report.json, dependencies.json, doc_cards.json, plus node_readiness_report.json",
+    "node_readiness_report_decision": "NOT_REGENERATED_ON_BRANCH (host decision): restored with git checkout HEAD -- Plans/.plan_index/node_readiness_report.json after every regeneration; never committed regenerated; the lander regenerates it after the rebase with the gitignored currentness receipt present and commits it with the landing, never hand-merged (precedent: Step 8(d) review A-08)"
+  },
+  "task_2_checks": {
+    "placement": "PASS: 74 files, 0 pre-existing; each byte-identical to PKG after/Plans on disk and as committed blob; 10357413 B",
+    "registry": "PASS: before 32d267dd (= 63cf2cb97f); committed 45e383b2 (= C07); /families/0-293 unchanged; only key families changed; 34 new rows materialized and later_gui_or_feature_projection; 33 RP-AUTHORITY-INDEFINITE, workflow_replan_producer RP-RUNTIME-365D",
+    "census_repins": "PASS: 8 of 8 applied; storage-plan.md line 523 is the SP-notes section 4 sentence with DATE 2026-09-25",
+    "index_section": "PASS: appended after line 6013 (6013 -> 6020 lines); every Plans/ path it names exists",
+    "files_committed": "74 placed, Plans/00-plans-index.md, Plans/storage-plan.md, Plans/storage_value_registry.json, scripts/pm-implementation-readiness.py, 3 test files, 701 shard files, 4 Plans/.plan_index files",
+    "shards_changed": {
+      "00-plans-index": "28 (27 changed, 1 new)",
+      "storage-plan": "87 changed",
+      "storage_value_registry": "586 (566 changed, 19 new, 1 renamed); every shard records the source SHA-256"
+    },
+    "shard_check": "PASS, 99 documents / 2770 shards",
+    "plan_index": "plan_units.jsonl 384 rows changed, all of storage-plan.md (316) and 00-plans-index.md (68); doc_cards.json only their hashes and the index's heading and line counts; coverage_report.json and dependencies.json only generated_at_utc; acceptance_units.jsonl unchanged (26413)",
+    "plan_index_validate": "1 failure, stale_generated_index_artifact Plans/.plan_index/node_readiness_report.json; the same on a worktree of origin/main 63cf2cb97f in this clone (receipt absent)",
+    "regeneration_rerun_on_commit": "only generated_at_utc in three index files, plus node_readiness_report.json",
+    "python_environment": "scratch venv: jsonschema 4.26.0, referencing 0.37.0, pytest (the system python has neither jsonschema nor pytest)",
+    "readiness_validate": "exit 1 on branch and origin/main, 29 failures each; keyed without hash values and absolute paths: 0 new, 0 gone; differing rows are expected-hash values of staleness rows for edited files (Spec Lock: registry, readiness script; PNC-019: Executor_Protocol.md, Goal_Runtime_System.md, Automated_Testing_System.md, storage_value_registry.json); no new storage_value_* error kind",
+    "readiness_self_test": "exit 1 on both; the same failing scenario case_l_verification_integration",
+    "lint_contractrefs": "identical on both; 1 failure Plans/00-plans-index.md:81 missing_ref to the gitignored Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json; pre-existing, outside the appended section",
+    "unittest_census_modules": "95 OK on both (tests.test_pm_onboarding_phases, tests.test_shared_runtime_storage_contracts, tests.test_pm_assistant_contract_closure)",
+    "pytest": "51 passed, 397 subtests passed on both (tests/test_pm_browser_event_admission.py, tests/test_pm_emit_only_event_boundaries.py)",
+    "surfaces": "82 validation-surface and 41 implementation-surface entries of the 13 units name no scripts/ path; every path exists",
+    "compile_witness": "NOT_RUN: no Plans/ledgers/v2 ledger; A1 compiles an accepted package",
+    "status": "PASS"
+  },
+  "repository_checks": {
+    "run_gates": "NOT_RUN_HERE; at landing via pm-landing-check.py",
+    "audit_governance": "NOT_RUN_HERE; at landing via pm-landing-check.py",
+    "plan_migration_validate": "NOT_RUN_HERE; at landing via pm-landing-check.py",
+    "landing_check_expectation": "exit 0 or 1; governance staleness on the edited documents only, after the lander regenerates node_readiness_report.json",
+    "canon_branch_blind_review": "PENDING (cycle cap two)"
+  },
+  "citation_census": {
+    "path": "reports/event-authority-20260911/replan-v8/a1/citation-census.json",
+    "sha256": "f2c8b43c1d3f5e1ef306ca00205bc2b9cd0b4873cf5a862793862320cfbd2b62",
+    "bytes": 942295,
+    "byte_identical_to_package_member": "checks/citation-census.json",
+    "summary": {
+      "replan_v3_exact_passages": "467/476",
+      "certified_v2_source_citations": "68/69",
+      "scope_passages": "4/4",
+      "plan_canonical_passages": "4/4",
+      "replan_v3_whole_definitions": "4102/4111"
+    }
+  },
+  "scope_limits": [
+    "Canonical source contracts only, for a genuine fresh all_writers.v8 birth and its producer_source.v3 component; all_writers.v6 and v7 births keep their closed scope.",
+    "No Event registry row, payload successor, consumer, projector or checkpoint is supplied; the goal_run.replanned row stays at v2 and unselected.",
+    "v8-born certified values: Storage admission unavailable until a separate Storage revision; SP-316 unchanged.",
+    "No file under the v7 certified directories changes."
+  ],
+  "d06": "UNAVAILABLE_DEPENDENCY",
+  "d06_statements": [
+    "The D06 argument grammar of EP-118 and EP-119 is carried",
+    "Its issuer owner.executor.native.record_cancellation.v1 is an unbound dependency",
+    "nothing in this installation activates it by implication",
+    "The Stop route rests on owner.executor.native.revoke_run_execution.v1 as Stop review v3 accepted it"
+  ],
+  "instances": "NOT_RUN",
+  "positive_route_obligations": "NOT_RUN",
+  "positive_route_obligation_ids": [
+    "FIRST-REPLAN-CLAIMED",
+    "FIRST-REPLAN-PREPARED",
+    "FIRST-CERTIFIED-HELD",
+    "REPEATED-HELD",
+    "READBACK-RELEASED-IDLE-REPLAN",
+    "READBACK-RELEASED-IDLE-CERTIFIED",
+    "TRUTHFUL-UNAVAILABLE"
+  ],
+  "native_execution": "NOT_RUN",
+  "event_admission": false,
+  "v8_certified_storage_admission": false,
+  "full_event_depth_clearance": false,
+  "governance_seal": false,
+  "validator_edits": false,
+  "open_after_a1": [
+    "D06",
+    "native installation and execution; schema instances; the seven positive-route obligations",
+    "A2 consumers, projector, checkpoint, backfill and retention declarations",
+    "A3 Event contracts, registry rows and payload successors",
+    "v8 certified Storage admission",
+    "child goal runs under Goal V2"
+  ],
+  "reseal_requests": [
+    "Spec_Lock",
+    "Plans/.evidence plan-sharding rows",
+    "readiness",
+    "R-1 certified-family pins (with A1 additions)",
+    "PNC-019 source hashes",
+    "currentness edition",
+    "plan-migration run 002 rows and snapshot-current",
+    "R-2 (owner of goal_run_cancelled_consumer_schema_resources.json)"
+  ],
+  "landing_prerequisites": {
+    "land_before_a1": [
+      "plans/replan-v8-a0-20260925 (tip 632f557c0)",
+      "plans/replan-v8-process-answers-20260925 (616f12bfd), cited by the placed composition.json"
+    ],
+    "unit_ids_recheck": "at landing against origin/main and every origin/* branch; for this report: origin/main 63cf2cb97f, 74 origin/* refs, no claim except this branch",
+    "if_main_moved": "if main moved past 63cf2cb97f in any file the package binds or in the storage census, run the package's scripts/rebase_check.py --landing-base <new main> and re-derive the re-pins before landing",
+    "node_readiness_report": "regenerated by the lander after the rebase with Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json present, committed with the landing, never hand-merged",
+    "packages_branch": "sittingmongoose/PuppetMaster-Packages replan-v8-canonical-draft-20260925 (tip 3928dd6) not yet merged to main (2cffa80); awaiting Jared"
+  },
+  "cost": "to be filled by the host"
+}
