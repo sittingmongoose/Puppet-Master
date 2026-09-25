@@ -64,7 +64,7 @@ Two things can hold it lower. The depth42 grader's note for this family says "te
 
 ## Open questions
 
-The cycle 1 review (`/mnt/Cursor/PM-Experiments/review-ea-browser-created-v2-20260925/findings.jsonl`, SHA-256 `8c82f1985c139f1201f6865988fe3dfdc6d333e2875ab995b3feed2093c72248`) raised three optional notes that are not in its patch. This repair round leaves them open. The line numbers are the reviewer's, on `dcc29db585`; after the V2-01 repair, Section 15 lines from 11577 on are two higher.
+The cycle 1 review (`/mnt/Cursor/PM-Experiments/review-ea-browser-created-v2-20260925/findings.jsonl`, SHA-256 `8c82f1985c139f1201f6865988fe3dfdc6d333e2875ab995b3feed2093c72248`) raised three optional notes that are not in its patch, and one note whose optional part is not in it. This repair round leaves them open. The line numbers are the reviewer's, on `dcc29db585`; after the V2-01 repair, Section 15 lines from 11577 on are two higher.
 
 - **V2-09 (note): some v1 definitions still read as current, though a later dated sentence supersedes them.**
   - The storage-plan v1 section says "Only the new Storage binding writes it", meaning v1.
@@ -84,3 +84,4 @@ The cycle 1 review (`/mnt/Cursor/PM-Experiments/review-ea-browser-created-v2-202
   - This does not break SP-266's "explicit reader" condition, since the versioned reader is explicit.
   - Citation: the `browser_workspace_created_index_checkpoint` row of `Plans/storage_value_registry.json` (`consumers`, `migration`); the storage-plan section 2.3.1 bullet "MVP rows retired to import readers"; the `restore_point_retention_summary` consumers list.
   - The optional repair adds "StorageMigrationCoordinator same-key v1 handoff" to `consumers`, in the row and in `expected_storage_family()` together.
+- **V2-11 (note), the optional part.** The required assertion landed in `c6da585c47`. Two gaps stay open: the sibling-borrow negatives use only the v1 pointer (`tests/test_pm_browser_event_admission.py` line 358 and `tests/test_pm_browser_workspace_reset.py` line 746), and the admission validator's static check, `validate_fixture_contracts` in `scripts/pm_browser_workspace_created.py`, still runs only the v1 checkpoint fixture and oracle.
