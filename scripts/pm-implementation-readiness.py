@@ -8570,6 +8570,7 @@ def storage_value_representation_self_test_checks(
     # and never the live redb_snapshot_id.
     durable_token = storage_value_durable_read_token_schema()
     persisted_tokens = {
+        "browser_workspace_created_index_checkpoint": ("$defs", "durable_index_read_token"),
         "browser_workspace_reset_index_checkpoint": ("$defs", "durable_read_token"),
         "seglog_observability_reader_checkpoint": ("properties", "index_read_token"),
         "home_layout_event_reader_checkpoint": ("properties", "generic_read_token"),
