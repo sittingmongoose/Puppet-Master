@@ -53,6 +53,7 @@ Record `RECLASSIFY_TO_EXCLUDED` on the row in `Plans/.audits/event-authority-202
 |---|---:|---:|---:|---:|
 | 2026-09-11 (review packet) | 0 | 6 | 20 | 226 |
 | 2026-09-24, batch 1 (DL-074 and DL-075 applied to their 20 rows), landed at `41fbecb612` (landing record `bc1d99c11e`) | 0 | 7 | 0 | 245 |
+| 2026-09-25, batch 2 card answers (DL-084, DL-085, DL-086 and DL-088 applied to their 27 rows; the 6 crew lifecycle rows stay carded for the Card 4 addendum, DL-087 reserved; the 7 coordination rows had no card), on `plans/ea-step09-batch2-answers-20260925`, not yet landed; to be amended when Card 4 is applied | 0 | 9 | 6 | 237 |
 
 ## Open questions from the review
 
