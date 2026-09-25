@@ -419,7 +419,7 @@ class BoundedGapRepairInventoryTests(unittest.TestCase):
         self.assertEqual(sum(c.startswith("cmd.chat.context_lens.") for c in admitted), 7)
         self.assertNotIn("cmd.bsd.set", admitted)
         self.assertEqual(len(rows), 646)
-        self.assertEqual(len(profiles), 147)  # Protected auth, JJ/Forge (including cancellation/reply) and credential successors.
+        self.assertEqual(len(profiles), 148)  # Protected auth, JJ/Forge (including cancellation/reply) and credential successors.
         for command, (profile_id, owner, unit) in admitted.items():
             with self.subTest(command=command):
                 self.assertEqual(rows[command][1:5], [profile_id, "command", command, "partial"])
@@ -505,7 +505,7 @@ class ForgeReviewAliasConsumerTests(unittest.TestCase):
         self.assertEqual(self.row(self.registry)[:5],
                          ["TOUCH-GHPR-001", "TCP-GITHUB-PR", "command_alias", self.ALIAS, "partial"])
         self.assertEqual(sum(row[3] == self.ALIAS for row in self.registry["rows"]), 1)
-        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (646, 147))
+        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (646, 148))
         binding = self.registry["alias_bindings"][self.ALIAS]
         for field in ("exact_target", "availability_source", "handler_dispatch_token"):
             self.assertEqual(binding[field], self.TARGET)
@@ -575,8 +575,8 @@ class ForgeReviewAliasConsumerTests(unittest.TestCase):
     def test_owner_schema_and_required_refs_cannot_drift(self):
         profile = self.profile(self.registry)
         expected = {"owner_plan": "Plans/Forge_Integrations.md", "plan_unit": "FGI-008",
-                    "payload_schema_ref": self.SCHEMA + "command_request",
-                    "result_schema_ref": self.SCHEMA + "command_result",
+                    "payload_schema_ref": 'Plans/forge_review_create_selected_contracts.schema.json#/$defs/request',
+                    "result_schema_ref": 'Plans/forge_review_create_selected_contracts.schema.json#/$defs/result',
                     "error_schema_ref": self.SCHEMA + "command_error_record"}
         for field, value in expected.items():
             self.assertEqual(profile[field], value)
@@ -602,7 +602,7 @@ class ForgeReviewAliasConsumerTests(unittest.TestCase):
         for profile_id in ("TCP-GITHUB-PR", "TCP-FORGE-PR-COMPAT"):
             profile = next(p for p in self.registry["profiles"] if p["profile_id"] == profile_id)
             with self.subTest(profile=profile_id):
-                self.assertEqual(profile["result_schema_ref"], self.SCHEMA + "command_result")
+                self.assertEqual(profile["result_schema_ref"], {'TCP-GITHUB-PR': {'payload_schema_ref': 'Plans/forge_review_create_selected_contracts.schema.json#/$defs/request', 'result_schema_ref': 'Plans/forge_review_create_selected_contracts.schema.json#/$defs/result'}, 'TCP-FORGE-PR-COMPAT': {'payload_schema_ref': 'cmd.source_control.pr.create -> Plans/forge_review_create_selected_contracts.schema.json#/$defs/request; cmd.source_control.pr.merge -> Plans/forge_integration_contracts.schema.json#/$defs/command_request', 'result_schema_ref': 'cmd.source_control.pr.create -> Plans/forge_review_create_selected_contracts.schema.json#/$defs/result; cmd.source_control.pr.merge -> Plans/forge_integration_contracts.schema.json#/$defs/command_result'}}[profile_id]["result_schema_ref"])
                 self.assertTrue(any("command_receipt" in ref for ref in profile["receipt_refs"]))
                 for command in ("cmd.forge.review.create", "cmd.forge.review.merge"):
                     value = copy.deepcopy(result)

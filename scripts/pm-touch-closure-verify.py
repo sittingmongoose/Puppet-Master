@@ -491,7 +491,9 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     add("TCP-FORGE-RETRY-SELECTED", "command", forge_retry)
     forge_run = {"cmd.forge.pipeline.run"}
     add("TCP-FORGE-RUN-SELECTED", "command", forge_run)
-    add("TCP-FORGE", "command", {item for item in forge if item.startswith("cmd.forge.")} - forge_decisions - forge_logs - forge_cancel - forge_thread_reply - forge_review_comment - forge_list_query - forge_retry - forge_run)
+    forge_review_create = {"cmd.forge.review.create"}
+    add("TCP-FORGE-REVIEW-CREATE", "command", forge_review_create)
+    add("TCP-FORGE", "command", {item for item in forge if item.startswith("cmd.forge.")} - forge_decisions - forge_logs - forge_cancel - forge_thread_reply - forge_review_comment - forge_list_query - forge_retry - forge_run - forge_review_create)
     add(
         "TCP-REPOSITORY-LOCAL",
         "ui_action",
@@ -1230,8 +1232,8 @@ def forge_review_alias_failures(
     for field, expected in {
         "owner_plan": "Plans/Forge_Integrations.md", "plan_unit": "FGI-008",
         "dry_contract_ref": "Plans/Forge_Integrations.md#FGI-008",
-        "payload_schema_ref": schema_prefix + "command_request",
-        "result_schema_ref": schema_prefix + "command_result",
+        "payload_schema_ref": 'Plans/forge_review_create_selected_contracts.schema.json#/$defs/request',
+        "result_schema_ref": 'Plans/forge_review_create_selected_contracts.schema.json#/$defs/result',
         "error_schema_ref": schema_prefix + "command_error_record",
         "handler_status": "specified", "wiring_status": "specified", "event_refs": [],
     }.items():
@@ -1242,8 +1244,10 @@ def forge_review_alias_failures(
                        if isinstance(item, dict) and item.get("profile_id") == "TCP-FORGE-PR-COMPAT"]
     require(len(compat_profiles) == 1, "expected one Source Control review compatibility profile")
     for compat_profile in compat_profiles:
-        require(compat_profile.get("result_schema_ref") == schema_prefix + "command_result",
-                "TCP-FORGE-PR-COMPAT result_schema_ref must use canonical command_result")
+        require(compat_profile.get("result_schema_ref") == 'cmd.source_control.pr.create -> Plans/forge_review_create_selected_contracts.schema.json#/$defs/result; cmd.source_control.pr.merge -> Plans/forge_integration_contracts.schema.json#/$defs/command_result',
+                "TCP-FORGE-PR-COMPAT result_schema_ref must preserve disjoint current create and historical merge bindings")
+    for compat_profile in compat_profiles:
+        require(compat_profile.get("payload_schema_ref") == 'cmd.source_control.pr.create -> Plans/forge_review_create_selected_contracts.schema.json#/$defs/request; cmd.source_control.pr.merge -> Plans/forge_integration_contracts.schema.json#/$defs/command_request', "compatibility create/merge payload binding must remain disjoint")
     for ref in (
         "Plans/Decision_Log.md#DL-044", "Plans/UI_Command_Catalog.md#UCC-122",
         "Plans/UI_Command_Catalog.md#UCC-132", "Plans/Forge_Integrations.md#FGI-008",
@@ -1922,7 +1926,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # selected logs use four bounded successor profiles. No new Touch rows.
         # Credential source-add has one exact successor, leaving nine peers intact.
         # Exact Forge cancellation consumes its bounded successor, no new row.
-        "profile_count": 147,
+        "profile_count": 148,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1142,

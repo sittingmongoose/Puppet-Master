@@ -16,11 +16,11 @@ composition, Forge ACT051/052 and their SIR response binding, and Usage quota-aw
 refresh/export are now specified and statically tested. Remaining exact selections
 are listed below; this is not native implementation or whole-family completion.
 
-1. Storage admission and implementation: the current registry has 65 explicitly
-   pending disposition rows (64 physical-family and one external-store pending),
+1. Storage admission and implementation: the current registry has 70 explicitly
+   pending disposition rows (69 physical-family and one external-store pending),
    including Guided Tour, pairing, original Forge dispatch and Backup read originals/receipts. Its
-   137 dispositions leave the 294 physical families unchanged. These are not
-   65 engines or proven packet-spec gaps. Exact key/value/retention/migration
+   146 dispositions leave the 294 physical families unchanged. These are not
+   70 engines or proven packet-spec gaps. Exact key/value/retention/migration
    bindings are required before a concrete writer is admitted; pending status alone
    does not reopen already specified product behavior. Separate that engineering
    integration from deployment of native writers.
@@ -97,7 +97,7 @@ Remaining selected-input/result composition uses these existing source IDs:
 Plain-language boundaries and the earlier exact 26-source-occurrence snapshot are
 in `remaining-command-boundaries.md`. Cancellation ACT071, thread reply ACT156,
 Backup destination test/remove ACT090/091, snapshot deletion ACT105 and Git pull
-ACT017, Forge comment ACT053, Backup export ACT111, key rotation ACT118, re-encryption ACT119, restore preview ACT120, Forge lists ACT062/067, retry ACT072 and run ACT070 are now integrated, leaving 11 selected source occurrences below, not 11 engines or a
+ACT017, Forge comment ACT053, Backup export ACT111, key rotation ACT118, re-encryption ACT119, restore preview ACT120, Forge lists ACT062/067, retry ACT072, run ACT070 and review creation ACT048 are now integrated, leaving 10 selected source occurrences below, not 10 engines or a
 whole-packet count.
 
 | Owner | Exact remaining IDs |
@@ -105,7 +105,7 @@ whole-packet count.
 | Neutral SCM, final-review open | ACT006,008,009,012,013,045 |
 | Git | ACT019 |
 | JJ, final-review open | ACT037,038 |
-| Forge | ACT048,060 |
+| Forge | ACT060 |
 | Backup | ACT118/119/120 integrated; native and custody obligations remain |
 | CredentialBroker | ACT087 selected source-add is integrated; native/custody obligations remain |
 
@@ -146,6 +146,11 @@ chosen. ACT072 retry is now integrated after final capped review; see
 ACT070 run is integrated after independent cycle-1 review; see
 `forge-run-companion.md`. Its finite typed native-input grammar is explicit;
 unsupported richer native forms are not claimed covered or silently coerced.
+ACT048 review creation is integrated after final capped review; see
+`forge-review-create-companion.md`. Its optional approved Git/JJ publication and
+actual review result retain separate originals and truthful partial/unknown effects.
+Native execution, authentication and physical custody remain unproved. The separate
+core Git push/fetch typed admission remains unbound despite the repaired census.
 ACT060 review checkout still needs the user choice of always using a separate
 workspace versus explicitly allowing current-workspace checkout after preview;
 existing local work must be preserved in either case. Asked, not defaulted.
@@ -221,7 +226,7 @@ hooks/tools migration fixture cannot stand in for that package.
 Consolidation snapshot before the additional Forge original-binding row:
 `/mnt/Cursor/PM-Experiments/settings-compound-overlay-20260925/FINITE-QUEUE-CONSOLIDATION.md`,
 SHA-256 `78a5711e8bf91bcfa7090ee9e674113db29c618880e8e7daa1958de689c243c8`.
-Its 25-pending count is historical; the current 65 above includes subsequent Forge,
+Its 25-pending count is historical; the current 70 above includes subsequent Forge,
 Backup, JJ publication, selected-log, CredentialBroker and cancellation custody rows.
 
 The bounded 54-row custody triage immediately before ACT120 distinguishes specified
@@ -233,7 +238,9 @@ ACT120 adds three explicit pending original/association/production-receipt rows;
 that checkpoint total was 57. ACT062/067 adds three pending original/descriptor/read
 metadata groups, bringing that checkpoint total to 60. ACT072 adds two pending
 original/preview-effect groups, bringing that checkpoint total to 62. ACT070 adds
-three original/definition/preview-effect groups, bringing the current total to 65. Existing
+three original/definition/preview-effect groups, bringing that checkpoint total to 65.
+ACT048 adds five original/observation/publication/approval groups, bringing the
+current total to 70. Existing
 capability custody is already enrolled and is not another task. Protected Tour,
 Full Thread, NamedPlan and Back Seat Driver custody cannot be inferred from older
 summary or migration families. Owner-first per-kind mapping work remains separate

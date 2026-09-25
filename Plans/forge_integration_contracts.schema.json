@@ -10867,6 +10867,7 @@
                       "cmd.forge.repository.list",
                       "cmd.forge.review.approve",
                       "cmd.forge.review.comment",
+                      "cmd.forge.review.create",
                       "cmd.forge.review.request_changes",
                       "cmd.forge.review.thread.reply"
                     ]
@@ -10905,6 +10906,9 @@
         },
         {
           "$ref": "https://puppetmaster.local/schemas/forge-run-selected/1.0.0/forge_run_selected_contracts.schema.json#/$defs/request"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/forge-review-create-selected/1.0.0/forge_review_create_selected_contracts.schema.json#/$defs/request"
         }
       ]
     },

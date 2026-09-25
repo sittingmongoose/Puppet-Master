@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2610
+Source lines: L2164-L2614
 
-Source SHA256: `d1f7642285e10a93009f3ac2d2d3297c096dd5ccc9622b8d53c0c501879eaf48`
+Source SHA256: `adaf228c22ddc7964891661c9ee135d6b6da61009f77cf0c7e45a684453d662e`
 
 ---
 
@@ -184,6 +184,10 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+Exact cmd.forge.review.create composes authentic retained original arguments/IdentityEnvelope/caller/return route with actual common Forge result/receipt/error and CommandOutcome/UI response. Nullable error projection preserves cancelled-null semantics; unknown native effect cannot be denied by an error claiming no effect. Entry/resolved inputs remain pinned across native callbacks and final current-disclosure checks. Canonical digests come from the actual owner interface, not a chosen serializer. Replaying a result never resubmits review creation or publication. Native authentication and physical custody remain explicit unproved prerequisites.
+
+ContractRef: ContractName:Plans/forge_review_create_selected_contracts.schema.json
 
 For exactly `cmd.forge.pipeline.retry`, request/result composition reuses actual common Forge authority/result/receipt/error, authentic original SIR IdentityEnvelope/CommandOutcome and current caller/return context. Explicit new SIR dispatch and nullable error projections bind their genuine owner records, including cancelled-null UI error. Inputs and resolved originals are pinned across all callbacks; a fresh final disclosure check is mandatory. Canonical digests come from the owner callback, not a newly chosen wire codec. The exact central response adapter must invoke this full composition, not only validate a bare result shape.
 

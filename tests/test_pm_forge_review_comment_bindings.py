@@ -49,14 +49,14 @@ class Bindings(unittest.TestCase):
         baseline=json.loads(subprocess.check_output(['git','show','40e590fe7:'+path],cwd=ROOT,text=True))
         self.assertEqual(baseline['$defs']['command_request'],schema['$defs']['command_request'])
         self.assertEqual(baseline['$defs']['command_request_admission']['oneOf'][1],schema['$defs']['command_request_admission']['oneOf'][1])
-        self.assertEqual(10,len(schema['$defs']['command_request_admission']['oneOf']))
+        self.assertEqual(11,len(schema['$defs']['command_request_admission']['oneOf']))
         spec=importlib.util.spec_from_file_location('comment_binding_gate',ROOT/'scripts/pm-new-contracts-verify.py');gate=importlib.util.module_from_spec(spec);spec.loader.exec_module(gate)
         registry=gate.offline_schema_registry().with_resource(schema['$id'],Resource.from_contents(schema))
         admission=Draft202012Validator({'$ref':schema['$id']+'#/$defs/command_request_admission'},registry=registry)
         historical=Draft202012Validator({'$ref':schema['$id']+'#/$defs/command_request'},registry=registry)
-        expected={'cmd.forge.review.approve','cmd.forge.review.request_changes','cmd.forge.pipeline.open_logs','cmd.forge.pipeline.cancel','cmd.forge.review.thread.reply','cmd.forge.review.comment','cmd.forge.pipeline.retry','cmd.forge.pipeline.run'}
+        expected={'cmd.forge.review.approve','cmd.forge.review.request_changes','cmd.forge.pipeline.open_logs','cmd.forge.pipeline.cancel','cmd.forge.review.thread.reply','cmd.forge.review.comment','cmd.forge.pipeline.retry','cmd.forge.pipeline.run','cmd.forge.review.create'}
         seen=set()
-        for fixture in ('forge_review_decision_fixtures.json','forge_log_selection_contract_fixtures.json','forge_cancel_selected_contract_fixtures.json','forge_thread_reply_contract_fixtures.json','forge_review_comment_contract_fixtures.json','forge_retry_selected_contract_fixtures.json','forge_run_selected_contract_fixtures.json'):
+        for fixture in ('forge_review_decision_fixtures.json','forge_log_selection_contract_fixtures.json','forge_cancel_selected_contract_fixtures.json','forge_thread_reply_contract_fixtures.json','forge_review_comment_contract_fixtures.json','forge_retry_selected_contract_fixtures.json','forge_run_selected_contract_fixtures.json','forge_review_create_selected_contract_fixtures.json'):
             for case in json.loads((ROOT/'Plans'/fixture).read_text())['valid']:
                 request=case['value'].get('request')
                 if request is None:continue

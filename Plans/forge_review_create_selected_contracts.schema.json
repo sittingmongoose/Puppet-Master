@@ -1,0 +1,1173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/forge-review-create-selected/1.0.0/forge_review_create_selected_contracts.schema.json",
+  "$defs": {
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "head",
+        "base",
+        "title",
+        "body",
+        "draft",
+        "source_ref",
+        "publication"
+      ],
+      "properties": {
+        "head": {
+          "$ref": "#/$defs/ref_object"
+        },
+        "base": {
+          "$ref": "#/$defs/ref_object"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "draft": {
+          "type": "boolean"
+        },
+        "source_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "publication": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/publication_selection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "authority",
+        "selection"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.review_create_selected.request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/command_request"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "authority": {
+              "properties": {
+                "command_id": {
+                  "const": "cmd.forge.review.create"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "original_request_ref",
+        "observation_ref",
+        "owner_result",
+        "error_projection_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.review_create_selected.result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "observation_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_result": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/command_result"
+        },
+        "error_projection_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "owner_result": {
+              "properties": {
+                "command_id": {
+                  "const": "cmd.forge.review.create"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "dispatch_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "identity",
+        "request_ref",
+        "dispatch_id",
+        "dispatch_frame_id",
+        "target_generation",
+        "idempotency_key",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "accepted_at_utc",
+        "arguments",
+        "payload_sha256",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.sir.forge_review_create_selected_dispatch.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "identity": {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+        },
+        "request_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "dispatch_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "dispatch_frame_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "accepted_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "arguments": {
+          "$ref": "#/$defs/request"
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "return_context": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/return_context"
+            }
+          ]
+        }
+      }
+    },
+    "delivery_return_context": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/return_context"
+        }
+      ]
+    },
+    "fixture_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "runtime_evidence",
+        "request",
+        "result",
+        "original_binding_ref",
+        "outcome_ref",
+        "response_ref",
+        "delivery_return_context",
+        "records"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.review_create_selected.fixture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "runtime_evidence": {
+          "const": false
+        },
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "result": {
+          "$ref": "#/$defs/result"
+        },
+        "original_binding_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "outcome_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "response_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "delivery_return_context": {
+          "$ref": "#/$defs/delivery_return_context"
+        },
+        "records": {
+          "type": "object"
+        }
+      }
+    },
+    "error_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "projection_id",
+        "owner_error_ref",
+        "original_request_ref",
+        "identity",
+        "ui_error",
+        "return_context",
+        "recorded_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.sir.forge_review_create_selected_error_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "projection_id": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "owner_error_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "identity": {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+        },
+        "ui_error": {
+          "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json#/properties/error"
+        },
+        "return_context": {
+          "$ref": "#/$defs/delivery_return_context"
+        },
+        "recorded_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/timestamp"
+        }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "original_request_ref",
+        "command_instance_id",
+        "operation_id",
+        "selection",
+        "provider",
+        "repository_binding_ref",
+        "target_ref",
+        "provider_receipt_ref",
+        "effect_state",
+        "outcome",
+        "reconciliation_ref",
+        "observed_at_utc",
+        "provider_review_id",
+        "returned_revision_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.review_create_selected.observation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "command_instance_id": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "provider": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/provider"
+        },
+        "repository_binding_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "target_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "provider_receipt_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "effect_state": {
+          "enum": [
+            "not_attempted",
+            "known_not_applied",
+            "known_applied",
+            "unknown"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "created",
+            "rejected",
+            "cancelled",
+            "unknown"
+          ]
+        },
+        "reconciliation_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/timestamp"
+        },
+        "provider_review_id": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "returned_revision_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ref_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository_binding_ref",
+        "ref",
+        "object_id"
+      ],
+      "properties": {
+        "repository_binding_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "object_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "publication_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "association_ref",
+        "target_id",
+        "destination_ref"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "git",
+            "jj"
+          ]
+        },
+        "association_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "target_id": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "destination_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_empty_string"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "source_ref",
+        "original_request_ref",
+        "head",
+        "base",
+        "repository_context_ref",
+        "draft_policy_ref",
+        "evaluated_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.review_create_selected.source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "source_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "head": {
+          "$ref": "#/$defs/ref_object"
+        },
+        "base": {
+          "$ref": "#/$defs/ref_object"
+        },
+        "repository_context_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "draft_policy_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evaluated_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/timestamp"
+        }
+      }
+    },
+    "remote_head": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "object_id"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "absent",
+            "known",
+            "unknown"
+          ]
+        },
+        "object_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "known"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "object_id": {
+                "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "object_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "git_mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_ref",
+        "source_object",
+        "destination_ref",
+        "refspec",
+        "expected_head",
+        "proposed_head"
+      ],
+      "properties": {
+        "source_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "source_object": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        },
+        "destination_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "refspec": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "expected_head": {
+          "$ref": "#/$defs/remote_head"
+        },
+        "proposed_head": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/identity_id"
+        }
+      }
+    },
+    "git_preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "preview_ref",
+        "original_request_ref",
+        "operation_id",
+        "command_instance_id",
+        "repository_context_ref",
+        "expected_revision",
+        "remote_operation_target_ref",
+        "target_selection_generation",
+        "target_id",
+        "push_url",
+        "refspecs",
+        "mappings",
+        "force_guard"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_publication_preview.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "preview_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "command_instance_id": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "repository_context_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "expected_revision": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/git_revision"
+        },
+        "remote_operation_target_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "target_selection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "target_id": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "push_url": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "refspecs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_empty_string"
+          }
+        },
+        "mappings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/git_mapping"
+          }
+        },
+        "force_guard": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "force_requested",
+            "expected_head_ref",
+            "lease_ref",
+            "dangerous_action_policy_ref"
+          ],
+          "properties": {
+            "force_requested": {
+              "type": "boolean"
+            },
+            "expected_head_ref": {
+              "oneOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "lease_ref": {
+              "oneOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "dangerous_action_policy_ref": {
+              "oneOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "git_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "original_request_ref",
+        "operation_id",
+        "target_id",
+        "preview_ref",
+        "mappings",
+        "effect_state",
+        "outcome",
+        "observed_heads",
+        "native_receipt_ref",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_publication_observation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "target_id": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "preview_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "mappings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/git_mapping"
+          }
+        },
+        "effect_state": {
+          "enum": [
+            "not_attempted",
+            "known_not_applied",
+            "known_applied",
+            "unknown"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "succeeded",
+            "failed",
+            "cancelled",
+            "outcome_unknown"
+          ]
+        },
+        "observed_heads": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "destination_ref",
+              "head"
+            ],
+            "properties": {
+              "destination_ref": {
+                "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+              },
+              "head": {
+                "$ref": "#/$defs/remote_head"
+              }
+            }
+          }
+        },
+        "native_receipt_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/timestamp"
+        }
+      }
+    },
+    "publication_approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "approval_ref",
+        "issuer_ref",
+        "original_request_ref",
+        "identity",
+        "permission_snapshot_ref",
+        "approval_scope_key",
+        "approval_target_ref",
+        "requested_account_binding",
+        "effective_account_binding",
+        "confirmation",
+        "preview_refs",
+        "reviewed_values_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.publication_approval_association.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "approval_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "issuer_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "identity": {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "approval_scope_key": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "approval_target_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "requested_account_binding": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "effective_account_binding": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "confirmation": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/confirmation"
+            },
+            {
+              "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/confirmation"
+            }
+          ]
+        },
+        "preview_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+          }
+        },
+        "reviewed_values_sha256": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/sha256"
+        }
+      }
+    },
+    "git_association": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "association_ref",
+        "original_request_ref",
+        "approval_ref",
+        "identity",
+        "return_context",
+        "kind",
+        "remote_operation_target_ref",
+        "owner_receipt_ref",
+        "work_ref",
+        "qualification_ref",
+        "status",
+        "target_results"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_publication_association.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "association_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "approval_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "identity": {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+        },
+        "return_context": {
+          "$ref": "#/$defs/delivery_return_context"
+        },
+        "kind": {
+          "const": "git"
+        },
+        "remote_operation_target_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "owner_receipt_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "work_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "qualification_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "succeeded",
+            "failed",
+            "cancelled",
+            "unknown"
+          ]
+        },
+        "target_results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "target_id",
+              "observation_ref",
+              "reconciliation_ref"
+            ],
+            "properties": {
+              "target_id": {
+                "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+              },
+              "observation_ref": {
+                "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+              },
+              "reconciliation_ref": {
+                "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+              }
+            }
+          }
+        }
+      }
+    },
+    "jj_association": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "association_ref",
+        "original_request_ref",
+        "approval_ref",
+        "identity",
+        "return_context",
+        "kind",
+        "owner_result_ref",
+        "original_dispatch_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.jj_publication_consumer_association.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "association_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "approval_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "identity": {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+        },
+        "return_context": {
+          "$ref": "#/$defs/delivery_return_context"
+        },
+        "kind": {
+          "const": "jj"
+        },
+        "owner_result_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original_dispatch_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        }
+      }
+    },
+    "publication_qualification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "qualification_ref",
+        "original_request_ref",
+        "repository_context_ref",
+        "capability_ref",
+        "credential_lease_ref",
+        "native_toolchain_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_publication_qualification.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "qualification_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "repository_context_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "capability_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "credential_lease_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "native_toolchain_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/result"
+    },
+    {
+      "$ref": "#/$defs/dispatch_binding"
+    },
+    {
+      "$ref": "#/$defs/fixture_case"
+    },
+    {
+      "$ref": "#/$defs/error_projection"
+    },
+    {
+      "$ref": "#/$defs/observation"
+    },
+    {
+      "$ref": "#/$defs/source"
+    },
+    {
+      "$ref": "#/$defs/git_preview"
+    },
+    {
+      "$ref": "#/$defs/git_observation"
+    },
+    {
+      "$ref": "#/$defs/publication_approval"
+    },
+    {
+      "$ref": "#/$defs/git_association"
+    },
+    {
+      "$ref": "#/$defs/jj_association"
+    },
+    {
+      "$ref": "#/$defs/publication_qualification"
+    }
+  ],
+  "x-schema-id": "pm.forge.review_create_selected_contracts.v1"
+}

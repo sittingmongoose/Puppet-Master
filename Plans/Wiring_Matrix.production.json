@@ -29889,8 +29889,8 @@
       },
       "ui_command_id": "cmd.forge.review.create",
       "handler_location": "handlers::forge::review_create",
-      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
-      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "request_schema_ref": "Plans/forge_review_create_selected_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/forge_review_create_selected_contracts.schema.json#/$defs/result",
       "expected_event_types": [],
       "acceptance_checks": [
         "Create carries the exact SCM context payload: repo, source worktree/branch, target branch, compare target, baseline, and run/attempt lineage",
@@ -29909,7 +29909,8 @@
         "effect_kind": "receipt",
         "description": "cmd.forge.review.create requires the owner typed result/receipt with explicit no-persist EventRecord disposition; accepted is not success, and success requires a separate terminal provider result and receipt. Navigation or a dispatch-only receipt cannot prove creation.",
         "receipt_or_event_refs": [
-          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+          "Plans/forge_review_create_selected_contracts.schema.json#/$defs/result",
+          "Plans/forge_review_create_selected_contracts.schema.json#/$defs/observation",
           "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
         ]
       },

@@ -5269,6 +5269,297 @@
         "Plans/forge_run_selected_contracts.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.forge.review_create_transport.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_review_create_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.review_create_selected.request.v1",
+        "pm.forge.review_create_selected.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Exact independently retained originals, owner receipts and selected-effect observations needed for replay, effect-unknown reconciliation, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original or observation required for replay. Never reconstruct a mutation from current UI selection."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not manufacture original inputs, publication approval, native outcomes or caller identity from historical records. Existing receipts retain their existing owner family; exact physical admission remains separate.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Transient selected create request/result; independently retained originals and receipts are separate.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_review_create_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.review_create_source.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_review_create_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.review_create_selected.source.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Exact independently retained originals, owner receipts and selected-effect observations needed for replay, effect-unknown reconciliation, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original or observation required for replay. Never reconstruct a mutation from current UI selection."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not manufacture original inputs, publication approval, native outcomes or caller identity from historical records. Existing receipts retain their existing owner family; exact physical admission remains separate.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted authentic provider/source owner projection; no source store or lifetime extension.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_review_create_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.review_create_observation.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_review_create_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.review_create_selected.observation.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual original/preview/approval/observation associations needed by existing receipt, replay, reconciliation, backup and audit holds; per-kind custody pending, no source lifetime extension.",
+        "expiry_rule": "No writer, cleanup or TTL admitted; exact key/value/readers/holds/release/migration/coherent backup require separate physical registration."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not manufacture original inputs, publication approval, native outcomes or caller identity from historical records. Existing receipts retain their existing owner family; exact physical admission remains separate.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained genuine issued-review/partial/unknown observation; physical owner custody remains pending.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_review_create_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.forge_review_create_dispatch.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/forge_review_create_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.forge_review_create_selected_dispatch.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual original/preview/approval/observation associations needed by existing receipt, replay, reconciliation, backup and audit holds; per-kind custody pending, no source lifetime extension.",
+        "expiry_rule": "No writer, cleanup or TTL admitted; exact key/value/readers/holds/release/migration/coherent backup require separate physical registration."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not manufacture original inputs, publication approval, native outcomes or caller identity from historical records. Existing receipts retain their existing owner family; exact physical admission remains separate.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained actual original identity/arguments/caller; physical custody pending.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/forge_review_create_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.forge_review_create_error.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/forge_review_create_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.forge_review_create_selected_error_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Exact independently retained originals, owner receipts and selected-effect observations needed for replay, effect-unknown reconciliation, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original or observation required for replay. Never reconstruct a mutation from current UI selection."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not manufacture original inputs, publication approval, native outcomes or caller identity from historical records. Existing receipts retain their existing owner family; exact physical admission remains separate.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted exact genuine owner error disclosure including cancelled-null UI.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/forge_review_create_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.source_control.git_publication_qualification.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/forge_review_create_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.source_control.git_publication_qualification.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Exact independently retained originals, owner receipts and selected-effect observations needed for replay, effect-unknown reconciliation, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original or observation required for replay. Never reconstruct a mutation from current UI selection."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not manufacture original inputs, publication approval, native outcomes or caller identity from historical records. Existing receipts retain their existing owner family; exact physical admission remains separate.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted native Source Control qualification projection; existing source authority remains required.",
+      "source_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/forge_review_create_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.source_control.git_publication_evidence.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/forge_review_create_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.source_control.git_publication_preview.v1",
+        "pm.source_control.git_publication_observation.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual original/preview/approval/observation associations needed by existing receipt, replay, reconciliation, backup and audit holds; per-kind custody pending, no source lifetime extension.",
+        "expiry_rule": "No writer, cleanup or TTL admitted; exact key/value/readers/holds/release/migration/coherent backup require separate physical registration."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not manufacture original inputs, publication approval, native outcomes or caller identity from historical records. Existing receipts retain their existing owner family; exact physical admission remains separate.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained actual per-target Git preview and known/unknown observation; existing RemoteOperationTarget/Reconciliation owners, physical custody pending.",
+      "source_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/forge_review_create_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.source_control.publication_consumer_association.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/forge_review_create_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.source_control.git_publication_association.v1",
+        "pm.source_control.jj_publication_consumer_association.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual original/preview/approval/observation associations needed by existing receipt, replay, reconciliation, backup and audit holds; per-kind custody pending, no source lifetime extension.",
+        "expiry_rule": "No writer, cleanup or TTL admitted; exact key/value/readers/holds/release/migration/coherent backup require separate physical registration."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not manufacture original inputs, publication approval, native outcomes or caller identity from historical records. Existing receipts retain their existing owner family; exact physical admission remains separate.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained actual publication original/result/receipt associations consumed by review create; no new public push command or receipt family.",
+      "source_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/forge_review_create_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.source_control.publication_approval_consumer.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/forge_review_create_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.source_control.publication_approval_association.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual original/preview/approval/observation associations needed by existing receipt, replay, reconciliation, backup and audit holds; per-kind custody pending, no source lifetime extension.",
+        "expiry_rule": "No writer, cleanup or TTL admitted; exact key/value/readers/holds/release/migration/coherent backup require separate physical registration."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not manufacture original inputs, publication approval, native outcomes or caller identity from historical records. Existing receipts retain their existing owner family; exact physical admission remains separate.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained Source Control consumer projection of genuine Permissions approval; not a new permission authority or physical store.",
+      "source_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/forge_review_create_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [

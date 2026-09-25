@@ -4576,8 +4576,8 @@
       "owner_plan": "Plans/Forge_Integrations.md",
       "plan_unit": "FGI-008",
       "dry_contract_ref": "Plans/Forge_Integrations.md#FGI-008",
-      "payload_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
-      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "payload_schema_ref": "Plans/forge_review_create_selected_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/forge_review_create_selected_contracts.schema.json#/$defs/result",
       "error_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_error_record",
       "availability_rule": "Normalize cmd.github.pr.create to cmd.forge.review.create {provider: github} before availability, permission, telemetry, receipt, and dispatch. Consume the canonical command catalog guard forge_capability_current && auth_valid && repository_current; the GitHub adapter defines each predicate against the exact GitHub account, repository, source/target revision, auth, remote, and capability. No independent GitHub guard.",
       "permission_gate": "Forge and Permissions owners gate the normalized target; Plans/GitHub_API_Auth_and_Flows.md owns the selected GitHub adapter's API/auth contribution, with exact authorized GitHub account and repository authority retained by the adapter. The alias grants no independent authority.",
@@ -4626,8 +4626,8 @@
       "owner_plan": "Plans/Forge_Integrations.md",
       "plan_unit": "FGI-008",
       "dry_contract_ref": "Plans/Forge_Integrations.md#3.1 compatibility normalization",
-      "payload_schema_ref": "pm.forge.command_request.v1 after provider-github normalization",
-      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "payload_schema_ref": "cmd.source_control.pr.create -> Plans/forge_review_create_selected_contracts.schema.json#/$defs/request; cmd.source_control.pr.merge -> Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "result_schema_ref": "cmd.source_control.pr.create -> Plans/forge_review_create_selected_contracts.schema.json#/$defs/result; cmd.source_control.pr.merge -> Plans/forge_integration_contracts.schema.json#/$defs/command_result",
       "error_schema_ref": "Forge typed availability, auth, permission, revision, and provider errors",
       "availability_rule": "Normalize the compatibility input to the exact provider-github Forge review command before availability, permission, telemetry, receipt, and dispatch.",
       "permission_gate": "Forge and Permissions owners gate the normalized command; the compatibility spelling grants no independent authority.",
@@ -8482,6 +8482,59 @@
       "evidence_refs": [
         "static_census_and_copy_repair_only"
       ]
+    },
+    {
+      "profile_id": "TCP-FORGE-REVIEW-CREATE",
+      "requirement_refs": [
+        "Plans/Forge_Integrations.md#FGI-004",
+        "Plans/Forge_Integrations.md#FGI-010",
+        "Plans/Source_Control_System.md#SCS-003",
+        "Plans/Shared_Integration_Runtime.md#SIR-042"
+      ],
+      "owner_plan": "Plans/Forge_Integrations.md",
+      "plan_unit": "FGI-010",
+      "dry_contract_ref": "Plans/forge_review_create_selected_contracts.schema.json",
+      "payload_schema_ref": "Plans/forge_review_create_selected_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/forge_review_create_selected_contracts.schema.json#/$defs/result",
+      "error_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_error_record",
+      "availability_rule": "Actual provider-owner create admission, original refs/objects and Draft policy, genuine selected publication and current caller/disclosure; no automatic push or inferred success.",
+      "permission_gate": "Existing Permissions and Source Control owners authenticate publication issuer/scope/target/account and actual native admission; static approval projection grants no authority.",
+      "disabled_reason_rule": "Preserve actual provider, permission, stale source/preview, native capability and reconciliation blockers without fabricating a review.",
+      "handler_owner": "Existing provider-owner handlers::forge::review_create only; handler_unavailable until native proof, not a common-route takeover.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static typed original/publication/creation/error/caller composition only; native authority and physical custody remain unproved.",
+      "gui_triggers": [
+        "Existing Create Review surfaces and normalized compatibility callers"
+      ],
+      "return_route": "Actual original and current delivery caller; replay never republishes or recreates.",
+      "reverse_consumers": [
+        "Plans/Source_Control_System.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "event_refs": [
+        "No admitted Forge EventRecord for this delta; expected_event_types=[] until Event Authority admission."
+      ],
+      "receipt_refs": [
+        "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt",
+        "Plans/forge_review_create_selected_contracts.schema.json#/$defs/observation"
+      ],
+      "observable_work": [
+        "Actual nonterminal accepted work only; cancellation before creation fabricates no work."
+      ],
+      "persistence_refs": [
+        "Plans/storage_value_registry.json"
+      ],
+      "migration_refs": [
+        "Plans/Forge_Integrations.md#FGI-008"
+      ],
+      "test_refs": [
+        "tests/test_pm_forge_review_create_selected.py",
+        "tests/test_pm_forge_review_create_bindings.py"
+      ],
+      "evidence_refs": [
+        "static_schema_and_fixture_only"
+      ]
     }
   ],
   "row_columns": [
@@ -10631,7 +10684,7 @@
     ],
     [
       "TOUCH-FGI-009",
-      "TCP-FORGE",
+      "TCP-FORGE-REVIEW-CREATE",
       "command",
       "cmd.forge.review.create",
       "partial",

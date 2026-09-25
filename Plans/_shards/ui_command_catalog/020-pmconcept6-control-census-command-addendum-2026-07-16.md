@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8334-L8524
+Source lines: L8334-L8526
 
-Source SHA256: `6ca873718dfa6c4f09c2fd5ebbaeddbaff48fb5cc4034486786f4b50a820b115`
+Source SHA256: `4ac61466bd92fdc64cc15310ecd39b172a84db48292173f61db8dc4a025d0be2`
 
 ---
 
@@ -195,6 +195,8 @@ Panel review actions consume the common Forge owner with exact SCM/forge context
 |------------|-------|-------------|----------------|--------------|
 | `cmd.forge.review.create` | Create Review | Creates a provider-discriminated review through the Forge owner with repository, source workspace/revision, target revision, compare payload, and exact return route. | `forge_capability_current && auth_valid && repository_current` | `domain_action` |
 | `cmd.forge.review.merge` | Merge Review | Merges the selected provider review through the Forge owner; protected-branch mutation routes the applicable destructive-remote permission class. | `review_open && merge_allowed && auth_valid` | `domain_action` |
+
+Exactly `cmd.forge.review.create` consumes `Plans/forge_review_create_selected_contracts.schema.json#/$defs/request` -> `Plans/forge_review_create_selected_contracts.schema.json#/$defs/result` under FGI-010/SCS-003/SIR-042. Its provider-owner route and Draft policy remain unchanged. Original head/base refs and immutable objects, title/body/draft and null/Git/JJ approved publication bind actual provider-issued review, genuine work, error/receipt and current caller. Compatibility create inputs use this same selected binding after normalization; merge keeps its historical binding. No automatic publication, new command, enabled handler, native authority or physical custody is implied.
 
 Compatibility inputs: `cmd.source_control.pr.create` and `cmd.github.pr.create` are alias-of `cmd.forge.review.create {provider: github}`, and `cmd.source_control.pr.merge` normalizes to `cmd.forge.review.merge {provider: github}`. These compatibility spellings receive no primary catalog or production-wiring row. DL-044 supersedes the former separate GitHub-domain create command; provider API behavior remains owned by the selected adapter.
 
