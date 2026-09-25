@@ -17234,9 +17234,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 2,
-        "True": 21
+        "True": 22
       },
-      "heading_count": 54,
+      "heading_count": 56,
       "implementation_surfaces": [
         "Plans/Commands_System.md",
         "Plans/FinalGUISpec.md",
@@ -17250,6 +17250,7 @@
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
         "Plans/touch_closure.json",
+        "future Plans/git_stash_apply_selected.schema.json and its fixture companion",
         "future Product Onboarding native controller",
         "future Product Onboarding owner adapter",
         "future Source Control Slint components",
@@ -17257,6 +17258,7 @@
         "future Source Control checkpoint native handlers",
         "future Source Control manager",
         "future Source Control setup surface and Slint consumer",
+        "future Source Control stash-apply surface, Slint consumer and UI_Command_Catalog row binding",
         "future SourceGraph projector and Slint consumer",
         "future SourceSnapshotAdapter and GitJJClosureValidator",
         "future acceptance harness",
@@ -17273,9 +17275,9 @@
         "future source-control facade",
         "future source-control migration"
       ],
-      "line_count": 1808,
+      "line_count": 1903,
       "path": "Plans/Source_Control_System.md",
-      "plan_unit_count": 23,
+      "plan_unit_count": 24,
       "plan_unit_ids": [
         "SCS-001",
         "SCS-002",
@@ -17299,7 +17301,8 @@
         "SCS-020",
         "SCS-021",
         "SCS-022",
-        "SCS-023"
+        "SCS-023",
+        "SCS-024"
       ],
       "reasoning_tiers": [
         "high"
@@ -17320,6 +17323,7 @@
         "scm_baseline_absence_or_cross_domain_collision",
         "section_proliferation_or_unstated_enforcement",
         "semantic_flattening_duplicate_external_effect_or_authority_escape",
+        "silently_chosen_staged_state_or_apply_meaning_drift",
         "source_control_backend_route_split_or_phantom_handler",
         "source_control_checkpoint_or_alias_authority_drift",
         "source_control_forge_identity_or_automation_authority_conflation",
@@ -17329,17 +17333,17 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "6b753e3b403ecce0c65314dc5379141c0a2644c124d6cbb5db6e9a3ad60fa188",
+      "sha256": "6b0fd179606c263a6ef0d010b88c04fbf680b93cddbe215d8403917b0cd46216",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 23
+        "accepted": 24
       },
       "title": "Source Control System",
       "unit_type_counts": {
         "command_binding": 2,
         "integration_contract": 12,
         "owner_boundary": 1,
-        "requirement": 7,
+        "requirement": 8,
         "validation": 1
       },
       "validation_surfaces": [
@@ -17377,6 +17381,7 @@
         "future Forgejo/Gitea transport/API/security/currentness and repository-automation handoff tests",
         "future IPC and credential security tests",
         "future Slint panel fixtures",
+        "future `Plans/git_stash_apply_selected.schema.json` request/preview/result defs and their fixture companion",
         "future all-terminal, stale selection, duplicate, lease-loss, interruption and unknown-effect fixtures",
         "future capability revision",
         "future clean-host closure, GC race, merge/currentness, remote trust, credential reattachment, unsafe-config, collision/conflict, and rollback tests",
@@ -17395,6 +17400,7 @@
         "future native pagination, stale-page, anchor-preservation, large-graph, Git/Jujutsu parity, accessibility, and frame-pacing tests",
         "future normalized roundtrip",
         "future owner-return and protected-auth runtime fixtures",
+        "no validator surface in this landing: the stash-apply selected-input companion SCS-003 names as pending is not yet materialized, so this unit is stated and not yet falsifiable. `Plans/git_selected_three.schema.json` and `Plans/git_pull_selected.schema.json` are the sibling companions this record already consumes and neither is extended here.",
         "no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. Neither source-control contract file carries an enforcement or gate-list shape, and Plans/Source_Control_System.md is not a sharding_config source, so the shard check never reads this document.",
         "prompt suppression tests",
         "python3 scripts/pm-new-contracts-verify.py",
@@ -17410,7 +17416,8 @@
         "tests/test_pm_onboarding_phases.py",
         "timeout/reconcile",
         "webhook replay",
-        "writer and credential lease fixtures"
+        "writer and credential lease fixtures",
+        "{'future stash-apply tests': 'unset choice, file-changes-only, file-changes-plus-saved-staged-selections, staged selections not restorable, retained-stash result, and no pop/drop behavior'}"
       ]
     },
     {
@@ -19311,7 +19318,7 @@
         "Plans/usage-feature.md",
         "future usage events"
       ],
-      "line_count": 7132,
+      "line_count": 7156,
       "path": "Plans/usage-feature.md",
       "plan_unit_count": 103,
       "plan_unit_ids": [
@@ -19456,7 +19463,7 @@
         "usage_workspace_state_orphan_or_preview_persistence",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "3a0d4e31f6e476718bd30ad18eba5d513cbc4308aae524ac250d853abc8e38cd",
+      "sha256": "2b6357e8500bee90b9e4fc8aa31555e1b0f488e3f8ad2a67d72e7ce2328d7421",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 103
@@ -20096,7 +20103,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T13:56:18Z",
+  "generated_at_utc": "2026-09-25T15:35:52Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20105,12 +20112,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3535,
-      "True": 3204
+      "True": 3205
     },
-    "plan_unit_count": 6739,
+    "plan_unit_count": 6740,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6548,
+      "accepted": 6549,
       "retired": 182,
       "superseded": 9
     },
@@ -20177,7 +20184,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5291,
+      "requirement": 5292,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

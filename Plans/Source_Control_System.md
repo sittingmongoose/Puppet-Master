@@ -214,8 +214,11 @@ acceptance_criteria:
     The three closed selected-input bindings in Plans/git_selected_three.schema.json adopt commit message plus
     expected index tree, stash-create include_untracked plus message, and branch-create name plus immutable base.
     Pull remote/branch/merge/rebase/ff_only strategy and actual native-qualified pull-preview/phase contents use
-    the separate git_pull_selected companion above. Stash-apply selected object plus actual conflict/dependency/effect
-    preview and index-restoration policy remain pending typed companions, not merely missing native implementations.
+    the separate git_pull_selected companion above. `cmd.source_control.stash.apply` keeps its immutable selected
+    stash object, original-request/currentness, FileSafe and Git-adapter ownership, and its staged-state restoration
+    choice is the explicit DL-096 choice recorded in SCS-024; that selected object, the actual conflict/dependency/effect
+    preview and the chosen restoration mode remain one pending typed companion with its fixtures, not merely a missing
+    native implementation.
     These concrete commands are not silently inserted into
     the neutral command family. Stash apply is not pop/drop, branch creation does not admit branch deletion, and
     historical candidate cmd.git.stash.* or cmd.git.branch.create names do not create peer public commands.
@@ -1805,4 +1808,96 @@ source_lineage: [Plans/Decision_Log.md#DL-062, Plans/ledgers/v2/pldg-20260918-00
 preserved_exact_tokens: [current checks, gate list, enforcement, required, advisory, not enforced, unknown]
 negative_constraints: [Do not add a second policies region or new section vocabulary under this decision., Do not infer an enforcement value the provider does not publish., Do not let the two consumer owners name different columns.]
 owner_hints: [Plans/Source_Control_System.md, Plans/FinalGUISpec.md, Plans/Azure_DevOps_Integration.md]
+```
+
+## DL-096 Accepted Stash-Apply Staged-State Choice - 2026-09-25
+
+This addendum compiles the DL-096 answer as accepted planning requirements for the existing stash apply flow. It admits no command, request meaning, handler, event, store, setting or runtime capability: `cmd.source_control.stash.apply` keeps its current owner and row with `handler_unavailable`, and `cmd.source_control.stash.pop` and `cmd.source_control.stash.drop` keep their existing two-step destructive confirmation and meaning. The selected-input companion SCS-003 records as pending stays pending; this unit fixes the choice that companion must carry and the behavior the apply flow must show. Git keeps its index, staging and stash semantics, and Jujutsu gains no index or stash semantic. Whether the choice renders as an action parameter or through an existing confirm surface is a UI/catalog landing decision, not a product choice made here.
+
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Source_Control_System.md
+
+### SCS-024 - Explicit Stash-Apply Staged-State Restoration Choice
+
+```yaml
+plan_unit_id: SCS-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Source_Control_System.md
+canonical_text: >-
+  Applying a saved stash through the existing `cmd.source_control.stash.apply` offers one explicit choice between
+  restoring the file changes only and restoring the file changes plus saved staged selections; both act on the
+  `stash_selected` immutable stash object the request already binds. Neither choice is silently assumed, and no
+  command-line default, previous answer or current UI selection substitutes for it; no mutation occurs without one of
+  the two modes the original request supplies. The immutable selected stash object stays exactly the one the original
+  request selected, and the choice binds to that same original request/currentness instead of being inferred later.
+  The owner preview for that exact request shows the file changes, the chosen staged-selection restoration or its
+  explicit non-restoration, the actual conflict and dependency effects, and the proposed state before the mutation is
+  admitted. Applying retains the stash and the result reports it as still present; apply never becomes pop, drop or
+  delete. FileSafe, permission, writer-lease, credential-lease and adapter-receipt ownership stay with their existing
+  owners, this remains the Git adapter flow, and no Jujutsu index, staging or stash semantic is introduced.
+gui_related: true
+gui_classification_reason: The unit decides a visible choice in the existing stash apply flow, its unset state, and the preview and result wording that shows what the choice did.
+depends_on: [SCS-003, SCS-005, DL-096]
+unblocks: []
+acceptance_criteria:
+  - >-
+    `cmd.source_control.stash.apply` offers exactly two restoration choices - file changes only, or file changes plus
+    the stash's saved staged selections - and the original request supplies one of them for the bound `stash_selected`
+    object. No default, previous answer, current UI selection or command-line behavior substitutes for it.
+  - The original request explicitly supplies one of the two modes and no mutation is admitted without it; the precise unset-state mapping remains with the pending selected-input companion.
+  - >-
+    The original request keeps the immutable selected stash object, the chosen restoration mode, the
+    RepositoryContext/Git revision, currentness generation, writer lease generation/epoch and FileSafe/permission
+    references; helper resolution cannot rewrite them, and result/replay preserves that original selection instead of
+    a later selection.
+  - >-
+    The owner preview for the exact original request shows the file changes, the chosen staged-selection restoration
+    or its explicit non-restoration, the actual conflict and dependency effects and the proposed state; changed inputs
+    require a fresh qualified preview, and unknown conflicts or dependencies cannot authorize the mutation.
+  - Applying retains the stash: the result and its terminal receipt report the stash as still present, no apply path performs or implies pop, drop or delete, and `cmd.source_control.stash.pop` and `cmd.source_control.stash.drop` keep their existing confirmation and destructive meaning.
+  - >-
+    Restoring saved staged selections reports exactly what the stash recorded; a stash whose staged selections cannot
+    be restored reports that fact instead of reporting a successful unstaged application.
+  - >-
+    The behavior is Git-only: `scm_backend=jujutsu` still has no staging or stash surface, and no Jujutsu index or
+    stash semantic is added by this decision.
+  - >-
+    Planning acceptance admits no command, request meaning, enum, handler availability, event, store, setting or native
+    behavior: the row stays `handler_unavailable`, the pending selected-input companion in SCS-003 remains a follow-up
+    obligation, and no WorkNode or NodeSeed is created.
+validation_surfaces:
+  - >-
+    no validator surface in this landing: the stash-apply selected-input companion SCS-003 names as pending is not yet
+    materialized, so this unit is stated and not yet falsifiable. `Plans/git_selected_three.schema.json` and
+    `Plans/git_pull_selected.schema.json` are the sibling companions this record already consumes and neither is
+    extended here.
+  - future `Plans/git_stash_apply_selected.schema.json` request/preview/result defs and their fixture companion
+  - future stash-apply tests: unset choice, file-changes-only, file-changes-plus-saved-staged-selections, staged selections not restorable, retained-stash result, and no pop/drop behavior
+risk_class: silently_chosen_staged_state_or_apply_meaning_drift
+reasoning_tier: high
+context_scope: stash_apply_staged_state_choice
+implementation_surfaces:
+  - Plans/Source_Control_System.md
+  - future Plans/git_stash_apply_selected.schema.json and its fixture companion
+  - future Source Control stash-apply surface, Slint consumer and UI_Command_Catalog row binding
+node_compile_hint:
+  mode: static_owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-096
+  - "SourceRef: reports/packet-canon-closure-20260924/product-choice-cards-20260925.md SHA-256 82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f"
+  - "SourceRef: /mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS.md SHA-256 306c011b5fd8a810839e98751147e3ed543b206e04a38bf4e893a79132c345a6"
+preserved_exact_tokens: [cmd.source_control.stash.apply, cmd.source_control.stash.pop, cmd.source_control.stash.drop, stash_selected, file changes only, file changes plus saved staged selections, handler_unavailable]
+negative_constraints:
+  - Do not assume a restoration mode from a command-line default, an unset choice, a previous answer or the current selection.
+  - Do not let apply pop, drop or delete the stash, and do not change the existing pop/drop confirmation or destructive meaning.
+  - Do not add Jujutsu index, staging or stash semantics, and do not restore Git-only staging or stash on a Jujutsu workspace.
+  - Do not replace or re-resolve the selected stash object after preview, and do not dispatch from current UI selection.
+  - Do not register or revive a retired `cmd.git.stash.*` candidate name; the canonical identity stays `cmd.source_control.stash.apply`.
+  - Do not admit a command, request meaning, handler, event, store, setting or native capability from this decision.
+owner_hints:
+  - Plans/Source_Control_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/GitHub_Integration.md
 ```

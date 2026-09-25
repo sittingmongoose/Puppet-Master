@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L950-L5047
+Source lines: L954-L5071
 
-Source SHA256: `3a0d4e31f6e476718bd30ad18eba5d513cbc4308aae524ac250d853abc8e38cd`
+Source SHA256: `2b6357e8500bee90b9e4fc8aa31555e1b0f488e3f8ad2a67d72e7ce2328d7421`
 
 ---
 
@@ -458,7 +458,7 @@ plan_unit_id: UF-010
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Usage keeps event-level usage ledger inspection, filtering/export, optional analytics by time/platform/project/tier, cost tracking/attribution, retention/privacy controls, and drill-down without turning filtered exports into canonical history.
+canonical_text: Usage keeps event-level usage ledger inspection, filtering/export, optional analytics by time/platform/project/tier, cost tracking/attribution, retention/privacy controls, and drill-down without turning filtered exports into canonical history. Ledger filters use actual recorded project, provider, account, model, run, thread, and event-type values with all selected filters conjunctive; search is case-insensitive literal over displayed labels and identifiers excluding prompts and secrets with no advanced patterns; sort supports time, tokens, and cost with newest first initially, unknowns last, and stable record identity ties; Export Selected includes exactly the selected records and Export Filtered includes all matching records independently of viewport rows; legacy session/tier labels are never guessed into current identities and quota-only rows receive no invented run or event identity.
 gui_related: true
 gui_classification_reason: The unit defines visible ledger, analytics, reporting, and export surfaces.
 split_recommended: true
@@ -470,6 +470,11 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UF-010 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- Ledger filters offer only actual recorded project, provider, account, model, run, thread, and event-type values, and every selected filter must match.
+- Ledger search is case-insensitive literal matching over displayed labels and identifiers only, excluding prompt content and secrets; advanced patterns are excluded.
+- Ledger sort supports time, tokens, and cost with newest-first initial order, unknown values last, and stable record identity tie-breaks.
+- Export Selected includes exactly the selected records; Export Filtered includes all records matching the current filters, not only viewport-drawn rows.
+- Legacy session/tier labels are never guessed into current identities; quota-only rows receive no invented run or event identity.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -486,6 +491,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0021
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0022
+- Plans/Decision_Log.md#DL-098 (PCC-USAGE-QUERY-001, approved 2026-09-25)
 preserved_exact_tokens:
 - Event-level log
 - platform
@@ -498,7 +504,16 @@ preserved_exact_tokens:
 - Aggregated view
 - Cost tracking
 - Retention policy
-negative_constraints: []
+- Export Selected
+- Export Filtered
+- conjunctive
+- newest first
+- stable record identity
+negative_constraints:
+- Do not guess legacy session or tier labels into current project, run, thread, or event identities.
+- Do not assign quota-only rows invented run, attempt, or event identities to satisfy a filter, sort, or export.
+- Do not search prompt content or secrets, and do not accept advanced search patterns.
+- Do not add Ledger filter axes or defaults beyond the DL-098 approved set.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -2496,6 +2511,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UF-047 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- Ledger Export Selected includes exactly the selected records and Ledger Export Filtered includes all filter-matching records, independently of viewport-drawn rows (DL-098).
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -2518,7 +2534,10 @@ preserved_exact_tokens:
 - date-range/analytics export
 - v1
 - analytics
-negative_constraints: []
+- Export Selected
+- Export Filtered
+negative_constraints:
+- Ledger Export Filtered must not return only viewport-drawn rows.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -3772,6 +3791,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - UF-070 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- Export Selected and Export Filtered ledger outputs remain view exports unless they carry the exact record envelope required for canonical record export; Export Filtered never means viewport-only rows (DL-098).
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:

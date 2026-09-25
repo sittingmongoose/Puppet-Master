@@ -27,8 +27,11 @@ answer hashes and status. The frozen presentation remains unchanged.
    including exact selection versus all-filter-matches export and no invented
    legacy/quota identities.
 
-Owner prose/contracts and implementation still require scoped reconciliation;
-recording answers alone does not close those packet occurrences. Newer spellcheck,
+Usage DL-098 owner prose/PlanUnits and stash DL-096 owner prose/SCS-024 are now
+integrated on the repair branch; see `usage-and-stash-owner-decisions.md` for exact
+external review and application hashes. Their typed companions still require
+separate reconciliation, so this does not close the selected-command occurrences.
+The other owner decisions and native implementation remain pending. Newer spellcheck,
 Help/Teacher and assistant/platform designs remain protected.
 
 The earlier capability-precedence question was an overstatement of the packet:

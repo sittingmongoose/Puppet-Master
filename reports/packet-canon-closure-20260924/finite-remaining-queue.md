@@ -1,5 +1,12 @@
 # Current finite remaining queue — 2026-09-25
 
+Current-state override: `decisions-and-handoff.md` and
+`usage-and-stash-owner-decisions.md` supersede this historical queue's unmade-choice
+and final-review labels. All five cards were answered; Usage and stash owner
+prose are integrated, while their typed companions remain pending. The later
+authorized SCM/JJ targeted reviews are preserved in that handoff. Do not use the
+older labels below to re-ask an answered choice or claim a current blocker.
+
 This supersedes older repair-pending descriptions, not their historical evidence.
 Doctor catalog, provider manifest/readiness/search, five Jujutsu operands and the
 bounded Vault/route/update/size prose are integrated on the repair branch. The

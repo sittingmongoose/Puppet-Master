@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L129-L373
+Source lines: L129-L375
 
-Source SHA256: `3a0d4e31f6e476718bd30ad18eba5d513cbc4308aae524ac250d853abc8e38cd`
+Source SHA256: `2b6357e8500bee90b9e4fc8aa31555e1b0f488e3f8ad2a67d72e7ce2328d7421`
 
 ---
 
@@ -28,7 +28,9 @@ Source SHA256: `3a0d4e31f6e476718bd30ad18eba5d513cbc4308aae524ac250d853abc8e38cd
 
 
 - **Event-level log:** Keep the existing concept of an event ledger (platform, operation, tokens in/out, cost, tier/session) so users can inspect per-request usage. This may remain the current "Ledger" page or be presented as a tab/section under a unified **Usage** area.
-- **Filtering and export:** Retain filtering (e.g. by type, tier, session) and export (e.g. JSON) as part of the Usage feature.
+- **Filtering and export:** Retain filtering (by recorded project, provider, account, model, run, thread, and event-type) and export (e.g. JSON) as part of the Usage feature. The older `type, tier, session` examples are compatibility vocabulary only; `tier`/`session` labels are never guessed into current project, run, thread, or event identities.
+
+Bounded Ledger query, sort, and export behavior follows `Plans/Decision_Log.md` DL-098 (frozen Card 5, `PCC-USAGE-QUERY-001`, approved 2026-09-25). Ledger filters offer only actual recorded project, provider, account, model, run, thread, and event-type values, and every selected filter must match (conjunctive). Search is case-insensitive literal text over displayed labels and identifiers only, never over prompt content or secrets; advanced patterns (regular expressions, wildcards, structured query syntax) are excluded. Sort supports time, tokens, and cost; the initial order is newest first, unknown values sort last, and stable record identity breaks ties. `Export Selected` includes exactly the selected records; `Export Filtered` includes all records matching the current filters, never only the rows currently drawn in the bounded virtualized viewport. Quota-only rows never acquire invented run, attempt, or event identities to satisfy a filter, sort, or export. This policy adds no new filter axis or default and changes no retention, money/cost, or account authority.
 
 ### 4. Optional analytics and reporting
 
