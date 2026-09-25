@@ -233,6 +233,8 @@ For the designated Plans agent, from editing `Plans/storage-plan.md`, `Plans/sto
    - Orchestrator: "archived or deleted" becomes "archived" (DL-085; `Plans/orchestrator-subagent-integration.md:4747`), the raw-output reconciliation (DL-086), and the child-run section cites DL-084.
    - Collaborative Workflows: section 13 cites DL-090 and gains `collaboration.failed` (DL-091).
    - The Step 8 depth assessment's four `RP-OPERATIONAL-2555D` retention cells can leave `PARTIAL` at the next regrade. The assessment is pinned by the DL-077 admission records and is not edited here.
+
+     **Open follow-up (review SR-05, note).** After this landing, `reports/event-authority-20260911/step-08-depth42-assessment-20260924.json` still grades these retention cells `PARTIAL`: `storage.boot_recovery`, `storage.recovery_applied`, `storage.compaction_lifecycle_changed` and `platform.capability_evaluated`. Its recorded reason is that the SP-291 owner edit has not been written, and this branch writes it. DL-083 and DL-089 hold the cells `PARTIAL` only "until that owner edit lands". The reviewer's repair, in the reviewer's words: "At the next Step 8 regrade, re-grade the retention cells of storage.boot_recovery, storage.recovery_applied, storage.compaction_lifecycle_changed and platform.capability_evaluated against Plans/storage-plan.md:23606-23626. Do not edit the pinned assessment on this branch." It is not applied here, because it belongs to the next regrade. The subsection still stands at lines 23606-23626 after this round's repairs.
 6. **Response rows unchanged.** `decision-responses.jsonl` still says the DL-084 to DL-086 cells are `FAIL` "until the Storage owner binding lands". That stays true as history and is not edited.
 
 ## 11. Commits
