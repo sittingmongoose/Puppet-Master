@@ -1,4 +1,4 @@
-"""Conditional SP-266 v2 decoded-value oracles. No admission; native NOT_RUN.
+"""SP-266 v2 decoded-value oracles of the current definition. They grant no admission; native NOT_RUN.
 
 Observations are synthetic adapter assumptions, not authenticated native receipts.
 This module never writes registries, storage, events or live Browser state. The

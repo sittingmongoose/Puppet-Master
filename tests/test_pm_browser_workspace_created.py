@@ -345,8 +345,8 @@ class WorkspaceHistoricalReadTests(unittest.TestCase):
         self.assertEqual(self.read(event=value)["outcome"], "read_unavailable")
 
 
-# Conditional v2 successor: these tests do not replace v1 admission or prove
-# native migration, source bytes, permissions or crash recovery. The v2 module
+# The v2 successor, the current definition since 2026-09-25: these tests do not
+# prove native migration, source bytes, permissions or crash recovery. The v2 module
 # is loaded in setUpClass, so a v2 import failure cannot fail the v1 suites.
 V2 = None
 
