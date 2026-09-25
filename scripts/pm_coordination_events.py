@@ -127,6 +127,11 @@ CLOSED_DOMAINS = {
 # from node_config.platform (OSI-258), as Plans/Models_System.md section 1.2 names runtime platforms. It is
 # bounded by form only; no list of platforms is closed.
 PLATFORM_ID = {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[a-z][a-z0-9_]*$"}
+# SP-320 path_ref and CV-353 rule 5 (review repair CP-08): a normalized project-relative path; no ".", ".." or empty
+# segment, and no Windows drive, home-relative or backslash (UNC) path, the shapes mirror_path and non_secret_ref
+# already reject.
+PATH_REF = {"type": "string", "minLength": 1, "maxLength": 1024,
+            "pattern": r"^(?![A-Za-z]:[\\/])(?![~\\])(?!\.{1,2}(?:/|$))(?![\s\S]*/\.{1,2}(?:/|$))[^/]+(?:/[^/]+)*$"}
 PROJECTION_MEMBERS = ("agent_projection", "file_projection", "operation_projection", "snapshot_projection", "checkpoint")
 PROJECTION_SCHEMA_IDS = {
     "agent_projection": "pm.storage_value.coordination_agent_projection.v1",
@@ -391,6 +396,8 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
             failures.append({"error": "closed_domain", "definition": name, "field": field})
     if envelope.get("properties", {}).get("platform") != PLATFORM_ID:
         failures.append({"error": "platform_pattern", "definition": "lineage_envelope"})
+    if defs["agent_file_ownership_updated"].get("properties", {}).get("path_ref") != PATH_REF:
+        failures.append({"error": "path_ref_pattern", "definition": "agent_file_ownership_updated"})
     nulls = null_admitting_nodes(payloads)
     if nulls:
         failures.append({"error": "payload_schema_admits_null", "detail": nulls[:5]})
@@ -495,6 +502,8 @@ def projection_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     for name in ("agent_projection", "snapshot_agent"):
         if defs.get(name, {}).get("properties", {}).get("platform") != PLATFORM_ID:
             failures.append({"error": "platform_pattern", "definition": name})
+    if defs.get("path_ref") != PATH_REF:
+        failures.append({"error": "path_ref_pattern", "definition": "path_ref"})
     if any(reaches_live_fence(defs.get(name, {}), defs) for name in PROJECTION_MEMBERS):
         failures.append({"error": "stored_live_snapshot_fence"})
     if projections.get("x-pm-event-authority-binding") != expected_binding():

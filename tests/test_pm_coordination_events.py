@@ -119,7 +119,7 @@ class StaticReportTests(unittest.TestCase):
             "transition_sequences", "transition_steps", "positive_projection_cases", "negative_projection_cases",
             "native_oracles_not_run")}
         self.assertEqual(counts, {
-            "positive_payload_cases": 43, "negative_payload_cases": 67, "negative_event_cases": 12, "identity_vectors": 7,
+            "positive_payload_cases": 43, "negative_payload_cases": 69, "negative_event_cases": 12, "identity_vectors": 7,
             "path_vectors": 9, "transition_sequences": 22, "transition_steps": 83, "positive_projection_cases": 11,
             "negative_projection_cases": 20, "native_oracles_not_run": 13})
 
@@ -169,6 +169,9 @@ class PayloadSchemaTests(unittest.TestCase):
             "platform_pattern":
                 lambda schema: schema["$defs"]["lineage_envelope"]["properties"].update(
                     platform={"enum": ["codex", "claude", "cursor", "gemini", "copilot"]}),
+            "path_ref_pattern":
+                lambda schema: schema["$defs"]["agent_file_ownership_updated"]["properties"]["path_ref"].update(
+                    pattern="^(?!\\.{1,2}(?:/|$))(?![\\s\\S]*/\\.{1,2}(?:/|$))[^/]+(?:/[^/]+)*$"),
         }
         for expected, mutation in mutations.items():
             with self.subTest(expected=expected), ScratchRoot(CHECK.PAYLOAD_PATH) as root:
@@ -221,6 +224,22 @@ class PayloadSchemaTests(unittest.TestCase):
         self.assertIsNone(CHECK.payload_rejection(record["event_type"], record["payload"]))
         self.assertEqual(CHECK.envelope_rejection(record, CONTEXT["storage_instance_id"], CONTEXT["recovery_epoch"]), "identity_recipe")
 
+    def test_path_ref_is_project_relative(self):
+        # Review repair CP-08: no Windows drive, home-relative or backslash (UNC) path, as in mirror_path and non_secret_ref.
+        claim = PAYLOADS["a7_file_editing_r4"]
+        for path in ("C:\\Users\\me\\secret.txt", "C:/Users/me/secret.txt", "~/secret.txt", "\\\\server\\share\\x", "/abs/x", "../x", "x/./y"):
+            with self.subTest(path=path):
+                value = dict(claim["payload"], path_ref=path, path_hash=CHECK.path_hash(path))
+                self.assertEqual(CHECK.payload_rejection(claim["event_type"], value), "schema")
+        for path in ("src/api.rs", "Src/API.rs", "docs/Über Straße.md", "a:b/file.txt"):
+            with self.subTest(path=path):
+                value = dict(claim["payload"], path_ref=path, path_hash=CHECK.path_hash(path))
+                self.assertIsNone(CHECK.payload_rejection(claim["event_type"], value))
+        row = PROJECTIONS["projection_file_claim"]["value"]
+        for path in ("C:/Users/me/a.rs", "~/a.rs"):
+            with self.subTest(projection=path):
+                self.assertEqual(CHECK.projection_value_failures("file_projection", dict(row, path_ref=path, path_hash=CHECK.path_hash(path))), ["schema"])
+
     def test_secret_path_and_null_shapes_are_rejected(self):
         operation = PAYLOADS["a7_operation_progress_r5"]
         for summary in ("token sk-abcdefghijklmnop123", "Bearer abcdefghijklmnop", "line one\nline two"):
@@ -271,6 +290,8 @@ class ProjectionAndCheckpointTests(unittest.TestCase):
                 lambda schema: schema["$defs"]["file_projection"]["properties"].update(schema_id={"const": "pm.storage_value.other.v1"}),
             "platform_pattern":
                 lambda schema: schema["$defs"]["snapshot_agent"]["properties"].update(platform={"enum": ["codex"]}),
+            "path_ref_pattern":
+                lambda schema: schema["$defs"]["path_ref"].update(maxLength=4096),
         }
         for expected, mutation in mutations.items():
             with self.subTest(expected=expected), ScratchRoot(*SCHEMA_FILES) as root:

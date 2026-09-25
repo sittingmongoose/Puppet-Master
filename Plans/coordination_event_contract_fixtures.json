@@ -1197,6 +1197,28 @@
       "event_type": "coordination.agent_file_ownership_updated"
     },
     {
+      "case_id": "file_windows_drive_path",
+      "base_case_id": "a7_file_editing_r4",
+      "patch": {
+        "path_ref": "C:/Users/me/a.rs",
+        "path_hash": "e7cf9378e38a49cd908b7b486348cae1fab3ec17e9e3774ba6f8b60441e42a17"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_file_ownership_updated"
+    },
+    {
+      "case_id": "file_home_relative_path",
+      "base_case_id": "a7_file_editing_r4",
+      "patch": {
+        "path_ref": "~/a.rs",
+        "path_hash": "5632e7d719a1b6fdd02c06bcaefbdde88e00742f180c7edd5dc299e872339aef"
+      },
+      "remove": [],
+      "expected_rejection": "schema",
+      "event_type": "coordination.agent_file_ownership_updated"
+    },
+    {
       "case_id": "file_uppercase_path_hash",
       "base_case_id": "a7_file_editing_r4",
       "patch": {
