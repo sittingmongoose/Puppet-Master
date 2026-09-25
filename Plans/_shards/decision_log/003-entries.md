@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L2143
+Source lines: L13-L2157
 
-Source SHA256: `c289962b2a9076637cf78bc397098396780fa4d107667af81a37a115ba56800b`
+Source SHA256: `794261c7a6057eff765489ee4932364f0b7c0ef80cd04fea6a497af81009e8d4`
 
 ---
 
@@ -2139,3 +2139,17 @@ The recorded events of every Crew, BrainStorm, Review and Chat Room run, the 18 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_CARD4_ADDENDUM.md`, SHA-256 `b09b2afdaed355e1170ef0a96db1d468fa00a35ef185cb8fddeed16b1bbea8c8`; card `reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md` (Card 4c); application record `reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json`.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Collaborative_Workflows.md
+
+### DL-093: A Step 9 registration's own Decision Log entry is Jared's decision entry for that family
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session: **"4 i approve"**, to the host's question 4, which put review question D-02 of the Step 9 procedure record to him.
+
+**Question:** Each coordination admission adds a Decision Log entry under DL-078, and the seal check's admission record cites it as Jared's decision entry for that family (review question D-02). Fine, or should Jared approve each of the seven himself?
+
+**Answer:** Approve. Jared's words for this question, verbatim: "4 i approve".
+
+The Decision Log entry that each Step 9 registration landing adds under DL-078, which names the family, is Jared's decision entry for that family in the sense of DL-077, and the family's DL-077 admission record cites it as its `decision_ref`. Jared does not approve each admission himself: each registration still passes the whole Step 9 procedure, and he sees each checkpoint change in its landing record, as DL-078 provides. The question named the seven coordination families, which are the next registrations; the host stated its reading back to Jared in the same session, that the landing entry of each Step 9 registration is Jared's decision entry for that family, which is what D-02 asks. This answer closes review question D-02 of the Step 9 procedure record. It changes neither DL-077's nor DL-078's text. DL-077's prose section is pinned under the V-07 rule (the post-August receipt pins it, and every admission record pins the receipt), so an edit to it would re-pin all three existing admission records. DL-078's text already says that the entry each such landing adds "is the decision entry its DL-077 admission record cites", and this answer confirms that reading. Every other requirement stands: a registration needs its full Event Authority contract, a blind form-driven review, its own Storage admission landing with one family per landing, the coordinator's landing go, and an admission record whose depth assessment shows all twelve criteria passing. This entry registers nothing, admits no family, and changes no registry row, validator, receipt or admission record.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_OPEN_QUESTIONS.md`, SHA-256 `678b9a32a0942fff08cea4127d9c52d7e73774509869c88958f466d6b8d0171a`; Step 9 procedure record `reports/event-authority-20260911/step-09-procedure-20260924.md` (open question 2, D-02); post-August admission receipt `reports/event-authority-20260911/step-10-post-august-admission-receipt.json`.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-077, ContractName:Plans/Decision_Log.md#DL-078, ContractName:Plans/event_family_registry.json

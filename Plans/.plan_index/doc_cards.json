@@ -5404,10 +5404,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 51,
+        "False": 52,
         "True": 38
       },
-      "heading_count": 185,
+      "heading_count": 187,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5483,15 +5483,17 @@
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json",
         "Plans/touch_closure.json",
+        "reports/event-authority-20260911/admission-records",
+        "reports/event-authority-20260911/step-09-procedure-20260924.md",
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py",
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 7627,
+      "line_count": 7701,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 89,
+      "plan_unit_count": 90,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5581,6 +5583,7 @@
         "DL-090",
         "DL-091",
         "DL-092",
+        "DL-093",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5618,6 +5621,7 @@
         "decision_review_flow_drift",
         "diagnostic_persistence_boundary_drift",
         "duplicated_or_unenforced_check_presentation",
+        "event_authority_admission_decision_entry_drift",
         "event_authority_binding_scope_expansion",
         "event_authority_checkpoint_approval_drift",
         "event_authority_decision_drift",
@@ -5677,16 +5681,16 @@
         "weak_integration_underclassification",
         "workflow_verification_exception_route_drift"
       ],
-      "sha256": "c289962b2a9076637cf78bc397098396780fa4d107667af81a37a115ba56800b",
+      "sha256": "794261c7a6057eff765489ee4932364f0b7c0ef80cd04fea6a497af81009e8d4",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 89
+        "accepted": 90
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 86
+        "requirement": 87
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -5725,7 +5729,8 @@
         "reports/event-authority-20260911/decision-responses.jsonl",
         "reports/event-authority-20260911/step-08-compaction-detail-cleanup-answer.json",
         "reports/event-authority-20260911/step-08-compaction-detail-cleanup-presentation.json",
-        "reports/event-authority-20260911/step-08-platform-lifetime-presentation.json"
+        "reports/event-authority-20260911/step-08-platform-lifetime-presentation.json",
+        "reports/event-authority-20260911/step-09-procedure-20260924.md"
       ]
     },
     {
@@ -20006,7 +20011,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T06:56:48Z",
+  "generated_at_utc": "2026-09-25T06:57:37Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20014,13 +20019,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3540,
+      "False": 3541,
       "True": 3197
     },
-    "plan_unit_count": 6737,
+    "plan_unit_count": 6738,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6546,
+      "accepted": 6547,
       "retired": 182,
       "superseded": 9
     },
@@ -20087,7 +20092,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5293,
+      "requirement": 5294,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

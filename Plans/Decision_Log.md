@@ -2142,6 +2142,20 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Collaborative_Workflows.md
 
+### DL-093: A Step 9 registration's own Decision Log entry is Jared's decision entry for that family
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session: **"4 i approve"**, to the host's question 4, which put review question D-02 of the Step 9 procedure record to him.
+
+**Question:** Each coordination admission adds a Decision Log entry under DL-078, and the seal check's admission record cites it as Jared's decision entry for that family (review question D-02). Fine, or should Jared approve each of the seven himself?
+
+**Answer:** Approve. Jared's words for this question, verbatim: "4 i approve".
+
+The Decision Log entry that each Step 9 registration landing adds under DL-078, which names the family, is Jared's decision entry for that family in the sense of DL-077, and the family's DL-077 admission record cites it as its `decision_ref`. Jared does not approve each admission himself: each registration still passes the whole Step 9 procedure, and he sees each checkpoint change in its landing record, as DL-078 provides. The question named the seven coordination families, which are the next registrations; the host stated its reading back to Jared in the same session, that the landing entry of each Step 9 registration is Jared's decision entry for that family, which is what D-02 asks. This answer closes review question D-02 of the Step 9 procedure record. It changes neither DL-077's nor DL-078's text. DL-077's prose section is pinned under the V-07 rule (the post-August receipt pins it, and every admission record pins the receipt), so an edit to it would re-pin all three existing admission records. DL-078's text already says that the entry each such landing adds "is the decision entry its DL-077 admission record cites", and this answer confirms that reading. Every other requirement stands: a registration needs its full Event Authority contract, a blind form-driven review, its own Storage admission landing with one family per landing, the coordinator's landing go, and an admission record whose depth assessment shows all twelve criteria passing. This entry registers nothing, admits no family, and changes no registry row, validator, receipt or admission record.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_OPEN_QUESTIONS.md`, SHA-256 `678b9a32a0942fff08cea4127d9c52d7e73774509869c88958f466d6b8d0171a`; Step 9 procedure record `reports/event-authority-20260911/step-09-procedure-20260924.md` (open question 2, D-02); post-August admission receipt `reports/event-authority-20260911/step-10-post-august-admission-receipt.json`.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-077, ContractName:Plans/Decision_Log.md#DL-078, ContractName:Plans/event_family_registry.json
+
 
 ## Owner / Consumer Map
 
@@ -7473,6 +7487,66 @@ owner_hints:
   - Plans/storage-plan.md
   - Plans/storage_value_registry.json
   - Plans/Collaborative_Workflows.md
+```
+
+### DL-093 - A Step 9 Registration Entry Is Jared's Decision Entry For Its Family
+
+```yaml
+plan_unit_id: DL-093
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered 4 i approve on 2026-09-25 to the host's question 4, review question D-02
+  of the Step 9 procedure record: the Decision Log entry that each Step 9 registration
+  landing adds under DL-078, which names the family, is Jared's decision entry for that
+  family in the sense of DL-077, and the family's DL-077 admission record cites it as its
+  decision_ref; Jared does not approve each admission himself. The question named the
+  seven coordination families; the host's reading, stated back to Jared in the same
+  session, covers each Step 9 registration. This closes D-02. DL-077's and DL-078's text
+  is unchanged, every other Step 9 requirement stands, and nothing is registered or
+  admitted.
+gui_related: false
+gui_classification_reason: Defines admission-record governance, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-077, DL-078]
+unblocks: []
+acceptance_criteria:
+  - The DL-077 admission record of each Step 9 registration cites as its decision_ref the Decision Log entry that its own landing adds under DL-078 and that names the family.
+  - The Step 9 procedure record marks review question D-02 as answered by DL-093.
+  - DL-077's and DL-078's text is unchanged, and no registration skips any other part of the Step 9 procedure.
+validation_surfaces:
+  - reports/event-authority-20260911/step-09-procedure-20260924.md
+  - python3 -m unittest tests.test_event_authority_holding_bucket
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_admission_decision_entry_drift
+reasoning_tier: high
+context_scope: event_authority_step09_admission_decision_entry
+implementation_surfaces:
+  - reports/event-authority-20260911/step-09-procedure-20260924.md
+  - reports/event-authority-20260911/admission-records
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_OPEN_QUESTIONS.md
+  - reports/event-authority-20260911/step-09-procedure-20260924.md
+  - reports/event-authority-20260911/step-10-post-august-admission-receipt.json
+preserved_exact_tokens:
+  - "4 i approve"
+  - "D-02"
+  - "DL-077"
+  - "DL-078"
+  - "decision_ref"
+negative_constraints:
+  - Do not require a separate approval from Jared for a Step 9 admission whose registration passes the full procedure and whose landing adds the family's own Decision Log entry.
+  - Do not cite DL-077 or DL-078 themselves as a family's decision entry, and do not edit either entry's text to record this answer.
+  - Do not lower any other Step 9 requirement on the strength of this entry.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Plan_To_Node_Compilation.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired
