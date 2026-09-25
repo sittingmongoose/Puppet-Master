@@ -111,11 +111,11 @@ Existing bindings reused by name, each in the role, version and scope its owner 
 | `coordination.agent_operation_updated` | 12 of 12 | oracles (R-C) |
 | `coordination.agent_file_ownership_updated` | 12 of 12 | oracles (R-C) |
 | `coordination.agent_unregistered` | 12 of 12 | oracles (R-C) |
-| `coordination.agent_crashed` | 10 to 12 of 12 | transitions and oracles (R-B), oracles (R-C) |
+| `coordination.agent_crashed` | 10 of 12 unless the heartbeat-expiry card is answered first | transitions and oracles (R-B), oracles (R-C) |
 | `coordination.agent_aborted` | 12 of 12 | oracles (R-C) |
 
 - **R-A, retention.** A grader could read the heartbeat volume against the 1,000,000-record cap as an open retention choice (plan risk R5). OSI-438 and SP-320 answer it: heartbeats are not records, and the policy applies unchanged. Low.
-- **R-B, crashed.** `heartbeat_expired` needs `coordination_heartbeat_expiry_ms`, and OSI-438 says "Until runtime policy supplies the value, no heartbeat expiry is inferred". The crash transition itself is fully specified, and three kinds of evidence work without the value. A grader may still call this an owner-flagged open facet. Medium.
+- **R-B, crashed.** `heartbeat_expired` needs `coordination_heartbeat_expiry_ms`, and OSI-438 says "Until runtime policy supplies the value, no heartbeat expiry is inferred". The crash transition itself is fully specified, and three kinds of evidence work without the value. But the value has no owner document and no number, and the rubric grades PARTIAL where "the owner itself says a facet remains open". OSI-438 now names the owner, the Orchestrator runtime policy that a DL-036 card to Jared records; the card is the host's to send, with Gap #30's "e.g., 5 minutes" as one option (review CP-05). High: `coordination.agent_crashed`'s forecast is 10 of 12 unless the card is answered first.
 - **R-C, own join and identity cases.** The 12 EventRecord join negatives are built on one status event, and the identity vectors cover five families but not `agent_operation_updated` or `agent_file_ownership_updated`. The join rules are the same for all seven (CV-353 rule 8), and ATS-058 says so. A strict reading of "the family's own cases" could still grade oracles PARTIAL for families without their own join negatives. Adding one join negative and one identity vector per family is cheap. Low.
 
 ## The rebase
@@ -262,7 +262,7 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-co
 3. **The holding-bucket harness.** `PostAugustAdmissionTests` now reads each admitted coordination family's decision entry from its real DL-077 admission record. The test drives the frozen seal check in a temporary root. The change is test data only, but it touches the DL-077 harness, so the coordinator should confirm it.
 4. **R6, the disposition rows** at each admission (Step 9 plan): the procedure says to update the row, but the schema note says the row "stays as written". This still needs the coordinator's ruling before the first admission. The simulation did not touch disposition rows.
 5. **D-02, whose decision entry an admission record cites.** It is answered by DL-093 on `plans/ea-step09-batch2-answers-20260925`, which has not landed. That branch shares only `Plans/.plan_index` with this one.
-6. **`coordination_heartbeat_expiry_ms` has no value** (risk R-B). Until runtime policy supplies it, `heartbeat_expired` is never inferred. A number would be a runtime policy choice, not part of this contract.
+6. **`coordination_heartbeat_expiry_ms` has no value** (risk R-B). Until runtime policy supplies it, `heartbeat_expired` is never inferred. Choosing the number is a runtime policy choice, so before `coordination.agent_crashed`'s admission landing it goes to Jared as a DL-036 card, offering Gap #30's "e.g., 5 minutes" as one option. The card is the host's. OSI-438 names its owner: the Orchestrator runtime policy that the card records (review CP-05).
 7. **Per-family join negatives and identity vectors** (risk R-C). Adding them to the fixtures is a small change for the fixture owner before the first admission.
 8. **`coordination.debug_mirror_exported`** keeps its open items from the ledger: owner binding and producer, identity recipe, retention anchor (its payload has no `run_id`), closed domains, and its own landing. SP-232's criterion that mirror recovery is recorded with it stays unmet until then.
 9. **The Step 9 plan's line references** to the pin lines are out of date by the lines added above them (see "Each admission landing").

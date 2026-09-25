@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L349-L31814
 
-Source SHA256: `0d288937eeba2e94a472905c80e83d97e60c15da731563ed93039181d356638c`
+Source SHA256: `441e474cad124b64508b2fb48d9a5b977ecab2ad26e1b1fea785ed0c70c8e829`
 
 ---
 
@@ -3495,7 +3495,7 @@ The crash detector records one of four reasons, each from direct evidence:
 - `worktree_lost`: the agent's worktree was deleted.
 - `heartbeat_expired`: the agent's last liveness signal is older than the heartbeat-expiry threshold.
 
-The threshold is the runtime policy value `coordination_heartbeat_expiry_ms`. Gap #33 puts timeout constants in runtime or storage policy, and this section assigns no number: the "e.g., 5 minutes" of Gap #30 stays an example. Until runtime policy supplies the value, no heartbeat expiry is inferred, and crashes are resolved from the other three kinds of evidence. The event records the observed `heartbeat_age_ms`, not the threshold.
+The threshold is the runtime policy value `coordination_heartbeat_expiry_ms`. Gap #33 puts timeout constants in runtime or storage policy, and this section assigns no number: the "e.g., 5 minutes" of Gap #30 stays an example. Until runtime policy supplies the value, no heartbeat expiry is inferred, and crashes are resolved from the other three kinds of evidence. Choosing the value is a runtime policy choice, so it goes to Jared on a DL-036 decision card. The value is owned by the Orchestrator runtime policy that the card records; until it is answered, `heartbeat_expired` is not inferred. The event records the observed `heartbeat_age_ms`, not the threshold.
 
 **Append on change; heartbeats are liveness.** A coordination event is appended at registration, on an actual change, and at termination:
 - a status event when `status` or `status_reason` differs from the agent's projection;
