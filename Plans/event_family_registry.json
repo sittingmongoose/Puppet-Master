@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-09-11.2",
+  "registry_revision": "2026-09-25.1",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -2569,6 +2569,62 @@
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-coordination-agent-registered",
+      "family_revision": "1.0.0",
+      "event_type": "coordination.agent_registered",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+      "payload_owner_doc": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+      "payload_schema_id": "pm.coordination_event.agent_registered.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/coordination_event_payloads.schema.json",
+        "json_pointer": "#/$defs/agent_registered",
+        "schema_id": "pm.coordination_event.agent_registered.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/project_id"
+          ],
+          "thread_id": [
+            "/payload/thread_id"
+          ],
+          "run_id": [
+            "/payload/run_id"
+          ],
+          "node_id": [
+            "/payload/node_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/coordination_event_admission.json#/rows/0",
+        "Plans/orchestrator-subagent-integration.md#OSI-438",
+        "Plans/Contracts_V0.md#CV-353",
+        "Plans/coordination_event_payloads.schema.json#/$defs/agent_registered",
+        "Plans/storage-plan.md#SP-320",
+        "Plans/storage-plan.md#SP-278",
+        "Plans/storage-plan.md#SP-286",
+        "Plans/Contracts_V0.md#CV-339",
+        "Plans/Decision_Log.md#DL-045",
+        "Plans/coordination_projection_contracts.schema.json#/x-pm-event-authority-binding",
+        "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-COORDINATION-180D",
         "policy_version": "1.0.0"
       }
     }

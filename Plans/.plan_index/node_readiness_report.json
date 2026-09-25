@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T12:34:09Z",
+  "generated_at_utc": "2026-09-25T12:41:46Z",
   "gui_related_units": {
     "count": 3197,
     "units": [
@@ -39207,7 +39207,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842",
+        "expected": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
         "source_path": "Plans/event_family_registry.json"
       },
       {
@@ -39291,7 +39291,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "41f9268d416196a7ecf7de81411caa4624feb222c409b8ca13aca1540ac8e46c",
+        "expected": "a089e0db03ae1b7bc5a45146ee282b22d6f60319cdb682323d9902ac99645f30",
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
@@ -39322,6 +39322,10 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_family_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/orchestrator-subagent-integration.md"
       },
       {
@@ -39331,6 +39335,9 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/storage_value_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_live_registry_drift"
       },
       {
         "bulk_registration_allowed": false,
@@ -39353,7 +39360,7 @@
           }
         ],
         "quarantined_row_count": 252,
-        "registered_kernel_rows": 42
+        "registered_kernel_rows": 43
       },
       {
         "bulk_registration_allowed": false,
@@ -39372,7 +39379,7 @@
           }
         ],
         "quarantined_row_count": 252,
-        "registered_kernel_rows": 42
+        "registered_kernel_rows": 43
       }
     ],
     "executable_lifecycle_certification_ref": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
