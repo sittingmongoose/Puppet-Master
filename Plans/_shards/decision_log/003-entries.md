@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L2216
 
-Source SHA256: `958f9ecc665cdbaf9dd5c36df9a6f159a7c074f623734b390f935a79a54799e2`
+Source SHA256: `9a4958530d6ec4e3c4696bbd13ac591d8dd796ca16c3945dc991d4264ed30c27`
 
 ---
 
@@ -2195,7 +2195,7 @@ Answered on 2026-09-25 by Jared, in the Event Authority program's host session, 
 
 The heartbeat expiry is five minutes: `coordination_heartbeat_expiry_ms` is 300000. An agent working alongside others that stops sending its heartbeat while its process has not exited is recorded as crashed, with the crash reason `heartbeat_expired`, once its last liveness signal is more than five minutes old, which at the 30-second heartbeat is ten missed heartbeats in a row. The Orchestrator runtime policy that OSI-438 names as the owner of this value records `coordination_heartbeat_expiry_ms` as 300000, SP-320 cites it, and the `heartbeat_expired` crash reason becomes active. The `coordination.agent_crashed` event still records the observed `heartbeat_age_ms`, never the threshold. An agent whose process exits, whose process is lost or whose worktree is deleted is still recorded as crashed from that evidence, whatever the threshold, and how a computer that was asleep is handled stays technical work, as the card said. That owner edit lands before or with the `coordination.agent_crashed` admission. It is not made by this entry or on the branch that records it; until it lands, runtime policy supplies no value, so `heartbeat_expired` is still not inferred (OSI-438). This entry is not the decision entry of the `coordination.agent_crashed` registration; that family's own registration landing adds that entry under DL-078 (DL-093). This entry registers, admits or changes nothing else: no payload field, registry row, retention policy or other runtime value.
 
-SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_HEARTBEAT_AND_DL093_SCOPE.md`, SHA-256 `5d0538a1ab9e9a7d397093cfefc71045b2ac214654984767f37efa2bbabf889f`; card `reports/event-authority-20260911/step-09-coordination-heartbeat-card-20260925.md`, SHA-256 `530e783739ab61e9ef7a3bcf4e3d02a6c3a7dc4ca6657f37049964e48559118b`, a byte-identical copy of the presented file (artifact `M8GSmygZ1MXjYaA7osPcTh`, version 1); review finding CP-05 in `/mnt/Cursor/PM-Experiments/review-ea-s09-coordination-prep-20260925/findings.jsonl`.
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_HEARTBEAT_AND_DL093_SCOPE.md`, SHA-256 `5d0538a1ab9e9a7d397093cfefc71045b2ac214654984767f37efa2bbabf889f`; card `reports/event-authority-20260911/step-09-coordination-heartbeat-card-20260925.md`, SHA-256 `530e783739ab61e9ef7a3bcf4e3d02a6c3a7dc4ca6657f37049964e48559118b`, a byte-identical copy of the presented file (artifact `M8GSmygZ1MXjYaA7osPcTh`, version 1); review finding CP-05 in `/mnt/Cursor/PM-Experiments/review-ea-s09-coordination-prep-20260925/findings.jsonl`, SHA-256 `e14c7f5a3e79b80f0058544943c651e440a2935cefe3f0db1d0d31e9d8f76401`.
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#OSI-438, ContractName:Plans/storage-plan.md#SP-320, ContractName:Plans/Contracts_V0.md#CV-353
 
