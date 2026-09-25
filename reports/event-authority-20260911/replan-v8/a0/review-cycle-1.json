@@ -1,0 +1,240 @@
+{
+ "cycle": 1,
+ "reviewed_commit": "c0e9644a578835e29d48679da4b0b3e9f1c0cbf3",
+ "base": "a6480b0f7c74c4e39726e2094a16175d21106e4e",
+ "verdict": "repairs_required",
+ "checks_run": [
+  "A scope: git diff --name-only origin/main c0e9644a5 names exactly 9 files, all under reports/event-authority-20260911/replan-v8/ (report, STATUS.md, a0/ bundle); one commit on top of a6480b0f7c (merge-base = origin/main). No Plans/**, scripts/**, Plans/Spec_Lock.json, Plans/.evidence/** or readiness artifact touched, so no shard or plan-index regeneration is needed. PASS.",
+  "Package authentication: sha256sum -c ../SHA256SUMS --quiet exit 0; SHA256SUMS sha256 6a85be03…ea53; 6,005 files, 0 symlinks, no unlisted file; package HEAD 2cffa80ef2; v3 manifest 9ed8ba4f…; frozen currentness manifest c7213eb4…; 16 version manifests with 5,989 members, all authentic.",
+  "B reproduction: ran a0/census.py from the commit (python3 census.py <pkg> /home/user/Puppet-Master origin/main <out>): summary.json byte-identical to a0/census-summary.json; all ten outputs match a0/census-full-outputs.SHA256SUMS; compact.py regenerates census-nonexact.json, census-summary.json and the SHA256SUMS byte-identically. PASS.",
+  "Package checks re-run in a copy (venv jsonschema 4.26.0, referencing 0.37.0): check_composition, check_method_roots, check_final_sources, check_stop_correction, check_stop_phase_v3 all PASS with the claimed counts (1,241/19/1,256/130,201; 2,035/240, bindings 1,785,491 bytes; 642, DAG 54 nodes 67 edges; 1,252; 751); outputs byte-identical to frozen and to a0/selfcheck.json hashes. Stop review v3 check.py/check_delta.py (P constant rewritten in copy only) PASS, checks.json/delta-checks.json/schema-and-phase-evidence.json byte-identical, check.py stdout equals check.log. R-05 reproduced: check_original_banks gives 18 entries vs frozen 16 (first 16 identical, same plans_to_code_handoff errors), after which Stop check.py reports FAIL on hash and bytes of original-bank-checks.json and still exits 0. Literal fields new_root_metaschemas PASS and complete_original_occurrences 323 confirmed in source.",
+  "Section 1 history: 13e7dbc0 and 4a72aa12 not ancestors (merge-base 4e68cc0e4b; 8 vs 332 commits), dd1df59d ancestor; 8aeaea204 same subject/author date, different patch-id; git diff 4a72aa12 origin/main empty for the listed docs and four directories; 00-plans-index 1 changed + 3 added, GRS 3 changed + note, storage-plan 8 changed old lines in 20 hunks. Confirmed, subject to A0-C1-05.",
+  "Section 2: chain of custody (Stop review v2 names ceaaa4ce, v3 source names cc383394, Stop review v3 names 9ed8ba4f, root acceptance.json names 9ed8ba4f and c9271320, manifest does not); step-08-stop-and-material report lines 7-10; parent authentication 487/2/1/177/4/82 complete, certified-v2 68/77, plan 7/142; 13437dc7 only in embedded plan manifest. Confirmed except the directory count (A0-C1-06).",
+  "Sections 3-4: 469/476, 68/69, 4/4, 4,102/4,111 (149 files), 112/2, registry 0be54418 byte-identical, storage 294/27 with 9 modified rows, no family_id or key-prefix collision (own check). Passage-to-unit mapping (SP-214, SP-282, SP-270, SP-273, SP-275), main line ranges 2648-2661, 15160-15173, 15198-15201, 21133-21209, 21212-21218, PWIZ-011 881-903/889-890, DL-066..083; 7ad1ffff6 sibling keywords equal referenced $defs and custody schema unchanged; five checkpoint schema $ids unchanged and unreferenced by v8 active files; Myers 838 hunks/2,337 deletions vs histogram 7/5. Confirmed.",
+  "Section 6: workflow_standard_source_contracts unchanged and pre-correction v5 bodies under preinstallation-originals; SP-316/SP-317/GRS-084/085 untouched since review base; GRS-085 halt at GRS 7885 and in replay_behavior at storage_value_registry.json 109765 and 109941. Confirmed; misquote in A0-C1-15.",
+  "Section 7 claims: EP-118 (text 7523, unit 7583) refuses unlisted writers and supplies no replanned route; GRS-082 adds no replan writer; v8 writer draft.replan.append_original.v3, WholeOriginalEvent const goal_run.replanned, public_dispatch false, payload clock_split v4, schema_version …v3.draft.20260921, registry row v2; no goal_run.stopped/blocked writer in v8 active files; all six goal_run families in RET-K37; fingerprint recipe recomputed (39 rows e2b5a433…, 40 rows a27cf49b…); DL-077 scope; certified v2->v3 approval recorded in scripts/pm_pnc019_currentness.py lines 43-49. Confirmed; omissions in A0-C1-09/10/11.",
+  "Section 8: P-01 lines (families 226-233; replan-source 4637, 4680-4681, 5088; DL-076 unit 5997; SP-278 21017), DurableGenericToken equals the nine-field projection, own reachability walk finds only draft_replan_release reaching redb_snapshot_id; P-02 field names confirmed by walk; P-03 lines 518/519/522; P-04 counts 15/31/30/slotorigin; P-05 codec only in SP-308 prose, registry json_canonical in 41 rows; P-07 RP-RUNTIME-365D vs RP-AUTHORITY-INDEFINITE; P-08 v2 coordinator ids absent on main, GuardReleased binds coordinator.v2; P-09 48c8ae3b/e9f563c6 vs 0055de6c/59931585, 11 of 19 files differ; P-11 27 methods, 30 draft_ families, 5 new methods and 19 $ids absent on main; P-12 5 same-$id different-content ids; P-13; P-14 PROTOCOL 159-167; P-15 DL-081 1639 and scope addendum GRS-027; P-16 PROTOCOL 98; P-17 4/109 stale; P-18 max IDs EP-124 GRS-085 CV-352 SP-319 ATS-057 BRS-029 DL-083 OP-036 C-052 PNC-025 PDS-022.",
+  "Sections 9-10 and open questions: record_cancellation 'Complete dependency contract only' at EP 7440; revoke_run_execution and workflow_combined_slot absent on main; pending-source-boundaries four keys; GoalRecordV2 and 'Retired Goal structure' 235; required_child_goal_run_ids at replan-source 3469/3483 and workflow-activation.v4 1747/1758; Q-08 identity.v1 defs are Recipe, IdentityInput, IdentityResult, IdentityOutcome; Q-09 B01 context. Confirmed; Q-04 wording in A0-C1-12.",
+  "E process: readjudication-findings.json has 4 readers, 107 findings (97 CONFIRMED, 10 CORRECTED, 0 REFUTED) and 23 verifier_missed items. Confirmed. Corrected claims R1-13 and R3-04 are not fully carried into the report (A0-C1-02, A0-C1-07).",
+  "STATUS.md: scope and landing sequence match .claude/CLAUDE.md (lock, fetch/rebase, status check, ff-only, shard check, landing check before push, reset --keep fallback); pm-landing-check.py supports --keep-check-reports on main."
+ ],
+ "findings": [
+  {
+   "finding_id": "A0-C1-01",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "count",
+   "severity": "blocking",
+   "claim": "Verdict item 3 (line 15): \"Two need a decision before A1 authoring starts: which coordinator descriptors v8 binds (P-09), and whether the draft identifiers get canonical names (P-11). Both change the v8 installed-contract digest `2d69459c…`.\" Section 8 marks three conditions \"Decide first\" (P-09, P-10, P-11), Q-05 lists all three as each changing `2d69459c…`, and STATUS.md line 12 says \"Three are marked 'decide first'\". The verdict drops P-10 (whether the 47 `13e7dbc0` preimage pins stay lineage or are regenerated against main), so the verdict's list of decisions that must precede A1 authoring is wrong.",
+   "verified_evidence": "Reviewed commit, report lines 127 (\"**Decide first** marks a choice that changes the v8 installed-contract digest\"), 139 (P-09 \"**Decide first.**\"), 140 (P-10 \"**Decide first.** v8's preimage holds 47 canonical files copied from `13e7dbc0`, 15 of which differ from `main`\"), 141 (P-11 \"**Decide first.**\"), 179 (Q-05 \"P-09, P-10 and P-11 ... Each changes `2d69459c…`\"); STATUS.md line 12 \"Three are marked \\\"decide first\\\"\" and line 49 \"The three \\\"decide first\\\" choices (P-09, P-10, P-11)\".",
+   "suggested_repair": "In report line 15 replace \"Two need a decision before A1 authoring starts: which coordinator descriptors v8 binds (P-09), and whether the draft identifiers get canonical names (P-11). Both change the v8 installed-contract digest `2d69459c…`.\" with \"Three need a decision before A1 authoring starts: which coordinator descriptors v8 binds (P-09), whether the 47 `13e7dbc0` preimage pins stay lineage or are regenerated against `main` (P-10), and whether the draft identifiers get canonical names (P-11). All three change the v8 installed-contract digest `2d69459c…`.\""
+  },
+  {
+   "finding_id": "A0-C1-02",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "claim",
+   "severity": "should_fix",
+   "claim": "Verdict item 2 (line 14): \"The frozen review could not see this.\" The bundle's own adversarial verifier CORRECTED this sentence in R1-13 (\"'The frozen review could not see this' overstates the case\"), and the report keeps the pre-correction wording although it states that corrected claims supersede the originals. The frozen review's target already carried SP-311's narrower never-persist rule; what it could not see is DL-076's generalisation of it to every stored value.",
+   "verified_evidence": "git show 4a72aa124739:Plans/storage-plan.md line 25667 (SP-311 prose): \"Snapshot id from the actual ten-field generic token is only a live transaction fence; never persist or manufacture it.\" (same sentence at main line 25949). a0/readjudication-findings.json R1-13 verdict CORRECTED, corrected_claim: \"DL-076 (main, 2026-09-24) turns SP-311's never-persist sentence into one rule for every stored value ... SP-311's sentence was already present at the review base, scoped to SP-311.\" The conflict itself is confirmed: my own reachability walk over 990 $id documents in the v3 tree finds draft_replan_release (ReleaseReceipt.source_token -> event_record_index_checkpoint read_token, which requires redb_snapshot_id) as the only one of the 35 families reaching redb_snapshot_id.",
+   "suggested_repair": "In report line 14 replace \"The frozen review could not see this.\" with \"The frozen review's target carried only SP-311's narrower rule (\\\"never persist or manufacture it\\\", `storage-plan.md` line 25667 at `4a72aa12`, scoped to SP-311); DL-076 made it one rule for every stored value, so the conflict is new on `main` (R1-13, corrected).\""
+  },
+  {
+   "finding_id": "A0-C1-03",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "wording",
+   "severity": "should_fix",
+   "claim": "Verdict item 4 (line 16): \"All six v3 checks and both Stop review v3 checks give PASS\". Section 5's own table (line 91) says the sixth v3 script, `check_original_banks.py`, is \"diagnostic, no status; **differs** (R-05)\". Only five v3 scripts report a status.",
+   "verified_evidence": "Re-run in my copy of the package with jsonschema 4.26.0 and referencing 0.37.0: check_composition, check_method_roots, check_final_sources, check_stop_correction and check_stop_phase_v3 print status PASS (1,241/19/1,256/130,201; 2,035/240; 642; 1,252; 751) and regenerate byte-identical outputs whose SHA-256 match a0/selfcheck.json; check_original_banks.py writes a list with no status field (18 entries, frozen c77f3b75… has 16; first 16 identical).",
+   "suggested_repair": "In report line 16 replace \"All six v3 checks and both Stop review v3 checks give PASS\" with \"The five v3 checks that report a status and both Stop review v3 checks give PASS; the sixth v3 script, `check_original_banks.py`, is a diagnostic with no status field\"."
+  },
+  {
+   "finding_id": "A0-C1-04",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "wording",
+   "severity": "should_fix",
+   "claim": "Verdict item 5 (line 17): \"Nothing here closes a root-open item except the first half of the first one.\" The first root-open item reads \"Current canonical-source placement and semantic re-adjudication of changed pins.\"; A0 settles the semantic re-adjudication, which is its second half, and the next sentence says placement is A1's.",
+   "verified_evidence": "Package goal-replan-stop-v3-root-acceptance-20260921/acceptance.json (manifest dc58f7d2…) \"remaining\": [\"Current canonical-source placement and semantic re-adjudication of changed pins.\", \"Complete positive data/native lifecycle instances.\", \"Full original cancellation/D06 evidence.\", \"Whole-family depth and existing landing gates.\"].",
+   "suggested_repair": "In report line 17 replace \"**Nothing here closes a root-open item except the first half of the first one.**\" with \"**Nothing here closes a root-open item except the second half of the first one** (`acceptance.json` `remaining[0]`: \\\"Current canonical-source placement and semantic re-adjudication of changed pins.\\\").\""
+  },
+  {
+   "finding_id": "A0-C1-05",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "claim",
+   "severity": "should_fix",
+   "claim": "Section 1, line 28: \"`4a72aa12` is off `main` in history, but not in content. For the files v8 pins, `main` differs from it only in `Plans/00-plans-index.md` ..., `Plans/Goal_Runtime_System.md` ... and `Plans/storage-plan.md` ...\". This holds only for v8's 47 direct pins. For the 250 inherited Replan v3 pins, which section 1's own table lists as v8's inherited pins, 20 files differ between 4a72aa12 and main (the report's section 3 says so), among them the storage registry A1 edits. Line 30 (\"Measured now it is three\") has the same unstated restriction.",
+   "verified_evidence": "Reproduced census-summary.json inherited_replan.changed_since_review_base (20): 00-plans-index, Assistant_Plan_Runtime, Decision_Log, FinalGUISpec, Goal_Runtime_System, Planning_Wizard, Prompt_Pipeline, Run_Graph_View, Runtime_Artifacts_Panel, Section15_MVP_Promoted_Features_Spec, assistant-chat-design, browser_event_admission.json, browser_workspace_reset/home_layout_event/home_layout_pending_receipt/restore_point_expired/seglog_append_observability schemas, newtools, storage-plan, storage_value_registry.json; direct.changed_since_review_base (3): 00-plans-index, Goal_Runtime_System, storage-plan. Report line 50: \"20 changed since the review base\".",
+   "suggested_repair": "In report line 28 replace \"`4a72aa12` is off `main` in history, but not in content. For the files v8 pins, `main` differs from it only in\" with \"`4a72aa12` is off `main` in history. For v8's 47 direct pins, `main` differs from it only in\", and after \"(8 changed old lines in 20 hunks).\" insert \"For the 250 inherited Replan v3 pins it differs in 20 files (section 3), among them `Decision_Log.md`, `Planning_Wizard.md`, `storage_value_registry.json` (9 rows and `contract_family_dispositions`), `browser_event_admission.json` and the five DL-076 checkpoint schemas.\" In line 30 replace \"Measured now it is three:\" with \"Among the 47 direct pins it is now three:\"."
+  },
+  {
+   "finding_id": "A0-C1-06",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "count",
+   "severity": "should_fix",
+   "claim": "Section 2, line 34: \"The package repository copy (`replan-v8/`, 11 directories)\". The copy has 10 top-level directories; the figure 11 is the plan's NAS count, not reproduced in the copy.",
+   "verified_evidence": "ls -d /home/user/puppetmaster-packages/replan-v8/*/ | wc -l -> 10 (goal-replan-combined-{independent-review,phase-review,root-review,scope-adjudication,source,stop-independent-review}-20260921, goal-replan-stop-currentness-impact-20260921, goal-replan-stop-v3-root-acceptance-20260921, goal-run-replanned-source-contract-20260920-relocated-20260921, goal-run-replanned-source-contract-relocation-receipt-20260921); 6,005 files, 0 symlinks. Plan Part 2: \"It holds 11 directories, 6,005 files and 831 MB.\"",
+   "suggested_repair": "In report line 34 replace \"(`replan-v8/`, 11 directories)\" with \"(`replan-v8/`, 10 top-level directories; the plan's count of 11 is not reproduced in the copy)\"."
+  },
+  {
+   "finding_id": "A0-C1-07",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "citation",
+   "severity": "should_fix",
+   "claim": "P-17 (line 147): \"The 2026-09-25 landing record lists only the GRS member.\"; R-1 (line 192): \"the landing record `LANDING_20260925_EA_CERTIFIED_ANCHORS.md` asks for only one of them\"; STATUS.md line 45: \"The 2026-09-25 landing record asks only for the `Goal_Runtime_System.md` member.\" The record's reseal bullet names two composition members: GRS (moves) and storage-plan (already stale). The bundle's corrected R3-04 says the same.",
+   "verified_evidence": "git show origin/main:reports/landing-checks/LANDING_20260925_EA_CERTIFIED_ANCHORS.md lines 62-64: \"- **The certified-family pins, re-pinned at the reseal by the certified-family owner.** ... - The Goal_Runtime_System.md member of `Plans/goal_certified_family_composition.json` moves from `ccedade9...` to `f233eb9c...`. - The storage-plan.md member (`328858615b...`) was already stale on `main`.\" Neither 00-plans-index.md nor storage_value_registry.json is named. Recomputed: 4 of 109 composition members stale on main (e96a1e1e, ccedade9, 32885861, 8556e243).",
+   "suggested_repair": "Report line 147: replace \"The 2026-09-25 landing record lists only the GRS member.\" with \"The 2026-09-25 landing record (`LANDING_20260925_EA_CERTIFIED_ANCHORS.md` lines 62-64) names the `Goal_Runtime_System.md` member and notes the `storage-plan.md` member as already stale; it names neither the `00-plans-index.md` nor the `storage_value_registry.json` member, nor the consumer's pins.\" Report line 192: replace \"asks for only one of them.\" with \"names two of them: the `Goal_Runtime_System.md` member, and the `storage-plan.md` member as already stale.\" STATUS.md line 45: replace the sentence with \"The 2026-09-25 landing record names the `Goal_Runtime_System.md` member and notes the `storage-plan.md` member as already stale; it does not name the other two or the consumer's pins.\""
+  },
+  {
+   "finding_id": "A0-C1-08",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "count",
+   "severity": "should_fix",
+   "claim": "R-1 (line 192): \"A further stale pin in the certified consumer's `owner-sources.json` (and `physical-retention-install.json`) needs the same reseal.\" `owner-sources.json` holds three stale current-selection pins, not one, which is what the bundle's corrected R2-11 says.",
+   "verified_evidence": "git show origin/main:Plans/goal_run_certified_consumer_contracts/owner-sources.json: line 5 GRS ccedade9… (main f233eb9c), line 17 storage-plan 32885861… (main ad6ea93d), line 53 storage registry 8556e243… (main df772ad3); lines 29 (BRS c4f00ec4) and 41 (event registry 0be54418) are current; the original_source_lineage hashes (70569719, 22a4999b, 42c7a278, 1972a6aa, 08759243) are historical by design. physical-retention-install.json line 49: 8556e243….",
+   "suggested_repair": "In report line 192 replace \"A further stale pin in the certified consumer's `owner-sources.json` (and `physical-retention-install.json`) needs the same reseal.\" with \"The certified consumer's `owner-sources.json` pins the same three stale values in its current-selection `sha256` fields (lines 5, 17 and 53: `Goal_Runtime_System.md` `ccedade9…`, `storage-plan.md` `32885861…`, `storage_value_registry.json` `8556e243…`), and `physical-retention-install.json` line 49 pins the registry at `8556e243…`; all need the same reseal. Its `original_source_lineage` hashes are historical by design.\""
+  },
+  {
+   "finding_id": "A0-C1-09",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "omission",
+   "severity": "should_fix",
+   "claim": "Section 7, line 123: \"Rows 0-5 are the six `goal_run` families, so every A3 landing, stopped and blocked included, re-freezes all three in the same landing.\" The recipe and the rows 0-5 claim are right, but the re-freeze is not confined to the three admission JSON files: the same fingerprints are pinned in a schema, two scripts and two tests, and a revised goal_run row also needs a whole-row pin in the Browser gate. This changes A3's edit list, which the plan (line 119) gives without scripts or tests.",
+   "verified_evidence": "Recomputed on main: sha256 of json.dumps(families[:39], sort_keys=True, separators=(',',':')) = e2b5a433… and of [:40] = a27cf49b…; rows 0-5 are event-family-goal-run-{blocked,cancelled,certified,replanned,started,stopped}. Other pins of the same values: Plans/browser_event_admission.schema.json line 46 (const e2b5a433…), scripts/pm-browser-event-admission.py line 31 CURRENT39_SHA256, scripts/pm_emit_only_event_contract.py line 16 PREEXISTING_REGISTRY_ROWS_SHA256, tests/test_pm_browser_event_admission.py line 67, tests/test_pm_emit_only_event_boundaries.py line 28. scripts/pm-browser-event-admission.py lines 116-143 rebuild historical rows only for families in REVIEWED_GOAL_SUCCESSORS (lines 35-60, six entries, none for goal_run.blocked/replanned/stopped); an unlisted revised row leaves the ORIGINAL39 fingerprint unmatched and the gate appends \"historical_preexisting_baseline_mismatch\". Precedent re-freeze commits: d21679659 (schema + test), c7b136ad2 (scripts/pm_emit_only_event_contract.py + three tests), 33edfd71f, 1cdf39074.",
+   "suggested_repair": "In report line 123, after \"re-freezes all three in the same landing\" insert: \", and with them every other copy of the two fingerprints: the `const` in `Plans/browser_event_admission.schema.json` line 46, `CURRENT39_SHA256` in `scripts/pm-browser-event-admission.py` line 31, `PREEXISTING_REGISTRY_ROWS_SHA256` in `scripts/pm_emit_only_event_contract.py` line 16, and the test pins in `tests/test_pm_browser_event_admission.py` line 67 and `tests/test_pm_emit_only_event_boundaries.py` line 28. A revised `goal_run.blocked`, `goal_run.replanned` or `goal_run.stopped` row also needs its own whole-row entry in `REVIEWED_GOAL_SUCCESSORS` (`scripts/pm-browser-event-admission.py` lines 35-60), or the Browser gate reports `historical_preexisting_baseline_mismatch`. The 2026-09-23 re-freeze (`d21679659`, `c7b136ad2`, `1cdf39074`) is the precedent\"."
+  },
+  {
+   "finding_id": "A0-C1-10",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "omission",
+   "severity": "should_fix",
+   "claim": "Section 7, line 121: \"DL-078's standing rule covers 'a family registration that passes the full Step 9 procedure'. Whether it covers a revision is unclear (Q-02).\" The report omits DL-078's own fallback clause, which governs any registry change that is not such a registration, and the plan's A3 row, which already states the approval route. Both bear directly on Q-02.",
+   "verified_evidence": "origin/main Plans/Decision_Log.md line 1571 (DL-078): \"Any other registry change still needs Jared's own checkpoint approval, and so does a registration that skips any part of the procedure.\" Plan line 119 (A3 row): \"`event_family_registry.json` rows (this changes the registry hash, so Jared's checkpoint approval is needed, or the DL-078 route if they go through Step 9)\". Known-37 membership of all six goal_run families confirmed in storage-plan RET-K37 (line 17948 onward).",
+   "suggested_repair": "In report line 121, after \"Whether it covers a revision is unclear (Q-02).\" insert: \"DL-078 ends: \\\"Any other registry change still needs Jared's own checkpoint approval, and so does a registration that skips any part of the procedure\\\" (`Decision_Log.md` 1571), and the plan's A3 row (line 119) says the registry change needs Jared's checkpoint approval or the DL-078 route. Unless Jared rules that revising a registered row is a family registration, each A3 revision needs his own checkpoint approval.\" In Q-02 (line 176) append: \"(DL-078's last clause, `Decision_Log.md` 1571, sends any other registry change to his own approval.)\""
+  },
+  {
+   "finding_id": "A0-C1-11",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "citation",
+   "severity": "should_fix",
+   "claim": "Three statements rest only on this thread's instructions, which are not in the repository, and cite nothing: line 121 \"which the card this thread must send anyway provides\"; line 122 \"The DL-077-form record Jared asked for\" (also Q-03 line 177, \"as the thread's instructions ask\"); STATUS.md line 49 \"Its authority to start is this thread's charter, Jared's decision of 2026-09-24 to run Group A.\" The plan on main says package work waits for Jared's go, and no go for Group A is recorded on main.",
+   "verified_evidence": "origin/main reports/event-authority-20260911/step-08-remaining-source-work-plan-20260924.md Part 2 Status: \"No package work starts until Jared gives his go; the coordinator has already sized the work for him.\" git grep over origin/main reports and Plans finds no record of a Group A go or of an A3 card requirement; DL-077 (Decision_Log.md 1515-1545) and DL-080 (1609-1637) do not ask for DL-077-form records for families among the original 37.",
+   "suggested_repair": "Report line 121: replace \"which the card this thread must send anyway provides\" with \"which the A3 card that this thread's charter requires would provide (the charter is not recorded in the repository)\". Report line 122: replace \"The DL-077-form record Jared asked for\" with \"The DL-077-form record this thread's charter asks for (not recorded in the repository)\". STATUS.md line 49: replace \"Its authority to start is this thread's charter, Jared's decision of 2026-09-24 to run Group A.\" with \"Its authority to start is Jared's go of 2026-09-24 for Group A, given in this thread's charter and not yet recorded in the repository; the plan's Part 2 status requires that go before package work starts.\""
+  },
+  {
+   "finding_id": "A0-C1-12",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "claim",
+   "severity": "should_fix",
+   "claim": "P-14 (line 144): the v3 envelope \"requires `idempotency_key` and has neither Goal-revision field\"; Q-04 (line 178): \"(required `idempotency_key`, no Goal-revision fields)\". The goal_run v3 envelope requires `goal_revision`. What it lacks is `expected_goal_revision` and `parent_goal_id`, and it also requires `expected_goal_run_revision` and `goal_run_revision`. Q-04 as written misstates the question sent to the A3 owners.",
+   "verified_evidence": "origin/main Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json required: [..., 'goal_id', 'goal_revision', ..., 'expected_goal_run_revision', 'goal_run_revision', 'idempotency_key']; properties contain no expected_goal_revision and no parent_goal_id. GRS main line 2657 routing note: \"v3 changes the envelope (required `expected_goal_run_revision`, `goal_run_revision` and `idempotency_key`; no `expected_goal_revision` or `parent_goal_id`)\". The v8 draft payload (originals/by-sha/0e1e3720….json) requires goal_revision, expected_goal_revision, expected_goal_run_revision, goal_run_revision; idempotency_key and parent_goal_id are optional properties.",
+   "suggested_repair": "P-14: replace \"requires `idempotency_key` and has neither Goal-revision field.\" with \"requires `idempotency_key`, `expected_goal_run_revision` and `goal_run_revision`, keeps the required `goal_revision`, and has no `expected_goal_revision` or `parent_goal_id` property.\" Q-04: replace \"(required `idempotency_key`, no Goal-revision fields)\" with \"(required `idempotency_key`, `expected_goal_run_revision` and `goal_run_revision`; no `expected_goal_revision` or `parent_goal_id`)\"."
+  },
+  {
+   "finding_id": "A0-C1-13",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "omission",
+   "severity": "should_fix",
+   "claim": "P-16 (line 146): \"`StopAcceptedPending` in v3 `PROTOCOL.md` 98, which STOP-PROTOCOL R10 supersedes\". R10 does not name StopAcceptedPending; STOP-PROTOCOL line 3 does, and it declares the old Stop definitions that stay inside the active shared roots to be lineage. P-16 covers only the prose, so A1 could compile those schema definitions as installed entry points.",
+   "verified_evidence": "Package v3 STOP-PROTOCOL.md line 3: \"Their old `PendingStopSource`, `StopAcceptedPending`, and `CombinedStopCurrentInput/Result` definitions remain lineage, not alternate installed Stop entry points.\" These definitions are in active roots: schemas/workflow-combined-guard.v1.schema.json line 1127 (StopAcceptedPending) and 1271 (PendingStopSource); schemas/workflow-original-start.v7.schema.json line 3210 (CombinedStopCurrentInput) and 3246 (CombinedStopResult, oneOf incl. guard.v1#/$defs/StopAcceptedPending). The active Stop root v2 uses StopAcceptedRevocation.",
+   "suggested_repair": "In P-16 replace \"`StopAcceptedPending` in v3 `PROTOCOL.md` 98, which STOP-PROTOCOL R10 supersedes,\" with \"`StopAcceptedPending` in v3 `PROTOCOL.md` 98, and the old `StopAcceptedPending` and `PendingStopSource` definitions in `schemas/workflow-combined-guard.v1.schema.json` (1127, 1271) and `CombinedStopCurrentInput`/`CombinedStopResult` in `schemas/workflow-original-start.v7.schema.json` (3210, 3246), which `STOP-PROTOCOL.md` line 3 declares \\\"lineage, not alternate installed Stop entry points\\\" (R10 supersedes the old pending-Stop routing),\"."
+  },
+  {
+   "finding_id": "A0-C1-14",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "wording",
+   "severity": "should_fix",
+   "claim": "P-04 (line 134): \"9 lack a real producer array (5 missing, 4 in prose)\". None of the 35 declares `producer` as the array the registry schema requires. 30 have a producer string, of which 26 are one method-id string and 4 are prose, and 5 have no producer field. The wording suggests 26 already have arrays.",
+   "verified_evidence": "origin/main Plans/storage_value_registry.schema.json $defs.family.required includes 'producer', typed $defs/string_list {type: array, minItems: 1}. Package replan-and-combined-physical-families.json: all 30 'producer' values are strings; prose in draft_replan_control, draft_replan_GraphPatchIssuedSnapshot, draft_replan_owner_issue_origin, draft_replan_native_publication_origin; no producer key in workflow_combined_enrollment/slot/slot_revision/slot_origin and executor_workflow_replan_observer_origin (these carry original_writer).",
+   "suggested_repair": "In P-04 replace \"9 lack a real producer array (5 missing, 4 in prose)\" with \"none declares `producer` as the array the registry schema requires (`string_list`); 26 carry one `draft.replan.*` method-id string, 4 carry prose (`draft_replan_control`, `draft_replan_GraphPatchIssuedSnapshot`, `draft_replan_owner_issue_origin`, `draft_replan_native_publication_origin`), and 5 have no `producer` field (the four `workflow_combined_*` families and `executor_workflow_replan_observer_origin`, which carry `original_writer`), so 9 need real owner IDs and all 35 need arrays\"."
+  },
+  {
+   "finding_id": "A0-C1-15",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "citation",
+   "severity": "should_fix",
+   "claim": "Section 6 row 4 (line 105) quotes SP-316 as \"285 previous rows remain unchanged\". This is not verbatim.",
+   "verified_evidence": "origin/main Plans/storage-plan.md line 26527 (SP-316): \"All 285 previous Storage rows remain\" / line 26528 \"unchanged, including all three existing workflow_standard_* families ...\".",
+   "suggested_repair": "In line 105 replace `SP-316's \"285 previous rows remain unchanged\"` with `SP-316's \"All 285 previous Storage rows remain unchanged\" (`storage-plan.md` 26527)`."
+  },
+  {
+   "finding_id": "A0-C1-16",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "citation",
+   "severity": "should_fix",
+   "claim": "Section 7 Wiring bullet (line 119): \"(`UI_Command_Catalog.md` 8148, wiring `catalog.runtime_replan`) expects `goal.replanned`\". The wiring entry that expects goal.replanned is in Plans/Wiring_Matrix.production.json, which the report does not name. UI_Command_Catalog.md 8148 lists goal.replanned among the Runtime allowed-action dispatch events.",
+   "verified_evidence": "origin/main Plans/Wiring_Matrix.production.json lines 52385-52391: \"catalog.runtime_replan\": { ... \"expected_event_types\": [ \"goal.replanned\" ...; UI_Command_Catalog.md line 8148: \"Dispatch emits `node.unblocked`, `safe_point.restored`, `scheduler.pass`, `goal.replanned`, `goal_run.stopped`, or an explicit dispatch receipt\". GRS-070 (Goal_Runtime_System.md 6489) makes goal.replanned historical-only.",
+   "suggested_repair": "In line 119 replace \"(`UI_Command_Catalog.md` 8148, wiring `catalog.runtime_replan`)\" with \"(`UI_Command_Catalog.md` 8148; `Plans/Wiring_Matrix.production.json` `catalog.runtime_replan`, lines 52385-52391, `expected_event_types` [\\\"goal.replanned\\\"])\"."
+  },
+  {
+   "finding_id": "A0-C1-17",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "wording",
+   "severity": "should_fix",
+   "claim": "Section 4 (lines 66-69) identifies passages as \"Replan #136\", \"#277 and #278\", \"#343, #345, #351 and #370\", \"#339\" without saying these are 0-based indices into the package's exact-passages list. Read as 1-based ordinals they point at the wrong passages.",
+   "verified_evidence": "Package v3 inputs/replan-v3/exact-passages.json (476 entries): index 136 (0-based) = Plans/Goal_Runtime_System.md 2648-2659; 277/278 = storage-plan 15128-15157/15170-15181 (SP-214); 339 = 20871-20947; 343 = 21093-21137 (SP-282); 345 = 21199-21226 (SP-270 section); 351 = 21443-21464 (SP-273 section); 370 = 22257-22276 (SP-275 section). The SP mapping in the report is correct under 0-based indexing.",
+   "suggested_repair": "At the end of report line 62 add: \"Passage numbers such as #136 are 0-based indices into the v3 member `inputs/replan-v3/exact-passages.json`.\""
+  },
+  {
+   "finding_id": "A0-C1-18",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "omission",
+   "severity": "note",
+   "claim": "Q-09 and section 7 (line 117) say \"'B01' is defined nowhere in the package or in `Plans/`\". That is true, but main's reports already record B01 as an unidentified pending question, and the report does not link Q-09 to those records.",
+   "verified_evidence": "origin/main step-08-remaining-source-work-plan-20260924.md line 136: \"The pending question that the A3 draft is queued behind, B01, could not be identified.\"; reports/event-authority-20260911/step-08-source-handoff-and-composition-review-20260921.md line 26: \"B01 remains the sole pending question.\"; the package mentions B01 in 33 files (e.g. v3/PROTOCOL.md, inputs/plan/PLAN.md line 38) without defining it.",
+   "suggested_repair": "Append to Q-09: \"Main already records B01 as unidentified: plan line 136 and `step-08-source-handoff-and-composition-review-20260921.md` line 26 (\\\"B01 remains the sole pending question\\\").\""
+  },
+  {
+   "finding_id": "A0-C1-19",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "omission",
+   "severity": "note",
+   "claim": "The plan's Part 2 table lists the standalone replanned source v3 with \"the prebirth-composition gap stays open\". The report does not say that the combined v8 source is the composition answering that gap at source level, or that the gap closes only when A1 installs v8.",
+   "verified_evidence": "Package goal-run-replanned-source-contract-20260920-relocated-20260921/v3/manifest.json status \"NARROW_EXTERNAL_V3_REPAIRS_AWAITING_REVIEW_PREBIRTH_COMPOSITION_MISSING\"; combined v3 inputs/plan/PLAN.md line 5: \"**Recommendation for root adjudication:** if one freshly born Workflow must support both the upcoming certified coordinator and Replan, author one complete combined successor source composition\".",
+   "suggested_repair": "Add a row to the section 9 table: \"| Replan v3 prebirth-composition gap | Replan v3 status `..._PREBIRTH_COMPOSITION_MISSING`; the combined source is the composition the prebirth plan `21e672ca…` recommends | none | A1: closed at source level by installing v8; native birth stays NOT_RUN |\""
+  },
+  {
+   "finding_id": "A0-C1-20",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "omission",
+   "severity": "note",
+   "claim": "The plan makes A1 wait for the landing-check exports repair (Recommendation 1, and line 112). That repair has landed on main. The report does not say so, although it bears on when A1 can land.",
+   "verified_evidence": "origin/main 8bc898648 \"Record the landing-check exports landing: ff of main from 3c4a64b2b5 to d30bbc95e8\"; LANDING_20260925_EA_CERTIFIED_ANCHORS.md line 51: \"Since the exports repair, evidence and plan graph are keyed from their complete exports in both aggregates\".",
+   "suggested_repair": "Optionally add to 'Reseal and landing': \"The exports repair the plan makes A1 wait for has landed (`8bc898648`).\""
+  },
+  {
+   "finding_id": "A0-C1-21",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "count",
+   "severity": "note",
+   "claim": "Line 30: \"The plan says four v8-pinned owner files differ from the reviewed base. Measured now it is three\". At the plan's own base `3ce6eb882c`, only two of the 47 direct pins differed from 4a72aa12. So the plan's 'four' is not reproduced by the direct-pin measure at either revision, and the report does not explain the difference.",
+   "verified_evidence": "Direct pins differing from 4a72aa12: at 3ce6eb882c ['Plans/00-plans-index.md', 'Plans/storage-plan.md']; at origin/main ['Plans/00-plans-index.md', 'Plans/Goal_Runtime_System.md', 'Plans/storage-plan.md'] (the GRS change is the 2026-09-24 Step 8(d) routing edit).",
+   "suggested_repair": "Optionally replace \"Measured now it is three:\" with \"Among the 47 direct pins it was two at the plan's base `3ce6eb882c` and is three now:\"."
+  },
+  {
+   "finding_id": "A0-C1-22",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "citation",
+   "severity": "note",
+   "claim": "P-05 cites \"SP-308 (`storage-plan.md` 25552)\" for the codec owner. 25552 is SP-308's plan_unit_id line; the sentence that defines the codec use is at 25523, in SP-308's prose. The attribution to SP-308 and not SP-309 is correct.",
+   "verified_evidence": "origin/main storage-plan.md line 25523: \"The new operational compiler/state/receipt families use exact `pm.workflow.activation_source_json.v1`\" (the only occurrence in the file); SP-308 heading 25446, plan_unit_id 25552; SP-309 heading 25611. 41 main registry rows carry the codec in replay_behavior with encoding json_canonical.",
+   "suggested_repair": "Optionally replace \"(`storage-plan.md` 25552)\" with \"(`storage-plan.md` 25523, unit line 25552)\"."
+  },
+  {
+   "finding_id": "A0-C1-23",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "claim",
+   "severity": "note",
+   "claim": "The Cost section's figures (4.5 agent-hours, 0.9M output tokens, 9 subagents, 2.45M subagent tokens, 1.3 hours wall) cannot be verified from the bytes. They are internally consistent, except that whether 4.5 agent-hours is 'within the plan's half agent-day' depends on an agent-day length the plan does not define.",
+   "verified_evidence": "Report lines 206-208; plan line 116 A0 estimate \"half an agent-day, about 150K to 250K output tokens, including review\".",
+   "suggested_repair": "No change required."
+  }
+ ],
+ "not_checked": [
+  "Cost figures (agent-hours, tokens, wall time): not recoverable from the bytes (A0-C1-23).",
+  "'fetched again before this report was written; no later commit exists': fetching is not permitted to this reviewer. Local origin/main equals a6480b0f7c.",
+  "'No branch on GitHub edits it beyond main' (Goal_Runtime_System.md): checked only against the 65 local remote-tracking refs; none touches GRS beyond main. No fresh fetch.",
+  "NAS-only bytes (Replan v3 root review 13437dc7, full prebirth plan 21e672ca, full certified-v2 91e18f5c, /home/sittingmongoose paths) are absent from the copy.",
+  "P-06's semantic equivalence of draft_replan_projection_checkpoint with the SP-311/SP-312/SP-317 checkpoint roles; section 9's D06 grammar claim (EP-118/119/121, SP-312, v8 v3/v7 argument successors); equality of v8 GoalStopSelector/GoalBodySelector constants with main. Taken from confirmed bundle findings, not re-derived.",
+  "The individual verifier_missed items and open_questions in readjudication-findings.json beyond those the report cites; the internals of the standard-library stand-in resolver in selfcheck.json (the real-library re-run was done instead).",
+  "Section 4's 'eight other inherited Markdown files' count and 'would falsely mark six verbatim Replan passages as touched'; section 10's claim that v8's pinned copies carry the same V2 authority line.",
+  "STATUS.md 'Expected landing check. Exit 0 or 1': running pm-landing-check.py needs a full checkout at landing and is outside a read-only review."
+ ]
+}
