@@ -75,7 +75,7 @@ Cost: to be filled by the host
 
 A local session that Jared designates lands the branch. Prerequisites:
 - A0 (`plans/replan-v8-a0-20260925`) is on `main`, and so is `plans/replan-v8-process-answers-20260925` (`616f12bfd`). The placed `composition.json` cites both report files.
-- If `main` has moved past `63cf2cb97f` in any file the package binds or in the storage census (or in a relied-on passage or a file A1 edits), run the package's `scripts/rebase_check.py --landing-base <new main>` and re-derive the re-pins before landing.
+- **If `main` has moved past `63cf2cb97f`** in any file the package binds, in the storage census, in a relied-on passage or in a file A1 edits, run the package's `scripts/rebase_check.py --landing-base <new main>`. If it reproduces both descriptor digests, every placed file and the merged-registry hash, re-derive only the re-pins (`data/census-after.json`, C07). If it reports any other change, follow root condition 1 in full: rebuild, re-run `run_all.py`, re-freeze and record every base-derived change. Then recompile this branch from the new manifest (re-copy the 74 files, update the digests in CV-354 and ATS-059 and the `canonical-draft-package` token in all 13 units), and have the changed edition reviewed before landing. Never edit outputs by hand. A0's report and the process answers must land byte-identical (`297b0f29…`, `8c16d369…`), because `composition.json` and every unit's `source_lineage` pin them.
 - The node readiness report is regenerated after the rebase with the currentness receipt present, and committed with the landing, never hand-merged (precedent: Step 8(d) review A-08).
 
     mkdir /mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held   # then write agent, branch, UTC time to held/holder.txt
