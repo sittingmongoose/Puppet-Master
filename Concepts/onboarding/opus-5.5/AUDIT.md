@@ -206,3 +206,29 @@ Still open:
   near the drapes; Basic's fixed-width badge; Friendly dark identity words contrast; AI sparks off the bar; the lock
   should open (not snap shut) on success; name and begin could use more life of their own.
 
+## Fourth pass (2026-09-25, evening): the pairing gap, the VPN switch, motion of their own
+
+- C44 (the canon gap above, fixed in canon and the concept) A device that runs Puppet Master was paired with no
+  approval and logged as `cmd.ssh_connection.key.install`, and the draft said `project_transport: ssh`. Canon now has
+  PWIZ-029 (Plans/Planning_Wizard.md) and `puppet_master` in `project_transport`, `backup_transport` and
+  `storage_transport`; a draft that records it must bind the pairing result in `source_access_authorization_refs`.
+  The concept's `nas-pmpair` screen shows the device's identity, then pairs through `cmd.client.pair.start` by approval,
+  code or QR (allowed before Review as consented selected-source pairing, never as Server setup); Choose another way
+  cancels through `cmd.client.pair.cancel` and records nothing; Use SSH instead takes the ordinary key route, recorded
+  as `ssh`. The NAS stays a Source Location: `server_mode` and `server_ref` do not change. Scenarios n6, n11-n14.
+- C45 (Jared) Connect had an "Also look on my VPN" switch. The person turns a VPN on or off on their own device, so there
+  is no switch: a line says "You can connect through a VPN too", discovery covers a VPN this device is already on, and
+  `include_vpn_networks` records that it was included. Canon: RAS-014 and F3-520 drop the `Include connected VPN
+  networks` checkbox. Scenario c4.
+- C46 Typing a name froze the marionette. Every keystroke re-renders the scene; the morph removed the rig's transforms
+  (the bar and sign snapped to rest) and the rig then waited ~950 ms before moving again, so typing held everything
+  still: on main 27 of 29 frames while typing had no bar transform, on this branch 0 of 30. The rig now holds its
+  transforms across a re-render, keeps its swing phase, re-measures at once when no prop moved and keeps moving while
+  props glide.
+- Name and start scenes have motion of their own: each letter plucks the sign (a kick, wobble and dip; Retro drops one
+  pixel step) and sends a fleck of the family's ink off the word; a helper cheers when the name becomes usable. Each
+  beginning idles in its own way (seed sways, folder peeks, cloud drifts, server hums, rewind ticks back; Retro in pixel
+  steps) and a new one pops in with a swing. Scenarios m1 (frame-measured, four families) and m2.
+
+Still open: noAi has not been crawled, and homeNasPm was crawled before the pairing screen existed; the Glass family often switches on low-resource mode on
+this VM (no GPU), which by design stops its idles.

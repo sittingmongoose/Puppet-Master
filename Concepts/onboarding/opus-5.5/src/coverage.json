@@ -1,7 +1,7 @@
 {
- "generated_from": "origin/main:Plans/product_onboarding_contracts.schema.json",
+ "generated_from": "/home/sittingmongoose/pm-worktrees/testopus55-gap-motion-20260925/Plans/product_onboarding_contracts.schema.json",
  "setup_plan_fields": 63,
- "conditionals": 26,
+ "conditionals": 27,
  "unmapped_fields": [],
  "unmapped_conditionals": [],
  "fields": [
@@ -57,13 +57,13 @@
   },
   {
    "field": "project_transport",
-   "schema": "enum [\"local\", \"mounted\", \"ssh\"]",
-   "mapped": "begin > Files on another computer: nas-find method (SSH -> ssh, SMB/NFS/Already connected -> mounted)"
+   "schema": "enum [\"local\", \"mounted\", \"ssh\", \"puppet_master\"]",
+   "mapped": "begin > Files on another computer: nas-find method (SSH -> ssh, SMB/NFS/Already connected -> mounted); a device that runs Puppet Master pairs on nas-pmpair -> puppet_master (Use SSH instead -> ssh)"
   },
   {
    "field": "backup_transport",
-   "schema": "enum [\"local\", \"mounted\", \"ssh\"]",
-   "mapped": "p-restore: backup source (Recovery Kit/folder -> local, NAS SSH -> ssh, mounted -> mounted)"
+   "schema": "enum [\"local\", \"mounted\", \"ssh\", \"puppet_master\"]",
+   "mapped": "p-restore: backup source (Recovery Kit/folder -> local, NAS SSH -> ssh, mounted -> mounted); a backup on a device that runs Puppet Master pairs -> puppet_master"
   },
   {
    "field": "local_location_mode",
@@ -207,8 +207,8 @@
   },
   {
    "field": "storage_transport",
-   "schema": "enum [\"mounted\", \"smb\", \"nfs\", \"ssh\"]",
-   "mapped": "name > network drive: nas-find method (SSH, SMB, NFS, Already connected)"
+   "schema": "enum [\"mounted\", \"smb\", \"nfs\", \"ssh\", \"puppet_master\"]",
+   "mapped": "name > network drive: nas-find method (SSH, SMB, NFS, Already connected); a device that runs Puppet Master pairs -> puppet_master"
   },
   {
    "field": "storage_location",
@@ -233,7 +233,7 @@
   {
    "field": "include_vpn_networks",
    "schema": "boolean",
-   "mapped": "c-route: Also look on my VPN switch"
+   "mapped": "c-route: no switch; discovery includes a VPN this device is already on and records it (c4)"
   },
   {
    "field": "connection_pairing",
@@ -385,6 +385,15 @@
   },
   {
    "n": 5,
+   "if": [],
+   "then": [
+    "source_access_authorization_refs:(constraint)"
+   ],
+   "else": null,
+   "mapped": "nas-pmpair then nas-folder: puppet_master is recorded only with the pairing result (source_access_authorization_refs); n6, n14; invalid fixtures in canon"
+  },
+  {
+   "n": 6,
    "if": [
     "online_mode=\"none\""
    ],
@@ -402,7 +411,7 @@
    "mapped": "safe > Online copy: Not now clears every service field"
   },
   {
-   "n": 6,
+   "n": 7,
    "if": [
     "online_mode in [\"new\", \"existing\"]"
    ],
@@ -419,7 +428,7 @@
    "mapped": "safe > Online copy > a service: name + account required"
   },
   {
-   "n": 7,
+   "n": 8,
    "if": [
     "forge=\"github\""
    ],
@@ -431,7 +440,7 @@
    "mapped": "online-details (GitHub): Private / Public / Everyone in <org> when the org allows it"
   },
   {
-   "n": 8,
+   "n": 9,
    "if": [
     "forge=\"gitlab\"",
     "forge_provider_variant=\"hosted\""
@@ -443,7 +452,7 @@
    "mapped": "online-details (GitLab.com): no internal"
   },
   {
-   "n": 9,
+   "n": 10,
    "if": [
     "forge=\"gitlab\"",
     "forge_provider_variant=\"self_managed\""
@@ -455,7 +464,7 @@
    "mapped": "online-details (GitLab self-managed): internal allowed"
   },
   {
-   "n": 10,
+   "n": 11,
    "if": [
     "forge=\"azure_devops\""
    ],
@@ -468,7 +477,7 @@
    "mapped": "online-details (Azure DevOps): privacy follows the Azure DevOps project; team project required"
   },
   {
-   "n": 11,
+   "n": 12,
    "if": [
     "forge=\"bitbucket_cloud\""
    ],
@@ -480,7 +489,7 @@
    "mapped": "online-details (Bitbucket Cloud): private / public"
   },
   {
-   "n": 12,
+   "n": 13,
    "if": [
     "forge=\"bitbucket_data_center\""
    ],
@@ -492,7 +501,7 @@
    "mapped": "online-details (Bitbucket Data Center): private / public / follows the project"
   },
   {
-   "n": 13,
+   "n": 14,
    "if": [
     "forge=\"cursor_origin\""
    ],
@@ -505,7 +514,7 @@
    "mapped": "online-details (Cursor Origin): private / internal, no public"
   },
   {
-   "n": 14,
+   "n": 15,
    "if": [
     "forge=\"forgejo\""
    ],
@@ -518,7 +527,7 @@
    "mapped": "online-service (Forgejo): server address -> instance profile"
   },
   {
-   "n": 15,
+   "n": 16,
    "if": [
     "forge=\"gitea\""
    ],
@@ -531,7 +540,7 @@
    "mapped": "online-service (Gitea): server address -> instance profile"
   },
   {
-   "n": 16,
+   "n": 17,
    "if": [
     "remote_mode=\"none\""
    ],
@@ -550,7 +559,7 @@
    "mapped": "away > Not now clears every remote field"
   },
   {
-   "n": 17,
+   "n": 18,
    "if": [
     "remote_mode=\"local_or_vpn\""
    ],
@@ -567,7 +576,7 @@
    "mapped": "c-route / away > On this network / Local or VPN"
   },
   {
-   "n": 18,
+   "n": 19,
    "if": [
     "remote_mode=\"tailscale\""
    ],
@@ -585,7 +594,7 @@
    "mapped": "c-route / away > Tailscale"
   },
   {
-   "n": 19,
+   "n": 20,
    "if": [
     "remote_mode=\"tailscale\"",
     "tailscale_control=\"hosted\""
@@ -598,7 +607,7 @@
    "mapped": "c-route / away > Tailscale hosted: sign in once"
   },
   {
-   "n": 20,
+   "n": 21,
    "if": [
     "remote_mode=\"tailscale\"",
     "tailscale_control=\"headscale\""
@@ -611,7 +620,7 @@
    "mapped": "c-route / away > Tailscale > Headscale address"
   },
   {
-   "n": 21,
+   "n": 22,
    "if": [
     "remote_mode=\"reverse_proxy\""
    ],
@@ -627,7 +636,7 @@
    "mapped": "c-route / away > My own web address: https address"
   },
   {
-   "n": 22,
+   "n": 23,
    "if": [
     "journey=\"connect_existing\"",
     "remote_mode=\"reverse_proxy\""
@@ -642,7 +651,7 @@
    "mapped": "c-route > My own web address (connect): manual address, no proxy setup on this device"
   },
   {
-   "n": 23,
+   "n": 24,
    "if": [
     "remote_mode=\"remote_link\""
    ],
@@ -662,7 +671,7 @@
    "mapped": "c-route / away > Remote Link: paste the link"
   },
   {
-   "n": 24,
+   "n": 25,
    "if": [
     "forge_account_action=\"already_connected\""
    ],
@@ -673,7 +682,7 @@
    "mapped": "online-signin: an already connected account row carries its account ref"
   },
   {
-   "n": 25,
+   "n": 26,
    "if": [
     "online_mode=\"existing\"",
     "review_confirmed=true"
@@ -805,6 +814,11 @@
    "chapter": "project",
    "stage": "server_storage_client",
    "scene": "nas:keys"
+  },
+  "nas-pmpair": {
+   "chapter": "project",
+   "stage": "server_storage_client",
+   "scene": "nas:pair"
   },
   "nas-install": {
    "chapter": "project",
