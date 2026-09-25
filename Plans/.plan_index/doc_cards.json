@@ -4238,7 +4238,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 23483,
+      "line_count": 23486,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 351,
       "plan_unit_ids": [
@@ -4948,7 +4948,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "aad3d3b7f610689f1b8eaffd9ce0a344d6287e0dc0d473dc0cad7b3dd32960e0",
+      "sha256": "24349309dfdaa4bc51f03a479a4c42bdc839b9f078e8805186f9a865ea5c2a09",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 351
@@ -4978,6 +4978,7 @@
         "Native exact-family retirement/read/recovery/action-spy oracles remain NOT_RUN.",
         "PlanUnit YAML parse and identifier uniqueness",
         "Plans/.plan_index/node_readiness_report.json",
+        "Plans/Automated_Testing_System.md#ATS-058",
         "Plans/Contracts_V0.md#73-route_target",
         "Plans/Crosswalk.md#c-052---forge-backuptsnet-owner-precedence-and-exact-route-context",
         "Plans/assistant_plan_cancel_bound_entry.schema.json",
@@ -4988,6 +4989,7 @@
         "Plans/assistant_plan_cancel_schema_resources.json",
         "Plans/browser_event_admission_fixtures.json",
         "Plans/context_compaction_completion_contract_fixtures.json",
+        "Plans/coordination_event_contract_fixtures.json",
         "Plans/coordination_event_payloads.schema.json",
         "Plans/event_append_receipt_contract_fixtures.json",
         "Plans/event_append_receipt_contracts.schema.json",
@@ -5096,6 +5098,7 @@
         "python3 scripts/pm-shared-runtime-contracts.py --self-test",
         "python3 scripts/pm-shared-runtime-storage-materialize.py check",
         "python3 scripts/pm-touch-closure-verify.py --json",
+        "python3 scripts/pm_coordination_events.py",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
@@ -11599,7 +11602,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 31810,
+      "line_count": 31813,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 438,
       "plan_unit_ids": [
@@ -12486,7 +12489,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "e32f5d0b0778f41bb08294714781a4fbad3f2fb122c2b9c11a9339373a83c03c",
+      "sha256": "991eff9cab9108d0254648d321dd6ae00846d7af9954bc349fbe0e6dcfeb439a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 437,
@@ -12503,6 +12506,8 @@
         "Future ambient trigger/skip rule tests.",
         "Future orchestrated no-path bug-fix test.",
         "Orchestrator DRY consumer conformance fixtures",
+        "Plans/Automated_Testing_System.md#ATS-058",
+        "Plans/coordination_event_contract_fixtures.json",
         "Plans/coordination_event_payloads.schema.json",
         "future Orchestrator subagent wave runtime review",
         "future durable thread-operation fixtures",
@@ -12515,6 +12520,7 @@
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+        "python3 scripts/pm_coordination_events.py",
         "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md",
         "restart and duplicate-request fixtures",
         "thread operation contract fixtures"
@@ -17436,7 +17442,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 27100,
+      "line_count": 27103,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 314,
       "plan_unit_ids": [
@@ -17856,7 +17862,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "512042eb770f2f54feb5e34936e2db13925976b5634599d32e5806ccf62d11b7",
+      "sha256": "5b1b95a7044d34d20fd6ef3cfe129b426deeb4486ec6185c95d4be1b87f25d54",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 311,
@@ -17904,6 +17910,7 @@
         "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
         "Notification settings and sound asset storage fixtures",
         "PlanUnit YAML parse and identifier uniqueness",
+        "Plans/Automated_Testing_System.md#ATS-058",
         "Plans/Automated_Testing_System.md#storage-boot-integrity-and-recovery-owner-oracles",
         "Plans/Backup_Restore_System.md#BRS-024",
         "Plans/Backup_Restore_System.md#BRS-026",
@@ -17924,6 +17931,7 @@
         "Plans/browser_workspace_reset_contract_fixtures.json",
         "Plans/browser_workspace_reset_contracts.schema.json",
         "Plans/context_compaction_completion_contract_fixtures.json",
+        "Plans/coordination_event_contract_fixtures.json",
         "Plans/coordination_event_payloads.schema.json",
         "Plans/coordination_projection_contracts.schema.json",
         "Plans/event_append_receipt_contract_fixtures.json",
@@ -18123,6 +18131,7 @@
         "python3 scripts/pm-terminal-command-block-contracts.py",
         "python3 scripts/pm-working-notebook-contracts.py validate",
         "python3 scripts/pm_browser_workspace_created_v2.py",
+        "python3 scripts/pm_coordination_events.py",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
@@ -20033,7 +20042,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T08:08:31Z",
+  "generated_at_utc": "2026-09-25T08:09:22Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

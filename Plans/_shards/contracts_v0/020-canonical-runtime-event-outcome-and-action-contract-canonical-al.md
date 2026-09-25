@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2912-L3199
+Source lines: L2912-L3202
 
-Source SHA256: `aad3d3b7f610689f1b8eaffd9ce0a344d6287e0dc0d473dc0cad7b3dd32960e0`
+Source SHA256: `24349309dfdaa4bc51f03a479a4c42bdc839b9f078e8805186f9a865ea5c2a09`
 
 ---
 
@@ -238,6 +238,9 @@ validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/coordination_event_payloads.schema.json
   - reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md
+  - python3 scripts/pm_coordination_events.py
+  - Plans/coordination_event_contract_fixtures.json
+  - Plans/Automated_Testing_System.md#ATS-058
 risk_class: coordination_payload_contract_regression
 reasoning_tier: high
 context_scope: coordination_event_authority_seven_families

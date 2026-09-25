@@ -3139,6 +3139,9 @@ validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/coordination_event_payloads.schema.json
   - reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md
+  - python3 scripts/pm_coordination_events.py
+  - Plans/coordination_event_contract_fixtures.json
+  - Plans/Automated_Testing_System.md#ATS-058
 risk_class: coordination_payload_contract_regression
 reasoning_tier: high
 context_scope: coordination_event_authority_seven_families

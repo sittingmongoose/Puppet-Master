@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L349-L31810
+Source lines: L349-L31813
 
-Source SHA256: `e32f5d0b0778f41bb08294714781a4fbad3f2fb122c2b9c11a9339373a83c03c`
+Source SHA256: `991eff9cab9108d0254648d321dd6ae00846d7af9954bc349fbe0e6dcfeb439a`
 
 ---
 
@@ -3595,6 +3595,9 @@ validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md
   - Plans/coordination_event_payloads.schema.json
+  - python3 scripts/pm_coordination_events.py
+  - Plans/coordination_event_contract_fixtures.json
+  - Plans/Automated_Testing_System.md#ATS-058
 risk_class: coordination_producer_identity_or_lifecycle_drift
 reasoning_tier: high
 context_scope: coordination_event_authority_seven_families

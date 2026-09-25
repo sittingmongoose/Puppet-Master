@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L26882-L27100
+Source lines: L26882-L27103
 
-Source SHA256: `512042eb770f2f54feb5e34936e2db13925976b5634599d32e5806ccf62d11b7`
+Source SHA256: `5b1b95a7044d34d20fd6ef3cfe129b426deeb4486ec6185c95d4be1b87f25d54`
 
 ---
 
@@ -213,6 +213,9 @@ validation_surfaces:
   - Plans/coordination_event_payloads.schema.json
   - Plans/storage_value_registry.json
   - reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md
+  - python3 scripts/pm_coordination_events.py
+  - Plans/coordination_event_contract_fixtures.json
+  - Plans/Automated_Testing_System.md#ATS-058
 risk_class: stale_coordination_projection_or_lost_update
 reasoning_tier: high
 context_scope: coordination_event_persistence_seven_families
