@@ -26974,7 +26974,7 @@ For one `agent_id`:
 | no event | `coordination.agent_registered` | `agent_revision` 1, with no `expected_previous_revision` | agent row created with status `queued`; lineage fixed |
 | no event | any other family | never | `not_registered` |
 | registered, not terminal | `coordination.agent_registered` | never, unless it is an exact retry | `already_registered` |
-| registered, not terminal | `coordination.agent_status_updated` | revision rule holds; `status` is non-terminal and changed | status and reason set |
+| registered, not terminal | `coordination.agent_status_updated` | revision rule holds; `status` is non-terminal, and `status` or `status_reason` changed | status and reason set |
 | registered, not terminal | `coordination.agent_operation_updated` | revision rule holds; the operation is new or changed | operation row written; current operation set |
 | registered, not terminal | `coordination.agent_file_ownership_updated` | revision rule holds; the claim is new or changed | the claim row for `(path_hash, agent_id)` written |
 | registered, not terminal | `coordination.agent_unregistered`, `coordination.agent_crashed` or `coordination.agent_aborted` | revision rule holds | agent terminal, with status `terminal_status`, `failed` or `cancelled`; every claim of the agent released; the agent leaves every snapshot |
