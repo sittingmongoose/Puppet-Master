@@ -125,7 +125,8 @@
     },
     rings(ctx) {
       const p = ctx.pal;
-      return `<g>${[18, 34, 50].map((r, i) => `<circle r="${r}" ${S(p, 0.8, p.ink2)} class="o55-draw o55-ring" style="--ri:${i}"/>`).join('')}</g>`;
+      /* one class attribute: a second one was dropped by the parser, so the rings never pulsed */
+      return `<g>${[18, 34, 50].map((r, i) => `<circle r="${r}" fill="none" stroke="${p.ink2}" stroke-width="0.8" class="o55-ring" style="--ri:${i}"/>`).join('')}</g>`;
     },
     badge(ctx, item) {
       const p = ctx.pal, o = item.opts || {};

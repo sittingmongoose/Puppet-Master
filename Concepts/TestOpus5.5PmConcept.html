@@ -24391,9 +24391,19 @@ html[data-motion="reduced"] #pm-o55-onboarding * { transition-duration: 0.01ms !
 .o55-f-basic .o55-an { animation-name: o55-fade; --dur: 360ms; }
 .o55-f-basic .o55-an-rise { animation-name: o55-slide; --dur: 700ms; }
 @keyframes o55-slide { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
-.o55-f-basic .o55-draw { stroke-dasharray: 1 1; animation: o55-draw 1050ms cubic-bezier(0.45, 0, 0.2, 1) var(--d, 0ms) both, o55-fillin 460ms ease calc(var(--d, 0ms) + 620ms) both; }
+/* the dash pattern exists only while a line draws itself on: once drawn, an outline is one closed line (a pattern
+   left in place showed a hairline seam where every rectangle began) */
+.o55-f-basic .o55-draw { animation: o55-draw 1050ms cubic-bezier(0.45, 0, 0.2, 1) var(--d, 0ms) both, o55-fillin 460ms ease calc(var(--d, 0ms) + 620ms) both; }
+.o55-f-basic .o55-draw-g { animation: o55-fade 420ms ease calc(var(--d, 0ms) + 560ms) both; } /* a node's icon appears once its outline has drawn */
 .o55-f-basic .o55-fadeline { animation: o55-fade 700ms ease calc(var(--d, 0ms) + 300ms) both; }
-@keyframes o55-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes o55-draw { from { stroke-dasharray: 1 1; stroke-dashoffset: 1; } 99.9% { stroke-dasharray: 1 1; stroke-dashoffset: 0; } to { stroke-dasharray: none; stroke-dashoffset: 0; } }
+/* Retro connectors march in steps; the Glass stage beam breathes */
+.o55-px-march > rect { animation: o55-px-march 1.2s steps(1, end) infinite; }
+.o55-px-march > rect:nth-child(3n+2) { animation-delay: -0.4s; }
+.o55-px-march > rect:nth-child(3n) { animation-delay: -0.8s; }
+@keyframes o55-px-march { 0% { opacity: 1; } 33% { opacity: 0.35; } 66% { opacity: 0.7; } }
+.o55-beam { animation: o55-beam 6.5s ease-in-out infinite; }
+@keyframes o55-beam { 0%, 100% { opacity: 0.78; } 50% { opacity: 1; } }
 @keyframes o55-fillin { from { fill-opacity: 0; } to { fill-opacity: 1; } }
 
 /* Friendly: paper drops with squash and stretch; pops overshoot */
@@ -24466,8 +24476,8 @@ html[data-motion="reduced"] #pm-o55-onboarding * { transition-duration: 0.01ms !
 /* pausing and preferences */
 [data-o55-ambient="off"] .o55-amb, [data-o55-ambient="off"] .o55-led, [data-o55-ambient="off"] .o55-px-blink,
 [data-o55-ambient="off"] .o55-px-twinkle, [data-o55-ambient="off"] .o55-star, [data-o55-ambient="off"] .o55-core,
-[data-o55-ambient="off"] .o55-ripple, [data-o55-ambient="off"] .o55-pulse, [data-o55-ambient="off"] .o55-ring { animation-play-state: paused !important; }
-html[data-o55-lowres] .o55-amb, html[data-o55-lowres] .o55-pulse, html[data-o55-lowres] .o55-ring, html[data-o55-lowres] .o55-core { animation: none !important; }
+[data-o55-ambient="off"] .o55-ripple, [data-o55-ambient="off"] .o55-pulse, [data-o55-ambient="off"] .o55-ring, [data-o55-ambient="off"] .o55-px-march > rect, [data-o55-ambient="off"] .o55-beam { animation-play-state: paused !important; }
+html[data-o55-lowres] .o55-amb, html[data-o55-lowres] .o55-pulse, html[data-o55-lowres] .o55-ring, html[data-o55-lowres] .o55-core, html[data-o55-lowres] .o55-px-march > rect, html[data-o55-lowres] .o55-beam { animation: none !important; }
 html[data-motion="reduced"] .o55-amb, html[data-motion="reduced"] .o55-pulse, html[data-motion="reduced"] .o55-ring,
 html[data-motion="reduced"] .o55-core, html[data-motion="reduced"] .o55-ripple, html[data-motion="reduced"] .o55-star { animation: none !important; }
 html[data-motion="reduced"] .o55-an, html[data-motion="reduced"] .o55-draw, html[data-motion="reduced"] .o55-scene-wrap { animation-duration: 140ms !important; animation-name: o55-fade !important; animation-delay: 0ms !important; stroke-dashoffset: 0 !important; }
@@ -82546,7 +82556,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     },
     rings(ctx) {
       const p = ctx.pal;
-      return `<g>${[18, 34, 50].map((r, i) => `<circle r="${r}" ${S(p, 0.8, p.ink2)} class="o55-draw o55-ring" style="--ri:${i}"/>`).join('')}</g>`;
+      /* one class attribute: a second one was dropped by the parser, so the rings never pulsed */
+      return `<g>${[18, 34, 50].map((r, i) => `<circle r="${r}" fill="none" stroke="${p.ink2}" stroke-width="0.8" class="o55-ring" style="--ri:${i}"/>`).join('')}</g>`;
     },
     badge(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
