@@ -100,7 +100,7 @@
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_workspace_created",
       "runtime_producer_status": "unimplemented_not_proven",
-      "authority_contract_ref": "Plans/browser_workspace_created_contracts.schema.json#/x-pm-event-authority-binding"
+      "authority_contract_ref": "Plans/browser_workspace_created_checkpoint_v2.schema.json#/x-pm-event-authority-binding"
     },
     {
       "event_type": "browser.workspace.reset",

@@ -2,8 +2,12 @@
 
 import copy
 import importlib.util
+import json
 import unittest
 from pathlib import Path
+
+from jsonschema import Draft202012Validator, FormatChecker
+from referencing import Registry, Resource
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -347,7 +351,7 @@ class WorkspaceHistoricalReadTests(unittest.TestCase):
 V2 = None
 
 
-class ConditionalCreatedV2Tests(unittest.TestCase):
+class CreatedV2Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         global V2
@@ -395,15 +399,49 @@ class ConditionalCreatedV2Tests(unittest.TestCase):
         after['retired_generations'].append({'checkpoint_core': core, 'successor_publication_id': name})
         return after, self.bind(before, after)
 
-    def test_conditional_initial_and_entire_generic_range(self):
+    def test_current_initial_and_entire_generic_range(self):
         self.assertEqual(V2.advance_failures(None, self.cp, self.index, self.obs), [])
         self.assertEqual(V2.source_failures(self.cp, self.index, self.obs, disclosure=True), [])
-        self.assertEqual(V2.load(V2.SCHEMA)['x-pm-definition-status'], 'conditional_not_admitted')
+        self.assertEqual(V2.load(V2.SCHEMA)['x-pm-definition-status'], 'newly_authored_owner_contract')
         self.assertEqual(self.obs['generation_transaction']['after'], self.cp)
         self.assertNotIn('reset', self.obs['generation_transaction']['checkpoint_key'])
         changed = copy.deepcopy(self.cp)
         changed['first_retained_sequence_id'] = 1 if changed['first_retained_sequence_id'] != 1 else 2
         self.assertTrue(V2.source_failures(changed, self.index, self.obs))
+
+    def test_registry_row_is_the_current_v2_bundle_with_the_v1_handoff_reader(self):
+        registry = json.loads((ROOT / 'Plans/storage_value_registry.json').read_text(encoding='utf-8'))
+        rows = [f for f in registry['families'] if f['family_id'] == 'browser_workspace_created_index_checkpoint']
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0], MODEL.expected_storage_family())
+        bundle = MODEL.checkpoint_v2_bundle()
+        self.assertEqual(rows[0]['value_schema'], bundle)
+        self.assertEqual(rows[0]['value_schema_id'], 'pm.storage_value.browser_workspace_created_index_checkpoint.v2')
+        self.assertNotIn('https://', json.dumps(bundle))
+        self.assertTrue(Draft202012Validator(bundle, format_checker=FormatChecker()).is_valid(self.cp))
+        generic = json.loads((ROOT / 'Plans/event_record_index_checkpoint.schema.json').read_text(encoding='utf-8'))
+        token = copy.deepcopy(generic['$defs']['read_token'])
+        token['required'].remove('redb_snapshot_id')
+        del token['properties']['redb_snapshot_id']
+        self.assertEqual(bundle['$defs']['durable_index_read_token'], token)
+        resource = Resource.from_contents({**bundle, '$id': 'urn:created-v2-bundle',
+                                           '$schema': 'https://json-schema.org/draft/2020-12/schema'})
+        handoff = Draft202012Validator({'$ref': 'urn:created-v2-bundle#/$defs/registered_read_value'},
+                                       registry=Registry().with_resource('urn:created-v2-bundle', resource),
+                                       format_checker=FormatChecker())
+        self.assertTrue(handoff.is_valid(self.old))
+        self.assertTrue(handoff.is_valid(self.cp))
+        mangled = copy.deepcopy(self.old)
+        mangled['schema_id'] = 'pm.storage_value.browser_workspace_created_index_checkpoint.v0'
+        self.assertFalse(handoff.is_valid(mangled))
+
+    def test_admission_row_names_only_the_current_v2_binding(self):
+        admission = json.loads((ROOT / 'Plans/browser_event_admission.json').read_text(encoding='utf-8'))
+        row = next(r for r in admission['rows'] if r['event_type'] == 'browser.workspace.created')
+        self.assertEqual(MODEL.binding_failures(row), [])
+        v1_ref = dict(row, authority_contract_ref='Plans/browser_workspace_created_contracts.schema.json#/x-pm-event-authority-binding')
+        self.assertIn('browser_authority_contract_ref_missing_or_mismatched', MODEL.binding_failures(v1_ref))
+        self.assertEqual(MODEL.load(MODEL.V2_SCHEMA_PATH)['x-pm-event-authority-binding'], MODEL.expected_binding())
 
     def test_v1_handoff_preimage_and_finalization(self):
         for withdrawn in (False, True):

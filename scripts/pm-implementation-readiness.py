@@ -8517,6 +8517,7 @@ def storage_value_representation_self_test_checks(
     # SP-278 read tokens.
     read_token_families = (
         "retention_hold_record",
+        "browser_workspace_created_index_checkpoint",
         "browser_workspace_reset_index_checkpoint",
         "seglog_observability_reader_checkpoint",
         "home_layout_event_reader_checkpoint",

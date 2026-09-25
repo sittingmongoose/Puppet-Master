@@ -276,7 +276,7 @@ def source_failures(candidate, index, observation, root=ROOT, *, disclosure=Fals
 
 
 def advance_failures(before, after, index, observation, root=ROOT, *, replacement=False):
-    """An oracle pass is conditional shape/semantic validity, never activation."""
+    """An oracle pass is shape/semantic validity of the current definition, never native activation."""
     errors = source_failures(after, index, observation, root)
     if errors:
         return errors
@@ -394,13 +394,13 @@ def fixture_values(root=ROOT, generic_case=None):
 
 if __name__ == '__main__':
     # The default source plus the lawful empty and degraded SP-278 shapes: each
-    # must be born and then disclosed. A pass is conditional validity only.
+    # must be born and then disclosed. A pass is contract validity only, never native activation.
     results = {}
     for case in (None, 'verified_empty', 'degraded_survivors'):
         checkpoint, index, observation, _ = fixture_values(generic_case=case)
         results[case or 'default'] = (advance_failures(None, checkpoint, index, observation) +
                                       source_failures(checkpoint, index, observation, disclosure=True))
     errors = {case: found for case, found in results.items() if found}
-    print(json.dumps({'status': 'FAIL' if errors else 'PASS', 'definition_status': 'conditional_not_admitted',
+    print(json.dumps({'status': 'FAIL' if errors else 'PASS', 'definition_status': 'newly_authored_owner_contract',
                       'native': 'NOT_RUN', 'positive_cases': len(results), 'errors': errors}))
     raise SystemExit(bool(errors))

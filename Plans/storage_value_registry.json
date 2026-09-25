@@ -28136,16 +28136,16 @@
       "tier": "later_gui_or_feature_projection",
       "key_shape": "browser_workspace_created_index_checkpoint.v1:{storage_instance_id}:{scope_partition}",
       "compatibility_key_shapes": [],
-      "value_schema_id": "pm.storage_value.browser_workspace_created_index_checkpoint.v1",
-      "value_schema_ref": "Plans/browser_workspace_created_contracts.schema.json#/$defs/checkpoint",
+      "value_schema_id": "pm.storage_value.browser_workspace_created_index_checkpoint.v2",
+      "value_schema_ref": "Plans/browser_workspace_created_checkpoint_v2.schema.json#/$defs/checkpoint",
       "owner_doc": "Plans/storage-plan.md#SP-266",
       "producer": [
-        "storage.browser_workspace_created_index.v1@1.0.0"
+        "storage.browser_workspace_created_index.v2@2.0.0"
       ],
       "consumers": [
-        "browser.workspace_inventory.created.v1@1.0.0"
+        "browser.workspace_inventory.created.v2@2.0.0"
       ],
-      "schema_version": "1.0.0",
+      "schema_version": "2.0.0",
       "encoding": "messagepack_canonical",
       "required_fields": [
         "schema_id",
@@ -28157,18 +28157,19 @@
         "projector_id",
         "projector_version",
         "event_type",
-        "index_schema_id",
-        "index_schema_version",
-        "index_checkpoint_ref",
-        "current_selection_sha256",
+        "index_read_token",
         "first_retained_sequence_id",
         "index_through_sequence_id",
+        "source_cursor",
         "filter_complete",
         "state",
         "health",
-        "source_cursor",
         "updated_at_utc",
-        "withdrawn_at_utc"
+        "withdrawn_at_utc",
+        "publication_id",
+        "published_at_utc",
+        "hold_refs",
+        "retired_generations"
       ],
       "optional_fields": [],
       "nullable_fields": [
@@ -28177,13 +28178,13 @@
         "source_cursor",
         "withdrawn_at_utc"
       ],
-      "replay_behavior": "Read only the independently published complete CURRENT-selected EventRecord index and verified original source range. Commit only this filtered checkpoint under prior-cursor CAS and source/access/deletion fences. Publish a read-only historical creation join under the same revalidated snapshot; no global checkpoint, index, runtime, Usage or prompt write. Inclusive cursor reread is idempotent.",
-      "migration": "StorageMigrationCoordinator alone installs this newly defined exact derived family and validates its closed sidecar. Unsupported binding/schema fences the reader until governed rebuild; no lazy rewrite, sibling checkpoint reuse or historical event mutation.",
+      "replay_behavior": "Explicitly adopt the SP-278 root/generation/anchor/frontier/source/read token and the complete generic range, including verified nonmatching events. Commit only this filtered checkpoint under prior-value CAS and unchanged source/currentness fences; publish the historical creation join read-only from the same snapshot, never as a durable Browser projection row. The stored token is the SP-278 nine-field durable read token; the writer before commit and every reader before disclosure join the snapshot ID of their own live read, which is never stored. One current plus at most two retired cores. No index, global-checkpoint, runtime, Usage or prompt write.",
+      "migration": "StorageMigrationCoordinator alone installs this same-key v2 successor against the actual store graph and ceilings. It authenticates the retained v1 row, codec, Project/source and hold/reference custody through $defs/registered_read_value, rebuilds the v2 current value from complete verified CURRENT-selected SP-278 source, and in one same-key transaction reserves lawful capacity, preserves the finalized v1 core as the v1_custody_bound_at_handoff history entry and publishes the v2 core. After the handoff the v1 binding cannot write the key. Unknown old custody, unsupported codec, unresolved hold, full protected capacity, incomplete source or uncertain outcome leaves v2 currentness unavailable; no lazy rewrite, sibling reuse or historical event mutation.",
       "migration_disposition": {
-        "mode": "current_schema",
+        "mode": "store_coordinator",
         "canonical_write_key_only": true,
         "compatibility_keys_read_only": false,
-        "ambiguity_policy": "not_applicable",
+        "ambiguity_policy": "fail_closed",
         "source_refs": [
           "Plans/storage-plan.md#SP-266"
         ]
@@ -28201,20 +28202,22 @@
         "authority_class": "derived_rebuildable",
         "strategy": "rebuild_from_canonical_events_and_snapshot",
         "source_family_ids": [
-          "event_record_index"
+          "event_record_index",
+          "event_record_index_checkpoint"
         ],
         "source_refs": [
           "Plans/Contracts_V0.md#EventRecord",
+          "Plans/storage-plan.md#SP-278",
           "Plans/storage-plan.md#SP-266"
         ],
         "backup_required": false,
         "data_loss_if_unavailable": false,
         "user_disclosure_required": true
       },
-      "retention_compaction": "Exact RP-PROJECTION-3GEN@1.0.0; current_plus_history; first durable withdrawal is the terminal anchor retained in withdrawn_at_utc; 604800 seconds; max 3 per logical_key; holds; rebuild_projection overflow; rebuild expiry. Refresh, Browser close, Run completion and CURRENT switches never set/reset this anchor. Source-event/index policies remain unchanged.",
+      "retention_compaction": "Exact RP-PROJECTION-3GEN@1.0.0; current_plus_history in the same value: one current core plus at most two retired cores, each terminal-anchored at its core's actual first withdrawal (the v1 wrapper at its retired_at_utc); cleanup of one exact retired entry from that anchor plus 604800 seconds, with holds and references resolved through the unchanged retention_hold_record owner; a fourth publication waits for lawful cleanup; rebuild_projection overflow; rebuild expiry. Refresh, Browser close, Run completion and CURRENT switches never set/reset an anchor. Source-event/index policies remain unchanged.",
       "retention_policy_ref": "RP-PROJECTION-3GEN",
-      "redaction_no_secret_rule": "Only non-secret IDs, hashes, cursors and opaque Storage refs; no payload/content copies, credentials, protected-auth identity or local absolute paths. Current access and deletion checks gate every read and disclosure.",
-      "legacy_canonical_crosswalk_status": "New browser.workspace.created-only derived checkpoint under DL-046; no other event, canonical Browser record or shared-runtime domain is admitted.",
+      "redaction_no_secret_rule": "Only non-secret IDs, hashes, cursors, the nine-field durable read token and opaque Storage refs; no snapshot ID, payload/content copies, credentials, protected-auth identity or local absolute paths. Current access and deletion checks gate every read and disclosure.",
+      "legacy_canonical_crosswalk_status": "browser.workspace.created-only derived checkpoint under DL-046. The v2 value is current; the exact v1 value (Plans/browser_workspace_created_contracts.schema.json#/$defs/checkpoint, inline as $defs/checkpoint_v1) is compatibility custody read only for the same-key handoff. No other event, canonical Browser record or shared-runtime domain is admitted.",
       "value_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -28228,31 +28231,33 @@
           "projector_id",
           "projector_version",
           "event_type",
-          "index_schema_id",
-          "index_schema_version",
-          "index_checkpoint_ref",
-          "current_selection_sha256",
+          "index_read_token",
           "first_retained_sequence_id",
           "index_through_sequence_id",
+          "source_cursor",
           "filter_complete",
           "state",
           "health",
-          "source_cursor",
           "updated_at_utc",
-          "withdrawn_at_utc"
+          "withdrawn_at_utc",
+          "publication_id",
+          "published_at_utc",
+          "hold_refs",
+          "retired_generations"
         ],
         "properties": {
           "schema_id": {
-            "const": "pm.storage_value.browser_workspace_created_index_checkpoint.v1"
+            "const": "pm.storage_value.browser_workspace_created_index_checkpoint.v2"
           },
           "schema_version": {
-            "const": "1.0.0"
+            "const": "2.0.0"
           },
           "checkpoint_id": {
             "const": "browser.workspace.created"
           },
           "storage_instance_id": {
             "type": "string",
+            "format": "uuid",
             "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
           },
           "project_id": {
@@ -28265,25 +28270,16 @@
             "pattern": "^project~[A-Za-z0-9_-]+$"
           },
           "projector_id": {
-            "const": "storage.browser_workspace_created_index.v1"
+            "const": "storage.browser_workspace_created_index.v2"
           },
           "projector_version": {
-            "const": "1.0.0"
+            "const": "2.0.0"
           },
           "event_type": {
             "const": "browser.workspace.created"
           },
-          "index_schema_id": {
-            "const": "pm.storage_value.event_record_index.v2"
-          },
-          "index_schema_version": {
-            "const": "2.0.0"
-          },
-          "index_checkpoint_ref": {
-            "$ref": "#/$defs/non_secret_ref"
-          },
-          "current_selection_sha256": {
-            "$ref": "#/$defs/sha256"
+          "index_read_token": {
+            "$ref": "#/$defs/durable_index_read_token"
           },
           "first_retained_sequence_id": {
             "type": [
@@ -28298,6 +28294,9 @@
               "null"
             ],
             "minimum": 0
+          },
+          "source_cursor": {
+            "$ref": "#/$defs/generic_source_cursor"
           },
           "filter_complete": {
             "type": "boolean"
@@ -28315,16 +28314,6 @@
               "degraded"
             ]
           },
-          "source_cursor": {
-            "oneOf": [
-              {
-                "$ref": "#/$defs/source_cursor"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
           "updated_at_utc": {
             "$ref": "#/$defs/timestamp"
           },
@@ -28337,6 +28326,26 @@
                 "type": "null"
               }
             ]
+          },
+          "publication_id": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "published_at_utc": {
+            "$ref": "#/$defs/timestamp"
+          },
+          "hold_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "uniqueItems": true
+          },
+          "retired_generations": {
+            "type": "array",
+            "maxItems": 2,
+            "items": {
+              "$ref": "#/$defs/retired_generation"
+            }
           }
         },
         "allOf": [
@@ -28440,10 +28449,6 @@
           }
         ],
         "$defs": {
-          "sha256": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{64}$"
-          },
           "timestamp": {
             "type": "string",
             "format": "date-time"
@@ -28456,6 +28461,714 @@
             "not": {
               "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
             }
+          },
+          "checkpoint_core": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "checkpoint_id",
+              "storage_instance_id",
+              "project_id",
+              "scope_partition",
+              "projector_id",
+              "projector_version",
+              "event_type",
+              "index_read_token",
+              "first_retained_sequence_id",
+              "index_through_sequence_id",
+              "source_cursor",
+              "filter_complete",
+              "state",
+              "health",
+              "updated_at_utc",
+              "withdrawn_at_utc",
+              "publication_id",
+              "published_at_utc",
+              "hold_refs"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.browser_workspace_created_index_checkpoint.v2"
+              },
+              "schema_version": {
+                "const": "2.0.0"
+              },
+              "checkpoint_id": {
+                "const": "browser.workspace.created"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 192
+              },
+              "scope_partition": {
+                "type": "string",
+                "pattern": "^project~[A-Za-z0-9_-]+$"
+              },
+              "projector_id": {
+                "const": "storage.browser_workspace_created_index.v2"
+              },
+              "projector_version": {
+                "const": "2.0.0"
+              },
+              "event_type": {
+                "const": "browser.workspace.created"
+              },
+              "index_read_token": {
+                "$ref": "#/$defs/durable_index_read_token"
+              },
+              "first_retained_sequence_id": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "index_through_sequence_id": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "source_cursor": {
+                "$ref": "#/$defs/generic_source_cursor"
+              },
+              "filter_complete": {
+                "type": "boolean"
+              },
+              "state": {
+                "enum": [
+                  "current",
+                  "degraded",
+                  "withdrawn"
+                ]
+              },
+              "health": {
+                "enum": [
+                  "healthy",
+                  "degraded"
+                ]
+              },
+              "updated_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "withdrawn_at_utc": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/timestamp"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "publication_id": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "published_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "hold_refs": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/non_secret_ref"
+                },
+                "uniqueItems": true
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "current"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "filter_complete": {
+                      "const": true
+                    },
+                    "health": {
+                      "const": "healthy"
+                    },
+                    "withdrawn_at_utc": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "degraded"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "health": {
+                      "const": "degraded"
+                    },
+                    "withdrawn_at_utc": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "withdrawn"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "withdrawn_at_utc": {
+                      "$ref": "#/$defs/timestamp"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "source_cursor": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "source_cursor"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "first_retained_sequence_id": {
+                      "type": "null"
+                    },
+                    "index_through_sequence_id": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "first_retained_sequence_id": {
+                      "type": "integer"
+                    },
+                    "index_through_sequence_id": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "retired_generation": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "checkpoint_core",
+                  "successor_publication_id"
+                ],
+                "properties": {
+                  "checkpoint_core": {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/checkpoint_core"
+                      },
+                      {
+                        "properties": {
+                          "state": {
+                            "const": "withdrawn"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "successor_publication_id": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "identity_origin",
+                  "publication_id",
+                  "custody_bound_at_utc",
+                  "retired_at_utc",
+                  "successor_publication_id",
+                  "hold_refs",
+                  "legacy_checkpoint"
+                ],
+                "properties": {
+                  "identity_origin": {
+                    "const": "v1_custody_bound_at_handoff"
+                  },
+                  "publication_id": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "custody_bound_at_utc": {
+                    "$ref": "#/$defs/timestamp"
+                  },
+                  "retired_at_utc": {
+                    "$ref": "#/$defs/timestamp"
+                  },
+                  "successor_publication_id": {
+                    "$ref": "#/$defs/non_secret_ref"
+                  },
+                  "hold_refs": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                      "$ref": "#/$defs/non_secret_ref"
+                    }
+                  },
+                  "legacy_checkpoint": {
+                    "allOf": [
+                      {
+                        "$ref": "#/$defs/checkpoint_v1"
+                      },
+                      {
+                        "properties": {
+                          "state": {
+                            "const": "withdrawn"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "description": "Finalized withdrawn v1 core. Already-withdrawn v1 fields remain exact; otherwise only state, updated_at_utc and withdrawn_at_utc are finalized at handoff. retired_at_utc equals the original first withdrawal. custody_bound_at_utc is handoff time, never historical birth."
+              }
+            ]
+          },
+          "durable_index_read_token": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "checkpoint_key",
+              "checkpoint_ref",
+              "generation_id",
+              "generation_anchor_sha256",
+              "frontier_revision",
+              "frontier_sha256",
+              "index_dataset_name",
+              "source_selection"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "checkpoint_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "checkpoint_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "generation_id": {
+                "type": "string",
+                "pattern": "^eig_[0-9a-f]{64}$"
+              },
+              "generation_anchor_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "frontier_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "frontier_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "index_dataset_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_selection": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "storage_instance_id",
+                  "current_ref",
+                  "current_bytes_sha256",
+                  "selected_segment_generation",
+                  "manifest_ref",
+                  "manifest_bytes_sha256",
+                  "manifest_generation",
+                  "recovery_epoch",
+                  "manifest_survivor_prefix_sha256",
+                  "retained_inventory_sha256",
+                  "durable_watermarks_sha256",
+                  "excluded_ranges_sha256",
+                  "retired_inputs_sha256"
+                ],
+                "properties": {
+                  "storage_instance_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "current_ref": {
+                    "const": "storage/seglog/CURRENT"
+                  },
+                  "current_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "selected_segment_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_ref": {
+                    "const": "storage/seglog/manifest.v1.msgpack"
+                  },
+                  "manifest_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "manifest_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "recovery_epoch": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_survivor_prefix_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retained_inventory_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "durable_watermarks_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "excluded_ranges_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retired_inputs_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          },
+          "generic_source_cursor": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "segment_generation",
+                  "segment_name",
+                  "byte_offset",
+                  "frame_end_offset",
+                  "last_sequence_id",
+                  "last_event_id"
+                ],
+                "properties": {
+                  "segment_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "segment_name": {
+                    "type": "string",
+                    "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+                  },
+                  "byte_offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "frame_end_offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "last_sequence_id": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "last_event_id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "checkpoint_v1": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "checkpoint_id",
+              "storage_instance_id",
+              "project_id",
+              "scope_partition",
+              "projector_id",
+              "projector_version",
+              "event_type",
+              "index_schema_id",
+              "index_schema_version",
+              "index_checkpoint_ref",
+              "current_selection_sha256",
+              "first_retained_sequence_id",
+              "index_through_sequence_id",
+              "filter_complete",
+              "state",
+              "health",
+              "source_cursor",
+              "updated_at_utc",
+              "withdrawn_at_utc"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.browser_workspace_created_index_checkpoint.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "checkpoint_id": {
+                "const": "browser.workspace.created"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 192
+              },
+              "scope_partition": {
+                "type": "string",
+                "pattern": "^project~[A-Za-z0-9_-]+$"
+              },
+              "projector_id": {
+                "const": "storage.browser_workspace_created_index.v1"
+              },
+              "projector_version": {
+                "const": "1.0.0"
+              },
+              "event_type": {
+                "const": "browser.workspace.created"
+              },
+              "index_schema_id": {
+                "const": "pm.storage_value.event_record_index.v2"
+              },
+              "index_schema_version": {
+                "const": "2.0.0"
+              },
+              "index_checkpoint_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "current_selection_sha256": {
+                "$ref": "#/$defs/sha256"
+              },
+              "first_retained_sequence_id": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "index_through_sequence_id": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "filter_complete": {
+                "type": "boolean"
+              },
+              "state": {
+                "enum": [
+                  "current",
+                  "degraded",
+                  "withdrawn"
+                ]
+              },
+              "health": {
+                "enum": [
+                  "healthy",
+                  "degraded"
+                ]
+              },
+              "source_cursor": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/source_cursor"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "updated_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "withdrawn_at_utc": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/timestamp"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "current"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "filter_complete": {
+                      "const": true
+                    },
+                    "health": {
+                      "const": "healthy"
+                    },
+                    "withdrawn_at_utc": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "degraded"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "health": {
+                      "const": "degraded"
+                    },
+                    "withdrawn_at_utc": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "withdrawn"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "withdrawn_at_utc": {
+                      "$ref": "#/$defs/timestamp"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "source_cursor": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "source_cursor"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "first_retained_sequence_id": {
+                      "type": "null"
+                    },
+                    "index_through_sequence_id": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "first_retained_sequence_id": {
+                      "type": "integer"
+                    },
+                    "index_through_sequence_id": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
           },
           "source_cursor": {
             "type": "object",
@@ -28506,6 +29219,17 @@
                 "const": "1.0.0"
               }
             }
+          },
+          "registered_read_value": {
+            "$comment": "REGISTERED SAME-KEY READ DISPATCH ONLY. The row's value_schema_id and schema_version select the current v2 writer, which validates only against the root. This dispatcher admits an unchanged retained v1 value only for the StorageMigrationCoordinator handoff that authenticates its preimage; no ordinary v1 reader, conversion or rewrite-on-read.",
+            "oneOf": [
+              {
+                "$ref": "#"
+              },
+              {
+                "$ref": "#/$defs/checkpoint_v1"
+              }
+            ]
           }
         }
       }

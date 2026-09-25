@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/browser_workspace_created_checkpoint/2.0.0/schema.json",
   "title": "Conditional Browser workspace-created checkpoint v2 contracts",
-  "description": "Conditional SP-266 successor companion; not an admitted writer or reader. Native migration, source, permission and crash proof NOT_RUN.",
+  "description": "SP-266's v2 successor: the current writer and reader definition of the browser.workspace.created checkpoint, admitted under DL-046 (authored 2026-09-25). The v1 value is compatibility custody read only at the StorageMigrationCoordinator same-key handoff. Native migration, source, permission and crash proof NOT_RUN.",
   "x-pm-v1-schema-ref": "Plans/browser_workspace_created_contracts.schema.json#/$defs/checkpoint",
   "$defs": {
     "non_secret_ref": {
@@ -747,10 +747,10 @@
     "checkpoint_retention_policy_id": "RP-PROJECTION-3GEN",
     "retention_policy_version": "1.0.0",
     "definition_authority_ref": "Plans/Decision_Log.md#DL-046",
-    "definition_status": "conditional_not_admitted",
+    "definition_status": "newly_authored_owner_contract",
     "native_proof": false,
     "generic_index_owner_ref": "Plans/storage-plan.md#SP-278",
     "generic_index_read_token_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/read_token"
   },
-  "x-pm-definition-status": "conditional_not_admitted"
+  "x-pm-definition-status": "newly_authored_owner_contract"
 }

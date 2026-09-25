@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T01:27:05Z",
+  "generated_at_utc": "2026-09-25T02:47:45Z",
   "gui_related_units": {
     "count": 3197,
     "units": [
@@ -28776,8 +28776,8 @@
         "source_location": {
           "heading": "SMPFS-170 - Terminal workgroup moved original operation and historical consumer",
           "heading_level": 3,
-          "heading_line": 12055,
-          "line": 12057,
+          "heading_line": 12078,
+          "line": 12080,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -29887,8 +29887,8 @@
         "source_location": {
           "heading": "Slot migration-generation custody and activation",
           "heading_level": 3,
-          "heading_line": 21791,
-          "line": 21813,
+          "heading_line": 21815,
+          "line": 21837,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29898,8 +29898,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 23285,
-          "line": 23287,
+          "heading_line": 23309,
+          "line": 23311,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -39211,7 +39211,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "df772ad36b7dd7502f2b9347f14f6ab04d12213c141fbbc26a12f546c614e504",
+        "expected": "ad90764db45bf8d728bf4f396a8eed4ec2faeaaa18e13f801e833f81e18e2a04",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -39301,6 +39301,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/storage-plan.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage_value_registry.json"
       },
       {
         "bulk_registration_allowed": false,

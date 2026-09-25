@@ -521,7 +521,7 @@ For the exact `goal_receipt` family, SP-289 explicitly registers concurrent gene
 - **Retention-hold authority.** The family-level recovery authority of `retention_hold_record` is the SP-288 v2 `canonical_non_rebuildable` with `restore_from_mandatory_backup`. `canonical_dual_homed` belongs only to the separate v1 roles.
 - **Census.** Readiness pins the family count, the retention-policy count and the status and tier counts. It re-pins them only to landed, recorded registry changes. The 2026-09-23 pin is 294 families and 27 retention policies: 272 materialized, 21 deferred and 1 compatibility alias; 40 tier-0 launch-critical, 251 later GUI or feature projection and 3 migration-only.
 
-These rules describe existing canon. They add no family, policy, field or stored identity, and they do not change the registry schema. The 2026-09-24 additions are owner decisions recorded as DL-076: the SP-310 member digest recipe, and the durable read token that removes `redb_snapshot_id` from four stored checkpoint values. Neither adds a family, policy or stored identity.
+These rules describe existing canon. They add no family, policy, field or stored identity, and they do not change the registry schema. The 2026-09-24 additions are owner decisions recorded as DL-076: the SP-310 member digest recipe, and the durable read token that removes `redb_snapshot_id` from four stored checkpoint values. Neither adds a family, policy or stored identity. On 2026-09-25 the `browser_workspace_created_index_checkpoint` v2 value, admitted under DL-046 as SP-266's same-family successor, became a fifth stored checkpoint value holding the same nine-field durable token; it adds no family or policy.
 
 This Tier 0C-2 registry is partial persistence-materialization progress only. It does not close provider streams, runtime lifecycle, clean-room harness, GUI wiring, security boundary, behavioral acceptance, or broad redb-family blockers; it does not create WorkNodes, NodeSeeds, candidates, executable queues, manifests, implementation files, runtime launches, or product build tasks; and `buildability_gate_passed` remains false.
 
@@ -19868,8 +19868,8 @@ These are **newly authored technical Storage definitions under DL-046** for
 `browser.workspace.created` only. The depth gap they answer is recorded in
 `reports/event-authority-20260911/step-08-browser-pair-depth-assessment-20260923.md`.
 
-The registered v1 value and binding above remain the current definitions until a
-separately installed successor is admitted. They do not encode SP-278's complete
+The registered v1 value and binding above were the current definitions until this
+successor was admitted on 2026-09-25 (below); they are now compatibility custody. They do not encode SP-278's complete
 advancing-frontier read token, so a v1 checkpoint cannot by itself certify current
 SP-278 coverage. The exact successor target is the same
 `browser_workspace_created_index_checkpoint` family and logical v1 key, with a
@@ -19916,9 +19916,8 @@ because SP-311 treats the snapshot id only as a live transaction fence that is
 never persisted. The writer before commit and every reader before disclosure join
 the id of the redb read snapshot it actually pinned to the stored nine fields, and
 validate the resulting complete ten-field SP-278 `read_token` for that transaction
-alone; the joined token is never written back. A separate registration must add
-this row to the checkpoint rows that the section 2.3.1 SP-278 read-token rule
-enumerates. The value's inclusive last-examined frame covers the complete generic
+alone; the joined token is never written back. The 2026-09-25 admission adds this row to the
+checkpoint rows that the section 2.3.1 SP-278 read-token rule covers. The value's inclusive last-examined frame covers the complete generic
 range, including verified nonmatching events, rather than only the last creation
 match. Every read reacquires a real SP-278 snapshot, joins the retained source
 frames and full-index checkpoint, and revalidates the complete token and
@@ -20007,6 +20006,28 @@ This successor requires its closed registered schema, explicit reader/admission
 revisions and native migration, source, permission and crash proofs before
 activation; this conditional target alone grants none of them.
 
+**Admission as the current definition — 2026-09-25.** This is newly authored under
+DL-046 for `browser.workspace.created` only. The closed registered schema and the
+reader and admission revisions now exist, and the successor is the specified current
+definition:
+- `Plans/storage_value_registry.json` registers the same-family, same-key v2 value as
+  the current writer, materialized closed with the referenced SP-278 read-token fields
+  and last-frame cursor inlined. The exact v1 checkpoint is inline as
+  `$defs/checkpoint_v1`, and `$defs/registered_read_value` admits an unchanged
+  retained v1 value only for the StorageMigrationCoordinator handoff that
+  authenticates its preimage. This is the `restore_point_retention_summary`
+  registered-read precedent, narrowed to the handoff: there is no ordinary v1 reader,
+  conversion or rewrite-on-read.
+- `Plans/browser_event_admission.json` names the v2 event authority binding.
+- SMPFS-167 names `browser.workspace_inventory.created.v2@2.0.0` as the current
+  reader.
+
+The native migration, source, permission and crash proofs remain required before
+activation on an actual store, and they are NOT_RUN. On a store where the handoff
+has not run, the v2 reader reports the history unavailable, and the v1 reader never
+serves currentness. This admission changes no event, event family registry row,
+payload, producer, generic index owner or retention policy.
+
 ### SP-266 - Browser workspace-created single-family persistence binding
 
 ```yaml
@@ -20023,6 +20044,9 @@ canonical_text: >-
   Existing event/index retention remains unchanged and the derived checkpoint uses
   RP-PROJECTION-3GEN. Event membership requires its exact registry row and reviewed
   binding; native producer, durability, security and runtime acceptance remain open.
+  Since 2026-09-25 the SP-278-adopting v2 successor, storage.browser_workspace_created_index.v2@2.0.0
+  with the v2 checkpoint value and reader, is the current definition, and the v1 value and
+  binding are compatibility custody read only at the StorageMigrationCoordinator same-key handoff.
 gui_related: false
 gui_classification_reason: This defines Storage persistence and replay authority, not visual design.
 depends_on: [DL-046, SP-262, SP-278, SMPFS-167, CV-332]
@@ -20033,7 +20057,7 @@ acceptance_criteria:
   - Missing, corrupt, withdrawn, stale, cross-scope, conflicting or unsupported inputs have no checkpoint advance, current read publication or runtime effect.
   - Empty-range proof is explicit; replay duplicates, restart, compaction, deletion, withdrawal and lost acknowledgement cannot resurrect or duplicate a workspace.
   - Static positive/negative schemas and semantic oracles are separate from unperformed native crash, producer, permission and storage proofs.
-  - A v2 SP-278 successor requires complete frontier/source token, authenticated same-key v1 retirement and lawful three-generation custody before current use; v1 remains current until that separate admission.
+  - The v2 SP-278 successor, admitted 2026-09-25 as the current definition, requires the complete frontier/source token, authenticated same-key v1 retirement and lawful three-generation custody before current use on a store; v1 is compatibility custody only.
 validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, python3 scripts/pm-browser-event-admission.py, Plans/browser_workspace_created_checkpoint_v2.schema.json, Plans/browser_workspace_created_checkpoint_v2_fixtures.json, python3 scripts/pm_browser_workspace_created_v2.py]
 risk_class: browser_workspace_created_source_or_checkpoint_authority_drift
 reasoning_tier: high

@@ -28,6 +28,18 @@ CHECKPOINT_FAMILY = "browser_workspace_created_index_checkpoint"
 PROJECTOR = "storage.browser_workspace_created_index.v1"
 CONSUMER = "browser.workspace_inventory.created.v1"
 VERSION = "1.0.0"
+# SP-266's v2 successor is the current definition (admitted under DL-046, authored 2026-09-25). The v1 value,
+# binding and reader above remain compatibility custody, authenticated only at the
+# StorageMigrationCoordinator same-key handoff.
+V2_SCHEMA_PATH = "Plans/browser_workspace_created_checkpoint_v2.schema.json"
+GENERIC_PATH = "Plans/event_record_index_checkpoint.schema.json"
+PROJECTOR_V2 = "storage.browser_workspace_created_index.v2"
+CONSUMER_V2 = "browser.workspace_inventory.created.v2"
+VERSION_V2 = "2.0.0"
+LIVE_SNAPSHOT_FENCE = "redb_snapshot_id"
+V1_CHECKPOINT_ID_REF = "https://puppetmaster.local/schemas/browser_workspace_created_contracts/1.0.0#/$defs/checkpoint"
+GENERIC_LAST_FRAME_ID_REF = ("https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json"
+                             "#/$defs/coverage/properties/last_frame")
 LINEAGE = ("project_id", "thread_id", "run_id", "attempt_id", "plan_id", "goal_id", "agent_id",
            "home_server_id", "execution_host_id", "execution_environment_id", "source_location_id")
 SUBJECT = ("project_id", "home_server_id", "execution_host_id", "execution_environment_id", "source_location_id",
@@ -63,6 +75,50 @@ def checkpoint_bundle(root=ROOT):
     return value
 
 
+def durable_read_token(root=ROOT):
+    """SP-278's read token without the live snapshot fence (DL-076), materialized from its canonical definition."""
+    token = copy.deepcopy(load(GENERIC_PATH, root)["$defs"]["read_token"])
+    token["required"] = [field for field in token["required"] if field != LIVE_SNAPSHOT_FENCE]
+    del token["properties"][LIVE_SNAPSHOT_FENCE]
+    return token
+
+
+def _localize(node, mapping):
+    if isinstance(node, dict):
+        return {key: (mapping.get(value, value) if key == "$ref" and isinstance(value, str) else _localize(value, mapping))
+                for key, value in node.items()}
+    if isinstance(node, list):
+        return [_localize(item, mapping) for item in node]
+    return node
+
+
+def checkpoint_v2_bundle(root=ROOT):
+    """Closed, self-contained registry materialization of the current v2 value.
+
+    The v2 definition with its referenced SP-278 read-token fields and last-frame cursor inlined, the
+    exact v1 checkpoint as the retained handoff reader, and a same-key read dispatcher that admits
+    exactly the current v2 value or an unchanged retained v1 value by their schema_id discriminants.
+    """
+    v2, v1, generic = load(V2_SCHEMA_PATH, root), load(CONTRACT_PATH, root), load(GENERIC_PATH, root)
+    mapping = {V1_CHECKPOINT_ID_REF: "#/$defs/checkpoint_v1", GENERIC_LAST_FRAME_ID_REF: "#/$defs/generic_source_cursor"}
+    value = _localize(copy.deepcopy(v2["$defs"]["checkpoint"]), mapping)
+    defs = {name: _localize(copy.deepcopy(v2["$defs"][name]), mapping)
+            for name in ("timestamp", "non_secret_ref", "checkpoint_core", "retired_generation")}
+    defs["durable_index_read_token"] = durable_read_token(root)
+    defs["generic_source_cursor"] = copy.deepcopy(generic["$defs"]["coverage"]["properties"]["last_frame"])
+    defs["checkpoint_v1"] = copy.deepcopy(v1["$defs"]["checkpoint"])
+    defs.update({name: copy.deepcopy(v1["$defs"][name]) for name in ("sha256", "source_cursor")})
+    defs["registered_read_value"] = {
+        "$comment": ("REGISTERED SAME-KEY READ DISPATCH ONLY. The row's value_schema_id and schema_version select the "
+                     "current v2 writer, which validates only against the root. This dispatcher admits an unchanged "
+                     "retained v1 value only for the StorageMigrationCoordinator handoff that authenticates its "
+                     "preimage; no ordinary v1 reader, conversion or rewrite-on-read."),
+        "oneOf": [{"$ref": "#"}, {"$ref": "#/$defs/checkpoint_v1"}],
+    }
+    value["$defs"] = defs
+    return value
+
+
 def checkpoint_failures(value, *, root=ROOT):
     if list(Draft202012Validator(checkpoint_bundle(root), format_checker=FormatChecker()).iter_errors(value)):
         return ["checkpoint_schema"]
@@ -91,27 +147,52 @@ def checkpoint_failures(value, *, root=ROOT):
 
 
 def expected_storage_family(root=ROOT):
-    """Materialize SP-266's one derived family; no sibling identifiers are used."""
-    binding = load(CONTRACT_PATH, root)["x-pm-event-authority-binding"]
-    schema = checkpoint_bundle(root)
+    """SP-266's one derived family, whose current definition is the v2 value (authored 2026-09-25).
+
+    The row describes the current v2 writer only. A retained v1 value is read through
+    $defs/registered_read_value solely for the StorageMigrationCoordinator same-key handoff.
+    """
+    binding = load(V2_SCHEMA_PATH, root)["x-pm-event-authority-binding"]
+    schema = checkpoint_v2_bundle(root)
     owner = binding["storage_owner_ref"]
     return {
         "family_id": CHECKPOINT_FAMILY, "storage_kind": "redb_checkpoint", "status": "materialized",
         "tier": "later_gui_or_feature_projection", "key_shape": binding["checkpoint_key"], "compatibility_key_shapes": [],
-        "value_schema_id": binding["checkpoint_schema_id"], "value_schema_ref": CONTRACT_PATH + "#/$defs/checkpoint",
-        "owner_doc": owner, "producer": [PROJECTOR + "@" + VERSION], "consumers": [CONSUMER + "@" + VERSION],
-        "schema_version": VERSION, "encoding": "messagepack_canonical", "required_fields": schema["required"],
+        "value_schema_id": binding["checkpoint_schema_id"], "value_schema_ref": V2_SCHEMA_PATH + "#/$defs/checkpoint",
+        "owner_doc": owner, "producer": [PROJECTOR_V2 + "@" + VERSION_V2], "consumers": [CONSUMER_V2 + "@" + VERSION_V2],
+        "schema_version": VERSION_V2, "encoding": "messagepack_canonical", "required_fields": schema["required"],
         "optional_fields": [], "nullable_fields": ["first_retained_sequence_id", "index_through_sequence_id", "source_cursor", "withdrawn_at_utc"],
-        "replay_behavior": "Read only the independently published complete CURRENT-selected EventRecord index and verified original source range. Commit only this filtered checkpoint under prior-cursor CAS and source/access/deletion fences. Publish a read-only historical creation join under the same revalidated snapshot; no global checkpoint, index, runtime, Usage or prompt write. Inclusive cursor reread is idempotent.",
-        "migration": "StorageMigrationCoordinator alone installs this newly defined exact derived family and validates its closed sidecar. Unsupported binding/schema fences the reader until governed rebuild; no lazy rewrite, sibling checkpoint reuse or historical event mutation.",
-        "migration_disposition": {"mode": "current_schema", "canonical_write_key_only": True, "compatibility_keys_read_only": False, "ambiguity_policy": "not_applicable", "source_refs": [owner]},
+        "replay_behavior": "Explicitly adopt the SP-278 root/generation/anchor/frontier/source/read token and the complete generic range, including verified nonmatching events. Commit only this filtered checkpoint under prior-value CAS and unchanged source/currentness fences; publish the historical creation join read-only from the same snapshot, never as a durable Browser projection row. The stored token is the SP-278 nine-field durable read token; the writer before commit and every reader before disclosure join the snapshot ID of their own live read, which is never stored. One current plus at most two retired cores. No index, global-checkpoint, runtime, Usage or prompt write.",
+        "migration": "StorageMigrationCoordinator alone installs this same-key v2 successor against the actual store graph and ceilings. It authenticates the retained v1 row, codec, Project/source and hold/reference custody through $defs/registered_read_value, rebuilds the v2 current value from complete verified CURRENT-selected SP-278 source, and in one same-key transaction reserves lawful capacity, preserves the finalized v1 core as the v1_custody_bound_at_handoff history entry and publishes the v2 core. After the handoff the v1 binding cannot write the key. Unknown old custody, unsupported codec, unresolved hold, full protected capacity, incomplete source or uncertain outcome leaves v2 currentness unavailable; no lazy rewrite, sibling reuse or historical event mutation.",
+        "migration_disposition": {"mode": "store_coordinator", "canonical_write_key_only": True, "compatibility_keys_read_only": False, "ambiguity_policy": "fail_closed", "source_refs": [owner]},
         "restore_disposition": {"mode": "rebuild_from_authority", "transaction_family_id": None, "outcome_owner_ref": owner, "mutation_fence_on_unresolved": True, "source_refs": [owner]},
-        "recovery_disposition": {"authority_class": "derived_rebuildable", "strategy": "rebuild_from_canonical_events_and_snapshot", "source_family_ids": ["event_record_index"], "source_refs": ["Plans/Contracts_V0.md#EventRecord", owner], "backup_required": False, "data_loss_if_unavailable": False, "user_disclosure_required": True},
-        "retention_compaction": "Exact RP-PROJECTION-3GEN@1.0.0; current_plus_history; first durable withdrawal is the terminal anchor retained in withdrawn_at_utc; 604800 seconds; max 3 per logical_key; holds; rebuild_projection overflow; rebuild expiry. Refresh, Browser close, Run completion and CURRENT switches never set/reset this anchor. Source-event/index policies remain unchanged.",
+        "recovery_disposition": {"authority_class": "derived_rebuildable", "strategy": "rebuild_from_canonical_events_and_snapshot", "source_family_ids": ["event_record_index", "event_record_index_checkpoint"], "source_refs": ["Plans/Contracts_V0.md#EventRecord", "Plans/storage-plan.md#SP-278", owner], "backup_required": False, "data_loss_if_unavailable": False, "user_disclosure_required": True},
+        "retention_compaction": "Exact RP-PROJECTION-3GEN@1.0.0; current_plus_history in the same value: one current core plus at most two retired cores, each terminal-anchored at its core's actual first withdrawal (the v1 wrapper at its retired_at_utc); cleanup of one exact retired entry from that anchor plus 604800 seconds, with holds and references resolved through the unchanged retention_hold_record owner; a fourth publication waits for lawful cleanup; rebuild_projection overflow; rebuild expiry. Refresh, Browser close, Run completion and CURRENT switches never set/reset an anchor. Source-event/index policies remain unchanged.",
         "retention_policy_ref": "RP-PROJECTION-3GEN",
-        "redaction_no_secret_rule": "Only non-secret IDs, hashes, cursors and opaque Storage refs; no payload/content copies, credentials, protected-auth identity or local absolute paths. Current access and deletion checks gate every read and disclosure.",
-        "legacy_canonical_crosswalk_status": "New browser.workspace.created-only derived checkpoint under DL-046; no other event, canonical Browser record or shared-runtime domain is admitted.",
+        "redaction_no_secret_rule": "Only non-secret IDs, hashes, cursors, the nine-field durable read token and opaque Storage refs; no snapshot ID, payload/content copies, credentials, protected-auth identity or local absolute paths. Current access and deletion checks gate every read and disclosure.",
+        "legacy_canonical_crosswalk_status": "browser.workspace.created-only derived checkpoint under DL-046. The v2 value is current; the exact v1 value (Plans/browser_workspace_created_contracts.schema.json#/$defs/checkpoint, inline as $defs/checkpoint_v1) is compatibility custody read only for the same-key handoff. No other event, canonical Browser record or shared-runtime domain is admitted.",
         "value_schema": schema,
+    }
+
+
+def expected_binding(root=ROOT):
+    """The exact current (v2) event authority binding of browser.workspace.created."""
+    return {
+        "event_type": EVENT_TYPE, "binding_version": VERSION_V2,
+        "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-167",
+        "storage_owner_ref": "Plans/storage-plan.md#SP-266",
+        "producer_component": "BrowserRuntimeService.workspace", "consumer_id": CONSUMER_V2, "consumer_version": VERSION_V2,
+        "projector_id": PROJECTOR_V2, "projector_version": VERSION_V2, "checkpoint_family_id": CHECKPOINT_FAMILY,
+        "checkpoint_key": CHECKPOINT_FAMILY + ".v1:{storage_instance_id}:{scope_partition}",
+        "checkpoint_schema_id": "pm.storage_value." + CHECKPOINT_FAMILY + ".v2", "checkpoint_schema_version": VERSION_V2,
+        "checkpoint_schema_pointer": "#/$defs/checkpoint",
+        "source_payload_schema_ref": "Plans/browser_event_payloads.schema.json#/$defs/workspace_created",
+        "source_payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+        "source_retention_policy_id": "RP-AUTHORITY-INDEFINITE", "checkpoint_retention_policy_id": "RP-PROJECTION-3GEN",
+        "retention_policy_version": VERSION, "definition_authority_ref": "Plans/Decision_Log.md#DL-046",
+        "definition_status": "newly_authored_owner_contract", "native_proof": False,
+        "generic_index_owner_ref": "Plans/storage-plan.md#SP-278",
+        "generic_index_read_token_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/read_token",
     }
 
 
@@ -335,30 +416,21 @@ def workspace_history_fact(event, subject, *, source_verified, access_allowed,
 
 
 def binding_failures(row, *, root=ROOT):
-    """A prepared sibling or arbitrary path can never manufacture this binding."""
+    """A prepared sibling or arbitrary path can never manufacture this binding.
+
+    The current binding is the v2 one (SP-266's successor, admitted under DL-046). The v1 binding in
+    the v1 contracts schema stays as compatibility custody and no longer authorizes the admission row.
+    """
     if row["event_type"] != EVENT_TYPE:
         return ["complete_browser_authority_binding_missing"]
-    schema = load(CONTRACT_PATH, root)
-    binding = schema["x-pm-event-authority-binding"]
-    expected = {
-        "event_type": EVENT_TYPE, "binding_version": VERSION,
-        "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-167",
-        "storage_owner_ref": "Plans/storage-plan.md#SP-266",
-        "producer_component": "BrowserRuntimeService.workspace", "consumer_id": CONSUMER, "consumer_version": VERSION,
-        "projector_id": PROJECTOR, "projector_version": VERSION, "checkpoint_family_id": CHECKPOINT_FAMILY,
-        "checkpoint_key": CHECKPOINT_FAMILY + ".v1:{storage_instance_id}:{scope_partition}",
-        "checkpoint_schema_id": "pm.storage_value." + CHECKPOINT_FAMILY + ".v1", "checkpoint_schema_version": VERSION,
-        "checkpoint_schema_pointer": "#/$defs/checkpoint",
-        "source_payload_schema_ref": "Plans/browser_event_payloads.schema.json#/$defs/workspace_created",
-        "source_payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
-        "source_retention_policy_id": "RP-AUTHORITY-INDEFINITE", "checkpoint_retention_policy_id": "RP-PROJECTION-3GEN",
-        "retention_policy_version": VERSION, "definition_authority_ref": "Plans/Decision_Log.md#DL-046",
-        "definition_status": "newly_authored_owner_contract", "native_proof": False,
-    }
+    binding = load(V2_SCHEMA_PATH, root)["x-pm-event-authority-binding"]
+    expected = expected_binding(root)
     failures = []
     if binding != expected:
         failures.append("exact_browser_authority_binding_mismatch")
-    if row.get("authority_contract_ref") != CONTRACT_PATH + "#/x-pm-event-authority-binding":
+    if load(V2_SCHEMA_PATH, root).get("x-pm-definition-status") != expected["definition_status"]:
+        failures.append("browser_checkpoint_successor_not_current")
+    if row.get("authority_contract_ref") != V2_SCHEMA_PATH + "#/x-pm-event-authority-binding":
         failures.append("browser_authority_contract_ref_missing_or_mismatched")
     if row["semantic_owner_ref"] != expected["semantic_owner_ref"]:
         failures.append("browser_exact_semantic_owner_ref_mismatch")
@@ -375,12 +447,12 @@ def binding_failures(row, *, root=ROOT):
     family = families[0]
     if family != expected_storage_family(root):
         failures.append("browser_checkpoint_family_disposition_mismatch")
-    if (family["value_schema"] != checkpoint_bundle(root)
-            or family["value_schema_ref"] != CONTRACT_PATH + "#/$defs/checkpoint"
+    if (family["value_schema"] != checkpoint_v2_bundle(root)
+            or family["value_schema_ref"] != V2_SCHEMA_PATH + "#/$defs/checkpoint"
             or family["value_schema_id"] != expected["checkpoint_schema_id"]
-            or family["schema_version"] != VERSION or family["key_shape"] != expected["checkpoint_key"]
-            or family["producer"] != [PROJECTOR + "@" + VERSION]
-            or family["consumers"] != [CONSUMER + "@" + VERSION]
+            or family["schema_version"] != VERSION_V2 or family["key_shape"] != expected["checkpoint_key"]
+            or family["producer"] != [PROJECTOR_V2 + "@" + VERSION_V2]
+            or family["consumers"] != [CONSUMER_V2 + "@" + VERSION_V2]
             or family["owner_doc"] != expected["storage_owner_ref"]
             or family["retention_policy_ref"] != expected["checkpoint_retention_policy_id"]):
         failures.append("browser_checkpoint_family_binding_mismatch")

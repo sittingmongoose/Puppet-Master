@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11411-L11620
+Source lines: L11411-L11643
 
-Source SHA256: `c3ff162423288f90649d88e0d4eb38c44547919691ebd2c1a7f1939d4887ec32`
+Source SHA256: `14833c6ba2383cc10adf5a7fbc4fed447da8398806f11ce0e82198180b41bafb`
 
 ---
 
@@ -158,6 +158,11 @@ this creation fact cannot create billing, attach a chip, dereference an artifact
 or start a Browser action. A future independent persisted consumer requires its
 own reviewed owner/Storage binding before use.
 
+Since the 2026-09-25 admission of SP-266's v2 successor (below), this consumer's
+current version is `browser.workspace_inventory.created.v2@2.0.0`, over
+`storage.browser_workspace_created_index.v2@2.0.0` and the v2 checkpoint. The v1
+identities above are compatibility custody.
+
 <a id="conditional-sp-266-v2-successor-adopting-the-sp-278-read-token"></a>
 ### Conditional SP-266 v2 successor adopting the SP-278 read token — 2026-09-23
 
@@ -173,10 +178,26 @@ reacquire the actual SP-278 root/generation/anchor/frontier/source token, join t
 live redb snapshot id of its own read to the stored nine-field durable token, and
 recheck the current Project/access/deletion fence for each disclosure; a stored
 token, matching generation or old creation row does not authorize a current answer.
-Until that replacement the v1 checkpoint and reader remain the current route; after
-it they are versioned compatibility custody only, never an alternate v2 currentness
-path. Neither route can act on a live workspace, and the successor does not change
-creation publication or admit another Browser event.
+Until that replacement the v1 checkpoint and reader remained the current route;
+since the admission below they are versioned compatibility custody only, never an
+alternate v2 currentness path. Neither route can act on a live workspace, and the
+successor does not change creation publication or admit another Browser event.
+
+**Admitted as the current definition — 2026-09-25.** This is newly authored under
+DL-046 for `browser.workspace.created` only. The v2 Storage value, the
+`storage.browser_workspace_created_index.v2@2.0.0` binding and
+`browser.workspace_inventory.created.v2@2.0.0` are now the specified current
+definitions:
+- `Plans/storage_value_registry.json` registers the closed v2 value, with the exact
+  v1 value inline only as the handoff reader;
+- `Plans/browser_event_admission.json` names the v2 event authority binding in
+  `Plans/browser_workspace_created_checkpoint_v2.schema.json`;
+- SP-266 states the same-key handoff.
+
+Installation on an actual store remains a native StorageMigrationCoordinator step
+(NOT_RUN). On a store where the handoff has not run, the reader reports the history
+unavailable. The v1 checkpoint is read only to authenticate that handoff and never
+serves currentness.
 
 ### SMPFS-167 - Workspace-created transition and historical inventory consumer
 
@@ -191,7 +212,9 @@ canonical_text: >-
   owner publishes the exact committed creation identity after the barrier AppendReceipt.
   browser.workspace_inventory.created.v1@1.0.0 reads the historical creation fact through
   storage.browser_workspace_created_index.v1@1.0.0 and SP-266, with no independent durable
-  effect and no authority to recreate or act on a live workspace. Lost-acknowledgement and
+  effect and no authority to recreate or act on a live workspace. Since 2026-09-25 the current
+  reader is browser.workspace_inventory.created.v2@2.0.0 over storage.browser_workspace_created_index.v2@2.0.0
+  and the v2 checkpoint of SP-266; the v1 reader and checkpoint are compatibility custody. Lost-acknowledgement and
   uncertain-append recovery resolves an issued original creation append only through the explicitly
   adopted SP-286/CV-339 storage.first_append_receipt.resolve.v2.
 gui_related: false
@@ -203,7 +226,7 @@ acceptance_criteria:
   - A new workspace identity has no predecessor generation; idempotent retries return the original committed result without a second runtime resource or event.
   - The one read consumer uses the complete SP-266 snapshot/checkpoint token; historical creation and index currentness never grant current Browser authority.
   - Replay, deletion, recovery and withdrawal cannot dispatch, recreate a process, restore a controller, attach prompt material or create UsageRecords.
-  - A separately admitted v2 reader must use SP-266's full SP-278 frontier/source token and authenticated checkpoint handoff; this conditional target does not make v2 current.
+  - The v2 reader, the current route since 2026-09-25, uses SP-266's full SP-278 frontier/source token and the authenticated checkpoint handoff; the v1 reader and checkpoint are compatibility custody only and never serve currentness.
   - Lost-acknowledgement and uncertain-append recovery resolves an issued original creation append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
 validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, Plans/browser_workspace_created_checkpoint_v2.schema.json, "Native execution of the SMPFS-167-A006 resolve.v2 receipt-join, supplied-receipt, wrong-class, first-mint-refusal and restored-work pairs remains required."]
 risk_class: browser_workspace_creation_or_replay_authority_escape
