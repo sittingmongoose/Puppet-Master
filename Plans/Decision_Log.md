@@ -1949,6 +1949,18 @@ SourceRef: `reports/packet-canon-closure-20260924/remaining-boundary-cards-20260
 
 ContractRef: ContractName:Plans/Source_Control_System.md
 
+### DL-102: One additional narrow public Git repair and independent review
+
+Recorded from Jared's explicit response on 2026-09-25 to the frozen public Git repair card. Status: approved_one_additional_bounded_repair_review.
+
+**Answer:** Approve
+
+**Decision:** Authorize one narrowly scoped repair and one independent review of the four reproduced public Git fetch/push defects remaining after DL-101's two-cycle limit: a repository original changing during owner resolution, a changed force-with-lease guard, an unknown fetch effect reported as success, and a push success without observed remote heads. The six accepted Source Control routes stay in place. This is one additional bounded correction/review, not an automatic third iteration of the prior cycle or an open-ended loop. Any residual after this review returns to Jared for another decision. The answer does not choose a new command alias, adapter, policy or product behavior, and does not authorize native implementation, runtime proof, governance reseal or an unreviewed candidate merge.
+
+SourceRef: frozen `reports/packet-canon-closure-20260924/scm-public-git-repair-decision-card-20260925.md`, SHA-256 `e4a1ab5dcd0f7de3871d7250dae635b56b0c56e00f93eef12e45097a34ccb2d2`; verbatim `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-SCM-PUBLIC-GIT-REPAIR.md`, SHA-256 `d0bc92b1d4750feff9bf3cafdda6fd2feeaaf9626817e29807a0b348d06261da`.
+
+ContractRef: ContractName:Plans/Source_Control_System.md
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -7006,6 +7018,44 @@ negative_constraints:
   - Do not edit the frozen cards or verbatim answers.
   - Do not promote Ask or a saved draft to approval.
   - Do not claim owner integration, native behavior, readiness or governance seal from this record.
+owner_hints: [Plans/Source_Control_System.md]
+```
+
+### DL-102 - One Additional Narrow Public Git Repair And Independent Review
+
+```yaml
+plan_unit_id: DL-102
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Authorize one additional narrowly scoped repair and independent review of the four reproduced public Git fetch/push defects remaining after DL-101's two-cycle limit: late repository-original mutation, changed force-with-lease guard, unknown fetch effect reported as success, and push success without observed remote heads. Retain the six accepted Source Control routes. Return any residual after that review to Jared; do not start another automatic cycle or select a new product alias, adapter or policy. This answer supplies no native implementation, runtime proof, governance reseal or unreviewed merge authority.
+gui_related: false
+gui_classification_reason: Records a bounded specification correction authorization, not GUI implementation.
+split_recommended: false
+depends_on: [DL-101]
+unblocks: []
+acceptance_criteria:
+  - "Exactly one additional repair and one independent review are authorized for the four reproduced public Git defects."
+  - "The six accepted Source Control routes remain in place and approved core behavior is not reopened."
+  - "Any residual after that review returns to Jared without another automatic cycle."
+  - "No new command alias, adapter, policy, native implementation, runtime proof, governance reseal or unreviewed merge is authorized."
+validation_surfaces:
+  - reports/packet-canon-closure-20260924/decision-responses.jsonl
+  - python3 scripts/pm-plan-index.py validate
+risk_class: packet_product_decision_scope_drift
+reasoning_tier: high
+context_scope: packet_boundary_response_recording
+implementation_surfaces: [Plans/Source_Control_System.md]
+node_compile_hint: {mode: owner_decision_record, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "SourceRef: reports/packet-canon-closure-20260924/scm-public-git-repair-decision-card-20260925.md SHA-256 e4a1ab5dcd0f7de3871d7250dae635b56b0c56e00f93eef12e45097a34ccb2d2"
+  - "SourceRef: /mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-SCM-PUBLIC-GIT-REPAIR.md SHA-256 d0bc92b1d4750feff9bf3cafdda6fd2feeaaf9626817e29807a0b348d06261da"
+preserved_exact_tokens: ["PCC-SCM-PUBLIC-GIT-REPAIR-001", "Approve"]
+negative_constraints:
+  - Do not alter the frozen card or verbatim answer.
+  - Do not treat this as another automatic review loop after its one independent review.
+  - Do not claim native implementation, runtime proof, governance seal or unreviewed merge from this record.
 owner_hints: [Plans/Source_Control_System.md]
 ```
 

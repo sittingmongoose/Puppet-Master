@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L1950
+Source lines: L13-L1962
 
-Source SHA256: `49395660afcd5843aff22bc3c00aa93105bf71782ce4f3fcde624682753ad7cd`
+Source SHA256: `d5993d3ecf913cd9c89d20967a43b73410136a5315c4c5f217005fb855fbfd17`
 
 ---
 
@@ -1944,5 +1944,17 @@ Recorded from Jared's explicit submitted response on 2026-09-25. Status: approve
 Sources: PCC-SCM-CLOSURE-AUTH-001; Plans/Source_Control_System.md. This records the response, not completed owner integration or native behavior.
 
 SourceRef: `reports/packet-canon-closure-20260924/remaining-boundary-cards-20260925.md`, SHA-256 `0e2cee08dfdba5c798b63ecf9cd1b51cf3c339c5657389c88648c03eddd39a38`; `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-REMAINING-BOUNDARIES.md`, SHA-256 `a39649b88e31ac133bfd1e57fcc8be14c8d77166c5f3902c573687a5f0b4efd5`.
+
+ContractRef: ContractName:Plans/Source_Control_System.md
+
+### DL-102: One additional narrow public Git repair and independent review
+
+Recorded from Jared's explicit response on 2026-09-25 to the frozen public Git repair card. Status: approved_one_additional_bounded_repair_review.
+
+**Answer:** Approve
+
+**Decision:** Authorize one narrowly scoped repair and one independent review of the four reproduced public Git fetch/push defects remaining after DL-101's two-cycle limit: a repository original changing during owner resolution, a changed force-with-lease guard, an unknown fetch effect reported as success, and a push success without observed remote heads. The six accepted Source Control routes stay in place. This is one additional bounded correction/review, not an automatic third iteration of the prior cycle or an open-ended loop. Any residual after this review returns to Jared for another decision. The answer does not choose a new command alias, adapter, policy or product behavior, and does not authorize native implementation, runtime proof, governance reseal or an unreviewed candidate merge.
+
+SourceRef: frozen `reports/packet-canon-closure-20260924/scm-public-git-repair-decision-card-20260925.md`, SHA-256 `e4a1ab5dcd0f7de3871d7250dae635b56b0c56e00f93eef12e45097a34ccb2d2`; verbatim `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-SCM-PUBLIC-GIT-REPAIR.md`, SHA-256 `d0bc92b1d4750feff9bf3cafdda6fd2feeaaf9626817e29807a0b348d06261da`.
 
 ContractRef: ContractName:Plans/Source_Control_System.md
