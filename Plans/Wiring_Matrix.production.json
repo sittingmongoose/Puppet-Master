@@ -28654,7 +28654,7 @@
     "catalog.forge_pipeline_list": {
       "acceptance_checks": [
         "cmd.forge.pipeline.list names exactly one owner-adjudicated future target handlers::forge::pipeline_list in Plans/Forge_Integrations.md#FGI-010; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
+        "Validate Plans/forge_list_query_contracts.schema.json#/$defs/request -> Plans/forge_list_query_contracts.schema.json#/$defs/result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
         "Read state.commands.forge_pipeline_list.availability and state.commands.forge_pipeline_list.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -28667,11 +28667,12 @@
       },
       "disabled_reason_projection": "state.commands.forge_pipeline_list.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
+        "description": "Actual original-query/provider source window and read-projection receipt only. Explicit completeness/freshness is separate from read operation completion; accepted work is nonterminal, failed/cancelled reads retain actual rows. No write probe, mutation receipt or EventRecord.",
         "effect_kind": "receipt",
         "receipt_or_event_refs": [
-          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
-          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt",
+          "Plans/forge_list_query_contracts.schema.json#/$defs/window",
+          "Plans/forge_list_query_contracts.schema.json#/$defs/read_receipt"
         ]
       },
       "event_test_requirements": [
@@ -28680,8 +28681,8 @@
       "evidence_required": "Future production evidence for cmd.forge.pipeline.list: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::forge::pipeline_list",
-      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
-      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "request_schema_ref": "Plans/forge_list_query_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/forge_list_query_contracts.schema.json#/$defs/result",
       "state_selector": "state.commands.forge_pipeline_list.availability",
       "test_evidence": [
         {
@@ -29292,7 +29293,7 @@
     "catalog.forge_repository_list": {
       "acceptance_checks": [
         "cmd.forge.repository.list names exactly one owner-adjudicated future target handlers::forge::repository_list in Plans/Forge_Integrations.md#FGI-010; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/forge_integration_contracts.schema.json#/$defs/command_request -> Plans/forge_integration_contracts.schema.json#/$defs/command_result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
+        "Validate Plans/forge_list_query_contracts.schema.json#/$defs/request -> Plans/forge_list_query_contracts.schema.json#/$defs/result and Plans/forge_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
         "Read state.commands.forge_repository_list.availability and state.commands.forge_repository_list.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return.",
@@ -29306,11 +29307,12 @@
       },
       "disabled_reason_projection": "state.commands.forge_repository_list.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; no EventRecord is admitted by this closure.",
+        "description": "Actual original-query/provider source window and read-projection receipt only. Explicit completeness/freshness is separate from read operation completion; accepted work is nonterminal, failed/cancelled reads retain actual rows. No write probe, mutation receipt or EventRecord.",
         "effect_kind": "receipt",
         "receipt_or_event_refs": [
-          "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
-          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt"
+          "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt",
+          "Plans/forge_list_query_contracts.schema.json#/$defs/window",
+          "Plans/forge_list_query_contracts.schema.json#/$defs/read_receipt"
         ]
       },
       "event_test_requirements": [
@@ -29319,8 +29321,8 @@
       "evidence_required": "Future production evidence for cmd.forge.repository.list: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::forge::repository_list",
-      "request_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
-      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_result",
+      "request_schema_ref": "Plans/forge_list_query_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/forge_list_query_contracts.schema.json#/$defs/result",
       "state_selector": "state.commands.forge_repository_list.availability",
       "test_evidence": [
         {

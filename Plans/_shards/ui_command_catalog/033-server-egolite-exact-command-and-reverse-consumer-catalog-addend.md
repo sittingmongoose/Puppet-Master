@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11771-L12033
+Source lines: L11771-L12035
 
-Source SHA256: `33625aae3e9343cecd4e970349d592253d004bb20599d2ce2d9badaac8195f03`
+Source SHA256: `181a3721ca8b6bd2055d833578cea13e7e34a78326d0f480370cb89f8aa0e70f`
 
 ---
 
@@ -17,6 +17,8 @@ Every primary row below is static central intent. A named `handler_location` is 
 
 
 ### Exact 100 primary catalog rows
+
+Exactly `cmd.forge.repository.list` and `cmd.forge.pipeline.list` use `Plans/forge_list_query_contracts.schema.json#/$defs/request` -> `Plans/forge_list_query_contracts.schema.json#/$defs/result`. Authentic provider-specific typed descriptors and original selected filters bind actual read windows/receipts and current caller; precommit null-Project scope and independent AutomationBinding remain exact. Read operation completion is not whole/fresh dataset completeness. No universal filters, default sort/page size, write probes, new events or handler availability are introduced.
 
 For exactly `cmd.forge.review.comment`, the selected binding is `Plans/forge_review_comment_contracts.schema.json#/$defs/request` -> `Plans/forge_review_comment_contracts.schema.json#/$defs/result`. It preserves exact submitted body, nullable original revision/line anchor, authentic SIR original/current caller and provider-issued comment/result/receipt. It requires no pre-existing thread, invents no tracking identity, and never falls back from anchored to unanchored posting. Accepted is not posted; uncertain effects require reconciliation and replay cannot repost. Existing handler, confirmation, availability and event policy remain unchanged.
 

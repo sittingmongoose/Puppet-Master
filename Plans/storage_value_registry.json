@@ -4744,6 +4744,203 @@
         "Plans/restore_selected_preview_contracts.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.forge.list_query_transport.v1",
+      "system_id": "forge_integrations",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_list_query_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.list_query.request.v1",
+        "pm.forge.list_query.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold or authority. Disposing transient query/item/error projections cannot release retained original/source/receipt dependencies.",
+        "expiry_rule": "Discard current transport/projection copies when delivery ends or actual source/disclosure becomes invalid; no durable query cache, token bytes or new expiry policy."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct original query/null/absence/catalog values, native source completeness or caller from current UI state. No old-record authority promotion, secret cursor migration or peer store; historical schemas remain readable.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Transient typed query/request/result transport; no original-read or replay authority.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_list_query_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.list_query_projections.v1",
+      "system_id": "forge_integrations",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_list_query_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.list_query.resource_operand.v1",
+        "pm.forge.list_query.repository_item.v1",
+        "pm.forge.list_query.pipeline_item.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold or authority. Disposing transient query/item/error projections cannot release retained original/source/receipt dependencies.",
+        "expiry_rule": "Discard current transport/projection copies when delivery ends or actual source/disclosure becomes invalid; no durable query cache, token bytes or new expiry policy."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct original query/null/absence/catalog values, native source completeness or caller from current UI state. No old-record authority promotion, secret cursor migration or peer store; historical schemas remain readable.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted resource/discovered-native repository or pipeline projections retain actual Forge producers. No fabricated PM binding or secret cursor bytes.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_list_query_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.forge_list_query_error_projection.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/forge_list_query_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.forge_list_query.error_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold or authority. Disposing transient query/item/error projections cannot release retained original/source/receipt dependencies.",
+        "expiry_rule": "Discard current transport/projection copies when delivery ends or actual source/disclosure becomes invalid; no durable query cache, token bytes or new expiry policy."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct original query/null/absence/catalog values, native source completeness or caller from current UI state. No old-record authority promotion, secret cursor migration or peer store; historical schemas remain readable.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "SIR-owned safe error projection only; actual unchanged owner error remains separately resolved and no protected contents are admitted.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/forge_list_query_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.forge_list_query_dispatch.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/forge_list_query_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.forge_list_query.dispatch_binding.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve authentic descriptor version, original query/caller and source/continuation/receipt metadata for actual read replay/audit dependencies; each source lifetime remains independent and exact physical per-kind policy is pending.",
+        "expiry_rule": "No physical cleanup writer or new TTL. Register exact keys, native producer/current-history readers, authentic dependency holds/release, migration and coherent backup before persistence. Protected cursor expiry is not descriptor/original metadata retention."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct original query/null/absence/catalog values, native source completeness or caller from current UI state. No old-record authority promotion, secret cursor migration or peer store; historical schemas remain readable.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Authentic retained original full identity/query digest/caller and genuine precommit Client; physical custody pending.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/forge_list_query_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.list_query_descriptor.v1",
+      "system_id": "forge_integrations",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_list_query_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.list_query.descriptor.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve authentic descriptor version, original query/caller and source/continuation/receipt metadata for actual read replay/audit dependencies; each source lifetime remains independent and exact physical per-kind policy is pending.",
+        "expiry_rule": "No physical cleanup writer or new TTL. Register exact keys, native producer/current-history readers, authentic dependency holds/release, migration and coherent backup before persistence. Protected cursor expiry is not descriptor/original metadata retention."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct original query/null/absence/catalog values, native source completeness or caller from current UI state. No old-record authority promotion, secret cursor migration or peer store; historical schemas remain readable.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained original version of the newly explicit provider-query descriptor. Existing catalog ownership does not establish physical admission or populated native query semantics.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_list_query_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.list_query_read_metadata.v1",
+      "system_id": "forge_integrations",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_list_query_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.list_query.continuation.v1",
+        "pm.forge.list_query.window.v1",
+        "pm.forge.list_query.read_receipt.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve authentic descriptor version, original query/caller and source/continuation/receipt metadata for actual read replay/audit dependencies; each source lifetime remains independent and exact physical per-kind policy is pending.",
+        "expiry_rule": "No physical cleanup writer or new TTL. Register exact keys, native producer/current-history readers, authentic dependency holds/release, migration and coherent backup before persistence. Protected cursor expiry is not descriptor/original metadata retention."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct original query/null/absence/catalog values, native source completeness or caller from current UI state. No old-record authority promotion, secret cursor migration or peer store; historical schemas remain readable.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained original query/source window/read receipt and non-redeemable protected cursor association. No raw cursor, token or provider secret is stored here.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_list_query_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [

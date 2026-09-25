@@ -10859,8 +10859,10 @@
                   "command_id": {
                     "enum": [
                       "cmd.forge.pipeline.cancel",
+                      "cmd.forge.pipeline.list",
                       "cmd.forge.pipeline.open_logs",
                       "cmd.forge.repository.create",
+                      "cmd.forge.repository.list",
                       "cmd.forge.review.approve",
                       "cmd.forge.review.comment",
                       "cmd.forge.review.request_changes",
@@ -10892,6 +10894,9 @@
         },
         {
           "$ref": "https://puppetmaster.local/schemas/forge-review-comment/1.0.0/forge_review_comment_contracts.schema.json#/$defs/request"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/forge-list-query/1.0.0/forge_list_query_contracts.schema.json#/$defs/request"
         }
       ]
     },

@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2596
+Source lines: L2164-L2602
 
-Source SHA256: `febd045806c702cb174d57e0921136d7d0c3902821ec30ac1e856d67060f53a2`
+Source SHA256: `f64995d8175adb6c420f698e94ed81d37ad3fe55be1f14360a191552ca9e02ef`
 
 ---
 
@@ -184,6 +184,12 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+Exactly `cmd.forge.repository.list` and `cmd.forge.pipeline.list` retain an authentic SIR original request/digest, full unchanged IdentityEnvelope, independent dispatch/target generations, actor/permission/idempotency and genuine nullable caller. The existing precommit authority uses its actual Server/Host/Environment/Client scope without inventing Project/run/agent identity. Actual current delivery is independently supplied. The adapter joins authentic descriptor/selection, original read admission, typed source window and read receipt before composing current CommandOutcome/UI response and safe errors.
+
+Accepted work is real nonterminal ObservableWork without terminal receipt. Read-only degraded/partial freshness is explicitly represented by the actual read owner, not borrowed from a mutation outcome. Failed/cancelled reads preserve their genuine observations and original error, including cancelled-null UI error where required. Original and live resolved values are snapshotted against later callback/resolver mutation. Replay discloses retained original reads under current permission; it does not silently repeat the provider query or substitute the visible panel filter. Static validation supplies no native authentication, availability or protected Full Thread change.
+
+ContractRef: ContractName:Plans/forge_list_query_contracts.schema.json
 
 The exact selected-preview original binding retains genuine full IdentityEnvelope, request/command/operation/dispatch/frame/caller, actor/permission and canonical argument/result digests. The existing Backup receipt's separate correlation_id is retained as explicit original dispatcher metadata, not invented as an IdentityEnvelope field or equated to command_instance_id. Actual result, owner preview/production receipt, CommandOutcome and UI response resolve to the same original; a cancelled null UI error preserves the unchanged actual Backup error through the typed safe projection. Accepted work is genuinely nonterminal. Unknown production retains its original reconciliation identity and cannot become successful readiness. Current disclosure is rechecked after source/target/helper calls and originals/resolved records remain mutation-fenced. No native availability or physical custody is established by the companion.
 

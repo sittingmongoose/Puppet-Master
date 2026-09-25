@@ -40,7 +40,7 @@ class Bindings(unittest.TestCase):
         self.assertEqual(expected,kinds)
         self.assertEqual(5,len(kinds))
 
-    def test_exact_six_current_successors_and_historical_decoder(self):
+    def test_prior_six_preserved_among_eight_current_successors(self):
         import importlib.util,subprocess
         from jsonschema import Draft202012Validator
         from referencing import Resource
@@ -49,7 +49,7 @@ class Bindings(unittest.TestCase):
         baseline=json.loads(subprocess.check_output(['git','show','40e590fe7:'+path],cwd=ROOT,text=True))
         self.assertEqual(baseline['$defs']['command_request'],schema['$defs']['command_request'])
         self.assertEqual(baseline['$defs']['command_request_admission']['oneOf'][1],schema['$defs']['command_request_admission']['oneOf'][1])
-        self.assertEqual(7,len(schema['$defs']['command_request_admission']['oneOf']))
+        self.assertEqual(8,len(schema['$defs']['command_request_admission']['oneOf']))
         spec=importlib.util.spec_from_file_location('comment_binding_gate',ROOT/'scripts/pm-new-contracts-verify.py');gate=importlib.util.module_from_spec(spec);spec.loader.exec_module(gate)
         registry=gate.offline_schema_registry().with_resource(schema['$id'],Resource.from_contents(schema))
         admission=Draft202012Validator({'$ref':schema['$id']+'#/$defs/command_request_admission'},registry=registry)
