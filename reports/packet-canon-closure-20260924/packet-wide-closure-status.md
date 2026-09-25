@@ -1,4 +1,10 @@
-# Packet-wide closure status — 2026-09-24
+# Packet-wide closure status — 2026-09-24, updated 2026-09-25
+
+Latest bounded step: `backup-and-update-companions.md` records the four Backup
+current command bindings, actual typed source/result joins and application-update
+cadence/settlement companions. Its credits supersede older companion-pending
+descriptions below. Physical storage specification and native execution remain
+open, as does overall packet semantic closure. No main landing is claimed.
 
 Revalidated repair-branch base: `6fe29ed2748128e0e9295c3161a9dd6a7f083d61`.
 This is a coverage and repair queue, not a declaration of packet closure, current
@@ -165,9 +171,11 @@ canon and forbids treating this review record as a seal or readiness unlock.
   repair; see `backup-four-operands-owner-repair.md` and `backup-input-shapes.md`.
   BRS-030 now specifies the actual source/result producer responsibilities and
   nonpersisted-transport versus domain-custody boundary; see
-  `backup-four-action-owner-protocol.md`. Current admission, result companions
-  and executable actual owner joins remain open.
-  The four findings are not closed.
+  `backup-four-action-owner-protocol.md`. The subsequent companion step now
+  materializes current admission and executable typed owner-result joins; see
+  `backup-and-update-companions.md`. Physical admission and authentic native
+  owner implementation/proof remain open. The four findings receive bounded
+  contract credit, not unconditional feature closure.
 - Home/widgets: ordinary return behavior already exists in production wiring.
   Only the two Tour-only summary strings needed reconciliation; see
   `home-widget-return-metadata-repair.md`. Concrete exchange/storage coverage

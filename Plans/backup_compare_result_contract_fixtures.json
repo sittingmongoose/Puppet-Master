@@ -1,0 +1,1269 @@
+{
+  "schema_id": "pm.backup_compare_results.contract_fixtures.v1",
+  "contract_schema_id": "pm.backup_compare_results.contracts.v1",
+  "evidence_level": "schema_fixture_only",
+  "owner_schema": "Plans/backup_compare_result_contracts.schema.json",
+  "valid": [
+    {
+      "name": "ordinary_file",
+      "definition": "backup_compare_validation_input",
+      "value": {
+        "schema_id": "pm.backup_compare.validation_input.v1",
+        "runtime_evidence": "NOT_RUN",
+        "original_operation": {
+          "operation_id": "operation:compare",
+          "command_id": "cmd.backup.file.compare",
+          "command_instance_id": "command:compare",
+          "idempotency_key": "compare-01",
+          "actor_ref": "actor:user",
+          "permission_snapshot_ref": "permission:compare",
+          "expected_currentness_ref": "currentness:compare",
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_surface": "files",
+          "return_route_ref": "route:compare",
+          "selected_input": {
+            "repository_id": "backup-repository:alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:alpha",
+            "capture_set_id": "capture-set:alpha",
+            "selected_path_ref": "path-ref:main",
+            "target_ref": "file-target:main",
+            "target_revision": "opaque owner revision 17",
+            "target_server_id": "server:home",
+            "initiating_client_id": "client:desktop",
+            "source_host_id": "execution-host:home",
+            "source_environment_id": "execution-environment:home",
+            "filesafe_decision_ref": "filesafe:compare"
+          }
+        },
+        "result": {
+          "schema_id": "pm.backup_restore_system.backup_browse_operation.v3",
+          "schema_version": "3.0.0",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "source_read_ref": "read:source",
+          "target_read_ref": "read:target",
+          "comparison_evidence_ref": "comparison:01",
+          "status": "completed",
+          "failure_reason": null,
+          "read_effects": [
+            "source_read",
+            "target_read",
+            "comparison_attempted"
+          ],
+          "mutation_applied": false,
+          "return_route_ref": "route:compare",
+          "focus_ref": "focus:editor"
+        },
+        "source_read": {
+          "schema_id": "pm.backup_compare.source_read_result.v1",
+          "read_ref": "read:source",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "snapshot_resolution_ref": "snapshot-resolution:alpha",
+          "selected_path_ref": "path-ref:main",
+          "capture_set_id": "capture-set:alpha",
+          "content": {
+            "content_ref": "content:snapshot",
+            "content_version": "opaque snapshot version",
+            "representation_ref": "representation:snapshot",
+            "representation_version": "owner format v1"
+          },
+          "evidence": {
+            "permission_ref": "permission:compare",
+            "filesafe_ref": "filesafe:compare",
+            "currentness_ref": "currentness:compare",
+            "resolved_path_ref": "resolved-path:main",
+            "fence_ref": "fence:read",
+            "owner_evidence_ref": "owner-evidence:read"
+          }
+        },
+        "target_read": {
+          "schema_id": "pm.backup_compare.target_read_result.v1",
+          "read_ref": "read:target",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "target_ref": "file-target:main",
+          "target_revision": "opaque owner revision 17",
+          "owner": "file",
+          "disposition": "resolved",
+          "resolved": {
+            "identity": {
+              "target_kind": "file",
+              "file_identity_ref": "file-identity:main",
+              "file_version": "opaque file version"
+            },
+            "topology": {
+              "project_id": "project:alpha",
+              "server_id": "server:home",
+              "host_id": "execution-host:home",
+              "environment_id": "execution-environment:home",
+              "source_location_id": "source-location:alpha",
+              "topology_generation": 4
+            },
+            "content": {
+              "content_ref": "content:file",
+              "content_version": "opaque file version",
+              "representation_ref": "representation:file",
+              "representation_version": "owner format v1"
+            },
+            "evidence": {
+              "permission_ref": "permission:compare",
+              "filesafe_ref": "filesafe:compare",
+              "currentness_ref": "currentness:compare",
+              "resolved_path_ref": "resolved-path:main",
+              "fence_ref": "fence:read",
+              "owner_evidence_ref": "owner-evidence:read"
+            }
+          },
+          "failure_reason": null
+        },
+        "comparison": {
+          "evidence_ref": "comparison:01",
+          "operation_id": "operation:compare",
+          "source_read_ref": "read:source",
+          "target_read_ref": "read:target",
+          "source_content": {
+            "content_ref": "content:snapshot",
+            "content_version": "opaque snapshot version",
+            "representation_ref": "representation:snapshot",
+            "representation_version": "owner format v1"
+          },
+          "target_content": {
+            "content_ref": "content:file",
+            "content_version": "opaque file version",
+            "representation_ref": "representation:file",
+            "representation_version": "owner format v1"
+          },
+          "outcome": "different"
+        }
+      }
+    },
+    {
+      "name": "dirty_buffer",
+      "definition": "backup_compare_validation_input",
+      "value": {
+        "schema_id": "pm.backup_compare.validation_input.v1",
+        "runtime_evidence": "NOT_RUN",
+        "original_operation": {
+          "operation_id": "operation:compare",
+          "command_id": "cmd.backup.file.compare",
+          "command_instance_id": "command:compare",
+          "idempotency_key": "compare-01",
+          "actor_ref": "actor:user",
+          "permission_snapshot_ref": "permission:compare",
+          "expected_currentness_ref": "currentness:compare",
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_surface": "files",
+          "return_route_ref": "route:compare",
+          "selected_input": {
+            "repository_id": "backup-repository:alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:alpha",
+            "capture_set_id": "capture-set:alpha",
+            "selected_path_ref": "path-ref:main",
+            "target_ref": "file-target:main",
+            "target_revision": "opaque owner revision 17",
+            "target_server_id": "server:home",
+            "initiating_client_id": "client:desktop",
+            "source_host_id": "execution-host:home",
+            "source_environment_id": "execution-environment:home",
+            "filesafe_decision_ref": "filesafe:compare"
+          }
+        },
+        "result": {
+          "schema_id": "pm.backup_restore_system.backup_browse_operation.v3",
+          "schema_version": "3.0.0",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "source_read_ref": "read:source",
+          "target_read_ref": "read:target",
+          "comparison_evidence_ref": "comparison:01",
+          "status": "completed",
+          "failure_reason": null,
+          "read_effects": [
+            "source_read",
+            "target_read",
+            "comparison_attempted"
+          ],
+          "mutation_applied": false,
+          "return_route_ref": "route:compare",
+          "focus_ref": "focus:editor"
+        },
+        "source_read": {
+          "schema_id": "pm.backup_compare.source_read_result.v1",
+          "read_ref": "read:source",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "snapshot_resolution_ref": "snapshot-resolution:alpha",
+          "selected_path_ref": "path-ref:main",
+          "capture_set_id": "capture-set:alpha",
+          "content": {
+            "content_ref": "content:snapshot",
+            "content_version": "opaque snapshot version",
+            "representation_ref": "representation:snapshot",
+            "representation_version": "owner format v1"
+          },
+          "evidence": {
+            "permission_ref": "permission:compare",
+            "filesafe_ref": "filesafe:compare",
+            "currentness_ref": "currentness:compare",
+            "resolved_path_ref": "resolved-path:main",
+            "fence_ref": "fence:read",
+            "owner_evidence_ref": "owner-evidence:read"
+          }
+        },
+        "target_read": {
+          "schema_id": "pm.backup_compare.target_read_result.v1",
+          "read_ref": "read:target",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "target_ref": "file-target:main",
+          "target_revision": "opaque owner revision 17",
+          "owner": "file",
+          "disposition": "resolved",
+          "resolved": {
+            "identity": {
+              "target_kind": "editor_buffer",
+              "file_identity_ref": "file-identity:main",
+              "file_version": "saved file v2",
+              "buffer_identity_ref": "buffer:main",
+              "buffer_version": "opaque buffer version"
+            },
+            "topology": {
+              "project_id": "project:alpha",
+              "server_id": "server:home",
+              "host_id": "execution-host:home",
+              "environment_id": "execution-environment:home",
+              "source_location_id": "source-location:alpha",
+              "topology_generation": 4
+            },
+            "content": {
+              "content_ref": "content:buffer",
+              "content_version": "opaque buffer version",
+              "representation_ref": "representation:buffer",
+              "representation_version": "owner format v1"
+            },
+            "evidence": {
+              "permission_ref": "permission:compare",
+              "filesafe_ref": "filesafe:compare",
+              "currentness_ref": "currentness:compare",
+              "resolved_path_ref": "resolved-path:main",
+              "fence_ref": "fence:read",
+              "owner_evidence_ref": "owner-evidence:read"
+            }
+          },
+          "failure_reason": null
+        },
+        "comparison": {
+          "evidence_ref": "comparison:01",
+          "operation_id": "operation:compare",
+          "source_read_ref": "read:source",
+          "target_read_ref": "read:target",
+          "source_content": {
+            "content_ref": "content:snapshot",
+            "content_version": "opaque snapshot version",
+            "representation_ref": "representation:snapshot",
+            "representation_version": "owner format v1"
+          },
+          "target_content": {
+            "content_ref": "content:buffer",
+            "content_version": "opaque buffer version",
+            "representation_ref": "representation:buffer",
+            "representation_version": "owner format v1"
+          },
+          "outcome": "different"
+        }
+      }
+    },
+    {
+      "name": "git_target",
+      "definition": "backup_compare_validation_input",
+      "value": {
+        "schema_id": "pm.backup_compare.validation_input.v1",
+        "runtime_evidence": "NOT_RUN",
+        "original_operation": {
+          "operation_id": "operation:compare",
+          "command_id": "cmd.backup.file.compare",
+          "command_instance_id": "command:compare",
+          "idempotency_key": "compare-01",
+          "actor_ref": "actor:user",
+          "permission_snapshot_ref": "permission:compare",
+          "expected_currentness_ref": "currentness:compare",
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_surface": "files",
+          "return_route_ref": "route:compare",
+          "selected_input": {
+            "repository_id": "backup-repository:alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:alpha",
+            "capture_set_id": "capture-set:alpha",
+            "selected_path_ref": "path-ref:main",
+            "target_ref": "file-target:main",
+            "target_revision": "opaque owner revision 17",
+            "target_server_id": "server:home",
+            "initiating_client_id": "client:desktop",
+            "source_host_id": "execution-host:home",
+            "source_environment_id": "execution-environment:home",
+            "filesafe_decision_ref": "filesafe:compare"
+          }
+        },
+        "result": {
+          "schema_id": "pm.backup_restore_system.backup_browse_operation.v3",
+          "schema_version": "3.0.0",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "source_read_ref": "read:source",
+          "target_read_ref": "read:target",
+          "comparison_evidence_ref": "comparison:01",
+          "status": "completed",
+          "failure_reason": null,
+          "read_effects": [
+            "source_read",
+            "target_read",
+            "comparison_attempted"
+          ],
+          "mutation_applied": false,
+          "return_route_ref": "route:compare",
+          "focus_ref": "focus:editor"
+        },
+        "source_read": {
+          "schema_id": "pm.backup_compare.source_read_result.v1",
+          "read_ref": "read:source",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "snapshot_resolution_ref": "snapshot-resolution:alpha",
+          "selected_path_ref": "path-ref:main",
+          "capture_set_id": "capture-set:alpha",
+          "content": {
+            "content_ref": "content:snapshot",
+            "content_version": "opaque snapshot version",
+            "representation_ref": "representation:snapshot",
+            "representation_version": "owner format v1"
+          },
+          "evidence": {
+            "permission_ref": "permission:compare",
+            "filesafe_ref": "filesafe:compare",
+            "currentness_ref": "currentness:compare",
+            "resolved_path_ref": "resolved-path:main",
+            "fence_ref": "fence:read",
+            "owner_evidence_ref": "owner-evidence:read"
+          }
+        },
+        "target_read": {
+          "schema_id": "pm.backup_compare.target_read_result.v1",
+          "read_ref": "read:target",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "target_ref": "file-target:main",
+          "target_revision": "opaque owner revision 17",
+          "owner": "source_control",
+          "disposition": "resolved",
+          "resolved": {
+            "identity": {
+              "target_kind": "source_control",
+              "selected_file_ref": "repo-file:main",
+              "content_version": "opaque file version",
+              "repository_context": {
+                "schema_id": "pm.source_control.repository_context.v1",
+                "repo_id": "repo:alpha",
+                "scm_backend": "git",
+                "workspace_id": "workspace:alpha",
+                "lineage": {
+                  "project_id": "project:alpha",
+                  "project_home_server_id": "server:home",
+                  "execution_host_id": "execution-host:home",
+                  "execution_environment_id": "execution-environment:home",
+                  "source_location_id": "source-location:alpha",
+                  "topology_generation": 4
+                },
+                "revision": {
+                  "kind": "git",
+                  "object_format": "sha1",
+                  "commit_oid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "ref_name": null,
+                  "index_generation": 2
+                },
+                "writer_lease_ref": "owner-context:existing-lease",
+                "credential_binding_ref": null,
+                "forge_binding": {
+                  "forge_provider": "none",
+                  "binding_ref": null
+                }
+              }
+            },
+            "topology": {
+              "project_id": "project:alpha",
+              "server_id": "server:home",
+              "host_id": "execution-host:home",
+              "environment_id": "execution-environment:home",
+              "source_location_id": "source-location:alpha",
+              "topology_generation": 4
+            },
+            "content": {
+              "content_ref": "content:file",
+              "content_version": "opaque file version",
+              "representation_ref": "representation:file",
+              "representation_version": "owner format v1"
+            },
+            "evidence": {
+              "permission_ref": "permission:compare",
+              "filesafe_ref": "filesafe:compare",
+              "currentness_ref": "currentness:compare",
+              "resolved_path_ref": "resolved-path:main",
+              "fence_ref": "fence:read",
+              "owner_evidence_ref": "owner-evidence:read"
+            }
+          },
+          "failure_reason": null
+        },
+        "comparison": {
+          "evidence_ref": "comparison:01",
+          "operation_id": "operation:compare",
+          "source_read_ref": "read:source",
+          "target_read_ref": "read:target",
+          "source_content": {
+            "content_ref": "content:snapshot",
+            "content_version": "opaque snapshot version",
+            "representation_ref": "representation:snapshot",
+            "representation_version": "owner format v1"
+          },
+          "target_content": {
+            "content_ref": "content:file",
+            "content_version": "opaque file version",
+            "representation_ref": "representation:file",
+            "representation_version": "owner format v1"
+          },
+          "outcome": "different"
+        }
+      }
+    },
+    {
+      "name": "jujutsu_target",
+      "definition": "backup_compare_validation_input",
+      "value": {
+        "schema_id": "pm.backup_compare.validation_input.v1",
+        "runtime_evidence": "NOT_RUN",
+        "original_operation": {
+          "operation_id": "operation:compare",
+          "command_id": "cmd.backup.file.compare",
+          "command_instance_id": "command:compare",
+          "idempotency_key": "compare-01",
+          "actor_ref": "actor:user",
+          "permission_snapshot_ref": "permission:compare",
+          "expected_currentness_ref": "currentness:compare",
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_surface": "files",
+          "return_route_ref": "route:compare",
+          "selected_input": {
+            "repository_id": "backup-repository:alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:alpha",
+            "capture_set_id": "capture-set:alpha",
+            "selected_path_ref": "path-ref:main",
+            "target_ref": "file-target:main",
+            "target_revision": "opaque owner revision 17",
+            "target_server_id": "server:home",
+            "initiating_client_id": "client:desktop",
+            "source_host_id": "execution-host:home",
+            "source_environment_id": "execution-environment:home",
+            "filesafe_decision_ref": "filesafe:compare"
+          }
+        },
+        "result": {
+          "schema_id": "pm.backup_restore_system.backup_browse_operation.v3",
+          "schema_version": "3.0.0",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "source_read_ref": "read:source",
+          "target_read_ref": "read:target",
+          "comparison_evidence_ref": "comparison:01",
+          "status": "completed",
+          "failure_reason": null,
+          "read_effects": [
+            "source_read",
+            "target_read",
+            "comparison_attempted"
+          ],
+          "mutation_applied": false,
+          "return_route_ref": "route:compare",
+          "focus_ref": "focus:editor"
+        },
+        "source_read": {
+          "schema_id": "pm.backup_compare.source_read_result.v1",
+          "read_ref": "read:source",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "snapshot_resolution_ref": "snapshot-resolution:alpha",
+          "selected_path_ref": "path-ref:main",
+          "capture_set_id": "capture-set:alpha",
+          "content": {
+            "content_ref": "content:snapshot",
+            "content_version": "opaque snapshot version",
+            "representation_ref": "representation:snapshot",
+            "representation_version": "owner format v1"
+          },
+          "evidence": {
+            "permission_ref": "permission:compare",
+            "filesafe_ref": "filesafe:compare",
+            "currentness_ref": "currentness:compare",
+            "resolved_path_ref": "resolved-path:main",
+            "fence_ref": "fence:read",
+            "owner_evidence_ref": "owner-evidence:read"
+          }
+        },
+        "target_read": {
+          "schema_id": "pm.backup_compare.target_read_result.v1",
+          "read_ref": "read:target",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "target_ref": "file-target:main",
+          "target_revision": "opaque owner revision 17",
+          "owner": "source_control",
+          "disposition": "resolved",
+          "resolved": {
+            "identity": {
+              "target_kind": "source_control",
+              "selected_file_ref": "repo-file:main",
+              "content_version": "opaque file version",
+              "repository_context": {
+                "schema_id": "pm.source_control.repository_context.v1",
+                "repo_id": "repo:alpha",
+                "scm_backend": "jujutsu",
+                "workspace_id": "workspace:alpha",
+                "lineage": {
+                  "project_id": "project:alpha",
+                  "project_home_server_id": "server:home",
+                  "execution_host_id": "execution-host:home",
+                  "execution_environment_id": "execution-environment:home",
+                  "source_location_id": "source-location:alpha",
+                  "topology_generation": 4
+                },
+                "revision": {
+                  "kind": "jujutsu",
+                  "change_id": "change:opaque",
+                  "commit_id": "commit:opaque",
+                  "operation_id": "jj-operation:original",
+                  "workspace_id": "workspace:alpha",
+                  "bookmarks": []
+                },
+                "writer_lease_ref": "owner-context:existing-lease",
+                "credential_binding_ref": null,
+                "forge_binding": {
+                  "forge_provider": "none",
+                  "binding_ref": null
+                }
+              }
+            },
+            "topology": {
+              "project_id": "project:alpha",
+              "server_id": "server:home",
+              "host_id": "execution-host:home",
+              "environment_id": "execution-environment:home",
+              "source_location_id": "source-location:alpha",
+              "topology_generation": 4
+            },
+            "content": {
+              "content_ref": "content:file",
+              "content_version": "opaque file version",
+              "representation_ref": "representation:file",
+              "representation_version": "owner format v1"
+            },
+            "evidence": {
+              "permission_ref": "permission:compare",
+              "filesafe_ref": "filesafe:compare",
+              "currentness_ref": "currentness:compare",
+              "resolved_path_ref": "resolved-path:main",
+              "fence_ref": "fence:read",
+              "owner_evidence_ref": "owner-evidence:read"
+            }
+          },
+          "failure_reason": null
+        },
+        "comparison": {
+          "evidence_ref": "comparison:01",
+          "operation_id": "operation:compare",
+          "source_read_ref": "read:source",
+          "target_read_ref": "read:target",
+          "source_content": {
+            "content_ref": "content:snapshot",
+            "content_version": "opaque snapshot version",
+            "representation_ref": "representation:snapshot",
+            "representation_version": "owner format v1"
+          },
+          "target_content": {
+            "content_ref": "content:file",
+            "content_version": "opaque file version",
+            "representation_ref": "representation:file",
+            "representation_version": "owner format v1"
+          },
+          "outcome": "different"
+        }
+      }
+    },
+    {
+      "name": "denied_after_source_read",
+      "definition": "backup_compare_validation_input",
+      "value": {
+        "schema_id": "pm.backup_compare.validation_input.v1",
+        "runtime_evidence": "NOT_RUN",
+        "original_operation": {
+          "operation_id": "operation:compare",
+          "command_id": "cmd.backup.file.compare",
+          "command_instance_id": "command:compare",
+          "idempotency_key": "compare-01",
+          "actor_ref": "actor:user",
+          "permission_snapshot_ref": "permission:compare",
+          "expected_currentness_ref": "currentness:compare",
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_surface": "files",
+          "return_route_ref": "route:compare",
+          "selected_input": {
+            "repository_id": "backup-repository:alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:alpha",
+            "capture_set_id": "capture-set:alpha",
+            "selected_path_ref": "path-ref:main",
+            "target_ref": "file-target:main",
+            "target_revision": "opaque owner revision 17",
+            "target_server_id": "server:home",
+            "initiating_client_id": "client:desktop",
+            "source_host_id": "execution-host:home",
+            "source_environment_id": "execution-environment:home",
+            "filesafe_decision_ref": "filesafe:compare"
+          }
+        },
+        "result": {
+          "schema_id": "pm.backup_restore_system.backup_browse_operation.v3",
+          "schema_version": "3.0.0",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "source_read_ref": "read:source",
+          "target_read_ref": "read:target",
+          "comparison_evidence_ref": null,
+          "status": "failed",
+          "failure_reason": "target_denied_after_source_read",
+          "read_effects": [
+            "source_read"
+          ],
+          "mutation_applied": false,
+          "return_route_ref": "route:compare",
+          "focus_ref": "focus:editor"
+        },
+        "source_read": {
+          "schema_id": "pm.backup_compare.source_read_result.v1",
+          "read_ref": "read:source",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "snapshot_resolution_ref": "snapshot-resolution:alpha",
+          "selected_path_ref": "path-ref:main",
+          "capture_set_id": "capture-set:alpha",
+          "content": {
+            "content_ref": "content:snapshot",
+            "content_version": "opaque snapshot version",
+            "representation_ref": "representation:snapshot",
+            "representation_version": "owner format v1"
+          },
+          "evidence": {
+            "permission_ref": "permission:compare",
+            "filesafe_ref": "filesafe:compare",
+            "currentness_ref": "currentness:compare",
+            "resolved_path_ref": "resolved-path:main",
+            "fence_ref": "fence:read",
+            "owner_evidence_ref": "owner-evidence:read"
+          }
+        },
+        "target_read": {
+          "schema_id": "pm.backup_compare.target_read_result.v1",
+          "read_ref": "read:target",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "target_ref": "file-target:main",
+          "target_revision": "opaque owner revision 17",
+          "owner": "file",
+          "disposition": "denied",
+          "resolved": null,
+          "failure_reason": "current_read_denied"
+        },
+        "comparison": null
+      }
+    },
+    {
+      "name": "original_evidence_unavailable",
+      "definition": "backup_compare_validation_input",
+      "value": {
+        "schema_id": "pm.backup_compare.validation_input.v1",
+        "runtime_evidence": "NOT_RUN",
+        "original_operation": {
+          "operation_id": "operation:compare",
+          "command_id": "cmd.backup.file.compare",
+          "command_instance_id": "command:compare",
+          "idempotency_key": "compare-01",
+          "actor_ref": "actor:user",
+          "permission_snapshot_ref": "permission:compare",
+          "expected_currentness_ref": "currentness:compare",
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_surface": "files",
+          "return_route_ref": "route:compare",
+          "selected_input": {
+            "repository_id": "backup-repository:alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_id": "snapshot:alpha",
+            "capture_set_id": "capture-set:alpha",
+            "selected_path_ref": "path-ref:main",
+            "target_ref": "file-target:main",
+            "target_revision": "opaque owner revision 17",
+            "target_server_id": "server:home",
+            "initiating_client_id": "client:desktop",
+            "source_host_id": "execution-host:home",
+            "source_environment_id": "execution-environment:home",
+            "filesafe_decision_ref": "filesafe:compare"
+          }
+        },
+        "result": {
+          "schema_id": "pm.backup_restore_system.backup_browse_operation.v3",
+          "schema_version": "3.0.0",
+          "operation_binding": {
+            "operation_id": "operation:compare",
+            "command_id": "cmd.backup.file.compare",
+            "command_instance_id": "command:compare",
+            "idempotency_key": "compare-01",
+            "actor_ref": "actor:user",
+            "permission_snapshot_ref": "permission:compare",
+            "expected_currentness_ref": "currentness:compare",
+            "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "source_surface": "files",
+            "return_route_ref": "route:compare",
+            "selected_input": {
+              "repository_id": "backup-repository:alpha",
+              "backup_destination_id": "backup-destination:nas",
+              "snapshot_id": "snapshot:alpha",
+              "capture_set_id": "capture-set:alpha",
+              "selected_path_ref": "path-ref:main",
+              "target_ref": "file-target:main",
+              "target_revision": "opaque owner revision 17",
+              "target_server_id": "server:home",
+              "initiating_client_id": "client:desktop",
+              "source_host_id": "execution-host:home",
+              "source_environment_id": "execution-environment:home",
+              "filesafe_decision_ref": "filesafe:compare"
+            }
+          },
+          "source_read_ref": null,
+          "target_read_ref": null,
+          "comparison_evidence_ref": null,
+          "status": "unavailable",
+          "failure_reason": "original_content_disposed",
+          "read_effects": [],
+          "mutation_applied": false,
+          "return_route_ref": "route:compare",
+          "focus_ref": "focus:editor"
+        },
+        "source_read": null,
+        "target_read": null,
+        "comparison": null
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "swapped_operation",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "ordinary_file",
+      "patch": {
+        "result.operation_binding.command_instance_id": "command:other"
+      },
+      "semantic_rule": "backup_compare_operation"
+    },
+    {
+      "name": "wrong_selected_path",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "ordinary_file",
+      "patch": {
+        "source_read.selected_path_ref": "path-ref:other"
+      },
+      "semantic_rule": "backup_compare_source_path"
+    },
+    {
+      "name": "wrong_capture",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "ordinary_file",
+      "patch": {
+        "source_read.capture_set_id": "capture-set:other"
+      },
+      "semantic_rule": "backup_compare_capture"
+    },
+    {
+      "name": "wrong_target_revision",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "ordinary_file",
+      "patch": {
+        "target_read.target_revision": "newer owner version"
+      },
+      "semantic_rule": "backup_compare_target_revision"
+    },
+    {
+      "name": "wrong_buffer_version",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "dirty_buffer",
+      "patch": {
+        "target_read.resolved.identity.buffer_version": "older buffer"
+      },
+      "semantic_rule": "backup_compare_content_version"
+    },
+    {
+      "name": "dirty_buffer_disk_substitution",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "dirty_buffer",
+      "patch": {
+        "target_read.resolved.content.content_version": "saved file v2"
+      },
+      "semantic_rule": "backup_compare_content_version"
+    },
+    {
+      "name": "wrong_server",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "ordinary_file",
+      "patch": {
+        "target_read.resolved.topology.server_id": "server:other"
+      },
+      "semantic_rule": "backup_compare_topology"
+    },
+    {
+      "name": "wrong_worktree",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "jujutsu_target",
+      "patch": {
+        "target_read.resolved.identity.repository_context.workspace_id": "workspace:other"
+      },
+      "semantic_rule": "backup_compare_workspace"
+    },
+    {
+      "name": "same_commit_wrong_file_evidence",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "git_target",
+      "patch": {
+        "comparison.target_read_ref": "read:other-file"
+      },
+      "semantic_rule": "backup_compare_evidence_binding"
+    },
+    {
+      "name": "fake_scm_for_file",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "ordinary_file",
+      "patch": {
+        "target_read.owner": "source_control"
+      }
+    },
+    {
+      "name": "git_jj_mismatch",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "git_target",
+      "patch": {
+        "target_read.resolved.identity.repository_context.scm_backend": "jujutsu"
+      }
+    },
+    {
+      "name": "mutation",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "ordinary_file",
+      "patch": {
+        "result.mutation_applied": true
+      }
+    },
+    {
+      "name": "unresolved_completed",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "denied_after_source_read",
+      "patch": {
+        "result.status": "completed"
+      }
+    },
+    {
+      "name": "old_result_new_route",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "ordinary_file",
+      "patch": {
+        "result.return_route_ref": "route:new"
+      },
+      "semantic_rule": "backup_compare_return_route"
+    },
+    {
+      "name": "different_bytes_same_result",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "ordinary_file",
+      "patch": {
+        "comparison.target_content.content_version": "newer bytes"
+      },
+      "semantic_rule": "backup_compare_evidence_binding"
+    },
+    {
+      "name": "lost_buffer_identity",
+      "definition": "backup_compare_validation_input",
+      "base_valid": "dirty_buffer",
+      "patch": {
+        "target_read.resolved.identity.buffer_identity_ref": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,592 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/backup_drill_results/1.0.0/backup_drill_result_contracts.schema.json",
+  "x-schema-id": "pm.backup_drill_results.contracts.v1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/backup_drill_target_admission"
+    },
+    {
+      "$ref": "#/$defs/backup_drill_verification_receipt_v2"
+    },
+    {
+      "$ref": "#/$defs/backup_jj_context_verification_receipt_v2"
+    }
+  ],
+  "$defs": {
+    "stable_id": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+    },
+    "nullable_stable_id": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/nullable_stable_id"
+    },
+    "non_secret_ref": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "nullable_non_secret_ref": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/nullable_non_secret_ref"
+    },
+    "timestamp": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/timestamp"
+    },
+    "backup_operation_binding": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_operation_binding"
+    },
+    "backup_drill_coverage": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_drill_coverage"
+    },
+    "ref_list": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/ref_list"
+    },
+    "backup_snapshot_resolution": {
+      "$ref": "https://puppetmaster.local/schemas/backup_snapshot_results/1.0.0/backup_snapshot_result_contracts.schema.json#/$defs/backup_snapshot_resolution"
+    },
+    "backup_drill_target_admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "original_operation",
+        "snapshot_selection",
+        "isolated_destination_ref",
+        "target_identity_ref",
+        "server_id",
+        "host_id",
+        "environment_id",
+        "project_id",
+        "containment_ref",
+        "target_generation",
+        "lease_ref",
+        "permission_decision_ref",
+        "filesafe_decision_ref",
+        "resource_admission_ref",
+        "cost_network_admission_ref",
+        "admitted_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup_restore_system.drill_target_admission.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "original_operation": {
+          "$ref": "#/$defs/backup_operation_binding"
+        },
+        "snapshot_selection": {
+          "$ref": "https://puppetmaster.local/schemas/backup_snapshot_results/1.0.0/backup_snapshot_result_contracts.schema.json#/$defs/selection"
+        },
+        "isolated_destination_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "target_identity_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "server_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "host_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "environment_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_stable_id"
+        },
+        "containment_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lease_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "filesafe_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "resource_admission_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "cost_network_admission_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "admitted_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "description": "RestoreCoordinator internal output from actual topology, Permissions, FileSafe and resource/cost/network owners. Nonpersisted output, not transferable authority. Lease/generation and containment are rechecked under owner fence at each effect. No host path or caller isolation boolean proves safety."
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selected_family_ids",
+        "path_selection",
+        "selected_path_refs",
+        "evidence_refs"
+      ],
+      "properties": {
+        "selected_family_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/family_id"}
+        },
+        "path_selection": {
+          "enum": [
+            "none",
+            "all_paths_in_selected_families",
+            "selected_paths"
+          ]
+        },
+        "selected_path_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "effect_id",
+        "phase",
+        "target_identity_ref",
+        "outcome",
+        "artifact_refs",
+        "evidence_refs",
+        "failure_refs"
+      ],
+      "properties": {
+        "effect_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "phase": {
+          "enum": [
+            "staging",
+            "isolated_verification",
+            "cleanup"
+          ]
+        },
+        "target_identity_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "enum": [
+            "completed",
+            "partial",
+            "failed",
+            "interrupted",
+            "outcome_unknown"
+          ]
+        },
+        "artifact_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "failure_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "backup_drill_verification_receipt_v2": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/receipt_common"
+        },
+        {
+          "type": "object",
+          "required": [
+            "schema_id",
+            "original_operation",
+            "source_resolution",
+            "target_admission",
+            "requested_coverage",
+            "attempted_coverage",
+            "achieved_coverage",
+            "verification_status",
+            "operation_status",
+            "effects",
+            "native_source_closure_refs",
+            "jj_verification_receipt_ref",
+            "rebuild_retained_operation_proof_refs",
+            "cleanup_status",
+            "cleanup_evidence_refs",
+            "residual_artifact_refs",
+            "recovery_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.backup_restore_system.backup_verification_receipt.drill.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "command_id": {
+              "const": "cmd.backup.test_restore"
+            },
+            "original_operation": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/backup_operation_binding"
+                },
+                {
+                  "properties": {
+                    "command_id": {
+                      "const": "cmd.backup.test_restore"
+                    }
+                  }
+                }
+              ]
+            },
+            "source_resolution": {
+              "$ref": "#/$defs/backup_snapshot_resolution"
+            },
+            "target_admission": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/backup_drill_target_admission"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "requested_coverage": {
+              "$ref": "#/$defs/backup_drill_coverage"
+            },
+            "attempted_coverage": {
+              "$ref": "#/$defs/coverage"
+            },
+            "achieved_coverage": {
+              "$ref": "#/$defs/coverage"
+            },
+            "verification_status": {
+              "enum": [
+                "passed",
+                "failed",
+                "cancelled",
+                "not_run"
+              ]
+            },
+            "operation_status": {
+              "enum": [
+                "completed",
+                "failed",
+                "cancelled",
+                "recovery_required"
+              ]
+            },
+            "effects": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/effect"
+              }
+            },
+            "native_source_closure_refs": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "jj_verification_receipt_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "rebuild_retained_operation_proof_refs": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "cleanup_status": {
+              "enum": [
+                "not_needed",
+                "completed",
+                "failed",
+                "pending",
+                "outcome_unknown"
+              ]
+            },
+            "cleanup_evidence_refs": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "residual_artifact_refs": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "recovery_ref": {
+              "$ref": "#/$defs/nullable_non_secret_ref"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false,
+      "description": "Isolated-drill branch of the existing BackupVerificationReceipt family, distinct runtime ID from ordinary v2 verify. No live activation, restored hook execution, fifth RestoreRun mode or synthetic RestoreRun/Preview records. Actual native closure relevance and authenticity are checked by existing owners; unproducible mandatory proof prevents pass."
+    },
+    "jj_verification_context": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "restore_run_ref",
+            "restore_preview_ref"
+          ],
+          "properties": {
+            "kind": {
+              "const": "live_restore"
+            },
+            "restore_run_ref": {
+              "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/restore_run_ref"
+            },
+            "restore_preview_ref": {
+              "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/restore_preview_ref"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "original_operation",
+            "source_resolution",
+            "target_admission"
+          ],
+          "properties": {
+            "kind": {
+              "const": "isolated_drill"
+            },
+            "original_operation": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/backup_operation_binding"
+                },
+                {
+                  "properties": {
+                    "command_id": {
+                      "const": "cmd.backup.test_restore"
+                    }
+                  }
+                }
+              ]
+            },
+            "source_resolution": {
+              "$ref": "#/$defs/backup_snapshot_resolution"
+            },
+            "target_admission": {
+              "$ref": "#/$defs/backup_drill_target_admission"
+            }
+          }
+        }
+      ]
+    },
+    "backup_jj_context_verification_receipt_v2": {
+      "type": "object",
+      "required": [
+        "schema_id",
+        "verification_receipt_id",
+        "source_closure_ref",
+        "isolated_repository_context_ref",
+        "native_toolchain_identity",
+        "toolchain_compatibility",
+        "read_pinning",
+        "operation_heads_after_refs",
+        "verification_authored_operation",
+        "pointer_resolutions",
+        "layout_profile",
+        "verified_revision",
+        "operation_head_refs",
+        "selected_historical_operation_id",
+        "historical_operation_result",
+        "object_closure_result",
+        "object_verification_depth",
+        "workspace_map_result",
+        "working_copy_relation",
+        "colocation_activation_disposition",
+        "conflict_refs",
+        "collision_refs",
+        "activation_config_disposition",
+        "credential_resolution",
+        "credential_resolution_ref",
+        "remote_validation_receipt_ref",
+        "repository_forge_binding_ref",
+        "automation_binding_ref",
+        "owner_route_refs",
+        "isolated_verification",
+        "hook_execution_performed",
+        "remote_write_performed",
+        "expected_event_types",
+        "outcome",
+        "recorded_at_utc",
+        "verification_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.jujutsu.backup_restore_verification_receipt.v2"
+        },
+        "verification_receipt_id": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/verification_receipt_id"
+        },
+        "source_closure_ref": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/source_closure_ref"
+        },
+        "isolated_repository_context_ref": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/isolated_repository_context_ref"
+        },
+        "native_toolchain_identity": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/native_toolchain_identity"
+        },
+        "toolchain_compatibility": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/toolchain_compatibility"
+        },
+        "read_pinning": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/read_pinning"
+        },
+        "operation_heads_after_refs": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/operation_heads_after_refs"
+        },
+        "verification_authored_operation": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/verification_authored_operation"
+        },
+        "pointer_resolutions": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/pointer_resolutions"
+        },
+        "layout_profile": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/layout_profile"
+        },
+        "verified_revision": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/verified_revision"
+        },
+        "operation_head_refs": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/operation_head_refs"
+        },
+        "selected_historical_operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/selected_historical_operation_id"
+        },
+        "historical_operation_result": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/historical_operation_result"
+        },
+        "object_closure_result": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/object_closure_result"
+        },
+        "object_verification_depth": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/object_verification_depth"
+        },
+        "workspace_map_result": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/workspace_map_result"
+        },
+        "working_copy_relation": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/working_copy_relation"
+        },
+        "colocation_activation_disposition": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/colocation_activation_disposition"
+        },
+        "conflict_refs": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/conflict_refs"
+        },
+        "collision_refs": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/collision_refs"
+        },
+        "activation_config_disposition": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/activation_config_disposition"
+        },
+        "credential_resolution": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/credential_resolution"
+        },
+        "credential_resolution_ref": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/credential_resolution_ref"
+        },
+        "remote_validation_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/remote_validation_receipt_ref"
+        },
+        "repository_forge_binding_ref": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/repository_forge_binding_ref"
+        },
+        "automation_binding_ref": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/automation_binding_ref"
+        },
+        "owner_route_refs": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/owner_route_refs"
+        },
+        "isolated_verification": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/isolated_verification"
+        },
+        "hook_execution_performed": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/hook_execution_performed"
+        },
+        "remote_write_performed": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/remote_write_performed"
+        },
+        "expected_event_types": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/expected_event_types"
+        },
+        "outcome": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/outcome"
+        },
+        "recorded_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/properties/recorded_at_utc"
+        },
+        "verification_context": {
+          "$ref": "#/$defs/jj_verification_context"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/allOf/0"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/allOf/1"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/allOf/2"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/allOf/3"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/allOf/4"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/allOf/5"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/allOf/6"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/allOf/7"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_restore_verification_receipt/allOf/8"
+        },
+        {
+          "if": {
+            "properties": {
+              "verification_context": {
+                "properties": {
+                  "kind": {
+                    "const": "isolated_drill"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "not": {
+                  "const": "ready_for_owner_activation"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    }
+  }
+}

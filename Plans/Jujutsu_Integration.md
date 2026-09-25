@@ -563,7 +563,10 @@ canonical_text: >-
   collision/conflict/closure truth before Backup may activate. Restored mutable configuration remains sanitized and
   inactive; credentials and non-secret references require their owners to revalidate/reconnect. Rebind, remote checks,
   Project registration, forge binding, and repository_automation remain separate owner routes, and no restore drill
-  pushes, executes hooks, resumes Goals, or mutates the original repository.
+  pushes, executes hooks, resumes Goals, or mutates the original repository. The context-discriminated native
+  verification successor binds either genuine live RestoreRun/RestorePreview references or the original BRS-030
+  isolated-drill operation, resolved source and RestoreCoordinator disposable target admission; a drill never
+  fabricates live restore records to obtain native verification proof.
 gui_related: true
 gui_classification_reason: Operation Log and Source Control expose Backup history pivots plus missing-closure, colocation, conflict, credential-reconnect, and activation blockers.
 depends_on: [JJI-002, JJI-004, JJI-005, JJI-006, SCS-014, BRS-002, BRS-003, BRS-006, BRS-014]
@@ -646,7 +649,28 @@ acceptance_criteria:
   - Ordinary restore does not activate hooks, aliases, credential helpers, filters, unsafe includes, URL user-info, extraHeaders, SSH material, forge credentials, or provider profiles. Non-secret restored refs and a separately authorized portable envelope remain pending owner validation and a fresh credential lease.
   - Operation History pivots only to existing `cmd.backup.browse`, `cmd.backup.file.compare`, and Project Backup routes; isolated operation inspection/restore uses existing `cmd.jujutsu.operation.show` and `cmd.jujutsu.operation.restore`; neutral rebind/status/remote validation uses Source Control; Forge/AutomationBinding remains Forge-owned. The exact 31-command JJ inventory is unchanged.
   - Machine records require `expected_event_types=[]`; schema and fixture success remains event-silent, handler_unavailable/static, and not runtime, native adapter, clean-host recovery, security, visual, or readiness proof.
+  - >-
+    `pm.jujutsu.backup_restore_verification_receipt.v2` in
+    `Plans/backup_drill_result_contracts.schema.json#/$defs/backup_jj_context_verification_receipt_v2`
+    preserves every v1 native verification field and proof obligation except that the two unconditional live
+    `restore_run_ref` and `restore_preview_ref` fields move into a disjoint `verification_context`.
+    `live_restore` requires both genuine owner references; `isolated_drill` requires the original
+    `cmd.backup.test_restore` operation binding, resolved immutable source, and actual RestoreCoordinator target
+    admission. No branch accepts the other branch's context fields. The native JJ owner retrieves and authenticates
+    the selected source closure and context, joins its isolated repository and pinned Execution Host/Environment to
+    that target, and verifies its original operation, exact selected historical operation, toolchain, bounded pointer
+    resolutions, full object integrity and unchanged operation-head set. This successor reuses the v1 field schemas
+    and constraints; existing v1 records remain exact historical contracts. An isolated drill can report
+    `verified_read_only` but cannot report `ready_for_owner_activation`; it neither registers nor activates a Project.
+    Authentic BRS-021 rebuild/retained-operation and BRS-024 through BRS-029 custody/lifetime obligations remain
+    mandatory where applicable, regardless of narrow requested coverage. Missing native context or proof blocks
+    success, and an absent disposed source cannot be reconstructed from this receipt. The successor is native
+    verification evidence consumed by the existing BackupVerificationReceipt family, not a sixth Backup receipt
+    family, fifth RestoreRun mode, physical writer registration or claim of native execution proof.
 validation_surfaces:
+  - Plans/backup_drill_result_contracts.schema.json
+  - Plans/backup_drill_result_contract_fixtures.json
+  - python3 -m unittest discover -s tests -p test_pm_backup_drill_results.py
   - Plans/jujutsu_integration_contracts.schema.json
   - Plans/jujutsu_integration_contract_fixtures.json
   - Plans/source_control_contracts.schema.json

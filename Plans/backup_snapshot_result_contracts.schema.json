@@ -1,0 +1,445 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/backup_snapshot_results/1.0.0/backup_snapshot_result_contracts.schema.json",
+  "x-schema-id": "pm.backup_snapshot_results.contracts.v1",
+  "description": "BRS-030 internal resolver output and existing BackupVerificationReceipt successor. Resolution is nonpersisted; embedded retained facts require explicit SP-251 admission. Static validation is not native authentication, byte verification, retention or physical writer proof.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/backup_snapshot_resolution"
+    },
+    {
+      "$ref": "#/$defs/backup_verification_receipt_v2"
+    }
+  ],
+  "$defs": {
+    "stable_id": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/stable_id"
+    },
+    "nullable_stable_id": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/nullable_stable_id"
+    },
+    "non_secret_ref": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "nullable_non_secret_ref": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/nullable_non_secret_ref"
+    },
+    "sha256": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/sha256"
+    },
+    "timestamp": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/timestamp"
+    },
+    "backup_operation_binding": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_operation_binding"
+    },
+    "ref_list": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/ref_list"
+    },
+    "verification_check": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/verification_check"
+    },
+    "scope": {
+      "enum": [
+        "structural",
+        "sampled_data_read",
+        "full_data_read"
+      ]
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository_id",
+        "backup_destination_id",
+        "snapshot_id"
+      ],
+      "properties": {
+        "repository_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "backup_destination_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "snapshot_id": {
+          "$ref": "#/$defs/stable_id"
+        }
+      }
+    },
+    "resolved_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository_binding_id",
+        "backup_run_id",
+        "backup_id",
+        "capture_set_id",
+        "destination_attempt_id",
+        "manifest_id",
+        "recovery_set_id",
+        "server_id",
+        "origin_ref",
+        "commit_receipt_ref",
+        "repository_snapshot_ref",
+        "manifest_ref",
+        "origin_kind",
+        "manifest_sha256",
+        "boundary_kind",
+        "project_id",
+        "project_vault_id"
+      ],
+      "properties": {
+        "repository_binding_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "backup_run_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "backup_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "capture_set_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "destination_attempt_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "manifest_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "recovery_set_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "server_id": {
+          "$ref": "#/$defs/stable_id"
+        },
+        "origin_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "commit_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "repository_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "manifest_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "origin_kind": {
+          "enum": [
+            "backup_run",
+            "backup_receipt"
+          ]
+        },
+        "manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "boundary_kind": {
+          "enum": [
+            "project",
+            "server_catalog"
+          ]
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_stable_id"
+        },
+        "project_vault_id": {
+          "$ref": "#/$defs/nullable_stable_id"
+        }
+      }
+    },
+    "backup_snapshot_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "operation_binding",
+        "selection",
+        "disposition",
+        "resolved_source",
+        "failure_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup_restore_system.snapshot_resolution.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_binding": {
+          "$ref": "#/$defs/backup_operation_binding"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "disposition": {
+          "enum": [
+            "resolved",
+            "unresolved"
+          ]
+        },
+        "resolved_source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/resolved_source"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "failure_reason": {
+          "enum": [
+            null,
+            "source_missing",
+            "source_incompatible",
+            "relation_mismatch",
+            "relation_ambiguous",
+            "authority_unavailable"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "const": "resolved"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "resolved_source": {
+                "$ref": "#/$defs/resolved_source"
+              },
+              "failure_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "resolved_source": {
+                "type": "null"
+              },
+              "failure_reason": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "snapshot_verification_outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resolution",
+        "requested_scope",
+        "achieved_scope",
+        "status",
+        "checks",
+        "coverage_evidence_refs",
+        "verified_object_count",
+        "verified_byte_count",
+        "failure_refs"
+      ],
+      "properties": {
+        "resolution": {
+          "$ref": "#/$defs/backup_snapshot_resolution"
+        },
+        "requested_scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "achieved_scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/scope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "passed",
+            "failed",
+            "cancelled",
+            "not_run"
+          ]
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/verification_check"
+          }
+        },
+        "coverage_evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "verified_object_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "verified_byte_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failure_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "passed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "achieved_scope": {
+                "$ref": "#/$defs/scope"
+              },
+              "checks": {
+                "minItems": 1
+              },
+              "coverage_evidence_refs": {
+                "minItems": 1
+              },
+              "failure_refs": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "resolution": {
+                "properties": {
+                  "disposition": {
+                    "const": "unresolved"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "achieved_scope": {
+                "type": "null"
+              },
+              "status": {
+                "enum": [
+                  "failed",
+                  "cancelled",
+                  "not_run"
+                ]
+              },
+              "checks": {
+                "maxItems": 0
+              },
+              "coverage_evidence_refs": {
+                "maxItems": 0
+              },
+              "verified_object_count": {
+                "const": 0
+              },
+              "verified_byte_count": {
+                "const": 0
+              },
+              "failure_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "backup_verification_receipt_v2": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/receipt_common"
+        },
+        {
+          "type": "object",
+          "required": [
+            "schema_id",
+            "original_operation",
+            "repository_id",
+            "backup_destination_id",
+            "selected_snapshot_ids",
+            "requested_scope",
+            "status",
+            "outcomes"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.backup_restore_system.backup_verification_receipt.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "command_id": {
+              "const": "cmd.backup.verify"
+            },
+            "original_operation": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/backup_operation_binding"
+                },
+                {
+                  "properties": {
+                    "command_id": {
+                      "const": "cmd.backup.verify"
+                    }
+                  }
+                }
+              ]
+            },
+            "repository_id": {
+              "$ref": "#/$defs/stable_id"
+            },
+            "backup_destination_id": {
+              "$ref": "#/$defs/stable_id"
+            },
+            "selected_snapshot_ids": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/stable_id"
+              }
+            },
+            "requested_scope": {
+              "$ref": "#/$defs/scope"
+            },
+            "status": {
+              "enum": [
+                "passed",
+                "failed",
+                "cancelled",
+                "not_run"
+              ]
+            },
+            "outcomes": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/snapshot_verification_outcome"
+              }
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false,
+      "description": "Verification branch successor only; the isolated drill successor has its separately owned shape. All selected members survive failure. Evidence refs require genuine version-pinned adapter reads; schema/static joins cannot authenticate them."
+    }
+  }
+}

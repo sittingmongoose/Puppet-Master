@@ -1,0 +1,689 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/backup_compare_results/1.0.0/backup_compare_result_contracts.schema.json",
+  "x-schema-id": "pm.backup_compare_results.contracts.v1",
+  "description": "F-085/BRS-030 internal owner read outputs and redacted BackupBrowseOperation successor. No JSON value authenticates content, native issuance or permission. Internal reads are nonpersisted; domain result needs explicit storage admission.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/target_read_result"
+    },
+    {
+      "$ref": "#/$defs/source_read_result"
+    },
+    {
+      "$ref": "#/$defs/backup_browse_operation_v3"
+    },
+    {
+      "$ref": "#/$defs/comparison_evidence"
+    },
+    {
+      "$ref": "#/$defs/backup_compare_validation_input"
+    }
+  ],
+  "$defs": {
+    "ref": {
+      "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "token": {
+      "type": "string",
+      "minLength": 1
+    },
+    "binding": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_operation_binding"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.backup.file.compare"
+            }
+          }
+        }
+      ]
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content_ref",
+        "content_version",
+        "representation_ref",
+        "representation_version"
+      ],
+      "properties": {
+        "content_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "content_version": {
+          "$ref": "#/$defs/token"
+        },
+        "representation_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "representation_version": {
+          "$ref": "#/$defs/token"
+        }
+      }
+    },
+    "topology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "server_id",
+        "host_id",
+        "environment_id",
+        "source_location_id",
+        "topology_generation"
+      ],
+      "properties": {
+        "project_id": {
+          "$ref": "#/$defs/ref"
+        },
+        "server_id": {
+          "$ref": "#/$defs/ref"
+        },
+        "host_id": {
+          "$ref": "#/$defs/ref"
+        },
+        "environment_id": {
+          "$ref": "#/$defs/ref"
+        },
+        "source_location_id": {
+          "$ref": "#/$defs/ref"
+        },
+        "topology_generation": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/lineage/properties/topology_generation"
+        }
+      }
+    },
+    "read_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "permission_ref",
+        "filesafe_ref",
+        "currentness_ref",
+        "resolved_path_ref",
+        "fence_ref",
+        "owner_evidence_ref"
+      ],
+      "properties": {
+        "permission_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "filesafe_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "currentness_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "resolved_path_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "fence_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "owner_evidence_ref": {
+          "$ref": "#/$defs/ref"
+        }
+      }
+    },
+    "file_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_kind",
+        "file_identity_ref",
+        "file_version"
+      ],
+      "properties": {
+        "target_kind": {
+          "const": "file"
+        },
+        "file_identity_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "file_version": {
+          "$ref": "#/$defs/token"
+        }
+      }
+    },
+    "buffer_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_kind",
+        "file_identity_ref",
+        "file_version",
+        "buffer_identity_ref",
+        "buffer_version"
+      ],
+      "properties": {
+        "target_kind": {
+          "const": "editor_buffer"
+        },
+        "file_identity_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "file_version": {
+          "$ref": "#/$defs/token"
+        },
+        "buffer_identity_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "buffer_version": {
+          "$ref": "#/$defs/token"
+        }
+      }
+    },
+    "scm_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_kind",
+        "selected_file_ref",
+        "content_version",
+        "repository_context"
+      ],
+      "properties": {
+        "target_kind": {
+          "const": "source_control"
+        },
+        "selected_file_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "content_version": {
+          "$ref": "#/$defs/token"
+        },
+        "repository_context": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/repository_context"
+        }
+      }
+    },
+    "target_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "topology",
+        "content",
+        "evidence"
+      ],
+      "properties": {
+        "identity": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/file_identity"
+            },
+            {
+              "$ref": "#/$defs/buffer_identity"
+            },
+            {
+              "$ref": "#/$defs/scm_identity"
+            }
+          ]
+        },
+        "topology": {
+          "$ref": "#/$defs/topology"
+        },
+        "content": {
+          "$ref": "#/$defs/content"
+        },
+        "evidence": {
+          "$ref": "#/$defs/read_evidence"
+        }
+      }
+    },
+    "target_read_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "read_ref",
+        "operation_binding",
+        "target_ref",
+        "target_revision",
+        "owner",
+        "disposition",
+        "resolved",
+        "failure_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup_compare.target_read_result.v1"
+        },
+        "read_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "operation_binding": {
+          "$ref": "#/$defs/binding"
+        },
+        "target_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "target_revision": {
+          "$ref": "#/$defs/token"
+        },
+        "owner": {
+          "enum": [
+            "file",
+            "source_control"
+          ]
+        },
+        "disposition": {
+          "enum": [
+            "resolved",
+            "missing",
+            "stale",
+            "unsupported",
+            "denied",
+            "unavailable"
+          ]
+        },
+        "resolved": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/target_payload"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "failure_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "const": "resolved"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "resolved": {
+                "$ref": "#/$defs/target_payload"
+              },
+              "failure_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "resolved": {
+                "type": "null"
+              },
+              "failure_reason": {
+                "$ref": "#/$defs/token"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "owner": {
+                "const": "file"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "resolved": {
+                "properties": {
+                  "identity": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/$defs/file_identity"
+                      },
+                      {
+                        "$ref": "#/$defs/buffer_identity"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "resolved": {
+                "properties": {
+                  "identity": {
+                    "$ref": "#/$defs/scm_identity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "file_compare_read_result": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/target_read_result"
+        },
+        {
+          "properties": {
+            "owner": {
+              "const": "file"
+            }
+          }
+        }
+      ]
+    },
+    "scm_compare_read_result": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/target_read_result"
+        },
+        {
+          "properties": {
+            "owner": {
+              "const": "source_control"
+            }
+          }
+        }
+      ]
+    },
+    "source_read_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "read_ref",
+        "operation_binding",
+        "snapshot_resolution_ref",
+        "selected_path_ref",
+        "capture_set_id",
+        "content",
+        "evidence"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup_compare.source_read_result.v1"
+        },
+        "read_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "operation_binding": {
+          "$ref": "#/$defs/binding"
+        },
+        "snapshot_resolution_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "selected_path_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "capture_set_id": {
+          "$ref": "#/$defs/ref"
+        },
+        "content": {
+          "$ref": "#/$defs/content"
+        },
+        "evidence": {
+          "$ref": "#/$defs/read_evidence"
+        }
+      }
+    },
+    "comparison_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_ref",
+        "operation_id",
+        "source_read_ref",
+        "target_read_ref",
+        "source_content",
+        "target_content",
+        "outcome"
+      ],
+      "properties": {
+        "evidence_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/ref"
+        },
+        "source_read_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "target_read_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "source_content": {
+          "$ref": "#/$defs/content"
+        },
+        "target_content": {
+          "$ref": "#/$defs/content"
+        },
+        "outcome": {
+          "enum": [
+            "equal",
+            "different"
+          ]
+        }
+      }
+    },
+    "backup_browse_operation_v3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "operation_binding",
+        "source_read_ref",
+        "target_read_ref",
+        "comparison_evidence_ref",
+        "status",
+        "failure_reason",
+        "read_effects",
+        "mutation_applied",
+        "return_route_ref",
+        "focus_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup_restore_system.backup_browse_operation.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "operation_binding": {
+          "$ref": "#/$defs/binding"
+        },
+        "source_read_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target_read_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "comparison_evidence_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "failed",
+            "cancelled",
+            "unavailable"
+          ]
+        },
+        "failure_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/token"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "read_effects": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "source_read",
+              "target_read",
+              "comparison_attempted"
+            ]
+          }
+        },
+        "mutation_applied": {
+          "const": false
+        },
+        "return_route_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "focus_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "source_read_ref": {
+                "$ref": "#/$defs/ref"
+              },
+              "target_read_ref": {
+                "$ref": "#/$defs/ref"
+              },
+              "comparison_evidence_ref": {
+                "$ref": "#/$defs/ref"
+              },
+              "failure_reason": {
+                "type": "null"
+              },
+              "read_effects": {
+                "const": [
+                  "source_read",
+                  "target_read",
+                  "comparison_attempted"
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "comparison_evidence_ref": {
+                "type": "null"
+              },
+              "failure_reason": {
+                "$ref": "#/$defs/token"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "backup_compare_validation_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "runtime_evidence",
+        "original_operation",
+        "result",
+        "source_read",
+        "target_read",
+        "comparison"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup_compare.validation_input.v1"
+        },
+        "runtime_evidence": {
+          "const": "NOT_RUN"
+        },
+        "original_operation": {
+          "$ref": "#/$defs/binding"
+        },
+        "result": {
+          "$ref": "#/$defs/backup_browse_operation_v3"
+        },
+        "source_read": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/source_read_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target_read": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/target_read_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "comparison": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/comparison_evidence"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

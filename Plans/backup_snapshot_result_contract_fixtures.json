@@ -1,0 +1,480 @@
+{
+  "schema_id": "pm.backup_snapshot_results.contract_fixtures.v1",
+  "contract_schema_id": "pm.backup_snapshot_results.contracts.v1",
+  "evidence_level": "schema_fixture_only",
+  "owner_schema": "Plans/backup_snapshot_result_contracts.schema.json",
+  "valid": [
+    {
+      "name": "partial_run_committed_copy_resolution",
+      "definition": "backup_snapshot_resolution",
+      "value": {
+        "schema_id": "pm.backup_restore_system.snapshot_resolution.v1",
+        "schema_version": "1.0.0",
+        "operation_binding": {
+          "operation_id": "operation:verify-selected",
+          "command_id": "cmd.backup.verify",
+          "command_instance_id": "command:input-v2-verify",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:backup:01",
+          "idempotency_key": "idem-input-v2-verify",
+          "expected_currentness_ref": "currentness:backup:01",
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_surface": "settings",
+          "return_route_ref": "route:settings:backup",
+          "selected_input": {
+            "repository_id": "backup-repository:project-alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_ids": [
+              "snapshot:project-alpha-nas-02",
+              "snapshot:missing"
+            ],
+            "requested_scope": "structural",
+            "cost_approval_ref": null
+          }
+        },
+        "selection": {
+          "repository_id": "backup-repository:project-alpha",
+          "backup_destination_id": "backup-destination:nas",
+          "snapshot_id": "snapshot:project-alpha-nas-02"
+        },
+        "disposition": "resolved",
+        "resolved_source": {
+          "repository_binding_id": "repository-binding:project-alpha",
+          "origin_kind": "backup_run",
+          "origin_ref": "original:run-alpha-02",
+          "backup_run_id": "backup-run:project-alpha-02",
+          "backup_id": "backup:project-alpha-02",
+          "capture_set_id": "capture-set:project-alpha-02",
+          "destination_attempt_id": "destination-attempt:nas-02",
+          "commit_receipt_ref": "receipt:destination-commit:nas-02",
+          "repository_snapshot_ref": "snapshot-ref:opaque-selected",
+          "manifest_ref": "immutable:manifest-alpha-02",
+          "manifest_id": "backup-manifest:project-alpha-02",
+          "manifest_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "recovery_set_id": "recovery-set:home-01",
+          "server_id": "server:home-01",
+          "boundary_kind": "project",
+          "project_id": "project:alpha",
+          "project_vault_id": "project-vault:alpha"
+        },
+        "failure_reason": null
+      }
+    },
+    {
+      "name": "unresolved_selected_member_retained",
+      "definition": "backup_snapshot_resolution",
+      "value": {
+        "schema_id": "pm.backup_restore_system.snapshot_resolution.v1",
+        "schema_version": "1.0.0",
+        "operation_binding": {
+          "operation_id": "operation:verify-selected",
+          "command_id": "cmd.backup.verify",
+          "command_instance_id": "command:input-v2-verify",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:backup:01",
+          "idempotency_key": "idem-input-v2-verify",
+          "expected_currentness_ref": "currentness:backup:01",
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_surface": "settings",
+          "return_route_ref": "route:settings:backup",
+          "selected_input": {
+            "repository_id": "backup-repository:project-alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_ids": [
+              "snapshot:project-alpha-nas-02",
+              "snapshot:missing"
+            ],
+            "requested_scope": "structural",
+            "cost_approval_ref": null
+          }
+        },
+        "selection": {
+          "repository_id": "backup-repository:project-alpha",
+          "backup_destination_id": "backup-destination:nas",
+          "snapshot_id": "snapshot:missing"
+        },
+        "disposition": "unresolved",
+        "resolved_source": null,
+        "failure_reason": "source_missing"
+      }
+    },
+    {
+      "name": "verification_keeps_good_and_missing_members",
+      "definition": "backup_verification_receipt_v2",
+      "value": {
+        "schema_id": "pm.backup_restore_system.backup_verification_receipt.v2",
+        "schema_version": "2.0.0",
+        "receipt_id": "receipt:verify-selected",
+        "operation_id": "operation:verify-selected",
+        "command_id": "cmd.backup.verify",
+        "idempotency_key": "idem-input-v2-verify",
+        "correlation_id": "correlation:verify",
+        "server_id": "server:home-01",
+        "project_ids": [
+          "project:alpha"
+        ],
+        "started_at_utc": "2026-09-24T12:00:00Z",
+        "completed_at_utc": "2026-09-24T12:01:00Z",
+        "evidence_refs": [
+          "evidence:structure"
+        ],
+        "failure_refs": [
+          "failure:missing"
+        ],
+        "redaction_profile": "no_secret_values_no_absolute_paths",
+        "original_operation": {
+          "operation_id": "operation:verify-selected",
+          "command_id": "cmd.backup.verify",
+          "command_instance_id": "command:input-v2-verify",
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:backup:01",
+          "idempotency_key": "idem-input-v2-verify",
+          "expected_currentness_ref": "currentness:backup:01",
+          "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_surface": "settings",
+          "return_route_ref": "route:settings:backup",
+          "selected_input": {
+            "repository_id": "backup-repository:project-alpha",
+            "backup_destination_id": "backup-destination:nas",
+            "snapshot_ids": [
+              "snapshot:project-alpha-nas-02",
+              "snapshot:missing"
+            ],
+            "requested_scope": "structural",
+            "cost_approval_ref": null
+          }
+        },
+        "repository_id": "backup-repository:project-alpha",
+        "backup_destination_id": "backup-destination:nas",
+        "selected_snapshot_ids": [
+          "snapshot:project-alpha-nas-02",
+          "snapshot:missing"
+        ],
+        "requested_scope": "structural",
+        "status": "failed",
+        "outcomes": [
+          {
+            "resolution": {
+              "schema_id": "pm.backup_restore_system.snapshot_resolution.v1",
+              "schema_version": "1.0.0",
+              "operation_binding": {
+                "operation_id": "operation:verify-selected",
+                "command_id": "cmd.backup.verify",
+                "command_instance_id": "command:input-v2-verify",
+                "actor_ref": "actor:user:01",
+                "permission_snapshot_ref": "permission:backup:01",
+                "idempotency_key": "idem-input-v2-verify",
+                "expected_currentness_ref": "currentness:backup:01",
+                "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                "source_surface": "settings",
+                "return_route_ref": "route:settings:backup",
+                "selected_input": {
+                  "repository_id": "backup-repository:project-alpha",
+                  "backup_destination_id": "backup-destination:nas",
+                  "snapshot_ids": [
+                    "snapshot:project-alpha-nas-02",
+                    "snapshot:missing"
+                  ],
+                  "requested_scope": "structural",
+                  "cost_approval_ref": null
+                }
+              },
+              "selection": {
+                "repository_id": "backup-repository:project-alpha",
+                "backup_destination_id": "backup-destination:nas",
+                "snapshot_id": "snapshot:project-alpha-nas-02"
+              },
+              "disposition": "resolved",
+              "resolved_source": {
+                "repository_binding_id": "repository-binding:project-alpha",
+                "origin_kind": "backup_run",
+                "origin_ref": "original:run-alpha-02",
+                "backup_run_id": "backup-run:project-alpha-02",
+                "backup_id": "backup:project-alpha-02",
+                "capture_set_id": "capture-set:project-alpha-02",
+                "destination_attempt_id": "destination-attempt:nas-02",
+                "commit_receipt_ref": "receipt:destination-commit:nas-02",
+                "repository_snapshot_ref": "snapshot-ref:opaque-selected",
+                "manifest_ref": "immutable:manifest-alpha-02",
+                "manifest_id": "backup-manifest:project-alpha-02",
+                "manifest_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "recovery_set_id": "recovery-set:home-01",
+                "server_id": "server:home-01",
+                "boundary_kind": "project",
+                "project_id": "project:alpha",
+                "project_vault_id": "project-vault:alpha"
+              },
+              "failure_reason": null
+            },
+            "requested_scope": "structural",
+            "achieved_scope": "structural",
+            "status": "passed",
+            "checks": [
+              {
+                "check_id": "check:structure",
+                "check_kind": "manifest_schema",
+                "status": "passed",
+                "evidence_ref": "evidence:structure",
+                "failure_ref": null
+              }
+            ],
+            "coverage_evidence_refs": [
+              "evidence:coverage"
+            ],
+            "verified_object_count": 1,
+            "verified_byte_count": 4096,
+            "failure_refs": []
+          },
+          {
+            "resolution": {
+              "schema_id": "pm.backup_restore_system.snapshot_resolution.v1",
+              "schema_version": "1.0.0",
+              "operation_binding": {
+                "operation_id": "operation:verify-selected",
+                "command_id": "cmd.backup.verify",
+                "command_instance_id": "command:input-v2-verify",
+                "actor_ref": "actor:user:01",
+                "permission_snapshot_ref": "permission:backup:01",
+                "idempotency_key": "idem-input-v2-verify",
+                "expected_currentness_ref": "currentness:backup:01",
+                "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+                "source_surface": "settings",
+                "return_route_ref": "route:settings:backup",
+                "selected_input": {
+                  "repository_id": "backup-repository:project-alpha",
+                  "backup_destination_id": "backup-destination:nas",
+                  "snapshot_ids": [
+                    "snapshot:project-alpha-nas-02",
+                    "snapshot:missing"
+                  ],
+                  "requested_scope": "structural",
+                  "cost_approval_ref": null
+                }
+              },
+              "selection": {
+                "repository_id": "backup-repository:project-alpha",
+                "backup_destination_id": "backup-destination:nas",
+                "snapshot_id": "snapshot:missing"
+              },
+              "disposition": "unresolved",
+              "resolved_source": null,
+              "failure_reason": "source_missing"
+            },
+            "requested_scope": "structural",
+            "achieved_scope": null,
+            "status": "failed",
+            "checks": [],
+            "coverage_evidence_refs": [],
+            "verified_object_count": 0,
+            "verified_byte_count": 0,
+            "failure_refs": [
+              "failure:missing"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "invalid": [
+    {"name":"unresolved_cannot_borrow_manifest", "base_valid":"unresolved_selected_member_retained", "patch":{"failure_reason":null}},
+    {"name":"missing_member_cannot_yield_selected_pass", "base_valid":"verification_keeps_good_and_missing_members", "patch":{"status":"passed"}, "semantic_rule":"selected_set_pass_mismatch"},
+    {"name":"unrequested_snapshot_is_not_source", "base_valid":"partial_run_committed_copy_resolution", "patch":{"selection.snapshot_id":"snapshot:unrequested"}, "semantic_rule":"unrequested_snapshot"}
+  ],
+  "static_join_sources": {
+    "description": "Explicit TEST ONLY mock resolver records, not public runtime authority or a durable contract. Existing historical independent fixtures are unchanged.",
+    "operation": {
+      "operation_id": "operation:verify-selected",
+      "command_id": "cmd.backup.verify",
+      "command_instance_id": "command:input-v2-verify",
+      "actor_ref": "actor:user:01",
+      "permission_snapshot_ref": "permission:backup:01",
+      "idempotency_key": "idem-input-v2-verify",
+      "expected_currentness_ref": "currentness:backup:01",
+      "expected_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "source_surface": "settings",
+      "return_route_ref": "route:settings:backup",
+      "selected_input": {
+        "repository_id": "backup-repository:project-alpha",
+        "backup_destination_id": "backup-destination:nas",
+        "snapshot_ids": [
+          "snapshot:project-alpha-nas-02",
+          "snapshot:missing"
+        ],
+        "requested_scope": "structural",
+        "cost_approval_ref": null
+      }
+    },
+    "repository_binding": {
+      "schema_id": "pm.backup_restore_system.backup_repository_binding.v2",
+      "schema_version": "2.0.0",
+      "repository_binding_id": "repository-binding:project-alpha",
+      "repository_id": "backup-repository:project-alpha",
+      "boundary_kind": "project",
+      "server_id": "server:home-01",
+      "project_id": "project:alpha",
+      "project_vault_id": "project-vault:alpha",
+      "recovery_set_id": "recovery-set:home-01",
+      "destination_binding_ids": [
+        "backup-destination:nas",
+        "backup-destination:b2"
+      ],
+      "writer_server_id": "server:home-01",
+      "maintenance_authority_ref": "maintenance-authority:project-alpha",
+      "source_location_refs": [
+        "source-location:alpha"
+      ],
+      "state": "ready",
+      "retention_policy_ref": "backup-policy:project-alpha",
+      "last_complete_snapshot_ref": "snapshot:project-alpha-01",
+      "quarantine_ref": null,
+      "currentness_ref": "currentness:repository:project-alpha"
+    },
+    "origin": {
+      "schema_id": "pm.backup_restore_system.backup_run.v2",
+      "schema_version": "2.0.0",
+      "backup_run_id": "backup-run:project-alpha-02",
+      "backup_id": "backup:project-alpha-02",
+      "capture_set_id": "capture-set:project-alpha-02",
+      "backup_type": "project_backup",
+      "server_id": "server:home-01",
+      "project_ids": [
+        "project:alpha"
+      ],
+      "project_vault_ids": [
+        "project-vault:alpha"
+      ],
+      "repository_binding_ids": [
+        "repository-binding:project-alpha"
+      ],
+      "repository_snapshot_refs": [
+        "snapshot-ref:opaque-selected"
+      ],
+      "recovery_set_id": "recovery-set:home-01",
+      "backup_policy_id": "backup-policy:project-alpha",
+      "expected_policy_revision": 1,
+      "state": "partial",
+      "capture_completeness": "complete",
+      "destination_attempts": [
+        {
+          "attempt_id": "destination-attempt:nas-02",
+          "backup_destination_id": "backup-destination:nas",
+          "repository_id": "backup-repository:project-alpha",
+          "upload_state": "committed",
+          "remote_snapshot_id": "snapshot:project-alpha-nas-02",
+          "commit_receipt_ref": "receipt:destination-commit:nas-02",
+          "failure_ref": null,
+          "started_at_utc": "2026-09-01T00:00:00Z",
+          "updated_at_utc": "2026-09-01T00:03:00Z",
+          "terminal_at_utc": "2026-09-01T00:03:00Z"
+        },
+        {
+          "attempt_id": "destination-attempt:b2-02",
+          "backup_destination_id": "backup-destination:b2",
+          "repository_id": "backup-repository:project-alpha",
+          "upload_state": "failed",
+          "remote_snapshot_id": null,
+          "commit_receipt_ref": null,
+          "failure_ref": "failure:destination-quota:b2-02",
+          "started_at_utc": "2026-09-01T00:00:00Z",
+          "updated_at_utc": "2026-09-01T00:04:00Z",
+          "terminal_at_utc": "2026-09-01T00:04:00Z"
+        }
+      ],
+      "integrity_verification_level": "structure_passed",
+      "restore_test_status": "not_run",
+      "catalog_revision": null,
+      "vault_generation_refs": [
+        "generation:vault-alpha:8"
+      ],
+      "recovery_point_receipt_ref": null,
+      "manifest_ref": "manifest:project-alpha-02",
+      "portable_secret_envelope_id": null,
+      "verification_receipt_ref": "receipt:verification:project-alpha-02",
+      "observable_work_ref": "observable-work:backup-project-alpha-02",
+      "phase_journal": {
+        "journal_ref": "journal:backup-project-alpha-02",
+        "phase_sequence": 12,
+        "phase_revision": 1,
+        "resume_ref": null,
+        "commit_marker_ref": "commit-marker:nas-02",
+        "rollback_marker_ref": null,
+        "quarantine_ref": null,
+        "last_reconciled_at_utc": "2026-09-01T00:04:00Z"
+      },
+      "idempotency_key": "backup-project-alpha-02",
+      "failure_ref": "failure:multi-destination-partial:project-alpha-02",
+      "started_at_utc": "2026-09-01T00:00:00Z",
+      "updated_at_utc": "2026-09-01T00:04:00Z",
+      "terminal_at_utc": "2026-09-01T00:04:00Z"
+    },
+    "manifest": {
+      "schema_id": "pm.backup_restore_system.backup_manifest.v2",
+      "schema_version": "2.0.0",
+      "manifest_id": "backup-manifest:project-alpha-02",
+      "manifest_version": "2.0.0",
+      "backup_id": "backup:project-alpha-02",
+      "capture_set_id": "capture-set:project-alpha-02",
+      "recovery_set_id": "recovery-set:home-01",
+      "repository_snapshot_refs": [
+        "snapshot-ref:opaque-selected"
+      ],
+      "backup_type": "project_backup",
+      "created_at_utc": "2026-08-31T12:00:00Z",
+      "server_id": "server:home-01",
+      "project_ids": [
+        "project:alpha"
+      ],
+      "project_vault_ids": [
+        "project-vault:alpha"
+      ],
+      "app_version": "0.1.0",
+      "storage_version": "1",
+      "protocol_version": 1,
+      "compatible_app_range": ">=0.1.0 <0.2.0",
+      "compatible_storage_range": ">=1 <2",
+      "consistency_boundaries": [
+        {
+          "consistency_boundary_id": "consistency-boundary:vault-alpha-7",
+          "boundary_kind": "project_vault",
+          "server_id": "server:home-01",
+          "project_id": "project:alpha",
+          "project_vault_id": "project-vault:alpha",
+          "catalog_revision": null,
+          "vault_generation_ref": "generation:vault-alpha:7",
+          "fence_receipt_ref": "receipt:consistency-fence:vault-alpha-7"
+        }
+      ],
+      "family_dispositions": [
+        {
+          "family_id": "project.settings",
+          "disposition": "included",
+          "reason_code": "selected_project_family",
+          "consistency_boundary_id": "consistency-boundary:vault-alpha-7"
+        }
+      ],
+      "objects": [
+        {
+          "object_id": "backup-object:vault-alpha-settings",
+          "family_id": "project.settings",
+          "consistency_boundary_id": "consistency-boundary:vault-alpha-7",
+          "relative_path": "projects/alpha/settings.canonical",
+          "byte_size": 4096,
+          "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "storage_encoding": "compressed_encrypted",
+          "encryption_metadata_ref": "encryption-metadata:backup-server-01:vault-alpha"
+        }
+      ],
+      "source_host_id": "execution-host:home-01",
+      "source_environment_id": "execution-environment:native-linux-01",
+      "source_code_inclusion_mode": "complete_project_source_git_jj",
+      "source_capture_completeness": "complete",
+      "portable_secret_envelope_id": null,
+      "parent_backup_id": null,
+      "incremental": false,
+      "verification_status": "passed",
+      "verification_receipt_ref": "receipt:backup-verification:server-01",
+      "manifest_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "redaction_profile": "no_secret_values"
+    }
+  }
+}
