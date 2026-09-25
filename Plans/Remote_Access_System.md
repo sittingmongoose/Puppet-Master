@@ -274,6 +274,12 @@ canonical_text: >-
   content. Pre-auth is rate limited. Direct/relay/provider migration preserves commands, cursors, and idempotency.
   The provider is replaceable; an optional self-hosted gateway implements the same public protocol. Cloudflare Tunnel
   is development aid only and Tor is out of scope.
+  Failure and failover among configured, admitted provider regions preserve the same Server identity, authenticated
+  route admission, command idempotency and stream continuity. When no admitted route is available, report
+  unavailability rather than claiming continuity or weakening pairing, authorization or E2E protection.
+  Provider-qualified outage, cost and limit warnings use observed current provider facts and disclose unknown or
+  stale information. A warning never changes server_id, selects a new provider or public exposure, authorizes
+  expenditure, or bypasses route admission.
 gui_related: true
 gui_classification_reason: Remote Link setup, address, direct/relay state, retry, key rotation, gateway configuration, and privacy status are visible.
 depends_on: [RAS-002, RAS-007, SRV-004]
@@ -282,6 +288,8 @@ acceptance_criteria:
   - Setup requires no Puppet Master account, email, API key, router port, or user-run public component.
   - Public-plane storage and logs contain no protected product content or credential material.
   - Direct-to-relay and provider migration preserve one Server identity, command idempotency, and projection continuity.
+  - Configured-region failure/failover preserves the same identity and security/currentness boundaries; no admitted surviving route yields explicit unavailability, not successful continuation or automatic paid-route approval.
+  - Provider outage/cost/limit warnings identify their provider and current evidence, disclose unknown/stale facts, and do not invent prices, thresholds, region counts, geography or a new telemetry store.
   - Relay/TURN credentials are short-lived under the admitted transport provider's credential policy, not durable Server identity or a reusable pairing grant. Expired credentials cannot authorize new relay use; obtaining a current credential preserves the existing authentication, pairing and route-admission boundaries. No numerical lifetime, new public exposure or Cloudflare production-provider choice is introduced here.
 validation_surfaces: [Plans/remote_access_system_contract_fixtures.json, future direct relay outage and E2E tests]
 risk_class: remote_link_content_exposure_or_identity_split
@@ -292,6 +300,8 @@ node_compile_hint: {mode: remote_link_contract, create_worknodes: false, create_
 source_lineage:
   - source_ref:normalized-register:server-first-2026-08-31:R09
   - source_ref:packet:18_FINAL_WAN_REMOTE_ACCESS_AUTHORITY.md
+  - source_ref:packet:PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/14_ACCEPTANCE_AND_FAILURE_TEST_MATRIX.md:39-42
+  - source_ref:packet:PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/remote_access_requirements.json:208
 preserved_exact_tokens: [Puppet Master Remote Link, accountless, domainless, WebRTC, STUN, TURN, direct, relay]
 negative_constraints: [Do not require a Puppet Master account email or API key., Do not store product content on the public plane., Do not make Cloudflare Tunnel product architecture.]
 owner_hints: [Plans/Remote_Access_System.md, Plans/Server_System.md]
@@ -436,6 +446,7 @@ unblocks: []
 acceptance_criteria:
   - Positive and negative schema fixtures pass expected dispositions.
   - Fresh runtime evidence covers configured route classes, attacks, migrations, outages, wrappers, and native/web parity before readiness is claimed.
+  - Configured Remote Link region-failure tests cover admitted failover and absence of an admitted surviving route, preserving Server identity, pairing/authorization, E2E, command idempotency and stream continuity. Provider outage/cost/limit-warning tests include current, unknown and stale evidence without changing identity or granting expenditure; runtime lanes remain not_run until fresh evidence exists.
   - Failures and unavailable lanes remain failures or not_run with named residual risk.
 validation_surfaces: [Plans/remote_access_system_contract_fixtures.json, Plans/Automated_Testing_System.md, future WAN and security receipts]
 risk_class: static_remote_contract_promoted_to_wan_readiness
