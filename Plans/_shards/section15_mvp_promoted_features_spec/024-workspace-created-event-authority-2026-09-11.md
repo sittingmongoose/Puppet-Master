@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11411-L11643
+Source lines: L11411-L11645
 
-Source SHA256: `14833c6ba2383cc10adf5a7fbc4fed447da8398806f11ce0e82198180b41bafb`
+Source SHA256: `b1c5b97668b72ef4ed5c51060f1da9b25aebc17d075aa06427e5d25f99d3d6f6`
 
 ---
 
@@ -170,10 +170,12 @@ These are **newly authored technical owner definitions under DL-046** for
 `browser.workspace.created` only. The depth gap they answer is recorded in
 `reports/event-authority-20260911/step-08-browser-pair-depth-assessment-20260923.md`.
 
-The conditional SP-266 v2 successor adopting the SP-278 read token names
+The SP-266 v2 successor adopting the SP-278 read token names
 `browser.workspace_inventory.created.v2@2.0.0` as this same historical read
-consumer's future version. It may replace the v1 read route only after the exact
-v2 Storage value, binding, admission and migration are installed. The reader must
+consumer's successor version. It replaced the v1 read route when the exact v2
+Storage value and binding were admitted on 2026-09-25 (below); on a store it
+serves history only after the StorageMigrationCoordinator migration is
+installed there. The reader must
 reacquire the actual SP-278 root/generation/anchor/frontier/source token, join the
 live redb snapshot id of its own read to the stored nine-field durable token, and
 recheck the current Project/access/deletion fence for each disclosure; a stored
