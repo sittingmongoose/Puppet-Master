@@ -3680,6 +3680,59 @@
       ]
     },
     {
+      "profile_id": "TCP-JJ-OPERANDS",
+      "requirement_refs": [
+        "Plans/Jujutsu_Integration.md#JJI-003",
+        "Plans/Jujutsu_Integration.md#JJI-007"
+      ],
+      "owner_plan": "Plans/Jujutsu_Integration.md",
+      "plan_unit": "JJI-003",
+      "dry_contract_ref": "Plans/jujutsu_change_operand_contracts.schema.json",
+      "payload_schema_ref": "Plans/jujutsu_change_operand_contracts.schema.json#/$defs/command_request_v2",
+      "result_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result",
+      "error_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record",
+      "availability_rule": "Exact JJ repository/workspace/change/bookmark/operation IDs, before operation, revision, leases, and colocation state are required. The five current commands require exact v2 operands; v1 alone is historical authority metadata, not an effect request.",
+      "permission_gate": "Permissions, FileSafe, writer/credential lease, setup, colocation fencing, and confirmation apply.",
+      "disabled_reason_rule": "Expose setup, unsupported capability, stale operation, lease, conflict, permission, degraded, quarantine, or recovery blocker.",
+      "handler_owner": "Jujutsu adapter under Source Control System; native JJ handlers are absent. The 30 commands added by the central Touch closure have sole future routes in Plans/Jujutsu_Integration.md#JJI-007; target strings are not native proof.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner/schema and PMConcept7 projection only. Central production-intent wiring is specified; native runtime evidence remains absent.",
+      "gui_triggers": [
+        "Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log"
+      ],
+      "return_route": "Exact repository/workspace/change/operation and caller focus.",
+      "reverse_consumers": [
+        "Plans/Source_Control_System.md",
+        "Plans/Forge_Integrations.md",
+        "Plans/Settings_System.md"
+      ],
+      "event_refs": [
+        "JJ owner events pending Event Authority"
+      ],
+      "receipt_refs": [
+        "JJ operation receipt extension"
+      ],
+      "observable_work": [
+        "Required for clone, fetch, push, import/export, rebase, restore, and long operations."
+      ],
+      "persistence_refs": [
+        "JJ backend, workspace, operation, change, bookmark refs"
+      ],
+      "migration_refs": [
+        "Plans/Jujutsu_Integration.md#7.1"
+      ],
+      "test_refs": [
+        "Plans/source_control_contract_fixtures.json",
+        "Plans/jujutsu_integration_contract_fixtures.json",
+        "Plans/jujutsu_change_operand_contract_fixtures.json",
+        "tests/test_pm_jujutsu_change_operands.py"
+      ],
+      "evidence_refs": [
+        "static_schema_fixture_and_concept_only"
+      ]
+    },
+    {
       "profile_id": "TCP-FORGE",
       "requirement_refs": [
         "Plans/Forge_Integrations.md#FGI-008",
@@ -9566,7 +9619,7 @@
     ],
     [
       "TOUCH-JJI-004",
-      "TCP-JJ",
+      "TCP-JJ-OPERANDS",
       "command",
       "cmd.jujutsu.change.new",
       "partial",
@@ -9574,7 +9627,7 @@
     ],
     [
       "TOUCH-JJI-005",
-      "TCP-JJ",
+      "TCP-JJ-OPERANDS",
       "command",
       "cmd.jujutsu.change.describe",
       "partial",
@@ -9598,7 +9651,7 @@
     ],
     [
       "TOUCH-JJI-008",
-      "TCP-JJ",
+      "TCP-JJ-OPERANDS",
       "command",
       "cmd.jujutsu.change.squash",
       "partial",
@@ -9606,7 +9659,7 @@
     ],
     [
       "TOUCH-JJI-009",
-      "TCP-JJ",
+      "TCP-JJ-OPERANDS",
       "command",
       "cmd.jujutsu.change.rebase",
       "partial",
@@ -9614,7 +9667,7 @@
     ],
     [
       "TOUCH-JJI-010",
-      "TCP-JJ",
+      "TCP-JJ-OPERANDS",
       "command",
       "cmd.jujutsu.change.abandon",
       "partial",

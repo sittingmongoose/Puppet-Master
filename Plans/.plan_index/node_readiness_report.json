@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T05:59:57Z",
+  "generated_at_utc": "2026-09-25T06:11:25Z",
   "gui_related_units": {
     "count": 3200,
     "units": [
@@ -18711,8 +18711,8 @@
         "source_location": {
           "heading": "JJI-004 - Colocated Repository Mutation Authority And Git Fencing",
           "heading_level": 3,
-          "heading_line": 206,
-          "line": 208,
+          "heading_line": 242,
+          "line": 244,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18722,8 +18722,8 @@
         "source_location": {
           "heading": "JJI-005 - Undo, Operation Restore, Conflicts, FileSafe, And Recovery",
           "heading_level": 3,
-          "heading_line": 249,
-          "line": 251,
+          "heading_line": 285,
+          "line": 287,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18733,8 +18733,8 @@
         "source_location": {
           "heading": "JJI-006 - JJ Setup, GUI Projection, Compatibility, And Migration",
           "heading_level": 3,
-          "heading_line": 281,
-          "line": 283,
+          "heading_line": 317,
+          "line": 319,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18744,8 +18744,8 @@
         "source_location": {
           "heading": "JJI-007 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 497,
-          "line": 499,
+          "heading_line": 533,
+          "line": 535,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18755,8 +18755,8 @@
         "source_location": {
           "heading": "JJI-008 - Complete JJ Backup Closure Across Layouts And Safe Restore Handoff",
           "heading_level": 3,
-          "heading_line": 548,
-          "line": 550,
+          "heading_line": 584,
+          "line": 586,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18766,8 +18766,8 @@
         "source_location": {
           "heading": "JJI-010 - Read Only And Earlier State Browsing",
           "heading_level": 3,
-          "heading_line": 798,
-          "line": 800,
+          "heading_line": 834,
+          "line": 836,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18777,8 +18777,8 @@
         "source_location": {
           "heading": "JJI-011 - Named Checkpoints And Receipt Based History Metadata",
           "heading_level": 3,
-          "heading_line": 866,
-          "line": 868,
+          "heading_line": 902,
+          "line": 904,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18788,8 +18788,8 @@
         "source_location": {
           "heading": "JJI-012 - Verified Group Undo Redo And Selected Operation Reversal",
           "heading_level": 3,
-          "heading_line": 931,
-          "line": 933,
+          "heading_line": 967,
+          "line": 969,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18799,8 +18799,8 @@
         "source_location": {
           "heading": "JJI-013 - Explicit History Storage Maintenance",
           "heading_level": 3,
-          "heading_line": 999,
-          "line": 1001,
+          "heading_line": 1035,
+          "line": 1037,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18810,8 +18810,8 @@
         "source_location": {
           "heading": "JJI-014 - Explicit Workspace Adoption Repair And Visibility",
           "heading_level": 3,
-          "heading_line": 1058,
-          "line": 1060,
+          "heading_line": 1094,
+          "line": 1096,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18821,8 +18821,8 @@
         "source_location": {
           "heading": "JJI-017 - Version Comparison And Focused Change Evolution",
           "heading_level": 3,
-          "heading_line": 1265,
-          "line": 1267,
+          "heading_line": 1301,
+          "line": 1303,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18832,8 +18832,8 @@
         "source_location": {
           "heading": "JJI-018 - Exact Hunk Selection And Graph Rewrite Intent",
           "heading_level": 3,
-          "heading_line": 1325,
-          "line": 1327,
+          "heading_line": 1361,
+          "line": 1363,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18843,8 +18843,8 @@
         "source_location": {
           "heading": "JJI-019 - Conditional Conflict Publication And Bookmark Resolution",
           "heading_level": 3,
-          "heading_line": 1392,
-          "line": 1394,
+          "heading_line": 1428,
+          "line": 1430,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -18854,8 +18854,8 @@
         "source_location": {
           "heading": "JJI-020 - History Annotation And Recovery Retention Boundary",
           "heading_level": 3,
-          "heading_line": 1467,
-          "line": 1469,
+          "heading_line": 1503,
+          "line": 1505,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -39248,7 +39248,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "2513d71501bca677bab6f66654bd1364c173e79338972cb572c672ba5db81b92",
+        "expected": "34844f131226539e4b0c62a4fbd4904741fe345fe0463366943e24501defb665",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -39290,13 +39290,13 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "1866213d2640b13255a7638544c4c5e7dc0c2c74e93fe0b08ef9200268ca71f1",
+        "expected": "feff9abc059c361083dac5f14342dc3d5e2d9c3f331b66b4743132e4342fba3c",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "2da500e1f2f265dfe3f4bb67953db257a7230cdeb12758c18083ae8bf914fa0a",
+        "expected": "f034b16b9344ecb43af99f91d91c3619b2a6d64a7988dfd3064db6645193390b",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {
@@ -39426,6 +39426,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Test_Capture_and_Motion_Evidence.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
         "error": "event_authority_currentness_source_drift",

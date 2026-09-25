@@ -1,0 +1,402 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/jujutsu-change-operands/2.0.0/jujutsu_change_operand_contracts.schema.json",
+  "title": "Five existing JJ commands: current operands and owner joins",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/command_request_v2"
+    },
+    {
+      "$ref": "#/$defs/selection_preview_v2"
+    },
+    {
+      "$ref": "#/$defs/command_result_binding_v2"
+    }
+  ],
+  "$defs": {
+    "selected_change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "change_id",
+        "commit_id"
+      ],
+      "properties": {
+        "change_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commit_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "selection": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "change",
+            "description"
+          ],
+          "properties": {
+            "kind": {
+              "const": "describe"
+            },
+            "change": {
+              "$ref": "#/$defs/selected_change"
+            },
+            "description": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "parents"
+          ],
+          "properties": {
+            "kind": {
+              "const": "new"
+            },
+            "parents": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/selected_change"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "source_changes",
+            "destination_change"
+          ],
+          "properties": {
+            "kind": {
+              "const": "squash"
+            },
+            "source_changes": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/selected_change"
+              }
+            },
+            "destination_change": {
+              "$ref": "#/$defs/selected_change"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "changes",
+            "destination"
+          ],
+          "properties": {
+            "kind": {
+              "const": "rebase"
+            },
+            "changes": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/selected_change"
+              }
+            },
+            "destination": {
+              "$ref": "#/$defs/selected_change"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "change_ids"
+          ],
+          "properties": {
+            "kind": {
+              "const": "abandon"
+            },
+            "change_ids": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/selected_change"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "command_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "authority",
+        "selection",
+        "preview_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.jujutsu.command_request.v2"
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/command_request"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "preview_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "selection": {
+                "properties": {
+                  "kind": {
+                    "const": "describe"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "authority": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.jujutsu.change.describe"
+                  }
+                }
+              },
+              "preview_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "selection": {
+                "properties": {
+                  "kind": {
+                    "const": "new"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "authority": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.jujutsu.change.new"
+                  }
+                }
+              },
+              "preview_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "selection": {
+                "properties": {
+                  "kind": {
+                    "const": "squash"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "authority": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.jujutsu.change.squash"
+                  }
+                }
+              },
+              "preview_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "selection": {
+                "properties": {
+                  "kind": {
+                    "const": "rebase"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "authority": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.jujutsu.change.rebase"
+                  }
+                }
+              },
+              "preview_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "selection": {
+                "properties": {
+                  "kind": {
+                    "const": "abandon"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "authority": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.jujutsu.change.abandon"
+                  }
+                }
+              },
+              "preview_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "selection_preview_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "preview_ref",
+        "command_id",
+        "command_instance_id",
+        "repository_context_ref",
+        "expected_revision",
+        "currentness",
+        "selection",
+        "disclosure_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.jujutsu.selection_preview.v2"
+        },
+        "preview_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command_id": {
+          "enum": [
+            "cmd.jujutsu.change.squash",
+            "cmd.jujutsu.change.rebase",
+            "cmd.jujutsu.change.abandon"
+          ]
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository_context_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_revision": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/jujutsu_revision"
+        },
+        "currentness": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/currentness_fence"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "disclosure_ref": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/non_secret_ref"
+        }
+      }
+    },
+    "command_result_binding_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "original_request",
+        "owner_result",
+        "operation_receipt"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.jujutsu.command_result_binding.v2"
+        },
+        "original_request": {
+          "$ref": "#/$defs/command_request_v2"
+        },
+        "owner_result": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/command_result"
+        },
+        "operation_receipt": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/operation_receipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

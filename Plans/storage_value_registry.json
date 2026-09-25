@@ -557,6 +557,36 @@
   "redaction_transform_registry_ref": "Plans/redaction_transform_registry.json",
   "contract_family_dispositions": [
     {
+      "disposition_id": "scd.jujutsu.change_operands_transport.v2",
+      "system_id": "jujutsu",
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "schema_ref": "Plans/jujutsu_change_operand_contracts.schema.json",
+      "record_kinds": [
+        "pm.jujutsu.command_request.v2",
+        "pm.jujutsu.selection_preview.v2",
+        "pm.jujutsu.command_result_binding.v2"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Original command/result/Source Control receipt custody and stronger holds remain with their existing owners; this validation composition introduces no archive.",
+        "expiry_rule": "Discard transient views after invocation or currentness invalidation; preserve original retained owner evidence independently."
+      },
+      "redaction_transform_ids": ["rt.no_secret_refs.v1"],
+      "migration_rule": "Existing five current command consumers require v2 operands. Historical v1 authority/result records remain exact readers and cannot be silently promoted into new effect requests.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Typed effect selections and original-request/result/receipt joins, not new commands, handlers, physical stores or native effect authority.",
+      "source_refs": [
+        "Plans/Jujutsu_Integration.md#JJI-003",
+        "Plans/jujutsu_change_operand_contracts.schema.json"
+      ]
+    },
+    {
       "disposition_id": "scd.provider_readiness.projection.v1",
       "system_id": "provider_setup",
       "owner_doc": "Plans/CLI_Bridged_Providers.md",

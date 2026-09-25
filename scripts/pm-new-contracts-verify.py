@@ -40,6 +40,7 @@ from pm_doctor_source_coverage import validate_coverage
 from pm_provider_setup_manifest_semantics import provider_setup_manifest_semantic_failures
 from pm_provider_readiness_semantics import provider_readiness_semantic_failures
 from pm_onboarding_search_semantics import onboarding_search_semantic_failures
+from pm_jujutsu_change_operands import operand_semantic_failures
 from pm_backup_drill_semantics import backup_drill_semantic_failures
 from pm_jujutsu_backup_semantics import jj_backup_pointer_failures, jj_backup_verification_failures
 from pm_browser_program_semantics import browser_program_semantic_failures
@@ -76,6 +77,7 @@ CONTRACT_PAIRS = (
     ("Plans/goal_handoff_contracts.schema.json", "Plans/goal_handoff_contract_fixtures.json"),
     ("Plans/guided_tour_contracts.schema.json", "Plans/guided_tour_contract_fixtures.json"),
     ("Plans/jujutsu_integration_contracts.schema.json", "Plans/jujutsu_integration_contract_fixtures.json"),
+    ("Plans/jujutsu_change_operand_contracts.schema.json", "Plans/jujutsu_change_operand_contract_fixtures.json"),
     ("Plans/named_plan_system_contracts.schema.json", "Plans/named_plan_system_contract_fixtures.json"),
     ("Plans/plugin_package_contracts.schema.json", "Plans/plugin_package_contract_fixtures.json"),
     ("Plans/product_onboarding_contracts.schema.json", "Plans/product_onboarding_contract_fixtures.json"),
@@ -100,7 +102,7 @@ CONTRACT_PAIRS = (
     ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 43
+EXPECTED_CONTRACT_PAIR_COUNT = 44
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1227,6 +1229,14 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/jujutsu_change_operand_contracts.schema.json":
+        failures = operand_semantic_failures(definition_name, value)
+        if definition_name == "command_request_v2":
+            failures += jujutsu_semantic_failures("command_request", value["authority"])
+        elif definition_name == "command_result_binding_v2":
+            failures += jujutsu_semantic_failures("command_request", value["original_request"]["authority"])
+            failures += jujutsu_semantic_failures("command_result", value["owner_result"])
+        return sorted(set(failures))
     if schema_rel == "Plans/provider_readiness_contracts.schema.json":
         return provider_readiness_semantic_failures(definition_name, value)
     if schema_rel == "Plans/onboarding_search_consumer_contracts.schema.json":

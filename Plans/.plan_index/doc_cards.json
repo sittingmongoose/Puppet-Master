@@ -3780,7 +3780,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "3e57ee1922adc92e4fb63c505d620e8446c30aa308f713920a602df6a2857a6b",
+      "sha256": "bec29ffa15775299efdafaebff45b0014801abc9ed3e7ebcb60fe186321b0944",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80
@@ -9270,7 +9270,7 @@
         "future qualified owner adapter and typed contract extensions",
         "future signed compatibility catalog and qualified owner adapter"
       ],
-      "line_count": 1664,
+      "line_count": 1700,
       "path": "Plans/Jujutsu_Integration.md",
       "plan_unit_count": 22,
       "plan_unit_ids": [
@@ -9324,7 +9324,7 @@
         "verified_group_undo_redo_and_selected_operation_reversal",
         "version_comparison_and_focused_change_evolution"
       ],
-      "sha256": "eca08e057648bc1f0072422173cde655d46e027372f23d9be5c7770c0b252113",
+      "sha256": "077efe289416acf4c32a3dfef70e494bc986e7b3fe73f36c84734e3de09ef2dd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 22
@@ -9348,6 +9348,8 @@
         "Plans/backup_drill_result_contracts.schema.json",
         "Plans/backup_restore_system_contract_fixtures.json",
         "Plans/backup_restore_system_contracts.schema.json",
+        "Plans/jujutsu_change_operand_contract_fixtures.json",
+        "Plans/jujutsu_change_operand_contracts.schema.json",
         "Plans/jujutsu_integration_contract_fixtures.json",
         "Plans/jujutsu_integration_contracts.schema.json",
         "Plans/source_control_contract_fixtures.json",
@@ -9387,6 +9389,7 @@
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "stale operation tests",
+        "tests/test_pm_jujutsu_change_operands.py",
         "undo/op restore fixtures"
       ]
     },
@@ -18985,7 +18988,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "1866213d2640b13255a7638544c4c5e7dc0c2c74e93fe0b08ef9200268ca71f1",
+      "sha256": "feff9abc059c361083dac5f14342dc3d5e2d9c3f331b66b4743132e4342fba3c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163,
@@ -20051,7 +20054,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T05:59:56Z",
+  "generated_at_utc": "2026-09-25T06:11:25Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

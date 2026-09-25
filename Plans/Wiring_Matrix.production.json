@@ -35745,7 +35745,7 @@
     "catalog.jujutsu_change_abandon": {
       "acceptance_checks": [
         "cmd.jujutsu.change.abandon names exactly one owner-adjudicated future target handlers::jujutsu::change_abandon in Plans/Jujutsu_Integration.md#JJI-007; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request -> Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result and Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
+        "Validate Plans/jujutsu_change_operand_contracts.schema.json#/$defs/command_request_v2 -> Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result and Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
         "Read state.commands.jujutsu_change_abandon.availability and state.commands.jujutsu_change_abandon.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -35771,7 +35771,7 @@
       "evidence_required": "Future production evidence for cmd.jujutsu.change.abandon: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::jujutsu::change_abandon",
-      "request_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request",
+      "request_schema_ref": "Plans/jujutsu_change_operand_contracts.schema.json#/$defs/command_request_v2",
       "result_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result",
       "state_selector": "state.commands.jujutsu_change_abandon.availability",
       "test_evidence": [
@@ -35803,7 +35803,7 @@
     "catalog.jujutsu_change_describe": {
       "acceptance_checks": [
         "cmd.jujutsu.change.describe names exactly one owner-adjudicated future target handlers::jujutsu::change_describe in Plans/Jujutsu_Integration.md#JJI-007; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request -> Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result and Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
+        "Validate Plans/jujutsu_change_operand_contracts.schema.json#/$defs/command_request_v2 -> Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result and Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
         "Read state.commands.jujutsu_change_describe.availability and state.commands.jujutsu_change_describe.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -35829,7 +35829,7 @@
       "evidence_required": "Future production evidence for cmd.jujutsu.change.describe: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::jujutsu::change_describe",
-      "request_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request",
+      "request_schema_ref": "Plans/jujutsu_change_operand_contracts.schema.json#/$defs/command_request_v2",
       "result_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result",
       "state_selector": "state.commands.jujutsu_change_describe.availability",
       "test_evidence": [
@@ -35919,7 +35919,7 @@
     "catalog.jujutsu_change_new": {
       "acceptance_checks": [
         "cmd.jujutsu.change.new names exactly one owner-adjudicated future target handlers::jujutsu::change_new in Plans/Jujutsu_Integration.md#JJI-007; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request -> Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result and Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
+        "Validate Plans/jujutsu_change_operand_contracts.schema.json#/$defs/command_request_v2 -> Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result and Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
         "Read state.commands.jujutsu_change_new.availability and state.commands.jujutsu_change_new.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -35945,7 +35945,7 @@
       "evidence_required": "Future production evidence for cmd.jujutsu.change.new: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::jujutsu::change_new",
-      "request_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request",
+      "request_schema_ref": "Plans/jujutsu_change_operand_contracts.schema.json#/$defs/command_request_v2",
       "result_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result",
       "state_selector": "state.commands.jujutsu_change_new.availability",
       "test_evidence": [
@@ -35977,7 +35977,7 @@
     "catalog.jujutsu_change_rebase": {
       "acceptance_checks": [
         "cmd.jujutsu.change.rebase names exactly one owner-adjudicated future target handlers::jujutsu::change_rebase in Plans/Jujutsu_Integration.md#JJI-007; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request -> Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result and Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
+        "Validate Plans/jujutsu_change_operand_contracts.schema.json#/$defs/command_request_v2 -> Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result and Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
         "Read state.commands.jujutsu_change_rebase.availability and state.commands.jujutsu_change_rebase.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -36003,7 +36003,7 @@
       "evidence_required": "Future production evidence for cmd.jujutsu.change.rebase: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::jujutsu::change_rebase",
-      "request_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request",
+      "request_schema_ref": "Plans/jujutsu_change_operand_contracts.schema.json#/$defs/command_request_v2",
       "result_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result",
       "state_selector": "state.commands.jujutsu_change_rebase.availability",
       "test_evidence": [
@@ -36151,7 +36151,7 @@
     "catalog.jujutsu_change_squash": {
       "acceptance_checks": [
         "cmd.jujutsu.change.squash names exactly one owner-adjudicated future target handlers::jujutsu::change_squash in Plans/Jujutsu_Integration.md#JJI-007; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request -> Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result and Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
+        "Validate Plans/jujutsu_change_operand_contracts.schema.json#/$defs/command_request_v2 -> Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result and Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record with exact availability and permission gates.",
         "Read state.commands.jujutsu_change_squash.availability and state.commands.jujutsu_change_squash.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -36177,7 +36177,7 @@
       "evidence_required": "Future production evidence for cmd.jujutsu.change.squash: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::jujutsu::change_squash",
-      "request_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request",
+      "request_schema_ref": "Plans/jujutsu_change_operand_contracts.schema.json#/$defs/command_request_v2",
       "result_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result",
       "state_selector": "state.commands.jujutsu_change_squash.availability",
       "test_evidence": [
