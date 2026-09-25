@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11610-L11811
+Source lines: L11612-L11816
 
-Source SHA256: `46182ec511dee2377bb9f64399300d3c8f93a89c9ab82f5fda5a9d2ab3e2dce1`
+Source SHA256: `bb9cfc5d05b040705deceeb9f26edec24ceed66283b709d08b14832e12478f79`
 
 ---
 
@@ -110,17 +110,20 @@ This is a **newly authored technical owner definition under DL-046** for
 For exactly this reset barrier, `BrowserRuntimeService.workspace` explicitly
 adopts SP-286/CV-339's `storage.first_append_receipt.resolve.v2`. The request is
 the original admitted EventRecord identity/semantic request under the existing
-replay policy: the original `command_instance_id` and idempotency key, the
-workspace identity, the checked owner revision and the actual prior and new
-generation, in the actual same Storage instance. It is not a caller custody row, locator or receipt. Storage
-authenticates the actual global/scoped identity, source semantic tuple and
-canonical issued custody. The returned eleven-field AppendReceipt and the retained
-four-field `original_append_result` must join the original event/sequence and the
-Storage-owned original segment reference/offset. The exact original durability
-class is the required synced barrier; a newer locator, timestamp, supplied digest
-or four-field dedupe result alone cannot satisfy it. An allowed scoped alternate
-incoming event ID resolves the original event ID and cannot create a second reset
-or event.
+replay policy, not a caller custody row, locator or receipt: the actual original
+event ID and scoped idempotency key and the authored semantic content of the
+original reset event, including its workspace identity and actual prior and new
+generation, in the actual same Storage instance. The original
+`command_instance_id`, idempotency key and checked owner revision select that
+original operation and join it through the resolved owner transition, not through
+the Storage request. Storage authenticates the actual global/scoped identity,
+source semantic tuple and canonical issued custody. The returned eleven-field
+AppendReceipt and the retained four-field `original_append_result` must join the
+original event/sequence and the Storage-owned original segment reference/offset.
+The exact original durability class is the required synced barrier; a newer
+locator, timestamp, supplied digest or four-field dedupe result alone cannot
+satisfy it. An allowed scoped alternate incoming event ID resolves the original
+event ID and cannot create a second reset or event.
 
 Once a reset effect is known committed, a failed or uncertain append keeps the
 workspace/operation recovery-required until Storage resolves the original append

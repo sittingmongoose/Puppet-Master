@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-09-25T00:37:29Z",
+  "generated_at_utc": "2026-09-25T00:38:43Z",
   "index_path": "Plans/_shards/section15_mvp_promoted_features_spec/00-index.md",
-  "index_sha256": "473904267a35a95506b1f267deef6f91a83acb4254978c3f32b3949035a0ec9d",
+  "index_sha256": "746e218c9b5438145f9801d7ae00b591c9174291a509dc0ea687468314c198a0",
   "manifest_path": "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/001-preamble.md",
-      "sha256": "7b6d4978852e71013a893da4c791ec9b6df82f46aead400fcaec4e1bf5e2aef2",
+      "sha256": "b242f3fca62ff8b915c50db26eda8e0bb7b4c76cd3ead790ed8c3f8b5527a432",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope and SSOT status",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/002-0.-scope-and-ssot-status.md",
-      "sha256": "d531d13e7b0253303576149512f56652c91701cfc229dafb03a0da288a1613f6",
+      "sha256": "bae4f1de8f12dd2fd648aa7894651fd91f2ee7460114d94aca774c7448f14b79",
       "shard_id": "002",
       "source_line_end": 19,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Canonical shell and surface model",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/003-1.-canonical-shell-and-surface-model.md",
-      "sha256": "b6699bf550bb7540461e2247a0e595a5e4add9aa19c7264feed05f6aed7d97de",
+      "sha256": "492a2316d2fb5079a67648f09cda1708194440bce67f74408e363479d4e1fbaf",
       "shard_id": "003",
       "source_line_end": 357,
       "source_line_start": 21,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Cross-feature runtime contracts",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/004-2.-cross-feature-runtime-contracts.md",
-      "sha256": "bf63f7b88e414f3f1aa431f6b0196f87764d8ad8df21bdc881e773321d08b344",
+      "sha256": "e97c7a44a985182fb7531ed9bccc25a1c03e6914707f641e0752da1a34de07b9",
       "shard_id": "004",
       "source_line_end": 438,
       "source_line_start": 358,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Feature requirements",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/005-3.-feature-requirements.md",
-      "sha256": "0da5a413f2a0645af6405d568f0af243e4103d74598ed021728665a94860d8d9",
+      "sha256": "b0663b7db4bcb23e9f720304fd32819f33096e58be07e457c2291f458a62e247",
       "shard_id": "005",
       "source_line_end": 948,
       "source_line_start": 440,
@@ -53,7 +53,7 @@
     {
       "heading": "4. Command families required by the promoted features",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/006-4.-command-families-required-by-the-promoted-features.md",
-      "sha256": "0c22c6a7b97326937304a47eb322f2f819c82dd20d0c840614c6638e01aa447a",
+      "sha256": "5c63d728158a521f1f1df7116447f013a8cc269a25c03fc6383344848f6f5f6c",
       "shard_id": "006",
       "source_line_end": 969,
       "source_line_start": 950,
@@ -62,7 +62,7 @@
     {
       "heading": "5. Persistence and restore rules",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/007-5.-persistence-and-restore-rules.md",
-      "sha256": "806fa7eccc36fe0e74f49aec936131182741f31d541b2ca3351fda780c8c840c",
+      "sha256": "168430ac7292b98fc6f8be3b8613ae2693bfef1d373e7b0efcce5348731a4eea",
       "shard_id": "007",
       "source_line_end": 1005,
       "source_line_start": 970,
@@ -71,7 +71,7 @@
     {
       "heading": "6. Non-goals and anti-drift rules",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/008-6.-non-goals-and-anti-drift-rules.md",
-      "sha256": "8913842dba72582d3fffb8b09bf84d9818a6b2906c30864be1068896593b81bc",
+      "sha256": "26f81712293268d5039daf015370559d8c60afc92d69c10d2e7c47050454df72",
       "shard_id": "008",
       "source_line_end": 1022,
       "source_line_start": 1006,
@@ -80,7 +80,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/009-owner-consumer-map.md",
-      "sha256": "bec1efdfb4ad01adc1734ee5be897b86159fa069019f3379a8acdb45b32c3e38",
+      "sha256": "fd2ab480ada01faf91c8d6a38eb131261086dcd9099fec59a0a837db57d9d599",
       "shard_id": "009",
       "source_line_end": 1028,
       "source_line_start": 1024,
@@ -89,7 +89,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/010-planunits.md",
-      "sha256": "2792d379d701f711cdc6e4a97b18cfeba87be427b0807a9fc7dcab7042eb969d",
+      "sha256": "aa54baa422d95595161230b093a862958bc495dd00747f14fd66d286c53fbcd4",
       "shard_id": "010",
       "source_line_end": 8602,
       "source_line_start": 1030,
@@ -98,7 +98,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/011-migration-coverage.md",
-      "sha256": "75f83be12c01a574362226625f2de2eb7f48a63f168ffaa890ff6d3eab1c31d3",
+      "sha256": "932afd67e37e6047ce48e41c1c7c3972df9fc8ba08142f7f37378233f9438efd",
       "shard_id": "011",
       "source_line_end": 8614,
       "source_line_start": 8604,
@@ -107,7 +107,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "5aa1785b33794b6918850a6fd17925b25fd3f646aaeaf4cf9de49e2c7fa9b740",
+      "sha256": "012544f3c913f1fc7680d8ba204d31c3e574c7f27ce7dc8616ada08d615bb9f4",
       "shard_id": "012",
       "source_line_end": 8702,
       "source_line_start": 8616,
@@ -116,7 +116,7 @@
     {
       "heading": "Browser Program Central-Route Binding Addendum - 2026-09-01",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/013-browser-program-central-route-binding-addendum-2026-09-01.md",
-      "sha256": "5e756c87e63b15f0f3c62e02a35f02cf8fba38c60c0470784dd8f3b0a19a6e0d",
+      "sha256": "3988b7e9c4464b3316654294f283c513b5b0d0ada56646726b25fdd812282a4a",
       "shard_id": "013",
       "source_line_end": 8824,
       "source_line_start": 8704,
@@ -125,7 +125,7 @@
     {
       "heading": "Browser Program contract closure addendum \u2014 2026-08-31",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/014-browser-program-contract-closure-addendum-2026-08-31.md",
-      "sha256": "fd95b446e979e93c0c3fd89194bb5e454fcd6f4e030e382e87c13c694e3dbd58",
+      "sha256": "4db468747726d9cb63e50c65c56f290a58a6f0b2157cc02eec91229b71d0343d",
       "shard_id": "014",
       "source_line_end": 9074,
       "source_line_start": 8826,
@@ -134,7 +134,7 @@
     {
       "heading": "Remaining Runtime Onboarding Ownership Addendum (2026-08-14)",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/015-remaining-runtime-onboarding-ownership-addendum-2026-08-14.md",
-      "sha256": "8ce0ddb32f594e767cc313de431329d54d243780c7d5a8072be153419e39ff1f",
+      "sha256": "d0a17b6a383739c3c24002f036161e93309fc54559d94d715388107f8af67d5d",
       "shard_id": "015",
       "source_line_end": 9120,
       "source_line_start": 9076,
@@ -143,7 +143,7 @@
     {
       "heading": "Runtime Integration Addendum - 2026-08-13",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/016-runtime-integration-addendum-2026-08-13.md",
-      "sha256": "94e58588aa10b2e8a579d711080e3fca158b8b2316593dfd7917d0e038da2b09",
+      "sha256": "74f4b291bedeaae2b1c5847cfb213df29f4b50b277011645334bf2c885d8b6d0",
       "shard_id": "016",
       "source_line_end": 9418,
       "source_line_start": 9122,
@@ -152,7 +152,7 @@
     {
       "heading": "PMConcept7 Home Workspace terminal reconciliation \u2014 2026-08-04",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/017-pmconcept7-home-workspace-terminal-reconciliation-2026-08-04.md",
-      "sha256": "9c3bfd12f44a7f8bb91e6f349dbf040c533487b2bdb42dae156a3ff046e9cf5f",
+      "sha256": "11dd1a9634c0deb159dee283aaf6541fcbcb780be5708eef861c1697adbecd17",
       "shard_id": "017",
       "source_line_end": 9489,
       "source_line_start": 9420,
@@ -161,7 +161,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/018-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "fa9c9fb63b7ae9eb265514802d0840c9f2e2d82b5692d031c26ab18ea6bff73b",
+      "sha256": "9dfdf46d581d859aea0f0de734a8d41833f7b96919a58000273196d05a09fa80",
       "shard_id": "018",
       "source_line_end": 10518,
       "source_line_start": 9491,
@@ -170,7 +170,7 @@
     {
       "heading": "Central Sole Future Handler Binding Addendum - 2026-09-01",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/019-central-sole-future-handler-binding-addendum-2026-09-01.md",
-      "sha256": "ded095fa4a2d92ba979a95ebe5661d310d485999a34618fd14319d325a229574",
+      "sha256": "b006340e17f87ef14071c90f8e91a7f64076e97bbe2caa54280d2cc45e7f5d48",
       "shard_id": "019",
       "source_line_end": 10594,
       "source_line_start": 10520,
@@ -179,7 +179,7 @@
     {
       "heading": "Additive Correction v4 \u2014 Browser Component Currentness At Dispatch (2026-09-03)",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/020-additive-correction-v4-browser-component-currentness-at-dispatch.md",
-      "sha256": "68936b322604579690b55acaccb52ebb591580f19ccee5bc3557f045350ad202",
+      "sha256": "4a0ab709552d0902e5cf514de9893771ee6abc80cd56df35e5448ac3e92a48f8",
       "shard_id": "020",
       "source_line_end": 10675,
       "source_line_start": 10596,
@@ -188,7 +188,7 @@
     {
       "heading": "Accepted Terminal Research Capabilities \u2014 DL-035 (2026-09-09)",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/021-accepted-terminal-research-capabilities-dl-035-2026-09-09.md",
-      "sha256": "61d0f18598781b8efca837223e6a458e57b5d70db23d51352f555c9355415d4d",
+      "sha256": "ff4b78871ec97fe90fdd35d0e5a45a76205eb101aa9339066f8dc1d4104feced",
       "shard_id": "021",
       "source_line_end": 11315,
       "source_line_start": 10678,
@@ -197,7 +197,7 @@
     {
       "heading": "Browser Event Contract Admission \u2014 2026-09-10",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/022-browser-event-contract-admission-2026-09-10.md",
-      "sha256": "6c0157d85b690cebe7f15e254b14970bbe8030c55bfd1b26b5abca2aed0ee519",
+      "sha256": "a2cf63f9ae17fa386873c971d79455d418d0413d045b51580edb6e715312654f",
       "shard_id": "022",
       "source_line_end": 11359,
       "source_line_start": 11317,
@@ -206,7 +206,7 @@
     {
       "heading": "Scoped Browser Event Admission \u2014 2026-09-10",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/023-scoped-browser-event-admission-2026-09-10.md",
-      "sha256": "6bee26f503c23bf933911cd33938ceaa3c9588031cc9ec15f86f017d9d390782",
+      "sha256": "f561a1a125e11e903901451b4bae79e96c05c5e67fce4101dc603214a1619939",
       "shard_id": "023",
       "source_line_end": 11409,
       "source_line_start": 11361,
@@ -215,43 +215,43 @@
     {
       "heading": "Workspace-created event authority \u2014 2026-09-11",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/024-workspace-created-event-authority-2026-09-11.md",
-      "sha256": "304499c483d89b0bd1e2a41e2929882558c259ab6e4bdf3966a9852d85b50e5b",
+      "sha256": "eef636bfb647becd8f7bee42aa0a33de8310e88ed4780ad6291dd31daf1999d6",
       "shard_id": "024",
-      "source_line_end": 11608,
+      "source_line_end": 11610,
       "source_line_start": 11411,
       "split_rule": "heading-##"
     },
     {
       "heading": "Workspace-reset event authority \u2014 2026-09-11",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/025-workspace-reset-event-authority-2026-09-11.md",
-      "sha256": "fc6c73c0a6118d8d2dea10f325d618ee85e54e8651fa6e13116ad806f28e559b",
+      "sha256": "8431260dfafbaa1729c9a9948ed75602c65869300c85440c358a92dd0257704d",
       "shard_id": "025",
-      "source_line_end": 11811,
-      "source_line_start": 11610,
+      "source_line_end": 11816,
+      "source_line_start": 11612,
       "split_rule": "heading-##"
     },
     {
       "heading": "Browser Program Result Binding - 2026-09-11",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/026-browser-program-result-binding-2026-09-11.md",
-      "sha256": "8a9c0b20df9539a72a2d2d3b3a38b54aadb948215f4b4ea20999a0d45f6ae8e6",
+      "sha256": "48a2cd30751928b924aded67effdeca66a7875ed85c2ecc110c90a52268ef8d1",
       "shard_id": "026",
-      "source_line_end": 11848,
-      "source_line_start": 11813,
+      "source_line_end": 11853,
+      "source_line_start": 11818,
       "split_rule": "heading-##"
     },
     {
       "heading": "Terminal workgroup moved \u2014 original operation and passive history contract",
       "path": "Plans/_shards/section15_mvp_promoted_features_spec/027-terminal-workgroup-moved-original-operation-and-passive-history-.md",
-      "sha256": "730bfb8d2d2cff5b4fc54fc209fd5778fad726b3283fb6e4a21e2a2685874de0",
+      "sha256": "7eb4945f6ab97cad1ae2c4d0ab5fc5a8ec56f70171127b57c1991e57e76d3ccd",
       "shard_id": "027",
-      "source_line_end": 12070,
-      "source_line_start": 11850,
+      "source_line_end": 12075,
+      "source_line_start": 11855,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 12070,
+    "line_count": 12075,
     "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-    "sha256": "46182ec511dee2377bb9f64399300d3c8f93a89c9ab82f5fda5a9d2ab3e2dce1"
+    "sha256": "bb9cfc5d05b040705deceeb9f26edec24ceed66283b709d08b14832e12478f79"
   }
 }

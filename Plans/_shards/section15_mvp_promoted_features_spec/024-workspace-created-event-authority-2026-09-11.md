@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11411-L11608
+Source lines: L11411-L11610
 
-Source SHA256: `46182ec511dee2377bb9f64399300d3c8f93a89c9ab82f5fda5a9d2ab3e2dce1`
+Source SHA256: `bb9cfc5d05b040705deceeb9f26edec24ceed66283b709d08b14832e12478f79`
 
 ---
 
@@ -83,10 +83,12 @@ This is a **newly authored technical owner definition under DL-046** for
 For exactly this creation barrier, `BrowserRuntimeService.workspace` explicitly
 adopts SP-286/CV-339's `storage.first_append_receipt.resolve.v2`. The request is
 the original admitted EventRecord identity/semantic request under the existing
-replay policy: the original `command_instance_id`, request idempotency key,
-reserved workspace identity and assigned generation, in the actual same Storage
-instance. It is not a caller custody row, locator or receipt. Storage
-authenticates the actual global/scoped identity, source semantic tuple and
+replay policy, not a caller custody row, locator or receipt: the actual original
+event ID and scoped idempotency key and the authored semantic content of the
+original creation event, including its reserved workspace identity and assigned
+generation, in the actual same Storage instance. The original
+`command_instance_id` and request idempotency key select that original operation.
+Storage authenticates the actual global/scoped identity, source semantic tuple and
 canonical issued custody. The returned eleven-field AppendReceipt and the retained
 four-field `original_append_result` must join the original event/sequence and the
 Storage-owned original segment reference/offset. The exact original durability
