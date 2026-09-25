@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11619-L11830
+Source lines: L11622-L11836
 
-Source SHA256: `30f722565337958836cd7e33726d02fe8860d0e64d8b64a334374aff9bfe3fc5`
+Source SHA256: `2ad113a824abd0dc87b7b03cddeaccdc5e24e1191e156b98ec6fa22f5d5aca68`
 
 ---
 
@@ -131,24 +131,27 @@ identity through that resolver. If Storage's own reconciliation establishes that
 no original event exists, resumption may retry only that original append identity
 through the unchanged shared idempotency route with the same original input; that
 retry is not a first-mint request and repeats no reset. A committed frame with
-lost acknowledgement then
-returns the original available result without a second reset or event. The
-Browser owner never asks for a first mint from a missing receipt, lost delivery,
-tail absence or a supplied never-issued flag; only Storage's own writer reaches
-`storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
-current protected group, after the original source/manifest barriers and complete
-current group/source/dedupe/restore checks. Missing or conflicting custody keeps
-the path unavailable under
-the existing failure behavior; it never proves no effect, restores the old
-generation or repeats the reset. A proper subset, lost previously issued custody,
-restored old pending request or ambiguous original group stays fenced under that
-behavior. In-place restart after actual protected promotion follows SP-286's
-original group handoff without reconstructing old transient capabilities. A
-verified older restore does not make omitted reset work fresh: only an actual
-newly accepted owner reset after the coordinator's completed restore
-occurrence/session may use its fresh-operation admission, and lost or restored
-reset requests and pending work cannot be renamed or reaccepted as a new reset.
-Resolution is passive: it grants no current
+lost acknowledgement then returns the original available result without a second
+reset or event. The Browser owner never asks for a first mint from a missing
+receipt, lost delivery, tail absence or a supplied never-issued flag; only
+Storage's own writer reaches `storage.first_append_receipt.issue.v2`, for an
+authenticated never-issued complete current protected group, after the original
+source/manifest barriers and complete current group/source/dedupe/restore checks.
+Missing or conflicting custody keeps the path unavailable under the existing
+failure behavior; it never proves no effect, restores the old generation or
+repeats the reset. A proper subset, lost previously issued custody, restored old
+pending request or ambiguous original group stays fenced under that behavior.
+In-place restart after actual protected promotion follows SP-286's original group
+handoff without reconstructing old transient capabilities. A verified older
+restore does not make omitted reset work fresh: only an actual newly accepted
+owner reset after the coordinator's completed restore occurrence/session may use
+its fresh-operation admission, and lost or restored reset requests and pending
+work cannot be renamed or reaccepted as a new reset.
+
+At the final owner publication boundary, after the resolver and every dependent
+helper, recheck that the resolved receipt and `original_append_result` still join
+the original request, event and owner result; no helper may change those facts
+between that check and publication. Resolution is passive: it grants no current
 Browser authority, controller or generation mutation and reopens no retired
 source. This owner does not claim that a supplied complete EventRecord equals its
 originally issued value, so it does not rely on

@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11411-L11617
+Source lines: L11411-L11620
 
-Source SHA256: `30f722565337958836cd7e33726d02fe8860d0e64d8b64a334374aff9bfe3fc5`
+Source SHA256: `2ad113a824abd0dc87b7b03cddeaccdc5e24e1191e156b98ec6fa22f5d5aca68`
 
 ---
 
@@ -101,31 +101,34 @@ After a committed creation and lost acknowledgement, the owner joins that resolv
 receipt to its original committed creation identity and its own original
 `browser_command_result`, and returns them without preparing another resource;
 receipt resolution cannot manufacture a missing owner result. An uncertain append
-stays fenced, with the prepared resource unexposed,
-until Storage resolves the original identity. If Storage's own reconciliation
-establishes that no original event exists, the existing pre-commit rule applies:
-the unexposed resource is disposed or stays fenced and no creation is published.
-The Browser owner never asks for a
-first mint from a missing receipt, lost delivery, tail absence or a supplied
-never-issued flag; only Storage's own writer reaches
+stays fenced, with the prepared resource unexposed, until Storage resolves the
+original identity. If Storage's own reconciliation establishes that no original
+event exists, the existing pre-commit rule applies: the unexposed resource is
+disposed or stays fenced and no creation is published. The Browser owner never
+asks for a first mint from a missing receipt, lost delivery, tail absence or a
+supplied never-issued flag; only Storage's own writer reaches
 `storage.first_append_receipt.issue.v2`, for an authenticated never-issued complete
 current protected group, after the original source/manifest barriers and complete
 current group/source/dedupe/restore checks. Missing or conflicting custody keeps
-the operation
-recovery-required under the existing failure behavior. A proper subset, lost
-previously issued custody, restored old pending request or ambiguous original
-group stays fenced under that behavior. In-place restart after actual protected
-promotion follows SP-286's original group handoff without reconstructing old
-transient capabilities. A verified older restore does not make omitted creation
-work fresh: only an actual newly accepted owner creation after the coordinator's
-completed restore occurrence/session may use its fresh-operation admission, and
-lost or restored creation requests, reserved workspace identities and pending work
-cannot be renamed or reaccepted as a new creation. Resolution is passive: it
-grants no current Browser authority, recreates no process and reopens no retired
-source. This owner does not claim that a supplied complete EventRecord equals its
-originally issued value, so it does not rely on
-`storage.first_append_receipt.resolve_full_value.v1`; a later claim of that kind
-must adopt that interface explicitly and cannot fall back to semantic replay.
+the operation recovery-required under the existing failure behavior. A proper
+subset, lost previously issued custody, restored old pending request or ambiguous
+original group stays fenced under that behavior. In-place restart after actual
+protected promotion follows SP-286's original group handoff without reconstructing
+old transient capabilities. A verified older restore does not make omitted
+creation work fresh: only an actual newly accepted owner creation after the
+coordinator's completed restore occurrence/session may use its fresh-operation
+admission, and lost or restored creation requests, reserved workspace identities
+and pending work cannot be renamed or reaccepted as a new creation.
+
+At the final owner publication boundary, after the resolver and every dependent
+helper, recheck that the resolved receipt and `original_append_result` still join
+the original request, event and owner result; no helper may change those facts
+between that check and publication. Resolution is passive: it grants no current
+Browser authority, recreates no process and reopens no retired source. This owner
+does not claim that a supplied complete EventRecord equals its originally issued
+value, so it does not rely on `storage.first_append_receipt.resolve_full_value.v1`;
+a later claim of that kind must adopt that interface explicitly and cannot fall back
+to semantic replay.
 
 ### Exact read consumer and currentness
 
