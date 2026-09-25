@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L5186-L5302
 
-Source SHA256: `8e1c5cdd55fa0efb70f1406d409cdcfcd352674c9460b17760449f33a4fa4e13`
+Source SHA256: `77c423bd3bc6d7a7a59af0b4903e4ad76ef80b34d20f84dc8cc7a34ef635ef95`
 
 ---
 
@@ -21,7 +21,7 @@ Nothing here admits a family. Each of the seven stays quarantined before append 
 - The checker, `python3 scripts/pm_coordination_events.py`, and its unittest module `tests/test_pm_coordination_events.py`. The checker validates the closed payload schema against the Contracts rows, the projection schema and its binding record, the admission ledger `Plans/coordination_event_admission.json` and the final registry row that each family's landing will append, the two Storage value registry rows, and every fixture expectation. It fails when a coordination family is in the event family registry while its ledger row is `prepared_not_admitted`, and when an admitted family's registry row differs from its prepared row.
 - A pass shows static contract consistency and nothing more. It proves no producer, crash detector, append path, projector, reader, durability, readiness or seal.
 
-**Per family.** Each family has its own cases. A sibling appears only as a transition partner inside a sequence, never as evidence for another family (DL-039). Each family's ledger row lists its case IDs in `validation_case_ids`.
+**Per family.** Each family has its own cases. A sibling appears only as a transition partner inside a sequence, never as evidence for another family (DL-039). Each family's ledger row lists its case IDs in `validation_case_ids`. The transition sequences exercise Storage's append admission alone. SP-320's producer activation gate, under which nothing is appended until all seven families are admitted, is outside them. COORD-WITHDRAW-01 covers the refusal of new registrations after a withdrawal.
 
 | Family | Positive payloads | Negative payloads, by first failing layer | Transition sequences | Native obligations of its own |
 |---|---|---|---|---|
