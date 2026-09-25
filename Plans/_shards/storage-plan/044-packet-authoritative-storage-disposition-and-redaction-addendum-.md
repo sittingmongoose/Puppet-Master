@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18680-L18934
+Source lines: L18719-L18979
 
-Source SHA256: `061a32972fd4db5fd4c5be3ce7f13a9710c541e01000930067786e4a36d29ee8`
+Source SHA256: `b3b496e2dbd00b67dae16dd37d01350a3264f598d6022bd279dcbef4b492cd8f`
 
 ---
 
@@ -47,7 +47,13 @@ canonical_text: >-
   Capture playback comparison state, and protected AuthBrowserSession content/state are explicitly
   nonpersisted. PWIZ-023's bounded safe checkpoint is a separate durable disposition with physical-family registration
   pending, not a serialized live session or an onboarding_state extension. Its original layout/Chat snapshots remain
-  owner-held references; a schema or disposition alone permits no checkpoint write or resume claim. The current physical
+  owner-held references: each ref resolves only to owner-issued authentic pre-mutation originals, the Chat original
+  inside Assistant Chat custody and the layout ref through an owner-issued binding that enumerates the complete exact set
+  of affected owner-scoped originals (with Home authoritative only for the record it actually covers), each held through
+  tour mutation, close/reload resume and failed-restoration recovery, applied only after its owner revalidates current
+  lifecycle, permission and scope, and released only after terminal settlement or the recovery resolution that ends the
+  session. A schema, disposition, ref string, fixture, materialized current projection, deferred
+  composer key or restoration boolean alone permits no checkpoint write, resume or restoration claim. The current physical
   family census and 24 retention policies remain unchanged in membership by this disposition layer.
   The exact CredentialBroker source-add successor has nonpersisted request/result transport and ephemeral
   connection, protected-submission metadata and source-read projections. Its redacted secure-interaction receipt
@@ -62,7 +68,7 @@ acceptance_criteria:
   - Every disposition ID is unique and schema-valid, and every row fixes runtime_evidence=false.
   - Durable rows that lack exact physical key/value registration remain physical_family_registration_pending or external_artifact_store_registration_pending rather than materialized.
   - Nonpersisted action, preview, lease, Guided Tour live-session/transport, playback, and protected-auth rows have no physical family and no retention authority.
-  - The Guided Tour v3 bounded checkpoint has a separate physical_family_registration_pending disposition; exact key/value, retention/redaction, owner snapshot custody, migration, adapter, and recovery evidence are required before durable writes or resume can be claimed. No physical family is added and onboarding_state accepts only a non-secret handoff ref.
+  - The Guided Tour v3 bounded checkpoint has a separate physical_family_registration_pending disposition; exact key/value, retention/redaction, owner snapshot custody, migration, adapter, and recovery evidence are required before durable writes or resume can be claimed, where owner snapshot custody means the Chat ref resolving to an Assistant Chat-issued authentic pre-mutation original of the exact covered Chat state and the layout ref resolving to an owner-issued binding that enumerates the complete exact set of affected owner-scoped originals with each entry's owner, scope, revision/currentness and capture sequence, each held through mutation, close/reload resume and failed-restoration retry, applied only after that owner revalidates its own current lifecycle, permission and scope, and released only after terminal settlement or the ending recovery resolution, not a ref string, fixture, materialized current projection, deferred composer key or restoration boolean. No physical family is added and onboarding_state accepts only a non-secret handoff ref.
   - Full Thread rows reference existing shared-runtime families only as explicit migration inputs and never reinterpret their schema IDs in place.
   - Browser and Test Capture legacy aggregate IDs are compatibility inputs only; one exact schema_id plus record_kind must be established before any durable admission.
   - No disposition adds an EventRecord family or treats a receipt/projection as event admission.

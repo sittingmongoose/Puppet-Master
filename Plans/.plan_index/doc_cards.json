@@ -542,7 +542,7 @@
         "False": 183,
         "True": 284
       },
-      "heading_count": 684,
+      "heading_count": 685,
       "implementation_surfaces": [
         "AGENTS.md",
         "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
@@ -621,7 +621,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 25887,
+      "line_count": 25944,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 467,
       "plan_unit_ids": [
@@ -1428,7 +1428,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "e38d81d68a249d6ee2fcf6f79aed41e29d037257cc9451d8d8f84c6e7244c48f",
+      "sha256": "51345ccf44e2484c8d13981a8dba1830c5e8f43da451c54ea478e4b8ef153a98",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 467
@@ -7207,7 +7207,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 38244,
+      "line_count": 38246,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 561,
       "plan_unit_ids": [
@@ -7871,7 +7871,7 @@
         "visualizer_script_policy_drift",
         "wand_overflow_or_demo_command_pollution"
       ],
-      "sha256": "67f37b6d89db7c1aba45288acbc4f9df3bb02753aca6b03c453b2dbe81fb6a4a",
+      "sha256": "e31bff5adf9eb8fbd760f703413b1b4de32b8c307c72ff18731471d6564d64e8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 560,
@@ -13700,7 +13700,7 @@
         "future Product Onboarding and Bootstrap projection controllers",
         "future Product Onboarding native controller"
       ],
-      "line_count": 2587,
+      "line_count": 2606,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 28,
       "plan_unit_ids": [
@@ -13755,7 +13755,7 @@
         "tour_fake_shell_or_layout_loss",
         "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "6905dfea5340074917be96fc51fa8a87216d96140b9e3e8fb016217d4d4befb6",
+      "sha256": "5673a4149f959c1dd608c94ecdcb4c46d1d339157b66937479bef94ddcd4bfb3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 27,
@@ -13788,9 +13788,10 @@
         "Plans/remote_access_system_contracts.schema.json",
         "Reduced Motion traces",
         "Skip-restore",
-        "and completion-layout fixtures",
+        "and owner-issued original capture/resolve/readback adapter checks for capture sequencing and restore-time current-authority revalidation and same-original retry (adapters not yet authored)",
         "and pre-review no-effect fixtures",
         "callout geometry",
+        "completion-layout fixtures",
         "current phase-census and bounded selected-source precommit negative fixtures; native execution not_run",
         "defer/resume",
         "focus",
@@ -17454,7 +17455,7 @@
         "False": 211,
         "True": 102
       },
-      "heading_count": 765,
+      "heading_count": 766,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -17539,7 +17540,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 26944,
+      "line_count": 26989,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 313,
       "plan_unit_ids": [
@@ -17957,7 +17958,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "061a32972fd4db5fd4c5be3ce7f13a9710c541e01000930067786e4a36d29ee8",
+      "sha256": "b3b496e2dbd00b67dae16dd37d01350a3264f598d6022bd279dcbef4b492cd8f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 310,
@@ -20131,7 +20132,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T18:37:46Z",
+  "generated_at_utc": "2026-09-25T18:55:07Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

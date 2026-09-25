@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3599-L22234
+Source lines: L3599-L22237
 
-Source SHA256: `e38d81d68a249d6ee2fcf6f79aed41e29d037257cc9451d8d8f84c6e7244c48f`
+Source SHA256: `51345ccf44e2484c8d13981a8dba1830c5e8f43da451c54ea478e4b8ef153a98`
 
 ---
 
@@ -3551,6 +3551,8 @@ depends_on: [ACD-074]
 unblocks: []
 acceptance_criteria:
   - Active threads keep full transcript, queue state, metadata, runtime references, and restorable UI state.
+  - An owner-coordinated reversible session resolves restorable Chat UI state only through an Assistant Chat-issued authentic pre-mutation original of the thread, selection, placeholder, unsent draft and focus; a ref string, projection, live or mutated state, or equal value recreated without the held original and owner readback is not that original, a partial composer restoration fails closed, and at restore time the Chat owner revalidates its current lifecycle, deletion/tombstone, permission and scope before applying anything.
+  - An authentic held pre-tour original never overrides that current authority, so a deleted or tombstoned thread, selection, placeholder or draft is never re-created or un-hidden, tombstone concealment stays visible, and the session reports the recoverable/unavailable outcome instead of a restored state.
   - Suspended and archived states prune only the allowed transient state.
   - Deletion immediately removes the thread from normal user-visible chat surfaces and active context/export projections.
   - Unheld canonical message, attachment/blob, mirror, search, and derived content is physically purged within 24 hours.
@@ -3583,6 +3585,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "archiving does not rewrite message ids, thread lineage, or worktree lineage"
   - "deletion is terminal for ordinary user navigation"
+  - "an authentic held pre-tour original never restores, re-creates, or un-hides deleted or tombstoned thread content; a hold may delay byte purge only"
   - Delete confirmation and completion copy must not promise ordinary undo.
 owner_hints:
   - Plans/assistant-chat-design.md

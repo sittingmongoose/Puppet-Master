@@ -1,5 +1,11 @@
 # Remaining decisions and handoff — 2026-09-25
 
+Latest owner-prose integration: Guided Tour authentic Chat/layout originals;
+see `tour-original-owner-integration.md`. Typed custody companions, native
+adapters and physical checkpoint admission remain separate. The final public
+Git review rejected its candidate after four reproduced false acceptances;
+the authorized two-cycle cap is exhausted and no third cycle is started.
+
 Latest integration: the six neutral SCM routes now have reviewed static original/
 request/result/caller composition; see `scm-six-neutral-integration.md`. Public Git
 fetch/push normalization remains in the same capped edge and requires the final

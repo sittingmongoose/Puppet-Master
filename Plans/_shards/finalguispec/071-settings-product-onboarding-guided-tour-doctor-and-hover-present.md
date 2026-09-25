@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34953-L35662
+Source lines: L34953-L35664
 
-Source SHA256: `67f37b6d89db7c1aba45288acbc4f9df3bb02753aca6b03c453b2dbe81fb6a4a`
+Source SHA256: `e31bff5adf9eb8fbd760f703413b1b4de32b8c307c72ff18731471d6564d64e8`
 
 ---
 
@@ -301,6 +301,7 @@ acceptance_criteria:
   - "Scene, route, target, theme, pause, Back, and forward transitions preserve a continuously painted application frame; no black/empty full-screen flash, stale halo, off-target box, text clipping, oversized heading, or callout edge outside the viewport is accepted."
   - "Protected AuthBrowserSession content is never highlighted, captured, inspected, or described."
   - "PMConcept7 browser behavior, effect receipts, and observed mounted-owner results remain concept_fixture_only evidence; they are not production command receipts, native Slint wiring, runtime certification, or product-readiness proof."
+  - "Skip, a default-restore Finish and the other already-defined restore paths apply each captured original only through owner-issued authentic pre-mutation originals, after each issuing owner revalidates its own current authority; deleted or tombstoned Chat content is never shown as restored, an unauthenticated ref, presentation fixture, materialized current projection, released transaction-slot prior bytes, deferred composer key or restoration boolean never reports applied restoration, the layout binding must enumerate every affected owner-scoped original, Keep settles layout only while Chat restoration still applies, a partial, denied or failed restoration stays recovery-required, and close/reload resume applies no original merely because the tour resumed."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)"
   - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)"
@@ -335,8 +336,9 @@ negative_constraints:
   - "Do not use left-edge accent rails, paint-only theme variants, target-covering callouts when a safe placement exists, or any black/empty transition frame."
   - "Do not silently keep the demonstrated layout, auto-start work, or leave a practice surface over the final real Planning Wizard."
   - "Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence, native Slint, or certification claims."
+  - "Do not report applied restoration, a completed Skip, or a Keep settlement from an unauthenticated ref, presentation fixture, current projection, released transaction-slot prior bytes, or restoration boolean; do not present a partially restored composer or layout as applied, and do not present deleted or tombstoned Chat content as restored."
 owner_boundary_notes:
-  - "Planning Wizard owns tour state and typed local actions; Settings owns `general.visual.reduce-animations`; Assistant Chat, Home/workspace-layout, Usage widget, page-navigation, and Planning owners retain performed action and state authority; Final GUI owns story, focus, overlay, copy presentation, and motion."
+  - "Planning Wizard owns tour state and typed local actions; Settings owns `general.visual.reduce-animations`; Assistant Chat, Home/workspace-layout, Usage widget, page-navigation, and Planning owners retain performed action and state authority; Assistant Chat and the owners of each affected layout value additionally issue, hold, resolve and release the authentic pre-mutation originals that Skip, a default-restore Finish and the other already-defined restore paths apply, each owner revalidating its own current authority at restore time, with the layout binding enumerating every affected owner-scoped original beyond the Home workspace-layout record; Final GUI owns story, focus, overlay, copy presentation, and motion."
 owner_hints: [Plans/FinalGUISpec.md, Plans/Planning_Wizard.md, Plans/assistant-chat-design.md]
 ```
 
