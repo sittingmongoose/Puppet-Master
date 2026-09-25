@@ -31350,9 +31350,8 @@
         "cmd.git.fetch dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.git.fetch must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.git.fetch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "cmd.git.fetch availability class is selection (stash_selected) with confirmation class two_step; disabled reasons come only from the closed set: blocked_state_required, stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)",
-        "Confirmation for cmd.git.fetch routes the shared confirm surface referenced by the unified expander row contract before dispatch",
-        "Retired prototype token cmd.git.stash_pop (excluded from production wiring) migrates to this canonical id in concept markup."
+        "cmd.git.fetch availability, disabled reasons and any required confirmation follow Plans/Source_Control_System.md, Plans/GitHub_Integration.md and Plans/WorktreeGitImprovement.md; no stash_selected or stash-pop confirmation policy applies.",
+        "cmd.git.fetch exact typed request/result binding remains unbound; existing planned handler and production certification requirements are unchanged."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/GitHub_Integration.md; Plans/WorktreeGitImprovement.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.git_fetch.availability",
@@ -31365,7 +31364,7 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.git_fetch exposes a stable role/name/description matching cmd.git.fetch with visible label Pop Stash.",
+        "role_or_semantics": "catalog.git_fetch exposes a stable role/name/description matching cmd.git.fetch; no Pop Stash label is inherited.",
         "keyboard_access": "catalog.git_fetch is reachable and activatable by keyboard where the control is visible.",
         "focus_management": "catalog.git_fetch preserves visible focus and returns focus deterministically after dispatch or error.",
         "disabled_announcement": "catalog.git_fetch surfaces state.cmd_git_fetch.disabled_reason to assistive technology when unavailable."
@@ -31374,7 +31373,7 @@
         {
           "test_id": "wiring.catalog.git_fetch.render_control",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Planned render/control placeholder: future render evidence must prove catalog.git_fetch exists on the declared surface with stable role and accessible name Pop Stash; this row is not implementation evidence."
+          "requirement": "Planned render/control placeholder: future evidence must prove catalog.git_fetch on its declared surface with an accessible name for the actual Git fetch command; no runtime evidence is asserted."
         },
         {
           "test_id": "wiring.catalog.git_fetch.dispatcher",
@@ -31384,7 +31383,7 @@
         {
           "test_id": "wiring.catalog.git_fetch.disabled_reason",
           "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.cmd_git_fetch.enabled and disabled copy reads state.cmd_git_fetch.disabled_reason; disabled_reason values come only from the closed set: blocked_state_required, stale_projection."
+          "requirement": "Availability and disabled copy read the existing state.commands.git_fetch.availability and state.commands.git_fetch.disabled_reason projections under actual Git remote owner requirements, not a copied stash-only reason set."
         },
         {
           "test_id": "wiring.catalog.git_fetch.effect",
@@ -31541,9 +31540,9 @@
         "cmd.git.push dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.git.push must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.git.push must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "cmd.git.push availability class is selection (stash_selected) with confirmation class two_step; disabled reasons come only from the closed set: blocked_state_required, stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)",
-        "Confirmation for cmd.git.push routes the shared confirm surface referenced by the unified expander row contract before dispatch",
-        "Retired prototype token cmd.git.stash_pop (excluded from production wiring) migrates to this canonical id in concept markup."
+        "cmd.git.push availability, disabled reasons and any required confirmation follow Plans/Source_Control_System.md, Plans/GitHub_Integration.md and Plans/WorktreeGitImprovement.md; no stash_selected or stash-pop confirmation policy applies.",
+        "cmd.git.push exact typed request/result binding remains unbound; existing planned handler and production certification requirements are unchanged.",
+        "Push retains the existing force-push-with-lease ladder in Plans/WorktreeGitImprovement.md; this row defines no replacement policy."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/GitHub_Integration.md; Plans/WorktreeGitImprovement.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.git_push.availability",
@@ -31556,7 +31555,7 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.git_push exposes a stable role/name/description matching cmd.git.push with visible label Pop Stash.",
+        "role_or_semantics": "catalog.git_push exposes a stable role/name/description matching cmd.git.push; no Pop Stash label is inherited.",
         "keyboard_access": "catalog.git_push is reachable and activatable by keyboard where the control is visible.",
         "focus_management": "catalog.git_push preserves visible focus and returns focus deterministically after dispatch or error.",
         "disabled_announcement": "catalog.git_push surfaces state.cmd_git_push.disabled_reason to assistive technology when unavailable."
@@ -31565,7 +31564,7 @@
         {
           "test_id": "wiring.catalog.git_push.render_control",
           "evidence_kind": "accessibility_regression",
-          "requirement": "Planned render/control placeholder: future render evidence must prove catalog.git_push exists on the declared surface with stable role and accessible name Pop Stash; this row is not implementation evidence."
+          "requirement": "Planned render/control placeholder: future evidence must prove catalog.git_push on its declared surface with an accessible name for the actual Git push command; no runtime evidence is asserted."
         },
         {
           "test_id": "wiring.catalog.git_push.dispatcher",
@@ -31575,7 +31574,7 @@
         {
           "test_id": "wiring.catalog.git_push.disabled_reason",
           "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.cmd_git_push.enabled and disabled copy reads state.cmd_git_push.disabled_reason; disabled_reason values come only from the closed set: blocked_state_required, stale_projection."
+          "requirement": "Availability and disabled copy read the existing state.commands.git_push.availability and state.commands.git_push.disabled_reason projections under actual Git remote owner requirements, not a copied stash-only reason set."
         },
         {
           "test_id": "wiring.catalog.git_push.effect",

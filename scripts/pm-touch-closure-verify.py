@@ -455,6 +455,12 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     if pull_command != "cmd.git.pull":
         raise ValueError("selected pull owner discriminator drift")
     add("TCP-GIT-PULL", "command", {pull_command})
+    # Independently census existing UCC core verbs, never derive from Touch rows.
+    remote_rows = [line for line in read("Plans/UI_Command_Catalog.md").splitlines()
+                   if line.startswith("| `cmd.git.pull` / `cmd.git.push` / `cmd.git.fetch` |")]
+    if len(remote_rows) != 1 or tokens(remote_rows[0].split("|")[1]) != {"cmd.git.pull", "cmd.git.push", "cmd.git.fetch"}:
+        raise ValueError("core Git remote owner registration drift")
+    add("TCP-GIT-REMOTE-LEGACY", "command", tokens(remote_rows[0].split("|")[1]) - {pull_command})
     scm_alias = {"cmd.source_control.select_worktree"}
     add("TCP-SCM", "command", {item for item in scm if item.startswith("cmd.source_control.")} - scm_alias)
     add("TCP-SCM-ALIAS", "command_alias", scm_alias)
@@ -1907,7 +1913,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # ACT017 adds one missing existing core Git pull consumer and exact profile:
     # 643 -> 644 rows, 141 -> 142 profiles; no new public command or runtime proof.
     exact_resolved_denominators = {
-        "row_count": 644,
+        "row_count": 646,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
         # SIR-031: three protected-auth locals select the existing protected
@@ -1916,7 +1922,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # selected logs use four bounded successor profiles. No new Touch rows.
         # Credential source-add has one exact successor, leaving nine peers intact.
         # Exact Forge cancellation consumes its bounded successor, no new row.
-        "profile_count": 146,
+        "profile_count": 147,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1142,

@@ -13,7 +13,7 @@ def baseline(p):return json.loads(subprocess.check_output(['git','show',BASE+':'
 class Bindings(unittest.TestCase):
  def test_only_exact_routes_handlers_and_receipts(self):
   p='Plans/Wiring_Matrix.production.json';now=load(p)['entries'];old=baseline(p)['entries'];keys={'catalog.forge_repository_list','catalog.forge_pipeline_list'}
-  self.assertEqual(1142,len(now));self.assertEqual(keys|{'catalog.forge_pipeline_retry','catalog.forge_pipeline_run'},{k for k in now if now[k]!=old[k]})
+  self.assertEqual(1142,len(now));self.assertEqual(keys|{'catalog.forge_pipeline_retry','catalog.forge_pipeline_run','catalog.git_push','catalog.git_fetch'},{k for k in now if now[k]!=old[k]})
   for k in keys:
    for f in ('handler_location','expected_event_types','ui_command_id'):self.assertEqual(old[k][f],now[k][f])
    for kind in ('request','result'):self.assertEqual(SCHEMA+'#/$defs/'+kind,now[k][kind+'_schema_ref'])
@@ -37,8 +37,8 @@ class Bindings(unittest.TestCase):
    q=case['value']['request'];seen.add(q['authority']['command_id']);self.assertEqual([],list(admission.iter_errors(q)));self.assertEqual([],list(historical.iter_errors(q['authority'])));self.assertTrue(list(admission.iter_errors(q['authority'])))
   self.assertEqual(CMDS,seen)
  def test_touch_only_two_rows_and_one_profile(self):
-  p='Plans/touch_closure.json';d=load(p);old=baseline(p);self.assertEqual((644,146),(len(d['rows']),len(d['profiles'])));self.assertEqual(old['profiles'],d['profiles'][:-3])
-  self.assertEqual({'TOUCH-FGI-001','TOUCH-FGI-027','TOUCH-FGI-030','TOUCH-FGI-029'},{r[0] for r in d['rows'] if r not in old['rows']})
+  p='Plans/touch_closure.json';d=load(p);old=baseline(p);self.assertEqual((646,147),(len(d['rows']),len(d['profiles'])));self.assertEqual(old['profiles'],d['profiles'][:-4])
+  self.assertEqual({'TOUCH-FGI-001','TOUCH-FGI-027','TOUCH-FGI-030','TOUCH-FGI-029','TOUCH-GITREMOTE-001','TOUCH-GITREMOTE-002'},{r[0] for r in d['rows'] if r not in old['rows']})
   for r in d['rows']:
    if r[3] in CMDS:self.assertEqual('TCP-FORGE-LIST-QUERY',r[1])
   for k in ('alias_bindings','excluded_tokens','external_disposition_registries'):self.assertEqual(old[k],d[k])

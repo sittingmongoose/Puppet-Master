@@ -122,8 +122,10 @@ This does not implement native canary testing, registration mutation or deletion
 
 Git ACT017 has a reviewed exact three-strategy pull contract and actual central
 response composition; see `git-pull-companion.md`. The pre-existing omission of
-core Git push/fetch from Touch's neutral-family extraction remains a separate census
-gap, not silent closure of those commands or authority to add their semantics.
+core Git push/fetch from Touch's neutral-family extraction is now repaired, along
+with copied stash-only Wiring assertions; see `git-remote-census-repair.md`.
+Their typed request/result/effect admission remains explicitly unbound, not silent
+closure of those commands or authority to invent their semantics.
 Forge ACT053 comment and the existing selected-request admission routing repair
 are integrated; see `forge-review-comment-companion.md`. Backup ACT111 export is
 integrated after corrected final review; see `backup-portable-export-companion.md`.

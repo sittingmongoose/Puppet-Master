@@ -6,7 +6,7 @@ def load(p):return json.loads((ROOT/p).read_text())
 def prior(p):return json.loads(subprocess.check_output(['git','show',BASE+':'+p],cwd=ROOT,text=True))
 class Bindings(unittest.TestCase):
  def test_only_retry_public_route(self):
-  p='Plans/Wiring_Matrix.production.json';a=prior(p)['entries'];b=load(p)['entries'];self.assertEqual({'catalog.forge_pipeline_retry','catalog.forge_pipeline_run'},{k for k in a if a[k]!=b[k]})
+  p='Plans/Wiring_Matrix.production.json';a=prior(p)['entries'];b=load(p)['entries'];self.assertEqual({'catalog.forge_pipeline_retry','catalog.forge_pipeline_run','catalog.git_push','catalog.git_fetch'},{k for k in a if a[k]!=b[k]})
   row=b['catalog.forge_pipeline_retry'];self.assertEqual('handlers::forge::pipeline_retry',row['handler_location']);self.assertEqual([],row['expected_event_types']);self.assertIn('handler_unavailable',' '.join(row['acceptance_checks']))
   for k in ('request','result'):self.assertEqual(S+'#/$defs/'+k,row[k+'_schema_ref'])
   for p in ('Plans/Commands_System.md','Plans/Forge_Integrations.md'):
@@ -15,7 +15,7 @@ class Bindings(unittest.TestCase):
   p='Plans/forge_integration_contracts.schema.json';a=prior(p);b=load(p);self.assertEqual({'command_request_admission'},{k for k in a['$defs'] if a['$defs'][k]!=b['$defs'][k]})
   old=a['$defs']['command_request_admission']['oneOf'];new=b['$defs']['command_request_admission']['oneOf'];self.assertEqual(10,len(new));self.assertEqual(old[1:],new[1:-2]);self.assertEqual({'$ref':load(S)['$id']+'#/$defs/request'},new[-2]);self.assertEqual(set(old[0]['allOf'][1]['not']['properties']['command_id']['enum'])|{CMD,"cmd.forge.pipeline.run"},set(new[0]['allOf'][1]['not']['properties']['command_id']['enum']))
  def test_one_narrow_touch_profile_no_other_row_changes(self):
-  p='Plans/touch_closure.json';a=prior(p);b=load(p);self.assertEqual((644,146),(len(b['rows']),len(b['profiles'])));self.assertEqual(a['profiles'],b['profiles'][:-2]);changed=[(x,y) for x,y in zip(a['rows'],b['rows']) if x!=y];self.assertEqual(2,len(changed));x,y=next((x,y) for x,y in changed if y[3]==CMD);self.assertEqual(CMD,y[3]);self.assertEqual('partial',y[4]);x[1]='TCP-FORGE-RETRY-SELECTED';self.assertEqual(x,y)
+  p='Plans/touch_closure.json';a=prior(p);b=load(p);self.assertEqual((646,147),(len(b['rows']),len(b['profiles'])));self.assertEqual(a['profiles'],b['profiles'][:-3]);changed=[(x,y) for x,y in zip(a['rows'],b['rows']) if x!=y];self.assertEqual(2,len(changed));x,y=next((x,y) for x,y in changed if y[3]==CMD);self.assertEqual(CMD,y[3]);self.assertEqual('partial',y[4]);x[1]='TCP-FORGE-RETRY-SELECTED';self.assertEqual(x,y)
   profile=next(p for p in b['profiles'] if p['profile_id']=='TCP-FORGE-RETRY-SELECTED');self.assertEqual('TCP-FORGE-RETRY-SELECTED',profile['profile_id']);self.assertEqual(S+'#/$defs/result',profile['result_schema_ref']);self.assertEqual(S+'#/$defs/request',profile['payload_schema_ref'])
   for k in ('alias_bindings','excluded_tokens','external_disposition_registries'):self.assertEqual(a[k],b[k])
  def test_eight_kinds_four_groups_no_physical_enrollment(self):
