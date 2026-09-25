@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L2166-L7673
+Source lines: L2166-L7678
 
-Source SHA256: `794261c7a6057eff765489ee4932364f0b7c0ef80cd04fea6a497af81009e8d4`
+Source SHA256: `6a2e3530e8a06983d4b65c31452883897438444903f64e5f73e92152edb1eb47`
 
 ---
 
@@ -5334,7 +5334,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-### DL-093 - A Step 9 Registration Entry Is Jared's Decision Entry For Its Family
+### DL-093 - The Seven Coordination Families' Registration Entries Are Jared's Decision Entries For Those Families
 
 ```yaml
 plan_unit_id: DL-093
@@ -5342,23 +5342,28 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Jared answered 4 i approve on 2026-09-25 to the host's question 4, review question D-02
-  of the Step 9 procedure record: the Decision Log entry that each Step 9 registration
-  landing adds under DL-078, which names the family, is Jared's decision entry for that
-  family in the sense of DL-077, and the family's DL-077 admission record cites it as its
-  decision_ref; Jared does not approve each admission himself. The question named the
-  seven coordination families; the host's reading, stated back to Jared in the same
-  session, covers each Step 9 registration. This closes D-02. DL-077's and DL-078's text
-  is unchanged, every other Step 9 requirement stands, and nothing is registered or
-  admitted.
+  Jared answered 4 i approve on 2026-09-25 to the host's question 4, which put review
+  question D-02 of the Step 9 procedure record to him for the seven coordination
+  admissions: the Decision Log entry that each registration landing of the seven
+  coordination families (coordination.agent_registered, coordination.agent_status_updated,
+  coordination.agent_operation_updated, coordination.agent_file_ownership_updated,
+  coordination.agent_unregistered, coordination.agent_crashed and
+  coordination.agent_aborted) adds under DL-078, which names the family, is Jared's
+  decision entry for that family in the sense of DL-077, and the family's DL-077 admission
+  record cites it as its decision_ref; Jared does not approve each of those seven
+  admissions himself. The question named the seven coordination families, and this answer
+  covers those seven. No answer from Jared to the host's wider reading, which covered
+  every Step 9 registration, is recorded, so D-02 stays open for every other Step 9
+  registration. DL-077's and DL-078's text is unchanged, every other Step 9 requirement
+  stands, and nothing is registered or admitted.
 gui_related: false
 gui_classification_reason: Defines admission-record governance, not visual presentation.
 split_recommended: false
 depends_on: [DL-039, DL-077, DL-078]
 unblocks: []
 acceptance_criteria:
-  - The DL-077 admission record of each Step 9 registration cites as its decision_ref the Decision Log entry that its own landing adds under DL-078 and that names the family.
-  - The Step 9 procedure record marks review question D-02 as answered by DL-093.
+  - The DL-077 admission record of each of the seven coordination families cites as its decision_ref the Decision Log entry that its own registration landing adds under DL-078 and that names the family.
+  - The Step 9 procedure record marks review question D-02 as answered by DL-093 for the seven coordination families and as open for every other Step 9 registration.
   - DL-077's and DL-078's text is unchanged, and no registration skips any other part of the Step 9 procedure.
 validation_surfaces:
   - reports/event-authority-20260911/step-09-procedure-20260924.md
@@ -5386,7 +5391,7 @@ preserved_exact_tokens:
   - "DL-078"
   - "decision_ref"
 negative_constraints:
-  - Do not require a separate approval from Jared for a Step 9 admission whose registration passes the full procedure and whose landing adds the family's own Decision Log entry.
+  - Do not require a separate approval from Jared for the admission of one of the seven coordination families whose registration passes the full procedure and whose landing adds the family's own Decision Log entry.
   - Do not cite DL-077 or DL-078 themselves as a family's decision entry, and do not edit either entry's text to record this answer.
   - Do not lower any other Step 9 requirement on the strength of this entry.
 owner_hints:

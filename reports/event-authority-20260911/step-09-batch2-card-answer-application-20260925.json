@@ -1888,5 +1888,149 @@
       ],
       "note": "Line numbers this application adds refer to main at 1e5d9b097b; Plans/Contracts_V0.md, Collaborative_Workflows.md and orchestrator-subagent-integration.md are unchanged on this branch. The Decision Log anchors DL-087 and DL-090 to DL-093 are the entries this branch adds."
     }
+  },
+  "review_cycle1_repair_application": {
+    "application_id": "EA-STEP09-BATCH2-ANSWERS-REVIEW-CYCLE1-REPAIR",
+    "bound": "DL-066's one bounded repair round, as step 5 of the Step 9 procedure record's \"Per batch\" applies it: one commit per finding, in the reviewer's suggested words",
+    "reviewed_tip": "130cd5b4009d0025bca12ef36fab95b660cb8213",
+    "review": {
+      "directory": "/mnt/Cursor/PM-Experiments/review-ea-step09-batch2-answers-20260925/",
+      "copy": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-batch2-answers-repair-20260925/review/",
+      "files_sha256": {
+        "REVIEW.md": "8c3014bc81eae3fc764fd1d0fd129cb8f45a6e94eee1f4b21583754e9d7137f8",
+        "findings.jsonl": "f2e34fb6384b551e04abf5987de2463e1d172bd0525df29dc165e32a313f5141",
+        "RECONCILIATION.md": "e094844301e9c096f6d4bb884eaf08ad86b6dcf331c92c7db7206e429b3250ec"
+      },
+      "result": "not landing-ready: B2-01 blocking; B2-02, B2-03 and B2-04 should fix; B2-05 to B2-08 notes"
+    },
+    "application_record_before_sha256": "ddcc37dae32267dc7c630d163a7b7e7be64b7da984e1da5f780379d3468b6d84",
+    "files_rule": "Each repair gives the SHA-256 before (at its parent commit) and after of every file its commit changes, except this record, its note (reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.md) and the batch report (reports/event-authority-20260911/step-09-batch2-20260925.md), which cite this record's hash. The entries of the two applications above are kept byte-identical; where a repair supersedes one of them, it says so.",
+    "repairs": {
+      "B2-01": {
+        "severity": "blocking",
+        "applied_at_utc": "2026-09-25T06:05:52Z",
+        "parent_commit": "130cd5b4009d0025bca12ef36fab95b660cb8213",
+        "finding": "DL-093 recorded Jared's \"4 i approve\" as covering every Step 9 registration, while question 4 as asked named only the seven coordination admissions; the wider reading was the host's, stated back to Jared in the same session, and no answer from him to it is recorded.",
+        "repair": "Narrowed to the question as asked, in the reviewer's words: DL-093's heading, prose, canonical_text and PlanUnit (heading, acceptance criteria 1 and 2, negative constraint 1) cover the seven coordination families, and review question D-02 stays open for every other Step 9 registration. The same narrowing is made in the procedure record's D-02 paragraph, the batch report's DL-093 row, and the note's DL-093 row and collaborative-batch follow-up. The Decision_Log shards and the plan index are regenerated.",
+        "answers": {
+          "DL-093": {
+            "decision_log": "Plans/Decision_Log.md#DL-093",
+            "question": "the host's question 4, which put review question D-02 of the Step 9 procedure record to Jared for the seven coordination admissions",
+            "answer": "Approve",
+            "answer_verbatim": "4 i approve",
+            "scope": [
+              "coordination.agent_registered",
+              "coordination.agent_status_updated",
+              "coordination.agent_operation_updated",
+              "coordination.agent_file_ownership_updated",
+              "coordination.agent_unregistered",
+              "coordination.agent_crashed",
+              "coordination.agent_aborted"
+            ],
+            "not_answered": "The host's wider reading, that the landing entry of every Step 9 registration is Jared's decision entry for that family, has no recorded answer from Jared; review question D-02 stays open for every other Step 9 registration, including the 18 collaborative workflow families of DL-090 and DL-091.",
+            "decided_by": "Jared",
+            "answered_on": "2026-09-25",
+            "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_OPEN_QUESTIONS.md",
+            "answer_source_sha256": "678b9a32a0942fff08cea4127d9c52d7e73774509869c88958f466d6b8d0171a",
+            "card_copy": null,
+            "owner_edits_pending": [],
+            "j248_rows": [],
+            "supersedes": "card4_and_retention_ruling_application.answers.DL-093, kept as history"
+          }
+        },
+        "files": {
+          "Plans/.plan_index/acceptance_units.jsonl": {
+            "before_sha256": "f13e9d4ee985a310052131ad43f5fc663ac21594f3fda487bb6247e64f4a493d",
+            "after_sha256": "84797a2c792535403851e63da3f66a56c7a4b75efe3be66a7a7667576ac2b62c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/coverage_report.json": {
+            "before_sha256": "e29d2a5745d6bb33fc26c1619d15072416a818ead22316e27263d5a8d1b1d76c",
+            "after_sha256": "295237872d1663e661e2c8de9dae22019a49b4823d466002b4546b7ce6735b88",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/dependencies.json": {
+            "before_sha256": "a938f607d68a8f3b262da8bdec351e1aab667fed63bb0b4735c3f84ecc54321f",
+            "after_sha256": "663e18f7c72c6f0316a6bac2c5d0bc8d6d1c285cc35413bcd52a0f4f051cdefd",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/doc_cards.json": {
+            "before_sha256": "9ff3faf5c3775e19895b720ea8b024ba19ff582b19dc377668fbc41bfaf72627",
+            "after_sha256": "99e5954cb8b50b3768bd67cb63f3aee031c1a726a4977b715920088994a8ae6f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/node_readiness_report.json": {
+            "before_sha256": "cc1a419ee82f3e7c8245e74d3867456db013cb536f6134cd0c45404ad9ab7172",
+            "after_sha256": "18e7f9eb9c594814d3295b83d5b3585de9a803e3344eda4726fe0fa289e3ec77",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/plan_units.jsonl": {
+            "before_sha256": "ef55312cc2b62fed93e384c143567f5fbb282ba818fb1ceb6d96bf742b4886fb",
+            "after_sha256": "0cf044b216fed356e1211964b77959aa1259af882f416675dedf551467fe3a74",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/Decision_Log.md": {
+            "before_sha256": "794261c7a6057eff765489ee4932364f0b7c0ef80cd04fea6a497af81009e8d4",
+            "after_sha256": "6a2e3530e8a06983d4b65c31452883897438444903f64e5f73e92152edb1eb47",
+            "kind": "edited"
+          },
+          "Plans/_shards/decision_log/00-index.md": {
+            "before_sha256": "2802b786235ac5a3240d16b997e254b3f4d148da7fac98356eb014294e575723",
+            "after_sha256": "65a37d7f33ea39ae0327e701292bae784c1caff2a3dea46a7040b64e5265d99c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/001-preamble.md": {
+            "before_sha256": "873637628101cf776aa93ccf91fd390a06bdfb8c1d598094477f8f63080d9962",
+            "after_sha256": "73bfbcb11402de3521fcb60f25e596702348be609e970b1c634df32e75fe1c2d",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/002-purpose.md": {
+            "before_sha256": "5ac22932940dede03a646d483fa3781082e1c48db2e8ae0f676446feba228c6e",
+            "after_sha256": "9ea82a0fa4c2d3deef088f3682f62e557a03aa57e2f3e088c8843fd18942c4b4",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/003-entries.md": {
+            "before_sha256": "e7b6851b8bc5d5f006009120ea2143c485cb76696fd0a7a9d060f6424fe2412c",
+            "after_sha256": "da3fad2951a2a7fef968364182d2f0699074bc2cad9edb995d64be476927c22c",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/004-owner-consumer-map.md": {
+            "before_sha256": "40a86285e9ca4ccf105385256fd2f097b5330cfd3cee05b8e9c5068e7da55c7b",
+            "after_sha256": "d556d8353f094f53981676657d5a772eb53e0799b57b0797773b9733aefc4176",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/005-planunits.md": {
+            "before_sha256": "1caeee97172e3cedb5444ddbfdb23b7414b2caf5a72dd71dc892f46eb28e15bd",
+            "after_sha256": "2d293e846b972272402a477d1b3232176175b24a53a9cb131408534e5e362e73",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/006-migration-coverage.md": {
+            "before_sha256": "3800f15e483d16db0c88e263b22d1604d390ca1752595f6d2ecc39225d99bbd4",
+            "after_sha256": "0cbecf948f3a4966ebe4be6cc48a152f0e5fbb252574789146d607a0b79cfe7b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md": {
+            "before_sha256": "2a70ebe2a7b4901a9714a2c5a4662d6c98e50eeaa4af02ef1289eab5e2fa3a81",
+            "after_sha256": "62d309c120495d8b8c5c9be0d09215e849c10711fcdc0a1f760d9a72a3c2dc19",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md": {
+            "before_sha256": "26a2f9e7c22bcbb6e7cb593d76a99a9ded287b8808941c1f43d1f5ad57541cb0",
+            "after_sha256": "5a3af1c49c2a5c401ea222726fccf3ad9410b09df9d616ecd3b7eb2d32be78da",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/manifest.json": {
+            "before_sha256": "2e108cdbf8c6516055a712b80ad3dd68f2a70c1a5759766a548091edf288e272",
+            "after_sha256": "b4ada78bbd4a9d074142f79a4483f95a220491b89207c82757553039f6cb72dc",
+            "kind": "derived (regenerated)"
+          },
+          "reports/event-authority-20260911/step-09-procedure-20260924.md": {
+            "before_sha256": "5d67ec19789a7d28fba8ceee697cab8edd370941a7948c277646629021fcd65c",
+            "after_sha256": "2aae95857abdbd4d86cad082680e9feedace6cfcda50cc2aa9e42efc40d2e27a",
+            "kind": "edited"
+          }
+        }
+      }
+    }
   }
 }

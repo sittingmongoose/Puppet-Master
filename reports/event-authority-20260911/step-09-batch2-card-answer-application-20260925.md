@@ -120,7 +120,7 @@ Jared's answers:
 | DL-090 | `EA-S09B2-COLLAB-EVENTS-001` (addendum 4a) | Option 2, written in the note with no radio button selected | All 17 names of `Plans/Collaborative_Workflows.md` section 13 are to be registered, one family per landing, under a separate bounded technical-binding permission on DL-045's terms, as DL-046 did. New scope outside the 252 | none |
 | DL-091 | `EA-S09B2-COLLAB-FAILED-001` (addendum 4b) | Approve (option 1) | Section 13 gains `collaboration.failed`, registered under DL-090's permission, whose exact list is therefore 18 names | none |
 | DL-092 | `EA-S09B2-COLLAB-RETENTION-001` (addendum 4c) | Approve (option 1) | The events of DL-090 and DL-091 are kept as long as the chat exists, DL-084's lifetime and the same Storage reuse check. This covers the recorded events only | none |
-| DL-093 | The host's question 4 (review question D-02) | "4 i approve" | The Decision Log entry each Step 9 registration landing adds is Jared's decision entry for that family in the DL-077 sense | none |
+| DL-093 | The host's question 4 (review question D-02, for the seven coordination admissions) | "4 i approve" | The Decision Log entry each registration landing of the seven coordination families adds is Jared's decision entry for that family in the DL-077 sense. D-02 stays open for every other Step 9 registration | none |
 
 Sources: `ANSWERS_STEP09_BATCH2.md` (`e224ff62...`), `ANSWERS_CARD4_ADDENDUM.md` (`b09b2afd...`) and `ANSWERS_OPEN_QUESTIONS.md` (`678b9a32...`), all in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/`. The answered addendum is kept byte-identical as `step-09-batch2-card4-addendum-20260925.md` (`295f17d7...`, artifact `QaLQRPQHwhsqQnNeRQ6g1z` version 1).
 
@@ -179,7 +179,7 @@ None of them is done on this branch.
 1. **DL-087, Contracts with Orchestrator.** Contracts removes the six crew lifecycle rows (`Plans/Contracts_V0.md:3061-3064`, `3068-3069`), narrows CV-270 to the board events and retires CV-271. The orchestrator adds a pointer from its Crew text (`Plans/orchestrator-subagent-integration.md:4200-4202`, `4258-4260`) to `Plans/Collaborative_Workflows.md`.
 2. **DL-090 and DL-091, the collaborative workflow batch.**
    - Collaborative Workflows section 13 cites DL-090 and gains `collaboration.failed`.
-   - The 18 families are prepared on one branch and admitted one per landing, each with its full contract, blind review and DL-077 admission record, citing its own landing entry (DL-093).
+   - The 18 families are prepared on one branch and admitted one per landing, each with its full contract, blind review and DL-077 admission record. Whether each one's own landing entry is Jared's decision entry for that family is review question D-02, which DL-093 answers only for the seven coordination families and which stays open for these 18.
    - The contracts of events that carry proposal or finding text say how that text is protected and deleted.
    - The run, message, proposal and finding records get their own contracts schema and fixture pair.
 3. **DL-092, Storage.** The Case L-3 retention text assigns the chat lifetime to the 18 families, together with DL-084's 19 families, after the same reuse check. Each family contract carries the structured `retention_policy_ref`.
@@ -197,3 +197,11 @@ The Storage retention follow-ups of the first application stand: DL-083 and DL-0
 - the J248 count over the ledger is 237 and 15.
 
 The shard check, index validation, test modules and the currentness validator run at the branch state are listed in the batch report, `step-09-batch2-20260925.md`, with the evidence directory `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-batch2-answers-checks-final-20260925/`.
+
+## Review repair, cycle 1, 2026-09-25
+
+The blind cycle-1 review of this branch at `130cd5b400` found one blocking finding, three should-fix findings and four notes, B2-01 to B2-08. Its files are in `/mnt/Cursor/PM-Experiments/review-ea-step09-batch2-answers-20260925/` (`REVIEW.md` `8c3014bc81eae3fc764fd1d0fd129cb8f45a6e94eee1f4b21583754e9d7137f8`, `findings.jsonl` `f2e34fb6384b551e04abf5987de2463e1d172bd0525df29dc165e32a313f5141`, `RECONCILIATION.md` `e094844301e9c096f6d4bb884eaf08ad86b6dcf331c92c7db7206e429b3250ec`), copied to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-batch2-answers-repair-20260925/review/`. This is DL-066's one bounded repair round: each finding is repaired in its own commit, in the reviewer's suggested words.
+
+The application record gains the key `review_cycle1_repair_application`. For each repair it gives the SHA-256 before and after of every file the repair changes, except the record itself, this note and the batch report, which cite the record's hash; the record's hash now is given in the batch report. The record entries of the two applications above are kept byte-identical. Where a repair below changes their text in this note, it says so. Where this section and the ones above differ, this section is current.
+
+- **B2-01 (blocking): DL-093's scope.** Question 4 named only the seven coordination admissions, and no answer from Jared to the host's wider reading is recorded. DL-093 now records "4 i approve" for the seven coordination families only: the Decision Log entry that each of their registration landings adds under DL-078 is Jared's decision entry for that family. Review question D-02 stays open for every other Step 9 registration, including the 18 collaborative workflow families. The same narrowing is made in the procedure record's D-02 paragraph, the batch report's DL-093 row, this note's DL-093 row and its follow-up for the collaborative workflow batch (both in the second application above), and the record, whose new key has a DL-093 answer entry that supersedes the second application's.
