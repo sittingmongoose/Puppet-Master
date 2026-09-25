@@ -58,7 +58,7 @@ The 2026-09-25 landing record names the `Goal_Runtime_System.md` member and note
 **What it does.** Installs `pm.executor.workflow_source.all_writers.v8`, with its Replan Stop route and its producer component `pm.goal_run_certified.producer_source.v3`, into canon as source contracts. It adds 13 owner units (EP-125 to 127, GRS-086 to 089, CV-354, SP-321, SP-322, ATS-059, ATS-060, BRS-031), an index section, 74 placed files, 34 registry rows and eight census re-pins. It adds no Event registry row, payload successor, consumer, projector or checkpoint, and nothing native. See `A1-canonical-placement-20260925.md`, with its evidence under `a1/`.
 
 **Where it stands.** Compiled on the branch, pending the blind review.
-- The canonical-draft package `replan-v8/goal-replan-v8-canonical-draft-20260925/v1` (manifest `bb6be609…`, commit `083be9a`) is accepted: independent review cycle 1 required repairs (3 blocking, 20 should_fix, 15 notes), cycle 2 accepted (1 should_fix, 4 notes, all applied), and root accepted it for the canon compile (`a7f5bb5f…`). The records are on branch `replan-v8-canonical-draft-20260925` (tip `3928dd6`) of `sittingmongoose/PuppetMaster-Packages`. That branch is not yet merged to the repository's `main` (`2cffa80`); the merge awaits Jared.
+- The canonical-draft package `replan-v8/goal-replan-v8-canonical-draft-20260925/v1` (manifest `bb6be609…`, commit `083be9a`) is accepted: independent review cycle 1 required repairs (3 blocking, 20 should_fix, 15 notes), cycle 2 accepted (1 should_fix, 4 notes, all applied), and root accepted it for the canon compile (`a7f5bb5f…`). The records are on branch `replan-v8-canonical-draft-20260925` (tip `3928dd6`) of `sittingmongoose/PuppetMaster-Packages`. That branch is merged to the repository's `main` (`3928dd6`).
 - Owner prose (task 1): `94585533b`. Companions (task 2): `48a2b6840`: the 74 files byte-identical to the package, the registry at `45e383b2…` (328 families), the eight re-pins and the index section. The report and its `a1/` bundle are the commit after them. The shard check passes, and the census unit tests run 95 OK.
 - `Plans/.plan_index/node_readiness_report.json` is deliberately left at `main`'s version. The cloud session lacks the gitignored currentness receipt, so regenerating it here rewrites rows for documents A1 does not edit. The lander regenerates it (below).
 - Next: one blind form-driven review of the canon branch, cycle cap two, then the handover for landing.
@@ -77,7 +77,6 @@ A local session that Jared designates lands the branch. Prerequisites:
 - A0 (`plans/replan-v8-a0-20260925`) is on `main`, and so is `plans/replan-v8-process-answers-20260925` (`616f12bfd`). The placed `composition.json` cites both report files.
 - If `main` has moved past `63cf2cb97f` in any file the package binds or in the storage census (or in a relied-on passage or a file A1 edits), run the package's `scripts/rebase_check.py --landing-base <new main>` and re-derive the re-pins before landing.
 - The node readiness report is regenerated after the rebase with the currentness receipt present, and committed with the landing, never hand-merged (precedent: Step 8(d) review A-08).
-- The packages branch's merge to `main` of `sittingmongoose/PuppetMaster-Packages` awaits Jared.
 
     mkdir /mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held   # then write agent, branch, UTC time to held/holder.txt
     git -C /mnt/Cursor/PuppetMaster fetch origin
@@ -110,4 +109,4 @@ A local session that Jared designates lands the branch. Prerequisites:
 
 ## Next
 
-The blind form-driven review of the A1 canon branch, then its handover for landing after A0 and the process answers. Jared merges the packages branch `replan-v8-canonical-draft-20260925` to `main` of `sittingmongoose/PuppetMaster-Packages`. After A1: A2 (consumer adoption) and A3 (the Event contracts and registry rows, each with its own DL-036 card).
+The blind form-driven review of the A1 canon branch, then its handover for landing after A0 and the process answers. After A1: A2 (consumer adoption) and A3 (the Event contracts and registry rows, each with its own DL-036 card).
