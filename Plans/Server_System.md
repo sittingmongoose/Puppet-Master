@@ -172,6 +172,10 @@ canonical_text: >-
   grant least-privilege scopes and bind protocol range, trust generation, expiry, and revocation. cmd.client.revoke
   increments authority generation, terminates all current sessions, rejects future sessions and stale commands, and
   remains restart-decidable from durable receipts.
+  Server-issued code/link/QR share one protected pairing invitation with exact Server, audience/access policy,
+  generation, expiry and one-use authority. Issuance, replacement and Cancel Code are distinct from Client
+  pair.start consumption and Client pair.cancel. Replacement invalidates the prior generation before publishing
+  the new material; uncertain transitions disclose no secret and grant no trust.
 gui_related: true
 gui_classification_reason: Pairing prompts, fingerprint confirmation, Client lists, access scopes, expiry, and revocation are user-visible workflows.
 depends_on: [SRV-002, SRV-003]
@@ -180,7 +184,9 @@ acceptance_criteria:
   - Pairing cannot complete without explicit user or trusted-Client approval and identity confirmation.
   - A revoked or expired Client cannot reconnect, reuse a session, or publish a late command.
   - Sessions bind client_id, server_id, access-policy generation, protocol version, expiry, and non-secret currentness evidence.
-validation_surfaces: [Plans/server_system_contract_fixtures.json, future stolen expired revoked access tests]
+  - Issuance results bind original owner admission and exact before/after values; replacement, cancellation, consumption, expiry and recovery cannot revive or disclose retired pairing material.
+  - Protected code/link/QR reads require current Server, audience, access, process/channel and generation checks; ordinary projections and historical replay carry no raw material or usable dispatch handles.
+validation_surfaces: [Plans/server_system_contract_fixtures.json, Plans/server_pairing_issuance_contracts.schema.json, Plans/server_pairing_issuance_contract_fixtures.json, tests/test_pm_server_pairing_issuance.py, future stolen expired revoked access tests]
 risk_class: client_trust_or_revocation_bypass
 reasoning_tier: high
 context_scope: client_trust_and_sessions
@@ -189,6 +195,8 @@ node_compile_hint: {mode: client_trust_contract, create_worknodes: false, create
 source_lineage:
   - source_ref:normalized-register:server-first-2026-08-31:R03
   - source_ref:packet:10_SERVER_REMOTE_ACCESS_DEPLOYMENT_CONTRACT.md
+  - source_packet:PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/05_REMOTE_ACCESS_DISCOVERY_AND_PAIRING.md#3-immediate-new-server-pairing-screen
+  - source_packet:PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/05_REMOTE_ACCESS_DISCOVERY_AND_PAIRING.md#4-pairing-workflow
 preserved_exact_tokens: [ClientTrustRecord, PairingRun, pairing_candidate_id, ClientAccessPolicy, ServerTrustRecord, RevocationRecord, SessionRecord, cmd.client.pair.start, cmd.client.pair.approve, cmd.client.pair.reject, cmd.client.pair.cancel, cmd.client.revoke]
 negative_constraints: [Do not treat route possession as trust., Do not leave revoked sessions active., Do not persist raw pairing or session secrets in ordinary events.]
 owner_hints: [Plans/Server_System.md, Plans/Permissions_System.md, Plans/FileSafe.md]
@@ -495,6 +503,22 @@ QR import and Tailscale/Headscale peer selection also do not mint independent si
 The schema exposes these six through `x-supplemental-command-contracts`, typed `supplemental_command_*` records, command-specific receipt refs, availability/disabled selectors, permission classes, currentness, expected generations, exact return context, and truthful `pending_central_integration` / `not_proven` status. Missing central rows or native wiring keeps every affected action disabled.
 
 ### 4.3 UI projection grammar
+
+#### Server-issued protected pairing material
+
+`server_pairing_issuance_contracts.schema.json` is the additive internal Server-owner companion for issuance, replacement (New Code), Cancel Code, expiry and successful one-use consumption. It does not register commands or change the six existing supplemental command contracts. `cmd.client.pair.start` consumes already-issued material through its unchanged process-local handoff; `cmd.client.pair.cancel` aborts that Client's request, not the Server's issued code. Issuance stays unavailable on a public surface until its existing Server owner has a genuine centrally admitted route and handler; no guessed `cmd.*` identity is created here.
+
+The Server alone allocates a pairing session and token generation after authentic admission. Code, link and QR encode the same protected token and share its Server fingerprint, audience-policy binding, intended ClientAccessPolicy, expiry and single-use state. Caller labels, endpoint possession and requested scope never prove authority. The issuance policy owns lifetime, audience and rate limits; no fixed timeout or broader trust role is introduced. Authentication, exact Server identity, owner claim/trusted approval and actual ClientAccessPolicy remain separate prerequisites. An invitation is not a Client credential or completed trust grant.
+
+The closed nonsecret records retain an original request, immutable issued state and original operation result. Issued state is `active`, `cancelled`, `expired`, `consumed`, or `recovery_required`. A replacement uses a newer generation and different material digest within the same session, invalidates the predecessor under the Server's atomic current-generation fence, and publishes new protected material only after that transition is established. Cancellation leaves that generation unusable; it does not revoke already issued Client trust. Expiry grants no refresh. Consumption is accepted once only with the actual completed, explicitly approved PairingRun, paired receipt and active ClientTrustRecord joined to the exact Server, session/generation, material, fingerprint, intended policy and Client. Failed or interrupted completion cannot consume as successful pairing or issue a second trust grant.
+
+Original result validation independently resolves authenticated owner request/before/after/operation evidence. Immutable historical replay returns only the original nonsecret outcome: it neither regenerates a code nor replays trust issuance. A blocked request has no state effect. Unknown commit/invalidated-secret/issuance custody returns `recovery_required`, discloses nothing and remains fenced; restart must reconcile actual Server-owned state rather than infer no effect from absence. Restored old invitation metadata cannot authorize old material. Native durable current-generation/one-use arbitration and original-result custody are prerequisites; this companion adds no physical family/key or migration and does not extend the closed predecessor PairingRun value.
+
+Protected display/read is separate from historical outcome inspection. Every Show/refresh QR, Copy Link or code display re-resolves current active unexpired issuance under the current Server identity, exact audience/access-policy and requesting Client authority. It also authenticates the live process/channel and protected source; no persisted handle, supplied digest or prior successful display authorizes another read. All helpers complete before the final generation/access/source fence; a consumed, replaced, expired, cancelled, restored-stale or uncertain issuance returns no material. Display alone neither replaces nor consumes the token. Raw code/link/QR, encoded bytes and usable handoff handles are process-local protected data, excluded from ordinary projections, receipts, logs, Chat, screenshots/recordings, analytics and fixtures. The existing client dispatch handle remains separate and ephemeral.
+
+`pm_server_pairing_issuance_semantics.py` checks finite typed joins through mandatory authentic owner resolvers and admission, transition, pairing-completion and protected-read proof adapters. Its static fixtures contain fabricated nonsecret metadata only and prove neither secret generation/delivery, authentication, rate-limit enforcement, atomic one-use exclusion, durable recovery nor native handler availability. Storage/writer, central command/wiring, current disclosure and native security proof remain separately required; no new EventRecord or physical store follows.
+
+ContractRef: ContractName:Plans/Server_System.md#SRV-004, ContractName:Plans/server_pairing_issuance_contracts.schema.json, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
 
 The normal Server card shows only:
 
