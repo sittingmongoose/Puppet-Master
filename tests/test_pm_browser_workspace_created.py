@@ -419,6 +419,7 @@ class CreatedV2Tests(unittest.TestCase):
         self.assertEqual(rows[0]['value_schema_id'], 'pm.storage_value.browser_workspace_created_index_checkpoint.v2')
         self.assertNotIn('https://', json.dumps(bundle))
         self.assertTrue(Draft202012Validator(bundle, format_checker=FormatChecker()).is_valid(self.cp))
+        self.assertFalse(Draft202012Validator(bundle, format_checker=FormatChecker()).is_valid(self.old))
         generic = json.loads((ROOT / 'Plans/event_record_index_checkpoint.schema.json').read_text(encoding='utf-8'))
         token = copy.deepcopy(generic['$defs']['read_token'])
         token['required'].remove('redb_snapshot_id')
