@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6016,
+      "line_count": 6019,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "ef243c4a1e70a6652b49179cd09db4efdf10736e14ad5dbb5cc328b403a3db56",
+      "sha256": "e6827d588136856d68d2c74ba8d628e8bf76d44004c37dc686a2f65b49ba7bbf",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -2398,7 +2398,7 @@
         "future restore coordinator",
         "future security adapter registry"
       ],
-      "line_count": 1923,
+      "line_count": 1942,
       "path": "Plans/Backup_Restore_System.md",
       "plan_unit_count": 30,
       "plan_unit_ids": [
@@ -2468,7 +2468,7 @@
         "unsafe_restore_or_false_operational_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "0f3a7dc0e8d28ff709730bd150c9072d8cb0e1c20542c920697eeef1d6ac3308",
+      "sha256": "8ea328faf9e7233433b73a56da5b8f8ea4be4bfe69d0f5013a09951aa55d0d13",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 30
@@ -2496,6 +2496,8 @@
         "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_architecture_admission_record",
         "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_recovery_admission_record",
         "Plans/backup_restore_system_contracts.schema.json#/$defs/restore_operational_safety_record",
+        "Plans/doctor_query_controller_contract_fixtures.json",
+        "Plans/doctor_query_controller_contracts.schema.json",
         "Plans/event_family_registry.json",
         "Plans/executor_cancellation_contracts/methods.json",
         "Plans/executor_cancellation_contracts/physical-families.json",
@@ -10949,7 +10951,7 @@
         "future Doctor descriptor registry fixtures",
         "future Doctor report export native handler"
       ],
-      "line_count": 9127,
+      "line_count": 9136,
       "path": "Plans/newtools.md",
       "plan_unit_count": 157,
       "plan_unit_ids": [
@@ -11274,7 +11276,7 @@
         "web_tool_search_site_reader",
         "worktree_config_cleanup_boundary"
       ],
-      "sha256": "f76550c5fe67d004a88eca1ce0a85e40f15e46eeab64f8c12503f1733c3670c4",
+      "sha256": "109db9afd01d746d7a3e7ef64dee9f6fa5a062fdb857359051180311f6a7e68c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 157
@@ -11292,6 +11294,8 @@
         "Plans/backup_restore_system_contracts.schema.json",
         "Plans/doctor_contract_fixtures.json",
         "Plans/doctor_contracts.schema.json",
+        "Plans/doctor_query_controller_contract_fixtures.json",
+        "Plans/doctor_query_controller_contracts.schema.json",
         "Plans/event_payload_platform_capability_evaluated.schema.json",
         "Plans/platform_capability_catalog.json",
         "Plans/platform_capability_catalog.schema.json",
@@ -12715,7 +12719,7 @@
         "future notification credential custody",
         "future permission settings"
       ],
-      "line_count": 9707,
+      "line_count": 9733,
       "path": "Plans/Permissions_System.md",
       "plan_unit_count": 143,
       "plan_unit_ids": [
@@ -12900,7 +12904,7 @@
         "visualizer_sandbox_escape",
         "wholesale_browser_state_or_auth_export"
       ],
-      "sha256": "b3fb90ae8e5d95a097da1614c78e2a2edf2e36e90acc595326d3ec6457731f73",
+      "sha256": "704772231957d514d5fa0d5f747aa41dbba3406d21a267629834b40bfe5b76d6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 143
@@ -12926,6 +12930,8 @@
         "Inline visualizer sandbox and library-denial fixtures",
         "Live probe authority and redaction fixtures",
         "Notification secret custody and live-send permission fixtures",
+        "Plans/doctor_query_controller_contract_fixtures.json",
+        "Plans/doctor_query_controller_contracts.schema.json",
         "Plans/egolite_retained_requirement_contract_fixtures.json",
         "Plans/egolite_retained_requirement_contracts.schema.json",
         "Plans/protected_auth_browser_contract_fixtures.json",
@@ -15909,7 +15915,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm_browser_program_semantics.py"
       ],
-      "line_count": 12101,
+      "line_count": 12112,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit_count": 170,
       "plan_unit_ids": [
@@ -16222,7 +16228,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "ef91ed2c93d28ad48c4dca5306050572280034a3fc9896f435e03ea33eab8066",
+      "sha256": "1eba8aa0da763251376795feee698d7ffe6f6016d90887851627e4092c8b8a21",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 168,
@@ -16269,6 +16275,8 @@
         "Plans/Automated_Testing_System.md ATS-035 future negative and external-process matrix",
         "Plans/Automated_Testing_System.md — DL-035 terminal acceptance fixtures (future execution)",
         "Plans/Wiring_Matrix.production.json",
+        "Plans/browser_control_flow_contract_fixtures.json",
+        "Plans/browser_control_flow_contracts.schema.json",
         "Plans/browser_event_admission_fixtures.json",
         "Plans/browser_workspace_created_checkpoint_v2.schema.json",
         "Plans/browser_workspace_created_contract_fixtures.json",
@@ -16338,6 +16346,7 @@
         "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current/self_test.py",
         "scripts/pm_browser_program_semantics.py",
         "scrollback is not model context",
+        "tests/test_pm_browser_control_flow.py",
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_browser_program_semantics.py",
         "tests/test_pm_browser_result_binding.py",
@@ -16717,7 +16726,7 @@
         "False": 28,
         "True": 24
       },
-      "heading_count": 119,
+      "heading_count": 120,
       "implementation_surfaces": [
         "Concepts/pm7-tools/full_thread_performance_source.py",
         "Concepts/pm7-tools/verify/full_thread_performance.mjs",
@@ -16772,7 +16781,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 3155,
+      "line_count": 3170,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 52,
       "plan_unit_ids": [
@@ -16886,7 +16895,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "fd0e31ff97d87160dde834b06d9d4d17f4bd2b36d14180e2f75498ef229c47d0",
+      "sha256": "10b6707f928c5744c0d5918da1063fe98ddc11977edbae14c0afb5faf0f80c61",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -20027,7 +20036,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T05:07:44Z",
+  "generated_at_utc": "2026-09-25T05:08:32Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -1,0 +1,699 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/capability_provisioning_continuation_contracts.schema.json",
+  "x-schema-id": "pm.capability_provisioning_continuation.contracts.v1",
+  "title": "SIR-003 original capability readiness and continuation settlement",
+  "description": "Additive owner outputs. Existing operation v1 and public commands are unchanged. Storage successor and native owner admission remain required.",
+  "$defs": {
+    "capability_bound_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_ref",
+        "sha256",
+        "generation"
+      ],
+      "properties": {
+        "record_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "capability_demand_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "owner_ref",
+        "source"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "project_metadata",
+            "file_language_tool",
+            "requested_test_debug_build_visual_media",
+            "approved_plan_validation",
+            "browser_native_mobile_device",
+            "attachment_artifact_media",
+            "capability_health_change"
+          ]
+        },
+        "owner_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "source": {
+          "$ref": "#/$defs/capability_bound_reference"
+        }
+      }
+    },
+    "capability_continuation_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "continuation_ref",
+        "generation",
+        "return_context_ref",
+        "origin_payload_sha256",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "continuation_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_context_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "origin_payload_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "capability_origin_lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plan_id",
+        "run_id",
+        "agent_id",
+        "crew_id"
+      ],
+      "properties": {
+        "plan_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "run_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "agent_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "crew_id": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        }
+      }
+    },
+    "capability_demand_value": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "demand_ref",
+        "origin_identity",
+        "source",
+        "capability_id",
+        "compatibility_requirement",
+        "requested_mode",
+        "requested_effect_scope",
+        "plan_lineage_ref",
+        "origin_lineage",
+        "continuation",
+        "schema_version"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.shared_runtime.capability_demand.v1"
+        },
+        "demand_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "origin_identity": {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+        },
+        "source": {
+          "$ref": "#/$defs/capability_demand_source"
+        },
+        "capability_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "compatibility_requirement": {
+          "$ref": "#/$defs/capability_bound_reference"
+        },
+        "requested_mode": {
+          "enum": [
+            "Off",
+            "Auto",
+            "On"
+          ]
+        },
+        "requested_effect_scope": {
+          "enum": [
+            "run_sandbox",
+            "project",
+            "host",
+            "global"
+          ]
+        },
+        "plan_lineage_ref": {
+          "$ref": "#/$defs/nullable_non_secret_ref"
+        },
+        "origin_lineage": {
+          "$ref": "#/$defs/capability_origin_lineage"
+        },
+        "continuation": {
+          "$ref": "#/$defs/capability_continuation_binding"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        }
+      }
+    },
+    "non_secret_ref": {
+      "$ref": "https://puppetmaster.local/schemas/shared_runtime/1.0.0/shared_runtime_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "nullable_non_secret_ref": {
+      "$ref": "https://puppetmaster.local/schemas/shared_runtime/1.0.0/shared_runtime_contracts.schema.json#/$defs/nullable_non_secret_ref"
+    },
+    "non_empty_string": {
+      "$ref": "https://puppetmaster.local/schemas/shared_runtime/1.0.0/shared_runtime_contracts.schema.json#/$defs/non_empty_string"
+    },
+    "nullable_non_empty_string": {
+      "$ref": "https://puppetmaster.local/schemas/shared_runtime/1.0.0/shared_runtime_contracts.schema.json#/$defs/nullable_non_empty_string"
+    },
+    "sha256": {
+      "$ref": "https://puppetmaster.local/schemas/shared_runtime/1.0.0/shared_runtime_contracts.schema.json#/$defs/sha256"
+    },
+    "timestamp": {
+      "$ref": "https://puppetmaster.local/schemas/shared_runtime/1.0.0/shared_runtime_contracts.schema.json#/$defs/timestamp"
+    },
+    "capability_waiter_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "waiter_ref",
+        "shared_operation_id",
+        "demand",
+        "admitted_policy",
+        "effective_mode",
+        "original_admission_ref",
+        "original_invocation_ref",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.shared_runtime.capability_waiter_binding.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "waiter_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "shared_operation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "demand": {
+          "$ref": "#/$defs/capability_bound_reference"
+        },
+        "admitted_policy": {
+          "$ref": "#/$defs/capability_bound_reference"
+        },
+        "effective_mode": {
+          "enum": [
+            "Off",
+            "Auto",
+            "On"
+          ]
+        },
+        "original_admission_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "original_invocation_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "capability_readiness_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_ref",
+        "shared_operation_id",
+        "capability_id",
+        "compatibility_requirement",
+        "execution_host_id",
+        "execution_environment_id",
+        "topology_generation",
+        "subject",
+        "readiness_basis",
+        "verification",
+        "effect_result",
+        "verified_at_utc",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.shared_runtime.capability_readiness_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "shared_operation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "capability_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "compatibility_requirement": {
+          "$ref": "#/$defs/capability_bound_reference"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "subject": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "record_ref",
+            "generation"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "Installation",
+                "Connection"
+              ]
+            },
+            "record_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "readiness_basis": {
+          "enum": [
+            "existing_verified_capability",
+            "verified_provisioning"
+          ]
+        },
+        "verification": {
+          "$ref": "#/$defs/capability_bound_reference"
+        },
+        "effect_result": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/capability_bound_reference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verified_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "readiness_basis": {
+                "const": "existing_verified_capability"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "effect_result": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "effect_result": {
+                "$ref": "#/$defs/capability_bound_reference"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "capability_origin_currentness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "snapshot_ref",
+        "waiter_ref",
+        "origin_identity",
+        "source",
+        "policy",
+        "effective_mode",
+        "continuation",
+        "origin_state",
+        "waiter_state",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.shared_runtime.capability_origin_currentness.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "waiter_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "origin_identity": {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+        },
+        "source": {
+          "$ref": "#/$defs/capability_bound_reference"
+        },
+        "policy": {
+          "$ref": "#/$defs/capability_bound_reference"
+        },
+        "effective_mode": {
+          "enum": [
+            "Off",
+            "Auto",
+            "On"
+          ]
+        },
+        "continuation": {
+          "$ref": "#/$defs/capability_continuation_binding"
+        },
+        "origin_state": {
+          "enum": [
+            "active",
+            "cancelled",
+            "completed",
+            "replaced"
+          ]
+        },
+        "waiter_state": {
+          "enum": [
+            "active",
+            "detached"
+          ]
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "capability_continuation_settlement": {
+      "description": "Resumed means actual admitted continuation dispatch/result, not downstream success. Failed includes original failed or rolled_back provisioning phase; rollback never implies capability ready.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "settlement_ref",
+        "waiter_ref",
+        "provisioning_operation_ref",
+        "readiness_result_ref",
+        "currentness_snapshot_ref",
+        "outcome",
+        "reason",
+        "continuation_result_ref",
+        "settled_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.shared_runtime.capability_continuation_settlement.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "settlement_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "waiter_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "provisioning_operation_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "readiness_result_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currentness_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "enum": [
+            "resumed",
+            "ready_without_resume",
+            "detached",
+            "blocked",
+            "failed",
+            "cancelled",
+            "recovery_required"
+          ]
+        },
+        "reason": {
+          "enum": [
+            null,
+            "waiter_detached",
+            "origin_inactive",
+            "origin_changed",
+            "source_changed",
+            "policy_changed",
+            "continuation_changed",
+            "continuation_expired",
+            "admission_refused",
+            "operation_not_ready"
+          ]
+        },
+        "continuation_result_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settled_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "resumed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "readiness_result_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "continuation_result_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "continuation_result_ref": {
+                "type": "null"
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "ready_without_resume"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "readiness_result_ref": {
+                "$ref": "#/$defs/non_secret_ref"
+              },
+              "reason": {
+                "enum": [
+                  "waiter_detached",
+                  "origin_inactive",
+                  "origin_changed",
+                  "source_changed",
+                  "policy_changed",
+                  "continuation_changed",
+                  "continuation_expired",
+                  "admission_refused"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "detached"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "const": "waiter_detached"
+              },
+              "readiness_result_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "blocked",
+                  "failed",
+                  "cancelled",
+                  "recovery_required"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "const": "operation_not_ready"
+              },
+              "readiness_result_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "capability_continuation_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "runtime_evidence",
+        "demand",
+        "waiter",
+        "operation",
+        "readiness",
+        "currentness",
+        "settlement"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.shared_runtime.capability_continuation_fixture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "runtime_evidence": {
+          "const": false
+        },
+        "demand": {
+          "$ref": "#/$defs/capability_demand_value"
+        },
+        "waiter": {
+          "$ref": "#/$defs/capability_waiter_binding"
+        },
+        "operation": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime/1.0.0/shared_runtime_contracts.schema.json#/$defs/capability_provisioning_operation"
+        },
+        "readiness": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/capability_readiness_result"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currentness": {
+          "$ref": "#/$defs/capability_origin_currentness"
+        },
+        "settlement": {
+          "$ref": "#/$defs/capability_continuation_settlement"
+        }
+      },
+      "description": "Static joined values only, never an accepted native authority map, transport or durable record."
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/capability_demand_value"
+    },
+    {
+      "$ref": "#/$defs/capability_waiter_binding"
+    },
+    {
+      "$ref": "#/$defs/capability_readiness_result"
+    },
+    {
+      "$ref": "#/$defs/capability_origin_currentness"
+    },
+    {
+      "$ref": "#/$defs/capability_continuation_settlement"
+    }
+  ]
+}

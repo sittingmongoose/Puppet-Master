@@ -557,6 +557,211 @@
   "redaction_transform_registry_ref": "Plans/redaction_transform_registry.json",
   "contract_family_dispositions": [
     {
+      "disposition_id": "scd.browser_program.control_flow_durable.v1",
+      "system_id": "browser_program",
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "schema_ref": "Plans/browser_control_flow_contracts.schema.json",
+      "record_kinds": [
+        "pm.browser_program.compile_result.v2",
+        "pm.browser_program.program.v2"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [
+        "Plans/storage_value_registry.json#/families/observable_work_projection"
+      ],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-RUNTIME-365D",
+          "RP-PROJECTION-3GEN",
+          "Q-CRITICAL"
+        ],
+        "hold_rule": "Active program, workspace, controller, handoff, transfer, routine promotion, recovery, evidence, and audit refs hold values.",
+        "expiry_rule": "Workspace/result/history compacts only after owner terminal, spill/checkpoint reconciliation, and reference release; routines require explicit invalidation/disable custody."
+      },
+      "redaction_transform_ids": [
+        "rt.browser_ordinary_session.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "V1 records retain their historical interpretation; v2 compiler/program records are explicitly version-discriminated and cannot be reconstructed by assigning execution order to v1 arrays. Exact physical version/writer admission remains pending. Legacy aggregate payload IDs are pre-validation input only and must map to one exact schema_id and record_kind; unknown/missing kinds reject and AuthBrowserSession never maps.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Typed finite control-flow successor of the existing Browser compile/program contract. The same Browser owner, ordinary-session boundary and retention rules apply; this row creates no peer live program, physical family, writer or event authority.",
+      "source_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-static-contract-closure-addendum-2026-08-31",
+        "Plans/section15_browser_program_contracts.schema.json",
+        "Plans/browser_control_flow_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.browser_program.control_flow_transport.v1",
+      "system_id": "browser_program",
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "schema_ref": "Plans/browser_control_flow_contracts.schema.json",
+      "record_kinds": [
+        "pm.browser_program.compile_request.v2"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "A promoted Program, durable result, receipt, or ordinary runtime artifact owns any retained consequence.",
+        "expiry_rule": "Discard request/query transport after response or generation invalidation."
+      },
+      "redaction_transform_ids": [
+        "rt.browser_ordinary_session.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "V1 records retain their historical interpretation; v2 compiler/program records are explicitly version-discriminated and cannot be reconstructed by assigning execution order to v1 arrays. Exact physical version/writer admission remains pending. Requests and representation queries are not restored, backed up, or promoted as stored page content.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Typed finite control-flow successor of the existing Browser compile/program contract. The same Browser owner, ordinary-session boundary and retention rules apply; this row creates no peer live program, physical family, writer or event authority.",
+      "source_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/section15_browser_program_contracts.schema.json",
+        "Plans/browser_control_flow_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.doctor.query_controller_transport.v1",
+      "system_id": "doctor",
+      "owner_doc": "Plans/newtools.md",
+      "schema_ref": "Plans/doctor_query_controller_contracts.schema.json",
+      "record_kinds": [
+        "pm.doctor.batch_request.v1",
+        "pm.doctor.owner_query_request.v1",
+        "pm.doctor.owner_query_result.v1",
+        "pm.doctor.batch_result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Owner ObservableWork and receipts retain any durable consequence.",
+        "expiry_rule": "Discard transport at terminal or invalidation; reconnect resolves genuine surviving admitted owner custody. Do not synthesize missing batch/history or retain arbitrary owner payloads in Doctor."
+      },
+      "redaction_transform_ids": [
+        "rt.doctor_bounded_evidence.v1"
+      ],
+      "migration_rule": "Doctor action requests never become repair authority or cache migration records.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Finite internal Doctor orchestration and query/result transport only. Native owners retain their own admitted originals; these envelopes do not establish a durable batch archive or grant query authority.",
+      "source_refs": [
+        "Plans/newtools.md#N2-152",
+        "Plans/doctor_query_controller_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.permissions.doctor_read_transport.v1",
+      "system_id": "permissions",
+      "owner_doc": "Plans/Permissions_System.md",
+      "schema_ref": "Plans/doctor_query_controller_contracts.schema.json",
+      "record_kinds": [
+        "pm.permissions.doctor_read_admission.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Owner ObservableWork and receipts retain any durable consequence.",
+        "expiry_rule": "Discard transport at terminal or invalidation; reconnect resolves genuine surviving admitted owner custody. Do not synthesize missing batch/history or retain arbitrary owner payloads in Doctor."
+      },
+      "redaction_transform_ids": [
+        "rt.doctor_bounded_evidence.v1"
+      ],
+      "migration_rule": "Do not convert a Doctor decision into an executor Project/attempt/node snapshot; missing authentic original decision/audit custody cannot be reconstructed from current Settings.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Permissions-owned human read-admission exchange, not a durable permission snapshot or independent authority store. Any required original audit/decision custody uses separately admitted Permissions storage.",
+      "source_refs": [
+        "Plans/Permissions_System.md#PS-133",
+        "Plans/newtools.md#N2-152",
+        "Plans/doctor_query_controller_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup.doctor_metadata_query.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/doctor_query_controller_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup_restore_system.repository_read_request.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No durable authority or content hold is created by this internal transport. Only separately typed admitted redacted domain metadata may outlive it.",
+        "expiry_rule": "Discard at terminal or invalidation; release owner read pins according to actual source authority. No raw content, private path, credentials or public transport archive."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target; reconstruct a response only from actual surviving admitted owner evidence, never by reexecuting or replacing selected content.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "BackupCoordinator-owned exact nonsecret repository metadata query consumed by Doctor; no unlock, scan, verify, health inference, mutation or durable request archive.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md#BRS-004",
+        "Plans/newtools.md#N2-152",
+        "Plans/doctor_query_controller_contracts.schema.json"
+      ]
+    },
+    {
+      "disposition_id": "scd.capability.continuation_custody.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/capability_provisioning_continuation_contracts.schema.json",
+      "record_kinds": [
+        "pm.shared_runtime.capability_demand.v1",
+        "pm.shared_runtime.capability_waiter_binding.v1",
+        "pm.shared_runtime.capability_readiness_result.v1",
+        "pm.shared_runtime.capability_origin_currentness.v1",
+        "pm.shared_runtime.capability_continuation_settlement.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [
+        "Plans/storage_value_registry.json#/families/capability_provisioning_operation"
+      ],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Existing provisioning-operation retention, backup, audit, evidence and recovery holds remain authoritative. Original demand/waiter/source/readiness/currentness/settlement custody requires exact same-family versioned writer admission before retention; this disposition creates no physical write authority.",
+        "expiry_rule": "No independent expiry or peer store. The exact successor physical value and writer/reader/migration contract must preserve applicable existing family holds and historical outcome identity before any production persistence."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "The existing closed capability_provisioning_operation.v1 physical value remains unchanged and does not admit these five companion values. Specify a same-owner, same-family versioned writer/historical reader integration before persistence; never fabricate old original demand or settlement on migration.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Additive original readiness/continuation custody obligations for the existing provisioning operation family, not a peer key, registry, queue or admitted physical value. Native issuance, effect fences and crash/readback proof remain separate.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-003",
+        "Plans/capability_provisioning_continuation_contracts.schema.json",
+        "Plans/storage_value_registry.json"
+      ]
+    },
+    {
       "disposition_id": "scd.backup_snapshot.resolution.v1",
       "system_id": "backup_restore",
       "owner_doc": "Plans/Backup_Restore_System.md",

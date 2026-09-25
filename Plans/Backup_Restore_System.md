@@ -180,6 +180,21 @@ owner_hints: [Plans/Backup_Restore_System.md, Plans/Permissions_System.md, Plans
 
 ### BRS-004 - Destination, Policy, Manifest, Retention, And Verification
 
+For the Doctor read-only owner-query protocol, BackupCoordinator owns
+`pm.backup_restore_system.repository_read_request.v1` in
+`Plans/doctor_query_controller_contracts.schema.json#/$defs/backup_repository_read_request`.
+The query selects the exact repository binding, repository, Server and original
+currentness under its unique query identity. It returns the authentic existing
+`backup_repository_binding`, not a reconstructed binding or a Doctor-authored
+health result. The owner validates the requested identity/currentness and actual
+read admission before reading and checks current disclosure after resolution.
+This is a bounded nonsecret metadata read only: it does not unlock, discover or
+scan repositories, verify snapshots, alter maintenance authority or imply that
+stored data is healthy or recoverable. Query completion, the binding's observed
+state and verified Backup health remain distinct. Doctor's common envelope
+cannot widen this leaf query; native owner issuance, storage/currentness fences
+and permission proof remain required.
+
 ```yaml
 plan_unit_id: BRS-004
 unit_type: requirement
@@ -207,6 +222,8 @@ canonical_text: >-
   A matching receipt reference or a formerly ready state cannot supply that applicability. This does not require a new test for a label-only edit
   when the owner establishes that its existing proof remains applicable, and no fixed generation increment is implied.
   An edit grants no implicit credential issuance, repository reassignment, backend deletion or successful test.
+  Doctor may read an exact existing nonsecret repository binding through BackupCoordinator's typed metadata
+  query under current read/disclosure authority; query completion cannot manufacture verification or health.
 gui_related: true
 gui_classification_reason: Destination, policy, schedule/retention, selected data, storage use, verification, protection, and history are visible manager behavior.
 depends_on: [BRS-002, BRS-003]
@@ -220,7 +237,8 @@ acceptance_criteria:
   - A changed locator or authorization premise cannot inherit an inapplicable ready, capability or test claim; a label-only edit may retain authentic applicable evidence without implying a new test or fixed generation increment.
   - Manifest covers every included object with relative path, byte size, digest, family, and consistency boundary and names exclusions.
   - Retention cannot delete protected, held, active-parent, last-known-good, or recovery-required generations.
-validation_surfaces: [Plans/backup_restore_system_contract_fixtures.json, future offline partial-write protection and retention tests]
+  - The Doctor repository metadata query binds exact repository, binding, Server and currentness to the authentic returned binding and cannot unlock, scan, verify, mutate or label Backup healthy merely because its read completed.
+validation_surfaces: [Plans/backup_restore_system_contract_fixtures.json, Plans/doctor_query_controller_contracts.schema.json, Plans/doctor_query_controller_contract_fixtures.json, future offline partial-write protection and retention tests]
 risk_class: destination_partial_write_or_manifest_omission
 reasoning_tier: high
 context_scope: backup_destination_policy_manifest
@@ -232,6 +250,7 @@ source_lineage:
   - source_ref:packet:2026-09-01:BKP-009
   - source_ref:packet:2026-09-01:CLOUD-001-CLOUD-008
   - source_ref:normalized-register:server-first-2026-08-31:B09-B11
+  - Plans/newtools.md#N2-152
   - source_ref:packet:backbone_v5/09_UPDATES_BACKUP_RESTORE_CONTRACT.md
 preserved_exact_tokens: [BackupDestination, BackupPolicy, BackupManifest, BackupRetentionDecision, incremental, parent, cmd.backup.destination.update]
 negative_constraints: [Do not use absolute source paths as portable object paths., Do not delete protected or held backups., Do not call an unverified partial write complete., Do not collapse repository authority or multi-destination attempts into one scalar state., Do not make a remote backup backend canonical PM state.]

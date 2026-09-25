@@ -1,6 +1,9 @@
 # Packet-wide closure status — 2026-09-24, updated 2026-09-25
 
-Latest bounded step: `backup-and-update-companions.md` records the four Backup
+Latest bounded steps: `runtime-doctor-browser-companions.md` records original
+capability continuation, finite Doctor query composition and Browser typed
+control-flow repairs, with their remaining physical/owner/native prerequisites.
+`backup-and-update-companions.md` records the four Backup
 current command bindings, actual typed source/result joins and application-update
 cadence/settlement companions. Its credits supersede older companion-pending
 descriptions below. Physical storage specification and native execution remain

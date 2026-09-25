@@ -1,0 +1,698 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/doctor-query-controller/1.0.0/doctor_query_controller_contracts.schema.json",
+  "x-schema-id": "pm.doctor.query_controller_contracts.v1",
+  "description": "N2-152 finite read-only orchestration. Closed internal values require actual owner resolvers and native permission/currentness fences; no command registration, durable archive or native proof.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/doctor_batch_request"
+    },
+    {
+      "$ref": "#/$defs/doctor_read_admission"
+    },
+    {
+      "$ref": "#/$defs/doctor_owner_query_request"
+    },
+    {
+      "$ref": "#/$defs/doctor_owner_query_result"
+    },
+    {
+      "$ref": "#/$defs/doctor_batch_result"
+    },
+    {
+      "$ref": "#/$defs/backup_repository_read_request"
+    }
+  ],
+  "$defs": {
+    "backup_repository_binding_result": {"$anchor":"backup_repository_binding_result", "$ref":"https://puppetmaster.local/schemas/backup_restore_system/2.0.0/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding"},
+    "doctor_finding_projection": {"$ref":"https://puppetmaster.local/schemas/doctor/1.0.0/doctor_contracts.schema.json#/$defs/doctor_finding_projection"},
+    "safe_ref": {
+      "$ref": "https://puppetmaster.local/schemas/doctor/1.0.0/doctor_contracts.schema.json#/$defs/safe_ref"
+    },
+    "nullable_safe_ref": {
+      "$ref": "https://puppetmaster.local/schemas/doctor/1.0.0/doctor_contracts.schema.json#/$defs/nullable_safe_ref"
+    },
+    "target_kind": {
+      "$ref": "https://puppetmaster.local/schemas/doctor/1.0.0/doctor_contracts.schema.json#/$defs/target_kind"
+    },
+    "doctor_check_descriptor": {
+      "$ref": "https://puppetmaster.local/schemas/doctor/1.0.0/doctor_contracts.schema.json#/$defs/doctor_check_descriptor"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "server_id",
+        "project_id"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "application",
+            "server",
+            "project"
+          ]
+        },
+        "server_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "server"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/safe_ref"
+              },
+              "project_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "server_id": {
+                "$ref": "#/$defs/safe_ref"
+              },
+              "project_id": {
+                "$ref": "#/$defs/safe_ref"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "identity_ref",
+        "server_id",
+        "project_id",
+        "host_id",
+        "environment_id",
+        "route_ref"
+      ],
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/target_kind"
+        },
+        "identity_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "server_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "host_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "environment_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "route_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        }
+      }
+    },
+    "member": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "member_id",
+        "descriptor",
+        "target",
+        "expected_owner_generation",
+        "expected_cache_generation",
+        "applicability_ref"
+      ],
+      "properties": {
+        "member_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "descriptor": {
+          "$ref": "#/$defs/doctor_check_descriptor"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "expected_owner_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "expected_cache_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "applicability_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "doctor_batch_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "batch_id",
+        "actor_ref",
+        "scope",
+        "selection_mode",
+        "selection_evidence_ref",
+        "members",
+        "requested_at_utc",
+        "deadline_utc",
+        "idempotency_key",
+        "parent_batch_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor.batch_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "batch_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "selection_mode": {
+          "enum": [
+            "explicit_all",
+            "selected_checks",
+            "onboarding_required"
+          ]
+        },
+        "selection_evidence_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/member"
+          }
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "deadline_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "parent_batch_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        }
+      }
+    },
+    "doctor_read_admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "decision_id",
+        "batch_id",
+        "member_id",
+        "query_id",
+        "actor_ref",
+        "scope",
+        "target",
+        "descriptor_revision",
+        "permission_class",
+        "policy_ref",
+        "policy_generation",
+        "authority_generation",
+        "audit_admission_ref",
+        "redaction_profile_ref",
+        "decision",
+        "reason_ref",
+        "evaluated_at_utc",
+        "expires_at_utc",
+        "expected_owner_generation",
+        "expected_cache_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.permissions.doctor_read_admission.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "decision_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "batch_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "member_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "query_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "target": {
+          "$ref": "#/$defs/target"
+        },
+        "descriptor_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "permission_class": {
+          "$ref": "https://puppetmaster.local/schemas/doctor/1.0.0/doctor_contracts.schema.json#/$defs/doctor_check_descriptor/properties/permission_class"
+        },
+        "policy_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "policy_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "authority_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "audit_admission_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "redaction_profile_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "decision": {
+          "enum": [
+            "allow",
+            "deny",
+            "prompt_human"
+          ]
+        },
+        "reason_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "evaluated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expected_owner_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "expected_cache_generation": {
+          "$ref": "#/$defs/generation"
+        }
+      }
+    },
+    "doctor_owner_query_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "query_id",
+        "batch_id",
+        "member_id",
+        "admission_ref",
+        "owner_request_ref",
+        "owner_request_schema_ref",
+        "governor_admission_ref",
+        "observable_work_ref",
+        "dispatched_at_utc",
+        "deadline_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor.owner_query_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "query_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "batch_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "member_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "admission_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "owner_request_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "owner_request_schema_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "governor_admission_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "observable_work_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "dispatched_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "deadline_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "doctor_owner_query_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_id",
+        "query_id",
+        "batch_id",
+        "member_id",
+        "status",
+        "owner_result_ref",
+        "owner_result_schema_ref",
+        "observed_owner_generation",
+        "started_at_utc",
+        "finished_at_utc",
+        "evidence_refs",
+        "failure_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor.owner_query_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "query_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "batch_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "member_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "failed",
+            "cancelled",
+            "interrupted"
+          ]
+        },
+        "owner_result_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "owner_result_schema_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "observed_owner_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "started_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "finished_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "failure_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "owner_result_ref": {
+                "$ref": "#/$defs/safe_ref"
+              },
+              "evidence_refs": {
+                "minItems": 1
+              },
+              "failure_refs": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "member_outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "member_id",
+        "status",
+        "query_ref",
+        "result_ref",
+        "finding_ref",
+        "disposition_evidence_ref"
+      ],
+      "properties": {
+        "member_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "unsupported",
+            "deferred",
+            "skipped",
+            "cancelled",
+            "stale",
+            "failed"
+          ]
+        },
+        "query_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "result_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "finding_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "disposition_evidence_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "control_id",
+        "action",
+        "member_id",
+        "query_ref",
+        "outcome",
+        "recorded_at_utc",
+        "evidence_ref"
+      ],
+      "properties": {
+        "control_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "action": {
+          "enum": [
+            "stop_scheduling",
+            "cancel_member",
+            "detach_viewer"
+          ]
+        },
+        "member_id": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "query_ref": {
+          "$ref": "#/$defs/nullable_safe_ref"
+        },
+        "outcome": {
+          "enum": [
+            "applied",
+            "requested",
+            "unsupported",
+            "refused",
+            "owner_cancelled"
+          ]
+        },
+        "recorded_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "evidence_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "doctor_batch_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "batch_id",
+        "result_id",
+        "status",
+        "outcomes",
+        "controls",
+        "started_at_utc",
+        "finished_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.doctor.batch_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "batch_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "result_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "partial",
+            "cancelled",
+            "failed",
+            "no_applicable_checks"
+          ]
+        },
+        "outcomes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/member_outcome"
+          }
+        },
+        "controls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/control"
+          }
+        },
+        "started_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "finished_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "backup_repository_read_request": {
+      "$anchor": "backup_repository_read_request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "query_id",
+        "repository_binding_id",
+        "repository_id",
+        "server_id",
+        "expected_currentness_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.backup_restore_system.repository_read_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "query_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "repository_binding_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "repository_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "server_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "expected_currentness_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    }
+  }
+}
