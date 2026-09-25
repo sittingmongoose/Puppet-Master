@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/onboarding_search_consumer_contracts.schema.json",
+  "x-schema-id": "pm.onboarding_search.contracts.v1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/selection_request"
+    },
+    {
+      "$ref": "#/$defs/selection_result"
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "nullable_id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/id"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "selection_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request_ref",
+        "return_context_ref",
+        "mode",
+        "selected_route_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.onboarding_search.selection_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "return_context_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "mode": {
+          "enum": [
+            "automatic",
+            "explicit",
+            "skip"
+          ]
+        },
+        "selected_route_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "selection_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "result_ref",
+        "request_ref",
+        "return_context_ref",
+        "registry_snapshot_ref",
+        "registry_revision",
+        "status",
+        "selected_route_ref",
+        "selected_account_ref",
+        "selected_model_ref",
+        "readiness_proof_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.onboarding_search.selection_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "request_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "return_context_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "registry_snapshot_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "registry_revision": {
+          "$ref": "#/$defs/id"
+        },
+        "status": {
+          "enum": [
+            "selected",
+            "unresolved",
+            "skipped"
+          ]
+        },
+        "selected_route_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selected_account_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selected_model_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readiness_proof_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_ref",
+        "provider_id",
+        "account_ref",
+        "model_ref",
+        "readiness_proof_ref",
+        "eligibility_fact_refs",
+        "selection_state"
+      ],
+      "properties": {
+        "route_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "provider_id": {
+          "$ref": "#/$defs/id"
+        },
+        "account_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "model_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readiness_proof_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eligibility_fact_refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "selection_state": {
+          "enum": [
+            "eligible_ready",
+            "not_ready",
+            "ineligible"
+          ]
+        }
+      }
+    },
+    "registry_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshot_ref",
+        "revision",
+        "request_ref",
+        "candidates"
+      ],
+      "properties": {
+        "snapshot_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "revision": {
+          "$ref": "#/$defs/id"
+        },
+        "request_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/candidate"
+          }
+        }
+      }
+    },
+    "return_context": {
+      "$ref": "https://puppetmaster.local/schemas/product_onboarding/2.0.0/product_onboarding_contracts.schema.json#/$defs/onboarding_return_context"
+    },
+    "continuation": {
+      "$ref": "https://puppetmaster.local/schemas/product_onboarding/2.0.0/product_onboarding_contracts.schema.json#/$defs/onboarding_continuation_snapshot"
+    },
+    "search_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "runtime_evidence",
+        "request",
+        "result",
+        "snapshot",
+        "return_context",
+        "continuation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.onboarding_search.fixture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_kind": {
+          "const": "onboarding_search_fixture"
+        },
+        "runtime_evidence": {
+          "const": false
+        },
+        "request": {
+          "$ref": "#/$defs/selection_request"
+        },
+        "result": {
+          "$ref": "#/$defs/selection_result"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/registry_snapshot"
+        },
+        "return_context": {
+          "$ref": "#/$defs/return_context"
+        },
+        "continuation": {
+          "$ref": "#/$defs/continuation"
+        }
+      }
+    }
+  }
+}

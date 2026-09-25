@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1775-L2105
+Source lines: L1775-L2112
 
-Source SHA256: `c479075a5b72602b14000d0389a1dd08098e1113e5aac383e6df7982725b8b62`
+Source SHA256: `6905dfea5340074917be96fc51fa8a87216d96140b9e3e8fb016217d4d4befb6`
 
 ---
 
@@ -57,6 +57,10 @@ Ready is derived from actual current owner account/route/entitlement/permission/
 Search-provider setup is also a consumer within the existing postcommit `provider_setup` phase, not a new dependency stage or a prerequisite that removes Skip. Offer `Automatic` — the first currently ready eligible search provider in the existing user-configurable owner priority order — and a searchable, capability-aware provider list from the same `WebProviderAdapterRegistry` consumed by Settings (`Plans/Tools.md` §§11–12, T-136/T-142). Show current readiness and credential state, search/fetch/crawl/map/extract support differences, official setup action/page, provider order, privacy, price/credit and fallback disclosures. Browser-backed or local fallbacks appear only where the current owner actually supports them; Automatic does not invent capability, ignore the selected account/model or applicable privacy/egress policy, or authorize a search merely by selecting a route. Unavailable or skipped setup remains truthful, not fabricated Ready.
 
 The existing Settings and provider/auth owners configure the same records used later in Settings; Onboarding adds no search registry, credential/quota store, per-operation priority editor or fixed provider list. Navigation consumes SSYS-019's exact Settings destination/context and bounded return; a selected setup effect additionally requires its existing owner command, current permission and result, not navigation success. Preserve the actual committed Project, selected Host/Environment, initiating Client, provider/route, operation and continuation generation/focus. A changed context rejects stale return without replacing newer selections or replaying owner work. Reference-only continuations retain owner refs rather than copying credentials or live readiness claims. Deferred-Project and connect-existing shortcuts remain unchanged; optional Free Models keeps its existing paid-provider-prompt ordering.
+
+`Plans/onboarding_search_consumer_contracts.schema.json` binds this existing selection consumer to its authentic v2 Onboarding return context and current continuation. Its internal request retains the original committed Project, operation, initiating Client, Host/Environment and generation/focus through those owner values. The consumer resolves the complete owner-ranked route population and genuine readiness, search capability, account/model and privacy/egress eligibility; submitted candidates cannot replace the owner snapshot. Automatic selects the first eligible ready route in that order. Explicit selection requires an eligible ready route; setup-required selection stays a separate owner flow. Skip selects none; an empty eligible set is unresolved, not invented readiness or fallback.
+
+The internal selection result pins its original request, registry revision, chosen route/account/model and readiness reference, and exact return context. Original session, revision, actual committed Project, Client, operation and focus must still match before consumption. Stale returns do not replace newer choices, replay completed work, reset phase history or uncreate the Project. Selection is not an owner-flow completion result: a setup effect still requires the existing owner request/result and authenticated completion/return binding. This read-only projection grants no authentication, search, navigation success or setting-changing authority. Native authenticity, eligibility, source/readiness provenance and current disclosure remain mandatory. These values introduce no registry, command, writer, storage key or additional Onboarding stage; candidate/snapshot/request/result values are nonpersisted transport and owner-read views.
 
 ### Typed actions, persistence, and owner routing
 
@@ -186,6 +190,9 @@ validation_surfaces:
 - Plans/product_onboarding_contract_fixtures.json
 - tests/test_pm_onboarding_phases.py
 - tests/test_pm_settings_draft_transfer.py
+- Plans/onboarding_search_consumer_contracts.schema.json
+- Plans/onboarding_search_consumer_contract_fixtures.json
+- tests/test_pm_onboarding_search_consumer.py
 - future native owner-routing, restart, accessibility and visual/motion receipts; not_run
 - Plans/Settings_System.md#SSYS-019
 risk_class: onboarding_parallel_owner_or_overloaded_first_run

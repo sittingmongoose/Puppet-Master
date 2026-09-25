@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L1641-L1783
+Source lines: L1641-L1790
 
-Source SHA256: `8d2ce56f55e97bcf9ff5f024167d6dd88634488ac8580641c667c86b4c742fe8`
+Source SHA256: `af8ad66f8da4ee085325fe65aee2ea4517ecf0670ab13ca8194e3a13e7645757`
 
 ---
 
@@ -43,6 +43,10 @@ usage_telemetry_state
 `installed`, `executable_healthy`, `authenticated`, and `ready` are not aliases. Authentication success alone cannot produce provider readiness. Usage telemetry may be unavailable while the route is otherwise ready. An optional model-backed generation check is a separately attributed validation-purpose Usage event; if policy, cost, privacy, or quota prevents it, the readiness proof records the lower confidence rather than fabricating success.
 
 `ProviderReadinessProof` carries `provider_id`, `provider_route_id`, `installation_id`, `installation_generation`, `execution_host_id`, `execution_environment_id`, `topology_generation`, `profile_ref?`, `account_id?`, `connection_id?`, product/entitlement and catalog refs, adapter/capability probe refs, generation proof/refusal reason, Usage availability, required-check set, observed facts, `readiness_state`, `readiness_confidence`, `failure_class?`, `failure_evidence_refs[]`, and `observed_at`. A bridge attempt freezes the effective installation generation and profile/account/connection identity; activation of a later generation never rewrites in-flight or historical truth.
+
+`Plans/provider_readiness_contracts.schema.json` closes this existing proof value and its original query binding. All ten independent observed facts retain their own owner identity and evidence: `verified`, `failed`, `unavailable`, or `not_applicable`. Verified facts require actual owner evidence; not-applicable facts require genuine applicability evidence, not missing probes. Null Installation is valid only when the actual route owner establishes that none applies; API/SDK routes never fabricate one. The genuine selected owner determines required checks, not the submitted proof. Ready requires every required fact to be verified or genuinely not applicable. Optional refused generation verification preserves the refusal and lowers confidence; unavailable Usage alone does not fail readiness unless its owner requires it. No mandatory paid probe is introduced.
+
+The native provider owner resolves the original query, setup binding, exact route/account/product/credential compatibility, and independently issued facts. Proof identities, dispositions and evidence must equal those original sources. Historical proof remains immutable; current consumers separately revalidate route/account/installation/topology and disclosure after helpers under the existing owner fence. Credential references, schema equality or earlier authentication are not readiness authority. This finite contract adds no command, writer, storage key, account/product/credential-proof family or second readiness engine. Actual probes, authentication, source verification and dispatch remain native implementation obligations. The query/proof values are nonpersisted owner-read projections, not newly admitted physical records.
 
 Claude CLI and Antigravity CLI OAuth/native login remain CLI-owned. PM may select an isolated supported profile root, launch the CLI-owned login, handle a protected human-only browser/device-code step, and verify identity/readiness afterward, but it must not label or copy that flow as PM-direct OAuth. PM-direct OAuth exists only for explicitly supported direct-provider clients. Provider setup manifests own exact official URLs/domains and trusted probe procedure IDs; manifests and clients cannot inject arbitrary shell commands.
 
@@ -111,6 +115,9 @@ validation_surfaces:
   - Plans/provider_setup_manifest_contracts.schema.json
   - Plans/provider_setup_manifest_contract_fixtures.json
   - tests/test_pm_provider_setup_manifest.py
+  - Plans/provider_readiness_contracts.schema.json
+  - Plans/provider_readiness_contract_fixtures.json
+  - tests/test_pm_provider_readiness.py
   - future provider_setup_required and stale-continuation fixtures
   - future installation-auth-readiness separation fixtures
   - future post-update dependent-route revalidation and failure-loop fixtures

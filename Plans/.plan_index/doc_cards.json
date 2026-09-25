@@ -3341,7 +3341,7 @@
         "future ProviderRequestEnvelope and CLI bridge context payloads",
         "future bridged-provider adapter contracts"
       ],
-      "line_count": 2082,
+      "line_count": 2089,
       "path": "Plans/CLI_Bridged_Providers.md",
       "plan_unit_count": 31,
       "plan_unit_ids": [
@@ -3414,7 +3414,7 @@
         "stream_resilience_drift",
         "worktree_context_drift"
       ],
-      "sha256": "8d2ce56f55e97bcf9ff5f024167d6dd88634488ac8580641c667c86b4c742fe8",
+      "sha256": "af8ad66f8da4ee085325fe65aee2ea4517ecf0670ab13ca8194e3a13e7645757",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 31
@@ -3429,6 +3429,8 @@
       "validation_surfaces": [
         "Bridge restores cooked mode/echo on crash or timeout.",
         "Orphan process cleanup receipts written.",
+        "Plans/provider_readiness_contract_fixtures.json",
+        "Plans/provider_readiness_contracts.schema.json",
         "Plans/provider_setup_manifest_contract_fixtures.json",
         "Plans/provider_setup_manifest_contracts.schema.json",
         "Plans/working_notebook_contract_fixtures.json",
@@ -3450,6 +3452,7 @@
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-shard-plans.py --check",
+        "tests/test_pm_provider_readiness.py",
         "tests/test_pm_provider_setup_manifest.py"
       ]
     },
@@ -13640,7 +13643,7 @@
         "future Product Onboarding and Bootstrap projection controllers",
         "future Product Onboarding native controller"
       ],
-      "line_count": 2580,
+      "line_count": 2587,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 28,
       "plan_unit_ids": [
@@ -13695,7 +13698,7 @@
         "tour_fake_shell_or_layout_loss",
         "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "c479075a5b72602b14000d0389a1dd08098e1113e5aac383e6df7982725b8b62",
+      "sha256": "6905dfea5340074917be96fc51fa8a87216d96140b9e3e8fb016217d4d4befb6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 27,
@@ -13721,6 +13724,8 @@
         "Plans/forge_integration_contracts.schema.json",
         "Plans/guided_tour_contract_fixtures.json",
         "Plans/guided_tour_contracts.schema.json",
+        "Plans/onboarding_search_consumer_contract_fixtures.json",
+        "Plans/onboarding_search_consumer_contracts.schema.json",
         "Plans/product_onboarding_contract_fixtures.json",
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/remote_access_system_contracts.schema.json",
@@ -13754,6 +13759,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "real-application action observation",
         "tests/test_pm_onboarding_phases.py",
+        "tests/test_pm_onboarding_search_consumer.py",
         "tests/test_pm_settings_draft_transfer.py"
       ]
     },
@@ -20045,7 +20051,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T05:51:49Z",
+  "generated_at_utc": "2026-09-25T05:59:56Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -1,0 +1,240 @@
+{
+  "schema_id": "pm.provider_readiness.contract_fixtures.v1",
+  "valid": [
+    {
+      "name": "direct_route_ready_usage_unavailable",
+      "definition": "readiness_fixture",
+      "value": {
+        "schema_id": "pm.provider_readiness.fixture.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "provider_readiness_fixture",
+        "runtime_evidence": false,
+        "query": {
+          "schema_id": "pm.provider_readiness.query.v1",
+          "query_ref": "fixture:query",
+          "setup_binding_ref": "fixture:binding",
+          "owner_currentness_ref": "fixture:currentness",
+          "schema_version": "1.0.0"
+        },
+        "binding": {
+          "schema_id": "pm.provider_setup.consumer_binding.v1",
+          "schema_version": "1.0.0",
+          "binding_ref": "fixture:binding",
+          "original_invocation_ref": "fixture:invocation",
+          "manifest": {
+            "record_ref": "fixture:manifest",
+            "revision": "opaque:revision-A",
+            "sha256": "724271c7ee886c70e552d3a82d77303325574f9ac097148fc8438baf8cbf6ca4"
+          },
+          "provider_entry_id": "fixture:provider-entry",
+          "provider_route_id": "fixture:route",
+          "setup_method_id": "fixture:setup-method",
+          "credential_owner": "pm",
+          "execution_host_id": "fixture:host",
+          "execution_environment_id": "fixture:environment",
+          "topology_generation": 7,
+          "account_ref": "fixture:account",
+          "profile_ref": null,
+          "connection_ref": null,
+          "readiness_proof_ref": "fixture:readiness",
+          "owner_currentness_ref": "fixture:currentness",
+          "return_context_ref": "fixture:return-context",
+          "return_destination_ref": "fixture:return-destination"
+        },
+        "proof": {
+          "schema_id": "pm.provider_readiness.proof.v1",
+          "proof_ref": "fixture:readiness",
+          "query_ref": "fixture:query",
+          "setup_binding_ref": "fixture:binding",
+          "provider_id": "fixture:provider-entry",
+          "provider_route_id": "fixture:route",
+          "execution_host_id": "fixture:host",
+          "execution_environment_id": "fixture:environment",
+          "topology_generation": 7,
+          "installation_id": null,
+          "installation_generation": null,
+          "profile_ref": null,
+          "account_ref": "fixture:account",
+          "account_id": "fixture:account-id",
+          "connection_ref": null,
+          "product_entitlement_ref": "fixture:entitlement",
+          "model_catalog_ref": "fixture:models",
+          "adapter_probe_ref": "fixture:adapter",
+          "capability_probe_ref": "fixture:capability",
+          "generation_proof_ref": "fixture:generation",
+          "generation_refusal_ref": null,
+          "required_checks": [
+            "installation_state",
+            "executable_health",
+            "authentication_state",
+            "account_identity_state",
+            "product_or_entitlement_state",
+            "model_catalog_state",
+            "adapter_handshake_state",
+            "required_capability_state"
+          ],
+          "observed_facts": {
+            "installation_state": {
+              "fact_ref": "fixture:fact:installation_state",
+              "query_ref": "fixture:query",
+              "dimension": "installation_state",
+              "state": "not_applicable",
+              "evidence_refs": [
+                "fixture:evidence:installation_state"
+              ],
+              "reason_ref": null
+            },
+            "executable_health": {
+              "fact_ref": "fixture:fact:executable_health",
+              "query_ref": "fixture:query",
+              "dimension": "executable_health",
+              "state": "not_applicable",
+              "evidence_refs": [
+                "fixture:evidence:executable_health"
+              ],
+              "reason_ref": null
+            },
+            "authentication_state": {
+              "fact_ref": "fixture:fact:authentication_state",
+              "query_ref": "fixture:query",
+              "dimension": "authentication_state",
+              "state": "verified",
+              "evidence_refs": [
+                "fixture:evidence:authentication_state"
+              ],
+              "reason_ref": null
+            },
+            "account_identity_state": {
+              "fact_ref": "fixture:fact:account_identity_state",
+              "query_ref": "fixture:query",
+              "dimension": "account_identity_state",
+              "state": "verified",
+              "evidence_refs": [
+                "fixture:evidence:account_identity_state"
+              ],
+              "reason_ref": null
+            },
+            "product_or_entitlement_state": {
+              "fact_ref": "fixture:fact:product_or_entitlement_state",
+              "query_ref": "fixture:query",
+              "dimension": "product_or_entitlement_state",
+              "state": "verified",
+              "evidence_refs": [
+                "fixture:evidence:product_or_entitlement_state"
+              ],
+              "reason_ref": null
+            },
+            "model_catalog_state": {
+              "fact_ref": "fixture:fact:model_catalog_state",
+              "query_ref": "fixture:query",
+              "dimension": "model_catalog_state",
+              "state": "verified",
+              "evidence_refs": [
+                "fixture:evidence:model_catalog_state"
+              ],
+              "reason_ref": null
+            },
+            "adapter_handshake_state": {
+              "fact_ref": "fixture:fact:adapter_handshake_state",
+              "query_ref": "fixture:query",
+              "dimension": "adapter_handshake_state",
+              "state": "verified",
+              "evidence_refs": [
+                "fixture:evidence:adapter_handshake_state"
+              ],
+              "reason_ref": null
+            },
+            "required_capability_state": {
+              "fact_ref": "fixture:fact:required_capability_state",
+              "query_ref": "fixture:query",
+              "dimension": "required_capability_state",
+              "state": "verified",
+              "evidence_refs": [
+                "fixture:evidence:required_capability_state"
+              ],
+              "reason_ref": null
+            },
+            "generation_verification_state": {
+              "fact_ref": "fixture:fact:generation_verification_state",
+              "query_ref": "fixture:query",
+              "dimension": "generation_verification_state",
+              "state": "verified",
+              "evidence_refs": [
+                "fixture:evidence:generation_verification_state"
+              ],
+              "reason_ref": null
+            },
+            "usage_telemetry_state": {
+              "fact_ref": "fixture:fact:usage_telemetry_state",
+              "query_ref": "fixture:query",
+              "dimension": "usage_telemetry_state",
+              "state": "unavailable",
+              "evidence_refs": [
+                "fixture:evidence:usage_telemetry_state"
+              ],
+              "reason_ref": "fixture:usage-unavailable"
+            }
+          },
+          "readiness_state": "ready",
+          "readiness_confidence": "verified",
+          "failure_class": null,
+          "failure_evidence_refs": [],
+          "owner_currentness_ref": "fixture:currentness",
+          "observed_at": "2026-09-25T00:00:00Z",
+          "schema_version": "1.0.0"
+        },
+        "owner_required_checks": [
+          "installation_state",
+          "executable_health",
+          "authentication_state",
+          "account_identity_state",
+          "product_or_entitlement_state",
+          "model_catalog_state",
+          "adapter_handshake_state",
+          "required_capability_state"
+        ]
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "foreign_route",
+      "definition": "readiness_fixture",
+      "base_valid": "direct_route_ready_usage_unavailable",
+      "patch": {
+        "proof.provider_route_id": "fixture:foreign"
+      },
+      "semantic_rule": "readiness_context_provider_route_id"
+    },
+    {
+      "name": "caller_drops_required_auth",
+      "definition": "readiness_fixture",
+      "base_valid": "direct_route_ready_usage_unavailable",
+      "patch": {
+        "proof.required_checks": []
+      },
+      "semantic_rule": "required_check_set"
+    },
+    {
+      "name": "auth_unavailable_not_ready",
+      "definition": "readiness_fixture",
+      "base_valid": "direct_route_ready_usage_unavailable",
+      "patch": {
+        "proof.observed_facts.authentication_state.state": "unavailable",
+        "proof.observed_facts.authentication_state.reason_ref": "fixture:auth-unavailable"
+      },
+      "semantic_rule": "required_fact_not_ready"
+    },
+    {
+      "name": "generation_refusal_not_verified",
+      "definition": "readiness_fixture",
+      "base_valid": "direct_route_ready_usage_unavailable",
+      "patch": {
+        "proof.observed_facts.generation_verification_state.state": "unavailable",
+        "proof.observed_facts.generation_verification_state.reason_ref": "fixture:refused",
+        "proof.generation_refusal_ref": "fixture:refused"
+      },
+      "semantic_rule": "generation_confidence_overclaim"
+    }
+  ]
+}

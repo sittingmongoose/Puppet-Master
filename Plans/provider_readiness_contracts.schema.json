@@ -1,0 +1,456 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/provider_readiness_contracts.schema.json",
+  "x-schema-id": "pm.provider_readiness.contracts.v1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/query"
+    },
+    {
+      "$ref": "#/$defs/readiness_proof"
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "query": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "query_ref",
+        "setup_binding_ref",
+        "owner_currentness_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.provider_readiness.query.v1"
+        },
+        "query_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "setup_binding_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "owner_currentness_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        }
+      }
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fact_ref",
+        "query_ref",
+        "dimension",
+        "state",
+        "evidence_refs",
+        "reason_ref"
+      ],
+      "properties": {
+        "fact_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "query_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "dimension": {
+          "enum": [
+            "installation_state",
+            "executable_health",
+            "authentication_state",
+            "account_identity_state",
+            "product_or_entitlement_state",
+            "model_catalog_state",
+            "adapter_handshake_state",
+            "required_capability_state",
+            "generation_verification_state",
+            "usage_telemetry_state"
+          ]
+        },
+        "state": {
+          "enum": [
+            "verified",
+            "failed",
+            "unavailable",
+            "not_applicable"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "reason_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "readiness_proof": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "proof_ref",
+        "query_ref",
+        "setup_binding_ref",
+        "provider_id",
+        "provider_route_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "topology_generation",
+        "installation_id",
+        "installation_generation",
+        "profile_ref",
+        "account_ref",
+        "account_id",
+        "connection_ref",
+        "product_entitlement_ref",
+        "model_catalog_ref",
+        "adapter_probe_ref",
+        "capability_probe_ref",
+        "generation_proof_ref",
+        "generation_refusal_ref",
+        "required_checks",
+        "observed_facts",
+        "readiness_state",
+        "readiness_confidence",
+        "failure_class",
+        "failure_evidence_refs",
+        "owner_currentness_ref",
+        "observed_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.provider_readiness.proof.v1"
+        },
+        "proof_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "query_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "setup_binding_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "provider_id": {
+          "$ref": "#/$defs/id"
+        },
+        "provider_route_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/id"
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "installation_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "installation_generation": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "profile_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "account_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "account_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "connection_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "product_entitlement_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "model_catalog_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "adapter_probe_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "capability_probe_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "generation_proof_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "generation_refusal_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required_checks": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "installation_state",
+              "executable_health",
+              "authentication_state",
+              "account_identity_state",
+              "product_or_entitlement_state",
+              "model_catalog_state",
+              "adapter_handshake_state",
+              "required_capability_state",
+              "generation_verification_state",
+              "usage_telemetry_state"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "observed_facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "installation_state",
+            "executable_health",
+            "authentication_state",
+            "account_identity_state",
+            "product_or_entitlement_state",
+            "model_catalog_state",
+            "adapter_handshake_state",
+            "required_capability_state",
+            "generation_verification_state",
+            "usage_telemetry_state"
+          ],
+          "properties": {
+            "installation_state": {
+              "$ref": "#/$defs/fact"
+            },
+            "executable_health": {
+              "$ref": "#/$defs/fact"
+            },
+            "authentication_state": {
+              "$ref": "#/$defs/fact"
+            },
+            "account_identity_state": {
+              "$ref": "#/$defs/fact"
+            },
+            "product_or_entitlement_state": {
+              "$ref": "#/$defs/fact"
+            },
+            "model_catalog_state": {
+              "$ref": "#/$defs/fact"
+            },
+            "adapter_handshake_state": {
+              "$ref": "#/$defs/fact"
+            },
+            "required_capability_state": {
+              "$ref": "#/$defs/fact"
+            },
+            "generation_verification_state": {
+              "$ref": "#/$defs/fact"
+            },
+            "usage_telemetry_state": {
+              "$ref": "#/$defs/fact"
+            }
+          }
+        },
+        "readiness_state": {
+          "enum": [
+            "ready",
+            "not_ready",
+            "unknown"
+          ]
+        },
+        "readiness_confidence": {
+          "enum": [
+            "verified",
+            "limited",
+            "unknown"
+          ]
+        },
+        "failure_class": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "failure_evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "owner_currentness_ref": {
+          "$ref": "#/$defs/id"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        }
+      }
+    },
+    "readiness_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "runtime_evidence",
+        "query",
+        "binding",
+        "proof",
+        "owner_required_checks"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.provider_readiness.fixture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_kind": {
+          "const": "provider_readiness_fixture"
+        },
+        "runtime_evidence": {
+          "const": false
+        },
+        "query": {
+          "$ref": "#/$defs/query"
+        },
+        "binding": {
+          "$ref": "https://puppetmaster.local/schemas/provider_setup_manifest_contracts.schema.json#/$defs/setup_consumer_binding"
+        },
+        "proof": {
+          "$ref": "#/$defs/readiness_proof"
+        },
+        "owner_required_checks": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "installation_state",
+              "executable_health",
+              "authentication_state",
+              "account_identity_state",
+              "product_or_entitlement_state",
+              "model_catalog_state",
+              "adapter_handshake_state",
+              "required_capability_state",
+              "generation_verification_state",
+              "usage_telemetry_state"
+            ]
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

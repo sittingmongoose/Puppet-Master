@@ -557,6 +557,70 @@
   "redaction_transform_registry_ref": "Plans/redaction_transform_registry.json",
   "contract_family_dispositions": [
     {
+      "disposition_id": "scd.provider_readiness.projection.v1",
+      "system_id": "provider_setup",
+      "owner_doc": "Plans/CLI_Bridged_Providers.md",
+      "schema_ref": "Plans/provider_readiness_contracts.schema.json",
+      "record_kinds": [
+        "pm.provider_readiness.query.v1",
+        "pm.provider_readiness.proof.v1"
+      ],
+      "source_refs": [
+        "Plans/CLI_Bridged_Providers.md#CBP-028",
+        "Plans/provider_readiness_contracts.schema.json"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Original owner evidence and existing session custody remain independently governed; this read-only transport/projection introduces no durable hold.",
+        "expiry_rule": "Discard view on invocation completion or currentness invalidation; resolve current actual owner authority before reuse."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target or reconstructed authority from current focus; no replayed setup, probe, search or owner effect.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Finite owner-resolved read-only value joins, not new physical records, runtime authority or an independent engine. Nested facts/candidates/snapshots share this transport classification; fixture wrappers are test-only."
+    },
+    {
+      "disposition_id": "scd.onboarding_search.transport.v1",
+      "system_id": "product_onboarding",
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "schema_ref": "Plans/onboarding_search_consumer_contracts.schema.json",
+      "record_kinds": [
+        "pm.onboarding_search.selection_request.v1",
+        "pm.onboarding_search.selection_result.v1"
+      ],
+      "source_refs": [
+        "Plans/Planning_Wizard.md#PWIZ-021",
+        "Plans/onboarding_search_consumer_contracts.schema.json"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Original owner evidence and existing session custody remain independently governed; this read-only transport/projection introduces no durable hold.",
+        "expiry_rule": "Discard view on invocation completion or currentness invalidation; resolve current actual owner authority before reuse."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target or reconstructed authority from current focus; no replayed setup, probe, search or owner effect.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Finite owner-resolved read-only value joins, not new physical records, runtime authority or an independent engine. Nested facts/candidates/snapshots share this transport classification; fixture wrappers are test-only."
+    },
+    {
       "disposition_id": "scd.provider_setup.manifest_transport.v1",
       "system_id": "provider_setup",
       "owner_doc": "Plans/CLI_Bridged_Providers.md",
