@@ -2830,6 +2830,20 @@
             "kind": "edited"
           }
         }
+      },
+      "B2-06": {
+        "severity": "note",
+        "applied_at_utc": "2026-09-25T06:16:04Z",
+        "parent_commit": "231ef3f79777cb45452791f0c5ac60a2931d89bb",
+        "finding": "The 8 exclusions (6 crew lifecycle rows under DL-087, 2 spawn rows under DL-088) are recorded before the Contracts owner edits that remove the names land, the opposite choice from the host ruling that holds the retention cells FAIL until owner text binds them; the procedure's Per exclusion permits it and the rationales say the edits are pending.",
+        "repair": "No row changes. The procedure record's open questions gain item 8, the reviewer's suggested question: \"Batch 2 records the DL-087 and DL-088 exclusions before the Contracts owner edits land; confirm that an exclusion may rest on a Decision Log answer while its owner edit is pending.\"",
+        "files": {
+          "reports/event-authority-20260911/step-09-procedure-20260924.md": {
+            "before_sha256": "2aae95857abdbd4d86cad082680e9feedace6cfcda50cc2aa9e42efc40d2e27a",
+            "after_sha256": "04febd4c03dafd77d4be3ac79bced7ed0655329c78c4e434f0aa51a9b3afedeb",
+            "kind": "edited"
+          }
+        }
       }
     }
   }
