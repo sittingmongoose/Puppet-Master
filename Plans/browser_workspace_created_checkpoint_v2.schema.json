@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/browser_workspace_created_checkpoint/2.0.0/schema.json",
-  "title": "Conditional Browser workspace-created checkpoint v2 contracts",
+  "title": "Browser workspace-created checkpoint v2 contracts",
   "description": "SP-266's v2 successor: the current writer and reader definition of the browser.workspace.created checkpoint, admitted under DL-046 (authored 2026-09-25). The v1 value is compatibility custody read only at the StorageMigrationCoordinator same-key handoff. Native migration, source, permission and crash proof NOT_RUN.",
   "x-pm-v1-schema-ref": "Plans/browser_workspace_created_contracts.schema.json#/$defs/checkpoint",
   "$defs": {

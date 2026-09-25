@@ -16,7 +16,7 @@
     "hold_refs": [],
     "retired_generations": []
   },
-  "claim_boundary": "Conditional synthetic decoded-value controls only. Mixed-scope generic source is a separate no-creation-match control, not an end-to-end indexed Browser creation. All verified-source, access, custody and transaction observations are explicit adapter assumptions. No admission or activation; native NOT_RUN. The generic index, the stored nine-field token, the examined bounds, cursor, state and health, and the birth transaction's key, after-value, selected publication and commit time are derived at load time from the SP-278 positive case named by generic_fixture_source, as the reset fixtures do; the live redb snapshot id comes from the observation and is never stored.",
+  "claim_boundary": "Synthetic decoded-value controls of the current v2 definition only. Mixed-scope generic source is a separate no-creation-match control, not an end-to-end indexed Browser creation. All verified-source, access, custody and transaction observations are explicit adapter assumptions. They grant no admission or activation; native NOT_RUN. The generic index, the stored nine-field token, the examined bounds, cursor, state and health, and the birth transaction's key, after-value, selected publication and commit time are derived at load time from the SP-278 positive case named by generic_fixture_source, as the reset fixtures do; the live redb snapshot id comes from the observation and is never stored.",
   "generic_fixture_source": {
     "path": "Plans/event_record_index_checkpoint_contract_fixtures.json",
     "json_pointer": "#/positive/initial_mixed_scope"
