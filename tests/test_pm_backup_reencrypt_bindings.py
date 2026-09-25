@@ -16,13 +16,13 @@ class Bindings(unittest.TestCase):
   s=json.loads((ROOT/OLD).read_text());schema=json.loads((ROOT/SCHEMA).read_text());fixtures=json.loads((ROOT/'Plans/backup_reencrypt_contract_fixtures.json').read_text());old=json.loads((ROOT/'Plans/backup_restore_system_contract_fixtures.json').read_text())
   self.assertEqual(41,len(s['$defs']['backup_restore_command_id']['enum']))
   for k in ('request','result'):
-   arms=s['$defs']['backup_current_command_'+k]['oneOf'];self.assertEqual(8,len(arms));self.assertEqual({'$ref':schema['$id']+'#/$defs/'+k},arms[6]);self.assertIn('key-rotation',arms[5]['$ref']);ex=arms[-1]['allOf'][1]['not']['properties']['command_id']['anyOf'];self.assertEqual(7,len(ex));self.assertIn({'const':CMD},ex)
+   arms=s['$defs']['backup_current_command_'+k]['oneOf'];self.assertEqual(9,len(arms));self.assertEqual({'$ref':schema['$id']+'#/$defs/'+k},arms[6]);self.assertIn('key-rotation',arms[5]['$ref']);ex=arms[-1]['allOf'][1]['not']['properties']['command_id']['anyOf'];self.assertEqual(8,len(ex));self.assertIn({'const':CMD},ex)
    current=g.validator_for(s,{'$ref':'#/$defs/backup_current_command_'+k},registry);historical=g.validator_for(s,{'$ref':'#/$defs/backup_restore_command_'+k},registry)
    for c in fixtures['valid']:self.assertEqual([],list(current.iter_errors(c['value'][k])));self.assertTrue(list(historical.iter_errors(c['value'][k])))
    historicals=[c['value'] for c in old['valid'] if c.get('definition')=='backup_restore_command_'+k]
    for v in historicals:self.assertEqual([],list(historical.iter_errors(v)))
    if k=='request':
-    self.assertEqual(set(s['$defs']['backup_restore_command_id']['enum']),{v['command_id'] for v in historicals});self.assertEqual(29,len({v['command_id'] for v in historicals if not list(current.iter_errors(v))}))
+    self.assertEqual(set(s['$defs']['backup_restore_command_id']['enum']),{v['command_id'] for v in historicals});self.assertEqual(28,len({v['command_id'] for v in historicals if not list(current.iter_errors(v))}))
     self.assertTrue(list(current.iter_errors(next(v for v in historicals if v['command_id']==CMD))))
  def test_five_custody_groups_nine_kinds(self):
   rows=[r for r in json.loads((ROOT/'Plans/storage_value_registry.json').read_text())['contract_family_dispositions'] if r['schema_ref']==SCHEMA];self.assertEqual(5,len(rows));kinds=[k for r in rows for k in r['record_kinds']];self.assertEqual(9,len(kinds));self.assertEqual(9,len(set(kinds)))

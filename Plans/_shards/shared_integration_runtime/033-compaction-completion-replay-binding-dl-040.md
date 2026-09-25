@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2594
+Source lines: L2164-L2596
 
-Source SHA256: `5701200857832110de22ba792ba9339f93af42bd3dbbf8ea40d9eeed495e7d58`
+Source SHA256: `febd045806c702cb174d57e0921136d7d0c3902821ec30ac1e856d67060f53a2`
 
 ---
 
@@ -184,6 +184,8 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+The exact selected-preview original binding retains genuine full IdentityEnvelope, request/command/operation/dispatch/frame/caller, actor/permission and canonical argument/result digests. The existing Backup receipt's separate correlation_id is retained as explicit original dispatcher metadata, not invented as an IdentityEnvelope field or equated to command_instance_id. Actual result, owner preview/production receipt, CommandOutcome and UI response resolve to the same original; a cancelled null UI error preserves the unchanged actual Backup error through the typed safe projection. Accepted work is genuinely nonterminal. Unknown production retains its original reconciliation identity and cannot become successful readiness. Current disclosure is rechecked after source/target/helper calls and originals/resolved records remain mutation-fenced. No native availability or physical custody is established by the companion.
 
 For exactly `cmd.backup.recovery_key.reencrypt`, SIR's internal companion retains authentic original full IdentityEnvelope, complete authority and reviewed arguments, payload digest, original dispatch/frame/generation, idempotency, actor/permission and nullable actual return context. The domain adapter resolves the actual review, source/target records, re-encryption observation/receipt and work before mapping to CommandOutcome/UICommandResponse. Safe error projection joins the unchanged actual Backup error to original identity/caller; cancelled common UI error may be null without erasing the owner error or known effects. Unknown effects map to terminal_unknown/recovery_required, accepted work cannot be relabelled terminal, and replay never repeats cryptographic effects. Mandatory actual original/current disclosure and immutable input guards remain; no protected FullThread field or native producer is created by static validation.
 

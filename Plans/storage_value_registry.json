@@ -4583,6 +4583,167 @@
         "Plans/backup_reencrypt_contracts.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.restore.selected_preview_transport.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/restore_selected_preview_contracts.schema.json",
+      "record_kinds": [
+        "pm.restore.selected_preview.request.v1",
+        "pm.restore.selected_preview.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold is created. Actual source/original and preview/production receipt custody retain their separate obligations.",
+        "expiry_rule": "Discard transient transport/error projection at delivery end or source/current disclosure invalidation. No TTL, durable cache or replay authority is created."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target. Missing authentic original, preview, receipt or caller/error evidence cannot be reconstructed from a transient projection.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted exact selected-preview transport; not retained original, readiness or activation authority.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/restore_selected_preview_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.restore.selected_preview_association.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/restore_selected_preview_contracts.schema.json",
+      "record_kinds": [
+        "pm.restore.selected_preview.association.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve genuine original source/target/mapping association, actual preview/production receipt and unresolved original reconciliation under existing replay, audit and source-coupled holds. Per-kind physical admission and lifetime remain pending; no source-retention extension.",
+        "expiry_rule": "No physical writer, cleanup operation or numeric TTL is admitted. Register exact keys/values, producer, current/history readers, source-coupled release/deletion, migration and coherent backup before persistence."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct original selected preview, actual owner receipt or unresolved production from a transient response or unrelated Backup receipt. Existing v1 preview receipt remains unchanged; new association/production carrier physical custody requires separate registration.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained authentic original source/target/mapping evaluations and actual change attribution, with genuine preview and v1 receipt references when produced.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/restore_selected_preview_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.restore.selected_preview_production_receipt.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/restore_selected_preview_contracts.schema.json",
+      "record_kinds": [
+        "pm.restore.selected_preview.production_receipt.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve genuine original source/target/mapping association, actual preview/production receipt and unresolved original reconciliation under existing replay, audit and source-coupled holds. Per-kind physical admission and lifetime remain pending; no source-retention extension.",
+        "expiry_rule": "No physical writer, cleanup operation or numeric TTL is admitted. Register exact keys/values, producer, current/history readers, source-coupled release/deletion, migration and coherent backup before persistence."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct original selected preview, actual owner receipt or unresolved production from a transient response or unrelated Backup receipt. Existing v1 preview receipt remains unchanged; new association/production carrier physical custody requires separate registration.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Explicit new terminal RestoreCoordinator production evidence when no actual v1 preview receipt exists. Retains actual partial preview through association; never a fabricated RestorePreviewReceipt or restore effect.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/restore_selected_preview_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.restore_selected_preview_dispatch.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/restore_selected_preview_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.restore_selected_preview_dispatch.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve genuine original source/target/mapping association, actual preview/production receipt and unresolved original reconciliation under existing replay, audit and source-coupled holds. Per-kind physical admission and lifetime remain pending; no source-retention extension.",
+        "expiry_rule": "No physical writer, cleanup operation or numeric TTL is admitted. Register exact keys/values, producer, current/history readers, source-coupled release/deletion, migration and coherent backup before persistence."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct original selected preview, actual owner receipt or unresolved production from a transient response or unrelated Backup receipt. Existing v1 preview receipt remains unchanged; new association/production carrier physical custody requires separate registration.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained authentic SIR original caller, arguments and separate Backup receipt correlation. Native issuer and physical custody pending.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/restore_selected_preview_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.restore_selected_preview_error_projection.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/restore_selected_preview_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.restore_selected_preview_error_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold is created. Actual source/original and preview/production receipt custody retain their separate obligations.",
+        "expiry_rule": "Discard transient transport/error projection at delivery end or source/current disclosure invalidation. No TTL, durable cache or replay authority is created."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target. Missing authentic original, preview, receipt or caller/error evidence cannot be reconstructed from a transient projection.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted actual original/caller/Backup error projection, including nullable cancelled UI error without erasing known production facts.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/restore_selected_preview_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [

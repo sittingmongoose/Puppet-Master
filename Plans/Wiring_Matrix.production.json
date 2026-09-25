@@ -48300,8 +48300,8 @@
       "ui_location": "Product Onboarding > Restore; Settings > Backup and Restore; Doctor > Recovery",
       "ui_command_id": "cmd.restore.preview",
       "handler_location": "handlers::backup_restore::preview_restore",
-      "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
-      "result_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result",
+      "request_schema_ref": "Plans/restore_selected_preview_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/restore_selected_preview_contracts.schema.json#/$defs/result",
       "expected_event_types": [],
       "acceptance_checks": [
         "The row is production intent only and remains disabled with handler_unavailable until a native Backup/Restore handler exists.",
@@ -48314,10 +48314,12 @@
       "disabled_reason_projection": "state.commands.restore_preview.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "Returns RestorePreviewReceipt and owner projection without activation or unregistered EventRecord.",
+        "description": "Actual nonterminal preview work or unchanged RestorePreview v2/RestorePreviewReceipt v1 binds original coherent selection, target and mapping. Failure/cancellation without v1 receipt retains genuine partial preview and explicit production evidence; no activation, fabricated readiness or EventRecord.",
         "receipt_or_event_refs": [
-          "RestorePreviewReceipt",
-          "BackupRestoreCommandResult.receipt"
+          "Plans/backup_restore_system_contracts.schema.json#/$defs/restore_preview",
+          "Plans/backup_restore_system_contracts.schema.json#/$defs/restore_preview_receipt",
+          "Plans/restore_selected_preview_contracts.schema.json#/$defs/association",
+          "Plans/restore_selected_preview_contracts.schema.json#/$defs/production_receipt"
         ]
       },
       "accessibility_contract": {

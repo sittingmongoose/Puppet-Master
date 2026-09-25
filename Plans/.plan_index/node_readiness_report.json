@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T11:12:52Z",
+  "generated_at_utc": "2026-09-25T11:20:38Z",
   "gui_related_units": {
     "count": 3200,
     "units": [
@@ -4676,7 +4676,7 @@
           "heading": "BRS-006 - Restore Preview, Modes, Quarantine, Derived Rebuild, And Rollback",
           "heading_level": 3,
           "heading_line": 315,
-          "line": 317,
+          "line": 327,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4686,8 +4686,8 @@
         "source_location": {
           "heading": "BRS-007 - Required Receipts And Post-Restore Readiness",
           "heading_level": 3,
-          "heading_line": 359,
-          "line": 361,
+          "heading_line": 371,
+          "line": 373,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4697,8 +4697,8 @@
         "source_location": {
           "heading": "BRS-008 - Canonical Backup Restore Commands, Events, And UI",
           "heading_level": 3,
-          "heading_line": 397,
-          "line": 399,
+          "heading_line": 409,
+          "line": 411,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4708,8 +4708,8 @@
         "source_location": {
           "heading": "BRS-010 - Backup Restore Acceptance And Proof Boundary",
           "heading_level": 3,
-          "heading_line": 500,
-          "line": 502,
+          "heading_line": 512,
+          "line": 514,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4719,8 +4719,8 @@
         "source_location": {
           "heading": "BRS-011 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 1015,
-          "line": 1017,
+          "heading_line": 1027,
+          "line": 1029,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4730,8 +4730,8 @@
         "source_location": {
           "heading": "BRS-012 - RecoverySet, Recovery Kit, Key Slots, And Human Custody",
           "heading_level": 3,
-          "heading_line": 540,
-          "line": 548,
+          "heading_line": 552,
+          "line": 560,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4741,8 +4741,8 @@
         "source_location": {
           "heading": "BRS-013 - Eleven Destination Families And Shared Authentication Consumption",
           "heading_level": 3,
-          "heading_line": 589,
-          "line": 591,
+          "heading_line": 601,
+          "line": 603,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4752,8 +4752,8 @@
         "source_location": {
           "heading": "BRS-014 - Snapshot Browse, Retrieve, Compare, Export, And Archive Delivery",
           "heading_level": 3,
-          "heading_line": 631,
-          "line": 633,
+          "heading_line": 643,
+          "line": 645,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4763,8 +4763,8 @@
         "source_location": {
           "heading": "BRS-015 - Scheduler, Retention, Prune, Verification, And Drill Policy",
           "heading_level": 3,
-          "heading_line": 688,
-          "line": 690,
+          "heading_line": 700,
+          "line": 702,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4774,8 +4774,8 @@
         "source_location": {
           "heading": "BRS-016 - Serialized Supersession, Fresh Recovery, And Consumer Truth",
           "heading_level": 3,
-          "heading_line": 747,
-          "line": 749,
+          "heading_line": 759,
+          "line": 761,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4785,8 +4785,8 @@
         "source_location": {
           "heading": "BRS-017 - Coordinator, Capture Barrier, Independent Repositories, And Durable Authority",
           "heading_level": 3,
-          "heading_line": 1066,
-          "line": 1068,
+          "heading_line": 1078,
+          "line": 1080,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4796,8 +4796,8 @@
         "source_location": {
           "heading": "BRS-018 - Destination, Headless Authentication, Recovery Key, And Human Delivery Safety",
           "heading_level": 3,
-          "heading_line": 1109,
-          "line": 1123,
+          "heading_line": 1121,
+          "line": 1135,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4807,8 +4807,8 @@
         "source_location": {
           "heading": "BRS-019 - Locate, Browse, Restore, Retention, And Durable Operational Safety",
           "heading_level": 3,
-          "heading_line": 1174,
-          "line": 1176,
+          "heading_line": 1186,
+          "line": 1188,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4818,8 +4818,8 @@
         "source_location": {
           "heading": "BRS-023 - Phase-Local Restore Evidence And Bound Emergency Consent",
           "heading_level": 3,
-          "heading_line": 1267,
-          "line": 1269,
+          "heading_line": 1279,
+          "line": 1281,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -39249,7 +39249,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "95ba302582e854ad78e43f07a35e41a58cd682cd2e68b8a601789391583cf075",
+        "expected": "98a9a37f4413e0d456395fefd143a8bb31ab3a7ae9729c7619afee80e5d4a59b",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -39291,13 +39291,13 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "0b67f4e2a650b5d82f3e29df2a647c8be873e5b593af1f203294ad0c6fa39d99",
+        "expected": "33625aae3e9343cecd4e970349d592253d004bb20599d2ce2d9badaac8195f03",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "be3c1353a702547d9cb654ac25d733c1d247ee612fffdf9abab98a7939d3cc9f",
+        "expected": "ceeb808c4c0ebffb0caa3892c1bf55ebcfd8baeb830225fc4ff4eff16b8ad9d1",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {

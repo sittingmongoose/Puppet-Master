@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L10988-L11248
 
-Source SHA256: `0b67f4e2a650b5d82f3e29df2a647c8be873e5b593af1f203294ad0c6fa39d99`
+Source SHA256: `33625aae3e9343cecd4e970349d592253d004bb20599d2ce2d9badaac8195f03`
 
 ---
 
@@ -20,7 +20,7 @@ and receipt/projection-only effects with an empty EventRecord set.
 |---|---|---|---|---|
 | `cmd.source_control.repository.clone` | Clone Git Repository | `source_control_command_request` -> `source_control_command_result` | `handlers::source_control::repository_clone` | Product Onboarding first-project branch; Settings SCM/Origin manager |
 | `cmd.jujutsu.git.clone` | Clone with Jujutsu | `command_request` -> `command_result` | `handlers::jujutsu::git_clone` | Product Onboarding first-project branch; Settings SCM/Origin manager |
-| `cmd.restore.preview` | Preview Restore | `backup_restore_command_request` -> `backup_restore_command_result` | `handlers::backup_restore::preview_restore` | Product Onboarding restore branch; Settings Backup/Restore manager; Doctor recovery route |
+| `cmd.restore.preview` | Preview Restore | `Plans/restore_selected_preview_contracts.schema.json#/$defs/request` -> `Plans/restore_selected_preview_contracts.schema.json#/$defs/result` | `handlers::backup_restore::preview_restore` | Product Onboarding restore branch; Settings Backup/Restore manager; Doctor recovery route |
 | `cmd.server.connect` | Connect Server | `command_payload` -> `command_result` | `handlers::server::connect` | Product Onboarding discovered/known Server branch; Settings Server manager; Doctor connectivity route |
 | `cmd.server.bootstrap.start` | Start Server Bootstrap | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::server::bootstrap_start` | Product Onboarding post-claim standalone/container branch; Settings Server manager |
 | `cmd.client.pair.start` | Start Client Pairing | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::start` | Product Onboarding pairing methods; Settings paired-clients manager |

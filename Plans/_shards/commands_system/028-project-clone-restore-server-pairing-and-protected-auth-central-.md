@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L4981-L5066
 
-Source SHA256: `3f8f7c1fcb8f49c548609a4e728200fbfb992db7dd7e7a7850c783e7e8ec6387`
+Source SHA256: `0a805c14c55661c7a125ace14e82791384d0b955e5e5568cc8e2c7535d004445`
 
 ---
 
@@ -20,7 +20,7 @@ exists, consumers must surface `handler_unavailable` or the exact owner-disabled
 |---|---|---|---|
 | `cmd.source_control.repository.clone` | `source_control_command_request` -> `source_control_command_result` | `handlers::source_control::repository_clone` | Ordinary Git only; never aliases Jujutsu clone. |
 | `cmd.jujutsu.git.clone` | `command_request` -> `command_result` | `handlers::jujutsu::git_clone` | Jujutsu-native operation and snapshot fence. |
-| `cmd.restore.preview` | `backup_restore_command_request` -> `backup_restore_command_result` | `handlers::backup_restore::preview_restore` | Validates and previews without activation. |
+| `cmd.restore.preview` | `Plans/restore_selected_preview_contracts.schema.json#/$defs/request` -> `Plans/restore_selected_preview_contracts.schema.json#/$defs/result` | `handlers::backup_restore::preview_restore` | Validates and previews without activation. |
 | `cmd.server.connect` | `command_payload` -> `command_result` | `handlers::server::connect` | One id carries `connect`, `reconnect`, and `resume`; no duplicate reconnect/resume commands. |
 | `cmd.server.bootstrap.start` | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::server::bootstrap_start` | Post-claim standalone/container bootstrap only. |
 | `cmd.client.pair.start` | `supplemental_command_payload` -> `supplemental_command_result` | `handlers::client_pairing::start` | Starts one generation-fenced pairing run; grants no trust. |

@@ -15,7 +15,7 @@ class Bindings(unittest.TestCase):
   sys.path.insert(0,str(ROOT/'scripts'));spec=importlib.util.spec_from_file_location('rotation_binding_gate',ROOT/'scripts/pm-new-contracts-verify.py');g=importlib.util.module_from_spec(spec);spec.loader.exec_module(g);registry=g.offline_schema_registry()
   s=json.loads((ROOT/OLD).read_text());new=json.loads((ROOT/'Plans/backup_key_rotation_contract_fixtures.json').read_text());old=json.loads((ROOT/'Plans/backup_restore_system_contract_fixtures.json').read_text());url=json.loads((ROOT/SCHEMA).read_text())['$id']
   for k in ('request','result'):
-   arms=s['$defs']['backup_current_command_'+k]['oneOf'];self.assertEqual(8,len(arms));self.assertEqual({'$ref':url+'#/$defs/'+k},arms[5]);self.assertEqual(7,len(arms[-1]['allOf'][1]['not']['properties']['command_id']['anyOf']))
+   arms=s['$defs']['backup_current_command_'+k]['oneOf'];self.assertEqual(9,len(arms));self.assertEqual({'$ref':url+'#/$defs/'+k},arms[5]);self.assertEqual(8,len(arms[-1]['allOf'][1]['not']['properties']['command_id']['anyOf']))
    current=g.validator_for(s,{'$ref':'#/$defs/backup_current_command_'+k},registry);historical=g.validator_for(s,{'$ref':'#/$defs/backup_restore_command_'+k},registry)
    for c in new['valid']:self.assertEqual([],list(current.iter_errors(c['value'][k])));self.assertTrue(list(historical.iter_errors(c['value'][k])))
    for c in old['valid']:
