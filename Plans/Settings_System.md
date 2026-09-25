@@ -360,6 +360,7 @@ acceptance_criteria:
   rebinds only after actual Project identity reservation.
 - Credential-bearing IDs and owner-excluded IDs are listed as excluded and never copied.
 - Ordinary Settings copy excludes environment-specific paths, physical window/screen geometry, live processes and raw credentials; category selection cannot make those values transferable. Preview discloses these exclusions and apply preserves destination-owned values rather than importing another environment's state. This does not change logical appearance preferences or authorize copying runtime/Assistant state.
+- For the explicitly owner-admitted value-dependent rows in SSYS-007.A, ordinary eligibility follows the row owner's value form and an owner-read source/destination Project identity, revision, and root binding. Project-root-relative values, owner-defined portable symbolic defaults, and separately owner-approved portable remote references may be eligible; a path-shaped string alone never overrides credential, owner-excluded, creation-only, run-scoped, or destination-owned custody.
 - Stale preview, validation failure, commit/read-back failure, or cancellation produces no partial destination mutation.
 - Later source changes cannot affect the destination.
 - A newly opened copy flow starts with all ten selector categories selected; an explicitly reduced selection resolves and applies only its previewed eligible exact IDs, never unselected or excluded IDs.
@@ -408,6 +409,62 @@ owner_hints:
 - Plans/storage-plan.md
 - Plans/Permissions_System.md
 ```
+
+#### SSYS-007.A - Value-dependent transfer boundary for path-valued rows (owner prose, 2026-09-25)
+
+Classification of record for every path-valued inventory row, under the already
+accepted SSYS-007 boundary: Settings transfer and Replace import exclude
+**environment-specific values** - a value is environment-specific when it names
+a location belonging to one host, home directory, drive, network environment,
+or run rather than to the Project - and category selection cannot make such a
+value transferable. The JSON field type `path` alone is not that boundary.
+Only a row explicitly admitted as value-dependent by its owner may take the
+ordinary branch, and only for an owner-validated Project-root-relative value
+bound to the actual source and destination Project roots, an owner-defined
+portable symbolic default, or a separately owner-approved portable remote
+reference where that row admits one. A portable remote reference need not name
+a file inside either Project; it must retain its owner-defined meaning at the
+destination. A path-shaped string never
+overrides credential, owner-excluded, creation-only, run-scoped, or
+destination-owned custody. Mixed rows are value-dependent, never universally
+ordinary and never universally local. Any ordinary-branch transfer must be
+validated by an actual owner read of the selected source and destination
+Project identity, revision, root binding, and value form, with the typed result
+bound to the frozen preview and revalidated at apply; a caller Boolean, a path
+prefix, a safe-looking ref, a copied hash, or a self-declared
+`excluded_settings` entry is not authority. Host-absolute, home-relative,
+drive-bound, or environment-bound values stay excluded and destination-owned.
+An omission resets only an eligible ordinary destination setting to its
+destination-current registry default; it can never erase local state by
+claiming the source omitted it. Until the typed value-shape join that
+implements this boundary clears independent acceptance, path-valued rows whose
+branch is not decided here remain fail-closed.
+
+Exact classifications of record:
+
+| Row | Class of record | Owner evidence |
+| --- | --- | --- |
+| `ai.accounts.opencode-cli-path` | local_environment (excluded, destination-owned) | host executable location, used only when the direct server connection is unavailable (owner row text) |
+| `code.execution.docker-binary-path` | local_environment (excluded, destination-owned) | host executable location for unusual installs (owner row text) |
+| `system.advanced.cli-path-cursor` | local_environment (excluded, destination-owned) | host install path; literal overrides are machine-bound (owner row text) |
+| `system.advanced.cli-path-claude` | local_environment (excluded, destination-owned) | host install path; literal overrides are machine-bound (owner row text) |
+| `branching.worktrees.worktree-base-dir` | local_environment (excluded, destination-owned) | host drive location for private workspace creation; moved when the default drive is short on space (owner row text) |
+| `web.fetch.ca-bundle` | local_environment (excluded, destination-owned) | company-issued certificate bundle for the local network-inspecting environment (owner row text) |
+| `planning.interview.wizard-project-path` | run-scoped creation preference (outside durable Project Replace state; excluded) | consumed during Project creation/selection, not a durable Project preference |
+| `ai.accounts.github-oauth-loopback` | local_environment (excluded, destination-owned; replaces the prior `unresolved` label) | GitHub_API_Auth_and_Flows.md GAAAF-004 with Tools.md 1197-1199: environment-bound OAuth callback listener bind address for the active local/WSL/container/remote-dev context; never a raw credential; never a callback invention, wildcard/public widening, or a hardcoded 127.0.0.1 in the wrong network namespace |
+| `safety.protection.custom-patterns-path` | value-dependent (Project-root-relative portable under FileSafe additive-patterns custody; host-absolute excluded) | FileSafe.md 247: Project-specific `.puppet-master/destructive-commands.local.txt` optional override |
+| `code.terminal.cwd` | value-dependent (symbolic locations such as the Project-root default portable; literal host folder excluded) | owner row text: folder new terminals open in |
+| `code.editing.lsp-root-override` | value-dependent (the Auto-Detected/symbolic default portable; literal host-absolute override excluded) | owner row text: tell language servers where the project really starts |
+| `code.execution.compose-file` | value-dependent (Project-root-relative portable; host-absolute override excluded) | Containers_Registry_and_Unraid.md 146: Project-aware inferred compose selections with explicit override |
+| `code.execution.build-context` | value-dependent (Project-root-relative portable; host-absolute override excluded) | Containers_Registry_and_Unraid.md 146: usually the project root, explicit override preserved |
+| `code.execution.dockerfile-path` | value-dependent (Project-root-relative portable; host-absolute override excluded) | Containers_Registry_and_Unraid.md 146: override when the Dockerfile is not at the project root |
+| `code.execution.unraid-repo-path` | value-dependent (Project-root-relative default and Git remote URL portable; host-absolute folder excluded) | owner row text: local folder or Git remote URL |
+| `media.io.artifacts-location` | value-dependent (`${PROJECT_ROOT}`-relative portable; host-absolute excluded) | owner row default `${PROJECT_ROOT}/.puppet-master/artifacts/` |
+
+This prose is the classification authority of record for these rows. The
+typed machine join (registry field, schema, helper, tests, and central
+registration) must enforce it; any branch not decided by the owner/value read
+remains fail-closed.
 
 ### SSYS-008 - Credential Exclusion And Secure Reference Custody
 
@@ -872,6 +929,7 @@ acceptance_criteria:
   - The machine command registry contains exactly the five canonical Settings command IDs and no Bloom alias.
   - Preview is non-mutating; apply and rollback are revision/hash/idempotency bound; export is detached and secret-free.
   - Replace-mode import previews every omitted eligible ordinary setting within the chosen categories as an explicit before/after reset to its current registry default; the reset set is fixed at preview and never expands during apply.
+  - For SSYS-007.A value-dependent rows, Replace eligibility and reset omission bind the owner-read source/destination Project identities, revisions, roots, and value form to the frozen preview and revalidate them at apply; an apparently safe path, remote ref, caller Boolean, or self-declared exclusion cannot authorize a reset or import.
   - Merge-mode import, settings outside the chosen categories, and excluded local or credential values gain no reset; no silent reset or broader deletion is authorized.
   - Missing central registration or handler remains command_not_registered or handler_unavailable and dispatches nothing.
 validation_surfaces: [Plans/settings_system_contracts.schema.json, Plans/settings_system_contract_fixtures.json, future central command/catalog/wiring parity validator]
