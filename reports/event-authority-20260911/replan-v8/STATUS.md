@@ -67,7 +67,7 @@ The 2026-09-25 landing record names the `Goal_Runtime_System.md` member and note
 
 **Open questions.** O-13 confirmation (Jared); O-20 / A0 Q-01, child goal runs (Goal Runtime owner, Jared); U3-Q7 (Storage owner, before A2); Q-U4-05, Q-U4-07, Q-U4-08; A0 Q-04, Q-07, Q-08 and the blocked trigger (A3); A0 Q-10: the narrow Replan v3 root review `13437dc7…` and the full prebirth plan exist only on the NAS, the cloud session did not read them, and canon cites the prebirth plan by hash only (`21e672ca…`) and does not cite the root review; read both on the VM before landing, or record that A1 relies on them by hash only (A1 lander, on the VM).
 
-Cost: to be filled by the host
+**Cost.** A1 used about 26 agent-hours and about 4.7M output tokens: 40 subagents (15.5 agent-hours, 4.54M output tokens) across scoping, the canonical-draft build, owner-prose drafting, the package's independent review in two cycles and its repairs, the rebase, the canon compile and the canon-branch review, plus about 11 hours of host time. Jared cleared the thread on 2026-09-25 to run over the plan's estimates (A1: 1.5 to 2.5 agent-days, 0.8M to 1.2M tokens).
 
 **Rebase note.** This branch is rebased onto `origin/main` `63cf2cb97`, where A0 has not landed. Its `STATUS.md` repeats A0's section, so if A0 lands first the rebase conflict on this file resolves by keeping this branch's version.
 
