@@ -1,0 +1,1377 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/coordination_projection_contracts/1.0.0/coordination_projection_contracts.schema.json",
+  "title": "Coordination projection values and projector checkpoint",
+  "description": "Newly authored Storage owner contract under DL-045: SP-320 in Plans/storage-plan.md, backed by the per-family search reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md. The closed values of the four coordination projection key shapes and of the projector checkpoint, one definition per key shape, each with its own schema ID and version 1.0.0. storage.coordination_projector.v1 is their only writer; the five storage.coordination_reader identities read them only after checking checkpoint coverage. Values hold only IDs, refs, hashes, enums, integers, timestamps and CV-353's bounded text. Nothing here admits a family or proves native behavior.",
+  "x-pm-event-authority-binding": {
+    "binding_version": "1.0.0",
+    "definition_authority_ref": "Plans/Decision_Log.md#DL-045",
+    "definition_status": "newly_authored_owner_contract",
+    "search_report_ref": "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md",
+    "semantic_owner_ref": "Plans/orchestrator-subagent-integration.md#OSI-438",
+    "payload_owner_ref": "Plans/Contracts_V0.md#CV-353",
+    "storage_owner_ref": "Plans/storage-plan.md#SP-320",
+    "producer_component": "AgentCoordinator",
+    "append_admission": "storage.coordination_append.v1@1.0.0",
+    "first_receipt_resolver": "storage.first_append_receipt.resolve.v2",
+    "first_receipt_owner_refs": [
+      "Plans/storage-plan.md#SP-286",
+      "Plans/Contracts_V0.md#CV-339"
+    ],
+    "projector_id": "storage.coordination_projector.v1",
+    "projector_version": "1.0.0",
+    "reader_ids": [
+      "storage.coordination_reader.scheduler.v1@1.0.0",
+      "storage.coordination_reader.agent_coordinator.v1@1.0.0",
+      "storage.coordination_reader.prompt_context.v1@1.0.0",
+      "storage.coordination_reader.mirror_export.v1@1.0.0",
+      "storage.coordination_reader.inspection.v1@1.0.0"
+    ],
+    "record_family_id": "coordination_event_records",
+    "projection_family_id": "coordination_read_model_projections",
+    "checkpoint_key": "projector.checkpoint.coordination:{project_id}",
+    "checkpoint_schema_id": "pm.storage_value.coordination_projector_checkpoint.v1",
+    "checkpoint_schema_version": "1.0.0",
+    "checkpoint_schema_pointer": "#/$defs/checkpoint",
+    "generic_index_owner_ref": "Plans/storage-plan.md#SP-278",
+    "generic_index_read_token_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/read_token",
+    "stored_read_token_pointer": "#/$defs/durable_read_token",
+    "source_retention_policy": {
+      "policy_id": "RP-COORDINATION-180D",
+      "policy_version": "1.0.0"
+    },
+    "projection_retention_policy": {
+      "policy_id": "RP-PROJECTION-3GEN",
+      "policy_version": "1.0.0"
+    },
+    "families": [
+      {
+        "event_type": "coordination.agent_registered",
+        "payload_schema_ref": "Plans/coordination_event_payloads.schema.json#/$defs/agent_registered",
+        "payload_schema_id": "pm.coordination_event.agent_registered.schema.v1",
+        "entry_point": "AgentCoordinator.register_agent(RegisterAgent)"
+      },
+      {
+        "event_type": "coordination.agent_status_updated",
+        "payload_schema_ref": "Plans/coordination_event_payloads.schema.json#/$defs/agent_status_updated",
+        "payload_schema_id": "pm.coordination_event.agent_status_updated.schema.v1",
+        "entry_point": "AgentCoordinator.update_status(AgentStatusUpdate)"
+      },
+      {
+        "event_type": "coordination.agent_operation_updated",
+        "payload_schema_ref": "Plans/coordination_event_payloads.schema.json#/$defs/agent_operation_updated",
+        "payload_schema_id": "pm.coordination_event.agent_operation_updated.schema.v1",
+        "entry_point": "AgentCoordinator.update_operation(AgentOperationUpdate)"
+      },
+      {
+        "event_type": "coordination.agent_file_ownership_updated",
+        "payload_schema_ref": "Plans/coordination_event_payloads.schema.json#/$defs/agent_file_ownership_updated",
+        "payload_schema_id": "pm.coordination_event.agent_file_ownership_updated.schema.v1",
+        "entry_point": "AgentCoordinator.update_file_ownership(AgentFileOwnershipUpdate)"
+      },
+      {
+        "event_type": "coordination.agent_unregistered",
+        "payload_schema_ref": "Plans/coordination_event_payloads.schema.json#/$defs/agent_unregistered",
+        "payload_schema_id": "pm.coordination_event.agent_unregistered.schema.v1",
+        "entry_point": "AgentCoordinator.unregister_agent(AgentTerminalUpdate)"
+      },
+      {
+        "event_type": "coordination.agent_crashed",
+        "payload_schema_ref": "Plans/coordination_event_payloads.schema.json#/$defs/agent_crashed",
+        "payload_schema_id": "pm.coordination_event.agent_crashed.schema.v1",
+        "entry_point": "AgentCoordinator.record_crash(AgentCrashResolution)"
+      },
+      {
+        "event_type": "coordination.agent_aborted",
+        "payload_schema_ref": "Plans/coordination_event_payloads.schema.json#/$defs/agent_aborted",
+        "payload_schema_id": "pm.coordination_event.agent_aborted.schema.v1",
+        "entry_point": "AgentCoordinator.record_abort(AgentAbortResolution)"
+      }
+    ],
+    "excluded_event_types": [
+      "coordination.debug_mirror_exported"
+    ],
+    "native_proof": false
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/agent_projection"
+    },
+    {
+      "$ref": "#/$defs/file_projection"
+    },
+    {
+      "$ref": "#/$defs/operation_projection"
+    },
+    {
+      "$ref": "#/$defs/snapshot_projection"
+    },
+    {
+      "$ref": "#/$defs/checkpoint"
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^evt_coordination_[0-9a-f]{64}$"
+    },
+    "non_secret_ref": {
+      "description": "CV-353 rule 6: a reference of the form kind:value. The kind is lowercase letters, digits and underscores, starting with a letter; the whole reference has at most 256 characters and no whitespace. It names an object, grants no access and holds no credential, account identifier, local absolute path or content.",
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 256,
+      "pattern": "^(?![\\s\\S]*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[a-z][a-z0-9_]*:(?![A-Za-z]:[\\\\/])(?![/\\\\~])(?!file:)(?!sk-[A-Za-z0-9_-]{8,})\\S+$"
+    },
+    "path_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "pattern": "^(?!\\.{1,2}(?:/|$))(?![\\s\\S]*/\\.{1,2}(?:/|$))[^/]+(?:/[^/]+)*$"
+    },
+    "status_reason": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[^\\u0000-\\u001F\\u007F]+$",
+      "not": {
+        "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+      }
+    },
+    "operation_summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[^\\u0000-\\u001F\\u007F]+$",
+      "not": {
+        "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+      }
+    },
+    "agent_projection": {
+      "description": "coordination_agent_projection.v1:{project_id}:{agent_id} (SP-320 projection rules). The registration's lineage, the current status, the current operation, the count of active claims, the revision and the last applied event; once terminal, the terminal family, its reason or status and its time. Registration sets queued; coordination.agent_unregistered sets its terminal_status, coordination.agent_crashed sets failed and coordination.agent_aborted sets cancelled (OSI-438). The row stays after the terminal event, with no active claims.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "publication_id",
+        "project_id",
+        "agent_id",
+        "run_id",
+        "agent_type",
+        "platform",
+        "started_at_utc",
+        "status",
+        "active_claim_count",
+        "agent_revision",
+        "last_applied_event_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.coordination_agent_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "publication_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "agent_id": {
+          "$ref": "#/$defs/id"
+        },
+        "run_id": {
+          "$ref": "#/$defs/id"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/id"
+        },
+        "agent_type": {
+          "$ref": "#/$defs/id"
+        },
+        "parent_run_id": {
+          "$ref": "#/$defs/id"
+        },
+        "child_run_id": {
+          "$ref": "#/$defs/id"
+        },
+        "node_id": {
+          "$ref": "#/$defs/id"
+        },
+        "lane_id": {
+          "$ref": "#/$defs/id"
+        },
+        "worktree_id": {
+          "$ref": "#/$defs/id"
+        },
+        "platform": {
+          "enum": [
+            "codex",
+            "claude",
+            "cursor",
+            "gemini",
+            "copilot"
+          ]
+        },
+        "model_id": {
+          "$ref": "#/$defs/id"
+        },
+        "started_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "running",
+            "awaiting_parent",
+            "blocked",
+            "complete",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "status_reason": {
+          "$ref": "#/$defs/status_reason"
+        },
+        "current_operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "active_claim_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "agent_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "last_applied_event_id": {
+          "$ref": "#/$defs/event_id"
+        },
+        "terminal": {
+          "$ref": "#/$defs/agent_terminal"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "terminal"
+            ]
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "complete",
+                  "failed",
+                  "cancelled"
+                ]
+              },
+              "active_claim_count": {
+                "const": 0
+              },
+              "agent_revision": {
+                "minimum": 2
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "queued",
+                  "running",
+                  "awaiting_parent",
+                  "blocked"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "terminal"
+            ],
+            "properties": {
+              "terminal": {
+                "properties": {
+                  "event_type": {
+                    "const": "coordination.agent_crashed"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "failed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "terminal"
+            ],
+            "properties": {
+              "terminal": {
+                "properties": {
+                  "event_type": {
+                    "const": "coordination.agent_aborted"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "cancelled"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "terminal"
+            ],
+            "properties": {
+              "terminal": {
+                "properties": {
+                  "event_type": {
+                    "const": "coordination.agent_unregistered"
+                  },
+                  "outcome": {
+                    "const": "complete"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "complete"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "terminal"
+            ],
+            "properties": {
+              "terminal": {
+                "properties": {
+                  "event_type": {
+                    "const": "coordination.agent_unregistered"
+                  },
+                  "outcome": {
+                    "const": "failed"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "failed"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "terminal"
+            ],
+            "properties": {
+              "terminal": {
+                "properties": {
+                  "event_type": {
+                    "const": "coordination.agent_unregistered"
+                  },
+                  "outcome": {
+                    "const": "cancelled"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": "cancelled"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "agent_terminal": {
+      "description": "The agent's one terminal event: its family, its terminal_status or reason, and its time.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_type",
+        "outcome",
+        "occurred_at_utc"
+      ],
+      "properties": {
+        "event_type": {
+          "enum": [
+            "coordination.agent_unregistered",
+            "coordination.agent_crashed",
+            "coordination.agent_aborted"
+          ]
+        },
+        "outcome": {
+          "type": "string"
+        },
+        "occurred_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "event_type": {
+              "const": "coordination.agent_unregistered"
+            },
+            "outcome": {
+              "enum": [
+                "complete",
+                "failed",
+                "cancelled"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "const": "coordination.agent_crashed"
+            },
+            "outcome": {
+              "enum": [
+                "process_exit",
+                "heartbeat_expired",
+                "process_lost",
+                "worktree_lost"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "event_type": {
+              "const": "coordination.agent_aborted"
+            },
+            "outcome": {
+              "enum": [
+                "parent",
+                "user",
+                "runtime"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "file_projection": {
+      "description": "coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}: the agent's latest claim on that path. A newer claim by the same agent on the same path replaces it, and the agent's terminal event deletes every file row of the agent in the same transaction. There is no release value (SP-320).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "publication_id",
+        "project_id",
+        "agent_id",
+        "path_ref",
+        "path_hash",
+        "claim_kind",
+        "claim_confidence",
+        "observed_at_utc",
+        "source_event_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.coordination_file_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "publication_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "agent_id": {
+          "$ref": "#/$defs/id"
+        },
+        "path_ref": {
+          "$ref": "#/$defs/path_ref"
+        },
+        "path_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "claim_kind": {
+          "enum": [
+            "editing",
+            "reviewing",
+            "generated_output",
+            "read_dependency"
+          ]
+        },
+        "claim_confidence": {
+          "enum": [
+            "high",
+            "medium"
+          ]
+        },
+        "operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "source_event_id": {
+          "$ref": "#/$defs/event_id"
+        }
+      }
+    },
+    "operation_projection": {
+      "description": "coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}: the latest event for that operation_id wins, with its summary, progress, refs, first and latest observation times and source event ID. Rows stay after the terminal event (SP-320).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "publication_id",
+        "project_id",
+        "agent_id",
+        "operation_id",
+        "operation_summary",
+        "first_observed_at_utc",
+        "last_observed_at_utc",
+        "source_event_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.coordination_operation_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "publication_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "agent_id": {
+          "$ref": "#/$defs/id"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "operation_summary": {
+          "$ref": "#/$defs/operation_summary"
+        },
+        "progress_pct": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "operation_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "first_observed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "last_observed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "source_event_id": {
+          "$ref": "#/$defs/event_id"
+        }
+      }
+    },
+    "snapshot_projection": {
+      "description": "coordination_snapshot_projection.v1:{project_id}:{projection_scope}: the non-terminal agents in scope. projection_scope is project, or run~{b}, worktree~{b}, lane~{r}~{b} or node~{r}~{b}, where b is the unpadded base64url of the exact UTF-8 run_id, worktree_id, lane_id or node_id, and r that of the run_id for lane and node scopes. A scoped row exists only while at least one non-terminal agent names its scope (SP-320).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "publication_id",
+        "project_id",
+        "projection_scope",
+        "agents"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.coordination_snapshot_projection.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "publication_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "projection_scope": {
+          "type": "string",
+          "pattern": "^(?:project|run~[A-Za-z0-9_-]+|worktree~[A-Za-z0-9_-]+|lane~[A-Za-z0-9_-]+~[A-Za-z0-9_-]+|node~[A-Za-z0-9_-]+~[A-Za-z0-9_-]+)$"
+        },
+        "agents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/snapshot_agent"
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "projection_scope": {
+            "const": "project"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "agents": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    "snapshot_agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent_id",
+        "agent_type",
+        "platform",
+        "status",
+        "claims"
+      ],
+      "properties": {
+        "agent_id": {
+          "$ref": "#/$defs/id"
+        },
+        "agent_type": {
+          "$ref": "#/$defs/id"
+        },
+        "platform": {
+          "enum": [
+            "codex",
+            "claude",
+            "cursor",
+            "gemini",
+            "copilot"
+          ]
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "running",
+            "awaiting_parent",
+            "blocked"
+          ]
+        },
+        "operation_summary": {
+          "$ref": "#/$defs/operation_summary"
+        },
+        "progress_pct": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/snapshot_claim"
+          }
+        }
+      }
+    },
+    "snapshot_claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path_ref",
+        "claim_kind",
+        "claim_confidence"
+      ],
+      "properties": {
+        "path_ref": {
+          "$ref": "#/$defs/path_ref"
+        },
+        "claim_kind": {
+          "enum": [
+            "editing",
+            "reviewing",
+            "generated_output",
+            "read_dependency"
+          ]
+        },
+        "claim_confidence": {
+          "enum": [
+            "high",
+            "medium"
+          ]
+        }
+      }
+    },
+    "checkpoint": {
+      "description": "The value at projector.checkpoint.coordination:{project_id} in redb's checkpoints table: pm.storage_value.coordination_projector_checkpoint.v1@1.0.0 (SP-320). It explicitly adopts SP-278's generic EventRecord index checkpoint and stores the nine-field durable read token, never redb_snapshot_id (DL-076). admitted_event_types is the sorted exact list of coordination event types that were admitted in the registry when this publication was built. A proven empty source has null bounds and cursor; a nonempty source with no coordination event keeps its examined bounds and cursor. The same-key generation set is the current core plus at most two retired cores (RP-PROJECTION-3GEN).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "publication_id",
+        "project_id",
+        "storage_instance_id",
+        "scope_partition",
+        "projector_id",
+        "projector_version",
+        "admitted_event_types",
+        "index_read_token",
+        "first_retained_sequence_id",
+        "index_through_sequence_id",
+        "source_cursor",
+        "filter_complete",
+        "state",
+        "health",
+        "updated_at_utc",
+        "withdrawn_at_utc",
+        "published_at_utc",
+        "hold_refs",
+        "retired_generations"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.coordination_projector_checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "publication_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "scope_partition": {
+          "type": "string",
+          "pattern": "^project~[A-Za-z0-9_-]+$"
+        },
+        "projector_id": {
+          "const": "storage.coordination_projector.v1"
+        },
+        "projector_version": {
+          "const": "1.0.0"
+        },
+        "admitted_event_types": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 7,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "coordination.agent_registered",
+              "coordination.agent_status_updated",
+              "coordination.agent_operation_updated",
+              "coordination.agent_file_ownership_updated",
+              "coordination.agent_unregistered",
+              "coordination.agent_crashed",
+              "coordination.agent_aborted"
+            ]
+          }
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        },
+        "first_retained_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "index_through_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "source_cursor": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/coverage/properties/last_frame"
+        },
+        "filter_complete": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "health": {
+          "enum": [
+            "healthy",
+            "degraded"
+          ]
+        },
+        "updated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "withdrawn_at_utc": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "published_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "hold_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        },
+        "retired_generations": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/retired_generation"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "current"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "filter_complete": {
+                "const": true
+              },
+              "health": {
+                "const": "healthy"
+              },
+              "withdrawn_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "degraded"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "health": {
+                "const": "degraded"
+              },
+              "withdrawn_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "withdrawn"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "withdrawn_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_cursor": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "source_cursor"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "null"
+              },
+              "index_through_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "integer"
+              },
+              "index_through_sequence_id": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkpoint_core": {
+      "description": "A checkpoint publication without its retired generations; a retired core is always withdrawn.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "publication_id",
+        "project_id",
+        "storage_instance_id",
+        "scope_partition",
+        "projector_id",
+        "projector_version",
+        "admitted_event_types",
+        "index_read_token",
+        "first_retained_sequence_id",
+        "index_through_sequence_id",
+        "source_cursor",
+        "filter_complete",
+        "state",
+        "health",
+        "updated_at_utc",
+        "withdrawn_at_utc",
+        "published_at_utc",
+        "hold_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.coordination_projector_checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "publication_id": {
+          "$ref": "#/$defs/id"
+        },
+        "project_id": {
+          "$ref": "#/$defs/id"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "scope_partition": {
+          "type": "string",
+          "pattern": "^project~[A-Za-z0-9_-]+$"
+        },
+        "projector_id": {
+          "const": "storage.coordination_projector.v1"
+        },
+        "projector_version": {
+          "const": "1.0.0"
+        },
+        "admitted_event_types": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 7,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "coordination.agent_registered",
+              "coordination.agent_status_updated",
+              "coordination.agent_operation_updated",
+              "coordination.agent_file_ownership_updated",
+              "coordination.agent_unregistered",
+              "coordination.agent_crashed",
+              "coordination.agent_aborted"
+            ]
+          }
+        },
+        "index_read_token": {
+          "$ref": "#/$defs/durable_read_token"
+        },
+        "first_retained_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "index_through_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "source_cursor": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/coverage/properties/last_frame"
+        },
+        "filter_complete": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "health": {
+          "enum": [
+            "healthy",
+            "degraded"
+          ]
+        },
+        "updated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "withdrawn_at_utc": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "published_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "hold_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "current"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "filter_complete": {
+                "const": true
+              },
+              "health": {
+                "const": "healthy"
+              },
+              "withdrawn_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "degraded"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "health": {
+                "const": "degraded"
+              },
+              "withdrawn_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "withdrawn"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "withdrawn_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_cursor": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "source_cursor"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "null"
+              },
+              "index_through_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "integer"
+              },
+              "index_through_sequence_id": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "retired_generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpoint_core",
+        "successor_publication_id"
+      ],
+      "properties": {
+        "checkpoint_core": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/checkpoint_core"
+            },
+            {
+              "properties": {
+                "state": {
+                  "const": "withdrawn"
+                }
+              }
+            }
+          ]
+        },
+        "successor_publication_id": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "durable_read_token": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "checkpoint_key",
+        "checkpoint_ref",
+        "generation_id",
+        "generation_anchor_sha256",
+        "frontier_revision",
+        "frontier_sha256",
+        "index_dataset_name",
+        "source_selection"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "checkpoint_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "checkpoint_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generation_id": {
+          "type": "string",
+          "pattern": "^eig_[0-9a-f]{64}$"
+        },
+        "generation_anchor_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "frontier_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "frontier_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "index_dataset_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "storage_instance_id",
+            "current_ref",
+            "current_bytes_sha256",
+            "selected_segment_generation",
+            "manifest_ref",
+            "manifest_bytes_sha256",
+            "manifest_generation",
+            "recovery_epoch",
+            "manifest_survivor_prefix_sha256",
+            "retained_inventory_sha256",
+            "durable_watermarks_sha256",
+            "excluded_ranges_sha256",
+            "retired_inputs_sha256"
+          ],
+          "properties": {
+            "storage_instance_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "current_ref": {
+              "const": "storage/seglog/CURRENT"
+            },
+            "current_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "selected_segment_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_ref": {
+              "const": "storage/seglog/manifest.v1.msgpack"
+            },
+            "manifest_bytes_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "manifest_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "recovery_epoch": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "manifest_survivor_prefix_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retained_inventory_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "durable_watermarks_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "excluded_ranges_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retired_inputs_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L26881-L27095
+Source lines: L26881-L27097
 
-Source SHA256: `fc0a24ac5fa73d915c6dac0b84122fe299cc36df0c2c8543c521d680717f7c4b`
+Source SHA256: `f8ab5f8bb21010631c2aa9f80223e98fa8f30d2d883399f3069620c9fe395ce8`
 
 ---
 
@@ -44,6 +44,8 @@ The registry's role names ("coordination projector", "Orchestrator scheduler" an
 - `publication_id`, `published_at_utc`, `hold_refs` and `retired_generations`.
 
 **Projections.** The four projection key shapes of section 2.3.2 are rows of one redb table named `coordination_read_model_projections`, in the same redb database as `checkpoints`, so that one write transaction covers rows and checkpoint. Their values are `pm.storage_value.coordination_agent_projection.v1`, `pm.storage_value.coordination_file_projection.v1`, `pm.storage_value.coordination_operation_projection.v1` and `pm.storage_value.coordination_snapshot_projection.v1`, each at version `1.0.0`. They are defined at `#/$defs/agent_projection`, `#/$defs/file_projection`, `#/$defs/operation_projection` and `#/$defs/snapshot_projection` of the same schema file. Each value carries its own `schema_id` and `schema_version`, so replay dispatches by schema and never by key template (section 2.3.1). Each value also carries the `publication_id` of the checkpoint core it belongs to.
+
+**Binding record.** The same schema file carries `x-pm-event-authority-binding`, this section's binding in machine form for the admission ledger and the checkers: the semantic, payload and Storage owners, `AgentCoordinator` and `storage.coordination_append.v1@1.0.0`, the first-receipt resolver, the projector and the five readers, the two registry families, the checkpoint key, schema and stored read token, both retention policies, and each family's payload schema and entry point. It restates the identities above and adds none.
 
 **Registry.** Storage materializes the two deferred registry families in place from these definitions. `coordination_event_records` takes the CV-353 payload definitions of `Plans/coordination_event_payloads.schema.json`, one for each event type of its key shape. `coordination_read_model_projections` takes one closed value per key shape from `Plans/coordination_projection_contracts.schema.json`. Their producer and consumer lists name the identities above. The family count does not change, and materializing the registry rows admits no event.
 
@@ -222,4 +224,4 @@ negative_constraints:
   - No WorkNode, NodeSeed, readiness clearance, count override or governance seal.
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Decision_Log.md#DL-076, ContractName:Plans/orchestrator-subagent-integration.md#OSI-438, ContractName:Plans/Contracts_V0.md#CV-353, ContractName:Plans/storage-plan.md#SP-232, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, SchemaID:pm.storage_value.coordination_projector_checkpoint.v1
+ContractRef: ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Decision_Log.md#DL-076, ContractName:Plans/orchestrator-subagent-integration.md#OSI-438, ContractName:Plans/Contracts_V0.md#CV-353, ContractName:Plans/storage-plan.md#SP-232, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/coordination_projection_contracts.schema.json, ContractName:Plans/coordination_event_payloads.schema.json, SchemaID:pm.storage_value.coordination_projector_checkpoint.v1
