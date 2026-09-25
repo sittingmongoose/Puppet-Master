@@ -14,8 +14,14 @@ class BackupOperandProseTests(unittest.TestCase):
     def test_destination_update_requires_actual_patch_without_implicit_effects(self):
         text = unit("BRS-004")
         for phrase in ("typed nonsecret patch", "expected current generation",
-                       "preserves destination identity and unedited fields",
+                       "preserves destination identity and unedited configuration fields",
                        "no implicit credential issuance, repository reassignment, backend deletion"):
+            self.assertIn(phrase, text)
+
+    def test_destination_edit_cannot_reuse_inapplicable_ready_or_test_proof(self):
+        text = unit("BRS-004")
+        for phrase in ("actual resulting effective configuration", "authentic test scope remains applicable",
+                       "not require a new test for a label-only edit", "no fixed generation increment"):
             self.assertIn(phrase, text)
 
     def test_verify_has_explicit_snapshot_set_and_requested_level(self):
