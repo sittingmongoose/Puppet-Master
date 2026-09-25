@@ -116,6 +116,8 @@ Each result holds over the whole scope in section 1.1. A family section repeats 
 
 **Newly authored owner contract under DL-045** (defined in OSI-438, CV-353 and SP-320): the producer binding to `AgentCoordinator.register_agent`, called by the Orchestrator before node execution; the per-registration `agent_id` rule; the closed `platform` domain; the rule that the initial operation is its own `coordination.agent_operation_updated` event; the closed payload definition `#/$defs/agent_registered`; `agent_revision` = 1 with no expected previous revision; the event-ID and idempotency-key recipe; the projector's registration step.
 
+2026-09-25, review repair CP-01: OSI-438 closes no list of platforms. `platform` is the effective runtime platform ID that the Orchestrator takes from `node_config.platform` (OSI-258), as `Plans/Models_System.md` section 1.2 names runtime platforms, and CV-353 rule 5 bounds only its form. This search read the list at ORCH 4091 only; ORCH 14, 199, 841, 4368 and 5547 and Models 1.2 name more platforms.
+
 ## 5. `coordination.agent_status_updated`
 
 **Search scope.** The exact string plus the shared patterns. 47 source hits (14 derived). Owner canon: CON 3037, 20045, 20083; DL 606; ORCH 3777, 4018, 21715, 31363; STO 536; SVR 7907.

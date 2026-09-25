@@ -116,7 +116,6 @@ ROW_FIELDS = {
 }
 # OSI-438 "Closed domains" and CV-353 rule 7.
 CLOSED_DOMAINS = {
-    ("lineage_envelope", "platform"): ["codex", "claude", "cursor", "gemini", "copilot"],
     ("agent_status_updated", "status"): ["queued", "running", "awaiting_parent", "blocked"],
     ("agent_unregistered", "terminal_status"): ["complete", "failed", "cancelled"],
     ("agent_crashed", "crash_reason"): ["process_exit", "heartbeat_expired", "process_lost", "worktree_lost"],
@@ -124,6 +123,10 @@ CLOSED_DOMAINS = {
     ("agent_file_ownership_updated", "claim_kind"): ["editing", "reviewing", "generated_output", "read_dependency"],
     ("agent_file_ownership_updated", "claim_confidence"): ["high", "medium"],
 }
+# CV-353 rule 5 (review repair CP-01): platform is the effective runtime platform ID that the Orchestrator takes
+# from node_config.platform (OSI-258), as Plans/Models_System.md section 1.2 names runtime platforms. It is
+# bounded by form only; no list of platforms is closed.
+PLATFORM_ID = {"type": "string", "minLength": 1, "maxLength": 256, "pattern": "^[a-z][a-z0-9_]*$"}
 PROJECTION_MEMBERS = ("agent_projection", "file_projection", "operation_projection", "snapshot_projection", "checkpoint")
 PROJECTION_SCHEMA_IDS = {
     "agent_projection": "pm.storage_value.coordination_agent_projection.v1",
@@ -373,6 +376,8 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     for (name, field), values in CLOSED_DOMAINS.items():
         if defs[name]["properties"].get(field) != {"enum": values}:
             failures.append({"error": "closed_domain", "definition": name, "field": field})
+    if envelope.get("properties", {}).get("platform") != PLATFORM_ID:
+        failures.append({"error": "platform_pattern", "definition": "lineage_envelope"})
     nulls = null_admitting_nodes(payloads)
     if nulls:
         failures.append({"error": "payload_schema_admits_null", "detail": nulls[:5]})
@@ -474,6 +479,9 @@ def projection_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
         failures.append({"error": "checkpoint_cursor_not_sp278_last_frame"})
     if checkpoint.get("properties", {}).get("admitted_event_types", {}).get("items") != {"enum": list(SEVEN)}:
         failures.append({"error": "checkpoint_admitted_domain"})
+    for name in ("agent_projection", "snapshot_agent"):
+        if defs.get(name, {}).get("properties", {}).get("platform") != PLATFORM_ID:
+            failures.append({"error": "platform_pattern", "definition": name})
     if any(reaches_live_fence(defs.get(name, {}), defs) for name in PROJECTION_MEMBERS):
         failures.append({"error": "stored_live_snapshot_fence"})
     if projections.get("x-pm-event-authority-binding") != expected_binding():

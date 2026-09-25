@@ -3850,7 +3850,7 @@ This is an event contract, not a retention choice. It states which facts these f
 
 | Field | Family | Values | Basis |
 |---|---|---|---|
-| `platform` | all seven, in the lineage envelope | `codex`, `claude`, `cursor`, `gemini`, `copilot` | "All platforms (Codex, Claude, Cursor, Gemini, Copilot)" under "When to use coordination modes", lowercase as in the coordination examples (`"platform": "codex"`); OSI-258 takes the value from `node_config.platform` |
+| `platform` | all seven, in the lineage envelope | the effective runtime platform ID that the Orchestrator takes from `node_config.platform` (OSI-258), as `Plans/Models_System.md` section 1.2 names runtime platforms; this section closes no list of platforms | OSI-258; Models 1.2 |
 | `status` | `coordination.agent_status_updated` | `queued`, `running`, `awaiting_parent`, `blocked` | the non-terminal members of the canonical child lifecycle enum in `Plans/Contracts_V0.md` |
 | `terminal_status` | `coordination.agent_unregistered` | `complete`, `failed`, `cancelled` | the terminal members of the same enum |
 | `crash_reason` | `coordination.agent_crashed` | `process_exit`, `heartbeat_expired`, `process_lost`, `worktree_lost` | Storage: "crash, heartbeat-expiry, process-loss, or worktree-loss resolution"; Gap #30: "process exit, worktree deletion, heartbeat expiry" |
@@ -3906,16 +3906,17 @@ canonical_text: >-
   register_agent, update_status, update_operation, update_file_ownership and unregister_agent(AgentTerminalUpdate),
   plus the newly defined record_crash for the scheduler or crash detector only and record_abort for the component
   that resolves the abort. The Gap #30 automatic-cleanup rule governs over the after-execution "Agent appends"
-  wording. An agent_id names one registration and is never registered again. The closed domains are platform
-  (codex, claude, cursor, gemini, copilot), status (the four non-terminal members of the canonical child lifecycle
-  enum, for every coordination agent), terminal_status (complete, failed, cancelled), claim_kind (editing,
-  reviewing, generated_output, read_dependency), claim_confidence (high, medium), crash_reason (process_exit,
-  heartbeat_expired, process_lost, worktree_lost) and abort_reason (parent, user, runtime). Events are appended at
-  registration, on actual change and at termination. Heartbeats are runtime liveness, and the heartbeat-expiry
-  threshold is the runtime policy value coordination_heartbeat_expiry_ms, with no number assigned here. The initial
-  operation is its own agent_operation_updated event after registration. Legacy sketch fields do not govern. Lost
-  acknowledgement resolves through the adopted SP-286/CV-339 storage.first_append_receipt.resolve.v2. Nothing is
-  admitted.
+  wording. An agent_id names one registration and is never registered again. The closed domains are status (the four
+  non-terminal members of the canonical child lifecycle enum, for every coordination agent), terminal_status
+  (complete, failed, cancelled), claim_kind (editing, reviewing, generated_output, read_dependency), claim_confidence
+  (high, medium), crash_reason (process_exit, heartbeat_expired, process_lost, worktree_lost) and abort_reason
+  (parent, user, runtime). platform is the effective runtime platform ID that the Orchestrator takes from
+  node_config.platform (OSI-258), as Plans/Models_System.md section 1.2 names runtime platforms, and no list of
+  platforms is closed here. Events are appended at registration, on actual change and at termination. Heartbeats are
+  runtime liveness, and the heartbeat-expiry threshold is the runtime policy value coordination_heartbeat_expiry_ms,
+  with no number assigned here. The initial operation is its own agent_operation_updated event after registration.
+  Legacy sketch fields do not govern. Lost acknowledgement resolves through the adopted SP-286/CV-339
+  storage.first_append_receipt.resolve.v2. Nothing is admitted.
 gui_related: false
 gui_classification_reason: Defines backend coordination producers, identities and event semantics, not presentation.
 depends_on: [DL-045, OSI-432, CV-310, SP-232, SP-286, CV-339]

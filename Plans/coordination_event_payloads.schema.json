@@ -93,13 +93,10 @@
           "maxLength": 256
         },
         "platform": {
-          "enum": [
-            "codex",
-            "claude",
-            "cursor",
-            "gemini",
-            "copilot"
-          ]
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[a-z][a-z0-9_]*$"
         },
         "agent_revision": {
           "type": "integer",

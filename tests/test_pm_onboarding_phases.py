@@ -304,7 +304,9 @@ class OnboardingStorageTests(unittest.TestCase):
         # - run_started_index_checkpoint, at 38d896d3f0;
         # - two of the 88 rows, coordination_event_records and coordination_read_model_projections,
         #   materialized in place as SP-320 keyed value compositions (DL-045, 2026-09-25, branch
-        #   plans/ea-s09-coordination-prep-20260925); no other row of the 88 changed.
+        #   plans/ea-s09-coordination-prep-20260925); no other row of the 88 changed. The same two rows
+        #   moved again with the cycle-1 review repairs on that branch: CP-01 (platform is an open runtime
+        #   platform ID, not a closed list).
         families = self.registry["families"]
         self.assertEqual(len(families), 294)
         self.assertEqual(len({row["family_id"] for row in families}), 294)
@@ -322,7 +324,7 @@ class OnboardingStorageTests(unittest.TestCase):
         self.assertEqual(len(prior), 88)
         def canonical_digest(value):
             return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-        self.assertEqual(canonical_digest(prior), "6dcdbfede3110fa918000f060957599c04b04f43a97ebff03c83191ccd29b200")
+        self.assertEqual(canonical_digest(prior), "1c0a9ce6e787e2793930ea8da55ba3ad5b464fe0ac5c36fbe77df7abe7a0dd99")
         self.assertEqual(canonical_digest(added[0]), "24060bdb4077754dc609915d59ffd6357f3ae042e4ff34e75f91683937055842")
         spec = importlib.util.spec_from_file_location("browser_created_storage_pin", ROOT / "scripts/pm_browser_workspace_created.py")
         browser = importlib.util.module_from_spec(spec)

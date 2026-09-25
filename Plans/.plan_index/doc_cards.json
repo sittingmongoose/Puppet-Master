@@ -1973,7 +1973,7 @@
         "web_gui_dev_test_authority_leak",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "a00520c830f4bd0ae90567af6da0e61b875c8552f68d90fe5e0923bfc933f9cd",
+      "sha256": "c03dd4b86feb2253ee06ada9b381dd56a4df776b2059e7b3332b550407841ca3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 58
@@ -4948,7 +4948,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "24349309dfdaa4bc51f03a479a4c42bdc839b9f078e8805186f9a865ea5c2a09",
+      "sha256": "56742a9c78668b4856133be6179aa1e3e162a7a9d28cbeacd6c78f88c7dae6c9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 351
@@ -11602,7 +11602,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 31813,
+      "line_count": 31814,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 438,
       "plan_unit_ids": [
@@ -12489,7 +12489,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "991eff9cab9108d0254648d321dd6ae00846d7af9954bc349fbe0e6dcfeb439a",
+      "sha256": "16c42454f7697c609ee4f8e672864bb3170be5535c7e479ba56c568622e5204d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 437,
@@ -20042,7 +20042,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T08:09:22Z",
+  "generated_at_utc": "2026-09-25T08:27:47Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

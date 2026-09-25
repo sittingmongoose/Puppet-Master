@@ -216,13 +216,10 @@
           "$ref": "#/$defs/id"
         },
         "platform": {
-          "enum": [
-            "codex",
-            "claude",
-            "cursor",
-            "gemini",
-            "copilot"
-          ]
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[a-z][a-z0-9_]*$"
         },
         "model_id": {
           "$ref": "#/$defs/id"
@@ -692,13 +689,10 @@
           "$ref": "#/$defs/id"
         },
         "platform": {
-          "enum": [
-            "codex",
-            "claude",
-            "cursor",
-            "gemini",
-            "copilot"
-          ]
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[a-z][a-z0-9_]*$"
         },
         "status": {
           "enum": [

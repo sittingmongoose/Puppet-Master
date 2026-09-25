@@ -119,7 +119,7 @@ class StaticReportTests(unittest.TestCase):
             "transition_sequences", "transition_steps", "positive_projection_cases", "negative_projection_cases",
             "native_oracles_not_run")}
         self.assertEqual(counts, {
-            "positive_payload_cases": 42, "negative_payload_cases": 67, "negative_event_cases": 12, "identity_vectors": 6,
+            "positive_payload_cases": 43, "negative_payload_cases": 67, "negative_event_cases": 12, "identity_vectors": 6,
             "path_vectors": 9, "transition_sequences": 22, "transition_steps": 83, "positive_projection_cases": 11,
             "negative_projection_cases": 20, "native_oracles_not_run": 13})
 
@@ -166,6 +166,9 @@ class PayloadSchemaTests(unittest.TestCase):
                 lambda schema: schema["$defs"]["agent_operation_updated"]["required"].remove("operation_summary"),
             "payload_schema_root_members":
                 lambda schema: schema["oneOf"].pop(),
+            "platform_pattern":
+                lambda schema: schema["$defs"]["lineage_envelope"]["properties"].update(
+                    platform={"enum": ["codex", "claude", "cursor", "gemini", "copilot"]}),
         }
         for expected, mutation in mutations.items():
             with self.subTest(expected=expected), ScratchRoot(CHECK.PAYLOAD_PATH) as root:
@@ -188,6 +191,16 @@ class PayloadSchemaTests(unittest.TestCase):
                          "path_hash_recipe")
         abort = PAYLOADS["a9_aborted_parent_r2"]
         self.assertEqual(CHECK.payload_rejection(abort["event_type"], dict(abort["payload"], aborted_by_ref="run:run_other")), "abort_ref_join")
+
+    def test_platform_is_an_open_runtime_platform_id(self):
+        # Review repair CP-01: no list of platforms is closed (OSI-258, Models_System.md 1.2); only the form is bounded.
+        base = PAYLOADS["a8_registered_minimal"]
+        for value in ("opencode", "gemini_direct", "antigravity_cli", "codex"):
+            with self.subTest(platform=value):
+                self.assertIsNone(CHECK.payload_rejection(base["event_type"], dict(base["payload"], platform=value)))
+        for value in ("Claude", "open code", "open-code", "1codex", "", "x" * 257):
+            with self.subTest(platform=value):
+                self.assertEqual(CHECK.payload_rejection(base["event_type"], dict(base["payload"], platform=value)), "schema")
 
     def test_secret_path_and_null_shapes_are_rejected(self):
         operation = PAYLOADS["a7_operation_progress_r5"]
@@ -228,6 +241,8 @@ class ProjectionAndCheckpointTests(unittest.TestCase):
                 lambda schema: schema["$defs"]["checkpoint"]["properties"]["admitted_event_types"]["items"]["enum"].append(CHECK.MIRROR),
             "projection_value_identity":
                 lambda schema: schema["$defs"]["file_projection"]["properties"].update(schema_id={"const": "pm.storage_value.other.v1"}),
+            "platform_pattern":
+                lambda schema: schema["$defs"]["snapshot_agent"]["properties"].update(platform={"enum": ["codex"]}),
         }
         for expected, mutation in mutations.items():
             with self.subTest(expected=expected), ScratchRoot(*SCHEMA_FILES) as root:
@@ -390,7 +405,7 @@ class FixtureTests(unittest.TestCase):
         def negative(value):
             value["invalid_payloads"][0]["expected_rejection"] = "identity_recipe"
         def positive(value):
-            value["payloads"][0]["payload"]["platform"] = "vscode"
+            value["payloads"][0]["payload"]["platform"] = "VS Code"
         def oracle(value):
             value["required_native_oracles"][0]["execution_status"] = "PASS"
         def identity(value):
