@@ -600,7 +600,9 @@
           "caller_context_ref": null,
           "expected_caller_revision": null,
           "continuation_generation": null
-        }
+        },
+        "expected_project_data_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "confirmation_strength": "strong"
       }
     },
     {
@@ -2491,6 +2493,42 @@
       "base_valid": "project_setup_commit_binding_for_provider_continuation",
       "patch": {
         "persistence_disposition": "no_persist_navigation"
+      }
+    },
+    {
+      "name": "delete_data_data_hash_missing",
+      "definition": "project_action_request",
+      "base_valid": "command_project_delete_data_routes_storage_owned_intent",
+      "expected_error": "Enumerated Project data hash is mandatory and distinct from registry currentness",
+      "remove": [
+        "expected_project_data_sha256"
+      ]
+    },
+    {
+      "name": "delete_data_confirmation_missing",
+      "definition": "project_action_request",
+      "base_valid": "command_project_delete_data_routes_storage_owned_intent",
+      "expected_error": "Strong confirmation intent must be carried to Storage",
+      "remove": [
+        "confirmation_strength"
+      ]
+    },
+    {
+      "name": "delete_data_confirmation_weak",
+      "definition": "project_action_request",
+      "base_valid": "command_project_delete_data_routes_storage_owned_intent",
+      "expected_error": "Only strong confirmation is admissible",
+      "patch": {
+        "confirmation_strength": "weak"
+      }
+    },
+    {
+      "name": "delete_data_data_hash_invalid",
+      "definition": "project_action_request",
+      "base_valid": "command_project_delete_data_routes_storage_owned_intent",
+      "expected_error": "Exact SHA256 format required",
+      "patch": {
+        "expected_project_data_sha256": "not-a-hash"
       }
     }
   ],

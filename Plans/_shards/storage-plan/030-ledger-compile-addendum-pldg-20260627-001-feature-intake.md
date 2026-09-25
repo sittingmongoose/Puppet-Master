@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L15936-L16153
+Source lines: L15936-L16183
 
-Source SHA256: `f91e21867f151dee9381285aa30c8f975bb8857128d1f02ec43555f30ae75e4e`
+Source SHA256: `b48f6936280b1af6608e2ebf7bc3b6390bbc5dbab817192b1e748606a2101d58`
 
 ---
 
@@ -96,6 +96,22 @@ canonical_text: >-
   built_in/user_uploaded/imported source_kind, display_name, source_url_or_package_ref, license_ref, attribution,
   version, format, duration_ms, loudness_normalization, sha256, disabled/hidden state, and default event_category
   mappings.
+  PeonPing/OpenPeon is source-lineage/import compatibility, not bundled runtime or licensed-asset authority.
+  Its source-category mappings are session.start -> routine_run_start;
+  task.complete -> routine_or_long_running_completion, using the actual originating event;
+  task.acknowledge -> acknowledgement_visual_or_optional_sound;
+  input.required -> input_or_approval_required; task.error -> failure;
+  resource.limit -> rate_or_resource_limit; user.spam -> repeated_prompt_user_spam.
+  These map existing notification meanings and register no EventRecord. Import does not make routine events audible
+  or override current routing, quiet/focus or safety policy. Unknown categories remain unmapped/disabled with warnings;
+  unsupported audio formats are rejected per member, unknown manifest versions require manual review, and unsafe paths
+  are rejected. Content-hash duplicates link existing managed audio content with retained/relabelled manifest identity;
+  filenames, labels and category collisions never authorize silent asset or mapping replacement. Source/license/version
+  metadata and compatibility/licensing checks remain mandatory. Per-member validation does not imply an all-or-nothing
+  import transaction or permission to commit unvalidated members. Built-ins cannot be deleted: asset delete is unavailable
+  for built-ins, and direct invocation refuses without mutation instead of silently becoming hide or disable. Separately
+  disclosed hide/disable remains available; user assets retain soft-delete, reference safety and restoration. No PeonPing
+  shell/PowerShell hook runtime or third-party asset without verified licensing is imported into PM canon.
 gui_related: false
 gui_classification_reason: Defines durable settings, credential references, sound assets, and delivery receipt records; GUI renders them elsewhere.
 depends_on: [CV-298, PS-124]
@@ -106,6 +122,8 @@ acceptance_criteria:
   - Built-in normal notification sounds carry source, license, attribution, version, duration, hash, and default event-category mapping metadata.
   - Webhook URLs, tokens, and push credentials are represented only by credential refs outside redb/plain settings.
   - Uploaded sound assets validate MIME/header/decode/path, cap at 5 MiB and 10 seconds decoded, warn above 3 seconds, normalize to PM-managed copies, trim silence, hash duplicates, soft-delete user assets, and never export secrets.
+  - All seven compatibility categories map to their exact existing notification meanings; unknown categories are unmapped/disabled with warnings, unsupported formats reject per member, unknown versions require manual review, and paths remain contained.
+  - Duplicate content links retained/relabelled managed assets without silent collision overwrite; built-in delete refuses without mutation and never substitutes hide/disable.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Notification settings and sound asset storage fixtures
@@ -132,7 +150,9 @@ source_lineage:
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0065
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0066
   - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0067
-source_atom_ids: [atom-0061, atom-0063, atom-0064, atom-0065, atom-0066, atom-0067]
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0068
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:peonping-openpeon-import-map
+source_atom_ids: [atom-0061, atom-0063, atom-0064, atom-0065, atom-0066, atom-0067, atom-0068]
 preserved_exact_tokens:
   - "notification_settings.v1:global"
   - "notification_destination.v1:{scope}:{destination_id}"
@@ -152,6 +172,16 @@ preserved_exact_tokens:
   - "10s"
   - "warn >3s"
   - "soft-delete"
+  - "PeonPing"
+  - "OpenPeon"
+  - "session.start"
+  - "task.complete"
+  - "task.acknowledge"
+  - "input.required"
+  - "task.error"
+  - "resource.limit"
+  - "user.spam"
+  - "unmapped/disabled"
 negative_constraints:
   - Do not store webhook URLs or provider tokens in non-secret settings.
   - Do not export secrets with sound packs or notification settings.

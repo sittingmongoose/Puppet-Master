@@ -2,9 +2,9 @@
 
 Source: `Plans/Plugins_System.md`
 
-Source lines: L4221-L4429
+Source lines: L4221-L4432
 
-Source SHA256: `5221647058ce770c078337c1e9c8b9c966059498610d062fa1f0988b6437c3c5`
+Source SHA256: `bfb620e895b0a10237964d83289eddc296e8b92b3e8ad1373dce36da21f4bb0d`
 
 ---
 
@@ -36,6 +36,8 @@ Package classification remains exactly `portable_conformant | portable_partial |
 ### Package containment, execution, and authority
 
 Archive extraction and local-directory admission validate every entry before writing. Absolute paths, drive/UNC roots, parent traversal, alternate data streams, device names, hard links outside the package, and symlinks that resolve outside the normalized package root are rejected. The final extracted tree is re-walked without following untrusted links, hashed, and compared with the signed package manifest before activation.
+
+Within an admitted plugin package's `skills/` component, discover skill entrypoints only at `skills/<immediate-child>/SKILL.md`. Nested resource directories are package resources, not recursively discovered additional plugin skills. Existing path/symlink containment and per-component validation still apply. This package-local boundary does not change Skills_System's recursive canonical discovery roots or named target adapters' independent schemas. Missing or invalid components retain the current manifest's required/optional admission semantics; required PM-internal fields do not become optional and closed manifests do not accept foreign extension fields.
 
 `PLUGIN_ROOT` is a read-only content root for the verified package generation. `PLUGIN_DATA` is a separate writable per-plugin data root with owner/scope/quota/retention identity; it cannot shadow executable content or escape to Project, config, credential, socket, or another plugin's data. GUI projections show safe source class, package identity, and redacted relative component labels; they do not expose private absolute entry/data paths, credential-store keys, internal sockets, or raw environment values.
 
@@ -134,6 +136,7 @@ depends_on: [PLUG-064, PLUG-065, SIR-015]
 unblocks: [PLUG-067, RSC-011]
 acceptance_criteria:
   - Archive and final-tree validation reject traversal, absolute/device paths, escaping links, and hash mismatch before activation.
+  - Plugin-package skill discovery selects only skills/<immediate-child>/SKILL.md; nested resources are not additional skills, and global Skills discovery roots and named target-adapter schemas remain unchanged.
   - PLUGIN_ROOT is read-only and PLUGIN_DATA cannot shadow content or escape its per-plugin authority.
   - External processes and transport are bounded, allowlisted, governed, cancellable as a process tree, and unable to open unowned public/control/debug endpoints.
   - Internal-interchange, target-adapter, and PM-native conformance reports preserve exact generation, source/output hashes, inventories, schemas, component, authority, and provenance evidence without widening authority.

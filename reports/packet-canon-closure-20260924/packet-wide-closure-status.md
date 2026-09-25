@@ -9,6 +9,11 @@ Current capability integration and exact verification counts are recorded in
 `capability-ensure-custody-integration.md`; its two same-family successors reduce
 pending Storage dispositions from 23 to 22 without new families or policies.
 
+`project-delete-sound-plugin-repairs.md` records the subsequent Project destructive
+intent, sound-import and package-discovery repairs. Fresh residual audits retain
+their exact source denominators and do not infer whole-packet closure from these
+passing checks.
+
 Latest bounded steps: `runtime-doctor-browser-companions.md` records original
 capability continuation, finite Doctor query composition and Browser typed
 control-flow repairs, with their remaining physical/owner/native prerequisites.

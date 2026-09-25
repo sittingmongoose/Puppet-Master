@@ -58,6 +58,34 @@ class NotificationSoundMetadataTests(unittest.TestCase):
                 self.assertEqual("receipt", row["effect_contract"]["effect_kind"])
                 self.assertEqual([command + ".dispatch_receipt"], row["effect_contract"]["receipt_or_event_refs"])
 
+    def test_seven_source_mappings_and_non_mutating_builtin_delete_are_retained(self):
+        storage = (ROOT / "Plans/storage-plan.md").read_text()
+        unit = storage.split("### SP-222 -", 1)[1].split("### SP-223 -", 1)[0]
+        for source, target in {
+            "session.start": "routine_run_start",
+            "task.complete": "routine_or_long_running_completion",
+            "task.acknowledge": "acknowledgement_visual_or_optional_sound",
+            "input.required": "input_or_approval_required",
+            "task.error": "failure",
+            "resource.limit": "rate_or_resource_limit",
+            "user.spam": "repeated_prompt_user_spam",
+        }.items():
+            self.assertIn(source + " -> " + target, unit)
+            self.assertIn('  - "' + source + '"', unit)
+        for token in ("unmapped/disabled with warnings", "rejected per member",
+                      "manual review", "direct invocation refuses without mutation",
+                      "retained/relabelled", "all-or-nothing", "shell/PowerShell hook runtime"):
+            self.assertIn(token, unit)
+        self.assertIn("does not make routine events audible", unit)
+
+    def test_plugin_skill_depth_is_package_local_not_a_global_root_change(self):
+        owner = (ROOT / "Plans/Plugins_System.md").read_text()
+        section = owner.split("### Package containment, execution, and authority", 1)[1].split("### Conformance, supply chain, update, and rollback", 1)[0]
+        for token in ("skills/<immediate-child>/SKILL.md", "Nested resource directories",
+                      "recursive canonical discovery roots", "required/optional admission",
+                      "closed manifests do not accept foreign extension fields"):
+            self.assertIn(token, section)
+
     def test_receipt_consumer_is_action_qualified_and_preview_stays_local(self):
         profile = self.profiles["TCP-NOTIFY-SOUND"]
         self.assertIn("Plans/Runtime_Artifacts_Panel.md#RAP-039", profile["reverse_consumers"])

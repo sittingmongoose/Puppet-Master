@@ -7564,6 +7564,7 @@ acceptance_criteria:
   - Destination create/update commands accept provider-specific profile payloads without exposing raw URLs or tokens.
   - Test-send commands are separate from local preview and cannot mutate alert state.
   - Sound asset commands distinguish user-uploaded assets, imported packs, built-ins, hide/disable, restore, and export behavior.
+  - Pack import consumes SP-222's exact category, per-member rejection and duplicate-content rules; built-in asset delete is unavailable and direct invocation refuses without mutation, never silently translating delete into hide/disable.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Notifications and Sounds command catalog fixtures

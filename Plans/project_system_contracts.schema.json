@@ -430,6 +430,15 @@
         },
         "onboarding_setup_binding": {
           "$ref": "#/$defs/onboarding_project_setup_binding"
+        },
+        "expected_project_data_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "confirmation_strength": {
+          "const": "strong"
+        },
+        "reason": {
+          "$ref": "#/$defs/non_empty_string"
         }
       },
       "allOf": [
@@ -634,6 +643,17 @@
               "filesafe_evidence_ref": {
                 "$ref": "#/$defs/safe_ref"
               }
+            },
+            "required": [
+              "expected_project_data_sha256",
+              "confirmation_strength"
+            ]
+          },
+          "else": {
+            "properties": {
+              "expected_project_data_sha256": false,
+              "confirmation_strength": false,
+              "reason": false
             }
           }
         },

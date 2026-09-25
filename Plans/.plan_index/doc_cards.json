@@ -13784,7 +13784,7 @@
         "Plans/plugin_contracts.schema.json",
         "Plans/plugin_package_contracts.schema.json"
       ],
-      "line_count": 4575,
+      "line_count": 4578,
       "path": "Plans/Plugins_System.md",
       "plan_unit_count": 70,
       "plan_unit_ids": [
@@ -13875,7 +13875,7 @@
         "plugins_system_drift",
         "residual_bridge_overreach"
       ],
-      "sha256": "5221647058ce770c078337c1e9c8b9c966059498610d062fa1f0988b6437c3c5",
+      "sha256": "bfb620e895b0a10237964d83289eddc296e8b92b3e8ad1373dce36da21f4bb0d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 70
@@ -14395,7 +14395,7 @@
         "scripts/pm_project_forge_contract.py",
         "scripts/pm_ui_command_response.py"
       ],
-      "line_count": 532,
+      "line_count": 534,
       "path": "Plans/Project_System.md",
       "plan_unit_count": 8,
       "plan_unit_ids": [
@@ -14422,7 +14422,7 @@
         "project_identity_or_owner_collapse",
         "project_registration_or_migration_data_loss"
       ],
-      "sha256": "f618d6b754e99fe810ca737bb94ab433bb18c3e0ea89199b2b7023bf65d5f2c0",
+      "sha256": "70e2680d0736ba13e67913e74faa6fb68ce3fd3fc9d5e504cc0d07013eaa147d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -17468,7 +17468,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 26906,
+      "line_count": 26936,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 313,
       "plan_unit_ids": [
@@ -17886,7 +17886,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "f91e21867f151dee9381285aa30c8f975bb8857128d1f02ec43555f30ae75e4e",
+      "sha256": "b48f6936280b1af6608e2ebf7bc3b6390bbc5dbab817192b1e748606a2101d58",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 310,
@@ -18759,7 +18759,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13273,
+      "line_count": 13274,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 164,
       "plan_unit_ids": [
@@ -18994,7 +18994,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "08c0f5b537d0974acaf0261ad8b537168055a51e06b25cd4ce033258b752227b",
+      "sha256": "80d4929aa983e87a546f9e1fe4c396ba1f6b9195f457245a405a1dca27a02584",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163,
@@ -20060,7 +20060,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T06:34:03Z",
+  "generated_at_utc": "2026-09-25T06:44:02Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

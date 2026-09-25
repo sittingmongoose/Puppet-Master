@@ -66878,7 +66878,9 @@
       "event_test_requirements": [
         "Assert successful cmd.project.delete_data emits storage.deletion_lifecycle_changed with EventRecord schema_version 2.0.0, project scope, payload/envelope project_id equality, exact registered payload schema, deletion record ref, command correlation, and a graph-valid Storage-owned state; generation is absent outside purge_pending|purged, optional non-negative for purge_pending, and required non-negative for terminal purged, while failure_reason is non-empty exactly for failed.",
         "Assert ambiguous reachability, scope conflict, hold, illegal transition, stale hash, tombstone failure, storage/writer, permission, confirmation, family/schema, compaction-authority, idempotency-conflict, dedupe-unavailable, refusal, and replay paths create zero new append, zero owner mutation, zero projection effect, zero checkpoint advance, zero purge/compaction dispatch, and zero hold clear, and never behave like cmd.project.remove."
-      ]
+      ],
+      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
+      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result"
     },
     "settings.storage_retention.compaction_request": {
       "ui_element_id": "settings.storage_retention.compaction_request",

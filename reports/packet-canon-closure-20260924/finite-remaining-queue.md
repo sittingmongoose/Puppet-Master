@@ -15,8 +15,11 @@ Remaining categories are distinct:
    decisions separately from deployment of already specified native writers.
 2. Narrow authority adjudications: Settings exposure/import semantics; ordinary
    Vault isolation/sharing and supervisor scope; four plugin applicability clauses;
-   sound-pack category/collision and built-in deletion interpretation. They are
-   questions, not established defects or permission to restore old designs.
+   remaining plugin applicability clauses. The immediate-child package discovery,
+   sound-pack category/collision/member rejection and built-in deletion clauses
+   are now repaired alongside the Project data-deletion typed handoff; see
+   `project-delete-sound-plugin-repairs.md`. Other questions are not permission
+   to restore old designs.
 3. Personal-dictionary local/shared custody remains an actual unanswered choice.
    Newer Back Seat Driver, Context Lens, Help/Teacher, assistant-chat Plan/Full
    Thread/platforms and further Azure expansion remain protected from old packets.
