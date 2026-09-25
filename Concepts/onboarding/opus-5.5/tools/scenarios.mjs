@@ -319,6 +319,57 @@ def('n14', 'homeNasPm', 'A new Project kept on a NAS that runs Puppet Master: st
   await d.primary(); A.eq(await d.screen(), 'safe', 'on to keeping it safe'); await d.primary(); await reviewAndCreate(d);
   A.eq(await d.state(() => window.O55.S.sess.commit.state), 'done', 'created'); A.capture('n14 paired storage', await d.draft('main'));
 });
+/* Motion of their own: typing a name keeps the marionette moving (a re-render never drops the bar back to level) and
+   every letter plucks the sign; each beginning on the start scene has its own idle. Measured every frame. */
+def('m1', 'fresh', 'Typing a name: the bar never snaps back, each letter plucks the sign, strings stay on', async (d, A) => {
+  await d.openOnboarding(); await toName(d);
+  await d.page.evaluate(() => { const el = document.querySelector('#o55f-name'); if (el) el.value = ''; });
+  await sleep(2600); /* the scene has settled and the ambient swing is running */
+  await d.page.evaluate(() => {
+    const svg = () => document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) svg');
+    const rot = (s) => { const m = /rotate\((-?[\d.]+)/.exec(s || ''); return m ? +m[1] : 0; }, ty = (s) => { const m = /translate\((-?[\d.]+)[ ,]+(-?[\d.]+)/.exec(s || ''); return m ? +m[2] : 0; };
+    const rec = window.__m1 = { frames: [], on: true };
+    const loop = () => {
+      if (!rec.on) return;
+      const v = svg(), bar = v && v.querySelector('.o55-it[data-key="bar"] > .o55-in > .o55-am'), sign = v && v.querySelector('.o55-it[data-key="sign"] > .o55-in > .o55-am');
+      if (bar && sign) rec.frames.push({ t: performance.now(), bar: bar.getAttribute('transform'), bt: rot(bar.getAttribute('transform')), st: rot(sign.getAttribute('transform')), sy: ty(sign.getAttribute('transform')) });
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  });
+  const fam = await d.state(() => window.PM_THEME.getFamily ? window.PM_THEME.getFamily() : document.documentElement.getAttribute('data-theme-family'));
+  for (const ch of 'Garden') { await d.type('name', ch, { clear: false, settle: 170 }); }
+  await sleep(900);
+  const r = await d.page.evaluate(() => { window.__m1.on = false; return window.__m1.frames; });
+  const retro = /retro/.test(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-stage svg').getAttribute('data-family')));
+  A.ok(r.length > 8, 'frames recorded (' + r.length + ')');
+  A.eq(r.filter((f) => !f.bar).length, 0, 'the bar keeps its transform on every frame while typing');
+  if (!retro) {
+    /* a snap back to level would be a step far faster than the swing (at most about 9 deg/s, Friendly) */
+    let rate = 0, at = null; for (let i = 1; i < r.length; i++) { const dt = Math.max(16, r[i].t - r[i - 1].t), v = (Math.abs(r[i].bt - r[i - 1].bt) / dt) * 1000; if (v > rate) { rate = v; at = [r[i - 1].bt, r[i].bt, dt]; } }
+    A.ok(rate < 30, 'no snap in the bar tilt (fastest ' + rate.toFixed(1) + ' deg/s' + (at ? ', ' + at[0].toFixed(2) + ' to ' + at[1].toFixed(2) + ' in ' + Math.round(at[2]) + ' ms' : '') + ')');
+    const wob = Math.max(...r.map((f) => Math.abs(f.st - f.bt)));
+    A.ok(wob > 1, 'letters pluck the sign (largest wobble off the bar ' + wob.toFixed(2) + ' deg)');
+  } else {
+    A.ok(r.some((f) => f.sy >= 4), 'Retro: a letter drops the sign one pixel step');
+  }
+  const gaps = await d.page.evaluate(() => window.O55.art.rig.gaps(document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) svg')));
+  A.ok(gaps && gaps.every((g) => g.start < 1.5 && g.end < 1.5), 'strings stay on their hooks (' + (gaps || []).map((g) => g.end.toFixed(2)).join(', ') + ')');
+  A.eq((await d.draft('main')).project_name, 'Garden', 'the name typed');
+});
+def('m2', 'fresh', 'Each beginning has an idle of its own; a new one is hung with a swing', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'begin', 'start scene');
+  const lowres = () => d.state(() => document.documentElement.hasAttribute('data-o55-lowres'));
+  const idle = () => d.page.evaluate(() => { const g = document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) [data-key="hero"] .o55-gl'); return g ? { cls: g.getAttribute('class'), anims: g.getAnimations().map((a) => a.animationName || 'waapi') } : null; });
+  await sleep(1400); let s = await idle(); A.ok(s && /o55-gl-seed/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-/.test(n))), 'seed idles, unless low-resource mode is on (' + (s && s.anims.join(',')) + ')');
+  await d.act('pick', 'restore', { settle: 1400 }); s = await idle(); A.ok(s && /o55-gl-rewind/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-(rewind|px-rw)/.test(n))), 'rewind ticks back (' + (s && s.anims.join(',')) + ')');
+  await d.act('pick', 'existing', { settle: 60 }); s = await idle(); A.ok(s && s.anims.includes('waapi'), 'the new icon pops in (' + (s && s.anims.join(',')) + ')');
+  await sleep(1100); await d.act('sub', 'online', { settle: 1400 }); s = await idle(); A.ok(s && /o55-gl-cloud/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-(drift|px-drift)/.test(n))), 'cloud drifts (' + (s && s.anims.join(',')) + ')');
+  await d.act('sub', 'device', { settle: 1400 }); s = await idle(); A.ok(s && /o55-gl-server/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-(hum|px)/.test(n))), 'server hums (' + (s && s.anims.join(',')) + ')');
+  const gaps = await d.page.evaluate(() => window.O55.art.rig.gaps(document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) svg')));
+  A.ok(gaps && gaps.every((g) => g.start < 1.5 && g.end < 1.5), 'the hero stays on its string');
+});
 def('c4', 'fresh', 'No VPN switch: a line says a VPN works, and a VPN this device is on is searched too', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:office\"]')", 'found on the VPN', 6000);

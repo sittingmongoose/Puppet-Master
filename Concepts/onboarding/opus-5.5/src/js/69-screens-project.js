@@ -34,6 +34,9 @@
     if (S.sess.backup && S.sess.backup.fromRestore) { S.sess.backup.dest = null; S.sess.backup.fromRestore = false; }
     S.sess.restore = null;
   }
+  /* a new beginning is hung on the string: the sign swings with it and its icon pops in */
+  const stage = (S) => S.root.querySelector('.o55-stage');
+  function swapBeginning(S, dir) { if (O55.art.poke) O55.art.poke(stage(S), 'hero', { amp: 1.5, dir, pop: true }); }
   def('begin', {
     chapter: 'project', stage: 'first_project', charmSlot: 'begin',
     scene: (S) => ({ id: 'begin', beat: choiceOf(S) === 'existing' ? (S.sess.ui.beginSub || 'folder') : choiceOf(S) }),
@@ -66,11 +69,13 @@
     },
     do: {
       pick(S, v, el) {
+        const was = S.sess.ui.begin;
         S.sess.ui.begin = v; if (v !== 'existing') S.sess.ui.beginSub = null;
         O55.draft.set(md(S), { source_more: v === 'existing' }); S.save(); O55.ui.refresh();
+        if (was !== v) swapBeginning(S, v === 'new' ? -1 : 1);
         O55.ui.charm(el, T('begin.' + v + '.title').split(' ').slice(0, 3).join(' '), { new: 'seed', existing: 'folder', restore: 'rewind' }[v]);
       },
-      sub(S, v) { S.sess.ui.beginSub = v; S.save(); O55.ui.refresh(); },
+      sub(S, v) { const was = S.sess.ui.beginSub; S.sess.ui.beginSub = v; S.save(); O55.ui.refresh(); if (was !== v) swapBeginning(S, 1); },
       /* a Project can wait, but a new Server is being set up now: its access away from home is still asked (canon
          skips only the provider phases for a deferred Project) */
       later(S) { O55.draft.set(md(S), { project_mode: 'later', source_more: false, online_mode: 'none' }); S.sess.ui.begin = null; S.save(); O55.ui.go(md(S).server_mode === 'new_server' ? 'away' : 'review'); },
@@ -162,6 +167,13 @@
     if (taken) return T('name.exists', { name: taken.name });
     return '';
   }
+  /* each letter lands on the sign: it swings (alternately left and right), a fleck of ink leaves the word, and a helper
+     cheers the moment the name becomes one that can be used */
+  function lettered(S, v, grew, wasOk) {
+    if (!O55.art.poke) return;
+    O55.art.poke(stage(S), 'sign', { amp: grew ? 1 : 0.55, dir: v.length % 2 ? 1 : -1, fleck: grew });
+    if (!wasOk && F.nonEmpty(v) && !nameProblem(S, v)) O55.motion.after(180, () => O55.art.react(stage(S)));
+  }
   def('name', {
     chapter: 'project', stage: 'first_project', charmSlot: 'name',
     scene: (S) => ({ id: 'name', beat: 'type', params: { name: md(S).project_name || '' } }),
@@ -205,7 +217,7 @@
       return { primary: { label: T('chrome.continue'), do: 'next', disabled: !!prob || !!miss, reason: prob || (miss ? T(miss.key) : '') } };
     },
     do: {
-      suggest(S, v, el) { S.sess.ui.nameTouched = true; O55.draft.set(md(S), { project_name: v }); S.save(); O55.ui.refresh(); },
+      suggest(S, v, el) { const was = !nameProblem(S, md(S).project_name) && F.nonEmpty(md(S).project_name); S.sess.ui.nameTouched = true; O55.draft.set(md(S), { project_name: v }); S.save(); O55.ui.refresh(); lettered(S, v, true, was); },
       storage(S, v) {
         O55.draft.set(md(S), { storage_mode: v });
         S.save();
@@ -229,7 +241,7 @@
       }
     },
     bind: {
-      name(S, v) { S.sess.ui.nameTouched = true; O55.draft.set(md(S), { project_name: v }); S.save(); O55.ui.refresh(); },
+      name(S, v) { const was = !nameProblem(S, md(S).project_name) && F.nonEmpty(md(S).project_name), grew = v.length > (md(S).project_name || '').length; S.sess.ui.nameTouched = true; O55.draft.set(md(S), { project_name: v }); S.save(); O55.ui.refresh(); lettered(S, v, grew, was); },
       custom(S, v) { O55.draft.set(md(S), { local_location: v }); S.save(); }
     },
     leave(S) { if (S.sess.ui.sheet === 'loc') { S.sess.ui.sheet = null; S.save(); } }

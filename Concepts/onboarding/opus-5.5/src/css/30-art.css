@@ -91,6 +91,27 @@
 @keyframes o55-glow { from { opacity: 0.65; } to { opacity: 1; } }
 @keyframes o55-led { 0%, 70% { opacity: 1; } 71%, 100% { opacity: 0.25; } }
 
+/* the beginning on the string lives in its own way (start scene): a seed sways and stretches up, a folder's lid peeks
+   open, a cloud drifts, a server hums, a rewind ticks back round the clock. Retro moves in whole pixel steps and never
+   turns: a hop, a tape shuffling back, a cloud stepping over. */
+.o55-scene[data-scene="begin"] [data-key="hero"] .o55-gl { transform-box: fill-box; transform-origin: 50% 50%; }
+.o55-scene[data-scene="begin"] [data-key="hero"] .o55-gl-seed { transform-origin: 50% 100%; animation: o55-gl-sprout 3.4s ease-in-out infinite; }
+.o55-scene[data-scene="begin"] [data-key="hero"] .o55-gl-folder { transform-origin: 12% 100%; animation: o55-gl-peek 3.8s ease-in-out infinite; }
+.o55-scene[data-scene="begin"] [data-key="hero"] .o55-gl-cloud { animation: o55-gl-drift 3.2s ease-in-out infinite alternate; }
+.o55-scene[data-scene="begin"] [data-key="hero"] .o55-gl-server { animation: o55-gl-hum 2.6s ease-in-out infinite; }
+.o55-scene[data-scene="begin"] [data-key="hero"] .o55-gl-rewind { animation: o55-gl-rewind 6s steps(12, end) infinite; }
+.o55-f-retro[data-scene="begin"] [data-key="hero"] .o55-gl { animation: o55-gl-px 1.6s steps(1, end) infinite; }
+.o55-f-retro[data-scene="begin"] [data-key="hero"] .o55-gl-rewind { animation: o55-gl-px-rw 1.2s steps(1, end) infinite; }
+.o55-f-retro[data-scene="begin"] [data-key="hero"] .o55-gl-cloud { animation: o55-gl-px-drift 2.4s steps(1, end) infinite; }
+@keyframes o55-gl-sprout { 0%, 100% { transform: rotate(0deg) scale(1, 1); } 30% { transform: rotate(-6deg) scale(1.04, 0.97); } 65% { transform: rotate(5deg) scale(0.98, 1.06); } }
+@keyframes o55-gl-peek { 0%, 55%, 100% { transform: rotate(0deg) translateY(0); } 66% { transform: rotate(-9deg) translateY(-1.5px); } 76% { transform: rotate(-2deg) translateY(0); } 84% { transform: rotate(-6deg) translateY(-0.5px); } }
+@keyframes o55-gl-drift { from { transform: translate(-1.8px, 0.6px); } to { transform: translate(1.8px, -1.6px); } }
+@keyframes o55-gl-hum { 0%, 70%, 100% { transform: scale(1); } 76% { transform: scale(1.07); } 82% { transform: scale(0.98); } 88% { transform: scale(1.03); } }
+@keyframes o55-gl-rewind { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+@keyframes o55-gl-px { 0%, 70% { transform: translate(0, 0); } 75%, 100% { transform: translate(0, -4px); } }
+@keyframes o55-gl-px-rw { 0% { transform: translate(0, 0); } 34% { transform: translate(-4px, 0); } 67% { transform: translate(-8px, 0); } 100% { transform: translate(0, 0); } }
+@keyframes o55-gl-px-drift { 0% { transform: translate(0, 0); } 50% { transform: translate(4px, 0); } 100% { transform: translate(0, 0); } }
+
 /* scene cross-transitions (the outgoing layer is inert and ID-free; there is never an empty frame) */
 .o55-scene-wrap.o55-out { pointer-events: none; animation: o55-scene-out 360ms cubic-bezier(0.3, 0, 1, 1) both; }
 .o55-scene-wrap:not(.o55-out) { animation: o55-scene-in 520ms var(--o55-ease, cubic-bezier(0.2, 0, 0, 1)) both; }
@@ -112,14 +133,15 @@
 /* pausing and preferences */
 [data-o55-ambient="off"] .o55-amb, [data-o55-ambient="off"] .o55-led, [data-o55-ambient="off"] .o55-px-blink,
 [data-o55-ambient="off"] .o55-px-twinkle, [data-o55-ambient="off"] .o55-star, [data-o55-ambient="off"] .o55-core,
-[data-o55-ambient="off"] .o55-ripple, [data-o55-ambient="off"] .o55-pulse, [data-o55-ambient="off"] .o55-ring, [data-o55-ambient="off"] .o55-px-march > rect, [data-o55-ambient="off"] .o55-beam { animation-play-state: paused !important; }
-html[data-o55-lowres] .o55-amb, html[data-o55-lowres] .o55-pulse, html[data-o55-lowres] .o55-ring, html[data-o55-lowres] .o55-core, html[data-o55-lowres] .o55-px-march > rect, html[data-o55-lowres] .o55-beam { animation: none !important; }
+[data-o55-ambient="off"] .o55-ripple, [data-o55-ambient="off"] .o55-pulse, [data-o55-ambient="off"] .o55-ring, [data-o55-ambient="off"] .o55-px-march > rect, [data-o55-ambient="off"] .o55-beam,
+[data-o55-ambient="off"] .o55-gl { animation-play-state: paused !important; }
+html[data-o55-lowres] .o55-gl, html[data-o55-lowres] .o55-amb, html[data-o55-lowres] .o55-pulse, html[data-o55-lowres] .o55-ring, html[data-o55-lowres] .o55-core, html[data-o55-lowres] .o55-px-march > rect, html[data-o55-lowres] .o55-beam { animation: none !important; }
 html[data-motion="reduced"] .o55-amb, html[data-motion="reduced"] .o55-pulse, html[data-motion="reduced"] .o55-ring,
-html[data-motion="reduced"] .o55-core, html[data-motion="reduced"] .o55-ripple, html[data-motion="reduced"] .o55-star { animation: none !important; }
+html[data-motion="reduced"] .o55-core, html[data-motion="reduced"] .o55-ripple, html[data-motion="reduced"] .o55-star, html[data-motion="reduced"] .o55-gl { animation: none !important; }
 html[data-motion="reduced"] .o55-an, html[data-motion="reduced"] .o55-draw, html[data-motion="reduced"] .o55-scene-wrap { animation-duration: 140ms !important; animation-name: o55-fade !important; animation-delay: 0ms !important; stroke-dashoffset: 0 !important; }
 html[data-motion="reduced"] .o55-it { transition-duration: 140ms !important; }
 @media (prefers-reduced-motion: reduce) {
-  .o55-amb, .o55-pulse, .o55-ring, .o55-core, .o55-ripple, .o55-star { animation: none !important; }
+  .o55-amb, .o55-pulse, .o55-ring, .o55-core, .o55-ripple, .o55-star, .o55-gl { animation: none !important; }
   .o55-an, .o55-draw, .o55-scene-wrap { animation-duration: 140ms !important; animation-name: o55-fade !important; animation-delay: 0ms !important; stroke-dashoffset: 0 !important; }
   .o55-it { transition-duration: 140ms !important; }
 }

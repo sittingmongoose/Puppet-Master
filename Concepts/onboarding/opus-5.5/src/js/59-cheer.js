@@ -52,15 +52,44 @@
     return true;
   };
 
-  function confetti(svg, fam, at, count) {
+  /* A small answer to one keystroke or one pick, on the prop hung from the bar: it is plucked (A.rig.pluck); a new
+     beginning's icon pops in (Retro drops in one pixel step, never scaled); a typed letter sends a fleck or two of the
+     family's ink off the end of the word. Reduced Motion skips it. */
+  let lastFleck = 0;
+  A.poke = function poke(host, key, o) {
+    o = o || {};
+    const svg = sceneSvg(host); if (!svg || quiet()) return false;
+    const fam = svg.getAttribute('data-family'), it = svg.querySelector(`.o55-it[data-key="${key}"]`); if (!it) return false;
+    if (A.rig) A.rig.pluck(svg, key, { amp: o.amp || 1, dir: o.dir || 1 });
+    const gl = o.pop && it.querySelector('.o55-gl');
+    if (gl && gl.animate) try {
+      gl.animate(fam === 'retro' ? [{ transform: 'translate(0, -4px)', opacity: 0 }, { transform: 'translate(0, -4px)', opacity: 1, offset: 0.34 }, { transform: 'translate(0, 0)', opacity: 1 }]
+        : [{ transform: 'scale(0.4) rotate(-14deg)', opacity: 0 }, { transform: 'scale(1.16) rotate(4deg)', opacity: 1, offset: 0.55 }, { transform: 'scale(1) rotate(0deg)', opacity: 1 }],
+      { duration: fam === 'retro' ? 360 : 460, easing: fam === 'retro' ? 'steps(3, end)' : fam === 'glass' ? 'cubic-bezier(0.3, 0, 0.2, 1)' : 'cubic-bezier(0.34, 1.4, 0.64, 1)' });
+    } catch (_) {}
+    if (o.fleck && M.now() - lastFleck > 70) { lastFleck = M.now(); const at = wordEnd(svg, it); if (at) confetti(svg, fam, at, 2 + (Math.random() < 0.4 ? 1 : 0), true); }
+    return true;
+  };
+  /* the end of the word on a prop (its last text), in scene units */
+  function wordEnd(svg, it) {
+    const txt = [...it.querySelectorAll('text')].pop(); if (!txt || !txt.getBBox) return null;
+    try {
+      const b = txt.getBBox(), m = svg.getScreenCTM().inverse().multiply(txt.getScreenCTM()), x = b.x + b.width + 7, y = b.y + b.height * 0.4;
+      return [m.a * x + m.c * y + m.e, m.b * x + m.d * y + m.f];
+    } catch (_) { return null; }
+  }
+
+  function confetti(svg, fam, at, count, small) {
     const fx = svg.querySelector('g.o55-fx') || svg, tok = A.tokens(svg), NS = 'http://www.w3.org/2000/svg';
     const colors = [tok.blue, tok.magenta, tok.lime, tok.orange, tok.warn];
     const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'o55-confetti'); g.setAttribute('aria-hidden', 'true');
     fx.appendChild(g);
     let longest = 0;
     for (let i = 0; i < count; i++) {
-      const c = colors[i % colors.length], ang = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.25, sp = 120 + Math.random() * 170;
-      const dx = Math.cos(ang) * sp, dy = Math.sin(ang) * sp, fall = 170 + Math.random() * 120;
+      /* a fleck leaves up and to the right of the word, short and small; a celebration bursts up and all round */
+      const c = colors[(i + (small ? Math.floor(Math.random() * 5) : 0)) % colors.length];
+      const ang = small ? -Math.PI / 2 + 0.7 + (Math.random() - 0.5) * 1.1 : -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.25, sp = small ? 26 + Math.random() * 30 : 120 + Math.random() * 170;
+      const dx = Math.cos(ang) * sp, dy = Math.sin(ang) * sp, fall = small ? 26 + Math.random() * 24 : 170 + Math.random() * 120;
       let el;
       if (fam === 'retro') { el = document.createElementNS(NS, 'rect'); const s = 4 * (1 + (i % 2)); el.setAttribute('width', s); el.setAttribute('height', s); el.setAttribute('x', -s / 2); el.setAttribute('y', -s / 2); el.setAttribute('shape-rendering', 'crispEdges'); el.setAttribute('fill', c); }
       else if (fam === 'basic') { el = document.createElementNS(NS, 'path'); el.setAttribute('d', i % 3 ? 'M-4 0H4M0 -4V4' : 'M0 -3.5A3.5 3.5 0 1 1 0 3.5A3.5 3.5 0 1 1 0 -3.5'); el.setAttribute('fill', 'none'); el.setAttribute('stroke', i % 2 ? tok.blue : tok.orange); el.setAttribute('stroke-width', '1.4'); }
@@ -68,16 +97,17 @@
       else { el = document.createElementNS(NS, 'rect'); el.setAttribute('width', i % 2 ? 9 : 6); el.setAttribute('height', i % 2 ? 5 : 8); el.setAttribute('x', -4); el.setAttribute('y', -3); el.setAttribute('rx', '1.2'); el.setAttribute('fill', c); el.setAttribute('stroke', 'rgba(0,0,0,0.25)'); el.setAttribute('stroke-width', '0.6'); }
       el.style.transformBox = 'fill-box'; el.style.transformOrigin = 'center';
       g.appendChild(el);
-      const x0 = at[0] + (Math.random() - 0.5) * 30, y0 = at[1];
+      const x0 = at[0] + (Math.random() - 0.5) * (small ? 6 : 30), y0 = at[1];
       const spin = fam === 'retro' ? 0 : (Math.random() - 0.5) * 720; /* pixels never rotate */
       /* Glass motes rise and fade; the others fly up and out, then fall with a little flutter */
       const kf = fam === 'glass'
         ? [{ transform: `translate(${x0}px, ${y0}px) scale(0.4)`, opacity: 0 }, { transform: `translate(${x0 + dx * 0.4}px, ${y0 + dy * 0.5}px) scale(1)`, opacity: 1, offset: 0.35 }, { transform: `translate(${x0 + dx * 0.7}px, ${y0 + dy * 0.9 - 40}px) scale(0.6)`, opacity: 0 }]
         : [{ transform: `translate(${x0}px, ${y0}px) rotate(0deg)`, opacity: 1 }, { transform: `translate(${x0 + dx * 0.85}px, ${y0 + dy * 0.85}px) rotate(${spin * 0.5}deg)`, opacity: 1, offset: 0.38 },
           { transform: `translate(${x0 + dx + (i % 2 ? 12 : -12)}px, ${y0 + dy + fall * 0.6}px) rotate(${spin * 0.8}deg)`, opacity: 1, offset: 0.72 }, { transform: `translate(${x0 + dx * 1.05}px, ${y0 + dy + fall}px) rotate(${spin}deg)`, opacity: 0 }];
-      const dur = (fam === 'glass' ? 1500 : 1300) + Math.random() * 500, delay = Math.random() * 160;
+      if (small && fam !== 'retro') kf.forEach((k) => { k.transform += ' scale(0.7)'; }); /* a fleck is smaller; Retro keeps whole pixels */
+      const dur = small ? 620 + Math.random() * 240 : (fam === 'glass' ? 1500 : 1300) + Math.random() * 500, delay = small ? Math.random() * 60 : Math.random() * 160;
       longest = Math.max(longest, dur + delay);
-      try { el.animate(kf, { duration: dur, delay, easing: fam === 'retro' ? 'steps(10, end)' : 'cubic-bezier(0.2, 0.6, 0.4, 1)', fill: 'both' }); } catch (_) {}
+      try { el.animate(kf, { duration: dur, delay, easing: fam === 'retro' ? (small ? 'steps(5, end)' : 'steps(10, end)') : 'cubic-bezier(0.2, 0.6, 0.4, 1)', fill: 'both' }); } catch (_) {}
     }
     M.after(longest + 100, () => g.remove());
   }

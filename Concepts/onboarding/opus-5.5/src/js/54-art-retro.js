@@ -124,7 +124,7 @@
       const p = ctx.pal, o = item.opts || {}, col = [p.a, p.c, p.d, p.b][(o.v || 0) % 4];
       const icon = ICONS[o.icon] || ICONS.spark;
       return `<g shape-rendering="crispEdges"><rect x="-26" y="-26" width="52" height="52" fill="${p.dark ? '#000' : p.ink}"/><rect x="-22" y="-22" width="44" height="44" fill="${p.panel}"/>`
-        + `<rect x="-22" y="-22" width="44" height="4" fill="${col}"/>${sprite(icon, { x: col }, 4, 0, 3)}`
+        + `<rect x="-22" y="-22" width="44" height="4" fill="${col}"/><g class="o55-gl o55-gl-${ICONS[o.icon] ? o.icon : 'spark'}">${sprite(icon, { x: col }, 4, 0, 3)}</g>`
         + (o.label ? mono(p, 0, 42, o.label, 8) : '') + (o.sub ? mono(p, 0, 53, o.sub, 6.5, p.mid) : '') + '</g>';
     },
     pathline(ctx, item) {

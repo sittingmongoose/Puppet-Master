@@ -181,10 +181,14 @@
       const svg = current.querySelector('svg');
       const tpl = document.createElement('template'); tpl.innerHTML = html;
       const next = tpl.content.firstElementChild;
+      /* the rig keeps moving through the re-render: its transforms are put back before the frame is painted, and a
+         re-render that moved no prop (the name sign relettered) is re-measured at once instead of held still */
+      const was = A.rig ? A.rig.layout(svg) : '', restore = A.rig ? A.rig.hold(svg) : null;
       for (const { name, value } of Array.from(next.attributes)) svg.setAttribute(name, value);
       U.morphFrom(svg, next);
+      if (restore) restore();
       current.classList.add('o55-beat');
-      if (A.rig) A.rig.watch(svg);
+      if (A.rig) A.rig.watch(svg, { quick: A.rig.layout(svg) === was });
       return current;
     }
     const wrap = document.createElement('div');
@@ -255,7 +259,9 @@
     stack: '<path d="M12 3l9 4.5-9 4.5-9-4.5z"/><path d="M3 12l9 4.5 9-4.5"/><path d="M3 16.5L12 21l9-4.5"/>'
   };
   A.glyph = function glyph(name, stroke, width) {
-    return `<g fill="none" stroke="${stroke || 'currentColor'}" stroke-width="${width || 1.8}" stroke-linecap="round" stroke-linejoin="round">${A.glyphs[name] || A.glyphs.spark}</g>`;
+    /* o55-gl-<name>: a scene may give the icon an idle of its own (the beginning on the start scene) */
+    const n = A.glyphs[name] ? name : 'spark';
+    return `<g class="o55-gl o55-gl-${n}" fill="none" stroke="${stroke || 'currentColor'}" stroke-width="${width || 1.8}" stroke-linecap="round" stroke-linejoin="round">${A.glyphs[n]}</g>`;
   };
 
   /* Identity picture: a deterministic symmetric 5x5 glyph (identicon-like) from a fingerprint string, drawn in the

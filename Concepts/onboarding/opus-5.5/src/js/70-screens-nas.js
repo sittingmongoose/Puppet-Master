@@ -398,7 +398,7 @@
     scene: (S) => { const n = N(S), st = F.state(S, pairKey(S)); return { id: 'nas', beat: n.paired ? 'paired' : 'pair', params: sceneParams(S, { seed: (pmOf(S) || {}).seed, words: words((pmOf(S) || {}).seed || ''), method: n.pairing || 'approval', waiting: !!(st && st.state === 'running') }) }; },
     eyebrow: () => T('nas.pmpair.eyebrow'),
     title: (S) => (N(S).paired ? T('nas.pmpair.doneTitle', { name: dname(S) }) : T('nas.pmpair.title', { name: dname(S) })),
-    lead: (S) => T(N(S).pairAsked ? 'connect.pair.lead' : 'nas.pmpair.lead', { name: dname(S) }),
+    lead: (S) => T(N(S).paired ? 'nas.pmpair.doneLead' : N(S).pairAsked ? 'connect.pair.lead' : 'nas.pmpair.lead', { name: dname(S) }),
     body(S) {
       const n = N(S), p = pmOf(S), m = n.pairing || 'approval';
       const labels = { reach: T('connect.pair.phases.reach', { name: p.name }), approve: T('connect.pair.phases.approve', { device: p.approver }), code: T('connect.pair.phases.code'), qr: T('connect.pair.phases.qr'), trust: T('nas.pmpair.trust'), perms: T('nas.install.phases.perms') };
