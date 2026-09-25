@@ -234,7 +234,9 @@ A1 edits canon, so governance goes stale for the documents it edits. That is exp
 | `a1/A1-source-checks.json` | Compact record: package and review manifests, the checks of tasks 1 and 2, what is NOT_RUN or unavailable |
 | `a1/author-decisions-20260925.md` | The author decisions and Jared's ratification (committed earlier on this branch) |
 | `a1/A1-full-outputs.SHA256SUMS` | SHA-256 and scratch path of each full output this report relies on: the task-1 consistency re-run (its output and a per-check listing of the 373 checks, the wrapper that lists them, the input hashes and the run time), readiness `validate` and `self-test` on the branch and on `origin/main`, `lint-contractrefs` on both, the `unittest` and `pytest` logs on both, the `pm-plan-index.py validate` outputs of tasks 1 and 2 and of `origin/main`, the two readiness-report diffs of section 7, and the shard check and `pm-plan-index.py validate` re-run on the tree of `74c79b5bf` |
-| `a1/SHA256SUMS` | SHA-256 of the four bundle files above (`sha256sum -c SHA256SUMS` in `a1/`) |
+| `a1/review-cycle-1.json` | The cycle-1 blind review form on `74c79b5bf` (13 findings: 8 should_fix, 5 notes; verdict ready), each repaired in its own commit |
+| `a1/review-cycle-2.json` | The cycle-2 re-review of the repaired rows on `74820a6a9`: verdict ready (4 notes); the cycle cap is reached |
+| `a1/SHA256SUMS` | SHA-256 of the six bundle files above (`sha256sum -c SHA256SUMS` in `a1/`) |
 
 **Where the full outputs live.** The files that `a1/A1-full-outputs.SHA256SUMS` lists are in the cloud session's scratchpad, `/tmp/claude-0/-home-user-Puppet-Master/e8a4a4d6-d9cf-5608-ab1e-bc8842bb958d/scratchpad/a1-compile/`. That directory is ephemeral and is not on the NAS, which the cloud session cannot reach, so the files do not outlive the session. The SHA-256 list is the durable record of them. `a1/A1-source-checks.json` `raw_evidence` names the same location and list.
 
