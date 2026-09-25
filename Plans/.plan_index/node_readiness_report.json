@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T21:32:23Z",
+  "generated_at_utc": "2026-09-25T21:34:59Z",
   "gui_related_units": {
     "count": 3209,
     "units": [
@@ -17413,8 +17413,8 @@
         "source_location": {
           "heading": "GAAAF-017 - Owner-Routed Source Mutation And API Orchestration",
           "heading_level": 3,
-          "heading_line": 1072,
-          "line": 1074,
+          "heading_line": 1077,
+          "line": 1079,
           "path": "Plans/GitHub_API_Auth_and_Flows.md"
         }
       },
@@ -39474,6 +39474,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Formatters_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/GitHub_API_Auth_and_Flows.md"
       },
       {
         "error": "event_authority_currentness_source_drift",

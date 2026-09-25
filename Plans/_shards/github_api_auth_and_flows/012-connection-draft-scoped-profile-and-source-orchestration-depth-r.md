@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_API_Auth_and_Flows.md`
 
-Source lines: L1005-L1113
+Source lines: L1005-L1118
 
-Source SHA256: `3109298d54ea966d7161ce851efa826bbb71ce09feba86cc2cc2b79fdaa307a2`
+Source SHA256: `cbf536a489e2811300216d8525afa6757b5df35b34e1d4889135fc103c4ff10d`
 
 ---
 
@@ -24,6 +24,10 @@ canonical_text: >-
   private browser content remain in the secret channel. The active Client opens supported official system
   browser, authorization-code-with-PKCE, provider-approved device, paste-code/official CLI, scoped-token entry,
   registered web callback, or isolated human AuthBrowser flows only when the named provider/app supports them.
+  Human AuthBrowser is the last supported fallback for the same named operation, provider and registered app;
+  it preserves explicit human consent and the initiating active Client/session, isolation and no-recording rules.
+  This does not impose a total order among other supported methods, automatically retry credentials, manufacture
+  an unsupported method or bypass provider embedded-browser restrictions.
   Native callback bridges admit one authenticated transaction to the owning Server; web-only/headless paths do
   not fabricate OOB, device, embedded-browser, localhost, or arbitrary-domain support. Forge, automation, and
   cloud setup begins with a typed inactive ConnectionDraft carrying connection kind, provider/instance/target
@@ -45,6 +49,7 @@ depends_on: [GAAAF-002, GAAAF-003, GAAAF-004, GAAAF-014, GAAAF-015, SIR-033]
 unblocks: [FGI-015, F3-529]
 acceptance_criteria:
   - Native, web-only, SSH, container, device, PKCE, official CLI, and scoped-token fixtures bind one exact session/profile/return and reject replay, mismatch, unsupported methods, and laptop-versus-container localhost confusion.
+  - Human AuthBrowser remains the last provider/app-supported fallback for the same operation with explicit human consent and initiating active Client/session binding; method selection does not invent support, automatically retry credentials or bypass embedded-browser restrictions.
   - First-time no-profile setup has a complete ConnectionDraft create/auth/select/verify/activate path plus cancel and restart without global provider configuration changes.
   - Activation is atomic and requires current non-destructive capability evidence; inactive/cancelled/expired drafts never claim a live Connection.
   - Cancellation expires callbacks and removes only uncommitted draft attachments; user-owned external/CLI profiles and existing Connections survive.
