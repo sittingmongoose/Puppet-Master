@@ -1,0 +1,478 @@
+{
+ "target_rev": "origin/main",
+ "target_commit": "a6480b0f7c74c4e39726e2094a16175d21106e4e",
+ "review_base": "4a72aa124739c9aeba8d1ab49865735feae528d8",
+ "review_base_is_ancestor_of_target": false,
+ "direct_base_is_ancestor_of_target": false,
+ "inherited_base_is_ancestor_of_target": true,
+ "merge_base_review_base_target": "4e68cc0e4b4b8d9bb656542ce5c365ff7b8ade48",
+ "subject": {
+  "manifest_sha256": "9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e",
+  "members": 1580,
+  "bad_members": [],
+  "status": "FROZEN_AUTHORED_STOP_V3_PHASE_CORRECTION_PENDING_INDEPENDENT_REVIEW",
+  "profile": "pm.executor.workflow_source.all_writers.v8",
+  "combined_installed_contract_digest": "2d69459c1e5ff9c39c3ed234f8b21cd68621b9420b80c1ac9442794a1e4e4155"
+ },
+ "direct": {
+  "at_review_base": {
+   "CHANGED": 15,
+   "EXACT": 32
+  },
+  "at_target": {
+   "CHANGED": 15,
+   "EXACT": 32
+  },
+  "target_equals_review_base": 44,
+  "changed_markdown_not_prefix": [
+   "Plans/workflow_standard_source_contracts/installation-composition-digest.txt",
+   "Plans/workflow_standard_source_contracts/installed-contract-digest.txt",
+   "Plans/00-plans-index.md",
+   "Plans/Goal_Runtime_System.md",
+   "Plans/storage-plan.md"
+  ],
+  "changed_since_review_base": [
+   "Plans/00-plans-index.md",
+   "Plans/Goal_Runtime_System.md",
+   "Plans/storage-plan.md"
+  ]
+ },
+ "inherited_replan": {
+  "at_review_base": {
+   "CHANGED": 9,
+   "EXACT": 241
+  },
+  "at_target": {
+   "CHANGED": 25,
+   "EXACT": 225
+  },
+  "changed_at_target": [
+   "Plans/00-plans-index.md",
+   "Plans/Assistant_Plan_Runtime.md",
+   "Plans/Automated_Testing_System.md",
+   "Plans/Backup_Restore_System.md",
+   "Plans/Contracts_V0.md",
+   "Plans/Decision_Log.md",
+   "Plans/Executor_Protocol.md",
+   "Plans/FinalGUISpec.md",
+   "Plans/Goal_Runtime_System.md",
+   "Plans/Planning_Wizard.md",
+   "Plans/Prompt_Pipeline.md",
+   "Plans/Run_Graph_View.md",
+   "Plans/Runtime_Artifacts_Panel.md",
+   "Plans/Section15_MVP_Promoted_Features_Spec.md",
+   "Plans/assistant-chat-design.md",
+   "Plans/browser_event_admission.json",
+   "Plans/browser_workspace_reset_contracts.schema.json",
+   "Plans/event_family_registry.json",
+   "Plans/home_layout_event_contracts.schema.json",
+   "Plans/home_layout_pending_receipt.schema.json",
+   "Plans/newtools.md",
+   "Plans/restore_point_expired_contracts.schema.json",
+   "Plans/seglog_append_observability_contracts.schema.json",
+   "Plans/storage-plan.md",
+   "Plans/storage_value_registry.json"
+  ],
+  "changed_since_review_base": [
+   "Plans/00-plans-index.md",
+   "Plans/Assistant_Plan_Runtime.md",
+   "Plans/Decision_Log.md",
+   "Plans/FinalGUISpec.md",
+   "Plans/Goal_Runtime_System.md",
+   "Plans/Planning_Wizard.md",
+   "Plans/Prompt_Pipeline.md",
+   "Plans/Run_Graph_View.md",
+   "Plans/Runtime_Artifacts_Panel.md",
+   "Plans/Section15_MVP_Promoted_Features_Spec.md",
+   "Plans/assistant-chat-design.md",
+   "Plans/browser_event_admission.json",
+   "Plans/browser_workspace_reset_contracts.schema.json",
+   "Plans/home_layout_event_contracts.schema.json",
+   "Plans/home_layout_pending_receipt.schema.json",
+   "Plans/newtools.md",
+   "Plans/restore_point_expired_contracts.schema.json",
+   "Plans/seglog_append_observability_contracts.schema.json",
+   "Plans/storage-plan.md",
+   "Plans/storage_value_registry.json"
+  ],
+  "markdown_not_prefix": [
+   "Plans/00-plans-index.md",
+   "Plans/Assistant_Plan_Runtime.md",
+   "Plans/Decision_Log.md",
+   "Plans/FinalGUISpec.md",
+   "Plans/Goal_Runtime_System.md",
+   "Plans/Planning_Wizard.md",
+   "Plans/Prompt_Pipeline.md",
+   "Plans/Run_Graph_View.md",
+   "Plans/Runtime_Artifacts_Panel.md",
+   "Plans/Section15_MVP_Promoted_Features_Spec.md",
+   "Plans/assistant-chat-design.md",
+   "Plans/newtools.md",
+   "Plans/storage-plan.md"
+  ]
+ },
+ "passages": {
+  "replan-v3-exact-passages": {
+   "total": 476,
+   "found_at_review_base": 476,
+   "found_at_target": 469,
+   "missing_at_target": [
+    [
+     "Plans/Goal_Runtime_System.md",
+     [
+      2648,
+      2659
+     ],
+     null
+    ],
+    [
+     "Plans/storage-plan.md",
+     [
+      15128,
+      15157
+     ],
+     null
+    ],
+    [
+     "Plans/storage-plan.md",
+     [
+      15170,
+      15181
+     ],
+     null
+    ],
+    [
+     "Plans/storage-plan.md",
+     [
+      21093,
+      21137
+     ],
+     null
+    ],
+    [
+     "Plans/storage-plan.md",
+     [
+      21199,
+      21226
+     ],
+     null
+    ],
+    [
+     "Plans/storage-plan.md",
+     [
+      21443,
+      21464
+     ],
+     null
+    ],
+    [
+     "Plans/storage-plan.md",
+     [
+      22257,
+      22276
+     ],
+     null
+    ]
+   ]
+  },
+  "certified-v2-source-citations": {
+   "total": 69,
+   "found_at_review_base": 69,
+   "found_at_target": 68,
+   "missing_at_target": [
+    [
+     "Plans/Planning_Wizard.md",
+     [
+      875,
+      895
+     ],
+     "PWIZ-011-assignment"
+    ]
+   ]
+  },
+  "scope-source-evidence": {
+   "total": 4,
+   "found_at_review_base": 4,
+   "found_at_target": 4,
+   "missing_at_target": []
+  },
+  "corrected_coordinator_citations_identical_to_certified_v2": true
+ },
+ "whole_definitions": {
+  "total": 4111,
+  "by_status": {
+   "EXACT": 4102,
+   "CHANGED": 9
+  },
+  "whole_file_exact": 4011,
+  "not_exact": [
+   [
+    "Plans/browser_workspace_reset_contracts.schema.json",
+    "/$defs/checkpoint",
+    "CHANGED"
+   ],
+   [
+    "Plans/browser_workspace_reset_contracts.schema.json",
+    "/$defs/checkpoint_core",
+    "CHANGED"
+   ],
+   [
+    "Plans/home_layout_event_contracts.schema.json",
+    "/$defs/reader_checkpoint",
+    "CHANGED"
+   ],
+   [
+    "Plans/home_layout_event_contracts.schema.json",
+    "/$defs/reader_checkpoint_core",
+    "CHANGED"
+   ],
+   [
+    "Plans/home_layout_pending_receipt.schema.json",
+    "/$defs/reader_checkpoint",
+    "CHANGED"
+   ],
+   [
+    "Plans/home_layout_pending_receipt.schema.json",
+    "/$defs/reader_checkpoint_core",
+    "CHANGED"
+   ],
+   [
+    "Plans/restore_point_expired_contracts.schema.json",
+    "/$defs/checkpoint",
+    "CHANGED"
+   ],
+   [
+    "Plans/seglog_append_observability_contracts.schema.json",
+    "/$defs/reader_checkpoint",
+    "CHANGED"
+   ],
+   [
+    "Plans/seglog_append_observability_contracts.schema.json",
+    "/$defs/reader_core",
+    "CHANGED"
+   ]
+  ]
+ },
+ "original_coordinates": {
+  "at_review_base": {
+   "EXACT": 112,
+   "CHANGED": 2
+  },
+  "at_target": {
+   "EXACT": 112,
+   "CHANGED": 2
+  },
+  "changed_at_target": [
+   "Plans/workflow_standard_source_contracts/schemas/workflow-cancel-start-profile.v5.schema.json",
+   "Plans/workflow_standard_source_contracts/schemas/workflow-original-start.v5.schema.json"
+  ]
+ },
+ "parents": [
+  {
+   "label": "certified-v2",
+   "manifest_sha256": "91e18f5cf3a5e1f14b99c3b52d77156be44ae0a6b61911efe752794399e75ff3",
+   "whole_members_authenticated_by_source": 77,
+   "whole_copy_in_package": null,
+   "embedded_manifest_copy_exact": true,
+   "embedded_members_present": 68,
+   "embedded_members_exact": 68,
+   "embedded_members_bad": []
+  },
+  {
+   "label": "replan-v3",
+   "manifest_sha256": "eb4441c1c0a904f946a54436185dac919a3cbba6efe069c94aa664e184e5374d",
+   "whole_members_authenticated_by_source": 487,
+   "whole_copy_in_package": "goal-run-replanned-source-contract-20260920-relocated-20260921/v3/manifest.json",
+   "whole_copy_manifest_exact": true,
+   "whole_copy_bad_members": [],
+   "embedded_manifest_copy_exact": true,
+   "embedded_members_present": 39,
+   "embedded_members_exact": 39,
+   "embedded_members_bad": []
+  },
+  {
+   "label": "scope",
+   "manifest_sha256": "dbb39600e2d0c620b0de063bf9579e2a451f1acd3126c707250e4c4f980ae2e1",
+   "whole_members_authenticated_by_source": 2,
+   "whole_copy_in_package": "goal-replan-combined-scope-adjudication-20260921/v1/manifest.json",
+   "whole_copy_manifest_exact": true,
+   "whole_copy_bad_members": [],
+   "embedded_manifest_copy_exact": true,
+   "embedded_members_present": 2,
+   "embedded_members_exact": 2,
+   "embedded_members_bad": []
+  },
+  {
+   "label": "scope-addendum",
+   "manifest_sha256": "4e1d3da2c7a03b30fd97050a59a6c14f6ef41f6a43090b1f16e7910b742e3960",
+   "whole_members_authenticated_by_source": 1,
+   "whole_copy_in_package": "goal-replan-combined-scope-adjudication-20260921/addendum-001/manifest.json",
+   "whole_copy_manifest_exact": true,
+   "whole_copy_bad_members": [],
+   "embedded_manifest_copy_exact": true,
+   "embedded_members_present": 1,
+   "embedded_members_exact": 1,
+   "embedded_members_bad": []
+  },
+  {
+   "label": "plan",
+   "manifest_sha256": "21e672cadbb9bf45bc49ed8146398fa316a4f59f563417fb65155c528cedfba2",
+   "whole_members_authenticated_by_source": 142,
+   "whole_copy_in_package": null,
+   "embedded_manifest_copy_exact": true,
+   "embedded_members_present": 7,
+   "embedded_members_exact": 7,
+   "embedded_members_bad": []
+  },
+  {
+   "label": "upstream-correction-v3",
+   "manifest_sha256": "dd464f1bec2a1691a045aec1fcd816de1c83feb70f8065f1e37ef0c053b890fe",
+   "whole_members_authenticated_by_source": 177,
+   "whole_copy_in_package": null,
+   "embedded_manifest_copy_exact": true,
+   "embedded_members_present": 177,
+   "embedded_members_exact": 177,
+   "embedded_members_bad": []
+  },
+  {
+   "label": "upstream-correction-review-v3",
+   "manifest_sha256": "214aea65be73b362d49cd3a7e75adadc875de032db37fd19b2bd795ab76c4ec4",
+   "whole_members_authenticated_by_source": 4,
+   "whole_copy_in_package": null,
+   "embedded_manifest_copy_exact": true,
+   "embedded_members_present": 4,
+   "embedded_members_exact": 4,
+   "embedded_members_bad": []
+  },
+  {
+   "label": "corrected-coordinator",
+   "manifest_sha256": "19822a42be34079b5b0816613d646e54bf04cff72e5b22e661a5847fc7b716cf",
+   "whole_members_authenticated_by_source": 82,
+   "whole_copy_in_package": null,
+   "embedded_manifest_copy_exact": true,
+   "embedded_members_present": 82,
+   "embedded_members_exact": 82,
+   "embedded_members_bad": []
+  }
+ ],
+ "registries": [
+  {
+   "path": "Plans/event_family_registry.json",
+   "family_count": {
+    "inherited_base": 42,
+    "direct_base": 42,
+    "review_base": 42,
+    "target": 42
+   },
+   "revision": {
+    "inherited_base": "2026-09-11.2",
+    "direct_base": "2026-09-11.2",
+    "review_base": "2026-09-11.2",
+    "target": "2026-09-11.2"
+   },
+   "review_base_to_target": {
+    "added": [],
+    "removed": [],
+    "modified": {},
+    "other_top_level_changed": []
+   },
+   "inherited_base_to_target_counts": {
+    "added": 0,
+    "removed": 0,
+    "modified": 1,
+    "other_top_level_changed": 0
+   }
+  },
+  {
+   "path": "Plans/storage_value_registry.json",
+   "family_count": {
+    "inherited_base": 282,
+    "direct_base": 285,
+    "review_base": 294,
+    "target": 294
+   },
+   "revision": {
+    "inherited_base": null,
+    "direct_base": null,
+    "review_base": null,
+    "target": null
+   },
+   "review_base_to_target": {
+    "added": [],
+    "removed": [],
+    "modified": {
+     "browser_workspace_reset_index_checkpoint": [
+      "/replay_behavior",
+      "/value_schema/$defs/checkpoint_core/properties/index_read_token/$ref",
+      "/value_schema/$defs/durable_read_token",
+      "/value_schema/$defs/generic_read_token",
+      "/value_schema/properties/index_read_token/$ref"
+     ],
+     "goal_body_control": [
+      "/value_schema/additionalProperties",
+      "/value_schema/properties",
+      "/value_schema/required",
+      "/value_schema/type"
+     ],
+     "goal_cancel_receipt": [
+      "/value_schema/additionalProperties",
+      "/value_schema/properties",
+      "/value_schema/required",
+      "/value_schema/type"
+     ],
+     "goal_cancel_source_audit": [
+      "/value_schema/additionalProperties",
+      "/value_schema/properties",
+      "/value_schema/required",
+      "/value_schema/type"
+     ],
+     "goal_cancel_stop_receipt": [
+      "/value_schema/additionalProperties",
+      "/value_schema/properties",
+      "/value_schema/required",
+      "/value_schema/type"
+     ],
+     "goal_host_stop_control": [
+      "/value_schema/additionalProperties",
+      "/value_schema/properties",
+      "/value_schema/required",
+      "/value_schema/type"
+     ],
+     "home_layout_event_reader_checkpoint": [
+      "/value_schema/properties/generic_read_token/properties/redb_snapshot_id",
+      "/value_schema/properties/generic_read_token/required",
+      "/value_schema/properties/previous_generations/items/properties/value/properties/generic_read_token/properties/redb_snapshot_id",
+      "/value_schema/properties/previous_generations/items/properties/value/properties/generic_read_token/required"
+     ],
+     "restore_point_expired_checkpoint": [
+      "/value_schema/properties/generic_read_token/properties/redb_snapshot_id",
+      "/value_schema/properties/generic_read_token/required",
+      "/value_schema/properties/retired_generations/items/properties/checkpoint/properties/generic_read_token/properties/redb_snapshot_id",
+      "/value_schema/properties/retired_generations/items/properties/checkpoint/properties/generic_read_token/required"
+     ],
+     "seglog_observability_reader_checkpoint": [
+      "/value_schema/properties/index_read_token/properties/redb_snapshot_id",
+      "/value_schema/properties/index_read_token/required",
+      "/value_schema/properties/retired_generations/items/properties/checkpoint/properties/index_read_token/properties/redb_snapshot_id",
+      "/value_schema/properties/retired_generations/items/properties/checkpoint/properties/index_read_token/required"
+     ]
+    },
+    "other_top_level_changed": [
+     "contract_family_dispositions"
+    ]
+   },
+   "inherited_base_to_target_counts": {
+    "added": 12,
+    "removed": 0,
+    "modified": 9,
+    "other_top_level_changed": 1
+   }
+  }
+ ],
+ "proposed_physical_families": {
+  "count": 35,
+  "distinct": 35,
+  "present_in_target": [],
+  "schema_id_shared_with_target_rows": {}
+ }
+}

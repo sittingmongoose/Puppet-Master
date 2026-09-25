@@ -1,0 +1,243 @@
+{
+ "library_run": {
+  "environment": "python3 venv with jsonschema 4.26.0 and referencing 0.37.0 from PyPI; scratch copy of the package, the frozen package untouched",
+  "stop_review_v3": {
+   "check.py": "exit 0, stdout byte-identical to check.log, checks.json byte-identical",
+   "check_delta.py": "exit 0, delta-checks.json and schema-and-phase-evidence.json byte-identical",
+   "path_rewrite": "P constant only, from /mnt/Cursor/PM-Experiments/goal-replan-combined-source-20260921/v3 to the scratch copy"
+  },
+  "v3_checks": {
+   "check_composition.py": "PASS, 1241 original selections, 19 new roots, 1256 literal resources, 130201 references, 0 errors",
+   "check_method_roots.py": "PASS, 2035 bound schema occurrences, 240 unique roots, 0 errors",
+   "check_original_banks.py": "diagnostic only (no status); output differs from frozen: 18 banks vs frozen 16",
+   "check_final_sources.py": "PASS, 642 checks, 0 errors",
+   "check_stop_correction.py": "PASS, 1252 checks, 0 errors",
+   "check_stop_phase_v3.py": "PASS, 751 checks, 0 errors"
+  },
+  "regenerated_output_sha256": {
+   "composition/full-bank-checks.json": "792f03a9a50493eb898c4631f5d7ed08d251dee7fffde44b2ce6acaf8fe904a2",
+   "method-root-bindings.json": "330e76b68c1c25c4fe7d63506d52565623c1af09bea6d947b27288172da199e0",
+   "method-root-checks.json": "bb51c57abcc9e8d60e65be730ccfb330567987a54accf98df4a6892fc5b590a1",
+   "original-bank-checks.json": "e18f3086637e66589ce423c673b43c7fcf2b4638c885158d9e8c48502110241a",
+   "final-source-checks.json": "f3ef79e94c693709492ec7f1c884a65a252d20124a787accab2d380360fe49e7",
+   "stop-correction-checks.json": "5e31e0feac5293b49a6fc6728accdbe48c9f3c50217bf9fa64744705f9f4e359",
+   "stop-phase-v3-checks.json": "61f95017f8dc99189ef888b80835f70e4a586c2b3dcfa1eb9fd4f0dda0e042db"
+  }
+ },
+ "standard_library_standin_run_R5": {
+  "summary": "R5-selfcheck (label R5). Scratch: /tmp/claude-0/-home-user-Puppet-Master/e8a4a4d6-d9cf-5608-ab1e-bc8842bb958d/scratchpad/a0/work/R5/ (copy at R5/replan-v8, logs at R5/logs, stand-in at R5/shim, extra generator copy at R5/compose-copy/v3). Nothing in /home/user/Puppet-Master or /home/user/puppetmaster-packages changed: git status is clean in both, HEADs are a6480b0f7c74c4e39726e2094a16175d21106e4e and 2cffa80ef2ad000ad61a6e47c751185625ec89cc, and `diff -r --brief` of the copy against the original before the runs showed it identical (6,005 files).\n\nHEADLINE: the scripts' literal claim cannot be reconfirmed here. Seven of the nine in-scope scripts import `referencing` and `jsonschema`. Neither module is installed in any interpreter here (python3.10, 3.11, 3.12, 3.13, /usr/local/bin/python3). There are no wheels for them in /root/.cache/pip or /root/.cache/uv, and the brief forbids installing from the network. Run as-is, every one of them exits 1 with \"ModuleNotFoundError: No module named 'referencing'\" and writes nothing.\n\nAs a clearly labelled SUBSTITUTE, I wrote a standard-library stand-in (R5/shim/referencing, about 300 lines). It implements only the parts of the `referencing` API the scripts call, following that library's documented draft 2020-12 algorithm: registry crawl and `$id` registration, lookup, pointer traversal with subresource base changes, the 2020-12 subresource keyword sets, and attrs-style exception text. `Draft202012Validator.check_schema` is replaced by Ajv 8.18.0 Ajv2020 metaschema validation (found offline at /opt/node22/lib/node_modules/serve/node_modules/ajv) plus `re.compile` of every pattern. The resources use only the 2020-12 dialect. There are no $anchor, $dynamicAnchor or $dynamicRef keywords. All 346 URIs claimed as `$id` by more than one resource map to identical contents, so crawl order cannot change a lookup. The stand-in logged 0 non-equal collisions, 0 anchor lookups and 0 other dialects.\n\nUnder the stand-in, all six v3 check scripts exit 0 with status PASS. Every count in source-review-summary.md line 15 is reproduced exactly: 1,241 original selections; 19 new roots; 1,256 literal resources; 130,201 references; 2,035 method schema positions; 240 unique roots; 1,252, 751 and 642 checks; and a 54-node, 67-edge acyclic DAG. That line reads \"Deterministic checks pass: 1,241 original whole resource selections, 19 active whole roots, 1,256 literal resources, 130,201 schema-aware scoped references; 2,035 method schema positions and 240 distinct reachable method roots.\" STATUS.json line 11 reads `\"source_consistency\": \"PASS\",`.\n\nFive of the six scripts regenerate their outputs byte-identically to the frozen files: composition/full-bank-checks.json, method-root-bindings.json (1,785,491 bytes, with 2,035 resolved-value SHA-256 values and per-root closure counts), method-root-checks.json, final-source-checks.json, stop-correction-checks.json and stop-phase-v3-checks.json. The stop-review v3 check.py, also under the stand-in, gives PASS; its checks.json is byte-identical and its stdout is byte-identical to the frozen check.log. It re-pins all 1,580 manifest members, confirms the exact census and the manifest hash 9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e, and recomputes 130,201 references and all 2,035 resolved-value hashes. The standard-library check_delta.py gives PASS_BOUNDED_V3_SOURCE_PHASE_DELTA, with both outputs byte-identical.\n\nSo source_consistency PASS is reconfirmed CONDITIONALLY: it rests on an independent re-implementation of the resolver, not on the real library, whose version the package does not record. The byte-identical method-root-bindings.json and full-bank-checks.json are strong corroboration that the stand-in behaves like the library, but they are not proof.\n\nFINDING 1 (freeze hygiene): the frozen original-bank-checks.json is stale against its own input. check_original_banks.py is declared a deterministic check in authoring-reproduction-boundary.json lines 4-10 (\"deterministic_checks\": [\"compose_whole_banks.py\", \"check_composition.py\", \"check_method_roots.py\", \"check_original_banks.py\", \"check_final_sources.py\"]).\n- The frozen output (SHA-256 c77f3b75d6697a39b1950002a40be0a6af656964cb386446e8be5d1d74ad85aa, the same bytes in v1, v2 and v3) has 16 bank entries.\n- original-resource-banks.json (d502fecfcbb9f497fc9bac998f6ee9d6aa5f94ddeaad2d293070bc8a70370828, the same in v1, v2 and v3) has 18 banks.\n- The re-run output (e18f3086637e66589ce423c673b43c7fcf2b4638c885158d9e8c48502110241a) equals the frozen 16 entries exactly (counts, error multisets and error order), followed by two appended banks: certified_corrected_native (139 resources, 15,118 refs, 22 errors) and certified_corrected_current_d05_source (139 resources, 14,994 refs, 22 errors). Their errors are the same unresolved relative `inputs/Plans/plans_to_code_handoff.schema.json#/$defs/...` refs that the frozen certified_native and certified_current_d05_source already record.\n- The script has no pass/fail status, so this does not flip source_consistency. But the file is a pinned manifest member, so re-running the package's own declared check changes a frozen member. The stop-review check.py then reports FAIL with [\"hash original-bank-checks.json\", \"bytes original-bank-checks.json\"], yet still exits 0.\n\nFINDING 2: none of these scripts exits non-zero on FAIL; only the status field is meaningful. Some fields reported as PASS are written as fixed values in the scripts rather than computed, for example `'new_root_metaschemas':'PASS'` in check_composition.py and `'complete_original_occurrences':323` in check_method_roots.py. What actually enforces the metaschema check is that `check_schema` does not raise.\n\nCURRENTNESS v1 check.py reads only git objects of named commits, via `git -C /home/user/Puppet-Master show 4a72aa124739c9aeba8d1ab49865735feae528d8:path`, of dd1df59d6307952d82a5c93be9ad4083a5bc0773 for the registry baseline, and of each pin's source_commit. It never reads the working tree, so it re-verifies the frozen computation at 4a72aa12 and says nothing about origin/main a6480b0.\n- Mode A (brief-literal mapping) exits 1 with FileNotFoundError on /home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/manifest.json, a directory not in the package. The five outputs it wrote before stopping are byte-identical: summary is direct 32 EXACT / 15 CHANGED, inherited 241 / 9, passages 476 / 476 found, additional coordinates 112 / 2.\n- Mode B, which maps the five missing parents to embedded v3/inputs copies with identical manifest SHA-256, also exits 1: the embedded certified-v2 lacks 9 of 77 members (e.g. apply_phase_corrections.py) and the embedded plan lacks 135 of 142.\n- Mode C skips only the parent block. It exits 0, and all seven outputs it writes are byte-identical, including registry-deltas.json and owner-addition-impact.json.\n- A separate probe, not the package script: 6 of 8 parents authenticate completely (replan-v3 487/487, scope 2/2, scope-addendum 1/1, upstream-correction-v3 177/177, upstream-correction-review-v3 4/4, corrected-coordinator 82/82). certified-v2 (68/77 present) and plan (7/142 present) cannot be fully authenticated in this environment.\n\nEXTRA, outside the brief's check_*.py list but declared deterministic by the package: compose_whole_banks.py, run in the separate copy R5/compose-copy/v3, exits 0 and reports 1,241 derived selections, 19 roots, 735 root bindings and 536 cross-bank bindings. It regenerates all 728 derived files, the 19 roots, root-transform-ledger, root-import-bindings, cross-bank-bindings, uri-map and draft-resource-map.json byte-identically. composition/original-transform-ledger.json differs only in order: all 1,241 entries have identical change multisets (128,586 changes), and 49 entries list them in a different order. That order comes from the unordered subresource-keyword set, whose iteration order is hash-randomised in the real library too.\n\nOPEN QUESTIONS:\n1. Which `referencing` and `jsonschema` versions and optional format checkers the authors used is not recorded in the package.\n2. Whether the two corrected banks were meant to be in original-bank-checks.json cannot be decided from the bytes; the file was never regenerated after the banks file grew to 18.\n3. certified-v2 and plan parent authentication at their original absolute paths cannot be re-verified here.",
+  "rewrites": [
+   "Six v3 check scripts (check_composition.py, check_method_roots.py, check_original_banks.py, check_final_sources.py, check_stop_correction.py, check_stop_phase_v3.py): NO rewrite. They use only P=pathlib.Path(__file__).parent-relative paths. Run from the copy R5/replan-v8/goal-replan-combined-source-20260921/v3.",
+   "Module substitution, not a script rewrite: the stand-in runs used PYTHONPATH=/tmp/claude-0/-home-user-Puppet-Master/e8a4a4d6-d9cf-5608-ab1e-bc8842bb958d/scratchpad/a0/work/R5/shim and PYTHONDONTWRITEBYTECODE=1. Files: shim/referencing/__init__.py (sha256 940e23821a3b61dd6a5f25bfddf6873acf8c6939b57160edfc8e1d6c205de637), shim/referencing/jsonschema.py (2ce137ce1bdc4bec7c4286a45aedaedeb24bc2692a3a7f7ed0d9976b07f2e1d1), shim/jsonschema/__init__.py (d8be95961116863a486d7fbe6e36248f2d4183f2f31e4a2f987dd9c3edec4f93), shim/ajv_check.js (5e83930a998d1f585826274bc752bd406960d39ac2260be2e79371ff26eb89f3), which uses Ajv 8.18.0 at /opt/node22/lib/node_modules/serve/node_modules/ajv/dist/2020 with strict:false and validateFormats:false. Diagnostics went to the JSONL file named by R5_SHIM_LOG.",
+   "goal-replan-combined-stop-independent-review-20260921/v3/check.py line 5: P=pathlib.Path('/mnt/Cursor/PM-Experiments/goal-replan-combined-source-20260921/v3') -> P=pathlib.Path('/tmp/claude-0/-home-user-Puppet-Master/e8a4a4d6-d9cf-5608-ab1e-bc8842bb958d/scratchpad/a0/work/R5/replan-v8/goal-replan-combined-source-20260921/v3'). The rewritten copy has sha256 1e84f82546f8d5c592589a4abe8fa60a391c93b85e8b98fd507ce8e85e8cbe08.",
+   "goal-replan-combined-stop-independent-review-20260921/v3/check_delta.py line 3: P=Path('/mnt/Cursor/PM-Experiments/goal-replan-combined-source-20260921/v3') -> P=Path('<scratch>/R5/replan-v8/goal-replan-combined-source-20260921/v3'), with V=P.parent/'v2' left unchanged. The rewritten copy has sha256 2616506d5c582622dc3942eafb5d5c9165e33e5e9910ffdd11cc801288549f68.",
+   "goal-replan-stop-currentness-impact-20260921/v1/check.py line 2: P=pathlib.Path('/mnt/Cursor/PM-Experiments/goal-replan-combined-source-20260921/v3') -> P=pathlib.Path('<scratch>/R5/replan-v8/goal-replan-combined-source-20260921/v3').",
+   "goal-replan-stop-currentness-impact-20260921/v1/check.py line 3: REPO='/mnt/Cursor/PuppetMaster' -> REPO='/home/user/Puppet-Master'. REV='4a72aa124739c9aeba8d1ab49865735feae528d8' is unchanged. The script reads only git objects through `git show <commit>:<path>`: 4a72aa12, dd1df59d6307952d82a5c93be9ad4083a5bc0773, and each pin's source_commit. It never reads the working tree.",
+   "goal-replan-stop-currentness-impact-20260921/v1/check.py: inserted a _r5map() helper before def write(...) and changed `q=pathlib.Path(x['manifest_path'])` to `q=pathlib.Path(_r5map(x['manifest_path']))`. The mode comes from env R5_PARENT_MAP. Every mode maps /mnt/Cursor/PM-Experiments/<dir>/ and /home/sittingmongoose/PM-Experiments/<dir>/ to <scratch>/R5/replan-v8/<dir>/ when that directory is in the package, with goal-run-replanned-source-contract-20260920 mapped to goal-run-replanned-source-contract-20260920-relocated-20260921. That covers scope (goal-replan-combined-scope-adjudication-20260921/v1), scope-addendum (.../addendum-001) and replan-v3. Mode B additionally maps the five parents not in the package to embedded copies whose manifest sha256 is identical: certified-v2 -> v3/inputs/certified-v2/manifest.json; plan -> v3/inputs/plan/manifest.json; upstream-correction-v3 -> v3/inputs/upstream-correction-v3/manifest.json; upstream-correction-review-v3 -> v3/inputs/upstream-correction-review-v3/manifest.json; corrected-coordinator -> v3/inputs/upstream-correction-v3/coordinator-corrected/manifest.json. The output rows still carry the original manifest_path strings.",
+   "goal-replan-stop-currentness-impact-20260921/v1/check.py (mode C): `for x in read('parent-pins.json'):` -> `for x in ([] if _r5os.environ.get('R5_PARENT_MAP')=='C' else read('parent-pins.json')):`, and `write('conditional-parent-authentication.json',parents)` is guarded to skip writing in mode C. This skips only the parent-authentication block so that the later git-only outputs can be reproduced. The final rewritten copy has sha256 504b69bc6a61e9210b1c4b9a83201aae2dfd953d2b2f819fcc9d0b6a9cc08633.",
+   "The data file v3/parent-pins.json and every other frozen data file in the copy were NOT modified. After all runs, `diff -r --brief` of the original against the copy lists only the three rewritten scripts and the regenerated v3/original-bank-checks.json. The stop-review checks.json was restored to its first-run bytes, which equal the frozen file."
+  ],
+  "runs": [
+   {
+    "script": "goal-replan-combined-source-20260921/v3/check_composition.py [literal: unmodified, system python3 3.11.15]",
+    "ran": false,
+    "pass": false,
+    "exit_code": 1,
+    "notes": "Failed at import: \"line 2, in <module> from referencing import Registry,Resource / ModuleNotFoundError: No module named 'referencing'\". No output was written. The dependency is also missing from python3.10, 3.12, 3.13 and /usr/local/bin/python3, there is no wheel in /root/.cache/pip or /root/.cache/uv, and installing from the network is forbidden. Log: R5/logs/literal-check_composition.py.out",
+    "claimed_checks": "1,241 original selections, 19 roots, 1,256 literal resources, 130,201 references",
+    "reported_checks": "none (import failure)",
+    "output_equals_frozen": "not produced"
+   },
+   {
+    "script": "goal-replan-combined-source-20260921/v3/check_method_roots.py [literal]",
+    "ran": false,
+    "pass": false,
+    "exit_code": 1,
+    "notes": "ModuleNotFoundError: No module named 'referencing' at line 2. No output was written.",
+    "claimed_checks": "2,035 method schema positions, 240 roots",
+    "reported_checks": "none (import failure)",
+    "output_equals_frozen": "not produced"
+   },
+   {
+    "script": "goal-replan-combined-source-20260921/v3/check_original_banks.py [literal]",
+    "ran": false,
+    "pass": false,
+    "exit_code": 1,
+    "notes": "ModuleNotFoundError: No module named 'referencing' at line 2. No output was written.",
+    "claimed_checks": "no count claimed in source-review-summary.md",
+    "reported_checks": "none (import failure)",
+    "output_equals_frozen": "not produced"
+   },
+   {
+    "script": "goal-replan-combined-source-20260921/v3/check_final_sources.py [literal]",
+    "ran": false,
+    "pass": false,
+    "exit_code": 1,
+    "notes": "ModuleNotFoundError: No module named 'referencing' at line 2. No output was written.",
+    "claimed_checks": "642 checks and a 54-node acyclic commitment graph",
+    "reported_checks": "none (import failure)",
+    "output_equals_frozen": "not produced"
+   },
+   {
+    "script": "goal-replan-combined-source-20260921/v3/check_stop_correction.py [literal]",
+    "ran": false,
+    "pass": false,
+    "exit_code": 1,
+    "notes": "ModuleNotFoundError: No module named 'referencing' at line 2. No output was written.",
+    "claimed_checks": "1,252",
+    "reported_checks": "none (import failure)",
+    "output_equals_frozen": "not produced"
+   },
+   {
+    "script": "goal-replan-combined-source-20260921/v3/check_stop_phase_v3.py [literal]",
+    "ran": false,
+    "pass": false,
+    "exit_code": 1,
+    "notes": "ModuleNotFoundError: No module named 'referencing' at line 2. No output was written.",
+    "claimed_checks": "751",
+    "reported_checks": "none (import failure)",
+    "output_equals_frozen": "not produced"
+   },
+   {
+    "script": "goal-replan-combined-stop-independent-review-20260921/v3/check.py [literal, before the P rewrite]",
+    "ran": false,
+    "pass": false,
+    "exit_code": 1,
+    "notes": "ModuleNotFoundError: No module named 'referencing'. Its P constant also pointed at /mnt/Cursor/PM-Experiments/..., which does not exist here.",
+    "claimed_checks": "counts listed in the frozen checks.json",
+    "reported_checks": "none (import failure)",
+    "output_equals_frozen": "not produced"
+   },
+   {
+    "script": "goal-replan-combined-source-20260921/v3/check_original_banks.py [stand-in resolver]",
+    "ran": true,
+    "pass": true,
+    "exit_code": 0,
+    "notes": "Took 4 s. The script has no pass/fail status; it is a per-bank diagnostic, and 'pass' here means only that it completed. The OUTPUT DIFFERS from the frozen file. Frozen original-bank-checks.json (c77f3b75d6697a39b1950002a40be0a6af656964cb386446e8be5d1d74ad85aa, the same bytes in v1, v2 and v3) has 16 banks, 959 resources, 97,278 refs and 492 errors. The re-run (e18f3086637e66589ce423c673b43c7fcf2b4638c885158d9e8c48502110241a) has 18 banks, 1,237 resources, 127,390 refs and 536 errors. It equals the frozen 16 entries exactly (counts, error multisets and error order), followed by 2 appended banks: certified_corrected_native (139/15,118/22) and certified_corrected_current_d05_source (139/14,994/22). Those 44 errors are the same unresolved relative 'inputs/Plans/plans_to_code_handoff.schema.json#/$defs/...' refs the frozen file records for certified_native and certified_current_d05_source. Cause: original-resource-banks.json (d502fecfcbb9f497fc9bac998f6ee9d6aa5f94ddeaad2d293070bc8a70370828, the same in v1, v2 and v3) already lists 18 banks. The frozen output was never regenerated, although authoring-reproduction-boundary.json lines 4-10 list this script under \"deterministic_checks\". Because the file is a manifest member, re-running it makes the stop-review check.py report FAIL (see that entry).",
+    "claimed_checks": "not claimed",
+    "reported_checks": "18 banks (frozen output has 16)",
+    "output_equals_frozen": "NO: frozen 16 entries reproduced exactly, plus 2 appended banks"
+   },
+   {
+    "script": "goal-replan-combined-source-20260921/v3/check_composition.py [stand-in resolver]",
+    "ran": true,
+    "pass": true,
+    "exit_code": 0,
+    "notes": "Took 8 s. Status PASS with errors []. Nineteen check_schema calls went to Ajv 2020-12 and all were valid, with 0 regex errors. The output field 'new_root_metaschemas':'PASS' is written as a fixed value; the enforcing mechanism is that check_schema does not raise. Stand-in diagnostics: 0 non-equal crawl collisions, 0 anchor lookups, 0 non-2020-12 dialects.",
+    "claimed_checks": "1,241 original selections; 19 roots; 1,256 literal resources; 130,201 references",
+    "reported_checks": "original_selections 1241; new_roots 19; literal_resources 1256; references_checked 130201",
+    "output_equals_frozen": "YES: composition/full-bank-checks.json byte-identical (792f03a9a50493eb898c4631f5d7ed08d251dee7fffde44b2ce6acaf8fe904a2)"
+   },
+   {
+    "script": "goal-replan-combined-source-20260921/v3/check_method_roots.py [stand-in resolver]",
+    "ran": true,
+    "pass": true,
+    "exit_code": 0,
+    "notes": "Took 5 s. Status PASS with errors []. 'complete_original_occurrences':323 is written as a fixed value. The 1,785,491-byte method-root-bindings.json, which carries a resolved_value_sha256 for each of the 2,035 bindings and per-root reachable node and scoped-reference counts, reproduced byte-for-byte. That is the strongest evidence that the stand-in behaves like the library.",
+    "claimed_checks": "2,035 method schema positions; 240 distinct reachable roots",
+    "reported_checks": "bound_schema_occurrences 2035; unique_full_schema_roots 240; complete_original_occurrences 323",
+    "output_equals_frozen": "YES: method-root-bindings.json (330e76b68c1c25c4fe7d63506d52565623c1af09bea6d947b27288172da199e0) and method-root-checks.json (bb51c57abcc9e8d60e65be730ccfb330567987a54accf98df4a6892fc5b590a1) byte-identical"
+   },
+   {
+    "script": "goal-replan-combined-source-20260921/v3/check_final_sources.py [stand-in resolver]",
+    "ran": true,
+    "pass": true,
+    "exit_code": 0,
+    "notes": "Took 2 s. Status PASS with errors []. The check 'runtime commitment DAG acyclic' passes with 54 nodes and 67 edges; authenticated_pin_entries is 483. This run reads the re-run composition/full-bank-checks.json and method-root-checks.json, both byte-identical to the frozen files.",
+    "claimed_checks": "642 checks; 54-node acyclic commitment graph",
+    "reported_checks": "642 checks, 0 errors; DAG 54 nodes / 67 edges, acyclic",
+    "output_equals_frozen": "YES: final-source-checks.json byte-identical (f3ef79e94c693709492ec7f1c884a65a252d20124a787accab2d380360fe49e7)"
+   },
+   {
+    "script": "goal-replan-combined-source-20260921/v3/check_stop_correction.py [stand-in resolver]",
+    "ran": true,
+    "pass": true,
+    "exit_code": 0,
+    "notes": "Took 3 s. Status PASS with errors []. One check_schema call went to Ajv and was valid. It authenticates the v1 predecessor manifest digest 11d59a1b... and the phase-review manifest 2542c6c5....",
+    "claimed_checks": "1,252",
+    "reported_checks": "1252 checks, 0 errors",
+    "output_equals_frozen": "YES: stop-correction-checks.json byte-identical (5e31e0feac5293b49a6fc6728accdbe48c9f3c50217bf9fa64744705f9f4e359)"
+   },
+   {
+    "script": "goal-replan-combined-source-20260921/v3/check_stop_phase_v3.py [stand-in resolver]",
+    "ran": true,
+    "pass": true,
+    "exit_code": 0,
+    "notes": "Took 3 s. Status PASS with errors []. One check_schema call went to Ajv and was valid. It includes 'all1562 predecessor v2 members unchanged' and the review manifest cc383394..., and reads the re-run final-source-checks.json.",
+    "claimed_checks": "751",
+    "reported_checks": "751 checks, 0 errors",
+    "output_equals_frozen": "YES: stop-phase-v3-checks.json byte-identical (61f95017f8dc99189ef888b80835f70e4a586c2b3dcfa1eb9fd4f0dda0e042db)"
+   },
+   {
+    "script": "goal-replan-combined-stop-independent-review-20260921/v3/check.py [P rewritten, stand-in resolver, run before the v3 scripts on the pristine v3 copy]",
+    "ran": true,
+    "pass": true,
+    "exit_code": 0,
+    "notes": "Took 11 s. Status PASS with errors []. It checks the manifest hash 9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e, pins all 1,580 members, confirms the exact census, runs the structural inverses, checks 19 metaschemas through Ajv (all valid), walks 130,201 refs, and recomputes all 2,035 method resolved-value hashes. Its stdout is byte-identical to the frozen check.log.",
+    "claimed_checks": "counts in the frozen checks.json: freeze_members 1580, scoped_refs 130201, literal_resources 1256, method_bindings 2035, unique_method_roots 240, etc.",
+    "reported_checks": "freeze_members 1580; inverses 25+2; original_transform_inverses 1241; root_transform_inverses 19; literal_resources 1256; scoped_refs 130201; method_bindings 2035; occurrences 323; scanned 2023; unique_method_roots 240; native fields 24; delivery rows 22; wrapper routes 16",
+    "output_equals_frozen": "YES: checks.json byte-identical (e63713aaf22b55fce339a176aa63cb9833a31a5c3fe5ba511598a4e9287a0287); stdout == check.log"
+   },
+   {
+    "script": "goal-replan-combined-stop-independent-review-20260921/v3/check.py [re-run AFTER the six v3 scripts had rewritten their outputs in the copy]",
+    "ran": true,
+    "pass": false,
+    "exit_code": 0,
+    "notes": "Status FAIL with errors ['hash original-bank-checks.json', 'bytes original-bank-checks.json']. Re-running the package's own declared deterministic check_original_banks.py changes a pinned manifest member, and this script exits 0 even on FAIL. The output was saved to R5/logs/stopreview-checks.after-v3-run.json, and the copy's checks.json was restored to its first-run bytes.",
+    "claimed_checks": "n/a",
+    "reported_checks": "same census; 2 errors",
+    "output_equals_frozen": "NO (FAIL output); restored afterwards"
+   },
+   {
+    "script": "goal-replan-combined-stop-independent-review-20260921/v3/check_delta.py [P rewritten, stdlib only]",
+    "ran": true,
+    "pass": true,
+    "exit_code": 0,
+    "notes": "Took under 1 s. Status PASS_BOUNDED_V3_SOURCE_PHASE_DELTA. It hashes all 1,562 v2 members and asserts 36 reverse edits, 323 inverses, 188 map positions, 12 selected Stop declarations, 40 pointer selections, 12 protocol sections and 7 obligations.",
+    "claimed_checks": "frozen delta-checks.json values",
+    "reported_checks": "predecessor_v2_members 1562; prior_review_members 8; unchanged roots 18; reverse edits 36; occurrences 323; map positions 188; selected 12; selections 40; sections 12; obligations 7",
+    "output_equals_frozen": "YES: delta-checks.json (122df300...) and schema-and-phase-evidence.json (2bb7fdad...) byte-identical"
+   },
+   {
+    "script": "goal-replan-stop-currentness-impact-20260921/v1/check.py [mode A: brief-literal path mapping]",
+    "ran": true,
+    "pass": false,
+    "exit_code": 1,
+    "notes": "Reads git objects of 4a72aa124739c9aeba8d1ab49865735feae528d8, not origin/main and not the working tree. It crashed with \"FileNotFoundError: [Errno 2] No such file or directory: '/home/sittingmongoose/PM-Experiments/goal-certified-event-coordinator-source-20260921/v2/manifest.json'\" (that directory is not in the package). Before the crash it wrote canonical-comparison, inherited-replan-comparison, selected-passage-comparison, additional-original-coordinate-comparison and summary.json, all byte-identical to the frozen files. summary: direct CHANGED 15 / EXACT 32; inherited CHANGED 9 / EXACT 241; passages 476/476 found; additional EXACT 112 / CHANGED 2.",
+    "claimed_checks": "frozen summary.json values",
+    "reported_checks": "same as the frozen summary.json",
+    "output_equals_frozen": "5 written outputs byte-identical; 3 later outputs not produced"
+   },
+   {
+    "script": "goal-replan-stop-currentness-impact-20260921/v1/check.py [mode B: parents mapped to embedded v3/inputs copies with identical manifest sha256]",
+    "ran": true,
+    "pass": false,
+    "exit_code": 1,
+    "notes": "Crashed with FileNotFoundError on '.../v3/inputs/certified-v2/apply_phase_corrections.py'. The embedded certified-v2 copy has only 68 of 77 members and embedded plan has 7 of 142. In a separate read-only probe, 6 of 8 parents authenticate fully with no bad hashes: replan-v3 487/487, scope 2/2, scope-addendum 1/1, upstream-correction-v3 177/177, upstream-correction-review-v3 4/4, corrected-coordinator 82/82.",
+    "claimed_checks": "8 parents authenticated (frozen conditional-parent-authentication.json)",
+    "reported_checks": "crashed on the first parent",
+    "output_equals_frozen": "same first 5 outputs byte-identical; parent output not produced"
+   },
+   {
+    "script": "goal-replan-stop-currentness-impact-20260921/v1/check.py [mode C: parent-authentication block skipped]",
+    "ran": true,
+    "pass": true,
+    "exit_code": 0,
+    "notes": "Completed. Every output it writes is byte-identical to the frozen file, including registry-deltas.json (dd1df59d to 4a72aa12) and owner-addition-impact.json. conditional-parent-authentication.json is intentionally not written in this mode. This reproduces the frozen 4a72aa12 computation only; it gives no currentness result against origin/main a6480b0.",
+    "claimed_checks": "frozen outputs",
+    "reported_checks": "7 outputs written",
+    "output_equals_frozen": "YES for all 7 written outputs"
+   },
+   {
+    "script": "goal-replan-combined-source-20260921/v3/compose_whole_banks.py [EXTRA: declared deterministic in authoring-reproduction-boundary.json; stand-in resolver; run in a separate copy R5/compose-copy/v3]",
+    "ran": true,
+    "pass": true,
+    "exit_code": 0,
+    "notes": "Took 15 s. Printed {\"derived_selections\": 1241, \"roots\": 19, \"root_bindings\": 735, \"exact_cross_bank_bindings\": 536}. All 728 composition/derived files (no new ones), the 19 composition/roots, root-transform-ledger.json, root-import-bindings.json, cross-bank-bindings.json, uri-map.json and draft-resource-map.json are byte-identical. composition/original-transform-ledger.json (frozen 43f9d7b1...) differs only in order: all 1,241 entries have identical change multisets (128,586 changes), and 49 entries list their changes in a different order. That order comes from set-ordered subresource keywords, which the real library also iterates in hash-randomised order.",
+    "claimed_checks": "n/a",
+    "reported_checks": "1241 derived, 19 roots, 735 root bindings, 536 cross-bank bindings",
+    "output_equals_frozen": "YES for every file except original-transform-ledger.json, which differs in order only"
+   }
+  ]
+ }
+}
