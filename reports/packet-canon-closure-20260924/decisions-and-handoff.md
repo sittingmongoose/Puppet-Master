@@ -14,7 +14,7 @@ answer hashes and status. The frozen presentation remains unchanged.
 
 1. The earlier same-user dictionary answer is superseded by DL-099: for now,
    dictionaries belong to the Project, follow it across installations and are
-   visible to other people using that Project. Owner reconciliation remains pending;
+   visible to other people using that Project. Owner reconciliation is integrated;
    a separate personal-sharing identity boundary is no longer the selected policy.
 2. DL-095: Replace resets omitted eligible ordinary settings within chosen import
    categories, with every reset previewed; outside-scope and excluded local or
@@ -35,8 +35,9 @@ separate reconciliation, so this does not close the selected-command occurrences
 Amended DL-097 is also integrated into Forge §3.4 and indexed FGI-008; see
 `review-checkout-owner-decision.md`. Its selected-request/result/preview companion
 remains separate work. Settings DL-095 owner reconciliation is now integrated;
-see `settings-replace-ego-reference.md`. Its typed companion, the dictionary sharing
-owner reconciliation, and native implementation remain pending. Newer spellcheck,
+see `settings-replace-ego-reference.md`. Its typed companion and native implementation
+remain pending. DL-099 dictionary owner reconciliation is integrated; see
+`project-dictionary-owner-decision.md` for exact scope and verification. Newer spellcheck,
 Help/Teacher and assistant/platform designs remain protected.
 
 The earlier capability-precedence question was an overstatement of the packet:

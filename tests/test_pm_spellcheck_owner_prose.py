@@ -47,6 +47,28 @@ class SpellcheckOwnerProseTests(unittest.TestCase):
             with self.subTest(token=token):
                 self.assertIn(token, text)
 
+    def test_custom_dictionary_follows_project_not_personal_identity(self):
+        text = self.section()
+        for token in ("User-managed custom words belong to the Project dictionary",
+                      "follows its Project across installations",
+                      "another person using the same Project sees those words",
+                      "former Personal dictionary label admits no independent custom-word store",
+                      "Built-in/System language dictionaries and source selection are unchanged",
+                      "Plans/Decision_Log.md#DL-099"):
+            with self.subTest(token=token):
+                self.assertIn(token, text)
+        for retired_claim in ("Personal dictionary management",
+                              "Personal and Project dictionaries remain distinct domain objects",
+                              "personal/Project dictionary distinctions remain visible"):
+            with self.subTest(retired_claim=retired_claim):
+                self.assertNotIn(retired_claim, text)
+        unit = yaml.safe_load(re.search(r"```yaml\n(.*?)\n```", text, re.S).group(1))
+        self.assertIn("DL-099", unit["depends_on"])
+        self.assertIn("User-managed custom words belong to the Project dictionary",
+                      unit["canonical_text"])
+        self.assertTrue(any("User-managed custom words are per Project" in criterion
+                            for criterion in unit["acceptance_criteria"]))
+
     def test_plan_unit_is_unique_and_preserves_exact_source_tokens(self):
         text = (ROOT / "Plans/assistant-chat-design.md").read_text()
         units = [yaml.safe_load(block) for block in re.findall(r"```yaml\n(.*?)\n```", text, re.S)

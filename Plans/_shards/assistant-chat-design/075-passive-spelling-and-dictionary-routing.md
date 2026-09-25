@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25809-L25880
+Source lines: L25809-L25887
 
-Source SHA256: `a3fea5b5d0104d239eb54477da4e9c42ad6a1f4719a7e78d29a2e6f9ada9c52f`
+Source SHA256: `e38d81d68a249d6ee2fcf6f79aed41e29d037257cc9451d8d8f84c6e7244c48f`
 
 ---
 
@@ -14,9 +14,9 @@ Assistant input uses one shared local spelling service. Ordinary spellcheck is e
 
 The service excludes code, URLs, paths, commands, hashes, identifiers, structured data, and known Puppet Master/provider names from ordinary spelling warnings. It supports technical-prose and unknown-name controls without treating code or opaque identity tokens as ordinary misspelled prose. Ordinary spelling offers the actions replace once, ignore once, ignore in the current composer buffer, and add to the chosen dictionary. Ignoring current buffer content does not create or restore a user-facing Draft product.
 
-The normal Settings projection exposes Check spelling, Language with Automatic selection, Dictionary source with Automatic selection, Personal dictionary management, and Project dictionary use/management where available. Advanced source selection exposes System dictionaries only and PM local dictionaries only. Automatic source selection prefers the OS spelling service and falls back to Puppet Master's local dictionaries. Language selection and language packs, technical-prose and unknown-name choices, and thread/Project overrides remain distinct choices; a thread-level disable is supported.
+The normal Settings projection exposes Check spelling, Language with Automatic selection, Dictionary source with Automatic selection, and Project dictionary management where available. Advanced source selection exposes System dictionaries only and PM local dictionaries only. Automatic source selection prefers the OS spelling service and falls back to Puppet Master's local dictionaries. Language selection and language packs, technical-prose and unknown-name choices, and thread/Project overrides remain distinct choices; a thread-level disable is supported.
 
-Personal and Project dictionaries remain distinct domain objects. This prose defines no physical family, storage key, synchronization policy, writer, or personal-dictionary global Settings scope, and admits no new setting ID. Settings consumes the spelling owner's configuration/projections through its existing Project-scoped ordinary-setting and domain-manager boundaries. Dictionary inspection or configuration must not silently dispatch an unregistered mutation.
+User-managed custom words belong to the Project dictionary. That dictionary follows its Project across installations, and another person using the same Project sees those words. The former Personal dictionary label admits no independent custom-word store, cross-Project sharing scope, or same-user identity service. Built-in/System language dictionaries and source selection are unchanged. This prose defines no physical family, storage key, synchronization protocol, writer, or global ordinary Settings scope, and admits no new setting ID; how a Project and its dictionary become available on another installation is not defined here. Settings consumes the spelling owner's configuration/projections through its existing Project-scoped ordinary-setting and domain-manager boundaries. Dictionary inspection or configuration must not silently dispatch an unregistered mutation.
 
 Grammar and style assistance is separate, explicitly opt-in provider-backed work. Before such work is requested, the existing permission/model/Usage owners supply the privacy, selected route, cost and Usage disclosure. Enabling local spelling, selecting dictionaries, or asking for a local spelling suggestion is not consent to provider-backed assistance. Neither missing OS dictionaries nor unavailable local dictionaries silently substitutes a provider route.
 
@@ -37,8 +37,12 @@ canonical_text: >-
   Code, URLs, paths, commands, hashes, identifiers, structured data and known Puppet Master/provider
   names are excluded. Automatic source prefers OS service then Puppet Master local dictionaries;
   System dictionaries only and PM local dictionaries only are Advanced choices. Automatic or
-  explicit language, Personal dictionary, Project dictionary, language packs, technical-prose
-  and unknown-name controls, thread-level disable and thread/Project overrides remain supported.
+  explicit language, Project dictionary management, language packs, technical-prose and
+  unknown-name controls, thread-level disable and thread/Project overrides remain supported.
+  User-managed custom words belong to the Project dictionary, which follows its Project across
+  installations and is visible to other people using that Project. The former Personal dictionary
+  label admits no independent custom-word store or same-user sharing identity. Built-in/System
+  language dictionaries and source selection remain unchanged.
   Grammar/style is separate opt-in provider-backed work with privacy, route, cost and Usage
   disclosure. Missing local sources do not silently substitute a provider route. Settings and
   storage retain their existing ownership; typed companions remain follow-on work. This unit
@@ -46,14 +50,15 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Spelling underlines, input context menus and Settings dictionary controls are user-visible.
 split_recommended: false
-depends_on: [SSYS-002, SSYS-006, SSYS-008]
+depends_on: [SSYS-002, SSYS-006, SSYS-008, DL-099]
 unblocks: []
 acceptance_criteria:
   - Ordinary spelling is local, enabled by default, and creates no provider request or Usage.
   - Code, URLs, paths, commands, hashes, identifiers, structured data and known PM/provider names are excluded.
   - No automatic text replacement or permanent Chat spelling toolbar control is introduced.
   - Replace once, ignore once, ignore current composer buffer and add to selected dictionary are explicit user actions; no Draft product is resurrected.
-  - Automatic source prefers OS service then PM local; explicit source/language choices and personal/Project dictionary distinctions remain visible.
+  - Automatic source prefers OS service then PM local; explicit source/language choices and Project dictionary management remain visible, without changing built-in language dictionaries.
+  - User-managed custom words are per Project; that dictionary follows its Project across installations, other people using that Project see it, and no independent personal store or same-user sharing boundary is introduced.
   - Thread disable/overrides and Project preferences do not create global ordinary Settings authority.
   - Grammar/style requires distinct opt-in privacy/route/cost/Usage disclosure; local fallback never silently becomes provider-backed work.
   - Missing typed mutation/inventory/persistence/native evidence remains follow-on work and is never represented as an enabled executable command.
@@ -71,12 +76,14 @@ source_lineage:
   - PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/DECISION_COVERAGE.json#CHAT-015
   - PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/DECISION_COVERAGE.json#MGR-030
   - PM_Settings_Bakeoff_Final_Cumulative_2026-08-08/reference/PM_CROSS_SYSTEM_COMPLETENESS_AUDIT.md#5.24-accessibility-input-and-spellcheck
+  - Plans/Decision_Log.md#DL-099
 preserved_exact_tokens: ["Automatic", "System dictionaries only", "PM local dictionaries only", "Personal dictionary", "Project dictionary", "No autocorrect"]
 negative_constraints:
   - Do not invent cmd.spelling command registrations, a physical dictionary family, implementation technology or provider route.
   - Do not send ordinary spelling content to a provider, fabricate Usage, or silently replace text.
   - Do not restore a user-facing Draft product or global ordinary Settings editing scope.
+  - Do not introduce a separate personal custom-word store, same-user identity service, cross-Project dictionary sharing, or a synchronization/permissions/storage design for dictionary following.
 owner_hints: [Plans/assistant-chat-design.md, Plans/Settings_System.md, Plans/storage-plan.md]
 ```
 
-ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md
+ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Decision_Log.md
