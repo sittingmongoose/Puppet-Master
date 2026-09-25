@@ -1,0 +1,944 @@
+{
+  "$schema": "https://puppetmaster.local/schemas/coordination_event_admission/1.0.0/coordination_event_admission.schema.json",
+  "schema_id": "pm.coordination_event_admission.v1",
+  "admission_id": "COORDINATION-DL045-STEP09-BATCH2-20260925",
+  "scope": "exact_seven_coordination_agent_families_plus_prepared_debug_mirror",
+  "batch_event_count": 7,
+  "row_count": 8,
+  "prepared_against_registry": {
+    "path": "Plans/event_family_registry.json",
+    "revision": "2026-09-11.2",
+    "sha256": "0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842",
+    "family_count": 42
+  },
+  "global_event_denominator": "UNKNOWN_OPEN",
+  "decision_refs": [
+    "Plans/Decision_Log.md#DL-039",
+    "Plans/Decision_Log.md#DL-045",
+    "Plans/Decision_Log.md#DL-046",
+    "Plans/Decision_Log.md#DL-076",
+    "Plans/Decision_Log.md#DL-077",
+    "Plans/Decision_Log.md#DL-078"
+  ],
+  "owner_refs": {
+    "semantic": "Plans/orchestrator-subagent-integration.md#OSI-438",
+    "payload": "Plans/Contracts_V0.md#CV-353",
+    "storage": "Plans/storage-plan.md#SP-320"
+  },
+  "search_report_ref": "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md",
+  "authority_contract_ref": "Plans/coordination_projection_contracts.schema.json#/x-pm-event-authority-binding",
+  "fixtures_ref": "Plans/coordination_event_contract_fixtures.json",
+  "admission_rule": "Preparing the eight contracts together is not admission (DL-046 by analogy; DL-045: one family per landing). Each of the seven is admitted only in its own Storage admission landing under DL-078: that landing appends this row's registry_row to Plans/event_family_registry.json byte for byte, advances registry_revision, flips this row to admitted_static_contract, moves the DL-078 checkpoint pins and writes the family's DL-077 admission record, which pins the row by registry_row_sha256. Until then every row stays denied: absent from the registry, quarantined before append or projection, and unable to advance the coordination checkpoint.",
+  "claim_boundary": "Static preparation only. No family is admitted, no registry row is added and no checkpoint, validator pin or seal condition moves. No native producer, crash detector, append path, projector, reader, durability, security, readiness or currentness is proved.",
+  "validation_command": "python3 scripts/pm_coordination_events.py",
+  "rows": [
+    {
+      "event_type": "coordination.agent_registered",
+      "family_id": "event-family-coordination-agent-registered",
+      "family_revision": "1.0.0",
+      "batch": "step09_batch2",
+      "admission_status": "prepared_not_admitted",
+      "semantic_owner_ref": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+      "payload_owner_ref": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+      "storage_owner_ref": "Plans/storage-plan.md#coordination-event-persistence-binding-dl-045-2026-09-25",
+      "producer_component": "AgentCoordinator.register_agent(RegisterAgent)",
+      "producer_callers": "The Orchestrator, once per agent, before node execution; execution starts only after the first AppendReceipt returns.",
+      "producer_admission": "Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.",
+      "transition_rule": "The first event of an agent: agent_revision 1, with no expected_previous_revision or last_applied_event_id. The agent row starts with status queued and the registration's lineage. Registration carries no operation; the initial operation is its own coordination.agent_operation_updated at agent_revision 2. Because the idempotency key of a registration always ends in revision 1, a repeated registration of the same agent_id is an exact retry or idempotency_conflict; already_registered is the transition table's backstop.",
+      "required_context_fields": [
+        "project_id",
+        "run_id",
+        "agent_id",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "schema_version"
+      ],
+      "payload_schema_ref": {
+        "path": "Plans/coordination_event_payloads.schema.json",
+        "json_pointer": "#/$defs/agent_registered",
+        "schema_id": "pm.coordination_event.agent_registered.schema.v1"
+      },
+      "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-320",
+        "Plans/storage-plan.md#SP-278",
+        "Plans/orchestrator-subagent-integration.md#OSI-438",
+        "Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint"
+      ],
+      "consumer_rule": "storage.coordination_projector.v1@1.0.0 is the only direct consumer. It adopts SP-278's generic index checkpoint, filters by Project and admitted_event_types, applies the family through SP-320's transition table, and commits rows and the projector.checkpoint.coordination:{project_id} checkpoint in one redb transaction under prior-value compare-and-swap, storing the nine-field durable read token (DL-076). The five storage.coordination_reader identities read projections only, after checking state, admitted families, coverage and publication.",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-COORDINATION-180D",
+        "policy_version": "1.0.0"
+      },
+      "retention_reason": "RP-COORDINATION-180D@1.0.0, as the registry family coordination_event_records binds it: 180 days after run_completion, which SP-320 binds to the first durable terminal canonical record of the Run; records of an unresolved Run stay unexpired; at most 1,000,000 per Project. Events are appended at registration, on an actual change and at termination; heartbeats are runtime liveness, not records. Projections and the checkpoint use RP-PROJECTION-3GEN@1.0.0.",
+      "recovery_rule": "The EventRecords are canonical and restored from the mandatory backup; projections and the checkpoint rebuild from verified CURRENT-selected seglog through SP-278. A lost or restored request is never replayed as a new event; after a restart or restore, non-terminal agents whose process is gone are resolved by the crash detector with process_lost as a new operation.",
+      "redaction_rule": "Closed CV-353 payload of IDs, refs, hashes, enums, integers, timestamps and bounded plain text; reject unhandled secrets. No prompt, model output, file content, diff, tool argument, command line, environment value, credential, account identifier or local absolute path. Readers apply current Project and thread permission and deletion tombstones before disclosure.",
+      "withdrawal_rule": "Per family (SP-320): cut off writer admission for the family, and for new registrations while the lifecycle is incomplete; withdraw the current checkpoint core and fence the projector and every reader; rebuild with the owner-approved successor from the kept seglog records and their dedupe and receipt custody. No zero-cursor reset, sibling reuse, history rewrite or seglog deletion.",
+      "validation_case_ids": [
+        "a7_registered_full",
+        "a7_registered_retry_changed",
+        "a8_registered_minimal",
+        "a9_registered",
+        "a10_registered",
+        "a11_registered",
+        "a12_registered",
+        "registered_extra_sketch_field",
+        "registered_legacy_worktree_path",
+        "registered_missing_project_lineage",
+        "registered_missing_agent_type",
+        "registered_wrong_platform_enum",
+        "registered_revision_not_one",
+        "registered_with_expected_previous_revision",
+        "registered_null_optional_lineage",
+        "registered_offset_timestamp",
+        "registered_key_padded_revision",
+        "registered_key_other_agent",
+        "registered_invalid_calendar_date",
+        "lifecycle_registration_to_unregister",
+        "registration_retry_and_conflict",
+        "registration_not_admitted"
+      ],
+      "runtime_producer_status": "unimplemented_not_proven",
+      "registry_row": {
+        "family_id": "event-family-coordination-agent-registered",
+        "family_revision": "1.0.0",
+        "event_type": "coordination.agent_registered",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+        "payload_owner_doc": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+        "payload_schema_id": "pm.coordination_event.agent_registered.schema.v1",
+        "payload_schema_ref": {
+          "path": "Plans/coordination_event_payloads.schema.json",
+          "json_pointer": "#/$defs/agent_registered",
+          "schema_id": "pm.coordination_event.agent_registered.schema.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/run_id"
+            ],
+            "node_id": [
+              "/payload/node_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/coordination_event_admission.json#/rows/0",
+          "Plans/orchestrator-subagent-integration.md#OSI-438",
+          "Plans/Contracts_V0.md#CV-353",
+          "Plans/coordination_event_payloads.schema.json#/$defs/agent_registered",
+          "Plans/storage-plan.md#SP-320",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Decision_Log.md#DL-045",
+          "Plans/coordination_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-COORDINATION-180D",
+          "policy_version": "1.0.0"
+        }
+      },
+      "registry_row_sha256": "1602bb6d33b63f79b7dc1daf4502c0aadbb26a4aa871a2963b2510a5d0353b40"
+    },
+    {
+      "event_type": "coordination.agent_status_updated",
+      "family_id": "event-family-coordination-agent-status-updated",
+      "family_revision": "1.0.0",
+      "batch": "step09_batch2",
+      "admission_status": "prepared_not_admitted",
+      "semantic_owner_ref": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+      "payload_owner_ref": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+      "storage_owner_ref": "Plans/storage-plan.md#coordination-event-persistence-binding-dl-045-2026-09-25",
+      "producer_component": "AgentCoordinator.update_status(AgentStatusUpdate)",
+      "producer_callers": "The Orchestrator's execution path for the agent, on an actual change of status or status_reason.",
+      "producer_admission": "Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.",
+      "transition_rule": "A registered, non-terminal agent only, at the agent's revision plus 1. status takes queued, running, awaiting_parent or blocked; complete, failed and cancelled arise only from the three terminal families, and a status update never stands in for a terminal event. An update that changes neither status nor status_reason returns coordination_unchanged; a skipped or repeated revision is stale_revision, a changed lineage lineage_mismatch, an event after the terminal event already_terminal.",
+      "required_context_fields": [
+        "project_id",
+        "run_id",
+        "agent_id",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "schema_version"
+      ],
+      "payload_schema_ref": {
+        "path": "Plans/coordination_event_payloads.schema.json",
+        "json_pointer": "#/$defs/agent_status_updated",
+        "schema_id": "pm.coordination_event.agent_status_updated.schema.v1"
+      },
+      "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-320",
+        "Plans/storage-plan.md#SP-278",
+        "Plans/orchestrator-subagent-integration.md#OSI-438",
+        "Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint"
+      ],
+      "consumer_rule": "storage.coordination_projector.v1@1.0.0 is the only direct consumer. It adopts SP-278's generic index checkpoint, filters by Project and admitted_event_types, applies the family through SP-320's transition table, and commits rows and the projector.checkpoint.coordination:{project_id} checkpoint in one redb transaction under prior-value compare-and-swap, storing the nine-field durable read token (DL-076). The five storage.coordination_reader identities read projections only, after checking state, admitted families, coverage and publication.",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-COORDINATION-180D",
+        "policy_version": "1.0.0"
+      },
+      "retention_reason": "RP-COORDINATION-180D@1.0.0, as the registry family coordination_event_records binds it: 180 days after run_completion, which SP-320 binds to the first durable terminal canonical record of the Run; records of an unresolved Run stay unexpired; at most 1,000,000 per Project. Events are appended at registration, on an actual change and at termination; heartbeats are runtime liveness, not records. Projections and the checkpoint use RP-PROJECTION-3GEN@1.0.0.",
+      "recovery_rule": "The EventRecords are canonical and restored from the mandatory backup; projections and the checkpoint rebuild from verified CURRENT-selected seglog through SP-278. A lost or restored request is never replayed as a new event; after a restart or restore, non-terminal agents whose process is gone are resolved by the crash detector with process_lost as a new operation.",
+      "redaction_rule": "Closed CV-353 payload of IDs, refs, hashes, enums, integers, timestamps and bounded plain text; reject unhandled secrets. No prompt, model output, file content, diff, tool argument, command line, environment value, credential, account identifier or local absolute path. Readers apply current Project and thread permission and deletion tombstones before disclosure.",
+      "withdrawal_rule": "Per family (SP-320): cut off writer admission for the family, and for new registrations while the lifecycle is incomplete; withdraw the current checkpoint core and fence the projector and every reader; rebuild with the owner-approved successor from the kept seglog records and their dedupe and receipt custody. No zero-cursor reset, sibling reuse, history rewrite or seglog deletion.",
+      "validation_case_ids": [
+        "a7_status_running_r3",
+        "a7_status_running_r2",
+        "a7_status_running_r2_other_run",
+        "a7_status_running_r2_other_node",
+        "a8_status_running_r2",
+        "a10_status_blocked_r2",
+        "a10_status_blocked_again_r3",
+        "a10_status_running_r3",
+        "a11_status_running_r3",
+        "status_terminal_value",
+        "status_wrong_enum_case",
+        "status_heartbeat_field",
+        "status_missing_run_lineage",
+        "status_revision_one",
+        "status_reason_secret",
+        "status_reason_multiline",
+        "status_reason_empty",
+        "status_key_wrong_revision",
+        "stale_revision_refused",
+        "event_before_registration_refused",
+        "event_after_terminal_refused",
+        "unchanged_status_not_appended",
+        "lineage_mismatch_refused",
+        "not_yet_admitted_family_quarantined"
+      ],
+      "runtime_producer_status": "unimplemented_not_proven",
+      "registry_row": {
+        "family_id": "event-family-coordination-agent-status-updated",
+        "family_revision": "1.0.0",
+        "event_type": "coordination.agent_status_updated",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+        "payload_owner_doc": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+        "payload_schema_id": "pm.coordination_event.agent_status_updated.schema.v1",
+        "payload_schema_ref": {
+          "path": "Plans/coordination_event_payloads.schema.json",
+          "json_pointer": "#/$defs/agent_status_updated",
+          "schema_id": "pm.coordination_event.agent_status_updated.schema.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/run_id"
+            ],
+            "node_id": [
+              "/payload/node_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/coordination_event_admission.json#/rows/1",
+          "Plans/orchestrator-subagent-integration.md#OSI-438",
+          "Plans/Contracts_V0.md#CV-353",
+          "Plans/coordination_event_payloads.schema.json#/$defs/agent_status_updated",
+          "Plans/storage-plan.md#SP-320",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Decision_Log.md#DL-045",
+          "Plans/coordination_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-COORDINATION-180D",
+          "policy_version": "1.0.0"
+        }
+      },
+      "registry_row_sha256": "9ebb6700e2b44e7caacf91c1bed278ffd2ddd74145a86d30f21c0afbf5438e5f"
+    },
+    {
+      "event_type": "coordination.agent_operation_updated",
+      "family_id": "event-family-coordination-agent-operation-updated",
+      "family_revision": "1.0.0",
+      "batch": "step09_batch2",
+      "admission_status": "prepared_not_admitted",
+      "semantic_owner_ref": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+      "payload_owner_ref": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+      "storage_owner_ref": "Plans/storage-plan.md#coordination-event-persistence-binding-dl-045-2026-09-25",
+      "producer_component": "AgentCoordinator.update_operation(AgentOperationUpdate)",
+      "producer_callers": "The same execution path: once for the initial operation right after registration, then on a new operation or an actual change of its summary, progress or refs.",
+      "producer_admission": "Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.",
+      "transition_rule": "A registered, non-terminal agent only, at the agent's revision plus 1. The latest event for an operation_id wins in coordination_operation_projection.v1 and sets the agent's current operation; the first observation time is kept. An unchanged operation returns coordination_unchanged. Operation rows stay after the terminal event.",
+      "required_context_fields": [
+        "project_id",
+        "run_id",
+        "agent_id",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "schema_version"
+      ],
+      "payload_schema_ref": {
+        "path": "Plans/coordination_event_payloads.schema.json",
+        "json_pointer": "#/$defs/agent_operation_updated",
+        "schema_id": "pm.coordination_event.agent_operation_updated.schema.v1"
+      },
+      "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-320",
+        "Plans/storage-plan.md#SP-278",
+        "Plans/orchestrator-subagent-integration.md#OSI-438",
+        "Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint"
+      ],
+      "consumer_rule": "storage.coordination_projector.v1@1.0.0 is the only direct consumer. It adopts SP-278's generic index checkpoint, filters by Project and admitted_event_types, applies the family through SP-320's transition table, and commits rows and the projector.checkpoint.coordination:{project_id} checkpoint in one redb transaction under prior-value compare-and-swap, storing the nine-field durable read token (DL-076). The five storage.coordination_reader identities read projections only, after checking state, admitted families, coverage and publication.",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-COORDINATION-180D",
+        "policy_version": "1.0.0"
+      },
+      "retention_reason": "RP-COORDINATION-180D@1.0.0, as the registry family coordination_event_records binds it: 180 days after run_completion, which SP-320 binds to the first durable terminal canonical record of the Run; records of an unresolved Run stay unexpired; at most 1,000,000 per Project. Events are appended at registration, on an actual change and at termination; heartbeats are runtime liveness, not records. Projections and the checkpoint use RP-PROJECTION-3GEN@1.0.0.",
+      "recovery_rule": "The EventRecords are canonical and restored from the mandatory backup; projections and the checkpoint rebuild from verified CURRENT-selected seglog through SP-278. A lost or restored request is never replayed as a new event; after a restart or restore, non-terminal agents whose process is gone are resolved by the crash detector with process_lost as a new operation.",
+      "redaction_rule": "Closed CV-353 payload of IDs, refs, hashes, enums, integers, timestamps and bounded plain text; reject unhandled secrets. No prompt, model output, file content, diff, tool argument, command line, environment value, credential, account identifier or local absolute path. Readers apply current Project and thread permission and deletion tombstones before disclosure.",
+      "withdrawal_rule": "Per family (SP-320): cut off writer admission for the family, and for new registrations while the lifecycle is incomplete; withdraw the current checkpoint core and fence the projector and every reader; rebuild with the owner-approved successor from the kept seglog records and their dedupe and receipt custody. No zero-cursor reset, sibling reuse, history rewrite or seglog deletion.",
+      "validation_case_ids": [
+        "a7_operation_initial_r2",
+        "a7_operation_progress_r5",
+        "a7_operation_progress_r3",
+        "a12_operation_r3",
+        "operation_summary_secret_key",
+        "operation_summary_bearer_token",
+        "operation_summary_too_long",
+        "operation_progress_over_100",
+        "operation_progress_fraction",
+        "operation_refs_empty",
+        "operation_refs_duplicate",
+        "operation_refs_too_many",
+        "operation_ref_absolute_path",
+        "operation_ref_without_kind",
+        "operation_wrong_platform_enum",
+        "operation_missing_agent_lineage",
+        "operation_extra_prompt_field",
+        "lifecycle_registration_to_unregister",
+        "operation_latest_event_wins",
+        "operation_stale_then_after_terminal",
+        "exact_retry_after_progress",
+        "interim_window_update_and_abort_families_not_admitted"
+      ],
+      "runtime_producer_status": "unimplemented_not_proven",
+      "registry_row": {
+        "family_id": "event-family-coordination-agent-operation-updated",
+        "family_revision": "1.0.0",
+        "event_type": "coordination.agent_operation_updated",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+        "payload_owner_doc": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+        "payload_schema_id": "pm.coordination_event.agent_operation_updated.schema.v1",
+        "payload_schema_ref": {
+          "path": "Plans/coordination_event_payloads.schema.json",
+          "json_pointer": "#/$defs/agent_operation_updated",
+          "schema_id": "pm.coordination_event.agent_operation_updated.schema.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/run_id"
+            ],
+            "node_id": [
+              "/payload/node_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/coordination_event_admission.json#/rows/2",
+          "Plans/orchestrator-subagent-integration.md#OSI-438",
+          "Plans/Contracts_V0.md#CV-353",
+          "Plans/coordination_event_payloads.schema.json#/$defs/agent_operation_updated",
+          "Plans/storage-plan.md#SP-320",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Decision_Log.md#DL-045",
+          "Plans/coordination_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-COORDINATION-180D",
+          "policy_version": "1.0.0"
+        }
+      },
+      "registry_row_sha256": "9816c8f0fb01372e452933c66549facc5c4b76bf17786fe3c11c27e76952d2f0"
+    },
+    {
+      "event_type": "coordination.agent_file_ownership_updated",
+      "family_id": "event-family-coordination-agent-file-ownership-updated",
+      "family_revision": "1.0.0",
+      "batch": "step09_batch2",
+      "admission_status": "prepared_not_admitted",
+      "semantic_owner_ref": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+      "payload_owner_ref": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+      "storage_owner_ref": "Plans/storage-plan.md#coordination-event-persistence-binding-dl-045-2026-09-25",
+      "producer_component": "AgentCoordinator.update_file_ownership(AgentFileOwnershipUpdate); Gap #33's update_file_activity_claim is a sketch of the same append",
+      "producer_callers": "The same execution path, from normalized hook, provider stream, output parsing and git diff observations; only high and medium confidence claims are appended.",
+      "producer_admission": "Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.",
+      "transition_rule": "A registered, non-terminal agent only, at the agent's revision plus 1. A new claim, or a changed claim_kind, claim_confidence or operation_id for the same path_hash, replaces the agent's claim row for that path; an identical claim returns coordination_unchanged. A claim warns and sequences agents and is not a FileSafe lock or lease. It ends only when the agent's terminal event is applied; there is no release value.",
+      "required_context_fields": [
+        "project_id",
+        "run_id",
+        "agent_id",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "schema_version"
+      ],
+      "payload_schema_ref": {
+        "path": "Plans/coordination_event_payloads.schema.json",
+        "json_pointer": "#/$defs/agent_file_ownership_updated",
+        "schema_id": "pm.coordination_event.agent_file_ownership_updated.schema.v1"
+      },
+      "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-320",
+        "Plans/storage-plan.md#SP-278",
+        "Plans/orchestrator-subagent-integration.md#OSI-438",
+        "Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint"
+      ],
+      "consumer_rule": "storage.coordination_projector.v1@1.0.0 is the only direct consumer. It adopts SP-278's generic index checkpoint, filters by Project and admitted_event_types, applies the family through SP-320's transition table, and commits rows and the projector.checkpoint.coordination:{project_id} checkpoint in one redb transaction under prior-value compare-and-swap, storing the nine-field durable read token (DL-076). The five storage.coordination_reader identities read projections only, after checking state, admitted families, coverage and publication.",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-COORDINATION-180D",
+        "policy_version": "1.0.0"
+      },
+      "retention_reason": "RP-COORDINATION-180D@1.0.0, as the registry family coordination_event_records binds it: 180 days after run_completion, which SP-320 binds to the first durable terminal canonical record of the Run; records of an unresolved Run stay unexpired; at most 1,000,000 per Project. Events are appended at registration, on an actual change and at termination; heartbeats are runtime liveness, not records. Projections and the checkpoint use RP-PROJECTION-3GEN@1.0.0.",
+      "recovery_rule": "The EventRecords are canonical and restored from the mandatory backup; projections and the checkpoint rebuild from verified CURRENT-selected seglog through SP-278. A lost or restored request is never replayed as a new event; after a restart or restore, non-terminal agents whose process is gone are resolved by the crash detector with process_lost as a new operation.",
+      "redaction_rule": "Closed CV-353 payload of IDs, refs, hashes, enums, integers, timestamps and bounded plain text; reject unhandled secrets. No prompt, model output, file content, diff, tool argument, command line, environment value, credential, account identifier or local absolute path. Readers apply current Project and thread permission and deletion tombstones before disclosure.",
+      "withdrawal_rule": "Per family (SP-320): cut off writer admission for the family, and for new registrations while the lifecycle is incomplete; withdraw the current checkpoint core and fence the projector and every reader; rebuild with the owner-approved successor from the kept seglog records and their dedupe and receipt custody. No zero-cursor reset, sibling reuse, history rewrite or seglog deletion.",
+      "validation_case_ids": [
+        "a7_file_editing_r4",
+        "a7_file_editing_r2",
+        "a7_file_reviewing_r3",
+        "a7_file_reviewing_again_r4",
+        "a8_file_claim_r3",
+        "a8_file_claim_r4",
+        "file_low_confidence_claim",
+        "file_release_claim_kind",
+        "file_absolute_path_ref",
+        "file_dot_dot_path_ref",
+        "file_leading_dot_path_ref",
+        "file_trailing_slash_path_ref",
+        "file_uppercase_path_hash",
+        "file_legacy_file_path",
+        "file_missing_platform_lineage",
+        "file_hash_of_other_path",
+        "file_claim_supersession_and_release",
+        "file_claim_stale_then_after_terminal",
+        "interim_window_update_and_abort_families_not_admitted"
+      ],
+      "runtime_producer_status": "unimplemented_not_proven",
+      "registry_row": {
+        "family_id": "event-family-coordination-agent-file-ownership-updated",
+        "family_revision": "1.0.0",
+        "event_type": "coordination.agent_file_ownership_updated",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+        "payload_owner_doc": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+        "payload_schema_id": "pm.coordination_event.agent_file_ownership_updated.schema.v1",
+        "payload_schema_ref": {
+          "path": "Plans/coordination_event_payloads.schema.json",
+          "json_pointer": "#/$defs/agent_file_ownership_updated",
+          "schema_id": "pm.coordination_event.agent_file_ownership_updated.schema.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/run_id"
+            ],
+            "node_id": [
+              "/payload/node_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/coordination_event_admission.json#/rows/3",
+          "Plans/orchestrator-subagent-integration.md#OSI-438",
+          "Plans/Contracts_V0.md#CV-353",
+          "Plans/coordination_event_payloads.schema.json#/$defs/agent_file_ownership_updated",
+          "Plans/storage-plan.md#SP-320",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Decision_Log.md#DL-045",
+          "Plans/coordination_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-COORDINATION-180D",
+          "policy_version": "1.0.0"
+        }
+      },
+      "registry_row_sha256": "b757b58976fb312b2979ce5d60363016d8573ffb72d0149917129905f6aab6f4"
+    },
+    {
+      "event_type": "coordination.agent_unregistered",
+      "family_id": "event-family-coordination-agent-unregistered",
+      "family_revision": "1.0.0",
+      "batch": "step09_batch2",
+      "admission_status": "prepared_not_admitted",
+      "semantic_owner_ref": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+      "payload_owner_ref": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+      "storage_owner_ref": "Plans/storage-plan.md#coordination-event-persistence-binding-dl-045-2026-09-25",
+      "producer_component": "AgentCoordinator.unregister_agent(AgentTerminalUpdate)",
+      "producer_callers": "The Orchestrator's node completion path or the scheduler's cleanup, once, when the agent ends with a known outcome; the unregister_agent(&str) sketches are source lineage.",
+      "producer_admission": "Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.",
+      "transition_rule": "Terminal. A registered, non-terminal agent at the agent's revision plus 1. The agent row takes terminal_status, every claim of the agent is released in the same transaction and the agent leaves every snapshot. Each agent has exactly one terminal event: a racing terminal event with the same revision is stale_revision, a later one already_terminal.",
+      "required_context_fields": [
+        "project_id",
+        "run_id",
+        "agent_id",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "schema_version"
+      ],
+      "payload_schema_ref": {
+        "path": "Plans/coordination_event_payloads.schema.json",
+        "json_pointer": "#/$defs/agent_unregistered",
+        "schema_id": "pm.coordination_event.agent_unregistered.schema.v1"
+      },
+      "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-320",
+        "Plans/storage-plan.md#SP-278",
+        "Plans/orchestrator-subagent-integration.md#OSI-438",
+        "Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint"
+      ],
+      "consumer_rule": "storage.coordination_projector.v1@1.0.0 is the only direct consumer. It adopts SP-278's generic index checkpoint, filters by Project and admitted_event_types, applies the family through SP-320's transition table, and commits rows and the projector.checkpoint.coordination:{project_id} checkpoint in one redb transaction under prior-value compare-and-swap, storing the nine-field durable read token (DL-076). The five storage.coordination_reader identities read projections only, after checking state, admitted families, coverage and publication.",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-COORDINATION-180D",
+        "policy_version": "1.0.0"
+      },
+      "retention_reason": "RP-COORDINATION-180D@1.0.0, as the registry family coordination_event_records binds it: 180 days after run_completion, which SP-320 binds to the first durable terminal canonical record of the Run; records of an unresolved Run stay unexpired; at most 1,000,000 per Project. Events are appended at registration, on an actual change and at termination; heartbeats are runtime liveness, not records. Projections and the checkpoint use RP-PROJECTION-3GEN@1.0.0.",
+      "recovery_rule": "The EventRecords are canonical and restored from the mandatory backup; projections and the checkpoint rebuild from verified CURRENT-selected seglog through SP-278. A lost or restored request is never replayed as a new event; after a restart or restore, non-terminal agents whose process is gone are resolved by the crash detector with process_lost as a new operation.",
+      "redaction_rule": "Closed CV-353 payload of IDs, refs, hashes, enums, integers, timestamps and bounded plain text; reject unhandled secrets. No prompt, model output, file content, diff, tool argument, command line, environment value, credential, account identifier or local absolute path. Readers apply current Project and thread permission and deletion tombstones before disclosure.",
+      "withdrawal_rule": "Per family (SP-320): cut off writer admission for the family, and for new registrations while the lifecycle is incomplete; withdraw the current checkpoint core and fence the projector and every reader; rebuild with the owner-approved successor from the kept seglog records and their dedupe and receipt custody. No zero-cursor reset, sibling reuse, history rewrite or seglog deletion.",
+      "validation_case_ids": [
+        "a7_unregistered_complete_r6",
+        "a7_unregistered_failed_r4",
+        "a9_unregistered_r2",
+        "a9_unregistered_r3",
+        "a7_unregistered_failed_r3",
+        "unregistered_nonterminal_status",
+        "unregistered_superseded_status",
+        "unregistered_result_ref_local_path",
+        "unregistered_missing_finished_at",
+        "unregistered_missing_run_lineage",
+        "unregistered_sibling_terminal_field",
+        "lifecycle_registration_to_unregister",
+        "second_terminal_event_refused",
+        "unregister_loses_race_to_abort",
+        "interim_window_terminal_families_not_admitted"
+      ],
+      "runtime_producer_status": "unimplemented_not_proven",
+      "registry_row": {
+        "family_id": "event-family-coordination-agent-unregistered",
+        "family_revision": "1.0.0",
+        "event_type": "coordination.agent_unregistered",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+        "payload_owner_doc": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+        "payload_schema_id": "pm.coordination_event.agent_unregistered.schema.v1",
+        "payload_schema_ref": {
+          "path": "Plans/coordination_event_payloads.schema.json",
+          "json_pointer": "#/$defs/agent_unregistered",
+          "schema_id": "pm.coordination_event.agent_unregistered.schema.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/run_id"
+            ],
+            "node_id": [
+              "/payload/node_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/coordination_event_admission.json#/rows/4",
+          "Plans/orchestrator-subagent-integration.md#OSI-438",
+          "Plans/Contracts_V0.md#CV-353",
+          "Plans/coordination_event_payloads.schema.json#/$defs/agent_unregistered",
+          "Plans/storage-plan.md#SP-320",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Decision_Log.md#DL-045",
+          "Plans/coordination_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-COORDINATION-180D",
+          "policy_version": "1.0.0"
+        }
+      },
+      "registry_row_sha256": "6785c377f6c3b54c08f0c56e3cb309fb8c55bd81605bf27fbd5166c8ef7f4859"
+    },
+    {
+      "event_type": "coordination.agent_crashed",
+      "family_id": "event-family-coordination-agent-crashed",
+      "family_revision": "1.0.0",
+      "batch": "step09_batch2",
+      "admission_status": "prepared_not_admitted",
+      "semantic_owner_ref": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+      "payload_owner_ref": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+      "storage_owner_ref": "Plans/storage-plan.md#coordination-event-persistence-binding-dl-045-2026-09-25",
+      "producer_component": "AgentCoordinator.record_crash(AgentCrashResolution)",
+      "producer_callers": "Only the scheduler or the crash detector, once, on direct crash evidence (process_exit, heartbeat_expired, process_lost, worktree_lost); never the agent. heartbeat_expired needs the runtime policy value coordination_heartbeat_expiry_ms and records the observed heartbeat_age_ms.",
+      "producer_admission": "Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.",
+      "transition_rule": "Terminal, as coordination.agent_unregistered, with agent status failed. The first terminal event to append wins; the other gets coordination_conflict and appends nothing. Heartbeat expiry reaches the agent's claims only through this event.",
+      "required_context_fields": [
+        "project_id",
+        "run_id",
+        "agent_id",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "schema_version"
+      ],
+      "payload_schema_ref": {
+        "path": "Plans/coordination_event_payloads.schema.json",
+        "json_pointer": "#/$defs/agent_crashed",
+        "schema_id": "pm.coordination_event.agent_crashed.schema.v1"
+      },
+      "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-320",
+        "Plans/storage-plan.md#SP-278",
+        "Plans/orchestrator-subagent-integration.md#OSI-438",
+        "Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint"
+      ],
+      "consumer_rule": "storage.coordination_projector.v1@1.0.0 is the only direct consumer. It adopts SP-278's generic index checkpoint, filters by Project and admitted_event_types, applies the family through SP-320's transition table, and commits rows and the projector.checkpoint.coordination:{project_id} checkpoint in one redb transaction under prior-value compare-and-swap, storing the nine-field durable read token (DL-076). The five storage.coordination_reader identities read projections only, after checking state, admitted families, coverage and publication.",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-COORDINATION-180D",
+        "policy_version": "1.0.0"
+      },
+      "retention_reason": "RP-COORDINATION-180D@1.0.0, as the registry family coordination_event_records binds it: 180 days after run_completion, which SP-320 binds to the first durable terminal canonical record of the Run; records of an unresolved Run stay unexpired; at most 1,000,000 per Project. Events are appended at registration, on an actual change and at termination; heartbeats are runtime liveness, not records. Projections and the checkpoint use RP-PROJECTION-3GEN@1.0.0.",
+      "recovery_rule": "The EventRecords are canonical and restored from the mandatory backup; projections and the checkpoint rebuild from verified CURRENT-selected seglog through SP-278. A lost or restored request is never replayed as a new event; after a restart or restore, non-terminal agents whose process is gone are resolved by the crash detector with process_lost as a new operation.",
+      "redaction_rule": "Closed CV-353 payload of IDs, refs, hashes, enums, integers, timestamps and bounded plain text; reject unhandled secrets. No prompt, model output, file content, diff, tool argument, command line, environment value, credential, account identifier or local absolute path. Readers apply current Project and thread permission and deletion tombstones before disclosure.",
+      "withdrawal_rule": "Per family (SP-320): cut off writer admission for the family, and for new registrations while the lifecycle is incomplete; withdraw the current checkpoint core and fence the projector and every reader; rebuild with the owner-approved successor from the kept seglog records and their dedupe and receipt custody. No zero-cursor reset, sibling reuse, history rewrite or seglog deletion.",
+      "validation_case_ids": [
+        "a7_crashed_race_r6",
+        "a8_crashed_heartbeat_r3",
+        "a12_crashed_worktree_lost_r2",
+        "a9_crashed_r3",
+        "a7_crashed_process_lost_r3",
+        "crashed_unknown_reason",
+        "crashed_heartbeat_without_age",
+        "crashed_negative_heartbeat_age",
+        "crashed_threshold_field",
+        "crashed_empty_process_ref",
+        "crashed_missing_agent_lineage",
+        "crash_by_heartbeat_expiry",
+        "crash_by_worktree_loss",
+        "second_terminal_event_refused",
+        "abort_loses_race_to_crash",
+        "interim_window_terminal_families_not_admitted"
+      ],
+      "runtime_producer_status": "unimplemented_not_proven",
+      "registry_row": {
+        "family_id": "event-family-coordination-agent-crashed",
+        "family_revision": "1.0.0",
+        "event_type": "coordination.agent_crashed",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+        "payload_owner_doc": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+        "payload_schema_id": "pm.coordination_event.agent_crashed.schema.v1",
+        "payload_schema_ref": {
+          "path": "Plans/coordination_event_payloads.schema.json",
+          "json_pointer": "#/$defs/agent_crashed",
+          "schema_id": "pm.coordination_event.agent_crashed.schema.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/run_id"
+            ],
+            "node_id": [
+              "/payload/node_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/coordination_event_admission.json#/rows/5",
+          "Plans/orchestrator-subagent-integration.md#OSI-438",
+          "Plans/Contracts_V0.md#CV-353",
+          "Plans/coordination_event_payloads.schema.json#/$defs/agent_crashed",
+          "Plans/storage-plan.md#SP-320",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Decision_Log.md#DL-045",
+          "Plans/coordination_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-COORDINATION-180D",
+          "policy_version": "1.0.0"
+        }
+      },
+      "registry_row_sha256": "96c4391f73440897559d37fab95a3c936261582839e44886b18184b842ef4744"
+    },
+    {
+      "event_type": "coordination.agent_aborted",
+      "family_id": "event-family-coordination-agent-aborted",
+      "family_revision": "1.0.0",
+      "batch": "step09_batch2",
+      "admission_status": "prepared_not_admitted",
+      "semantic_owner_ref": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+      "payload_owner_ref": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+      "storage_owner_ref": "Plans/storage-plan.md#coordination-event-persistence-binding-dl-045-2026-09-25",
+      "producer_component": "AgentCoordinator.record_abort(AgentAbortResolution)",
+      "producer_callers": "Only the component that resolves the abort: the parent run's orchestration path, the user command path or the runtime.",
+      "producer_admission": "Only AgentCoordinator appends, through storage.coordination_append.v1@1.0.0 (SP-320); child agents, provider adapters, platform hooks and mirrors never append. The entry point builds one complete closed payload with the next agent_revision and the SP-320 idempotency key, submits it once and returns the first AppendReceipt Storage issues; no owner body precedes the append. After a lost acknowledgement it resolves the original append only through storage.first_append_receipt.resolve.v2 (SP-286/CV-339, adopted by name) and never asks for a first mint.",
+      "transition_rule": "Terminal, as coordination.agent_unregistered, with agent status cancelled. aborted_by_ref kind follows abort_reason: run and parent_run_id for parent, actor for user, component for runtime. The first terminal event to append wins.",
+      "required_context_fields": [
+        "project_id",
+        "run_id",
+        "agent_id",
+        "platform",
+        "agent_revision",
+        "idempotency_key",
+        "schema_version"
+      ],
+      "payload_schema_ref": {
+        "path": "Plans/coordination_event_payloads.schema.json",
+        "json_pointer": "#/$defs/agent_aborted",
+        "schema_id": "pm.coordination_event.agent_aborted.schema.v1"
+      },
+      "compatibility_rule": "No aliases, legacy extensions or sketch fields are admitted: the Orchestrator sketch structs are source lineage and the closed CV-353 definition governs. A later payload change needs a new definition and version, and readers reject an unsupported one. Unknown and not-yet-admitted coordination events stay quarantined before append or projection.",
+      "replay_rule": "EventRecord 2.0 identity, sequence and dedupe stay authoritative: (scope_partition, event_type, idempotency_key) with idempotency_key coordination:{event_type}:{project_id}:{agent_id}:{agent_revision}. An exact retry returns the original event and result, and the same identity with a different digest is idempotency_conflict. Replay rebuilds projection rows in canonical seglog order and never re-runs scheduling, prompts, notifications, mirror writes, commands or appends.",
+      "consumer_contract_refs": [
+        "Plans/storage-plan.md#SP-320",
+        "Plans/storage-plan.md#SP-278",
+        "Plans/orchestrator-subagent-integration.md#OSI-438",
+        "Plans/coordination_projection_contracts.schema.json#/$defs/checkpoint"
+      ],
+      "consumer_rule": "storage.coordination_projector.v1@1.0.0 is the only direct consumer. It adopts SP-278's generic index checkpoint, filters by Project and admitted_event_types, applies the family through SP-320's transition table, and commits rows and the projector.checkpoint.coordination:{project_id} checkpoint in one redb transaction under prior-value compare-and-swap, storing the nine-field durable read token (DL-076). The five storage.coordination_reader identities read projections only, after checking state, admitted families, coverage and publication.",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-COORDINATION-180D",
+        "policy_version": "1.0.0"
+      },
+      "retention_reason": "RP-COORDINATION-180D@1.0.0, as the registry family coordination_event_records binds it: 180 days after run_completion, which SP-320 binds to the first durable terminal canonical record of the Run; records of an unresolved Run stay unexpired; at most 1,000,000 per Project. Events are appended at registration, on an actual change and at termination; heartbeats are runtime liveness, not records. Projections and the checkpoint use RP-PROJECTION-3GEN@1.0.0.",
+      "recovery_rule": "The EventRecords are canonical and restored from the mandatory backup; projections and the checkpoint rebuild from verified CURRENT-selected seglog through SP-278. A lost or restored request is never replayed as a new event; after a restart or restore, non-terminal agents whose process is gone are resolved by the crash detector with process_lost as a new operation.",
+      "redaction_rule": "Closed CV-353 payload of IDs, refs, hashes, enums, integers, timestamps and bounded plain text; reject unhandled secrets. No prompt, model output, file content, diff, tool argument, command line, environment value, credential, account identifier or local absolute path. Readers apply current Project and thread permission and deletion tombstones before disclosure.",
+      "withdrawal_rule": "Per family (SP-320): cut off writer admission for the family, and for new registrations while the lifecycle is incomplete; withdraw the current checkpoint core and fence the projector and every reader; rebuild with the owner-approved successor from the kept seglog records and their dedupe and receipt custody. No zero-cursor reset, sibling reuse, history rewrite or seglog deletion.",
+      "validation_case_ids": [
+        "a7_aborted_after_terminal_r7",
+        "a9_aborted_parent_r2",
+        "a10_aborted_user_r4",
+        "a11_aborted_runtime_r2",
+        "a12_aborted_runtime_r2",
+        "aborted_unknown_reason",
+        "aborted_parent_with_actor_ref",
+        "aborted_parent_without_parent_run",
+        "aborted_user_with_component_ref",
+        "aborted_runtime_with_run_ref",
+        "aborted_missing_project_lineage",
+        "aborted_sibling_terminal_field",
+        "aborted_parent_ref_other_run",
+        "abort_by_parent",
+        "event_after_terminal_refused",
+        "unregister_loses_race_to_abort",
+        "abort_loses_race_to_crash",
+        "interim_window_update_and_abort_families_not_admitted"
+      ],
+      "runtime_producer_status": "unimplemented_not_proven",
+      "registry_row": {
+        "family_id": "event-family-coordination-agent-aborted",
+        "family_revision": "1.0.0",
+        "event_type": "coordination.agent_aborted",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25",
+        "payload_owner_doc": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+        "payload_schema_id": "pm.coordination_event.agent_aborted.schema.v1",
+        "payload_schema_ref": {
+          "path": "Plans/coordination_event_payloads.schema.json",
+          "json_pointer": "#/$defs/agent_aborted",
+          "schema_id": "pm.coordination_event.agent_aborted.schema.v1"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": [
+              "/payload/thread_id"
+            ],
+            "run_id": [
+              "/payload/run_id"
+            ],
+            "node_id": [
+              "/payload/node_id"
+            ]
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/coordination_event_admission.json#/rows/6",
+          "Plans/orchestrator-subagent-integration.md#OSI-438",
+          "Plans/Contracts_V0.md#CV-353",
+          "Plans/coordination_event_payloads.schema.json#/$defs/agent_aborted",
+          "Plans/storage-plan.md#SP-320",
+          "Plans/storage-plan.md#SP-278",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/Contracts_V0.md#CV-339",
+          "Plans/Decision_Log.md#DL-045",
+          "Plans/coordination_projection_contracts.schema.json#/x-pm-event-authority-binding",
+          "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-COORDINATION-180D",
+          "policy_version": "1.0.0"
+        }
+      },
+      "registry_row_sha256": "8f0850134164ee80796c4210c1b3a270b6399d294a790e3286b3adcee86448b2"
+    },
+    {
+      "event_type": "coordination.debug_mirror_exported",
+      "batch": "outside_batch_storage",
+      "admission_status": "prepared_not_admitted",
+      "semantic_owner_ref": "Plans/storage-plan.md#coordination-record-projection-and-mirror-export-families",
+      "payload_owner_ref": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25",
+      "payload_schema_ref": {
+        "path": "Plans/coordination_event_payloads.schema.json",
+        "json_pointer": "#/$defs/debug_mirror_exported",
+        "schema_id": "pm.coordination_event.debug_mirror_exported.schema.v1"
+      },
+      "storage_record_family_id": "coordination_event_records",
+      "out_of_batch_reason": "It sits in DL-045's Plans/storage-plan.md batch, not among the Orchestrator rows of Step 9 batch 2. Its payload definition is prepared only because the Storage record family coordination_event_records covers every key shape. It is not admitted, the mirror exporter cannot append it until its own landing, and SP-232's criterion that mirror recovery is recorded with it stays unmet until then.",
+      "open_items": [
+        "semantic owner binding and producer entry point for the mirror exporter",
+        "identity and idempotency recipe; the payload has no agent_id, run_id or idempotency_key",
+        "retention anchor: RP-COORDINATION-180D anchors on run_completion and the payload has no run_id",
+        "closed domains for mirror_kind, export_status and error_code",
+        "its own final registry row, admission landing, depth assessment and DL-077 admission record"
+      ],
+      "validation_case_ids": [
+        "debug_mirror_exported_written",
+        "debug_mirror_absolute_path",
+        "debug_mirror_agent_field",
+        "debug_mirror_missing_sequence",
+        "not_yet_admitted_family_quarantined"
+      ],
+      "runtime_producer_status": "unimplemented_not_proven",
+      "registry_row": null
+    }
+  ]
+}

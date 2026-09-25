@@ -1,0 +1,445 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/coordination_event_admission/1.0.0/coordination_event_admission.schema.json",
+  "title": "Coordination prepared contracts and per-family admission decisions",
+  "description": "Newly authored under DL-045 for Step 9 batch 2, modelled on Plans/browser_event_admission.schema.json. Eight rows: the seven coordination agent families, each carrying the final event_family_registry row its own admission landing will append, and coordination.debug_mirror_exported, prepared outside the batch with no registry row. A row becomes admitted_static_contract only in its family's own landing.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_id",
+    "admission_id",
+    "scope",
+    "batch_event_count",
+    "row_count",
+    "prepared_against_registry",
+    "global_event_denominator",
+    "decision_refs",
+    "owner_refs",
+    "search_report_ref",
+    "authority_contract_ref",
+    "fixtures_ref",
+    "admission_rule",
+    "claim_boundary",
+    "validation_command",
+    "rows"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://puppetmaster.local/schemas/coordination_event_admission/1.0.0/coordination_event_admission.schema.json"
+    },
+    "schema_id": {
+      "const": "pm.coordination_event_admission.v1"
+    },
+    "admission_id": {
+      "const": "COORDINATION-DL045-STEP09-BATCH2-20260925"
+    },
+    "scope": {
+      "const": "exact_seven_coordination_agent_families_plus_prepared_debug_mirror"
+    },
+    "batch_event_count": {
+      "const": 7
+    },
+    "row_count": {
+      "const": 8
+    },
+    "prepared_against_registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "revision",
+        "sha256",
+        "family_count"
+      ],
+      "properties": {
+        "path": {
+          "const": "Plans/event_family_registry.json"
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}\\.[1-9][0-9]*$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "family_count": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "global_event_denominator": {
+      "const": "UNKNOWN_OPEN"
+    },
+    "decision_refs": {
+      "const": [
+        "Plans/Decision_Log.md#DL-039",
+        "Plans/Decision_Log.md#DL-045",
+        "Plans/Decision_Log.md#DL-046",
+        "Plans/Decision_Log.md#DL-076",
+        "Plans/Decision_Log.md#DL-077",
+        "Plans/Decision_Log.md#DL-078"
+      ]
+    },
+    "owner_refs": {
+      "const": {
+        "semantic": "Plans/orchestrator-subagent-integration.md#OSI-438",
+        "payload": "Plans/Contracts_V0.md#CV-353",
+        "storage": "Plans/storage-plan.md#SP-320"
+      }
+    },
+    "search_report_ref": {
+      "const": "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md"
+    },
+    "authority_contract_ref": {
+      "const": "Plans/coordination_projection_contracts.schema.json#/x-pm-event-authority-binding"
+    },
+    "fixtures_ref": {
+      "const": "Plans/coordination_event_contract_fixtures.json"
+    },
+    "admission_rule": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "validation_command": {
+      "const": "python3 scripts/pm_coordination_events.py"
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/batch_row"
+          },
+          {
+            "$ref": "#/$defs/out_of_batch_row"
+          }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "text_list": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "retention_policy_ref": {
+      "const": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-COORDINATION-180D",
+        "policy_version": "1.0.0"
+      }
+    },
+    "payload_schema_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "json_pointer",
+        "schema_id"
+      ],
+      "properties": {
+        "path": {
+          "const": "Plans/coordination_event_payloads.schema.json"
+        },
+        "json_pointer": {
+          "type": "string",
+          "pattern": "^#/\\$defs/[a-z_]+$"
+        },
+        "schema_id": {
+          "type": "string",
+          "pattern": "^pm\\.coordination_event\\.[a-z_]+\\.schema\\.v1$"
+        }
+      }
+    },
+    "registry_row": {
+      "description": "The final Plans/event_family_registry.json row: every field of the registry schema's $defs/family, with the coordination constants. Its admission landing appends it unchanged.",
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json#/$defs/family"
+        },
+        {
+          "required": [
+            "payload_schema_ref"
+          ],
+          "not": {
+            "required": [
+              "payload_schema"
+            ]
+          },
+          "properties": {
+            "family_revision": {
+              "const": "1.0.0"
+            },
+            "scope_policy": {
+              "const": "project_only"
+            },
+            "semantic_owner_doc": {
+              "const": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25"
+            },
+            "payload_owner_doc": {
+              "const": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25"
+            },
+            "payload_schema_ref": {
+              "$ref": "#/$defs/payload_schema_ref"
+            },
+            "legacy": {
+              "properties": {
+                "aliases": {
+                  "const": []
+                },
+                "admitted_extensions": {
+                  "const": []
+                },
+                "redaction": {
+                  "const": {
+                    "mode": "reject_unhandled_secrets",
+                    "transform_id": null,
+                    "transform_version": null
+                  }
+                }
+              }
+            },
+            "retention_policy_ref": {
+              "$ref": "#/$defs/retention_policy_ref"
+            }
+          }
+        }
+      ]
+    },
+    "batch_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_type",
+        "family_id",
+        "family_revision",
+        "batch",
+        "admission_status",
+        "semantic_owner_ref",
+        "payload_owner_ref",
+        "storage_owner_ref",
+        "producer_component",
+        "producer_callers",
+        "producer_admission",
+        "transition_rule",
+        "required_context_fields",
+        "payload_schema_ref",
+        "compatibility_rule",
+        "replay_rule",
+        "consumer_contract_refs",
+        "consumer_rule",
+        "retention_policy_ref",
+        "retention_reason",
+        "recovery_rule",
+        "redaction_rule",
+        "withdrawal_rule",
+        "validation_case_ids",
+        "runtime_producer_status",
+        "registry_row",
+        "registry_row_sha256"
+      ],
+      "properties": {
+        "event_type": {
+          "enum": [
+            "coordination.agent_registered",
+            "coordination.agent_status_updated",
+            "coordination.agent_operation_updated",
+            "coordination.agent_file_ownership_updated",
+            "coordination.agent_unregistered",
+            "coordination.agent_crashed",
+            "coordination.agent_aborted"
+          ]
+        },
+        "family_id": {
+          "type": "string",
+          "pattern": "^event-family-coordination-agent-[a-z]+(?:-[a-z]+)*$"
+        },
+        "family_revision": {
+          "const": "1.0.0"
+        },
+        "batch": {
+          "const": "step09_batch2"
+        },
+        "admission_status": {
+          "enum": [
+            "prepared_not_admitted",
+            "admitted_static_contract"
+          ]
+        },
+        "semantic_owner_ref": {
+          "const": "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25"
+        },
+        "payload_owner_ref": {
+          "const": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25"
+        },
+        "storage_owner_ref": {
+          "const": "Plans/storage-plan.md#coordination-event-persistence-binding-dl-045-2026-09-25"
+        },
+        "producer_component": {
+          "$ref": "#/$defs/text"
+        },
+        "producer_callers": {
+          "$ref": "#/$defs/text"
+        },
+        "producer_admission": {
+          "$ref": "#/$defs/text"
+        },
+        "transition_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "required_context_fields": {
+          "const": [
+            "project_id",
+            "run_id",
+            "agent_id",
+            "platform",
+            "agent_revision",
+            "idempotency_key",
+            "schema_version"
+          ]
+        },
+        "payload_schema_ref": {
+          "$ref": "#/$defs/payload_schema_ref"
+        },
+        "compatibility_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "replay_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "consumer_contract_refs": {
+          "$ref": "#/$defs/text_list"
+        },
+        "consumer_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "retention_policy_ref": {
+          "$ref": "#/$defs/retention_policy_ref"
+        },
+        "retention_reason": {
+          "$ref": "#/$defs/text"
+        },
+        "recovery_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "redaction_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "withdrawal_rule": {
+          "$ref": "#/$defs/text"
+        },
+        "validation_case_ids": {
+          "$ref": "#/$defs/text_list"
+        },
+        "runtime_producer_status": {
+          "const": "unimplemented_not_proven"
+        },
+        "registry_row": {
+          "$ref": "#/$defs/registry_row"
+        },
+        "registry_row_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "authority_contract_ref": {
+          "const": "Plans/coordination_projection_contracts.schema.json#/x-pm-event-authority-binding"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "admission_status": {
+                "const": "admitted_static_contract"
+              }
+            },
+            "required": [
+              "admission_status"
+            ]
+          },
+          "then": {
+            "required": [
+              "authority_contract_ref"
+            ]
+          }
+        }
+      ]
+    },
+    "out_of_batch_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_type",
+        "batch",
+        "admission_status",
+        "semantic_owner_ref",
+        "payload_owner_ref",
+        "payload_schema_ref",
+        "storage_record_family_id",
+        "out_of_batch_reason",
+        "open_items",
+        "validation_case_ids",
+        "runtime_producer_status",
+        "registry_row"
+      ],
+      "properties": {
+        "event_type": {
+          "const": "coordination.debug_mirror_exported"
+        },
+        "batch": {
+          "const": "outside_batch_storage"
+        },
+        "admission_status": {
+          "const": "prepared_not_admitted"
+        },
+        "semantic_owner_ref": {
+          "const": "Plans/storage-plan.md#coordination-record-projection-and-mirror-export-families"
+        },
+        "payload_owner_ref": {
+          "const": "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25"
+        },
+        "payload_schema_ref": {
+          "$ref": "#/$defs/payload_schema_ref"
+        },
+        "storage_record_family_id": {
+          "const": "coordination_event_records"
+        },
+        "out_of_batch_reason": {
+          "$ref": "#/$defs/text"
+        },
+        "open_items": {
+          "$ref": "#/$defs/text_list"
+        },
+        "validation_case_ids": {
+          "$ref": "#/$defs/text_list"
+        },
+        "runtime_producer_status": {
+          "const": "unimplemented_not_proven"
+        },
+        "registry_row": {
+          "type": "null"
+        }
+      }
+    }
+  }
+}
