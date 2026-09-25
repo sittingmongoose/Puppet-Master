@@ -65,7 +65,7 @@ The 2026-09-25 landing record names the `Goal_Runtime_System.md` member and note
 
 **Decisions.** `a1/author-decisions-20260925.md`, ratified by Jared on 2026-09-25; the review questions were ruled by the independent and root reviews. O-13 (retention): root raised no card; the ruling is stated in the report for Jared's confirmation under DL-045.
 
-**Open questions.** O-13 confirmation (Jared); O-20 / A0 Q-01, child goal runs (Goal Runtime owner, Jared); U3-Q7 (Storage owner, before A2); Q-U4-05, Q-U4-07, Q-U4-08; A0 Q-04, Q-07, Q-08 and the blocked trigger (A3).
+**Open questions.** O-13 confirmation (Jared); O-20 / A0 Q-01, child goal runs (Goal Runtime owner, Jared); U3-Q7 (Storage owner, before A2); Q-U4-05, Q-U4-07, Q-U4-08; A0 Q-04, Q-07, Q-08 and the blocked trigger (A3); A0 Q-10: the narrow Replan v3 root review `13437dc7…` and the full prebirth plan exist only on the NAS, the cloud session did not read them, and canon cites the prebirth plan by hash only (`21e672ca…`) and does not cite the root review; read both on the VM before landing, or record that A1 relies on them by hash only (A1 lander, on the VM).
 
 Cost: to be filled by the host
 

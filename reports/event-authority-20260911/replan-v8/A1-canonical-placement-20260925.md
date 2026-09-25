@@ -191,8 +191,9 @@ A0 section 9 and root's `remains_open_after_a1`, against the owner units:
 | Q-04, Q-07, Q-08 | The replanned envelope; the Runtime Replan wiring; the certified row's unresolved source ref | A3 |
 | B01 | The condition that puts a run into `blocked` | A3, by the Q-09 route |
 | composition.json source_reviews | The three canonical-draft review entries stay null in canon; record their manifests in a later edition | Designated Plans agent, next v8 edition |
+| Q-10 (A0) | The narrow Replan v3 root review `13437dc7…` and the full prebirth plan exist only on the NAS. The cloud session did not read them; canon cites the prebirth plan by hash only (`21e672ca…`, `composition.json` line 1114) and does not cite the root review. Read both on the VM before landing, or record that A1 relies on them by hash only | A1 lander, on the VM |
 
-A0's Q-05 is settled by O-02, Q-06 by the durable-token repair (C06), Q-11 by O-21, and Q-12 by the process answers.
+A0's Q-05 is settled by O-02, Q-06 by the durable-token repair (C06), Q-11 by O-21, and Q-12 by the process answers. Q-10 stays open (Open questions).
 
 ## Reseal request
 
