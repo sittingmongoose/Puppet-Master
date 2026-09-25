@@ -14,8 +14,8 @@
    snaps back to level. A tied prop can be plucked (A.rig.pluck): a sideways kick into its spring, a wobble and a
    small dip that settle on their own, as when a letter lands on the name sign.
    Retro moves in whole pixels on a stepped clock and never rotates: the bar hops, the helpers hop with it, the waving
-   helper swaps between two frames, and a pluck drops the prop one pixel step for a beat. Reduced Motion and low-resource mode hold the ambient motion still; nothing runs
-   while the scene is hidden, paused or gone. */
+   helper swaps between two frames, and a pluck drops the prop one pixel step for a beat. Reduced Motion and
+   low-resource mode hold the ambient motion still; nothing runs while the scene is hidden, paused or gone. */
 (function () {
   'use strict';
   const O55 = window.O55, A = O55.art, M = O55.motion;
@@ -71,7 +71,7 @@
           const old = prev && prev.helpers.get(tk), arm = hIt.querySelector('.o55-arm');
           st.helpers.set(tk, { it: hIt, am: am(hIt), pos: parse(hIt), arm, pivot: arm ? (arm.getAttribute('data-pivot') || '0 0').split(/[ ,]+/).map(Number) : null,
             frames: [...hIt.querySelectorAll('.o55-wf')], x: old ? old.x : 0, v: old ? old.v : 0, up: old ? old.up : 0, lean: old ? old.lean : 0, ang: old ? old.ang : 0,
-            cheer: old ? old.cheer : null, pl: old ? old.pl : null, i: st.helpers.size });
+            cheer: old ? old.cheer : null, pl: old ? old.pl : null, still: old ? old.still : null, i: st.helpers.size });
         }
         const h = st.helpers.get(tk);
         if (t.hand) h.handTie = t; else { h.heads = (h.heads || []).concat(t); h.head = h.head || t; }
@@ -228,7 +228,9 @@
       /* a prop hung by two strings (the name sign) tilts with the bar and rises by the mean of its two points */
       const shift = (l) => { const r = rot(l, B.tilt); return [r[0] - l[0], r[1] - l[1] - B.lift]; };
       const moves = h.heads.map((t) => shift(t.fromLocal)), dx = moves.reduce((a, m) => a + m[0], 0) / moves.length, dy = moves.reduce((a, m) => a + m[1], 0) / moves.length;
-      const target = moving ? dx * f.swing + 1.2 * Math.sin(w(2900 + h.i * 530) + h.i * 1.7) : 0;
+      /* with the ambient motion held, a helper keeps the place it stopped at, and a pluck settles back to it */
+      if (moving) h.still = null; else if (h.still == null) h.still = h.x;
+      const target = moving ? dx * f.swing + 1.2 * Math.sin(w(2900 + h.i * 530) + h.i * 1.7) : h.still;
       const acc = f.k * (target - h.x) - f.c * h.v; h.v += acc * dt; h.x += h.v * dt;
       const ch = cheerAt(h, now), pk = pluckAt(h, now, f);
       h.up = Math.max(0, -dy) * f.lift + (ch ? ch.up : 0) - (pk ? pk.dip : 0);
