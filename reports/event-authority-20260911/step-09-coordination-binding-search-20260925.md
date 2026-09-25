@@ -92,6 +92,8 @@ Each result holds over the whole scope in section 1.1. A family section repeats 
 - **No transition rules.** The only ordering text is prose: "Before execution" and "After execution" (ORCH 4105 and 4110), and OSI-261 (ORCH 21828 to 21829). Nothing says that registration comes first, that an agent has exactly one terminal event, or which of two racing terminal events wins.
 - **Retention exists and is reused.** `RP-COORDINATION-180D@1.0.0` is bound structurally (SVR 7988, policy at SVR 329 to 342) and echoed at STO 17272. It is an existing owner binding with its role, version and scope, so it is reused, not redefined. SVR 7952 ("retain under runtime audit policy") is v1 prose that the structured reference governs; that wording repair is separate work.
 
+2026-09-25: SP-320 made the SVR 7952 wording repair on this branch (K8).
+
 ## 4. `coordination.agent_registered`
 
 **Search scope.** The exact string over section 1.1's scope, plus the shared patterns. 55 source hits (22 derived copies not listed). Owner canon: CON 3036, 20045, 20082; DL 606; ORCH 3776, 3929, 3941, 4014, 4105, 21653, 31363, 31396; STO 535, 16713, 16781; SVR 7907. The other hits are the quarantine row and ledgers under `Plans/.audits/` (for example `individual-disposition/rows/ROW_coordination.agent_registered.json`), one migration snapshot line and the Step 9 scope and row reports.
