@@ -60,8 +60,13 @@ The 2026-09-25 landing record names the `Goal_Runtime_System.md` member and note
 **Decisions.** See `a1/author-decisions-20260925.md`. Jared ratified the eleven process questions on 2026-09-25. Review questions take the design's defaults until the package reviews adjudicate them. O-13 (retention) and O-20 (child goal runs) are carried open.
 
 **Where it stands.**
-- The package is being built in the cloud scratch workspace: select, relocate, rename, repair, bind, author, checks C1 to C11, then the manifest.
-- Next steps: the package's independent review, the root review, the push to the packages repository, then owner prose on this branch.
+- The canonical-draft package is built and frozen: manifest `792bf55975cf28a9b6e433bdc8f285ef9de54334a73a0a0c3ee00cd8814ddb0f`, 413 members.
+  - It holds 74 files to place in canon (10.07 MB) and 34 proposed registry rows (`/families/294` to `/families/327`).
+  - All checks C01 to C11 pass, with three documented exceptions (OI-01 to OI-03) left for review.
+  - Descriptor digests: all_writers.v8 `dc35d6f9…`, producer_source.v3 `855ab6cc…`, both under the CV-352 codec.
+- It is pushed to `sittingmongoose/PuppetMaster-Packages` on branch `replan-v8-canonical-draft-20260925` (commit `3bbd4e9`), at `replan-v8/goal-replan-v8-canonical-draft-20260925/v1`. It stays on that branch until its reviews accept it.
+- Unit IDs moved because other threads' unlanded branches claim some of the planned ones. The final IDs are EP-125 to 127, GRS-086 to 089, CV-354, SP-321 (the 30 Replan rows), SP-322 (the 4 guard rows), ATS-059, ATS-060 and BRS-031. The package's C08 now fails if any of them is claimed on another `origin/*` branch.
+- Next: the package's independent review (running), then the root review, then owner prose on this branch. The 13 owner units are pre-drafted in scratch and pass 365 consistency checks.
 
 **Rebase note.** This branch is cut from `origin/main` `1e5d9b097`, where A0 has not yet landed. Its `STATUS.md` repeats A0's section so that, if A0 lands first, the rebase conflict on this file resolves by keeping this branch's version.
 
