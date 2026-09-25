@@ -1735,6 +1735,178 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/event_family_registry.json
 
 
+### DL-094: Personal dictionary sharing between installations belonging to the same user
+
+Answered by Jared on 2026-09-25 through the submitted frozen-card response. The later draft-state notification is not an answer and does not undo submission.
+
+**Name:** Where your personal dictionary follows you
+
+**Question:** Should words you add to your personal dictionary stay on this installation or be shared between your installations?
+
+**Why it came up:** Assistant Chat’s “Passive spelling and dictionary routing” separates personal and project dictionaries, but does not choose how personal words are shared.
+
+**What you get:** Approving keeps your personal words on this installation, available across your projects, without sending them to another installation.
+
+**What it costs:** Local-only means adding words again elsewhere. Sharing needs an agreed user identity, synchronization, access rules and conflict handling.
+
+**Options:**
+
+- Recommended — Keep personal words local to this installation.
+- Share personal words between installations belonging to the same user; define the sharing boundary before enabling it.
+
+**Recommendation:** Local-only for now: it is predictable and private, and does not invent a shared account boundary. This does not change project dictionaries or ordinary spellchecking.
+
+**Answer:** Deny with changes — Share personal words between installations belonging to the same user; define the sharing boundary before enabling it.
+
+Sources: Plans/assistant-chat-design.md, “Passive spelling and dictionary routing,” lines 25811–25821; Plans/Settings_System.md §3.1; card PCC-DICTIONARY-001.
+
+**Decision:** Personal words are to be shared between installations belonging to the same user. The sharing boundary must be defined before enabling it. Local-only is not the selected product policy. This answer does not choose an identity service, Server or account boundary, synchronization protocol, editing/conflict policy, storage family or permissions; those details remain unresolved and sharing stays disabled until the boundary is defined. Project dictionaries and ordinary spellchecking are unchanged.
+
+Owner reconciliation and implementation remain follow-up work. This entry records the selected policy; it is not runtime, readiness or governance-seal evidence.
+
+SourceRef: `reports/packet-canon-closure-20260924/product-choice-cards-20260925.md`, SHA-256 `82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f`; `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS.md`, SHA-256 `306c011b5fd8a810839e98751147e3ed543b206e04a38bf4e893a79132c345a6`.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Settings_System.md
+
+### DL-095: Replace import resets omitted ordinary settings within the chosen scope
+
+Answered by Jared on 2026-09-25 through the submitted frozen-card response. The later draft-state notification is not an answer and does not undo submission.
+
+**Name:** What Replace does with settings missing from an import
+
+**Question:** When importing with Replace, should settings missing from the file return to their defaults within the chosen import scope?
+
+**Why it came up:** Settings’ “Transfer preview” requires a reviewed, exact set of changes, but does not say whether Replace resets, preserves or refuses missing values.
+
+**What you get:** Approving makes Replace reset missing ordinary settings within the chosen categories, with every reset shown before applying; settings outside that scope and excluded local or credential values remain untouched.
+
+**What it costs:** Resetting can remove custom choices after you approve the preview. Preserving leaves a mixture of old and imported values. Refusing incomplete files means more preparation before importing.
+
+**Options:**
+
+- Recommended — Reset missing settings inside the chosen scope, after an explicit preview.
+- Preserve missing settings, even in Replace mode.
+- Refuse Replace unless the file covers every eligible setting in the chosen scope.
+
+**Recommendation:** Reset within the chosen scope: it gives Replace a distinct meaning from Merge while keeping the effects visible and bounded.
+
+**Answer:** Approve
+
+Sources: Plans/Settings_System.md §§3.1–3.3, lines 1199–1215; packet requirement SET-013; card PCC-SETTINGS-REPLACE-001.
+
+**Decision:** Replace resets missing ordinary settings to their defaults within the chosen import categories. Every reset is shown in the existing explicit preview before applying. Settings outside that chosen scope and excluded local or credential values remain untouched. This does not authorize silent resets, broader deletion, or changes to Merge.
+
+Owner reconciliation and implementation remain follow-up work. This entry records the selected policy; it is not runtime, readiness or governance-seal evidence.
+
+SourceRef: `reports/packet-canon-closure-20260924/product-choice-cards-20260925.md`, SHA-256 `82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f`; `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS.md`, SHA-256 `306c011b5fd8a810839e98751147e3ed543b206e04a38bf4e893a79132c345a6`.
+
+ContractRef: ContractName:Plans/Settings_System.md
+
+### DL-096: Stash apply explicitly chooses whether to restore saved staged selections
+
+Answered by Jared on 2026-09-25 through the submitted frozen-card response. The later draft-state notification is not an answer and does not undo submission.
+
+**Name:** Restoring a stash’s staged changes
+
+**Question:** When applying a saved stash, should you choose whether to restore which changes were staged for the next commit?
+
+**Why it came up:** Source Control’s command and receipt contract preserves the selected stash and an effects preview, but leaves restoration of its staged selections unspecified.
+
+**What you get:** Approving adds an explicit choice to the existing apply flow: restore file changes only, or also restore the stash’s saved staged selections; neither choice is silently assumed.
+
+**What it costs:** An explicit choice adds one decision when applying. Always restoring only files loses the saved staged selection. Always restoring staged selections can change what is prepared for your next commit.
+
+**Options:**
+
+- Recommended — Choose file changes only or file changes plus saved staged selections.
+- Always restore file changes only.
+- Always restore file changes and saved staged selections.
+
+**Recommendation:** An explicit choice makes both useful behaviors available without borrowing a command-line default. Applying still keeps the stash; it does not become Pop or Delete.
+
+**Answer:** Approve
+
+Sources: Plans/Source_Control_System.md, “Writer Leases, Credential Leases, Commands, Events, And Receipts,” lines 119 and 213–220; Plans/UI_Command_Catalog.md, stash actions; packet ACT-019; card PCC-STASH-APPLY-001.
+
+**Decision:** Applying a saved stash offers an explicit choice between restoring file changes only and also restoring the stash's saved staged selections. Neither choice is silently assumed. Applying keeps the stash; this is not Pop or Delete and does not borrow a command-line default.
+
+Owner reconciliation and implementation remain follow-up work. This entry records the selected policy; it is not runtime, readiness or governance-seal evidence.
+
+SourceRef: `reports/packet-canon-closure-20260924/product-choice-cards-20260925.md`, SHA-256 `82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f`; `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS.md`, SHA-256 `306c011b5fd8a810839e98751147e3ed543b206e04a38bf4e893a79132c345a6`.
+
+ContractRef: ContractName:Plans/Source_Control_System.md, ContractName:Plans/UI_Command_Catalog.md
+
+### DL-097: Review checkout also permits explicitly chosen current workspace after safety preview
+
+Answered by Jared on 2026-09-25 through the submitted frozen-card response, then amended by his direct message. The later draft-state notification is not an answer and does not undo submission.
+
+**Name:** Where to check out a review
+
+**Question:** Should checking out a pull request or review always use a separate workspace, or may you explicitly choose your current workspace?
+
+**Why it came up:** Forge Integrations’ selected-command requirements demand an exact checkout preview and protection of local work, but do not choose where the checkout may happen.
+
+**What you get:** Approving opens the reviewed code in a separate workspace, leaving the current workspace and its uncommitted work unchanged.
+
+**What it costs:** Separate workspaces use more disk space and need cleanup. Allowing the current workspace avoids that extra workspace, but needs a clear choice, preview and safeguards against disturbing local work.
+
+**Options:**
+
+- Recommended — Always use a separate workspace for review checkout.
+- Also allow an explicitly chosen current-workspace checkout after the existing safety preview.
+
+**Recommendation:** Separate workspaces keep review work isolated and reduce accidental disruption. This changes checkout placement, not merely opening a review page.
+
+**Answer:** Approve
+
+**Later direct amendment (verbatim):** for card 4 Also allow an explicitly chosen current-workspace checkout after the existing safety preview.
+
+The amendment is preserved as a subsequent user instruction, not rewritten as a submitted “Deny with changes” form answer.
+
+Sources: Plans/Forge_Integrations.md, selected review-checkout requirement, line 589; Plans/Source_Control_System.md, mutation safety; packet ACT-060; card PCC-REVIEW-CHECKOUT-001.
+
+**Decision:** Review checkout may use a separate workspace and may also use an explicitly chosen current workspace after the existing safety preview. Preserve local work in either case. Jared's later direct instruction replaces the original Approve selection of separate-workspace-only behavior. Current-workspace checkout is not silently assumed, and the amendment does not waive any mutation-safety or preview requirement.
+
+Owner reconciliation and implementation remain follow-up work. This entry records the selected policy; it is not runtime, readiness or governance-seal evidence.
+
+SourceRef: `reports/packet-canon-closure-20260924/product-choice-cards-20260925.md`, SHA-256 `82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f`; `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS.md`, SHA-256 `306c011b5fd8a810839e98751147e3ed543b206e04a38bf4e893a79132c345a6`.
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-CARD4-AMENDMENT.md`, SHA-256 `6a44a2fe542bbeab8b9d78d51ac7dd09d905c80ae35bc69e7e5d10d45e3e1ba2`.
+
+ContractRef: ContractName:Plans/Forge_Integrations.md, ContractName:Plans/Source_Control_System.md
+
+### DL-098: Usage Ledger bounded query sorting and export behavior
+
+Answered by Jared on 2026-09-25 through the submitted frozen-card response. The later draft-state notification is not an answer and does not undo submission.
+
+**Name:** Consistent Ledger search, sorting and export
+
+**Question:** Should the Usage Ledger use the following explicit search, sorting and export rules?
+
+**Why it came up:** Usage’s “Ledger analytics reporting and retention” requires filtering and export, but the remaining search, ordering and selected-versus-visible rules are not fully defined.
+
+**What you get:** Approving uses real recorded project, provider, account, model, run, thread and event-type values for filters; chosen filters must all match. Search is case-insensitive literal text over displayed labels and identifiers, not prompts or secrets. Sort by time, tokens or cost, newest first initially, unknown values last, and stable record identity for ties. Export Selected means exactly the selected records; Export Filtered means all matching records, not just rows currently drawn on screen.
+
+**What it costs:** These rules need query and export tests. Advanced patterns and prompt-content search are excluded. Keeping only existing filters leaves the additional search and export distinctions unavailable.
+
+**Options:**
+
+- Recommended — Adopt this bounded Ledger query and export behavior.
+- Keep existing admitted filters only; leave the additional behavior unavailable pending a different proposal.
+
+**Recommendation:** The explicit rules make results reproducible and prevent scrolling from silently changing an export. Old session or tier labels are not guessed into current identities; quota-only rows do not acquire invented run or event identities.
+
+**Answer:** Approve
+
+Sources: Plans/usage-feature.md, UF-010, “Rewrite alignment (2026-02-21),” “Same-frame acknowledgement, bounded lists, and hidden surfaces,” lines 29, 1393 and 6572–6576; card PCC-USAGE-QUERY-001.
+
+**Decision:** Usage Ledger filters use real recorded project, provider, account, model, run, thread and event-type values; all chosen filters must match. Search is case-insensitive literal text over displayed labels and identifiers, excluding prompts and secrets. Sort by time, tokens or cost, with newest first initially, unknown values last and stable record identity for ties. Export Selected includes exactly the selected records; Export Filtered includes all matching records, not only the rows currently drawn. Advanced patterns and prompt-content search are excluded. Old session or tier labels are not guessed into current identities, and quota-only rows receive no invented run or event identity.
+
+Owner reconciliation and implementation remain follow-up work. This entry records the selected policy; it is not runtime, readiness or governance-seal evidence.
+
+SourceRef: `reports/packet-canon-closure-20260924/product-choice-cards-20260925.md`, SHA-256 `82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f`; `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS.md`, SHA-256 `306c011b5fd8a810839e98751147e3ed543b206e04a38bf4e893a79132c345a6`.
+
+ContractRef: ContractName:Plans/usage-feature.md
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -6447,6 +6619,238 @@ negative_constraints:
 owner_hints:
   - Plans/storage-plan.md
   - Plans/storage_value_registry.json
+```
+
+### DL-094 - Personal dictionary sharing between installations belonging to the same user
+
+```yaml
+plan_unit_id: DL-094
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Personal words are to be shared between installations belonging to the same user. The sharing boundary must be defined before enabling it. Local-only is not the selected product policy. This answer does not choose an identity service, Server or account boundary, synchronization protocol, editing/conflict policy, storage family or permissions; those details remain unresolved and sharing stays disabled until the boundary is defined. Project dictionaries and ordinary spellchecking are unchanged.
+gui_related: false
+gui_classification_reason: Decides sharing scope and an enablement prerequisite, not a visual design.
+split_recommended: false
+depends_on: [DL-036]
+unblocks: []
+acceptance_criteria:
+  - "Personal words are shared only between installations belonging to the same user, after the sharing boundary has been defined."
+  - "Sharing remains disabled until that boundary is defined; no identity, account, Server, synchronization or conflict policy is inferred from this answer."
+  - "Project dictionaries and ordinary spellchecking remain unchanged."
+validation_surfaces:
+  - reports/packet-canon-closure-20260924/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: packet_product_decision_scope_drift
+reasoning_tier: high
+context_scope: packet_product_choice_recording
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Settings_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "SourceRef: reports/packet-canon-closure-20260924/product-choice-cards-20260925.md SHA-256 82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f"
+  - "SourceRef: /mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS.md SHA-256 306c011b5fd8a810839e98751147e3ed543b206e04a38bf4e893a79132c345a6"
+preserved_exact_tokens:
+  - "PCC-DICTIONARY-001"
+  - "Deny with changes — Share personal words between installations belonging to the same user; define the sharing boundary before enabling it."
+negative_constraints:
+  - Do not treat a draft widget-state notification as a submitted answer or edit the frozen card files.
+  - Do not claim owner integration, runtime implementation, readiness, or governance seal from recording this decision.
+  - Do not enable personal-dictionary sharing before its sharing boundary is defined.
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Settings_System.md
+```
+
+### DL-095 - Replace import resets omitted ordinary settings within the chosen scope
+
+```yaml
+plan_unit_id: DL-095
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Replace resets missing ordinary settings to their defaults within the chosen import categories. Every reset is shown in the existing explicit preview before applying. Settings outside that chosen scope and excluded local or credential values remain untouched. This does not authorize silent resets, broader deletion, or changes to Merge.
+gui_related: true
+gui_classification_reason: Decides the visible Settings import preview and user-selected application scope.
+split_recommended: false
+depends_on: [DL-036]
+unblocks: []
+acceptance_criteria:
+  - "Replace resets omitted eligible ordinary settings to defaults only within the chosen import categories."
+  - "The explicit pre-apply preview shows every reset."
+  - "Outside-scope settings and excluded local or credential values remain untouched."
+validation_surfaces:
+  - reports/packet-canon-closure-20260924/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: packet_product_decision_scope_drift
+reasoning_tier: high
+context_scope: packet_product_choice_recording
+implementation_surfaces:
+  - Plans/Settings_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "SourceRef: reports/packet-canon-closure-20260924/product-choice-cards-20260925.md SHA-256 82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f"
+  - "SourceRef: /mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS.md SHA-256 306c011b5fd8a810839e98751147e3ed543b206e04a38bf4e893a79132c345a6"
+preserved_exact_tokens:
+  - "PCC-SETTINGS-REPLACE-001"
+  - "Approve"
+negative_constraints:
+  - Do not treat a draft widget-state notification as a submitted answer or edit the frozen card files.
+  - Do not claim owner integration, runtime implementation, readiness, or governance seal from recording this decision.
+owner_hints:
+  - Plans/Settings_System.md
+```
+
+### DL-096 - Stash apply explicitly chooses whether to restore saved staged selections
+
+```yaml
+plan_unit_id: DL-096
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Applying a saved stash offers an explicit choice between restoring file changes only and also restoring the stash's saved staged selections. Neither choice is silently assumed. Applying keeps the stash; this is not Pop or Delete and does not borrow a command-line default.
+gui_related: true
+gui_classification_reason: Decides the visible stash-apply choice and its user-reviewed effects.
+split_recommended: false
+depends_on: [DL-036]
+unblocks: []
+acceptance_criteria:
+  - "Stash apply explicitly offers file changes only or file changes plus saved staged selections."
+  - "Neither restoration choice is silently assumed."
+  - "Applying retains the stash and does not become Pop or Delete."
+validation_surfaces:
+  - reports/packet-canon-closure-20260924/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: packet_product_decision_scope_drift
+reasoning_tier: high
+context_scope: packet_product_choice_recording
+implementation_surfaces:
+  - Plans/Source_Control_System.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "SourceRef: reports/packet-canon-closure-20260924/product-choice-cards-20260925.md SHA-256 82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f"
+  - "SourceRef: /mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS.md SHA-256 306c011b5fd8a810839e98751147e3ed543b206e04a38bf4e893a79132c345a6"
+preserved_exact_tokens:
+  - "PCC-STASH-APPLY-001"
+  - "Approve"
+negative_constraints:
+  - Do not treat a draft widget-state notification as a submitted answer or edit the frozen card files.
+  - Do not claim owner integration, runtime implementation, readiness, or governance seal from recording this decision.
+owner_hints:
+  - Plans/Source_Control_System.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### DL-097 - Review checkout also permits explicitly chosen current workspace after safety preview
+
+```yaml
+plan_unit_id: DL-097
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Review checkout may use a separate workspace and may also use an explicitly chosen current workspace after the existing safety preview. Preserve local work in either case. Jared's later direct instruction replaces the original Approve selection of separate-workspace-only behavior. Current-workspace checkout is not silently assumed, and the amendment does not waive any mutation-safety or preview requirement.
+gui_related: true
+gui_classification_reason: Decides the user-visible review-checkout location choice and safety preview.
+split_recommended: false
+depends_on: [DL-036]
+unblocks: []
+acceptance_criteria:
+  - "Separate-workspace review checkout remains available."
+  - "Current-workspace checkout is allowed only when explicitly chosen after the existing safety preview."
+  - "Local work remains protected, and no existing preview or mutation-safety requirement is waived."
+validation_surfaces:
+  - reports/packet-canon-closure-20260924/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: packet_product_decision_scope_drift
+reasoning_tier: high
+context_scope: packet_product_choice_recording
+implementation_surfaces:
+  - Plans/Forge_Integrations.md
+  - Plans/Source_Control_System.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "SourceRef: reports/packet-canon-closure-20260924/product-choice-cards-20260925.md SHA-256 82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f"
+  - "SourceRef: /mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS.md SHA-256 306c011b5fd8a810839e98751147e3ed543b206e04a38bf4e893a79132c345a6"
+  - "SourceRef: /mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-CARD4-AMENDMENT.md SHA-256 6a44a2fe542bbeab8b9d78d51ac7dd09d905c80ae35bc69e7e5d10d45e3e1ba2"
+preserved_exact_tokens:
+  - "PCC-REVIEW-CHECKOUT-001"
+  - "Approve"
+  - "for card 4 Also allow an explicitly chosen current-workspace checkout after the existing safety preview."
+negative_constraints:
+  - Do not treat a draft widget-state notification as a submitted answer or edit the frozen card files.
+  - Do not claim owner integration, runtime implementation, readiness, or governance seal from recording this decision.
+  - Do not retain separate-workspace-only as the decision after Jared's explicit amendment.
+owner_hints:
+  - Plans/Forge_Integrations.md
+  - Plans/Source_Control_System.md
+```
+
+### DL-098 - Usage Ledger bounded query sorting and export behavior
+
+```yaml
+plan_unit_id: DL-098
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Usage Ledger filters use real recorded project, provider, account, model, run, thread and event-type values; all chosen filters must match. Search is case-insensitive literal text over displayed labels and identifiers, excluding prompts and secrets. Sort by time, tokens or cost, with newest first initially, unknown values last and stable record identity for ties. Export Selected includes exactly the selected records; Export Filtered includes all matching records, not only the rows currently drawn. Advanced patterns and prompt-content search are excluded. Old session or tier labels are not guessed into current identities, and quota-only rows receive no invented run or event identity.
+gui_related: true
+gui_classification_reason: Decides Ledger filter/search/sort controls and visible export semantics.
+split_recommended: false
+depends_on: [DL-036]
+unblocks: []
+acceptance_criteria:
+  - "Filters use actual recorded project, provider, account, model, run, thread and event-type values, and all selected filters must match."
+  - "Search is case-insensitive literal matching on displayed labels and identifiers, not prompts or secrets; advanced patterns are excluded."
+  - "Sort supports time, tokens and cost; newest first is initial, unknowns sort last and stable record identity breaks ties."
+  - "Export Selected includes exactly selected records, while Export Filtered includes all matches independently of drawn viewport rows."
+  - "Legacy session or tier values are not guessed into current identities; quota-only records receive no invented run or event identity."
+validation_surfaces:
+  - reports/packet-canon-closure-20260924/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: packet_product_decision_scope_drift
+reasoning_tier: high
+context_scope: packet_product_choice_recording
+implementation_surfaces:
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "SourceRef: reports/packet-canon-closure-20260924/product-choice-cards-20260925.md SHA-256 82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f"
+  - "SourceRef: /mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS.md SHA-256 306c011b5fd8a810839e98751147e3ed543b206e04a38bf4e893a79132c345a6"
+preserved_exact_tokens:
+  - "PCC-USAGE-QUERY-001"
+  - "Approve"
+negative_constraints:
+  - Do not treat a draft widget-state notification as a submitted answer or edit the frozen card files.
+  - Do not claim owner integration, runtime implementation, readiness, or governance seal from recording this decision.
+owner_hints:
+  - Plans/usage-feature.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

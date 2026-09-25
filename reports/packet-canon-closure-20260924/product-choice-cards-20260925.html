@@ -1,0 +1,218 @@
+<div id="packet-decisions-20260925">
+<style>
+#packet-decisions-20260925 section{margin-block:18px}
+#packet-decisions-20260925 dt{font-weight:500;margin-top:12px}
+#packet-decisions-20260925 dd{margin-inline:0}
+#packet-decisions-20260925 .answers-output{white-space:pre-wrap;overflow-wrap:anywhere}
+#packet-decisions-20260925 .sources{overflow-wrap:anywhere;margin-top:14px}
+#packet-decisions-20260925 .answer-fields{display:grid;gap:8px}
+</style>
+<h2>Packet closure decision cards — 2026-09-25</h2>
+<p>Status: queued, unanswered</p>
+<p>Approve selects the recommended option. To choose a different option, answer Deny with changes and state the change. Ask leaves the card unanswered until it is re-presented. Only your submitted answer counts; no choice is preselected.</p>
+<div class="viz-row">
+<button class="btn" type="button" data-action="prev">Previous</button>
+<span data-position aria-live="polite">Card 1 of 5</span>
+<button class="btn" type="button" data-action="next">Next</button>
+<button class="btn" type="button" data-action="all">Show all cards</button>
+</div>
+<section data-card="PCC-DICTIONARY-001" aria-labelledby="packet-card-heading-0">
+<h3 id="packet-card-heading-0">Assistant Chat — Card 1</h3>
+<dl>
+<dt>Name:</dt><dd>Where your personal dictionary follows you</dd>
+<dt>Question:</dt><dd>Should words you add to your personal dictionary stay on this installation or be shared between your installations?</dd>
+<dt>Why it came up:</dt><dd>Assistant Chat’s “Passive spelling and dictionary routing” separates personal and project dictionaries, but does not choose how personal words are shared.</dd>
+<dt>What you get:</dt><dd>Approving keeps your personal words on this installation, available across your projects, without sending them to another installation.</dd>
+<dt>What it costs:</dt><dd>Local-only means adding words again elsewhere. Sharing needs an agreed user identity, synchronization, access rules and conflict handling.</dd>
+<dt>Options:</dt><dd><ul><li>Recommended — Keep personal words local to this installation.</li><li>Share personal words between installations belonging to the same user; define the sharing boundary before enabling it.</li></ul></dd>
+<dt>Recommendation:</dt><dd>Local-only for now: it is predictable and private, and does not invent a shared account boundary. This does not change project dictionaries or ordinary spellchecking.</dd>
+<dt>Answer:</dt><dd class="answer-fields">
+<label class="form-label" for="packet-answer-0">Your response</label>
+<select class="form-select" id="packet-answer-0" data-answer>
+<option value="">Choose a response</option>
+<option>Approve</option><option>Deny</option><option>Deny with changes</option><option>Ask</option>
+</select>
+<label class="form-label" for="packet-note-0" data-note-label hidden>Your change or question</label>
+<textarea class="form-control" id="packet-note-0" data-note rows="3" hidden></textarea>
+</dd></dl>
+<p class="text-small sources">Sources: Plans/assistant-chat-design.md, “Passive spelling and dictionary routing,” lines 25811–25821; Plans/Settings_System.md §3.1; card PCC-DICTIONARY-001.</p>
+</section>
+<section data-card="PCC-SETTINGS-REPLACE-001" hidden aria-labelledby="packet-card-heading-1">
+<h3 id="packet-card-heading-1">Settings — Card 2</h3>
+<dl>
+<dt>Name:</dt><dd>What Replace does with settings missing from an import</dd>
+<dt>Question:</dt><dd>When importing with Replace, should settings missing from the file return to their defaults within the chosen import scope?</dd>
+<dt>Why it came up:</dt><dd>Settings’ “Transfer preview” requires a reviewed, exact set of changes, but does not say whether Replace resets, preserves or refuses missing values.</dd>
+<dt>What you get:</dt><dd>Approving makes Replace reset missing ordinary settings within the chosen categories, with every reset shown before applying; settings outside that scope and excluded local or credential values remain untouched.</dd>
+<dt>What it costs:</dt><dd>Resetting can remove custom choices after you approve the preview. Preserving leaves a mixture of old and imported values. Refusing incomplete files means more preparation before importing.</dd>
+<dt>Options:</dt><dd><ul><li>Recommended — Reset missing settings inside the chosen scope, after an explicit preview.</li><li>Preserve missing settings, even in Replace mode.</li><li>Refuse Replace unless the file covers every eligible setting in the chosen scope.</li></ul></dd>
+<dt>Recommendation:</dt><dd>Reset within the chosen scope: it gives Replace a distinct meaning from Merge while keeping the effects visible and bounded.</dd>
+<dt>Answer:</dt><dd class="answer-fields">
+<label class="form-label" for="packet-answer-1">Your response</label>
+<select class="form-select" id="packet-answer-1" data-answer>
+<option value="">Choose a response</option>
+<option>Approve</option><option>Deny</option><option>Deny with changes</option><option>Ask</option>
+</select>
+<label class="form-label" for="packet-note-1" data-note-label hidden>Your change or question</label>
+<textarea class="form-control" id="packet-note-1" data-note rows="3" hidden></textarea>
+</dd></dl>
+<p class="text-small sources">Sources: Plans/Settings_System.md §§3.1–3.3, lines 1199–1215; packet requirement SET-013; card PCC-SETTINGS-REPLACE-001.</p>
+</section>
+<section data-card="PCC-STASH-APPLY-001" hidden aria-labelledby="packet-card-heading-2">
+<h3 id="packet-card-heading-2">Source Control — Card 3</h3>
+<dl>
+<dt>Name:</dt><dd>Restoring a stash’s staged changes</dd>
+<dt>Question:</dt><dd>When applying a saved stash, should you choose whether to restore which changes were staged for the next commit?</dd>
+<dt>Why it came up:</dt><dd>Source Control’s command and receipt contract preserves the selected stash and an effects preview, but leaves restoration of its staged selections unspecified.</dd>
+<dt>What you get:</dt><dd>Approving adds an explicit choice to the existing apply flow: restore file changes only, or also restore the stash’s saved staged selections; neither choice is silently assumed.</dd>
+<dt>What it costs:</dt><dd>An explicit choice adds one decision when applying. Always restoring only files loses the saved staged selection. Always restoring staged selections can change what is prepared for your next commit.</dd>
+<dt>Options:</dt><dd><ul><li>Recommended — Choose file changes only or file changes plus saved staged selections.</li><li>Always restore file changes only.</li><li>Always restore file changes and saved staged selections.</li></ul></dd>
+<dt>Recommendation:</dt><dd>An explicit choice makes both useful behaviors available without borrowing a command-line default. Applying still keeps the stash; it does not become Pop or Delete.</dd>
+<dt>Answer:</dt><dd class="answer-fields">
+<label class="form-label" for="packet-answer-2">Your response</label>
+<select class="form-select" id="packet-answer-2" data-answer>
+<option value="">Choose a response</option>
+<option>Approve</option><option>Deny</option><option>Deny with changes</option><option>Ask</option>
+</select>
+<label class="form-label" for="packet-note-2" data-note-label hidden>Your change or question</label>
+<textarea class="form-control" id="packet-note-2" data-note rows="3" hidden></textarea>
+</dd></dl>
+<p class="text-small sources">Sources: Plans/Source_Control_System.md, “Writer Leases, Credential Leases, Commands, Events, And Receipts,” lines 119 and 213–220; Plans/UI_Command_Catalog.md, stash actions; packet ACT-019; card PCC-STASH-APPLY-001.</p>
+</section>
+<section data-card="PCC-REVIEW-CHECKOUT-001" hidden aria-labelledby="packet-card-heading-3">
+<h3 id="packet-card-heading-3">Forge Integrations — Card 4</h3>
+<dl>
+<dt>Name:</dt><dd>Where to check out a review</dd>
+<dt>Question:</dt><dd>Should checking out a pull request or review always use a separate workspace, or may you explicitly choose your current workspace?</dd>
+<dt>Why it came up:</dt><dd>Forge Integrations’ selected-command requirements demand an exact checkout preview and protection of local work, but do not choose where the checkout may happen.</dd>
+<dt>What you get:</dt><dd>Approving opens the reviewed code in a separate workspace, leaving the current workspace and its uncommitted work unchanged.</dd>
+<dt>What it costs:</dt><dd>Separate workspaces use more disk space and need cleanup. Allowing the current workspace avoids that extra workspace, but needs a clear choice, preview and safeguards against disturbing local work.</dd>
+<dt>Options:</dt><dd><ul><li>Recommended — Always use a separate workspace for review checkout.</li><li>Also allow an explicitly chosen current-workspace checkout after the existing safety preview.</li></ul></dd>
+<dt>Recommendation:</dt><dd>Separate workspaces keep review work isolated and reduce accidental disruption. This changes checkout placement, not merely opening a review page.</dd>
+<dt>Answer:</dt><dd class="answer-fields">
+<label class="form-label" for="packet-answer-3">Your response</label>
+<select class="form-select" id="packet-answer-3" data-answer>
+<option value="">Choose a response</option>
+<option>Approve</option><option>Deny</option><option>Deny with changes</option><option>Ask</option>
+</select>
+<label class="form-label" for="packet-note-3" data-note-label hidden>Your change or question</label>
+<textarea class="form-control" id="packet-note-3" data-note rows="3" hidden></textarea>
+</dd></dl>
+<p class="text-small sources">Sources: Plans/Forge_Integrations.md, selected review-checkout requirement, line 589; Plans/Source_Control_System.md, mutation safety; packet ACT-060; card PCC-REVIEW-CHECKOUT-001.</p>
+</section>
+<section data-card="PCC-USAGE-QUERY-001" hidden aria-labelledby="packet-card-heading-4">
+<h3 id="packet-card-heading-4">Usage — Card 5</h3>
+<dl>
+<dt>Name:</dt><dd>Consistent Ledger search, sorting and export</dd>
+<dt>Question:</dt><dd>Should the Usage Ledger use the following explicit search, sorting and export rules?</dd>
+<dt>Why it came up:</dt><dd>Usage’s “Ledger analytics reporting and retention” requires filtering and export, but the remaining search, ordering and selected-versus-visible rules are not fully defined.</dd>
+<dt>What you get:</dt><dd>Approving uses real recorded project, provider, account, model, run, thread and event-type values for filters; chosen filters must all match. Search is case-insensitive literal text over displayed labels and identifiers, not prompts or secrets. Sort by time, tokens or cost, newest first initially, unknown values last, and stable record identity for ties. Export Selected means exactly the selected records; Export Filtered means all matching records, not just rows currently drawn on screen.</dd>
+<dt>What it costs:</dt><dd>These rules need query and export tests. Advanced patterns and prompt-content search are excluded. Keeping only existing filters leaves the additional search and export distinctions unavailable.</dd>
+<dt>Options:</dt><dd><ul><li>Recommended — Adopt this bounded Ledger query and export behavior.</li><li>Keep existing admitted filters only; leave the additional behavior unavailable pending a different proposal.</li></ul></dd>
+<dt>Recommendation:</dt><dd>The explicit rules make results reproducible and prevent scrolling from silently changing an export. Old session or tier labels are not guessed into current identities; quota-only rows do not acquire invented run or event identities.</dd>
+<dt>Answer:</dt><dd class="answer-fields">
+<label class="form-label" for="packet-answer-4">Your response</label>
+<select class="form-select" id="packet-answer-4" data-answer>
+<option value="">Choose a response</option>
+<option>Approve</option><option>Deny</option><option>Deny with changes</option><option>Ask</option>
+</select>
+<label class="form-label" for="packet-note-4" data-note-label hidden>Your change or question</label>
+<textarea class="form-control" id="packet-note-4" data-note rows="3" hidden></textarea>
+</dd></dl>
+<p class="text-small sources">Sources: Plans/usage-feature.md, UF-010, “Rewrite alignment (2026-02-21),” “Same-frame acknowledgement, bounded lists, and hidden surfaces,” lines 29, 1393 and 6572–6576; card PCC-USAGE-QUERY-001.</p>
+</section>
+<hr>
+<section aria-labelledby="packet-answer-summary">
+<h3 id="packet-answer-summary">Your answers, ready to paste</h3>
+<p>Status: draft only. Choices are not recorded until you send them in chat.</p>
+<pre class="answers-output" data-output>Card 1 (PCC-DICTIONARY-001): 
+Card 2 (PCC-SETTINGS-REPLACE-001): 
+Card 3 (PCC-STASH-APPLY-001): 
+Card 4 (PCC-REVIEW-CHECKOUT-001): 
+Card 5 (PCC-USAGE-QUERY-001): </pre>
+<div class="viz-row">
+<button class="btn" type="button" data-action="copy">Copy answers</button>
+<button class="btn btn-primary" type="button" data-action="send">Send answers in chat</button>
+</div>
+<p data-message role="status" aria-live="polite"></p>
+<p class="text-small sources">Frozen Markdown SHA-256: <code>82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f</code></p>
+</section>
+<script>
+(function(){
+const root=document.getElementById("packet-decisions-20260925");
+const cards=Array.from(root.querySelectorAll("[data-card]"));
+const output=root.querySelector("[data-output]");
+const message=root.querySelector("[data-message]");
+const version="82a728706e6224c115e068fdf389ef6fb8285f7a109b136b264b66402d5cee1f";
+let index=0,showAll=false;
+const button=a=>root.querySelector('[data-action="'+a+'"]');
+function entries(){return cards.map(c=>({id:c.dataset.card,answer:c.querySelector("[data-answer]").value,note:c.querySelector("[data-note]").value}));}
+function compose(){
+return "Frozen card SHA-256: "+version+"\n"+entries().map((e,i)=>"Card "+(i+1)+" ("+e.id+"): "+e.answer+((e.answer==="Ask"||e.answer==="Deny with changes")&&e.note.trim()?" — "+e.note:"")).join("\n");
+}
+function render(){
+cards.forEach((c,i)=>{
+c.hidden=!showAll&&i!==index;
+const a=c.querySelector("[data-answer]").value;
+const needsNote=a==="Ask"||a==="Deny with changes";
+c.querySelector("[data-note]").hidden=!needsNote;
+c.querySelector("[data-note-label]").hidden=!needsNote;
+});
+root.querySelector("[data-position]").textContent=showAll?"All 5 cards":"Card "+(index+1)+" of 5";
+button("prev").disabled=showAll||index===0;
+button("next").disabled=showAll||index===cards.length-1;
+button("all").textContent=showAll?"One at a time":"Show all cards";
+output.textContent=compose();
+}
+function persist(){
+if(window.openai&&window.openai.setWidgetState){
+window.openai.setWidgetState({modelContent:{card_sha256:version,status:"draft_not_submitted"},privateContent:{card_sha256:version,index,showAll,entries:entries()}}).catch(()=>{});
+}
+}
+function restore(state){
+const p=state&&state.privateContent;
+if(!p||p.card_sha256!==version)return;
+index=Number.isInteger(p.index)?Math.max(0,Math.min(cards.length-1,p.index)):0;
+showAll=p.showAll===true;
+if(Array.isArray(p.entries))cards.forEach(c=>{
+const saved=p.entries.find(e=>e.id===c.dataset.card);
+if(!saved)return;
+c.querySelector("[data-answer]").value=["Approve","Deny","Deny with changes","Ask"].includes(saved.answer)?saved.answer:"";
+c.querySelector("[data-note]").value=typeof saved.note==="string"?saved.note:"";
+});
+render();
+}
+function valid(){
+const rows=entries();
+if(!rows.some(e=>e.answer)){message.textContent="Choose at least one response. Nothing was sent.";return false;}
+const incomplete=rows.find(e=>(e.answer==="Ask"||e.answer==="Deny with changes")&&!e.note.trim());
+if(incomplete){message.textContent="Add your question or change before sending. Nothing was sent.";return false;}
+return true;
+}
+button("prev").addEventListener("click",()=>{index--;render();persist();});
+button("next").addEventListener("click",()=>{index++;render();persist();});
+button("all").addEventListener("click",()=>{showAll=!showAll;render();persist();});
+cards.forEach(c=>{
+c.querySelector("[data-answer]").addEventListener("change",()=>{message.textContent="Draft only; not submitted.";render();persist();});
+c.querySelector("[data-note]").addEventListener("input",()=>{output.textContent=compose();persist();});
+});
+button("copy").addEventListener("click",async()=>{
+if(!valid())return;
+try{await navigator.clipboard.writeText(compose());message.textContent="Copied. Paste in chat to submit; no answer has been recorded yet.";}
+catch(e){message.textContent="Clipboard unavailable. Select and copy the answer text above, then paste it in chat.";}
+});
+button("send").addEventListener("click",async()=>{
+if(!valid())return;
+if(!window.openai||!window.openai.sendFollowUpMessage){message.textContent="Copy the answer text above and paste it in chat. Nothing was sent.";return;}
+button("send").disabled=true;
+try{await window.openai.sendFollowUpMessage({prompt:compose(),title:"Send your decision-card answers"});message.textContent="Confirm the message in chat; local selections alone are not recorded decisions.";}
+catch(e){message.textContent="Nothing confirmed. Copy and paste the answer text in chat.";}
+finally{button("send").disabled=false;}
+});
+window.addEventListener("openai:set_globals",event=>{if(event.detail&&event.detail.globals)restore(event.detail.globals.widgetState);});
+render();
+if(window.openai)restore(window.openai.widgetState);
+})();
+</script>
+</div>
+

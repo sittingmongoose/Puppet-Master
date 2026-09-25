@@ -5439,10 +5439,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 42,
-        "True": 38
+        "False": 43,
+        "True": 42
       },
-      "heading_count": 166,
+      "heading_count": 176,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5517,15 +5517,16 @@
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json",
         "Plans/touch_closure.json",
+        "Plans/usage-feature.md",
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py",
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 6601,
+      "line_count": 7005,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 80,
+      "plan_unit_count": 85,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5606,6 +5607,11 @@
         "DL-081",
         "DL-082",
         "DL-083",
+        "DL-094",
+        "DL-095",
+        "DL-096",
+        "DL-097",
+        "DL-098",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5660,6 +5666,7 @@
         "navigation_primitive_boundary_drift",
         "operational_retention_cardinality_scope_drift",
         "orchestration_model_drift",
+        "packet_product_decision_scope_drift",
         "permanent_repository_format_chosen_without_evidence",
         "platform_capability_catalog_deferral_drift",
         "platform_decision_custody_retention_and_cleanup",
@@ -5693,16 +5700,16 @@
         "weak_integration_underclassification",
         "workflow_verification_exception_route_drift"
       ],
-      "sha256": "0493c6ce5e30a40f063ad1c4ebe2706fda55369512d82ef6c62b3e20799c4e0a",
+      "sha256": "6ebb4b3956ae21e910f046f98888691cd31c5beb48319ca3573d426ad18bd483",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 80
+        "accepted": 85
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 77
+        "requirement": 82
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -5741,7 +5748,8 @@
         "reports/event-authority-20260911/decision-responses.jsonl",
         "reports/event-authority-20260911/step-08-compaction-detail-cleanup-answer.json",
         "reports/event-authority-20260911/step-08-compaction-detail-cleanup-presentation.json",
-        "reports/event-authority-20260911/step-08-platform-lifetime-presentation.json"
+        "reports/event-authority-20260911/step-08-platform-lifetime-presentation.json",
+        "reports/packet-canon-closure-20260924/decision-responses.jsonl"
       ]
     },
     {
@@ -20088,7 +20096,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T13:04:33Z",
+  "generated_at_utc": "2026-09-25T13:56:18Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20096,13 +20104,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3534,
-      "True": 3200
+      "False": 3535,
+      "True": 3204
     },
-    "plan_unit_count": 6734,
+    "plan_unit_count": 6739,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6543,
+      "accepted": 6548,
       "retired": 182,
       "superseded": 9
     },
@@ -20169,7 +20177,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5286,
+      "requirement": 5291,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

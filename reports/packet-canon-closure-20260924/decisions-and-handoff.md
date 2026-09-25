@@ -5,29 +5,43 @@ the repair branch. This is specification/static-contract work, not a finished
 native application, main landing or whole-packet closure. The detailed evidence
 and source IDs remain in `finite-remaining-queue.md` and the two companion reports.
 
-## Decisions awaiting direction
+## Answered decisions and remaining owner work
 
-1. Personal dictionary: local to this installation, or shared? If shared, which
-   identity/Server boundary and editing authority apply? Do not override newer
-   spellcheck, Help or Teacher behavior to settle this.
-2. Settings replacement import (SET013): preserve, reset or reject existing
-   settings omitted by the imported file? “Replace” alone is not deletion authority.
-3. Stash apply (ACT019): files only, files plus saved staged/index state, or explicit
-   selection between them? FileSafe restoration is a different operation.
-4. Review checkout (ACT060): always a separate workspace, or also allow explicitly
-   reviewed current-workspace checkout? Preserve local work either way.
-5. Capability evidence: which authority wins when equally applicable evidence
-   conflicts? Existing Permissions/continuation behavior is not a precedence rule.
-6. Usage Ledger: current type/event/session/tier identities, search fields and
-   matching, sort/null/tie-break rules, and the meaning of selected/visible rows.
-   Existing core/quota contracts do not define this additional query grammar.
+Jared submitted answers to all five frozen cards, then directly amended Card 4.
+They are recorded in both Decision Log sections as DL-094 through DL-098 and
+in `decision-responses.jsonl`. See `product-choice-answers-20260925.md` for exact
+answer hashes and status. The frozen presentation remains unchanged.
 
-No defaults are selected. An additional permission question is already outstanding:
-authorize one targeted correction and one extra independent review for the eight
-capped SCM/JJ items, or leave them OPEN. The required two-review cap is not silently
-waived. SCM still needs typed adoption/removal preview contents and original-request
-mutation protection; JJ's introduced cancelled-error projection mismatch still
-needs its documented correction. Neither external package is current canon.
+1. DL-094: share personal words between installations belonging to the same user;
+   define the sharing boundary before enabling it. That identity/access/sync
+   boundary remains unresolved; sharing is not enabled by this record.
+2. DL-095: Replace resets omitted eligible ordinary settings within chosen import
+   categories, with every reset previewed; outside-scope and excluded local or
+   credential values stay untouched.
+3. DL-096: stash apply explicitly chooses file changes only or also saved staged
+   selections; no silent default, and applying retains the stash.
+4. DL-097: the later instruction permits explicitly chosen current-workspace
+   checkout after the existing safety preview, alongside separate-workspace
+   checkout. It supersedes the original separate-workspace-only selection.
+5. DL-098: the bounded Usage Ledger filter/search/sort/export proposal is approved,
+   including exact selection versus all-filter-matches export and no invented
+   legacy/quota identities.
+
+Owner prose/contracts and implementation still require scoped reconciliation;
+recording answers alone does not close those packet occurrences. Newer spellcheck,
+Help/Teacher and assistant/platform designs remain protected.
+
+The earlier capability-precedence question was an overstatement of the packet:
+current Models MS-137 already keeps conflicting/unknown/stale/partial evidence
+unready without inference. No new winner-selection policy is required or proposed.
+
+Jared authorized one additional targeted correction-and-independent-review cycle
+for the eight capped SCM/JJ items. That cycle passed: SCM typed adoption/removal
+preview disclosures and original-input mutation fencing (29 tests); JJ cancelled
+UI error projection while preserving actual owner errors/effects (48 tests).
+These are reviewed external stages, not yet integrated canon. SCM's complete
+generic UI/original-caller response composition remains outside that targeted
+PASS. No further review cycle is implicitly authorized.
 
 ## Exact remaining boundaries
 
@@ -45,12 +59,24 @@ Narrow owner mappings remain DRY's exact ID/scope/writer, formatter ordinary-set
 versus domain-definition fields before cross-scope migration, and the Client–Server
 relation to Environment supervisor-generation authority.
 Do not invent a new formatter store, identity equivalence or second supervisor.
-The named Ego import needs authentic original manifest/skill acceptance input;
-a synthetic PM migration fixture cannot replace it. A bounded hidden-inclusive
-check of the preserved packet and campaign inventory did not find the original
-evaluated Ego manifest/skill bytes. The user has been asked for the original
-ego-lite-1.3.1-beta.3 attachment or its exact authorized local location; no newer
-download, fabricated manifest or installation substitutes for that input.
+Jared supplied Ego Browser v2.0.0 and Ego Lite 2.0.0 as newer reference material,
+then explicitly clarified that Puppet Master's browser is custom-built and only
+inspired by useful Ego ideas. Ego is NOT the PM browser, a required runtime,
+package import, adapter or deployment dependency. The earlier v2 import proposal
+was withdrawn without application. The old original-source request and missing
+native-Ego-app/admission concerns are not blockers for this task. Archive custody
+facts remain useful for idea evaluation; no installation was performed. The
+branch's existing named mandatory-import example in Plugins_System must be
+corrected without weakening unrelated generic plugin admission rules.
+
+This was already explicit in the packet, not a newly missing product choice:
+`sources/01_EGO_EVALUATION.md` Executive decision says to adopt architectural
+patterns without replacing PM's native browser/testing architecture with Ego.
+`01_IMPLEMENTATION_PACKET.md` sections 2.1–2.3 translate that into compact PM
+Browser Script, checked typed BrowserProgram and the PM-native execution ladder.
+Work remains mapping those outlined requirements to current owners, not a new
+Ego discovery/integration campaign. V2 is optional supporting reference where
+needed, never a prerequisite to understanding requirements already in the packet.
 Tour's original Chat/layout
 custody remains a protected-owner dependency.
 
@@ -99,3 +125,8 @@ Nothing here represents that comparison or permission to push main.
   `7534d2bf847e2a327ad93e0ec73cb0244ed24a3e1daead6752b378d9a3ae5d13`.
 - `/mnt/Cursor/PM-Experiments/ego-original-input-custody-recheck-20260925.md`, SHA-256
   `f32e0329334171e8047ae1ffaf73a6cc5ad7ff45967e4d5fbbe264f243451003`.
+  Historical v1 search only; not a prerequisite for the custom PM browser.
+- `/mnt/Cursor/PM-Experiments/ego-v2-baseline-receipt-20260925.md`, SHA-256
+  `3c8f3a6ce5ee2f17321f4d9c8eab4d3d1d1034c4fc0099e012428f2c57d38a70`.
+  Archive facts remain valid; its proposed import/admission work is superseded
+  by Jared's subsequent reference-only correction, not approved scope.
