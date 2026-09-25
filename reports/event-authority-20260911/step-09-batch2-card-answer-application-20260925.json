@@ -2030,6 +2030,604 @@
             "kind": "edited"
           }
         }
+      },
+      "B2-02": {
+        "severity": "should_fix",
+        "applied_at_utc": "2026-09-25T06:08:16Z",
+        "parent_commit": "0af0fd4f93e77965526a752b155ac318af5e364f",
+        "finding": "The 25 retention rows kept the first application's sentence that the retention cell is PASS (\"is now PASS for that answer\" in the 22 subagent and diagnostic rows, \"stays PASS, now on that answer instead of the 24-hour rule\" in the 3 crew.board_* rows) ahead of the appended host ruling that sets it FAIL, and so did their individual-ledger lines.",
+        "repair": "The sentence is replaced in the reviewer's words; only disposition_rationale changes, the 25 individual-ledger lines are rewritten from the row objects, and the census ledger is unchanged. This step supersedes, for these 25 rows and the individual ledger, the after-hashes of card4_and_retention_ruling_application, which are kept as history.",
+        "rows": [
+          {
+            "event_type": "subagent.spawned",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawned.json",
+            "before_sha256": "4eefaeda05771b10838fa8261e9e2e64c014f886f81eb0588c5997763564cfd1",
+            "after_sha256": "c013087d6491f22e01fffecb1843fcbb9a8118bb63e8702cbb2488f6588f7627",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.started",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.started.json",
+            "before_sha256": "8f88f61f4d266eb6258c1c5d2db87589a00f5e01328a8738949ed98934d3a823",
+            "after_sha256": "58d45008ec0c4a2e3d550eafd61b829f7b94998ffd66d1e0f9aa13203c8c5756",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.completed",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.completed.json",
+            "before_sha256": "924c5dc7b834435893c30a571924ae234ca060abdf09f25e002856cde9a01db4",
+            "after_sha256": "276f4e316049ac8d50028159f496b802808bcc524086991fe65a426658ad573b",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.failed",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.failed.json",
+            "before_sha256": "8404f42d85fc3987cdbab3d0933c234928a8b7400249a273b93d665bf8f113d9",
+            "after_sha256": "f2de060509e2da661c3ab98f5c4a8348d062cd85b8dce1661807a115099ff87e",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.cancelled",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.cancelled.json",
+            "before_sha256": "696042c1443cb03d2f117d57a51466bb78f36c275cedd5b4706a28c45fb9c25c",
+            "after_sha256": "2ac0ea5e3c6c8aadc6c46c75cca4a498ba180c4858f08c1b42e68d72ee749ee9",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.timeout",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.timeout.json",
+            "before_sha256": "899e4176e9456d6c055c90f23ec0290de9acd731449fa85971925075eaface0c",
+            "after_sha256": "947533dfa711dbcf47b2b60b473cc7e12bc30dfab803de709ba319e20ea27b09",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.paused",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.paused.json",
+            "before_sha256": "af95089daa3d907c6eb5978d455da68d45e5429a117318ce3cf7205b96dd4406",
+            "after_sha256": "8c12d5661d63c6abd53fdbf34dde0b410e8e75b9fc141d91c0c02b23f505c991",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.resumed",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.resumed.json",
+            "before_sha256": "4d009febcd96e784bb0ef4652c7c4f5d0549d3cb3370d3902dbc9c8911bf82f1",
+            "after_sha256": "968b4827d04ffe220eafcdc7181081cff03006177b9a5355cdece00e3826ca00",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.progress",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.progress.json",
+            "before_sha256": "bdd13f00098263b1c6163f88785b19b6c0c3d337fd4c06c33d2d98b892bf26cd",
+            "after_sha256": "4d11c612981e55c556b3752c446c3e0f440c565b4dbcf5f2b2b3e27e07182af3",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.tool_called",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.tool_called.json",
+            "before_sha256": "64776c4e65bded2b634dc1b7dbd5bea818b06fa2e08c16dc5b4f4e76fb39ee2d",
+            "after_sha256": "bb7554f479fe96d8509ee1595e3252544f18b69844fdc5f12e3a67a1161f007a",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.tool_completed",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.tool_completed.json",
+            "before_sha256": "8dbda99150e3200e725b98266b9da7f6e6465599f5095175f0c341f5ef436815",
+            "after_sha256": "816a80d2e4a85fe4a18228e6992fcfcf6c41322d578b08bf7cac01d4077b1ef2",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.message_sent",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.message_sent.json",
+            "before_sha256": "671e84b4a40b1fb9496a66281a117c47007f38d2f1e6f4d30a5e738f99088f31",
+            "after_sha256": "0d55ab0e05645cd41f50d5c008eedf8083001bea783873864cec59c86d4288c6",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.message_received",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.message_received.json",
+            "before_sha256": "bb4c58e3636ed3f38adfbeed0ca1f5afbbfcb07b4bc3272dc19795c9100e9baf",
+            "after_sha256": "50dd18933f140ddf54cadc21d76cd758faf9e1de7ca9796a0b994b919b22f450",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.output_truncated",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.output_truncated.json",
+            "before_sha256": "55071dfdb00b48a81cfe6f6c02e1c37c985d87d0036de597dac0a7d5bc46af99",
+            "after_sha256": "cb705014d974c5b21306763daf725d1122dbb4780b89fee8cb7eeaef8e3865f7",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.retried",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.retried.json",
+            "before_sha256": "368ea7a088cad59a842fef804e0632e42a315f49191d155902abf83fee35fc43",
+            "after_sha256": "7ce3de42ff70cd4799d5faf11279fa584f5fdc9453556c15aaa2ba370659b74c",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.context_warning",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.context_warning.json",
+            "before_sha256": "91c03845c91fbe3db0d94935db3c00e8ceb2b2753049716d0ad2fbbcb1d30c74",
+            "after_sha256": "df017f36bdfaf1294e05e8dec454191655da69e962b96930c4ba491429db3466",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.model_switched",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.model_switched.json",
+            "before_sha256": "96f75ff9b2ec6ff91a6e4cfc94c1bc59131fca1c433c17c9e6cb83ae77bca118",
+            "after_sha256": "6993e0ce67470b5ec32e98638cc604ee0a261ed075dab7f8adfdde3a5125df6f",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.budget_warning",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.budget_warning.json",
+            "before_sha256": "b36c7176659be262b57e761c1e2d9d494238d41e1c6021d3558260c8ceb463a0",
+            "after_sha256": "016f664c079aac8e37ce2ced94c193bad42c1b35e585edf2c77950bfe1f3bfdc",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "subagent.escalated",
+            "decision": "DL-084",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.escalated.json",
+            "before_sha256": "e603fb44c55a92b0af803543d1f14710e8b4e46d377ad9cc79faa73f26fc6be2",
+            "after_sha256": "f5cb92cd9f8fa76797b9954ced0ebd1491047866fad36d0294686e799831e198",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-084"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "crew.board_message_posted",
+            "decision": "DL-085",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_message_posted.json",
+            "before_sha256": "b74b100c52f572d8bf690c9618fc02fa9339b277d7de2c7bba8cf6f28d53be2d",
+            "after_sha256": "9bad6992c5ee7c67dff04d3d084d11bfe6da52f34471df1bf41188d24b33e50f",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-085"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-085"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell stays PASS, now on that answer instead of the 24-hour rule, and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the 24-hour rule no longer supports the retention cell, the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "crew.board_message_read",
+            "decision": "DL-085",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_message_read.json",
+            "before_sha256": "bc7dd3b9312fc47fff3098ec4047f43dc2c2895613b6083ceea0e327f734510d",
+            "after_sha256": "a4a50d07447fa66a57b369b015423875d8e77b8bb77fcf9d11e80fa3fd4583a1",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-085"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-085"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell stays PASS, now on that answer instead of the 24-hour rule, and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the 24-hour rule no longer supports the retention cell, the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "crew.board_messages_archived",
+            "decision": "DL-085",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.board_messages_archived.json",
+            "before_sha256": "94fc56aba0f41d20b2a0d6716f1d67b4215dcf4062493567206726c0012002a7",
+            "after_sha256": "9fcb79b9d5246053d0917e574c08d83035db52ba3fac3e89d83b6489d2ea7fcc",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-085"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-085"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell stays PASS, now on that answer instead of the 24-hour rule, and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the 24-hour rule no longer supports the retention cell, the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "phase.force_completed",
+            "decision": "DL-086",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_phase.force_completed.json",
+            "before_sha256": "6fcde95443df3b86e35e944ad7441e79321b3e6592fc7027cbcd6833c09855a9",
+            "after_sha256": "c04a5d6fe6a601761023e687b1c2afc2275d9b724266bc92ef9436ae11aa2695",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-086"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-086"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "config.validation.failed",
+            "decision": "DL-086",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_config.validation.failed.json",
+            "before_sha256": "3cda60add7372d8ea4f8b3a516125cf238778ee10d0f327bd41b741be997ae57",
+            "after_sha256": "16215bd7deffb2a0762890af15b6ffab55b22addb045791f8372f02ba962b3a2",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-086"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-086"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          },
+          {
+            "event_type": "parser.error",
+            "decision": "DL-086",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_parser.error.json",
+            "before_sha256": "d04694ca13b4ed64de3a8cb1a29b4b86584ee6bc8cfbd0ada42ab8378d3d8513",
+            "after_sha256": "cd0604a4fc3d5a94965c647098453b66cb797518d82f8138ad915158e225df59",
+            "disposition_before": "KEEP_QUARANTINED",
+            "disposition_after": "KEEP_QUARANTINED",
+            "retention_before": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-086"
+            },
+            "retention_after": {
+              "status": "FAIL",
+              "citation": "Plans/Decision_Log.md#DL-086"
+            },
+            "field_changed": "disposition_rationale",
+            "sentence_before": "Applied at 2026-09-25T03:50:05Z: the retention cell is now PASS for that answer and the row stays KEEP_QUARANTINED as unfinished technical contract work.",
+            "sentence_after": "Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below."
+          }
+        ],
+        "untouched_batch2_rows": [
+          {
+            "event_type": "coordination.agent_registered",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_registered.json",
+            "sha256_before_and_after": "e990debac213073de4d9a970b1072b807edfe55d8abab5f0547b3326bd1d8da6"
+          },
+          {
+            "event_type": "coordination.agent_status_updated",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_status_updated.json",
+            "sha256_before_and_after": "266e6752cda5b254e2818995edc0eabbdc4ceaff324664cfc35d8dfa0a37093b"
+          },
+          {
+            "event_type": "coordination.agent_operation_updated",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_operation_updated.json",
+            "sha256_before_and_after": "cf0fee1bd113e829aaad05a735d2fd82dcec04f69835c446c286c7933874a922"
+          },
+          {
+            "event_type": "coordination.agent_file_ownership_updated",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_file_ownership_updated.json",
+            "sha256_before_and_after": "eb4d9cf65087961842079d548aa336c4b48ab08a8d70f04808b51c0d2a6ddc10"
+          },
+          {
+            "event_type": "coordination.agent_unregistered",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_unregistered.json",
+            "sha256_before_and_after": "a20ed35a36b3e1b9d5748963d70505ca102c05c5918cda9792adfb936c2481f9"
+          },
+          {
+            "event_type": "coordination.agent_crashed",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_crashed.json",
+            "sha256_before_and_after": "ec685b8e67ec5b74f9647c251965a05ad55e5532feeee86ed561bde08757f6f9"
+          },
+          {
+            "event_type": "coordination.agent_aborted",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_aborted.json",
+            "sha256_before_and_after": "8af83e23a692a63f9358265931a07c254a36d6d05015f2d81b7f4c215429052e"
+          },
+          {
+            "event_type": "crew.formed",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.formed.json",
+            "sha256_before_and_after": "9b9f428563e3af6c88d9f540e392a624931192cd16f73369a54663c9d5f81790"
+          },
+          {
+            "event_type": "crew.member_added",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.member_added.json",
+            "sha256_before_and_after": "30d3b2eff6fa0cd5504da323181025f025f143354936091873ef440eb9882f30"
+          },
+          {
+            "event_type": "crew.member_removed",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.member_removed.json",
+            "sha256_before_and_after": "600c68e12263fd866c4118df80b559de99522781836aacbda7799deb54039f65"
+          },
+          {
+            "event_type": "crew.coordination",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.coordination.json",
+            "sha256_before_and_after": "a9dd3ab6d5702eeca046442168d5d2321704c82ed16eda2c73c96918fea498c0"
+          },
+          {
+            "event_type": "crew.completed",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.completed.json",
+            "sha256_before_and_after": "5ea99dc1c9da0d3d539ccc116b85888e2ee921b2b7ad583fda0c5824924d2e7c"
+          },
+          {
+            "event_type": "crew.disbanded",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_crew.disbanded.json",
+            "sha256_before_and_after": "fd1f32b72dd46ae536d6c15a6992cdf2174f476a87417381812b9d9a0c3a3ad6"
+          },
+          {
+            "event_type": "subagent.spawn_requested",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawn_requested.json",
+            "sha256_before_and_after": "a2736784d9454ad738df273d9dacbf02e11d92d3ebbe2f4eb09a41e67ce42e2d"
+          },
+          {
+            "event_type": "subagent.spawn_completed",
+            "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.spawn_completed.json",
+            "sha256_before_and_after": "002172d30d9c19c099f4880967a192102a0d999a51c104f90af9718c563c3a7d"
+          }
+        ],
+        "unchanged_files_sha256": {
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": "2d35c1e4d69e8f471ac9ba3906bc3c924eb70272ace3302ccc478d6c2ac4183c",
+          "Plans/.audits/event-authority-2026-08-12/individual-disposition/OWNER_VETOES.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "files": {
+          "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+            "before_sha256": "c838efed8fd4703d71275da87b7b5fe987f4f5aec1cca5450ddbf4257cbb0349",
+            "after_sha256": "abea8410fdeeafcc2bd74b5a3f9b6d1e13602d911475d194230cc983d007623c",
+            "kind": "edited",
+            "lines_changed": 25
+          }
+        }
       }
     }
   }
