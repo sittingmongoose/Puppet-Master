@@ -30,5 +30,5 @@ class Bindings(unittest.TestCase):
    self.assertEqual('physical_family_registration_pending' if r['persistence_disposition']=='durable' else 'not_applicable_nonpersisted',r['physical_family_status'])
   protected=next(r for r in rows if r['disposition_id']=='scd.backup.key_rotation_protected_submission.v1');self.assertEqual('ephemeral_nonpersisted',protected['persistence_disposition']);self.assertEqual([s['$defs']['submission']['properties']['schema_id']['const']],protected['record_kinds'])
  def test_existing_touch_no_new_profile(self):
-  t=json.loads((ROOT/'Plans/touch_closure.json').read_text());self.assertEqual(644,len(t['rows']));self.assertEqual(143,len(t['profiles']));row=next(r for r in t['rows'] if r[3]==CMD);self.assertEqual('TCP-BACKUP',row[1]);self.assertEqual('partial',row[4])
+  t=json.loads((ROOT/'Plans/touch_closure.json').read_text());self.assertEqual(646,len(t['rows']));self.assertEqual(151,len(t['profiles']));row=next(r for r in t['rows'] if r[3]==CMD);self.assertEqual('TCP-BACKUP',row[1]);self.assertEqual('partial',row[4])
 if __name__=='__main__':unittest.main()

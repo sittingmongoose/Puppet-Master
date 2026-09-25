@@ -30,6 +30,6 @@ class Bindings(unittest.TestCase):
   for r in rows:
    self.assertFalse(r['runtime_evidence']);self.assertEqual([],r['existing_family_refs']);self.assertEqual('physical_family_registration_pending' if r['persistence_disposition']=='durable' else 'not_applicable_nonpersisted',r['physical_family_status'])
  def test_existing_touch_union_unchanged(self):
-  t=json.loads((ROOT/'Plans/touch_closure.json').read_text());self.assertEqual(644,len(t['rows']));self.assertEqual(143,len(t['profiles']));row=next(r for r in t['rows'] if r[3]==CMD);self.assertEqual('TCP-BACKUP',row[1]);self.assertEqual('partial',row[4]);p=next(p for p in t['profiles'] if p['profile_id']=='TCP-BACKUP')
+  t=json.loads((ROOT/'Plans/touch_closure.json').read_text());self.assertEqual(646,len(t['rows']));self.assertEqual(151,len(t['profiles']));row=next(r for r in t['rows'] if r[3]==CMD);self.assertEqual('TCP-BACKUP',row[1]);self.assertEqual('partial',row[4]);p=next(p for p in t['profiles'] if p['profile_id']=='TCP-BACKUP')
   self.assertEqual(OLD+'#/$defs/backup_current_command_request',p['payload_schema_ref']);self.assertEqual(OLD+'#/$defs/backup_current_command_result',p['result_schema_ref'])
 if __name__=='__main__':unittest.main()
