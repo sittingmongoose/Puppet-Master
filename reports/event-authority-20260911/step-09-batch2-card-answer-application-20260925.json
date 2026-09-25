@@ -2722,6 +2722,20 @@
             "kind": "edited"
           }
         }
+      },
+      "B2-04": {
+        "severity": "should_fix",
+        "applied_at_utc": "2026-09-25T06:13:07Z",
+        "parent_commit": "a9901f0707f0ec406365b3745e9d253c64c3eef7",
+        "finding": "The response row EA-S09B2-CREW-HISTORY-001-RESPONSE-001 (DL-087) had card_status deferred_recorded, the status of DL-082's genuinely deferred card, though Jared's words were applied at once; the batch report presented the label as intended.",
+        "repair": "card_status is now no_option_words_recorded_owner_contract_pending (no other field changes), and the batch report's sentence reads \"Card 4 takes `no_option_words_recorded_owner_contract_pending`, since no option was selected and his words were applied, and the others take\".",
+        "files": {
+          "reports/event-authority-20260911/decision-responses.jsonl": {
+            "before_sha256": "2bdea50c08e38276682050bc5e12f5b349636e61cc0cb5a00b2ccc580379d10f",
+            "after_sha256": "ac268523dcbeb2017e0c737fecc40f79524fd28bcf3ddd1ae39759b023fc990f",
+            "kind": "edited"
+          }
+        }
       }
     }
   }
