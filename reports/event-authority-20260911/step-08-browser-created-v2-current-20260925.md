@@ -44,6 +44,15 @@ Derived files are regenerated with the currentness edition present: the `storage
   - run-002 `refresh-batch-hashes` for batch report rows 168 to 170 and 173 to 180 (already on the wave's list);
   - the readiness report and the migration snapshot.
 
+## Expected at landing
+
+Measured on `git archive` exports of `1e5d9b097b` and of this branch, with the currentness edition linked; a forecast for `pm-landing-check.py --base origin/main` against the baseline `792d2fb8b1`, if `main` does not move first.
+- **Per aggregate, against `main`:** evidence +554 and plan graph +554 (553 `artifact_hash_stale` rows for `Plans/storage_value_registry.json` and its shards, and 1 `missing_ref` for `Plans/_shards/storage_value_registry/551-lines-110001-110108.md`, which regeneration renamed); readiness +5 (28 to 33); Spec Lock +2 (2 to 4); run-002 no new row, with rows 168 to 170 and 173 to 180 changing value. Every other subcheck is unchanged. That is +1,115 per aggregate: `run-gates` and `audit-governance` go from 1,835 (at `a3d6bb616b`, per its landing record) to 2,950.
+- **`plan-migration-validate`:** 33,072, unchanged. No new key; 835 rows change value (825 name `storage-plan.md`, 7 Section 15, 3 no document).
+- **Against the baseline, in each aggregate:** evidence and plan graph 0 to 727, implementation readiness 24 to 33, plan migration 2 to 15, Spec Lock 0 to 4. That is 1,480 new rows per aggregate, 2,960 in all.
+- **Exit 1, with 0 blocking items.** Every new row is staleness except the 4 `missing_ref` rows, 1 each for evidence and plan graph in each aggregate. They name no branch path: their path is the bundle, and the shard path is a derived one. So the check reports them as new failures that name none of this branch's files. This branch causes them, and the reseal's bundle update clears them.
+- **Pre-existing.** `implementation_readiness_self_tests_failed` names `scripts/pm-implementation-readiness.py`, which this branch edits. It was on the baseline (count 1, the same fingerprint `278ef94b633b`), so rule 2 keeps it from stopping the landing.
+
 ## Effect on the depth grades
 
 Once this lands with the first half, a regrade of `browser.workspace.created` should find:
