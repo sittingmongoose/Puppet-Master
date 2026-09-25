@@ -193,7 +193,16 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 .o55-pill-fail { color: var(--accent-error, #ef5350); background: color-mix(in srgb, var(--accent-error, #ef5350) 14%, transparent); }
 #pm-o55-onboarding[data-family="retro"] .o55-pill { border-radius: 0; }
 .o55-spin { width: 10px; height: 10px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: o55-spin 0.8s linear infinite; }
-#pm-o55-onboarding[data-family="retro"] .o55-spin { border-radius: 0; animation: o55-spin 0.8s steps(4) infinite; }
+/* Retro never turns anything: a working mark is a whole pixel box with one pixel stepping round its corners (a
+   square spun with one side open read as a box with a side cut off) */
+#pm-o55-onboarding[data-family="retro"] .o55-spin { width: 12px; height: 12px; border-radius: 0; border-right-color: currentColor; animation: none; position: relative; --b: 3px; --g: 1px; }
+#pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark { border-right-color: var(--o55-accent); animation: none; position: relative; --b: 4px; --g: 3px; }
+#pm-o55-onboarding[data-family="retro"] .o55-spin::after, #pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark::after {
+  content: ''; position: absolute; width: var(--b); height: var(--b); background: currentColor; left: var(--g); top: var(--g); animation: o55-px-chase 0.8s steps(1, end) infinite; }
+#pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark::after { background: var(--o55-accent); }
+@keyframes o55-px-chase { 0% { left: var(--g); top: var(--g); } 25% { left: calc(100% - var(--g) - var(--b)); top: var(--g); }
+  50% { left: calc(100% - var(--g) - var(--b)); top: calc(100% - var(--g) - var(--b)); } 75% { left: var(--g); top: calc(100% - var(--g) - var(--b)); } }
+html[data-motion="reduced"] #pm-o55-onboarding[data-family="retro"] .o55-spin::after, html[data-motion="reduced"] #pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark::after { animation: none; }
 @keyframes o55-spin { to { transform: rotate(360deg); } }
 .o55-field { display: grid; gap: 6px; }
 .o55-field label { font: 650 13px/1.3 var(--body-font); color: var(--text-secondary); }

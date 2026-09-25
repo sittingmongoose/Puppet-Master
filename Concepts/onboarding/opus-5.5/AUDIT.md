@@ -247,5 +247,11 @@ Still open:
   cut in, the old screen scans away over 320 ms while the new one starts at 40 ms; films before and after checked frame
   by frame (dip 0.86 -> 0.88 and 0.90 -> 0.95, no off frames).
 
-Still open: noAi has not been crawled, and homeNasPm was crawled before the pairing screen existed; the Glass family often switches on low-resource mode on
+- C49 (Jared) Retro's working marks (the phase list's active step, the waiting spinner) were a square with one side open
+  turned in 90 degree steps: a box with a side cut off. Retro turns nothing, so it is now a whole pixel box with one
+  pixel stepping round its corners; the other families keep the round ring spinner, which is not cut off.
+- homeNasPm crawled again over the pairing screen: 779 states, R1-R13 hold, 0 dead ends, 0 errors, 0 spills; the pairing
+  approval is timed, so the crawler stops at nas-pmpair (n6, n14, n15 cover the rest).
+
+Still open: noAi has not been crawled; the Glass family often switches on low-resource mode on
 this VM (no GPU), which by design stops its idles.
