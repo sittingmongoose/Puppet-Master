@@ -1,0 +1,702 @@
+{
+  "schema_id": "pm.source_control.git_selected.fixtures.v1",
+  "schema_version": "1.0.0",
+  "valid": [
+    {
+      "name": "commit",
+      "definition": "fixture_case",
+      "evidence_kind": "synthetic_static_double_not_native_proof",
+      "value": {
+        "request": {
+          "schema_id": "pm.source_control.git_selected.request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.git.commit",
+          "command_instance_id": "command:commit",
+          "idempotency_key": "idem:commit",
+          "repository_context_ref": "context:commit",
+          "expected_revision": {
+            "kind": "git",
+            "object_format": "sha1",
+            "commit_oid": "1111111111111111111111111111111111111111",
+            "ref_name": "refs/heads/main",
+            "branch_name": "main",
+            "index_generation": 8
+          },
+          "writer_lease_ref": "lease:writer:1",
+          "writer_lease_generation": 3,
+          "writer_lease_epoch": 7,
+          "permission_snapshot_ref": "permission:commit",
+          "file_safe_decision_ref": "filesafe:commit",
+          "selection": {
+            "kind": "commit",
+            "message": "Selected message",
+            "expected_index_tree": "2222222222222222222222222222222222222222"
+          },
+          "return_context": null,
+          "requested_at_utc": "2026-09-25T10:00:00Z"
+        },
+        "result": {
+          "schema_id": "pm.source_control.git_selected.result.v1",
+          "schema_version": "1.0.0",
+          "original_request_ref": "original:commit",
+          "command_id": "cmd.git.commit",
+          "command_instance_id": "command:commit",
+          "idempotency_key": "idem:commit",
+          "operation_receipt_ref": "receipt:commit",
+          "native_effect_ref": "effect:commit",
+          "return_context": null
+        },
+        "records": {
+          "context:commit": {
+            "schema_id": "pm.source_control.repository_context.v1",
+            "repo_id": "repo:alpha",
+            "scm_backend": "git",
+            "workspace_id": "git-worktree:alpha-main",
+            "lineage": {
+              "project_id": "project:alpha",
+              "plan_id": null,
+              "goal_id": "goal:1",
+              "run_id": "run:1",
+              "agent_id": "agent:1",
+              "project_home_server_id": "server:home:1",
+              "execution_host_id": "host:linux:1",
+              "execution_environment_id": "environment:native:1",
+              "source_location_id": "source:alpha-main",
+              "topology_generation": 4
+            },
+            "revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "credential_binding_ref": "credential-binding:git:1",
+            "forge_binding": {
+              "forge_provider": "github",
+              "binding_ref": "forge-binding:github:1"
+            },
+            "display_path": "/display-only/project-alpha"
+          },
+          "lease:writer:1": {
+            "schema_id": "pm.source_control.writer_lease.v1",
+            "lease_id": "lease:writer:1",
+            "repo_id": "repo:alpha",
+            "workspace_id": "git-worktree:alpha-main",
+            "scm_backend": "git",
+            "holder_ref": "holder:static",
+            "generation": 3,
+            "epoch": 7,
+            "state": "active",
+            "acquired_at_utc": "2026-09-25T09:59:00Z",
+            "expires_at_utc": "2026-09-25T10:10:00Z",
+            "reconciliation_state": "not_required"
+          },
+          "original:commit": {
+            "schema_id": "pm.source_control.git_selected.request.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.git.commit",
+            "command_instance_id": "command:commit",
+            "idempotency_key": "idem:commit",
+            "repository_context_ref": "context:commit",
+            "expected_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "writer_lease_generation": 3,
+            "writer_lease_epoch": 7,
+            "permission_snapshot_ref": "permission:commit",
+            "file_safe_decision_ref": "filesafe:commit",
+            "selection": {
+              "kind": "commit",
+              "message": "Selected message",
+              "expected_index_tree": "2222222222222222222222222222222222222222"
+            },
+            "return_context": null,
+            "requested_at_utc": "2026-09-25T10:00:00Z"
+          },
+          "receipt:commit": {
+            "schema_id": "pm.source_control.operation_receipt.v1",
+            "receipt_id": "receipt:commit",
+            "command_instance_id": "command:commit",
+            "operation_id": "operation:commit",
+            "outcome": "succeeded",
+            "scm_backend": "git",
+            "repository_context_ref": "context:commit",
+            "before_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "after_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "4444444444444444444444444444444444444444",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "credential_lease_ref": null,
+            "observable_work_id": null,
+            "event_refs": [],
+            "completed_at_utc": "2026-09-25T10:01:00Z",
+            "degradation": {
+              "state": "none",
+              "reason_codes": [],
+              "allowed_action_ids": []
+            }
+          },
+          "effect:commit": {
+            "schema_id": "pm.source_control.git_selected.effect.v1",
+            "schema_version": "1.0.0",
+            "original_request_ref": "original:commit",
+            "command_instance_id": "command:commit",
+            "operation_id": "operation:commit",
+            "repository_context_ref": "context:commit",
+            "applied_selection": {
+              "kind": "commit",
+              "message": "Selected message",
+              "expected_index_tree": "2222222222222222222222222222222222222222"
+            },
+            "result_object": "4444444444444444444444444444444444444444",
+            "completion": "completed"
+          }
+        }
+      }
+    },
+    {
+      "name": "stash_create",
+      "definition": "fixture_case",
+      "evidence_kind": "synthetic_static_double_not_native_proof",
+      "value": {
+        "request": {
+          "schema_id": "pm.source_control.git_selected.request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.source_control.stash.create",
+          "command_instance_id": "command:stash_create",
+          "idempotency_key": "idem:stash_create",
+          "repository_context_ref": "context:stash_create",
+          "expected_revision": {
+            "kind": "git",
+            "object_format": "sha1",
+            "commit_oid": "1111111111111111111111111111111111111111",
+            "ref_name": "refs/heads/main",
+            "branch_name": "main",
+            "index_generation": 8
+          },
+          "writer_lease_ref": "lease:writer:1",
+          "writer_lease_generation": 3,
+          "writer_lease_epoch": 7,
+          "permission_snapshot_ref": "permission:stash_create",
+          "file_safe_decision_ref": "filesafe:stash_create",
+          "selection": {
+            "kind": "stash_create",
+            "include_untracked": true,
+            "message": "Selected stash"
+          },
+          "return_context": null,
+          "requested_at_utc": "2026-09-25T10:00:00Z"
+        },
+        "result": {
+          "schema_id": "pm.source_control.git_selected.result.v1",
+          "schema_version": "1.0.0",
+          "original_request_ref": "original:stash_create",
+          "command_id": "cmd.source_control.stash.create",
+          "command_instance_id": "command:stash_create",
+          "idempotency_key": "idem:stash_create",
+          "operation_receipt_ref": "receipt:stash_create",
+          "native_effect_ref": "effect:stash_create",
+          "return_context": null
+        },
+        "records": {
+          "context:stash_create": {
+            "schema_id": "pm.source_control.repository_context.v1",
+            "repo_id": "repo:alpha",
+            "scm_backend": "git",
+            "workspace_id": "git-worktree:alpha-main",
+            "lineage": {
+              "project_id": "project:alpha",
+              "plan_id": null,
+              "goal_id": "goal:1",
+              "run_id": "run:1",
+              "agent_id": "agent:1",
+              "project_home_server_id": "server:home:1",
+              "execution_host_id": "host:linux:1",
+              "execution_environment_id": "environment:native:1",
+              "source_location_id": "source:alpha-main",
+              "topology_generation": 4
+            },
+            "revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "credential_binding_ref": "credential-binding:git:1",
+            "forge_binding": {
+              "forge_provider": "github",
+              "binding_ref": "forge-binding:github:1"
+            },
+            "display_path": "/display-only/project-alpha"
+          },
+          "lease:writer:1": {
+            "schema_id": "pm.source_control.writer_lease.v1",
+            "lease_id": "lease:writer:1",
+            "repo_id": "repo:alpha",
+            "workspace_id": "git-worktree:alpha-main",
+            "scm_backend": "git",
+            "holder_ref": "holder:static",
+            "generation": 3,
+            "epoch": 7,
+            "state": "active",
+            "acquired_at_utc": "2026-09-25T09:59:00Z",
+            "expires_at_utc": "2026-09-25T10:10:00Z",
+            "reconciliation_state": "not_required"
+          },
+          "original:stash_create": {
+            "schema_id": "pm.source_control.git_selected.request.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.source_control.stash.create",
+            "command_instance_id": "command:stash_create",
+            "idempotency_key": "idem:stash_create",
+            "repository_context_ref": "context:stash_create",
+            "expected_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "writer_lease_generation": 3,
+            "writer_lease_epoch": 7,
+            "permission_snapshot_ref": "permission:stash_create",
+            "file_safe_decision_ref": "filesafe:stash_create",
+            "selection": {
+              "kind": "stash_create",
+              "include_untracked": true,
+              "message": "Selected stash"
+            },
+            "return_context": null,
+            "requested_at_utc": "2026-09-25T10:00:00Z"
+          },
+          "receipt:stash_create": {
+            "schema_id": "pm.source_control.operation_receipt.v1",
+            "receipt_id": "receipt:stash_create",
+            "command_instance_id": "command:stash_create",
+            "operation_id": "operation:stash_create",
+            "outcome": "succeeded",
+            "scm_backend": "git",
+            "repository_context_ref": "context:stash_create",
+            "before_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "after_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "credential_lease_ref": null,
+            "observable_work_id": null,
+            "event_refs": [],
+            "completed_at_utc": "2026-09-25T10:01:00Z",
+            "degradation": {
+              "state": "none",
+              "reason_codes": [],
+              "allowed_action_ids": []
+            }
+          },
+          "effect:stash_create": {
+            "schema_id": "pm.source_control.git_selected.effect.v1",
+            "schema_version": "1.0.0",
+            "original_request_ref": "original:stash_create",
+            "command_instance_id": "command:stash_create",
+            "operation_id": "operation:stash_create",
+            "repository_context_ref": "context:stash_create",
+            "applied_selection": {
+              "kind": "stash_create",
+              "include_untracked": true,
+              "message": "Selected stash"
+            },
+            "result_object": "4444444444444444444444444444444444444444",
+            "completion": "completed"
+          }
+        }
+      }
+    },
+    {
+      "name": "branch_create",
+      "definition": "fixture_case",
+      "evidence_kind": "synthetic_static_double_not_native_proof",
+      "value": {
+        "request": {
+          "schema_id": "pm.source_control.git_selected.request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.source_control.branch.create",
+          "command_instance_id": "command:branch_create",
+          "idempotency_key": "idem:branch_create",
+          "repository_context_ref": "context:branch_create",
+          "expected_revision": {
+            "kind": "git",
+            "object_format": "sha1",
+            "commit_oid": "1111111111111111111111111111111111111111",
+            "ref_name": "refs/heads/main",
+            "branch_name": "main",
+            "index_generation": 8
+          },
+          "writer_lease_ref": "lease:writer:1",
+          "writer_lease_generation": 3,
+          "writer_lease_epoch": 7,
+          "permission_snapshot_ref": "permission:branch_create",
+          "file_safe_decision_ref": "filesafe:branch_create",
+          "selection": {
+            "kind": "branch_create",
+            "branch": "feature/example",
+            "base": "3333333333333333333333333333333333333333"
+          },
+          "return_context": null,
+          "requested_at_utc": "2026-09-25T10:00:00Z"
+        },
+        "result": {
+          "schema_id": "pm.source_control.git_selected.result.v1",
+          "schema_version": "1.0.0",
+          "original_request_ref": "original:branch_create",
+          "command_id": "cmd.source_control.branch.create",
+          "command_instance_id": "command:branch_create",
+          "idempotency_key": "idem:branch_create",
+          "operation_receipt_ref": "receipt:branch_create",
+          "native_effect_ref": "effect:branch_create",
+          "return_context": null
+        },
+        "records": {
+          "context:branch_create": {
+            "schema_id": "pm.source_control.repository_context.v1",
+            "repo_id": "repo:alpha",
+            "scm_backend": "git",
+            "workspace_id": "git-worktree:alpha-main",
+            "lineage": {
+              "project_id": "project:alpha",
+              "plan_id": null,
+              "goal_id": "goal:1",
+              "run_id": "run:1",
+              "agent_id": "agent:1",
+              "project_home_server_id": "server:home:1",
+              "execution_host_id": "host:linux:1",
+              "execution_environment_id": "environment:native:1",
+              "source_location_id": "source:alpha-main",
+              "topology_generation": 4
+            },
+            "revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "credential_binding_ref": "credential-binding:git:1",
+            "forge_binding": {
+              "forge_provider": "github",
+              "binding_ref": "forge-binding:github:1"
+            },
+            "display_path": "/display-only/project-alpha"
+          },
+          "lease:writer:1": {
+            "schema_id": "pm.source_control.writer_lease.v1",
+            "lease_id": "lease:writer:1",
+            "repo_id": "repo:alpha",
+            "workspace_id": "git-worktree:alpha-main",
+            "scm_backend": "git",
+            "holder_ref": "holder:static",
+            "generation": 3,
+            "epoch": 7,
+            "state": "active",
+            "acquired_at_utc": "2026-09-25T09:59:00Z",
+            "expires_at_utc": "2026-09-25T10:10:00Z",
+            "reconciliation_state": "not_required"
+          },
+          "original:branch_create": {
+            "schema_id": "pm.source_control.git_selected.request.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.source_control.branch.create",
+            "command_instance_id": "command:branch_create",
+            "idempotency_key": "idem:branch_create",
+            "repository_context_ref": "context:branch_create",
+            "expected_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "writer_lease_generation": 3,
+            "writer_lease_epoch": 7,
+            "permission_snapshot_ref": "permission:branch_create",
+            "file_safe_decision_ref": "filesafe:branch_create",
+            "selection": {
+              "kind": "branch_create",
+              "branch": "feature/example",
+              "base": "3333333333333333333333333333333333333333"
+            },
+            "return_context": null,
+            "requested_at_utc": "2026-09-25T10:00:00Z"
+          },
+          "receipt:branch_create": {
+            "schema_id": "pm.source_control.operation_receipt.v1",
+            "receipt_id": "receipt:branch_create",
+            "command_instance_id": "command:branch_create",
+            "operation_id": "operation:branch_create",
+            "outcome": "succeeded",
+            "scm_backend": "git",
+            "repository_context_ref": "context:branch_create",
+            "before_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "after_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "credential_lease_ref": null,
+            "observable_work_id": null,
+            "event_refs": [],
+            "completed_at_utc": "2026-09-25T10:01:00Z",
+            "degradation": {
+              "state": "none",
+              "reason_codes": [],
+              "allowed_action_ids": []
+            }
+          },
+          "effect:branch_create": {
+            "schema_id": "pm.source_control.git_selected.effect.v1",
+            "schema_version": "1.0.0",
+            "original_request_ref": "original:branch_create",
+            "command_instance_id": "command:branch_create",
+            "operation_id": "operation:branch_create",
+            "repository_context_ref": "context:branch_create",
+            "applied_selection": {
+              "kind": "branch_create",
+              "branch": "feature/example",
+              "base": "3333333333333333333333333333333333333333"
+            },
+            "result_object": "3333333333333333333333333333333333333333",
+            "completion": "completed"
+          }
+        }
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "foreign_applied_message",
+      "definition": "fixture_case",
+      "evidence_kind": "synthetic_static_double_not_native_proof",
+      "value": {
+        "request": {
+          "schema_id": "pm.source_control.git_selected.request.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.git.commit",
+          "command_instance_id": "command:commit",
+          "idempotency_key": "idem:commit",
+          "repository_context_ref": "context:commit",
+          "expected_revision": {
+            "kind": "git",
+            "object_format": "sha1",
+            "commit_oid": "1111111111111111111111111111111111111111",
+            "ref_name": "refs/heads/main",
+            "branch_name": "main",
+            "index_generation": 8
+          },
+          "writer_lease_ref": "lease:writer:1",
+          "writer_lease_generation": 3,
+          "writer_lease_epoch": 7,
+          "permission_snapshot_ref": "permission:commit",
+          "file_safe_decision_ref": "filesafe:commit",
+          "selection": {
+            "kind": "commit",
+            "message": "Selected message",
+            "expected_index_tree": "2222222222222222222222222222222222222222"
+          },
+          "return_context": null,
+          "requested_at_utc": "2026-09-25T10:00:00Z"
+        },
+        "result": {
+          "schema_id": "pm.source_control.git_selected.result.v1",
+          "schema_version": "1.0.0",
+          "original_request_ref": "original:commit",
+          "command_id": "cmd.git.commit",
+          "command_instance_id": "command:commit",
+          "idempotency_key": "idem:commit",
+          "operation_receipt_ref": "receipt:commit",
+          "native_effect_ref": "effect:commit",
+          "return_context": null
+        },
+        "records": {
+          "context:commit": {
+            "schema_id": "pm.source_control.repository_context.v1",
+            "repo_id": "repo:alpha",
+            "scm_backend": "git",
+            "workspace_id": "git-worktree:alpha-main",
+            "lineage": {
+              "project_id": "project:alpha",
+              "plan_id": null,
+              "goal_id": "goal:1",
+              "run_id": "run:1",
+              "agent_id": "agent:1",
+              "project_home_server_id": "server:home:1",
+              "execution_host_id": "host:linux:1",
+              "execution_environment_id": "environment:native:1",
+              "source_location_id": "source:alpha-main",
+              "topology_generation": 4
+            },
+            "revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "credential_binding_ref": "credential-binding:git:1",
+            "forge_binding": {
+              "forge_provider": "github",
+              "binding_ref": "forge-binding:github:1"
+            },
+            "display_path": "/display-only/project-alpha"
+          },
+          "lease:writer:1": {
+            "schema_id": "pm.source_control.writer_lease.v1",
+            "lease_id": "lease:writer:1",
+            "repo_id": "repo:alpha",
+            "workspace_id": "git-worktree:alpha-main",
+            "scm_backend": "git",
+            "holder_ref": "holder:static",
+            "generation": 3,
+            "epoch": 7,
+            "state": "active",
+            "acquired_at_utc": "2026-09-25T09:59:00Z",
+            "expires_at_utc": "2026-09-25T10:10:00Z",
+            "reconciliation_state": "not_required"
+          },
+          "original:commit": {
+            "schema_id": "pm.source_control.git_selected.request.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.git.commit",
+            "command_instance_id": "command:commit",
+            "idempotency_key": "idem:commit",
+            "repository_context_ref": "context:commit",
+            "expected_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "writer_lease_generation": 3,
+            "writer_lease_epoch": 7,
+            "permission_snapshot_ref": "permission:commit",
+            "file_safe_decision_ref": "filesafe:commit",
+            "selection": {
+              "kind": "commit",
+              "message": "Selected message",
+              "expected_index_tree": "2222222222222222222222222222222222222222"
+            },
+            "return_context": null,
+            "requested_at_utc": "2026-09-25T10:00:00Z"
+          },
+          "receipt:commit": {
+            "schema_id": "pm.source_control.operation_receipt.v1",
+            "receipt_id": "receipt:commit",
+            "command_instance_id": "command:commit",
+            "operation_id": "operation:commit",
+            "outcome": "succeeded",
+            "scm_backend": "git",
+            "repository_context_ref": "context:commit",
+            "before_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "1111111111111111111111111111111111111111",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "after_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "4444444444444444444444444444444444444444",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 8
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "credential_lease_ref": null,
+            "observable_work_id": null,
+            "event_refs": [],
+            "completed_at_utc": "2026-09-25T10:01:00Z",
+            "degradation": {
+              "state": "none",
+              "reason_codes": [],
+              "allowed_action_ids": []
+            }
+          },
+          "effect:commit": {
+            "schema_id": "pm.source_control.git_selected.effect.v1",
+            "schema_version": "1.0.0",
+            "original_request_ref": "original:commit",
+            "command_instance_id": "command:commit",
+            "operation_id": "operation:commit",
+            "repository_context_ref": "context:commit",
+            "applied_selection": {
+              "kind": "commit",
+              "message": "different",
+              "expected_index_tree": "2222222222222222222222222222222222222222"
+            },
+            "result_object": "4444444444444444444444444444444444444444",
+            "completion": "completed"
+          }
+        }
+      },
+      "expected_error": "effect_applied_selection",
+      "semantic_rule": "effect_applied_selection"
+    }
+  ]
+}

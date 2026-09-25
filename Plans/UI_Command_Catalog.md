@@ -9882,6 +9882,8 @@ These rows resolve the underdefined `cmd.source_control.stash.*` compatibility-f
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md
 
+The existing `cmd.git.commit`, `cmd.source_control.stash.create` and `cmd.source_control.branch.create` rows consume `Plans/git_selected_three.schema.json#/$defs/request` -> `Plans/git_selected_three.schema.json#/$defs/result`, with their exact command discriminator and selected-input semantic joins from SCS-003. The actual owner operation receipt and adapter observation remain required; route/open alone is not mutation success. Existing handlers, availability, confirmation and disabled reasons are unchanged. This typed binding proves neither native admission nor physical observation/original replay custody. Pull and stash-apply preview contracts remain pending and are not admitted by this schema.
+
 ### Worktree and GitHub PR rows
 
 `cmd.git.worktree.merge` mints the project-scope worktree merge the UCC-054 family lacked; per UCC-122's negative constraint it never reuses the thread-bound `cmd.chat.worktree.merge`. Lock and unlock register the worktree lock flags from the worktree research and W-doc lineage. Under DL-044, `cmd.github.pr.create` and `cmd.source_control.pr.create` are compatibility aliases of `cmd.forge.review.create {provider: github}`. This supersedes the separate GitHub-domain create command and its independent guard; the selected adapter retains GitHub API behavior through the generic command's provider-owner route. The panel action and thread-bound `cmd.chat.worktree.pr` remain distinct scopes with explicit wiring.

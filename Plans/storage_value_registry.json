@@ -2635,6 +2635,74 @@
         "Plans/storage-plan.md",
         "Plans/usage_command_contracts.schema.json"
       ]
+    },
+    {
+      "disposition_id": "scd.source_control.git_selected_transport.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/git_selected_three.schema.json",
+      "record_kinds": [
+        "pm.source_control.git_selected.request.v1",
+        "pm.source_control.git_selected.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Exact independently retained originals, owner receipts and selected-effect observations needed for replay, effect-unknown reconciliation, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original or observation required for replay. Never reconstruct a mutation from current UI selection."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No reinterpretation of historical operation_request or neutral command_request as containing Git-three operands. Transport has no physical migration; exact original retained-value binding remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "The request/result are closed transient transport, not another repository or receipt store. Fixture wrappers are not runtime records. Native admission, dispatcher implementation and replay custody are not proved.",
+      "source_refs": [
+        "Plans/Source_Control_System.md#SCS-003",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/git_selected_three.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.source_control.git_selected_effect.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Source_Control_System.md",
+      "schema_ref": "Plans/git_selected_three.schema.json",
+      "record_kinds": [
+        "pm.source_control.git_selected.effect.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-RUNTIME-365D",
+          "Q-CRITICAL"
+        ],
+        "hold_rule": "Retain the exact adapter observation and independently retained original while operation receipts, idempotent replay, unknown-effect reconciliation, backup or audit hold them. Exact physical original/observation custody remains unbound.",
+        "expiry_rule": "Existing runtime retention is subject to stronger active holds; cleanup requires reference release and the existing storage deletion policy. This pending row admits no physical deletion writer or new numeric interval."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1"
+      ],
+      "migration_rule": "Register exact physical family/key/value, producer/readers, original-request custody and migration before writing or migrating this observation. Do not insert it into operation_receipt or claim a legacy reader admits its shape.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "New adapter-selected-effect observation has explicit durable intent but no physical family or writer. It is not native authentication, an EventRecord or an extension silently accepted by the existing operation_receipt schema; original-value/replay/backup closure remains pending.",
+      "source_refs": [
+        "Plans/Source_Control_System.md#SCS-003",
+        "Plans/git_selected_three.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [

@@ -54,6 +54,7 @@ from pm_guided_tour_semantics import guided_tour_semantic_failures
 from pm_named_plan_semantics import named_plan_semantic_failures
 from pm_forge_creation_semantics import forge_creation_semantic_failures
 from pm_usage_command_semantics import usage_command_semantic_failures
+from pm_git_selected_three import git_selected_semantic_failures
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -104,9 +105,10 @@ CONTRACT_PAIRS = (
     ("Plans/testing_session_command_contracts.schema.json", "Plans/testing_session_command_contract_fixtures.json"),
     ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
     ("Plans/usage_command_contracts.schema.json", "Plans/usage_command_contract_fixtures.json"),
+    ("Plans/git_selected_three.schema.json", "Plans/git_selected_three_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 46
+EXPECTED_CONTRACT_PAIR_COUNT = 47
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1239,6 +1241,10 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/git_selected_three.schema.json":
+        # Fixture composition has retained originals; a bare runtime record does not.
+        # Runtime consumers must separately invoke result_failures with actual owner records.
+        return git_selected_semantic_failures(definition_name, value) if definition_name == "fixture_case" else []
     if schema_rel == "Plans/usage_command_contracts.schema.json":
         return usage_command_semantic_failures(definition_name, value)
     if schema_rel == "Plans/capability_ensure_custody_contracts.schema.json":

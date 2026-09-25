@@ -172,11 +172,40 @@ acceptance_criteria:
   - >-
     Existing Git commands cmd.git.commit, cmd.git.pull, cmd.source_control.stash.create,
     cmd.source_control.stash.apply and cmd.source_control.branch.create retain their current owners and handlers.
-    Their pending typed operand bindings respectively carry message plus expected index tree; remote, branch,
-    merge/rebase/ff_only strategy plus pull preview; include_untracked plus message; selected stash object plus apply
-    preview; and selected branch name plus immutable base. These concrete commands are not silently inserted into
+    The three closed selected-input bindings in Plans/git_selected_three.schema.json adopt commit message plus
+    expected index tree, stash-create include_untracked plus message, and branch-create name plus immutable base.
+    Pull remote/branch/merge/rebase/ff_only strategy plus actual pull-preview contents and stash-apply selected object
+    plus actual conflict/dependency/effect preview contents remain pending typed companions, not merely missing
+    native implementations. These concrete commands are not silently inserted into
     the neutral command family. Stash apply is not pop/drop, branch creation does not admit branch deletion, and
     historical candidate cmd.git.stash.* or cmd.git.branch.create names do not create peer public commands.
+  - >-
+    For only cmd.git.commit, cmd.source_control.stash.create and cmd.source_control.branch.create, the closed
+    git_selected request/result preserves original command instance, idempotency, RepositoryContext, native Git
+    revision, writer lease generation/epoch, Permissions/FileSafe refs, selection and return context. Resolve the
+    actual existing RepositoryContext, writer_lease and operation_receipt; do not widen historical neutral request
+    enums or infer authority from shape-valid records. Snapshot original request/result before helper resolution
+    and reject helper mutation before return. Native admission still authenticates the original target and current
+    grants immediately before effects; static selected-value joins never enable a handler.
+  - >-
+    The new git_selected.effect value is an adapter-owned selected-effect observation, not a preexisting receipt
+    shape or authorization grant. It binds original request, command instance, operation, repository context,
+    applied selection, actual resulting commit/stash/base object and completed/partial/unknown completion. A
+    succeeded receipt requires completed observation and native after-state; commit binds its resulting commit
+    to receipt after-state and branch creation binds its resulting object to the selected immutable base. An
+    unsuccessful or unknown receipt may omit an unobserved object without inventing success. Authenticate actual
+    adapter observations and receipts independently; fixture readers prove only deterministic value joins.
+  - >-
+    The git_selected request/result are transport copies, not new stores. Preserve independently retained exact
+    originals and observations needed by idempotent replay, unknown-effect reconciliation, backup and audit holds;
+    never reconstruct them from current focus or rerun a mutation. The selected-effect observation has a separate
+    durable/pending disposition and is not silently added to operation_receipt. Its exact physical family/key,
+    producer/reader, original-value custody and migration binding remain unbound; do not write a new store or claim
+    restart/replay/backup closure before those existing storage admission requirements are met. Central structural
+    validation of the result is not the original/result/receipt/effect resolver: consumers must separately call
+    result_failures with the actual original and retained owner records. The current generic UI response adapter
+    does not establish this three-command original/outcome/caller composition. No EventRecord,
+    handler availability, arbitrary retention interval or credential persistence is introduced.
   - A succeeded result cannot have effect_state=effect_unknown; an effect_unknown error cannot disguise itself as a known effect. Unknown effects keep retry_allowed=false and offer reconciliation without any retry action until effects are known.
   - Every established terminal source_control_command_result carries a non-secret operation_receipt_ref, including blocked, failed, cancelled, recovery_required and effect_unknown. This is not a requirement for pre-attempt availability or error records.
   - The CV-333 central response consumes only the exact source_control_command_result family for these nineteen commands and joins the original typed request's command instance, discriminated scope, applicable lineage, idempotency key and exact return context to the result and its terminal receipt. A local projection or another owner's result cannot substitute for this join.

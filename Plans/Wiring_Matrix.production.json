@@ -30972,7 +30972,7 @@
         "cmd.git.commit must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.git.commit must expose projected state selector and disabled reason before dispatch",
         "cmd.git.commit dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.git.commit must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.commit requires the exact Git-three selected-input request/result, existing operation receipt and authenticated adapter observation; route/open alone cannot establish mutation success. Static binding leaves native admission and physical custody unproved.",
         "cmd.git.commit must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "cmd.git.commit availability class is selection (git_available && staged_changes_present) with confirmation class none; disabled reasons come only from the closed set: blocked_state_required, stale_projection, permission_required (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)",
         "Retired prototype token panels.git_commit migrates to this canonical id in concept markup."
@@ -31027,7 +31027,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.git.commit records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+      ],
+      "request_schema_ref": "Plans/git_selected_three.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/git_selected_three.schema.json#/$defs/result"
     },
     "catalog.git_conflict_apply_resolution": {
       "ui_element_id": "catalog.git_conflict_apply_resolution",
@@ -56070,7 +56072,7 @@
         "cmd.source_control.branch.create must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.source_control.branch.create must expose projected state selector and disabled reason before dispatch",
         "cmd.source_control.branch.create dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.source_control.branch.create must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.source_control.branch.create requires the exact Git-three selected-input request/result, existing operation receipt and authenticated adapter observation; route/open alone cannot establish mutation success. Static binding leaves native admission and physical custody unproved.",
         "cmd.source_control.branch.create must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "cmd.source_control.branch.create availability class is capability (git_available) with confirmation class none; disabled reasons come only from the closed set: stale_projection, permission_required (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)"
       ],
@@ -56124,7 +56126,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.source_control.branch.create records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+      ],
+      "request_schema_ref": "Plans/git_selected_three.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/git_selected_three.schema.json#/$defs/result"
     },
     "catalog.source_control_branch_switch": {
       "ui_element_id": "catalog.source_control_branch_switch",
@@ -57890,7 +57894,7 @@
         "cmd.source_control.stash.create must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.source_control.stash.create must expose projected state selector and disabled reason before dispatch",
         "cmd.source_control.stash.create dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.source_control.stash.create must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.source_control.stash.create requires the exact Git-three selected-input request/result, existing operation receipt and authenticated adapter observation; route/open alone cannot establish mutation success. Static binding leaves native admission and physical custody unproved.",
         "cmd.source_control.stash.create must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "cmd.source_control.stash.create availability class is selection (dirty_working_tree) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)"
       ],
@@ -57944,7 +57948,9 @@
       ],
       "event_test_requirements": [
         "Assert cmd.source_control.stash.create records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+      ],
+      "request_schema_ref": "Plans/git_selected_three.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/git_selected_three.schema.json#/$defs/result"
     },
     "catalog.source_control_stash_drop": {
       "ui_element_id": "catalog.source_control_stash_drop",

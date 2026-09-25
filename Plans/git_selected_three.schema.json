@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/git-selected-three/1.0.0/git_selected_three.schema.json",
+  "$defs": {
+    "selection": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "message",
+            "expected_index_tree"
+          ],
+          "properties": {
+            "kind": {
+              "const": "commit"
+            },
+            "message": {
+              "type": "string"
+            },
+            "expected_index_tree": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "include_untracked",
+            "message"
+          ],
+          "properties": {
+            "kind": {
+              "const": "stash_create"
+            },
+            "include_untracked": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "branch",
+            "base"
+          ],
+          "properties": {
+            "kind": {
+              "const": "branch_create"
+            },
+            "branch": {
+              "type": "string",
+              "minLength": 1
+            },
+            "base": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+            }
+          }
+        }
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "idempotency_key",
+        "repository_context_ref",
+        "expected_revision",
+        "writer_lease_ref",
+        "writer_lease_generation",
+        "writer_lease_epoch",
+        "permission_snapshot_ref",
+        "file_safe_decision_ref",
+        "selection",
+        "return_context",
+        "requested_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_selected.request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.git.commit",
+            "cmd.source_control.stash.create",
+            "cmd.source_control.branch.create"
+          ]
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository_context_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "expected_revision": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/git_revision"
+        },
+        "writer_lease_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "writer_lease_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "writer_lease_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "file_safe_decision_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "return_context": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/return_context"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requested_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        }
+      }
+    },
+    "effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "original_request_ref",
+        "command_instance_id",
+        "operation_id",
+        "repository_context_ref",
+        "applied_selection",
+        "result_object",
+        "completion"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_selected.effect.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository_context_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "applied_selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "result_object": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        "completion": {
+          "enum": [
+            "completed",
+            "partial",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "original_request_ref",
+        "command_id",
+        "command_instance_id",
+        "idempotency_key",
+        "operation_receipt_ref",
+        "native_effect_ref",
+        "return_context"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.source_control.git_selected.result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.git.commit",
+            "cmd.source_control.stash.create",
+            "cmd.source_control.branch.create"
+          ]
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "native_effect_ref": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/return_context"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "fixture_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "result",
+        "records"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "result": {
+          "$ref": "#/$defs/result"
+        },
+        "records": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "x-fixture-only": true
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/effect"
+    },
+    {
+      "$ref": "#/$defs/result"
+    }
+  ]
+}

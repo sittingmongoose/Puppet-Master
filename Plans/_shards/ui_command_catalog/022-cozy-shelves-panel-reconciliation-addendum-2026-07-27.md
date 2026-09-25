@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L9724-L10641
+Source lines: L9724-L10643
 
-Source SHA256: `c89d265c968efef410a88c33ac6e82924851bddad1e11b3e03e07ffcf06351f3`
+Source SHA256: `e3a9cfb4bcee40340d7ef70bbd2da547714c141a4b46cb4c7f3ff1a99b95ff92`
 
 ---
 
@@ -168,6 +168,8 @@ These rows resolve the underdefined `cmd.source_control.stash.*` compatibility-f
 | `cmd.source_control.stash.drop` | Drop Stash | `domain_action` | selection (`stash_selected`) | two_step | `stale_projection`, `permission_required` | source_control |
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md
+
+The existing `cmd.git.commit`, `cmd.source_control.stash.create` and `cmd.source_control.branch.create` rows consume `Plans/git_selected_three.schema.json#/$defs/request` -> `Plans/git_selected_three.schema.json#/$defs/result`, with their exact command discriminator and selected-input semantic joins from SCS-003. The actual owner operation receipt and adapter observation remain required; route/open alone is not mutation success. Existing handlers, availability, confirmation and disabled reasons are unchanged. This typed binding proves neither native admission nor physical observation/original replay custody. Pull and stash-apply preview contracts remain pending and are not admitted by this schema.
 
 ### Worktree and GitHub PR rows
 
