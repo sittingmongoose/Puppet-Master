@@ -133,7 +133,9 @@
     compose(ctx) {
       const pr = ctx.params || {}, n = pr.n || 0, m = A.metrics(ctx.family);
       const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }].concat(A.ensemble(ctx, { poses: n ? ['wave', 'carry', 'stand'] : ['stand', 'stand', 'stand'] }));
-      for (let i = 0; i < Math.min(4, n); i++) items.push({ key: 'pw' + i, prop: 'node', x: 150 + i * 60, y: 60, s: R(ctx) ? 1 : 0.8, layer: 'front', anim: 'pop', delay: 120 + i * 90, opts: { icon: 'spark', accent: true } });
+      /* each connected account lights a spark just above the bar, centred on it (they sat off the bar, left-aligned) */
+      const k = Math.min(4, n);
+      for (let i = 0; i < k; i++) items.push({ key: 'pw' + i, prop: 'node', x: 240 + (i - (k - 1) / 2) * 58, y: m.barY - 46, s: R(ctx) ? 1 : 0.7, layer: 'front', anim: 'pop', delay: 120 + i * 90, opts: { icon: 'spark', accent: true } });
       if (ctx.beat === 'free') [[70, 380], [410, 380]].forEach(([x, y], i) => items.push({ key: 'fx' + i, prop: 'helper', x, y: m.floor - 6, s: m.helperScale * 0.7, layer: 'front', anim: 'drop', delay: 300 + i * 140, amb: 'bob', opts: { variant: (i + 1) % 3, pose: 'wave', px: m.helperPx } }));
       return items;
     }

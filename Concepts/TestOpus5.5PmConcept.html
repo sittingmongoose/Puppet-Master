@@ -24492,7 +24492,7 @@ html[data-motion="reduced"] .o55-it { transition-duration: 140ms !important; }
 .o55-cur { transform-box: fill-box; }
 .o55-f-friendly .o55-cur-l { transform-origin: left center; animation: o55-cur-gather 1500ms cubic-bezier(0.55, 0, 0.2, 1.1) 280ms both; }
 .o55-f-friendly .o55-cur-r { transform-origin: right center; animation: o55-cur-gather 1500ms cubic-bezier(0.55, 0, 0.2, 1.1) 280ms both; }
-@keyframes o55-cur-gather { 0% { transform: none; opacity: 1; } 80% { transform: scaleX(0.4); opacity: 1; } 100% { transform: scaleX(0.4); opacity: 0; } }
+@keyframes o55-cur-gather { 0% { transform: none; opacity: 1; } 80% { transform: scaleX(0.32); opacity: 1; } 100% { transform: scaleX(0.32); opacity: 0; } }
 .o55-f-basic .o55-cur-sheet { animation: o55-cur-lift 1200ms cubic-bezier(0.45, 0, 0.2, 1) 300ms both; }
 @keyframes o55-cur-lift { 0% { transform: none; } 20% { transform: translateY(6px); } 100% { transform: translateY(-640px); } }
 .o55-f-glass .o55-cur-l { animation: o55-cur-slide-l 1400ms cubic-bezier(0.05, 0.7, 0.1, 1) 350ms both; }
@@ -82586,9 +82586,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     },
     badge(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
-      return `<g><rect x="-44" y="-15" width="88" height="30" rx="3" fill="${p.paper}" stroke="${o.accent ? p.accent : p.ink}" stroke-width="1.2"/>`
-        + (o.glyph ? `<g transform="translate(-38 -9) scale(0.75)" style="color:${o.accent ? p.accent : p.ink}">${A.glyph(o.glyph)}</g>` : '')
-        + txt(p, o.glyph ? 6 : 0, 3, o.label || '', 6.8, 'middle', o.accent ? p.accent : p.ink) + '</g>';
+      /* sized from its label (small caps at 6.8 with 1.1 tracking run about 6 units a letter), glyph room included */
+      const tw = String(o.label || '').length * 6.1, gw = o.glyph ? 18 : 0, w = Math.max(88, Math.ceil(tw + gw + 20)), x0 = -w / 2;
+      return `<g><rect x="${x0}" y="-15" width="${w}" height="30" rx="3" fill="${p.paper}" stroke="${o.accent ? p.accent : p.ink}" stroke-width="1.2"/>`
+        + (o.glyph ? `<g transform="translate(${x0 + 6} -9) scale(0.75)" style="color:${o.accent ? p.accent : p.ink}">${A.glyph(o.glyph)}</g>` : '')
+        + txt(p, gw / 2, 3, o.label || '', 6.8, 'middle', o.accent ? p.accent : p.ink) + '</g>';
     },
     identity(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
@@ -82793,7 +82795,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const p = ctx.pal, o = item.opts || {};
       return `<g>${sh(p, '<rect x="-36" y="-36" width="72" height="72" rx="16"/>')}<rect x="-36" y="-36" width="72" height="72" rx="16" fill="${p.paper}" ${OL(p)}/>`
         + `<g transform="translate(-22 -22)">${A.identitySvg(o.seed || 'nas', 44, 'friendly').replace('<svg', '<svg x="0" y="0"')}</g>`
-        + (o.words ? label(p, 0, 52, o.words, p.ink) : '') + '</g>';
+        + (o.words ? label(p, 0, 52, o.words, p.dark ? p.paper : p.ink) : '') + '</g>';
     },
     note(ctx, item) {
       const p = ctx.pal, o = item.opts || {}, dx = o.dx == null ? 60 : o.dx, dy = o.dy == null ? -30 : o.dy, w = (o.text || '').length * 5.6 + 18, x = dx >= 0 ? dx : dx - w;
@@ -82821,8 +82823,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           + [[212, 80], [340, 104], [370, 176], [150, 196], [286, 70], [236, 150], [322, 238]].map(([x, y], i) => `<path transform="translate(${x} ${y}) scale(${i % 2 ? 0.55 : 0.8})" d="M0 -8 L2.4 -2.4 L8 0 L2.4 2.4 L0 8 L-2.4 2.4 L-8 0 L-2.4 -2.4Z" fill="${p.sun}" opacity="0.9" class="o55-star" style="--si:${i}"/>`).join('') + '</g>'
         : `<g><circle cx="352" cy="104" r="26" fill="${p.sun}" ${OL(p, 1.8)}/>` + [0, 45, 90, 135, 180, 225, 270, 315].map((a) => `<path transform="translate(352 104) rotate(${a})" d="M0 -34 V-42" stroke="${p.ink}" stroke-width="2" stroke-linecap="round" opacity="0.5"/>`).join('')
           + `<path d="M140 122 a12 12 0 0 1 2 -23 a16 16 0 0 1 29 -5 a12 12 0 0 1 21 11 a10 10 0 0 1 -2 17Z" fill="${p.paper}" ${OL(p, 1.6)}/></g>`;
+      /* the side drapes are drawn narrower than the stage opening needs (they crowded props near the edges) */
       const drape = (flip) => {
-        const X = (x) => (flip ? W - x : x);
+        const X = (x) => (flip ? W - x * 0.74 : x * 0.74);
         return `<path d="M${X(0)} 0 H${X(104)} C${X(86)} 120 ${X(108)} 250 ${X(80)} ${H * 0.62} C${X(72)} ${H * 0.72} ${X(92)} ${H * 0.86} ${X(84)} ${H} H${X(0)}Z" fill="${p.curtain}" ${OL(p)}/>`
           + `<path d="M${X(66)} 0 C${X(56)} 150 ${X(78)} 300 ${X(62)} ${H}" stroke="${p.curtainHi}" stroke-width="6" fill="none" opacity="0.8"/>`
           + `<path d="M${X(86)} 20 C${X(74)} 160 ${X(94)} 320 ${X(76)} ${H}" stroke="${p.curtainDk}" stroke-width="4" fill="none" opacity="0.75"/>`
@@ -83320,13 +83323,24 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const nas = { key: 'nas', prop: 'nas', x: nx, y: ny, s: retro ? 2 : 1.5, layer: 'mid', anim: 'rise', delay: 160, opts: { label: pr.device || L('homeNas', 'home nas'), busy: beat === 'install' } };
       /* the lock sits on the NAS's left edge, a third of the way down; the path runs from the laptop's outline to it */
       const tl = A.attach(ctx, nas, 'topLeft'), bl = A.attach(ctx, nas, 'bottomLeft'), lockX = tl[0], lockY = tl[1] + (bl[1] - tl[1]) * 0.34;
-      const lock = { key: 'lock', prop: 'lock', x: lockX, y: lockY, s: retro ? 1 : 1.25, layer: 'front', anim: 'pop', delay: 420, opts: { open: !done } };
+      /* locked until the key is in and checked; then it opens: access granted (it used to snap shut, which reads
+         "locked out") */
+      const lock = { key: 'lock', prop: 'lock', x: lockX, y: lockY, s: retro ? 1 : 1.25, layer: 'front', anim: 'pop', delay: 420, opts: { open: done } };
+      if (beat === 'share') {
+        /* a shared folder on the NAS reached over the network (SMB, NFS, already connected): no key and no lock; SMB
+           signs in with a name and password, the others simply connect */
+        const ln = A.link(ctx, pc, nas), mid = [(ln[0][0] + ln[1][0]) / 2, (ln[0][1] + ln[1][1]) / 2], tr = A.attach(ctx, nas, 'topRight');
+        return [pc, nas, { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 320, opts: { pts: ln } },
+          { key: 'fold', prop: 'folder', x: tr[0] - 6, y: tr[1] - 6, s: retro ? 1 : 1.05, layer: 'front', anim: 'drop', delay: 380, opts: { label: L('sharedFolder', 'shared') } },
+          { key: 'how', prop: 'node', x: mid[0], y: mid[1], s: retro ? 1 : 0.95, layer: 'front', anim: 'pop', delay: 460, opts: { icon: pr.share === 'smb' ? 'person' : 'link', accent: true } },
+          ...sparks([[70, 150, 1], [410, 520, 2]], 800)];
+      }
       const items = [pc, nas, { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 320, opts: { pts: A.link(ctx, pc, lock) } }, lock];
       if (beat === 'find') items.push({ key: 'rings', prop: 'rings', x: nx, y: A.attach(ctx, nas, 'top')[1] - 24, s: 1.3, layer: 'back', anim: 'fade', delay: 200, amb: 'pulse', ambd: 1800 },
         { key: 'n-find', prop: 'note', x: nx, y: ny - 142, layer: 'front', anim: 'fade', delay: 700, opts: { text: L('lookingNearby', 'looking nearby'), dx: -60, dy: -64 } });
       const idCard = { key: 'id', prop: 'identity', x: nx, y: 122, s: retro ? 1 : 1.2, layer: 'front', anim: 'pop', delay: 120, opts: { seed: pr.seed || 'home-nas', words: pr.words || '' } };
       if (beat === 'identity' || beat === 'keys') items.push(idCard);
-      if (beat === 'identity') { const e = A.attach(ctx, idCard, 'left'); items.push({ key: 'n-id', prop: 'note', x: e[0], y: e[1], layer: 'front', anim: 'fade', delay: 600, opts: { text: L('itsId', 'its id'), dx: -44, dy: 58 } }); }
+      if (beat === 'identity') { const e = A.attach(ctx, idCard, 'left'); items.push({ key: 'n-id', prop: 'note', x: e[0], y: e[1], layer: 'front', anim: 'fade', delay: 600, opts: { text: L('itsId', 'its id'), dx: -46, dy: -42 } }); } /* up and to the left: the ID's words sit below the card */
       if (beat === 'keys') {
         /* the keys found on this computer (up to four), the chosen one lit; a new key made just for this, when chosen */
         const n = Math.min(4, pr.keys == null ? 3 : pr.keys) + (pr.newKey ? 1 : 0), step = n > 3 ? 40 : 48, y0 = 352 - ((Math.max(1, n) - 1) * step) / 2;
@@ -83535,7 +83549,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     compose(ctx) {
       const pr = ctx.params || {}, n = pr.n || 0, m = A.metrics(ctx.family);
       const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise' }].concat(A.ensemble(ctx, { poses: n ? ['wave', 'carry', 'stand'] : ['stand', 'stand', 'stand'] }));
-      for (let i = 0; i < Math.min(4, n); i++) items.push({ key: 'pw' + i, prop: 'node', x: 150 + i * 60, y: 60, s: R(ctx) ? 1 : 0.8, layer: 'front', anim: 'pop', delay: 120 + i * 90, opts: { icon: 'spark', accent: true } });
+      /* each connected account lights a spark just above the bar, centred on it (they sat off the bar, left-aligned) */
+      const k = Math.min(4, n);
+      for (let i = 0; i < k; i++) items.push({ key: 'pw' + i, prop: 'node', x: 240 + (i - (k - 1) / 2) * 58, y: m.barY - 46, s: R(ctx) ? 1 : 0.7, layer: 'front', anim: 'pop', delay: 120 + i * 90, opts: { icon: 'spark', accent: true } });
       if (ctx.beat === 'free') [[70, 380], [410, 380]].forEach(([x, y], i) => items.push({ key: 'fx' + i, prop: 'helper', x, y: m.floor - 6, s: m.helperScale * 0.7, layer: 'front', anim: 'drop', delay: 300 + i * 140, amb: 'bob', opts: { variant: (i + 1) % 3, pose: 'wave', px: m.helperPx } }));
       return items;
     }
@@ -86089,7 +86105,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   }
   def('nas-smb', {
     chapter: 'project', stage: 'server_storage_client',
-    scene: (S) => ({ id: 'nas', beat: 'keys', params: sceneParams(S) }),
+    scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'smb' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.smb.eyebrow'), title: () => T('nas.smb.title'), lead: () => T('nas.smb.lead'),
     body(S) {
       const n = N(S), sh = S.env.shares.find((s) => s.id === n.share) || {};
@@ -86109,7 +86125,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   });
   def('nas-nfs', {
     chapter: 'project', stage: 'server_storage_client',
-    scene: (S) => ({ id: 'nas', beat: 'folder', params: sceneParams(S) }),
+    scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'nfs' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.nfs.eyebrow'), title: () => T('nas.nfs.title'), lead: () => T('nas.nfs.lead'),
     body(S) { const n = N(S), sh = S.env.shares.find((s) => s.id === n.share) || {}; return `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>` + F.phases(S, 'nfs:' + n.share, ['mount', 'read'], { mount: T('nas.nfs.phases.mount'), read: T('nas.nfs.phases.read') }); },
     mounted(S) { F.op(S, 'nfs:' + N(S).share, 'cmd.storage.share.mount_check', [{ key: 'mount', ms: 900 }, { key: 'read', ms: 600 }], { payload: { share: N(S).share, readOnly: true } }); },
@@ -86118,7 +86134,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   });
   def('nas-mounted', {
     chapter: 'project', stage: 'server_storage_client',
-    scene: (S) => ({ id: 'nas', beat: 'folder', params: sceneParams(S) }),
+    scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'mounted' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.mounted.eyebrow'), title: () => T('nas.mounted.title'), lead: () => T('nas.mounted.lead'),
     body(S) { const n = N(S); return C.cards('volume', ['/Volumes/Home NAS', '/Volumes/Media'].map((v) => ({ v, glyph: 'folder', title: v.split('/').pop(), sub: v })), n.volume); },
     foot(S) { return { primary: { label: T('chrome.continue'), do: 'use', disabled: !N(S).volume, reason: T('missing.storage') } }; },

@@ -411,7 +411,7 @@
   }
   def('nas-smb', {
     chapter: 'project', stage: 'server_storage_client',
-    scene: (S) => ({ id: 'nas', beat: 'keys', params: sceneParams(S) }),
+    scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'smb' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.smb.eyebrow'), title: () => T('nas.smb.title'), lead: () => T('nas.smb.lead'),
     body(S) {
       const n = N(S), sh = S.env.shares.find((s) => s.id === n.share) || {};
@@ -431,7 +431,7 @@
   });
   def('nas-nfs', {
     chapter: 'project', stage: 'server_storage_client',
-    scene: (S) => ({ id: 'nas', beat: 'folder', params: sceneParams(S) }),
+    scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'nfs' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.nfs.eyebrow'), title: () => T('nas.nfs.title'), lead: () => T('nas.nfs.lead'),
     body(S) { const n = N(S), sh = S.env.shares.find((s) => s.id === n.share) || {}; return `<p class="o55-path" data-key="share">${U.esc(sh.path || '')}</p>` + F.phases(S, 'nfs:' + n.share, ['mount', 'read'], { mount: T('nas.nfs.phases.mount'), read: T('nas.nfs.phases.read') }); },
     mounted(S) { F.op(S, 'nfs:' + N(S).share, 'cmd.storage.share.mount_check', [{ key: 'mount', ms: 900 }, { key: 'read', ms: 600 }], { payload: { share: N(S).share, readOnly: true } }); },
@@ -440,7 +440,7 @@
   });
   def('nas-mounted', {
     chapter: 'project', stage: 'server_storage_client',
-    scene: (S) => ({ id: 'nas', beat: 'folder', params: sceneParams(S) }),
+    scene: (S) => ({ id: 'nas', beat: 'share', params: sceneParams(S, { share: 'mounted' }) }), /* a shared folder: no key, no lock */
     eyebrow: () => T('nas.mounted.eyebrow'), title: () => T('nas.mounted.title'), lead: () => T('nas.mounted.lead'),
     body(S) { const n = N(S); return C.cards('volume', ['/Volumes/Home NAS', '/Volumes/Media'].map((v) => ({ v, glyph: 'folder', title: v.split('/').pop(), sub: v })), n.volume); },
     foot(S) { return { primary: { label: T('chrome.continue'), do: 'use', disabled: !N(S).volume, reason: T('missing.storage') } }; },

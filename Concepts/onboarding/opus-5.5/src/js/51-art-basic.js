@@ -137,9 +137,11 @@
     },
     badge(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
-      return `<g><rect x="-44" y="-15" width="88" height="30" rx="3" fill="${p.paper}" stroke="${o.accent ? p.accent : p.ink}" stroke-width="1.2"/>`
-        + (o.glyph ? `<g transform="translate(-38 -9) scale(0.75)" style="color:${o.accent ? p.accent : p.ink}">${A.glyph(o.glyph)}</g>` : '')
-        + txt(p, o.glyph ? 6 : 0, 3, o.label || '', 6.8, 'middle', o.accent ? p.accent : p.ink) + '</g>';
+      /* sized from its label (small caps at 6.8 with 1.1 tracking run about 6 units a letter), glyph room included */
+      const tw = String(o.label || '').length * 6.1, gw = o.glyph ? 18 : 0, w = Math.max(88, Math.ceil(tw + gw + 20)), x0 = -w / 2;
+      return `<g><rect x="${x0}" y="-15" width="${w}" height="30" rx="3" fill="${p.paper}" stroke="${o.accent ? p.accent : p.ink}" stroke-width="1.2"/>`
+        + (o.glyph ? `<g transform="translate(${x0 + 6} -9) scale(0.75)" style="color:${o.accent ? p.accent : p.ink}">${A.glyph(o.glyph)}</g>` : '')
+        + txt(p, gw / 2, 3, o.label || '', 6.8, 'middle', o.accent ? p.accent : p.ink) + '</g>';
     },
     identity(ctx, item) {
       const p = ctx.pal, o = item.opts || {};

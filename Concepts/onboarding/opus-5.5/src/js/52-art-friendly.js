@@ -163,7 +163,7 @@
       const p = ctx.pal, o = item.opts || {};
       return `<g>${sh(p, '<rect x="-36" y="-36" width="72" height="72" rx="16"/>')}<rect x="-36" y="-36" width="72" height="72" rx="16" fill="${p.paper}" ${OL(p)}/>`
         + `<g transform="translate(-22 -22)">${A.identitySvg(o.seed || 'nas', 44, 'friendly').replace('<svg', '<svg x="0" y="0"')}</g>`
-        + (o.words ? label(p, 0, 52, o.words, p.ink) : '') + '</g>';
+        + (o.words ? label(p, 0, 52, o.words, p.dark ? p.paper : p.ink) : '') + '</g>';
     },
     note(ctx, item) {
       const p = ctx.pal, o = item.opts || {}, dx = o.dx == null ? 60 : o.dx, dy = o.dy == null ? -30 : o.dy, w = (o.text || '').length * 5.6 + 18, x = dx >= 0 ? dx : dx - w;
@@ -191,8 +191,9 @@
           + [[212, 80], [340, 104], [370, 176], [150, 196], [286, 70], [236, 150], [322, 238]].map(([x, y], i) => `<path transform="translate(${x} ${y}) scale(${i % 2 ? 0.55 : 0.8})" d="M0 -8 L2.4 -2.4 L8 0 L2.4 2.4 L0 8 L-2.4 2.4 L-8 0 L-2.4 -2.4Z" fill="${p.sun}" opacity="0.9" class="o55-star" style="--si:${i}"/>`).join('') + '</g>'
         : `<g><circle cx="352" cy="104" r="26" fill="${p.sun}" ${OL(p, 1.8)}/>` + [0, 45, 90, 135, 180, 225, 270, 315].map((a) => `<path transform="translate(352 104) rotate(${a})" d="M0 -34 V-42" stroke="${p.ink}" stroke-width="2" stroke-linecap="round" opacity="0.5"/>`).join('')
           + `<path d="M140 122 a12 12 0 0 1 2 -23 a16 16 0 0 1 29 -5 a12 12 0 0 1 21 11 a10 10 0 0 1 -2 17Z" fill="${p.paper}" ${OL(p, 1.6)}/></g>`;
+      /* the side drapes are drawn narrower than the stage opening needs (they crowded props near the edges) */
       const drape = (flip) => {
-        const X = (x) => (flip ? W - x : x);
+        const X = (x) => (flip ? W - x * 0.74 : x * 0.74);
         return `<path d="M${X(0)} 0 H${X(104)} C${X(86)} 120 ${X(108)} 250 ${X(80)} ${H * 0.62} C${X(72)} ${H * 0.72} ${X(92)} ${H * 0.86} ${X(84)} ${H} H${X(0)}Z" fill="${p.curtain}" ${OL(p)}/>`
           + `<path d="M${X(66)} 0 C${X(56)} 150 ${X(78)} 300 ${X(62)} ${H}" stroke="${p.curtainHi}" stroke-width="6" fill="none" opacity="0.8"/>`
           + `<path d="M${X(86)} 20 C${X(74)} 160 ${X(94)} 320 ${X(76)} ${H}" stroke="${p.curtainDk}" stroke-width="4" fill="none" opacity="0.75"/>`
