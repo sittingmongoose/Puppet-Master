@@ -24,7 +24,7 @@
 - **Units.** SMPFS-167 and SMPFS-168 are the only units whose content changes. The readiness report adds four `depends_on` edges and one Section 15 drift row.
 - **Section 15.** It is the reviewer's proposed file plus the two S-08 entries and nothing else, SHA-256 `c3ff1624...`.
 - **Tests.** Browser created 63 OK, reset 53 OK, admission 38 OK, and `pm-browser-event-admission.py` passes, all as on `main`.
-- **An earlier run.** The same checks on the pre-rebase commit `a6252abe46` gave the same Section 15 deltas against `main` `3c4a64b2b5`. They are in the parent directory, whose `SHA256SUMS` has SHA-256 `6414216ac827848e663c73971e4e9c1f139cdd19f74f20fa1d8ca92d05342b02`; its `NOTE.txt` explains the base line in `context.txt`.
+- **An earlier run.** The same checks on the pre-rebase commit `a6252abe46` gave the same Section 15 deltas against `main` `3c4a64b2b5`. They are in the parent directory, whose `SHA256SUMS` has SHA-256 `6414216ac827848e663c73971e4e9c1f139cdd19f74f20fa1d8ca92d05342b02`; its `NOTE.txt` explains the base line in `context.txt` (`NOTE.txt` is not in that `SHA256SUMS`; its SHA-256 is `4bb5323776211229e09ba9e082d68cbe0766886da1458d7e9dab7b00c7a58a8a`).
 
 ## Effect on the depth grade
 
