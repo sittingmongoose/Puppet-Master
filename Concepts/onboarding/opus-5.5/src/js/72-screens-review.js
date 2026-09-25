@@ -23,7 +23,7 @@
 
   function beginsAs(S) {
     const d = md(S);
-    if (d.project_mode === 'existing_local') return d.project_transport === 'ssh' || d.project_transport === 'mounted' ? T('review.begins.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref }) : T('review.begins.existing_local', { path: d.local_location });
+    if (d.project_mode === 'existing_local') return d.project_transport !== 'local' ? T(d.project_transport === 'puppet_master' ? 'review.begins.devicePaired' : 'review.begins.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref }) : T('review.begins.existing_local', { path: d.local_location });
     if (d.project_mode === 'existing_online') return T('review.begins.existing_online', { repo: d.repository_ref.replace(/^[a-z_]+:/, ''), service: forgeName(d) });
     if (d.project_mode === 'restore') return T('review.begins.restore', { project: d.project_name });
     return T('review.begins.new');
@@ -203,7 +203,7 @@
         cm.receipts = cm.receipts || {}; cm.receipts.online = 'receipt:online-copy:' + d.forge + ':' + d.repository_name;
       }
       if (k === 'settings') return applySettings(S);
-      if (k === 'check') { ensureProject(S); if (d.storage_mode === 'network_location' || d.project_transport === 'ssh') cm.writeTest = 'ok'; }
+      if (k === 'check') { ensureProject(S); if (d.storage_mode === 'network_location' || d.project_transport === 'ssh' || d.project_transport === 'puppet_master') cm.writeTest = 'ok'; }
       return null;
     } }));
     if (!cm.projectId && order[0] !== 'folder') ensureProject(S);
@@ -332,11 +332,11 @@
         if (next === 'signin' && b.dest === 'nas' && !nasReady(S)) {
           /* the same SSH steps as files on a NAS: its identity before trust, a key, one sign-in; then back here */
           S.sess.nas = { purpose: 'dest', method: 'ssh', device: O55.backup.nas(S).id, trusted: false, installed: false, key: null };
-          S.save(); return O55.ui.go('nas-identity');
+          S.save(); return O55.ui.go(O55.nas.entry(S));
         }
         if (next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessTake(S, b.dest, acc(S))) { O55.sound.play('error'); O55.ui.refresh(); return; }
         if (next === 'signin' && (b.dest === 'gdrive' || b.dest === 'onedrive')) O55.official.open(S, { name: O55.backup.label(S, b.dest), url: O55.fixtures.OFFICIAL.backup[b.dest] || null });
-        F.op(S, 'backup:' + next, cmd, [{ key: next, ms: next === 'test' ? 1200 : next === 'signin' ? 1800 : 700 }], { payload: { destination: b.dest, transport: b.dest === 'nas' ? 'ssh' : b.dest, path: b.dest === 'nas' ? NAS_PATH : null, credential_ref: ACCESSED(b.dest) ? 'credential:backup:' + b.dest : null }, onDone: () => { if (!done.includes(next)) done.push(next); b.state = done.length === STEPS.length ? 'done' : 'partial'; S.save(); O55.ui.refresh(); } });
+        F.op(S, 'backup:' + next, cmd, [{ key: next, ms: next === 'test' ? 1200 : next === 'signin' ? 1800 : 700 }], { payload: { destination: b.dest, transport: b.dest === 'nas' ? O55.nas.transport(S) : b.dest, path: b.dest === 'nas' ? NAS_PATH : null, credential_ref: ACCESSED(b.dest) ? 'credential:backup:' + b.dest : null }, onDone: () => { if (!done.includes(next)) done.push(next); b.state = done.length === STEPS.length ? 'done' : 'partial'; S.save(); O55.ui.refresh(); } });
       },
       later(S) { S.sess.backup.state = 'later'; S.save(); O55.ui.go('ai'); },
       finish(S) { O55.ui.go('ai'); }

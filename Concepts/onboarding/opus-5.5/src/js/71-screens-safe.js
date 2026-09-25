@@ -301,11 +301,13 @@
 
   /* ================================================================== backup destinations */
   /* The NAS a backup can go to is one found on this network. It is no backup if the Project's own files already live
-     on that NAS: on it over SSH, as its storage, or because the Puppet Master Server is that NAS. */
+     on that NAS: on it over SSH or through its own Puppet Master, as its storage, or because the Puppet Master Server
+     is that NAS. */
   const backupNas = (S) => S.env.devices.find((x) => x.ssh) || null;
+  const ON_NAS = new Set(['ssh', 'puppet_master']);
   function filesOnNas(S) {
     const d = md(S), n = S.sess.nas || {}, nas = backupNas(S); if (!nas) return false;
-    if (n.device === nas.id && n.purpose !== 'dest' && (d.project_transport === 'ssh' || (d.storage_mode === 'network_location' && d.storage_transport === 'ssh'))) return true;
+    if (n.device === nas.id && n.purpose !== 'dest' && (ON_NAS.has(d.project_transport) || (d.storage_mode === 'network_location' && ON_NAS.has(d.storage_transport)))) return true;
     const srv = d.server_mode !== 'this_device' ? S.env.pmServers.find((x) => x.id === d.server_ref) : null;
     return !!(srv && srv.device === nas.id);
   }

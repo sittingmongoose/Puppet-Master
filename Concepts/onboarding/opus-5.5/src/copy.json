@@ -170,8 +170,6 @@
       "found": "Found on your network",
       "projects": "{n} Projects",
       "oneProject": "1 Project",
-      "vpn": "Also look on my VPN",
-      "vpnSub": "Finds Puppet Masters on a work or home VPN too",
       "address": "Enter an address instead",
       "addressLabel": "Its address",
       "addressHint": "For example home-nas.local or 192.168.1.20",
@@ -195,7 +193,8 @@
         "sub": "Paste the link your Server gave you",
         "label": "Remote Link"
       },
-      "local": "On this network"
+      "local": "On this network",
+      "vpnLine": "You can connect through a VPN too. When this device is on one, Puppet Masters there show up here as well."
     },
     "review": {
       "eyebrow": "Connect this device",
@@ -782,7 +781,8 @@
       "existing_local": "Folder {path}",
       "existing_online": "{repo} from {service}",
       "restore": "Backup of {project}",
-      "device": "Files on {device}"
+      "device": "Files on {device}",
+      "devicePaired": "Files on {device}, through its Puppet Master"
     },
     "fresh": "Start fresh",
     "copied": "Like {project}",
@@ -1024,7 +1024,7 @@
       "exports": "NFS shares found",
       "volumes": "Connected drives",
       "pmTag": "Runs Puppet Master",
-      "pmNote": "{name} runs Puppet Master, so they pair directly. No SSH password needed.",
+      "pmNote": "{name} runs Puppet Master, so this computer pairs with it: you approve it once, and no key or password is needed.",
       "noAnswer": "Nothing answered at {addr}. Check the address and that the device is on.",
       "choose": "Choose a device"
     },
@@ -1101,8 +1101,7 @@
         "unlock": "Unlocking {key}",
         "add": "Adding your key to {name}",
         "verify": "Checking it works without a password",
-        "perms": "Checking you can use the folders",
-        "pmpair": "Pairing with Puppet Master on {name}"
+        "perms": "Checking you can use the folders"
       },
       "fail": {
         "wrong_password": "{name} didn't accept the password.",
@@ -1155,6 +1154,17 @@
       "eyebrow": "Connected drive",
       "title": "Choose the drive",
       "lead": "Drives this computer already shows in its file browser."
+    },
+    "pmpair": {
+      "eyebrow": "Pair with Puppet Master",
+      "title": "Pair with Puppet Master on {name}",
+      "doneTitle": "Paired with {name}",
+      "lead": "Check the picture matches the one {name} shows, then choose how to approve this computer.",
+      "why": "{name} runs Puppet Master, so it hands over the folder you pick itself. No SSH key or password is involved.",
+      "trust": "Pairing this computer for this folder",
+      "pair": "Pair",
+      "another": "Choose another way",
+      "useSsh": "Use SSH instead"
     }
   },
   "demo": {

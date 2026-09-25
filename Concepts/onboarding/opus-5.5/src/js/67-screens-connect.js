@@ -11,10 +11,14 @@
   const words = (seed) => O55.art.identity(seed).words.join(' ');
   const nProjects = (n) => T(n === 1 ? 'connect.route.oneProject' : 'connect.route.projects', { n });
 
-  /* read-only discovery, cached per network scope (cmd.server.discovery.refresh) */
-  function scanKey(S) { return 'discover:connect:' + (cd(S).include_vpn_networks ? 'vpn' : 'lan'); }
+  /* read-only discovery, cached per network scope (cmd.server.discovery.refresh). It looks on the local network and on
+     a VPN this device is already connected to: the person turns a VPN on or off on their own device, so there is no
+     switch for it here (RAS-014); the draft records that a VPN was included. */
+  const vpnOn = (S) => !!S.env.here.vpn;
+  function scanKey(S) { return 'discover:connect:' + (vpnOn(S) ? 'vpn' : 'lan'); }
   function scan(S) {
-    const vpn = cd(S).include_vpn_networks;
+    const vpn = vpnOn(S);
+    if (cd(S).include_vpn_networks !== vpn) { O55.draft.set(cd(S), { include_vpn_networks: vpn }); S.save(); }
     F.op(S, scanKey(S), 'cmd.server.discovery.refresh', [{ key: 'lan', ms: 1100 }].concat(vpn ? [{ key: 'vpn', ms: 800 }] : []), { payload: { scope: vpn ? 'lan+vpn' : 'lan' } });
   }
   function found(S) {
@@ -60,7 +64,7 @@
           if (!list.length) out += `<div class="o55-row o55-row-wait" data-key="scan"><span class="o55-spin" aria-hidden="true"></span><span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('connect.route.looking'))}</span></span></div>`;
           else out += C.cards('pickServer', list.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: s.address + ' · ' + nProjects(s.projects.length), tag: s.via === 'vpn' ? 'VPN' : '' })), d.server_ref, { label: T('connect.route.found') });
           if (st && st.state === 'done' && !list.length) out += C.note(T('connect.route.none'), 'warn');
-          out += C.toggle({ do: 'vpn', on: d.include_vpn_networks, label: T('connect.route.vpn'), sub: T('connect.route.vpnSub') });
+          out += C.note(T('connect.route.vpnLine'), 'info', 'link');
           out += `<div class="o55-sublinks" data-key="l-addr">${C.link(T('connect.route.address'), 'manualOn')}</div>`;
         }
       } else if (mode === 'tailscale') {
@@ -91,7 +95,6 @@
     },
     do: {
       pickServer(S, id, el) { const s = server(S, id); choose(S, s, { server_connection_mode: 'discover' }); O55.ui.refresh(); O55.ui.charm(el, s.name, 'server'); },
-      vpn(S) { O55.draft.set(cd(S), { include_vpn_networks: !cd(S).include_vpn_networks }); S.save(); O55.sound.play(cd(S).include_vpn_networks ? 'toggleOn' : 'toggleOff'); scan(S); O55.ui.refresh(); },
       manualOn(S) { S.sess.connect.manual = true; S.save(); O55.ui.refresh(); const i = S.root.querySelector('#o55f-addr'); if (i) i.focus(); },
       /* back to the list: a Server found only through the typed address is not chosen any more (C24) */
       manualOff(S) { const c = S.sess.connect; if (c.manual) choose(S, null, { server_connection_mode: 'discover' }); c.manual = false; S.save(); O55.ui.refresh(); },
@@ -100,7 +103,7 @@
          other routes' details (a web address, a Remote Link) leave the draft. The same route again changes nothing. */
       route(S, mode) {
         const d = cd(S); if (d.remote_mode === mode) { O55.draft.set(d, { remote_more: true }); S.save(); return O55.ui.refresh(); }
-        const patch = { remote_mode: mode, remote_more: true, proxy_hostname: '', remote_endpoint: '' };
+        const patch = { remote_mode: mode, remote_more: true, proxy_hostname: '', remote_endpoint: '', include_vpn_networks: mode === 'local_or_vpn' && vpnOn(S) };
         if (mode === 'tailscale' && !d.tailscale_control) patch.tailscale_control = 'hosted';
         patch.server_connection_mode = mode === 'reverse_proxy' || mode === 'remote_link' ? 'manual' : 'discover';
         S.sess.connect.manual = false;

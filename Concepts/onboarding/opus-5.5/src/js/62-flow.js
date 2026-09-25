@@ -21,7 +21,7 @@
     const epoch = S.epoch || 0, stale = () => (S.epoch || 0) !== epoch;
     S.sess.ops[key] = { state: 'running', phases: phases.map((p) => ({ key: p.key, status: 'waiting' })), code: null };
     S.save(); O55.ui.refresh();
-    return O55.owners.dispatch(cmdId, opts.payload || {}, S.ctx(), () => O55.owners.operation(key, phases, (st) => {
+    return O55.owners.dispatch(cmdId, opts.payload || {}, Object.assign(S.ctx(), opts.ctx || {}), () => O55.owners.operation(key, phases, (st) => {
       if (stale()) return;
       S.sess.ops[key] = { state: st.state, phases: st.phases, code: st.code, failedAt: st.failedAt, receipt: O55.owners.opState(key) && O55.owners.opState(key).receipt };
       S.save();

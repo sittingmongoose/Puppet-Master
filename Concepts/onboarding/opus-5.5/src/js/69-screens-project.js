@@ -175,7 +175,7 @@
       /* where its files live: an existing folder stays where it is (also on a Server); a new or copied Project on a
          Server offers the Server, this device or a network drive */
       if (d.project_mode === 'existing_local') {
-        const path = d.project_transport === 'ssh' ? (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref : d.local_location;
+        const path = d.project_transport === 'ssh' || d.project_transport === 'puppet_master' ? (S.sess.nas && S.sess.nas.folderLabel) || d.project_source_ref : d.local_location;
         out += `<p class="o55-locline" data-key="loc">${C.small('folder', 16)}<span>${U.esc(onServer(S) && d.project_transport === 'local' ? T('name.keptOn', { path, name: serverName(S) }) : T('name.kept', { path }))}</span></p>`;
       } else if (onServer(S)) {
         const nm = serverName(S);

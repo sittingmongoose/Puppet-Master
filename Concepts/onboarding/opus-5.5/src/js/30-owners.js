@@ -26,7 +26,9 @@
     'cmd.storage.share.mount_check': { owner: 'Storage', phase: 'selected_source_auth', canonical: false },
     /* Server preflow (own confirmation) */
     'cmd.server.claim': { owner: 'Server', phase: 'server_setup' },
-    'cmd.client.pair.start': { owner: 'Server', phase: 'server_setup' },
+    /* also consented selected-source pairing (PWIZ-029): the person's Pair click on a device that runs Puppet Master */
+    'cmd.client.pair.start': { owner: 'Server', phase: 'server_setup', selectedSource: true },
+    'cmd.client.pair.cancel': { owner: 'Server', phase: 'server_setup', selectedSource: true },
     'cmd.restore.preview': { owner: 'Backup', phase: 'read_only_preflight' },
     'cmd.restore.apply': { owner: 'Backup', phase: 'restore_preflow', canonical: false },
     /* the one reviewed commit and its child owners */
@@ -63,7 +65,7 @@
     const row = TABLE[id]; if (!row) return { ok: false, reason: 'unknown_command' };
     const s = ctx || {};
     if (row.phase === 'tour_local' || PRECOMMIT.has(row.phase)) return { ok: true };
-    if (row.phase === 'server_setup') return s.serverConfirmed ? { ok: true } : { ok: false, reason: 'needs_server_confirmation' };
+    if (row.phase === 'server_setup') return s.serverConfirmed || (row.selectedSource && s.sourcePairConfirmed) ? { ok: true } : { ok: false, reason: 'needs_server_confirmation' };
     if (row.phase === 'restore_preflow') return s.restoreConfirmed ? { ok: true } : { ok: false, reason: 'needs_restore_confirmation' };
     if (row.phase === 'project_commit') return s.reviewConfirmed ? { ok: true } : { ok: false, reason: 'needs_review_confirmation' };
     if (row.phase.startsWith('postcommit')) return s.committed ? { ok: true } : { ok: false, reason: 'needs_committed_project' };
@@ -108,7 +110,9 @@
       phases: phases.map((p) => ({ key: p.key, status: op.done.includes(p.key) ? 'done' : op.current === p.key ? 'active' : op.failedAt === p.key ? 'failed' : 'waiting' })) };
   }
   function opState(key) { return OPS[key] || null; }
+  /* stop one operation at its next phase boundary (a pairing the person turned away from) */
+  function cancelOp(key) { const o = OPS[key]; if (o) { o.cancelled = true; delete OPS[key]; } }
   function resetOps() { Object.keys(OPS).forEach((k) => { OPS[k].cancelled = true; delete OPS[k]; }); }
 
-  O55.owners = { TABLE, log, dispatch, operation, opState, resetOps, allowed, on(fn) { listeners.add(fn); return () => listeners.delete(fn); } };
+  O55.owners = { TABLE, log, dispatch, operation, opState, cancelOp, resetOps, allowed, on(fn) { listeners.add(fn); return () => listeners.delete(fn); } };
 })();

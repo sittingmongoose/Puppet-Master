@@ -75,7 +75,7 @@
       scenario: 'fresh',
       client: { id: 'client:this', name: "Jared's MacBook Pro", os: 'macOS', user: 'jared' },
       here: {
-        id: 'server:this', name: 'This computer', freeGB: 212, git: true, jj: true, internet: true,
+        id: 'server:this', name: 'This computer', freeGB: 212, git: true, jj: true, internet: true, vpn: true, /* already on a VPN (the office one) */
         projectsRoot: 'Documents › Puppet Master',
         sshKeys: [
           { id: 'k-ed', file: '~/.ssh/id_ed25519', comment: 'jared@MacBook-Pro', type: 'ed25519', where: 'agent' },

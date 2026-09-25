@@ -253,12 +253,79 @@ def('n5', 'readOnly', 'Read-only NAS folder is refused', async (d, A) => {
   await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:new']||{}).state === 'done'", 'installed', 9000); await d.primary();
   await d.act('cd', '/volume1/projects'); A.ok((await d.primaryInfo()).disabled, 'Use this folder is disabled for a read-only folder');
 });
-def('n6', 'homeNasPm', 'NAS already runs Puppet Master: pairs, no SSH password', async (d, A) => {
+/* A NAS that runs Puppet Master (PWIZ-029): its identity, then the Server owner's pairing by approval, code or QR;
+   no SSH key, no password, and the draft records puppet_master with the pairing result. */
+const toPmPair = async (d) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary(); await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home');
-  A.ok(await d.state(() => /pair directly/.test(document.body.textContent)), 'explains direct pairing'); await d.primary(); await d.primary();
-  A.eq(await d.screen(), 'nas-install', 'no key or password steps'); await until(d, "Object.keys(window.O55.S.sess.ops).some((k) => k.startsWith('sshinstall:nas-home') && window.O55.S.sess.ops[k].state === 'done')", 'paired', 8000);
+};
+const pairOk = "Object.keys(window.O55.S.sess.ops).some((k) => /^pmpairperms:nas-home/.test(k) && window.O55.S.sess.ops[k].state === 'done')";
+def('n6', 'homeNasPm', 'NAS already runs Puppet Master: identity first, then approval; recorded as puppet_master', async (d, A) => {
+  await toPmPair(d);
+  A.ok(await d.state(() => /pairs with it/.test(document.body.textContent)), 'explains pairing'); await d.primary();
+  A.eq(await d.screen(), 'nas-pmpair', 'pairing screen, not the SSH steps');
+  A.ok(await d.state(() => !!document.querySelector('.o55-layer:not(.o55-out) .o55-identity-chip')), 'identity shown before pairing');
+  A.ok(!(await d.commands()).some((c) => c.startsWith('cmd.client.pair.start')), 'nothing paired before the Pair click');
+  A.ok(await d.state(() => !!document.querySelector('.o55-card.o55-on[data-arg="approval"]')), 'approval is the default way');
+  A.eq((await d.primaryInfo()).label, 'Pair', 'the button says Pair'); await d.primary();
+  await until(d, pairOk, 'approved and folders checked', 10000);
+  const cmds = await d.commands();
+  A.ok(cmds.includes('cmd.client.pair.start:server_setup'), 'pairing through the Server owner, allowed as consented selected-source pairing');
+  A.ok(!cmds.some((c) => c.startsWith('cmd.ssh_connection')), 'no SSH key command at all');
   await d.primary(); A.eq(await d.screen(), 'nas-folder', 'folder browser');
+  await d.act('cd', '/volume1/projects'); await d.act('cd', '/volume1/projects/recipe-app'); await d.primary();
+  A.eq(await d.screen(), 'name', 'name'); const dr = await d.draft('main');
+  A.eq(dr.project_transport, 'puppet_master', 'puppet_master transport'); A.ok(/^pm:home-nas\//.test(dr.project_source_ref), 'non-secret device-and-path reference');
+  A.ok(dr.source_access_authorization_refs.includes('pairing:home-nas:source-read'), 'pairing result bound'); A.eq(dr.server_mode, 'this_device', 'work still runs here');
+  A.ok(dr.server_ref !== 'pm:home', 'the NAS does not become the Server');
+  A.capture('n6 paired source', dr);
+});
+def('n11', 'homeNasPm', 'Pairing by code: a wrong code is explained, the right one pairs', async (d, A) => {
+  await toPmPair(d); await d.primary(); await d.act('pairing', 'code'); await d.primary();
+  await until(d, "Object.keys(window.O55.S.sess.ops).some((k) => /^pmpairreach:nas-home/.test(k) && window.O55.S.sess.ops[k].state === 'done')", 'reached', 5000);
+  await d.type('pmcode', 'AAAA-BBBB'); await d.act('checkCode', null, { settle: 1400 });
+  A.ok(await d.state(() => /doesn't match/.test(document.body.textContent)), 'wrong code explained');
+  A.ok(!(await d.state(() => window.O55.S.sess.nas.paired)), 'not paired on a wrong code');
+  await d.type('pmcode', 'A7K9-M2Q4'); await d.act('checkCode', null, { settle: 1800 }); await until(d, pairOk, 'paired by code', 6000);
+  A.ok(true, 'paired by code');
+});
+def('n12', 'homeNasPm', 'Use SSH instead: the ordinary key route, recorded as ssh', async (d, A) => {
+  await toPmPair(d); await d.primary(); await d.act('useSsh');
+  A.eq(await d.screen(), 'nas-identity', 'SSH identity step'); await d.primary();
+  A.eq(await d.screen(), 'nas-key', 'choose a key'); await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys', 5000); await d.primary();
+  await d.type('user', 'jared'); await d.type('pw', 'correct horse'); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:new']||{}).state === 'done'", 'key installed', 9000); await d.primary();
+  await d.act('cd', '/volume1/projects'); await d.act('cd', '/volume1/projects/recipe-app'); await d.primary();
+  const dr = await d.draft('main'); A.eq(dr.project_transport, 'ssh', 'ssh transport'); A.ok(!(await d.commands()).some((c) => c.startsWith('cmd.client.pair')), 'no pairing');
+  A.capture('n12 ssh on a Puppet Master device', dr);
+});
+def('n13', 'homeNasPm', 'Choosing another way while waiting cancels the pairing and records nothing', async (d, A) => {
+  await toPmPair(d); await d.primary(); await d.primary();
+  await until(d, "Object.values(window.O55.S.sess.ops).some((o) => o.state === 'running' && (o.phases||[]).some((p) => p.key === 'approve' && p.status === 'active'))", 'waiting for approval', 5000);
+  A.ok(await d.state(() => !!document.querySelector('[data-key="expiry"]')), 'expiry shown while waiting');
+  await d.act('another', null, { settle: 3800 });
+  A.ok((await d.commands()).includes('cmd.client.pair.cancel:server_setup'), 'the owner run is cancelled');
+  A.ok(!(await d.state(() => window.O55.S.sess.nas.paired)), 'not paired'); A.eq((await d.draft('main')).source_access_authorization_refs.length, 0, 'nothing recorded');
+  A.ok(await d.state(() => !!document.querySelector('.o55-card[data-arg="qr"]')), 'back to the choice of method');
+  await d.act('pairing', 'qr'); await d.primary(); await until(d, pairOk, 'paired by QR', 9000); A.ok(true, 'a second way pairs');
+});
+def('n14', 'homeNasPm', 'A new Project kept on a NAS that runs Puppet Master: storage through pairing', async (d, A) => {
+  await d.openOnboarding(); await toName(d); await d.type('name', 'Garden planner'); await d.act('change'); await d.act('loc', 'network');
+  A.eq(await d.screen(), 'nas-find', 'find device'); await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000);
+  await d.act('device', 'nas-home'); await d.primary(); A.eq(await d.screen(), 'nas-pmpair', 'pairs'); await d.primary(); await until(d, pairOk, 'paired', 10000);
+  await d.primary(); await d.act('cd', '/volume1/projects'); await d.primary();
+  const dr = await d.draft('main'); A.eq(dr.storage_transport, 'puppet_master', 'storage through Puppet Master'); A.eq(dr.storage_mode, 'network_location', 'network storage');
+  A.eq(dr.project_transport, 'local', 'the new Project itself is not a source'); A.ok(dr.source_access_authorization_refs.length >= 1, 'pairing result bound');
+  await d.primary(); A.eq(await d.screen(), 'safe', 'on to keeping it safe'); await d.primary(); await reviewAndCreate(d);
+  A.eq(await d.state(() => window.O55.S.sess.commit.state), 'done', 'created'); A.capture('n14 paired storage', await d.draft('main'));
+});
+def('c4', 'fresh', 'No VPN switch: a line says a VPN works, and a VPN this device is on is searched too', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:office\"]')", 'found on the VPN', 6000);
+  A.ok(await d.state(() => !document.querySelector('.o55-layer:not(.o55-out) [data-o55-do="vpn"]')), 'no VPN switch');
+  A.ok(await d.state(() => /connect through a VPN too/.test(document.body.textContent)), 'the VPN line');
+  A.eq((await d.draft('connect')).include_vpn_networks, true, 'the draft records that the VPN was included');
+  await d.act('more'); await d.act('route', 'tailscale'); A.eq((await d.draft('connect')).include_vpn_networks, false, 'not on another route');
 });
 def('n7', 'keyRefused', 'Key refused once: one clear fix', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary(); await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();

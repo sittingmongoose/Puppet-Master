@@ -18,7 +18,7 @@
   const sceneParams = (S, extra) => {
     const ks = keyring(S), sel = N(S).key || (dev(S) ? defaultKey(S) : null);
     return Object.assign({ device: (dev(S) || {}).name ? dev(S).name.toLowerCase() : undefined, seed: (dev(S) || {}).hostKey, words: dev(S) ? words(dev(S).hostKey) : '',
-      keys: ks.length, pick: ks.findIndex((k) => k.id === sel), newKey: sel === 'new' }, extra || {});
+      keys: ks.length, pick: ks.findIndex((k) => k.id === sel), newKey: sel === 'new', paired: !!N(S).viaPm }, extra || {});
   };
 
   /* ------------------------------------------------------------------ find the device */
@@ -76,7 +76,7 @@
       method(S, v) { N(S).method = v; S.save(); O55.ui.refresh(); },
       device(S, v, el) {
         const [id, cfg] = v.split('|'), n = N(S), h = cfg ? S.env.here.sshConfigHosts.find((x) => S.env.devices.find((d) => d.id === id && d.address === x.host)) : null;
-        if (n.device !== id) { n.trusted = false; n.installed = false; n.key = null; }
+        if (n.device !== id) { Object.assign(n, { trusted: false, installed: false, key: null, paired: false, viaPm: false, pairAsked: false, useSsh: false, pairing: null, code: '' }); }
         n.device = id; n.fromConfig = !!cfg; if (h) { n.user = h.user; n.key = h.key; }
         S.save(); O55.ui.refresh(); O55.ui.charm(el, dev(S).name, 'server');
       },
@@ -93,7 +93,7 @@
         const n = N(S), m = n.method || 'ssh';
         if (m === 'ssh' && n.manual) { const d = S.env.devices.find((x) => x.address === String(n.addr || '').trim()); n.device = d && d.id; }
         S.save();
-        O55.ui.go({ ssh: 'nas-identity', smb: 'nas-smb', nfs: 'nas-nfs', mounted: 'nas-mounted' }[m]);
+        O55.ui.go(m === 'ssh' ? entry(S) : { smb: 'nas-smb', nfs: 'nas-nfs', mounted: 'nas-mounted' }[m]);
       }
     },
     bind: { addr(S, v) { N(S).addr = v; S.save(); O55.ui.refresh(); }, port(S, v) { N(S).port = v.replace(/[^0-9]/g, '').slice(0, 5); S.save(); } }
@@ -126,7 +126,7 @@
       return { primary: { label: hs === 'known' || n.trusted ? T('chrome.continue') : T('nas.identity.confirm'), do: 'trust' } };
     },
     do: {
-      trust(S) { const n = N(S); n.trusted = true; S.env.here.knownHosts[dev(S).address] = dev(S).hostKey; S.save(); if (dev(S).pm) return O55.ui.go('nas-install', { viaPm: true }); O55.ui.go('nas-key'); },
+      trust(S) { const n = N(S); n.trusted = true; S.env.here.knownHosts[dev(S).address] = dev(S).hostKey; S.save(); O55.ui.go('nas-key'); },
       trustNew(S) { N(S).acceptedNew = true; S.save(); O55.ui.refresh(); },
       stop(S) { O55.ui.back(); }
     }
@@ -287,11 +287,11 @@
     eyebrow: () => T('nas.install.eyebrow'),
     title: () => T('nas.install.title'),
     lead: () => T('nas.install.lead'),
-    enter(S, opts) { const n = N(S); n.verifyOnly = !!(opts && opts.verifyOnly); n.viaPm = !!(opts && opts.viaPm); if (n.viaPm) n.key = 'pm'; n.opKey = null; S.save(); },
+    enter(S, opts) { const n = N(S); n.verifyOnly = !!(opts && opts.verifyOnly); n.viaPm = false; n.opKey = null; S.save(); },
     body(S) {
       const n = N(S), d = dev(S), k = keyring(S).find((x) => x.id === n.key), st = F.state(S, installKey(S));
       const order = phaseOrder(S);
-      const labels = { pmpair: T('nas.install.phases.pmpair', { name: d.name }), make: T('nas.install.phases.make'), unlock: T('nas.install.phases.unlock', { key: k ? k.comment : '' }), add: T('nas.install.phases.add', { name: d.name }), verify: T('nas.install.phases.verify'), perms: T('nas.install.phases.perms') };
+      const labels = { make: T('nas.install.phases.make'), unlock: T('nas.install.phases.unlock', { key: k ? k.comment : '' }), add: T('nas.install.phases.add', { name: d.name }), verify: T('nas.install.phases.verify'), perms: T('nas.install.phases.perms') };
       let out = F.phases(S, installKey(S), order, labels);
       if (st && st.state === 'failed') {
         const code = st.code, fix = { refused: 'refusedFix', not_allowed: 'notAllowedFix' }[code];
@@ -299,8 +299,7 @@
         if (code === 'not_allowed') out += C.note(T('nas.install.fail.notAllowedFix', { brand: d.brand }), 'info', 'power');
         if (fix === 'refusedFix') out += `<div class="o55-inline" data-key="fix">${O55.ui.btn({ label: T('nas.install.fail.refusedFix'), do: 'fixPerms', cls: 'o55-small' }, 'o55-secondary')}</div>`;
       }
-      /* paired with the Puppet Master on the device: no key and no password were involved, and the note says so */
-      if (st && st.state === 'done') out += C.note(n.viaPm ? T('nas.install.donePaired', { name: d.name }) : T('nas.install.done'), 'ok', 'lock');
+      if (st && st.state === 'done') out += C.note(T('nas.install.done'), 'ok', 'lock');
       return out;
     },
     mounted(S) { run(S); },
@@ -317,13 +316,7 @@
         F.reset(S, installKey(S)); N(S).opKey = null; O55.ui.refresh(); run(S);
       },
       fixPerms(S) { dev(S).homePermsOpen = false; F.reset(S, installKey(S)); N(S).opKey = null; S.save(); O55.ui.refresh(); run(S); },
-      /* a backup source goes back to the restore (its backups are listed there), everything else picks a folder */
-      next(S) {
-        if (N(S).purpose === 'backup') { const r = S.sess.restore || {}; r.nasReady = true; S.save(); return O55.ui.go(r.scope !== 'project' ? 'r-unlock' : 'r-pick'); }
-        /* a backup destination: back to Finish protecting your work, which finishes connecting with this key */
-        if (N(S).purpose === 'dest') return O55.ui.go('protect');
-        O55.ui.go('nas-folder');
-      }
+      next(S) { connected(S); }
     },
     skipOnBack: (S) => { const st = F.state(S, installKey(S)); return !!(st && st.state === 'done'); }
   });
@@ -332,7 +325,6 @@
   function installKey(S) { const n = N(S); return n.opKey || 'sshinstall:' + n.device + ':' + (n.key || 'new'); }
   function phaseOrder(S) {
     const n = N(S), k = keyring(S).find((x) => x.id === n.key);
-    if (n.viaPm) return ['pmpair', 'perms'];
     if (n.verifyOnly) return (k && k.passphrase ? ['unlock'] : []).concat(['verify', 'perms']);
     return (n.key === 'new' || !k ? ['make'] : k.passphrase ? ['unlock'] : []).concat(['add', 'verify', 'perms']);
   }
@@ -349,11 +341,10 @@
       /* the key must really be on the device: added just now by the add phase, already there, or added by the person */
       verify: () => (n.verifyOnly && !d.authorized.includes(n.key) ? 'not_added' : d.homePermsOpen ? 'refused' : null)
     };
-    const ms = { pmpair: 1200, make: 700, unlock: 500, add: 1100, verify: 800, perms: 700 };
+    const ms = { make: 700, unlock: 500, add: 1100, verify: 800, perms: 700 };
     F.op(S, installKey(S), 'cmd.ssh_connection.key.install', order.map((k) => ({ key: k, ms: ms[k], fail: failFor[k] })), {
       payload: { device: d.id, key: n.key, publicOnly: true },
       onDone: () => {
-        if (n.viaPm) { n.installed = true; S.save(); return; }
         if (!n.verifyOnly) { if (n.key === 'new') makeNewKey(S); if (!d.authorized.includes(n.key)) d.authorized.push(n.key); }
         n.installed = true;
         const dd = md(S);
@@ -362,6 +353,123 @@
       }
     });
   }
+
+  /* ------------------------------------------------------------------ where the device's steps lead */
+  /* A device that runs Puppet Master is reached through it by pairing (PWIZ-029), unless the person chose SSH; every
+     other device starts with its SSH identity. */
+  const entry = (S) => (dev(S) && dev(S).pm && !N(S).useSsh ? 'nas-pmpair' : 'nas-identity');
+  const transport = (S) => (N(S).viaPm ? 'puppet_master' : 'ssh');
+  /* connected either way: a backup source goes back to the restore (its backups are listed there), a backup
+     destination back to Finish protecting your work, everything else picks a folder */
+  function connected(S) {
+    if (N(S).purpose === 'backup') { const r = S.sess.restore || {}; r.nasReady = true; S.save(); return O55.ui.go(r.scope !== 'project' ? 'r-unlock' : 'r-pick'); }
+    if (N(S).purpose === 'dest') return O55.ui.go('protect');
+    O55.ui.go('nas-folder');
+  }
+
+  /* ------------------------------------------------------------------ pair with the Puppet Master on the device */
+  /* The Server owner's pairing, as on Connect: the device's identity first, then approval from a device that already
+     uses it, its code or its QR. Nothing is paired until the owner reports approval, no SSH key is added, and the
+     person may use SSH instead. Turning away from a pairing cancels it and records nothing. */
+  const pmOf = (S) => { const d = dev(S); if (!d) return null; return S.env.pmServers.find((p) => p.device === d.id) || { id: 'pm:' + d.id, name: d.name, address: d.address, seed: d.hostKey, approver: '', code: '' }; };
+  const pairKey = (S, part) => 'pmpair' + (part || '') + ':' + N(S).device + ':' + (N(S).pairTry || 0);
+  const PAIR_MS = 600000;
+  function pairDone(S) {
+    const n = N(S), d = dev(S), dd = md(S);
+    n.paired = true; n.viaPm = true; n.installed = true;
+    O55.draft.set(dd, { source_access_authorization_refs: Array.from(new Set(dd.source_access_authorization_refs.concat(['pairing:' + U.slug(d.name) + ':source-read']))).slice(0, 16),
+      preflight_result_refs: Array.from(new Set(dd.preflight_result_refs.concat(['preflight:paired-source:' + U.slug(d.name)]))).slice(0, 32) });
+    S.save(); checkFolders(S);
+  }
+  /* read-only: can this computer see the folders it will be offered (the write test waits for Creating); idempotent,
+     so a reopen resumes it */
+  function checkFolders(S) { F.op(S, pairKey(S, 'perms'), 'cmd.project.source_location.test', [{ key: 'perms', ms: 700 }], { payload: { device: N(S).device, readOnly: true } }); }
+  function startPmPair(S) {
+    const n = N(S), p = pmOf(S), m = n.pairing || 'approval', ctx = { sourcePairConfirmed: true };
+    if (!n.pairAsked || n.paired) return;
+    if (!n.pairStart || Date.now() - n.pairStart > PAIR_MS) { n.pairStart = Date.now(); S.save(); }
+    const payload = { server: p.id, method: m, scope: 'selected_source_read', purpose: n.purpose };
+    if (m === 'code') return F.op(S, pairKey(S, 'reach'), 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }], { payload, ctx });
+    const mid = m === 'qr' ? { key: 'qr', ms: 1900 } : { key: 'approve', ms: 2800 };
+    F.op(S, pairKey(S), 'cmd.client.pair.start', [{ key: 'reach', ms: 700 }, mid, { key: 'trust', ms: 800 }], { payload, ctx, onDone: () => pairDone(S) });
+  }
+  def('nas-pmpair', {
+    chapter: 'project', chapterFor: (S) => chapterOf(S), stage: 'server_storage_client',
+    scene: (S) => { const n = N(S), st = F.state(S, pairKey(S)); return { id: 'nas', beat: n.paired ? 'paired' : 'pair', params: sceneParams(S, { seed: (pmOf(S) || {}).seed, words: words((pmOf(S) || {}).seed || ''), method: n.pairing || 'approval', waiting: !!(st && st.state === 'running') }) }; },
+    eyebrow: () => T('nas.pmpair.eyebrow'),
+    title: (S) => (N(S).paired ? T('nas.pmpair.doneTitle', { name: dname(S) }) : T('nas.pmpair.title', { name: dname(S) })),
+    lead: (S) => T(N(S).pairAsked ? 'connect.pair.lead' : 'nas.pmpair.lead', { name: dname(S) }),
+    body(S) {
+      const n = N(S), p = pmOf(S), m = n.pairing || 'approval';
+      const labels = { reach: T('connect.pair.phases.reach', { name: p.name }), approve: T('connect.pair.phases.approve', { device: p.approver }), code: T('connect.pair.phases.code'), qr: T('connect.pair.phases.qr'), trust: T('nas.pmpair.trust'), perms: T('nas.install.phases.perms') };
+      let out = C.identity(p.seed, words(p.seed), p.name + ' · ' + p.address);
+      if (!n.pairAsked) {
+        out += C.note(T('nas.pmpair.why', { name: p.name }), 'info', 'link');
+        return out + C.group(T('connect.review.confirmTitle'), C.cards('pairing', [
+          { v: 'approval', glyph: 'phone', title: T('connect.review.approve.title'), sub: T('connect.review.approve.sub', { device: p.approver || '' }), tag: T('chrome.recommended') },
+          { v: 'code', glyph: 'key', title: T('connect.review.code.title'), sub: T('connect.review.code.sub', { name: p.name }) },
+          { v: 'qr', glyph: 'spark', title: T('connect.review.qr.title'), sub: T('connect.review.qr.sub') }
+        ], m, { label: T('connect.review.confirmTitle') }));
+      }
+      if (m === 'code' && !n.paired) {
+        out += F.phases(S, pairKey(S, 'reach'), ['reach'], labels);
+        const reached = (F.state(S, pairKey(S, 'reach')) || {}).state === 'done', cs = F.state(S, pairKey(S, 'code'));
+        if (reached) {
+          out += C.field({ bind: 'pmcode', label: T('connect.pair.codeLabel', { name: p.name }), value: n.code || '', placeholder: 'A7K9-M2Q4', hint: T('connect.pair.codeHint'), error: cs && cs.state === 'failed' ? T('connect.pair.codeWrong', { name: p.name }) : '', invalid: !!(cs && cs.state === 'failed') });
+          out += `<div class="o55-inline" data-key="checkcode">${O55.ui.btn({ label: T('connect.pair.check'), do: 'checkCode', cls: 'o55-small', disabled: !F.nonEmpty(n.code), reason: T('connect.pair.codeHint') }, 'o55-secondary')}</div>`;
+        }
+        if (cs) out += F.phases(S, pairKey(S, 'code'), ['code', 'trust'], labels);
+      } else if (!n.paired) {
+        out += F.phases(S, pairKey(S), ['reach', m === 'qr' ? 'qr' : 'approve', 'trust'], labels);
+        const st = F.state(S, pairKey(S));
+        const waiting = st && st.state === 'running' && (st.phases || []).some((ph) => (ph.key === 'approve' || ph.key === 'qr') && ph.status === 'active');
+        if (waiting && m === 'approval') {
+          const c = F.countdown((n.pairStart || Date.now()) + PAIR_MS);
+          out += `<p class="o55-hint" data-key="expiry">${U.esc(T('chrome.expiresIn', { m: c.m, s: c.s }))}</p><div class="o55-sublinks" data-key="resend">${C.link(T('connect.pair.resend'), 'resend')}</div>`;
+        }
+        if (waiting && m === 'qr') out += `<div class="o55-viewfinder" data-key="vf" aria-label="${U.esc(T('connect.pair.qrAim', { name: p.name }))}"><span class="o55-vf-line"></span><span class="o55-vf-text">${U.esc(T('connect.pair.qrAim', { name: p.name }))}</span></div>`;
+      }
+      if (n.paired) {
+        out += F.phases(S, pairKey(S, 'perms'), ['perms'], labels);
+        if ((F.state(S, pairKey(S, 'perms')) || {}).state === 'done') out += C.note(T('nas.install.donePaired', { name: p.name }), 'ok', 'lock');
+      }
+      return out;
+    },
+    mounted(S) {
+      const n = N(S);
+      if (n.pairAsked && !n.paired) { startPmPair(S); if ((n.pairing || 'approval') === 'approval') F.ticker(S, 'nas-pmpair', 1000, () => N(S).paired); }
+      if (n.paired) checkFolders(S);
+    },
+    foot(S) {
+      const n = N(S);
+      if (!n.pairAsked) return { secondary: [{ label: T('nas.pmpair.useSsh'), do: 'useSsh' }], primary: { label: T('nas.pmpair.pair'), do: 'pair' } };
+      if (!n.paired) return { secondary: [{ label: T('nas.pmpair.another'), do: 'another' }], primary: { label: T('chrome.continue'), do: 'next', disabled: true, reason: T('connect.pair.phases.approve', { device: (pmOf(S) || {}).approver || '' }) } };
+      const ps = F.state(S, pairKey(S, 'perms'));
+      return { primary: { label: T('chrome.continue'), do: 'next', disabled: !(ps && ps.state === 'done'), reason: T('chrome.working') } };
+    },
+    do: {
+      pairing(S, v) { if (N(S).pairAsked) return; N(S).pairing = v; S.save(); O55.ui.refresh(); },
+      pair(S) { const n = N(S); n.pairAsked = true; n.useSsh = false; n.pairStart = Date.now(); S.save(); O55.ui.refresh(); startPmPair(S); if ((n.pairing || 'approval') === 'approval') F.ticker(S, 'nas-pmpair', 1000, () => N(S).paired); },
+      resend(S) { N(S).pairStart = Date.now(); S.save(); O55.ui.refresh(); U.announce(T('connect.pair.phases.approve', { device: (pmOf(S) || {}).approver || '' }), S.root.querySelector('.o55-win')); },
+      checkCode(S) {
+        const n = N(S), p = pmOf(S), ok = String(n.code || '').replace(/[\s-]/g, '').toUpperCase() === String(p.code || '').replace(/-/g, '');
+        F.reset(S, pairKey(S, 'code'));
+        F.op(S, pairKey(S, 'code'), 'cmd.client.pair.start', [{ key: 'code', ms: 500, fail: () => (ok ? null : 'code_mismatch') }, { key: 'trust', ms: 800 }],
+          { payload: { server: p.id, method: 'code', scope: 'selected_source_read' }, ctx: { sourcePairConfirmed: true }, onDone: () => pairDone(S) });
+      },
+      /* turning away cancels the owner's pairing run and records nothing */
+      another(S) {
+        const n = N(S), p = pmOf(S);
+        ['', 'reach', 'code'].forEach((part) => { O55.owners.cancelOp(pairKey(S, part)); F.reset(S, pairKey(S, part)); });
+        O55.owners.dispatch('cmd.client.pair.cancel', { server: p.id }, Object.assign(S.ctx(), { sourcePairConfirmed: true }));
+        n.pairAsked = false; n.pairTry = (n.pairTry || 0) + 1; n.code = ''; S.save(); O55.ui.refresh();
+      },
+      useSsh(S) { const n = N(S); n.useSsh = true; n.viaPm = false; S.save(); O55.ui.go('nas-identity'); },
+      next(S) { connected(S); }
+    },
+    bind: { pmcode(S, v) { N(S).code = v; S.save(); O55.ui.refresh(); } },
+    skipOnBack: (S) => !!N(S).paired
+  });
 
   /* ------------------------------------------------------------------ choose a folder (SFTP browser) */
   function readOnlyAt(S, path) { const d = dev(S); return (d.readOnly || []).some((p) => path === p || path.startsWith(p + '/')); }
@@ -390,10 +498,10 @@
       adding(S) { N(S).adding = true; S.save(); O55.ui.refresh(); },
       addFolder(S) { const n = N(S), at = n.at || dev(S).roots[0]; n.newFolders = (n.newFolders || []).concat([{ parent: at, name: n.newName.trim() }]); n.adding = false; n.at = at + '/' + n.newName.trim(); n.newName = ''; S.save(); O55.ui.refresh(); },
       use(S) {
-        const n = N(S), d = dev(S), at = n.at, ref = 'ssh:' + U.slug(d.name) + at, dd = md(S);
+        const n = N(S), d = dev(S), at = n.at, tr = transport(S), ref = (tr === 'puppet_master' ? 'pm:' : 'ssh:') + U.slug(d.name) + at, dd = md(S);
         n.folderLabel = d.name + ' › ' + at.split('/').filter(Boolean).join(' › ');
-        if (n.purpose === 'storage') O55.draft.set(dd, { storage_mode: 'network_location', storage_transport: 'ssh', storage_location: ref });
-        else O55.draft.set(dd, { project_source_ref: ref, project_transport: 'ssh', project_name: dd.project_name || O55.project.pretty(at.split('/').pop()) });
+        if (n.purpose === 'storage') O55.draft.set(dd, { storage_mode: 'network_location', storage_transport: tr, storage_location: ref });
+        else O55.draft.set(dd, { project_source_ref: ref, project_transport: tr, project_name: dd.project_name || O55.project.pretty(at.split('/').pop()) });
         S.save();
         O55.ui.go('name');
       }
@@ -455,5 +563,5 @@
     if (n.key === 'k-pm' && !keyring(S).some((x) => x.id === 'k-pm')) keyring(S).push(K_PM(S));
     if (S.sess.ops && S.sess.ops['sshcheck:' + d.id] && S.sess.ops['sshcheck:' + d.id].state === 'done') d.ssh = true;
   }]);
-  O55.nas = { dev, N, pubLine };
+  O55.nas = { dev, N, pubLine, entry, transport };
 })();

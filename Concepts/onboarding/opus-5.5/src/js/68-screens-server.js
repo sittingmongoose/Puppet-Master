@@ -224,7 +224,7 @@
            a key is set up (the SSH steps), then the restore continues */
         if (r.source === 'nas' && !r.nasReady) {
           const n = S.sess.nas = { purpose: 'backup', method: 'ssh', device: r.device, trusted: false, installed: false, key: null };
-          S.save(); return O55.ui.go('nas-identity');
+          S.save(); return O55.ui.go(O55.nas.entry(S)); /* a NAS running Puppet Master pairs instead (PWIZ-029) */
         }
         if (r.source === 'cloud' && r.cloud === 's3' && !r.cloudSignedIn) {
           if (!O55.backup.accessTake(S, 's3', racc(S))) { O55.sound.play('error'); return O55.ui.refresh(); }
@@ -290,7 +290,7 @@
         const r = R(S);
         if (r.scope === 'project') {
           const [bid] = r.pick.split('#'), b = S.env.backups.find((x) => x.id === bid);
-          const transport = r.source === 'nas' ? 'ssh' : r.source === 'cloud' ? 'mounted' : 'local';
+          const transport = r.source === 'nas' ? O55.nas.transport(S) : r.source === 'cloud' ? 'mounted' : 'local';
           /* the place the backup came from is suggested as the new backup's place (marked, so it leaves with the restore) */
           if (!S.sess.backup.dest && (r.source === 'nas' || r.source === 'cloud')) { S.sess.backup.dest = r.source === 'nas' ? 'nas' : (r.cloud || 'gdrive'); S.sess.backup.fromRestore = true; }
           O55.draft.set(md(S), { project_mode: 'restore', backup_source_ref: 'backup:' + U.slug(b.where) + '/' + U.slug(b.project) + '#' + r.pick.split('#')[1], backup_transport: transport, project_name: md(S).project_name || b.project });

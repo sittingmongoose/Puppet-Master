@@ -88,9 +88,9 @@
     compose(ctx) {
       const beat = ctx.beat || 'find', pr = ctx.params || {}, retro = ctx.family === 'retro';
       const cx = 150, cy = 540, nx = 336, ny = 392;
-      const done = beat === 'verified' || beat === 'folder';
+      const done = beat === 'verified' || beat === 'folder' || beat === 'paired';
       const pc = { key: 'pc', prop: 'computer', x: cx, y: cy, s: retro ? 1 : 1.45, layer: 'mid', anim: 'rise', delay: 60, opts: { label: pr.here || L('thisComputer', 'this computer'), screen: done ? 'check' : '' } };
-      const nas = { key: 'nas', prop: 'nas', x: nx, y: ny, s: retro ? 2 : 1.5, layer: 'mid', anim: 'rise', delay: 160, opts: { label: pr.device || L('homeNas', 'home nas'), busy: beat === 'install' } };
+      const nas = { key: 'nas', prop: 'nas', x: nx, y: ny, s: retro ? 2 : 1.5, layer: 'mid', anim: 'rise', delay: 160, opts: { label: pr.device || L('homeNas', 'home nas'), busy: beat === 'install' || (beat === 'pair' && !!pr.waiting) } };
       /* the lock sits on the NAS's left edge, a third of the way down; the path runs from the laptop's outline to it */
       const tl = A.attach(ctx, nas, 'topLeft'), bl = A.attach(ctx, nas, 'bottomLeft'), lockX = tl[0], lockY = tl[1] + (bl[1] - tl[1]) * 0.34;
       /* locked until the key is in and checked; then it opens: access granted (it used to snap shut, which reads
@@ -105,10 +105,22 @@
           { key: 'how', prop: 'node', x: mid[0], y: mid[1], s: retro ? 1 : 0.95, layer: 'front', anim: 'pop', delay: 460, opts: { icon: pr.share === 'smb' ? 'person' : 'link', accent: true } },
           ...sparks([[70, 150, 1], [410, 520, 2]], 800)];
       }
+      const idCard = { key: 'id', prop: 'identity', x: nx, y: 122, s: retro ? 1 : 1.2, layer: 'front', anim: 'pop', delay: 120, opts: { seed: pr.seed || 'home-nas', words: pr.words || '' } };
+      if (beat === 'pair' || beat === 'paired' || (pr.paired && beat === 'folder')) {
+        /* paired with the Puppet Master on the device (PWIZ-029): no key and no lock. One string runs from this computer
+           to the device, the way of approving sits on it (a phone, a code, a QR) and becomes a check once paired */
+        const ln = A.link(ctx, pc, nas), mid = [(ln[0][0] + ln[1][0]) / 2, (ln[0][1] + ln[1][1]) / 2], ok = beat !== 'pair';
+        const out = [pc, nas, { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 320, opts: { pts: ln } },
+          { key: 'how', prop: 'node', x: mid[0], y: mid[1], s: retro ? 1 : 0.95, layer: 'front', anim: 'pop', delay: 460, amb: ok ? null : 'bob',
+            opts: { icon: ok ? 'check' : ({ approval: 'phone', code: 'key', qr: 'spark' }[pr.method] || 'phone'), accent: true } }];
+        if (beat === 'pair') { out.push(idCard); const e = A.attach(ctx, idCard, 'left'); out.push({ key: 'n-id', prop: 'note', x: e[0], y: e[1], layer: 'front', anim: 'fade', delay: 600, opts: { text: L('itsId', 'its id'), dx: -46, dy: -42 } }); }
+        if (beat === 'paired') out.push(...sparks([[mid[0] + 40, mid[1] - 56, 2], [mid[0] - 58, mid[1] - 40, 0], [nx + 70, ny - 150, 1]], 180));
+        if (beat === 'folder') out.push({ key: 'fold', prop: 'folder', x: nx, y: 150, s: retro ? 1 : 1.2, layer: 'front', anim: 'drop', delay: 120, opts: { label: pr.folder || L('projectsFolder', 'projects') } });
+        return out;
+      }
       const items = [pc, nas, { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 320, opts: { pts: A.link(ctx, pc, lock) } }, lock];
       if (beat === 'find') items.push({ key: 'rings', prop: 'rings', x: nx, y: A.attach(ctx, nas, 'top')[1] - 24, s: 1.3, layer: 'back', anim: 'fade', delay: 200, amb: 'pulse', ambd: 1800 },
         { key: 'n-find', prop: 'note', x: nx, y: ny - 142, layer: 'front', anim: 'fade', delay: 700, opts: { text: L('lookingNearby', 'looking nearby'), dx: -60, dy: -64 } });
-      const idCard = { key: 'id', prop: 'identity', x: nx, y: 122, s: retro ? 1 : 1.2, layer: 'front', anim: 'pop', delay: 120, opts: { seed: pr.seed || 'home-nas', words: pr.words || '' } };
       if (beat === 'identity' || beat === 'keys') items.push(idCard);
       if (beat === 'identity') { const e = A.attach(ctx, idCard, 'left'); items.push({ key: 'n-id', prop: 'note', x: e[0], y: e[1], layer: 'front', anim: 'fade', delay: 600, opts: { text: L('itsId', 'its id'), dx: -46, dy: -42 } }); } /* up and to the left: the ID's words sit below the card */
       if (beat === 'keys') {
