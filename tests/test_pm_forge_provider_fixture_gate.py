@@ -53,6 +53,7 @@ def run_isolated_gate(pairs, *, expected_count=None, inputs=None):
         mock.patch.object(GATE, "EXPECTED_CONTRACT_PAIR_COUNT", len(pairs) if expected_count is None else expected_count),
         mock.patch.object(GATE, "load_json", side_effect=load),
         mock.patch.object(GATE, "validate_onboarding_storage_contract", return_value=([], Counter())),
+        mock.patch.object(GATE, "validate_doctor_source_catalog", return_value=([], Counter())),
         mock.patch.object(GATE, "validate_expansion_fixture_pack", return_value=([], Counter())),
         redirect_stdout(stream),
     ):

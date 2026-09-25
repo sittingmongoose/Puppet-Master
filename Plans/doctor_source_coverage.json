@@ -1,0 +1,1221 @@
+{
+  "schema_id": "pm.doctor.source_coverage_catalog.v1",
+  "schema_version": "1.0.0",
+  "artifact_kind": "static_source_coverage_catalog",
+  "coverage_status": "all_source_occurrences_catalogued",
+  "leaf_binding_status": "incomplete",
+  "runtime_authority": "none",
+  "source": {
+    "document": "PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/07_DOCTOR_HEALTH_AND_REMEDIATION.md",
+    "document_sha256": "a17ec624d285dfeaa023cc7ab39aea4374f97b0f00b457ae0e85002be87f8d26",
+    "matrix": "PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/machine/doctor_check_matrix.json",
+    "matrix_sha256": "1cffebd503698e9b46de120aa6bdf7f877ea31a5a031913b1cd37a40fdef1cd5"
+  },
+  "occurrences": [
+    {
+      "occurrence_id": "sep03-doctor-001",
+      "source_pointer": "/groups/0/checks/0",
+      "source_group": "Puppet Master Server",
+      "source_label": "claim",
+      "required_dimensions": [
+        "claim state",
+        "owner authority"
+      ],
+      "owner_refs": [
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/server_system_contracts.schema.json#/$defs/server_record",
+        "Plans/server_system_contracts.schema.json#/$defs/server_bootstrap_run",
+        "Plans/server_system_contracts.schema.json#/$defs/server_bootstrap_receipt"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-002",
+      "source_pointer": "/groups/0/checks/1",
+      "source_group": "Puppet Master Server",
+      "source_label": "server_identity",
+      "required_dimensions": [
+        "identity fingerprint",
+        "stable Server identity"
+      ],
+      "owner_refs": [
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/server_system_contracts.schema.json#/$defs/server_record",
+        "Plans/server_system_contracts.schema.json#/$defs/server_connection_test_receipt"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-003",
+      "source_pointer": "/groups/0/checks/2",
+      "source_group": "Puppet Master Server",
+      "source_label": "catalog_vault",
+      "required_dimensions": [
+        "Catalog access",
+        "Project Vault access"
+      ],
+      "owner_refs": [
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/server_system_contracts.schema.json#/$defs/server_catalog",
+        "Plans/server_system_contracts.schema.json#/$defs/project_registration_summary"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-004",
+      "source_pointer": "/groups/0/checks/3",
+      "source_group": "Puppet Master Server",
+      "source_label": "protocol",
+      "required_dimensions": [
+        "Client/Server compatibility"
+      ],
+      "owner_refs": [
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/server_system_contracts.schema.json#/$defs/server_record",
+        "Plans/server_system_contracts.schema.json#/$defs/server_connection_test_receipt"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-005",
+      "source_pointer": "/groups/0/checks/4",
+      "source_group": "Puppet Master Server",
+      "source_label": "client_connection",
+      "required_dimensions": [
+        "current Client session"
+      ],
+      "owner_refs": [
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/server_system_contracts.schema.json#/$defs/server_connection_projection",
+        "Plans/server_system_contracts.schema.json#/$defs/session_record",
+        "Plans/server_system_contracts.schema.json#/$defs/client_trust_record"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-006",
+      "source_pointer": "/groups/0/checks/5",
+      "source_group": "Puppet Master Server",
+      "source_label": "discovery",
+      "required_dimensions": [
+        "Nearby observation freshness"
+      ],
+      "owner_refs": [
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/server_system_contracts.schema.json#/$defs/discovery_observation"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-007",
+      "source_pointer": "/groups/0/checks/6",
+      "source_group": "Puppet Master Server",
+      "source_label": "endpoint_dedupe",
+      "required_dimensions": [
+        "same Server multiple endpoints",
+        "identity mismatch"
+      ],
+      "owner_refs": [
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/server_system_contracts.schema.json#/$defs/server_endpoint_record",
+        "Plans/server_system_contracts.schema.json#/$defs/discovery_observation"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-008",
+      "source_pointer": "/groups/0/checks/7",
+      "source_group": "Puppet Master Server",
+      "source_label": "app_update",
+      "required_dimensions": [
+        "version",
+        "channel",
+        "install source",
+        "available update",
+        "restart requirement"
+      ],
+      "owner_refs": [
+        "Plans/Release_Supply_Chain.md",
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/application_update_check_contracts.schema.json#/$defs/ApplicationCheckState",
+        "Plans/application_update_check_contracts.schema.json#/$defs/ApplicationSourceResult",
+        "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandOutput"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": "application_update",
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-009",
+      "source_pointer": "/groups/1/checks/0",
+      "source_group": "Devices & Remote Access",
+      "source_label": "trusted_clients",
+      "required_dimensions": [
+        "trust",
+        "expiry",
+        "revocation",
+        "access policy"
+      ],
+      "owner_refs": [
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/server_system_contracts.schema.json#/$defs/client_trust_record",
+        "Plans/server_system_contracts.schema.json#/$defs/client_access_policy",
+        "Plans/server_system_contracts.schema.json#/$defs/revocation_record"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-010",
+      "source_pointer": "/groups/1/checks/1",
+      "source_group": "Devices & Remote Access",
+      "source_label": "pairing",
+      "required_dimensions": [
+        "pairing health",
+        "expiry",
+        "identity confirmation",
+        "approval"
+      ],
+      "owner_refs": [
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/server_system_contracts.schema.json#/$defs/pairing_run",
+        "Plans/server_system_contracts.schema.json#/$defs/pairing_receipt",
+        "Plans/server_system_contracts.schema.json#/$defs/client_trust_record"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-011",
+      "source_pointer": "/groups/1/checks/2",
+      "source_group": "Devices & Remote Access",
+      "source_label": "lan",
+      "required_dimensions": [
+        "identity",
+        "protocol",
+        "API",
+        "stream",
+        "file transfer"
+      ],
+      "owner_refs": [
+        "Plans/Remote_Access_System.md"
+      ],
+      "schema_refs": [
+        "Plans/server_system_contracts.schema.json#/$defs/server_connection_test_receipt",
+        "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_test_receipt"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-012",
+      "source_pointer": "/groups/1/checks/3",
+      "source_group": "Devices & Remote Access",
+      "source_label": "go_tsnet_connector",
+      "required_dimensions": [
+        "process",
+        "binary/build/version",
+        "protocol",
+        "persistent identity"
+      ],
+      "owner_refs": [
+        "Plans/Remote_Access_System.md"
+      ],
+      "schema_refs": [
+        "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_connector_process_projection",
+        "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_connector_configuration"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-013",
+      "source_pointer": "/groups/1/checks/4",
+      "source_group": "Devices & Remote Access",
+      "source_label": "hosted_tailscale_auth_private",
+      "required_dimensions": [
+        "hosted auth",
+        "private listener",
+        "private reachability"
+      ],
+      "owner_refs": [
+        "Plans/Remote_Access_System.md"
+      ],
+      "schema_refs": [
+        "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_authorization_session",
+        "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_private_endpoint_projection"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-014",
+      "source_pointer": "/groups/1/checks/5",
+      "source_group": "Devices & Remote Access",
+      "source_label": "headscale",
+      "required_dimensions": [
+        "control server",
+        "registration",
+        "private endpoint"
+      ],
+      "owner_refs": [
+        "Plans/Remote_Access_System.md"
+      ],
+      "schema_refs": [
+        "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_private_endpoint_projection",
+        "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_connector_configuration"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-015",
+      "source_pointer": "/groups/1/checks/6",
+      "source_group": "Devices & Remote Access",
+      "source_label": "funnel_if_enabled",
+      "required_dimensions": [
+        "enabled applicability",
+        "current preflight",
+        "public ingress health"
+      ],
+      "owner_refs": [
+        "Plans/Remote_Access_System.md"
+      ],
+      "schema_refs": [
+        "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_funnel_projection",
+        "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_test_receipt"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-016",
+      "source_pointer": "/groups/1/checks/7",
+      "source_group": "Devices & Remote Access",
+      "source_label": "nginx_traefik",
+      "required_dimensions": [
+        "TLS",
+        "origin",
+        "WebSocket",
+        "trusted proxies"
+      ],
+      "owner_refs": [
+        "Plans/Remote_Access_System.md"
+      ],
+      "schema_refs": [
+        "Plans/remote_access_system_contracts.schema.json#/$defs/reverse_proxy_configuration",
+        "Plans/remote_access_system_contracts.schema.json#/$defs/public_ingress_security_policy",
+        "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_test_receipt"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-017",
+      "source_pointer": "/groups/1/checks/8",
+      "source_group": "Devices & Remote Access",
+      "source_label": "remote_link",
+      "required_dimensions": [
+        "signaling",
+        "direct",
+        "relay",
+        "E2E"
+      ],
+      "owner_refs": [
+        "Plans/Remote_Access_System.md"
+      ],
+      "schema_refs": [
+        "Plans/remote_access_system_contracts.schema.json#/$defs/remote_link_configuration",
+        "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_projection",
+        "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_test_receipt"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-018",
+      "source_pointer": "/groups/1/checks/9",
+      "source_group": "Devices & Remote Access",
+      "source_label": "manual_vpn",
+      "required_dimensions": [
+        "endpoint",
+        "identity",
+        "protocol"
+      ],
+      "owner_refs": [
+        "Plans/Remote_Access_System.md"
+      ],
+      "schema_refs": [
+        "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_external_endpoint_projection",
+        "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_test_receipt"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-019",
+      "source_pointer": "/groups/2/checks/0",
+      "source_group": "AI Services",
+      "source_label": "installation_if_needed",
+      "required_dimensions": [
+        "provider applicability",
+        "executable",
+        "version/compatibility",
+        "exact Host/Environment"
+      ],
+      "owner_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/BinaryLocator_Spec.md"
+      ],
+      "schema_refs": [
+        "Plans/shared_runtime_contracts.schema.json#/$defs/installation_inventory_record",
+        "Plans/shared_runtime_contracts.schema.json#/$defs/installation_candidate_record",
+        "Plans/shared_runtime_contracts.schema.json#/$defs/installation_lifecycle_record"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-020",
+      "source_pointer": "/groups/2/checks/1",
+      "source_group": "AI Services",
+      "source_label": "auth_profile",
+      "required_dimensions": [
+        "profile",
+        "auth proof",
+        "expiry/currentness"
+      ],
+      "owner_refs": [
+        "Plans/Multi-Account.md"
+      ],
+      "schema_refs": [
+        "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest",
+        "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-021",
+      "source_pointer": "/groups/2/checks/2",
+      "source_group": "AI Services",
+      "source_label": "account_product",
+      "required_dimensions": [
+        "account selection",
+        "product/entitlement"
+      ],
+      "owner_refs": [
+        "Plans/Multi-Account.md"
+      ],
+      "schema_refs": [],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-022",
+      "source_pointer": "/groups/2/checks/3",
+      "source_group": "AI Services",
+      "source_label": "model_capability",
+      "required_dimensions": [
+        "catalog",
+        "model",
+        "capability"
+      ],
+      "owner_refs": [
+        "Plans/Models_System.md"
+      ],
+      "schema_refs": [],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-023",
+      "source_pointer": "/groups/2/checks/4",
+      "source_group": "AI Services",
+      "source_label": "generation",
+      "required_dimensions": [
+        "model-backed proof",
+        "refusal reason",
+        "confidence"
+      ],
+      "owner_refs": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Models_System.md"
+      ],
+      "schema_refs": [],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-024",
+      "source_pointer": "/groups/2/checks/5",
+      "source_group": "AI Services",
+      "source_label": "usage_telemetry_separate",
+      "required_dimensions": [
+        "source confidence",
+        "missing/unknown vs zero",
+        "account/model/route attribution"
+      ],
+      "owner_refs": [
+        "Plans/usage-feature.md"
+      ],
+      "schema_refs": [],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-025",
+      "source_pointer": "/groups/3/checks/0",
+      "source_group": "Code & Version History",
+      "source_label": "source_reachability",
+      "required_dimensions": [
+        "path",
+        "mount",
+        "SSH"
+      ],
+      "owner_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/shared_runtime_contracts.schema.json#/$defs/environment_connection_state",
+        "Plans/shared_runtime_contracts.schema.json#/$defs/environment_domain_sync_state"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-026",
+      "source_pointer": "/groups/3/checks/1",
+      "source_group": "Code & Version History",
+      "source_label": "git_jj",
+      "required_dimensions": [
+        "toolchain",
+        "repository health",
+        "backend"
+      ],
+      "owner_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/Jujutsu_Integration.md"
+      ],
+      "schema_refs": [
+        "Plans/source_control_contracts.schema.json#/$defs/setup_state",
+        "Plans/source_control_contracts.schema.json#/$defs/repository_context",
+        "Plans/source_control_contracts.schema.json#/$defs/native_toolchain_identity",
+        "Plans/source_control_contracts.schema.json#/$defs/jj_effective_capability_snapshot",
+        "Plans/source_control_contracts.schema.json#/$defs/source_control_projection"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-027",
+      "source_pointer": "/groups/3/checks/2",
+      "source_group": "Code & Version History",
+      "source_label": "remote_fetch",
+      "required_dimensions": [
+        "remote identity",
+        "read credential",
+        "fetch permission"
+      ],
+      "owner_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/Jujutsu_Integration.md"
+      ],
+      "schema_refs": [
+        "Plans/source_control_contracts.schema.json#/$defs/effective_operation_capability",
+        "Plans/source_control_contracts.schema.json#/$defs/normalized_remote_record"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-028",
+      "source_pointer": "/groups/3/checks/3",
+      "source_group": "Code & Version History",
+      "source_label": "remote_push",
+      "required_dimensions": [
+        "push target",
+        "write credential",
+        "publish permission"
+      ],
+      "owner_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/Jujutsu_Integration.md"
+      ],
+      "schema_refs": [
+        "Plans/source_control_contracts.schema.json#/$defs/effective_operation_capability",
+        "Plans/source_control_contracts.schema.json#/$defs/normalized_remote_record"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-029",
+      "source_pointer": "/groups/3/checks/4",
+      "source_group": "Code & Version History",
+      "source_label": "forge_api",
+      "required_dimensions": [
+        "account",
+        "scopes",
+        "version",
+        "capabilities"
+      ],
+      "owner_refs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "schema_refs": [
+        "Plans/forge_integration_contracts.schema.json#/$defs/provider_instance_profile",
+        "Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope",
+        "Plans/forge_integration_contracts.schema.json#/$defs/repository_binding"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-030",
+      "source_pointer": "/groups/3/checks/5",
+      "source_group": "Code & Version History",
+      "source_label": "review",
+      "required_dimensions": [
+        "review API read/write/approve/merge independent"
+      ],
+      "owner_refs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "schema_refs": [
+        "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
+        "Plans/forge_integration_contracts.schema.json#/$defs/review_thread",
+        "Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope",
+        "Plans/source_control_contracts.schema.json#/$defs/effective_operation_capability"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-031",
+      "source_pointer": "/groups/3/checks/6",
+      "source_group": "Code & Version History",
+      "source_label": "automation",
+      "required_dimensions": [
+        "provider Actions/Pipelines",
+        "read/dispatch/cancel/rerun separate"
+      ],
+      "owner_refs": [
+        "Plans/Forge_Integrations.md"
+      ],
+      "schema_refs": [
+        "Plans/forge_integration_contracts.schema.json#/$defs/automation_binding",
+        "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection",
+        "Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope",
+        "Plans/source_control_contracts.schema.json#/$defs/effective_operation_capability"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-032",
+      "source_pointer": "/groups/3/checks/7",
+      "source_group": "Code & Version History",
+      "source_label": "origin_cli_if_used",
+      "required_dimensions": [
+        "Origin executable",
+        "Host/Environment",
+        "login profile",
+        "hosting capability"
+      ],
+      "owner_refs": [
+        "Plans/Cursor_Origin_Integration.md"
+      ],
+      "schema_refs": [
+        "Plans/forge_integration_contracts.schema.json#/$defs/origin_cli_operation_profile",
+        "Plans/shared_runtime_contracts.schema.json#/$defs/installation_inventory_record"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-033",
+      "source_pointer": "/groups/3/checks/8",
+      "source_group": "Code & Version History",
+      "source_label": "lfs_submodules_conflicts",
+      "required_dimensions": [
+        "LFS",
+        "submodules",
+        "conflicts"
+      ],
+      "owner_refs": [
+        "Plans/Source_Control_System.md",
+        "Plans/Jujutsu_Integration.md"
+      ],
+      "schema_refs": [
+        "Plans/source_control_contracts.schema.json#/$defs/source_control_projection",
+        "Plans/source_control_contracts.schema.json#/$defs/backup_source_closure_record",
+        "Plans/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_closure_record"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-034",
+      "source_pointer": "/groups/4/checks/0",
+      "source_group": "Backups & Recovery",
+      "source_label": "destination_auth",
+      "required_dimensions": [
+        "auth",
+        "reachability",
+        "TLS",
+        "path",
+        "quota",
+        "throttle"
+      ],
+      "owner_refs": [
+        "Plans/Backup_Restore_System.md"
+      ],
+      "schema_refs": [
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_v3",
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/destination_capability_matrix",
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_health_projection"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-035",
+      "source_pointer": "/groups/4/checks/1",
+      "source_group": "Backups & Recovery",
+      "source_label": "repository_unlock",
+      "required_dimensions": [
+        "unlock-required",
+        "writer/lock"
+      ],
+      "owner_refs": [
+        "Plans/Backup_Restore_System.md"
+      ],
+      "schema_refs": [
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding",
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_health_projection"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": {
+        "descriptor_ref": "Plans/doctor_query_controller_contract_fixtures.json#/valid/0/value/members/0/descriptor",
+        "check_id": "doctor.backup.repository.metadata",
+        "request_schema_ref": "Plans/doctor_query_controller_contracts.schema.json#/$defs/backup_repository_read_request",
+        "result_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding",
+        "coverage": "metadata_subset_only"
+      }
+    },
+    {
+      "occurrence_id": "sep03-doctor-036",
+      "source_pointer": "/groups/4/checks/2",
+      "source_group": "Backups & Recovery",
+      "source_label": "recovery_kit",
+      "required_dimensions": [
+        "public recovery identity",
+        "protected attachment availability",
+        "saved/acknowledged/tested"
+      ],
+      "owner_refs": [
+        "Plans/Backup_Restore_System.md"
+      ],
+      "schema_refs": [
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/recovery_set_public_record",
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/recovery_key_slot"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-037",
+      "source_pointer": "/groups/4/checks/3",
+      "source_group": "Backups & Recovery",
+      "source_label": "last_complete",
+      "required_dimensions": [
+        "scope-complete committed snapshot",
+        "latest attempt distinct"
+      ],
+      "owner_refs": [
+        "Plans/Backup_Restore_System.md"
+      ],
+      "schema_refs": [
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding",
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_receipt",
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_manifest"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": {
+        "descriptor_ref": "Plans/doctor_query_controller_contract_fixtures.json#/valid/0/value/members/0/descriptor",
+        "check_id": "doctor.backup.repository.metadata",
+        "request_schema_ref": "Plans/doctor_query_controller_contracts.schema.json#/$defs/backup_repository_read_request",
+        "result_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding",
+        "coverage": "metadata_subset_only"
+      }
+    },
+    {
+      "occurrence_id": "sep03-doctor-038",
+      "source_pointer": "/groups/4/checks/4",
+      "source_group": "Backups & Recovery",
+      "source_label": "source_jj_coverage",
+      "required_dimensions": [
+        "Git/JJ native dependencies",
+        "dirty/source completeness",
+        "barriers/fences"
+      ],
+      "owner_refs": [
+        "Plans/Backup_Restore_System.md"
+      ],
+      "schema_refs": [
+        "Plans/source_control_contracts.schema.json#/$defs/backup_source_closure_record",
+        "Plans/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_closure_record",
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_manifest"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-039",
+      "source_pointer": "/groups/4/checks/5",
+      "source_group": "Backups & Recovery",
+      "source_label": "verification",
+      "required_dimensions": [
+        "structural",
+        "sampled/full data integrity"
+      ],
+      "owner_refs": [
+        "Plans/Backup_Restore_System.md"
+      ],
+      "schema_refs": [
+        "Plans/backup_snapshot_result_contracts.schema.json#/$defs/backup_verification_receipt_v2",
+        "Plans/backup_snapshot_result_contracts.schema.json#/$defs/backup_snapshot_resolution"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-040",
+      "source_pointer": "/groups/4/checks/6",
+      "source_group": "Backups & Recovery",
+      "source_label": "restore_drill",
+      "required_dimensions": [
+        "isolated drill",
+        "freshness",
+        "compatibility"
+      ],
+      "owner_refs": [
+        "Plans/Backup_Restore_System.md"
+      ],
+      "schema_refs": [
+        "Plans/backup_drill_result_contracts.schema.json#/$defs/backup_drill_verification_receipt_v2",
+        "Plans/backup_drill_result_contracts.schema.json#/$defs/backup_jj_context_verification_receipt_v2"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-041",
+      "source_pointer": "/groups/4/checks/7",
+      "source_group": "Backups & Recovery",
+      "source_label": "retention_hold_prune",
+      "required_dimensions": [
+        "policy",
+        "schedule",
+        "hold",
+        "preview",
+        "cleanup/lease"
+      ],
+      "owner_refs": [
+        "Plans/Backup_Restore_System.md"
+      ],
+      "schema_refs": [
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/retention_preview",
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_retention_decision",
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": {
+        "descriptor_ref": "Plans/doctor_query_controller_contract_fixtures.json#/valid/0/value/members/0/descriptor",
+        "check_id": "doctor.backup.repository.metadata",
+        "request_schema_ref": "Plans/doctor_query_controller_contracts.schema.json#/$defs/backup_repository_read_request",
+        "result_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding",
+        "coverage": "metadata_subset_only"
+      }
+    },
+    {
+      "occurrence_id": "sep03-doctor-042",
+      "source_pointer": "/groups/4/checks/8",
+      "source_group": "Backups & Recovery",
+      "source_label": "quota_archive",
+      "required_dimensions": [
+        "quota",
+        "cold retrieval availability/cost",
+        "restore compatibility"
+      ],
+      "owner_refs": [
+        "Plans/Backup_Restore_System.md"
+      ],
+      "schema_refs": [
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/destination_capability_matrix",
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_v3"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-043",
+      "source_pointer": "/groups/5/checks/0",
+      "source_group": "Updates",
+      "source_label": "app_update",
+      "required_dimensions": [
+        "version",
+        "channel",
+        "install source",
+        "restart",
+        "protocol"
+      ],
+      "owner_refs": [
+        "Plans/Release_Supply_Chain.md",
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/application_update_check_contracts.schema.json#/$defs/ApplicationCheckState",
+        "Plans/application_update_check_contracts.schema.json#/$defs/ApplicationSourceResult",
+        "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandOutput"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": "application_update",
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-044",
+      "source_pointer": "/groups/5/checks/1",
+      "source_group": "Updates",
+      "source_label": "content_update",
+      "required_dimensions": [
+        "catalog/channel",
+        "currentness"
+      ],
+      "owner_refs": [
+        "Plans/Project_Sync_and_Backbone.md"
+      ],
+      "schema_refs": [
+        "Plans/project_sync_backbone_contracts.schema.json#/$defs/ContentUpdateCommandRequest",
+        "Plans/project_sync_backbone_contracts.schema.json#/$defs/ContentUpdateCommandResult"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-045",
+      "source_pointer": "/groups/5/checks/2",
+      "source_group": "Updates",
+      "source_label": "helper_tool_update",
+      "required_dimensions": [
+        "installation",
+        "update readiness",
+        "verified retained generation"
+      ],
+      "owner_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/BinaryLocator_Spec.md"
+      ],
+      "schema_refs": [
+        "Plans/shared_runtime_contracts.schema.json#/$defs/installation_lifecycle_record",
+        "Plans/shared_runtime_contracts.schema.json#/$defs/installation_inventory_record"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-046",
+      "source_pointer": "/groups/5/checks/3",
+      "source_group": "Updates",
+      "source_label": "migration_backup_rollback",
+      "required_dimensions": [
+        "migration compatibility",
+        "pre-update recovery",
+        "rollback availability"
+      ],
+      "owner_refs": [
+        "Plans/Release_Supply_Chain.md",
+        "Plans/Server_System.md"
+      ],
+      "schema_refs": [
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/recovery_point_receipt",
+        "Plans/backup_restore_system_contracts.schema.json#/$defs/restore_recovery_prerequisite"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-047",
+      "source_pointer": "/groups/6/checks/0",
+      "source_group": "Optional Capabilities",
+      "source_label": "wsl_if_enabled",
+      "required_dimensions": [
+        "optional selected distribution",
+        "Host/Environment",
+        "capability/readiness"
+      ],
+      "owner_refs": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/newtools.md#N2-152"
+      ],
+      "schema_refs": [
+        "Plans/shared_runtime_contracts.schema.json#/$defs/environment_connection_state",
+        "Plans/shared_runtime_contracts.schema.json#/$defs/environment_domain_sync_state"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-048",
+      "source_pointer": "/groups/6/checks/1",
+      "source_group": "Optional Capabilities",
+      "source_label": "apple_linux_if_enabled",
+      "required_dimensions": [
+        "optional Apple Linux environment",
+        "capability/readiness"
+      ],
+      "owner_refs": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/newtools.md#N2-152"
+      ],
+      "schema_refs": [
+        "Plans/shared_runtime_contracts.schema.json#/$defs/environment_connection_state",
+        "Plans/shared_runtime_contracts.schema.json#/$defs/environment_domain_sync_state"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-049",
+      "source_pointer": "/groups/6/checks/2",
+      "source_group": "Optional Capabilities",
+      "source_label": "gpu_kvm_devices",
+      "required_dimensions": [
+        "GPU",
+        "KVM",
+        "Android",
+        "attached devices"
+      ],
+      "owner_refs": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/newtools.md#N2-152"
+      ],
+      "schema_refs": [],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-050",
+      "source_pointer": "/groups/6/checks/3",
+      "source_group": "Optional Capabilities",
+      "source_label": "containers_clusters_registries",
+      "required_dimensions": [
+        "engine families",
+        "cluster/context/namespace",
+        "registry auth/capability"
+      ],
+      "owner_refs": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/newtools.md#N2-152"
+      ],
+      "schema_refs": [],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-051",
+      "source_pointer": "/groups/6/checks/4",
+      "source_group": "Optional Capabilities",
+      "source_label": "testing_debug",
+      "required_dimensions": [
+        "test capabilities",
+        "debug adapters/sessions"
+      ],
+      "owner_refs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/newtools.md"
+      ],
+      "schema_refs": [
+        "Plans/plans_to_code_handoff.schema.json#/$defs/test_capability_report",
+        "Plans/plans_to_code_handoff.schema.json#/$defs/test_harness_probe_report",
+        "Plans/shared_runtime_contracts.schema.json#/$defs/dev_session_record"
+      ],
+      "declared_descriptor_ids": [],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    },
+    {
+      "occurrence_id": "sep03-doctor-052",
+      "source_pointer": "/groups/6/checks/5",
+      "source_group": "Optional Capabilities",
+      "source_label": "extensions",
+      "required_dimensions": [
+        "plugins",
+        "skills",
+        "tools",
+        "MCP",
+        "LSP",
+        "formatters"
+      ],
+      "owner_refs": [
+        "Plans/Plugins_System.md",
+        "Plans/Skills_System.md",
+        "Plans/Tools.md",
+        "Plans/LSPSupport.md",
+        "Plans/newtools.md#N2-154"
+      ],
+      "schema_refs": [
+        "Plans/plugin_package_contracts.schema.json#/$defs/PluginPackageRecord",
+        "Plans/plugin_package_contracts.schema.json#/$defs/PluginManifestResolutionRecord",
+        "Plans/plugin_package_contracts.schema.json#/$defs/PortableConformanceReport",
+        "Plans/plugin_package_contracts.schema.json#/$defs/PluginRuntimeBoundsReport",
+        "Plans/shared_runtime_contracts.schema.json#/$defs/mcp_server_lifecycle_record"
+      ],
+      "declared_descriptor_ids": [
+        "doctor.plugin.manifest_resolution",
+        "doctor.plugin.conformance",
+        "doctor.plugin.containment",
+        "doctor.plugin.supply_chain",
+        "doctor.plugin.permission_update_review",
+        "doctor.plugin.runtime_bounds",
+        "doctor.plugin.rollback_health",
+        "doctor.plugin.promoted_routine_freshness"
+      ],
+      "full_dimension_query_binding": "unbound",
+      "shared_fact_key": null,
+      "bounded_leaf": null
+    }
+  ]
+}

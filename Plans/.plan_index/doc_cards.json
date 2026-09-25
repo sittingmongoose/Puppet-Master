@@ -10951,7 +10951,7 @@
         "future Doctor descriptor registry fixtures",
         "future Doctor report export native handler"
       ],
-      "line_count": 9136,
+      "line_count": 9140,
       "path": "Plans/newtools.md",
       "plan_unit_count": 157,
       "plan_unit_ids": [
@@ -11276,7 +11276,7 @@
         "web_tool_search_site_reader",
         "worktree_config_cleanup_boundary"
       ],
-      "sha256": "109db9afd01d746d7a3e7ef64dee9f6fa5a062fdb857359051180311f6a7e68c",
+      "sha256": "9475c5c4449d541a68068ce0c60a9be5d632adf6f0ac552c1288de0ba6d084b8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 157
@@ -11296,6 +11296,8 @@
         "Plans/doctor_contracts.schema.json",
         "Plans/doctor_query_controller_contract_fixtures.json",
         "Plans/doctor_query_controller_contracts.schema.json",
+        "Plans/doctor_source_coverage.json",
+        "Plans/doctor_source_coverage.schema.json",
         "Plans/event_payload_platform_capability_evaluated.schema.json",
         "Plans/platform_capability_catalog.json",
         "Plans/platform_capability_catalog.schema.json",
@@ -11316,7 +11318,8 @@
         "registry and scheduling negative fixtures",
         "remediation-return and protected-session fixtures",
         "reports/event-authority-20260911/step-08-platform-custody-validation.md",
-        "reports/event-authority-20260911/step-08-platform-withdrawal-validation.md"
+        "reports/event-authority-20260911/step-08-platform-withdrawal-validation.md",
+        "tests/test_pm_doctor_source_coverage.py"
       ]
     },
     {
@@ -20039,7 +20042,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T05:32:22Z",
+  "generated_at_utc": "2026-09-25T05:44:16Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

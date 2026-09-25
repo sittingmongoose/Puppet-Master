@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L8719-L8901
+Source lines: L8719-L8905
 
-Source SHA256: `109db9afd01d746d7a3e7ef64dee9f6fa5a062fdb857359051180311f6a7e68c`
+Source SHA256: `9475c5c4449d541a68068ce0c60a9be5d632adf6f0ac552c1288de0ba6d084b8`
 
 ---
 
@@ -52,7 +52,11 @@ The additive internal protocol in `Plans/doctor_query_controller_contracts.schem
 
 `pm.doctor.batch_result.v1` contains exactly one outcome per selected member, retaining unsupported, deferred, skipped, cancelled, stale and failed members. Completed query coverage is distinct from health; the domain owner's actual result determines the normalized finding. Unsupported/unavailable requires actual owner support/applicability evidence and cannot conceal an unimplemented descriptor or missing query interface. Separate controller records distinguish stop-future-scheduling, supported owner cancellation and viewer detach. A scheduling stop blocks later starts but cannot cancel work already in flight; a requested/refused/unsupported cancellation is not an owner terminal cancellation; viewer detach changes no member lifecycle. Resume requires actual original owner custody, never a replacement target or synthesized result.
 
-These are internal nonpersisted request/controller/query envelopes, not a durable command archive or a new domain engine. Any retained result/projection facts require explicit existing Doctor/owner storage admission. Native resolver, policy issuance, query execution, effect-free read, governor, cancellation and recovery proof remain separate. The 52-source-occurrence descriptor population remains a separate coverage obligation; this common protocol does not manufacture unsupported outcomes or claim those mappings are all implemented.
+These are internal nonpersisted request/controller/query envelopes, not a durable command archive or a new domain engine. Any retained result/projection facts require explicit existing Doctor/owner storage admission. Native resolver, policy issuance, query execution, effect-free read, governor, cancellation and recovery proof remain separate. The 52-source-occurrence coverage catalog is materialized separately from this common protocol and from authentic leaf binding; neither the catalog nor the protocol manufactures unsupported outcomes or claims all owner queries are bound or implemented.
+
+`Plans/doctor_source_coverage.json`, constrained by `Plans/doctor_source_coverage.schema.json`, is the closed static source-occurrence catalog for N2-152, not an active Doctor registry or runtime record. It preserves all 52 source occurrences, 51 distinct labels, exact source matrix pointers and composite dimensions, canonical owner links and established typed-value references. The two `app_update` occurrences retain separate source identities and one shared fact key. Existing N2-154 plugin descriptor identities are retained without treating that subset as coverage of skill, tool, MCP, LSP or formatter siblings. The BRS-004 descriptor fixture is credited only for its existing nonsecret metadata subset, never complete Backup health.
+
+Catalog completion means source obligations are exhaustively represented, not that full-dimension queries are bound. Each current full-dimension binding remains explicitly `unbound`; genuine existing bounded-leaf evidence is separate. This design-time state is neither a runtime unavailable/unsupported outcome nor permission to register a new descriptor, probe or mutation. Authentic descriptor population and exact owner query bindings remain required before check admission, with all N2-152/controller authority, applicability, support and currentness rules unchanged. Resolve and reuse current owner contracts before proposing an additional interface. No command, event, physical storage family, runtime admission or native proof is created by the catalog. Its static validator rejects dropped or duplicated occurrences, collapsed composite dimensions, unresolved established references, changed bounded-leaf routes and mutation/health authority claims.
 
 ### Normalized finding projection
 
@@ -106,7 +110,7 @@ acceptance_criteria:
   - Run All progress distinguishes partial, deferred, unsupported, cancelled, stale and failed work from complete health; stop-future-scheduling, supported owner cancellation and viewer detachment remain distinct, with no cmd.doctor.run_all registration or unrestricted refresh_visible sweep.
   - Final Product Onboarding runs only draft-required checks; full source coverage and finite-batch semantics require separate exact companion validation, not a generic-descriptor or single-check schema pass.
   - The versioned finite batch retains exact original membership and all terminal outcomes, composes authentic descriptor/request/result/current read authority, distinguishes query completion from health, and keeps stop scheduling, owner cancellation and viewer detach separate without registering cmd.doctor.run_all.
-validation_surfaces: [Plans/doctor_contracts.schema.json, Plans/doctor_contract_fixtures.json, Plans/doctor_query_controller_contracts.schema.json, Plans/doctor_query_controller_contract_fixtures.json, registry and scheduling negative fixtures]
+validation_surfaces: [Plans/doctor_contracts.schema.json, Plans/doctor_contract_fixtures.json, Plans/doctor_query_controller_contracts.schema.json, Plans/doctor_query_controller_contract_fixtures.json, Plans/doctor_source_coverage.json, Plans/doctor_source_coverage.schema.json, tests/test_pm_doctor_source_coverage.py, registry and scheduling negative fixtures]
 risk_class: doctor_registry_collision_or_parallel_engine
 reasoning_tier: high
 context_scope: doctor_registry_router

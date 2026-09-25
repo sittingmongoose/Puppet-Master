@@ -36,6 +36,7 @@ from pm_capability_continuation_semantics import capability_continuation_semanti
 from pm_doctor_query_semantics import doctor_query_semantic_failures
 from pm_browser_control_flow_semantics import browser_control_flow_semantic_failures
 from pm_server_pairing_issuance_semantics import pairing_issuance_semantic_failures
+from pm_doctor_source_coverage import validate_coverage
 from pm_backup_drill_semantics import backup_drill_semantic_failures
 from pm_jujutsu_backup_semantics import jj_backup_pointer_failures, jj_backup_verification_failures
 from pm_browser_program_semantics import browser_program_semantic_failures
@@ -1393,6 +1394,21 @@ def validate_onboarding_storage_contract() -> tuple[list[dict[str, Any]], dict[s
             {"onboarding_storage_contracts_checked": 1, "onboarding_storage_contracts_valid": int(not failures)})
 
 
+def validate_doctor_source_catalog() -> tuple[list[dict[str, Any]], dict[str, int]]:
+    """Static source coverage, not another runtime schema/fixture pair."""
+    path = "Plans/doctor_source_coverage.json"
+    try:
+        catalog = load_json(ROOT / path)
+        failures = validate_coverage(catalog, repo_root=ROOT,
+            schema=load_json(ROOT / "Plans/doctor_source_coverage.schema.json"))
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        failures = ["catalog_unreadable:" + str(exc)]
+    return ([{"code": "doctor_source_coverage_invalid", "path": path, "detail": error}
+             for error in failures],
+            {"doctor_source_catalogs_checked": 1,
+             "doctor_source_catalogs_valid": int(not failures)})
+
+
 def main() -> int:
     findings: list[dict[str, Any]] = []
     counts = Counter()
@@ -1411,6 +1427,10 @@ def main() -> int:
     storage_findings, storage_counts = validate_onboarding_storage_contract()
     findings.extend(storage_findings)
     counts.update(storage_counts)
+
+    doctor_findings, doctor_counts = validate_doctor_source_catalog()
+    findings.extend(doctor_findings)
+    counts.update(doctor_counts)
 
     try:
         schema_registry = offline_schema_registry()

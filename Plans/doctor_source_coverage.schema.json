@@ -1,0 +1,3141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/doctor-source-coverage/1.0.0/doctor_source_coverage.schema.json",
+  "title": "Static Doctor source-occurrence coverage catalog; not a runtime registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "artifact_kind",
+    "coverage_status",
+    "leaf_binding_status",
+    "runtime_authority",
+    "source",
+    "occurrences"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.doctor.source_coverage_catalog.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "artifact_kind": {
+      "const": "static_source_coverage_catalog"
+    },
+    "coverage_status": {
+      "const": "all_source_occurrences_catalogued"
+    },
+    "leaf_binding_status": {
+      "const": "incomplete"
+    },
+    "runtime_authority": {
+      "const": "none"
+    },
+    "source": {
+      "const": {
+        "document": "PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/07_DOCTOR_HEALTH_AND_REMEDIATION.md",
+        "document_sha256": "a17ec624d285dfeaa023cc7ab39aea4374f97b0f00b457ae0e85002be87f8d26",
+        "matrix": "PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/machine/doctor_check_matrix.json",
+        "matrix_sha256": "1cffebd503698e9b46de120aa6bdf7f877ea31a5a031913b1cd37a40fdef1cd5"
+      }
+    },
+    "occurrences": {
+      "type": "array",
+      "minItems": 52,
+      "maxItems": 52,
+      "items": {
+        "$ref": "#/$defs/occurrence"
+      }
+    }
+  },
+  "$defs": {
+    "local_ref": {
+      "type": "string",
+      "pattern": "^Plans/[A-Za-z0-9_.-]+(?:#[A-Za-z0-9_./$~-]+)?$"
+    },
+    "occurrence": {
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-001"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/server_system_contracts.schema.json#/$defs/server_record",
+                  "Plans/server_system_contracts.schema.json#/$defs/server_bootstrap_run",
+                  "Plans/server_system_contracts.schema.json#/$defs/server_bootstrap_receipt"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-002"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/server_system_contracts.schema.json#/$defs/server_record",
+                  "Plans/server_system_contracts.schema.json#/$defs/server_connection_test_receipt"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-003"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/server_system_contracts.schema.json#/$defs/server_catalog",
+                  "Plans/server_system_contracts.schema.json#/$defs/project_registration_summary"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-004"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/server_system_contracts.schema.json#/$defs/server_record",
+                  "Plans/server_system_contracts.schema.json#/$defs/server_connection_test_receipt"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-005"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/server_system_contracts.schema.json#/$defs/server_connection_projection",
+                  "Plans/server_system_contracts.schema.json#/$defs/session_record",
+                  "Plans/server_system_contracts.schema.json#/$defs/client_trust_record"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-006"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/server_system_contracts.schema.json#/$defs/discovery_observation"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-007"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/server_system_contracts.schema.json#/$defs/server_endpoint_record",
+                  "Plans/server_system_contracts.schema.json#/$defs/discovery_observation"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-008"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/application_update_check_contracts.schema.json#/$defs/ApplicationCheckState",
+                  "Plans/application_update_check_contracts.schema.json#/$defs/ApplicationSourceResult",
+                  "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandOutput"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-009"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/server_system_contracts.schema.json#/$defs/client_trust_record",
+                  "Plans/server_system_contracts.schema.json#/$defs/client_access_policy",
+                  "Plans/server_system_contracts.schema.json#/$defs/revocation_record"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-010"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/server_system_contracts.schema.json#/$defs/pairing_run",
+                  "Plans/server_system_contracts.schema.json#/$defs/pairing_receipt",
+                  "Plans/server_system_contracts.schema.json#/$defs/client_trust_record"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-011"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/server_system_contracts.schema.json#/$defs/server_connection_test_receipt",
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_test_receipt"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-012"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_connector_process_projection",
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_connector_configuration"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-013"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_authorization_session",
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_private_endpoint_projection"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-014"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_private_endpoint_projection",
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_connector_configuration"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-015"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_funnel_projection",
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_test_receipt"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-016"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/reverse_proxy_configuration",
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/public_ingress_security_policy",
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_test_receipt"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-017"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/remote_link_configuration",
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_projection",
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_test_receipt"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-018"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/tailscale_external_endpoint_projection",
+                  "Plans/remote_access_system_contracts.schema.json#/$defs/remote_access_test_receipt"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-019"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/installation_inventory_record",
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/installation_candidate_record",
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/installation_lifecycle_record"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-020"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest",
+                  "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-021"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": []
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-022"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": []
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-023"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": []
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-024"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": []
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-025"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/environment_connection_state",
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/environment_domain_sync_state"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-026"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/source_control_contracts.schema.json#/$defs/setup_state",
+                  "Plans/source_control_contracts.schema.json#/$defs/repository_context",
+                  "Plans/source_control_contracts.schema.json#/$defs/native_toolchain_identity",
+                  "Plans/source_control_contracts.schema.json#/$defs/jj_effective_capability_snapshot",
+                  "Plans/source_control_contracts.schema.json#/$defs/source_control_projection"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-027"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/source_control_contracts.schema.json#/$defs/effective_operation_capability",
+                  "Plans/source_control_contracts.schema.json#/$defs/normalized_remote_record"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-028"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/source_control_contracts.schema.json#/$defs/effective_operation_capability",
+                  "Plans/source_control_contracts.schema.json#/$defs/normalized_remote_record"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-029"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/forge_integration_contracts.schema.json#/$defs/provider_instance_profile",
+                  "Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope",
+                  "Plans/forge_integration_contracts.schema.json#/$defs/repository_binding"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-030"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/forge_integration_contracts.schema.json#/$defs/review_revision",
+                  "Plans/forge_integration_contracts.schema.json#/$defs/review_thread",
+                  "Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope",
+                  "Plans/source_control_contracts.schema.json#/$defs/effective_operation_capability"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-031"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/forge_integration_contracts.schema.json#/$defs/automation_binding",
+                  "Plans/forge_integration_contracts.schema.json#/$defs/pipeline_projection",
+                  "Plans/forge_integration_contracts.schema.json#/$defs/capability_envelope",
+                  "Plans/source_control_contracts.schema.json#/$defs/effective_operation_capability"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-032"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/forge_integration_contracts.schema.json#/$defs/origin_cli_operation_profile",
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/installation_inventory_record"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-033"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/source_control_contracts.schema.json#/$defs/source_control_projection",
+                  "Plans/source_control_contracts.schema.json#/$defs/backup_source_closure_record",
+                  "Plans/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_closure_record"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-034"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_v3",
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/destination_capability_matrix",
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_health_projection"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-035"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding",
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_health_projection"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-036"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/recovery_set_public_record",
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/recovery_key_slot"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-037"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding",
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_receipt",
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_manifest"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-038"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/source_control_contracts.schema.json#/$defs/backup_source_closure_record",
+                  "Plans/jujutsu_integration_contracts.schema.json#/$defs/backup_jj_closure_record",
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_manifest"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-039"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/backup_snapshot_result_contracts.schema.json#/$defs/backup_verification_receipt_v2",
+                  "Plans/backup_snapshot_result_contracts.schema.json#/$defs/backup_snapshot_resolution"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-040"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/backup_drill_result_contracts.schema.json#/$defs/backup_drill_verification_receipt_v2",
+                  "Plans/backup_drill_result_contracts.schema.json#/$defs/backup_jj_context_verification_receipt_v2"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-041"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/retention_preview",
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_retention_decision",
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-042"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/destination_capability_matrix",
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_v3"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-043"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/application_update_check_contracts.schema.json#/$defs/ApplicationCheckState",
+                  "Plans/application_update_check_contracts.schema.json#/$defs/ApplicationSourceResult",
+                  "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandOutput"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-044"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/project_sync_backbone_contracts.schema.json#/$defs/ContentUpdateCommandRequest",
+                  "Plans/project_sync_backbone_contracts.schema.json#/$defs/ContentUpdateCommandResult"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-045"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/installation_lifecycle_record",
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/installation_inventory_record"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-046"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/recovery_point_receipt",
+                  "Plans/backup_restore_system_contracts.schema.json#/$defs/restore_recovery_prerequisite"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-047"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/environment_connection_state",
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/environment_domain_sync_state"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-048"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/environment_connection_state",
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/environment_domain_sync_state"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-049"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": []
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-050"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": []
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-051"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/plans_to_code_handoff.schema.json#/$defs/test_capability_report",
+                  "Plans/plans_to_code_handoff.schema.json#/$defs/test_harness_probe_report",
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/dev_session_record"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "occurrence_id": {
+                "const": "sep03-doctor-052"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "schema_refs": {
+                "const": [
+                  "Plans/plugin_package_contracts.schema.json#/$defs/PluginPackageRecord",
+                  "Plans/plugin_package_contracts.schema.json#/$defs/PluginManifestResolutionRecord",
+                  "Plans/plugin_package_contracts.schema.json#/$defs/PortableConformanceReport",
+                  "Plans/plugin_package_contracts.schema.json#/$defs/PluginRuntimeBoundsReport",
+                  "Plans/shared_runtime_contracts.schema.json#/$defs/mcp_server_lifecycle_record"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "occurrence_id",
+        "source_pointer",
+        "source_group",
+        "source_label",
+        "required_dimensions",
+        "owner_refs",
+        "schema_refs",
+        "declared_descriptor_ids",
+        "full_dimension_query_binding",
+        "shared_fact_key",
+        "bounded_leaf"
+      ],
+      "properties": {
+        "occurrence_id": {
+          "type": "string"
+        },
+        "source_pointer": {
+          "type": "string"
+        },
+        "source_group": {
+          "type": "string"
+        },
+        "source_label": {
+          "type": "string"
+        },
+        "required_dimensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "owner_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/local_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "schema_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/local_ref"
+          },
+          "uniqueItems": true
+        },
+        "declared_descriptor_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "full_dimension_query_binding": {
+          "const": "unbound"
+        },
+        "shared_fact_key": {
+          "enum": [
+            null,
+            "application_update"
+          ]
+        },
+        "bounded_leaf": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "descriptor_ref",
+                "check_id",
+                "request_schema_ref",
+                "result_schema_ref",
+                "coverage"
+              ],
+              "properties": {
+                "descriptor_ref": {
+                  "$ref": "#/$defs/local_ref"
+                },
+                "check_id": {
+                  "const": "doctor.backup.repository.metadata"
+                },
+                "request_schema_ref": {
+                  "$ref": "#/$defs/local_ref"
+                },
+                "result_schema_ref": {
+                  "$ref": "#/$defs/local_ref"
+                },
+                "coverage": {
+                  "const": "metadata_subset_only"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-001"
+            },
+            "source_pointer": {
+              "const": "/groups/0/checks/0"
+            },
+            "source_group": {
+              "const": "Puppet Master Server"
+            },
+            "source_label": {
+              "const": "claim"
+            },
+            "required_dimensions": {
+              "const": [
+                "claim state",
+                "owner authority"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-002"
+            },
+            "source_pointer": {
+              "const": "/groups/0/checks/1"
+            },
+            "source_group": {
+              "const": "Puppet Master Server"
+            },
+            "source_label": {
+              "const": "server_identity"
+            },
+            "required_dimensions": {
+              "const": [
+                "identity fingerprint",
+                "stable Server identity"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-003"
+            },
+            "source_pointer": {
+              "const": "/groups/0/checks/2"
+            },
+            "source_group": {
+              "const": "Puppet Master Server"
+            },
+            "source_label": {
+              "const": "catalog_vault"
+            },
+            "required_dimensions": {
+              "const": [
+                "Catalog access",
+                "Project Vault access"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-004"
+            },
+            "source_pointer": {
+              "const": "/groups/0/checks/3"
+            },
+            "source_group": {
+              "const": "Puppet Master Server"
+            },
+            "source_label": {
+              "const": "protocol"
+            },
+            "required_dimensions": {
+              "const": [
+                "Client/Server compatibility"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-005"
+            },
+            "source_pointer": {
+              "const": "/groups/0/checks/4"
+            },
+            "source_group": {
+              "const": "Puppet Master Server"
+            },
+            "source_label": {
+              "const": "client_connection"
+            },
+            "required_dimensions": {
+              "const": [
+                "current Client session"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-006"
+            },
+            "source_pointer": {
+              "const": "/groups/0/checks/5"
+            },
+            "source_group": {
+              "const": "Puppet Master Server"
+            },
+            "source_label": {
+              "const": "discovery"
+            },
+            "required_dimensions": {
+              "const": [
+                "Nearby observation freshness"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-007"
+            },
+            "source_pointer": {
+              "const": "/groups/0/checks/6"
+            },
+            "source_group": {
+              "const": "Puppet Master Server"
+            },
+            "source_label": {
+              "const": "endpoint_dedupe"
+            },
+            "required_dimensions": {
+              "const": [
+                "same Server multiple endpoints",
+                "identity mismatch"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-008"
+            },
+            "source_pointer": {
+              "const": "/groups/0/checks/7"
+            },
+            "source_group": {
+              "const": "Puppet Master Server"
+            },
+            "source_label": {
+              "const": "app_update"
+            },
+            "required_dimensions": {
+              "const": [
+                "version",
+                "channel",
+                "install source",
+                "available update",
+                "restart requirement"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Release_Supply_Chain.md",
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": "application_update"
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-009"
+            },
+            "source_pointer": {
+              "const": "/groups/1/checks/0"
+            },
+            "source_group": {
+              "const": "Devices & Remote Access"
+            },
+            "source_label": {
+              "const": "trusted_clients"
+            },
+            "required_dimensions": {
+              "const": [
+                "trust",
+                "expiry",
+                "revocation",
+                "access policy"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-010"
+            },
+            "source_pointer": {
+              "const": "/groups/1/checks/1"
+            },
+            "source_group": {
+              "const": "Devices & Remote Access"
+            },
+            "source_label": {
+              "const": "pairing"
+            },
+            "required_dimensions": {
+              "const": [
+                "pairing health",
+                "expiry",
+                "identity confirmation",
+                "approval"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-011"
+            },
+            "source_pointer": {
+              "const": "/groups/1/checks/2"
+            },
+            "source_group": {
+              "const": "Devices & Remote Access"
+            },
+            "source_label": {
+              "const": "lan"
+            },
+            "required_dimensions": {
+              "const": [
+                "identity",
+                "protocol",
+                "API",
+                "stream",
+                "file transfer"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Remote_Access_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-012"
+            },
+            "source_pointer": {
+              "const": "/groups/1/checks/3"
+            },
+            "source_group": {
+              "const": "Devices & Remote Access"
+            },
+            "source_label": {
+              "const": "go_tsnet_connector"
+            },
+            "required_dimensions": {
+              "const": [
+                "process",
+                "binary/build/version",
+                "protocol",
+                "persistent identity"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Remote_Access_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-013"
+            },
+            "source_pointer": {
+              "const": "/groups/1/checks/4"
+            },
+            "source_group": {
+              "const": "Devices & Remote Access"
+            },
+            "source_label": {
+              "const": "hosted_tailscale_auth_private"
+            },
+            "required_dimensions": {
+              "const": [
+                "hosted auth",
+                "private listener",
+                "private reachability"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Remote_Access_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-014"
+            },
+            "source_pointer": {
+              "const": "/groups/1/checks/5"
+            },
+            "source_group": {
+              "const": "Devices & Remote Access"
+            },
+            "source_label": {
+              "const": "headscale"
+            },
+            "required_dimensions": {
+              "const": [
+                "control server",
+                "registration",
+                "private endpoint"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Remote_Access_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-015"
+            },
+            "source_pointer": {
+              "const": "/groups/1/checks/6"
+            },
+            "source_group": {
+              "const": "Devices & Remote Access"
+            },
+            "source_label": {
+              "const": "funnel_if_enabled"
+            },
+            "required_dimensions": {
+              "const": [
+                "enabled applicability",
+                "current preflight",
+                "public ingress health"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Remote_Access_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-016"
+            },
+            "source_pointer": {
+              "const": "/groups/1/checks/7"
+            },
+            "source_group": {
+              "const": "Devices & Remote Access"
+            },
+            "source_label": {
+              "const": "nginx_traefik"
+            },
+            "required_dimensions": {
+              "const": [
+                "TLS",
+                "origin",
+                "WebSocket",
+                "trusted proxies"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Remote_Access_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-017"
+            },
+            "source_pointer": {
+              "const": "/groups/1/checks/8"
+            },
+            "source_group": {
+              "const": "Devices & Remote Access"
+            },
+            "source_label": {
+              "const": "remote_link"
+            },
+            "required_dimensions": {
+              "const": [
+                "signaling",
+                "direct",
+                "relay",
+                "E2E"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Remote_Access_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-018"
+            },
+            "source_pointer": {
+              "const": "/groups/1/checks/9"
+            },
+            "source_group": {
+              "const": "Devices & Remote Access"
+            },
+            "source_label": {
+              "const": "manual_vpn"
+            },
+            "required_dimensions": {
+              "const": [
+                "endpoint",
+                "identity",
+                "protocol"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Remote_Access_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-019"
+            },
+            "source_pointer": {
+              "const": "/groups/2/checks/0"
+            },
+            "source_group": {
+              "const": "AI Services"
+            },
+            "source_label": {
+              "const": "installation_if_needed"
+            },
+            "required_dimensions": {
+              "const": [
+                "provider applicability",
+                "executable",
+                "version/compatibility",
+                "exact Host/Environment"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Shared_Integration_Runtime.md",
+                "Plans/BinaryLocator_Spec.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-020"
+            },
+            "source_pointer": {
+              "const": "/groups/2/checks/1"
+            },
+            "source_group": {
+              "const": "AI Services"
+            },
+            "source_label": {
+              "const": "auth_profile"
+            },
+            "required_dimensions": {
+              "const": [
+                "profile",
+                "auth proof",
+                "expiry/currentness"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Multi-Account.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-021"
+            },
+            "source_pointer": {
+              "const": "/groups/2/checks/2"
+            },
+            "source_group": {
+              "const": "AI Services"
+            },
+            "source_label": {
+              "const": "account_product"
+            },
+            "required_dimensions": {
+              "const": [
+                "account selection",
+                "product/entitlement"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Multi-Account.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-022"
+            },
+            "source_pointer": {
+              "const": "/groups/2/checks/3"
+            },
+            "source_group": {
+              "const": "AI Services"
+            },
+            "source_label": {
+              "const": "model_capability"
+            },
+            "required_dimensions": {
+              "const": [
+                "catalog",
+                "model",
+                "capability"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Models_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-023"
+            },
+            "source_pointer": {
+              "const": "/groups/2/checks/4"
+            },
+            "source_group": {
+              "const": "AI Services"
+            },
+            "source_label": {
+              "const": "generation"
+            },
+            "required_dimensions": {
+              "const": [
+                "model-backed proof",
+                "refusal reason",
+                "confidence"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/CLI_Bridged_Providers.md",
+                "Plans/Models_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-024"
+            },
+            "source_pointer": {
+              "const": "/groups/2/checks/5"
+            },
+            "source_group": {
+              "const": "AI Services"
+            },
+            "source_label": {
+              "const": "usage_telemetry_separate"
+            },
+            "required_dimensions": {
+              "const": [
+                "source confidence",
+                "missing/unknown vs zero",
+                "account/model/route attribution"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/usage-feature.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-025"
+            },
+            "source_pointer": {
+              "const": "/groups/3/checks/0"
+            },
+            "source_group": {
+              "const": "Code & Version History"
+            },
+            "source_label": {
+              "const": "source_reachability"
+            },
+            "required_dimensions": {
+              "const": [
+                "path",
+                "mount",
+                "SSH"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Shared_Integration_Runtime.md",
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-026"
+            },
+            "source_pointer": {
+              "const": "/groups/3/checks/1"
+            },
+            "source_group": {
+              "const": "Code & Version History"
+            },
+            "source_label": {
+              "const": "git_jj"
+            },
+            "required_dimensions": {
+              "const": [
+                "toolchain",
+                "repository health",
+                "backend"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Source_Control_System.md",
+                "Plans/Jujutsu_Integration.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-027"
+            },
+            "source_pointer": {
+              "const": "/groups/3/checks/2"
+            },
+            "source_group": {
+              "const": "Code & Version History"
+            },
+            "source_label": {
+              "const": "remote_fetch"
+            },
+            "required_dimensions": {
+              "const": [
+                "remote identity",
+                "read credential",
+                "fetch permission"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Source_Control_System.md",
+                "Plans/Jujutsu_Integration.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-028"
+            },
+            "source_pointer": {
+              "const": "/groups/3/checks/3"
+            },
+            "source_group": {
+              "const": "Code & Version History"
+            },
+            "source_label": {
+              "const": "remote_push"
+            },
+            "required_dimensions": {
+              "const": [
+                "push target",
+                "write credential",
+                "publish permission"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Source_Control_System.md",
+                "Plans/Jujutsu_Integration.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-029"
+            },
+            "source_pointer": {
+              "const": "/groups/3/checks/4"
+            },
+            "source_group": {
+              "const": "Code & Version History"
+            },
+            "source_label": {
+              "const": "forge_api"
+            },
+            "required_dimensions": {
+              "const": [
+                "account",
+                "scopes",
+                "version",
+                "capabilities"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Forge_Integrations.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-030"
+            },
+            "source_pointer": {
+              "const": "/groups/3/checks/5"
+            },
+            "source_group": {
+              "const": "Code & Version History"
+            },
+            "source_label": {
+              "const": "review"
+            },
+            "required_dimensions": {
+              "const": [
+                "review API read/write/approve/merge independent"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Forge_Integrations.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-031"
+            },
+            "source_pointer": {
+              "const": "/groups/3/checks/6"
+            },
+            "source_group": {
+              "const": "Code & Version History"
+            },
+            "source_label": {
+              "const": "automation"
+            },
+            "required_dimensions": {
+              "const": [
+                "provider Actions/Pipelines",
+                "read/dispatch/cancel/rerun separate"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Forge_Integrations.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-032"
+            },
+            "source_pointer": {
+              "const": "/groups/3/checks/7"
+            },
+            "source_group": {
+              "const": "Code & Version History"
+            },
+            "source_label": {
+              "const": "origin_cli_if_used"
+            },
+            "required_dimensions": {
+              "const": [
+                "Origin executable",
+                "Host/Environment",
+                "login profile",
+                "hosting capability"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Cursor_Origin_Integration.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-033"
+            },
+            "source_pointer": {
+              "const": "/groups/3/checks/8"
+            },
+            "source_group": {
+              "const": "Code & Version History"
+            },
+            "source_label": {
+              "const": "lfs_submodules_conflicts"
+            },
+            "required_dimensions": {
+              "const": [
+                "LFS",
+                "submodules",
+                "conflicts"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Source_Control_System.md",
+                "Plans/Jujutsu_Integration.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-034"
+            },
+            "source_pointer": {
+              "const": "/groups/4/checks/0"
+            },
+            "source_group": {
+              "const": "Backups & Recovery"
+            },
+            "source_label": {
+              "const": "destination_auth"
+            },
+            "required_dimensions": {
+              "const": [
+                "auth",
+                "reachability",
+                "TLS",
+                "path",
+                "quota",
+                "throttle"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Backup_Restore_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-035"
+            },
+            "source_pointer": {
+              "const": "/groups/4/checks/1"
+            },
+            "source_group": {
+              "const": "Backups & Recovery"
+            },
+            "source_label": {
+              "const": "repository_unlock"
+            },
+            "required_dimensions": {
+              "const": [
+                "unlock-required",
+                "writer/lock"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Backup_Restore_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": {
+                "descriptor_ref": "Plans/doctor_query_controller_contract_fixtures.json#/valid/0/value/members/0/descriptor",
+                "check_id": "doctor.backup.repository.metadata",
+                "request_schema_ref": "Plans/doctor_query_controller_contracts.schema.json#/$defs/backup_repository_read_request",
+                "result_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding",
+                "coverage": "metadata_subset_only"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-036"
+            },
+            "source_pointer": {
+              "const": "/groups/4/checks/2"
+            },
+            "source_group": {
+              "const": "Backups & Recovery"
+            },
+            "source_label": {
+              "const": "recovery_kit"
+            },
+            "required_dimensions": {
+              "const": [
+                "public recovery identity",
+                "protected attachment availability",
+                "saved/acknowledged/tested"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Backup_Restore_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-037"
+            },
+            "source_pointer": {
+              "const": "/groups/4/checks/3"
+            },
+            "source_group": {
+              "const": "Backups & Recovery"
+            },
+            "source_label": {
+              "const": "last_complete"
+            },
+            "required_dimensions": {
+              "const": [
+                "scope-complete committed snapshot",
+                "latest attempt distinct"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Backup_Restore_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": {
+                "descriptor_ref": "Plans/doctor_query_controller_contract_fixtures.json#/valid/0/value/members/0/descriptor",
+                "check_id": "doctor.backup.repository.metadata",
+                "request_schema_ref": "Plans/doctor_query_controller_contracts.schema.json#/$defs/backup_repository_read_request",
+                "result_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding",
+                "coverage": "metadata_subset_only"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-038"
+            },
+            "source_pointer": {
+              "const": "/groups/4/checks/4"
+            },
+            "source_group": {
+              "const": "Backups & Recovery"
+            },
+            "source_label": {
+              "const": "source_jj_coverage"
+            },
+            "required_dimensions": {
+              "const": [
+                "Git/JJ native dependencies",
+                "dirty/source completeness",
+                "barriers/fences"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Backup_Restore_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-039"
+            },
+            "source_pointer": {
+              "const": "/groups/4/checks/5"
+            },
+            "source_group": {
+              "const": "Backups & Recovery"
+            },
+            "source_label": {
+              "const": "verification"
+            },
+            "required_dimensions": {
+              "const": [
+                "structural",
+                "sampled/full data integrity"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Backup_Restore_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-040"
+            },
+            "source_pointer": {
+              "const": "/groups/4/checks/6"
+            },
+            "source_group": {
+              "const": "Backups & Recovery"
+            },
+            "source_label": {
+              "const": "restore_drill"
+            },
+            "required_dimensions": {
+              "const": [
+                "isolated drill",
+                "freshness",
+                "compatibility"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Backup_Restore_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-041"
+            },
+            "source_pointer": {
+              "const": "/groups/4/checks/7"
+            },
+            "source_group": {
+              "const": "Backups & Recovery"
+            },
+            "source_label": {
+              "const": "retention_hold_prune"
+            },
+            "required_dimensions": {
+              "const": [
+                "policy",
+                "schedule",
+                "hold",
+                "preview",
+                "cleanup/lease"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Backup_Restore_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": {
+                "descriptor_ref": "Plans/doctor_query_controller_contract_fixtures.json#/valid/0/value/members/0/descriptor",
+                "check_id": "doctor.backup.repository.metadata",
+                "request_schema_ref": "Plans/doctor_query_controller_contracts.schema.json#/$defs/backup_repository_read_request",
+                "result_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_repository_binding",
+                "coverage": "metadata_subset_only"
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-042"
+            },
+            "source_pointer": {
+              "const": "/groups/4/checks/8"
+            },
+            "source_group": {
+              "const": "Backups & Recovery"
+            },
+            "source_label": {
+              "const": "quota_archive"
+            },
+            "required_dimensions": {
+              "const": [
+                "quota",
+                "cold retrieval availability/cost",
+                "restore compatibility"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Backup_Restore_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-043"
+            },
+            "source_pointer": {
+              "const": "/groups/5/checks/0"
+            },
+            "source_group": {
+              "const": "Updates"
+            },
+            "source_label": {
+              "const": "app_update"
+            },
+            "required_dimensions": {
+              "const": [
+                "version",
+                "channel",
+                "install source",
+                "restart",
+                "protocol"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Release_Supply_Chain.md",
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": "application_update"
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-044"
+            },
+            "source_pointer": {
+              "const": "/groups/5/checks/1"
+            },
+            "source_group": {
+              "const": "Updates"
+            },
+            "source_label": {
+              "const": "content_update"
+            },
+            "required_dimensions": {
+              "const": [
+                "catalog/channel",
+                "currentness"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Project_Sync_and_Backbone.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-045"
+            },
+            "source_pointer": {
+              "const": "/groups/5/checks/2"
+            },
+            "source_group": {
+              "const": "Updates"
+            },
+            "source_label": {
+              "const": "helper_tool_update"
+            },
+            "required_dimensions": {
+              "const": [
+                "installation",
+                "update readiness",
+                "verified retained generation"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Shared_Integration_Runtime.md",
+                "Plans/BinaryLocator_Spec.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-046"
+            },
+            "source_pointer": {
+              "const": "/groups/5/checks/3"
+            },
+            "source_group": {
+              "const": "Updates"
+            },
+            "source_label": {
+              "const": "migration_backup_rollback"
+            },
+            "required_dimensions": {
+              "const": [
+                "migration compatibility",
+                "pre-update recovery",
+                "rollback availability"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Release_Supply_Chain.md",
+                "Plans/Server_System.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-047"
+            },
+            "source_pointer": {
+              "const": "/groups/6/checks/0"
+            },
+            "source_group": {
+              "const": "Optional Capabilities"
+            },
+            "source_label": {
+              "const": "wsl_if_enabled"
+            },
+            "required_dimensions": {
+              "const": [
+                "optional selected distribution",
+                "Host/Environment",
+                "capability/readiness"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Containers_Registry_and_Unraid.md",
+                "Plans/Shared_Integration_Runtime.md",
+                "Plans/newtools.md#N2-152"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-048"
+            },
+            "source_pointer": {
+              "const": "/groups/6/checks/1"
+            },
+            "source_group": {
+              "const": "Optional Capabilities"
+            },
+            "source_label": {
+              "const": "apple_linux_if_enabled"
+            },
+            "required_dimensions": {
+              "const": [
+                "optional Apple Linux environment",
+                "capability/readiness"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Containers_Registry_and_Unraid.md",
+                "Plans/Shared_Integration_Runtime.md",
+                "Plans/newtools.md#N2-152"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-049"
+            },
+            "source_pointer": {
+              "const": "/groups/6/checks/2"
+            },
+            "source_group": {
+              "const": "Optional Capabilities"
+            },
+            "source_label": {
+              "const": "gpu_kvm_devices"
+            },
+            "required_dimensions": {
+              "const": [
+                "GPU",
+                "KVM",
+                "Android",
+                "attached devices"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Containers_Registry_and_Unraid.md",
+                "Plans/Shared_Integration_Runtime.md",
+                "Plans/newtools.md#N2-152"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-050"
+            },
+            "source_pointer": {
+              "const": "/groups/6/checks/3"
+            },
+            "source_group": {
+              "const": "Optional Capabilities"
+            },
+            "source_label": {
+              "const": "containers_clusters_registries"
+            },
+            "required_dimensions": {
+              "const": [
+                "engine families",
+                "cluster/context/namespace",
+                "registry auth/capability"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Containers_Registry_and_Unraid.md",
+                "Plans/Shared_Integration_Runtime.md",
+                "Plans/newtools.md#N2-152"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-051"
+            },
+            "source_pointer": {
+              "const": "/groups/6/checks/4"
+            },
+            "source_group": {
+              "const": "Optional Capabilities"
+            },
+            "source_label": {
+              "const": "testing_debug"
+            },
+            "required_dimensions": {
+              "const": [
+                "test capabilities",
+                "debug adapters/sessions"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Automated_Testing_System.md",
+                "Plans/newtools.md"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": []
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        },
+        {
+          "properties": {
+            "occurrence_id": {
+              "const": "sep03-doctor-052"
+            },
+            "source_pointer": {
+              "const": "/groups/6/checks/5"
+            },
+            "source_group": {
+              "const": "Optional Capabilities"
+            },
+            "source_label": {
+              "const": "extensions"
+            },
+            "required_dimensions": {
+              "const": [
+                "plugins",
+                "skills",
+                "tools",
+                "MCP",
+                "LSP",
+                "formatters"
+              ]
+            },
+            "owner_refs": {
+              "const": [
+                "Plans/Plugins_System.md",
+                "Plans/Skills_System.md",
+                "Plans/Tools.md",
+                "Plans/LSPSupport.md",
+                "Plans/newtools.md#N2-154"
+              ]
+            },
+            "declared_descriptor_ids": {
+              "const": [
+                "doctor.plugin.manifest_resolution",
+                "doctor.plugin.conformance",
+                "doctor.plugin.containment",
+                "doctor.plugin.supply_chain",
+                "doctor.plugin.permission_update_review",
+                "doctor.plugin.runtime_bounds",
+                "doctor.plugin.rollback_health",
+                "doctor.plugin.promoted_routine_freshness"
+              ]
+            },
+            "shared_fact_key": {
+              "const": null
+            },
+            "bounded_leaf": {
+              "const": null
+            }
+          }
+        }
+      ]
+    }
+  }
+}
