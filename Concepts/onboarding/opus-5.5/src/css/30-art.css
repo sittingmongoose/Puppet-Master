@@ -58,7 +58,7 @@
 .o55-f-retro .o55-an-drop { animation-name: o55-step-drop; }
 .o55-f-retro .o55-an-rise { animation-name: o55-step-rise; }
 .o55-f-retro .o55-an-type { animation-name: o55-type; animation-timing-function: steps(8, end); --dur: 600ms; }
-@keyframes o55-blink-in { 0% { opacity: 0; } 30% { opacity: 1; } 50% { opacity: 0; } 70%, 100% { opacity: 1; } }
+@keyframes o55-blink-in { 0%, 39.9% { opacity: 0; } 40%, 100% { opacity: 1; } }
 @keyframes o55-step-drop { from { opacity: 0; transform: translateY(-40px); } 20% { opacity: 1; } to { opacity: 1; transform: none; } }
 @keyframes o55-step-rise { from { opacity: 0; transform: translateY(16px); } 20% { opacity: 1; } to { opacity: 1; transform: none; } }
 @keyframes o55-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }

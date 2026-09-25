@@ -5,7 +5,7 @@
 #pm-o55-onboarding { --o55-ui-ease: cubic-bezier(0.2, 0, 0, 1); --o55-step: 500ms; --o55-out: 350ms; --o55-stagger: 70ms; --o55-enter-delay: 110ms; }
 #pm-o55-onboarding[data-family="friendly"] { --o55-ui-ease: cubic-bezier(0.34, 1.56, 0.64, 1); --o55-step: 560ms; }
 #pm-o55-onboarding[data-family="glass"] { --o55-ui-ease: cubic-bezier(0.05, 0.7, 0.1, 1); --o55-step: 560ms; }
-#pm-o55-onboarding[data-family="retro"] { --o55-ui-ease: steps(4, end); --o55-step: 420ms; --o55-stagger: 60ms; --o55-enter-delay: 90ms; }
+#pm-o55-onboarding[data-family="retro"] { --o55-ui-ease: steps(4, end); --o55-step: 420ms; --o55-stagger: 60ms; --o55-enter-delay: 40ms; }
 
 /* layers are transparent so the outgoing layer stays visible under the incoming one */
 .o55-pane > .o55-layer { background: transparent !important; }
@@ -57,7 +57,7 @@
 @keyframes o55-st-retro-back { from { opacity: 0; transform: translateX(-16px); } 25% { opacity: 1; } to { opacity: 1; transform: none; } }
 @keyframes o55-card-retro { from { opacity: 0; transform: translateX(24px); } 34% { opacity: 1; } to { opacity: 1; transform: none; } }
 @keyframes o55-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
-@keyframes o55-blink-in { 0% { opacity: 0; } 30% { opacity: 1; } 50% { opacity: 0; } 70%, 100% { opacity: 1; } }
+@keyframes o55-blink-in { 0%, 39.9% { opacity: 0; } 40%, 100% { opacity: 1; } } /* one hard cut in, never off again (the old on-off-on read as flicker) */
 
 /* ---- outgoing layer (inert, ID-free) --------------------------------------------------------------------------- */
 .o55-pane > .o55-layer.o55-out-fwd { animation: o55-out-basic var(--o55-out) cubic-bezier(0.3, 0, 1, 1) both; }
@@ -68,7 +68,7 @@
 @keyframes o55-out-friendly { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: translateY(14px) scale(0.98); } }
 #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer.o55-out-back { animation-name: o55-out-glass; }
 @keyframes o55-out-glass { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: scale(0.975); } }
-#pm-o55-onboarding[data-family="retro"] .o55-pane > .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="retro"] .o55-pane > .o55-layer.o55-out-back { animation: o55-out-retro 240ms steps(4, jump-start) both; }
+#pm-o55-onboarding[data-family="retro"] .o55-pane > .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="retro"] .o55-pane > .o55-layer.o55-out-back { animation: o55-out-retro 320ms steps(4, end) both; } /* the old screen scans away while the new one arrives, never an empty pane */
 @keyframes o55-out-retro { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(100% 0 0 0); } }
 
 /* ---- window open / close (bounds never change; only opacity, transform and clip) -------------------------------- */

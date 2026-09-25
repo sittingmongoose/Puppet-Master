@@ -29,7 +29,8 @@
     const p = ctx.pal, o = item.opts || {}, s = item.s || 1, tint = tints[(o.variant || 0) % 4];
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -68 L${dx.toFixed(1)} ${dy.toFixed(1)}" stroke="${p[tint]}" stroke-width="5" opacity="0.14" stroke-linecap="round"/><path d="M0 -68 L${dx.toFixed(1)} ${dy.toFixed(1)}" stroke="${ctx.url('fil')}" stroke-width="1.3" stroke-linecap="round"/><circle cx="0" cy="-68" r="2.2" fill="${p.core}"/>`; })() : '';
     const pose = o.pose || 'stand';
-    const armR = { wave: '', point: 'M13 -40 L26 -39 L36 -38', carry: 'M13 -40 L9 -30 L3 -27' }[pose] || 'M13 -40 L18 -28 L19 -18';
+    /* the waving arm is drawn by its own group below; '' here means no second right arm (it must not fall through) */
+    const armR = ({ wave: '', point: 'M13 -40 L26 -39 L36 -38', carry: 'M13 -40 L9 -30 L3 -27' })[pose] ?? 'M13 -40 L18 -28 L19 -18';
     /* a waving arm is its own group (the rig lifts it); tied to the bar, a bright knot where the string meets the head */
     const waveArm = pose === 'wave' ? `<g class="o55-arm" data-pivot="13 -40"><path d="M13 -40 L22 -54 L25 -64" fill="none" stroke="${ctx.url('edge')}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`
       + `<path d="M13 -40 L22 -54 L25 -64" fill="none" stroke="${p[tint]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/><circle cx="25" cy="-64" r="2" fill="${p.core}"/><circle class="o55-hook" data-hook="hand" cx="25" cy="-64" r="0.01" fill="none"/></g>` : '';

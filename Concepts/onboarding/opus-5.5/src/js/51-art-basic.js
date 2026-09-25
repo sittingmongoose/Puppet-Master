@@ -42,6 +42,9 @@
       point: 'M-12 -40 L-17 -29 L-18 -19 M12 -40 L23 -37 L33 -36'
     }[pose] || '';
     const joints = [[-12, -40], [12, -40], [-8, -18], [8, -18], [-6, -9], [6, -9]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.7" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/>`).join('');
+    /* a hand at the end of every arm (the waving hand is drawn with its arm) */
+    const hands = ({ stand: [[-18, -19], [18, -19]], wave: [[-18, -19]], carry: [[-3, -27], [3, -27]], bow: [[-12, -21], [12, -21]], point: [[-18, -19], [33, -36]] }[pose] || [])
+      .map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.9" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/>`).join('');
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -64 L${dx.toFixed(1)} ${dy.toFixed(1)}" ${S(p, 0.8, p.ink2)}/><circle cx="0" cy="-64" r="1.6" fill="${p.ink}"/>`; })() : '';
     /* tied to the bar: a knot where the string meets the head; a waving arm is its own group (the rig lifts it) */
     const knot = o.rig ? `<circle cx="0" cy="-63" r="1.7" fill="${p.ink}"/>` : '';
@@ -50,7 +53,7 @@
     return `<g>${str}<circle cx="0" cy="-54" r="9" ${F(p, p.fill, 1.5)}/><path d="M-9 -54H9M0 -63V-45" ${S(p, 0.5, p.faint)}/>`
       + `<path d="M0 -45V-41" ${S(p)}/><path d="M-12 -41 L12 -41 L8 -18 L-8 -18 Z" ${F(p, p.fill, 1.5)}/>`
       + `<path d="${arms}" ${S(p, 1.4)}/><path d="M-8 -18 L-6 -9 L-7 0 M8 -18 L6 -9 L7 0" ${S(p, 1.4)}/>`
-      + `<path d="M-11 0H-3M3 0H11" ${S(p, 1.4)}/>${joints}${waveArm}${carry}${knot}</g>`;
+      + `<path d="M-11 0H-3M3 0H11" ${S(p, 1.4)}/>${joints}${carry}${hands}${waveArm}${knot}</g>`;
   };
 
   const props = {

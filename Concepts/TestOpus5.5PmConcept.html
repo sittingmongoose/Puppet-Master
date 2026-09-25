@@ -24259,7 +24259,7 @@ html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demomenu { left: 26p
 #pm-o55-onboarding { --o55-ui-ease: cubic-bezier(0.2, 0, 0, 1); --o55-step: 500ms; --o55-out: 350ms; --o55-stagger: 70ms; --o55-enter-delay: 110ms; }
 #pm-o55-onboarding[data-family="friendly"] { --o55-ui-ease: cubic-bezier(0.34, 1.56, 0.64, 1); --o55-step: 560ms; }
 #pm-o55-onboarding[data-family="glass"] { --o55-ui-ease: cubic-bezier(0.05, 0.7, 0.1, 1); --o55-step: 560ms; }
-#pm-o55-onboarding[data-family="retro"] { --o55-ui-ease: steps(4, end); --o55-step: 420ms; --o55-stagger: 60ms; --o55-enter-delay: 90ms; }
+#pm-o55-onboarding[data-family="retro"] { --o55-ui-ease: steps(4, end); --o55-step: 420ms; --o55-stagger: 60ms; --o55-enter-delay: 40ms; }
 
 /* layers are transparent so the outgoing layer stays visible under the incoming one */
 .o55-pane > .o55-layer { background: transparent !important; }
@@ -24311,7 +24311,7 @@ html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demomenu { left: 26p
 @keyframes o55-st-retro-back { from { opacity: 0; transform: translateX(-16px); } 25% { opacity: 1; } to { opacity: 1; transform: none; } }
 @keyframes o55-card-retro { from { opacity: 0; transform: translateX(24px); } 34% { opacity: 1; } to { opacity: 1; transform: none; } }
 @keyframes o55-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
-@keyframes o55-blink-in { 0% { opacity: 0; } 30% { opacity: 1; } 50% { opacity: 0; } 70%, 100% { opacity: 1; } }
+@keyframes o55-blink-in { 0%, 39.9% { opacity: 0; } 40%, 100% { opacity: 1; } } /* one hard cut in, never off again (the old on-off-on read as flicker) */
 
 /* ---- outgoing layer (inert, ID-free) --------------------------------------------------------------------------- */
 .o55-pane > .o55-layer.o55-out-fwd { animation: o55-out-basic var(--o55-out) cubic-bezier(0.3, 0, 1, 1) both; }
@@ -24322,7 +24322,7 @@ html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demomenu { left: 26p
 @keyframes o55-out-friendly { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: translateY(14px) scale(0.98); } }
 #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer.o55-out-back { animation-name: o55-out-glass; }
 @keyframes o55-out-glass { 0% { opacity: 1; transform: none; } 55% { opacity: 0; } 100% { opacity: 0; transform: scale(0.975); } }
-#pm-o55-onboarding[data-family="retro"] .o55-pane > .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="retro"] .o55-pane > .o55-layer.o55-out-back { animation: o55-out-retro 240ms steps(4, jump-start) both; }
+#pm-o55-onboarding[data-family="retro"] .o55-pane > .o55-layer.o55-out-fwd, #pm-o55-onboarding[data-family="retro"] .o55-pane > .o55-layer.o55-out-back { animation: o55-out-retro 320ms steps(4, end) both; } /* the old screen scans away while the new one arrives, never an empty pane */
 @keyframes o55-out-retro { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(100% 0 0 0); } }
 
 /* ---- window open / close (bounds never change; only opacity, transform and clip) -------------------------------- */
@@ -24425,7 +24425,7 @@ html[data-motion="reduced"] #pm-o55-onboarding * { transition-duration: 0.01ms !
 .o55-f-retro .o55-an-drop { animation-name: o55-step-drop; }
 .o55-f-retro .o55-an-rise { animation-name: o55-step-rise; }
 .o55-f-retro .o55-an-type { animation-name: o55-type; animation-timing-function: steps(8, end); --dur: 600ms; }
-@keyframes o55-blink-in { 0% { opacity: 0; } 30% { opacity: 1; } 50% { opacity: 0; } 70%, 100% { opacity: 1; } }
+@keyframes o55-blink-in { 0%, 39.9% { opacity: 0; } 40%, 100% { opacity: 1; } }
 @keyframes o55-step-drop { from { opacity: 0; transform: translateY(-40px); } 20% { opacity: 1; } to { opacity: 1; transform: none; } }
 @keyframes o55-step-rise { from { opacity: 0; transform: translateY(16px); } 20% { opacity: 1; } to { opacity: 1; transform: none; } }
 @keyframes o55-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
@@ -82327,7 +82327,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         const list = it.opts.ties || [[it.opts.tie, 'top']], b = it.prop === 'helper' ? null : A.box(ctx, it.prop, it.opts);
         hookPts.set(it, list.map(([bh, side], i) => {
           if (!b) return ['head', m.hook, bh];
-          const cx = (b[0] + b[2]) / 2, pts = { top: [cx, b[1]], topLeft: [b[0] + 6, b[1]], topRight: [b[2] - 6, b[1]] };
+          /* past the family's rounded corner, so each string ends on the outline, not in the air beside it */
+          const cx = (b[0] + b[2]) / 2, ins = m.edgeInset || 6, pts = { top: [cx, b[1]], topLeft: [b[0] + ins, b[1]], topRight: [b[2] - ins, b[1]] };
           return [i ? 'head' + i : 'head', pts[side] || pts.top, bh];
         }));
         it.amb = null; it.opts = Object.assign({}, it.opts, { anchor: null, rig: true });
@@ -82526,6 +82527,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       point: 'M-12 -40 L-17 -29 L-18 -19 M12 -40 L23 -37 L33 -36'
     }[pose] || '';
     const joints = [[-12, -40], [12, -40], [-8, -18], [8, -18], [-6, -9], [6, -9]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.7" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/>`).join('');
+    /* a hand at the end of every arm (the waving hand is drawn with its arm) */
+    const hands = ({ stand: [[-18, -19], [18, -19]], wave: [[-18, -19]], carry: [[-3, -27], [3, -27]], bow: [[-12, -21], [12, -21]], point: [[-18, -19], [33, -36]] }[pose] || [])
+      .map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.9" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/>`).join('');
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -64 L${dx.toFixed(1)} ${dy.toFixed(1)}" ${S(p, 0.8, p.ink2)}/><circle cx="0" cy="-64" r="1.6" fill="${p.ink}"/>`; })() : '';
     /* tied to the bar: a knot where the string meets the head; a waving arm is its own group (the rig lifts it) */
     const knot = o.rig ? `<circle cx="0" cy="-63" r="1.7" fill="${p.ink}"/>` : '';
@@ -82534,7 +82538,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return `<g>${str}<circle cx="0" cy="-54" r="9" ${F(p, p.fill, 1.5)}/><path d="M-9 -54H9M0 -63V-45" ${S(p, 0.5, p.faint)}/>`
       + `<path d="M0 -45V-41" ${S(p)}/><path d="M-12 -41 L12 -41 L8 -18 L-8 -18 Z" ${F(p, p.fill, 1.5)}/>`
       + `<path d="${arms}" ${S(p, 1.4)}/><path d="M-8 -18 L-6 -9 L-7 0 M8 -18 L6 -9 L7 0" ${S(p, 1.4)}/>`
-      + `<path d="M-11 0H-3M3 0H11" ${S(p, 1.4)}/>${joints}${waveArm}${carry}${knot}</g>`;
+      + `<path d="M-11 0H-3M3 0H11" ${S(p, 1.4)}/>${joints}${carry}${hands}${waveArm}${knot}</g>`;
   };
 
   const props = {
@@ -82908,7 +82912,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const p = ctx.pal, o = item.opts || {}, s = item.s || 1, tint = tints[(o.variant || 0) % 4];
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -68 L${dx.toFixed(1)} ${dy.toFixed(1)}" stroke="${p[tint]}" stroke-width="5" opacity="0.14" stroke-linecap="round"/><path d="M0 -68 L${dx.toFixed(1)} ${dy.toFixed(1)}" stroke="${ctx.url('fil')}" stroke-width="1.3" stroke-linecap="round"/><circle cx="0" cy="-68" r="2.2" fill="${p.core}"/>`; })() : '';
     const pose = o.pose || 'stand';
-    const armR = { wave: '', point: 'M13 -40 L26 -39 L36 -38', carry: 'M13 -40 L9 -30 L3 -27' }[pose] || 'M13 -40 L18 -28 L19 -18';
+    /* the waving arm is drawn by its own group below; '' here means no second right arm (it must not fall through) */
+    const armR = ({ wave: '', point: 'M13 -40 L26 -39 L36 -38', carry: 'M13 -40 L9 -30 L3 -27' })[pose] ?? 'M13 -40 L18 -28 L19 -18';
     /* a waving arm is its own group (the rig lifts it); tied to the bar, a bright knot where the string meets the head */
     const waveArm = pose === 'wave' ? `<g class="o55-arm" data-pivot="13 -40"><path d="M13 -40 L22 -54 L25 -64" fill="none" stroke="${ctx.url('edge')}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`
       + `<path d="M13 -40 L22 -54 L25 -64" fill="none" stroke="${p[tint]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/><circle cx="25" cy="-64" r="2" fill="${p.core}"/><circle class="o55-hook" data-hook="hand" cx="25" cy="-64" r="0.01" fill="none"/></g>` : '';
@@ -83083,9 +83088,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
   const HELPER = {
     stand: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaak.', 'kaaaaaaaak', 'saaaaaaaas', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
-    wave: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssks', '..kkkkkkk.', '.kaaaaaak.', 'kaaaaaaaa.', 'saaaaaaaa.', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
-    /* the second frame of the wave: the hand out at shoulder height */
-    wave2: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaaks', 'kaaaaaaak.', 'saaaaaaaa.', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
+    /* waving: the right arm is raised, a sleeve up beside the head with the hand on top; the body keeps its outline */
+    wave: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksks', '.kssssssks', '.kssmmsska', '..kkkkkk.a', '.kaaaaaaaa', 'kaaaaaaaak', 'saaaaaaaak', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
+    /* the second frame of the wave: the hand comes down to head height, the sleeve shorter */
+    wave2: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssks', '..kkkkkk.s', '.kaaaaaaaa', 'kaaaaaaaak', 'saaaaaaaak', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
     carry: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaak.', 'kawwwwwwak', 'kswkkkkwsk', '.kwwwwwwk.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.']
   };
   const BAR = ['............kkkk............', '...........k....k...........', '............kkkk............', '.............kk.............',
@@ -83277,8 +83283,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const hooks = (a) => ({ a0: a[0], a1: a[1], a2: a[2], w0: [Math.round(a[0][0] * 0.56), a[0][1]], w2: [Math.round(a[2][0] * 0.56), a[2][1]] });
   const METRICS = {
     basic: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 470, helperScale: 1.75, barY: 136, hook: [0, -63] },
-    friendly: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 472, helperScale: 1.6, barY: 140, hook: [0, -73.5] },
-    glass: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 478, helperScale: 1.7, barY: 136, hook: [0, -68.5] },
+    friendly: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 472, helperScale: 1.6, barY: 140, hook: [0, -73.5], edgeInset: 17 },
+    glass: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 478, helperScale: 1.7, barY: 136, hook: [0, -68.5], edgeInset: 17 },
     retro: { anchors: [[-96, -4], [0, 36], [96, -4]], floor: 458, helperScale: 1, barY: 132, helperPx: 7, hook: [0, -100] }
   };
   Object.values(METRICS).forEach((m) => { m.barHooks = hooks(m.anchors); });

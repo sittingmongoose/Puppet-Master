@@ -131,7 +131,8 @@
         const list = it.opts.ties || [[it.opts.tie, 'top']], b = it.prop === 'helper' ? null : A.box(ctx, it.prop, it.opts);
         hookPts.set(it, list.map(([bh, side], i) => {
           if (!b) return ['head', m.hook, bh];
-          const cx = (b[0] + b[2]) / 2, pts = { top: [cx, b[1]], topLeft: [b[0] + 6, b[1]], topRight: [b[2] - 6, b[1]] };
+          /* past the family's rounded corner, so each string ends on the outline, not in the air beside it */
+          const cx = (b[0] + b[2]) / 2, ins = m.edgeInset || 6, pts = { top: [cx, b[1]], topLeft: [b[0] + ins, b[1]], topRight: [b[2] - ins, b[1]] };
           return [i ? 'head' + i : 'head', pts[side] || pts.top, bh];
         }));
         it.amb = null; it.opts = Object.assign({}, it.opts, { anchor: null, rig: true });

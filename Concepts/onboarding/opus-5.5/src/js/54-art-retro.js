@@ -24,9 +24,10 @@
 
   const HELPER = {
     stand: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaak.', 'kaaaaaaaak', 'saaaaaaaas', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
-    wave: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssks', '..kkkkkkk.', '.kaaaaaak.', 'kaaaaaaaa.', 'saaaaaaaa.', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
-    /* the second frame of the wave: the hand out at shoulder height */
-    wave2: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaaks', 'kaaaaaaak.', 'saaaaaaaa.', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
+    /* waving: the right arm is raised, a sleeve up beside the head with the hand on top; the body keeps its outline */
+    wave: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksks', '.kssssssks', '.kssmmsska', '..kkkkkk.a', '.kaaaaaaaa', 'kaaaaaaaak', 'saaaaaaaak', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
+    /* the second frame of the wave: the hand comes down to head height, the sleeve shorter */
+    wave2: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssks', '..kkkkkk.s', '.kaaaaaaaa', 'kaaaaaaaak', 'saaaaaaaak', '.kaaaaaak.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.'],
     carry: ['..kkkkkk..', '.khhhhhhk.', '.khsssshk.', '.kskssksk.', '.kssssssk.', '.kssmmssk.', '..kkkkkk..', '.kaaaaaak.', 'kawwwwwwak', 'kswkkkkwsk', '.kwwwwwwk.', '.kbbkkbbk.', '.kbk..kbk.', '.kk....kk.']
   };
   const BAR = ['............kkkk............', '...........k....k...........', '............kkkk............', '.............kk.............',

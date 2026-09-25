@@ -237,5 +237,15 @@ Still open:
   it and shows no switch; a chosen tool this computer lacks is installed during Creating (the install phase now follows
   the chosen tool, not Git alone). Scenarios j1-j3.
 
+- C48 (Jared's art review) Glass: a waving helper drew two right arms (the waving pose's empty right arm fell through
+  to the standing arm). Basic: only the waving hand had a hand; every arm now ends in one. Retro: the raised arm was a
+  lone skin pixel beside the face with the body's outline missing below it; both wave frames now show a sleeve raised
+  beside the head with the hand on top. Friendly (and Glass): the name sign's strings ended 6 units in from the box
+  corner, which on a pill is past the curve and in the air; they now meet the flat top past the corner (edgeInset 17).
+  Retro screen changes flickered: its blink-in went on, off and on again for the text, footer and every picture
+  element, and the old screen was wiped away before the new one began (a nearly empty pane). The blink-in is one hard
+  cut in, the old screen scans away over 320 ms while the new one starts at 40 ms; films before and after checked frame
+  by frame (dip 0.86 -> 0.88 and 0.90 -> 0.95, no off frames).
+
 Still open: noAi has not been crawled, and homeNasPm was crawled before the pairing screen existed; the Glass family often switches on low-resource mode on
 this VM (no GPU), which by design stops its idles.
