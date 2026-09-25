@@ -73,6 +73,14 @@ No further Azure scope is added.
 
 ## Landing hold
 
+Latest branch preflight completed with four blocking rows (two distinct causes).
+The branch-introduced Usage disposition-ID schema defect is now corrected and
+independently verified; the inherited missing historical audit reference remains
+unresolved. Complete standalone readiness failures decrease from 69 to 68 with
+no added failure keys. See `final-preflight-and-usage-id-repair.md` for exact keys,
+full-report receipts and the branch/main divergence caveat. This does not make
+the aggregate check green or replace a fresh-main comparison.
+
 The earlier full-delta hold on two Settings registry hash rows remains unresolved.
 Current branch Touch still reports the known Settings source mismatch; the locally
 available main fixture matches its own recorded binding. No binding or baseline
