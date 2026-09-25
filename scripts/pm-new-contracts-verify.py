@@ -53,6 +53,7 @@ from pm_goal_handoff_semantics import goal_handoff_semantic_failures
 from pm_guided_tour_semantics import guided_tour_semantic_failures
 from pm_named_plan_semantics import named_plan_semantic_failures
 from pm_forge_creation_semantics import forge_creation_semantic_failures
+from pm_usage_command_semantics import usage_command_semantic_failures
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -102,9 +103,10 @@ CONTRACT_PAIRS = (
     ("Plans/multi_account_contracts.schema.json", "Plans/multi_account_contract_fixtures.json"),
     ("Plans/testing_session_command_contracts.schema.json", "Plans/testing_session_command_contract_fixtures.json"),
     ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
+    ("Plans/usage_command_contracts.schema.json", "Plans/usage_command_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 45
+EXPECTED_CONTRACT_PAIR_COUNT = 46
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -350,6 +352,12 @@ def offline_schema_registry() -> Registry:
     if not isinstance(runtime_uri, str) or not runtime_uri:
         raise ValueError("shared runtime owner schema has no canonical $id")
     registry = registry.with_resource(runtime_uri, Resource.from_contents(runtime_schema))
+    # Existing UI response dependency; not a new contract pair.
+    ui_schema = load_json(ROOT / "Plans/ui_command_response.schema.json")
+    ui_uri = ui_schema.get("$id")
+    if not isinstance(ui_uri, str) or not ui_uri:
+        raise ValueError("UI command response schema has no canonical $id")
+    registry = registry.with_resource(ui_uri, Resource.from_contents(ui_schema))
     return registry
 
 
@@ -1231,6 +1239,8 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/usage_command_contracts.schema.json":
+        return usage_command_semantic_failures(definition_name, value)
     if schema_rel == "Plans/capability_ensure_custody_contracts.schema.json":
         return capability_ensure_semantic_failures(definition_name, value)
     if schema_rel == "Plans/jujutsu_change_operand_contracts.schema.json":

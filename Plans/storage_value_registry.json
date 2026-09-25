@@ -2600,6 +2600,41 @@
         "Plans/Commands_System.md#CS-078",
         "Plans/storage-plan.md#SP-318"
       ]
+    },
+    {
+      "disposition_id": "scd.usage.command_transport.v1",
+      "system_id": "usage",
+      "owner_doc": "Plans/usage-feature.md",
+      "schema_ref": "Plans/usage_command_contracts.schema.json",
+      "record_kinds": [
+        "pm.usage.command_request.v1",
+        "pm.usage.command_result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Original command outcomes, owner projections and actual output artifacts retain their existing independent custody, retention and replay holds.",
+        "expiry_rule": "Discard transient request/result copies after dispatch or response; disposal cannot erase the independently retained original result/output required by existing command replay. Never reconstruct replay from a new projection or export."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Use the core-selection typed transport only for representable original queries and projections; refuse unsupported originals. No new physical store, command, handler availability or accounting authority; existing outcome/artifact migration remains owner-governed.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "The two Usage command envelopes are transient view transport, not duplicate accounting or output storage. Synthetic fixture wrappers are not production stored record kinds.",
+      "source_refs": [
+        "Plans/usage-feature.md",
+        "Plans/UI_Command_Catalog.md#UCC-116",
+        "Plans/Commands_System.md",
+        "Plans/storage-plan.md",
+        "Plans/usage_command_contracts.schema.json"
+      ]
     }
   ],
   "families": [

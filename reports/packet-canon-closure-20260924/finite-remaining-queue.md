@@ -54,6 +54,12 @@ the remaining distinctions above still apply.
 Refined Backup, pairing, application-check and Tour custody proposals remain
 external owner-review evidence, not newly admitted policies or physical writers.
 Tour original Chat/layout capture custody remains a protected-owner dependency;
-no generic reference or fixture claims to supply it. Usage command companions
-remain pending, including a separate unresolved grammar for additional Ledger
-filters; current owner prose does not certify those carriers or native execution.
+no generic reference or fixture claims to supply it. The limited Usage companion
+is integrated in `usage-core-command-companion.md`; additional Ledger filters and
+execution-free quota-only rows remain typed-profile gaps, not native-only work.
+The neutral SCM staging is partial: adoption/removal preview contents remain
+untyped and it is not enrolled as a sufficient current effect boundary. Its final
+second-cycle review also reproduced a resolver mutating the original request
+after earlier comparisons without detection. Both are recorded open, with no
+third review loop or public enrollment: `/mnt/Cursor/PM-Experiments/scm-selected-operands-20260925-LN2w1A/independent-final-cycle2.md`,
+SHA-256 `f0a270860e4d198c52304d9394ec53d7043e6bfe72067b913fe9cfaef97589e9`.

@@ -62313,12 +62313,14 @@
       "ui_location": "Usage page > Export JSON / Ledger JSON",
       "ui_command_id": "cmd.usage.export",
       "handler_location": "handlers::usage::export",
+      "request_schema_ref": "Plans/usage_command_contracts.schema.json#/$defs/usage_export_request",
+      "result_schema_ref": "Plans/usage_command_contracts.schema.json#/$defs/usage_export_result",
       "expected_event_types": [],
       "acceptance_checks": [
         "Export scope is snapshot or ledger; ledger scope preserves usage_event_refs per row",
         "Export output is a view export per the record/bundle/view taxonomy and never becomes canonical record truth",
         "Export includes no secrets and no unauthorized provider/account details",
-        "cmd.usage.export must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.usage.export requires the bound core-selection request/result and genuine owner outcome; route/open alone is not success",
         "cmd.usage.export must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.usage.export; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
@@ -62326,7 +62328,7 @@
       "disabled_reason_projection": "state.commands.usage_export.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.usage.export has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "cmd.usage.export has no declared persisted event; dispatch records the existing command receipt and binds the actual owner result; route/open alone is not success.",
         "receipt_or_event_refs": [
           "cmd.usage.export.dispatch_receipt"
         ]
@@ -62351,7 +62353,7 @@
         {
           "test_id": "wiring.catalog.usage_export.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.usage.export has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.usage.export has no declared persisted event; dispatch records the existing command receipt and binds the actual owner result; route/open alone is not success."
         },
         {
           "test_id": "wiring.catalog.usage_export.accessibility",
@@ -62360,7 +62362,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.usage.export records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.usage.export binds the original request, actual owner result and command receipt, refuses route-only success, and emits no unexpected persisted domain event."
       ]
     },
     "catalog.usage_forecast_request": {
@@ -62424,12 +62426,14 @@
       "ui_location": "Usage page > Header > Refresh",
       "ui_command_id": "cmd.usage.refresh",
       "handler_location": "handlers::usage::refresh",
+      "request_schema_ref": "Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_request",
+      "result_schema_ref": "Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_result",
       "expected_event_types": [],
       "acceptance_checks": [
         "Refresh re-reads usage projections from provider routes on demand without blocking the UI",
         "Background refresh continues independently; on-demand refresh does not replace it",
         "Refresh surfaces projection freshness/health so stale data is visible rather than silently overwritten",
-        "cmd.usage.refresh must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.usage.refresh requires the bound core-selection request/result and genuine owner outcome; route/open alone is not success",
         "cmd.usage.refresh must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "The PMConcept7 Refresh button dispatches only on explicit activation; room, scope, range, disclosure, and filter changes do not call this command.",
         "Refresh updates the existing Usage freshness/health projection and never writes a widget layout namespace or fabricates a Usage domain event."
@@ -62439,7 +62443,7 @@
       "disabled_reason_projection": "state.commands.usage_refresh.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.usage.refresh has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 local view selections do not invoke refresh; explicit refresh updates the existing projection and records only the declared receipt.",
+        "description": "cmd.usage.refresh has no declared persisted event; dispatch records the existing command receipt and binds the actual owner result; route/open alone is not success. PMConcept7 local view selections do not invoke refresh; explicit refresh updates the existing projection and records only the declared receipt.",
         "receipt_or_event_refs": [
           "cmd.usage.refresh.dispatch_receipt"
         ]
@@ -62464,7 +62468,7 @@
         {
           "test_id": "wiring.catalog.usage_refresh.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.usage.refresh has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.usage.refresh has no declared persisted event; dispatch records the existing command receipt and binds the actual owner result; route/open alone is not success."
         },
         {
           "test_id": "wiring.catalog.usage_refresh.accessibility",
@@ -62478,7 +62482,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.usage.refresh records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.",
+        "Assert cmd.usage.refresh binds the original request, actual owner result and command receipt, refuses route-only success, and emits no unexpected persisted domain event.",
         "Assert PMConcept7 local Usage projection changes do not dispatch cmd.usage.refresh and explicit Refresh records one receipt with no fabricated event."
       ]
     },

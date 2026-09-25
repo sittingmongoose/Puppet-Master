@@ -2,15 +2,17 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L903-L934
+Source lines: L903-L936
 
-Source SHA256: `315258f1c3c028cee2f5a9873a41aec37e282624b606048325d04ad28c375310`
+Source SHA256: `11e08427addbbc954f853049f43204ddf8f1bb835ebfeb0166cedbbbbf452a93`
 
 ---
 
 ## Cross-Surface Usage Routing Clarifications
 
 ### Current refresh and export command boundary
+
+The `usage_core_selection.v1` machine profile in `Plans/usage_command_contracts.schema.json` represents the UF-044 selectors and attempt-attributed Usage view rows. The actual optional provider execution handle may be null. Additional Ledger filter grammar and execution-free provider/account quota-only row grammar remain outside this profile: originals requiring either are refused, never stripped, converted to empty rows or filled with fabricated Project, Run, Attempt, model or event identities. Empty application-scoped views do not prove application quota-row support. These remain typed-profile gaps, not merely unavailable native adapters. The companion is a view/command contract, not accounting persistence or native runtime proof.
 
 The existing `cmd.usage.refresh` and `cmd.usage.export` preserve the original invocation, admitted Usage scope, complete selected owner query and exact caller return context. Local room, filter, range and disclosure changes dispatch neither command. Admission resolves the actual original projection/query; current UI focus, a changed account/route selection or a later recomputed query cannot replace it. Stale selection requires current owner admission or an explicit stale result, not silently different exported rows. Read/export permission and current disclosure are independently rechecked before returning content.
 

@@ -4815,6 +4815,8 @@ are local projections. A changed semantic release dispatches one existing comman
 returns without dispatch, and Escape or `pointercancel` restores the original projection without a
 command, receipt, persisted event, or storage write.
 
+Core-selection machine bindings: `cmd.usage.refresh`: `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_result`; `cmd.usage.export`: `Plans/usage_command_contracts.schema.json#/$defs/usage_export_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_export_result`. Existing handlers, availability and disabled reasons are unchanged; this binding grants no native handler availability. Additional Ledger filters and execution-free quota-only projections are outside this profile and must refuse rather than silently lose filters or rows.
+
 The canonical dispositions are:
 
 | Interaction family | Canonical command or disposition | Commit/effect boundary |

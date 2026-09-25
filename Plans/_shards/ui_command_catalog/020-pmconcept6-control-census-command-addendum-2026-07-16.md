@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8334-L8522
+Source lines: L8334-L8524
 
-Source SHA256: `80d4929aa983e87a546f9e1fe4c396ba1f6b9195f457245a405a1dca27a02584`
+Source SHA256: `c89d265c968efef410a88c33ac6e82924851bddad1e11b3e03e07ffcf06351f3`
 
 ---
 
@@ -112,6 +112,8 @@ ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Section15_M
 | `cmd.provider.switch_route` | Switch Provider Route | Accepts a provider re-route, preferring an alternate provider/plan until the quota window resets; carries `provider_id` and `retry_after_ms` context. | `alternate_route_available` | `domain_action` |
 | `cmd.usage.export` | Export Usage Projection | Exports the current usage projection as JSON with `scope` `snapshot` or `ledger`; ledger scope preserves `usage_event_refs` per row. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules; behavior unchanged. | `usage_projection_loaded` | `domain_action` |
 | `cmd.usage.refresh` | Refresh Usage Projections | Re-reads usage projections from provider routes on demand; background refresh continues independently and the UI never blocks. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules; behavior unchanged. | `provider_routes_configured` | `domain_action` |
+
+Core-selection machine bindings: `cmd.usage.refresh`: `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_result`; `cmd.usage.export`: `Plans/usage_command_contracts.schema.json#/$defs/usage_export_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_export_result`. Existing handlers, availability and disabled reasons are unchanged; this binding grants no native handler availability. Additional Ledger filters and execution-free quota-only projections are outside this profile and must refuse rather than silently lose filters or rows.
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
 

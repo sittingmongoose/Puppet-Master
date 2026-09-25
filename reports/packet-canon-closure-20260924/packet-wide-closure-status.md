@@ -11,6 +11,13 @@ Historical unverified/not-reopened counts below are superseded, not silently
 promoted to covered. Confirmed selected-operation bindings, explicit comparisons
 and owner choices still remain; neither whole-packet nor GUI-only closure follows.
 
+`selected-operation-prose-boundaries.md` records subsequent owner prose and three
+corrected existing Backup credits. `usage-core-command-companion.md` records the
+bounded Usage machine companion and its remaining filter/quota-only gaps. The
+partial neutral SCM staging is not publicly enrolled; its final two-cycle findings
+remain in the finite queue. These later records supersede older pending labels
+only for their exact named scope.
+
 Current capability integration and exact verification counts are recorded in
 `capability-ensure-custody-integration.md`; its two same-family successors reduce
 pending Storage dispositions from 23 to 22 without new families or policies.

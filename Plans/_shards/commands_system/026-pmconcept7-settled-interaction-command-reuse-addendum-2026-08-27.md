@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4809-L4917
+Source lines: L4809-L4919
 
-Source SHA256: `dfb05ec06d6151528e59fcf0e67852079ca40783ac546c357a45893e9374fa96`
+Source SHA256: `3c7074478d02f753d0615026d90a3e9d0cb8e46a530f6e321db7f3f068c2a0e9`
 
 ---
 
@@ -16,6 +16,8 @@ open/close state, Usage room/scope/range/disclosure/filter selection, and Contex
 are local projections. A changed semantic release dispatches one existing command, a no-change release
 returns without dispatch, and Escape or `pointercancel` restores the original projection without a
 command, receipt, persisted event, or storage write.
+
+Core-selection machine bindings: `cmd.usage.refresh`: `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_result`; `cmd.usage.export`: `Plans/usage_command_contracts.schema.json#/$defs/usage_export_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_export_result`. Existing handlers, availability and disabled reasons are unchanged; this binding grants no native handler availability. Additional Ledger filters and execution-free quota-only projections are outside this profile and must refuse rather than silently lose filters or rows.
 
 The canonical dispositions are:
 

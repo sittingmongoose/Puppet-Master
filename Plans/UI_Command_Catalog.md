@@ -8436,6 +8436,8 @@ ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Section15_M
 | `cmd.usage.export` | Export Usage Projection | Exports the current usage projection as JSON with `scope` `snapshot` or `ledger`; ledger scope preserves `usage_event_refs` per row. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules; behavior unchanged. | `usage_projection_loaded` | `domain_action` |
 | `cmd.usage.refresh` | Refresh Usage Projections | Re-reads usage projections from provider routes on demand; background refresh continues independently and the UI never blocks. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules; behavior unchanged. | `provider_routes_configured` | `domain_action` |
 
+Core-selection machine bindings: `cmd.usage.refresh`: `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_refresh_result`; `cmd.usage.export`: `Plans/usage_command_contracts.schema.json#/$defs/usage_export_request` -> `Plans/usage_command_contracts.schema.json#/$defs/usage_export_result`. Existing handlers, availability and disabled reasons are unchanged; this binding grants no native handler availability. Additional Ledger filters and execution-free quota-only projections are outside this profile and must refuse rather than silently lose filters or rows.
+
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
 
 ### Browser pane navigation commands
