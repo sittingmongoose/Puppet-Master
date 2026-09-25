@@ -51,7 +51,7 @@ The landing check on the VM is the one that counts.
 - `goal_certified_family_composition.json` members `00-plans-index.md`, `Goal_Runtime_System.md`, `storage-plan.md` and `storage_value_registry.json`.
 - The consumer's `owner-sources.json` and `physical-retention-install.json`.
 
-The 2026-09-25 landing record asks only for the `Goal_Runtime_System.md` member.
+The 2026-09-25 landing record names the `Goal_Runtime_System.md` member and notes the `storage-plan.md` member as already stale; it does not name the other two or the consumer's pins.
 
 ## Next
 
