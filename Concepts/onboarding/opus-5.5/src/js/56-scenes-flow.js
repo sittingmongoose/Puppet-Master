@@ -24,15 +24,18 @@
       const b = ctx.beat || 'this', retro = R(ctx), m = A.metrics(ctx.family);
       const items = [];
       if (b === 'this') {
-        items.push({ key: 'bar', prop: 'bar', x: 240, y: 140, layer: 'front', anim: 'drop', amb: 'sway', ambd: 5600 });
-        items.push({ key: 'pc', prop: 'computer', x: 240, y: 460, s: retro ? 1 : 2.1, layer: 'mid', anim: 'rise', delay: 120, opts: { label: L('thisComputer', 'this computer') } });
-        items.push({ key: 'str', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 260, opts: { pts: [[240, 176], [240, 318]] } });
-        items.push({ key: 'h0', prop: 'helper', x: 108, y: 520, s: m.helperScale * 0.8, layer: 'front', anim: 'drop', delay: 360, amb: 'bob', opts: { variant: 0, pose: 'wave', px: 5 } });
-        items.push({ key: 'h2', prop: 'helper', x: 372, y: 520, s: m.helperScale * 0.8, layer: 'front', anim: 'drop', delay: 440, amb: 'bob', ambd: 2800, opts: { variant: 2, pose: 'point', px: 5 } });
+        /* the computer hangs from the control bar on a real string (the rig keeps it on) */
+        items.push({ key: 'bar', prop: 'bar', x: 240, y: 140, layer: 'front', anim: 'drop' });
+        const pc = { key: 'pc', prop: 'computer', x: 240, y: 450, s: retro ? 2 : 1.7, layer: 'mid', anim: 'rise', delay: 120, opts: { label: L('thisComputer', 'this computer'), tie: 'a1' } };
+        items.push(pc);
+        /* the helpers stand beside the laptop, not on its corners */
+        const bl = A.attach(ctx, pc, 'bottomLeft'), br = A.attach(ctx, pc, 'bottomRight');
+        items.push({ key: 'h0', prop: 'helper', x: Math.min(150, Math.max(96, bl[0] - 30)), y: bl[1] + 34, s: m.helperScale * 0.8, layer: 'front', anim: 'drop', delay: 360, amb: 'bob', opts: { variant: 0, pose: 'wave', px: 5 } });
+        items.push({ key: 'h2', prop: 'helper', x: Math.max(330, Math.min(384, br[0] + 30)), y: br[1] + 34, s: m.helperScale * 0.8, layer: 'front', anim: 'drop', delay: 440, amb: 'bob', ambd: 2800, opts: { variant: 2, pose: 'point', px: 5 } });
       } else if (b === 'connect') {
-        items.push({ key: 'pc', prop: 'computer', x: 140, y: 500, s: retro ? 1 : 1.5, layer: 'mid', anim: 'rise', opts: { label: L('thisDevice', 'this device') } });
-        items.push({ key: 'nas', prop: 'nas', x: 336, y: 330, s: retro ? 1 : 1.5, layer: 'mid', anim: 'rise', delay: 100, opts: { label: L('yourPm', 'your puppet master') } });
-        items.push({ key: 'str', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: [[190, 400], [290, 250]] } });
+        const pc = { key: 'pc', prop: 'computer', x: 140, y: 500, s: 1.5, layer: 'mid', anim: 'rise', opts: { label: L('thisDevice', 'this device') } };
+        const nas = { key: 'nas', prop: 'nas', x: 336, y: 330, s: 1.5, layer: 'mid', anim: 'rise', delay: 100, opts: { label: L('yourPm', 'your puppet master') } };
+        items.push(pc, nas, { key: 'str', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: A.link(ctx, pc, nas) } });
         items.push({ key: 'rings', prop: 'rings', x: 336, y: 270, s: 1.2, layer: 'back', anim: 'fade', delay: 300, amb: 'pulse' });
       } else {
         items.push({ key: 'nas', prop: 'nas', x: 240, y: 420, s: retro ? 1 : 2, layer: 'mid', anim: 'rise', opts: { label: L('alwaysOn', 'always on') } });

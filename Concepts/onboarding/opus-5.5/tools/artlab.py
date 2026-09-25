@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Art lab: a light page (outside the repo) that renders scenes for fast visual iteration.
 
-Usage: python3 tools/artlab.py [out-dir=/tmp/o55/artlab] [scene:beat,scene:beat,...]
+Usage: python3 tools/artlab.py [out-dir=/tmp/o55/artlab] [scene:beat,scene:beat@{"params":1},...]  (rows split on ';' when any
+has parameters, else on ',')
 Writes one page per family (<family>.html: dark and light columns, one row per scene/beat) plus all.html.
 Uses the base concept's real theme tokens and the O55 art/motion sources; nothing else from the app.
 """
@@ -56,13 +57,14 @@ def page(families, rows, title):
   const grid=document.getElementById('grid');
   const settle=new URLSearchParams(location.search).has('settle');
   for(const row of rows){{
-    const [scene,beat]=row.split(':');
+    /* a row may carry sample parameters: scene:beat@{{"json":"params"}} (a sign's name, keys found, extras chosen) */
+    const at=row.indexOf('@'), [scene,beat]=(at>=0?row.slice(0,at):row).split(':'), params=at>=0?JSON.parse(row.slice(at+1)):{{}};
     for(const fam of families) for(const mode of ['dark','light']){{
       const cell=document.createElement('div'); cell.className='cell'; cell.setAttribute('data-theme',fam+'-'+mode);
       cell.innerHTML='<div class="cap">'+fam+'-'+mode+' · '+row+'</div><div class="o55-scene-host" data-family="'+fam+'"></div>';
       grid.appendChild(cell);
       const host=cell.querySelector('.o55-scene-host');
-      O55.art.mount(host, scene, {{family:fam, mode, beat, tok:O55.art.tokens(cell), params:{{}}, instance:row}});
+      O55.art.mount(host, scene, {{family:fam, mode, beat, tok:O55.art.tokens(cell), params, instance:row}});
     }}
   }}
   if(settle) document.body.setAttribute('data-o55-ambient','off');
@@ -73,7 +75,7 @@ def page(families, rows, title):
 
 def main():
     out = Path(sys.argv[1] if len(sys.argv) > 1 else '/tmp/o55/artlab')
-    rows = sys.argv[2].split(',') if len(sys.argv) > 2 else DEFAULT_ROWS
+    rows = (sys.argv[2].split(';') if '@' in sys.argv[2] else sys.argv[2].split(',')) if len(sys.argv) > 2 else DEFAULT_ROWS
     out.mkdir(parents=True, exist_ok=True)
     for fam in ['basic', 'friendly', 'glass', 'retro']:
         (out / f'{fam}.html').write_text(page([fam], rows, f'artlab {fam}'), encoding='utf-8')

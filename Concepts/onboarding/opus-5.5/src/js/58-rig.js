@@ -64,7 +64,7 @@
             frames: [...hIt.querySelectorAll('.o55-wf')], x: old ? old.x : 0, v: old ? old.v : 0, up: 0, lean: 0, ang: 0, cheer: old ? old.cheer : null, i: st.helpers.size });
         }
         const h = st.helpers.get(tk);
-        if (t.hand) h.handTie = t; else h.head = t;
+        if (t.hand) h.handTie = t; else { h.heads = (h.heads || []).concat(t); h.head = h.head || t; }
         t.h = h;
         return t;
       }).filter(Boolean);
@@ -181,12 +181,14 @@
     if (B.am) B.am.setAttribute('transform', `translate(0 ${(-B.lift).toFixed(2)}) rotate(${B.tilt.toFixed(3)})`);
     for (const h of st.helpers.values()) {
       if (!h.head || !h.am) continue;
-      const loc = h.head.fromLocal, r = rot(loc, B.tilt), dx = r[0] - loc[0], dy = r[1] - loc[1] - B.lift;
+      /* a prop hung by two strings (the name sign) tilts with the bar and rises by the mean of its two points */
+      const shift = (l) => { const r = rot(l, B.tilt); return [r[0] - l[0], r[1] - l[1] - B.lift]; };
+      const moves = h.heads.map((t) => shift(t.fromLocal)), dx = moves.reduce((a, m) => a + m[0], 0) / moves.length, dy = moves.reduce((a, m) => a + m[1], 0) / moves.length;
       const target = moving ? dx * f.swing + 1.2 * Math.sin(w(2900 + h.i * 530) + h.i * 1.7) : h.x;
       const acc = f.k * (target - h.x) - f.c * h.v; h.v += acc * dt; h.x += h.v * dt;
       const ch = cheerAt(h, now);
       h.up = Math.max(0, -dy) * f.lift + (ch ? ch.up : 0);
-      h.lean = Math.max(-8, Math.min(8, (dx - h.x) * f.lean + h.v * 0.02 + (ch ? ch.lean : 0)));
+      h.lean = h.heads.length > 1 ? B.tilt + (ch ? ch.lean * 0.4 : 0) : Math.max(-8, Math.min(8, (dx - h.x) * f.lean + h.v * 0.02 + (ch ? ch.lean : 0)));
       const s = h.pos.s || 1;
       h.am.setAttribute('transform', `translate(${(h.x / s).toFixed(2)} ${(-h.up / s).toFixed(2)}) rotate(${h.lean.toFixed(2)})`);
       if (h.arm) {

@@ -14,7 +14,12 @@
   const dev = (S) => S.env.devices.find((d) => d.id === N(S).device) || null;
   const dname = (S) => (dev(S) || { name: '' }).name;
   const words = (seed) => O55.art.identity(seed).words.join(' ');
-  const sceneParams = (S, extra) => Object.assign({ device: (dev(S) || {}).name ? dev(S).name.toLowerCase() : undefined, seed: (dev(S) || {}).hostKey, words: dev(S) ? words(dev(S).hostKey) : '' }, extra || {});
+  /* the picture follows the screen: as many keys as were found, the chosen one lit, a new key when one is chosen */
+  const sceneParams = (S, extra) => {
+    const ks = S.env.here.sshKeys, sel = N(S).key || (dev(S) ? defaultKey(S) : null);
+    return Object.assign({ device: (dev(S) || {}).name ? dev(S).name.toLowerCase() : undefined, seed: (dev(S) || {}).hostKey, words: dev(S) ? words(dev(S).hostKey) : '',
+      keys: ks.length, pick: ks.findIndex((k) => k.id === sel), newKey: sel === 'new' }, extra || {});
+  };
 
   /* ------------------------------------------------------------------ find the device */
   def('nas-find', {

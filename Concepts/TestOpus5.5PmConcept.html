@@ -82181,9 +82181,54 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   A.tone = function tone(ctx, i) { const t = ctx.pal.tones || [ctx.pal.ink || '#888']; return t[((i || 0) % t.length + t.length) % t.length]; };
   A.defineScene = function defineScene(id, def) { A.scenes[id] = def; };
 
+  /* Retro draws whole pixels: a prop keeps its size in whole steps (1x, 2x), never a fraction and never rotated */
+  A.scaleOf = (ctx, item) => (ctx.family === 'retro' ? item.sr || Math.max(1, Math.round(item.s || 1)) : item.s || 1);
+
+  /* A prop's drawn outline, measured once per family, look and variant from the drawing itself (text, glows and
+     shadows left out), so a string or a connector can end exactly on it: A.box(ctx, prop, opts) -> [x0, y0, x1, y1]
+     in the prop's own units, before its scale. */
+  const boxes = new Map();
+  A.box = function box(ctx, prop, opts) {
+    const k = ctx.family + '|' + ctx.mode + '|' + prop + '|' + JSON.stringify(opts || {});
+    if (boxes.has(k)) return boxes.get(k);
+    const fam = A.families[ctx.family] || A.families.basic, draw = fam.props[prop] || (A.common[prop] && ((c, o) => A.common[prop](c, o, fam)));
+    let r = [-20, -20, 20, 20];
+    if (draw && document.body) {
+      const NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('style', 'position:fixed;left:-9999px;top:0;width:10px;height:10px;visibility:hidden;pointer-events:none');
+      svg.innerHTML = `<g>${draw(ctx, { x: 0, y: 0, s: 1, opts: opts || {}, key: 'geo' })}</g>`;
+      svg.querySelectorAll('text, .o55-hook, [fill*="glow"], [class*="shade"], .o55-shadow').forEach((t) => t.remove());
+      document.body.appendChild(svg);
+      try { const b = svg.firstElementChild.getBBox(); if (b.width || b.height) r = [b.x, b.y, b.x + b.width, b.y + b.height]; } catch (_) {}
+      svg.remove();
+    }
+    boxes.set(k, r); return r;
+  };
+  /* the scene point on one side of a placed item: top, bottom, left, right, center, topLeft, topRight, bottomLeft,
+     bottomRight; d nudges it (scene units) */
+  A.attach = function attach(ctx, item, side, d) {
+    const b = A.box(ctx, item.prop, item.opts), s = A.scaleOf(ctx, item), cx = (b[0] + b[2]) / 2, cy = (b[1] + b[3]) / 2;
+    const p = { top: [cx, b[1]], bottom: [cx, b[3]], left: [b[0], cy], right: [b[2], cy], topLeft: [b[0], b[1]], topRight: [b[2], b[1]], bottomLeft: [b[0], b[3]], bottomRight: [b[2], b[3]] }[side] || [cx, cy];
+    return [item.x + s * p[0] + ((d && d[0]) || 0), item.y + s * p[1] + ((d && d[1]) || 0)];
+  };
+  /* where the line from an item's centre toward a point leaves its outline (a circle for round props) */
+  A.edge = function edge(ctx, item, toward) {
+    const b = A.box(ctx, item.prop, item.opts), s = A.scaleOf(ctx, item);
+    const c = [item.x + s * (b[0] + b[2]) / 2, item.y + s * (b[1] + b[3]) / 2], hw = s * (b[2] - b[0]) / 2, hh = s * (b[3] - b[1]) / 2;
+    const dx = toward[0] - c[0], dy = toward[1] - c[1], len = Math.hypot(dx, dy) || 1;
+    if (/^(node|spark|rings)$/.test(item.prop)) { const r = Math.min(hw, hh); return [c[0] + (dx / len) * r, c[1] + (dy / len) * r]; }
+    const k = Math.min(hw / Math.abs(dx || 1e-6), hh / Math.abs(dy || 1e-6));
+    return [c[0] + dx * k, c[1] + dy * k];
+  };
+  /* a connector between two placed items, ending on both outlines */
+  A.link = function link(ctx, a, b) {
+    const ca = A.attach(ctx, a, 'center'), cb = A.attach(ctx, b, 'center');
+    return [A.edge(ctx, a, cb), A.edge(ctx, b, ca)];
+  };
+
   /* place(item) -> anchor + animated inner group */
   function place(item, inner, family) {
-    if (family === 'retro') { item = Object.assign({}, item, { r: 0, s: item.sr || 1 }); }
+    if (family === 'retro') { item = Object.assign({}, item, { r: 0, s: item.sr || Math.max(1, Math.round(item.s || 1)) }); }
     const tf = `translate(${(+item.x || 0).toFixed(1)}px, ${(+item.y || 0).toFixed(1)}px)`
       + (item.s && item.s !== 1 ? ` scale(${item.s})` : '') + (item.r ? ` rotate(${item.r}deg)` : '');
     const anim = item.anim ? ` o55-an o55-an-${item.anim}` : '';
@@ -82214,16 +82259,26 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        hand, from a second hook to that hand). O55.art.rig keeps every string on its two hook points every frame and
        drives the bar and the tied helpers as one linked system, so nothing comes loose while it all moves. */
     const bar = items.find((it) => it.prop === 'bar');
-    const ties = bar && fam.string ? items.filter((it) => it.prop === 'helper' && it.opts && it.opts.tie) : [];
+    /* any prop may hang from the bar: opts.tie (one string, to a helper's head or a prop's top) or opts.ties
+       ([[barHook, side], ...], several strings to sides of its measured outline) */
+    const ties = bar && fam.string ? items.filter((it) => it.opts && (it.opts.tie || it.opts.ties)) : [];
+    const hookPts = new Map(); /* item -> [[name, local point, bar hook]] */
     if (ties.length) {
       const m = A.metrics(ctx.family), hooks = Object.assign({}, m.barHooks, (bar.opts || {}).hooks);
       bar.amb = null; bar.opts = Object.assign({}, bar.opts, { hooks });
-      ties.forEach((it) => { it.amb = null; it.opts = Object.assign({}, it.opts, { anchor: null, rig: true }); });
-      const pt = (it, local) => [it.x + (it.s || 1) * local[0], it.y + (it.s || 1) * local[1]];
+      ties.forEach((it) => {
+        const list = it.opts.ties || [[it.opts.tie, 'top']], b = it.prop === 'helper' ? null : A.box(ctx, it.prop, it.opts);
+        hookPts.set(it, list.map(([bh, side], i) => {
+          if (!b) return ['head', m.hook, bh];
+          const cx = (b[0] + b[2]) / 2, pts = { top: [cx, b[1]], topLeft: [b[0] + 6, b[1]], topRight: [b[2] - 6, b[1]] };
+          return [i ? 'head' + i : 'head', pts[side] || pts.top, bh];
+        }));
+        it.amb = null; it.opts = Object.assign({}, it.opts, { anchor: null, rig: true });
+      });
+      const pt = (it, local) => { const s = A.scaleOf(ctx, it); return [it.x + s * local[0], it.y + s * local[1]]; };
       const d = (a, b) => `M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
       const strings = ties.map((it) => {
-        const from = hooks[it.opts.tie] || [0, 0], head = pt(it, m.hook);
-        let out = `<g class="o55-tie" data-key="tie-${U.esc(it.key)}" data-from="${U.esc(bar.key)}:${U.esc(it.opts.tie)}" data-to="${U.esc(it.key)}:head">${fam.string(ctx, d(pt(bar, from), head))}</g>`;
+        let out = hookPts.get(it).map(([name, local, bh]) => `<g class="o55-tie" data-key="tie-${U.esc(it.key)}-${name}" data-from="${U.esc(bar.key)}:${U.esc(bh)}" data-to="${U.esc(it.key)}:${name}">${fam.string(ctx, d(pt(bar, hooks[bh] || [0, 0]), pt(it, local)))}</g>`).join('');
         const hand = it.opts.pose === 'wave' && it.opts.handTie && fam.hand && fam.hand.wave;
         if (hand) out += `<g class="o55-tie o55-tie-hand" data-key="tie-${U.esc(it.key)}-hand" data-from="${U.esc(bar.key)}:${U.esc(it.opts.handTie)}" data-to="${U.esc(it.key)}:hand">${fam.string(ctx, d(pt(bar, hooks[it.opts.handTie] || from), pt(it, fam.hand.wave)), true)}</g>`;
         return out;
@@ -82237,7 +82292,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       let inner = draw(ctx, item);
       /* hook points the rig measures: the bar's string points, a tied helper's head */
       if (ties.length && item === bar) inner = inner.replace(/<\/g>$/, Object.entries(item.opts.hooks).map(([k, [x, y]]) => hook(k, x, y)).join('') + '</g>');
-      if (item.opts && item.opts.rig) { const h = A.metrics(ctx.family).hook; inner = inner.replace(/<\/g>$/, hook('head', h[0], h[1]) + '</g>'); }
+      if (hookPts.has(item)) inner = inner.replace(/<\/g>$/, hookPts.get(item).map(([name, p]) => hook(name, p[0], p[1])).join('') + '</g>');
       (layers[item.layer || 'mid'] || layers.mid).push(place(item, inner, ctx.family));
     }
     const bg = fam.background ? fam.background(ctx) : '';
@@ -83175,8 +83230,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         { icon: 'computer', label: L('worksHere', 'Works here'), sub: L('thisComputer', 'this computer') }, { icon: 'person', label: L('you', 'You'), sub: L('thisDevice', 'this device') }];
       const n = nodes.length, top = 112, bottom = 476;
       const pts = nodes.map((_, i) => [i % 2 ? 336 : 144, top + ((bottom - top) * i) / Math.max(1, n - 1)]);
-      const items = [{ key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 200, opts: { pts } }];
-      nodes.forEach((nd, i) => items.push({ key: 'n' + i + nd.icon, prop: 'node', x: pts[i][0], y: pts[i][1], s: 1.28, layer: 'mid', anim: 'pop', delay: 120 + i * 150, opts: Object.assign({ v: i }, nd) }));
+      const nodeItems = nodes.map((nd, i) => ({ key: 'n' + i + nd.icon, prop: 'node', x: pts[i][0], y: pts[i][1], s: 1.28, layer: 'mid', anim: 'pop', delay: 120 + i * 150, opts: Object.assign({ v: i }, nd) }));
+      /* the route is drawn node to node, each leg from one outline to the next (never through the see-through icons),
+         each leg drawing on after the node before it has arrived */
+      const items = nodeItems.slice(1).map((nd, i) => ({ key: 'path' + i, prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 260 + i * 150, opts: { pts: A.link(ctx, nodeItems[i], nd) } }));
+      items.push(...nodeItems);
       const side = (i) => (i % 2 ? 150 : 332);
       if (pr.inherit) items.push({ key: 'inherit', prop: 'badge', x: side(0), y: pts[0][1], layer: 'front', anim: 'rise', delay: 760, opts: { label: pr.inherit, glyph: 'stack' } });
       if (pr.online && n > 1) items.push({ key: 'online', prop: 'cloud', x: side(1), y: pts[1][1] - 26, s: 0.8, layer: 'mid', anim: 'drop', delay: 820, amb: 'float', ambd: 3600 },
@@ -83194,21 +83252,26 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     band: [0, 170, 480, 330],
     compose(ctx) {
       const beat = ctx.beat || 'find', pr = ctx.params || {}, retro = ctx.family === 'retro';
-      const cx = 150, cy = 540, nx = 336, ny = 392, lockX = 264, lockY = 300;
+      const cx = 150, cy = 540, nx = 336, ny = 392;
       const done = beat === 'verified' || beat === 'folder';
-      const items = [
-        { key: 'pc', prop: 'computer', x: cx, y: cy, s: retro ? 1 : 1.45, layer: 'mid', anim: 'rise', delay: 60, opts: { label: pr.here || L('thisComputer', 'this computer'), screen: done ? 'check' : '' } },
-        { key: 'nas', prop: 'nas', x: nx, y: ny, s: retro ? 1 : 1.5, layer: 'mid', anim: 'rise', delay: 160, opts: { label: pr.device || L('homeNas', 'home nas'), busy: beat === 'install' } },
-        { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 320, opts: { pts: [[cx + 40, cy - 110], [lockX - 26, lockY + 14]] } },
-        { key: 'lock', prop: 'lock', x: lockX, y: lockY, s: retro ? 1 : 1.25, layer: 'front', anim: 'pop', delay: 420, opts: { open: !done } }
-      ];
-      if (beat === 'find') items.push({ key: 'rings', prop: 'rings', x: nx, y: ny - 64, s: 1.3, layer: 'back', anim: 'fade', delay: 200, amb: 'pulse', ambd: 1800 },
+      const pc = { key: 'pc', prop: 'computer', x: cx, y: cy, s: retro ? 1 : 1.45, layer: 'mid', anim: 'rise', delay: 60, opts: { label: pr.here || L('thisComputer', 'this computer'), screen: done ? 'check' : '' } };
+      const nas = { key: 'nas', prop: 'nas', x: nx, y: ny, s: retro ? 2 : 1.5, layer: 'mid', anim: 'rise', delay: 160, opts: { label: pr.device || L('homeNas', 'home nas'), busy: beat === 'install' } };
+      /* the lock sits on the NAS's left edge, a third of the way down; the path runs from the laptop's outline to it */
+      const tl = A.attach(ctx, nas, 'topLeft'), bl = A.attach(ctx, nas, 'bottomLeft'), lockX = tl[0], lockY = tl[1] + (bl[1] - tl[1]) * 0.34;
+      const lock = { key: 'lock', prop: 'lock', x: lockX, y: lockY, s: retro ? 1 : 1.25, layer: 'front', anim: 'pop', delay: 420, opts: { open: !done } };
+      const items = [pc, nas, { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 320, opts: { pts: A.link(ctx, pc, lock) } }, lock];
+      if (beat === 'find') items.push({ key: 'rings', prop: 'rings', x: nx, y: A.attach(ctx, nas, 'top')[1] - 24, s: 1.3, layer: 'back', anim: 'fade', delay: 200, amb: 'pulse', ambd: 1800 },
         { key: 'n-find', prop: 'note', x: nx, y: ny - 142, layer: 'front', anim: 'fade', delay: 700, opts: { text: L('lookingNearby', 'looking nearby'), dx: -60, dy: -64 } });
-      if (beat === 'identity' || beat === 'keys') items.push({ key: 'id', prop: 'identity', x: nx, y: 122, s: retro ? 1 : 1.2, layer: 'front', anim: 'pop', delay: 120, opts: { seed: pr.seed || 'home-nas', words: pr.words || '' } });
-      if (beat === 'identity') items.push({ key: 'n-id', prop: 'note', x: nx - 46, y: 122, layer: 'front', anim: 'fade', delay: 600, opts: { text: L('itsId', 'its id'), dx: -44, dy: 58 } });
+      const idCard = { key: 'id', prop: 'identity', x: nx, y: 122, s: retro ? 1 : 1.2, layer: 'front', anim: 'pop', delay: 120, opts: { seed: pr.seed || 'home-nas', words: pr.words || '' } };
+      if (beat === 'identity' || beat === 'keys') items.push(idCard);
+      if (beat === 'identity') { const e = A.attach(ctx, idCard, 'left'); items.push({ key: 'n-id', prop: 'note', x: e[0], y: e[1], layer: 'front', anim: 'fade', delay: 600, opts: { text: L('itsId', 'its id'), dx: -44, dy: 58 } }); }
       if (beat === 'keys') {
-        [[112, 304], [112, 352], [112, 400]].forEach(([x, y], i) => items.push({ key: 'k' + i, prop: 'key', x, y, r: retro ? 0 : (i - 1) * 8, s: retro ? 1 : 1.05, layer: 'front', anim: 'pop', delay: 80 + i * 110, opts: { accent: i === 0 } }));
-        items.push({ key: 'n-keys', prop: 'note', x: 138, y: 280, layer: 'front', anim: 'fade', delay: 600, opts: { text: L('yourKeys', 'your keys'), dx: 34, dy: -44 } });
+        /* the keys found on this computer (up to four), the chosen one lit; a new key made just for this, when chosen */
+        const n = Math.min(4, pr.keys == null ? 3 : pr.keys) + (pr.newKey ? 1 : 0), step = n > 3 ? 40 : 48, y0 = 352 - ((Math.max(1, n) - 1) * step) / 2;
+        const keys = Array.from({ length: n }, (_, i) => ({ key: 'k' + i, prop: 'key', x: 112, y: y0 + i * step, r: retro ? 0 : (i - (n - 1) / 2) * 7, s: retro ? 1 : 1.05, layer: 'front', anim: 'pop', delay: 80 + i * 100,
+          opts: { accent: pr.newKey ? i === n - 1 : i === Math.max(0, pr.pick) } }));
+        items.push(...keys);
+        if (keys.length) { const top = A.attach(ctx, keys[0], 'top'); items.push({ key: 'n-keys', prop: 'note', x: top[0], y: top[1], layer: 'front', anim: 'fade', delay: 600, opts: { text: L('yourKeys', 'your keys'), dx: 34, dy: -44 } }); }
       } else if (beat === 'install') {
         items.push({ key: 'k0', prop: 'key', x: 214, y: 372, r: retro ? 0 : -62, s: retro ? 1 : 1.05, layer: 'front', anim: 'pop', opts: { accent: true } });
         items.push({ key: 'n-inst', prop: 'note', x: 206, y: 360, layer: 'front', anim: 'fade', delay: 400, opts: { text: L('addingKey', 'adding your key'), dx: -40, dy: -84 } });
@@ -83249,15 +83312,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const b = ctx.beat || 'this', retro = R(ctx), m = A.metrics(ctx.family);
       const items = [];
       if (b === 'this') {
-        items.push({ key: 'bar', prop: 'bar', x: 240, y: 140, layer: 'front', anim: 'drop', amb: 'sway', ambd: 5600 });
-        items.push({ key: 'pc', prop: 'computer', x: 240, y: 460, s: retro ? 1 : 2.1, layer: 'mid', anim: 'rise', delay: 120, opts: { label: L('thisComputer', 'this computer') } });
-        items.push({ key: 'str', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 260, opts: { pts: [[240, 176], [240, 318]] } });
-        items.push({ key: 'h0', prop: 'helper', x: 108, y: 520, s: m.helperScale * 0.8, layer: 'front', anim: 'drop', delay: 360, amb: 'bob', opts: { variant: 0, pose: 'wave', px: 5 } });
-        items.push({ key: 'h2', prop: 'helper', x: 372, y: 520, s: m.helperScale * 0.8, layer: 'front', anim: 'drop', delay: 440, amb: 'bob', ambd: 2800, opts: { variant: 2, pose: 'point', px: 5 } });
+        /* the computer hangs from the control bar on a real string (the rig keeps it on) */
+        items.push({ key: 'bar', prop: 'bar', x: 240, y: 140, layer: 'front', anim: 'drop' });
+        const pc = { key: 'pc', prop: 'computer', x: 240, y: 450, s: retro ? 2 : 1.7, layer: 'mid', anim: 'rise', delay: 120, opts: { label: L('thisComputer', 'this computer'), tie: 'a1' } };
+        items.push(pc);
+        /* the helpers stand beside the laptop, not on its corners */
+        const bl = A.attach(ctx, pc, 'bottomLeft'), br = A.attach(ctx, pc, 'bottomRight');
+        items.push({ key: 'h0', prop: 'helper', x: Math.min(150, Math.max(96, bl[0] - 30)), y: bl[1] + 34, s: m.helperScale * 0.8, layer: 'front', anim: 'drop', delay: 360, amb: 'bob', opts: { variant: 0, pose: 'wave', px: 5 } });
+        items.push({ key: 'h2', prop: 'helper', x: Math.max(330, Math.min(384, br[0] + 30)), y: br[1] + 34, s: m.helperScale * 0.8, layer: 'front', anim: 'drop', delay: 440, amb: 'bob', ambd: 2800, opts: { variant: 2, pose: 'point', px: 5 } });
       } else if (b === 'connect') {
-        items.push({ key: 'pc', prop: 'computer', x: 140, y: 500, s: retro ? 1 : 1.5, layer: 'mid', anim: 'rise', opts: { label: L('thisDevice', 'this device') } });
-        items.push({ key: 'nas', prop: 'nas', x: 336, y: 330, s: retro ? 1 : 1.5, layer: 'mid', anim: 'rise', delay: 100, opts: { label: L('yourPm', 'your puppet master') } });
-        items.push({ key: 'str', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: [[190, 400], [290, 250]] } });
+        const pc = { key: 'pc', prop: 'computer', x: 140, y: 500, s: 1.5, layer: 'mid', anim: 'rise', opts: { label: L('thisDevice', 'this device') } };
+        const nas = { key: 'nas', prop: 'nas', x: 336, y: 330, s: 1.5, layer: 'mid', anim: 'rise', delay: 100, opts: { label: L('yourPm', 'your puppet master') } };
+        items.push(pc, nas, { key: 'str', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: A.link(ctx, pc, nas) } });
         items.push({ key: 'rings', prop: 'rings', x: 336, y: 270, s: 1.2, layer: 'back', anim: 'fade', delay: 300, amb: 'pulse' });
       } else {
         items.push({ key: 'nas', prop: 'nas', x: 240, y: 420, s: retro ? 1 : 2, layer: 'mid', anim: 'rise', opts: { label: L('alwaysOn', 'always on') } });
@@ -83290,9 +83356,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const b = ctx.beat || 'new', s = R(ctx) ? 1 : 1.9;
       const icon = { new: 'seed', folder: 'folder', online: 'cloud', device: 'server', restore: 'rewind', existing: 'folder' }[b] || 'seed';
       const items = [{ key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise', delay: 60 },
-        { key: 'bar', prop: 'bar', x: 240, y: 128, layer: 'front', anim: 'drop', amb: 'sway', ambd: 5600 },
-        { key: 'str', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: [[240, 166], [240, 262]] } },
-        { key: 'hero', prop: 'node', x: 240, y: 318, s, layer: 'mid', anim: 'pop', delay: 160, opts: { icon, accent: true } }];
+        { key: 'bar', prop: 'bar', x: 240, y: 128, layer: 'front', anim: 'drop' },
+        /* the beginning hangs from the control bar on a real string */
+        { key: 'hero', prop: 'node', x: 240, y: 318, s, layer: 'mid', anim: 'pop', delay: 160, opts: { icon, accent: true, tie: 'a1' } }];
       if (b === 'online') items.push({ key: 'cl', prop: 'cloud', x: 360, y: 214, s: 0.9, layer: 'back', anim: 'drop', delay: 320, amb: 'float' });
       if (b === 'device') items.push({ key: 'nas', prop: 'nas', x: 372, y: 450, s: R(ctx) ? 1 : 1.1, layer: 'mid', anim: 'rise', delay: 320, opts: { label: L('homeNas', 'home nas') } });
       if (b === 'restore') items.push({ key: 'rings', prop: 'rings', x: 240, y: 318, s: 1.6, layer: 'back', anim: 'fade', delay: 300, amb: 'pulse' });
@@ -83307,10 +83373,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     label: 'art.hero', band: [0, 140, 480, 300],
     compose(ctx) {
       const name = String((ctx.params || {}).name || '').slice(0, 22) || '…';
-      const items = [{ key: 'bar', prop: 'bar', x: 240, y: 120, layer: 'front', anim: 'drop', amb: 'sway', ambd: 5600 },
-        { key: 'sl', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 200, opts: { pts: [[140, 120], [150, 268]] } },
-        { key: 'sr', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: [[340, 120], [330, 268]] } },
-        { key: 'sign', prop: 'badge', x: 240, y: 296, s: R(ctx) ? 1 : 2.1, layer: 'mid', anim: 'drop', delay: 180, amb: 'sway', ambd: 4200, opts: { label: name, accent: true } },
+      /* the sign hangs from both ends of the control bar; its strings meet its corners whatever the name's length */
+      const items = [{ key: 'bar', prop: 'bar', x: 240, y: 120, layer: 'front', anim: 'drop' },
+        { key: 'sign', prop: 'badge', x: 240, y: 296, s: R(ctx) ? 2 : 2.1, layer: 'mid', anim: 'drop', delay: 180, opts: { label: name, accent: true, ties: [['a0', 'topLeft'], ['a2', 'topRight']] } },
         { key: 'stage', prop: 'stage', x: 240, y: floorY(ctx), layer: 'back', anim: 'rise', delay: 80 }];
       items.push(helper(ctx, 'h1', 240, floorY(ctx) - 16, 1, 'point', 320));
       items.push(...sparks([[90, 200, 0], [398, 180, 2]], 800));
@@ -83325,9 +83390,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const copy = ctx.beat === 'copy', s = R(ctx) ? 1 : 1.5;
       const items = [{ key: 'new', prop: 'folder', x: copy ? 340 : 240, y: 420, s, layer: 'mid', anim: 'rise', delay: 100, opts: { label: L('new', 'new') } }];
       if (copy) {
-        items.push({ key: 'old', prop: 'folder', x: 140, y: 250, s, layer: 'mid', anim: 'rise', delay: 60, opts: {} });
-        items.push({ key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 220, opts: { pts: [[176, 280], [304, 392]] } });
-        items.push({ key: 'bundle', prop: 'node', x: 240, y: 334, s: R(ctx) ? 1 : 1.2, layer: 'front', anim: 'pop', delay: 360, opts: { icon: 'stack', accent: true } });
+        const old = { key: 'old', prop: 'folder', x: 140, y: 250, s, layer: 'mid', anim: 'rise', delay: 60, opts: {} }, nw = items[0], ln = A.link(ctx, old, nw);
+        items.push(old, { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 220, opts: { pts: ln } });
+        items.push({ key: 'bundle', prop: 'node', x: (ln[0][0] + ln[1][0]) / 2, y: (ln[0][1] + ln[1][1]) / 2, s: R(ctx) ? 1 : 1.2, layer: 'front', anim: 'pop', delay: 360, opts: { icon: 'stack', accent: true } });
       } else items.push({ key: 'seed', prop: 'node', x: 240, y: 250, s: R(ctx) ? 1 : 1.4, layer: 'front', anim: 'pop', delay: 200, opts: { icon: 'seed', accent: true } });
       items.push(...sparks([[80, 120, 1], [410, 150, 0], [412, 520, 2]], 700));
       return items;
@@ -83339,11 +83404,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     label: 'art.route', band: [0, 150, 480, 320],
     compose(ctx) {
       const pr = ctx.params || {}, s = R(ctx) ? 1 : 1.35;
-      const items = [{ key: 'folder', prop: 'folder', x: 240, y: 448, s: R(ctx) ? 1 : 1.6, layer: 'mid', anim: 'rise', delay: 60 },
-        { key: 'hist', prop: 'node', x: 240, y: 268, s, layer: 'mid', anim: 'pop', delay: 160, opts: { icon: 'history', accent: true, label: 'safe history' } },
-        { key: 'p0', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 220, opts: { pts: [[240, 300], [240, 410]] } }];
-      if (pr.online) items.push({ key: 'cl', prop: 'cloud', x: 108, y: 150, s: 1, layer: 'mid', anim: 'drop', delay: 120, amb: 'float' }, { key: 'p1', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 200, opts: { pts: [[214, 250], [126, 176]] } });
-      if (pr.backup) items.push({ key: 'vault', prop: 'node', x: 378, y: 150, s: R(ctx) ? 1 : 1.1, layer: 'mid', anim: 'pop', delay: 140, opts: { icon: 'vault' } }, { key: 'p2', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 220, opts: { pts: [[266, 250], [356, 176]] } });
+      const folder = { key: 'folder', prop: 'folder', x: 240, y: 448, s: R(ctx) ? 2 : 1.6, layer: 'mid', anim: 'rise', delay: 60 };
+      const hist = { key: 'hist', prop: 'node', x: 240, y: 268, s, layer: 'mid', anim: 'pop', delay: 160, opts: { icon: 'history', accent: true, label: L('safeHistory', 'safe history') } };
+      /* the line down to the folder starts below the node's label, not through it */
+      const down = A.link(ctx, hist, folder); down[0] = [down[0][0], down[0][1] + 20];
+      const items = [folder, hist, { key: 'p0', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 220, opts: { pts: down } }];
+      if (pr.online) { const cl = { key: 'cl', prop: 'cloud', x: 108, y: 150, s: 1, layer: 'mid', anim: 'drop', delay: 120, amb: 'float' }; items.push(cl, { key: 'p1', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 200, opts: { pts: A.link(ctx, hist, cl) } }); }
+      if (pr.backup) { const vault = { key: 'vault', prop: 'node', x: 378, y: 150, s: R(ctx) ? 1 : 1.1, layer: 'mid', anim: 'pop', delay: 140, opts: { icon: 'vault' } }; items.push(vault, { key: 'p2', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 220, opts: { pts: A.link(ctx, hist, vault) } }); }
       if (ctx.beat === 'protect') items.push({ key: 'lock', prop: 'lock', x: 378, y: 222, s: R(ctx) ? 1 : 1.1, layer: 'front', anim: 'pop', delay: 300, opts: { open: false } });
       items.push(...sparks([[80, 520, 2], [410, 500, 0]], 900));
       return items;
@@ -83355,10 +83422,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     label: 'art.route', band: [0, 150, 480, 320],
     compose(ctx) {
       const b = ctx.beat || 'service', signed = b === 'signed';
-      const items = [{ key: 'cl', prop: 'cloud', x: 300, y: 200, s: R(ctx) ? 1 : 1.9, layer: 'mid', anim: 'drop', delay: 60, amb: 'float', ambd: 4200 },
-        { key: 'me', prop: 'node', x: 160, y: 420, s: R(ctx) ? 1 : 1.4, layer: 'mid', anim: 'pop', delay: 160, opts: { icon: 'person', accent: signed } }];
-      if (b !== 'service') items.push({ key: 'p', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: [[186, 396], [276, 236]] } }, { key: 'key', prop: 'key', x: 232, y: 318, r: R(ctx) ? 0 : -58, s: R(ctx) ? 1 : 1.1, layer: 'front', anim: 'pop', delay: 320, opts: { accent: signed } });
-      if (signed) items.push({ key: 'ok', prop: 'badge', x: 300, y: 292, layer: 'front', anim: 'rise', delay: 200, opts: { label: 'signed in', glyph: 'check', accent: true } });
+      const cl = { key: 'cl', prop: 'cloud', x: 300, y: 200, s: R(ctx) ? 2 : 1.9, layer: 'mid', anim: 'drop', delay: 60, ambd: 4200 };
+      const me = { key: 'me', prop: 'node', x: 160, y: 420, s: R(ctx) ? 1 : 1.4, layer: 'mid', anim: 'pop', delay: 160, opts: { icon: 'person', accent: signed } };
+      const items = [cl, me], ln = A.link(ctx, me, cl);
+      if (b !== 'service') items.push({ key: 'p', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: ln } }, { key: 'key', prop: 'key', x: (ln[0][0] + ln[1][0]) / 2, y: (ln[0][1] + ln[1][1]) / 2, r: R(ctx) ? 0 : -58, s: R(ctx) ? 1 : 1.1, layer: 'front', anim: 'pop', delay: 320, opts: { accent: signed } });
+      if (signed) items.push({ key: 'ok', prop: 'badge', x: 300, y: A.attach(ctx, cl, 'bottom')[1] + 34, layer: 'front', anim: 'rise', delay: 200, opts: { label: L('signedIn', 'signed in'), glyph: 'check', accent: true } });
       items.push(...sparks([[90, 150, 0], [420, 380, 2], [96, 540, 1]], 700));
       return items;
     }
@@ -83369,12 +83437,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     label: 'art.where', band: [0, 150, 480, 320],
     compose(ctx) {
       const any = ctx.beat === 'anywhere';
-      const items = [{ key: 'nas', prop: 'nas', x: 170, y: 430, s: R(ctx) ? 1 : 1.6, layer: 'mid', anim: 'rise', delay: 60, opts: { label: L('homeNas', 'home nas') } },
-        { key: 'rings', prop: 'rings', x: 170, y: 350, s: 1.2, layer: 'back', anim: 'fade', delay: 200, amb: 'pulse' }];
-      if (any) items.push({ key: 'globe', prop: 'node', x: 336, y: 210, s: R(ctx) ? 1 : 1.6, layer: 'mid', anim: 'pop', delay: 160, opts: { icon: 'globe', accent: true } },
-        { key: 'phone', prop: 'node', x: 372, y: 440, s: R(ctx) ? 1 : 1.1, layer: 'mid', anim: 'pop', delay: 260, opts: { icon: 'phone' } },
-        { key: 'p', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: [[196, 350], [312, 234], [360, 410]] } });
-      else items.push({ key: 'pc', prop: 'computer', x: 340, y: 470, s: R(ctx) ? 1 : 1.1, layer: 'mid', anim: 'rise', delay: 180, opts: {} }, { key: 'p', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: [[204, 400], [300, 430]] } });
+      const nas = { key: 'nas', prop: 'nas', x: 170, y: 430, s: R(ctx) ? 2 : 1.6, layer: 'mid', anim: 'rise', delay: 60, opts: { label: L('homeNas', 'home nas') } };
+      const items = [nas, { key: 'rings', prop: 'rings', x: 170, y: A.attach(ctx, nas, 'top')[1] - 26, s: 1.2, layer: 'back', anim: 'fade', delay: 200, amb: 'pulse' }];
+      if (any) {
+        /* the route runs outline to outline: home to the world, the world to the phone */
+        const globe = { key: 'globe', prop: 'node', x: 336, y: 210, s: R(ctx) ? 1 : 1.6, layer: 'mid', anim: 'pop', delay: 160, opts: { icon: 'globe', accent: true } };
+        const phone = { key: 'phone', prop: 'node', x: 372, y: 440, s: R(ctx) ? 1 : 1.1, layer: 'mid', anim: 'pop', delay: 260, opts: { icon: 'phone' } };
+        items.push(globe, phone, { key: 'p', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: A.link(ctx, nas, globe) } }, { key: 'p2', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 420, opts: { pts: A.link(ctx, globe, phone) } });
+      } else { const pc = { key: 'pc', prop: 'computer', x: 340, y: 470, s: R(ctx) ? 1 : 1.1, layer: 'mid', anim: 'rise', delay: 180, opts: {} }; items.push(pc, { key: 'p', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 240, opts: { pts: A.link(ctx, nas, pc) } }); }
       items.push(...sparks([[90, 120, 1], [412, 110, 2]], 700));
       return items;
     }
@@ -83488,7 +83558,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
             frames: [...hIt.querySelectorAll('.o55-wf')], x: old ? old.x : 0, v: old ? old.v : 0, up: 0, lean: 0, ang: 0, cheer: old ? old.cheer : null, i: st.helpers.size });
         }
         const h = st.helpers.get(tk);
-        if (t.hand) h.handTie = t; else h.head = t;
+        if (t.hand) h.handTie = t; else { h.heads = (h.heads || []).concat(t); h.head = h.head || t; }
         t.h = h;
         return t;
       }).filter(Boolean);
@@ -83605,12 +83675,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (B.am) B.am.setAttribute('transform', `translate(0 ${(-B.lift).toFixed(2)}) rotate(${B.tilt.toFixed(3)})`);
     for (const h of st.helpers.values()) {
       if (!h.head || !h.am) continue;
-      const loc = h.head.fromLocal, r = rot(loc, B.tilt), dx = r[0] - loc[0], dy = r[1] - loc[1] - B.lift;
+      /* a prop hung by two strings (the name sign) tilts with the bar and rises by the mean of its two points */
+      const shift = (l) => { const r = rot(l, B.tilt); return [r[0] - l[0], r[1] - l[1] - B.lift]; };
+      const moves = h.heads.map((t) => shift(t.fromLocal)), dx = moves.reduce((a, m) => a + m[0], 0) / moves.length, dy = moves.reduce((a, m) => a + m[1], 0) / moves.length;
       const target = moving ? dx * f.swing + 1.2 * Math.sin(w(2900 + h.i * 530) + h.i * 1.7) : h.x;
       const acc = f.k * (target - h.x) - f.c * h.v; h.v += acc * dt; h.x += h.v * dt;
       const ch = cheerAt(h, now);
       h.up = Math.max(0, -dy) * f.lift + (ch ? ch.up : 0);
-      h.lean = Math.max(-8, Math.min(8, (dx - h.x) * f.lean + h.v * 0.02 + (ch ? ch.lean : 0)));
+      h.lean = h.heads.length > 1 ? B.tilt + (ch ? ch.lean * 0.4 : 0) : Math.max(-8, Math.min(8, (dx - h.x) * f.lean + h.v * 0.02 + (ch ? ch.lean : 0)));
       const s = h.pos.s || 1;
       h.am.setAttribute('transform', `translate(${(h.x / s).toFixed(2)} ${(-h.up / s).toFixed(2)}) rotate(${h.lean.toFixed(2)})`);
       if (h.arm) {
@@ -85502,7 +85574,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const dev = (S) => S.env.devices.find((d) => d.id === N(S).device) || null;
   const dname = (S) => (dev(S) || { name: '' }).name;
   const words = (seed) => O55.art.identity(seed).words.join(' ');
-  const sceneParams = (S, extra) => Object.assign({ device: (dev(S) || {}).name ? dev(S).name.toLowerCase() : undefined, seed: (dev(S) || {}).hostKey, words: dev(S) ? words(dev(S).hostKey) : '' }, extra || {});
+  /* the picture follows the screen: as many keys as were found, the chosen one lit, a new key when one is chosen */
+  const sceneParams = (S, extra) => {
+    const ks = S.env.here.sshKeys, sel = N(S).key || (dev(S) ? defaultKey(S) : null);
+    return Object.assign({ device: (dev(S) || {}).name ? dev(S).name.toLowerCase() : undefined, seed: (dev(S) || {}).hostKey, words: dev(S) ? words(dev(S).hostKey) : '',
+      keys: ks.length, pick: ks.findIndex((k) => k.id === sel), newKey: sel === 'new' }, extra || {});
+  };
 
   /* ------------------------------------------------------------------ find the device */
   def('nas-find', {

@@ -42,9 +42,54 @@
   A.tone = function tone(ctx, i) { const t = ctx.pal.tones || [ctx.pal.ink || '#888']; return t[((i || 0) % t.length + t.length) % t.length]; };
   A.defineScene = function defineScene(id, def) { A.scenes[id] = def; };
 
+  /* Retro draws whole pixels: a prop keeps its size in whole steps (1x, 2x), never a fraction and never rotated */
+  A.scaleOf = (ctx, item) => (ctx.family === 'retro' ? item.sr || Math.max(1, Math.round(item.s || 1)) : item.s || 1);
+
+  /* A prop's drawn outline, measured once per family, look and variant from the drawing itself (text, glows and
+     shadows left out), so a string or a connector can end exactly on it: A.box(ctx, prop, opts) -> [x0, y0, x1, y1]
+     in the prop's own units, before its scale. */
+  const boxes = new Map();
+  A.box = function box(ctx, prop, opts) {
+    const k = ctx.family + '|' + ctx.mode + '|' + prop + '|' + JSON.stringify(opts || {});
+    if (boxes.has(k)) return boxes.get(k);
+    const fam = A.families[ctx.family] || A.families.basic, draw = fam.props[prop] || (A.common[prop] && ((c, o) => A.common[prop](c, o, fam)));
+    let r = [-20, -20, 20, 20];
+    if (draw && document.body) {
+      const NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('style', 'position:fixed;left:-9999px;top:0;width:10px;height:10px;visibility:hidden;pointer-events:none');
+      svg.innerHTML = `<g>${draw(ctx, { x: 0, y: 0, s: 1, opts: opts || {}, key: 'geo' })}</g>`;
+      svg.querySelectorAll('text, .o55-hook, [fill*="glow"], [class*="shade"], .o55-shadow').forEach((t) => t.remove());
+      document.body.appendChild(svg);
+      try { const b = svg.firstElementChild.getBBox(); if (b.width || b.height) r = [b.x, b.y, b.x + b.width, b.y + b.height]; } catch (_) {}
+      svg.remove();
+    }
+    boxes.set(k, r); return r;
+  };
+  /* the scene point on one side of a placed item: top, bottom, left, right, center, topLeft, topRight, bottomLeft,
+     bottomRight; d nudges it (scene units) */
+  A.attach = function attach(ctx, item, side, d) {
+    const b = A.box(ctx, item.prop, item.opts), s = A.scaleOf(ctx, item), cx = (b[0] + b[2]) / 2, cy = (b[1] + b[3]) / 2;
+    const p = { top: [cx, b[1]], bottom: [cx, b[3]], left: [b[0], cy], right: [b[2], cy], topLeft: [b[0], b[1]], topRight: [b[2], b[1]], bottomLeft: [b[0], b[3]], bottomRight: [b[2], b[3]] }[side] || [cx, cy];
+    return [item.x + s * p[0] + ((d && d[0]) || 0), item.y + s * p[1] + ((d && d[1]) || 0)];
+  };
+  /* where the line from an item's centre toward a point leaves its outline (a circle for round props) */
+  A.edge = function edge(ctx, item, toward) {
+    const b = A.box(ctx, item.prop, item.opts), s = A.scaleOf(ctx, item);
+    const c = [item.x + s * (b[0] + b[2]) / 2, item.y + s * (b[1] + b[3]) / 2], hw = s * (b[2] - b[0]) / 2, hh = s * (b[3] - b[1]) / 2;
+    const dx = toward[0] - c[0], dy = toward[1] - c[1], len = Math.hypot(dx, dy) || 1;
+    if (/^(node|spark|rings)$/.test(item.prop)) { const r = Math.min(hw, hh); return [c[0] + (dx / len) * r, c[1] + (dy / len) * r]; }
+    const k = Math.min(hw / Math.abs(dx || 1e-6), hh / Math.abs(dy || 1e-6));
+    return [c[0] + dx * k, c[1] + dy * k];
+  };
+  /* a connector between two placed items, ending on both outlines */
+  A.link = function link(ctx, a, b) {
+    const ca = A.attach(ctx, a, 'center'), cb = A.attach(ctx, b, 'center');
+    return [A.edge(ctx, a, cb), A.edge(ctx, b, ca)];
+  };
+
   /* place(item) -> anchor + animated inner group */
   function place(item, inner, family) {
-    if (family === 'retro') { item = Object.assign({}, item, { r: 0, s: item.sr || 1 }); }
+    if (family === 'retro') { item = Object.assign({}, item, { r: 0, s: item.sr || Math.max(1, Math.round(item.s || 1)) }); }
     const tf = `translate(${(+item.x || 0).toFixed(1)}px, ${(+item.y || 0).toFixed(1)}px)`
       + (item.s && item.s !== 1 ? ` scale(${item.s})` : '') + (item.r ? ` rotate(${item.r}deg)` : '');
     const anim = item.anim ? ` o55-an o55-an-${item.anim}` : '';
@@ -75,16 +120,26 @@
        hand, from a second hook to that hand). O55.art.rig keeps every string on its two hook points every frame and
        drives the bar and the tied helpers as one linked system, so nothing comes loose while it all moves. */
     const bar = items.find((it) => it.prop === 'bar');
-    const ties = bar && fam.string ? items.filter((it) => it.prop === 'helper' && it.opts && it.opts.tie) : [];
+    /* any prop may hang from the bar: opts.tie (one string, to a helper's head or a prop's top) or opts.ties
+       ([[barHook, side], ...], several strings to sides of its measured outline) */
+    const ties = bar && fam.string ? items.filter((it) => it.opts && (it.opts.tie || it.opts.ties)) : [];
+    const hookPts = new Map(); /* item -> [[name, local point, bar hook]] */
     if (ties.length) {
       const m = A.metrics(ctx.family), hooks = Object.assign({}, m.barHooks, (bar.opts || {}).hooks);
       bar.amb = null; bar.opts = Object.assign({}, bar.opts, { hooks });
-      ties.forEach((it) => { it.amb = null; it.opts = Object.assign({}, it.opts, { anchor: null, rig: true }); });
-      const pt = (it, local) => [it.x + (it.s || 1) * local[0], it.y + (it.s || 1) * local[1]];
+      ties.forEach((it) => {
+        const list = it.opts.ties || [[it.opts.tie, 'top']], b = it.prop === 'helper' ? null : A.box(ctx, it.prop, it.opts);
+        hookPts.set(it, list.map(([bh, side], i) => {
+          if (!b) return ['head', m.hook, bh];
+          const cx = (b[0] + b[2]) / 2, pts = { top: [cx, b[1]], topLeft: [b[0] + 6, b[1]], topRight: [b[2] - 6, b[1]] };
+          return [i ? 'head' + i : 'head', pts[side] || pts.top, bh];
+        }));
+        it.amb = null; it.opts = Object.assign({}, it.opts, { anchor: null, rig: true });
+      });
+      const pt = (it, local) => { const s = A.scaleOf(ctx, it); return [it.x + s * local[0], it.y + s * local[1]]; };
       const d = (a, b) => `M${a[0].toFixed(1)} ${a[1].toFixed(1)} L${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
       const strings = ties.map((it) => {
-        const from = hooks[it.opts.tie] || [0, 0], head = pt(it, m.hook);
-        let out = `<g class="o55-tie" data-key="tie-${U.esc(it.key)}" data-from="${U.esc(bar.key)}:${U.esc(it.opts.tie)}" data-to="${U.esc(it.key)}:head">${fam.string(ctx, d(pt(bar, from), head))}</g>`;
+        let out = hookPts.get(it).map(([name, local, bh]) => `<g class="o55-tie" data-key="tie-${U.esc(it.key)}-${name}" data-from="${U.esc(bar.key)}:${U.esc(bh)}" data-to="${U.esc(it.key)}:${name}">${fam.string(ctx, d(pt(bar, hooks[bh] || [0, 0]), pt(it, local)))}</g>`).join('');
         const hand = it.opts.pose === 'wave' && it.opts.handTie && fam.hand && fam.hand.wave;
         if (hand) out += `<g class="o55-tie o55-tie-hand" data-key="tie-${U.esc(it.key)}-hand" data-from="${U.esc(bar.key)}:${U.esc(it.opts.handTie)}" data-to="${U.esc(it.key)}:hand">${fam.string(ctx, d(pt(bar, hooks[it.opts.handTie] || from), pt(it, fam.hand.wave)), true)}</g>`;
         return out;
@@ -98,7 +153,7 @@
       let inner = draw(ctx, item);
       /* hook points the rig measures: the bar's string points, a tied helper's head */
       if (ties.length && item === bar) inner = inner.replace(/<\/g>$/, Object.entries(item.opts.hooks).map(([k, [x, y]]) => hook(k, x, y)).join('') + '</g>');
-      if (item.opts && item.opts.rig) { const h = A.metrics(ctx.family).hook; inner = inner.replace(/<\/g>$/, hook('head', h[0], h[1]) + '</g>'); }
+      if (hookPts.has(item)) inner = inner.replace(/<\/g>$/, hookPts.get(item).map(([name, p]) => hook(name, p[0], p[1])).join('') + '</g>');
       (layers[item.layer || 'mid'] || layers.mid).push(place(item, inner, ctx.family));
     }
     const bg = fam.background ? fam.background(ctx) : '';

@@ -63,8 +63,11 @@
         { icon: 'computer', label: L('worksHere', 'Works here'), sub: L('thisComputer', 'this computer') }, { icon: 'person', label: L('you', 'You'), sub: L('thisDevice', 'this device') }];
       const n = nodes.length, top = 112, bottom = 476;
       const pts = nodes.map((_, i) => [i % 2 ? 336 : 144, top + ((bottom - top) * i) / Math.max(1, n - 1)]);
-      const items = [{ key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 200, opts: { pts } }];
-      nodes.forEach((nd, i) => items.push({ key: 'n' + i + nd.icon, prop: 'node', x: pts[i][0], y: pts[i][1], s: 1.28, layer: 'mid', anim: 'pop', delay: 120 + i * 150, opts: Object.assign({ v: i }, nd) }));
+      const nodeItems = nodes.map((nd, i) => ({ key: 'n' + i + nd.icon, prop: 'node', x: pts[i][0], y: pts[i][1], s: 1.28, layer: 'mid', anim: 'pop', delay: 120 + i * 150, opts: Object.assign({ v: i }, nd) }));
+      /* the route is drawn node to node, each leg from one outline to the next (never through the see-through icons),
+         each leg drawing on after the node before it has arrived */
+      const items = nodeItems.slice(1).map((nd, i) => ({ key: 'path' + i, prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 260 + i * 150, opts: { pts: A.link(ctx, nodeItems[i], nd) } }));
+      items.push(...nodeItems);
       const side = (i) => (i % 2 ? 150 : 332);
       if (pr.inherit) items.push({ key: 'inherit', prop: 'badge', x: side(0), y: pts[0][1], layer: 'front', anim: 'rise', delay: 760, opts: { label: pr.inherit, glyph: 'stack' } });
       if (pr.online && n > 1) items.push({ key: 'online', prop: 'cloud', x: side(1), y: pts[1][1] - 26, s: 0.8, layer: 'mid', anim: 'drop', delay: 820, amb: 'float', ambd: 3600 },
@@ -82,21 +85,26 @@
     band: [0, 170, 480, 330],
     compose(ctx) {
       const beat = ctx.beat || 'find', pr = ctx.params || {}, retro = ctx.family === 'retro';
-      const cx = 150, cy = 540, nx = 336, ny = 392, lockX = 264, lockY = 300;
+      const cx = 150, cy = 540, nx = 336, ny = 392;
       const done = beat === 'verified' || beat === 'folder';
-      const items = [
-        { key: 'pc', prop: 'computer', x: cx, y: cy, s: retro ? 1 : 1.45, layer: 'mid', anim: 'rise', delay: 60, opts: { label: pr.here || L('thisComputer', 'this computer'), screen: done ? 'check' : '' } },
-        { key: 'nas', prop: 'nas', x: nx, y: ny, s: retro ? 1 : 1.5, layer: 'mid', anim: 'rise', delay: 160, opts: { label: pr.device || L('homeNas', 'home nas'), busy: beat === 'install' } },
-        { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 320, opts: { pts: [[cx + 40, cy - 110], [lockX - 26, lockY + 14]] } },
-        { key: 'lock', prop: 'lock', x: lockX, y: lockY, s: retro ? 1 : 1.25, layer: 'front', anim: 'pop', delay: 420, opts: { open: !done } }
-      ];
-      if (beat === 'find') items.push({ key: 'rings', prop: 'rings', x: nx, y: ny - 64, s: 1.3, layer: 'back', anim: 'fade', delay: 200, amb: 'pulse', ambd: 1800 },
+      const pc = { key: 'pc', prop: 'computer', x: cx, y: cy, s: retro ? 1 : 1.45, layer: 'mid', anim: 'rise', delay: 60, opts: { label: pr.here || L('thisComputer', 'this computer'), screen: done ? 'check' : '' } };
+      const nas = { key: 'nas', prop: 'nas', x: nx, y: ny, s: retro ? 2 : 1.5, layer: 'mid', anim: 'rise', delay: 160, opts: { label: pr.device || L('homeNas', 'home nas'), busy: beat === 'install' } };
+      /* the lock sits on the NAS's left edge, a third of the way down; the path runs from the laptop's outline to it */
+      const tl = A.attach(ctx, nas, 'topLeft'), bl = A.attach(ctx, nas, 'bottomLeft'), lockX = tl[0], lockY = tl[1] + (bl[1] - tl[1]) * 0.34;
+      const lock = { key: 'lock', prop: 'lock', x: lockX, y: lockY, s: retro ? 1 : 1.25, layer: 'front', anim: 'pop', delay: 420, opts: { open: !done } };
+      const items = [pc, nas, { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 320, opts: { pts: A.link(ctx, pc, lock) } }, lock];
+      if (beat === 'find') items.push({ key: 'rings', prop: 'rings', x: nx, y: A.attach(ctx, nas, 'top')[1] - 24, s: 1.3, layer: 'back', anim: 'fade', delay: 200, amb: 'pulse', ambd: 1800 },
         { key: 'n-find', prop: 'note', x: nx, y: ny - 142, layer: 'front', anim: 'fade', delay: 700, opts: { text: L('lookingNearby', 'looking nearby'), dx: -60, dy: -64 } });
-      if (beat === 'identity' || beat === 'keys') items.push({ key: 'id', prop: 'identity', x: nx, y: 122, s: retro ? 1 : 1.2, layer: 'front', anim: 'pop', delay: 120, opts: { seed: pr.seed || 'home-nas', words: pr.words || '' } });
-      if (beat === 'identity') items.push({ key: 'n-id', prop: 'note', x: nx - 46, y: 122, layer: 'front', anim: 'fade', delay: 600, opts: { text: L('itsId', 'its id'), dx: -44, dy: 58 } });
+      const idCard = { key: 'id', prop: 'identity', x: nx, y: 122, s: retro ? 1 : 1.2, layer: 'front', anim: 'pop', delay: 120, opts: { seed: pr.seed || 'home-nas', words: pr.words || '' } };
+      if (beat === 'identity' || beat === 'keys') items.push(idCard);
+      if (beat === 'identity') { const e = A.attach(ctx, idCard, 'left'); items.push({ key: 'n-id', prop: 'note', x: e[0], y: e[1], layer: 'front', anim: 'fade', delay: 600, opts: { text: L('itsId', 'its id'), dx: -44, dy: 58 } }); }
       if (beat === 'keys') {
-        [[112, 304], [112, 352], [112, 400]].forEach(([x, y], i) => items.push({ key: 'k' + i, prop: 'key', x, y, r: retro ? 0 : (i - 1) * 8, s: retro ? 1 : 1.05, layer: 'front', anim: 'pop', delay: 80 + i * 110, opts: { accent: i === 0 } }));
-        items.push({ key: 'n-keys', prop: 'note', x: 138, y: 280, layer: 'front', anim: 'fade', delay: 600, opts: { text: L('yourKeys', 'your keys'), dx: 34, dy: -44 } });
+        /* the keys found on this computer (up to four), the chosen one lit; a new key made just for this, when chosen */
+        const n = Math.min(4, pr.keys == null ? 3 : pr.keys) + (pr.newKey ? 1 : 0), step = n > 3 ? 40 : 48, y0 = 352 - ((Math.max(1, n) - 1) * step) / 2;
+        const keys = Array.from({ length: n }, (_, i) => ({ key: 'k' + i, prop: 'key', x: 112, y: y0 + i * step, r: retro ? 0 : (i - (n - 1) / 2) * 7, s: retro ? 1 : 1.05, layer: 'front', anim: 'pop', delay: 80 + i * 100,
+          opts: { accent: pr.newKey ? i === n - 1 : i === Math.max(0, pr.pick) } }));
+        items.push(...keys);
+        if (keys.length) { const top = A.attach(ctx, keys[0], 'top'); items.push({ key: 'n-keys', prop: 'note', x: top[0], y: top[1], layer: 'front', anim: 'fade', delay: 600, opts: { text: L('yourKeys', 'your keys'), dx: 34, dy: -44 } }); }
       } else if (beat === 'install') {
         items.push({ key: 'k0', prop: 'key', x: 214, y: 372, r: retro ? 0 : -62, s: retro ? 1 : 1.05, layer: 'front', anim: 'pop', opts: { accent: true } });
         items.push({ key: 'n-inst', prop: 'note', x: 206, y: 360, layer: 'front', anim: 'fade', delay: 400, opts: { text: L('addingKey', 'adding your key'), dx: -40, dy: -84 } });
