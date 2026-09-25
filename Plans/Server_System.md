@@ -518,7 +518,9 @@ Protected display/read is separate from historical outcome inspection. Every Sho
 
 `pm_server_pairing_issuance_semantics.py` checks finite typed joins through mandatory authentic owner resolvers and admission, transition, pairing-completion and protected-read proof adapters. Its static fixtures contain fabricated nonsecret metadata only and prove neither secret generation/delivery, authentication, rate-limit enforcement, atomic one-use exclusion, durable recovery nor native handler availability. Storage/writer, central command/wiring, current disclosure and native security proof remain separately required; no new EventRecord or physical store follows.
 
-ContractRef: ContractName:Plans/Server_System.md#SRV-004, ContractName:Plans/server_pairing_issuance_contracts.schema.json, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+The central fixture manifest validates this companion's six positive and fourteen negative cases. Storage dispositions `scd.server_pairing.issuance_transport.v1` and `scd.server_pairing.issuance_custody.v1` classify its four runtime metadata records; the `issuance_fixture` wrapper is test-only. Requests and protected-display metadata are nonpersisted transport. Original invitation state/results require Server-owned durable custody whose exact physical admission remains pending; these dispositions admit no key, lifetime, migration, protected material storage or handler.
+
+ContractRef: ContractName:Plans/Server_System.md#SRV-004, ContractName:Plans/server_pairing_issuance_contracts.schema.json, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json
 
 The normal Server card shows only:
 

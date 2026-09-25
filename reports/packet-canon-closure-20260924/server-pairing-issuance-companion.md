@@ -28,3 +28,32 @@ Runtime IDs, all schema_version 1.0.0:
 The public APIs are `validate_issuance_result(result_ref, *, resolve_record, verify_original_admission, verify_transition, verify_pairing_completion, check_current_disclosure)` and `validate_protected_display(request_ref, *, resolve_display_request, resolve_current_invitation, now_utc, verify_protected_read, final_display_fence)`. The latter returns metadata-validation failures only; native protected material emission must remain under the same genuine owner fence, never treat an empty failure list as a transferable grant.
 
 Missing public issuance route admission, protected native secret generation/delivery, real policy/rate-limit/authority issuance, atomic current-generation/one-use arbitration, durable original state/result custody and restore-safe recovery remain explicit. These prerequisites prevent claiming PA01 native availability or whole-feature closure. No new central command ID, fake trust grant, automatically reissued recovery token or EventRecord is introduced.
+
+## Central integration checkpoint (landing held)
+
+Rebased onto the verified packet repair `bad5718eede2686cc573cbc200c771f232a45815`
+as `6b080c2e8`; only generated index conflicts were regenerated. This separate
+worktree does not alter the frozen repair capture or its complete delta.
+
+The central manifest now enrolls this exact pair once and dispatches its semantic
+rules. All 40 pairs pass: 1,283 positive and 4,377 negative cases. Sixteen focused
+pairing tests and nine central-manifest regressions pass. Two storage disposition
+rows classify four runtime metadata kinds, excluding the fixture wrapper; the
+regression checks all physical family values, retention policies and predecessor
+dispositions against the pinned repair tree. No physical family is added or
+changed. Physical issuance custody remains explicitly pending.
+
+Shard generation changes only the edited storage registry's derived root; Server
+is not a configured shard source. Index generation passes with 6,733 PlanUnits
+and 26,387 acceptance units, runtime certification still blocked.
+
+Full gate evidence:
+`/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/server-pairing-integrated-gate-001/stdout`,
+SHA-256 `c66537d81ea9758dd1a549c0131e71e1f6c982655c6abc8eff0104c14e87d863`.
+Focused test evidence: sibling `server-pairing-integrated-tests-001/stderr`,
+SHA-256 `52c401e437b9c47ec9a5bf7695582dce1ab4aa3ed69bc8e6e2b02d46f87dfdd4`.
+
+Landing is stopped by the earlier repair batch's complete-delta findings, not
+waived by these focused checks. This checkpoint preserves already-started work
+on a branch only; it does not claim a main landing, complete Server feature,
+governance refresh or whole-packet closure.

@@ -35,6 +35,7 @@ from pm_application_update_semantics import application_update_semantic_failures
 from pm_capability_continuation_semantics import capability_continuation_semantic_failures
 from pm_doctor_query_semantics import doctor_query_semantic_failures
 from pm_browser_control_flow_semantics import browser_control_flow_semantic_failures
+from pm_server_pairing_issuance_semantics import pairing_issuance_semantic_failures
 from pm_backup_drill_semantics import backup_drill_semantic_failures
 from pm_jujutsu_backup_semantics import jj_backup_pointer_failures, jj_backup_verification_failures
 from pm_browser_program_semantics import browser_program_semantic_failures
@@ -80,6 +81,7 @@ CONTRACT_PAIRS = (
     ("Plans/remote_access_system_contracts.schema.json", "Plans/remote_access_system_contract_fixtures.json"),
     ("Plans/section15_browser_program_contracts.schema.json", "Plans/section15_browser_program_contract_fixtures.json"),
     ("Plans/server_system_contracts.schema.json", "Plans/server_system_contract_fixtures.json"),
+    ("Plans/server_pairing_issuance_contracts.schema.json", "Plans/server_pairing_issuance_contract_fixtures.json"),
     ("Plans/settings_system_contracts.schema.json", "Plans/settings_system_contract_fixtures.json"),
     ("Plans/shared_runtime_command_contracts.schema.json", "Plans/shared_runtime_command_contract_fixtures.json"),
     ("Plans/source_control_contracts.schema.json", "Plans/source_control_contract_fixtures.json"),
@@ -91,7 +93,7 @@ CONTRACT_PAIRS = (
     ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 39
+EXPECTED_CONTRACT_PAIR_COUNT = 40
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1218,6 +1220,8 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/server_pairing_issuance_contracts.schema.json":
+        return pairing_issuance_semantic_failures(definition_name, value)
     if schema_rel == "Plans/capability_provisioning_continuation_contracts.schema.json":
         return capability_continuation_semantic_failures(definition_name, value)
     if schema_rel == "Plans/doctor_query_controller_contracts.schema.json":

@@ -2,6 +2,7 @@
 import copy
 import json
 from pathlib import Path
+import subprocess
 import sys
 import unittest
 from jsonschema import Draft202012Validator
@@ -51,6 +52,32 @@ class PairingIssuanceTests(unittest.TestCase):
                     self.assertEqual(bool(errors), group == 'invalid', errors)
                     if 'semantic_rule' in row:
                         self.assertIn(row['semantic_rule'], errors)
+
+    def test_storage_classification_adds_no_physical_custody(self):
+        registry = json.loads((ROOT / 'Plans/storage_value_registry.json').read_text())
+        before = json.loads(subprocess.check_output([
+            'git', '-C', str(ROOT), 'show',
+            'bad5718eede2686cc573cbc200c771f232a45815:Plans/storage_value_registry.json',
+        ], text=True))
+        self.assertEqual(registry['families'], before['families'])
+        self.assertEqual(registry['retention_policies'], before['retention_policies'])
+        added = {row['disposition_id']: row for row in registry['contract_family_dispositions']
+                 if row['disposition_id'].startswith('scd.server_pairing.')}
+        self.assertEqual(set(added), {'scd.server_pairing.issuance_transport.v1',
+                                      'scd.server_pairing.issuance_custody.v1'})
+        self.assertEqual([row for row in registry['contract_family_dispositions']
+                          if row['disposition_id'] not in added], before['contract_family_dispositions'])
+        transport = added['scd.server_pairing.issuance_transport.v1']
+        custody = added['scd.server_pairing.issuance_custody.v1']
+        self.assertEqual(transport['physical_family_status'], 'not_applicable_nonpersisted')
+        self.assertEqual(custody['physical_family_status'], 'physical_family_registration_pending')
+        self.assertEqual(transport['existing_family_refs'], [])
+        self.assertEqual(custody['existing_family_refs'], [])
+        self.assertEqual(set(transport['record_kinds'] + custody['record_kinds']), {
+            'pm.server_pairing.issuance_request.v1', 'pm.server_pairing.protected_display_request.v1',
+            'pm.server_pairing.invitation_state.v1', 'pm.server_pairing.issuance_result.v1'})
+        schema = json.loads((ROOT / 'Plans/storage_value_registry.schema.json').read_text())
+        self.assertEqual(list(Draft202012Validator(schema).iter_errors(registry)), [])
 
     def test_original_resolution_and_proofs_are_mandatory(self):
         value = self.value()
