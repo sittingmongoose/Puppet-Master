@@ -870,7 +870,9 @@
     "nasFlow": "Puppet Master sets up a secure connection to {name} with a key. You sign in to it once.",
     "nasPath": "Backups go to {path} on {name}.",
     "connect": "Connect",
-    "accessMissing": "Fill in all three to connect."
+    "accessMissing": "Fill in all three to connect.",
+    "nasReusePaired": "Uses the pairing with Puppet Master on {name}. Nothing more to approve.",
+    "nasFlowPaired": "{name} runs Puppet Master, so this computer pairs with it: you approve it once. No key or password."
   },
   "ai": {
     "eyebrow": "AI",

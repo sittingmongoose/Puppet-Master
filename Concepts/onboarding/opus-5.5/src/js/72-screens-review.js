@@ -293,7 +293,9 @@
       /* connecting, by kind of place: the NAS over SSH with a key, a bucket or a server with its access details, a
          cloud drive through its own sign-in page */
       if (next === 'signin' && b.dest === 'nas') {
-        out += C.note(nasReady(S) ? T('protect.nasReuse', { name: where }) : T('protect.nasFlow', { name: where }), 'info', 'key');
+        /* a NAS that runs Puppet Master is paired with, not given a key (PWIZ-029) */
+        const nas = O55.backup.nas(S), paired = nasReady(S) ? !!(S.sess.nas || {}).viaPm : !!(nas && nas.pm && !(S.sess.nas || {}).useSsh);
+        out += C.note(T('protect.' + (nasReady(S) ? 'nasReuse' : 'nasFlow') + (paired ? 'Paired' : ''), { name: where }), 'info', paired ? 'link' : 'key');
         out += `<p class="o55-hint" data-key="naspath">${U.esc(T('protect.nasPath', { name: where, path: NAS_PATH.split('/').filter(Boolean).join(' › ') }))}</p>`;
       }
       if (next === 'signin' && ACCESSED(b.dest)) out += O55.backup.accessFields(S, b.dest, acc(S));

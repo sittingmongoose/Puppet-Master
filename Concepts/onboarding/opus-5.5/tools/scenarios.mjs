@@ -370,6 +370,25 @@ def('m2', 'fresh', 'Each beginning has an idle of its own; a new one is hung wit
   const gaps = await d.page.evaluate(() => window.O55.art.rig.gaps(document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) svg')));
   A.ok(gaps && gaps.every((g) => g.start < 1.5 && g.end < 1.5), 'the hero stays on its string');
 });
+def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and the backup is reached through it', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();
+  A.eq(await d.screen(), 'nas-pmpair', 'pairs, no key steps'); await d.primary(); await until(d, pairOk, 'paired', 10000); await d.primary();
+  A.eq(await d.screen(), 'r-pick', 'then the backups'); await d.page.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pick"]'); await d.settle(500); await d.primary();
+  const dr = await d.draft('main'); A.eq(dr.backup_transport, 'puppet_master', 'backup reached through Puppet Master'); A.ok(dr.source_access_authorization_refs.length >= 1, 'pairing result bound');
+  A.ok(!(await d.commands()).some((c) => c.startsWith('cmd.ssh_connection')), 'no SSH key command');
+  A.capture('n15 paired restore', dr);
+});
+def('b5', 'homeNasPm', 'Backup to a NAS that runs Puppet Master: pairs once, then the backup finishes', async (d, A) => {
+  await toProtect(d, 'nas');
+  A.ok(/pairs with it/.test(await d.state(() => document.body.textContent)), 'the step says it pairs, not a key');
+  await d.primary(); A.eq(await d.screen(), 'nas-pmpair', 'pairing'); await d.primary(); await until(d, pairOk, 'paired', 10000); await d.primary();
+  A.eq(await d.screen(), 'protect', 'back to Finish protecting your work');
+  await until(d, "(window.O55.S.sess.backup.done||[]).includes('signin')", 'connected through the pairing', 6000);
+  A.ok(await d.state(() => window.O55.owners.log.some((e) => e.id === 'cmd.backup.destination.add' && e.ok)), 'added through the backup owner');
+  A.ok(!(await d.commands()).some((c) => c.startsWith('cmd.ssh_connection')), 'no SSH key command');
+  await finishProtect(d, A);
+});
 def('c4', 'fresh', 'No VPN switch: a line says a VPN works, and a VPN this device is on is searched too', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:office\"]')", 'found on the VPN', 6000);
