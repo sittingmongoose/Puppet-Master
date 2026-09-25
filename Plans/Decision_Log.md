@@ -2201,6 +2201,20 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#OSI-438, ContractName:Plans/storage-plan.md#SP-320, ContractName:Plans/Contracts_V0.md#CV-353
 
+### DL-096: Every Step 9 registration's own Decision Log entry is Jared's decision entry for its family
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session: **"And yes I approve the DL-093 covering the families and later"**, to the host's question whether his DL-093 approval also covers the 18 collaborative workflow families and later Step 9 registrations.
+
+**Question:** Does your DL-093 approval also cover the 18 collaborative families and later registrations? That's the rule that each admission's own Decision Log entry counts as your decision, so you don't approve each one separately. A yes means I record it as its own entry. A no means you approve those individually.
+
+**Answer:** Approve. Jared's words for this question, verbatim: "And yes I approve the DL-093 covering the families and later".
+
+This answers the wider reading that DL-093 records as unanswered. For the 18 collaborative workflow families of DL-090 and DL-091, and for every later Step 9 registration, the Decision Log entry that the family's own registration landing adds under DL-078, which names the family, is Jared's decision entry for that family in the sense of DL-077, and the family's DL-077 admission record cites it as its `decision_ref`, as DL-093 records for the seven coordination families. Jared does not approve each of those admissions himself: each registration still passes the whole Step 9 procedure, and he sees each checkpoint change in its landing record, as DL-078 provides. Review question D-02 of the Step 9 procedure record is now answered for every Step 9 registration, by DL-093 for the seven coordination families and by this entry for all others. This answer changes neither DL-077's nor DL-078's nor DL-093's text. DL-077's prose section is pinned under the V-07 rule, DL-078's text already says that the entry each such landing adds "is the decision entry its DL-077 admission record cites", and DL-093 remains the record of the answer for the seven coordination families. This entry names no family and is not itself any family's decision entry. It registers nothing, admits no family and lowers no Step 9 requirement: every registration still needs its full Event Authority contract, a blind form-driven review, its own Storage admission landing with one family per landing, the coordinator's landing go, and a complete DL-077 admission record whose depth assessment shows all twelve criteria passing. It changes no registry row, validator, receipt or admission record.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_HEARTBEAT_AND_DL093_SCOPE.md`, SHA-256 `5d0538a1ab9e9a7d397093cfefc71045b2ac214654984767f37efa2bbabf889f`; Step 9 procedure record `reports/event-authority-20260911/step-09-procedure-20260924.md` (open question 2, D-02); DL-093's source `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_OPEN_QUESTIONS.md`, SHA-256 `678b9a32a0942fff08cea4127d9c52d7e73774509869c88958f466d6b8d0171a`.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-077, ContractName:Plans/Decision_Log.md#DL-078, ContractName:Plans/Decision_Log.md#DL-093, ContractName:Plans/event_family_registry.json
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -7661,6 +7675,72 @@ negative_constraints:
 owner_hints:
   - Plans/orchestrator-subagent-integration.md
   - Plans/storage-plan.md
+```
+
+### DL-096 - Every Step 9 Registration's Own Decision Log Entry Is Jared's Decision Entry For Its Family
+
+```yaml
+plan_unit_id: DL-096
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered "And yes I approve the DL-093 covering the families and later" on
+  2026-09-25 to the host's question whether his DL-093 approval also covers the 18
+  collaborative workflow families and later registrations. For the 18 collaborative
+  workflow families of DL-090 and DL-091 and for every later Step 9 registration, the
+  Decision Log entry that the family's own registration landing adds under DL-078, which
+  names the family, is Jared's decision entry for that family in the sense of DL-077, and
+  the family's DL-077 admission record cites it as its decision_ref, as DL-093 records for
+  the seven coordination families; Jared does not approve each of those admissions
+  himself. Review question D-02 of the Step 9 procedure record is now answered for every
+  Step 9 registration. DL-077's, DL-078's and DL-093's text is unchanged, and this entry
+  names no family and is no family's decision entry. Nothing is registered or admitted and
+  no Step 9 requirement is lowered: each registration still needs its full Event Authority
+  contract, a blind form-driven review, its own Storage admission landing, the
+  coordinator's landing go and a complete DL-077 admission record.
+gui_related: false
+gui_classification_reason: Defines admission-record governance, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-077, DL-078, DL-090, DL-091, DL-093]
+unblocks: []
+acceptance_criteria:
+  - The DL-077 admission record of each of the 18 collaborative workflow families of DL-090 and DL-091, and of every later Step 9 registration, cites as its decision_ref the Decision Log entry that its own registration landing adds under DL-078 and that names the family.
+  - The Step 9 procedure record marks review question D-02 as answered for every Step 9 registration, by DL-093 for the seven coordination families and by DL-096 for all others.
+  - DL-077's, DL-078's and DL-093's text is unchanged, and no registration skips any part of the Step 9 procedure or its complete DL-077 admission record.
+validation_surfaces:
+  - reports/event-authority-20260911/step-09-procedure-20260924.md
+  - python3 -m unittest tests.test_event_authority_holding_bucket
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_admission_decision_entry_scope_drift
+reasoning_tier: high
+context_scope: event_authority_step09_admission_decision_entry_every_registration
+implementation_surfaces:
+  - reports/event-authority-20260911/step-09-procedure-20260924.md
+  - reports/event-authority-20260911/admission-records
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_HEARTBEAT_AND_DL093_SCOPE.md
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_OPEN_QUESTIONS.md
+  - reports/event-authority-20260911/step-09-procedure-20260924.md
+preserved_exact_tokens:
+  - "And yes I approve the DL-093 covering the families and later"
+  - "D-02"
+  - "DL-077"
+  - "DL-078"
+  - "DL-093"
+  - "decision_ref"
+negative_constraints:
+  - Do not require a separate approval from Jared for the admission of a Step 9 family whose registration passes the full procedure and whose landing adds the family's own Decision Log entry.
+  - Do not cite DL-077, DL-078, DL-093 or DL-096 as a family's decision entry, and do not edit DL-077's, DL-078's or DL-093's text to record this answer.
+  - Do not register a family or lower any Step 9 requirement on the strength of this entry.
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/Plan_To_Node_Compilation.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

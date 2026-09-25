@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L2202
+Source lines: L13-L2216
 
-Source SHA256: `164a57caf10aa15c318ed060576966b4feffc08b4bd2fb689f38fd9deead2d59`
+Source SHA256: `aebf7af9718b2607c5d5d2934b25b47f8eec3299257e290531beb129fe28c119`
 
 ---
 
@@ -2198,3 +2198,17 @@ The heartbeat expiry is five minutes: `coordination_heartbeat_expiry_ms` is 3000
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_HEARTBEAT_AND_DL093_SCOPE.md`, SHA-256 `5d0538a1ab9e9a7d397093cfefc71045b2ac214654984767f37efa2bbabf889f`; card `reports/event-authority-20260911/step-09-coordination-heartbeat-card-20260925.md`, SHA-256 `530e783739ab61e9ef7a3bcf4e3d02a6c3a7dc4ca6657f37049964e48559118b`, a byte-identical copy of the presented file (artifact `M8GSmygZ1MXjYaA7osPcTh`, version 1); review finding CP-05 in `/mnt/Cursor/PM-Experiments/review-ea-s09-coordination-prep-20260925/findings.jsonl`.
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#OSI-438, ContractName:Plans/storage-plan.md#SP-320, ContractName:Plans/Contracts_V0.md#CV-353
+
+### DL-096: Every Step 9 registration's own Decision Log entry is Jared's decision entry for its family
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session: **"And yes I approve the DL-093 covering the families and later"**, to the host's question whether his DL-093 approval also covers the 18 collaborative workflow families and later Step 9 registrations.
+
+**Question:** Does your DL-093 approval also cover the 18 collaborative families and later registrations? That's the rule that each admission's own Decision Log entry counts as your decision, so you don't approve each one separately. A yes means I record it as its own entry. A no means you approve those individually.
+
+**Answer:** Approve. Jared's words for this question, verbatim: "And yes I approve the DL-093 covering the families and later".
+
+This answers the wider reading that DL-093 records as unanswered. For the 18 collaborative workflow families of DL-090 and DL-091, and for every later Step 9 registration, the Decision Log entry that the family's own registration landing adds under DL-078, which names the family, is Jared's decision entry for that family in the sense of DL-077, and the family's DL-077 admission record cites it as its `decision_ref`, as DL-093 records for the seven coordination families. Jared does not approve each of those admissions himself: each registration still passes the whole Step 9 procedure, and he sees each checkpoint change in its landing record, as DL-078 provides. Review question D-02 of the Step 9 procedure record is now answered for every Step 9 registration, by DL-093 for the seven coordination families and by this entry for all others. This answer changes neither DL-077's nor DL-078's nor DL-093's text. DL-077's prose section is pinned under the V-07 rule, DL-078's text already says that the entry each such landing adds "is the decision entry its DL-077 admission record cites", and DL-093 remains the record of the answer for the seven coordination families. This entry names no family and is not itself any family's decision entry. It registers nothing, admits no family and lowers no Step 9 requirement: every registration still needs its full Event Authority contract, a blind form-driven review, its own Storage admission landing with one family per landing, the coordinator's landing go, and a complete DL-077 admission record whose depth assessment shows all twelve criteria passing. It changes no registry row, validator, receipt or admission record.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_HEARTBEAT_AND_DL093_SCOPE.md`, SHA-256 `5d0538a1ab9e9a7d397093cfefc71045b2ac214654984767f37efa2bbabf889f`; Step 9 procedure record `reports/event-authority-20260911/step-09-procedure-20260924.md` (open question 2, D-02); DL-093's source `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_OPEN_QUESTIONS.md`, SHA-256 `678b9a32a0942fff08cea4127d9c52d7e73774509869c88958f466d6b8d0171a`.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-077, ContractName:Plans/Decision_Log.md#DL-078, ContractName:Plans/Decision_Log.md#DL-093, ContractName:Plans/event_family_registry.json
