@@ -177,7 +177,7 @@ class CreationCompositionTests(unittest.TestCase):
         original = json.loads(subprocess.check_output(["git", "show", "47d055c035c14b2bd3442ea5f96515ef990c32dc:Plans/forge_integration_contracts.schema.json"], cwd=ROOT, text=True))
         self.assertEqual(original["$defs"]["command_request"], schema["$defs"]["command_request"])
         fixtures = json.loads((ROOT / "Plans/forge_integration_contract_fixtures.json").read_text())
-        selected = set(['cmd.forge.repository.list', 'cmd.forge.pipeline.list', 'cmd.forge.pipeline.cancel', 'cmd.forge.pipeline.open_logs', 'cmd.forge.review.approve', 'cmd.forge.review.comment', 'cmd.forge.review.request_changes', 'cmd.forge.review.thread.reply'])
+        selected = set(['cmd.forge.pipeline.retry', 'cmd.forge.repository.list', 'cmd.forge.pipeline.list', 'cmd.forge.pipeline.cancel', 'cmd.forge.pipeline.open_logs', 'cmd.forge.review.approve', 'cmd.forge.review.comment', 'cmd.forge.review.request_changes', 'cmd.forge.review.thread.reply'])
         seen = 0
         commands = set()
         for case in fixtures["valid"]:
@@ -192,7 +192,7 @@ class CreationCompositionTests(unittest.TestCase):
             else:
                 seen += 1
                 self.assertEqual([], errors)
-        self.assertEqual(38, seen)  # 49 historical fixtures minus two create and nine selected instances (eight commands; repository.list has both scopes).
+        self.assertEqual(37, seen)  # 49 historical fixtures minus two create and ten selected instances (nine commands; repository.list has both scopes).
         self.assertEqual(46, len(commands))
         self.assertEqual(set(schema["$defs"]["command_id"]["enum"]), commands)
         current = composition_fixture()["request"]

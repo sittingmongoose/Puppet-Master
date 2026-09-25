@@ -4941,6 +4941,138 @@
         "Plans/forge_list_query_contracts.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.forge.retry_transport.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_retry_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.retry_selected.request.v1",
+        "pm.forge.retry_selected.result.v1",
+        "pm.forge.retry_selected.authority.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Exact independently retained originals, owner receipts and selected-effect observations needed for replay, effect-unknown reconciliation, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original or observation required for replay. Never reconstruct a mutation from current UI selection."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not synthesize original retry scope/preview, native effects or current caller authority from historical records. Native producers and physical admission remain separate prerequisites.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Transient selected retry transport and nested authority; not a persisted admission proof.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_retry_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.retry_metadata.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_retry_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.forge.retry_preview.v1",
+        "pm.forge.retry_revalidation.v1",
+        "pm.forge.retry_observation.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain authentic original retry preview, direct admission and known/unknown effect evidence for genuine receipt/reconciliation references under existing holds. Per-kind custody pending; no source lifetime extension.",
+        "expiry_rule": "No physical writer, cleanup or TTL admitted. Exact keys/readers/holds/release/deletion/migration/coherent backup require separate registration."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not synthesize original retry scope/preview, native effects or current caller authority from historical records. Native producers and physical admission remain separate prerequisites.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Authentic original scope/member preview, direct current revalidation and actual partial/native retry evidence. Physical custody remains pending.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_retry_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.forge_retry_dispatch.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/forge_retry_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.forge_retry_dispatch_binding.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain authentic original retry preview, direct admission and known/unknown effect evidence for genuine receipt/reconciliation references under existing holds. Per-kind custody pending; no source lifetime extension.",
+        "expiry_rule": "No physical writer, cleanup or TTL admitted. Exact keys/readers/holds/release/deletion/migration/coherent backup require separate registration."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not synthesize original retry scope/preview, native effects or current caller authority from historical records. Native producers and physical admission remain separate prerequisites.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained actual original retry identity/arguments/caller binding; native and physical custody remain pending.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/forge_retry_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.forge_retry_error_projection.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/forge_retry_selected_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.forge_retry_error_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Exact independently retained originals, owner receipts and selected-effect observations needed for replay, effect-unknown reconciliation, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original or observation required for replay. Never reconstruct a mutation from current UI selection."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not synthesize original retry scope/preview, native effects or current caller authority from historical records. Native producers and physical admission remain separate prerequisites.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted genuine owner-error disclosure projection; nullable cancellation does not erase actual effect truth.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/forge_retry_selected_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [

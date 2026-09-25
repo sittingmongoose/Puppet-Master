@@ -10861,6 +10861,7 @@
                       "cmd.forge.pipeline.cancel",
                       "cmd.forge.pipeline.list",
                       "cmd.forge.pipeline.open_logs",
+                      "cmd.forge.pipeline.retry",
                       "cmd.forge.repository.create",
                       "cmd.forge.repository.list",
                       "cmd.forge.review.approve",
@@ -10897,6 +10898,9 @@
         },
         {
           "$ref": "https://puppetmaster.local/schemas/forge-list-query/1.0.0/forge_list_query_contracts.schema.json#/$defs/request"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/forge-retry-selected/1.0.0/forge_retry_selected_contracts.schema.json#/$defs/request"
         }
       ]
     },

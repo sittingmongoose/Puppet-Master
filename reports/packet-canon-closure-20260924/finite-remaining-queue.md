@@ -16,15 +16,15 @@ composition, Forge ACT051/052 and their SIR response binding, and Usage quota-aw
 refresh/export are now specified and statically tested. Remaining exact selections
 are listed below; this is not native implementation or whole-family completion.
 
-1. Storage admission and implementation: the current registry has 60 explicitly
-   pending disposition rows (59 physical-family and one external-store pending),
+1. Storage admission and implementation: the current registry has 62 explicitly
+   pending disposition rows (61 physical-family and one external-store pending),
    including Guided Tour, pairing, original Forge dispatch and Backup read originals/receipts. Its
-   127 dispositions leave the 294 physical families unchanged. These are not
-   60 engines or proven packet-spec gaps. Exact key/value/retention/migration
+   131 dispositions leave the 294 physical families unchanged. These are not
+   62 engines or proven packet-spec gaps. Exact key/value/retention/migration
    bindings are required before a concrete writer is admitted; pending status alone
    does not reopen already specified product behavior. Separate that engineering
    integration from deployment of native writers.
-2. Narrow authority adjudications: Settings exposure/import semantics, Vault
+2. Narrow authority adjudications: Settings import semantics, Vault
    sharing and supervisor scope, and remaining plugin applicability clauses.
    Ordinary Vault isolation and four other Server prose omissions are now repaired;
    see `server-five-prose-and-usage-boundary.md`. The immediate-child package discovery,
@@ -87,7 +87,7 @@ Remaining selected-input/result composition uses these existing source IDs:
 Plain-language boundaries and the earlier exact 26-source-occurrence snapshot are
 in `remaining-command-boundaries.md`. Cancellation ACT071, thread reply ACT156,
 Backup destination test/remove ACT090/091, snapshot deletion ACT105 and Git pull
-ACT017, Forge comment ACT053, Backup export ACT111, key rotation ACT118, re-encryption ACT119, restore preview ACT120 and Forge lists ACT062/067 are now integrated, leaving 13 selected source occurrences below, not 13 engines or a
+ACT017, Forge comment ACT053, Backup export ACT111, key rotation ACT118, re-encryption ACT119, restore preview ACT120, Forge lists ACT062/067 and retry ACT072 are now integrated, leaving 12 selected source occurrences below, not 12 engines or a
 whole-packet count.
 
 | Owner | Exact remaining IDs |
@@ -95,7 +95,7 @@ whole-packet count.
 | Neutral SCM, final-review open | ACT006,008,009,012,013,045 |
 | Git | ACT019 |
 | JJ, final-review open | ACT037,038 |
-| Forge | ACT048,060,070,072 |
+| Forge | ACT048,060,070 |
 | Backup | ACT118/119/120 integrated; native and custody obligations remain |
 | CredentialBroker | ACT087 selected source-add is integrated; native/custody obligations remain |
 
@@ -129,7 +129,11 @@ Forge repository/pipeline lists ACT062/067 are integrated after corrected final
 review; see `forge-list-query-companion.md`. Exact provider-issued descriptor,
 original query and preceding-page provenance remain distinct from native descriptor
 population/read execution and physical admission. No universal filter/default is
-chosen. ACT072 retry has passed final external review but is not yet integrated.
+chosen. ACT072 retry is now integrated after final capped review; see
+`forge-retry-companion.md`. Native effect execution and physical custody are separate.
+ACT060 review checkout still needs the user choice of always using a separate
+workspace versus explicitly allowing current-workspace checkout after preview;
+existing local work must be preserved in either case. Asked, not defaulted.
 
 ACT019 stash apply needs a genuine index-restoration decision: explicit selection,
 fixed files-only restoration or fixed restoration of saved staged state. Neither
@@ -166,12 +170,22 @@ not supplied by the static companions. Other external proposals are not integrat
 closure evidence.
 
 Named decision blockers remain personal-dictionary custody; SET013 missing-ID
-merge/replace behavior; SET008 Expert/Risky facet; DRY application/Project writer
-mapping; MGR007 shortcut-import unknown-ID/duplicate-key behavior; MGR010 per-field
+merge/replace behavior; DRY application/Project writer
+mapping; MGR010 per-field
 formatter custody/migration; equally applicable conflicting capability evidence
 precedence; and the additional Ledger query grammar. No defaults are invented.
 Cookie telemetry remains conditional, not a required engine, and cross-Vault
 sharing constraints do not require a deduplication feature.
+
+SET008 is covered by the current SSYS005/006/033/035 composition: exposure, live
+owner status, diagnostic result type and technical/dangerous disclosure are
+orthogonal, searchable dimensions, not six new exclusive tiers. Native mapping
+and GUI verification remain implementation work. MGR007 unknown-action and
+conflicting-shortcut alternatives are explicitly delegated implementation choices
+in M027/M028, not unanswered product questions. No defaults or new risk taxonomy
+are selected, and the newer single Advanced disclosure is preserved. Evidence:
+`/mnt/Cursor/PM-Experiments/settings-set008-owner-mapping-and-mgr007-delegation-20260925.md`,
+SHA-256 `b0b46e781eca5e6eb90bd99643f428e3bbcd969d4a565aee5047243fecf3a192`.
 
 Two other bounded seams now have explicit boundary/acceptance prose, not closure:
 Client–Server relation to Environment supervisor authority is unbound (no second
@@ -182,7 +196,7 @@ hooks/tools migration fixture cannot stand in for that package.
 Consolidation snapshot before the additional Forge original-binding row:
 `/mnt/Cursor/PM-Experiments/settings-compound-overlay-20260925/FINITE-QUEUE-CONSOLIDATION.md`,
 SHA-256 `78a5711e8bf91bcfa7090ee9e674113db29c618880e8e7daa1958de689c243c8`.
-Its 25-pending count is historical; the current 60 above includes subsequent Forge,
+Its 25-pending count is historical; the current 62 above includes subsequent Forge,
 Backup, JJ publication, selected-log, CredentialBroker and cancellation custody rows.
 
 The bounded 54-row custody triage immediately before ACT120 distinguishes specified
@@ -192,7 +206,8 @@ maps. It proves no complete pending group ready for a mechanical status flip:
 SHA-256 `4cc33ba932f34df8f452167845380da6ff21b101b188abb97c34e90a2b32ce12`.
 ACT120 adds three explicit pending original/association/production-receipt rows;
 that checkpoint total was 57. ACT062/067 adds three pending original/descriptor/read
-metadata groups, bringing the current total to 60. Existing
+metadata groups, bringing that checkpoint total to 60. ACT072 adds two pending
+original/preview-effect groups, bringing the current total to 62. Existing
 capability custody is already enrolled and is not another task. Protected Tour,
 Full Thread, NamedPlan and Back Seat Driver custody cannot be inferred from older
 summary or migration families. Owner-first per-kind mapping work remains separate

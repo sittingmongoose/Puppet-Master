@@ -8322,6 +8322,60 @@
       "evidence_refs": [
         "static_schema_and_fixture_only"
       ]
+    },
+    {
+      "profile_id": "TCP-FORGE-RETRY-SELECTED",
+      "requirement_refs": [
+        "Plans/Forge_Integrations.md#FGI-005",
+        "Plans/Forge_Integrations.md#FGI-010",
+        "Plans/Shared_Integration_Runtime.md#SIR-042"
+      ],
+      "owner_plan": "Plans/Forge_Integrations.md",
+      "plan_unit": "FGI-010",
+      "dry_contract_ref": "Plans/forge_retry_selected_contracts.schema.json",
+      "payload_schema_ref": "Plans/forge_retry_selected_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/forge_retry_selected_contracts.schema.json#/$defs/result",
+      "error_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_error_record",
+      "availability_rule": "Exact original AutomationBinding/run/retry scope/native selection and preview, genuine current admission, effect/receipt/caller/disclosure required. No default scope or provider guarantee; accepted work remains nonterminal, partial known effects retained and unknown reconciliation-only. Native and physical proof pending.",
+      "permission_gate": "Actual remote-effect Permissions, independent AutomationBinding and provider capability/credential authority, original preview and direct native revalidation; no generic allow boolean.",
+      "disabled_reason_rule": "Retain actual unavailable scope, native hierarchy, stale preview/currentness, permission and reconciliation blockers without broadening retry scope.",
+      "handler_owner": "Existing handlers::forge::pipeline_retry only; handler_unavailable until native evidence.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static retry selection/preview/effect/SIR composition only; no native execution, issuer authentication or physical custody proof.",
+      "gui_triggers": [
+        "Actions & Pipelines selected retry",
+        "Command palette and authorized automation"
+      ],
+      "return_route": "Exact authentic original/current delivery caller and selected native run context.",
+      "reverse_consumers": [
+        "Plans/Source_Control_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "event_refs": [
+        "No admitted Forge EventRecord for this delta; expected_event_types=[] until Event Authority admission."
+      ],
+      "receipt_refs": [
+        "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt",
+        "Plans/forge_retry_selected_contracts.schema.json#/$defs/observation"
+      ],
+      "observable_work": [
+        "Genuine nonterminal accepted retry work; cancellation before submission permits no work and never fabricates a provider operation."
+      ],
+      "persistence_refs": [
+        "Plans/storage_value_registry.json"
+      ],
+      "migration_refs": [
+        "Plans/Forge_Integrations.md#7.1"
+      ],
+      "test_refs": [
+        "Plans/forge_retry_selected_contract_fixtures.json",
+        "tests/test_pm_forge_retry_selected.py",
+        "tests/test_pm_forge_retry_bindings.py"
+      ],
+      "evidence_refs": [
+        "static_schema_and_fixture_only"
+      ]
     }
   ],
   "row_columns": [
@@ -10639,7 +10693,7 @@
     ],
     [
       "TOUCH-FGI-030",
-      "TCP-FORGE",
+      "TCP-FORGE-RETRY-SELECTED",
       "command",
       "cmd.forge.pipeline.retry",
       "partial",

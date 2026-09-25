@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11771-L12035
+Source lines: L11771-L12037
 
-Source SHA256: `181a3721ca8b6bd2055d833578cea13e7e34a78326d0f480370cb89f8aa0e70f`
+Source SHA256: `bed2fc43e3198ba12648d0fdbd70740d86d5497a697d551236b4f67be5b41c6a`
 
 ---
 
@@ -17,6 +17,8 @@ Every primary row below is static central intent. A named `handler_location` is 
 
 
 ### Exact 100 primary catalog rows
+
+Exactly `cmd.forge.pipeline.retry` uses `Plans/forge_retry_selected_contracts.schema.json#/$defs/request` -> `Plans/forge_retry_selected_contracts.schema.json#/$defs/result`. The original explicit retry scope, actual native selection and preview bind current admission, genuine work, partial/unknown effects and the authentic caller/receipt/error. No default scope, provider support, automatic retry, new event or handler availability is introduced. Cancellation before submission does not fabricate work; accepted work remains nonterminal.
 
 Exactly `cmd.forge.repository.list` and `cmd.forge.pipeline.list` use `Plans/forge_list_query_contracts.schema.json#/$defs/request` -> `Plans/forge_list_query_contracts.schema.json#/$defs/result`. Authentic provider-specific typed descriptors and original selected filters bind actual read windows/receipts and current caller; precommit null-Project scope and independent AutomationBinding remain exact. Read operation completion is not whole/fresh dataset completeness. No universal filters, default sort/page size, write probes, new events or handler availability are introduced.
 

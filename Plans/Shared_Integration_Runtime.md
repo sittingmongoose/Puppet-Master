@@ -2338,6 +2338,10 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
 
+For exactly `cmd.forge.pipeline.retry`, request/result composition reuses actual common Forge authority/result/receipt/error, authentic original SIR IdentityEnvelope/CommandOutcome and current caller/return context. Explicit new SIR dispatch and nullable error projections bind their genuine owner records, including cancelled-null UI error. Inputs and resolved originals are pinned across all callbacks; a fresh final disclosure check is mandatory. Canonical digests come from the owner callback, not a newly chosen wire codec. The exact central response adapter must invoke this full composition, not only validate a bare result shape.
+
+ContractRef: ContractName:Plans/forge_retry_selected_contracts.schema.json
+
 Exactly `cmd.forge.repository.list` and `cmd.forge.pipeline.list` retain an authentic SIR original request/digest, full unchanged IdentityEnvelope, independent dispatch/target generations, actor/permission/idempotency and genuine nullable caller. The existing precommit authority uses its actual Server/Host/Environment/Client scope without inventing Project/run/agent identity. Actual current delivery is independently supplied. The adapter joins authentic descriptor/selection, original read admission, typed source window and read receipt before composing current CommandOutcome/UI response and safe errors.
 
 Accepted work is real nonterminal ObservableWork without terminal receipt. Read-only degraded/partial freshness is explicitly represented by the actual read owner, not borrowed from a mutation outcome. Failed/cancelled reads preserve their genuine observations and original error, including cancelled-null UI error where required. Original and live resolved values are snapshotted against later callback/resolver mutation. Replay discloses retained original reads under current permission; it does not silently repeat the provider query or substitute the visible panel filter. Static validation supplies no native authentication, availability or protected Full Thread change.

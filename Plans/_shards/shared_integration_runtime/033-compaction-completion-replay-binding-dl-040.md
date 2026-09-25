@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2602
+Source lines: L2164-L2606
 
-Source SHA256: `f64995d8175adb6c420f698e94ed81d37ad3fe55be1f14360a191552ca9e02ef`
+Source SHA256: `75009faabcc9921c2d6720f45c7c2a45a9d28826c3cef1e9905d422e1cba1d10`
 
 ---
 
@@ -184,6 +184,10 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+For exactly `cmd.forge.pipeline.retry`, request/result composition reuses actual common Forge authority/result/receipt/error, authentic original SIR IdentityEnvelope/CommandOutcome and current caller/return context. Explicit new SIR dispatch and nullable error projections bind their genuine owner records, including cancelled-null UI error. Inputs and resolved originals are pinned across all callbacks; a fresh final disclosure check is mandatory. Canonical digests come from the owner callback, not a newly chosen wire codec. The exact central response adapter must invoke this full composition, not only validate a bare result shape.
+
+ContractRef: ContractName:Plans/forge_retry_selected_contracts.schema.json
 
 Exactly `cmd.forge.repository.list` and `cmd.forge.pipeline.list` retain an authentic SIR original request/digest, full unchanged IdentityEnvelope, independent dispatch/target generations, actor/permission/idempotency and genuine nullable caller. The existing precommit authority uses its actual Server/Host/Environment/Client scope without inventing Project/run/agent identity. Actual current delivery is independently supplied. The adapter joins authentic descriptor/selection, original read admission, typed source window and read receipt before composing current CommandOutcome/UI response and safe errors.
 
