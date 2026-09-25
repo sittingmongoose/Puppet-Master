@@ -95,6 +95,9 @@ FAMILY_TIME = {
 }
 LINEAGE_FIXED = ("project_id", "run_id", "platform")
 LINEAGE_OPTIONAL = ("thread_id", "agent_type", "parent_run_id", "child_run_id", "node_id", "lane_id", "worktree_id")
+# CV-353 rule 8 joins that name the family: its timestamp, its payload schema ID and its event ID recipe. Each family's
+# own valid EventRecord carries a negative for each of them (ATS-058).
+FAMILY_EVENT_JOINS = ("occurred_at_join", "payload_schema_id", "identity_recipe")
 # The Contracts lineage envelope and payload rows (Plans/Contracts_V0.md, "Stable active-agent coordination
 # event families"): required fields, then optional ("?") fields. CV-353 rule 1: apart from schema_version no
 # row gains a field; rule 2: agent_revision is required for the seven agent families.
@@ -1243,8 +1246,8 @@ def fixture_report(fixtures: dict[str, Any] | None = None, *, root: Path = ROOT)
     if (fixtures["payload_schema"] != {"path": PAYLOAD_PATH, "schema_id": PAYLOAD_SCHEMA_URI}
             or fixtures["projection_schema"] != {"path": PROJECTION_PATH, "schema_id": PROJECTION_SCHEMA_URI}):
         failures.append({"error": "fixture_schema_refs"})
-    all_ids = [case["case_id"] for key in ("payloads", "invalid_payloads", "invalid_events", "identity_vectors", "path_vectors",
-                                           "transition_sequences", "projection_values", "invalid_projection_values")
+    all_ids = [case["case_id"] for key in ("payloads", "invalid_payloads", "valid_events", "invalid_events", "identity_vectors",
+                                           "path_vectors", "transition_sequences", "projection_values", "invalid_projection_values")
                for case in fixtures[key]]
     if len(all_ids) != len(set(all_ids)):
         failures.append({"error": "fixture_case_id_duplicate"})
@@ -1263,17 +1266,33 @@ def fixture_report(fixtures: dict[str, Any] | None = None, *, root: Path = ROOT)
         if rejection != case["expected_rejection"]:
             failures.append({"error": "negative_payload_not_rejected_for_stated_reason", "case_id": case["case_id"],
                              "expected": case["expected_rejection"], "actual": rejection})
-    valid_event = fixtures["valid_event"]
-    envelope = load(ENVELOPE_PATH, root)
-    if list(Draft202012Validator(envelope, format_checker=FormatChecker()).iter_errors(valid_event)):
-        failures.append({"error": "valid_event_envelope_schema"})
-    if envelope_rejection(valid_event, store_id, epoch) is not None or payload_rejection(valid_event["event_type"], valid_event["payload"], root):
-        failures.append({"error": "valid_event_rejected"})
+    # CV-353 rule 8 joins: one valid EventRecord per family, built on one of that family's own positive payloads, and
+    # each negative patches the record its base_event_case_id names (grade gap 2: no family rests on a sibling's record).
+    envelope_validator = Draft202012Validator(load(ENVELOPE_PATH, root), format_checker=FormatChecker())
+    valid_events: dict[str, dict[str, Any]] = {}
+    for case in fixtures["valid_events"]:
+        valid_events[case["case_id"]] = case
+        record, source = case["record"], payloads.get(case["payload_case_id"])
+        if (source is None or source["event_type"] != case["event_type"] or record.get("event_type") != case["event_type"]
+                or canonical(record.get("payload")) != canonical(source["payload"])):
+            failures.append({"error": "valid_event_payload_join", "case_id": case["case_id"]})
+            continue
+        if list(envelope_validator.iter_errors(record)):
+            failures.append({"error": "valid_event_envelope_schema", "case_id": case["case_id"]})
+        if envelope_rejection(record, store_id, epoch) is not None or payload_rejection(record["event_type"], record["payload"], root):
+            failures.append({"error": "valid_event_rejected", "case_id": case["case_id"]})
+    event_rejections: dict[str, set[str]] = {}
     for case in fixtures["invalid_events"]:
-        rejection = envelope_rejection(apply_patch(valid_event, case["patch"], []), store_id, epoch)
+        base = valid_events.get(case["base_event_case_id"])
+        if base is None:
+            failures.append({"error": "negative_event_base", "case_id": case["case_id"]})
+            continue
+        rejection = envelope_rejection(apply_patch(base["record"], case["patch"], []), store_id, epoch)
         if rejection != case["expected_rejection"]:
             failures.append({"error": "negative_event_not_rejected_for_stated_reason", "case_id": case["case_id"],
                              "expected": case["expected_rejection"], "actual": rejection})
+            continue
+        event_rejections.setdefault(base["event_type"], set()).add(rejection)
     for vector in fixtures["identity_vectors"]:
         vector_epoch = vector.get("recovery_epoch", epoch)
         values = (vector["project_id"], vector["event_type"], vector["agent_id"], vector["agent_revision"])
@@ -1330,18 +1349,26 @@ def fixture_report(fixtures: dict[str, Any] | None = None, *, root: Path = ROOT)
         failures.append({"error": "native_oracles_must_stay_not_run"})
     per_family = {}
     for event_type in SEVEN + (MIRROR,):
-        per_family[event_type] = {
+        counts = {
             "positive_payloads": sum(1 for case in fixtures["payloads"] if case["event_type"] == event_type),
             "negative_payloads": sum(1 for case in fixtures["invalid_payloads"] if case["event_type"] == event_type),
             "transition_sequences": sum(1 for sequence in fixtures["transition_sequences"]
                                         if any(payloads.get(step["payload_case_id"], {}).get("event_type") == event_type for step in sequence["steps"])),
         }
-        if event_type in SEVEN and not all(per_family[event_type].values()):
+        if event_type in SEVEN and not all(counts.values()):
             failures.append({"error": "family_without_positive_negative_and_transition_cases", "event_type": event_type})
+        counts["valid_events"] = sum(1 for case in valid_events.values() if case["event_type"] == event_type)
+        counts["negative_events"] = sum(1 for case in fixtures["invalid_events"]
+                                        if valid_events.get(case["base_event_case_id"], {}).get("event_type") == event_type)
+        if event_type in SEVEN and (not counts["valid_events"] or not set(FAMILY_EVENT_JOINS) <= event_rejections.get(event_type, set())):
+            failures.append({"error": "family_without_own_event_join_cases", "event_type": event_type,
+                             "detail": sorted(set(FAMILY_EVENT_JOINS) - event_rejections.get(event_type, set()))})
+        per_family[event_type] = counts
     return {
         "failures": failures,
         "positive_payload_cases": len(fixtures["payloads"]),
         "negative_payload_cases": len(fixtures["invalid_payloads"]),
+        "valid_event_cases": len(fixtures["valid_events"]),
         "negative_event_cases": len(fixtures["invalid_events"]),
         "identity_vectors": len(fixtures["identity_vectors"]),
         "path_vectors": len(fixtures["path_vectors"]),
@@ -1356,10 +1383,13 @@ def fixture_report(fixtures: dict[str, Any] | None = None, *, root: Path = ROOT)
 
 def validation_case_failures(ledger: dict[str, Any] | None = None, fixtures: dict[str, Any] | None = None,
                              *, root: Path = ROOT) -> list[dict[str, Any]]:
-    """Each ledger row names cases of its own family, and every payload case belongs to one row."""
+    """Each ledger row names cases of its own family, and every payload and EventRecord case belongs to one row."""
     ledger = load(LEDGER_PATH, root) if ledger is None else ledger
     fixtures = load(FIXTURE_PATH, root) if fixtures is None else fixtures
     payload_types = {case["case_id"]: case["event_type"] for key in ("payloads", "invalid_payloads") for case in fixtures[key]}
+    record_types = {case["case_id"]: case["event_type"] for case in fixtures["valid_events"]}
+    case_types = {**payload_types, **record_types,
+                  **{case["case_id"]: record_types.get(case["base_event_case_id"]) for case in fixtures["invalid_events"]}}
     sequence_types = {sequence["case_id"]: {payload_types.get(step["payload_case_id"]) for step in sequence["steps"]}
                       for sequence in fixtures["transition_sequences"]}
     failures: list[dict[str, Any]] = []
@@ -1368,8 +1398,8 @@ def validation_case_failures(ledger: dict[str, Any] | None = None, fixtures: dic
         event_type = row["event_type"]
         named = set(row["validation_case_ids"])
         for case_id in sorted(named):
-            if case_id in payload_types:
-                if payload_types[case_id] != event_type:
+            if case_id in case_types:
+                if case_types[case_id] != event_type:
                     failures.append({"error": "validation_case_of_other_family", "event_type": event_type, "case_id": case_id})
             elif case_id in sequence_types:
                 claimed_sequences.add(case_id)
@@ -1377,7 +1407,7 @@ def validation_case_failures(ledger: dict[str, Any] | None = None, fixtures: dic
                     failures.append({"error": "validation_sequence_without_family_step", "event_type": event_type, "case_id": case_id})
             else:
                 failures.append({"error": "validation_case_missing", "event_type": event_type, "case_id": case_id})
-        own = {case_id for case_id, case_type in payload_types.items() if case_type == event_type}
+        own = {case_id for case_id, case_type in case_types.items() if case_type == event_type}
         if own - named:
             failures.append({"error": "family_cases_not_named_by_ledger_row", "event_type": event_type, "detail": sorted(own - named)})
     if set(sequence_types) - claimed_sequences:

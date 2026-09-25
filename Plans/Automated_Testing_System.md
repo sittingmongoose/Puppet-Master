@@ -5192,7 +5192,7 @@ This is a **newly authored owner contract under DL-045**. It names the oracles o
 Nothing here admits a family. Each of the seven stays quarantined before append or projection, and absent from `Plans/event_family_registry.json`, until its own Storage admission landing, one family per landing (DL-045). `coordination.debug_mirror_exported` is outside this entry. The fixtures hold a few of its payload cases only because the Storage record family `coordination_event_records` covers every key shape.
 
 **Static oracles.** They run now, and they must pass:
-- The fixtures, `Plans/coordination_event_contract_fixtures.json`. They hold positive and negative payload cases per family, EventRecord envelope join cases, identity and path vectors, transition sequences with their final agent, claim and operation state, projection and checkpoint values, and the native obligations listed below.
+- The fixtures, `Plans/coordination_event_contract_fixtures.json`. They hold positive and negative payload cases per family, a valid EventRecord of each family with envelope join negatives built on it, identity and path vectors, transition sequences with their final agent, claim and operation state, projection and checkpoint values, and the native obligations listed below.
 - The checker, `python3 scripts/pm_coordination_events.py`, and its unittest module `tests/test_pm_coordination_events.py`. The checker validates the closed payload schema against the Contracts rows, the projection schema and its binding record, the admission ledger `Plans/coordination_event_admission.json` and the final registry row that each family's landing will append, the two Storage value registry rows, and every fixture expectation. It fails when a coordination family is in the event family registry while its ledger row is `prepared_not_admitted`, and when an admitted family's registry row differs from its prepared row.
 - A pass shows static contract consistency and nothing more. It proves no producer, crash detector, append path, projector, reader, durability, readiness or seal.
 
@@ -5208,7 +5208,19 @@ Nothing here admits a family. Each of the seven stays quarantined before append 
 | `coordination.agent_crashed` | 5 | 6, all schema: an unknown reason, `heartbeat_expired` without `heartbeat_age_ms`, a negative age, a threshold field, an empty process ref, no `agent_id`. | `crash_by_heartbeat_expiry`, `crash_by_worktree_loss`, `second_terminal_event_refused`, `abort_loses_race_to_crash`, `interim_window_terminal_families_not_admitted` | `COORD-RACE-01`, `COORD-RESTORE-01`, `COORD-HEARTBEAT-01` |
 | `coordination.agent_aborted` | 5 | 8. Schema, 7: an unknown reason, a ref kind that does not match the reason (three cases), a parent abort without `parent_run_id`, no `project_id`, a crash field. `abort_ref_join`, 1: a parent ref naming another run. | `abort_by_parent`, `event_after_terminal_refused`, `unregister_loses_race_to_abort`, `abort_loses_race_to_crash`, `interim_window_update_and_abort_families_not_admitted` | `COORD-RACE-01` |
 
-Every family also shares `COORD-RETRY-01`, `COORD-UNCERTAIN-01`, `COORD-CAS-01`, `COORD-TOKEN-01`, `COORD-QUARANTINE-01`, `COORD-READER-01`, `COORD-WITHDRAW-01`, `COORD-RETENTION-01` and `COORD-MIRROR-01`. The twelve EventRecord join negatives are built on one status event, and the join rules they test are the same for all seven families (CV-353 rule 8).
+Every family also shares `COORD-RETRY-01`, `COORD-UNCERTAIN-01`, `COORD-CAS-01`, `COORD-TOKEN-01`, `COORD-QUARANTINE-01`, `COORD-READER-01`, `COORD-WITHDRAW-01`, `COORD-RETENTION-01` and `COORD-MIRROR-01`.
+
+**EventRecord joins per family.** Each family has a valid EventRecord of its own, built on one of its own positive payloads, and join negatives built on that record (CV-353 rule 8). Every family's record is negated on the three joins that name the family: an `occurred_at_utc` other than the family timestamp (`occurred_at_join`), a sibling's `payload_schema_id` (`payload_schema_id`) and the event ID that the recipe gives a sibling family for the same agent and revision (`identity_recipe`). The status record also carries twelve shared negatives, which add the joins that do not depend on the family: scope, inline payload, envelope identity (project, run, thread, attempt and key), redaction profile, replay policy and an event ID off the recipe. The checker fails when a family has no record of its own or lacks one of its three joins.
+
+| Family | Valid EventRecord, on its payload | Join negatives built on it |
+|---|---|---|
+| `coordination.agent_registered` | `event_valid_agent_registered`, on `a7_registered_full` | 4: `occurred_at_join`, `payload_schema_id`, `identity_recipe`, and `payload_envelope_identity` for an envelope that drops the payload's `thread_id` |
+| `coordination.agent_status_updated` | `event_valid_agent_status_updated`, on `a7_status_running_r2` | 13: the twelve shared negatives, which include its `occurred_at_join` and `payload_schema_id`, and `identity_recipe` for a sibling's event ID |
+| `coordination.agent_operation_updated` | `event_valid_agent_operation_updated`, on `a7_operation_progress_r5` | 3: `occurred_at_join`, `payload_schema_id`, `identity_recipe` |
+| `coordination.agent_file_ownership_updated` | `event_valid_agent_file_ownership_updated`, on `a7_file_editing_r4` | 3: `occurred_at_join`, `payload_schema_id`, `identity_recipe` |
+| `coordination.agent_unregistered` | `event_valid_agent_unregistered`, on `a7_unregistered_complete_r6` | 3: `occurred_at_join`, `payload_schema_id`, `identity_recipe` |
+| `coordination.agent_crashed` | `event_valid_agent_crashed`, on `a8_crashed_heartbeat_r3` | 3: `occurred_at_join`, `payload_schema_id`, `identity_recipe` |
+| `coordination.agent_aborted` | `event_valid_agent_aborted`, on `a9_aborted_parent_r2` | 3: `occurred_at_join`, `payload_schema_id`, `identity_recipe` |
 
 **Native obligations.** They stay NOT_RUN until native code exists and they are actually executed. No static check stands in for them.
 
@@ -5239,8 +5251,8 @@ canonical_text: >-
   coordination.agent_file_ownership_updated, coordination.agent_unregistered, coordination.agent_crashed and
   coordination.agent_aborted are the fixtures in Plans/coordination_event_contract_fixtures.json and the static
   checker python3 scripts/pm_coordination_events.py with its unittest module tests/test_pm_coordination_events.py.
-  Each family has its own positive payload cases, negative payload cases rejected at a stated layer and
-  transition sequences, named in its admission ledger row. The checker must pass. It fails when a family is in
+  Each family has its own positive payload cases, negative payload cases rejected at a stated layer, a valid
+  EventRecord with join negatives built on it and transition sequences, named in its admission ledger row. The checker must pass. It fails when a family is in
   the event family registry while its ledger row is prepared_not_admitted, or when an admitted row differs from
   its prepared registry row. The thirteen native obligations COORD-APPEND-01 to COORD-MIRROR-01 stay NOT_RUN
   until executed natively, and a static pass is never native proof, admission, readiness or a seal. Nothing is
@@ -5254,7 +5266,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - python3 scripts/pm_coordination_events.py exits 0 with no failures, and python3 -m unittest tests.test_pm_coordination_events passes.
-- Each of the seven families has at least one positive payload case, one negative payload case that fails at its stated layer and one transition sequence of its own, and its ledger row names them.
+- Each of the seven families has at least one positive payload case, one negative payload case that fails at its stated layer, a valid EventRecord of its own with occurred_at_join, payload_schema_id and identity_recipe negatives built on it, and one transition sequence of its own, and its ledger row names them.
 - Every transition sequence reproduces its stated results and its final agent, claim and operation state under the SP-320 admission order.
 - No coordination family is registered while its ledger row is prepared_not_admitted, and an admitted family's registry row equals its prepared row byte for byte in canonical JSON.
 - The thirteen native obligations stay NOT_RUN until executed natively, and no static result is reported as native proof, admission, readiness or a seal.

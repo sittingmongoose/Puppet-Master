@@ -48,7 +48,8 @@
       "append: appended; the event_id follows the identity recipe"
     ],
     "producer_digest": "For these fixtures the producer semantic digest is the SHA-256 of the canonical JSON {event_type, payload}; an exact retry repeats the payload byte for byte.",
-    "path_normalization": "path_vectors apply SP-320's recipe lexically: no file system and no symbolic links. A path that leaves the worktree produces no claim."
+    "path_normalization": "path_vectors apply SP-320's recipe lexically: no file system and no symbolic links. A path that leaves the worktree produces no claim.",
+    "event_cases": "valid_events holds one EventRecord per family, built on one of its own positive payloads; each invalid event patches the record its base_event_case_id names and is rejected by the first failing envelope rule. The joins that name the family (occurred_at_join, payload_schema_id, identity_recipe) are tested on every family's own record; the family-independent joins are tested on the status record."
   },
   "payloads": [
     {
@@ -1526,55 +1527,390 @@
       "event_type": "coordination.debug_mirror_exported"
     }
   ],
-  "valid_event": {
-    "schema_id": "pm.event.v0",
-    "schema_version": "2.0.0",
-    "scope_kind": "project",
-    "event_id": "evt_coordination_a7bdc319a4601dc160b2c56a1617f8c83c165419f670b07f12b3b8b8ab0a16c6",
-    "event_type": "coordination.agent_status_updated",
-    "project_id": "project_fixture_alpha",
-    "thread_id": null,
-    "run_id": "run_fixture_child_7",
-    "node_id": null,
-    "attempt_id": null,
-    "actor_ref": "component:orchestrator",
-    "requested_account_ref": null,
-    "effective_account_ref": null,
-    "occurred_at_utc": "2026-09-25T04:01:00Z",
-    "observed_at_utc": "2026-09-25T04:02:00.100000Z",
-    "persisted_at_utc": "2026-09-25T04:02:00.200000Z",
-    "sequence_id": 42,
-    "producer_sequence_id": null,
-    "correlation_id": "correlation:fixture:coordination",
-    "causation_event_id": null,
-    "parent_event_id": null,
-    "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3:2",
-    "payload_schema_id": "pm.coordination_event.agent_status_updated.schema.v1",
-    "payload": {
-      "schema_version": "1.0.0",
-      "project_id": "project_fixture_alpha",
-      "run_id": "run_fixture_child_7",
-      "agent_id": "agent_fixture_7",
-      "platform": "codex",
-      "agent_revision": 2,
-      "expected_previous_revision": 1,
-      "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3:2",
-      "status": "running",
-      "observed_at_utc": "2026-09-25T04:01:00Z"
+  "valid_events": [
+    {
+      "case_id": "event_valid_agent_registered",
+      "event_type": "coordination.agent_registered",
+      "payload_case_id": "a7_registered_full",
+      "record": {
+        "schema_id": "pm.event.v0",
+        "schema_version": "2.0.0",
+        "scope_kind": "project",
+        "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91",
+        "event_type": "coordination.agent_registered",
+        "project_id": "project_fixture_alpha",
+        "thread_id": "thr_fixture_1",
+        "run_id": "run_fixture_child_7",
+        "node_id": "node_1.1.1",
+        "attempt_id": null,
+        "actor_ref": "component:orchestrator",
+        "requested_account_ref": null,
+        "effective_account_ref": null,
+        "occurred_at_utc": "2026-09-25T04:00:00Z",
+        "observed_at_utc": "2026-09-25T04:00:00.100000Z",
+        "persisted_at_utc": "2026-09-25T04:00:00.200000Z",
+        "sequence_id": 41,
+        "producer_sequence_id": null,
+        "correlation_id": "correlation:fixture:coordination",
+        "causation_event_id": null,
+        "parent_event_id": null,
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:3:1",
+        "payload_schema_id": "pm.coordination_event.agent_registered.schema.v1",
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_fixture_alpha",
+          "run_id": "run_fixture_child_7",
+          "agent_id": "agent_fixture_7",
+          "thread_id": "thr_fixture_1",
+          "agent_type": "rust-engineer",
+          "parent_run_id": "run_fixture_parent",
+          "child_run_id": "run_fixture_child_7",
+          "node_id": "node_1.1.1",
+          "lane_id": "lane_a",
+          "worktree_id": "wt_fixture_7",
+          "platform": "codex",
+          "agent_revision": 1,
+          "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:3:1",
+          "model_id": "gpt-5-codex",
+          "started_at_utc": "2026-09-25T04:00:00Z"
+        },
+        "payload_ref": null,
+        "redaction_profile": "no_secrets",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "migration": {
+          "migrated_from_schema_id": null,
+          "migrated_from_schema_version": null,
+          "migration_id": null,
+          "compatibility_event_type": null
+        }
+      }
     },
-    "payload_ref": null,
-    "redaction_profile": "no_secrets",
-    "replay_policy": "dedupe_by_idempotency_key",
-    "migration": {
-      "migrated_from_schema_id": null,
-      "migrated_from_schema_version": null,
-      "migration_id": null,
-      "compatibility_event_type": null
+    {
+      "case_id": "event_valid_agent_status_updated",
+      "event_type": "coordination.agent_status_updated",
+      "payload_case_id": "a7_status_running_r2",
+      "record": {
+        "schema_id": "pm.event.v0",
+        "schema_version": "2.0.0",
+        "scope_kind": "project",
+        "event_id": "evt_coordination_a7bdc319a4601dc160b2c56a1617f8c83c165419f670b07f12b3b8b8ab0a16c6",
+        "event_type": "coordination.agent_status_updated",
+        "project_id": "project_fixture_alpha",
+        "thread_id": null,
+        "run_id": "run_fixture_child_7",
+        "node_id": null,
+        "attempt_id": null,
+        "actor_ref": "component:orchestrator",
+        "requested_account_ref": null,
+        "effective_account_ref": null,
+        "occurred_at_utc": "2026-09-25T04:01:00Z",
+        "observed_at_utc": "2026-09-25T04:02:00.100000Z",
+        "persisted_at_utc": "2026-09-25T04:02:00.200000Z",
+        "sequence_id": 42,
+        "producer_sequence_id": null,
+        "correlation_id": "correlation:fixture:coordination",
+        "causation_event_id": null,
+        "parent_event_id": null,
+        "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3:2",
+        "payload_schema_id": "pm.coordination_event.agent_status_updated.schema.v1",
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_fixture_alpha",
+          "run_id": "run_fixture_child_7",
+          "agent_id": "agent_fixture_7",
+          "platform": "codex",
+          "agent_revision": 2,
+          "expected_previous_revision": 1,
+          "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_7:3:2",
+          "status": "running",
+          "observed_at_utc": "2026-09-25T04:01:00Z"
+        },
+        "payload_ref": null,
+        "redaction_profile": "no_secrets",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "migration": {
+          "migrated_from_schema_id": null,
+          "migrated_from_schema_version": null,
+          "migration_id": null,
+          "compatibility_event_type": null
+        }
+      }
+    },
+    {
+      "case_id": "event_valid_agent_operation_updated",
+      "event_type": "coordination.agent_operation_updated",
+      "payload_case_id": "a7_operation_progress_r5",
+      "record": {
+        "schema_id": "pm.event.v0",
+        "schema_version": "2.0.0",
+        "scope_kind": "project",
+        "event_id": "evt_coordination_d8442be8745ea412dc6a0c3dd2edebbc70cfb1ed167a02716d2e44b05b762535",
+        "event_type": "coordination.agent_operation_updated",
+        "project_id": "project_fixture_alpha",
+        "thread_id": null,
+        "run_id": "run_fixture_child_7",
+        "node_id": null,
+        "attempt_id": null,
+        "actor_ref": "component:orchestrator",
+        "requested_account_ref": null,
+        "effective_account_ref": null,
+        "occurred_at_utc": "2026-09-25T04:04:00Z",
+        "observed_at_utc": "2026-09-25T04:04:00.100000Z",
+        "persisted_at_utc": "2026-09-25T04:04:00.200000Z",
+        "sequence_id": 43,
+        "producer_sequence_id": null,
+        "correlation_id": "correlation:fixture:coordination",
+        "causation_event_id": null,
+        "parent_event_id": null,
+        "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_7:3:5",
+        "payload_schema_id": "pm.coordination_event.agent_operation_updated.schema.v1",
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_fixture_alpha",
+          "run_id": "run_fixture_child_7",
+          "agent_id": "agent_fixture_7",
+          "platform": "codex",
+          "agent_revision": 5,
+          "expected_previous_revision": 4,
+          "idempotency_key": "coordination:coordination.agent_operation_updated:project_fixture_alpha:agent_fixture_7:3:5",
+          "operation_id": "op_fixture_1",
+          "operation_summary": "editing src/auth/password.rs",
+          "progress_pct": 40,
+          "operation_refs": [
+            "command:cargo_test",
+            "artifact:build_log_7"
+          ],
+          "observed_at_utc": "2026-09-25T04:04:00Z"
+        },
+        "payload_ref": null,
+        "redaction_profile": "no_secrets",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "migration": {
+          "migrated_from_schema_id": null,
+          "migrated_from_schema_version": null,
+          "migration_id": null,
+          "compatibility_event_type": null
+        }
+      }
+    },
+    {
+      "case_id": "event_valid_agent_file_ownership_updated",
+      "event_type": "coordination.agent_file_ownership_updated",
+      "payload_case_id": "a7_file_editing_r4",
+      "record": {
+        "schema_id": "pm.event.v0",
+        "schema_version": "2.0.0",
+        "scope_kind": "project",
+        "event_id": "evt_coordination_e5f06aa708ae1893c0bf2f74e41148a42610f169c96e710a6520a612cc7c89df",
+        "event_type": "coordination.agent_file_ownership_updated",
+        "project_id": "project_fixture_alpha",
+        "thread_id": null,
+        "run_id": "run_fixture_child_7",
+        "node_id": null,
+        "attempt_id": null,
+        "actor_ref": "component:orchestrator",
+        "requested_account_ref": null,
+        "effective_account_ref": null,
+        "occurred_at_utc": "2026-09-25T04:03:00Z",
+        "observed_at_utc": "2026-09-25T04:03:00.100000Z",
+        "persisted_at_utc": "2026-09-25T04:03:00.200000Z",
+        "sequence_id": 44,
+        "producer_sequence_id": null,
+        "correlation_id": "correlation:fixture:coordination",
+        "causation_event_id": null,
+        "parent_event_id": null,
+        "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:3:4",
+        "payload_schema_id": "pm.coordination_event.agent_file_ownership_updated.schema.v1",
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_fixture_alpha",
+          "run_id": "run_fixture_child_7",
+          "agent_id": "agent_fixture_7",
+          "platform": "codex",
+          "agent_revision": 4,
+          "expected_previous_revision": 3,
+          "last_applied_event_id": "evt_coordination_154f6d09cf926b6f8a3f64023463e97d00ef9c358246d2585e7657e0235df8d1",
+          "idempotency_key": "coordination:coordination.agent_file_ownership_updated:project_fixture_alpha:agent_fixture_7:3:4",
+          "path_ref": "src/api.rs",
+          "path_hash": "adea2445327e39eb215de697b440dbbc02135357380fb612a10a9e659129a46b",
+          "claim_kind": "editing",
+          "claim_confidence": "high",
+          "operation_id": "op_fixture_1",
+          "observed_at_utc": "2026-09-25T04:03:00Z"
+        },
+        "payload_ref": null,
+        "redaction_profile": "no_secrets",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "migration": {
+          "migrated_from_schema_id": null,
+          "migrated_from_schema_version": null,
+          "migration_id": null,
+          "compatibility_event_type": null
+        }
+      }
+    },
+    {
+      "case_id": "event_valid_agent_unregistered",
+      "event_type": "coordination.agent_unregistered",
+      "payload_case_id": "a7_unregistered_complete_r6",
+      "record": {
+        "schema_id": "pm.event.v0",
+        "schema_version": "2.0.0",
+        "scope_kind": "project",
+        "event_id": "evt_coordination_de33f051abe5db623debf4397a24a1996e2378492c117f7a13277f046fba2904",
+        "event_type": "coordination.agent_unregistered",
+        "project_id": "project_fixture_alpha",
+        "thread_id": null,
+        "run_id": "run_fixture_child_7",
+        "node_id": null,
+        "attempt_id": null,
+        "actor_ref": "component:orchestrator",
+        "requested_account_ref": null,
+        "effective_account_ref": null,
+        "occurred_at_utc": "2026-09-25T04:05:00Z",
+        "observed_at_utc": "2026-09-25T04:05:00.100000Z",
+        "persisted_at_utc": "2026-09-25T04:05:00.200000Z",
+        "sequence_id": 45,
+        "producer_sequence_id": null,
+        "correlation_id": "correlation:fixture:coordination",
+        "causation_event_id": null,
+        "parent_event_id": null,
+        "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:3:6",
+        "payload_schema_id": "pm.coordination_event.agent_unregistered.schema.v1",
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_fixture_alpha",
+          "run_id": "run_fixture_child_7",
+          "agent_id": "agent_fixture_7",
+          "platform": "codex",
+          "agent_revision": 6,
+          "expected_previous_revision": 5,
+          "idempotency_key": "coordination:coordination.agent_unregistered:project_fixture_alpha:agent_fixture_7:3:6",
+          "terminal_status": "complete",
+          "finished_at_utc": "2026-09-25T04:05:00Z",
+          "result_ref": "receipt:node_1.1.1"
+        },
+        "payload_ref": null,
+        "redaction_profile": "no_secrets",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "migration": {
+          "migrated_from_schema_id": null,
+          "migrated_from_schema_version": null,
+          "migration_id": null,
+          "compatibility_event_type": null
+        }
+      }
+    },
+    {
+      "case_id": "event_valid_agent_crashed",
+      "event_type": "coordination.agent_crashed",
+      "payload_case_id": "a8_crashed_heartbeat_r3",
+      "record": {
+        "schema_id": "pm.event.v0",
+        "schema_version": "2.0.0",
+        "scope_kind": "project",
+        "event_id": "evt_coordination_e1190d487ad734d53c9f06961dad0ee058f7305fac3edefec35804125d02a927",
+        "event_type": "coordination.agent_crashed",
+        "project_id": "project_fixture_alpha",
+        "thread_id": null,
+        "run_id": "run_fixture_child_8",
+        "node_id": null,
+        "attempt_id": null,
+        "actor_ref": "component:crash_detector",
+        "requested_account_ref": null,
+        "effective_account_ref": null,
+        "occurred_at_utc": "2026-09-25T04:17:00Z",
+        "observed_at_utc": "2026-09-25T04:17:00.100000Z",
+        "persisted_at_utc": "2026-09-25T04:17:00.200000Z",
+        "sequence_id": 46,
+        "producer_sequence_id": null,
+        "correlation_id": "correlation:fixture:coordination",
+        "causation_event_id": null,
+        "parent_event_id": null,
+        "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_8:3:3",
+        "payload_schema_id": "pm.coordination_event.agent_crashed.schema.v1",
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_fixture_alpha",
+          "run_id": "run_fixture_child_8",
+          "agent_id": "agent_fixture_8",
+          "platform": "claude",
+          "agent_revision": 3,
+          "idempotency_key": "coordination:coordination.agent_crashed:project_fixture_alpha:agent_fixture_8:3:3",
+          "crash_reason": "heartbeat_expired",
+          "detected_at_utc": "2026-09-25T04:17:00Z",
+          "heartbeat_age_ms": 360000,
+          "process_ref": "process:4242"
+        },
+        "payload_ref": null,
+        "redaction_profile": "no_secrets",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "migration": {
+          "migrated_from_schema_id": null,
+          "migrated_from_schema_version": null,
+          "migration_id": null,
+          "compatibility_event_type": null
+        }
+      }
+    },
+    {
+      "case_id": "event_valid_agent_aborted",
+      "event_type": "coordination.agent_aborted",
+      "payload_case_id": "a9_aborted_parent_r2",
+      "record": {
+        "schema_id": "pm.event.v0",
+        "schema_version": "2.0.0",
+        "scope_kind": "project",
+        "event_id": "evt_coordination_3e1428f713700d1b279d7cd4c32b9c169d92a0214637f8c31a724c393e73db30",
+        "event_type": "coordination.agent_aborted",
+        "project_id": "project_fixture_alpha",
+        "thread_id": null,
+        "run_id": "run_fixture_child_9",
+        "node_id": null,
+        "attempt_id": null,
+        "actor_ref": "component:orchestrator",
+        "requested_account_ref": null,
+        "effective_account_ref": null,
+        "occurred_at_utc": "2026-09-25T04:21:00Z",
+        "observed_at_utc": "2026-09-25T04:21:00.100000Z",
+        "persisted_at_utc": "2026-09-25T04:21:00.200000Z",
+        "sequence_id": 47,
+        "producer_sequence_id": null,
+        "correlation_id": "correlation:fixture:coordination",
+        "causation_event_id": null,
+        "parent_event_id": null,
+        "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_9:3:2",
+        "payload_schema_id": "pm.coordination_event.agent_aborted.schema.v1",
+        "payload": {
+          "schema_version": "1.0.0",
+          "project_id": "project_fixture_alpha",
+          "run_id": "run_fixture_child_9",
+          "agent_id": "agent_fixture_9",
+          "agent_type": "reviewer",
+          "parent_run_id": "run_fixture_parent",
+          "platform": "cursor",
+          "agent_revision": 2,
+          "idempotency_key": "coordination:coordination.agent_aborted:project_fixture_alpha:agent_fixture_9:3:2",
+          "abort_reason": "parent",
+          "aborted_by_ref": "run:run_fixture_parent",
+          "aborted_at_utc": "2026-09-25T04:21:00Z"
+        },
+        "payload_ref": null,
+        "redaction_profile": "no_secrets",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "migration": {
+          "migrated_from_schema_id": null,
+          "migrated_from_schema_version": null,
+          "migration_id": null,
+          "compatibility_event_type": null
+        }
+      }
     }
-  },
+  ],
   "invalid_events": [
     {
       "case_id": "event_application_scope",
+      "base_event_case_id": "event_valid_agent_status_updated",
       "patch": {
         "scope_kind": "application",
         "project_id": null
@@ -1583,6 +1919,7 @@
     },
     {
       "case_id": "event_external_payload_ref",
+      "base_event_case_id": "event_valid_agent_status_updated",
       "patch": {
         "payload_ref": "artifact:fixture:payload"
       },
@@ -1590,6 +1927,7 @@
     },
     {
       "case_id": "event_wrong_payload_schema_id",
+      "base_event_case_id": "event_valid_agent_status_updated",
       "patch": {
         "payload_schema_id": "pm.coordination_event.agent_operation_updated.schema.v1"
       },
@@ -1597,6 +1935,7 @@
     },
     {
       "case_id": "event_other_project",
+      "base_event_case_id": "event_valid_agent_status_updated",
       "patch": {
         "project_id": "project_fixture_beta"
       },
@@ -1604,6 +1943,7 @@
     },
     {
       "case_id": "event_other_run",
+      "base_event_case_id": "event_valid_agent_status_updated",
       "patch": {
         "run_id": "run_fixture_other"
       },
@@ -1611,6 +1951,7 @@
     },
     {
       "case_id": "event_thread_without_payload_thread",
+      "base_event_case_id": "event_valid_agent_status_updated",
       "patch": {
         "thread_id": "thr_fixture_1"
       },
@@ -1618,6 +1959,7 @@
     },
     {
       "case_id": "event_attempt_id_present",
+      "base_event_case_id": "event_valid_agent_status_updated",
       "patch": {
         "attempt_id": "attempt_fixture_1"
       },
@@ -1625,6 +1967,7 @@
     },
     {
       "case_id": "event_other_idempotency_key",
+      "base_event_case_id": "event_valid_agent_status_updated",
       "patch": {
         "idempotency_key": "coordination:coordination.agent_status_updated:project_fixture_alpha:agent_fixture_8:3:9"
       },
@@ -1632,6 +1975,7 @@
     },
     {
       "case_id": "event_redacted_profile",
+      "base_event_case_id": "event_valid_agent_status_updated",
       "patch": {
         "redaction_profile": "redacted"
       },
@@ -1639,6 +1983,7 @@
     },
     {
       "case_id": "event_append_once_policy",
+      "base_event_case_id": "event_valid_agent_status_updated",
       "patch": {
         "replay_policy": "append_once"
       },
@@ -1646,6 +1991,7 @@
     },
     {
       "case_id": "event_occurred_at_not_family_time",
+      "base_event_case_id": "event_valid_agent_status_updated",
       "patch": {
         "occurred_at_utc": "2026-09-25T04:11:59Z"
       },
@@ -1653,8 +1999,169 @@
     },
     {
       "case_id": "event_id_off_recipe",
+      "base_event_case_id": "event_valid_agent_status_updated",
       "patch": {
         "event_id": "evt_coordination_0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expected_rejection": "identity_recipe"
+    },
+    {
+      "case_id": "event_agent_registered_occurred_at_not_family_time",
+      "base_event_case_id": "event_valid_agent_registered",
+      "patch": {
+        "occurred_at_utc": "2026-09-25T04:00:00.100000Z"
+      },
+      "expected_rejection": "occurred_at_join"
+    },
+    {
+      "case_id": "event_agent_registered_sibling_payload_schema_id",
+      "base_event_case_id": "event_valid_agent_registered",
+      "patch": {
+        "payload_schema_id": "pm.coordination_event.agent_status_updated.schema.v1"
+      },
+      "expected_rejection": "payload_schema_id"
+    },
+    {
+      "case_id": "event_agent_registered_sibling_event_id",
+      "base_event_case_id": "event_valid_agent_registered",
+      "patch": {
+        "event_id": "evt_coordination_8728a8a2e965022bba64914e838ba409571c57cdad6a6173a6db726e30927857"
+      },
+      "expected_rejection": "identity_recipe"
+    },
+    {
+      "case_id": "event_agent_registered_thread_missing_from_envelope",
+      "base_event_case_id": "event_valid_agent_registered",
+      "patch": {
+        "thread_id": null
+      },
+      "expected_rejection": "payload_envelope_identity"
+    },
+    {
+      "case_id": "event_agent_status_updated_sibling_event_id",
+      "base_event_case_id": "event_valid_agent_status_updated",
+      "patch": {
+        "event_id": "evt_coordination_d27e930b3a55013fec5262b125ad3319b64468765ba1405a803f99705f9aba3f"
+      },
+      "expected_rejection": "identity_recipe"
+    },
+    {
+      "case_id": "event_agent_operation_updated_occurred_at_not_family_time",
+      "base_event_case_id": "event_valid_agent_operation_updated",
+      "patch": {
+        "occurred_at_utc": "2026-09-25T04:04:00.100000Z"
+      },
+      "expected_rejection": "occurred_at_join"
+    },
+    {
+      "case_id": "event_agent_operation_updated_sibling_payload_schema_id",
+      "base_event_case_id": "event_valid_agent_operation_updated",
+      "patch": {
+        "payload_schema_id": "pm.coordination_event.agent_file_ownership_updated.schema.v1"
+      },
+      "expected_rejection": "payload_schema_id"
+    },
+    {
+      "case_id": "event_agent_operation_updated_sibling_event_id",
+      "base_event_case_id": "event_valid_agent_operation_updated",
+      "patch": {
+        "event_id": "evt_coordination_a29535475c4ace1f4f6294ec77e526aa7c8538d98e7ccacfad0b84dd91b69d8e"
+      },
+      "expected_rejection": "identity_recipe"
+    },
+    {
+      "case_id": "event_agent_file_ownership_updated_occurred_at_not_family_time",
+      "base_event_case_id": "event_valid_agent_file_ownership_updated",
+      "patch": {
+        "occurred_at_utc": "2026-09-25T04:03:00.100000Z"
+      },
+      "expected_rejection": "occurred_at_join"
+    },
+    {
+      "case_id": "event_agent_file_ownership_updated_sibling_payload_schema_id",
+      "base_event_case_id": "event_valid_agent_file_ownership_updated",
+      "patch": {
+        "payload_schema_id": "pm.coordination_event.agent_unregistered.schema.v1"
+      },
+      "expected_rejection": "payload_schema_id"
+    },
+    {
+      "case_id": "event_agent_file_ownership_updated_sibling_event_id",
+      "base_event_case_id": "event_valid_agent_file_ownership_updated",
+      "patch": {
+        "event_id": "evt_coordination_7684ca646b3a9669c633b94cd435a5736b015e0571a3740dde3a49dd8da96d71"
+      },
+      "expected_rejection": "identity_recipe"
+    },
+    {
+      "case_id": "event_agent_unregistered_occurred_at_not_family_time",
+      "base_event_case_id": "event_valid_agent_unregistered",
+      "patch": {
+        "occurred_at_utc": "2026-09-25T04:05:00.100000Z"
+      },
+      "expected_rejection": "occurred_at_join"
+    },
+    {
+      "case_id": "event_agent_unregistered_sibling_payload_schema_id",
+      "base_event_case_id": "event_valid_agent_unregistered",
+      "patch": {
+        "payload_schema_id": "pm.coordination_event.agent_crashed.schema.v1"
+      },
+      "expected_rejection": "payload_schema_id"
+    },
+    {
+      "case_id": "event_agent_unregistered_sibling_event_id",
+      "base_event_case_id": "event_valid_agent_unregistered",
+      "patch": {
+        "event_id": "evt_coordination_fbb18988228a94592913f9f24369902f1e8982d214bf5681e3b3ca0fa4a887ec"
+      },
+      "expected_rejection": "identity_recipe"
+    },
+    {
+      "case_id": "event_agent_crashed_occurred_at_not_family_time",
+      "base_event_case_id": "event_valid_agent_crashed",
+      "patch": {
+        "occurred_at_utc": "2026-09-25T04:17:00.100000Z"
+      },
+      "expected_rejection": "occurred_at_join"
+    },
+    {
+      "case_id": "event_agent_crashed_sibling_payload_schema_id",
+      "base_event_case_id": "event_valid_agent_crashed",
+      "patch": {
+        "payload_schema_id": "pm.coordination_event.agent_aborted.schema.v1"
+      },
+      "expected_rejection": "payload_schema_id"
+    },
+    {
+      "case_id": "event_agent_crashed_sibling_event_id",
+      "base_event_case_id": "event_valid_agent_crashed",
+      "patch": {
+        "event_id": "evt_coordination_642f20fa0cb13f0c3fd6ad38c0895b12dfc3938bd26df1ef0d74a3e4a5d1e4da"
+      },
+      "expected_rejection": "identity_recipe"
+    },
+    {
+      "case_id": "event_agent_aborted_occurred_at_not_family_time",
+      "base_event_case_id": "event_valid_agent_aborted",
+      "patch": {
+        "occurred_at_utc": "2026-09-25T04:21:00.100000Z"
+      },
+      "expected_rejection": "occurred_at_join"
+    },
+    {
+      "case_id": "event_agent_aborted_sibling_payload_schema_id",
+      "base_event_case_id": "event_valid_agent_aborted",
+      "patch": {
+        "payload_schema_id": "pm.coordination_event.agent_registered.schema.v1"
+      },
+      "expected_rejection": "payload_schema_id"
+    },
+    {
+      "case_id": "event_agent_aborted_sibling_event_id",
+      "base_event_case_id": "event_valid_agent_aborted",
+      "patch": {
+        "event_id": "evt_coordination_2556a63f2f9e471c6050ab624acfe089b4cf897457d93af72fb35265d71a656c"
       },
       "expected_rejection": "identity_recipe"
     }

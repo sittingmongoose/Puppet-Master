@@ -115,13 +115,13 @@ class StaticReportTests(unittest.TestCase):
         report = CHECK.fixture_report()
         self.assertEqual(report["failures"], [])
         counts = {key: report[key] for key in (
-            "positive_payload_cases", "negative_payload_cases", "negative_event_cases", "identity_vectors", "path_vectors",
-            "transition_sequences", "transition_steps", "positive_projection_cases", "negative_projection_cases",
+            "positive_payload_cases", "negative_payload_cases", "valid_event_cases", "negative_event_cases", "identity_vectors",
+            "path_vectors", "transition_sequences", "transition_steps", "positive_projection_cases", "negative_projection_cases",
             "native_oracles_not_run")}
         self.assertEqual(counts, {
-            "positive_payload_cases": 45, "negative_payload_cases": 69, "negative_event_cases": 12, "identity_vectors": 7,
-            "path_vectors": 9, "transition_sequences": 24, "transition_steps": 91, "positive_projection_cases": 11,
-            "negative_projection_cases": 20, "native_oracles_not_run": 13})
+            "positive_payload_cases": 45, "negative_payload_cases": 69, "valid_event_cases": 7, "negative_event_cases": 32,
+            "identity_vectors": 7, "path_vectors": 9, "transition_sequences": 24, "transition_steps": 91,
+            "positive_projection_cases": 11, "negative_projection_cases": 20, "native_oracles_not_run": 13})
 
     def test_every_family_has_positive_negative_and_transition_cases(self):
         per_family = CHECK.fixture_report()["per_family"]
@@ -216,14 +216,17 @@ class PayloadSchemaTests(unittest.TestCase):
         self.assertIsNone(CHECK.payload_rejection(base["event_type"], dict(base["payload"], idempotency_key=prefix + "4:1")))
 
     def test_event_record_key_uses_the_event_id_recovery_epoch(self):
-        record = copy.deepcopy(FIXTURES["valid_event"])
-        self.assertIsNone(CHECK.envelope_rejection(record, CONTEXT["storage_instance_id"], CONTEXT["recovery_epoch"]))
-        other = record["idempotency_key"].rsplit(":", 2)
-        key = f"{other[0]}:{CONTEXT['recovery_epoch'] + 1}:{other[2]}"
-        record["idempotency_key"] = key
-        record["payload"]["idempotency_key"] = key
-        self.assertIsNone(CHECK.payload_rejection(record["event_type"], record["payload"]))
-        self.assertEqual(CHECK.envelope_rejection(record, CONTEXT["storage_instance_id"], CONTEXT["recovery_epoch"]), "identity_recipe")
+        for case in FIXTURES["valid_events"]:
+            with self.subTest(event=case["event_type"]):
+                record = copy.deepcopy(case["record"])
+                self.assertIsNone(CHECK.envelope_rejection(record, CONTEXT["storage_instance_id"], CONTEXT["recovery_epoch"]))
+                other = record["idempotency_key"].rsplit(":", 2)
+                key = f"{other[0]}:{CONTEXT['recovery_epoch'] + 1}:{other[2]}"
+                record["idempotency_key"] = key
+                record["payload"]["idempotency_key"] = key
+                self.assertIsNone(CHECK.payload_rejection(record["event_type"], record["payload"]))
+                self.assertEqual(CHECK.envelope_rejection(record, CONTEXT["storage_instance_id"], CONTEXT["recovery_epoch"]),
+                                 "identity_recipe")
 
     def test_path_ref_is_project_relative(self):
         # Review repair CP-08: no Windows drive, home-relative or backslash (UNC) path, as in mirror_path and non_secret_ref.
@@ -405,6 +408,13 @@ class LedgerTests(unittest.TestCase):
         ledger = copy.deepcopy(PREP_LEDGER)
         ledger["rows"][6]["validation_case_ids"].remove("aborted_unknown_reason")
         self.assertIn("family_cases_not_named_by_ledger_row", errors(CHECK.validation_case_failures(ledger)))
+        # The family's own EventRecord cases are its cases too (grade gap 2).
+        ledger = copy.deepcopy(PREP_LEDGER)
+        ledger["rows"][0]["validation_case_ids"].append("event_occurred_at_not_family_time")
+        self.assertIn("validation_case_of_other_family", errors(CHECK.validation_case_failures(ledger)))
+        ledger = copy.deepcopy(PREP_LEDGER)
+        ledger["rows"][0]["validation_case_ids"].remove("event_agent_registered_sibling_payload_schema_id")
+        self.assertIn("family_cases_not_named_by_ledger_row", errors(CHECK.validation_case_failures(ledger)))
 
 
 class RegistryMembershipTests(unittest.TestCase):
@@ -526,6 +536,49 @@ class FixtureTests(unittest.TestCase):
              if sequence["case_id"] == "repeat_registration_of_terminal_agent_refused")["steps"][-1]["expected"] = \
             "coordination_conflict:already_registered"
         self.assertIn("transition_step_mismatch", errors(CHECK.fixture_report(value)["failures"]))
+
+    def test_every_family_has_its_own_event_join_cases(self):
+        # Grade gap 2: each family's CV-353 rule 8 joins rest on a valid EventRecord of its own, built on one of its own
+        # positive payloads, with the joins that name the family negated on that record; no family rests on a sibling.
+        records = {case["event_type"]: case for case in FIXTURES["valid_events"]}
+        self.assertEqual(sorted(records), sorted(CHECK.SEVEN))
+        for index, event_type in enumerate(CHECK.SEVEN):
+            with self.subTest(event=event_type):
+                case = records[event_type]
+                self.assertEqual(PAYLOADS[case["payload_case_id"]]["event_type"], event_type)
+                self.assertEqual(case["record"]["payload"], PAYLOADS[case["payload_case_id"]]["payload"])
+                own = [negative for negative in FIXTURES["invalid_events"] if negative["base_event_case_id"] == case["case_id"]]
+                self.assertTrue(set(CHECK.FAMILY_EVENT_JOINS) <= {negative["expected_rejection"] for negative in own})
+                named = set(LEDGER["rows"][index]["validation_case_ids"])
+                self.assertLessEqual({case["case_id"]} | {negative["case_id"] for negative in own}, named)
+
+    def test_event_join_drift_is_detected(self):
+        def without_own_join(value):
+            value["invalid_events"] = [case for case in value["invalid_events"]
+                                       if case["case_id"] != "event_agent_registered_sibling_payload_schema_id"]
+        def sibling_payload(value):
+            value["valid_events"][0]["payload_case_id"] = "a8_status_running_r2"
+        def moved_base(value):
+            value["invalid_events"][-1]["base_event_case_id"] = "event_valid_agent_missing"
+        def wrong_join(value):
+            next(case for case in value["invalid_events"]
+                 if case["case_id"] == "event_agent_crashed_occurred_at_not_family_time")["expected_rejection"] = "payload_schema_id"
+        mutations = {
+            "family_without_own_event_join_cases": without_own_join,
+            "valid_event_payload_join": sibling_payload,
+            "negative_event_base": moved_base,
+            "negative_event_not_rejected_for_stated_reason": wrong_join,
+        }
+        for expected, mutation in mutations.items():
+            with self.subTest(expected=expected):
+                value = copy.deepcopy(FIXTURES)
+                mutation(value)
+                self.assertIn(expected, errors(CHECK.fixture_report(value)["failures"]))
+        value = copy.deepcopy(FIXTURES)
+        without_own_join(value)
+        self.assertEqual([failure for failure in CHECK.fixture_report(value)["failures"]],
+                         [{"error": "family_without_own_event_join_cases", "event_type": "coordination.agent_registered",
+                           "detail": ["payload_schema_id"]}])
 
 
 class TransitionModelTests(unittest.TestCase):
