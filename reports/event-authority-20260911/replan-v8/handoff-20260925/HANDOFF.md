@@ -14,7 +14,7 @@ The work was stopped at a safe point:
 |---|---|---|
 | `plans/replan-v8-a0-20260925` | `632f557c0` | A0 currentness and placement report. Blind review ran two cycles and found it ready. **Ready to land.** It must land byte-identical: report SHA-256 `297b0f29…`. |
 | `plans/replan-v8-process-answers-20260925` | `616f12bfd` | The PM process thread's answers (Q-02, Q-03, Q-09, Q-12, package home). Must land byte-identical (`8c16d369…`) before A1. |
-| `plans/replan-v8-a1-20260925` | `e8d61ace4` | A1 installs `all_writers.v8` as source contracts: 13 units, 74 placed files, 34 storage rows, 8 census re-pins. Blind review ran two cycles and found it ready. **Not landable as it stands**; see "A1 needs a rebase". |
+| `plans/replan-v8-a1-20260925` | `31c0a086c` (reviewed content at `e8d61ace4`; one STATUS note after it) | A1 installs `all_writers.v8` as source contracts: 13 units, 74 placed files, 34 storage rows, 8 census re-pins. Blind review ran two cycles and found it ready. **Not landable as it stands**; see "A1 needs a rebase". |
 | PuppetMaster-Packages `main` | `3928dd6` | A1 canonical-draft package v1 (manifest `bb6be609…`), with its independent review (two cycles) and root acceptance. |
 | PuppetMaster-Packages `replan-v8-canonical-draft-20260925-rebase1-wip` | `e37921e` | **Unreviewed, incomplete.** Two tooling commits from the stopped rebase. `344fd08` moves BASE to `bd95afcc8c` and locates the census re-pins by content. `e37921e` makes C08 part 1 exclude the A1 program branch. No rebuilt output and no re-freeze. |
 | `plans/replan-v8-handoff-20260925` | this branch | This record and the design documents below. |
