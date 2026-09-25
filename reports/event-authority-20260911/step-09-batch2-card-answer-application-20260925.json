@@ -2858,6 +2858,14 @@
             "kind": "edited"
           }
         }
+      },
+      "B2-08": {
+        "severity": "note",
+        "applied_at_utc": "2026-09-25T06:17:25Z",
+        "parent_commit": "fc8ace5fd69e09a755fb4425e7c8e9b6ce509f80",
+        "finding": "The application note's second-application section said \"One sentence is appended to each rationale.\"; each of the 25 rationales gained three sentences.",
+        "repair": "The note now says \"A three-sentence ruling is appended to each rationale.\" The note is outside this record's files rule; its hash now is in the batch report.",
+        "files": {}
       }
     }
   }
