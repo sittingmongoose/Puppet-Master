@@ -1,0 +1,158 @@
+{
+  "findings": [
+    {
+      "finding_id": "A2C-01",
+      "section": "0.3, 1.4, 2.4, 7.2 (C09, C12)",
+      "kind": "refuted_claim_version_pin",
+      "severity": "blocking",
+      "claim": "0.3: 'None of the 189 v8 descriptor members changed on main ... So the v8 digest 7b22c1f4... survives A1's rebase'. 2.4: 'The v8 digest is final.' 7.2 C09: 'recomputes v8 7b22c1f4..., v7 0055de6c... and v5 fca86d74... unchanged'.",
+      "verified_evidence": "Refuted. The members did not change on main, but two members are derived from the base commit and will be rebuilt. (1) owner-sources.json and source-citations.json are v8 members: Plans/workflow_combined_source_contracts/installed-profile.json:613 and :743 @origin/plans/replan-v8-a1-20260925 (A1). (2) owner-sources.json @A1 rows carry \"base_commit\": \"63cf2cb97f936c91...\" and whole_sha256_at_base; I recomputed at origin/main bd95afcc8: Contracts_V0.md, Decision_Log.md and storage-plan.md no longer match their pins. (3) source-citations.json @A1 landing_base.commit is 63cf2cb97 with rule 'the compile rebase re-derives the registry rows, the descriptors and these citations at the landing base'. (4) reports/event-authority-20260911/replan-v8/STATUS.md:80 @A1: 'If it reports any other change, follow root condition 1 in full: rebuild, re-run run_all.py, re-freeze ... update the digests in CV-354 and ATS-059'; Plans/storage_value_registry.json changed on main since 63cf2cb97 (git diff --name-only 63cf2cb97 origin/main), so the merged-registry hash cannot reproduce. (5) Package scripts (read-only checkout /home/user/pmpkg-push, replan-v8/goal-replan-v8-canonical-draft-20260925/v1): scripts/author.py:999 writes (\"base_commit\", ctx.a.base); scripts/rebase_check.py:72 runs the build with \"--base\", lb. (6) Corroboration, not canon: that checkout is on branch replan-v8-canonical-draft-20260925-rebase1 (commit 344fd08 'move BASE to the landing base bd95afcc8c'); its uncommitted working-tree after/Plans/workflow_combined_source_contracts/installed-profile-digest.txt (15:33Z) reads 0da022d2..., while the committed file reads 7b22c1f4.... C09 as written would fail against A1 as it will land.",
+      "suggested_repair": "Drop 'final' and 'survives'. Take the v8 digest only from A1 as landed. Have profile-branches.json, C09 and C12 read it from the landed descriptor, and write every 7b22c1f4... mention as 'the v8 digest at A1's landing (7b22c1f4... at e8d61ace4)'. Re-cite every A1 line number after A1's canon recompile (the rebase rewrites CV-354 and ATS-059 at least)."
+    },
+    {
+      "finding_id": "A2C-02",
+      "section": "1.2, 1.4 (:14, A2-05), 2.5, 3.3",
+      "kind": "scope_transfer_and_stale_canon",
+      "severity": "should_fix",
+      "claim": "The Replan consumer is 'Not adopted in A2' and the release projection admission is 'Not supplied. Stated in GRS-090 with the reason'.",
+      "verified_evidence": "The reason is sound: Plans/workflow_combined_source_contracts/replan/schemas/workflow-replan-source.v1.schema.json:212-213 @A1 fixes original_projection to '...goal_run_started_cancelled_replanned_consumer.v1.schema.json#/$defs/ReplanProjectResult' (checked). But canon assigns this to A2 in many places, and the design leaves them saying so after A2 lands: Plans/Goal_Runtime_System.md:8104-8105 @A1 'Replan release is unavailable until the consumer-adoption work A2 supplies the projection admission'; :8141 @A1 'Replan release and projection stay unavailable until A2'; Plans/Executor_Protocol.md:8887-8888 @A1 'release stays unavailable until A2 and A3 supply its projection admission'; Plans/Contracts_V0.md:23557-23559 @A1 'its adoption ... is separate required work (the consumer-adoption work A2)'; external-consumer-adoption-boundary.json:14 @A1. The program plan also gives it to A2: reports/event-authority-20260911/step-08-remaining-source-work-plan-20260924.md:118 @origin/main (A2 edits 'a new replanned consumer; a GRS-085 successor; projection families') and :119 (A3: 'replanned needs A1 and A2'). The design only routes ATS-059 (4.3) and freezes the descriptor 'consumer' literal (1.4). T-11 covers chain order, not this transfer.",
+      "suggested_repair": "Add dated routing notes (outside the unit YAML, as Goal_Runtime_System.md:2657 @origin/main) after GRS-087, EP-126, SP-321, CV-354, ATS-060 and BRS-031, and in the A1 index section, saying A2 landed without the Replan projection admission and naming where it now sits (C-A2-1). Add a process item: the step-08 plan rows 118-119 change, so the coordinator and A3 must accept that A3-replanned (or v9) owns the Replan consumer. Keep boundary :14 listed as open in GRS-090."
+    },
+    {
+      "finding_id": "A2C-03",
+      "section": "1.4, 2.3 item 7, 10.2",
+      "kind": "scope_omission",
+      "severity": "should_fix",
+      "claim": "1.4 lists a disposition for 'each A2 item A1 lists'; only Q-U4-08 is dispositioned (2.3 item 7, OT-12).",
+      "verified_evidence": "reports/event-authority-20260911/replan-v8/A1-canonical-placement-20260925.md:190 @A1: 'Q-U4-05, Q-U4-07, Q-U4-08 | Released-idle readback reachability; the record_stop caller after the Goal Stop latch; the Event treatment of a revoked certified slot holding a durable Event | Executor and Goal owners; A2 and A3'. The design never names Q-U4-05 or Q-U4-07 (grep of A2-design.md).",
+      "suggested_repair": "Add two rows to 1.4. Q-U4-05: A2's share is nil because both released-idle readbacks stay unavailable (ATS-060 Automated_Testing_System.md:5619-5620 and :5631-5632 @A1). Q-U4-07: no A2 share; it goes to A3 and the v9 stop writer. Say so in GRS-090."
+    },
+    {
+      "finding_id": "A2C-04",
+      "section": "2.10, 10.1 ('No other product question')",
+      "kind": "unlabeled_analogy_governance",
+      "severity": "should_fix",
+      "claim": "'reuse of an existing policy for its own role is an owner assignment. So no card.'",
+      "verified_evidence": "Plans/Decision_Log.md:564 @origin/main (DL-045): 'This approval does not decide ... retention/deletion policy'. A1 treated the same situation differently: A1-canonical-placement-20260925.md:74 @A1 'No new retention policy or horizon is chosen. Retention assignment is Jared's under DL-045, so this ruling is stated here for his confirmation.' The SP-311/312/317 reuse without a DL entry is a precedent applied by analogy, and the design does not label it so. Evidence note R3 A2-09 reached the opposite inference.",
+      "suggested_repair": "Label the step as by analogy. State the v6 retention (RP-PROJECTION-3GEN@1.0.0 on both rows, and the source coupling) for Jared's confirmation under DL-045, in A1's O-13 form. No DL-036 card is needed unless he objects."
+    },
+    {
+      "finding_id": "A2C-05",
+      "section": "0.4, 2.8, 10.2 OT-01, 10.3 PR-08",
+      "kind": "governance_authority_unlabeled_analogy",
+      "severity": "should_fix",
+      "claim": "P-02 is decided by the 'Storage owner, by delegation as DL-076 was'.",
+      "verified_evidence": "Plans/Decision_Log.md:1465 @origin/main: 'Decided by Jared, by delegation to the coordinator, 2026-09-24. Jared approved the coordinator deciding these two Storage owner questions on his behalf.' That delegation names two questions only. The P-02 ruling also re-reads three landed rows (#279, #281, #293) that Plans/storage-plan.md:519 @origin/main still calls 'a secret-material failure'.",
+      "suggested_repair": "Say that P-02 needs a new delegation from Jared, or his answer. Record who decided in the DL entry. Cite DL-076 as the form to follow, not as the authority."
+    },
+    {
+      "finding_id": "A2C-06",
+      "section": "0.1 item 9, 2.9, 4.2 (SP-323 row), 4.4",
+      "kind": "unit_edit_omitted",
+      "severity": "should_fix",
+      "claim": "Six owner units plus one DL entry; 'the mandatory role moves to v6 by a dated SP-214 routing paragraph' is booked under SP-323.",
+      "verified_evidence": "Plans/storage-plan.md:15166-15176 @origin/main is inside SP-214's canonical_text: the quote closes at 15176 ('...GRS-080 with SP-312.'') and 15177 is 'gui_related: false'. So the paragraph edits SP-214, a seventh unit. It is also per family and per profile: 'for that family' (goal_run.certified), 'That family applies only to a genuine fresh pm.executor.workflow_source.all_writers.v7 birth' (:15170-15171), and 'goal_run.started and goal_run.cancelled v3 keep their registry owners GRS-079 with SP-311 and GRS-080 with SP-312' (:15175-15176). The GRS minima row Goal_Runtime_System.md:2653 @origin/main names 'GRS-085 governing its mandatory started/cancelled/certified prefix projection'. Rows #292/#293 replay_behavior begin 'The mandatory started/cancelled/certified per-Workflow-run projection' and stay unchanged.",
+      "suggested_repair": "List SP-214 as an edited unit, with its Spec Lock staleness in the reseal request. Write the routing per family and per birth profile, including that v7 certified runs move from GRS-085 to GRS-090. Say in SP-323 that GRS-085 and rows #292/#293 keep the word 'mandatory' as historical text after cutover."
+    },
+    {
+      "finding_id": "A2C-07",
+      "section": "2.2, 6.3, 9.2",
+      "kind": "design_gap_activation_route",
+      "severity": "should_fix",
+      "claim": "Cancelled v8 is 'authored, dormant' so 'a later D06 binding' does not force a new successor; certified v8 is 'authored, unavailable', and when admissions land 'A fresh generation is staged'.",
+      "verified_evidence": "The design never says how a dormant or unavailable branch becomes live without a byte change. Its own rule (0.2, anchor recipe 2.6 with profile_digest) makes any v6 byte change move the anchor. 6.3 pins the six goal_run rows by fingerprint but does not say whether that pin sits in a digest member; a later certified row revision (C-A2-2 or v9) changes fingerprint f58cc6a7 (recomputed @origin/main). 9.2's v7 row adds only 'v9 started, cancelled, certified' plus stopped, so no chain member is named to make v8 certified live. The A3-stopped design section 5 table expects v6 'certified for v7, and for v8 once A2 adopts it'.",
+      "suggested_repair": "State in GRS-090 and protocol P-sections that each gate is a runtime source-admission condition written in v6's bytes. List which pins sit in digest members and which do not. Name the chain member that makes v8 certified live, or say v8 certified is never projected and tell A3."
+    },
+    {
+      "finding_id": "A2C-08",
+      "section": "2.5 (b), 10.1 card C-A2-1, 10.3",
+      "kind": "inference_stated_as_fact",
+      "severity": "should_fix",
+      "claim": "2.5 (b): 'DL-080 orders replanned after stopped and blocked, and both now wait for v9'. Card: 'which comes after stopped and blocked, which now wait for v9'.",
+      "verified_evidence": "This is an inference. Evidence note R2 left it open (O-R2-02). The cards record says only 'Stopped's registry and projection step (landing 2) waits for v9' (a3-stopped-scope/cards-C2-C4-20260925.md:114). The card omits DL-080's premise: Plans/Decision_Log.md:1633 @origin/main '`goal_run.replanned` after the Workflow Replan source work. That source work, the external `pm.executor.workflow_source.all_writers.v8` package ... is therefore needed'; unit :6680 'The goal_run.replanned contract follows the Workflow Replan source work in pm.executor.workflow_source.all_writers.v8.' R2's O-R2-03 (should v8 refuse the Replan claim so no run is left held) is dropped.",
+      "suggested_repair": "Mark (b) as inference and add O-R2-02 to 10.3. Cite DL-080 in the card and say plainly that under option 1 the v8 Replan source DL-080 named never completes a Replan. Add O-R2-03 as an owner question."
+    },
+    {
+      "finding_id": "A2C-09",
+      "section": "2.8 rules 1, 4 and 6",
+      "kind": "dl076_check",
+      "severity": "note",
+      "claim": "The P-02 ruling admits source_token_at_birth and generic_token as stored names in chain checkpoints, nine-field only.",
+      "verified_evidence": "No DL-076 violation found. I recomputed: the v5 $defs/DurableGenericToken (goal_run_certified_consumer_contracts/schemas/consumer.v1.schema.json:496 @origin/main) equals event_record_index_checkpoint.schema.json $defs/read_token with redb_snapshot_id removed from properties and required. Rule 2 forbids the ten-field token; rule 5 keeps ReplanProjectResult.generic_token (…replanned-consumer.v1.schema.json:2114-2115 @A1, '$ref …#/$defs/read_token') unstored. But section 2.3.1 describes readiness, and readiness still accepts only 'read_token' or '*_read_token' (scripts/pm-implementation-readiness.py:2257-2258 @origin/main).",
+      "suggested_repair": "Say in the amendment that readiness does not implement the name admission and that it is enforced by owner text and package check C06 only (OT-06)."
+    },
+    {
+      "finding_id": "A2C-10",
+      "section": "3.4, 9.3 item 5",
+      "kind": "overstated_claim",
+      "severity": "note",
+      "claim": "'v6's pin files sit outside its digest (3.4), so a reseal never forces a copy or moves v6's anchor.'",
+      "verified_evidence": "resource-realms.json is a digest member (3.1 table: 'yes'). v5's Plans/goal_run_certified_consumer_contracts/resource-realms.json @origin/main pins 1006 whole-file SHA-256 values (my count; 0 stale today). A change to any of those files stales v6's realm pins, and a re-pin moves v6's profile digest and so its anchor.",
+      "suggested_repair": "Say that moving two pin files out reduces churn but does not remove it, or pin realms only for the closure v6 reaches."
+    },
+    {
+      "finding_id": "A2C-11",
+      "section": "4.1",
+      "kind": "id_collision_check",
+      "severity": "note",
+      "claim": "GRS-090, EP-128, SP-323, CV-355, ATS-061, BRS-032 and DL-099 are free on every origin ref.",
+      "verified_evidence": "Verified free on all 76 origin refs (git grep over Plans reports scripts tests, touch_closure.json excluded). goal_run_projection.v6, goal_run_lifecycle_v6_*, grl6g_ and Plans/goal_run_lifecycle_v6_consumer_contracts are also unused. DL-099 is at risk: reports/event-authority-20260911/step8-9-progress-20260924.md:21 @origin/main 'fix/server-pairing-issuance-20260925 ... carry DL-094 to DL-098 for five unrelated decisions. DL-094 is now taken on main, so that thread renumbers.' Five renumbered entries after DL-096 would take DL-097 to DL-101.",
+      "suggested_repair": "Plan the DL number as 'next free at landing' only, and re-check the server-pairing branch at the landing fetch."
+    },
+    {
+      "finding_id": "A2C-12",
+      "section": "1.3 (stopped and blocked row), 2.3 item 2",
+      "kind": "evidence_misapplied",
+      "severity": "note",
+      "claim": "'No v8 writer exists or will exist', citing Executor_Protocol.md:8985 @A1.",
+      "verified_evidence": "Executor_Protocol.md:8985 @A1 reads 'The limited operation appends no Event and adds no goal_run.stopped, goal_run.blocked or goal_run.cancelled writer.' It is about the limited revocation operation, and it names cancelled too, which the design treats as dormant, not absent. The real evidence is STATUS.md:62 @A1 ('v8 births never record goal_run.stopped or goal_run.blocked').",
+      "suggested_repair": "Cite STATUS.md:62 @A1 (C-4 answer) as the ground; keep 8985 only as supporting text."
+    },
+    {
+      "finding_id": "A2C-13",
+      "section": "3.2",
+      "kind": "internal_inconsistency",
+      "severity": "note",
+      "claim": "The uri_map table maps executor_workflow_original_start.v2 to .v7, and then says .v2 references in the v5 root's original branch must not be remapped.",
+      "verified_evidence": "$ref census @origin/main: the v5 root references executor_workflow_original_start.v6 20 times and .v2 twice, workflow_start_original_custody.v6 once and .v2 once, workflow_cancel_positive_arguments.v2 once and .v1 once. The started and cancelled canon consumers use the .v2/.v1 ids. One shared map cannot serve both.",
+      "suggested_repair": "Publish one uri_map per companion. For the certified companion map only the .v6, standard .v4 and coordinator/identity/append-phase .v1 ids and the native_v7 companion ids."
+    },
+    {
+      "finding_id": "A2C-14",
+      "section": "5.1, 5.3",
+      "kind": "rebase_risk_incomplete",
+      "severity": "note",
+      "claim": "Rebase risk with ea-storage-retention is limited to line 523, the readiness policy pin and the onboarding test.",
+      "verified_evidence": "reports/event-authority-20260911/step8-9-progress-20260924.md:20 @origin/main tells that branch: 'if storage-plan changed above 17282 ... re-pin the 25 row citations and the application record'. A2 edits storage-plan lines 519, 523 and SP-214 at 15166 onward, all above 17282. Also 5.1 says each consumer successor 'added exactly two rows'; f6350caf2 added nine (seven authority rows plus the pair, R5 section 3).",
+      "suggested_repair": "Add the 25-citation re-pin to the rebase risks. Reword 5.1 to 'each consumer successor added exactly one projection and checkpoint pair and changed no row'."
+    },
+    {
+      "finding_id": "A2C-15",
+      "section": "2.2 last row, 9.2",
+      "kind": "ordering_constraint_missing",
+      "severity": "note",
+      "claim": "Runs born under a profile outside the table, such as all_writers.v9, halt at their first row in v6.",
+      "verified_evidence": "Stated in the 2.2 table. The consequence is not carried into 9.2: a v9 birth before the v7 chain member lands has no run history at all.",
+      "suggested_repair": "Add to 9.2 and GRS-090: no all_writers.v9 birth is admitted before the chain member that carries v9 started lands."
+    },
+    {
+      "finding_id": "A2C-16",
+      "section": "8, 5.3",
+      "kind": "governance_check",
+      "severity": "note",
+      "claim": "The design edits no validator and reseals nothing.",
+      "verified_evidence": "Confirmed. scripts/pm_event_authority_independent_validator.py does not exist on origin/main, A1 or any origin ref. The design only re-pins census counts in scripts/pm-implementation-readiness.py and three tests, as A1 did (git diff 63cf2cb97..A1 -- scripts tests); the tests are named in .gitignore (lines 81, 90, 92 @origin/main). Spec Lock, .evidence and readiness go to a reseal request (8 step 7).",
+      "suggested_repair": "None."
+    },
+    {
+      "finding_id": "A2C-17",
+      "section": "Refs, 0.3, 6.1",
+      "kind": "currentness",
+      "severity": "note",
+      "claim": "main = abdf4eead; six goal_run row fingerprints and registry 2026-09-25.1 unchanged.",
+      "verified_evidence": "origin/main is now bd95afcc8 (one reports-only commit after abdf4eead); A1 is 18 behind. At bd95afcc8 I recomputed: registry SHA 4227be36..., revision 2026-09-25.1, 43 families; fingerprints blocked f137e724, cancelled f60bbabf, certified f58cc6a7, replanned cfbe2a47, started 3b6a4abd, stopped 8acbc249. Storage registry: 294 families, 27 policies, 274 materialized, 251 later-GUI; A1: 328, 308, 285; /families/327 workflow_combined_slot_origin. The no-Event-row-change claim holds.",
+      "suggested_repair": "Update the main ref to bd95afcc8. No cited Plans line moved."
+    }
+  ],
+  "verdict": "not_ready"
+}

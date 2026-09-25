@@ -1,0 +1,165 @@
+{
+ "verdict": "not_ready",
+ "findings": [
+  {
+   "finding_id": "CR-01",
+   "file": "A3-blocked-design.md; v9-profile-plan.md",
+   "section": "Design §2.3, §2.4 input 3, §7.2 (B-1), §7.4 (B-3), §8 forecast; plan §0 item 1, §2, §3",
+   "kind": "unreachable_trigger_and_unlabelled_analogy",
+   "severity": "blocking",
+   "claim": "The dead-end trigger for the blocked writer cannot be proven on a v9 birth as the plan defines v9. The design takes the remediation ceiling, replan_required and graph_integrity from the general Executor and Decision_Policy text. It does not check that v9's native roster can produce any of them. The plan says v9 'keeps every v8 method ID, and adds two writers'. v8's native chain has no retry, repair, failed-result or step-block writer. So the input 'authentic owner block record' (design §2.4 input 3b) has no source, and W-B would be installed but never able to write. Cards B-1 and B-3 promise that 'the run history shows real dead ends' and that stalled runs 'can be aborted as soon as v9 exists'. The depth forecast gives `producer` a PASS. All of these rest on the gap.",
+   "verified_evidence": "A1 native-v8 protocol.md @e8d61ace4 line 129: 'Unsupported retry, general repair, waiver, exception, child or unknown writer branches remain unadmitted'. Line 163 (begin_attempt): 'Its WorkNode is queued, has no prior attempt, empty retries…'. Line 165: 'terminal_result, result_ref and blocked_state_ref are null'. Line 169 (record_verified): 'Failing/blocked/skipped/unresolved results cannot use this method.' native-v8/methods.json @A1 lists 18 methods: admit_first_attempt, capture_original_input, begin_attempt, submit_verification, record_verified, complete_worknode, publish_execution, publish_provisional_success, issue_final_decision, capture_standard.v2, prepare_certified, publish_certified_joint, read_retained, read_standard, update_execution, update_provisional, update_certified, read_current. None of them records a failure, a block episode or a retry. B2 F9 already says 'a v8 run has no blocked path at all'. The design does not carry this into v9. With no second attempt, a 3-generation remediation ceiling (Decision_Policy 423) cannot be reached.",
+   "suggested_repair": "Re-derive B-1's options against the native roster v9 actually installs. For example, the real v9 dead end may be a first attempt whose non-pass result no installed writer can record, before Replan release. Otherwise add native outcome writers to v9's scope, as a stated scope and product change shown on the card. Say which on cards B-1 and B-3, in the plan's §2 and §3, and in the design's §2.3. Add an owner question to TB-02, and to T-02/TB-03: does an unrecordable failed attempt leave the run permanently not quiet? That would also leave a C-3 stop pending forever. Label the import of Executor and Decision_Policy causes 'by analogy' until this is settled."
+  },
+  {
+   "finding_id": "CR-02",
+   "file": "A3-blocked-design.md",
+   "section": "§2.3 option table and trigger item 2; §7.2 card B-1 (option 1, Recommendation); §7.4 card B-3 (What it costs, option 1)",
+   "kind": "misread_citation_in_card",
+   "severity": "blocking",
+   "claim": "Option 1 is defined as a step 'stuck on something only Replan or Abort can clear', and the card says it 'breaks no button'. Canon names other exits for two of the three causes: a manual fix, or a patch. A recorded blocked run is fenced (GRS 3468), so option 1 would remove those exits and the step buttons for the recorded run. B-3's 'Under B-1 option 1 such a run could not have continued anyway' is false by the same text. graph_integrity is a failure class ('hard fail'), not a blocked reason code, so reading it as a block is an unlabelled inference. The card lists 'the final check fails on an open blocker' without condition, but design §2.3 and §2.4 admit it only if TB-12 creates a non-pass record.",
+   "verified_evidence": "Decision_Policy.md @63cf2cb line 423: '`remediation_ceiling_exceeded` | no automatic retry | … | remain blocked until replan, manual fix, or abort'. Executor_Protocol.md @63cf2cb line 419: '`replan_required` | 0 | — | No | remain blocked until patch or replan is applied'. Line 418: '`failure_class` | `graph_integrity` | 0 | — | No | hard fail; replan path only'. GRS 3468: '`blocked` and `stopped` are fenced, resumable only through a new revision and valid `goal_run.replanned` admission.' UCC 1156-1167 and 8148 list the step actions (retry_now, start_fresh_attempt, resume_after_prerequisite, skip_node, replan, abort_run). B2 §3 rows T10 and T11 quote the same lines, yet summarise them as 'only Replan clears it'.",
+   "suggested_repair": "Correct §2.3 and cards B-1 and B-3 before they are shown. Say that canon also names 'manual fix' (DP 423) and 'patch' (EP 419) as exits, and that option 1 removes them once a run is recorded blocked. State the button effect honestly. Mark the graph_integrity mapping as an inference and add it as an owner question. Make the G4 cause conditional on TB-12 in the card text too."
+  },
+  {
+   "finding_id": "CR-03",
+   "file": "A3-blocked-design.md; v9-profile-plan.md; A3-stopped-design-addendum.md",
+   "section": "Design §0 'Two landings', §4.1, §4.3, §9 step 1; plan §0 item 2, §4.1 'Source', §9 steps 3-5, Q-V9-08; addendum §4.1 'Timing', §4.2 census",
+   "kind": "cross_document_contradiction",
+   "severity": "should_fix",
+   "claim": "The three notes disagree on where the A3 source contracts (landing 1) land. The design assumes they sit inside the v9 package and its canon landing (V1-Q8, 'This design assumes that'). The plan and the addendum have them land before v9, so that v9 pins their landed bytes. The census tables follow different orders: the design gives '339 + x' at the v9 landing, the addendum gives 334 at stopped landing 1, and the plan gives 338 to 339 before v9.",
+   "verified_evidence": "Design §4.1: 'V1 §8 recommends that the v9 profile and the two A3 source contracts share one package and one review round (V1-Q8). This design assumes that.' Plan §0 item 2: 'The stop and blocked source contracts land first, as A3 landing 1 for each. v9 then pins their landed bytes as members'. Plan Q-V9-08 recommends landing before v9. Addendum §4.1: 'Landing 1 lands before the v9 package freezes'.",
+   "suggested_repair": "Settle Q-V9-08 / V1-Q8 once. Rewrite design §0, §4.1, §4.3 and §9, or the plan and the addendum, to one order. Re-derive one census table from that order."
+  },
+  {
+   "finding_id": "CR-04",
+   "file": "A3-blocked-design.md; v9-profile-plan.md; A3-stopped-design-addendum.md",
+   "section": "Design §6.2 last bullet, §7.1 card 'The change (exact)', P-01; plan §9 'Two rows in one landing', Q-V9-06; addendum §4.2",
+   "kind": "process_ruling_tension",
+   "severity": "should_fix",
+   "claim": "Moving two Event registry rows in one joint landing 2 is recommended as a default, but the process text points to one landing per row. Q-02 says 'each landing is answered on its own line', and DL-078's procedure (applied in DL-094) is 'one family per landing'. Q-09 also says to land stopped first. The notes also disagree on which SHA pair each card carries. The design and the card draft use main → whole landing for both cards. The plan uses X→Y for the first row and Y→Z for the second, with Y never on main.",
+   "verified_evidence": "PA process-answers-20260925.md @616f12bf line 7: 'Cards for two families prepared together may be presented in one batch, but each landing is answered on its own line'. Line 17: 'land `goal_run.stopped` first so the blocked card does not hold up the other work'. DL-078 @63cf2cb (Decision_Log 1571): 'its own Storage admission landing with one family per landing'. Design §6.2: 'both cards show the registry SHA before (main) and after (whole landing) (P-01)'. Plan §9: 'Card for the first row: registry SHA X → Y. Card for the second: Y → Z.'",
+   "suggested_repair": "Send 'joint landing or two landings' and 'which SHA pair each card shows' to the process thread as one question, citing Q-02 line 7, Q-09 line 17 and DL-078. Record it as open (P-01 = Q-V9-06), not as a recommended default. Align the design, the plan and the addendum on one answer. Keep separate sequential landings as the stated fallback."
+  },
+  {
+   "finding_id": "CR-05",
+   "file": "v9-profile-plan.md",
+   "section": "§6.1 'If B-1 is late', recommendation 'Wait'; §0 item 4",
+   "kind": "product_or_process_choice_presented_as_settled",
+   "severity": "should_fix",
+   "claim": "The plan recommends that the v9 freeze wait for B-1. That makes the live stop writer and stopped's landing 2 wait on the blocked card. It cites only C-4 and does not mention Q-09's instruction that the blocked card must not hold up stopped. The design records the tension (P-03). The plan settles it by recommendation.",
+   "verified_evidence": "PA line 17 (Q-09): 'land `goal_run.stopped` first so the blocked card does not hold up the other work'. Cards file line 117 (C-4): 'one v9 carries both the stop and the blocked writers once blocked's trigger is decided'. Design P-03: 'Q-09 says stopped must not wait on the blocked card'.",
+   "suggested_repair": "Cite Q-09 in §6.1. Present 'wait' against 'v9 stop-only plus v10 blocked' as a tension between C-4 and Q-09, for Jared or the process thread to decide, with no recommendation. Or recommend only presenting B-1 now, as the design does."
+  },
+  {
+   "finding_id": "CR-06",
+   "file": "A3-blocked-design.md; A3-stopped-design-addendum.md",
+   "section": "Design header 'Verified again … (all at origin/main)', §4.2, §6.2 (label and count), §7.1 card, P-10; addendum §6.1",
+   "kind": "stale_base",
+   "severity": "should_fix",
+   "claim": "origin/main moved during this review, so the design's 'verified at origin/main' values are no longer current. The registry now has 43 families, revision label 2026-09-25.1, SHA-256 4227be36…. The card draft hard-codes 'revision 2026-09-11.2, 42 families, SHA-256 0be54418…' as 'Registry before'. §6.2 and P-10 say the label 'stays 2026-09-11.2'. DL-094 now shows that a registry change under the standing rule bumps the label, which reopens P-10 and T-15.",
+   "verified_evidence": "Local origin/main is now abdf4eead; ls-remote shows remote main at bd95afcc8. At abdf4eead: event_family_registry.json registry_revision '2026-09-25.1', 43 families, sha256 4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70. Row 0 fingerprint is still f137e724…b4a5 and row 5 is still 8acbc249…e0a3. scripts/pm_pnc019_currentness.py now pins EVENT_FAMILY_REGISTRY_REVISION '2026-09-25.1' and KERNEL_ROW_COUNT 43. The DL-080 PlanUnit moved from line 6633 to 6655, after the DL-094 entry was added. At 63cf2cb every design value checks out: 0be54418…, 42 families, depth42 ba9b84f9…, readiness 491.",
+   "suggested_repair": "Re-derive every 'before' value at the rebase base and keep them as placeholders in the card draft. Re-ask P-10 and T-15 with DL-094 as evidence. Re-check the F1-F4 and PNC-019 line citations against the new main, where the PNC comment block was rewritten."
+  },
+  {
+   "finding_id": "CR-07",
+   "file": "v9-profile-plan.md",
+   "section": "§6.3 option (a); §8 table row v8 ('v8 births only under RR-1 or RR-3') and §8 lead ('Rules R1 to R4 … hold: linear')",
+   "kind": "non_linear_projection_chain",
+   "severity": "should_fix",
+   "claim": "The plan says the one chain is linear under R1. It still lists options that need a second per-run projector (RR-1, and §6.3 (a) 'two projectors') without saying that they break R1 and DL-080's single mandatory projection.",
+   "verified_evidence": "A2 R2-projection.md §4.4, RR-1: 'Two per-run projectors derive replanned rows. Breaks R1.' Stopped design line 298, R1: 'There is no second projector for the per-run role.' Plan §6.3 (a): 'v9 carries the forked type unchanged (RR-1 again, two projectors)'.",
+   "suggested_repair": "Mark option (a) and every RR-1 branch in §8 as breaking R1, needing an explicit exception against DL-080. Or drop them from the chain table."
+  },
+  {
+   "finding_id": "CR-08",
+   "file": "A3-blocked-design.md",
+   "section": "§2.4 input 6 (allowed actions); §3 payload table row allowed_action_ids",
+   "kind": "unlabelled_inference_incomplete_enumeration",
+   "severity": "should_fix",
+   "claim": "The design says the first contract's action set is 'exactly [\"stop_goal\"]'. It only argues against retry-type ActionIds. Seven other ActionIds get no reason: narrow_scope, request_approval, change_model, change_account, restore_from_mandatory_backup, abandon_preserved_work and resolve_owner_conflict. 'cannot be owner-valid' is an inference stated as fact. D-R16 also ties permission and recovery branches to D-R01, which the design does not read.",
+   "verified_evidence": "GRS @63cf2cb line 3502: ActionId = retry_same_action, replan, narrow_scope, request_approval, change_model, change_account, retry_storage, restore_from_mandatory_backup, abandon_preserved_work, resolve_owner_conflict, cancel_goal, stop_goal, resume_after_revalidation. Line 3732: 'allowed actions are non-empty and owner-valid; permission/recovery branches carry the same restrictions as `D-R01`.'",
+   "suggested_repair": "Give a one-line reason for each of the 13 ActionIds: no bound issuer in v9, fenced by GRS 3468, or needs D06. Label the reasons as inference. Read D-R01 for the permission and recovery branches. Keep TB-07 and TB-22 open until an owner confirms."
+  },
+  {
+   "finding_id": "CR-09",
+   "file": "A3-stopped-design-addendum.md",
+   "section": "§1.10 (Pause versus Abort), §10.2 T-25",
+   "kind": "settled_answer_reopened",
+   "severity": "should_fix",
+   "claim": "Jared's approved C-2 option says Abort is stopped and not resumable. The addendum gives both commands resumable=false. Under D-R21 that still allows a resume through a distinct replan. It then turns 'whether Abort needs a stronger bar' into a new open question for A3-replanned. The approved rule is not carried into the stopped contract.",
+   "verified_evidence": "Cards file C-2 option 1, approved: 'Pause is stopped and resumable later through replan. Abort is stopped and not resumable.' GRS @63cf2cb line 3767: '`resumable=false` forbids future resume without a distinct replan that proves changed admission conditions.'",
+   "suggested_repair": "Have the stopped GRS unit state C-2's rule as a binding constraint on the later replanned contract: an Abort-origin stop is not resumable. Reword T-25 to ask how to enforce it, for example refusing a replan whose stop intent came from abort_run, not whether."
+  },
+  {
+   "finding_id": "CR-10",
+   "file": "A3-blocked-design.md; v9-profile-plan.md",
+   "section": "Design §4.2 (landing 2 rows), §7.1 card ('The only other row this landing changes is #/families/5'); plan §7 'Certified for v9 births'",
+   "kind": "possible_row_revision_without_card",
+   "severity": "should_fix",
+   "claim": "Landing 2 adopts certified Events for v9 births. The plan carries forward A2's open question O-R2-05: does admitting them change the certified Event row? If the answer is yes, landing 2 changes a third row, #/families/2, with no card. The design's card states that only #/families/5 changes besides blocked.",
+   "verified_evidence": "R2-projection.md §4.3: 'If it does, admitting v8 certified Events is a registry change and needs a Q-02 / DL-036 checkpoint card. Open (O-R2-05).' Plan §7: 'whether the certified Event row's source_refs pin on the v1 identity root means a registry change (O-R2-05)… the same answers apply'. The registry @63cf2cb certified row source_refs pin 'Plans/goal_certified_event_coordinator_contracts/schemas/identity.v1.schema.json#/$defs/EventRecord'.",
+   "suggested_repair": "Make the card's 'only other row' sentence conditional on O-R2-05 and Q-V9-09. If the certified row must change, list a separate Q-02 card for #/families/2 in design §4.2 and §7."
+  },
+  {
+   "finding_id": "CR-11",
+   "file": "A3-stopped-design-addendum.md",
+   "section": "§2.3 'Who completes it (new question T-24)'",
+   "kind": "deviation_from_approved_card_text",
+   "severity": "note",
+   "claim": "C-3's approved card says the caller retries. The addendum proposes that the Executor scheduler pass completes a pending stop instead. It is marked prop. and open, but it does not say that it differs from the text Jared approved.",
+   "verified_evidence": "Cards file C-3, 'What it costs', option 1: 'The command reports pending, and the caller retries until the run is quiet.'",
+   "suggested_repair": "Note in T-24 that the scheduler-completion option differs from the approved card wording. If it is adopted, record it in the C-3 DL entry."
+  },
+  {
+   "finding_id": "CR-12",
+   "file": "A3-blocked-design.md",
+   "section": "§5 'Reading'",
+   "kind": "wrong_citation",
+   "severity": "note",
+   "claim": "The quoted phrase is cited to the wrong line of DL-080.",
+   "verified_evidence": "At 63cf2cb, 'extends the mandatory GRS-085 run-history projection to its rows' is at Decision_Log.md 6647-6648, in canonical_text. Line 6657 is the acceptance criterion: 'each with a named writer and its rows carried by the mandatory GRS-085 run-history projection'.",
+   "suggested_repair": "Cite DL 6647-6648 for the quoted phrase, or quote line 6657's own wording."
+  },
+  {
+   "finding_id": "CR-13",
+   "file": "A3-stopped-design-addendum.md",
+   "section": "§2.3 'Callers' item 1",
+   "kind": "citation_to_non_carried_protocol",
+   "severity": "note",
+   "claim": "The Goal-action rule is cited from the native-v7 protocol, but v9 carries native-v8.",
+   "verified_evidence": "native-v7 protocol.md @63cf2cb line 33 and A1 native-v8 protocol.md @e8d61ace4 line 147 carry the same U3 sentence: 'New native work requires an admissible current Goal action and no accepted Stop/cancel/owner conflict'.",
+   "suggested_repair": "Cite native-v8 protocol 147 @A1, the source v9 carries."
+  },
+  {
+   "finding_id": "CR-14",
+   "file": "A3-blocked-design.md; v9-profile-plan.md",
+   "section": "Design §3 idempotency key and §2.3 item 1 (quiet facts); plan §3.1 and Q-V9-10",
+   "kind": "unlabelled_analogy_and_naming_drift",
+   "severity": "note",
+   "claim": "Two steps borrow from precedents without the 'by analogy' label. The v3 key recipe is canon only for started, and the design applies it to blocked. The quiet census is stopped's T-02. Separately, the plan still lists the D01 names as open (Q-V9-10), but the design has already chosen B2's names (P-08).",
+   "verified_evidence": "GRS @63cf2cb line 7443 defines the v3 JCS key for 'goal_run.started' only. Design §2.3 item 1: 'These are the same facts as stopped's T-02'. Design line 13 picks original_run_block / run_block_original. The plan §3.1 leaves the choice open.",
+   "suggested_repair": "Label both steps 'by analogy'. Close Q-V9-10 with the design's choice, or reopen P-08."
+  },
+  {
+   "finding_id": "CR-15",
+   "file": "A3-blocked-design.md",
+   "section": "§2.3 opening bullet ('Canon names 26 blocking conditions'); §7.4 card B-3 'What you get'",
+   "kind": "minor_accuracy_and_form",
+   "severity": "note",
+   "claim": "Two small errors. Not all 26 rows of B2's table are blocking conditions. Card B-3 lists three options but gives 'What you get' for only two. DL-036's form asks what each option gets.",
+   "verified_evidence": "B2 §3: T22 'Codes that are refusals, not conditions … not triggers'; T25 'terminate, not blocked'; T26 'stopped, not blocked'. DL-036 @63cf2cb: the card form includes 'what you would get'.",
+   "suggested_repair": "Say '26 rows, of which T22-T26 are not block triggers'. Add option 3's gain to card B-3."
+  },
+  {
+   "finding_id": "CR-16",
+   "file": "A3-blocked-design.md; v9-profile-plan.md; A3-stopped-design-addendum.md",
+   "section": "Whole notes (checks with nothing found)",
+   "kind": "verified_clean",
+   "severity": "note",
+   "claim": "None of the three notes edits the independent validator or reseals governance. No blocked trigger, writer input or exit depends on D06. The projection chain v5 → v6 → v7 (stopped + blocked) → v8 (replanned) is linear and follows DL-080's order. The v9 carry-forward drops no v8 method.",
+   "verified_evidence": "Checked at 63cf2cb and e8d61ace4. The design only runs 'a scratch copy of the validator', and 'The validator is never edited'. The validator lives at Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py; its lines 269, 294 and 623-626 match the design. Resealing is left to the designated Plans agent. W-B's 'Explicitly not inputs' list names D05, D06, StopSource, SchedulerStop, record_cancellation.v1 and record_stop.v1. Other checks that matched: the v8 descriptor (189 members; methods 18/5/12/14/27; 323 occurrences; 11 routes; digest 7b22c1f4…); the D01 v7 schema (11 rules, 4 origin kinds, so 13 and 6 after adding two writers); the registry SHA 0be54418… and row fingerprints (f137e724…, also at b09294e44b); the Browser gate's six reconstructed fields; depth42 ba9b84f9… with blocked row 3 PASS UNDISPOSITIONED; EP 7523; A1 EP 8696/8700/8985; GRS 3468/3501/3555/3731-3733/3768/3794; cards lines 117 and 119; readiness 491.",
+   "suggested_repair": "None."
+  }
+ ]
+}
