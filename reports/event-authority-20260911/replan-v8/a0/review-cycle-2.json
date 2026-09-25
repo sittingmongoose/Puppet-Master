@@ -1,0 +1,93 @@
+{
+ "cycle": 2,
+ "reviewed_commit": "f29ca48b7524f2d274dbc416899a76a10df4a15b",
+ "base": "a6480b0f7c74c4e39726e2094a16175d21106e4e",
+ "verdict": "ready",
+ "checks_run": [
+  "Scope: 25 commits c0e9644a57..f29ca48b7 (73eb240a9, 15630efc9, then one per A0-C1-01..22) touch only the report, STATUS.md and the new a0/review-cycle-1.json. git diff --name-only origin/main f29ca48b7 names only reports/event-authority-20260911/replan-v8/**, and the merge-base is still a6480b0f7c. No Plans/**, scripts/** or governance file is touched.",
+  "a0/review-cycle-1.json is JSON-equal to the cycle-1 form (all 23 findings).",
+  "(1) Repairs applied as suggested: the diff hunks for A0-C1-01 to 22 match the suggested replacement text word for word. That covers verdict items 2-5, section 1 (05, then 21), section 2 (06), section 4 intro (17), section 6 row 4 (15), section 7 wiring/DL-078/DL-077/fingerprint bullets (16, 10, 11, 09), P-04, P-05, P-14, P-16, P-17 (14, 22, 12, 13, 07), the new section 9 row (19), Q-02, Q-04, Q-09 (10, 12, 18), R-1 (07, 08), the exports paragraph (20), and STATUS.md lines 45 and 49 (07, 11). A0-C1-23 needed no change and is unchanged.",
+  "(1) Repaired text re-verified against the bytes: storage-plan 25667 at 4a72aa12; acceptance.json remaining[0]; 20 inherited files and 2-then-3 direct pins at 3ce6eb882c/main; 10 top-level package directories; landing record lines 62-64; owner-sources.json lines 5/17/53 and physical-retention-install.json line 49; fingerprint copies at schema line 46, scripts lines 31/16, tests lines 67/28 (REVIEWED_GOAL_SUCCESSORS range wrong, A0-C2-01); Decision_Log.md 1571 and plan line 119; goal-run-started.v3 required fields; STOP-PROTOCOL line 3 and schema lines 1127/1271/3210/3246; P-04 producer breakdown; storage-plan 26527; Wiring_Matrix 52385-52391; exact-passages 0-based indices; B01 records (plan 136, handoff review 26); prebirth status and PLAN.md line 5; 8bc898648; storage-plan 25523/25552. All true except A0-C2-01.",
+  "(2) Adjacent text: all 9 tables in the repaired report keep consistent column counts. That includes the new 4-column section 9 row, the long P-04 and P-16 cells (no stray pipes) and the Q-02/Q-04/Q-09 cells. Backticks and bold markers are balanced on every line. The inserted exports paragraph sits under 'Reseal and landing' before '## Evidence'. Cross-reference gaps: section 9's summary paragraph (A0-C2-02) and the Q routing (A0-C2-03).",
+  "(3) STATUS.md 73eb240a9: the baseline commit 792d2fb8b1 (reports/landing-checks/baseline.json, recorded 2026-09-24T21:10:29Z) is an ancestor of origin/main and about 4.6 hours older than it, so it is current. This clone is not sparse. tests/agent_packet_restrictions is absent here while tests/fixtures/governance/raw_evidence_capture_modes.json references paths under it, which is consistent with the cloud-environment rows. 'Exit 1: nothing stops the landing' with 647 new, all off-branch rows is consistent with the .claude/CLAUDE.md exit semantics. The five routed items are counted correctly. The run itself (3 minutes, exit 1, 647 rows) can be checked only for internal consistency; see A0-C2-05."
+ ],
+ "findings": [
+  {
+   "finding_id": "A0-C2-01",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "citation",
+   "severity": "should_fix",
+   "claim": "Section 7, A3 registry landings bullet (line 123, repair of A0-C1-09): \"needs its own whole-row entry in `REVIEWED_GOAL_SUCCESSORS` (`scripts/pm-browser-event-admission.py` lines 35-60)\". The line range is wrong: `REVIEWED_GOAL_SUCCESSORS` spans lines 36-67. The error came from my cycle-1 suggested wording, and the repair copied it faithfully. All the other line numbers in the inserted text are correct.",
+   "verified_evidence": "git show origin/main:scripts/pm-browser-event-admission.py: line 36 \"REVIEWED_GOAL_SUCCESSORS = {\", line 67 \"}\" (lines 33-35 are the comment above it). The other citations in the same sentence were verified: Plans/browser_event_admission.schema.json line 46 const e2b5a433…; scripts/pm-browser-event-admission.py line 31 CURRENT39_SHA256; scripts/pm_emit_only_event_contract.py line 16 PREEXISTING_REGISTRY_ROWS_SHA256; tests/test_pm_browser_event_admission.py line 67 and tests/test_pm_emit_only_event_boundaries.py line 28 (both a27cf49b…); commits d21679659, c7b136ad2, 1cdf39074 dated 2026-09-23.",
+   "suggested_repair": "In report line 123 replace \"(`scripts/pm-browser-event-admission.py` lines 35-60)\" with \"(`scripts/pm-browser-event-admission.py` lines 36-67)\"."
+  },
+  {
+   "finding_id": "A0-C2-02",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "omission",
+   "severity": "should_fix",
+   "claim": "The new section 9 row (repair of A0-C1-19) says the Replan v3 prebirth-composition gap is \"A1: closed at source level by installing v8\". The summary paragraph directly under the table still lists what A1 closes without it: \"A1 therefore closes by compile: canonical placement; whole-package review, through its canonical-draft package; the four pending-source boundaries; the install-at-birth rule; and TRUTHFUL-UNAVAILABLE's statement.\" The repair left the table and the paragraph out of step.",
+   "verified_evidence": "Report at f29ca48b7, section 9: the last table row \"| Replan v3 prebirth-composition gap | ... | none | A1: closed at source level by installing v8; native birth stays NOT_RUN |\" followed by the unchanged sentence \"A1 therefore closes by compile: ... and TRUTHFUL-UNAVAILABLE's statement.\" The row's content is true: the relocated Replan v3 manifest status is NARROW_EXTERNAL_V3_REPAIRS_AWAITING_REVIEW_PREBIRTH_COMPOSITION_MISSING, and combined v3 inputs/plan/PLAN.md line 5 recommends one complete combined successor source composition.",
+   "suggested_repair": "In section 9 replace \"the install-at-birth rule; and TRUTHFUL-UNAVAILABLE's statement.\" with \"the install-at-birth rule; TRUTHFUL-UNAVAILABLE's statement; and, at source level, the Replan v3 prebirth-composition gap.\""
+  },
+  {
+   "finding_id": "A0-C2-03",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "claim",
+   "severity": "should_fix",
+   "claim": "Two sets of affected rows disagree with the STATUS.md routing added in 73eb240a9. STATUS.md says \"On 2026-09-25 Jared routed five process questions to the PM Low cost/complexity process thread, which has authority on them\", and those include Q-02, Q-03, Q-09 and Q-12. First, the report's open-questions table still names other recipients: Q-02 \"Jared (the A3 card can ask)\", which A0-C1-10 edited; Q-03 \"Jared\"; Q-09 \"coordinator / Jared\", which A0-C1-18 edited; Q-12 \"coordinator / Jared\". Second, section 7 (line 121, as edited by A0-C1-10 and A0-C1-11) reads \"Unless Jared rules that revising a registered row is a family registration\" and \"which the A3 card that this thread's charter requires would provide\". A reader of the report would send these questions to the wrong place.",
+   "verified_evidence": "STATUS.md at f29ca48b7 lines 17-24 (from 73eb240a9): the routing sentence and the list \"- Q-02: DL-078 and row revisions. - Q-03: ... - Q-09: what \\\"B01\\\" is. - Q-12: ...\". Report at f29ca48b7, open-questions table: Q-02 For \"Jared (the A3 card can ask)\", Q-03 For \"Jared\", Q-09 For \"coordinator / Jared\", Q-12 For \"coordinator / Jared\". Precedent that this thread answers process questions: origin/main Decision_Log.md line 1571 (DL-078) \"Clarified on 2026-09-24 by the coordinating thread (PM Low cost/complexity process) ... in answer to review question D-07\".",
+   "suggested_repair": "In the open-questions table set the For cell of Q-02, Q-03, Q-09 and Q-12 to \"PM Low cost/complexity process thread (routed by Jared on 2026-09-25; see STATUS.md)\". In section 7 line 121 replace \"Unless Jared rules that revising a registered row is a family registration\" with \"Unless Jared, or the PM Low cost/complexity process thread he routed Q-02 to on 2026-09-25, rules that revising a registered row is a family registration\"."
+  },
+  {
+   "finding_id": "A0-C2-04",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "wording",
+   "severity": "note",
+   "claim": "Verdict item 4 (line 16, repair of A0-C1-03): \"...; the sixth v3 script, `check_original_banks.py`, is a diagnostic with no status field, and every counted figure the package claims is reproduced exactly.\" Because my replacement boundary stopped where it did, the clause \"and every counted figure ...\" now hangs off the diagnostic clause. The sentence is still true but reads awkwardly.",
+   "verified_evidence": "Report at f29ca48b7 line 16. The counted figures (1,241/19/1,256/130,201; 2,035/240; 642; 1,252; 751) were reproduced in cycle 1.",
+   "suggested_repair": "In line 16 replace \"is a diagnostic with no status field, and every counted figure the package claims is reproduced exactly.\" with \"is a diagnostic with no status field. Every counted figure the package claims is reproduced exactly.\""
+  },
+  {
+   "finding_id": "A0-C2-05",
+   "file": "reports/event-authority-20260911/replan-v8/STATUS.md",
+   "kind": "count",
+   "severity": "note",
+   "claim": "STATUS.md Cloud preview (73eb240a9): \"Staleness left on `main` by the Step 8(d) landing: Spec Lock `stale_hash` for `Goal_Runtime_System.md` and `storage-plan.md`, and the 143 plan-sharding evidence and plan-graph rows, keyed from their exports.\" The landing record this refers to counts 143 in each of the two aggregates and assigns 11 of each 143 to main's own Decision Log rows, not to the Step 8(d) landing. The cloud run's own output is not in the repository, so the figure can be checked only against that record.",
+   "verified_evidence": "origin/main reports/landing-checks/LANDING_20260925_EA_CERTIFIED_ANCHORS.md line 46: \"143 `artifact_hash_stale` in evidence and 143 in plan graph. That is 132 for the two documents and their 130 shards (47 Goal_Runtime_System, 85 storage-plan), plus `main`'s own 11 Decision Log rows\"; line 48: \"2 Spec Lock `stale_hash` rows (both documents)\".",
+   "suggested_repair": "In STATUS.md replace \"and the 143 plan-sharding evidence and plan-graph rows, keyed from their exports.\" with \"and 143 `artifact_hash_stale` rows in each of the evidence and plan-graph aggregates (132 for the two documents and their 130 shards, 11 for `main`'s own Decision Log rows), keyed from their exports.\""
+  },
+  {
+   "finding_id": "A0-C2-06",
+   "file": "reports/event-authority-20260911/replan-v8/STATUS.md",
+   "kind": "wording",
+   "severity": "note",
+   "claim": "STATUS.md (73eb240a9): \"The answers come back as `reports/event-authority-20260911/replan-v8/process-answers-20260925.md` on the branch `reports/replan-v8-process-answers-20260925`\". `reports/` is not one of the branch kinds .claude/CLAUDE.md lists. The branch belongs to another thread, and nonconforming prefixes exist on the remote, so this is a note only.",
+   "verified_evidence": "origin/main .claude/CLAUDE.md line 24: \"Branch kinds: `research/`, `audit/`, `concept/`, `plans/`, `fix/`.\" This branch, which also touches only reports/, uses `plans/`. Remote refs include one other `reports/` branch (origin/reports/handoff-20260918).",
+   "suggested_repair": "In STATUS.md replace \"on the branch `reports/replan-v8-process-answers-20260925`\" with \"on the branch `plans/replan-v8-process-answers-20260925`\" (or whichever listed kind the process thread uses)."
+  },
+  {
+   "finding_id": "A0-C2-07",
+   "file": "reports/event-authority-20260911/replan-v8/STATUS.md",
+   "kind": "citation",
+   "severity": "note",
+   "claim": "STATUS.md (73eb240a9) rests on text that is not in the repository: \"On 2026-09-25 Jared routed five process questions ...\" and \"Until then this thread follows the recommendations in the questions\". The report's Q-02, Q-03, Q-09 and Q-12 carry no recommendations, so \"the recommendations in the questions\" means the relayed versions, which are not on the branch. A0-C1-11 repaired the same kind of uncited charter statement elsewhere in STATUS.md.",
+   "verified_evidence": "Report at f29ca48b7, open-questions table: Q-02, Q-03, Q-09 and Q-12 are questions with no recommendation. No record of Jared's 2026-09-25 routing or of the relayed questions exists on origin/main or on the branch.",
+   "suggested_repair": "In STATUS.md replace \"On 2026-09-25 Jared routed five process questions\" with \"On 2026-09-25 Jared routed (by instruction to this thread, not recorded in the repository) five process questions\", and replace \"follows the recommendations in the questions\" with \"follows the recommendations in the questions as relayed (not in the repository)\"."
+  },
+  {
+   "finding_id": "A0-C2-08",
+   "file": "reports/event-authority-20260911/replan-v8/A0-currentness-placement-20260925.md",
+   "kind": "omission",
+   "severity": "note",
+   "claim": "Commit 15630efc9 adds `a0/review-cycle-1.json`. The report's Evidence table does not list it, and STATUS.md still says \"**Review.** Pending: one blind form-driven review, capped at two cycles.\"",
+   "verified_evidence": "git diff --name-only c0e9644a57 f29ca48b7 adds reports/event-authority-20260911/replan-v8/a0/review-cycle-1.json, which is JSON-equal to the cycle-1 form. Report at f29ca48b7: the Evidence table lists 7 files and not review-cycle-1.json. STATUS.md line 15 is unchanged.",
+   "suggested_repair": "Add to the report's Evidence table the row \"| `a0/review-cycle-1.json` | The cycle-1 blind review form on `c0e9644a57` (23 findings: 1 blocking, 16 should_fix, 6 notes), each applied in its own commit |\". In STATUS.md replace \"**Review.** Pending: one blind form-driven review, capped at two cycles.\" with \"**Review.** One blind form-driven review, capped at two cycles: cycle 1 is `a0/review-cycle-1.json`; cycle 2 re-reviews the repaired rows.\""
+  }
+ ],
+ "not_checked": [
+  "The cloud landing-check run behind STATUS.md's 'Cloud preview' (runtime, exit code, the 647 rows): its output is not in the repository, so only its internal consistency, the baseline currency and the cited landing record were checked.",
+  "Jared's 2026-09-25 routing instruction and the questions relayed to the PM Low cost/complexity thread: not in the repository.",
+  "Rows not affected by the cycle-1 repairs: out of scope for this DL-066 re-review by instruction."
+ ]
+}
