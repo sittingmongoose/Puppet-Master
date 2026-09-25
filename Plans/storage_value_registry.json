@@ -65766,7 +65766,7 @@
           "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation"
         ]
       },
-      "retention_compaction": "Unsettled controls remain protected until actual original resolution. Settled/no-obligation terminal transition uses unchanged RP-OPERATIONAL-2555D@1.0.0 plus stronger refs/holds. Existing 2000000/project cardinality is not a new application-root bucket; the application aggregate policy-owner adapter remains unproved and fails closed. No policy value is changed.",
+      "retention_compaction": "Unsettled controls remain protected until actual original resolution. Settled/no-obligation terminal transition uses unchanged RP-OPERATIONAL-2555D@1.0.0 plus stronger refs/holds. Settled/no-obligation controls count in the application-wide bucket app:storage_operational together with the storage.boot_recovery, storage.recovery_applied and storage.compaction_lifecycle_changed records (DL-083; Plans/storage-plan.md, Application-wide count buckets under the operational policy): at most 2000000 records, fail-closed overflow, no invented project. No policy value is changed.",
       "retention_policy_ref": "RP-OPERATIONAL-2555D",
       "redaction_no_secret_rule": "Closed non-secret identity, hash, original receipt, typed result and source references only; no raw recovery/source bytes, credentials, machine path, log/error text or copied source body.",
       "legacy_canonical_crosswalk_status": "NEW first-native Boot custody under SP-291/SP-292. Existing event/payload readers and all previous families/policies remain unchanged. No reconstructive legacy backfill or fixture production migration edge.",
