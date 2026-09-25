@@ -85,7 +85,7 @@ def structural_failures(path: str, value: Any, pointer: str = "#") -> list[str]:
 def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=None,
                              canonical_request_digest=None, backup_read_admission=None,
                              backup_page_source=None, backup_source_custody=None,
-                             backup_current_disclosure=None, forge_log_dependencies=None, credential_source_dependencies=None) -> list[str]:
+                             backup_current_disclosure=None, forge_log_dependencies=None, credential_source_dependencies=None, forge_cancel_dependencies=None) -> list[str]:
     """Existing static bundle; Git-three additionally requires actual owner readers.
 
     Both callbacks are trusted native contracts, not issuer/caller authentication
@@ -104,7 +104,8 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
     forge_log = (response.get("command_id") == FORGE_LOG_COMMAND
                  or result.get("schema_id") == FORGE_LOG_BINDING["schema_id"])
     credential_source = (response.get('command_id') == CREDENTIAL_SOURCE_COMMAND or result.get('schema_id') == CREDENTIAL_SOURCE_BINDING['schema_id'])
-    if not git_three and not forge_review and not backup_read and not jj_publication and not forge_log and not credential_source:
+    forge_cancel = response.get('command_id') == 'cmd.forge.pipeline.cancel' or result.get('schema_id') == 'pm.forge.cancel_selected.result.v1'
+    if not git_three and not forge_review and not backup_read and not jj_publication and not forge_log and not credential_source and not forge_cancel:
         return _response_bundle_failures(bundle)
     snapshot = deepcopy(bundle)
     failures = _response_bundle_failures(snapshot, resolve_owner_record=resolve_owner_record,
@@ -113,7 +114,7 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
                                          backup_page_source=backup_page_source,
                                          backup_source_custody=backup_source_custody,
                                          backup_current_disclosure=backup_current_disclosure,
-                                         forge_log_dependencies=forge_log_dependencies,
+                                         forge_log_dependencies=forge_log_dependencies, forge_cancel_dependencies=forge_cancel_dependencies,
                                          credential_source_dependencies=credential_source_dependencies)
     if bundle != snapshot:
         failures.append("credential_bundle_mutated_during_resolution" if credential_source else "backup_read_bundle_mutated_during_resolution" if backup_read else "jj_publication_bundle_mutated_during_resolution" if jj_publication else "forge_log_bundle_mutated_during_resolution" if forge_log else "forge_bundle_mutated_during_resolution" if forge_review else "git3_bundle_mutated_during_resolution")
@@ -123,7 +124,7 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
 def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=None,
                               canonical_request_digest=None, backup_read_admission=None,
                               backup_page_source=None, backup_source_custody=None,
-                              backup_current_disclosure=None, forge_log_dependencies=None, credential_source_dependencies=None) -> list[str]:
+                              backup_current_disclosure=None, forge_log_dependencies=None, credential_source_dependencies=None, forge_cancel_dependencies=None) -> list[str]:
     """Validate independently owned records and then their exact binding.
 
     normalized_request is a fixture snapshot of the authenticated dispatcher
@@ -141,6 +142,9 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
     if response["command_id"] == FORGE_LOG_COMMAND:
         if response["response_kind"] != "owner_operation" or response.get("owner_result_schema_ref") != FORGE_LOG_BINDING:
             failures.append("forge_log_owner_binding")
+    if response.get('command_id') == 'cmd.forge.pipeline.cancel':
+        if response['response_kind'] != 'owner_operation' or response.get('owner_result_schema_ref') != {'path':'Plans/forge_cancel_selected_contracts.schema.json','json_pointer':'#/$defs/result','schema_id':'pm.forge.cancel_selected.result.v1'}:
+            failures.append('forge_cancel_owner_binding')
     if response["response_kind"] != "owner_operation":
         if outcome is not None or owner_result is not None:
             failures.append("non_operation_has_owner_records")
@@ -256,6 +260,9 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
             elif owner_result.get("schema_id") == FORGE_LOG_BINDING["schema_id"]:
                 from pm_forge_log_selection_semantics import response_failures as log_response_failures
                 failures.extend(log_response_failures(bundle, forge_log_dependencies))
+            elif owner_result.get('schema_id') == 'pm.forge.cancel_selected.result.v1':
+                from pm_forge_cancel_selected_semantics import response_failures as cancel_response_failures
+                failures.extend(cancel_response_failures(bundle, forge_cancel_dependencies))
             elif owner_result.get("schema_id") == FORGE_REVIEW_BINDING["schema_id"]:
                 if "delivery_return_context" not in bundle:
                     failures.append("forge_delivery_owner_value_missing")

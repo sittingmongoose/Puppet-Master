@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2563
+Source lines: L2164-L2567
 
-Source SHA256: `12bc176594d9229bfec09e056a734a1717dcd56c7aa32612f8be615b137a8348`
+Source SHA256: `0e454fd67a95be7d32e1da284b4da0cf22c5016a4026f64f7c405f4e00bdefac`
 
 ---
 
@@ -184,6 +184,10 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+For exactly `cmd.forge.pipeline.cancel`, `Plans/forge_cancel_selected_contracts.schema.json#/$defs/dispatch_binding` is a disjoint authentic SIR original containing actual full identity, selected request, canonical digest, permission and original caller context. Shared response composition resolves actual state-fence/revalidation/observation, receipt/work, original dispatch and current caller/disclosure, rejecting late mutation and replayed effects. Existing Full Thread identity and central outcome grammars remain unchanged. Actual original and observation custody remain physical-registration-pending; a static match does not authenticate the issuer or enable a native handler.
+
+The new `pm.sir.forge_cancel_error_projection.v1` is an internal nonpersisted SIR disclosure projection, not a receipt or error store. It binds the actual unchanged Forge command error record and outcome error reference to the original request, whole identity, caller, time and exact nullable UI error. No provider-code mapping is inferred. A cancelled response may retain a genuine owner error and recovery facts while its common UI error remains null. Native final disclosure authenticates the actual source error and projection; unrelated references/text cannot replace them. Accepted work uses an actual nonterminal acceptance snapshot with no terminal receipt, never later terminal work substituted for that snapshot.
 
 For exactly `cmd.forge.pipeline.open_logs`, `Plans/forge_log_selection_contracts.schema.json#/$defs/dispatch_binding` is a disjoint SIR original value produced by the established authenticated dispatcher. Its arguments are the exact selected log request, with genuine full identity, permission, canonical argument digest and nullable original caller context. The actual current delivery owner supplies the independently authenticated matching caller value. Resolve original run/child/cursor/content provenance and current redacted disclosure through mandatory native adapters; static matching is not authentication. Shared response composition retains actual receipts and work, preserves replay without reissued reads and rejects late resolver/callback mutation. Unknown effects remain terminal_unknown/recovery_required even when the owner label says failed; no_op and generic degraded terminal mapping are unadmitted for this profile. Do not widen the separate two-action Forge review binding or IdentityEnvelope. Original and observation custody remain separately pending, with no new store or retention interval.
 

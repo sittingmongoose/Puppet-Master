@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11769-L12025
+Source lines: L11769-L12027
 
-Source SHA256: `1e21c7981a576ada2fb134fbcae45474a9c2a1d4a15c5b9f8458c97ed4cefbe9`
+Source SHA256: `9b28b0185a7f12bde730f51238f43cfecb5536cafd63cf82e5f224950e48bed5`
 
 ---
 
@@ -17,6 +17,8 @@ Every primary row below is static central intent. A named `handler_location` is 
 
 
 ### Exact 100 primary catalog rows
+
+For exactly `cmd.forge.pipeline.cancel`, the selected cancellation binding is `Plans/forge_cancel_selected_contracts.schema.json#/$defs/request` -> `#/$defs/result`. It retains the actual AutomationBinding/run/state fence, direct revalidation, original SIR caller and truthful provider receipt/work/error disclosure. Accepted is not stopped; unknown is reconciliation-only. Existing handler availability, command ID and event policy remain unchanged.
 
 For exactly `cmd.credential_source.add`, the current terminal source-add binding is `Plans/credential_source_add_contracts.schema.json#/$defs/request` -> `#/$defs/result` with the actual `#/$defs/receipt` and authentic SIR original/current-disclosure composition. Other CredentialBroker commands retain their existing expansion bindings; `cmd.credential.add` remains normalization-only. Source registration does not attach, activate, authenticate or issue a lease. Handler availability and receipt-only event policy are unchanged.
 

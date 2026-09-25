@@ -16,11 +16,11 @@ composition, Forge ACT051/052 and their SIR response binding, and Usage quota-aw
 refresh/export are now specified and statically tested. Remaining exact selections
 are listed below; this is not native implementation or whole-family completion.
 
-1. Exact Storage specification integration: the current registry has 34 explicitly
-   pending disposition rows (33 physical-family and one external-store pending),
+1. Exact Storage specification integration: the current registry has 36 explicitly
+   pending disposition rows (35 physical-family and one external-store pending),
    including Guided Tour, pairing, original Forge dispatch and Backup read originals/receipts. Its
-   78 dispositions leave the 294 physical families unchanged. These are not
-   34 engines to build. Determine owner key/value/retention/migration
+   82 dispositions leave the 294 physical families unchanged. These are not
+   36 engines to build. Determine owner key/value/retention/migration
    decisions separately from deployment of already specified native writers.
 2. Narrow authority adjudications: Settings exposure/import semantics, Vault
    sharing and supervisor scope, and remaining plugin applicability clauses.
@@ -82,22 +82,23 @@ unbuilt. See the companion reports; frozen earlier overlays remain history.
 
 Remaining selected-input/result composition uses these existing source IDs:
 
-Plain-language boundaries and the exact 26-source-occurrence snapshot are in
-`remaining-command-boundaries.md`; those are not 26 engines or a whole-packet count.
+Plain-language boundaries and the earlier exact 26-source-occurrence snapshot are
+in `remaining-command-boundaries.md`. Cancellation ACT071 is now integrated,
+leaving 25 selected source occurrences below, not 25 engines or a whole-packet count.
 
 | Owner | Exact remaining IDs |
 | --- | --- |
 | Neutral SCM, final-review open | ACT006,008,009,012,013,045 |
 | Git | ACT017,019 |
 | JJ, final-review open | ACT037,038 |
-| Forge | ACT048,053,060,062,067,070,071,072,156 |
+| Forge | ACT048,053,060,062,067,070,072,156 |
 | Backup | ACT090,091,105,111,118,119,120 |
 | CredentialBroker | ACT087 selected source-add is integrated; native/custody obligations remain |
 
-Forge cancellation ACT071 is not adopted despite its initial review pass: root
-integration probes found unbound common error reference/text and accepted work
-already carrying terminal state/receipt. Its corrections await the final second
-review. ACT156 reply has the same two first-review findings and is also external.
+Forge cancellation ACT071 is now integrated after fixing the root-probe error and
+accepted-work findings and passing final second review; see
+`forge-cancellation-companion.md`. ACT156 reply also passed corrected final review
+but remains external until root integration; a review alone is not canon adoption.
 
 The historical credential-command deferred inventory is now explicitly subordinated
 to the current SIR owner/registration status; see `credential-current-owner-status.md`.
@@ -142,5 +143,5 @@ hooks/tools migration fixture cannot stand in for that package.
 Consolidation snapshot before the additional Forge original-binding row:
 `/mnt/Cursor/PM-Experiments/settings-compound-overlay-20260925/FINITE-QUEUE-CONSOLIDATION.md`,
 SHA-256 `78a5711e8bf91bcfa7090ee9e674113db29c618880e8e7daa1958de689c243c8`.
-Its 25-pending count is historical; the current 34 above includes the subsequent
-Forge, Backup, JJ publication, selected-log and CredentialBroker original/receipt rows.
+Its 25-pending count is historical; the current 36 above includes subsequent Forge,
+Backup, JJ publication, selected-log, CredentialBroker and cancellation custody rows.

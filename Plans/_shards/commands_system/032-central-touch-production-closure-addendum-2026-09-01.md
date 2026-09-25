@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L5460-L5741
 
-Source SHA256: `7fb382bd2eb626eff83f1c2b64246094d24afe4121595aac1f0e3ce913509ba6`
+Source SHA256: `4f531d5f15d0ade505c760ba88bd490ad3f3985393bfdaac5dfa13998ce5bd47`
 
 ---
 
@@ -58,7 +58,7 @@ The following exact 231 primary commands complete the remaining actionable Touch
 | `cmd.forge.mirror.detach` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_detach` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.mirror.inspect` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_inspect` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.mirror.sync` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::mirror_sync` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
-| `cmd.forge.pipeline.cancel` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_cancel` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.pipeline.cancel` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_cancel` | `Plans/forge_cancel_selected_contracts.schema.json#/$defs/request` -> `Plans/forge_cancel_selected_contracts.schema.json#/$defs/result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.pipeline.list` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_list` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.pipeline.open_in_browser` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_in_browser` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.pipeline.open_job` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::pipeline_open_job` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |

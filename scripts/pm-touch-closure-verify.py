@@ -465,9 +465,11 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     forge = tokens(between(forge_text, "### 3.1 Canonical commands", "Setup reuses shared runtime commands:"))
     forge_decisions = {"cmd.forge.review.approve", "cmd.forge.review.request_changes"}
     forge_logs = {"cmd.forge.pipeline.open_logs"}
+    forge_cancel = {"cmd.forge.pipeline.cancel"}
     add("TCP-FORGE-REVIEW-DECISIONS", "command", forge_decisions)
     add("TCP-FORGE-LOG-SELECTION", "command", forge_logs)
-    add("TCP-FORGE", "command", {item for item in forge if item.startswith("cmd.forge.")} - forge_decisions - forge_logs)
+    add("TCP-FORGE-CANCEL-SELECTED", "command", forge_cancel)
+    add("TCP-FORGE", "command", {item for item in forge if item.startswith("cmd.forge.")} - forge_decisions - forge_logs - forge_cancel)
     add(
         "TCP-REPOSITORY-LOCAL",
         "ui_action",
@@ -1895,7 +1897,8 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # Five JJ operand commands, JJ publication, Forge review decisions and
         # selected logs use four bounded successor profiles. No new Touch rows.
         # Credential source-add has one exact successor, leaving nine peers intact.
-        "profile_count": 139,
+        # Exact Forge cancellation consumes its bounded successor, no new row.
+        "profile_count": 140,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1142,
