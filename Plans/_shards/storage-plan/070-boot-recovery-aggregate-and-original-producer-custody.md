@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L23596-L23706
 
-Source SHA256: `3f93bf2ba1abbb4e909a5116d747441ea809bebc18511b05a69b5f090faf0fe9`
+Source SHA256: `05d4a27e7958199c7c852931154fac72043cb01111ef586dbd6bde116f10e894`
 
 ---
 
@@ -20,7 +20,7 @@ Unsettled aggregate custody is protected until actual original resolution. Settl
 
 ### Application-wide count buckets under the operational policy (DL-083, DL-089)
 
-Until 2026-09-25 this section called the count of application-scoped records under `RP-OPERATIONAL-2555D@1.0.0` an unproved policy-owner adapter seam: the policy counts per Project, and these records belong to no Project. Jared decided that count in DL-083 on 2026-09-24 for `storage.boot_recovery`, `storage.recovery_applied` and `storage.compaction_lifecycle_changed`, and in DL-089 on 2026-09-25 for the application-scoped evaluations of `platform.capability_evaluated`. The binding below is a newly authored Storage owner contract under DL-045, whose registered-depth column holds all four families; no earlier Storage text defines an application count bucket. It creates no retention policy object and changes no value of `RP-OPERATIONAL-2555D@1.0.0`, including `cardinality_scope=project`: an application-wide bucket takes the place of the Project bucket only for records that have no Project.
+Until 2026-09-25 this section called the count of application-scoped records under `RP-OPERATIONAL-2555D@1.0.0` an unproved policy-owner adapter seam: the policy counts per Project, and these records belong to no Project. Jared decided that count in DL-083 on 2026-09-24 for `storage.boot_recovery`, `storage.recovery_applied` and `storage.compaction_lifecycle_changed`, and in DL-089 on 2026-09-25 for the application-scoped evaluations of `platform.capability_evaluated`. The binding below is a newly authored Storage owner contract under DL-045, whose registered-depth column holds all four families; no earlier Storage text defines an application count bucket. The search covered section 2.3.1, Case L-3, SP-291 and SP-293 of this document, `Plans/storage_value_registry.json` and its schema, `Plans/event_family_registry.json` and `Plans/Contracts_V0.md`: the only application-scope count text was SP-291's seam sentence and the matching `boot_recovery_control` prose, and the schema's `instance` cardinality scope is a policy value that `RP-OPERATIONAL-2555D@1.0.0` does not use. It creates no retention policy object and changes no value of `RP-OPERATIONAL-2555D@1.0.0`, including `cardinality_scope=project`: an application-wide bucket takes the place of the Project bucket only for records that have no Project.
 
 **Buckets.** These are the count buckets of `RP-OPERATIONAL-2555D@1.0.0` in a Storage instance, and no record counts in more than one of them:
 - the Project bucket of a project-scoped record, named by its existing scope partition `project~{base64url_no_pad(UTF8(project_id))}`. Per-project counting is unchanged.
