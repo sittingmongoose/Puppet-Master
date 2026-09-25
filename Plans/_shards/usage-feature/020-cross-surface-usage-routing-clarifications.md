@@ -2,13 +2,27 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L903-L920
+Source lines: L903-L934
 
-Source SHA256: `3f0a8dcc889ec2cd2f2a0df746594ff699966d6850c730b316a7ab5bd4926c6d`
+Source SHA256: `315258f1c3c028cee2f5a9873a41aec37e282624b606048325d04ad28c375310`
 
 ---
 
 ## Cross-Surface Usage Routing Clarifications
+
+### Current refresh and export command boundary
+
+The existing `cmd.usage.refresh` and `cmd.usage.export` preserve the original invocation, admitted Usage scope, complete selected owner query and exact caller return context. Local room, filter, range and disclosure changes dispatch neither command. Admission resolves the actual original projection/query; current UI focus, a changed account/route selection or a later recomputed query cannot replace it. Stale selection requires current owner admission or an explicit stale result, not silently different exported rows. Read/export permission and current disclosure are independently rechecked before returning content.
+
+The query preserves UF-044's exact `5h|24h|7d|30d` intervals and timestamped identity-bound filtering. `all`, a selected provider, `work` and `personal` filter records inside the authorized Usage scope; `all` does not enable UF-043's future all-Project aggregation. Provider identity and work/personal account scope come from their actual owners, not labels. Additional existing Ledger filters remain in the authenticated original query rather than being dropped, widened or replaced with a free-form invented filter language. Interval boundaries are pinned original query values, not recalculated from a later clock.
+
+Refresh performs the existing on-demand provider-route projection read under the current provider/account route, resource and permission owners. It does not select accounts, authenticate, install, reroute, change policy or trigger a model call to obtain Usage. Acceptance is not completed refresh: the actual result reports attempted-route outcomes and resulting projection identity, currentness, freshness and health, preserving stale/partial/degraded/unavailable disclosure. Reported zero remains distinct from unknown, not exposed or disabled. Background refresh remains independent and nonblocking; failure cannot erase the prior projection or mark it freshly verified.
+
+Export requires the existing explicit `snapshot|ledger` scope and produces the admitted view as JSON. This command does not acquire CSV, bundle, raw-record export or a default scope from broader deferred UF-047 examples. Ledger output preserves `usage_event_refs` for each row. Both outputs are views, not canonical ledger replacement, and retain original value-state, counting, settlement, source and selection/filter distinctions without inventing missing measurements or flattening provider-native quota units. Current permission and redaction exclude secrets, protected browser material, raw provider payloads and unauthorized provider/account details. Local delivery follows existing FileSafe and export/artifact custody; a caller path alone grants no write authority.
+
+Success binds actual produced JSON output evidence and original selection. Navigation, opening a dialog, acceptance or a matching filename cannot prove export success. Refresh/export results bind the original request and actual owner outcome through the existing CommandOutcomeRecord/UI response path. Return honors only the original admitted caller; a closed or replaced caller cannot redirect output to a different view. Replay reads the original result under present disclosure permission, never a newly refreshed projection or regenerated export. No Usage EventRecord, new receipt family, accounting store, provider implementation or native handler is admitted by this contract.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-116, ContractName:Plans/usage-feature.md#UF-043, ContractName:Plans/usage-feature.md#UF-044, ContractName:Plans/usage-feature.md#UF-047, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
 - `manual_preferred_account_id` is a run-request field, not a project policy default. Usage must keep policy defaults separate from the per-run requested concrete account so the two meanings do not collapse.
 - Account pressure and switching use an append-only event `/record` family. Usage, Ledger, History, and routing projections read account-pressure and account-switch records instead of inferring them from mutable view state.

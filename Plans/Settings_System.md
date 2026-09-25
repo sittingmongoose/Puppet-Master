@@ -359,6 +359,7 @@ acceptance_criteria:
   binds the exact source Project and uncreated destination draft, selectors, sorted eligible IDs and hash, then
   rebinds only after actual Project identity reservation.
 - Credential-bearing IDs and owner-excluded IDs are listed as excluded and never copied.
+- Ordinary Settings copy excludes environment-specific paths, physical window/screen geometry, live processes and raw credentials; category selection cannot make those values transferable. Preview discloses these exclusions and apply preserves destination-owned values rather than importing another environment's state. This does not change logical appearance preferences or authorize copying runtime/Assistant state.
 - Stale preview, validation failure, commit/read-back failure, or cancellation produces no partial destination mutation.
 - Later source changes cannot affect the destination.
 - A newly opened copy flow starts with all ten selector categories selected; an explicitly reduced selection resolves and applies only its previewed eligible exact IDs, never unselected or excluded IDs.

@@ -282,6 +282,7 @@ acceptance_criteria:
   - Setup requires no Puppet Master account, email, API key, router port, or user-run public component.
   - Public-plane storage and logs contain no protected product content or credential material.
   - Direct-to-relay and provider migration preserve one Server identity, command idempotency, and projection continuity.
+  - Relay/TURN credentials are short-lived under the admitted transport provider's credential policy, not durable Server identity or a reusable pairing grant. Expired credentials cannot authorize new relay use; obtaining a current credential preserves the existing authentication, pairing and route-admission boundaries. No numerical lifetime, new public exposure or Cloudflare production-provider choice is introduced here.
 validation_surfaces: [Plans/remote_access_system_contract_fixtures.json, future direct relay outage and E2E tests]
 risk_class: remote_link_content_exposure_or_identity_split
 reasoning_tier: high

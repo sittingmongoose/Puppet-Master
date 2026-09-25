@@ -13,9 +13,10 @@ Remaining categories are distinct:
    pending disposition rows after capability integration, including Guided Tour
    and pairing custody. These are not 22 engines to build. Determine owner key/value/retention/migration
    decisions separately from deployment of already specified native writers.
-2. Narrow authority adjudications: Settings exposure/import semantics; ordinary
-   Vault isolation/sharing and supervisor scope; four plugin applicability clauses;
-   remaining plugin applicability clauses. The immediate-child package discovery,
+2. Narrow authority adjudications: Settings exposure/import semantics, Vault
+   sharing and supervisor scope, and remaining plugin applicability clauses.
+   Ordinary Vault isolation and four other Server prose omissions are now repaired;
+   see `server-five-prose-and-usage-boundary.md`. The immediate-child package discovery,
    sound-pack category/collision/member rejection and built-in deletion clauses
    are now repaired alongside the Project data-deletion typed handoff; see
    `project-delete-sound-plugin-repairs.md`. Other questions are not permission
@@ -30,10 +31,12 @@ Remaining categories are distinct:
    attempt requires the landing lock, then-current rebase and fresh full comparison;
    no governance refresh or widened exception is inferred.
 
-The review preserves all 199 Settings and 169 Server residual identities. The
-original overlay left 150/156 not reopened; these are evidence-backlog counts,
-not defect counts or whole-corpus closure. The 459-source raw-read census and
-13,416 historical assessment entries have separate denominators.
+The review now classifies all 199 Settings and 169 Server residual identities;
+the earlier 150/156 not-reopened backlog counts are superseded. Classification
+completion is not semantic closure: exact unresolved comparisons, owner choices,
+selected-operation bindings and protected newer designs remain explicit. See
+`server-five-prose-and-usage-boundary.md` for the current evidence. The 459-source
+raw-read census and 13,416 historical assessment entries have separate denominators.
 
 Exact reconciliation and row inventory:
 `/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-canon-closure-20260924-Ol2rqUdF/packet-wide-rebaseline/finite-remaining-canon-queue-20260925.json`,
@@ -46,5 +49,6 @@ the remaining distinctions above still apply.
 Refined Backup, pairing, application-check and Tour custody proposals remain
 external owner-review evidence, not newly admitted policies or physical writers.
 Tour original Chat/layout capture custody remains a protected-owner dependency;
-no generic reference or fixture claims to supply it. Settings and Server residual
-source IDs are being reopened explicitly rather than silently credited as covered.
+no generic reference or fixture claims to supply it. Usage command companions
+remain pending, including a separate unresolved grammar for additional Ledger
+filters; current owner prose does not certify those carriers or native execution.

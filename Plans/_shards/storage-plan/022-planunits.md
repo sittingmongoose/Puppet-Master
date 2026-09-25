@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2382-L15076
+Source lines: L2383-L15079
 
-Source SHA256: `b48f6936280b1af6608e2ebf7bc3b6390bbc5dbab817192b1e748606a2101d58`
+Source SHA256: `8453bfc41e8a8f9d31457e885bb0836c408c28edc7a9072bb6273ef3b5df0d77`
 
 ---
 
@@ -7994,6 +7994,8 @@ canonical_text: >-
   per-Vault views/index readers are byte-accounted and idle-evictable only after safe reference release.
   Logical per-Vault append/projector/index queues consume shared permits with no dedicated thread/process per
   Vault by default, preserving canonical order, writer ownership, held authority and recovery material.
+  Ordinary Vault failure/quarantine is isolated from unrelated Projects with valid required authority/storage;
+  genuine shared-root, aggregate-lock or shared-authority failures remain fail-closed and explicitly disclosed.
 gui_related: false
 gui_classification_reason: This unit preserves backend projection rebuild and checkpoint ownership boundaries.
 split_recommended: false

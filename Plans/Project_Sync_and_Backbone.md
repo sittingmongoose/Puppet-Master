@@ -31,6 +31,8 @@ Before mutation, the owner records source and destination inventory digests, fre
 
 Conflict outcomes are `no_conflict`, `source_wins_approved`, `destination_wins_approved`, `manual_merge_required`, `blocked_identity_mismatch`, or `blocked_policy`. Silent last-writer-wins is prohibited. Deletions are explicit plan entries and cannot be inferred solely from absence in a partial or stale inventory.
 
+Project Move and execution-source handoff reconcile the selected source rather than blindly copying a workspace. A shared Source Location is re-mapped only after its actual identity and destination accessibility are verified. For Git/Jujutsu sources, the Source Control/backend owner fetches and checks out the selected immutable source, and FileSafe preserves/applies the selected uncommitted and required untracked state under the reviewed reconciliation plan; a clean checkout alone is not proof that the user's source state arrived. Non-Git sources use a content-addressed delta of the selected content. Caches and build outputs are excluded from source transfer. All strategies retain the same exact Host/Environment/Source Location bindings, permissions, FileSafe, verified staging/read-back and recovery boundary above; a missing dependency or unsupported reconciliation remains blocked rather than discarded or fabricated. This owner coordinates movement and does not re-own Git/Jujutsu mutations.
+
 ## 4. Sync bundles and recovery
 
 A Sync bundle is a versioned manifest plus content-addressed payload references. It records Project/Vault identity, source topology generation, selection digest, entry digests, excluded paths, metadata support, redaction/secret scan result, producer version, and verification instructions. It contains no raw credential or local credential path.
@@ -84,6 +86,7 @@ unblocks: []
 acceptance_criteria:
   - A stale or partial inventory cannot authorize deletion or claim currentness.
   - Destructive source removal follows verified destination commit and explicit move policy.
+  - Source reconciliation follows section 3's shared-source remap, Git/Jujutsu fetch-checkout plus FileSafe uncommitted/required-untracked state, or non-Git content-addressed delta strategy; caches/build outputs are excluded and missing required source state blocks readiness.
   - Conflict and recovery outcomes use the closed vocabularies in this owner.
 validation_surfaces: [sync fixture validation, interrupted-move recovery fixtures, conflict negative fixtures]
 risk_class: project_content_loss

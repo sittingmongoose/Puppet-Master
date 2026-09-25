@@ -5,6 +5,12 @@ entries below. Completed logical requirements retain credit; unresolved Storage
 specification/authority questions, native implementation and landing remain
 distinct. This historical queue is not a current defect count.
 
+`server-five-prose-and-usage-boundary.md` records the latest six-owner prose step
+and completed classification of all 199 Settings / 169 Server residual IDs.
+Historical unverified/not-reopened counts below are superseded, not silently
+promoted to covered. Confirmed selected-operation bindings, explicit comparisons
+and owner choices still remain; neither whole-packet nor GUI-only closure follows.
+
 Current capability integration and exact verification counts are recorded in
 `capability-ensure-custody-integration.md`; its two same-family successors reduce
 pending Storage dispositions from 23 to 22 without new families or policies.

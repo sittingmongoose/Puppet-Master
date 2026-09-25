@@ -2398,7 +2398,7 @@
         "future restore coordinator",
         "future security adapter registry"
       ],
-      "line_count": 1942,
+      "line_count": 1946,
       "path": "Plans/Backup_Restore_System.md",
       "plan_unit_count": 30,
       "plan_unit_ids": [
@@ -2468,7 +2468,7 @@
         "unsafe_restore_or_false_operational_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "8ea328faf9e7233433b73a56da5b8f8ea4be4bfe69d0f5013a09951aa55d0d13",
+      "sha256": "73cbc82c3cdaed785606e3e85dd74e629f8d5d59c9b29524a2d10aa4a5dcef89",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 30
@@ -14323,7 +14323,7 @@
         "Plans/usage-feature.md",
         "future Project Move and Content Update native handlers"
       ],
-      "line_count": 260,
+      "line_count": 263,
       "path": "Plans/Project_Sync_and_Backbone.md",
       "plan_unit_count": 6,
       "plan_unit_ids": [
@@ -14346,7 +14346,7 @@
         "sync_bundle_custody_loss",
         "sync_time_misattributed_as_provider_usage"
       ],
-      "sha256": "f5a85c4fbeaec22e45631a9418829e1f49a9a2074eba89fb691a16c9985947f8",
+      "sha256": "48f1fe915eb032311da63ccb67ee7d919852bcf4c674b544ce37cc3423caa164",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 6
@@ -15108,7 +15108,7 @@
         "future deployment wrappers",
         "future proxy configuration service"
       ],
-      "line_count": 1009,
+      "line_count": 1010,
       "path": "Plans/Remote_Access_System.md",
       "plan_unit_count": 15,
       "plan_unit_ids": [
@@ -15148,7 +15148,7 @@
         "static_remote_contract_promoted_to_wan_readiness",
         "tailscale_identity_or_product_claim_drift"
       ],
-      "sha256": "a98392309c961bb3fb9b910fc714842e077f6f9968d0d8bfb100576cca445012",
+      "sha256": "2e0be3f3897cfac86a842ef0d1d639b2cc06946a61b3aef2fc43cc196cba7d62",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 15
@@ -16561,7 +16561,7 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 2321,
+      "line_count": 2322,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 37,
       "plan_unit_ids": [
@@ -16647,7 +16647,7 @@
         "terminal_research_consumer_or_acceptance_drift",
         "theme_or_layout_cross_project_leak"
       ],
-      "sha256": "ab4d21b893dcf7000c5747899e960e885cf3879d1bba3698a29cae579eb6d749",
+      "sha256": "a8a2769f8f4ed4ae5e2bce81d7f80a24e2deae4411b884165bcaba2c41036b96",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37
@@ -17468,7 +17468,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 26936,
+      "line_count": 26939,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 313,
       "plan_unit_ids": [
@@ -17886,7 +17886,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "b48f6936280b1af6608e2ebf7bc3b6390bbc5dbab817192b1e748606a2101d58",
+      "sha256": "8453bfc41e8a8f9d31457e885bb0836c408c28edc7a9072bb6273ef3b5df0d77",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 310,
@@ -19244,7 +19244,7 @@
         "False": 33,
         "True": 70
       },
-      "heading_count": 225,
+      "heading_count": 226,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Back_Seat_Driver.md",
@@ -19275,7 +19275,7 @@
         "Plans/usage-feature.md",
         "future usage events"
       ],
-      "line_count": 7109,
+      "line_count": 7123,
       "path": "Plans/usage-feature.md",
       "plan_unit_count": 103,
       "plan_unit_ids": [
@@ -19420,7 +19420,7 @@
         "usage_workspace_state_orphan_or_preview_persistence",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "3f0a8dcc889ec2cd2f2a0df746594ff699966d6850c730b316a7ab5bd4926c6d",
+      "sha256": "315258f1c3c028cee2f5a9873a41aec37e282624b606048325d04ad28c375310",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 103
@@ -20060,7 +20060,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T06:44:02Z",
+  "generated_at_utc": "2026-09-25T07:00:00Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
