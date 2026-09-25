@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T10:26:20Z",
+  "generated_at_utc": "2026-09-25T10:37:42Z",
   "gui_related_units": {
     "count": 3200,
     "units": [
@@ -4719,8 +4719,8 @@
         "source_location": {
           "heading": "BRS-011 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 1001,
-          "line": 1003,
+          "heading_line": 1007,
+          "line": 1009,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4763,8 +4763,8 @@
         "source_location": {
           "heading": "BRS-015 - Scheduler, Retention, Prune, Verification, And Drill Policy",
           "heading_level": 3,
-          "heading_line": 674,
-          "line": 676,
+          "heading_line": 680,
+          "line": 682,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4774,8 +4774,8 @@
         "source_location": {
           "heading": "BRS-016 - Serialized Supersession, Fresh Recovery, And Consumer Truth",
           "heading_level": 3,
-          "heading_line": 733,
-          "line": 735,
+          "heading_line": 739,
+          "line": 741,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4785,8 +4785,8 @@
         "source_location": {
           "heading": "BRS-017 - Coordinator, Capture Barrier, Independent Repositories, And Durable Authority",
           "heading_level": 3,
-          "heading_line": 1052,
-          "line": 1054,
+          "heading_line": 1058,
+          "line": 1060,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4796,8 +4796,8 @@
         "source_location": {
           "heading": "BRS-018 - Destination, Headless Authentication, Recovery Key, And Human Delivery Safety",
           "heading_level": 3,
-          "heading_line": 1095,
-          "line": 1097,
+          "heading_line": 1101,
+          "line": 1103,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4807,8 +4807,8 @@
         "source_location": {
           "heading": "BRS-019 - Locate, Browse, Restore, Retention, And Durable Operational Safety",
           "heading_level": 3,
-          "heading_line": 1143,
-          "line": 1145,
+          "heading_line": 1149,
+          "line": 1151,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4818,8 +4818,8 @@
         "source_location": {
           "heading": "BRS-023 - Phase-Local Restore Evidence And Bound Emergency Consent",
           "heading_level": 3,
-          "heading_line": 1236,
-          "line": 1238,
+          "heading_line": 1242,
+          "line": 1244,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -39249,7 +39249,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "085b3a502081f9972a61d350c9202aeee83c658a863435331fdc51aca94dbdba",
+        "expected": "66246a7994418971e9436873568e0b1be7abcd80366aa3d22dc882571d279894",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -39297,7 +39297,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "aac143143013b0cae636b0273e0fc2870350e8f1064b0bb01ede3977c402f99d",
+        "expected": "c30777c662125c48b7de95abdd4024adc9b721cd399ce63e7a1639495600d7aa",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {

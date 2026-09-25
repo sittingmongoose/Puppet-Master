@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2586
+Source lines: L2164-L2590
 
-Source SHA256: `76e125955ee1243b9d4af02b9a20605d2bf3eab7c1cf9d051f4426a8ccea0d1c`
+Source SHA256: `302f51a9de3100920272b464bc862a1cb3ec06f57b87daf4f003646b594bf38f`
 
 ---
 
@@ -184,6 +184,10 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+For the exact ACT111 export successor, SIR retains an authentic original dispatch binding to the complete submitted export request, full IdentityEnvelope, actor/permission snapshot, dispatch frame/generation, idempotency/payload digest and original return context. Actual result, CommandOutcome and UICommandResponse resolve against that binding. The separate nonsecret error projection binds the unchanged actual Backup error reference, original identity and caller to the current common UI error; cancelled UI error may be null without dropping the owner error or known output effects. Accepted ObservableWork is nonterminal and has no terminal result receipt. Replay preserves the original outcome and receipts; every final disclosure requires current native authorization. This internal admission does not change protected FullThread types, introduce events or advertise handler availability.
+
+ContractRef: ContractName:Plans/backup_portable_export_contracts.schema.json, ContractName:Plans/Backup_Restore_System.md#BRS-014
 
 For exactly `cmd.forge.review.comment`, the SIR dispatch binding in `Plans/forge_review_comment_contracts.schema.json` retains the authenticated original full IdentityEnvelope, exact arguments and argument-only digest, request/dispatch/frame, independent target generation, idempotency, actor/permission and genuine nullable caller. The actual delivery owner independently supplies its nullable current caller; null/foreign substitution is not equivalent. The actual provider comment result composes the unchanged common outcome with nonterminal accepted work, genuine original receipt/error and no inferred no_op. Explicit error projection resolves the unchanged owner error and exact command/instance/identity/caller to nullable existing UICommandError; cancellation may retain known applied owner effects with null UI error. Unknown owner error/effect is not failed success/failure certainty; degraded mapping remains unsupported. Snapshot inputs before dependent owner reads and reject late mutation. No Full Thread identity/UI envelope schema widening, fabricated thread, automatic replay, physical store or native authentication/disclosure proof follows from static fixtures.
 

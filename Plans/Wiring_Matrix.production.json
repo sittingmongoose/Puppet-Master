@@ -9573,7 +9573,7 @@
     "catalog.backup_export": {
       "acceptance_checks": [
         "cmd.backup.export names exactly one owner-adjudicated future target handlers::backup_restore::backup_export in Plans/Backup_Restore_System.md#BRS-011; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
+        "Validate Plans/backup_portable_export_contracts.schema.json#/$defs/request -> Plans/backup_portable_export_contracts.schema.json#/$defs/result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.backup_export.availability and state.commands.backup_export.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -9586,15 +9586,12 @@
       },
       "disabled_reason_projection": "state.commands.backup_export.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; dispatch acceptance is not completion and no unregistered EventRecord is admitted.",
+        "description": "Actual encrypted export output observation and BackupExportReceipt bind original immutable selection, dependency scope, explicit destination and known or unknown effects. Not a capture or restore receipt; no activation, inferred no_op or new EventRecord. Accepted work remains nonterminal.",
         "effect_kind": "receipt",
         "receipt_or_event_refs": [
-          "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result",
-          "BackupReceipt",
-          "BackupVerificationReceipt",
-          "RestorePreviewReceipt",
-          "RestoreReceipt",
-          "RecoveryPointReceipt"
+          "Plans/backup_portable_export_contracts.schema.json#/$defs/result",
+          "Plans/backup_portable_export_contracts.schema.json#/$defs/observation",
+          "Plans/backup_portable_export_contracts.schema.json#/$defs/receipt"
         ]
       },
       "event_test_requirements": [
@@ -9603,8 +9600,8 @@
       "evidence_required": "Future production evidence for cmd.backup.export: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::backup_export",
-      "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
-      "result_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result",
+      "request_schema_ref": "Plans/backup_portable_export_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/backup_portable_export_contracts.schema.json#/$defs/result",
       "state_selector": "state.commands.backup_export.availability",
       "test_evidence": [
         {

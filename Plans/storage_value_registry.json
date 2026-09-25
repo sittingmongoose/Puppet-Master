@@ -4090,6 +4090,169 @@
         "Plans/forge_review_comment_contracts.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.backup.portable_export_transport.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_portable_export_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.portable_export.request.v1",
+        "pm.backup.portable_export.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold is created; actual original, engine admission, source and effect custody remain under their existing owners.",
+        "expiry_rule": "Discard transient transport/destination/disclosure copies when delivery ends or actual source/current disclosure is invalidated. No TTL, durable cache or replay authority is introduced."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target. Missing authentic originals, destination admission, errors or effects remain unavailable rather than reconstructed from a transient projection.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted exact encrypted-export transport; not replay, effect or source authority.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_portable_export_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.backup_portable_export_error_projection.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/backup_portable_export_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.backup_portable_export_error_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold is created; actual original, engine admission, source and effect custody remain under their existing owners.",
+        "expiry_rule": "Discard transient transport/destination/disclosure copies when delivery ends or actual source/current disclosure is invalidated. No TTL, durable cache or replay authority is introduced."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target. Missing authentic originals, destination admission, errors or effects remain unavailable rather than reconstructed from a transient projection.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted exact original/actual Backup error/current caller disclosure, including nullable cancelled UI error without discarding known effects.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/backup_portable_export_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.backup_portable_export_dispatch.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/backup_portable_export_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.backup_portable_export_dispatch.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve actual original, selected immutable sources, engine admission, output metadata, receipts and unresolved reconciliation under existing owner replay/audit/hold obligations. Exact per-kind physical lifetime and policy assignment remain pending; no new anchor, duration or source-retention extension.",
+        "expiry_rule": "No cleanup writer or numeric retention is admitted. Register actual keys/values, source-coupled holds, current and historical readers, deletion/migration and coherent backup before persistence. Transport/projection disposal cannot release retained authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct portable-export originals, admission or effects from capture/verification/restore receipts or transient projections. Preserve historical decoders; exact physical writer/readers/migration and coherent backup admission remain pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Authentic retained original export request/identity/arguments/caller; native issuer and physical custody remain pending.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/backup_portable_export_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup.portable_export_effect_metadata.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_portable_export_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.portable_export.observation.v1",
+        "pm.backup.portable_export.receipt.v1",
+        "pm.backup.portable_export.engine_admission.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve actual original, selected immutable sources, engine admission, output metadata, receipts and unresolved reconciliation under existing owner replay/audit/hold obligations. Exact per-kind physical lifetime and policy assignment remain pending; no new anchor, duration or source-retention extension.",
+        "expiry_rule": "No cleanup writer or numeric retention is admitted. Register actual keys/values, source-coupled holds, current and historical readers, deletion/migration and coherent backup before persistence. Transport/projection disposal cannot release retained authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never reconstruct portable-export originals, admission or effects from capture/verification/restore receipts or transient projections. Preserve historical decoders; exact physical writer/readers/migration and coherent backup admission remain pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained actual export admission/closure, delivered-output metadata and BackupExportReceipt; no raw archive bytes, keys, default format or source-retention extension.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_portable_export_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup.portable_export_destination.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_portable_export_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.portable_export.destination.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold is created; actual original, engine admission, source and effect custody remain under their existing owners.",
+        "expiry_rule": "Discard transient transport/destination/disclosure copies when delivery ends or actual source/current disclosure is invalidated. No TTL, durable cache or replay authority is introduced."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target. Missing authentic originals, destination admission, errors or effects remain unavailable rather than reconstructed from a transient projection.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted actual Client/Host delivery projection, not a second destination configuration or permission issuer. Actual Permissions/FileSafe authority remains with existing owners.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_portable_export_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [
