@@ -101,7 +101,7 @@ Every unit carries the same `source_lineage`: the external source `9ed8ba4f…`,
 
 ## 5. The 74 files and the 34 rows
 
-**Files.** `Plans/workflow_combined_source_contracts/` holds 60 files: 37 at its top level, 7 in `coordinator/`, 6 in `producer/`, 6 in `replan/` and 4 in `schemas/`. `Plans/workflow_standard_source_contracts/native-v8/` holds 14. None existed on `main`, and none lies under a v7 directory. `installed-profile.json` is the static descriptor and `composition.json` binds the final whole selections; with the digest file these three are the only placed files that are not descriptor members. Task 2 (`48a2b6840`) copied them without overwriting anything: each of the 74 equals its counterpart in the package's `after/Plans/` byte for byte, both on disk and as the committed blob, and the package's `SHA256SUMS` verifies them.
+**Files.** `Plans/workflow_combined_source_contracts/` holds 60 files: 37 at its top level, 7 in `coordinator/`, 6 in `producer/`, 6 in `replan/` and 4 in `schemas/`. `Plans/workflow_standard_source_contracts/native-v8/` holds 14. None existed on `main`, and none lies under a v7 directory. `installed-profile.json` is the static descriptor and `composition.json` binds the final whole selections; with the digest file these three are the only placed files that are not descriptor members. Task 2 (`48a2b6840`) copied them without overwriting anything: each of the 74 equals its counterpart in the package's `after/Plans/` byte for byte, both on disk and as the committed blob, and the package's `SHA256SUMS` verifies them. `composition.json` `source_reviews` keeps its three `manifest_ref: null` entries (`canonical_draft_package`, `canonical_draft_independent_review`, `canonical_draft_root_review`, lines 2757-2771), because root condition 3 requires the 74 files byte-identical to the package. This departs from PACKAGE-STATUS §6.5 and design §6 step 2, which ask the compile to record the three manifests there. They are recorded instead in every unit's `source_lineage` (`bb6be609…`, `62d94dc1…`, `a7f5bb5f…`). Recording them in `source_reviews` is left to a later v8 edition; the file is outside both descriptors, so neither digest changes.
 
 **Rows.** The 34 rows are appended verbatim, in the registry's own formatting, at `/families/294` to `/families/327`:
 - SP-321, 30 rows: `executor_workflow_replan_update`, the 28 `workflow_replan_*` families and `executor_workflow_replan_observer_origin`.
@@ -190,6 +190,7 @@ A0 section 9 and root's `remains_open_after_a1`, against the owner units:
 | Q-U4-05, Q-U4-07, Q-U4-08 | Released-idle readback reachability; the `record_stop` caller after the Goal Stop latch; the Event treatment of a revoked certified slot holding a durable Event | Executor and Goal owners; A2 and A3 |
 | Q-04, Q-07, Q-08 | The replanned envelope; the Runtime Replan wiring; the certified row's unresolved source ref | A3 |
 | B01 | The condition that puts a run into `blocked` | A3, by the Q-09 route |
+| composition.json source_reviews | The three canonical-draft review entries stay null in canon; record their manifests in a later edition | Designated Plans agent, next v8 edition |
 
 A0's Q-05 is settled by O-02, Q-06 by the durable-token repair (C06), Q-11 by O-21, and Q-12 by the process answers.
 
