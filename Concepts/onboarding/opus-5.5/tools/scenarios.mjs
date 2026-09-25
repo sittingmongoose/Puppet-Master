@@ -429,6 +429,67 @@ def('x2', 'fresh', 'Run Onboarding Again while a Project is being created waits 
   A.eq(await d.screen(), 'welcome', 'once it is made, Run Onboarding Again starts over');
 });
 
+/* ---------------------------------------------------------------------------------------------- backups */
+async function toProtect(d, dest) {
+  await d.openOnboarding(); await toName(d); await d.type('name', 'Book club website'); await d.primary();
+  await d.act('backup'); await d.act('bdest', dest); await d.act('sheet-close'); await d.primary();
+  await readyPrimary(d); await d.primary(); await until(d, "window.O55.S.sess.commit.state === 'done'", 'commit', 25000);
+  await readyPrimary(d); await d.primary();
+}
+async function finishProtect(d, A) {
+  for (const [step, what] of [['test', 'test'], ['kit', 'kit']]) { await readyPrimary(d); await d.primary(); await until(d, `(window.O55.S.sess.backup.done||[]).includes('${step}')`, what, 8000); }
+  const word = await d.state(() => [...document.querySelectorAll('.o55-kitwords span')][3].lastChild.textContent.trim());
+  await d.type('word', word); await d.primary(); await until(d, "(window.O55.S.sess.backup.done||[]).includes('kitTest')", 'kit checked', 8000);
+  await readyPrimary(d); await d.primary(); await until(d, "window.O55.S.sess.backup.state === 'done'", 'backups on', 8000);
+  A.ok(/Backups are on/.test(await d.state(() => document.body.textContent)), 'backups are on');
+}
+def('b1', 'fresh', 'Backup to Home NAS: Connect runs the SSH steps once, then the backup finishes with that key', async (d, A) => {
+  await toProtect(d, 'nas');
+  A.eq(await d.screen(), 'protect', 'Finish protecting your work');
+  A.ok(/Connect to Home NAS/.test(await d.state(() => document.querySelector('.o55-steplist').textContent)), 'the first step connects to Home NAS (not a web sign-in)');
+  await d.primary(); A.eq(await d.screen(), 'nas-identity', 'its identity first'); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys', 5000); await d.primary();
+  await d.type('user', 'jared'); await d.type('pw', 'correct horse'); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:new']||{}).state === 'done'", 'key added', 9000); await d.primary();
+  A.eq(await d.screen(), 'protect', 'back to Finish protecting your work');
+  await until(d, "(window.O55.S.sess.backup.done||[]).includes('signin')", 'connected with the key', 6000);
+  A.ok(await d.state(() => window.O55.owners.log.some((e) => e.id === 'cmd.backup.destination.add' && e.ok)), 'the destination is added through the backup owner');
+  A.ok(!(await d.state(() => window.O55.owners.log.some((e) => e.id === 'cmd.auth_profile.open_official_page'))), 'no web page is opened for the NAS');
+  await finishProtect(d, A);
+});
+def('b2', 'fresh', 'Backup to S3 or B2: bucket and access keys, the secret never kept', async (d, A) => {
+  await toProtect(d, 's3');
+  A.ok(await d.state(() => ['acc-bucket', 'acc-keyId', 'acc-secret'].every((b) => !!document.querySelector(`[data-o55-bind="${b}"]`))), 'bucket, key ID and secret fields');
+  A.ok((await d.primaryInfo()).disabled, 'Connect waits for all three');
+  await d.type('acc-bucket', 's3://book-club-backups'); await d.type('acc-keyId', 'AKIAEXAMPLEKEY'); await d.type('acc-secret', 'not-a-real-secret');
+  A.ok(!(await d.primaryInfo()).disabled, 'Connect is ready'); await d.primary();
+  await until(d, "(window.O55.S.sess.backup.done||[]).includes('signin')", 'connected', 6000);
+  A.ok(!(await d.state(() => JSON.stringify(window.O55.S.sess) + localStorage.getItem('pm.o55.onboarding.v1'))).includes('not-a-real-secret'), 'the secret is never stored');
+  await finishProtect(d, A);
+});
+def('b3', 'fresh', 'Files on Home NAS: a backup to Home NAS is not offered, with the reason', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary(); await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary(); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys', 5000); await d.primary();
+  await d.type('user', 'jared'); await d.type('pw', 'correct horse'); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:new']||{}).state === 'done'", 'key added', 9000); await d.primary();
+  await d.act('cd', '/volume1/projects'); await d.act('cd', '/volume1/projects/recipe-app'); await d.primary();
+  if ((await d.screen()) === 'name') await d.primary();
+  if ((await d.screen()) === 'like') await d.primary();
+  A.eq(await d.screen(), 'safe', 'Keep your work safe'); await d.act('backup');
+  const card = await d.state(() => { const c = document.querySelector('[data-o55-do="bdest"][data-arg="nas"]'); return c && { disabled: c.getAttribute('aria-disabled'), reason: c.getAttribute('data-disabled-reason') }; });
+  A.ok(card && card.disabled === 'true' && /files are on Home NAS/.test(card.reason || ''), 'Home NAS is not offered, and says why');
+});
+def('b4', 'fresh', 'Restore from S3 or B2: access details, then the recovery phrase', async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary(); await d.act('pick', 'restore'); await d.primary();
+  A.eq(await d.screen(), 'r-source', 'backup source'); await d.act('source', 'cloud'); await d.act('cloud', 's3');
+  A.ok(await d.state(() => !!document.querySelector('[data-o55-bind="acc-secret"]')), 'access fields, not a browser sign-in');
+  A.ok((await d.primaryInfo()).disabled, 'Continue waits for them');
+  await d.type('acc-bucket', 's3://book-club-backups'); await d.type('acc-keyId', 'AKIAEXAMPLEKEY'); await d.type('acc-secret', 'not-a-real-secret'); await d.primary();
+  await d.untilScreen('r-unlock', 8000);
+  A.ok(!(await d.state(() => JSON.stringify(window.O55.S.sess))).includes('not-a-real-secret'), 'the secret is never stored');
+});
+
 /* ---------------------------------------------------------------------------------------------- runner */
 const report = [], drafts = [];
 for (const sc of SC) {

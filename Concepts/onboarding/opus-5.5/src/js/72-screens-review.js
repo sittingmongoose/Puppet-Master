@@ -47,7 +47,7 @@
     if (d.project_mode !== 'later') nodes.push({ icon: 'folder', label: T('art.labels.files'), sub: d.storage_mode === 'with_server' ? P().serverName(S).toLowerCase() : T('art.labels.documents') });
     nodes.push({ icon: d.server_mode === 'this_device' ? 'computer' : 'server', label: T('art.labels.worksHere'), sub: whereWork(S).toLowerCase().slice(0, 18) });
     nodes.push({ icon: 'person', label: T('art.labels.you'), sub: T('art.labels.thisDevice') });
-    return { nodes, online: d.online_mode === 'new' ? forgeName(d) : null, backup: S.sess.backup.dest ? T('safe.backup.' + S.sess.backup.dest) : null, inherit: d.settings_transfer.mode === 'copy_from_project' ? (S.sess.like && S.sess.like.name) || '' : null };
+    return { nodes, online: d.online_mode === 'new' ? forgeName(d) : null, backup: S.sess.backup.dest ? O55.backup.label(S, S.sess.backup.dest) : null, inherit: d.settings_transfer.mode === 'copy_from_project' ? (S.sess.like && S.sess.like.name) || '' : null };
   }
 
   /* ------------------------------------------------------------------ review */
@@ -57,7 +57,8 @@
     eyebrow: () => T('review.eyebrow'),
     title(S) { const d = md(S); return d.project_mode === 'later' ? T('review.titleLater') : T(d.project_mode === 'new' ? 'review.titleNew' : d.project_mode === 'restore' ? 'review.titleRestore' : 'review.titleAdd', { name: d.project_name }); },
     lead: (S) => (md(S).project_mode === 'later' ? (needsRemote(md(S)) ? T('review.leadLaterAccess', { name: P().serverName(S) }) : T('review.leadLater')) : T('review.lead')),
-    enter(S) { S.sess.ui.returnTo = null; },
+    /* a backup to the NAS the Project's files now live on is no backup: it is dropped here, with the reason */
+    enter(S) { S.sess.ui.returnTo = null; if (S.sess.backup.dest === 'nas' && O55.backup.filesOnNas(S)) { S.sess.backup.dest = null; S.sess.ui.backupDropped = true; } else S.sess.ui.backupDropped = false; },
     body(S) {
       const d = md(S), row = (k, v, edit) => `<div class="o55-revrow" data-key="rv-${k}"><span class="o55-revk">${U.esc(T('review.rows.' + k))}</span><span class="o55-revv">${U.esc(v)}</span>${edit ? C.link(T('review.edit'), 'edit', edit) : ''}</div>`;
       const st = F.state(S, 'recheck:' + d.project_draft_revision);
@@ -79,7 +80,8 @@
       if (d.online_mode !== 'none') safe += row('online', d.project_mode === 'existing_online' ? forgeName(d) + ' · ' + d.repository_ref.replace(/^[a-z_]+:/, '') : forgeName(d) + ' · ' + (d.repository_container || S.sess.forgeAccounts[d.forge] || '') + '/' + d.repository_name, 'safe');
       else if (fi && fi.online) safe += row('online', O55.safe.forgeName(fi.online.forge) + ' · ' + fi.online.repo + ' · ' + T('safe.online.linked'), 'begin');
       else notSet.push(T('safe.online.title').toLowerCase());
-      if (S.sess.backup.dest) safe += row('backup', T('safe.backup.' + S.sess.backup.dest), 'safe'); else notSet.push(T('safe.backup.title').toLowerCase());
+      if (S.sess.backup.dest) safe += row('backup', O55.backup.label(S, S.sess.backup.dest), 'safe'); else notSet.push(T('safe.backup.title').toLowerCase());
+      if (S.sess.ui.backupDropped) safe += C.note(T('review.backupDropped', { name: O55.backup.label(S, 'nas') }), 'warn', 'vault');
       out += C.group(T('review.groups.safe'), safe);
       if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d), 'away'));
       if (notSet.length) out += `<p class="o55-hint" data-key="notset">${U.esc(T('review.notSet', { list: notSet.join(', ') }))}</p>`;
@@ -263,20 +265,33 @@
 
   /* ------------------------------------------------------------------ finish protecting your work (after commit) */
   const STEPS = ['signin', 'test', 'kit', 'kitTest', 'policy'];
+  const NAS_PATH = '/volume1/backups/puppet-master';
+  const ACCESSED = (dest) => dest === 's3' || dest === 'sftp';
+  const signinStep = (dest) => (dest === 'nas' ? 'connect' : ACCESSED(dest) ? 'access' : 'signin');
+  const acc = (S) => (S.sess.backup.access = S.sess.backup.access || {});
+  /* a working SSH connection to the backup NAS already exists (set up for it here, or earlier in this run) */
+  const nasReady = (S) => { const n = S.sess.nas || {}, nas = O55.backup.nas(S); return !!(nas && n.device === nas.id && n.installed); };
   const kitWords = (S) => { const w = ['river', 'candle', 'orbit', 'maple', 'quiet', 'lantern', 'harbor', 'cedar', 'violet', 'pebble', 'ember', 'falcon'], r = U.rng('kit:' + md(S).project_name); return [0, 1, 2, 3, 4, 5].map(() => w[Math.floor(r() * w.length)]); };
   def('protect', {
     chapter: 'project', stage: 'automatic_preparation',
     scene: (S) => ({ id: 'safe', beat: 'protect', params: { backup: true, online: md(S).online_mode !== 'none' } }),
     eyebrow: () => T('protect.eyebrow'),
     title: () => T('protect.title'),
-    lead: (S) => T('protect.lead', { where: T('safe.backup.' + S.sess.backup.dest) }),
+    lead: (S) => T(S.sess.backup.dest === 'nas' ? 'protect.leadNas' : ACCESSED(S.sess.backup.dest) ? 'protect.leadAccess' : 'protect.lead', { where: O55.backup.label(S, S.sess.backup.dest) }),
     body(S) {
-      const b = S.sess.backup, where = T('safe.backup.' + b.dest), done = b.done || [];
+      const b = S.sess.backup, where = O55.backup.label(S, b.dest), done = b.done || [];
       const next = STEPS.find((s) => !done.includes(s));
       let out = `<ol class="o55-steplist" data-key="steps">` + STEPS.map((s) => {
         const state = done.includes(s) ? 'done' : s === next ? 'active' : 'waiting';
-        return `<li class="o55-step o55-step-${state}" data-key="st-${s}"><span class="o55-phmark" aria-hidden="true">${state === 'done' ? C.small('check', 13) : ''}</span><span>${U.esc(T('protect.steps.' + s, { where }))}</span></li>`;
+        return `<li class="o55-step o55-step-${state}" data-key="st-${s}"><span class="o55-phmark" aria-hidden="true">${state === 'done' ? C.small('check', 13) : ''}</span><span>${U.esc(T('protect.steps.' + (s === 'signin' ? signinStep(b.dest) : s), { where }))}</span></li>`;
       }).join('') + '</ol>';
+      /* connecting, by kind of place: the NAS over SSH with a key, a bucket or a server with its access details, a
+         cloud drive through its own sign-in page */
+      if (next === 'signin' && b.dest === 'nas') {
+        out += C.note(nasReady(S) ? T('protect.nasReuse', { name: where }) : T('protect.nasFlow', { name: where }), 'info', 'key');
+        out += `<p class="o55-hint" data-key="naspath">${U.esc(T('protect.nasPath', { name: where, path: NAS_PATH.split('/').filter(Boolean).join(' › ') }))}</p>`;
+      }
+      if (next === 'signin' && ACCESSED(b.dest)) out += O55.backup.accessFields(S, b.dest, acc(S));
       if (next === 'kit') out += C.note(T('protect.kitWhy'), 'info', 'key');
       if (done.includes('kit') && !done.includes('kitTest')) {
         out += `<div class="o55-kit" data-key="kit"><span class="o55-hint">${U.esc(T('protect.saved'))} · Recovery Kit – ${U.esc(md(S).project_name)}.pdf</span><span class="o55-kitwords">${kitWords(S).map((w, i) => `<span><i>${i + 1}</i>${U.esc(w)}</span>`).join('')}</span></div>`;
@@ -290,8 +305,15 @@
     foot(S) {
       const b = S.sess.backup, done = b.done || [], next = STEPS.find((s) => !done.includes(s));
       if (!next) return { back: false, primary: { label: T('chrome.continue'), do: 'finish' } };
-      const label = { signin: T('online.signin.signIn'), test: T('protect.steps.test'), kit: T('protect.save'), kitTest: T('ai.verify'), policy: T('protect.steps.policy') }[next];
-      return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label, do: 'step' } };
+      const label = { signin: b.dest === 'nas' || ACCESSED(b.dest) ? T('protect.connect') : T('online.signin.signIn'), test: T('protect.steps.test'), kit: T('protect.save'), kitTest: T('ai.verify'), policy: T('protect.steps.policy') }[next];
+      const waiting = next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessReady(b.dest, acc(S));
+      return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label, do: 'step', disabled: waiting, reason: T('protect.accessMissing') } };
+    },
+    /* back from the NAS's SSH steps, the connection is finished here; fields for a secret are empty when drawn afresh */
+    mounted(S, layer, fresh) {
+      const b = S.sess.backup, next = STEPS.find((s) => !(b.done || []).includes(s));
+      if (fresh && b.access) { O55.backup.accessReset(b.access); }
+      if (next === 'signin' && b.dest === 'nas' && nasReady(S) && !F.state(S, 'backup:signin')) this.do.step(S);
     },
     do: {
       step(S) {
@@ -302,13 +324,20 @@
           if (v !== kitWords(S)[3]) { b.wordBad = true; S.save(); O55.sound.play('error'); O55.ui.refresh(); return O55.ui.shake('word'); }
           b.wordBad = false;
         }
-        if (next === 'signin') O55.official.open(S, { name: T('safe.backup.' + b.dest), url: { nas: 'https://home-nas.local', gdrive: 'https://accounts.google.com', onedrive: 'https://login.live.com', s3: 'https://console.aws.amazon.com', sftp: 'https://example.com' }[b.dest] || 'https://example.com' });
-        F.op(S, 'backup:' + next, cmd, [{ key: next, ms: next === 'test' ? 1200 : next === 'signin' ? 1800 : 700 }], { payload: { destination: b.dest }, onDone: () => { if (!done.includes(next)) done.push(next); b.state = done.length === STEPS.length ? 'done' : 'partial'; S.save(); O55.ui.refresh(); } });
+        if (next === 'signin' && b.dest === 'nas' && !nasReady(S)) {
+          /* the same SSH steps as files on a NAS: its identity before trust, a key, one sign-in; then back here */
+          S.sess.nas = { purpose: 'dest', method: 'ssh', device: O55.backup.nas(S).id, trusted: false, installed: false, key: null };
+          S.save(); return O55.ui.go('nas-identity');
+        }
+        if (next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessTake(S, b.dest, acc(S))) { O55.sound.play('error'); O55.ui.refresh(); return; }
+        if (next === 'signin' && (b.dest === 'gdrive' || b.dest === 'onedrive')) O55.official.open(S, { name: O55.backup.label(S, b.dest), url: O55.fixtures.OFFICIAL.backup[b.dest] || null });
+        F.op(S, 'backup:' + next, cmd, [{ key: next, ms: next === 'test' ? 1200 : next === 'signin' ? 1800 : 700 }], { payload: { destination: b.dest, transport: b.dest === 'nas' ? 'ssh' : b.dest, path: b.dest === 'nas' ? NAS_PATH : null, credential_ref: ACCESSED(b.dest) ? 'credential:backup:' + b.dest : null }, onDone: () => { if (!done.includes(next)) done.push(next); b.state = done.length === STEPS.length ? 'done' : 'partial'; S.save(); O55.ui.refresh(); } });
       },
       later(S) { S.sess.backup.state = 'later'; S.save(); O55.ui.go('ai'); },
       finish(S) { O55.ui.go('ai'); }
     },
-    bind: { word() {} },
+    /* the kit word is read on submit; the access fields keep what is not secret, and only whether a secret was typed */
+    bind: Object.assign(O55.backup.accessBinds((S) => [S.sess.backup.dest, acc(S)]), { word() {} }),
     onBack: () => false
   });
 

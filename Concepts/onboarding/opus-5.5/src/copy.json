@@ -708,7 +708,8 @@
       "s3": "S3 or B2",
       "s3Sub": "A cloud storage bucket",
       "sftp": "Another server (SFTP or WebDAV)",
-      "none": "Not now"
+      "none": "Not now",
+      "nasSame": "Your Project's files are on {name}, so a backup there would not survive losing it. Choose another place."
     },
     "sync": "Your other Puppet Master devices see this Project automatically.",
     "notNow": "Not now"
@@ -805,7 +806,8 @@
     "finish": "Finish setup",
     "edit": "Edit",
     "leadLaterAccess": "No Project will be created now. Access to {name} from away is set up so it is ready when you are.",
-    "savedExisting": "Keeps its {kind} history"
+    "savedExisting": "Keeps its {kind} history",
+    "backupDropped": "Backup to {name} was taken off: your Project's files are on {name}. Choose another place for backups."
   },
   "creating": {
     "eyebrow": "Creating",
@@ -848,7 +850,9 @@
       "test": "Run a quick test",
       "kit": "Save your Recovery Kit",
       "kitTest": "Check your Recovery Kit",
-      "policy": "Turn on daily backups"
+      "policy": "Turn on daily backups",
+      "connect": "Connect to {where}",
+      "access": "Add the access details for {where}"
     },
     "kitWhy": "The Recovery Kit is the only way back in if this computer is lost. Keep it somewhere safe, like a password manager.",
     "save": "Save Recovery Kit",
@@ -856,7 +860,14 @@
     "checkLabel": "Type word {n} of your recovery phrase",
     "checkBad": "That isn't word {n}. Open the kit and try again.",
     "done": "Backups are on. Next one tonight.",
-    "later": "Do this later"
+    "later": "Do this later",
+    "leadNas": "Your backup to {where} goes over a secure connection, then one quick test.",
+    "leadAccess": "Your backup to {where} needs its access details, then one quick test.",
+    "nasReuse": "Uses the key you set up for {name}. No password needed.",
+    "nasFlow": "Puppet Master sets up a secure connection to {name} with a key. You sign in to it once.",
+    "nasPath": "Backups go to {path} on {name}.",
+    "connect": "Connect",
+    "accessMissing": "Fill in all three to connect."
   },
   "ai": {
     "eyebrow": "AI",
@@ -1396,5 +1407,24 @@
     "signup": "Your browser opened {name}'s sign-up page",
     "guide": "Your browser opened the install guide for {name}",
     "page": "Your browser opened {name}"
+  },
+  "access": {
+    "s3": {
+      "bucket": "Bucket",
+      "bucketPh": "s3://my-backups",
+      "bucketHint": "An S3 or B2 bucket made for backups.",
+      "keyId": "Access key ID",
+      "secret": "Secret access key",
+      "secretHint": "Kept in your computer's password store, never in Puppet Master's files."
+    },
+    "sftp": {
+      "address": "Server address",
+      "addressPh": "sftp://backup.example.com/puppet-master",
+      "addressHint": "sftp:// for SFTP, https:// for WebDAV.",
+      "user": "Username",
+      "password": "Password",
+      "passwordHint": "Kept in your computer's password store, never in Puppet Master's files."
+    },
+    "checking": "Checking the bucket"
   }
 }

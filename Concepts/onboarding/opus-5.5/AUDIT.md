@@ -11,8 +11,9 @@ are options available based on selections. "The logic is extremely important. Th
 3. Rule table: each rule -> where enforced -> verified by (scenario / explorer / schema conditional).
 4. Ordering review with rationale (packet > canon; research), change where wrong.
 5. Copy/details per screen given prior choices (names, places, services, plural/singular, labels "on Home NAS").
-6. Visual/motion/sound pass per screen x 8 themes x (1600, 760, 390, short) with harness invariants
-   (raw copy keys, clipping/overflow, overlaps, focus, disabled reasons), films of every transition.
+6. Visual/motion/sound pass per screen x 8 themes x (1600, short) with harness invariants (raw copy keys,
+   clipping/overflow, overlaps, disabled reasons), films of every transition. Jared, 2026-09-25: no phone widths and
+   no accessibility-only work ("This will not be phone accessible").
 
 ## Candidate issues found while mapping (verify before changing)
 - C1 `begin` -> later jumps straight to review. On a new-Server path this skips "Use it away from home?"
@@ -122,3 +123,55 @@ are options available based on selections. "The logic is extremely important. Th
 - C14 not an issue: on a Server path the sync line states a fact (every device on that Server sees the Project).
   C14b left as a gap: the setup plan has no Project sync field (63 properties, only client_mode), so the onboarding
   cannot record a sync choice without inventing canon; REPORT lists it.
+
+## Second pass (2026-09-25): the crawl, Jared's reports, resolutions
+Crawl of the fixed build (fresh world): 873 states, 5,667 clicks, 34 of 43 screens reached; 0 dead ends, 0 controls
+without a reason, 0 raw copy keys, 0 page errors. The rule table (R1-R13, tools/audit_rules.py) holds on every state;
+R1, R2 and R6 hold vacuously there, because away, like and protect sit behind deep chains the crawl did not reach
+(scenarios cover them: a1, v1, s02, b1, b2). The crawl's 11 "no-op" controls were official pages that open outside the
+window (7), a repeated wrong recovery phrase (1) and an already-selected SSH method (1); its one text spill was real.
+
+Found and fixed (each with the scenario that now guards it):
+- C29 NAS "I'll add the key myself": the check added the key itself, so it always passed; a new key's line was shown
+  before the key existed; every key showed the same line. Now the chosen key's public half, a new key made first, and
+  a real check that says "isn't on Home NAS yet" (n8, n9).
+- C30 After a reload a password or recovery phrase "typed" earlier still enabled the button over an empty field, and
+  the NAS key could be added with no password at all. Protected fields count only what is typed after the screen is
+  drawn; adding a key needs the password (n10).
+- C31 A failed submit that leaves the screen unchanged (the same wrong phrase, an empty passphrase, a wrong kit word)
+  gave no visible answer. The field now shakes (a flash under Reduced Motion).
+- C32 Official pages: the notice said "sign-in page" for install guides and sign-up pages; addresses were made from
+  names (azure_devops.com, huggingface.com, googleaistudio.com); "Browser didn't open?" gave a made-up device address
+  for services without a device sign-in. One table of known addresses, the typed address for self-managed services,
+  and a copied sign-in link where there is no device code.
+- C33 One unbreakable line (a public key) or the footer's buttons widened the content column past the window: the
+  key's Copy button was off-screen at every width. Both grids clamp their column; code lines wrap (state_shots).
+- C34 (Jared) Run Onboarding Again did not reset the tour: a tour left part-way resumed at Choose Teacher on the next
+  run's Take the Guided Tour. A rerun now ends a running tour and clears its record and chip; a tour taken at the end
+  of onboarding always starts at its first step (t7, x1).
+- C35 A replay counted the last run's question as sent: the chat's sent list was never cleared (t7).
+- C36 A rerun kept the fixture world and the operation registry: finished checks completed instantly on the rerun,
+  and one still running could report into the new run. A rerun now builds a clean world, cancels the old run's
+  operations at their next phase and drops their late reports; a Project being created is waited for, never
+  abandoned half-made (x1, x2).
+- C37 Closing during Creating and reopening in the same page left the window on Creating forever: the creation
+  finished into a stale copy of the session. Reopening the same run keeps the live session (x2).
+- C38 (Jared) Back in the tour could not show Show Me again: Back left the step done and the app as the learner had
+  left it. Back now rewinds to how the app looked when that step began (Chat's place, the dashboard, the page, the
+  guided conversation, persona and ELI5, the practice plan), and that step and every later one are undone; a Back
+  pressed while a step is arriving waits for it (t6).
+- C39 Backups: every destination was a browser sign-in (Home NAS opened a web page; S3/B2 and SFTP/WebDAV need access
+  details), and Home NAS was offered even when the Project's files live on it. Home NAS now connects over SSH (the
+  same key steps, then back), S3/B2 and SFTP/WebDAV take access details with the secret never stored, Home NAS is not
+  offered when the files are on it (with the reason), and Review drops such a choice with a note. An S3 restore source
+  takes access details too (b1-b4).
+- C40 No scenario covered Finish protecting your work; b1 and b2 walk it end to end.
+- C41 A key given twice in one screen definition silently replaced the first (the protect screen's field handlers);
+  build.py --check now fails on a duplicate key.
+
+Still open:
+- C24 a Connect route switch keeps a Server resolved through a web address or Remote Link.
+- Crawl the other worlds (returning, keyWorks, homeNasPm) so away, like and protect are reached by the crawler too.
+- "Keep this layout" keeps the Guided example thread in Chat; the plan removes the practice surface at the end, so the
+  practice conversation should probably leave with the tour either way (a decision for Jared).
+

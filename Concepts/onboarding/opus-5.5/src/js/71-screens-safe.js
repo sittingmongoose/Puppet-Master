@@ -299,6 +299,37 @@
     bind: { q(S, v) { S.sess.ui.repoQ = v; S.save(); O55.ui.refresh(); } }
   });
 
+  /* ================================================================== backup destinations */
+  /* The NAS a backup can go to is one found on this network. It is no backup if the Project's own files already live
+     on that NAS: on it over SSH, as its storage, or because the Puppet Master Server is that NAS. */
+  const backupNas = (S) => S.env.devices.find((x) => x.ssh) || null;
+  function filesOnNas(S) {
+    const d = md(S), n = S.sess.nas || {}, nas = backupNas(S); if (!nas) return false;
+    if (n.device === nas.id && n.purpose !== 'dest' && (d.project_transport === 'ssh' || (d.storage_mode === 'network_location' && d.storage_transport === 'ssh'))) return true;
+    const srv = d.server_mode !== 'this_device' ? S.env.pmServers.find((x) => x.id === d.server_ref) : null;
+    return !!(srv && srv.device === nas.id);
+  }
+  const backupLabel = (S, dest) => (dest === 'nas' ? (backupNas(S) || { name: T('safe.backup.nas') }).name : T('safe.backup.' + dest));
+  /* S3 or B2 and SFTP or WebDAV connect with access details, not a browser sign-in. The secret is read from its field
+     when it is used and handed to the credential owner; the session records only that one was typed. */
+  const ACCESS = { s3: [['bucket', 'text'], ['keyId', 'text'], ['secret', 'password']], sftp: [['address', 'text'], ['user', 'text'], ['password', 'password']] };
+  const accessFields = (S, kind, st) => ACCESS[kind].map(([k, type]) => C.field({ bind: 'acc-' + k, type, protected: type === 'password', label: T('access.' + kind + '.' + k),
+    value: type === 'password' ? '' : (st[k] || ''), placeholder: O55.tx('access.' + kind + '.' + k + 'Ph') || '', hint: O55.tx('access.' + kind + '.' + k + 'Hint') || '', autocomplete: type === 'password' ? 'off' : undefined })).join('');
+  const accessReady = (kind, st) => !!ACCESS[kind] && ACCESS[kind].every(([k, type]) => (type === 'password' ? !!st[k + 'Typed'] : F.nonEmpty(st[k])));
+  function accessBind(kind, st, S, key, v) {
+    const f = (ACCESS[kind] || []).find(([k]) => k === key); if (!f) return;
+    if (f[1] === 'password') { const had = !!st[key + 'Typed']; st[key + 'Typed'] = v.length > 0; if (had !== st[key + 'Typed']) { S.save(); O55.ui.refresh(); } }
+    else { st[key] = v; S.save(); O55.ui.refresh(); }
+  }
+  /* read and clear the secret field; false when it is empty (after a reload the field always is) */
+  function accessTake(S, kind, st) {
+    const f = ACCESS[kind].find(([, t]) => t === 'password'), i = S.root.querySelector('#o55f-acc-' + f[0]), ok = !!(i && i.value);
+    if (i) i.value = ''; st[f[0] + 'Typed'] = false; S.save(); return ok;
+  }
+  const accessReset = (st) => { Object.keys(st || {}).forEach((k) => { if (/Typed$/.test(k)) st[k] = false; }); };
+  const accessBinds = (get) => Object.fromEntries(['bucket', 'keyId', 'secret', 'address', 'user', 'password'].map((k) => ['acc-' + k, (S, v) => { const [kind, st] = get(S); accessBind(kind, st, S, k, v); }]));
+  O55.backup = { nas: backupNas, filesOnNas, label: backupLabel, accessFields, accessReady, accessTake, accessReset, accessBinds };
+
   /* ================================================================== keep your work safe */
   const BACKUPS = [['nas', 'server'], ['gdrive', 'cloud'], ['onedrive', 'cloud'], ['s3', 'vault'], ['sftp', 'server']];
   def('safe', {
@@ -330,10 +361,11 @@
       const online = `<div class="o55-saferow" data-key="r-online">${C.glyph('cloud')}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('safe.online.title'))}</span><span class="o55-rowmeta">${U.esc(onlineState)}</span></span>${onlineBtn}</div>`;
       /* 3. backup */
       const bk = S.sess.backup.dest;
-      const backup = `<div class="o55-saferow" data-key="r-backup">${C.glyph('vault')}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('safe.backup.title'))}</span><span class="o55-rowmeta">${U.esc(bk ? T('safe.backup.' + bk) + ' · ' + T('safe.backup.note') : T('safe.backup.later') + ' · ' + T('safe.backup.sub'))}</span></span>${C.link(bk ? T('chrome.change') : T('safe.backup.later') + ' ›', 'backup')}</div>`;
+      const backup = `<div class="o55-saferow" data-key="r-backup">${C.glyph('vault')}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('safe.backup.title'))}</span><span class="o55-rowmeta">${U.esc(bk ? backupLabel(S, bk) + ' · ' + T('safe.backup.note') : T('safe.backup.later') + ' · ' + T('safe.backup.sub'))}</span></span>${C.link(bk ? T('chrome.change') : T('safe.backup.later') + ' ›', 'backup')}</div>`;
       let out = hist + online + backup;
       if (S.sess.ui.sheet === 'backup') {
-        out += C.sheet(S, 'backup', T('safe.backup.sheetTitle'), C.cards('bdest', BACKUPS.map(([v, g]) => ({ v, glyph: g, title: T('safe.backup.' + v), sub: O55.tx('safe.backup.' + v + 'Sub') || '', quiet: true })).concat([{ v: 'none', glyph: 'history', title: T('safe.backup.none'), quiet: true }]), bk || 'none', { cls: 'o55-choices-quiet' }) + C.note(T('safe.backup.note'), 'info', 'lock'), O55.ui.btn({ label: T('chrome.done'), do: 'sheet-close' }, 'o55-primary'));
+        out += C.sheet(S, 'backup', T('safe.backup.sheetTitle'), C.cards('bdest', BACKUPS.filter(([v]) => v !== 'nas' || backupNas(S)).map(([v, g]) => ({ v, glyph: g, title: backupLabel(S, v), sub: O55.tx('safe.backup.' + v + 'Sub') || '', quiet: true,
+          disabled: v === 'nas' && filesOnNas(S), reason: T('safe.backup.nasSame', { name: backupLabel(S, 'nas') }) })).concat([{ v: 'none', glyph: 'history', title: T('safe.backup.none'), quiet: true }]), bk || 'none', { cls: 'o55-choices-quiet' }) + C.note(T('safe.backup.note'), 'info', 'lock'), O55.ui.btn({ label: T('chrome.done'), do: 'sheet-close' }, 'o55-primary'));
       }
       if (O55.project.onServer(S)) out += C.note(T('safe.sync'), 'info', 'link');
       return out;
@@ -344,7 +376,7 @@
       filesafe(S) { O55.draft.set(md(S), { filesafe: !md(S).filesafe }); S.save(); O55.ui.refresh(); },
       online(S) { OL(S).purpose = 'copy'; S.save(); O55.ui.go('online-service'); },
       backup(S) { S.sess.ui.sheet = 'backup'; S.save(); O55.ui.refresh(); },
-      bdest(S, v, el) { S.sess.backup.dest = v === 'none' ? null : v; S.save(); O55.ui.refresh(); if (v !== 'none') O55.ui.charm(el, T('safe.backup.' + v), 'vault'); },
+      bdest(S, v, el) { S.sess.backup.dest = v === 'none' ? null : v; S.save(); O55.ui.refresh(); if (v !== 'none') O55.ui.charm(el, backupLabel(S, v), 'vault'); },
       next(S) { O55.ui.go(md(S).server_mode === 'new_server' ? 'away' : 'review'); }
     },
     leave(S) { if (S.sess.ui.sheet === 'backup') { S.sess.ui.sheet = null; S.save(); } }

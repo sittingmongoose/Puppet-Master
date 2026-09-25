@@ -138,10 +138,10 @@
     return (rsa ? 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ' : 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI') + body + ' ' + (k.pubComment || k.comment || 'puppet-master');
   }
   /* a new key made just for Puppet Master (made on this computer; only its public half ever leaves it) */
+  const K_PM = () => ({ id: 'k-pm', file: '~/.ssh/puppet_master_ed25519', comment: 'Puppet Master', pubComment: 'puppet-master@MacBook-Pro', type: 'ed25519', where: 'file' });
   function makeNewKey(S) {
-    const n = N(S);
-    if (!S.env.here.sshKeys.some((x) => x.id === 'k-pm')) S.env.here.sshKeys.push({ id: 'k-pm', file: '~/.ssh/puppet_master_ed25519', comment: 'Puppet Master', pubComment: 'puppet-master@MacBook-Pro', type: 'ed25519', where: 'file' });
-    n.key = 'k-pm';
+    if (!S.env.here.sshKeys.some((x) => x.id === 'k-pm')) S.env.here.sshKeys.push(K_PM());
+    N(S).key = 'k-pm';
   }
   function keyStatus(S, k) {
     const d = dev(S);
@@ -304,6 +304,8 @@
       /* a backup source goes back to the restore (its backups are listed there), everything else picks a folder */
       next(S) {
         if (N(S).purpose === 'backup') { const r = S.sess.restore || {}; r.nasReady = true; S.save(); return O55.ui.go(r.scope !== 'project' ? 'r-unlock' : 'r-pick'); }
+        /* a backup destination: back to Finish protecting your work, which finishes connecting with this key */
+        if (N(S).purpose === 'dest') return O55.ui.go('protect');
         O55.ui.go('nas-folder');
       }
     },
@@ -434,7 +436,7 @@
     const d = S.env.devices.find((x) => x.id === n.device); if (!d) return;
     if (n.trusted) S.env.here.knownHosts[d.address] = d.hostKey;
     if (n.installed && n.key && !d.authorized.includes(n.key)) d.authorized.push(n.key);
-    if (n.key === 'k-pm' && !S.env.here.sshKeys.some((x) => x.id === 'k-pm')) S.env.here.sshKeys.push({ id: 'k-pm', file: '~/.ssh/puppet_master_ed25519', comment: 'Puppet Master', type: 'ed25519', where: 'file' });
+    if (n.key === 'k-pm' && !S.env.here.sshKeys.some((x) => x.id === 'k-pm')) S.env.here.sshKeys.push(K_PM());
     if (S.sess.ops && S.sess.ops['sshcheck:' + d.id] && S.sess.ops['sshcheck:' + d.id].state === 'done') d.ssh = true;
   }]);
   O55.nas = { dev, N, pubLine };

@@ -106,7 +106,34 @@ def lint_sources() -> list[str]:
             if BANNED_COPY.search(node) and not path.split('.')[-1].startswith('detail'):
                 problems.append(f'banned word in copy.json{path}: {node[:80]}')
     walk(copy_json(), '')
+    problems.extend(duplicate_keys())
     return problems
+
+
+def duplicate_keys() -> list[str]:
+    """A key given twice in one screen or tour-step definition: JavaScript keeps the later one without a word, which
+    once dropped the backup access fields' handlers (a second `bind:` further down the protect screen). Top-level keys
+    are the 4-space-indented `key:` / `key(` / `async key(` lines of each def('id', {...}) or S({ id: ... })."""
+    out = []
+    for p in sorted((SRC / 'js').glob('*.js')):
+        cur, keys = None, {}
+        for n, line in enumerate(p.read_text(encoding='utf-8').split('\n'), 1):
+            m = re.match(r"\s*(?:def|S)\((?:'([\w-]+)',\s*)?\{(?:\s*id:\s*'([\w-]+)')?", line)
+            if m and (m.group(1) or m.group(2)):
+                cur, keys = m.group(1) or m.group(2), {}
+                for k in re.findall(r"[,{]\s*(\w+)\s*:", line):
+                    if k != 'id':
+                        keys.setdefault(k, []).append(n)
+                continue
+            if cur is None:
+                continue
+            m = re.match(r"^    (?:async\s+)?(\w+)\s*(?::|\()", line)
+            if m:
+                keys.setdefault(m.group(1), []).append(n)
+            if re.match(r"^  \S", line):
+                out += [f'duplicate key {k!r} in {cur} ({p.name} lines {ns})' for k, ns in keys.items() if len(ns) > 1]
+                cur = None
+    return out
 
 
 PATCHES = [

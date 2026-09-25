@@ -171,6 +171,7 @@
 
   /* ================================================================== Restore (shared) */
   const R = (S) => (S.sess.restore = S.sess.restore || { scope: 'full' });
+  const racc = (S) => (R(S).access = R(S).access || {});
   const restoreChapter = (S) => (R(S).scope === 'project' ? 'project' : 'computer');
   def('r-source', {
     chapter: 'computer', stage: 'first_project',
@@ -189,13 +190,20 @@
         { v: 'cloud', glyph: 'cloud', title: T('restore.source.cloud.title'), sub: T('restore.source.cloud.sub') }
       ], r.source, { label: T('restore.source.title') });
       if (r.source === 'nas') out += C.cards('device', S.env.devices.filter((d) => d.ssh).map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address })), r.device, { cls: 'o55-choices-quiet' });
-      if (r.source === 'cloud') out += C.segmented({ do: 'cloud', value: r.cloud || 'gdrive', label: T('restore.source.cloud.title'), options: [{ v: 'gdrive', label: T('safe.backup.gdrive') }, { v: 'onedrive', label: T('safe.backup.onedrive') }, { v: 's3', label: 'S3 / B2' }] });
+      if (r.source === 'cloud') out += C.segmented({ do: 'cloud', value: r.cloud || 'gdrive', label: T('restore.source.cloud.title'), options: [{ v: 'gdrive', label: T('safe.backup.gdrive') }, { v: 'onedrive', label: T('safe.backup.onedrive') }, { v: 's3', label: T('safe.backup.s3') }] });
+      /* a bucket is reached with its access details (a cloud drive signs in on its own page, next) */
+      if (r.source === 'cloud' && r.cloud === 's3' && !r.cloudSignedIn) out += O55.backup.accessFields(S, 's3', racc(S));
+      if (r.source === 'cloud' && r.cloud === 's3' && F.state(S, 'restore-s3') && F.state(S, 'restore-s3').state === 'running') out += F.phases(S, 'restore-s3', ['check'], { check: T('access.checking') });
       return out;
     },
     foot(S) {
-      const r = R(S), ready = r.source && (r.source !== 'nas' || r.device);
-      return { primary: { label: T('chrome.continue'), do: 'next', disabled: !ready, reason: T('missing.backup') } };
+      const r = R(S), s3 = r.source === 'cloud' && r.cloud === 's3' && !r.cloudSignedIn;
+      const ready = r.source && (r.source !== 'nas' || r.device) && (!s3 || O55.backup.accessReady('s3', racc(S)));
+      return { primary: { label: T('chrome.continue'), do: 'next', disabled: !ready, reason: s3 && r.source ? T('protect.accessMissing') : T('missing.backup') } };
     },
+    mounted(S, layer, fresh) { if (fresh && R(S).access) O55.backup.accessReset(R(S).access); },
+    /* the access fields' handlers come from O55.backup (defined with the other backup helpers, loaded later) */
+    bind: new Proxy({}, { get: (t, key) => (O55.backup ? O55.backup.accessBinds((S) => ['s3', racc(S)])[key] : undefined) }),
     do: {
       source(S, v) { R(S).source = v; if (v === 'cloud' && !R(S).cloud) R(S).cloud = 'gdrive'; S.save(); O55.ui.refresh(); },
       device(S, v) { R(S).device = v; S.save(); O55.ui.refresh(); },
@@ -209,7 +217,12 @@
           const n = S.sess.nas = { purpose: 'backup', method: 'ssh', device: r.device, trusted: false, installed: false, key: null };
           S.save(); return O55.ui.go('nas-identity');
         }
-        if (r.source === 'cloud' && !r.cloudSignedIn) return O55.official.signIn(S, { service: r.cloud, name: { gdrive: 'Google Drive', onedrive: 'OneDrive', s3: 'S3 / B2' }[r.cloud], kind: 'cloud', then: 'r-unlock', done: 'restoreCloud' });
+        if (r.source === 'cloud' && r.cloud === 's3' && !r.cloudSignedIn) {
+          if (!O55.backup.accessTake(S, 's3', racc(S))) { O55.sound.play('error'); return O55.ui.refresh(); }
+          return F.op(S, 'restore-s3', 'cmd.auth_profile.sign_in', [{ key: 'check', ms: 900 }], { payload: { service: 's3', method: 'access_key', credential_ref: 'credential:restore:s3' },
+            onDone: () => { r.cloudSignedIn = true; S.save(); O55.ui.go('r-unlock'); } }); /* like every cloud source */
+        }
+        if (r.source === 'cloud' && !r.cloudSignedIn) return O55.official.signIn(S, { service: r.cloud, name: T('safe.backup.' + r.cloud), kind: 'cloud', then: 'r-unlock', done: 'restoreCloud' });
         O55.ui.go(r.source === 'kit' || r.scope !== 'project' ? 'r-unlock' : 'r-pick');
       }
     }

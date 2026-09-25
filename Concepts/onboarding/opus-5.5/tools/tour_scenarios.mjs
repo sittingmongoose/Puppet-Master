@@ -267,7 +267,8 @@ def('t5', 'A missing target offers Take me there', async (t, A) => {
 /* ------------------------------------------------------------------------------------------ Back, starting over */
 const done = (id) => new Function(`return window.O55.tour.state().done.includes(${JSON.stringify(id)})`);
 const chatHost = (t) => t.ev(() => window.PM_HOME_WORKSPACE.layout.surfaces.find((s) => s.surface_kind === 'chat').host);
-const showMeOffered = (t) => t.ev(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="showMe"]'));
+/* Show Me is offered once the step's callout is drawn (on a loaded machine that can take a few seconds) */
+const showMeOffered = (t) => t.until(() => !(window.O55.tour.st && window.O55.tour.st.entering) && !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="showMe"]'), 'Show Me offered', 4000).then(() => true, () => false);
 def('t6', 'Back rewinds a step, so it can be done again or watched with Show Me', async (t, A) => {
   const before = await counters(t);
   const persona0 = await t.ev(() => window.O55.tour.snapshot().persona);
