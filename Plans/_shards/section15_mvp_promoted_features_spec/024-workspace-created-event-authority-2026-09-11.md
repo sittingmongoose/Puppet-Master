@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L11411-L11620
 
-Source SHA256: `2ad113a824abd0dc87b7b03cddeaccdc5e24e1191e156b98ec6fa22f5d5aca68`
+Source SHA256: `c3ff162423288f90649d88e0d4eb38c44547919691ebd2c1a7f1939d4887ec32`
 
 ---
 
@@ -205,7 +205,7 @@ acceptance_criteria:
   - Replay, deletion, recovery and withdrawal cannot dispatch, recreate a process, restore a controller, attach prompt material or create UsageRecords.
   - A separately admitted v2 reader must use SP-266's full SP-278 frontier/source token and authenticated checkpoint handoff; this conditional target does not make v2 current.
   - Lost-acknowledgement and uncertain-append recovery resolves an issued original creation append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
-validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, Plans/browser_workspace_created_checkpoint_v2.schema.json]
+validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, Plans/browser_workspace_created_checkpoint_v2.schema.json, "Native execution of the SMPFS-167-A006 resolve.v2 receipt-join, supplied-receipt, wrong-class, first-mint-refusal and restored-work pairs remains required."]
 risk_class: browser_workspace_creation_or_replay_authority_escape
 reasoning_tier: high
 context_scope: browser_workspace_created_single_family

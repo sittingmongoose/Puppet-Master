@@ -11605,7 +11605,7 @@ acceptance_criteria:
   - Replay, deletion, recovery and withdrawal cannot dispatch, recreate a process, restore a controller, attach prompt material or create UsageRecords.
   - A separately admitted v2 reader must use SP-266's full SP-278 frontier/source token and authenticated checkpoint handoff; this conditional target does not make v2 current.
   - Lost-acknowledgement and uncertain-append recovery resolves an issued original creation append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
-validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, Plans/browser_workspace_created_checkpoint_v2.schema.json]
+validation_surfaces: [Plans/browser_workspace_created_contracts.schema.json, Plans/browser_workspace_created_contract_fixtures.json, tests/test_pm_browser_workspace_created.py, Plans/browser_workspace_created_checkpoint_v2.schema.json, "Native execution of the SMPFS-167-A006 resolve.v2 receipt-join, supplied-receipt, wrong-class, first-mint-refusal and restored-work pairs remains required."]
 risk_class: browser_workspace_creation_or_replay_authority_escape
 reasoning_tier: high
 context_scope: browser_workspace_created_single_family
@@ -11821,7 +11821,7 @@ acceptance_criteria:
   - Original-result retry and historical replay cannot reset again, rewind a newer generation or recreate unavailable owner custody.
   - The sole historical reader adopts the complete SP-278 token through SP-282 without acquiring live Browser, Usage or Prompt authority.
   - Failed, uncertain or lost-acknowledgement append recovery resolves an issued original reset append only through storage.first_append_receipt.resolve.v2 under SP-286/CV-339, joining the original eleven-field receipt and four-field original result to the original identity and synced barrier class; when no original event exists, only the original append identity is retried through the unchanged shared idempotency route with the same original input; no supplied row, locator, receipt or flag substitutes, the owner never requests a first mint, no full-value claim is made without separately adopting storage.first_append_receipt.resolve_full_value.v1, and restored or lost work is never reaccepted as fresh.
-validation_surfaces: [Plans/browser_workspace_reset_contracts.schema.json, Plans/browser_workspace_reset_contract_fixtures.json, tests/test_pm_browser_workspace_reset.py]
+validation_surfaces: [Plans/browser_workspace_reset_contracts.schema.json, Plans/browser_workspace_reset_contract_fixtures.json, tests/test_pm_browser_workspace_reset.py, "Native execution of the SMPFS-168-A005 resolve.v2 receipt-join, supplied-receipt, wrong-class, first-mint-refusal, no-original-event retry and restored-work pairs remains required."]
 risk_class: browser_reset_generation_replay_or_append_uncertainty
 reasoning_tier: high
 context_scope: browser_workspace_reset_single_family

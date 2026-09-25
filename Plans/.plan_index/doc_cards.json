@@ -16183,7 +16183,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "2ad113a824abd0dc87b7b03cddeaccdc5e24e1191e156b98ec6fa22f5d5aca68",
+      "sha256": "c3ff162423288f90649d88e0d4eb38c44547919691ebd2c1a7f1939d4887ec32",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 168,
@@ -16208,6 +16208,8 @@
         "If live PTY cannot survive, UI says review-limited and offers restart/rerun, not fake continuity.",
         "If retention cap prunes, transcript chunk references prove what remains and what was pruned.",
         "Long-running spam commands throttle announcements without hiding state.",
+        "Native execution of the SMPFS-167-A006 resolve.v2 receipt-join, supplied-receipt, wrong-class, first-mint-refusal and restored-work pairs remains required.",
+        "Native execution of the SMPFS-168-A005 resolve.v2 receipt-join, supplied-receipt, wrong-class, first-mint-refusal, no-original-event retry and restored-work pairs remains required.",
         "No control sequence bytes leak to visible grid when split across reads",
         "OSC 133/633 marker loss/degradation is visible.",
         "OSC 52 read/write respects policy and remote trust.",
@@ -19985,7 +19987,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T01:26:18Z",
+  "generated_at_utc": "2026-09-25T01:27:05Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
