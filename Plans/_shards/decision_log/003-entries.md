@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L2157
+Source lines: L13-L2180
 
-Source SHA256: `0ca4f10131297113a0413c3bfb0d9d3481a8bd7301aea3aac7c3eafa8c2db506`
+Source SHA256: `a8c5e8023f5d58b7cb9ce1ae7607576e094df26f77663f6304e28656d4f74163`
 
 ---
 
@@ -2153,3 +2153,26 @@ The Decision Log entry that each registration landing of the seven coordination 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_OPEN_QUESTIONS.md`, SHA-256 `678b9a32a0942fff08cea4127d9c52d7e73774509869c88958f466d6b8d0171a`; Step 9 procedure record `reports/event-authority-20260911/step-09-procedure-20260924.md` (open question 2, D-02); post-August admission receipt `reports/event-authority-20260911/step-10-post-august-admission-receipt.json`.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-077, ContractName:Plans/Decision_Log.md#DL-078, ContractName:Plans/event_family_registry.json
+
+### DL-094: `coordination.agent_registered` is registered, and the approved checkpoint moves to registry revision 2026-09-25.1
+
+Recorded on 2026-09-25 under DL-078's standing rule, for the Storage admission landing of `coordination.agent_registered` (branch `plans/ea-s09-coord-registered-20260925`). Under DL-093 this entry is Jared's decision entry for `coordination.agent_registered` in the sense of DL-077. Jared does not approve this admission himself; he sees the checkpoint change in the landing record, as DL-078 provides.
+
+**What is registered.** The family `coordination.agent_registered` (`event-family-coordination-agent-registered`, revision 1.0.0) is appended to `Plans/event_family_registry.json` as its 43rd family. The row is the one prepared in `Plans/coordination_event_admission.json`, unchanged (canonical SHA-256 `1602bb6d33b63f79b7dc1daf4502c0aadbb26a4aa871a2963b2510a5d0353b40`). The registry moves from revision `2026-09-11.2` with 42 families (SHA-256 `0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842`) to revision `2026-09-25.1` with 43 families (SHA-256 `4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70`). The binding authority is DL-045: the owners wrote the family's missing technical bindings after the documented per-family search (`reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md`), and Storage registers one family per landing.
+
+**The checkpoint.** In the same landing, `EVENT_FAMILY_REGISTRY_REVISION` and `EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT` in `scripts/pm_pnc019_currentness.py` and their provenance comment move to `2026-09-25.1` and 43, and the test pins in `tests/test_pm_testing_session_events.py` and `tests/test_pm_github_project_integration.py` move to 43. The derived plan index is regenerated. The implementation-readiness gate report is left to the designated Plans agent's reseal.
+
+**The procedure.** The registration passes the whole Step 9 procedure that DL-078 names:
+
+1. **The full Event Authority contract.** OSI-438, CV-353 with `Plans/coordination_event_payloads.schema.json`, SP-320 with `Plans/coordination_projection_contracts.schema.json`, ATS-058, the admission ledger and the contract fixtures are on `main` since `4a2135b940`. Their blind form-driven review, `/mnt/Cursor/PM-Experiments/review-ea-s09-coordination-prep-20260925/`, found them landing-ready after its second cycle. Its four residuals, R4-01 (should fix) and the notes R4-02 to R4-04, are repaired on this landing's branch, as are the oracle gaps that the family's first independent grade found.
+2. **This admission's own blind form-driven review.** The landing record names it and its verdict.
+3. **Its own Storage admission landing**, one family per landing. That landing adds this entry.
+4. **The coordinator's landing go**, given by the Event Authority program's host session.
+
+**Depth and admission record.** The depth assessment is `reports/event-authority-20260911/step-09-depth-coordination.agent_registered.json`, SHA-256 `54346d8b231b7080b487ed5a8e7332cc0d6202a8177309a10d772b796266509c`. It is an independent grade of this family at registry revision `2026-09-25.1`: all twelve criteria pass on current owner text, and native execution is not run. The DL-077 admission record is `reports/event-authority-20260911/admission-records/coordination.agent_registered.json`, and it cites this entry as its `decision_ref`.
+
+This entry admits only `coordination.agent_registered`. The six other coordination families stay prepared and unregistered, each for its own landing, and SP-320 keeps this family contract-only, with nothing appended, until all seven are admitted. The entry changes no other checkpoint, validator or seal condition, and no other registry row.
+
+SourceRef: depth assessment `reports/event-authority-20260911/step-09-depth-coordination.agent_registered.json`, SHA-256 `54346d8b231b7080b487ed5a8e7332cc0d6202a8177309a10d772b796266509c`; admission record `reports/event-authority-20260911/admission-records/coordination.agent_registered.json`; Step 9 procedure record `reports/event-authority-20260911/step-09-procedure-20260924.md`; preparation report `reports/event-authority-20260911/step-09-coordination-prep-20260925.md`; preparation review `/mnt/Cursor/PM-Experiments/review-ea-s09-coordination-prep-20260925/RECHECK.md`.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-078, ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Decision_Log.md#DL-093, ContractName:Plans/event_family_registry.json, ContractName:Plans/coordination_event_admission.json

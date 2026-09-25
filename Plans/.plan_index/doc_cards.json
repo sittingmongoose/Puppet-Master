@@ -5420,10 +5420,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 52,
+        "False": 53,
         "True": 38
       },
-      "heading_count": 187,
+      "heading_count": 189,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5481,6 +5481,7 @@
         "Plans/bootstrap/Bootstrap_Design_Brief.md",
         "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
         "Plans/bootstrap/Codex_Prompts.md",
+        "Plans/coordination_event_admission.json",
         "Plans/event_family_registry.json",
         "Plans/event_family_registry.schema.json",
         "Plans/event_record.schema.json",
@@ -5500,6 +5501,7 @@
         "Plans/storage_value_registry.schema.json",
         "Plans/touch_closure.json",
         "reports/event-authority-20260911/admission-records",
+        "reports/event-authority-20260911/admission-records/coordination.agent_registered.json",
         "reports/event-authority-20260911/step-09-procedure-20260924.md",
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-new-contracts-verify.py",
@@ -5507,9 +5509,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 7706,
+      "line_count": 7805,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 90,
+      "plan_unit_count": 91,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5600,6 +5602,7 @@
         "DL-091",
         "DL-092",
         "DL-093",
+        "DL-094",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5641,6 +5644,7 @@
         "event_authority_binding_scope_expansion",
         "event_authority_checkpoint_approval_drift",
         "event_authority_decision_drift",
+        "event_authority_registration_checkpoint_drift",
         "event_authority_seal_check_drift",
         "extraction_mapping_overauthority",
         "forge_wiring_provider_vocabulary_drift",
@@ -5697,16 +5701,16 @@
         "weak_integration_underclassification",
         "workflow_verification_exception_route_drift"
       ],
-      "sha256": "0ca4f10131297113a0413c3bfb0d9d3481a8bd7301aea3aac7c3eafa8c2db506",
+      "sha256": "a8c5e8023f5d58b7cb9ce1ae7607576e094df26f77663f6304e28656d4f74163",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 90
+        "accepted": 91
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 87
+        "requirement": 88
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -5742,6 +5746,7 @@
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "python3 scripts/pm_coordination_events.py",
         "reports/event-authority-20260911/decision-responses.jsonl",
         "reports/event-authority-20260911/step-08-compaction-detail-cleanup-answer.json",
         "reports/event-authority-20260911/step-08-compaction-detail-cleanup-presentation.json",
@@ -20042,7 +20047,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T12:41:46Z",
+  "generated_at_utc": "2026-09-25T13:21:23Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20050,13 +20055,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3545,
+      "False": 3546,
       "True": 3197
     },
-    "plan_unit_count": 6742,
+    "plan_unit_count": 6743,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6551,
+      "accepted": 6552,
       "retired": 182,
       "superseded": 9
     },
@@ -20123,7 +20128,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5296,
+      "requirement": 5297,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
