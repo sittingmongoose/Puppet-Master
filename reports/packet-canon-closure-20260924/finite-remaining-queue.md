@@ -76,8 +76,9 @@ closures. LSP and Debug are already specified; raw desktop maps existing IDs.
 PROV012 recovery meanings and PROV020 catalog LKG/history are repaired, with
 Pin's actual writer still unbound. PROV016 concurrency applicability, PROV022
 evidence preservation/disclosure and MGR010 safe test-versus-detection prose are
-now repaired. MGR019 retains only general non-file/provider-artifact action
-applicability. See the companion reports; frozen earlier overlays remain history.
+now repaired. MGR019's general non-file/provider-artifact action applicability is
+also repaired in `artifact-plugin-connection-boundaries.md`; native actions remain
+unbuilt. See the companion reports; frozen earlier overlays remain history.
 
 Remaining selected-input/result composition uses these existing source IDs:
 
@@ -105,10 +106,11 @@ precedence; and the additional Ledger query grammar. No defaults are invented.
 Cookie telemetry remains conditional, not a required engine, and cross-Vault
 sharing constraints do not require a deduplication feature.
 
-Two other bounded seams: Client–Server relation to Environment supervisor authority
-is unbound (no second supervisor or guessed identity equivalence); the exact Ego
-legacy Codex import acceptance needs original manifest/skill input custody. A
-synthetic old PM hooks/tools migration fixture cannot stand in for that package.
+Two other bounded seams now have explicit boundary/acceptance prose, not closure:
+Client–Server relation to Environment supervisor authority is unbound (no second
+supervisor or guessed identity equivalence); the exact Ego legacy Codex import
+acceptance needs original manifest/skill input custody. A synthetic old PM
+hooks/tools migration fixture cannot stand in for that package.
 
 Consolidation snapshot before the additional Forge original-binding row:
 `/mnt/Cursor/PM-Experiments/settings-compound-overlay-20260925/FINITE-QUEUE-CONSOLIDATION.md`,

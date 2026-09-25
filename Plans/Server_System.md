@@ -232,6 +232,7 @@ acceptance_criteria:
   - Native and web Clients use the same commands, identities, receipts, and projection cursors.
   - Standalone and container bootstrap preserve requested/effective execution_form, require a prior claim receipt, validate the execution baseline, and enable normal Server execution.
   - Client tab or process loss does not cancel Server-owned work.
+  - One authoritative relation lifecycle delegates transport supervision to SIR; Client/Server identity is not silently equated with ExecutionEnvironmentId, and the exact relation-to-supervisor binding remains required before composition is claimed.
   - Explicit Server stop is permission-gated, drains or checkpoints work, and exposes truthful blocked or recovery-required outcomes.
 validation_surfaces: [future multi-Client cursor convergence tests, future native web parity tests, future GUI-close continuation tests]
 risk_class: client_lifetime_becoming_server_lifetime
@@ -464,6 +465,8 @@ The schema root carries aggregate identity `x-schema-id = pm.server_system.contr
 | Session | Binds Client, Server, trust generation, access-policy generation, protocol version, issued/expiry timestamps, and state; no secret token bytes. |
 | Connection projection | Uses `loading`, `cached`, `connecting`, `current`, `stale`, `offline`, `unauthorized`, `protocol_mismatch`, `identity_mismatch`, `degraded`, `blocked`, or `recovery_required`. |
 | Bootstrap run | Binds prior claim receipt, requested/effective `execution_form`, standalone/container platform, durable roots/mount proof, immutable execution baseline, remote-access disposition, `ObservableWork`, receipt, and failure/currentness state; control-plane-only Server bootstrap is forbidden. |
+
+All surfaces using the same authenticated Client–Server relation consume one authoritative connection lifecycle; endpoint changes, reconnect and multiple domain subscriptions must not create competing relation-level retry/authentication loops. Stable Client and Server identity, trust/session and cursor catch-up remain Server-owned; endpoint/route health does not become identity or domain synchronization truth. Shared Integration Runtime remains the sole transport-supervision owner. Its ExecutionEnvironmentId/supervisor-generation contract is not renamed to client_id/server_id, and a Server connection projection is not a second supervisor. The concrete relation-to-environment supervisor binding must be supplied by those existing owners before a consumer can claim this composition; missing binding cannot be filled by matching labels, addresses or display context. Client disconnection still never cancels Server-owned work.
 
 ### 3.3 Event Authority candidates
 
