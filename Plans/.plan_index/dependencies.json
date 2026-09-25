@@ -6287,6 +6287,7 @@
     "PLUG-066",
     "MA-045",
     "MA-066",
+    "ATS-058",
     "OSI-435",
     "PSMERA-025",
     "CV-344",
@@ -12836,6 +12837,21 @@
       "edge_type": "depends_on",
       "from": "ATS-057",
       "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-058",
+      "to": "CV-353"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-058",
+      "to": "OSI-438"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-058",
+      "to": "SP-320"
     },
     {
       "edge_type": "depends_on",
@@ -98903,7 +98919,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-25T08:07:37Z",
+  "generated_at_utc": "2026-09-25T08:08:31Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -111926,6 +111942,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "coordination_event_oracles_seven_families",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-058",
+      "reasoning_tier": "high",
+      "risk_class": "coordination_oracle_gap_or_false_native_claim",
+      "source_location": {
+        "heading": "ATS-058 — Coordination event oracles for the seven agent families (DL-045, 2026-09-25)",
+        "heading_level": 2,
+        "heading_line": 5186,
+        "line": 5231,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_criterion"
     },
     {
       "context_scope": "bitbucket_provider_identity",
@@ -213509,10 +213542,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15732,
+    "depends_on_edge_count": 15735,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18431,
-    "node_count": 6741,
+    "edge_count": 18434,
+    "node_count": 6742,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0

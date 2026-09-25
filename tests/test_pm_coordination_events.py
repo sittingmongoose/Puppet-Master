@@ -129,6 +129,15 @@ class StaticReportTests(unittest.TestCase):
             with self.subTest(event=event_type):
                 self.assertTrue(all(value > 0 for value in per_family[event_type].values()), per_family[event_type])
 
+    def test_ats_entry_names_every_native_obligation(self):
+        self.assertEqual(CHECK.ats_oracle_failures(), [])
+        with ScratchRoot(CHECK.ATS_PATH, CHECK.FIXTURE_PATH) as root:
+            path = root / CHECK.ATS_PATH
+            path.write_text(path.read_text(encoding="utf-8").replace("`COORD-RACE-01`", "COORD-RACE"), encoding="utf-8")
+            self.assertEqual(CHECK.ats_oracle_failures(root=root), [{"error": "ats_native_oracle_not_named", "detail": ["COORD-RACE-01"]}])
+            path.write_text("# no entry\n", encoding="utf-8")
+            self.assertEqual(errors(CHECK.ats_oracle_failures(root=root)), {"ats_coordination_oracle_entry_missing"})
+
     def test_registry_membership_matches_ledger_status(self):
         admitted_types = {row["event_type"] for row in LEDGER["rows"] if row["admission_status"] == CHECK.ADMITTED}
         registered = {row["event_type"] for row in REGISTRY["families"] if row["event_type"].startswith("coordination.")}

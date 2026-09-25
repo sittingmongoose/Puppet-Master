@@ -46,6 +46,7 @@ FIXTURE_PATH = "Plans/coordination_event_contract_fixtures.json"
 REGISTRY_PATH = "Plans/event_family_registry.json"
 REGISTRY_SCHEMA_PATH = "Plans/event_family_registry.schema.json"
 SVR_PATH = "Plans/storage_value_registry.json"
+ATS_PATH = "Plans/Automated_Testing_System.md"
 SEARCH_REPORT = "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md"
 SEMANTIC_OWNER_DOC = "Plans/orchestrator-subagent-integration.md#coordination-event-authority-dl-045-2026-09-25"
 PAYLOAD_OWNER_DOC = "Plans/Contracts_V0.md#closed-coordination-payload-schema-dl-045-2026-09-25"
@@ -1333,6 +1334,18 @@ def validation_case_failures(ledger: dict[str, Any] | None = None, fixtures: dic
     return failures
 
 
+def ats_oracle_failures(fixtures: dict[str, Any] | None = None, *, root: Path = ROOT) -> list[dict[str, Any]]:
+    """The ATS oracle entry names every NOT_RUN native obligation of the fixtures."""
+    fixtures = load(FIXTURE_PATH, root) if fixtures is None else fixtures
+    text = (root / ATS_PATH).read_text(encoding="utf-8")
+    marker = '<a id="coordination-event-oracles-dl-045-2026-09-25"></a>'
+    if marker not in text:
+        return [{"error": "ats_coordination_oracle_entry_missing"}]
+    section = text.split(marker, 1)[1]
+    missing = [oracle["oracle_id"] for oracle in fixtures["required_native_oracles"] if f"`{oracle['oracle_id']}`" not in section]
+    return [{"error": "ats_native_oracle_not_named", "detail": missing}] if missing else []
+
+
 def validate(*, root: Path = ROOT) -> dict[str, Any]:
     """Run every static check; the report claims no admission and no native proof."""
     failures: list[dict[str, Any]] = []
@@ -1344,6 +1357,7 @@ def validate(*, root: Path = ROOT) -> dict[str, Any]:
         ("registry_preflight", registry_preflight_failures),
         ("storage_value_registry", svr_failures),
         ("validation_cases", validation_case_failures),
+        ("ats_oracles", ats_oracle_failures),
     )
     for name, check in sections:
         failures.extend(dict(failure, check=name) for failure in check(root=root))

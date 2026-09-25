@@ -1755,10 +1755,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 24,
+        "False": 25,
         "True": 33
       },
-      "heading_count": 123,
+      "heading_count": 124,
       "implementation_surfaces": [
         "Concepts/pm7-tools/global_hover_tags_source.py",
         "Concepts/pm7-tools/home_workspace_source.py",
@@ -1788,6 +1788,8 @@
         "Plans/Wiring_Matrix.md",
         "Plans/Wiring_Matrix.production.json",
         "Plans/WorktreeGitImprovement.md",
+        "Plans/coordination_event_admission.json",
+        "Plans/coordination_event_contract_fixtures.json",
         "Plans/event_family_registry.json",
         "Plans/event_payloads/workspace_layout_changed.schema.json",
         "Plans/event_record.schema.json",
@@ -1841,6 +1843,7 @@
         "scripts/pm-shared-runtime-command-contracts.py",
         "scripts/pm-touch-closure-verify.py",
         "scripts/pm-working-notebook-contracts.py",
+        "scripts/pm_coordination_events.py",
         "scripts/pm_packet_audit_census.py",
         "scripts/pm_packet_audit_verdicts.py",
         "tests/fixtures/pm7_shared",
@@ -1849,9 +1852,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 5183,
+      "line_count": 5302,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 57,
+      "plan_unit_count": 58,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -1909,7 +1912,8 @@
         "ATS-054",
         "ATS-055",
         "ATS-056",
-        "ATS-057"
+        "ATS-057",
+        "ATS-058"
       ],
       "reasoning_tiers": [
         "high",
@@ -1921,6 +1925,7 @@
         "compaction_manual_entrypoint_validation_gap",
         "containerized_host_test_proof_gap",
         "contract_fixture_drift_or_false_runtime_claim",
+        "coordination_oracle_gap_or_false_native_claim",
         "cross_agent_browser_mutation_or_state_bleed",
         "discovery_validation_gap",
         "dropped_packet_acceptance_or_false_execution_claim",
@@ -1968,10 +1973,10 @@
         "web_gui_dev_test_authority_leak",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "8c6415acf4cc3d87c760cc8c2f15fd124ffa45b509d7c37d10a3a7f9f795298a",
+      "sha256": "a00520c830f4bd0ae90567af6da0e61b875c8552f68d90fe5e0923bfc933f9cd",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 57
+        "accepted": 58
       },
       "title": "Automated Testing System",
       "unit_type_counts": {
@@ -1980,7 +1985,7 @@
         "requirement": 24,
         "schema_contract": 3,
         "validation_contract": 1,
-        "validation_criterion": 25
+        "validation_criterion": 26
       },
       "validation_surfaces": [
         "Concepts/pm7-tools/build_pm7.py final generated-artifact static gate",
@@ -2003,6 +2008,8 @@
         "Plans/assistant_plan_cancel_contracts/owner-field-map.json",
         "Plans/assistant_plan_cancel_contracts/publication-dependencies.json",
         "Plans/assistant_plan_cancel_contracts/semantic-obligations.json",
+        "Plans/coordination_event_admission.json",
+        "Plans/coordination_event_contract_fixtures.json",
         "Plans/external_research_contract_fixtures.json",
         "Plans/external_research_contracts.schema.json",
         "Plans/forge_backup_tsnet_acceptance.json",
@@ -2081,6 +2088,7 @@
         "independent complete original-source/schema/role preservation audit",
         "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
         "node Concepts/pm7-tools/verify/smoke.mjs",
+        "python3 -m unittest tests.test_pm_coordination_events",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
@@ -2115,6 +2123,7 @@
         "python3 scripts/pm-ui-command-response.py",
         "python3 scripts/pm-validate-pm7-gui-fixtures.py validate",
         "python3 scripts/pm-working-notebook-contracts.py",
+        "python3 scripts/pm_coordination_events.py",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
         "scripts/pm-integration-packet-audit-work.py",
@@ -20024,7 +20033,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T08:07:37Z",
+  "generated_at_utc": "2026-09-25T08:08:31Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20032,13 +20041,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3544,
+      "False": 3545,
       "True": 3197
     },
-    "plan_unit_count": 6741,
+    "plan_unit_count": 6742,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6550,
+      "accepted": 6551,
       "retired": 182,
       "superseded": 9
     },
@@ -20131,7 +20140,7 @@
       "ui_wiring_rule": 1,
       "validation": 13,
       "validation_contract": 1,
-      "validation_criterion": 28,
+      "validation_criterion": 29,
       "validation_requirement": 3,
       "validation_rule": 24,
       "variant_contract": 2,
