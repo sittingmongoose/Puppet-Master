@@ -2628,6 +2628,100 @@
             "lines_changed": 25
           }
         }
+      },
+      "B2-03": {
+        "severity": "should_fix",
+        "applied_at_utc": "2026-09-25T06:12:11Z",
+        "parent_commit": "354fafda79e76e7f20ea9ef66f279b69677178f7",
+        "finding": "DL-092's application paragraph lets the Storage owner materialize the Chat content class if the Goal-named object cannot be reused, then said \"No policy object is created and no policy value changes.\"",
+        "repair": "In DL-092's prose the sentence now reads \"This entry itself creates no policy object and changes no policy value; the only new policy object it allows is the Chat content class, if the Storage owner's reuse check materializes it with the same lifetime.\" The DL-092 response row's effect, which said \"No new policy, owner text, registry, admission, depth, readiness or seal change.\", now reads \"This answer itself creates no policy object and changes no policy value; the only new policy object it allows is the Chat content class, if the Storage owner's reuse check materializes it with the same lifetime. No owner text, registry, admission, depth, readiness or seal change.\" The Decision_Log shards and the plan index are regenerated.",
+        "files": {
+          "Plans/.plan_index/coverage_report.json": {
+            "before_sha256": "295237872d1663e661e2c8de9dae22019a49b4823d466002b4546b7ce6735b88",
+            "after_sha256": "ba8b5bfe2387cd889cf87fd18a321fd565eaabfe412f39081b85c51ac9e3a83d",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/dependencies.json": {
+            "before_sha256": "663e18f7c72c6f0316a6bac2c5d0bc8d6d1c285cc35413bcd52a0f4f051cdefd",
+            "after_sha256": "4cf4926a3bb9e3d2887ce2f9bcb2c1b0ef6acb944a38dcad1eeb97171126aac6",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/doc_cards.json": {
+            "before_sha256": "99e5954cb8b50b3768bd67cb63f3aee031c1a726a4977b715920088994a8ae6f",
+            "after_sha256": "23ee7201b3d9678430f2305c3b11a7881661ae0230c8e5285b74efed397e748d",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/node_readiness_report.json": {
+            "before_sha256": "18e7f9eb9c594814d3295b83d5b3585de9a803e3344eda4726fe0fa289e3ec77",
+            "after_sha256": "4295271e20154be3fe56429970b307c3ddd09366ec4d75fbe6c679c0da070f9b",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/.plan_index/plan_units.jsonl": {
+            "before_sha256": "0cf044b216fed356e1211964b77959aa1259af882f416675dedf551467fe3a74",
+            "after_sha256": "3a7f39a161738d16df9d65532835fa4daefc4c3b4f678d494ce86bade7cb41e4",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/Decision_Log.md": {
+            "before_sha256": "6a2e3530e8a06983d4b65c31452883897438444903f64e5f73e92152edb1eb47",
+            "after_sha256": "8baf80de1f2735f194fea323c4b8ee0c6033c32766b1c1dc20599dceb6e773fc",
+            "kind": "edited"
+          },
+          "Plans/_shards/decision_log/00-index.md": {
+            "before_sha256": "65a37d7f33ea39ae0327e701292bae784c1caff2a3dea46a7040b64e5265d99c",
+            "after_sha256": "3d789c219a1cfc29c10279cd561c7e0309a02e0d854fd550beab77e03ac36058",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/001-preamble.md": {
+            "before_sha256": "73bfbcb11402de3521fcb60f25e596702348be609e970b1c634df32e75fe1c2d",
+            "after_sha256": "b2dbc960a313bb061b4a213074e3fb7f03a725e300556d62818a0753e066afef",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/002-purpose.md": {
+            "before_sha256": "9ea82a0fa4c2d3deef088f3682f62e557a03aa57e2f3e088c8843fd18942c4b4",
+            "after_sha256": "e8c6970787cc506914a0a83cfc82012a864af3b6197fa731d6ca414b11a902df",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/003-entries.md": {
+            "before_sha256": "da3fad2951a2a7fef968364182d2f0699074bc2cad9edb995d64be476927c22c",
+            "after_sha256": "37859b2f3fbcacaad0f7d78721d8a3be9a7e0a62d93d3a6999f6bffc04562ebd",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/004-owner-consumer-map.md": {
+            "before_sha256": "d556d8353f094f53981676657d5a772eb53e0799b57b0797773b9733aefc4176",
+            "after_sha256": "e4b3a6e955b362afc92394ab2f7c1b16cda801355103412f1443a4cecb776d62",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/005-planunits.md": {
+            "before_sha256": "2d293e846b972272402a477d1b3232176175b24a53a9cb131408534e5e362e73",
+            "after_sha256": "53b361e530d3f4eaf532c555f89e5b29aba8fa859354a70b7b278579bb1d5f69",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/006-migration-coverage.md": {
+            "before_sha256": "0cbecf948f3a4966ebe4be6cc48a152f0e5fbb252574789146d607a0b79cfe7b",
+            "after_sha256": "27f8eef49788a35a345787f84bec5c09aacd757057cb81e3951454af24ce45de",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md": {
+            "before_sha256": "62d309c120495d8b8c5c9be0d09215e849c10711fcdc0a1f760d9a72a3c2dc19",
+            "after_sha256": "79c65793a0fb6696fe3ddcc365ba9df2249389073cadc1a47154ac69170cf941",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md": {
+            "before_sha256": "5a3af1c49c2a5c401ea222726fccf3ad9410b09df9d616ecd3b7eb2d32be78da",
+            "after_sha256": "e84e004099b84f8007c0bdb25fd512dc1ba9c3f4f091a809771a724b80c41a7f",
+            "kind": "derived (regenerated)"
+          },
+          "Plans/_shards/decision_log/manifest.json": {
+            "before_sha256": "b4ada78bbd4a9d074142f79a4483f95a220491b89207c82757553039f6cb72dc",
+            "after_sha256": "d014e8eb21646c6b499348a897ad362418a85c81eab08ac4d8df342bc74ad9af",
+            "kind": "derived (regenerated)"
+          },
+          "reports/event-authority-20260911/decision-responses.jsonl": {
+            "before_sha256": "4c9dbff2132df50e14d93205560248f7ef27e72bcea54317a57538cfd55e15d9",
+            "after_sha256": "2bdea50c08e38276682050bc5e12f5b349636e61cc0cb5a00b2ccc580379d10f",
+            "kind": "edited"
+          }
+        }
       }
     }
   }
