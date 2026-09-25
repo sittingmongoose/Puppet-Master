@@ -230,5 +230,12 @@ Still open:
   beginning idles in its own way (seed sways, folder peeks, cloud drifts, server hums, rewind ticks back; Retro in pixel
   steps) and a new one pops in with a swing. Scenarios m1 (frame-measured, four families) and m2.
 
+- C47 (Jared) Jujutsu could not be found: the Git / Jujutsu choice sat behind a closed "How is it saved?" disclosure,
+  though PWIZ-024 says Safe History explicitly selects Git or Jujutsu. It is now a visible "Kept with: Git | Jujutsu"
+  choice inside the Safe History row, with a line saying what each is (Jujutsu: a newer tool built on Git, works with
+  GitHub, not a website or an account). It is never on the online-copy row. A folder that already has history keeps
+  it and shows no switch; a chosen tool this computer lacks is installed during Creating (the install phase now follows
+  the chosen tool, not Git alone). Scenarios j1-j3.
+
 Still open: noAi has not been crawled, and homeNasPm was crawled before the pairing screen existed; the Glass family often switches on low-resource mode on
 this VM (no GPU), which by design stops its idles.

@@ -342,10 +342,21 @@
     lead: () => T('safe.lead'),
     body(S) {
       const d = md(S), fi = S.sess.folderInfo, existing = d.project_mode === 'existing_local' && fi && fi.history;
-      /* 1. Safe History */
-      const hist = `<div class="o55-saferow" data-key="r-hist">${C.glyph('history')}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('safe.history.title'))}</span><span class="o55-rowmeta">${U.esc(existing ? T('safe.history.subExisting') : T('safe.history.sub'))}</span></span>${C.pill('ready', d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git')}</div>`
-        + C.details(S, 'hist', T('safe.history.detailsLabel'), C.cards('backend', [{ v: 'git', glyph: 'history', title: T('safe.history.git'), sub: T('safe.history.gitSub'), quiet: true }, { v: 'jujutsu', glyph: 'rewind', title: T('safe.history.jj'), sub: T('safe.history.jjSub'), quiet: true }], d.history_backend, { cls: 'o55-choices-quiet' })
-          + C.toggle({ do: 'filesafe', on: d.filesafe, label: T('safe.history.filesafe'), sub: T('safe.history.filesafeSub') }));
+      /* 1. Safe History: how versions are kept on this computer, Git or Jujutsu, chosen in plain sight (PWIZ-024). Both
+         are local version-control tools with no account; Jujutsu keeps its history in Git's format, so either works
+         with every online copy. It is never offered as a website, account or online copy. A folder that already has
+         history keeps its own. */
+      const jj = d.history_backend === 'jujutsu', kind = existing ? (fi.history === 'jujutsu' ? 'Jujutsu' : 'Git') : jj ? 'Jujutsu' : 'Git';
+      const missing = !existing && d.server_mode === 'this_device' && !(jj ? S.env.here.jj : S.env.here.git);
+      let hist = `<div class="o55-saferow" data-key="r-hist">${C.glyph('history')}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('safe.history.title'))}</span><span class="o55-rowmeta">${U.esc(existing ? T('safe.history.subExisting') : T('safe.history.sub'))}</span></span>${C.pill('ready', kind)}`;
+      if (!existing) hist += `<div class="o55-inline o55-howsaved" data-key="hist-how"><span class="o55-hint">${U.esc(T('safe.history.howLabel'))}</span>`
+        + C.segmented({ do: 'backend', value: d.history_backend, label: T('safe.history.howLabel'), options: [{ v: 'git', label: T('safe.history.git') }, { v: 'jujutsu', label: T('safe.history.jj') }] }) + '</div>'
+        + `<p class="o55-hint o55-howhint" data-key="hist-hint">${U.esc(T(jj ? 'safe.history.jjSub' : 'safe.history.gitSub'))}</p>`;
+      hist += '</div>';
+      if (existing) hist += C.note(T('safe.history.keeps', { kind }), 'info', 'history');
+      else if (missing) hist += C.note(T('safe.history.install', { kind }), 'info', 'history');
+      hist += C.details(S, 'hist', T('safe.history.detailsLabel'), `<p>${U.esc(T('safe.history.detail'))}</p>`
+        + C.toggle({ do: 'filesafe', on: d.filesafe, label: T('safe.history.filesafe'), sub: T('safe.history.filesafeSub') }));
       /* 2. online copy */
       let onlineState, onlineBtn = '';
       /* a folder that already has an online copy keeps it: show it, and do not offer a second one */

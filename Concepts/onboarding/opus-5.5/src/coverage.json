@@ -83,7 +83,7 @@
   {
    "field": "history_backend",
    "schema": "enum [\"git\", \"jujutsu\"]",
-   "mapped": "safe details: Git (recommended) / Jujutsu"
+   "mapped": "safe: Safe History row, \"Kept with\" Git (default) | Jujutsu, always visible; a folder with its own history keeps it (j1, j2, j3)"
   },
   {
    "field": "filesafe",

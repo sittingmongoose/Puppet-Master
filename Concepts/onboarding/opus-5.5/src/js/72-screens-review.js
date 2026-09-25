@@ -136,7 +136,8 @@
     if (d.project_mode === 'existing_online') list.push('folder', 'clone');
     if (d.project_mode === 'restore') list.push('restore');
     const hasHistory = d.project_mode === 'existing_local' && S.sess.folderInfo && S.sess.folderInfo.history;
-    if (!hasHistory) list.push(S.env.here.git ? 'history' : 'historyInstall');
+    /* the tool the person chose (Git or Jujutsu) is installed first when this computer lacks it */
+    if (!hasHistory) list.push((d.history_backend === 'jujutsu' ? S.env.here.jj : S.env.here.git) ? 'history' : 'historyInstall');
     if (d.online_mode === 'new' && !cm.skipOnline) list.push('online');
     if (d.settings_transfer.mode === 'copy_from_project') list.push('settings');
     if (d.server_mode === 'new_server' && d.remote_mode !== 'local_or_vpn') list.push('remote');
@@ -194,7 +195,7 @@
     }
     const phases = order.map((k) => ({ key: k, ms: PH_MS[k], fail: () => {
       if (k === 'folder' || (k === 'device' && !cm.projectId) || (k === 'restore' && !cm.projectId) || (k === 'clone' && !cm.projectId)) ensureProject(S);
-      if (CHILD[k]) O55.owners.dispatch(CHILD[k], { draft: d.project_draft_ref }, S.ctx(), () => ({ ok: true }));
+      if (CHILD[k]) O55.owners.dispatch(CHILD[k], Object.assign({ draft: d.project_draft_ref }, CHILD[k] === 'cmd.source_control.backend.select' ? { backend: d.history_backend, install: k === 'historyInstall' } : {}), S.ctx(), () => ({ ok: true }));
       if (k === 'remote') O55.owners.dispatch(remoteCmd(d), { draft: d.project_draft_ref }, S.ctx(), () => ({ ok: true }));
       if (k === 'online') {
         const f = S.env.failures.online_copy;
@@ -230,7 +231,7 @@
     body(S) {
       const d = md(S), cm = S.sess.commit || {}, svc = forgeName(d);
       const labels = { folder: T('creating.phases.folder'), device: T('creating.phases.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || P().serverName(S) }), clone: T('creating.phases.clone', { service: svc }), restore: T('creating.phases.restore'),
-        history: T('creating.phases.history'), historyInstall: T('creating.phases.historyInstall'), online: T('creating.phases.online', { service: svc }), settings: T('creating.phases.settings', { project: (S.sess.like && S.sess.like.name) || '' }), remote: T('creating.phases.remote'), check: T('creating.phases.check') };
+        history: T('creating.phases.history', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }), historyInstall: T('creating.phases.historyInstall', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }), online: T('creating.phases.online', { service: svc }), settings: T('creating.phases.settings', { project: (S.sess.like && S.sess.like.name) || '' }), remote: T('creating.phases.remote'), check: T('creating.phases.check') };
       let out = F.phases(S, cm.key, phasesFor(S), labels, cm.settingsCount != null ? { settings: cm.settingsCount ? cm.settingsCount + ' settings' : '' } : null);
       if (cm.state === 'failed') {
         const msg = cm.code === 'name_taken' ? T('creating.taken', { service: svc, repo: d.repository_name }) : cm.code === 'network' ? T('creating.network', { service: svc }) : cm.code === 'settings_rejected' ? (cm.settingsError || '') : cm.code || '';

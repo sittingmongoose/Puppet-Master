@@ -681,12 +681,16 @@
       "sub": "Safe History — undo any change, any time",
       "subExisting": "Keeps the folder's own history",
       "git": "Git",
-      "gitSub": "Recommended. Works with GitHub and most tools.",
+      "gitSub": "Git is the most common way to keep versions. Recommended. Works with GitHub and every other online service.",
       "jj": "Jujutsu",
-      "jjSub": "Newer. Easier to undo mistakes.",
+      "jjSub": "Jujutsu is a newer tool built on Git. Mistakes are easier to undo, and it still works with GitHub and the others. It is not a website or an account.",
       "filesafe": "FileSafe",
       "filesafeSub": "Keeps a safety copy of each file before big changes",
-      "detailsLabel": "How is it saved?"
+      "detailsLabel": "More about keeping versions",
+      "howLabel": "Kept with",
+      "install": "{kind} isn't on this computer yet. Puppet Master installs it while your Project is created.",
+      "keeps": "This folder already keeps its versions with {kind}, so Puppet Master keeps using it.",
+      "detail": "Git and Jujutsu both save every version of your Project on this computer. Neither needs an account, and an online copy works with either, because Jujutsu keeps its history in Git's format."
     },
     "online": {
       "title": "Online copy",
@@ -818,8 +822,8 @@
     "lead": "This takes a moment. You can close the window; it keeps going.",
     "phases": {
       "folder": "Making the folder",
-      "history": "Starting Safe History",
-      "historyInstall": "Installing Safe History",
+      "history": "Starting Safe History with {kind}",
+      "historyInstall": "Installing {kind} for Safe History",
       "clone": "Copying from {service}",
       "restore": "Bringing back the backup",
       "device": "Connecting to {device}",

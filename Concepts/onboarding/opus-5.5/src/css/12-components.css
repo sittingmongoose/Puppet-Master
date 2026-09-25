@@ -108,6 +108,9 @@
 /* keep-your-work-safe rows */
 .o55-saferow { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 12px 14px; border-radius: var(--o55-card-r); border: 1px solid var(--o55-line); background: var(--o55-card-bg); }
 .o55-saferow .o55-glyph { width: 38px; height: 38px; }
+/* how versions are kept (Git or Jujutsu), under the Safe History row and in line with its text */
+.o55-saferow .o55-howsaved { grid-column: 2 / -1; gap: 10px; }
+.o55-saferow .o55-howhint { grid-column: 2 / -1; margin: -4px 0 0; max-width: 58ch; }
 
 /* review + summary rows */
 .o55-revrow { display: grid; grid-template-columns: 128px minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 7px 0; border-bottom: 1px solid color-mix(in srgb, var(--o55-line) 70%, transparent); font-size: 14px; }

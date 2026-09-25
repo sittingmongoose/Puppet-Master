@@ -389,6 +389,40 @@ def('b5', 'homeNasPm', 'Backup to a NAS that runs Puppet Master: pairs once, the
   A.ok(!(await d.commands()).some((c) => c.startsWith('cmd.ssh_connection')), 'no SSH key command');
   await finishProtect(d, A);
 });
+/* Safe History: Git or Jujutsu is chosen in plain sight on Keep your work safe. Jujutsu is a local version-control tool
+   (history kept in Git's format), never an account, website or online copy. */
+const onSafe = async (d, name) => { await d.openOnboarding(); await toName(d); await d.type('name', name); await d.primary(); };
+def('j1', 'fresh', 'Keep your work safe offers Git or Jujutsu in plain sight; Jujutsu is used for the new Project', async (d, A) => {
+  await onSafe(d, 'Garden planner'); A.eq(await d.screen(), 'safe', 'keep your work safe');
+  A.ok(await d.state(() => { const s = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-key="r-hist"] [data-o55-do="backend"][data-arg="jujutsu"]'); return !!(s && s.getClientRects().length); }), 'Jujutsu is visible without opening anything');
+  A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-seg button.o55-on[data-arg="git"]')), 'Git is the default');
+  A.ok(!(await d.state(() => /jujutsu/i.test(document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-key="r-online"]').textContent))), 'not offered as an online copy');
+  await d.act('backend', 'jujutsu');
+  A.ok(await d.state(() => /not a website or an account/.test(document.querySelector('[data-key="hist-hint"]').textContent) && /GitHub/.test(document.querySelector('[data-key="hist-hint"]').textContent)), 'says what Jujutsu is, and that it works with GitHub');
+  A.eq((await d.draft('main')).history_backend, 'jujutsu', 'draft records jujutsu');
+  await d.primary(); A.eq(await d.screen(), 'review', 'review');
+  A.ok(await d.state(() => /Jujutsu/.test(document.querySelector('#pm-o55-onboarding [data-key="rv-history"]') ? document.querySelector('#pm-o55-onboarding [data-key="rv-history"]').textContent : document.body.textContent)), 'Review names Jujutsu');
+  await reviewAndCreate(d); A.eq(await d.state(() => window.O55.S.sess.commit.state), 'done', 'created');
+  A.ok(await d.state(() => window.O55.owners.log.some((e) => e.id === 'cmd.source_control.backend.select' && e.ok)), 'the Source Control owner selects the backend');
+  A.capture('j1 jujutsu', await d.draft('main'));
+});
+def('j2', 'fresh', "A folder that already keeps its versions with Jujutsu keeps it: no choice to change", async (d, A) => {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
+  await d.act('pick', 'existing'); await d.act('sub', 'folder'); await d.primary(); await d.act('pick', '~/Code/budget-tracker', { settle: 1200 });
+  await d.primary(); A.eq(await d.screen(), 'name', 'name'); await d.primary();
+  A.eq(await d.screen(), 'safe', 'keep your work safe');
+  A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="backend"]')), 'no Git/Jujutsu switch for existing history');
+  A.ok(await d.state(() => /already keeps its versions with Jujutsu/.test(document.body.textContent)), 'says it keeps Jujutsu');
+  A.eq((await d.draft('main')).history_backend, 'jujutsu', 'draft keeps jujutsu');
+});
+def('j3', 'fresh', "Jujutsu chosen on a computer that doesn't have it: installed while the Project is created", async (d, A) => {
+  await d.openOnboarding(); await d.page.evaluate(() => { window.O55.S.env.here.jj = false; }); await toName(d); await d.type('name', 'Garden planner'); await d.primary();
+  await d.act('backend', 'jujutsu');
+  A.ok(await d.state(() => /isn't on this computer yet/.test(document.body.textContent)), 'says it will be installed');
+  await d.primary(); await reviewAndCreate(d);
+  A.ok(await d.state(() => /Installing Jujutsu/.test(document.body.textContent) || (window.O55.S.sess.ops && Object.keys(window.O55.S.sess.ops).some((k) => /commit/.test(k) && (window.O55.S.sess.ops[k].phases || []).some((p) => p.key === 'historyInstall')))), 'an install phase for Jujutsu');
+  A.eq(await d.state(() => window.O55.S.sess.commit.state), 'done', 'created');
+});
 def('c4', 'fresh', 'No VPN switch: a line says a VPN works, and a VPN this device is on is searched too', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:office\"]')", 'found on the VPN', 6000);
