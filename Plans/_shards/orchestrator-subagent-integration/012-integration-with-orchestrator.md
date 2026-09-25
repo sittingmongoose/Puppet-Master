@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L349-L31814
 
-Source SHA256: `b8c18a07e9af4bf20c2b449afe2cbf87c71a124aac69cddd58bd7800ccfc8a79`
+Source SHA256: `0d288937eeba2e94a472905c80e83d97e60c15da731563ed93039181d356638c`
 
 ---
 
@@ -3467,7 +3467,7 @@ This section is a **newly authored owner contract under DL-045**. It is the sema
 
 Nothing here admits a family. Each of the seven stays quarantined before append or projection, and absent from `Plans/event_family_registry.json`, until its own Storage admission landing, one family per landing. Preparing the seven together is not admission.
 
-Where earlier text in this document differs, this section governs. That covers the family list under "Canonical active-agent coordination records and projections", the `AgentCoordinator` sketch, the `RegisterAgent` example, the "Coordination event updates" bullets, and Gaps #30, #31, #33 and #34. The Contracts payload rows govern over every sketch struct in this document.
+Where other text in this document that predates this section differs, this section governs, wherever that text stands. That covers the family list under "Canonical active-agent coordination records and projections", the `AgentCoordinator` sketch, the `RegisterAgent` example, the "Coordination event updates" bullets, "When to use coordination modes", Gaps #30, #31, #33 and #34, and OSI-258 to OSI-264. The Contracts payload rows govern over every sketch struct in this document.
 
 **Agent identity.** `agent_id` names one registration of one agent. The component that registers the agent allocates it once, before the first append attempt, and reuses it for every retry of that registration. It is unique within its project for the lifetime of the app data root. A registered `agent_id` is never registered again, even after its terminal event. The sketch value `format!("{}-{}", subagent_name, node_id)` repeats across runs, so it is source lineage only. The subagent or persona name goes in `agent_type`.
 
@@ -3532,7 +3532,7 @@ The lifecycle enum applies to every coordination agent, including node agents, b
 | `files_being_edited` | the same, OSI-259 and OSI-260 | one `coordination.agent_file_ownership_updated` per claimed path |
 | `current_operation` | the same | `coordination.agent_operation_updated` |
 | `started_at` | the same | `started_at_utc` |
-| `last_update` | the same, and Gap #30's heartbeat | none: runtime liveness, not a record |
+| `last_update` | the same, Gap #30's heartbeat and OSI-260's projection of it | none: runtime liveness, not a record |
 | `expected_agent_revision` | the `RegisterAgent` example | `agent_revision` (1 at registration) and `expected_previous_revision` on later events |
 | `unregister_agent(&str)` | the tier execution sketch and the `RegisterAgent` example | `unregister_agent(AgentTerminalUpdate)` |
 | `FileActivityClaim.file_path: PathBuf`, `claimed_by`, `last_event_id` | Gap #33 | `path_ref` and `path_hash` (SP-320's recipe), the envelope's `agent_id`, the projection's source event |
