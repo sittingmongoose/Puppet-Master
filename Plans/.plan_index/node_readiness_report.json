@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-25T10:37:42Z",
+  "generated_at_utc": "2026-09-25T11:00:19Z",
   "gui_related_units": {
     "count": 3200,
     "units": [
@@ -4719,8 +4719,8 @@
         "source_location": {
           "heading": "BRS-011 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 1007,
-          "line": 1009,
+          "heading_line": 1015,
+          "line": 1017,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4731,7 +4731,7 @@
           "heading": "BRS-012 - RecoverySet, Recovery Kit, Key Slots, And Human Custody",
           "heading_level": 3,
           "heading_line": 540,
-          "line": 542,
+          "line": 548,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4741,8 +4741,8 @@
         "source_location": {
           "heading": "BRS-013 - Eleven Destination Families And Shared Authentication Consumption",
           "heading_level": 3,
-          "heading_line": 581,
-          "line": 583,
+          "heading_line": 589,
+          "line": 591,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4752,8 +4752,8 @@
         "source_location": {
           "heading": "BRS-014 - Snapshot Browse, Retrieve, Compare, Export, And Archive Delivery",
           "heading_level": 3,
-          "heading_line": 623,
-          "line": 625,
+          "heading_line": 631,
+          "line": 633,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4763,8 +4763,8 @@
         "source_location": {
           "heading": "BRS-015 - Scheduler, Retention, Prune, Verification, And Drill Policy",
           "heading_level": 3,
-          "heading_line": 680,
-          "line": 682,
+          "heading_line": 688,
+          "line": 690,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4774,8 +4774,8 @@
         "source_location": {
           "heading": "BRS-016 - Serialized Supersession, Fresh Recovery, And Consumer Truth",
           "heading_level": 3,
-          "heading_line": 739,
-          "line": 741,
+          "heading_line": 747,
+          "line": 749,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4785,8 +4785,8 @@
         "source_location": {
           "heading": "BRS-017 - Coordinator, Capture Barrier, Independent Repositories, And Durable Authority",
           "heading_level": 3,
-          "heading_line": 1058,
-          "line": 1060,
+          "heading_line": 1066,
+          "line": 1068,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4796,8 +4796,8 @@
         "source_location": {
           "heading": "BRS-018 - Destination, Headless Authentication, Recovery Key, And Human Delivery Safety",
           "heading_level": 3,
-          "heading_line": 1101,
-          "line": 1103,
+          "heading_line": 1109,
+          "line": 1111,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4807,8 +4807,8 @@
         "source_location": {
           "heading": "BRS-019 - Locate, Browse, Restore, Retention, And Durable Operational Safety",
           "heading_level": 3,
-          "heading_line": 1149,
-          "line": 1151,
+          "heading_line": 1159,
+          "line": 1161,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -4818,8 +4818,8 @@
         "source_location": {
           "heading": "BRS-023 - Phase-Local Restore Evidence And Bound Emergency Consent",
           "heading_level": 3,
-          "heading_line": 1242,
-          "line": 1244,
+          "heading_line": 1252,
+          "line": 1254,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -39249,7 +39249,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "66246a7994418971e9436873568e0b1be7abcd80366aa3d22dc882571d279894",
+        "expected": "c0f7d40453a72f58f9104610e8e929e3de065446e4af2f133e37162e09ae9cf0",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -39297,7 +39297,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "c30777c662125c48b7de95abdd4024adc9b721cd399ce63e7a1639495600d7aa",
+        "expected": "87fb413008c5469f31f2ec17ddbd0afd7a0072f69828760f976dfc91de7788d8",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {

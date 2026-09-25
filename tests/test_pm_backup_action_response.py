@@ -43,7 +43,7 @@ class BackupActionResponseTests(unittest.TestCase):
     def test_fresh_response_consumes_real_domain_relation_validator(self):
         self.assertEqual([], self.check())
 
-    def test_current_union_preserves_other_31_and_rejects_ten_legacy_shapes(self):
+    def test_current_union_preserves_other_30_and_rejects_eleven_legacy_shapes(self):
         # The current union includes external owner schemas; use the actual
         # closed gate's offline registry, not a local-only legacy shape helper.
         import importlib.util
@@ -57,8 +57,8 @@ class BackupActionResponseTests(unittest.TestCase):
         four = set(SEM._schema()['$defs']['backup_action_request_v2']['properties']['command_id']['enum'])
         successors = four | {'cmd.backup.destination.discover', 'cmd.backup.browse',
                              'cmd.backup.destination.test', 'cmd.backup.destination.remove',
-                             'cmd.backup.delete', 'cmd.backup.export'}
-        self.assertEqual(10, len(successors))
+                             'cmd.backup.delete', 'cmd.backup.export', 'cmd.backup.recovery_key.rotate'}
+        self.assertEqual(11, len(successors))
         seen = set()
         for row in self.valid:
             value = row['value']
@@ -70,7 +70,7 @@ class BackupActionResponseTests(unittest.TestCase):
             elif value.get('schema_id') == 'pm.backup_restore_system.action_request.v2':
                 self.assertEqual([], list(current.iter_errors(value)))
         self.assertEqual(41, len(seen))
-        self.assertEqual(31, len(seen - successors))
+        self.assertEqual(30, len(seen - successors))
 
     def test_replay_keeps_original_operation_despite_fresh_disclosure_invocation(self):
         self.request['command_instance_id'] = self.response['command_instance_id'] = 'command:replay'

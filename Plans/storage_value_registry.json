@@ -4253,6 +4253,172 @@
         "Plans/backup_portable_export_contracts.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.backup.key_rotation_transport.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_key_rotation_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.key_rotation.request.v1",
+        "pm.backup.key_rotation.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold. Actual original and redacted effect metadata retain their separate owner obligations; no secret or protected capability persistence.",
+        "expiry_rule": "Dispose transient delivery/admission projections when their protected lifecycle or delivery ends; never infer a fresh input from retained observation. Existing protected expiry and one-use zeroization remain owner policies, not new metadata TTL."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No durable migration target. Missing authentic protected input or admission requires genuine human admission; never reconstruct or replay it from retained metadata.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Nonpersisted exact rotation request/result transport, never retained replay or effect authority.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_key_rotation_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup.key_rotation_protected_submission.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_key_rotation_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.key_rotation.submission.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold. Actual original and redacted effect metadata retain their separate owner obligations; no secret or protected capability persistence.",
+        "expiry_rule": "Dispose transient delivery/admission projections when their protected lifecycle or delivery ends; never infer a fresh input from retained observation. Existing protected expiry and one-use zeroization remain owner policies, not new metadata TTL."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No durable migration target. Missing authentic protected input or admission requires genuine human admission; never reconstruct or replay it from retained metadata.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Protected process-local no-store submission/admission association only. No protected input, secret, consume capability or channel content may enter redb or ordinary logs.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_key_rotation_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.backup_key_rotation_dispatch.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/backup_key_rotation_contracts.schema.json",
+      "record_kinds": [
+        "pm.sir.backup_key_rotation_dispatch.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve authentic original review, source snapshots, redacted protected-use timing, session association and engine effect/receipt evidence under actual replay, audit and unresolved reconciliation holds. Exact per-kind physical lifetime remains pending; no new duration or source-retention extension.",
+        "expiry_rule": "No cleanup writer or numeric TTL is admitted. Physical key/value, producer, historical reader, dependency release, migration and coherent backup require separate registration before persistence. Protected submission expiry is not metadata retention."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never synthesize rotation originals or effects from generic Backup receipts, public slot summaries or transient input admission. No automatic input redemption, engine replay or secret migration; physical successor custody remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained authentic SIR original identity, reviewed request digest and genuine human Client/caller; physical writer and reader admission pending.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md",
+        "Plans/backup_key_rotation_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup.key_rotation_original_sources.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_key_rotation_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.key_rotation.review.v1",
+        "pm.backup.key_rotation.slot_snapshot.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve authentic original review, source snapshots, redacted protected-use timing, session association and engine effect/receipt evidence under actual replay, audit and unresolved reconciliation holds. Exact per-kind physical lifetime remains pending; no new duration or source-retention extension.",
+        "expiry_rule": "No cleanup writer or numeric TTL is admitted. Physical key/value, producer, historical reader, dependency release, migration and coherent backup require separate registration before persistence. Protected submission expiry is not metadata retention."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never synthesize rotation originals or effects from generic Backup receipts, public slot summaries or transient input admission. No automatic input redemption, engine replay or secret migration; physical successor custody remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained redacted immutable reviewed repository and original slot source metadata; not secret material or automatic latest-source reconstruction.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_key_rotation_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.backup.key_rotation_effect_metadata.v1",
+      "system_id": "backup_restore",
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "schema_ref": "Plans/backup_key_rotation_contracts.schema.json",
+      "record_kinds": [
+        "pm.backup.key_rotation.protected_use.v1",
+        "pm.backup.key_rotation.session_association.v1",
+        "pm.backup.key_rotation.phase_receipt.v1",
+        "pm.backup.key_rotation.transition.v1",
+        "pm.backup.key_rotation.receipt.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve authentic original review, source snapshots, redacted protected-use timing, session association and engine effect/receipt evidence under actual replay, audit and unresolved reconciliation holds. Exact per-kind physical lifetime remains pending; no new duration or source-retention extension.",
+        "expiry_rule": "No cleanup writer or numeric TTL is admitted. Physical key/value, producer, historical reader, dependency release, migration and coherent backup require separate registration before persistence. Protected submission expiry is not metadata retention."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Never synthesize rotation originals or effects from generic Backup receipts, public slot summaries or transient input admission. No automatic input redemption, engine replay or secret migration; physical successor custody remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Retained redacted use timing, session progress and native engine effects/rotation receipt. Protected handles are non-redeemable evidence references only, never secret/callback bytes or permission to repeat input consumption.",
+      "source_refs": [
+        "Plans/Backup_Restore_System.md",
+        "Plans/backup_key_rotation_contracts.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [

@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L5460-L5741
 
-Source SHA256: `d495179dc6c4d441b7392da1601994955d585a60f8e68ab493f33ccf10a175d6`
+Source SHA256: `8f72c23403ebe2e04a5f34a4553050ce762c6b9eb918eaf10ca939f09bf89454`
 
 ---
 
@@ -240,7 +240,7 @@ The following exact 231 primary commands complete the remaining actionable Touch
 | `cmd.backup.recovery_key.print` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_print` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.backup.recovery_key.test` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_test` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.backup.recovery_key.acknowledge_saved` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_acknowledge_saved` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
-| `cmd.backup.recovery_key.rotate` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_rotate` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.backup.recovery_key.rotate` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_rotate` | `Plans/backup_key_rotation_contracts.schema.json#/$defs/request` -> `Plans/backup_key_rotation_contracts.schema.json#/$defs/result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.backup.recovery_key.reencrypt` | `Plans/Backup_Restore_System.md#BRS-011` | `handlers::backup_restore::recovery_key_reencrypt` | `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request` -> `Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.remote_access.tailscale.connector.check` | `Plans/Remote_Access_System.md#RAS-015` | `handlers::remote_access::tailscale_connector_check` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.remote_access.tailscale.connector.restart` | `Plans/Remote_Access_System.md#RAS-015` | `handlers::remote_access::tailscale_connector_restart` | `Plans/remote_access_system_contracts.schema.json#/$defs/command_payload` -> `Plans/remote_access_system_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |

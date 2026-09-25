@@ -11,23 +11,23 @@ class Bindings(unittest.TestCase):
   for p in ('Plans/Commands_System.md','Plans/Backup_Restore_System.md'):
    line=next(l for l in (ROOT/p).read_text().splitlines() if l.startswith('| `'+CMD+'` |'));self.assertIn('`'+SCHEMA+'#/$defs/request` -> `'+SCHEMA+'#/$defs/result`',line)
   self.assertIn('same owner error / FileSafe',line)
- def test_exact_ten_current_commands(self):
+ def test_export_among_eleven_current_commands(self):
   s=json.loads((ROOT/OLD).read_text());url=json.loads((ROOT/SCHEMA).read_text())['$id'];self.assertEqual(41,len(s['$defs']['backup_restore_command_id']['enum']))
   for kind in ('request','result'):
-   arms=s['$defs']['backup_current_command_'+kind]['oneOf'];self.assertEqual(6,len(arms));self.assertEqual({'$ref':url+'#/$defs/'+kind},arms[4]);self.assertIn('backup_selected_delete',arms[3]['$ref']);self.assertIn('backup-destination-lifecycle',arms[2]['$ref']);self.assertIn('backup_bounded_reads',arms[1]['$ref'])
-   ex=arms[-1]['allOf'][1]['not']['properties']['command_id']['anyOf'];self.assertEqual(5,len(ex));self.assertIn({'const':CMD},ex);self.assertIn({'const':'cmd.backup.delete'},ex)
+   arms=s['$defs']['backup_current_command_'+kind]['oneOf'];self.assertEqual(7,len(arms));self.assertEqual({'$ref':url+'#/$defs/'+kind},arms[4]);self.assertIn('backup_selected_delete',arms[3]['$ref']);self.assertIn('backup-destination-lifecycle',arms[2]['$ref']);self.assertIn('backup_bounded_reads',arms[1]['$ref'])
+   ex=arms[-1]['allOf'][1]['not']['properties']['command_id']['anyOf'];self.assertEqual(6,len(ex));self.assertIn({'const':CMD},ex);self.assertIn({'const':'cmd.backup.delete'},ex)
  def test_actual_current_union_and_historical_decoders(self):
   sys.path.insert(0,str(ROOT/'scripts'));spec=importlib.util.spec_from_file_location('export_binding_gate',ROOT/'scripts/pm-new-contracts-verify.py');g=importlib.util.module_from_spec(spec);spec.loader.exec_module(g);registry=g.offline_schema_registry()
   s=json.loads((ROOT/OLD).read_text());new=json.loads((ROOT/'Plans/backup_portable_export_contract_fixtures.json').read_text());old=json.loads((ROOT/'Plans/backup_restore_system_contract_fixtures.json').read_text())
   historical_requests=[c['value'] for c in old['valid'] if c.get('definition')=='backup_restore_command_request'];self.assertEqual(set(s['$defs']['backup_restore_command_id']['enum']),{v['command_id'] for v in historical_requests})
-  successor_commands={'cmd.backup.destination.update','cmd.backup.verify','cmd.backup.test_restore','cmd.backup.file.compare','cmd.backup.destination.discover','cmd.backup.browse','cmd.backup.destination.test','cmd.backup.destination.remove','cmd.backup.delete',CMD}
+  successor_commands={'cmd.backup.destination.update','cmd.backup.verify','cmd.backup.test_restore','cmd.backup.file.compare','cmd.backup.destination.discover','cmd.backup.browse','cmd.backup.destination.test','cmd.backup.destination.remove','cmd.backup.delete',CMD,'cmd.backup.recovery_key.rotate'}
   for kind in ('request','result'):
    current=g.validator_for(s,{'$ref':'#/$defs/backup_current_command_'+kind},registry);historical=g.validator_for(s,{'$ref':'#/$defs/backup_restore_command_'+kind},registry)
    for c in new['valid']:self.assertEqual([],list(current.iter_errors(c['value'][kind])));self.assertTrue(list(historical.iter_errors(c['value'][kind])))
    for c in old['valid']:
     if c.get('definition')=='backup_restore_command_'+kind:self.assertEqual([],list(historical.iter_errors(c['value'])),c['name'])
    if kind=='request':
-    fallback={v['command_id'] for v in historical_requests if not list(current.iter_errors(v))};self.assertEqual(set(s['$defs']['backup_restore_command_id']['enum'])-successor_commands,fallback);self.assertEqual(31,len(fallback))
+    fallback={v['command_id'] for v in historical_requests if not list(current.iter_errors(v))};self.assertEqual(set(s['$defs']['backup_restore_command_id']['enum'])-successor_commands,fallback);self.assertEqual(30,len(fallback))
    if kind=='request':v=next(c['value'] for c in old['valid'] if c.get('definition')=='backup_restore_command_request' and c['value']['command_id']==CMD)
    else:v=dict(next(c['value'] for c in old['valid'] if c.get('definition')=='backup_restore_command_result'),command_id=CMD,recovery_state='not_applicable')
    self.assertEqual([],list(historical.iter_errors(v)));self.assertTrue(list(current.iter_errors(v)))

@@ -12,11 +12,11 @@ class Bindings(unittest.TestCase):
   for path in ('Plans/Commands_System.md','Plans/Backup_Restore_System.md'):
    line=next(l for l in (ROOT/path).read_text().splitlines() if l.startswith('| `'+CMD+'` |') and '#/$defs/request' in l);self.assertIn('`'+SCHEMA+'#/$defs/request` -> `'+SCHEMA+'#/$defs/result`',line)
   self.assertIn(OLD+'#/$defs/backup_restore_command_request/properties/permission_snapshot_ref',line)
- def test_union_preserves_delete_among_ten_current_commands(self):
+ def test_union_preserves_delete_among_eleven_current_commands(self):
   schema=json.loads((ROOT/OLD).read_text());url=json.loads((ROOT/SCHEMA).read_text())['$id']
   for kind in ('request','result'):
-   arms=schema['$defs']['backup_current_command_'+kind]['oneOf'];self.assertEqual(6,len(arms));self.assertEqual({'$ref':url+'#/$defs/'+kind},arms[3]);self.assertIn('backup-destination-lifecycle',arms[2]['$ref']);self.assertIn('backup_bounded_reads',arms[1]['$ref'])
-   exclusions=arms[-1]['allOf'][1]['not']['properties']['command_id']['anyOf'];self.assertEqual(5,len(exclusions));self.assertIn({'const':CMD},exclusions);self.assertIn({'enum':['cmd.backup.destination.remove','cmd.backup.destination.test']},exclusions)
+   arms=schema['$defs']['backup_current_command_'+kind]['oneOf'];self.assertEqual(7,len(arms));self.assertEqual({'$ref':url+'#/$defs/'+kind},arms[3]);self.assertIn('backup-destination-lifecycle',arms[2]['$ref']);self.assertIn('backup_bounded_reads',arms[1]['$ref'])
+   exclusions=arms[-1]['allOf'][1]['not']['properties']['command_id']['anyOf'];self.assertEqual(6,len(exclusions));self.assertIn({'const':CMD},exclusions);self.assertIn({'enum':['cmd.backup.destination.remove','cmd.backup.destination.test']},exclusions)
  def test_current_successor_not_historical_fallback(self):
   sys.path.insert(0,str(ROOT/'scripts'));spec=importlib.util.spec_from_file_location('delete_binding_gate',ROOT/'scripts/pm-new-contracts-verify.py');gate=importlib.util.module_from_spec(spec);spec.loader.exec_module(gate);registry=gate.offline_schema_registry()
   schema=json.loads((ROOT/OLD).read_text());old=json.loads((ROOT/'Plans/backup_restore_system_contract_fixtures.json').read_text());new=json.loads((ROOT/'Plans/backup_selected_delete_contract_fixtures.json').read_text())

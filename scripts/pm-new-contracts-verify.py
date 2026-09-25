@@ -65,6 +65,7 @@ from pm_git_pull_selected import git_pull_semantic_failures
 from pm_git_pull_response import git_pull_dispatch_semantic_failures
 from pm_forge_review_comment_semantics import review_comment_semantic_failures
 from pm_backup_portable_export import portable_export_semantic_failures
+from pm_backup_key_rotation import rotation_semantic_failures
 from pm_jj_publication_selected import publication_semantic_failures
 from pm_jj_publication_response import jj_publication_dispatch_semantic_failures
 from pm_forge_log_selection_semantics import log_selection_semantic_failures
@@ -138,9 +139,10 @@ CONTRACT_PAIRS = (
     ("Plans/sir_git_pull_dispatch.schema.json", "Plans/sir_git_pull_dispatch_fixtures.json"),
     ("Plans/forge_review_comment_contracts.schema.json", "Plans/forge_review_comment_contract_fixtures.json"),
     ("Plans/backup_portable_export_contracts.schema.json", "Plans/backup_portable_export_contract_fixtures.json"),
+    ("Plans/backup_key_rotation_contracts.schema.json", "Plans/backup_key_rotation_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 63
+EXPECTED_CONTRACT_PAIR_COUNT = 64
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1273,6 +1275,8 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/backup_key_rotation_contracts.schema.json":
+        return rotation_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_portable_export_contracts.schema.json":
         return portable_export_semantic_failures(definition_name, value)
     if schema_rel == "Plans/forge_review_comment_contracts.schema.json":

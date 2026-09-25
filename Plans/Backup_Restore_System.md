@@ -539,6 +539,12 @@ owner_hints: [Plans/Backup_Restore_System.md, Plans/Automated_Testing_System.md]
 
 ### BRS-012 - RecoverySet, Recovery Kit, Key Slots, And Human Custody
 
+For exactly `cmd.backup.recovery_key.rotate`, `Plans/backup_key_rotation_contracts.schema.json` materializes RecoverySetKeyService's human-reviewed original RecoverySet generation, repository membership and exact existing engine key-slot identities, protected submission/session/use association, causal engine phase observations and redacted rotation receipt. The current request's human step-up, actual initiating Client and mandatory protected submission remain required. Per-repository slot snapshots resolve genuine RepositoryBinding/RecoverySet and engine identities; ordinary public summaries never substitute for actual per-repository effect facts. No secret bytes, encoding material, protected browser content or callback payload enters these records.
+
+The engine adds and verifies every reviewed replacement before any selected old slot is retired. Actual phase receipts authenticate the causal add→verify and complete reviewed verification→retirement relationships, not a fabricated cross-worker clock. Partial failure/cancellation preserves every known addition, verification, retirement and surviving old slot. Public RecoverySet summary and per-repository phase states remain distinct authentic owner projections, not guessed aggregation. Success requires complete reviewed engine closure; kit delivery, acknowledgement and actual saved-kit unlock test remain separately evidenced states. Rotation does not re-encrypt historical ciphertext, repair compromise, change repository/destination/encryption-domain identity or create a credential source.
+
+A dedicated RecoverySetKeyService session association binds the original command/operation/review to actual RecoveryKitDeliverySession, human Client/audience and protected input. It reuses ProtectedInputContract's fresh admission lifecycle, not a CredentialBroker/AuthBrowser producer. The protected owner authenticates actual consumption time separately from observation: consumption must be within admitted input validity, while later truthful observation/replay can follow expiry without redeeming input. Later unused/consumed-and-zeroized/unknown observations are separate; consumed or uncertain input is never re-redeemed. Authentic awaiting-input and engine-in-progress states use session-owned progress with common accepted/pending response and no fabricated ObservableWork or terminal rotation receipt. Engine progress resolves actual phase evidence. Reconciliation preserves the same operation; any genuinely new input still requires its own protected human admission, never automatic resubmission. No crypto, key-slot capacity, scheduler attachment, new physical store/key/TTL or cleanup policy is selected. Native source/admission/effect/current-audience evidence and physical metadata custody remain pending independently of static fixtures.
+
 ```yaml
 plan_unit_id: BRS-012
 unit_type: security_requirement
@@ -558,22 +564,24 @@ gui_classification_reason: Recovery Kit handoff, masked human reveal, save/copy/
 depends_on: [BRS-003, BRS-004, SIR-007]
 unblocks: [BRS-013, BRS-014, BRS-015]
 acceptance_criteria:
+  - Exact cmd.backup.recovery_key.rotate retains authentic reviewed repositories and original key slots, protected human Client/session and consumption-time evidence; actual add and verify across every reviewed repository precede retirement, with partial and unknown facts retained. Actual consumed_at_utc identifies authenticated consumption, not the later observation time; consumption remains within both input and bound session validity.
   - Remote payload and repository metadata are engine-encrypted before transport; destination credentials cannot decrypt repository contents.
   - Encryption does not hide provider-visible object sizes, timing, account/bucket identifiers or necessary outer format/key-slot metadata. Repository identity and the trusted manifest must bind the selected restore source; detect rollback where trusted local freshness evidence exists, without promising detection after all trusted local freshness state is lost.
   - Public records, commands, events, receipts, Doctor, logs, capture, Chat, Usage, and ordinary GUI contain no recovery credential.
   - Protected scheduler attachment and human kit copies have distinct custody refs; loss warnings state that PM cannot recover all-lost keys.
   - Key export/copy/print/test/rotate/reencrypt are human-only step-up actions and remain handler_unavailable until native protected-channel evidence exists.
   - tsnet node identity, keys, state, and enrollment are excluded; foreign-machine restore creates a new Server/connector identity unless a same-host takeover is explicitly fenced.
-validation_surfaces: [Plans/backup_restore_system_contracts.schema.json, Plans/backup_restore_system_contract_fixtures.json, future key-slot rotation compromise re-encryption no-store and tsnet-exclusion tests]
+validation_surfaces: [Plans/backup_key_rotation_contracts.schema.json, Plans/backup_key_rotation_contract_fixtures.json, tests/test_pm_backup_key_rotation.py, Plans/backup_restore_system_contracts.schema.json, Plans/backup_restore_system_contract_fixtures.json, future key-slot rotation compromise re-encryption no-store and tsnet-exclusion tests]
 risk_class: recovery_key_loss_exposure_or_identity_clone
 reasoning_tier: high
 context_scope: recovery_set_repository_encryption_and_human_custody
 implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/backup_restore_system_contracts.schema.json, future RecoverySetKeyService]
 node_compile_hint: {mode: recovery_set_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json:ACT-118
   - source_ref:packet:2026-09-01:KEY-001-KEY-007
   - source_ref:packet:2026-09-01:TSX-backup-identity-boundary
-preserved_exact_tokens: [RecoverySetPublicRecord, Backup Recovery Key, Recovery Kit, Save Recovery Kit, Copy Recovery Key, Print Recovery Kit, Test Saved Kit, no escrow]
+preserved_exact_tokens: [cmd.backup.recovery_key.rotate, consumed_at_utc, RecoverySetPublicRecord, Backup Recovery Key, Recovery Kit, Save Recovery Kit, Copy Recovery Key, Print Recovery Kit, Test Saved Kit, no escrow]
 negative_constraints: [Do not store or project raw recovery credentials., Do not reuse Storage boot recovery_set_id identity., Do not treat password rotation as compromise repair., Do not restore tsnet identity by default.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/Permissions_System.md, Plans/Remote_Access_System.md]
 ```
@@ -995,7 +1003,7 @@ This owner adjudicates exactly 40 primary commands that require future native Ba
 | `cmd.backup.recovery_key.print` | `handlers::backup_restore::recovery_key_print` | same owner request -> protected no-store print-session ref | same owner error / human step-up; no spool/log/capture leak |
 | `cmd.backup.recovery_key.test` | `handlers::backup_restore::recovery_key_test` | same owner request -> redacted test receipt | same owner error / human step-up; protected submission ref only |
 | `cmd.backup.recovery_key.acknowledge_saved` | `handlers::backup_restore::recovery_key_acknowledge_saved` | same owner request -> redacted confirmation receipt | same owner error / human step-up; exact RecoverySet generation |
-| `cmd.backup.recovery_key.rotate` | `handlers::backup_restore::recovery_key_rotate` | same owner request -> redacted key-slot rotation receipt | same owner error / human step-up; add/verify before remove |
+| `cmd.backup.recovery_key.rotate` | `handlers::backup_restore::recovery_key_rotate` | `Plans/backup_key_rotation_contracts.schema.json#/$defs/request` -> `Plans/backup_key_rotation_contracts.schema.json#/$defs/result` | same owner error / human step-up; add/verify before remove |
 | `cmd.backup.recovery_key.reencrypt` | `handlers::backup_restore::recovery_key_reencrypt` | same owner request -> redacted re-encryption receipt/ObservableWork | same owner error / human step-up; preview, confirmation, lease, new RecoverySet |
 
 The central closure emits no new EventRecord type. `expected_event_types=[]` is mandatory until Event Authority registers an owner event and payload. Owner-typed result/receipt/projection records remain required, and asynchronous work must correlate through the owner ObservableWork contract where applicable. Protected authentication, secret bytes, browser content, provider credentials, filesystem authority, trust, readiness, success, and completion are never inferred from dispatch acceptance.
@@ -1112,6 +1120,7 @@ gui_classification_reason: Destination cards, official sign-in return, safe-test
 depends_on: [BRS-012, BRS-013, SIR-032]
 unblocks: []
 acceptance_criteria:
+  - Exact cmd.backup.recovery_key.rotate distinguishes authenticated awaiting-input and engine progress from terminal rotation receipt; actual SIR original and current caller compose accepted/pending without fabricated work, and consumed or uncertain input is never redeemed again. Actual consumed_at_utc identifies authenticated consumption, not the later observation time; consumption remains within both input and bound session validity.
   - Safe tests mutate only a named random canary within an approved PM scratch prefix and clean it with a receipt; read-only tests do not mutate, and no test changes ACL/public access, creates billable resources, destroys a repository, or initializes over an unreachable/existing repository.
   - Provider profiles keep locator/account/region/prefix separately from secret refs and prove the selected engine/transport method; rotation/refresh does not rewrite backup data, endpoint/TLS trust prevents credential exfiltration, and restored missing credentials project Reconnect destination.
   - Google Drive prefers verified drive.file app-created/selected objects and proves rediscovery; OneDrive distinguishes personal/business/tenant and app-folder availability. A retiring shared rclone client, generic OOB flow, fake client ID, or universal scope claim is forbidden.
@@ -1124,20 +1133,21 @@ acceptance_criteria:
   - Key export sessions are short-lived, audience-bound, one-use where practical, creation/redemption authorized, revocable, and no-store; later export requires step-up and protected attachment. Scheduler unlock uses protected Server/OS/admin secret attachment and projects Unlock required when unavailable.
   - Key-slot rotation adds and verifies every new engine slot before retiring an old slot; compromise uses a new encryption domain/repository or explicit copy/re-encryption and never claims to repair already exposed copies.
   - Rotation binds the human-reviewed original RecoverySet generation/repository/key-slot scope before protected delivery or engine effects. Re-encryption additionally binds the explicitly selected new destination references and new RecoverySet to that review. Existing protected submission, step-up, confirmation, maintenance lease and native engine proofs remain independent requirements; the review contains no raw credential and changes no cryptographic algorithm.
-validation_surfaces: [Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_recovery_admission_record, Plans/backup_restore_system_contract_fixtures.json, future provider/OAuth/key-delivery/rotation/capture-isolation runtime tests]
+validation_surfaces: [Plans/backup_key_rotation_contracts.schema.json, Plans/backup_key_rotation_contract_fixtures.json, tests/test_pm_backup_key_rotation.py, Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_recovery_admission_record, Plans/backup_restore_system_contract_fixtures.json, future provider/OAuth/key-delivery/rotation/capture-isolation runtime tests]
 risk_class: destination_credential_exfiltration_or_recovery_key_loss
 reasoning_tier: high
 context_scope: backup_destination_auth_encryption_and_human_custody
 implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/backup_restore_system_contracts.schema.json, future destination adapters and RecoverySetKeyService]
 node_compile_hint: {mode: static_destination_and_recovery_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+  - source_ref:packet:PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01/machine/command_census.json:ACT-118
   - source_ref:packet:2026-09-01:CLOUD-002-CLOUD-004
   - source_ref:packet:2026-09-01:CLOUD-006-CLOUD-008
   - source_ref:packet:2026-09-01:KEY-001-KEY-004
   - source_ref:packet:2026-09-01:KEY-006-KEY-007
   - source_ref:packet:2026-09-01:BGUI-002
   - source_report:scratchpad/pm-forge-backup-tsnet-post-integration-2026-09-01/agent_reports/backup_residue_2.md#2.2
-preserved_exact_tokens: [Use existing, Reconnect destination, Backup Recovery Key, RecoverySet, Save Recovery Kit, Copy Recovery Key, Print Recovery Kit, Test Saved Kit, PKCE, drive.file, Retry-After, Unlock required, no-store]
+preserved_exact_tokens: [cmd.backup.recovery_key.rotate, consumed_at_utc, Use existing, Reconnect destination, Backup Recovery Key, RecoverySet, Save Recovery Kit, Copy Recovery Key, Print Recovery Kit, Test Saved Kit, PKCE, drive.file, Retry-After, Unlock required, no-store]
 negative_constraints:
   - Do not place secrets on command lines, in URLs/history/telemetry/world-readable rclone files, route context, ordinary receipts, agent context, screenshot automation, browser storage, service-worker caches, or server file pickers presented as Client paths.
   - Do not conflate storage credentials, Backup Recovery Key, forge/model accounts, or tailnet enrollment.
@@ -1957,7 +1967,7 @@ A versioned BackupBrowseOperation and its result bind the original operation, bo
 
 #### Companion and enablement boundary
 
-The four actions use `backup_action_request_v2` and `backup_action_result_v2` in the aggregate schema. `backup_current_command_request` and `backup_current_command_result` admit those four successor shapes, the exact-two bounded discovery/browse successor in Plans/backup_bounded_read_contracts.schema.json, the two destination lifecycle successors, selected snapshot deletion, portable encrypted export, and the unchanged other 31 v1 command shapes; the aggregate root still decodes historical v1 records. This is current shape admission, not handler enablement. `validate_action_response` requires independent original-operation and actual domain-result resolution, the full corresponding owner validator with genuine source/proof dependencies, authentic response admission and a fresh final disclosure check. The public result retains the invoking command instance separately from the original operation; a disclosure retry cannot change original selection/idempotency or effect evidence. Destination partial effects map to a partial response; verification passes map to completed and cancellations to cancelled; a drill maps its entire operation status, never verification status alone, with recovery-required cleanup mapping to partial. Compare unavailable source is a failed domain outcome, not a fabricated completed comparison. Disabled/rejected/unavailable transport cannot claim a retained terminal result or completed replay. All transport remains nonpersisted.
+The four actions use `backup_action_request_v2` and `backup_action_result_v2` in the aggregate schema. `backup_current_command_request` and `backup_current_command_result` admit those four successor shapes, the exact-two bounded discovery/browse successor in Plans/backup_bounded_read_contracts.schema.json, the two destination lifecycle successors, selected snapshot deletion, portable encrypted export, protected recovery-key rotation, and the unchanged other 30 v1 command shapes; the aggregate root still decodes historical v1 records. This is current shape admission, not handler enablement. `validate_action_response` requires independent original-operation and actual domain-result resolution, the full corresponding owner validator with genuine source/proof dependencies, authentic response admission and a fresh final disclosure check. The public result retains the invoking command instance separately from the original operation; a disclosure retry cannot change original selection/idempotency or effect evidence. Destination partial effects map to a partial response; verification passes map to completed and cancellations to cancelled; a drill maps its entire operation status, never verification status alone, with recovery-required cleanup mapping to partial. Compare unavailable source is a failed domain outcome, not a fabricated completed comparison. Disabled/rejected/unavailable transport cannot claim a retained terminal result or completed replay. All transport remains nonpersisted.
 
 `Plans/backup_snapshot_result_contracts.schema.json` owns the internal nonpersisted `snapshot_resolution.v1` output and the selected-set `backup_verification_receipt.v2` successor. One authentic original BackupRun or BackupReceipt suffices for its discriminated origin; if both are retrieved their shared identities and selected attempt must agree. Disposed originals remain unavailable, not reconstructed. Actual adapter/source resolution authenticates opaque commit/snapshot associations and manifest bytes; no new commit-body format, suffix grammar or manifest self-hash preimage is invented. The native resolution callback and final disclosure check are required independently of static record joins. A committed selected copy within a partial multi-destination run remains resolvable without claiming complete source coverage or successful verification.
 

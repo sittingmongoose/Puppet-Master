@@ -10500,7 +10500,7 @@
     "catalog.backup_recovery_key_rotate": {
       "acceptance_checks": [
         "cmd.backup.recovery_key.rotate names exactly one owner-adjudicated future target handlers::backup_restore::recovery_key_rotate in Plans/Backup_Restore_System.md#BRS-011; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request -> Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
+        "Validate Plans/backup_key_rotation_contracts.schema.json#/$defs/request -> Plans/backup_key_rotation_contracts.schema.json#/$defs/result and Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_error with exact availability and permission gates.",
         "Read state.commands.backup_recovery_key_rotate.availability and state.commands.backup_recovery_key_rotate.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -10513,25 +10513,23 @@
       },
       "disabled_reason_projection": "state.commands.backup_recovery_key_rotate.disabled_reason",
       "effect_contract": {
-        "description": "Owner typed result/receipt/projection only; dispatch acceptance is not completion and no unregistered EventRecord is admitted.",
+        "description": "Actual protected session progress or dedicated redacted rotation receipt binds original human Client/review and per-repository add/verify/retire effects. Accepted is not completion; no fabricated ObservableWork, capture receipt or EventRecord.",
         "effect_kind": "receipt",
         "receipt_or_event_refs": [
-          "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result",
-          "BackupReceipt",
-          "BackupVerificationReceipt",
-          "RestorePreviewReceipt",
-          "RestoreReceipt",
-          "RecoveryPointReceipt"
+          "Plans/backup_key_rotation_contracts.schema.json#/$defs/result",
+          "Plans/backup_key_rotation_contracts.schema.json#/$defs/session_association",
+          "Plans/backup_key_rotation_contracts.schema.json#/$defs/transition",
+          "Plans/backup_key_rotation_contracts.schema.json#/$defs/rotation_receipt"
         ]
       },
       "event_test_requirements": [
         "Assert cmd.backup.recovery_key.rotate records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.backup.recovery_key.rotate: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future production evidence for cmd.backup.recovery_key.rotate: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, actual protected session progress or dedicated rotation receipt correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::backup_restore::recovery_key_rotate",
-      "request_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_request",
-      "result_schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_restore_command_result",
+      "request_schema_ref": "Plans/backup_key_rotation_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/backup_key_rotation_contracts.schema.json#/$defs/result",
       "state_selector": "state.commands.backup_recovery_key_rotate.availability",
       "test_evidence": [
         {

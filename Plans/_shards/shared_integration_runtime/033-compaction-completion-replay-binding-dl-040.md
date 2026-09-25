@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2590
+Source lines: L2164-L2592
 
-Source SHA256: `302f51a9de3100920272b464bc862a1cb3ec06f57b87daf4f003646b594bf38f`
+Source SHA256: `f20dc0c2c1d22883d88fbbfe14e08d40012101838f42331f1a1e1a63675f47f1`
 
 ---
 
@@ -184,6 +184,8 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-015, ContractN
 
 
 ### SIR-042 - Full Thread Typed Result Binding And Central Response Projection
+
+For exactly `cmd.backup.recovery_key.rotate`, the SIR binding in `Plans/backup_key_rotation_contracts.schema.json` retains authentic full IdentityEnvelope, original request/operation/instance/dispatch/frame/independent target, actor/permission, initiating Client, exact arguments/digest and genuine nullable caller. Current delivery independently authenticates the same caller and protected audience. Actual session-owned nonterminal progress maps accepted/pending with no terminal receipt and no invented ObservableWork; session delivery does not mean engine rotation completion. Terminal dedicated redacted rotation receipt joins actual original, protected use, per-repository causal engine facts, unchanged Backup error and nullable safe UI error. Failure/cancellation retain known effects, including null UI error for genuine cancellation; unknown use/effects remain terminal_unknown/reconciliation-only. Snapshot original and live resolved records and reject late mutation. Replay cannot redeem consumed input or repeat rotation. No Full Thread/UI schema widening, key bytes, new event or native proof follows from static composition.
 
 For the exact ACT111 export successor, SIR retains an authentic original dispatch binding to the complete submitted export request, full IdentityEnvelope, actor/permission snapshot, dispatch frame/generation, idempotency/payload digest and original return context. Actual result, CommandOutcome and UICommandResponse resolve against that binding. The separate nonsecret error projection binds the unchanged actual Backup error reference, original identity and caller to the current common UI error; cancelled UI error may be null without dropping the owner error or known output effects. Accepted ObservableWork is nonterminal and has no terminal result receipt. Replay preserves the original outcome and receipts; every final disclosure requires current native authorization. This internal admission does not change protected FullThread types, introduce events or advertise handler availability.
 

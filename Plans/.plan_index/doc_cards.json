@@ -2398,7 +2398,7 @@
         "future restore coordinator",
         "future security adapter registry"
       ],
-      "line_count": 1972,
+      "line_count": 1982,
       "path": "Plans/Backup_Restore_System.md",
       "plan_unit_count": 30,
       "plan_unit_ids": [
@@ -2468,7 +2468,7 @@
         "unsafe_restore_or_false_operational_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "87f37b0ca9aae4babf042f360e937b4a675fb96bb8fc542aeebe9e7a8b22f304",
+      "sha256": "bdf05d8acb38cc39a0b09ed4c4aa47183f069393e75ea9cd5e1a3968811406e7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 30
@@ -2491,6 +2491,8 @@
         "Plans/Automated_Testing_System.md",
         "Plans/Goal_Runtime_System.md#GRS-077",
         "Plans/Plan_To_Node_Compilation.md#PNC-025",
+        "Plans/backup_key_rotation_contract_fixtures.json",
+        "Plans/backup_key_rotation_contracts.schema.json",
         "Plans/backup_portable_export_contract_fixtures.json",
         "Plans/backup_portable_export_contracts.schema.json",
         "Plans/backup_restore_system_contract_fixtures.json",
@@ -2563,6 +2565,7 @@
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "scripts/pm_restore_semantics.py",
+        "tests/test_pm_backup_key_rotation.py",
         "tests/test_pm_restore_phase_contracts.py"
       ]
     },
@@ -3782,7 +3785,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "d495179dc6c4d441b7392da1601994955d585a60f8e68ab493f33ccf10a175d6",
+      "sha256": "8f72c23403ebe2e04a5f34a4553050ce762c6b9eb918eaf10ca939f09bf89454",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80
@@ -16807,7 +16810,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 3234,
+      "line_count": 3236,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 52,
       "plan_unit_ids": [
@@ -16921,7 +16924,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "302f51a9de3100920272b464bc862a1cb3ec06f57b87daf4f003646b594bf38f",
+      "sha256": "f20dc0c2c1d22883d88fbbfe14e08d40012101838f42331f1a1e1a63675f47f1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -20065,7 +20068,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T10:37:42Z",
+  "generated_at_utc": "2026-09-25T11:00:19Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
