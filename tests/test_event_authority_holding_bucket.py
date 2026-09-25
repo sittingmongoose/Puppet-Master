@@ -263,12 +263,28 @@ class HoldingBucketTests(unittest.TestCase):
                     self.assertEqual(result['quarantined_not_admitted'], self.members)
 
 
+def admitted_coordination_decisions(repo=REPO):
+    """Decision entries of the coordination families the ledger marks admitted (Step 9 batch 2).
+
+    Each such family's own landing writes its DL-077 admission record; the decision number is read
+    from that record, so a landing adds no test data here. A missing record fails closed.
+    """
+    ledger = json.loads((repo / 'Plans/coordination_event_admission.json').read_text(encoding='utf-8'))
+    decisions = {}
+    for row in ledger['rows']:
+        if row['admission_status'] == 'admitted_static_contract':
+            record_path = repo / 'reports/event-authority-20260911/admission-records' / (row['event_type'] + '.json')
+            decisions[row['event_type']] = json.loads(record_path.read_text(encoding='utf-8'))['decision_ref'].split('#', 1)[1]
+    return decisions
+
+
 class PostAugustAdmissionTests(unittest.TestCase):
     """DL-077: families registered after August are accepted only through complete admission records."""
 
-    POST = ['context.compaction.completed', 'browser.workspace.created', 'browser.workspace.reset']
+    COORDINATION = admitted_coordination_decisions()
+    POST = ['context.compaction.completed', 'browser.workspace.created', 'browser.workspace.reset', *COORDINATION]
     DECISION = {'context.compaction.completed': 'DL-040', 'browser.workspace.created': 'DL-046',
-                'browser.workspace.reset': 'DL-046'}
+                'browser.workspace.reset': 'DL-046', **COORDINATION}
 
     def setUp(self):
         spec = importlib.util.spec_from_file_location('post_august_validator', REPO / VALIDATOR)

@@ -142,6 +142,7 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
                     self.assertFalse(report["current_preexisting_rows_match_reviewed_successors"])
 
     def test_each_other_historical_row_and_compaction_remain_exact(self):
+        coordination = GATE.admitted_coordination_rows()
         for original in self.rows:
             if original["family_id"] in GATE.REVIEWED_GOAL_SUCCESSORS or original["event_type"].startswith("browser."):
                 continue
@@ -150,6 +151,10 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
                 next(row for row in rows if row["family_id"] == original["family_id"])["family_revision"] = "99.0.0"
                 report, failures = GATE.preexisting_preservation(self.admission, rows)
                 self.assertTrue(failures)
+                if (original["family_id"], original["event_type"]) in coordination:
+                    # An admitted coordination row is not historical: drift makes it unexpected (Step 9 batch 2).
+                    self.assertIn("unexpected_central_event_family", {row["error"] for row in failures})
+                    continue
                 self.assertFalse(report["historical_baseline_verified"])
 
     def test_missing_duplicate_reordered_extra_and_changed_manifest_rejected(self):
@@ -218,7 +223,9 @@ class BrowserPreparedAdmissionTests(unittest.TestCase):
         self.assertEqual(admitted | prepared, set(ROWS))
         self.assertEqual(report["prepared_scoped_event_families"], len(prepared))
         self.assertEqual(report["admitted_scoped_event_families"], len(admitted))
-        self.assertEqual(report["registry_family_count"], 40 + len(admitted))
+        # The only other additions are rows the coordination ledger marks admitted (Step 9 batch 2).
+        coordination = GATE.admitted_coordination_rows()
+        self.assertEqual(report["registry_family_count"], 40 + len(admitted) + len(coordination))
         self.assertEqual(report["admission_complete"], len(admitted) == 53)
 
     def test_isolated_prepared_consistency_is_not_admission_completion(self):

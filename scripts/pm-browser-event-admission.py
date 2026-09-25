@@ -30,6 +30,7 @@ ORIGINAL40_SHA256 = "4f701c9598003d7c01a405f18f7991b373379eca8b182cf6222540a4746
 # 2026-09-24. Keep its authority separate from the preparation-era lineage.
 CURRENT39_SHA256 = "e2b5a433c668a36ffe3ffdc329f90a0f860b680bbc54fb9c596d1a302c6cd306"
 COMPACTION_FAMILY = "event-family-context-compaction-completed"
+COORDINATION_LEDGER = "Plans/coordination_event_admission.json"
 # Whole-row pins independently taken from each adoption commit, never generated
 # from the live registry. Historical pins are from b09294e44b. No sibling or
 # field-level exemption follows from these exact six owner adoptions.
@@ -144,11 +145,32 @@ def historical_preexisting_rows(rows):
     return historical
 
 
-def preexisting_preservation(admission, registry_rows, *, allow_historical=False):
+def admitted_coordination_rows():
+    """Registry rows the coordination ledger marks admitted_static_contract, by identity and fingerprint.
+
+    Step 9 batch 2 (DL-045): each coordination family is admitted in its own
+    landing under DL-078, which appends its prepared registry_row unchanged.
+    A row is accepted only as that exact prepared row. A prepared, out-of-batch,
+    changed or unreadable row stays unexpected, and no other family is opened.
+    """
+    try:
+        rows = load_json(COORDINATION_LEDGER)["rows"]
+    except (OSError, ValueError, KeyError, TypeError):
+        return {}
+    return {
+        (row["registry_row"]["family_id"], row["registry_row"]["event_type"]): fingerprint(row["registry_row"])
+        for row in rows
+        if isinstance(row, dict) and row.get("admission_status") == "admitted_static_contract"
+        and isinstance(row.get("registry_row"), dict)
+    }
+
+
+def preexisting_preservation(admission, registry_rows, *, allow_historical=False, coordination_rows=None):
     """Verify historical39/40 lineage and require the active successor rows.
 
     Historical comparison is opt-in for isolated tests, never a CLI mode or
     permission to downgrade an active registry row to its retained reader.
+    coordination_rows defaults to admitted_coordination_rows(); tests pass their own.
     """
     ids = admission["preexisting_family_ids"]
     original_ids = set(ids)
@@ -169,9 +191,13 @@ def preexisting_preservation(admission, registry_rows, *, allow_historical=False
     if admission["preexisting_family_rows_sha256"] != CURRENT39_SHA256:
         failures.append({"error": "current_preexisting_manifest_hash_mismatch"})
     # Do not let unrelated additions disappear through the baseline filter.
+    # Besides Browser rows, only an admitted coordination row equal to its
+    # prepared row passes (Step 9 batch 2, generalized 2026-09-25).
     browser_pairs = {(row["family_id"], row["event_type"]) for row in admission["rows"]}
+    coordination = admitted_coordination_rows() if coordination_rows is None else coordination_rows
     if any(row["family_id"] not in original_ids | {COMPACTION_FAMILY}
-           and (row["family_id"], row["event_type"]) not in browser_pairs for row in registry_rows):
+           and (row["family_id"], row["event_type"]) not in browser_pairs
+           and coordination.get((row["family_id"], row["event_type"])) != fingerprint(row) for row in registry_rows):
         failures.append({"error": "unexpected_central_event_family"})
     if len({row["family_id"] for row in registry_rows}) != len(registry_rows):
         failures.append({"error": "duplicate_central_family_id"})

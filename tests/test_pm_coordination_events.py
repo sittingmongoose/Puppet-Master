@@ -7,18 +7,39 @@ import shutil
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = importlib.util.spec_from_file_location("coordination_events", ROOT / "scripts/pm_coordination_events.py")
-CHECK = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(CHECK)
+
+
+def module(name, path):
+    spec = importlib.util.spec_from_file_location(name, ROOT / path)
+    loaded = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(loaded)
+    return loaded
+
+
+CHECK = module("coordination_events", "scripts/pm_coordination_events.py")
 FIXTURES = CHECK.load(CHECK.FIXTURE_PATH)
 LEDGER = CHECK.load(CHECK.LEDGER_PATH)
 REGISTRY = CHECK.load(CHECK.REGISTRY_PATH)
 PAYLOADS = {case["case_id"]: case for case in FIXTURES["payloads"]}
 PROJECTIONS = {case["case_id"]: case for case in FIXTURES["projection_values"]}
 CONTEXT = FIXTURES["storage_context"]
+
+
+def all_prepared():
+    """Synthetic baseline with no coordination family admitted, independent of later admission landings."""
+    ledger, registry = copy.deepcopy(LEDGER), copy.deepcopy(REGISTRY)
+    for row in ledger["rows"]:
+        row["admission_status"] = CHECK.PREPARED
+        row.pop("authority_contract_ref", None)
+    registry["families"] = [row for row in registry["families"] if not row["event_type"].startswith("coordination.")]
+    return ledger, registry
+
+
+PREP_LEDGER, PREP_REGISTRY = all_prepared()
 
 
 def errors(failures):
@@ -265,33 +286,34 @@ class LedgerTests(unittest.TestCase):
         }
         for expected, mutation in mutations.items():
             with self.subTest(expected=expected):
-                ledger = copy.deepcopy(LEDGER)
+                ledger = copy.deepcopy(PREP_LEDGER)
                 mutation(ledger)
                 self.assertIn(expected, errors(CHECK.ledger_failures(ledger)))
         for mutation in (status, order):
             with self.subTest(mutation=mutation.__name__):
-                ledger = copy.deepcopy(LEDGER)
+                ledger = copy.deepcopy(PREP_LEDGER)
                 mutation(ledger)
                 self.assertTrue(errors(CHECK.ledger_failures(ledger)) & {"ledger_schema", "ledger_row_order"})
 
     def test_admitted_row_needs_authority_contract_ref(self):
-        ledger = admitted(LEDGER, 0)
+        ledger = admitted(PREP_LEDGER, 0)
         self.assertEqual(CHECK.ledger_failures(ledger), [])
         del ledger["rows"][0]["authority_contract_ref"]
         self.assertIn("ledger_schema", errors(CHECK.ledger_failures(ledger)))
 
     def test_each_prepared_row_is_what_the_registry_would_receive(self):
         self.assertEqual(CHECK.registry_preflight_failures(), [])
-        ledger = copy.deepcopy(LEDGER)
+        self.assertEqual(CHECK.registry_preflight_failures(PREP_LEDGER, PREP_REGISTRY), [])
+        ledger = copy.deepcopy(PREP_LEDGER)
         ledger["rows"][1]["registry_row"]["payload_schema_ref"]["json_pointer"] = "#/$defs/agent_missing"
-        self.assertIn("prepared_row_not_admissible", errors(CHECK.registry_preflight_failures(ledger)))
+        self.assertEqual(errors(CHECK.registry_preflight_failures(ledger, PREP_REGISTRY)), {"prepared_row_not_admissible"})
 
     def test_validation_case_ids_stay_within_their_family(self):
         self.assertEqual(CHECK.validation_case_failures(), [])
-        ledger = copy.deepcopy(LEDGER)
+        ledger = copy.deepcopy(PREP_LEDGER)
         ledger["rows"][0]["validation_case_ids"].append("status_terminal_value")
         self.assertIn("validation_case_of_other_family", errors(CHECK.validation_case_failures(ledger)))
-        ledger = copy.deepcopy(LEDGER)
+        ledger = copy.deepcopy(PREP_LEDGER)
         ledger["rows"][6]["validation_case_ids"].remove("aborted_unknown_reason")
         self.assertIn("family_cases_not_named_by_ledger_row", errors(CHECK.validation_case_failures(ledger)))
 
@@ -300,27 +322,27 @@ class RegistryMembershipTests(unittest.TestCase):
     def test_prepared_row_cannot_be_registered(self):
         for index, event_type in enumerate(CHECK.SEVEN):
             with self.subTest(event=event_type):
-                registry = with_row(REGISTRY, LEDGER["rows"][index]["registry_row"])
-                self.assertEqual(errors(CHECK.registry_membership_failures(registry, LEDGER)), {"prepared_coordination_family_registered"})
+                registry = with_row(PREP_REGISTRY, PREP_LEDGER["rows"][index]["registry_row"])
+                self.assertEqual(errors(CHECK.registry_membership_failures(registry, PREP_LEDGER)), {"prepared_coordination_family_registered"})
 
     def test_admitted_row_must_be_registered_byte_for_byte(self):
-        ledger = admitted(LEDGER, 0)
+        ledger = admitted(PREP_LEDGER, 0)
         prepared = ledger["rows"][0]["registry_row"]
-        self.assertEqual(CHECK.registry_membership_failures(with_row(REGISTRY, prepared), ledger), [])
-        self.assertEqual(errors(CHECK.registry_membership_failures(REGISTRY, ledger)), {"admitted_coordination_family_missing_or_duplicate"})
+        self.assertEqual(CHECK.registry_membership_failures(with_row(PREP_REGISTRY, prepared), ledger), [])
+        self.assertEqual(errors(CHECK.registry_membership_failures(PREP_REGISTRY, ledger)), {"admitted_coordination_family_missing_or_duplicate"})
         changed = copy.deepcopy(prepared)
         changed["source_refs"] = changed["source_refs"][:-1]
-        self.assertEqual(errors(CHECK.registry_membership_failures(with_row(REGISTRY, changed), ledger)),
+        self.assertEqual(errors(CHECK.registry_membership_failures(with_row(PREP_REGISTRY, changed), ledger)),
                          {"admitted_coordination_row_differs_from_prepared_row"})
-        self.assertEqual(errors(CHECK.registry_membership_failures(with_row(with_row(REGISTRY, prepared), prepared), ledger)),
+        self.assertEqual(errors(CHECK.registry_membership_failures(with_row(with_row(PREP_REGISTRY, prepared), prepared), ledger)),
                          {"admitted_coordination_family_missing_or_duplicate"})
 
     def test_mirror_and_unknown_coordination_rows_are_refused(self):
-        mirror = copy.deepcopy(LEDGER["rows"][0]["registry_row"])
+        mirror = copy.deepcopy(PREP_LEDGER["rows"][0]["registry_row"])
         mirror.update(event_type=CHECK.MIRROR, family_id="event-family-coordination-debug-mirror-exported")
-        self.assertTrue(errors(CHECK.registry_membership_failures(with_row(REGISTRY, mirror), LEDGER)))
+        self.assertTrue(errors(CHECK.registry_membership_failures(with_row(PREP_REGISTRY, mirror), PREP_LEDGER)))
         unknown = dict(mirror, event_type="coordination.agent_heartbeat", family_id="event-family-coordination-agent-heartbeat")
-        self.assertEqual(errors(CHECK.registry_membership_failures(with_row(REGISTRY, unknown), LEDGER)),
+        self.assertEqual(errors(CHECK.registry_membership_failures(with_row(PREP_REGISTRY, unknown), PREP_LEDGER)),
                          {"unexpected_coordination_registry_family"})
 
 
@@ -445,6 +467,116 @@ class TransitionModelTests(unittest.TestCase):
         without_age = {key: value for key, value in crash["payload"].items() if key != "heartbeat_age_ms"}
         self.assertEqual(CHECK.payload_rejection(crash["event_type"], without_age), "schema")
         self.assertEqual(CHECK.payload_rejection(crash["event_type"], dict(crash["payload"], coordination_heartbeat_expiry_ms=300000)), "schema")
+
+
+def documents(registry, ledger):
+    """Loader side effect that swaps only the central registry and the coordination ledger."""
+    replacements = {CHECK.REGISTRY_PATH: registry, CHECK.LEDGER_PATH: ledger}
+
+    def swap(original):
+        return lambda path: copy.deepcopy(replacements[path]) if path in replacements else original(path)
+    return swap
+
+
+class ClosedWorldGuardTests(unittest.TestCase):
+    """The Browser gate and the two pinned test helpers accept admitted coordination rows and nothing else.
+
+    A first admission landing appends the prepared row and flips the ledger row; with the guards
+    generalized, it has to move only the DL-078 pins, which these tests never touch.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.browser = module("coordination_browser_gate", "scripts/pm-browser-event-admission.py")
+        cls.testing = module("coordination_testing_session_tests", "tests/test_pm_testing_session_events.py")
+        cls.github = module("coordination_github_project_tests", "tests/test_pm_github_project_integration.py")
+        cls.first = admitted(PREP_LEDGER, 0)
+        cls.first_registry = with_row(PREP_REGISTRY, cls.first["rows"][0]["registry_row"])
+
+    def browser_failures(self, registry, ledger):
+        with patch.object(self.browser, "load_json", side_effect=documents(registry, ledger)(self.browser.load_json)):
+            _report, failures = self.browser.preexisting_preservation(self.browser.contract_context()[0], registry["families"])
+        return errors(failures)
+
+    def helpers(self):
+        return (
+            (self.testing.gate, self.testing.TestingSessionEventTests("test_static_candidates_and_all_authored_negatives_without_admission")),
+            (self.github.GATE, self.github.GitHubProjectIntegrationTests("test_two_candidates_and_all_negative_fixtures_without_admission")),
+        )
+
+    def helper_count(self, gate, case, registry, ledger):
+        with patch.object(gate, "load", side_effect=documents(registry, ledger)(gate.load)):
+            return case.assert_registry_matches_upstream_plus_admitted_browser()
+
+    def test_browser_behaviour_on_the_live_registry_is_unchanged(self):
+        self.assertEqual(self.browser_failures(REGISTRY, LEDGER), set())
+        self.assertEqual(self.browser.admitted_coordination_rows(),
+                         {(row["family_id"], row["event_type"]): self.browser.fingerprint(row["registry_row"])
+                          for row in LEDGER["rows"] if row["admission_status"] == CHECK.ADMITTED})
+
+    def test_browser_gate_accepts_an_admitted_row_only_as_its_prepared_row(self):
+        self.assertNotIn("unexpected_central_event_family", self.browser_failures(self.first_registry, self.first))
+        self.assertIn("unexpected_central_event_family", self.browser_failures(self.first_registry, PREP_LEDGER))
+        changed = copy.deepcopy(self.first["rows"][0]["registry_row"])
+        changed["family_revision"] = "1.0.1"
+        self.assertIn("unexpected_central_event_family", self.browser_failures(with_row(PREP_REGISTRY, changed), self.first))
+        mirror = dict(changed, family_revision="1.0.0", event_type=CHECK.MIRROR, family_id="event-family-coordination-debug-mirror-exported")
+        self.assertIn("unexpected_central_event_family", self.browser_failures(with_row(self.first_registry, mirror), self.first))
+
+    def test_browser_gate_fails_closed_without_a_readable_ledger(self):
+        def unreadable(path):
+            raise OSError(path)
+        with patch.object(self.browser, "load_json", side_effect=unreadable):
+            self.assertEqual(self.browser.admitted_coordination_rows(), {})
+        _report, failures = self.browser.preexisting_preservation(
+            self.browser.contract_context()[0], self.first_registry["families"], coordination_rows={})
+        self.assertIn("unexpected_central_event_family", errors(failures))
+
+    def test_browser_validate_passes_after_a_simulated_first_admission(self):
+        with patch.object(self.browser, "load_json", side_effect=documents(self.first_registry, self.first)(self.browser.load_json)):
+            report = self.browser.validate()
+        browser = sum(1 for row in CHECK.load("Plans/browser_event_admission.json")["rows"] if row["admission_status"] == CHECK.ADMITTED)
+        self.assertEqual(report["failures"], [])
+        self.assertEqual(report["registry_family_count"], len(PREP_REGISTRY["families"]) + 1)
+        self.assertEqual(report["admitted_scoped_event_families"], browser)
+
+    def test_pinned_helpers_count_admitted_coordination_rows_and_nothing_else(self):
+        browser = sum(1 for row in CHECK.load("Plans/browser_event_admission.json")["rows"] if row["admission_status"] == CHECK.ADMITTED)
+        coordination = sum(1 for row in LEDGER["rows"] if row["admission_status"] == CHECK.ADMITTED)
+        changed = copy.deepcopy(self.first["rows"][0]["registry_row"])
+        changed["source_refs"] = changed["source_refs"][:-1]
+        for gate, case in self.helpers():
+            with self.subTest(helper=type(case).__name__):
+                self.assertEqual(self.helper_count(gate, case, REGISTRY, LEDGER), browser + coordination)
+                self.assertEqual(self.helper_count(gate, case, PREP_REGISTRY, PREP_LEDGER), browser)
+                self.assertEqual(self.helper_count(gate, case, self.first_registry, self.first), browser + 1)
+                for registry, ledger in ((self.first_registry, PREP_LEDGER), (PREP_REGISTRY, self.first), (with_row(PREP_REGISTRY, changed), self.first)):
+                    with self.assertRaises(AssertionError):
+                        self.helper_count(gate, case, registry, ledger)
+
+    def test_coordination_checker_passes_the_simulated_first_admission(self):
+        self.assertEqual(CHECK.registry_membership_failures(self.first_registry, self.first), [])
+        self.assertEqual(CHECK.ledger_failures(self.first), [])
+
+    def test_holding_bucket_post_august_list_follows_admitted_coordination_rows(self):
+        holding = module("coordination_holding_bucket_tests", "tests/test_event_authority_holding_bucket.py")
+        admitted_types = [row["event_type"] for row in LEDGER["rows"] if row["admission_status"] == CHECK.ADMITTED]
+        post = holding.PostAugustAdmissionTests.POST
+        self.assertEqual(post[:3], ["context.compaction.completed", "browser.workspace.created", "browser.workspace.reset"])
+        self.assertEqual(post[3:], admitted_types)
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            (repo / "Plans").mkdir()
+            (repo / CHECK.LEDGER_PATH).write_text(json.dumps(PREP_LEDGER), encoding="utf-8")
+            self.assertEqual(holding.admitted_coordination_decisions(repo), {})
+            (repo / CHECK.LEDGER_PATH).write_text(json.dumps(self.first), encoding="utf-8")
+            with self.assertRaises(FileNotFoundError):
+                holding.admitted_coordination_decisions(repo)
+            records = repo / "reports/event-authority-20260911/admission-records"
+            records.mkdir(parents=True)
+            (records / "coordination.agent_registered.json").write_text(
+                json.dumps({"decision_ref": "Plans/Decision_Log.md#DL-094"}), encoding="utf-8")
+            self.assertEqual(holding.admitted_coordination_decisions(repo), {"coordination.agent_registered": "DL-094"})
 
 
 if __name__ == "__main__":

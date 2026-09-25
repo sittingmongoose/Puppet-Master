@@ -17,7 +17,11 @@ spec.loader.exec_module(gate)
 
 class TestingSessionEventTests(unittest.TestCase):
     def assert_registry_matches_upstream_plus_admitted_browser(self):
+        # Generalized 2026-09-25 (Step 9 batch 2 preparation): a row the coordination ledger marks
+        # admitted_static_contract is accepted too, only as its exact prepared registry row, and
+        # nothing else. The returned count includes it, so an admission landing moves only the pins.
         manifest = gate.load("Plans/browser_event_admission.json")
+        coordination = gate.load("Plans/coordination_event_admission.json")
         families = gate.load("Plans/event_family_registry.json")["families"]
         upstream_ids = set(manifest["preexisting_family_ids"]) | {"event-family-context-compaction-completed"}
         self.assertEqual(len(upstream_ids), 40)
@@ -29,6 +33,13 @@ class TestingSessionEventTests(unittest.TestCase):
         # goal v3 adoptions: 3890d86c70, 5fc9747b6f, 1136661ddc, e686963ad5, a3c511657f, f6350caf27.
         self.assertEqual(hashlib.sha256(encoded).hexdigest(), "b59cc61d0f6569d1389256157d29d80f88516644b70c029809d4543405be52ea")
         admitted_ids = {row["family_id"] for row in manifest["rows"] if row["admission_status"] == "admitted_static_contract"}
+        coordination_rows = {row["family_id"]: row["registry_row"] for row in coordination["rows"]
+                             if row["admission_status"] == "admitted_static_contract"}
+        live = {row["family_id"]: row for row in families}
+        for family_id, prepared in coordination_rows.items():
+            self.assertEqual(json.dumps(live.get(family_id), sort_keys=True, separators=(",", ":"), ensure_ascii=False),
+                             json.dumps(prepared, sort_keys=True, separators=(",", ":"), ensure_ascii=False))
+        admitted_ids |= set(coordination_rows)
         self.assertEqual({row["family_id"] for row in families}, upstream_ids | admitted_ids)
         self.assertEqual(len(families), 40 + len(admitted_ids))
         return len(admitted_ids)

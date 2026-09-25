@@ -691,14 +691,15 @@ def readiness_module(root: Path = ROOT):
     return module
 
 
-def registry_preflight_failures(ledger: dict[str, Any] | None = None, *, root: Path = ROOT) -> list[dict[str, Any]]:
+def registry_preflight_failures(ledger: dict[str, Any] | None = None, registry: dict[str, Any] | None = None,
+                                *, root: Path = ROOT) -> list[dict[str, Any]]:
     """Append each prepared row to a copy of the live registry, as its admission landing would.
 
     The registry schema must accept the result, and readiness must report nothing new except the
     DL-078 checkpoint row count that the family's own landing moves.
     """
     ledger = load(LEDGER_PATH, root) if ledger is None else ledger
-    registry = load(REGISTRY_PATH, root)
+    registry = load(REGISTRY_PATH, root) if registry is None else registry
     schema = load(REGISTRY_SCHEMA_PATH, root)
     readiness = readiness_module(root)
     baseline = {canonical(failure) for failure in readiness.event_family_registry_data_failures(
