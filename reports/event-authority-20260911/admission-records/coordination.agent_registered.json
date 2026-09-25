@@ -1,0 +1,39 @@
+{
+ "schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
+ "event_type": "coordination.agent_registered",
+ "family_id": "event-family-coordination-agent-registered",
+ "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
+ "decision_ref": "Plans/Decision_Log.md#DL-094",
+ "decision_section_sha256": "e8e2404f028e426c6e69572ab848eae668ea095baf7389b3ae21ba85f151587f",
+ "registry_before": {
+  "revision": "2026-09-11.2",
+  "sha256": "0be544181eda423dcea4d8661206e7da6d066fdcf51913d5962f1a283635c842",
+  "family_count": 42
+ },
+ "registry_after": {
+  "revision": "2026-09-25.1",
+  "sha256": "4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70",
+  "family_count": 43
+ },
+ "registry_row_sha256": "1602bb6d33b63f79b7dc1daf4502c0aadbb26a4aa871a2963b2510a5d0353b40",
+ "depth_assessment": {
+  "path": "reports/event-authority-20260911/step-09-depth-coordination.agent_registered.json",
+  "sha256": "54346d8b231b7080b487ed5a8e7332cc0d6202a8177309a10d772b796266509c"
+ },
+ "admission_landing": {
+  "branch": "plans/ea-s09-coord-registered-20260925",
+  "commit": null,
+  "record": "reports/event-authority-20260911/step-09-coord-registered-20260925.md",
+  "note": "The landing commit is this branch's tip when it lands on main. A record cannot name the commit that contains it, so the landing record names it."
+ },
+ "criteria_not_passing_at_recording": [],
+ "status_at_recording": "complete_depth",
+ "recorded_by": "claude-opus-5.5:ea-s09-coord-registered-20260925",
+ "recorded_at_utc": "2026-09-25T13:23:50Z",
+ "notes": [
+  "The first Step 9 registration, in the family's own Storage admission landing under DL-078. The decision entry is DL-094, which DL-093 makes Jared's decision entry for this family.",
+  "The depth assessment is the independent re-grade at 3abdf9fe3f, the commit that appends the registry row, copied byte-identically from the grader's output; the family's first independent grade, at 0fad478e03, was 10 of 12.",
+  "registry_before is the registry at the branch's merge base with main (63cf2cb97f). If main's registry moves before the landing, the row is appended again on the new base, and this record, DL-094 and the checkpoint pins are taken again.",
+  "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
+ ]
+}
