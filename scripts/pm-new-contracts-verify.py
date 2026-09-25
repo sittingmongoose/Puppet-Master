@@ -76,6 +76,8 @@ from pm_jj_publication_selected import publication_semantic_failures
 from pm_jj_operation_recovery import recovery_semantic_failures
 from pm_jj_publication_response import jj_publication_dispatch_semantic_failures
 from pm_jj_recovery_response import jj_recovery_dispatch_semantic_failures
+from pm_source_control_selected_operands import selected_operand_semantic_failures
+from pm_source_control_selected_response import selected_dispatch_semantic_failures
 from pm_forge_log_selection_semantics import log_selection_semantic_failures
 from pm_git_selected_three import git_selected_semantic_failures
 from pm_forge_review_decisions import review_decision_semantic_failures
@@ -156,9 +158,11 @@ CONTRACT_PAIRS = (
     ("Plans/forge_retry_selected_contracts.schema.json", "Plans/forge_retry_selected_contract_fixtures.json"),
     ("Plans/forge_run_selected_contracts.schema.json", "Plans/forge_run_selected_contract_fixtures.json"),
     ("Plans/forge_review_create_selected_contracts.schema.json", "Plans/forge_review_create_selected_contract_fixtures.json"),
+    ("Plans/source_control_selected_operands.schema.json", "Plans/source_control_selected_operand_fixtures.json"),
+    ("Plans/sir_source_control_selected_dispatch.schema.json", "Plans/sir_source_control_selected_dispatch_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 72
+EXPECTED_CONTRACT_PAIR_COUNT = 74
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1331,6 +1335,13 @@ def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any
         return recovery_semantic_failures(definition_name, value)
     if schema_rel == "Plans/sir_jj_recovery_dispatch.schema.json":
         return jj_recovery_dispatch_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/source_control_selected_operands.schema.json":
+        # Fixture cases carry retained originals; a bare runtime record has no resolver.
+        return selected_operand_semantic_failures(definition_name, value, canon_root=ROOT)
+    if schema_rel == "Plans/sir_source_control_selected_dispatch.schema.json":
+        # Fixture cases compose the actual central response path; bare owner records
+        # are joined by the runtime adapter, not by fixture-only equality.
+        return selected_dispatch_semantic_failures(definition_name, value)
     if schema_rel == "Plans/forge_log_selection_contracts.schema.json":
         return log_selection_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_bounded_read_contracts.schema.json":

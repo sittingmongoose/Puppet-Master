@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L5844-L5889
+Source lines: L5844-L5891
 
-Source SHA256: `b83336ae367b63c5f342525dd0c07f4a985b24b3eb29c0d77019e7339925ac16`
+Source SHA256: `4f0a48537884fa9896671469a228e9a602bdf4a87329f8cd922eb0eac0fb10bf`
 
 ---
 
@@ -12,13 +12,15 @@ Source SHA256: `b83336ae367b63c5f342525dd0c07f4a985b24b3eb29c0d77019e7339925ac16
 
 The existing `cmd.git.pull` consumes `Plans/git_pull_selected.schema.json#/$defs/request` -> `Plans/git_pull_selected.schema.json#/$defs/result` under SCS-003, through the authentic original and independent delivery binding in `Plans/sir_git_pull_dispatch.schema.json` owned by SIR-042. The sole future handler remains `handlers::git::pull`, `handler_unavailable`, with `expected_event_types=[]`. Explicit merge/rebase/ff_only, native-qualified selected upstream and before/proposed/actual phase effects are required; accepted work is nonterminal and unknown effects require reconciliation. This is neither stash-pop nor route/open success; no new confirmation policy or native/physical custody proof follows.
 
+The existing `cmd.source_control.backend.select`, `cmd.source_control.remote.fetch`, `cmd.source_control.remote.publish`, `cmd.source_control.diff.open`, `cmd.source_control.history.open` and `cmd.source_control.workspace.remove` routes consume the enrolled successor `Plans/source_control_selected_operands.schema.json#/$defs/request` -> `Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding` under SCS-003 and SIR-042. The historical `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `#/$defs/source_control_command_result` binding remains the unchanged reader for the other thirteen neutral requests and is not reinterpreted as containing these operands. Each of the six keeps its existing owner row, sole future handler, `handler_unavailable` state and `expected_event_types=[]`; the successor supplies the authentic original dispatch, exact selected operands/preview, owner result and terminal receipt, nullable owner error projection and central/caller response joins. Static registration and fixtures prove no native dispatcher, issuer, lease, effect or physical custody.
+
 Three existing Source Control owner commands already have typed owner contracts, Touch Closure rows, and production-intent wiring, but require explicit concrete central catalog records. This section completes those records without minting new semantics or changing the packet compatibility aliases that target them.
 
 | Command ID | Canonical owner | Sole future handler | Exact request -> result | Current evidence boundary |
 |---|---|---|---|---|
 | `cmd.source_control.repository.bind` | `Plans/Source_Control_System.md#SCS-003` | `handlers::source_control::repository_bind` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.source_control.status.refresh` | `Plans/Source_Control_System.md#SCS-003` | `handlers::source_control::status_refresh` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
-| `cmd.source_control.workspace.remove` | `Plans/Source_Control_System.md#SCS-003` | `handlers::source_control::workspace_remove` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.source_control.workspace.remove` | `Plans/Source_Control_System.md#SCS-003` | `handlers::source_control::workspace_remove` | `Plans/source_control_selected_operands.schema.json#/$defs/request` -> `Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 
 The compatibility spellings `cmd.project.checkout.connect_existing`, `cmd.project.checkout.verify`, and `cmd.project.checkout.remove` continue to normalize before every gate to these primaries. They do not receive peer registrations or handlers.
 

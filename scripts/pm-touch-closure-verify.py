@@ -462,7 +462,24 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
         raise ValueError("core Git remote owner registration drift")
     add("TCP-GIT-REMOTE-LEGACY", "command", tokens(remote_rows[0].split("|")[1]) - {pull_command})
     scm_alias = {"cmd.source_control.select_worktree"}
-    add("TCP-SCM", "command", {item for item in scm if item.startswith("cmd.source_control.")} - scm_alias)
+    # Exact selected successor routes come from the actual SIR successor
+    # discriminator, not from the Touch rows.
+    scm_selected = schema_enum_actions(
+        "Plans/sir_source_control_selected_dispatch.schema.json",
+        "/$defs/error_projection/properties/command_id/enum",
+    )
+    if scm_selected != {
+        "cmd.source_control.backend.select",
+        "cmd.source_control.diff.open",
+        "cmd.source_control.history.open",
+        "cmd.source_control.remote.fetch",
+        "cmd.source_control.remote.publish",
+        "cmd.source_control.workspace.remove",
+    }:
+        raise ValueError("selected neutral SCM owner discriminator drift")
+    add("TCP-SCM", "command",
+        {item for item in scm if item.startswith("cmd.source_control.")} - scm_alias - scm_selected)
+    add("TCP-SCM-SELECTED", "command", scm_selected)
     add("TCP-SCM-ALIAS", "command_alias", scm_alias)
 
     jj_text = read("Plans/Jujutsu_Integration.md")
@@ -1942,7 +1959,9 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # Exact Forge cancellation consumes its bounded successor, no new row.
         # JJ operation recovery consumes its bounded successor for the two
         # existing undo/restore routes: profile total moves 148 -> 149 only.
-        "profile_count": 149,
+        # The six neutral selected-operand routes consume their bounded
+        # successor for existing rows: profile total moves 149 -> 150 only.
+        "profile_count": 150,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1142,

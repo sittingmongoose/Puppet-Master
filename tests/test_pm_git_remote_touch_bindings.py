@@ -11,12 +11,18 @@ def prior(p):return json.loads(subprocess.check_output(['git','show',BASE+':'+p]
 class GitRemoteCensus(unittest.TestCase):
  def test_exact_append_without_rewriting_prior_inventory(self):
   p='Plans/touch_closure.json';a=prior(p);b=load(p)
-  self.assertEqual((646,149),(len(b['rows']),len(b['profiles'])))
+  self.assertEqual((646,150),(len(b['rows']),len(b['profiles'])))
   expected_rows=json.loads(json.dumps(a['rows']));next(r for r in expected_rows if r[3]=='cmd.forge.review.create')[1]='TCP-FORGE-REVIEW-CREATE'
   for command in ('cmd.jujutsu.operation.undo','cmd.jujutsu.operation.restore'):next(r for r in expected_rows if r[3]==command)[1]='TCP-JJ-RECOVERY'
+  for command in ('cmd.source_control.backend.select','cmd.source_control.diff.open','cmd.source_control.history.open','cmd.source_control.remote.fetch','cmd.source_control.remote.publish','cmd.source_control.workspace.remove'):next(r for r in expected_rows if r[3]==command)[1]='TCP-SCM-SELECTED'
   self.assertEqual(expected_rows,b['rows'][:644]);self.assertEqual([dict(p,**ALIAS_REFS.get(p['profile_id'],{})) for p in a['profiles']],b['profiles'][:146])
   recovery=next(p for p in b['profiles'] if p['profile_id']=='TCP-JJ-RECOVERY')
   for kind in ('request','result'):self.assertEqual('Plans/jj_operation_recovery.schema.json#/$defs/'+kind,recovery[('payload' if kind=='request' else kind)+'_schema_ref'])
+  successor=next(p for p in b['profiles'] if p['profile_id']=='TCP-SCM-SELECTED')
+  self.assertEqual('Plans/source_control_selected_operands.schema.json#/$defs/request',successor['payload_schema_ref'])
+  self.assertEqual('Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding',successor['result_schema_ref'])
+  self.assertEqual('Plans/source_control_contracts.schema.json#/$defs/source_control_command_error',successor['error_schema_ref'])
+  self.assertIn('remain absent',successor['production_or_simulation'])
   for k in a:
    if k not in ('rows','profiles'):self.assertEqual(a[k],b[k])
   self.assertEqual(['TOUCH-GITREMOTE-001','TOUCH-GITREMOTE-002'],[r[0] for r in b['rows'][644:]])
@@ -27,7 +33,13 @@ class GitRemoteCensus(unittest.TestCase):
   self.assertIn('no native',p['production_or_simulation'])
  def test_only_two_existing_wiring_rows_no_effect_or_handler_change(self):
   p='Plans/Wiring_Matrix.production.json';a=prior(p);b=load(p);self.assertEqual(1142,len(b['entries']))
-  self.assertEqual({'catalog.git_push','catalog.git_fetch','catalog.forge_review_create','catalog.jujutsu_operation_undo','catalog.jujutsu_operation_restore'},{k for k in a['entries'] if a['entries'][k]!=b['entries'][k]})
+  self.assertEqual({'catalog.git_push','catalog.git_fetch','catalog.forge_review_create','catalog.jujutsu_operation_undo','catalog.jujutsu_operation_restore','catalog.source_control_backend_select','catalog.source_control_diff_open','catalog.source_control_history_open','catalog.source_control_remote_fetch','catalog.source_control_remote_publish','catalog.source_control_workspace_remove'},{k for k in a['entries'] if a['entries'][k]!=b['entries'][k]})
+  for key in ('catalog.source_control_backend_select','catalog.source_control_remote_fetch','catalog.source_control_workspace_remove'):
+   row=b['entries'][key]
+   self.assertEqual('Plans/source_control_selected_operands.schema.json#/$defs/request',row['request_schema_ref'])
+   self.assertEqual('Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding',row['result_schema_ref'])
+   self.assertEqual([],row['expected_event_types'])
+   self.assertIn('handler_unavailable',' '.join(row['acceptance_checks']))
   for command,handler in (('undo','handlers::jujutsu::operation_undo'),('restore','handlers::jujutsu::operation_restore')):
    row=b['entries']['catalog.jujutsu_operation_'+command];self.assertEqual('cmd.jujutsu.operation.'+command,row['ui_command_id']);self.assertEqual(handler,row['handler_location']);self.assertEqual([],row['expected_event_types'])
    for kind in ('request','result'):self.assertEqual('Plans/jj_operation_recovery.schema.json#/$defs/'+kind,row[kind+'_schema_ref'])

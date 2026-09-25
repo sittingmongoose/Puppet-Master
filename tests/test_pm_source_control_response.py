@@ -27,7 +27,7 @@ STATES = {"succeeded": "succeeded", "blocked": "rejected", "failed": "failed",
           "effect_unknown": "terminal_unknown"}
 
 
-def bundle_for(command="cmd.source_control.remote.fetch", state="succeeded"):
+def bundle_for(command="cmd.source_control.remote.sync", state="succeeded"):
     request = copy.deepcopy(REQUESTS[command])
     result = copy.deepcopy(RESULT)
     result.update(scope=copy.deepcopy(request["scope"]),
@@ -69,12 +69,20 @@ def rehash(bundle):
 
 
 class SourceControlResponseTests(unittest.TestCase):
-    def test_all_nineteen_requests_and_six_terminal_states(self):
-        self.assertEqual(len(REQUESTS), 19)
-        for command in REQUESTS:
+    def test_thirteen_historical_requests_and_six_terminal_states(self):
+        successor = set(REQUESTS) & set(GATE.SCM_SELECTED_COMMANDS)
+        historical = sorted(set(REQUESTS) - successor)
+        self.assertEqual((len(historical), len(successor)), (13, 6))
+        for command in historical:
             for state in STATES:
                 with self.subTest(command=command, state=state):
                     self.assertEqual(GATE.response_bundle_failures(bundle_for(command, state)), [])
+
+    def test_six_successor_commands_require_the_selected_binding(self):
+        for command in sorted(GATE.SCM_SELECTED_COMMANDS):
+            with self.subTest(command=command):
+                bundle = bundle_for(command, "succeeded")
+                self.assertIn("scm_selected_owner_result_binding", GATE.response_bundle_failures(bundle))
 
     def test_schema_valid_foreign_scope_and_receipt_cannot_pass(self):
         for field in ("project_id", "project_home_server_id", "execution_host_id",
@@ -93,7 +101,7 @@ class SourceControlResponseTests(unittest.TestCase):
 
     def test_nested_command_cannot_evade_top_level_binding(self):
         bundle = bundle_for()
-        bundle["owner_result"]["scope"]["command_id"] = "cmd.source_control.remote.sync"
+        bundle["owner_result"]["scope"]["command_id"] = "cmd.source_control.remote.publish"
         rehash(bundle)
         self.assertEqual(GATE.structural_failures(SCHEMA, bundle["owner_result"], RESULT_BINDING["json_pointer"]), [])
         self.assertIn("scm_owner_command_mismatch", GATE.response_bundle_failures(bundle))

@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L5200-L5458
 
-Source SHA256: `b83336ae367b63c5f342525dd0c07f4a985b24b3eb29c0d77019e7339925ac16`
+Source SHA256: `4f0a48537884fa9896671469a228e9a602bdf4a87329f8cd922eb0eac0fb10bf`
 
 ---
 
@@ -97,7 +97,7 @@ The 103 unique central obligations resolve to 100 distinct primary definitions i
 | `cmd.provider_binding.copy` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::binding_copy` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
 | `cmd.provider_binding.resolve_on_destination` | `Plans/Shared_Integration_Runtime.md` / `SIR-024` | `handlers::credential_broker::binding_resolve_on_destination` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult` |
 | `cmd.source_control.backend.detect` | `Plans/Source_Control_System.md` / `SCS-003` | `handlers::source_control::backend_detect` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` |
-| `cmd.source_control.backend.select` | `Plans/Source_Control_System.md` / `SCS-003` | `handlers::source_control::backend_select` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` |
+| `cmd.source_control.backend.select` | `Plans/Source_Control_System.md` / `SCS-003` | `handlers::source_control::backend_select` | `Plans/source_control_selected_operands.schema.json#/$defs/request` -> `Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding` |
 | `cmd.source_control.checkpoint.create` | `Plans/Source_Control_System.md` / `SCS-008` | `handlers::source_control::checkpoint_create` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` |
 | `cmd.source_control.checkpoint.inspect` | `Plans/Source_Control_System.md` / `SCS-008` | `handlers::source_control::checkpoint_inspect` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` |
 | `cmd.source_control.checkpoint.restore` | `Plans/Source_Control_System.md` / `SCS-008` | `handlers::source_control::checkpoint_restore` | `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result` |

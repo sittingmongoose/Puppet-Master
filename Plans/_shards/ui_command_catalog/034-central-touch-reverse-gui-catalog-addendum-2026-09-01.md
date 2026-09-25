@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12043-L12314
+Source lines: L12043-L12316
 
-Source SHA256: `ff5e327b4e5cdc98b34e48586c361d20f938d050970dc2f7f6bcd0f54bc84cef`
+Source SHA256: `be9b225e517e8eaa67b1b0ffd0cdfabfaa7b7d0076afffb7d34c98a98cf3dfa3`
 
 ---
 
@@ -19,6 +19,8 @@ For exactly `cmd.backup.destination.discover` and `cmd.backup.browse`, the typed
 For exactly `cmd.forge.review.approve` and `cmd.forge.review.request_changes`, the typed binding is `Plans/forge_review_decisions.schema.json#/$defs/request` -> `Plans/forge_review_decisions.schema.json#/$defs/result`. The unchanged common authority is nested under `authority`; original review/head/body selection joins actual RepositoryBinding, ReviewRevision, retained original, common receipt and provider-owned selected-decision observation. Null approval body differs from submitted empty text. Result/receipt operation, outcome, work, event references, recovery actions and optional AutomationBinding identity/generation remain consistent with the original. Static resolution is not native admission or provider authentication. Historical common v1 meanings, other routes, handlers, availability and event admission remain unchanged. Physical original/observation custody and replay/backup closure remain pending; no effect is automatically replayed.
 
 For exactly `cmd.jujutsu.operation.undo` and `cmd.jujutsu.operation.restore`, the request/result binding is `Plans/jj_operation_recovery.schema.json#/$defs/request` -> `Plans/jj_operation_recovery.schema.json#/$defs/result`, with the authentic original/delivery and the nullable error projection in `Plans/sir_jj_recovery_dispatch.schema.json` under SIR-042. Preserve the required target operation, the actual selected/current native operation and owner qualification, the complete before/proposed view, the full affected/preserved/conflicted/unknown effect union, and the actual post-operation observation and receipt. Accepted work is nonterminal, unknown effects remain recovery-required, and a truthful cancelled result retains the genuine owner error and its reference plus known partial effects while `projection.ui_error` and the common UI error are null. Historical v1 meanings, the other JJ commands, handlers, availability and event admission remain unchanged, and no native execution, dispatcher authentication or physical custody is proved.
+
+For exactly `cmd.source_control.backend.select`, `cmd.source_control.remote.fetch`, `cmd.source_control.remote.publish`, `cmd.source_control.diff.open`, `cmd.source_control.history.open` and `cmd.source_control.workspace.remove`, the request/result binding is `Plans/source_control_selected_operands.schema.json#/$defs/request` -> `Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding`, with the authentic original/delivery and the nullable error projection in `Plans/sir_source_control_selected_dispatch.schema.json` under SCS-003 and SIR-042. The historical `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request` -> `#/$defs/source_control_command_result` binding stays readable for the other thirteen neutral requests. Preserve each route's exact selected operand and owner-issued preview, the unchanged owner result and terminal receipt, and the actual owner error where one exists; a truthful cancelled route may show no common UI error while the owner error and known effects remain. Succeeded, blocked, failed, cancelled, recovery_required and effect_unknown stay distinct, unknown effects remain reconciliation-only, and replay preserves the original dispatch/result/receipt without redispatching. Every route remains `handler_unavailable` with `expected_event_types=[]`; static catalog, fixture and response composition prove no rendered control, native dispatcher, issuer, effect or physical custody.
 
 | Command | Label | Owner binding | Sole future handler | Intended GUI consumers / return |
 |---|---|---|---|---|

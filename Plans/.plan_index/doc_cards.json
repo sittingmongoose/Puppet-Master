@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6022,
+      "line_count": 6025,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "0fc24942b74d82a4058956f9a5542e0d6a7cfb6fc69f0eb8e5590b6f403730a1",
+      "sha256": "f29173fdb0d903f8e033c688df3891953f78751e20bd7cb2a7b4f5ca1d76e9b3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -3618,7 +3618,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 6355,
+      "line_count": 6357,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 80,
       "plan_unit_ids": [
@@ -3790,7 +3790,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "b83336ae367b63c5f342525dd0c07f4a985b24b3eb29c0d77019e7339925ac16",
+      "sha256": "4f0a48537884fa9896671469a228e9a602bdf4a87329f8cd922eb0eac0fb10bf",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80
@@ -16854,7 +16854,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 3264,
+      "line_count": 3268,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 52,
       "plan_unit_ids": [
@@ -16968,7 +16968,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "f9fd12639476d239f7c62756cd2575b1ffbf873496e6f37dc55542205e696e04",
+      "sha256": "bcfd62b1c4abb7f15fd4436dbfabf7c7f16fd2764b3ced4c196e9eb336275d16",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -17266,8 +17266,10 @@
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
         "Plans/product_onboarding_contracts.schema.json",
+        "Plans/sir_source_control_selected_dispatch.schema.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
+        "Plans/source_control_selected_operands.schema.json",
         "Plans/touch_closure.json",
         "future Plans/git_stash_apply_selected.schema.json and its fixture companion",
         "future Product Onboarding native controller",
@@ -17294,7 +17296,7 @@
         "future source-control facade",
         "future source-control migration"
       ],
-      "line_count": 1903,
+      "line_count": 1934,
       "path": "Plans/Source_Control_System.md",
       "plan_unit_count": 24,
       "plan_unit_ids": [
@@ -17352,7 +17354,7 @@
         "unbounded_graph_hydration_or_source_history_identity_conflation",
         "wrong_environment_or_stale_version_certification"
       ],
-      "sha256": "6b0fd179606c263a6ef0d010b88c04fbf680b93cddbe215d8403917b0cd46216",
+      "sha256": "e9660aafd57edabb43001cc18a70034d69318de30539324877fec2d038a15116",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 24
@@ -17380,12 +17382,14 @@
         "Plans/jujutsu_integration_contracts.schema.json",
         "Plans/product_onboarding_contract_fixtures.json",
         "Plans/product_onboarding_contracts.schema.json",
+        "Plans/sir_source_control_selected_dispatch_fixtures.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
         "Plans/source_control_contracts.schema.json#/$defs/new_repository_object_format_selection",
         "Plans/source_control_contracts.schema.json#/$defs/repository_object_format_profile",
         "Plans/source_control_contracts.schema.json#/$defs/source_graph_parent_expansion_request",
         "Plans/source_control_contracts.schema.json#/$defs/source_graph_projection",
+        "Plans/source_control_selected_operand_fixtures.json",
         "Plans/touch_closure.json",
         "Settings search and route dedupe fixtures",
         "The continuation rule and the parent-reference bound are enforced by `Plans/source_control_contracts.schema.json`. The count/page-size arithmetic and the in-page `node_ref` rule are relational obligations that JSON Schema cannot express; they are enforced by the `source_control_contracts` branch of `contract_semantic_failures` in `scripts/pm-new-contracts-verify.py`, with one authored negative fixture per rule.",
@@ -17428,11 +17432,16 @@
         "remote fan-out",
         "repository_context schema fixtures",
         "routing",
+        "scripts/pm_source_control_selected_operands.py",
+        "scripts/pm_source_control_selected_response.py",
         "setup state fixtures",
         "signed catalog currentness tests",
         "source_control_projection fixtures",
         "stale lease tests",
         "tests/test_pm_onboarding_phases.py",
+        "tests/test_pm_source_control_response.py",
+        "tests/test_pm_source_control_selected_operands.py",
+        "tests/test_pm_source_control_selected_response.py",
         "timeout/reconcile",
         "webhook replay",
         "writer and credential lease fixtures",
@@ -18821,7 +18830,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13304,
+      "line_count": 13306,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 164,
       "plan_unit_ids": [
@@ -19056,7 +19065,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "ff5e327b4e5cdc98b34e48586c361d20f938d050970dc2f7f6bcd0f54bc84cef",
+      "sha256": "be9b225e517e8eaa67b1b0ffd0cdfabfaa7b7d0076afffb7d34c98a98cf3dfa3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163,
@@ -20122,7 +20131,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T16:52:27Z",
+  "generated_at_utc": "2026-09-25T18:37:46Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

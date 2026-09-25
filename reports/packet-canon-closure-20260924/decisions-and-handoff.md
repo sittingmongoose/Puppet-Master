@@ -1,5 +1,12 @@
 # Remaining decisions and handoff — 2026-09-25
 
+Latest integration: the six neutral SCM routes now have reviewed static original/
+request/result/caller composition; see `scm-six-neutral-integration.md`. Public Git
+fetch/push normalization remains in the same capped edge and requires the final
+authorized review cycle. Earlier statements below that SCM is wholly external
+are historical; full SCM closure is still not claimed. Storage now has 153 logical
+dispositions with the same 294 physical families.
+
 Git push/fetch census/copy repair and review creation ACT048 are integrated on
 the repair branch. This is specification/static-contract work, not a finished
 native application, main landing or whole-packet closure. The detailed evidence

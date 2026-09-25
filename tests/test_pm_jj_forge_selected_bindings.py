@@ -15,21 +15,26 @@ class SelectedBindings(unittest.TestCase):
         profiles={p['profile_id']:p for p in data['profiles']}
         rows={r[3]:r for r in data['rows']}
         expected={
-            'cmd.jujutsu.operation.undo':('TCP-JJ-RECOVERY','Plans/jj_operation_recovery.schema.json'),
-            'cmd.jujutsu.operation.restore':('TCP-JJ-RECOVERY','Plans/jj_operation_recovery.schema.json'),
-            'cmd.jujutsu.git.push':('TCP-JJ-PUBLICATION','Plans/jj_publication_selected.schema.json'),
-            'cmd.forge.pipeline.open_logs':('TCP-FORGE-LOG-SELECTION','Plans/forge_log_selection_contracts.schema.json'),
-            'cmd.forge.review.approve':('TCP-FORGE-REVIEW-DECISIONS','Plans/forge_review_decisions.schema.json'),
-            'cmd.forge.review.request_changes':('TCP-FORGE-REVIEW-DECISIONS','Plans/forge_review_decisions.schema.json'),
+            'cmd.jujutsu.operation.undo':('TCP-JJ-RECOVERY','Plans/jj_operation_recovery.schema.json#/$defs/request','Plans/jj_operation_recovery.schema.json#/$defs/result'),
+            'cmd.jujutsu.operation.restore':('TCP-JJ-RECOVERY','Plans/jj_operation_recovery.schema.json#/$defs/request','Plans/jj_operation_recovery.schema.json#/$defs/result'),
+            'cmd.jujutsu.git.push':('TCP-JJ-PUBLICATION','Plans/jj_publication_selected.schema.json#/$defs/request','Plans/jj_publication_selected.schema.json#/$defs/result'),
+            'cmd.forge.pipeline.open_logs':('TCP-FORGE-LOG-SELECTION','Plans/forge_log_selection_contracts.schema.json#/$defs/request','Plans/forge_log_selection_contracts.schema.json#/$defs/result'),
+            'cmd.forge.review.approve':('TCP-FORGE-REVIEW-DECISIONS','Plans/forge_review_decisions.schema.json#/$defs/request','Plans/forge_review_decisions.schema.json#/$defs/result'),
+            'cmd.forge.review.request_changes':('TCP-FORGE-REVIEW-DECISIONS','Plans/forge_review_decisions.schema.json#/$defs/request','Plans/forge_review_decisions.schema.json#/$defs/result'),
+            'cmd.source_control.backend.select':('TCP-SCM-SELECTED','Plans/source_control_selected_operands.schema.json#/$defs/request','Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding'),
+            'cmd.source_control.diff.open':('TCP-SCM-SELECTED','Plans/source_control_selected_operands.schema.json#/$defs/request','Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding'),
+            'cmd.source_control.history.open':('TCP-SCM-SELECTED','Plans/source_control_selected_operands.schema.json#/$defs/request','Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding'),
+            'cmd.source_control.remote.fetch':('TCP-SCM-SELECTED','Plans/source_control_selected_operands.schema.json#/$defs/request','Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding'),
+            'cmd.source_control.remote.publish':('TCP-SCM-SELECTED','Plans/source_control_selected_operands.schema.json#/$defs/request','Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding'),
+            'cmd.source_control.workspace.remove':('TCP-SCM-SELECTED','Plans/source_control_selected_operands.schema.json#/$defs/request','Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding'),
         }
-        self.assertEqual((646,149),(len(data['rows']),len(profiles)))
-        for command,(profile,path) in expected.items():
+        self.assertEqual((646,150),(len(data['rows']),len(profiles)))
+        for command,(profile,payload_ref,result_ref) in expected.items():
             with self.subTest(command=command):
                 self.assertEqual([profile,'command',command,'partial'],rows[command][1:5])
                 self.assertTrue(rows[command][5])
-                for kind in ('payload','result'):
-                    definition='request' if kind=='payload' else kind
-                    self.assertEqual(path+'#/$defs/'+definition,profiles[profile][kind+'_schema_ref'])
+                self.assertEqual(payload_ref,profiles[profile]['payload_schema_ref'])
+                self.assertEqual(result_ref,profiles[profile]['result_schema_ref'])
 
     def test_exact_public_routes_keep_existing_handlers_and_no_events(self):
         entries=json.loads((ROOT/'Plans/Wiring_Matrix.production.json').read_text())['entries']
@@ -52,10 +57,13 @@ class SelectedBindings(unittest.TestCase):
         data=json.loads((ROOT/'Plans/storage_value_registry.json').read_text())
         ids={'scd.source_control.jj_publication_transport.v1','scd.source_control.jj_publication_metadata.v1',
              'scd.sir.jj_publication_dispatch_binding.v1','scd.forge.log_selection_transport.v1',
-             'scd.forge.log_read_observation.v1','scd.sir.forge_log_dispatch_binding.v1'}
+             'scd.forge.log_read_observation.v1','scd.sir.forge_log_dispatch_binding.v1',
+             'scd.source_control.selected_operands_transport.v1',
+             'scd.sir.source_control_selected_dispatch_binding.v1',
+             'scd.sir.source_control_selected_error_projection.v1'}
         rows=[r for r in data['contract_family_dispositions'] if r['disposition_id'] in ids]
         self.assertEqual(ids,{r['disposition_id'] for r in rows})
-        self.assertEqual(6,len(rows))
+        self.assertEqual(9,len(rows))
         for r in rows:
             self.assertFalse(r['runtime_evidence'])
             self.assertEqual([],r['existing_family_refs'])

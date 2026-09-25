@@ -1,0 +1,2297 @@
+{
+  "schema_id": "pm.source_control.selected_operands.fixtures.v1",
+  "valid": [
+    {
+      "name": "backend_select",
+      "definition": "result_case",
+      "value": {
+        "request": {
+          "schema_id": "pm.source_control.selected_operands.request.v1",
+          "schema_version": "1.0.0",
+          "authority": {
+            "schema_id": "pm.source_control.command_request.v1",
+            "command_instance_id": "scm-command-02",
+            "idempotency_key": "scm-idem-02",
+            "scope": {
+              "command_id": "cmd.source_control.backend.select",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "scm_backend": "git",
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "lease:adoption"
+            },
+            "permission_snapshot_ref": "permission:scm:02",
+            "file_safe_decision_ref": "filesafe:scm:02",
+            "requested_at_utc": "2026-08-31T14:00:02Z"
+          },
+          "repository_context_ref": "repository-context:cmd",
+          "selection": {
+            "kind": "backend_select",
+            "backend": "git"
+          },
+          "preview_ref": "preview:backend_select"
+        },
+        "records": {
+          "repository-context:cmd": {
+            "schema_id": "pm.source_control.repository_context.v1",
+            "repo_id": "repo:cmd",
+            "scm_backend": "git",
+            "workspace_id": "git-worktree:cmd",
+            "lineage": {
+              "project_id": "project:cmd",
+              "plan_id": null,
+              "goal_id": "goal:1",
+              "run_id": "run:1",
+              "agent_id": "agent:1",
+              "project_home_server_id": "server:cmd",
+              "execution_host_id": "host:cmd",
+              "execution_environment_id": "environment:cmd",
+              "source_location_id": "source:cmd",
+              "topology_generation": 9
+            },
+            "revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "writer_lease_ref": "lease:adoption",
+            "credential_binding_ref": "credential-binding:git:1",
+            "forge_binding": {
+              "forge_provider": "github",
+              "binding_ref": "forge-binding:github:1"
+            },
+            "display_path": "/display-only/project-alpha"
+          },
+          "preview:backend_select": {
+            "schema_id": "pm.source_control.selected_operands.preview.v1",
+            "schema_version": "1.0.0",
+            "command_instance_id": "scm-command-02",
+            "scope": {
+              "command_id": "cmd.source_control.backend.select",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "scm_backend": "git",
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "lease:adoption"
+            },
+            "repository_context_ref": "repository-context:cmd",
+            "selection": {
+              "kind": "backend_select",
+              "backend": "git"
+            },
+            "disclosure_refs": [
+              "disclosure:static-only"
+            ],
+            "native_disclosure_source_ref": "native-source:preview:backend_select",
+            "native_disclosure": {
+              "kind": "adoption",
+              "before_mapping": {
+                "repo_id": "repo:cmd",
+                "scm_backend": "git",
+                "workspace_id": "git-worktree:cmd",
+                "source_location_id": "source:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "topology_generation": 9,
+                "native_repository_id": "native:repo",
+                "native_workspace_id": "native:workspace",
+                "backing_store_ref": "store:actual",
+                "registered": true
+              },
+              "proposed_mapping": {
+                "repo_id": "repo:cmd",
+                "scm_backend": "git",
+                "workspace_id": "git-worktree:cmd",
+                "source_location_id": "source:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "topology_generation": 9,
+                "native_repository_id": "native:repo",
+                "native_workspace_id": "native:workspace",
+                "backing_store_ref": "store:actual",
+                "registered": true
+              },
+              "registration_before": true,
+              "registration_after": true,
+              "native_repairs": [],
+              "file_effects": [],
+              "config_effects": [],
+              "blocking_finding_refs": []
+            }
+          },
+          "request:backend_select": {
+            "schema_id": "pm.source_control.selected_operands.request.v1",
+            "schema_version": "1.0.0",
+            "authority": {
+              "schema_id": "pm.source_control.command_request.v1",
+              "command_instance_id": "scm-command-02",
+              "idempotency_key": "scm-idem-02",
+              "scope": {
+                "command_id": "cmd.source_control.backend.select",
+                "lineage": {
+                  "project_id": "project:cmd",
+                  "plan_id": null,
+                  "goal_id": "goal:1",
+                  "run_id": "run:1",
+                  "agent_id": "agent:1",
+                  "project_home_server_id": "server:cmd",
+                  "execution_host_id": "host:cmd",
+                  "execution_environment_id": "environment:cmd",
+                  "source_location_id": "source:cmd",
+                  "topology_generation": 9
+                },
+                "scm_backend": "git",
+                "repository_context_ref": "repository-context:cmd",
+                "repo_id": "repo:cmd",
+                "workspace_id": "git-worktree:cmd",
+                "expected_revision": {
+                  "kind": "git",
+                  "object_format": "sha1",
+                  "commit_oid": "2222222222222222222222222222222222222222",
+                  "ref_name": "refs/heads/main",
+                  "branch_name": "main",
+                  "index_generation": 4
+                },
+                "currentness_generation": 9,
+                "writer_lease_ref": "lease:adoption"
+              },
+              "permission_snapshot_ref": "permission:scm:02",
+              "file_safe_decision_ref": "filesafe:scm:02",
+              "requested_at_utc": "2026-08-31T14:00:02Z"
+            },
+            "repository_context_ref": "repository-context:cmd",
+            "selection": {
+              "kind": "backend_select",
+              "backend": "git"
+            },
+            "preview_ref": "preview:backend_select"
+          },
+          "receipt:backend_select": {
+            "schema_id": "pm.source_control.operation_receipt.v1",
+            "receipt_id": "receipt:backend_select",
+            "command_instance_id": "scm-command-02",
+            "operation_id": "operation:backend_select",
+            "outcome": "succeeded",
+            "scm_backend": "git",
+            "repository_context_ref": "repository-context:cmd",
+            "before_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "after_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "writer_lease_ref": "lease:adoption",
+            "credential_lease_ref": null,
+            "observable_work_id": null,
+            "event_refs": [],
+            "completed_at_utc": "2026-08-31T14:01:00Z",
+            "degradation": {
+              "state": "none",
+              "reason_codes": [],
+              "allowed_action_ids": []
+            }
+          },
+          "native-source:preview:backend_select": {
+            "schema_id": "pm.source_control.selected_operands.native_disclosure_source.v1",
+            "schema_version": "1.0.0",
+            "source_id": "native-source:preview:backend_select",
+            "command_instance_id": "scm-command-02",
+            "scope": {
+              "command_id": "cmd.source_control.backend.select",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "scm_backend": "git",
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "lease:adoption"
+            },
+            "selection": {
+              "kind": "backend_select",
+              "backend": "git"
+            },
+            "disclosure": {
+              "kind": "adoption",
+              "before_mapping": {
+                "repo_id": "repo:cmd",
+                "scm_backend": "git",
+                "workspace_id": "git-worktree:cmd",
+                "source_location_id": "source:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "topology_generation": 9,
+                "native_repository_id": "native:repo",
+                "native_workspace_id": "native:workspace",
+                "backing_store_ref": "store:actual",
+                "registered": true
+              },
+              "proposed_mapping": {
+                "repo_id": "repo:cmd",
+                "scm_backend": "git",
+                "workspace_id": "git-worktree:cmd",
+                "source_location_id": "source:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "topology_generation": 9,
+                "native_repository_id": "native:repo",
+                "native_workspace_id": "native:workspace",
+                "backing_store_ref": "store:actual",
+                "registered": true
+              },
+              "registration_before": true,
+              "registration_after": true,
+              "native_repairs": [],
+              "file_effects": [],
+              "config_effects": [],
+              "blocking_finding_refs": []
+            }
+          }
+        },
+        "result": {
+          "schema_id": "pm.source_control.selected_operands.result_binding.v1",
+          "schema_version": "1.0.0",
+          "original_request_ref": "request:backend_select",
+          "selection": {
+            "kind": "backend_select",
+            "backend": "git"
+          },
+          "owner_result": {
+            "schema_id": "pm.source_control.command_result.v1",
+            "command_instance_id": "scm-command-02",
+            "scope": {
+              "command_id": "cmd.source_control.backend.select",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "scm_backend": "git",
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "lease:adoption"
+            },
+            "outcome": "succeeded",
+            "effect_state": "effects_reconciled",
+            "result_refs": [],
+            "operation_receipt_ref": "receipt:backend_select",
+            "observable_work_id": null,
+            "completed_at_utc": "2026-08-31T14:01:00Z"
+          }
+        }
+      },
+      "evidence_kind": "synthetic_static_double_not_native_authority"
+    },
+    {
+      "name": "fetch",
+      "definition": "result_case",
+      "value": {
+        "request": {
+          "schema_id": "pm.source_control.selected_operands.request.v1",
+          "schema_version": "1.0.0",
+          "authority": {
+            "schema_id": "pm.source_control.command_request.v1",
+            "command_instance_id": "scm-command-13",
+            "idempotency_key": "scm-idem-13",
+            "scope": {
+              "command_id": "cmd.source_control.remote.fetch",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "git",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "writer-lease:scm:cmd",
+              "credential_lease_ref": "credential-lease:scm:cmd",
+              "transport": "https",
+              "forge_binding": {
+                "forge_provider": "github",
+                "binding_ref": "forge-binding:github:cmd"
+              }
+            },
+            "permission_snapshot_ref": "permission:scm:13",
+            "file_safe_decision_ref": "filesafe:scm:13",
+            "requested_at_utc": "2026-08-31T14:00:13Z"
+          },
+          "repository_context_ref": "repository-context:cmd",
+          "selection": {
+            "kind": "fetch",
+            "remote_id": "remote:alpha:origin",
+            "refs": [
+              "refs/heads/main"
+            ]
+          },
+          "preview_ref": null
+        },
+        "records": {
+          "repository-context:cmd": {
+            "schema_id": "pm.source_control.repository_context.v1",
+            "repo_id": "repo:cmd",
+            "scm_backend": "git",
+            "workspace_id": "git-worktree:cmd",
+            "lineage": {
+              "project_id": "project:cmd",
+              "plan_id": null,
+              "goal_id": "goal:1",
+              "run_id": "run:1",
+              "agent_id": "agent:1",
+              "project_home_server_id": "server:cmd",
+              "execution_host_id": "host:cmd",
+              "execution_environment_id": "environment:cmd",
+              "source_location_id": "source:cmd",
+              "topology_generation": 9
+            },
+            "revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "writer_lease_ref": "writer-lease:scm:cmd",
+            "credential_binding_ref": "credential-binding:git:1",
+            "forge_binding": {
+              "forge_provider": "github",
+              "binding_ref": "forge-binding:github:cmd"
+            },
+            "display_path": "/display-only/project-alpha"
+          },
+          "request:fetch": {
+            "schema_id": "pm.source_control.selected_operands.request.v1",
+            "schema_version": "1.0.0",
+            "authority": {
+              "schema_id": "pm.source_control.command_request.v1",
+              "command_instance_id": "scm-command-13",
+              "idempotency_key": "scm-idem-13",
+              "scope": {
+                "command_id": "cmd.source_control.remote.fetch",
+                "lineage": {
+                  "project_id": "project:cmd",
+                  "plan_id": null,
+                  "goal_id": "goal:1",
+                  "run_id": "run:1",
+                  "agent_id": "agent:1",
+                  "project_home_server_id": "server:cmd",
+                  "execution_host_id": "host:cmd",
+                  "execution_environment_id": "environment:cmd",
+                  "source_location_id": "source:cmd",
+                  "topology_generation": 9
+                },
+                "repository_context_ref": "repository-context:cmd",
+                "repo_id": "repo:cmd",
+                "scm_backend": "git",
+                "workspace_id": "git-worktree:cmd",
+                "expected_revision": {
+                  "kind": "git",
+                  "object_format": "sha1",
+                  "commit_oid": "2222222222222222222222222222222222222222",
+                  "ref_name": "refs/heads/main",
+                  "branch_name": "main",
+                  "index_generation": 4
+                },
+                "currentness_generation": 9,
+                "writer_lease_ref": "writer-lease:scm:cmd",
+                "credential_lease_ref": "credential-lease:scm:cmd",
+                "transport": "https",
+                "forge_binding": {
+                  "forge_provider": "github",
+                  "binding_ref": "forge-binding:github:cmd"
+                }
+              },
+              "permission_snapshot_ref": "permission:scm:13",
+              "file_safe_decision_ref": "filesafe:scm:13",
+              "requested_at_utc": "2026-08-31T14:00:13Z"
+            },
+            "repository_context_ref": "repository-context:cmd",
+            "selection": {
+              "kind": "fetch",
+              "remote_id": "remote:alpha:origin",
+              "refs": [
+                "refs/heads/main"
+              ]
+            },
+            "preview_ref": null
+          },
+          "receipt:fetch": {
+            "schema_id": "pm.source_control.operation_receipt.v1",
+            "receipt_id": "receipt:fetch",
+            "command_instance_id": "scm-command-13",
+            "operation_id": "operation:fetch",
+            "outcome": "succeeded",
+            "scm_backend": "git",
+            "repository_context_ref": "repository-context:cmd",
+            "before_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "after_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "writer_lease_ref": "writer-lease:scm:cmd",
+            "credential_lease_ref": "credential-lease:scm:cmd",
+            "observable_work_id": "work:fetch",
+            "event_refs": [],
+            "completed_at_utc": "2026-08-31T14:01:00Z",
+            "degradation": {
+              "state": "none",
+              "reason_codes": [],
+              "allowed_action_ids": []
+            }
+          }
+        },
+        "result": {
+          "schema_id": "pm.source_control.selected_operands.result_binding.v1",
+          "schema_version": "1.0.0",
+          "original_request_ref": "request:fetch",
+          "selection": {
+            "kind": "fetch",
+            "remote_id": "remote:alpha:origin",
+            "refs": [
+              "refs/heads/main"
+            ]
+          },
+          "owner_result": {
+            "schema_id": "pm.source_control.command_result.v1",
+            "command_instance_id": "scm-command-13",
+            "scope": {
+              "command_id": "cmd.source_control.remote.fetch",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "git",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "writer-lease:scm:cmd",
+              "credential_lease_ref": "credential-lease:scm:cmd",
+              "transport": "https",
+              "forge_binding": {
+                "forge_provider": "github",
+                "binding_ref": "forge-binding:github:cmd"
+              }
+            },
+            "outcome": "succeeded",
+            "effect_state": "effects_reconciled",
+            "result_refs": [],
+            "operation_receipt_ref": "receipt:fetch",
+            "observable_work_id": "work:fetch",
+            "completed_at_utc": "2026-08-31T14:01:00Z"
+          }
+        }
+      },
+      "evidence_kind": "synthetic_static_double_not_native_authority"
+    },
+    {
+      "name": "publish",
+      "definition": "result_case",
+      "value": {
+        "request": {
+          "schema_id": "pm.source_control.selected_operands.request.v1",
+          "schema_version": "1.0.0",
+          "authority": {
+            "schema_id": "pm.source_control.command_request.v1",
+            "command_instance_id": "scm-command-15",
+            "idempotency_key": "scm-idem-15",
+            "scope": {
+              "command_id": "cmd.source_control.remote.publish",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "git",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "writer-lease:scm:cmd",
+              "credential_lease_ref": "credential-lease:scm:cmd",
+              "transport": "ssh",
+              "forge_binding": {
+                "forge_provider": "github",
+                "binding_ref": "forge-binding:github:cmd"
+              }
+            },
+            "permission_snapshot_ref": "permission:scm:15",
+            "file_safe_decision_ref": "filesafe:scm:15",
+            "requested_at_utc": "2026-08-31T14:00:15Z"
+          },
+          "repository_context_ref": "repository-context:cmd",
+          "selection": {
+            "kind": "publish",
+            "remote_target_ref": "target:publish",
+            "reconciliation_ref": "effect:publish",
+            "expected_remote_heads": [
+              {
+                "target_id": "remote-target:origin",
+                "ref_name": "refs/heads/main",
+                "expected_oid": "3333333333333333333333333333333333333333"
+              },
+              {
+                "target_id": "remote-target:upstream",
+                "ref_name": "refs/heads/main",
+                "expected_oid": "3333333333333333333333333333333333333333"
+              }
+            ],
+            "target_selection_generation": 71
+          },
+          "preview_ref": "preview:publish"
+        },
+        "records": {
+          "repository-context:cmd": {
+            "schema_id": "pm.source_control.repository_context.v1",
+            "repo_id": "repo:cmd",
+            "scm_backend": "git",
+            "workspace_id": "git-worktree:cmd",
+            "lineage": {
+              "project_id": "project:cmd",
+              "plan_id": null,
+              "goal_id": "goal:1",
+              "run_id": "run:1",
+              "agent_id": "agent:1",
+              "project_home_server_id": "server:cmd",
+              "execution_host_id": "host:cmd",
+              "execution_environment_id": "environment:cmd",
+              "source_location_id": "source:cmd",
+              "topology_generation": 9
+            },
+            "revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "writer_lease_ref": "writer-lease:scm:cmd",
+            "credential_binding_ref": "credential-binding:git:1",
+            "forge_binding": {
+              "forge_provider": "github",
+              "binding_ref": "forge-binding:github:cmd"
+            },
+            "display_path": "/display-only/project-alpha"
+          },
+          "target:publish": {
+            "schema_id": "pm.source_control.remote_operation_target.v1",
+            "operation_id": "publish:alpha:42",
+            "project_id": "project:cmd",
+            "repository_id": "repo:cmd",
+            "remote_id": "remote:alpha:origin",
+            "forge_instance_id": "instance:cursor-origin",
+            "account_id": "account:origin:alpha",
+            "revision_ref": "revision:git:alpha:42",
+            "fetch_url": "ssh://origin.example.invalid/alpha.git",
+            "push_targets": [
+              {
+                "target_id": "remote-target:origin",
+                "push_url": "ssh://origin.example.invalid/alpha.git",
+                "refspecs": [
+                  "refs/heads/main:refs/heads/main"
+                ],
+                "preview_ref": "preview:publish",
+                "idempotency_key": "idempotency:push:origin:42",
+                "outcome": "pending"
+              },
+              {
+                "target_id": "remote-target:upstream",
+                "push_url": "ssh://github.example.invalid/alpha.git",
+                "refspecs": [
+                  "refs/heads/main:refs/heads/main"
+                ],
+                "preview_ref": "preview:publish",
+                "idempotency_key": "idempotency:push:upstream:42",
+                "outcome": "pending"
+              }
+            ],
+            "review_binding_ref": "review-binding:github:alpha",
+            "selection_snapshot_generation": 71,
+            "fanout_atomic": false,
+            "mirror_duplicate_push_allowed": false,
+            "identity_equivalence_from_shared_commits": false
+          },
+          "effect:publish": {
+            "schema_id": "pm.source_control.external_effect_reconciliation.v1",
+            "operation_id": "publish:alpha:42",
+            "operation_kind": "push",
+            "intended_target_ref": "target:publish",
+            "precondition_refs": [
+              "preview:publish"
+            ],
+            "intent_recorded_before_call": true,
+            "provider_idempotency_supported": false,
+            "idempotency_key": null,
+            "state": "outcome_unknown",
+            "exact_reconciliation_evidence_refs": [
+              "correlation:origin:review-create:12"
+            ],
+            "blind_retry_allowed": false,
+            "successful_cli_exit_proves_remote_state": false,
+            "force_guard": {
+              "force_requested": false,
+              "expected_head_ref": null,
+              "lease_ref": null,
+              "dangerous_action_policy_ref": null
+            },
+            "accepted_request_distinct_from_durable_outcome": true
+          },
+          "revision:git:alpha:42": {
+            "kind": "git",
+            "object_format": "sha1",
+            "commit_oid": "2222222222222222222222222222222222222222",
+            "ref_name": "refs/heads/main",
+            "branch_name": "main",
+            "index_generation": 4
+          },
+          "preview:publish": {
+            "schema_id": "pm.source_control.selected_operands.preview.v1",
+            "schema_version": "1.0.0",
+            "command_instance_id": "scm-command-15",
+            "scope": {
+              "command_id": "cmd.source_control.remote.publish",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "git",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "writer-lease:scm:cmd",
+              "credential_lease_ref": "credential-lease:scm:cmd",
+              "transport": "ssh",
+              "forge_binding": {
+                "forge_provider": "github",
+                "binding_ref": "forge-binding:github:cmd"
+              }
+            },
+            "repository_context_ref": "repository-context:cmd",
+            "selection": {
+              "kind": "publish",
+              "remote_target_ref": "target:publish",
+              "reconciliation_ref": "effect:publish",
+              "expected_remote_heads": [
+                {
+                  "target_id": "remote-target:origin",
+                  "ref_name": "refs/heads/main",
+                  "expected_oid": "3333333333333333333333333333333333333333"
+                },
+                {
+                  "target_id": "remote-target:upstream",
+                  "ref_name": "refs/heads/main",
+                  "expected_oid": "3333333333333333333333333333333333333333"
+                }
+              ],
+              "target_selection_generation": 71
+            },
+            "disclosure_refs": [
+              "disclosure:static-only"
+            ],
+            "native_disclosure_source_ref": null,
+            "native_disclosure": null
+          },
+          "request:publish": {
+            "schema_id": "pm.source_control.selected_operands.request.v1",
+            "schema_version": "1.0.0",
+            "authority": {
+              "schema_id": "pm.source_control.command_request.v1",
+              "command_instance_id": "scm-command-15",
+              "idempotency_key": "scm-idem-15",
+              "scope": {
+                "command_id": "cmd.source_control.remote.publish",
+                "lineage": {
+                  "project_id": "project:cmd",
+                  "plan_id": null,
+                  "goal_id": "goal:1",
+                  "run_id": "run:1",
+                  "agent_id": "agent:1",
+                  "project_home_server_id": "server:cmd",
+                  "execution_host_id": "host:cmd",
+                  "execution_environment_id": "environment:cmd",
+                  "source_location_id": "source:cmd",
+                  "topology_generation": 9
+                },
+                "repository_context_ref": "repository-context:cmd",
+                "repo_id": "repo:cmd",
+                "scm_backend": "git",
+                "workspace_id": "git-worktree:cmd",
+                "expected_revision": {
+                  "kind": "git",
+                  "object_format": "sha1",
+                  "commit_oid": "2222222222222222222222222222222222222222",
+                  "ref_name": "refs/heads/main",
+                  "branch_name": "main",
+                  "index_generation": 4
+                },
+                "currentness_generation": 9,
+                "writer_lease_ref": "writer-lease:scm:cmd",
+                "credential_lease_ref": "credential-lease:scm:cmd",
+                "transport": "ssh",
+                "forge_binding": {
+                  "forge_provider": "github",
+                  "binding_ref": "forge-binding:github:cmd"
+                }
+              },
+              "permission_snapshot_ref": "permission:scm:15",
+              "file_safe_decision_ref": "filesafe:scm:15",
+              "requested_at_utc": "2026-08-31T14:00:15Z"
+            },
+            "repository_context_ref": "repository-context:cmd",
+            "selection": {
+              "kind": "publish",
+              "remote_target_ref": "target:publish",
+              "reconciliation_ref": "effect:publish",
+              "expected_remote_heads": [
+                {
+                  "target_id": "remote-target:origin",
+                  "ref_name": "refs/heads/main",
+                  "expected_oid": "3333333333333333333333333333333333333333"
+                },
+                {
+                  "target_id": "remote-target:upstream",
+                  "ref_name": "refs/heads/main",
+                  "expected_oid": "3333333333333333333333333333333333333333"
+                }
+              ],
+              "target_selection_generation": 71
+            },
+            "preview_ref": "preview:publish"
+          },
+          "receipt:publish": {
+            "schema_id": "pm.source_control.operation_receipt.v1",
+            "receipt_id": "receipt:publish",
+            "command_instance_id": "scm-command-15",
+            "operation_id": "operation:publish",
+            "outcome": "succeeded",
+            "scm_backend": "git",
+            "repository_context_ref": "repository-context:cmd",
+            "before_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "after_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "writer_lease_ref": "writer-lease:scm:cmd",
+            "credential_lease_ref": "credential-lease:scm:cmd",
+            "observable_work_id": "work:publish",
+            "event_refs": [],
+            "completed_at_utc": "2026-08-31T14:01:00Z",
+            "degradation": {
+              "state": "none",
+              "reason_codes": [],
+              "allowed_action_ids": []
+            }
+          }
+        },
+        "result": {
+          "schema_id": "pm.source_control.selected_operands.result_binding.v1",
+          "schema_version": "1.0.0",
+          "original_request_ref": "request:publish",
+          "selection": {
+            "kind": "publish",
+            "remote_target_ref": "target:publish",
+            "reconciliation_ref": "effect:publish",
+            "expected_remote_heads": [
+              {
+                "target_id": "remote-target:origin",
+                "ref_name": "refs/heads/main",
+                "expected_oid": "3333333333333333333333333333333333333333"
+              },
+              {
+                "target_id": "remote-target:upstream",
+                "ref_name": "refs/heads/main",
+                "expected_oid": "3333333333333333333333333333333333333333"
+              }
+            ],
+            "target_selection_generation": 71
+          },
+          "owner_result": {
+            "schema_id": "pm.source_control.command_result.v1",
+            "command_instance_id": "scm-command-15",
+            "scope": {
+              "command_id": "cmd.source_control.remote.publish",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "git",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "writer-lease:scm:cmd",
+              "credential_lease_ref": "credential-lease:scm:cmd",
+              "transport": "ssh",
+              "forge_binding": {
+                "forge_provider": "github",
+                "binding_ref": "forge-binding:github:cmd"
+              }
+            },
+            "outcome": "succeeded",
+            "effect_state": "effects_reconciled",
+            "result_refs": [],
+            "operation_receipt_ref": "receipt:publish",
+            "observable_work_id": "work:publish",
+            "completed_at_utc": "2026-08-31T14:01:00Z"
+          }
+        }
+      },
+      "evidence_kind": "synthetic_static_double_not_native_authority"
+    },
+    {
+      "name": "diff",
+      "definition": "result_case",
+      "value": {
+        "request": {
+          "schema_id": "pm.source_control.selected_operands.request.v1",
+          "schema_version": "1.0.0",
+          "authority": {
+            "schema_id": "pm.source_control.command_request.v1",
+            "command_instance_id": "scm-command-06",
+            "idempotency_key": "scm-idem-06",
+            "scope": {
+              "command_id": "cmd.source_control.diff.open",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "git",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9
+            },
+            "permission_snapshot_ref": "permission:scm:06",
+            "file_safe_decision_ref": "filesafe:scm:06",
+            "requested_at_utc": "2026-08-31T14:00:06Z"
+          },
+          "repository_context_ref": "repository-context:cmd",
+          "selection": {
+            "kind": "diff",
+            "left": {
+              "kind": "git_index"
+            },
+            "right": {
+              "kind": "working_tree"
+            },
+            "paths": [
+              "src/main.rs"
+            ]
+          },
+          "preview_ref": null
+        },
+        "records": {
+          "repository-context:cmd": {
+            "schema_id": "pm.source_control.repository_context.v1",
+            "repo_id": "repo:cmd",
+            "scm_backend": "git",
+            "workspace_id": "git-worktree:cmd",
+            "lineage": {
+              "project_id": "project:cmd",
+              "plan_id": null,
+              "goal_id": "goal:1",
+              "run_id": "run:1",
+              "agent_id": "agent:1",
+              "project_home_server_id": "server:cmd",
+              "execution_host_id": "host:cmd",
+              "execution_environment_id": "environment:cmd",
+              "source_location_id": "source:cmd",
+              "topology_generation": 9
+            },
+            "revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "credential_binding_ref": "credential-binding:git:1",
+            "forge_binding": {
+              "forge_provider": "github",
+              "binding_ref": "forge-binding:github:1"
+            },
+            "display_path": "/display-only/project-alpha"
+          },
+          "request:diff": {
+            "schema_id": "pm.source_control.selected_operands.request.v1",
+            "schema_version": "1.0.0",
+            "authority": {
+              "schema_id": "pm.source_control.command_request.v1",
+              "command_instance_id": "scm-command-06",
+              "idempotency_key": "scm-idem-06",
+              "scope": {
+                "command_id": "cmd.source_control.diff.open",
+                "lineage": {
+                  "project_id": "project:cmd",
+                  "plan_id": null,
+                  "goal_id": "goal:1",
+                  "run_id": "run:1",
+                  "agent_id": "agent:1",
+                  "project_home_server_id": "server:cmd",
+                  "execution_host_id": "host:cmd",
+                  "execution_environment_id": "environment:cmd",
+                  "source_location_id": "source:cmd",
+                  "topology_generation": 9
+                },
+                "repository_context_ref": "repository-context:cmd",
+                "repo_id": "repo:cmd",
+                "scm_backend": "git",
+                "workspace_id": "git-worktree:cmd",
+                "expected_revision": {
+                  "kind": "git",
+                  "object_format": "sha1",
+                  "commit_oid": "2222222222222222222222222222222222222222",
+                  "ref_name": "refs/heads/main",
+                  "branch_name": "main",
+                  "index_generation": 4
+                },
+                "currentness_generation": 9
+              },
+              "permission_snapshot_ref": "permission:scm:06",
+              "file_safe_decision_ref": "filesafe:scm:06",
+              "requested_at_utc": "2026-08-31T14:00:06Z"
+            },
+            "repository_context_ref": "repository-context:cmd",
+            "selection": {
+              "kind": "diff",
+              "left": {
+                "kind": "git_index"
+              },
+              "right": {
+                "kind": "working_tree"
+              },
+              "paths": [
+                "src/main.rs"
+              ]
+            },
+            "preview_ref": null
+          },
+          "receipt:diff": {
+            "schema_id": "pm.source_control.operation_receipt.v1",
+            "receipt_id": "receipt:diff",
+            "command_instance_id": "scm-command-06",
+            "operation_id": "operation:diff",
+            "outcome": "succeeded",
+            "scm_backend": "git",
+            "repository_context_ref": "repository-context:cmd",
+            "before_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "after_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "writer_lease_ref": "lease:legacy-receipt-static",
+            "credential_lease_ref": null,
+            "observable_work_id": null,
+            "event_refs": [],
+            "completed_at_utc": "2026-08-31T14:01:00Z",
+            "degradation": {
+              "state": "none",
+              "reason_codes": [],
+              "allowed_action_ids": []
+            }
+          }
+        },
+        "result": {
+          "schema_id": "pm.source_control.selected_operands.result_binding.v1",
+          "schema_version": "1.0.0",
+          "original_request_ref": "request:diff",
+          "selection": {
+            "kind": "diff",
+            "left": {
+              "kind": "git_index"
+            },
+            "right": {
+              "kind": "working_tree"
+            },
+            "paths": [
+              "src/main.rs"
+            ]
+          },
+          "owner_result": {
+            "schema_id": "pm.source_control.command_result.v1",
+            "command_instance_id": "scm-command-06",
+            "scope": {
+              "command_id": "cmd.source_control.diff.open",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "git",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9
+            },
+            "outcome": "succeeded",
+            "effect_state": "no_effect",
+            "result_refs": [],
+            "operation_receipt_ref": "receipt:diff",
+            "observable_work_id": null,
+            "completed_at_utc": "2026-08-31T14:01:00Z"
+          }
+        }
+      },
+      "evidence_kind": "synthetic_static_double_not_native_authority"
+    },
+    {
+      "name": "history",
+      "definition": "result_case",
+      "value": {
+        "request": {
+          "schema_id": "pm.source_control.selected_operands.request.v1",
+          "schema_version": "1.0.0",
+          "authority": {
+            "schema_id": "pm.source_control.command_request.v1",
+            "command_instance_id": "scm-command-07",
+            "idempotency_key": "scm-idem-07",
+            "scope": {
+              "command_id": "cmd.source_control.history.open",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "git",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9
+            },
+            "permission_snapshot_ref": "permission:scm:07",
+            "file_safe_decision_ref": "filesafe:scm:07",
+            "requested_at_utc": "2026-08-31T14:00:07Z"
+          },
+          "repository_context_ref": "repository-context:cmd",
+          "selection": {
+            "kind": "history",
+            "revision": null
+          },
+          "preview_ref": null
+        },
+        "records": {
+          "repository-context:cmd": {
+            "schema_id": "pm.source_control.repository_context.v1",
+            "repo_id": "repo:cmd",
+            "scm_backend": "git",
+            "workspace_id": "git-worktree:cmd",
+            "lineage": {
+              "project_id": "project:cmd",
+              "plan_id": null,
+              "goal_id": "goal:1",
+              "run_id": "run:1",
+              "agent_id": "agent:1",
+              "project_home_server_id": "server:cmd",
+              "execution_host_id": "host:cmd",
+              "execution_environment_id": "environment:cmd",
+              "source_location_id": "source:cmd",
+              "topology_generation": 9
+            },
+            "revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "writer_lease_ref": "lease:writer:1",
+            "credential_binding_ref": "credential-binding:git:1",
+            "forge_binding": {
+              "forge_provider": "github",
+              "binding_ref": "forge-binding:github:1"
+            },
+            "display_path": "/display-only/project-alpha"
+          },
+          "request:history": {
+            "schema_id": "pm.source_control.selected_operands.request.v1",
+            "schema_version": "1.0.0",
+            "authority": {
+              "schema_id": "pm.source_control.command_request.v1",
+              "command_instance_id": "scm-command-07",
+              "idempotency_key": "scm-idem-07",
+              "scope": {
+                "command_id": "cmd.source_control.history.open",
+                "lineage": {
+                  "project_id": "project:cmd",
+                  "plan_id": null,
+                  "goal_id": "goal:1",
+                  "run_id": "run:1",
+                  "agent_id": "agent:1",
+                  "project_home_server_id": "server:cmd",
+                  "execution_host_id": "host:cmd",
+                  "execution_environment_id": "environment:cmd",
+                  "source_location_id": "source:cmd",
+                  "topology_generation": 9
+                },
+                "repository_context_ref": "repository-context:cmd",
+                "repo_id": "repo:cmd",
+                "scm_backend": "git",
+                "workspace_id": "git-worktree:cmd",
+                "expected_revision": {
+                  "kind": "git",
+                  "object_format": "sha1",
+                  "commit_oid": "2222222222222222222222222222222222222222",
+                  "ref_name": "refs/heads/main",
+                  "branch_name": "main",
+                  "index_generation": 4
+                },
+                "currentness_generation": 9
+              },
+              "permission_snapshot_ref": "permission:scm:07",
+              "file_safe_decision_ref": "filesafe:scm:07",
+              "requested_at_utc": "2026-08-31T14:00:07Z"
+            },
+            "repository_context_ref": "repository-context:cmd",
+            "selection": {
+              "kind": "history",
+              "revision": null
+            },
+            "preview_ref": null
+          },
+          "receipt:history": {
+            "schema_id": "pm.source_control.operation_receipt.v1",
+            "receipt_id": "receipt:history",
+            "command_instance_id": "scm-command-07",
+            "operation_id": "operation:history",
+            "outcome": "succeeded",
+            "scm_backend": "git",
+            "repository_context_ref": "repository-context:cmd",
+            "before_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "after_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "writer_lease_ref": "lease:legacy-receipt-static",
+            "credential_lease_ref": null,
+            "observable_work_id": null,
+            "event_refs": [],
+            "completed_at_utc": "2026-08-31T14:01:00Z",
+            "degradation": {
+              "state": "none",
+              "reason_codes": [],
+              "allowed_action_ids": []
+            }
+          }
+        },
+        "result": {
+          "schema_id": "pm.source_control.selected_operands.result_binding.v1",
+          "schema_version": "1.0.0",
+          "original_request_ref": "request:history",
+          "selection": {
+            "kind": "history",
+            "revision": null
+          },
+          "owner_result": {
+            "schema_id": "pm.source_control.command_result.v1",
+            "command_instance_id": "scm-command-07",
+            "scope": {
+              "command_id": "cmd.source_control.history.open",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "git",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9
+            },
+            "outcome": "succeeded",
+            "effect_state": "no_effect",
+            "result_refs": [],
+            "operation_receipt_ref": "receipt:history",
+            "observable_work_id": null,
+            "completed_at_utc": "2026-08-31T14:01:00Z"
+          }
+        }
+      },
+      "evidence_kind": "synthetic_static_double_not_native_authority"
+    },
+    {
+      "name": "workspace_remove",
+      "definition": "result_case",
+      "value": {
+        "request": {
+          "schema_id": "pm.source_control.selected_operands.request.v1",
+          "schema_version": "1.0.0",
+          "authority": {
+            "schema_id": "pm.source_control.command_request.v1",
+            "command_instance_id": "scm-command-12",
+            "idempotency_key": "scm-idem-12",
+            "scope": {
+              "command_id": "cmd.source_control.workspace.remove",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "jujutsu",
+              "workspace_id": "jj-workspace:cmd",
+              "expected_revision": {
+                "kind": "jujutsu",
+                "change_id": "change:cmd",
+                "commit_id": "commit:cmd",
+                "operation_id": "jj-op:cmd",
+                "workspace_id": "jj-workspace:cmd",
+                "bookmarks": [
+                  "main"
+                ]
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "writer-lease:scm:cmd"
+            },
+            "permission_snapshot_ref": "permission:scm:12",
+            "file_safe_decision_ref": "filesafe:scm:12",
+            "requested_at_utc": "2026-08-31T14:00:12Z"
+          },
+          "repository_context_ref": "repository-context:cmd",
+          "selection": {
+            "kind": "workspace_remove",
+            "workspace_id": "jj-workspace:cmd"
+          },
+          "preview_ref": "preview:workspace_remove"
+        },
+        "records": {
+          "repository-context:cmd": {
+            "schema_id": "pm.source_control.repository_context.v1",
+            "repo_id": "repo:cmd",
+            "scm_backend": "jujutsu",
+            "workspace_id": "jj-workspace:cmd",
+            "lineage": {
+              "project_id": "project:cmd",
+              "plan_id": null,
+              "goal_id": "goal:1",
+              "run_id": "run:1",
+              "agent_id": "agent:1",
+              "project_home_server_id": "server:cmd",
+              "execution_host_id": "host:cmd",
+              "execution_environment_id": "environment:cmd",
+              "source_location_id": "source:cmd",
+              "topology_generation": 9
+            },
+            "revision": {
+              "kind": "jujutsu",
+              "change_id": "change:cmd",
+              "commit_id": "commit:cmd",
+              "operation_id": "jj-op:cmd",
+              "workspace_id": "jj-workspace:cmd",
+              "bookmarks": [
+                "main"
+              ]
+            },
+            "writer_lease_ref": "writer-lease:scm:cmd",
+            "credential_binding_ref": "credential-binding:git:1",
+            "forge_binding": {
+              "forge_provider": "github",
+              "binding_ref": "forge-binding:github:1"
+            },
+            "display_path": "/display-only/project-alpha"
+          },
+          "preview:workspace_remove": {
+            "schema_id": "pm.source_control.selected_operands.preview.v1",
+            "schema_version": "1.0.0",
+            "command_instance_id": "scm-command-12",
+            "scope": {
+              "command_id": "cmd.source_control.workspace.remove",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "jujutsu",
+              "workspace_id": "jj-workspace:cmd",
+              "expected_revision": {
+                "kind": "jujutsu",
+                "change_id": "change:cmd",
+                "commit_id": "commit:cmd",
+                "operation_id": "jj-op:cmd",
+                "workspace_id": "jj-workspace:cmd",
+                "bookmarks": [
+                  "main"
+                ]
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "writer-lease:scm:cmd"
+            },
+            "repository_context_ref": "repository-context:cmd",
+            "selection": {
+              "kind": "workspace_remove",
+              "workspace_id": "jj-workspace:cmd"
+            },
+            "disclosure_refs": [
+              "disclosure:static-only"
+            ],
+            "native_disclosure_source_ref": "native-source:preview:workspace_remove",
+            "native_disclosure": {
+              "kind": "removal",
+              "before_mapping": {
+                "repo_id": "repo:cmd",
+                "scm_backend": "jujutsu",
+                "workspace_id": "jj-workspace:cmd",
+                "source_location_id": "source:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "topology_generation": 9,
+                "native_repository_id": "native:repo",
+                "native_workspace_id": "native:workspace",
+                "backing_store_ref": "store:actual",
+                "registered": true
+              },
+              "owner_ref": "owner:workspace",
+              "dependencies": [],
+              "active_work_refs": [],
+              "active_lease_refs": [],
+              "registration_after": false,
+              "data_effects": [
+                {
+                  "item_ref": "data:workspace",
+                  "before": {
+                    "state": "present",
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "after": {
+                    "state": "present",
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                }
+              ],
+              "blocking_finding_refs": []
+            }
+          },
+          "request:workspace_remove": {
+            "schema_id": "pm.source_control.selected_operands.request.v1",
+            "schema_version": "1.0.0",
+            "authority": {
+              "schema_id": "pm.source_control.command_request.v1",
+              "command_instance_id": "scm-command-12",
+              "idempotency_key": "scm-idem-12",
+              "scope": {
+                "command_id": "cmd.source_control.workspace.remove",
+                "lineage": {
+                  "project_id": "project:cmd",
+                  "plan_id": null,
+                  "goal_id": "goal:1",
+                  "run_id": "run:1",
+                  "agent_id": "agent:1",
+                  "project_home_server_id": "server:cmd",
+                  "execution_host_id": "host:cmd",
+                  "execution_environment_id": "environment:cmd",
+                  "source_location_id": "source:cmd",
+                  "topology_generation": 9
+                },
+                "repository_context_ref": "repository-context:cmd",
+                "repo_id": "repo:cmd",
+                "scm_backend": "jujutsu",
+                "workspace_id": "jj-workspace:cmd",
+                "expected_revision": {
+                  "kind": "jujutsu",
+                  "change_id": "change:cmd",
+                  "commit_id": "commit:cmd",
+                  "operation_id": "jj-op:cmd",
+                  "workspace_id": "jj-workspace:cmd",
+                  "bookmarks": [
+                    "main"
+                  ]
+                },
+                "currentness_generation": 9,
+                "writer_lease_ref": "writer-lease:scm:cmd"
+              },
+              "permission_snapshot_ref": "permission:scm:12",
+              "file_safe_decision_ref": "filesafe:scm:12",
+              "requested_at_utc": "2026-08-31T14:00:12Z"
+            },
+            "repository_context_ref": "repository-context:cmd",
+            "selection": {
+              "kind": "workspace_remove",
+              "workspace_id": "jj-workspace:cmd"
+            },
+            "preview_ref": "preview:workspace_remove"
+          },
+          "receipt:workspace_remove": {
+            "schema_id": "pm.source_control.operation_receipt.v1",
+            "receipt_id": "receipt:workspace_remove",
+            "command_instance_id": "scm-command-12",
+            "operation_id": "operation:workspace_remove",
+            "outcome": "succeeded",
+            "scm_backend": "jujutsu",
+            "repository_context_ref": "repository-context:cmd",
+            "before_revision": {
+              "kind": "jujutsu",
+              "change_id": "change:cmd",
+              "commit_id": "commit:cmd",
+              "operation_id": "jj-op:cmd",
+              "workspace_id": "jj-workspace:cmd",
+              "bookmarks": [
+                "main"
+              ]
+            },
+            "after_revision": {
+              "kind": "jujutsu",
+              "change_id": "change:cmd",
+              "commit_id": "commit:cmd",
+              "operation_id": "jj-op:cmd",
+              "workspace_id": "jj-workspace:cmd",
+              "bookmarks": [
+                "main"
+              ]
+            },
+            "writer_lease_ref": "writer-lease:scm:cmd",
+            "credential_lease_ref": null,
+            "observable_work_id": null,
+            "event_refs": [],
+            "completed_at_utc": "2026-08-31T14:01:00Z",
+            "degradation": {
+              "state": "none",
+              "reason_codes": [],
+              "allowed_action_ids": []
+            }
+          },
+          "native-source:preview:workspace_remove": {
+            "schema_id": "pm.source_control.selected_operands.native_disclosure_source.v1",
+            "schema_version": "1.0.0",
+            "source_id": "native-source:preview:workspace_remove",
+            "command_instance_id": "scm-command-12",
+            "scope": {
+              "command_id": "cmd.source_control.workspace.remove",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "jujutsu",
+              "workspace_id": "jj-workspace:cmd",
+              "expected_revision": {
+                "kind": "jujutsu",
+                "change_id": "change:cmd",
+                "commit_id": "commit:cmd",
+                "operation_id": "jj-op:cmd",
+                "workspace_id": "jj-workspace:cmd",
+                "bookmarks": [
+                  "main"
+                ]
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "writer-lease:scm:cmd"
+            },
+            "selection": {
+              "kind": "workspace_remove",
+              "workspace_id": "jj-workspace:cmd"
+            },
+            "disclosure": {
+              "kind": "removal",
+              "before_mapping": {
+                "repo_id": "repo:cmd",
+                "scm_backend": "jujutsu",
+                "workspace_id": "jj-workspace:cmd",
+                "source_location_id": "source:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "topology_generation": 9,
+                "native_repository_id": "native:repo",
+                "native_workspace_id": "native:workspace",
+                "backing_store_ref": "store:actual",
+                "registered": true
+              },
+              "owner_ref": "owner:workspace",
+              "dependencies": [],
+              "active_work_refs": [],
+              "active_lease_refs": [],
+              "registration_after": false,
+              "data_effects": [
+                {
+                  "item_ref": "data:workspace",
+                  "before": {
+                    "state": "present",
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "after": {
+                    "state": "present",
+                    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                }
+              ],
+              "blocking_finding_refs": []
+            }
+          }
+        },
+        "result": {
+          "schema_id": "pm.source_control.selected_operands.result_binding.v1",
+          "schema_version": "1.0.0",
+          "original_request_ref": "request:workspace_remove",
+          "selection": {
+            "kind": "workspace_remove",
+            "workspace_id": "jj-workspace:cmd"
+          },
+          "owner_result": {
+            "schema_id": "pm.source_control.command_result.v1",
+            "command_instance_id": "scm-command-12",
+            "scope": {
+              "command_id": "cmd.source_control.workspace.remove",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "jujutsu",
+              "workspace_id": "jj-workspace:cmd",
+              "expected_revision": {
+                "kind": "jujutsu",
+                "change_id": "change:cmd",
+                "commit_id": "commit:cmd",
+                "operation_id": "jj-op:cmd",
+                "workspace_id": "jj-workspace:cmd",
+                "bookmarks": [
+                  "main"
+                ]
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "writer-lease:scm:cmd"
+            },
+            "outcome": "succeeded",
+            "effect_state": "effects_reconciled",
+            "result_refs": [],
+            "operation_receipt_ref": "receipt:workspace_remove",
+            "observable_work_id": null,
+            "completed_at_utc": "2026-08-31T14:01:00Z"
+          }
+        }
+      },
+      "evidence_kind": "synthetic_static_double_not_native_authority"
+    }
+  ],
+  "invalid": [
+    {
+      "name": "foreign_publish_target",
+      "definition": "result_case",
+      "value": {
+        "request": {
+          "schema_id": "pm.source_control.selected_operands.request.v1",
+          "schema_version": "1.0.0",
+          "authority": {
+            "schema_id": "pm.source_control.command_request.v1",
+            "command_instance_id": "scm-command-15",
+            "idempotency_key": "scm-idem-15",
+            "scope": {
+              "command_id": "cmd.source_control.remote.publish",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "git",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "writer-lease:scm:cmd",
+              "credential_lease_ref": "credential-lease:scm:cmd",
+              "transport": "ssh",
+              "forge_binding": {
+                "forge_provider": "github",
+                "binding_ref": "forge-binding:github:cmd"
+              }
+            },
+            "permission_snapshot_ref": "permission:scm:15",
+            "file_safe_decision_ref": "filesafe:scm:15",
+            "requested_at_utc": "2026-08-31T14:00:15Z"
+          },
+          "repository_context_ref": "repository-context:cmd",
+          "selection": {
+            "kind": "publish",
+            "remote_target_ref": "target:publish",
+            "reconciliation_ref": "effect:publish",
+            "expected_remote_heads": [
+              {
+                "target_id": "remote-target:origin",
+                "ref_name": "refs/heads/main",
+                "expected_oid": "3333333333333333333333333333333333333333"
+              },
+              {
+                "target_id": "remote-target:upstream",
+                "ref_name": "refs/heads/main",
+                "expected_oid": "3333333333333333333333333333333333333333"
+              }
+            ],
+            "target_selection_generation": 71
+          },
+          "preview_ref": "preview:publish"
+        },
+        "records": {
+          "repository-context:cmd": {
+            "schema_id": "pm.source_control.repository_context.v1",
+            "repo_id": "repo:cmd",
+            "scm_backend": "git",
+            "workspace_id": "git-worktree:cmd",
+            "lineage": {
+              "project_id": "project:cmd",
+              "plan_id": null,
+              "goal_id": "goal:1",
+              "run_id": "run:1",
+              "agent_id": "agent:1",
+              "project_home_server_id": "server:cmd",
+              "execution_host_id": "host:cmd",
+              "execution_environment_id": "environment:cmd",
+              "source_location_id": "source:cmd",
+              "topology_generation": 9
+            },
+            "revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "writer_lease_ref": "writer-lease:scm:cmd",
+            "credential_binding_ref": "credential-binding:git:1",
+            "forge_binding": {
+              "forge_provider": "github",
+              "binding_ref": "forge-binding:github:cmd"
+            },
+            "display_path": "/display-only/project-alpha"
+          },
+          "target:publish": {
+            "schema_id": "pm.source_control.remote_operation_target.v1",
+            "operation_id": "publish:alpha:42",
+            "project_id": "project:cmd",
+            "repository_id": "repo:foreign",
+            "remote_id": "remote:alpha:origin",
+            "forge_instance_id": "instance:cursor-origin",
+            "account_id": "account:origin:alpha",
+            "revision_ref": "revision:git:alpha:42",
+            "fetch_url": "ssh://origin.example.invalid/alpha.git",
+            "push_targets": [
+              {
+                "target_id": "remote-target:origin",
+                "push_url": "ssh://origin.example.invalid/alpha.git",
+                "refspecs": [
+                  "refs/heads/main:refs/heads/main"
+                ],
+                "preview_ref": "preview:publish",
+                "idempotency_key": "idempotency:push:origin:42",
+                "outcome": "pending"
+              },
+              {
+                "target_id": "remote-target:upstream",
+                "push_url": "ssh://github.example.invalid/alpha.git",
+                "refspecs": [
+                  "refs/heads/main:refs/heads/main"
+                ],
+                "preview_ref": "preview:publish",
+                "idempotency_key": "idempotency:push:upstream:42",
+                "outcome": "pending"
+              }
+            ],
+            "review_binding_ref": "review-binding:github:alpha",
+            "selection_snapshot_generation": 71,
+            "fanout_atomic": false,
+            "mirror_duplicate_push_allowed": false,
+            "identity_equivalence_from_shared_commits": false
+          },
+          "effect:publish": {
+            "schema_id": "pm.source_control.external_effect_reconciliation.v1",
+            "operation_id": "publish:alpha:42",
+            "operation_kind": "push",
+            "intended_target_ref": "target:publish",
+            "precondition_refs": [
+              "preview:publish"
+            ],
+            "intent_recorded_before_call": true,
+            "provider_idempotency_supported": false,
+            "idempotency_key": null,
+            "state": "outcome_unknown",
+            "exact_reconciliation_evidence_refs": [
+              "correlation:origin:review-create:12"
+            ],
+            "blind_retry_allowed": false,
+            "successful_cli_exit_proves_remote_state": false,
+            "force_guard": {
+              "force_requested": false,
+              "expected_head_ref": null,
+              "lease_ref": null,
+              "dangerous_action_policy_ref": null
+            },
+            "accepted_request_distinct_from_durable_outcome": true
+          },
+          "revision:git:alpha:42": {
+            "kind": "git",
+            "object_format": "sha1",
+            "commit_oid": "2222222222222222222222222222222222222222",
+            "ref_name": "refs/heads/main",
+            "branch_name": "main",
+            "index_generation": 4
+          },
+          "preview:publish": {
+            "schema_id": "pm.source_control.selected_operands.preview.v1",
+            "schema_version": "1.0.0",
+            "command_instance_id": "scm-command-15",
+            "scope": {
+              "command_id": "cmd.source_control.remote.publish",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "git",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "writer-lease:scm:cmd",
+              "credential_lease_ref": "credential-lease:scm:cmd",
+              "transport": "ssh",
+              "forge_binding": {
+                "forge_provider": "github",
+                "binding_ref": "forge-binding:github:cmd"
+              }
+            },
+            "repository_context_ref": "repository-context:cmd",
+            "selection": {
+              "kind": "publish",
+              "remote_target_ref": "target:publish",
+              "reconciliation_ref": "effect:publish",
+              "expected_remote_heads": [
+                {
+                  "target_id": "remote-target:origin",
+                  "ref_name": "refs/heads/main",
+                  "expected_oid": "3333333333333333333333333333333333333333"
+                },
+                {
+                  "target_id": "remote-target:upstream",
+                  "ref_name": "refs/heads/main",
+                  "expected_oid": "3333333333333333333333333333333333333333"
+                }
+              ],
+              "target_selection_generation": 71
+            },
+            "disclosure_refs": [
+              "disclosure:static-only"
+            ],
+            "native_disclosure_source_ref": null,
+            "native_disclosure": null
+          },
+          "request:publish": {
+            "schema_id": "pm.source_control.selected_operands.request.v1",
+            "schema_version": "1.0.0",
+            "authority": {
+              "schema_id": "pm.source_control.command_request.v1",
+              "command_instance_id": "scm-command-15",
+              "idempotency_key": "scm-idem-15",
+              "scope": {
+                "command_id": "cmd.source_control.remote.publish",
+                "lineage": {
+                  "project_id": "project:cmd",
+                  "plan_id": null,
+                  "goal_id": "goal:1",
+                  "run_id": "run:1",
+                  "agent_id": "agent:1",
+                  "project_home_server_id": "server:cmd",
+                  "execution_host_id": "host:cmd",
+                  "execution_environment_id": "environment:cmd",
+                  "source_location_id": "source:cmd",
+                  "topology_generation": 9
+                },
+                "repository_context_ref": "repository-context:cmd",
+                "repo_id": "repo:cmd",
+                "scm_backend": "git",
+                "workspace_id": "git-worktree:cmd",
+                "expected_revision": {
+                  "kind": "git",
+                  "object_format": "sha1",
+                  "commit_oid": "2222222222222222222222222222222222222222",
+                  "ref_name": "refs/heads/main",
+                  "branch_name": "main",
+                  "index_generation": 4
+                },
+                "currentness_generation": 9,
+                "writer_lease_ref": "writer-lease:scm:cmd",
+                "credential_lease_ref": "credential-lease:scm:cmd",
+                "transport": "ssh",
+                "forge_binding": {
+                  "forge_provider": "github",
+                  "binding_ref": "forge-binding:github:cmd"
+                }
+              },
+              "permission_snapshot_ref": "permission:scm:15",
+              "file_safe_decision_ref": "filesafe:scm:15",
+              "requested_at_utc": "2026-08-31T14:00:15Z"
+            },
+            "repository_context_ref": "repository-context:cmd",
+            "selection": {
+              "kind": "publish",
+              "remote_target_ref": "target:publish",
+              "reconciliation_ref": "effect:publish",
+              "expected_remote_heads": [
+                {
+                  "target_id": "remote-target:origin",
+                  "ref_name": "refs/heads/main",
+                  "expected_oid": "3333333333333333333333333333333333333333"
+                },
+                {
+                  "target_id": "remote-target:upstream",
+                  "ref_name": "refs/heads/main",
+                  "expected_oid": "3333333333333333333333333333333333333333"
+                }
+              ],
+              "target_selection_generation": 71
+            },
+            "preview_ref": "preview:publish"
+          },
+          "receipt:publish": {
+            "schema_id": "pm.source_control.operation_receipt.v1",
+            "receipt_id": "receipt:publish",
+            "command_instance_id": "scm-command-15",
+            "operation_id": "operation:publish",
+            "outcome": "succeeded",
+            "scm_backend": "git",
+            "repository_context_ref": "repository-context:cmd",
+            "before_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "after_revision": {
+              "kind": "git",
+              "object_format": "sha1",
+              "commit_oid": "2222222222222222222222222222222222222222",
+              "ref_name": "refs/heads/main",
+              "branch_name": "main",
+              "index_generation": 4
+            },
+            "writer_lease_ref": "writer-lease:scm:cmd",
+            "credential_lease_ref": "credential-lease:scm:cmd",
+            "observable_work_id": "work:publish",
+            "event_refs": [],
+            "completed_at_utc": "2026-08-31T14:01:00Z",
+            "degradation": {
+              "state": "none",
+              "reason_codes": [],
+              "allowed_action_ids": []
+            }
+          }
+        },
+        "result": {
+          "schema_id": "pm.source_control.selected_operands.result_binding.v1",
+          "schema_version": "1.0.0",
+          "original_request_ref": "request:publish",
+          "selection": {
+            "kind": "publish",
+            "remote_target_ref": "target:publish",
+            "reconciliation_ref": "effect:publish",
+            "expected_remote_heads": [
+              {
+                "target_id": "remote-target:origin",
+                "ref_name": "refs/heads/main",
+                "expected_oid": "3333333333333333333333333333333333333333"
+              },
+              {
+                "target_id": "remote-target:upstream",
+                "ref_name": "refs/heads/main",
+                "expected_oid": "3333333333333333333333333333333333333333"
+              }
+            ],
+            "target_selection_generation": 71
+          },
+          "owner_result": {
+            "schema_id": "pm.source_control.command_result.v1",
+            "command_instance_id": "scm-command-15",
+            "scope": {
+              "command_id": "cmd.source_control.remote.publish",
+              "lineage": {
+                "project_id": "project:cmd",
+                "plan_id": null,
+                "goal_id": "goal:1",
+                "run_id": "run:1",
+                "agent_id": "agent:1",
+                "project_home_server_id": "server:cmd",
+                "execution_host_id": "host:cmd",
+                "execution_environment_id": "environment:cmd",
+                "source_location_id": "source:cmd",
+                "topology_generation": 9
+              },
+              "repository_context_ref": "repository-context:cmd",
+              "repo_id": "repo:cmd",
+              "scm_backend": "git",
+              "workspace_id": "git-worktree:cmd",
+              "expected_revision": {
+                "kind": "git",
+                "object_format": "sha1",
+                "commit_oid": "2222222222222222222222222222222222222222",
+                "ref_name": "refs/heads/main",
+                "branch_name": "main",
+                "index_generation": 4
+              },
+              "currentness_generation": 9,
+              "writer_lease_ref": "writer-lease:scm:cmd",
+              "credential_lease_ref": "credential-lease:scm:cmd",
+              "transport": "ssh",
+              "forge_binding": {
+                "forge_provider": "github",
+                "binding_ref": "forge-binding:github:cmd"
+              }
+            },
+            "outcome": "succeeded",
+            "effect_state": "effects_reconciled",
+            "result_refs": [],
+            "operation_receipt_ref": "receipt:publish",
+            "observable_work_id": "work:publish",
+            "completed_at_utc": "2026-08-31T14:01:00Z"
+          }
+        }
+      },
+      "evidence_kind": "synthetic_static_double_not_native_authority",
+      "expected_error": "publish_repository",
+      "semantic_rule": "publish_repository"
+    }
+  ]
+}

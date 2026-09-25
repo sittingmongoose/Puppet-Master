@@ -55987,7 +55987,7 @@
     "catalog.source_control_backend_select": {
       "acceptance_checks": [
         "cmd.source_control.backend.select names exactly one specified target handlers::source_control::backend_select; the target string is not implementation or dispatch proof.",
-        "Validate the exact request/result pair Plans/source_control_contracts.schema.json#/$defs/source_control_command_request -> Plans/source_control_contracts.schema.json#/$defs/source_control_command_result and reject unknown, stale, conflicting, or authority-widening fields.",
+        "Validate Plans/source_control_selected_operands.schema.json#/$defs/request -> Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding and Plans/source_control_contracts.schema.json#/$defs/source_control_command_error with the SIR original/delivery/error projection in Plans/sir_source_control_selected_dispatch.schema.json and exact availability and permission gates.",
         "Read state.commands.source_control_backend_select.availability and state.commands.source_control_backend_select.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
         "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return."
@@ -56010,11 +56010,11 @@
       "event_test_requirements": [
         "Assert cmd.source_control.backend.select records only its typed receipt/projection result and emits no unexpected persisted domain event while Event Authority remains open."
       ],
-      "evidence_required": "Future production evidence for cmd.source_control.backend.select: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts.",
+      "evidence_required": "Future native evidence only; cmd.source_control.backend.select remains handler_unavailable. Its registered route consumes Plans/source_control_selected_operands.schema.json#/$defs/request -> Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding through the authentic original/error binding in Plans/sir_source_control_selected_dispatch.schema.json under SCS-003/SIR-042. Typed/static joins, this production-intent row and fixture composition establish no dispatcher, handler, native issuance, permission, lease, effect or physical custody.",
       "expected_event_types": [],
       "handler_location": "handlers::source_control::backend_select",
-      "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request",
-      "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result",
+      "request_schema_ref": "Plans/source_control_selected_operands.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding",
       "state_selector": "state.commands.source_control_backend_select.availability",
       "test_evidence": [
         {
@@ -56354,7 +56354,7 @@
     "catalog.source_control_diff_open": {
       "acceptance_checks": [
         "cmd.source_control.diff.open names exactly one owner-adjudicated future target handlers::source_control::diff_open in Plans/Source_Control_System.md#SCS-010; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/source_control_contracts.schema.json#/$defs/source_control_command_request -> Plans/source_control_contracts.schema.json#/$defs/source_control_command_result and Plans/source_control_contracts.schema.json#/$defs/source_control_command_error with exact availability and permission gates.",
+        "Validate Plans/source_control_selected_operands.schema.json#/$defs/request -> Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding and Plans/source_control_contracts.schema.json#/$defs/source_control_command_error with the SIR original/delivery/error projection in Plans/sir_source_control_selected_dispatch.schema.json and exact availability and permission gates.",
         "Read state.commands.source_control_diff_open.availability and state.commands.source_control_diff_open.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -56376,11 +56376,11 @@
       "event_test_requirements": [
         "Assert cmd.source_control.diff.open records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.source_control.diff.open: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future native evidence only; cmd.source_control.diff.open remains handler_unavailable. Its registered route consumes Plans/source_control_selected_operands.schema.json#/$defs/request -> Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding through the authentic original/error binding in Plans/sir_source_control_selected_dispatch.schema.json under SCS-003/SIR-042. Typed/static joins, this production-intent row and fixture composition establish no dispatcher, handler, native issuance, permission, lease, effect or physical custody.",
       "expected_event_types": [],
       "handler_location": "handlers::source_control::diff_open",
-      "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request",
-      "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result",
+      "request_schema_ref": "Plans/source_control_selected_operands.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding",
       "state_selector": "state.commands.source_control_diff_open.availability",
       "test_evidence": [
         {
@@ -56741,7 +56741,7 @@
     "catalog.source_control_history_open": {
       "acceptance_checks": [
         "cmd.source_control.history.open names exactly one owner-adjudicated future target handlers::source_control::history_open in Plans/Source_Control_System.md#SCS-010; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/source_control_contracts.schema.json#/$defs/source_control_command_request -> Plans/source_control_contracts.schema.json#/$defs/source_control_command_result and Plans/source_control_contracts.schema.json#/$defs/source_control_command_error with exact availability and permission gates.",
+        "Validate Plans/source_control_selected_operands.schema.json#/$defs/request -> Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding and Plans/source_control_contracts.schema.json#/$defs/source_control_command_error with the SIR original/delivery/error projection in Plans/sir_source_control_selected_dispatch.schema.json and exact availability and permission gates.",
         "Read state.commands.source_control_history_open.availability and state.commands.source_control_history_open.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -56763,11 +56763,11 @@
       "event_test_requirements": [
         "Assert cmd.source_control.history.open records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.source_control.history.open: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future native evidence only; cmd.source_control.history.open remains handler_unavailable. Its registered route consumes Plans/source_control_selected_operands.schema.json#/$defs/request -> Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding through the authentic original/error binding in Plans/sir_source_control_selected_dispatch.schema.json under SCS-003/SIR-042. Typed/static joins, this production-intent row and fixture composition establish no dispatcher, handler, native issuance, permission, lease, effect or physical custody.",
       "expected_event_types": [],
       "handler_location": "handlers::source_control::history_open",
-      "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request",
-      "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result",
+      "request_schema_ref": "Plans/source_control_selected_operands.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding",
       "state_selector": "state.commands.source_control_history_open.availability",
       "test_evidence": [
         {
@@ -57073,7 +57073,7 @@
     "catalog.source_control_remote_fetch": {
       "acceptance_checks": [
         "cmd.source_control.remote.fetch names exactly one owner-adjudicated future target handlers::source_control::remote_fetch in Plans/Source_Control_System.md#SCS-010; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/source_control_contracts.schema.json#/$defs/source_control_command_request -> Plans/source_control_contracts.schema.json#/$defs/source_control_command_result and Plans/source_control_contracts.schema.json#/$defs/source_control_command_error with exact availability and permission gates.",
+        "Validate Plans/source_control_selected_operands.schema.json#/$defs/request -> Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding and Plans/source_control_contracts.schema.json#/$defs/source_control_command_error with the SIR original/delivery/error projection in Plans/sir_source_control_selected_dispatch.schema.json and exact availability and permission gates.",
         "Read state.commands.source_control_remote_fetch.availability and state.commands.source_control_remote_fetch.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -57095,11 +57095,11 @@
       "event_test_requirements": [
         "Assert cmd.source_control.remote.fetch records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.source_control.remote.fetch: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future native evidence only; cmd.source_control.remote.fetch remains handler_unavailable. Its registered route consumes Plans/source_control_selected_operands.schema.json#/$defs/request -> Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding through the authentic original/error binding in Plans/sir_source_control_selected_dispatch.schema.json under SCS-003/SIR-042. Typed/static joins, this production-intent row and fixture composition establish no dispatcher, handler, native issuance, permission, lease, effect or physical custody.",
       "expected_event_types": [],
       "handler_location": "handlers::source_control::remote_fetch",
-      "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request",
-      "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result",
+      "request_schema_ref": "Plans/source_control_selected_operands.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding",
       "state_selector": "state.commands.source_control_remote_fetch.availability",
       "test_evidence": [
         {
@@ -57130,7 +57130,7 @@
     "catalog.source_control_remote_publish": {
       "acceptance_checks": [
         "cmd.source_control.remote.publish names exactly one owner-adjudicated future target handlers::source_control::remote_publish in Plans/Source_Control_System.md#SCS-010; the target string and this production-intent row are not native dispatcher or handler proof.",
-        "Validate Plans/source_control_contracts.schema.json#/$defs/source_control_command_request -> Plans/source_control_contracts.schema.json#/$defs/source_control_command_result and Plans/source_control_contracts.schema.json#/$defs/source_control_command_error with exact availability and permission gates.",
+        "Validate Plans/source_control_selected_operands.schema.json#/$defs/request -> Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding and Plans/source_control_contracts.schema.json#/$defs/source_control_command_error with the SIR original/delivery/error projection in Plans/sir_source_control_selected_dispatch.schema.json and exact availability and permission gates.",
         "Read state.commands.source_control_remote_publish.availability and state.commands.source_control_remote_publish.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
         "Record only the owner typed result/receipt/projection and emit no unregistered EventRecord.",
         "Prove every named reverse consumer, accessible disabled behavior, keyboard/pointer parity, and deterministic return."
@@ -57152,11 +57152,11 @@
       "event_test_requirements": [
         "Assert cmd.source_control.remote.publish records only its typed result/receipt/projection and emits no unexpected persisted domain event."
       ],
-      "evidence_required": "Future production evidence for cmd.source_control.remote.publish: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, accessibility, restart/race/currentness negatives, and exact return. The owner binding and production-intent row prove none of those runtime facts.",
+      "evidence_required": "Future native evidence only; cmd.source_control.remote.publish remains handler_unavailable. Its registered route consumes Plans/source_control_selected_operands.schema.json#/$defs/request -> Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding through the authentic original/error binding in Plans/sir_source_control_selected_dispatch.schema.json under SCS-003/SIR-042. Typed/static joins, this production-intent row and fixture composition establish no dispatcher, handler, native issuance, permission, lease, effect or physical custody.",
       "expected_event_types": [],
       "handler_location": "handlers::source_control::remote_publish",
-      "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request",
-      "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result",
+      "request_schema_ref": "Plans/source_control_selected_operands.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding",
       "state_selector": "state.commands.source_control_remote_publish.availability",
       "test_evidence": [
         {
@@ -58532,7 +58532,7 @@
     "catalog.source_control_workspace_remove": {
       "acceptance_checks": [
         "cmd.source_control.workspace.remove names exactly one specified target handlers::source_control::workspace_remove; the target string is not implementation or dispatch proof.",
-        "Validate the exact request/result pair Plans/source_control_contracts.schema.json#/$defs/source_control_command_request -> Plans/source_control_contracts.schema.json#/$defs/source_control_command_result and reject unknown, stale, conflicting, or authority-widening fields.",
+        "Validate Plans/source_control_selected_operands.schema.json#/$defs/request -> Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding and Plans/source_control_contracts.schema.json#/$defs/source_control_command_error with the SIR original/delivery/error projection in Plans/sir_source_control_selected_dispatch.schema.json and exact availability and permission gates.",
         "Read state.commands.source_control_workspace_remove.availability and state.commands.source_control_workspace_remove.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
         "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return."
@@ -58555,11 +58555,11 @@
       "event_test_requirements": [
         "Assert cmd.source_control.workspace.remove records only its typed receipt/projection result and emits no unexpected persisted domain event while Event Authority remains open."
       ],
-      "evidence_required": "Future production evidence for cmd.source_control.workspace.remove: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts.",
+      "evidence_required": "Future native evidence only; cmd.source_control.workspace.remove remains handler_unavailable. Its registered route consumes Plans/source_control_selected_operands.schema.json#/$defs/request -> Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding through the authentic original/error binding in Plans/sir_source_control_selected_dispatch.schema.json under SCS-003/SIR-042. Typed/static joins, this production-intent row and fixture composition establish no dispatcher, handler, native issuance, permission, lease, effect or physical custody.",
       "expected_event_types": [],
       "handler_location": "handlers::source_control::workspace_remove",
-      "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request",
-      "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result",
+      "request_schema_ref": "Plans/source_control_selected_operands.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding",
       "state_selector": "state.commands.source_control_workspace_remove.availability",
       "test_evidence": [
         {

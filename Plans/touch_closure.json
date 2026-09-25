@@ -8592,6 +8592,63 @@
         "static_schema_fixture_and_concept_only"
       ]
     }
+,
+{
+      "availability_rule": "Consume SCS-003's exact command_id-discriminated scope and current capability together with the enrolled selected operands: repository/backend/revision/workspace, writer and credential leases only where that command's owner scope requires them, and the owner-issued preview plus its independently retained native disclosure source for the mutation routes. A current head, focus, display path or replaced preview cannot substitute for the submitted selection; native admission and current authority remain required.",
+      "disabled_reason_rule": "Expose backend/repository/workspace missing, stale revision, selection or preview mismatch, lease conflict, permission, credential, setup, degraded, or recovery blocker, including handler_unavailable.",
+      "dry_contract_ref": "Plans/source_control_selected_operands.schema.json",
+      "error_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_error",
+      "event_refs": [
+        "Plans/Source_Control_System.md#3.2 Canonical events pending Event Authority"
+      ],
+      "evidence_refs": [
+        "static_schema_fixture_and_exact_join_only",
+        "native_issuer_effect_and_physical_custody_absent"
+      ],
+      "gui_triggers": [
+        "Source Control workbench, Settings, Project, palette, forge consumers"
+      ],
+      "handler_owner": "Source Control System neutral router with one backend adapter; native handlers are absent. The existing sole future routes handlers::source_control::backend_select, remote_fetch, remote_publish, diff_open, history_open and workspace_remove remain target strings, not native proof.",
+      "handler_status": "specified",
+      "migration_refs": [
+        "Plans/Source_Control_System.md#7.1"
+      ],
+      "observable_work": [
+        "Required for remote and long repository operations."
+      ],
+      "owner_plan": "Plans/Source_Control_System.md",
+      "payload_schema_ref": "Plans/source_control_selected_operands.schema.json#/$defs/request",
+      "permission_gate": "Permissions, FileSafe, repository authority and confirmation follow the exact owner command branch; writer leases and credential-broker transport authority apply only where SCS-003 requires them, never inferred for pre-read or read-only commands.",
+      "persistence_refs": [
+        "repository binding, backend selection, workspace refs"
+      ],
+      "plan_unit": "SCS-003",
+      "production_or_simulation": "Static exact-route schema/fixture/original-result-response composition and future production-intent wiring only; native execution, issuer authentication, disclosure resolution, effects and physical custody remain absent.",
+      "profile_id": "TCP-SCM-SELECTED",
+      "receipt_refs": [
+        "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result",
+        "Plans/source_control_contracts.schema.json#/$defs/operation_receipt"
+      ],
+      "requirement_refs": [
+        "Plans/Source_Control_System.md#SCS-003",
+        "Plans/Shared_Integration_Runtime.md#SIR-042"
+      ],
+      "result_schema_ref": "Plans/sir_source_control_selected_dispatch.schema.json#/$defs/result_binding",
+      "return_route": "Exact repository/backend/workspace and caller focus.",
+      "reverse_consumers": [
+        "Plans/Jujutsu_Integration.md",
+        "Plans/Forge_Integrations.md",
+        "Plans/Settings_System.md"
+      ],
+      "test_refs": [
+        "Plans/source_control_selected_operand_fixtures.json",
+        "Plans/sir_source_control_selected_dispatch_fixtures.json",
+        "tests/test_pm_source_control_selected_operands.py",
+        "tests/test_pm_source_control_selected_response.py",
+        "tests/test_pm_source_control_response.py"
+      ],
+      "wiring_status": "specified"
+    }
   ],
   "row_columns": [
     "touch_id",
@@ -10300,7 +10357,7 @@
     ],
     [
       "TOUCH-SCM-002",
-      "TCP-SCM",
+      "TCP-SCM-SELECTED",
       "command",
       "cmd.source_control.backend.select",
       "partial",
@@ -10332,7 +10389,7 @@
     ],
     [
       "TOUCH-SCM-006",
-      "TCP-SCM",
+      "TCP-SCM-SELECTED",
       "command",
       "cmd.source_control.diff.open",
       "partial",
@@ -10340,7 +10397,7 @@
     ],
     [
       "TOUCH-SCM-007",
-      "TCP-SCM",
+      "TCP-SCM-SELECTED",
       "command",
       "cmd.source_control.history.open",
       "partial",
@@ -10380,7 +10437,7 @@
     ],
     [
       "TOUCH-SCM-012",
-      "TCP-SCM",
+      "TCP-SCM-SELECTED",
       "command",
       "cmd.source_control.workspace.remove",
       "partial",
@@ -10388,7 +10445,7 @@
     ],
     [
       "TOUCH-SCM-013",
-      "TCP-SCM",
+      "TCP-SCM-SELECTED",
       "command",
       "cmd.source_control.remote.fetch",
       "partial",
@@ -10404,7 +10461,7 @@
     ],
     [
       "TOUCH-SCM-015",
-      "TCP-SCM",
+      "TCP-SCM-SELECTED",
       "command",
       "cmd.source_control.remote.publish",
       "partial",

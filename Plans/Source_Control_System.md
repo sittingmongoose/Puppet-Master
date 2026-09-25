@@ -209,6 +209,37 @@ acceptance_criteria:
     native admission separately authenticates its disclosures and current authority. Result/replay preserves that
     original selection and actual owner receipt without redispatching or replacing it with current UI selection.
   - >-
+    The selected-operand companion materializes adoption/removal disclosures as closed values, not an opaque
+    disclosure-reference bag. Adoption separates original/proposed native repository, store and workspace mapping
+    from PM registration and ordered version-qualified repairs, including exact file/config before/after content
+    identities. Each repair resolves its authentic owner qualification for that exact command, original scope and
+    repair value. Removal exposes exact workspace ownership, dependent owner/resource identities, active work and
+    leases, proposed registration and explicit per-target before/after data identities. No disposal default or
+    automatic dependency release is inferred. The independently retained native disclosure source binds the exact
+    source identity, command instance, original scope, selection and disclosed value. Native completeness, currentness,
+    repair semantics, dependency resolution, Permissions/FileSafe and issuer authentication remain required; matching
+    static records do not grant effects. Unknown content, unresolved dependencies and active-work blockers cannot
+    be treated as a complete admitted mutation preview. Original request, result and live resolved source/preview/
+    receipt values are snapshotted before dependent reads and checked again for mutation before returning.
+  - >-
+    Exactly these six routes consume one explicitly enrolled closed successor: the selected-operands request plus the
+    SIR original dispatch binding in Plans/sir_source_control_selected_dispatch.schema.json, whose authenticated
+    original full IdentityEnvelope, request/dispatch/frame identity, independent target generation, idempotency,
+    actor/permission snapshot, admission time, exact selected arguments, canonical argument-only payload digest and
+    genuine nullable caller return context are preserved. The successor result binding keeps the unchanged
+    pm.source_control.command_result.v1 owner result and terminal pm.source_control.operation_receipt.v1, adds only the
+    independently retained owner-result reference and the nullable owner error/projection references, and a nullable
+    SIR error projection resolves the actual source_control_command_error by its reference while the common UI error is
+    null exactly for a truthful cancellation. Resolve the actual retained owner records and the existing canonical
+    digest contract; static value equality, a fixture reader or a matching hash authenticates no issuer, permission,
+    lease, effect or physical custody. Central and caller responses consume this composition through the existing
+    cmd.source_control command/instance/operation scope and CV-333 response, never a local projection, another owner's
+    result family or current UI selection. Succeeded, blocked, failed, cancelled, recovery_required and effect_unknown
+    remain distinct; unknown effects stay terminal_unknown/reconciliation-only with no inferred no_op or blind retry,
+    and replay preserves the original dispatch, result and receipt without redispatching. The remaining thirteen neutral
+    requests keep the unchanged historical v1 request/result binding, which stays readable and is not reinterpreted as
+    containing the omitted operands. No command, handler, event, retention interval or physical store follows.
+  - >-
     Existing Git commands cmd.git.commit, cmd.git.pull, cmd.source_control.stash.create,
     cmd.source_control.stash.apply and cmd.source_control.branch.create retain their current owners and handlers.
     The three closed selected-input bindings in Plans/git_selected_three.schema.json adopt commit message plus
@@ -267,11 +298,11 @@ acceptance_criteria:
   - The CV-333 central response consumes only the exact source_control_command_result family for these nineteen commands and joins the original typed request's command instance, discriminated scope, applicable lineage, idempotency key and exact return context to the result and its terminal receipt. A local projection or another owner's result cannot substitute for this join.
   - Optional plan_id and goal_id lineage map exactly to the central named_plan_id and goal_id; omission or null cannot authorize an invented non-null central identity. Run and agent lineage stay in the exact owner request/result scope without inventing fields in the closed central identity.
   - Central projection maps succeeded to succeeded, blocked to rejected, failed/cancelled to their same terminal states, and recovery_required/effect_unknown to terminal_unknown and recovery_required. Any unresolved effect requires terminal_unknown regardless of a failed result label. no_effect alone is not an owner-verified no_op verdict.
-validation_surfaces: [Plans/source_control_contract_fixtures.json, writer and credential lease fixtures, stale lease tests, prompt suppression tests, command idempotency tests]
+validation_surfaces: [Plans/source_control_contract_fixtures.json, Plans/source_control_selected_operand_fixtures.json, Plans/sir_source_control_selected_dispatch_fixtures.json, scripts/pm_source_control_selected_operands.py, scripts/pm_source_control_selected_response.py, tests/test_pm_source_control_selected_operands.py, tests/test_pm_source_control_selected_response.py, tests/test_pm_source_control_response.py, writer and credential lease fixtures, stale lease tests, prompt suppression tests, command idempotency tests]
 risk_class: concurrent_mutation_or_credential_escape
 reasoning_tier: high
 context_scope: source_control_mutation_authority
-implementation_surfaces: [Plans/source_control_contracts.schema.json, future command handlers, future credential broker adapter]
+implementation_surfaces: [Plans/source_control_contracts.schema.json, Plans/source_control_selected_operands.schema.json, Plans/sir_source_control_selected_dispatch.schema.json, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, future command handlers, future credential broker adapter]
 node_compile_hint: {mode: source_control_command_and_lease_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:SCM-008..009, source_ref:egolite-register:CT-01..02, source_ref:pldg-20260916-001-jujutsu-continuation-corrections:atom-credential-lease-transport-evidence-109]
 preserved_exact_tokens: [writer lease, generation, epoch, git-credential-puppet-master, credential.useHttpPath=true, pm-ssh, pm-ssh-agent-bridge, ObservableWork, effect_unknown]
