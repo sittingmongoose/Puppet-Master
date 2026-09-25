@@ -1907,6 +1907,48 @@ SourceRef: `reports/packet-canon-closure-20260924/product-choice-cards-20260925.
 
 ContractRef: ContractName:Plans/usage-feature.md
 
+### DL-099: Dictionaries belong to the Project and are shared with its users
+
+Recorded from Jared's explicit submitted response on 2026-09-25. Status: answered_recorded_owner_contract_pending.
+
+**Answer:** Deny with changes — For now, installations share dictionary.  It follows the project, so if someone else also uses the project, they see the dictionary.  Dictionaries should be per project.
+
+**Decision:** For now, dictionaries are per Project. The dictionary follows the Project and is shared across installations using that Project; another person using the same Project sees that dictionary. This supersedes the earlier same-user personal-dictionary sharing answer to PCC-DICTIONARY-001. It does not create a separate personal-sharing identity service or authorize sharing across unrelated Projects. Existing Project access controls remain; synchronization protocol, conflict handling and physical storage admission are not chosen by this answer.
+
+Sources: PCC-DICTIONARY-BOUNDARY-001; Plans/assistant-chat-design.md. This records the response, not completed owner integration or native behavior.
+
+SourceRef: `reports/packet-canon-closure-20260924/remaining-boundary-cards-20260925.md`, SHA-256 `0e2cee08dfdba5c798b63ecf9cd1b51cf3c339c5657389c88648c03eddd39a38`; `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-REMAINING-BOUNDARIES.md`, SHA-256 `a39649b88e31ac133bfd1e57fcc8be14c8d77166c5f3902c573687a5f0b4efd5`.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md
+
+### DL-100: Server connection question deferred for explanation
+
+Recorded from Jared's explicit submitted response on 2026-09-25. Status: deferred_user_question_requires_answer_and_represented_card.
+
+**Answer:** Ask — Isnt the server the environment?  I want the user to be able to connect to a server and see all projects on that server or create new ones.  The user can use multiple clients at once to connect to the same server/project.
+
+**Decision:** Deferred, not approved: Jared asked whether the Server is the environment and specified the desired experience: connect to a Server, see all Projects on that Server or create new ones, and use multiple Clients simultaneously with the same Server/Project. Explain the existing internal Server versus execution-environment distinction and re-present the card in those terms. Do not treat Ask as approval of either proposed connection architecture, collapse distinct internal identities, invent one globally shared Client session, or remove existing permissions.
+
+Sources: PCC-SERVER-ENVIRONMENT-001; Plans/Server_System.md. This records the response, not completed owner integration or native behavior.
+
+SourceRef: `reports/packet-canon-closure-20260924/remaining-boundary-cards-20260925.md`, SHA-256 `0e2cee08dfdba5c798b63ecf9cd1b51cf3c339c5657389c88648c03eddd39a38`; `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-REMAINING-BOUNDARIES.md`, SHA-256 `a39649b88e31ac133bfd1e57fcc8be14c8d77166c5f3902c573687a5f0b4efd5`.
+
+ContractRef: ContractName:Plans/Server_System.md
+
+### DL-101: Bounded completion of six Source Control request and result connections
+
+Recorded from Jared's explicit submitted response on 2026-09-25. Status: approved_bounded_followup_authorized.
+
+**Answer:** Approve
+
+**Decision:** Approve completing the remaining six Source Control actions' original-request, actual-result and calling-interface connections, with up to two bounded review cycles and without reopening their approved core behavior. Unresolved findings after that cap return to Jared. This authorizes the missing existing specification connections and their tests, not a new feature, native implementation, governance reseal or a silent further review loop.
+
+Sources: PCC-SCM-CLOSURE-AUTH-001; Plans/Source_Control_System.md. This records the response, not completed owner integration or native behavior.
+
+SourceRef: `reports/packet-canon-closure-20260924/remaining-boundary-cards-20260925.md`, SHA-256 `0e2cee08dfdba5c798b63ecf9cd1b51cf3c339c5657389c88648c03eddd39a38`; `/mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-REMAINING-BOUNDARIES.md`, SHA-256 `a39649b88e31ac133bfd1e57fcc8be14c8d77166c5f3902c573687a5f0b4efd5`.
+
+ContractRef: ContractName:Plans/Source_Control_System.md
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -6851,6 +6893,120 @@ negative_constraints:
   - Do not claim owner integration, runtime implementation, readiness, or governance seal from recording this decision.
 owner_hints:
   - Plans/usage-feature.md
+```
+
+### DL-099 - Dictionaries belong to the Project and are shared with its users
+
+```yaml
+plan_unit_id: DL-099
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  For now, dictionaries are per Project. The dictionary follows the Project and is shared across installations using that Project; another person using the same Project sees that dictionary. This supersedes the earlier same-user personal-dictionary sharing answer to PCC-DICTIONARY-001. It does not create a separate personal-sharing identity service or authorize sharing across unrelated Projects. Existing Project access controls remain; synchronization protocol, conflict handling and physical storage admission are not chosen by this answer.
+gui_related: true
+gui_classification_reason: Records user-visible dictionary or Server connection requirements, without claiming implementation.
+split_recommended: false
+depends_on: [DL-036]
+unblocks: []
+acceptance_criteria:
+  - "The dictionary is per Project and follows that Project across installations."
+  - "Other people using the same Project see its dictionary; same-user identity is not the sharing boundary."
+  - "The earlier personal same-user sharing answer is superseded without editing its frozen source record."
+  - "No unrelated Project receives dictionary data and no native sync or storage admission is claimed."
+validation_surfaces:
+  - reports/packet-canon-closure-20260924/decision-responses.jsonl
+  - python3 scripts/pm-plan-index.py validate
+risk_class: packet_product_decision_scope_drift
+reasoning_tier: high
+context_scope: packet_boundary_response_recording
+implementation_surfaces: [Plans/assistant-chat-design.md]
+node_compile_hint: {mode: owner_decision_record, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "SourceRef: reports/packet-canon-closure-20260924/remaining-boundary-cards-20260925.md SHA-256 0e2cee08dfdba5c798b63ecf9cd1b51cf3c339c5657389c88648c03eddd39a38"
+  - "SourceRef: /mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-REMAINING-BOUNDARIES.md SHA-256 a39649b88e31ac133bfd1e57fcc8be14c8d77166c5f3902c573687a5f0b4efd5"
+preserved_exact_tokens: ["PCC-DICTIONARY-BOUNDARY-001", "Deny with changes"]
+negative_constraints:
+  - Do not edit the frozen cards or verbatim answers.
+  - Do not promote Ask or a saved draft to approval.
+  - Do not claim owner integration, native behavior, readiness or governance seal from this record.
+owner_hints: [Plans/assistant-chat-design.md]
+```
+
+### DL-100 - Server connection question deferred for explanation
+
+```yaml
+plan_unit_id: DL-100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Deferred, not approved: Jared asked whether the Server is the environment and specified the desired experience: connect to a Server, see all Projects on that Server or create new ones, and use multiple Clients simultaneously with the same Server/Project. Explain the existing internal Server versus execution-environment distinction and re-present the card in those terms. Do not treat Ask as approval of either proposed connection architecture, collapse distinct internal identities, invent one globally shared Client session, or remove existing permissions.
+gui_related: true
+gui_classification_reason: Records user-visible dictionary or Server connection requirements, without claiming implementation.
+split_recommended: false
+depends_on: [DL-036]
+unblocks: []
+acceptance_criteria:
+  - "The exact Ask text is retained and the connection-scope choice remains deferred."
+  - "The explanation distinguishes the user-facing Server connection from internal execution location."
+  - "Multiple simultaneous Clients and Project browsing/creation are preserved as Jared's stated requirements."
+  - "No proposed connection option is marked approved on Jared's behalf."
+validation_surfaces:
+  - reports/packet-canon-closure-20260924/decision-responses.jsonl
+  - python3 scripts/pm-plan-index.py validate
+risk_class: packet_product_decision_scope_drift
+reasoning_tier: high
+context_scope: packet_boundary_response_recording
+implementation_surfaces: [Plans/Server_System.md]
+node_compile_hint: {mode: owner_decision_record, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "SourceRef: reports/packet-canon-closure-20260924/remaining-boundary-cards-20260925.md SHA-256 0e2cee08dfdba5c798b63ecf9cd1b51cf3c339c5657389c88648c03eddd39a38"
+  - "SourceRef: /mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-REMAINING-BOUNDARIES.md SHA-256 a39649b88e31ac133bfd1e57fcc8be14c8d77166c5f3902c573687a5f0b4efd5"
+preserved_exact_tokens: ["PCC-SERVER-ENVIRONMENT-001", "Ask"]
+negative_constraints:
+  - Do not edit the frozen cards or verbatim answers.
+  - Do not promote Ask or a saved draft to approval.
+  - Do not claim owner integration, native behavior, readiness or governance seal from this record.
+owner_hints: [Plans/Server_System.md]
+```
+
+### DL-101 - Bounded completion of six Source Control request and result connections
+
+```yaml
+plan_unit_id: DL-101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Approve completing the remaining six Source Control actions' original-request, actual-result and calling-interface connections, with up to two bounded review cycles and without reopening their approved core behavior. Unresolved findings after that cap return to Jared. This authorizes the missing existing specification connections and their tests, not a new feature, native implementation, governance reseal or a silent further review loop.
+gui_related: false
+gui_classification_reason: Records bounded specification-work authorization, not GUI implementation.
+split_recommended: false
+depends_on: [DL-036]
+unblocks: []
+acceptance_criteria:
+  - "The six actions' original request, actual result and caller connections are completed without changing approved core behavior."
+  - "At most two bounded review cycles are authorized by this answer."
+  - "Findings unresolved at the cap return to Jared rather than initiating another implicit loop."
+  - "No native implementation, new product feature or governance reseal is authorized."
+validation_surfaces:
+  - reports/packet-canon-closure-20260924/decision-responses.jsonl
+  - python3 scripts/pm-plan-index.py validate
+risk_class: packet_product_decision_scope_drift
+reasoning_tier: high
+context_scope: packet_boundary_response_recording
+implementation_surfaces: [Plans/Source_Control_System.md]
+node_compile_hint: {mode: owner_decision_record, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "SourceRef: reports/packet-canon-closure-20260924/remaining-boundary-cards-20260925.md SHA-256 0e2cee08dfdba5c798b63ecf9cd1b51cf3c339c5657389c88648c03eddd39a38"
+  - "SourceRef: /mnt/Cursor/PuppetMaster-Evidence/packet-canon-closure-20260924/decision-card-answers-20260925/ANSWERS-REMAINING-BOUNDARIES.md SHA-256 a39649b88e31ac133bfd1e57fcc8be14c8d77166c5f3902c573687a5f0b4efd5"
+preserved_exact_tokens: ["PCC-SCM-CLOSURE-AUTH-001", "Approve"]
+negative_constraints:
+  - Do not edit the frozen cards or verbatim answers.
+  - Do not promote Ask or a saved draft to approval.
+  - Do not claim owner integration, native behavior, readiness or governance seal from this record.
+owner_hints: [Plans/Source_Control_System.md]
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

@@ -15,12 +15,14 @@ class SelectedBindings(unittest.TestCase):
         profiles={p['profile_id']:p for p in data['profiles']}
         rows={r[3]:r for r in data['rows']}
         expected={
+            'cmd.jujutsu.operation.undo':('TCP-JJ-RECOVERY','Plans/jj_operation_recovery.schema.json'),
+            'cmd.jujutsu.operation.restore':('TCP-JJ-RECOVERY','Plans/jj_operation_recovery.schema.json'),
             'cmd.jujutsu.git.push':('TCP-JJ-PUBLICATION','Plans/jj_publication_selected.schema.json'),
             'cmd.forge.pipeline.open_logs':('TCP-FORGE-LOG-SELECTION','Plans/forge_log_selection_contracts.schema.json'),
             'cmd.forge.review.approve':('TCP-FORGE-REVIEW-DECISIONS','Plans/forge_review_decisions.schema.json'),
             'cmd.forge.review.request_changes':('TCP-FORGE-REVIEW-DECISIONS','Plans/forge_review_decisions.schema.json'),
         }
-        self.assertEqual((646,148),(len(data['rows']),len(profiles)))
+        self.assertEqual((646,149),(len(data['rows']),len(profiles)))
         for command,(profile,path) in expected.items():
             with self.subTest(command=command):
                 self.assertEqual([profile,'command',command,'partial'],rows[command][1:5])

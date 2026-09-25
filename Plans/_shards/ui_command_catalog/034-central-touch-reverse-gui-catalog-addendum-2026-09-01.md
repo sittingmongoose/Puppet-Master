@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12043-L12312
+Source lines: L12043-L12314
 
-Source SHA256: `4ac61466bd92fdc64cc15310ecd39b172a84db48292173f61db8dc4a025d0be2`
+Source SHA256: `ff5e327b4e5cdc98b34e48586c361d20f938d050970dc2f7f6bcd0f54bc84cef`
 
 ---
 
@@ -17,6 +17,8 @@ For exactly `cmd.jujutsu.git.push`, the request/result binding is `Plans/jj_publ
 For exactly `cmd.backup.destination.discover` and `cmd.backup.browse`, the typed binding is `Plans/backup_bounded_read_contracts.schema.json#/$defs/request` -> `Plans/backup_bounded_read_contracts.schema.json#/$defs/result`. Actual original destination/prefix or immutable snapshot/path/cursor selection joins the bounded source page, prior-page continuity, explicit BackupReadProjectionReceipt and SIR original caller/response. Missing source is not an empty successful listing; a completed page is not exhausted listing or recovery proof. These remain read-only terminal-page contracts with native source/Permissions/current-delivery authentication and original/receipt physical custody unbuilt. No capture/verification/restore receipt is substituted, and no new control, command, event or handler availability is admitted.
 
 For exactly `cmd.forge.review.approve` and `cmd.forge.review.request_changes`, the typed binding is `Plans/forge_review_decisions.schema.json#/$defs/request` -> `Plans/forge_review_decisions.schema.json#/$defs/result`. The unchanged common authority is nested under `authority`; original review/head/body selection joins actual RepositoryBinding, ReviewRevision, retained original, common receipt and provider-owned selected-decision observation. Null approval body differs from submitted empty text. Result/receipt operation, outcome, work, event references, recovery actions and optional AutomationBinding identity/generation remain consistent with the original. Static resolution is not native admission or provider authentication. Historical common v1 meanings, other routes, handlers, availability and event admission remain unchanged. Physical original/observation custody and replay/backup closure remain pending; no effect is automatically replayed.
+
+For exactly `cmd.jujutsu.operation.undo` and `cmd.jujutsu.operation.restore`, the request/result binding is `Plans/jj_operation_recovery.schema.json#/$defs/request` -> `Plans/jj_operation_recovery.schema.json#/$defs/result`, with the authentic original/delivery and the nullable error projection in `Plans/sir_jj_recovery_dispatch.schema.json` under SIR-042. Preserve the required target operation, the actual selected/current native operation and owner qualification, the complete before/proposed view, the full affected/preserved/conflicted/unknown effect union, and the actual post-operation observation and receipt. Accepted work is nonterminal, unknown effects remain recovery-required, and a truthful cancelled result retains the genuine owner error and its reference plus known partial effects while `projection.ui_error` and the common UI error are null. Historical v1 meanings, the other JJ commands, handlers, availability and event admission remain unchanged, and no native execution, dispatcher authentication or physical custody is proved.
 
 | Command | Label | Owner binding | Sole future handler | Intended GUI consumers / return |
 |---|---|---|---|---|

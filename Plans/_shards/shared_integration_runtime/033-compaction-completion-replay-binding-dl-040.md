@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2614
+Source lines: L2164-L2620
 
-Source SHA256: `adaf228c22ddc7964891661c9ee135d6b6da61009f77cf0c7e45a684453d662e`
+Source SHA256: `f9fd12639476d239f7c62756cd2575b1ffbf873496e6f37dc55542205e696e04`
 
 ---
 
@@ -242,6 +242,12 @@ For exactly `cmd.jujutsu.git.push`, the authenticated dispatcher produces the cl
 
 The exact result composes the actual original, per-target RemoteOperationTarget preview, native qualification, observations/reconciliation and Source Control receipt through `pm_jj_publication_selected`, then binds the CV-333 response and CommandOutcomeRecord through `pm_jj_publication_response`. Payload hash covers actual selected arguments, not the dispatch binding container. Accepted work resolves the genuine original ObservableWork and has no central terminal receipt. Known terminal outcomes preserve actual receipt facts; unknown effects and recovery-required remain terminal_unknown/recovery_required, never no_op or inferred success. Replay preserves the original response and effects. Input values and live resolved original/preview/receipt records are snapshotted before dependent reads and checked again for late mutation. Native producer/delivery authentication, effect admission and physical original custody remain independently required; matching static records or hashes prove none of them. No peer store, public command, event or retention interval is admitted by this logical binding.
 
+For exactly `cmd.jujutsu.operation.undo` and `cmd.jujutsu.operation.restore`, the authenticated dispatcher produces the closed original `pm.sir.jj_recovery_dispatch_binding.v1` in `Plans/sir_jj_recovery_dispatch.schema.json`. It preserves the authentic full IdentityEnvelope, exact original operation-recovery arguments and their canonical payload digest, request/dispatch/frame identity, independent target generation, idempotency, actual actor/permission snapshot, admission time and nullable original caller return context. RepositoryContext supplies only its own lineage; it cannot invent Server, operation-generation, Run, agent or caller identity. Existing SCM return_context is reused only as value grammar, not SCM authority. The actual delivery owner independently supplies current nullable return_context; missing is not null, and foreign or null substitution fails. No UICommandEnvelope, IdentityEnvelope or historical JJ schema is widened.
+
+The exact result composes the actual original, native recovery preview, selected/current operation sources, native qualification, post-state observation and Source Control receipt through `pm_jj_operation_recovery`, then binds the CV-333 response and CommandOutcomeRecord through `pm_jj_recovery_response`. Payload hash covers actual selected arguments, not the dispatch binding container. Accepted work resolves the genuine original ObservableWork and has no central terminal receipt. Known terminal outcomes preserve actual receipt facts; unknown effects and recovery-required remain terminal_unknown/recovery_required, never no_op or inferred success. Replay preserves the original response and effects. Input values and live resolved original/preview/receipt records are snapshotted before dependent reads and checked again for late mutation. Native producer/delivery authentication, effect admission and physical original custody remain independently required; matching static records or hashes prove none of them. No peer store, public command, event or retention interval is admitted by this logical binding.
+
+This successor additionally materializes `pm.sir.jj_recovery_error_projection.v1`: the authenticated SIR producer binds the actual unchanged JJ command_error_record resolved by CommandOutcomeRecord.error_ref to the exact command/instance and existing closed UICommandError, preserving the independently authenticated original and delivery return context. The domain result names this projection; projection and error_ref are null exactly when no actual owner error exists. When an actual error accompanies a truthful cancelled result, retain that error, its reference and projection plus all known partial/recovery effects, but set projection.ui_error and the common UI error to null as required by the existing cancellation contract. For other outcomes with an actual owner error, projection.ui_error remains nonnull and exact; cancellation never erases the owner error or converts unknown effects into a known outcome. The owner error is preserved exactly, and projection issuance follows that error and precedes central observation. This is not a total code mapping, truncation or normalization rule: an authentic producer must supply a qualified projection or this profile refuses it. Logical projection custody and native producer/disclosure authentication remain pending; no new physical family is admitted.
+
 ```yaml
 plan_unit_id: SIR-042
 unit_type: requirement
@@ -260,11 +266,11 @@ acceptance_criteria:
   - "Replay preserves the original owner result, outcome, receipt and command identity with zero repeated effects; terminal_unknown remains recovery-required."
   - "Schema evolution is a pre-build contract correction; old minimal records remain explicit unbound read/import lineage until actual missing references are resolved."
   - "The two Forge review decisions bind authenticated original SIR identity, arguments, caller and owner evidence; accepted is nonterminal, unknown effects require reconciliation, and degraded mutation qualification remains unsupported."
-validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate, Plans/sir_jj_recovery_dispatch.schema.json, Plans/sir_jj_recovery_dispatch_fixtures.json, tests/test_pm_jj_recovery_response.py]
 risk_class: command_response_identity_or_false_completion
 reasoning_tier: high
 context_scope: central_command_response_bridge
-implementation_surfaces: [Plans/full_thread_runtime_contracts.schema.json, Plans/ui_command_response.schema.json, Plans/Shared_Integration_Runtime.md]
+implementation_surfaces: [Plans/full_thread_runtime_contracts.schema.json, Plans/ui_command_response.schema.json, Plans/Shared_Integration_Runtime.md, Plans/sir_jj_recovery_dispatch.schema.json]
 node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
 negative_constraints:

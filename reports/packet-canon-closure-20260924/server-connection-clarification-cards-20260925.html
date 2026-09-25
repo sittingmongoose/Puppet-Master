@@ -1,0 +1,47 @@
+<style>#pm-server-clarification-20260925{overflow-wrap:anywhere}#pm-server-clarification-20260925 dd{margin-inline-start:0}#pm-server-clarification-20260925 dt{font-weight:500}</style>
+<div id="pm-server-clarification-20260925">
+<h2>Server connection clarification</h2>
+<p>Status: queued, unanswered.</p>
+<p>Approve selects the recommendation. Deny with changes must state the change. Ask leaves the question open. Draft selections are not answers.</p>
+<section aria-labelledby="pm-server-card-title">
+<h3 id="pm-server-card-title">Server System — Card 1</h3>
+<dl><dt>Name:</dt><dd>Connect to a Server and use its Projects</dd>
+<dt>Question:</dt><dd>Should each Client connect to a Server to see its Projects or create new ones, with multiple Clients able to use the same Server and Project at once?</dd>
+<dt>Why it came up:</dt><dd>You asked whether Server and environment mean the same thing. Server System owns Projects and Client connections; Shared Integration Runtime uses environment for the exact place work runs, such as native execution or a container.</dd>
+<dt>What you get:</dt><dd>The Server-level experience you described. Each Client has its own connection; you do not make a separate environment connection just to browse or create Projects. Existing access permissions still apply.</dd>
+<dt>What it costs:</dt><dd>This needs multi-Client reconnect and consistency tests plus the internal connection mapping. A different user-facing flow needs more design. Deferring leaves that mapping unresolved.</dd>
+<dt>Options:</dt><dd><ul><li>Recommended — Use this Server-level flow, preserving distinct internal execution identities.</li><li>Describe a different connection flow.</li><li>Defer the connection choice.</li></ul></dd>
+<dt>Recommendation:</dt><dd>Use the Server-level flow. Internal execution details should not introduce another connection step for these Project actions or one shared session across all Clients.</dd>
+<dt>Answer:</dt><dd></dd></dl>
+<p class="text-small">Sources: Plans/Decision_Log.md#DL-100; Plans/Server_System.md, opening authority, SRV-005, SRV-006 and §3.2; Plans/Shared_Integration_Runtime.md §§2–3 and §5.</p>
+<label class="form-label" for="pm-server-answer">Your response</label>
+<select class="form-select" id="pm-server-answer"><option value="">Unanswered</option><option>Approve</option><option>Deny</option><option>Deny with changes</option><option>Ask</option></select>
+<label class="form-label" for="pm-server-note">Your change or question</label>
+<textarea class="form-control" id="pm-server-note" rows="2"></textarea>
+</section>
+<h3>Your answers, ready to paste</h3>
+<textarea class="form-control" id="pm-server-summary" rows="3" readonly aria-label="Answer ready to paste">Card 1 (PCC-SERVER-ENVIRONMENT-002):</textarea>
+<button class="btn btn-primary" type="button" id="pm-server-send">Send answer to chat</button>
+<p id="pm-server-status" aria-live="polite">Unanswered. Only an explicitly sent chat response counts as an answer.</p>
+<p class="text-small">Frozen Markdown SHA-256: 6132a1ea10f0426709454866ac11d80f0b81423f6893decc4ad2a4f54a659b90</p>
+</div>
+<script>
+(() => {
+const root=document.getElementById('pm-server-clarification-20260925');
+const answer=root.querySelector('#pm-server-answer'),note=root.querySelector('#pm-server-note'),summary=root.querySelector('#pm-server-summary'),status=root.querySelector('#pm-server-status');
+const hash='6132a1ea10f0426709454866ac11d80f0b81423f6893decc4ad2a4f54a659b90';
+const line=()=> 'Card 1 (PCC-SERVER-ENVIRONMENT-002): '+answer.value+(note.value?' — '+note.value:'');
+function render(){summary.value=line();}
+function restore(state){const s=state&&state.privateContent;if(!s||s.hash!==hash)return;answer.value=['','Approve','Deny','Deny with changes','Ask'].includes(s.answer)?s.answer:'';note.value=typeof s.note==='string'?s.note:'';render();}
+function changed(){render();status.textContent='Draft only. Nothing has been submitted.';if(window.openai&&window.openai.setWidgetState)window.openai.setWidgetState({modelContent:{status:'unsubmitted draft',cardFileSha256:hash},privateContent:{hash,answer:answer.value,note:note.value}}).catch(()=>{});}
+answer.addEventListener('input',changed);note.addEventListener('input',changed);
+root.querySelector('#pm-server-send').addEventListener('click',async()=>{
+if(!answer.value){status.textContent='Choose a response before sending.';return;}
+if(['Ask','Deny with changes'].includes(answer.value)&&!note.value.trim()){status.textContent='Include your change or question.';return;}
+if(!window.openai||!window.openai.sendFollowUpMessage){status.textContent='Copy the answer above into chat. No answer has been sent.';return;}
+try{await window.openai.sendFollowUpMessage({title:'Send Server clarification answer',prompt:'I am submitting this decision-card answer for server-connection-clarification-cards-20260925.md, SHA-256 '+hash+':\n'+line()});status.textContent='Send requested. The explicit response posted in chat is the answer record.';}catch(_){status.textContent='Nothing confirmed sent. Copy the answer into chat if needed.';}
+});
+window.addEventListener('openai:set_globals',e=>{if(e.detail&&e.detail.globals&&e.detail.globals.widgetState)restore(e.detail.globals.widgetState);});
+restore(window.openai&&window.openai.widgetState);render();
+})();
+</script>

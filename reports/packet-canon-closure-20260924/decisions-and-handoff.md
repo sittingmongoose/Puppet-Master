@@ -12,9 +12,10 @@ They are recorded in both Decision Log sections as DL-094 through DL-098 and
 in `decision-responses.jsonl`. See `product-choice-answers-20260925.md` for exact
 answer hashes and status. The frozen presentation remains unchanged.
 
-1. DL-094: share personal words between installations belonging to the same user;
-   define the sharing boundary before enabling it. That identity/access/sync
-   boundary remains unresolved; sharing is not enabled by this record.
+1. The earlier same-user dictionary answer is superseded by DL-099: for now,
+   dictionaries belong to the Project, follow it across installations and are
+   visible to other people using that Project. Owner reconciliation remains pending;
+   a separate personal-sharing identity boundary is no longer the selected policy.
 2. DL-095: Replace resets omitted eligible ordinary settings within chosen import
    categories, with every reset previewed; outside-scope and excluded local or
    credential values stay untouched.
@@ -35,7 +36,7 @@ Amended DL-097 is also integrated into Forge §3.4 and indexed FGI-008; see
 `review-checkout-owner-decision.md`. Its selected-request/result/preview companion
 remains separate work. Settings DL-095 owner reconciliation is now integrated;
 see `settings-replace-ego-reference.md`. Its typed companion, the dictionary sharing
-boundary, and native implementation remain pending. Newer spellcheck,
+owner reconciliation, and native implementation remain pending. Newer spellcheck,
 Help/Teacher and assistant/platform designs remain protected.
 
 The earlier capability-precedence question was an overstatement of the packet:
@@ -46,14 +47,19 @@ Jared authorized one additional targeted correction-and-independent-review cycle
 for the eight capped SCM/JJ items. That cycle passed: SCM typed adoption/removal
 preview disclosures and original-input mutation fencing (29 tests); JJ cancelled
 UI error projection while preserving actual owner errors/effects (48 tests).
-These are reviewed external stages, not yet integrated canon. SCM's complete
+The reviewed JJ package is now integrated on the repair branch, including its
+actual central response, command/catalog/wiring/Touch and logical custody bindings;
+see `jj-operation-recovery-integration.md`. SCM remains an external stage. Its complete
 generic UI/original-caller response composition remains outside that targeted
-PASS. No further review cycle is implicitly authorized.
+PASS. Jared subsequently approved the new bounded six-action SCM completion card
+(DL-101): up to two review cycles, preserving approved core behavior. Unresolved
+findings after that cap return to him; no silent further cycle is authorized.
 
 ## Exact remaining boundaries
 
-Ten selected source occurrences remain: SCM ACT006/008/009/012/013/045,
-Git ACT019, JJ ACT037/038 and Forge ACT060. This denominator is not a total of
+Eight selected source occurrences remain: SCM ACT006/008/009/012/013/045,
+Git ACT019 and Forge ACT060. JJ ACT037/038 are now statically integrated and checked;
+native execution and physical custody are not supplied by that integration. This denominator is not a total of
 missing product features. Core Git push/fetch exact typed effect admission remains
 separately unbound; repairing their census did not supply that contract.
 
@@ -88,9 +94,9 @@ needed, never a prerequisite to understanding requirements already in the packet
 Tour's original Chat/layout
 custody remains a protected-owner dependency.
 
-The registry has 146 dispositions, including 70 pending admissions, while all
+The registry has 150 dispositions, including 72 pending admissions, while all
 294 physical families remain unchanged. Pending physical mapping and native writer
-implementation are not 70 unspecified product behaviors. Native authentication,
+implementation are not 72 unspecified product behaviors. Native authentication,
 execution, security/recovery and GUI/deployment proof remain separate obligations.
 
 Pin's selected-version meaning and unavailable-until-admitted boundary are already
@@ -107,10 +113,12 @@ No further Azure scope is added.
 
 ## Landing hold
 
-The three remaining product/authorization cards are queued and unanswered in
-`remaining-boundary-cards-20260925.md`; the presentation report pins the frozen
-Markdown and interactive HTML hashes. Dictionary and Server choices and further
-capped SCM work wait for explicit answers; other authorized contract work continues.
+The frozen three-card batch has explicit responses: dictionary changed to per
+Project (DL-099), Server question deferred as Ask (DL-100), and bounded SCM follow-up
+approved (DL-101). See `remaining-boundary-answers-20260925.md` for exact answer and
+card hashes. The clarified Server card is newly queued and unanswered. Frozen prior
+cards are unchanged. The same report records the older branch/main DL-094 collision
+that must be reconciled without overwriting either decision before landing.
 
 The clean aggregate run at committed 306f6c8e8 failed overall, with readiness 68
 and the known Touch mismatch among its findings. Its exact full report hash and

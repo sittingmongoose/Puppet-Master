@@ -128,13 +128,15 @@ canonical_text: >-
   Plans/jujutsu_change_operand_contracts.schema.json. It embeds the unchanged v1 request as authority metadata,
   not as a sufficient standalone current effect request for those five commands. All other commands retain
   their existing request contract; split remains deferred and unavailable.
-  Existing operation.undo, operation.restore and git.push retain those identities and their current owner bindings.
-  Their pending selected-operand companions are separate from the five change-command v2 successor: undo/restore
-  bind the exact selected native operation and owner preview against the expected current operation head; push binds
-  the complete selected bookmark set and publication preview through Source Control's existing RemoteOperationTarget
-  and ExternalEffectReconciliation. Confirmation target hashes and a single bookmark field do not stand in for
-  resolving the complete submitted selection. Historical v1 and the completed five-command v2 definitions remain
-  unchanged; these prose requirements do not enroll another schema variant, public command or native capability.
+  Existing operation.undo, operation.restore and git.push retain those command identities and their class, expected
+  revision, lease, Permissions, FileSafe, confirmation and idempotency obligations. Their selected-operand
+  companions are separate from the five change-command v2 successor: undo/restore bind the exact selected native
+  operation and owner preview against the expected current operation head, authored as the closed companion under
+  JJI-005 in Plans/jj_operation_recovery.schema.json; push binds the complete selected bookmark set and publication
+  preview through Source Control's existing RemoteOperationTarget and ExternalEffectReconciliation. Confirmation
+  target hashes and a single bookmark field do not stand in for resolving the complete submitted selection.
+  Historical v1 and the completed five-command v2 definitions remain unchanged; these prose requirements do not
+  enroll another public command or native capability.
   For exactly cmd.jujutsu.git.push, Plans/jj_publication_selected.schema.json binds the complete original
   bookmark name/change/immutable-commit set to actual per-target Git mappings under Source Control's existing
   RemoteOperationTarget and ExternalEffectReconciliation owners. Each mapping is independently qualified by the
@@ -143,8 +145,10 @@ canonical_text: >-
   effective_operation_capability with operation=publish supplies publication capability, while native_toolchain_identity
   supplies exact native/version/catalog facts. Neither a schema-valid record nor a static fixture authenticates
   those producers. A single v1 bookmark field remains an optional explicit anchor, not the complete selection.
-  Historical v1 and the five-change v2 companion remain unchanged; Git pull/stash-apply and JJ undo/restore preview
-  companions remain separate pending work. No new public command, provider, physical store or native capability
+  Historical v1 and the five-change v2 companion remain unchanged; the undo/restore operation-recovery preview
+  companion is authored under JJI-005 in Plans/jj_operation_recovery.schema.json. Git pull and stash-apply
+  companions remain separate under the Source Control owner; this JJ recovery change does not alter their contracts.
+  No new public command, provider, physical store or native capability
   is admitted by these values.
 gui_related: true
 gui_classification_reason: The commands map to user-visible actions, progress, disabled states, and receipts.
@@ -302,6 +306,12 @@ owner_hints: [Plans/Jujutsu_Integration.md, Plans/WorktreeGitImprovement.md, Pla
 
 ### JJI-005 - Undo, Operation Restore, Conflicts, FileSafe, And Recovery
 
+For exactly `cmd.jujutsu.operation.undo` and `cmd.jujutsu.operation.restore`, the closed operation-recovery successor preserves the existing required target.operation_id and consumes a native-owner preview for the exact command, instance, RepositoryContext, expected current operation/workspace snapshot and selected operation. The preview resolves actual selected/current native operation records, parent identities, owner-qualified recovery semantics and toolchain; undo and restore cannot exchange previews. Its complete before/proposed view contains change/commit identities, bookmark targets, workspace snapshots, native conflicts and materialized-file status separately, plus exact repository-relative external file content/absence. Each changed or retained effect has an explicit disposition. This is new typed materialization of the existing native preview, not an opaque disclosure bag or a second recovery authority.
+
+Unknown, incomplete or unqualified ancestry/effects cannot authorize application. Root/multiple-parent operations never select a parent by ordering, newest operation, focus or a guessed inverse; the actual native owner must qualify the admitted semantics and exact parent where needed, otherwise the request is blocked. Every native write revalidates SCS-018 currentness, lease, Permissions, FileSafe and exact target-bound confirmation. Preview reads do not hide snapshot/migration/fetch/repair effects. Native original/source/preview authentication remains a required producer obligation, not a boolean supplied by fixtures.
+
+Actual recovery evidence resolves the original preview and reports actual before/after native state, new operation identity, complete affected/preserved/conflicted/unknown effects and post-operation snapshots/conflict proof. Original selected operation and exact IDs of resolved operation/source, writer lease and receipt remain bound throughout. Known partial effects survive failure/cancellation; unresolved effects remain effect_unknown/reconciliation-only. FileSafe cannot replace the operation log or certify clean native conflict state. The unchanged Source Control receipt and JJ command_result join this evidence, never preview expectations substituted for success. SIR's exact original dispatch and current delivery bindings complete the generic response with authentic identity/caller/digest and genuine accepted work; native and physical custody remain unproved by static contracts. No Backup receipt, group undo/redo, new public command, peer store, event or retention policy is introduced; existing five-change and publication companions remain unchanged.
+
 ```yaml
 plan_unit_id: JJI-005
 unit_type: requirement
@@ -320,11 +330,11 @@ acceptance_criteria:
   - Undo and restore reject stale operation IDs and emit before/after operation identities.
   - FileSafe restore and JJ operation restore have distinct commands, decisions, and receipts.
   - Conflict resolution proves current snapshot, expected conflict identity, and terminal reconciliation.
-validation_surfaces: [undo/op restore fixtures, FileSafe complement tests, conflict and restart recovery tests]
+validation_surfaces: [Plans/jj_operation_recovery.schema.json, Plans/jj_operation_recovery_fixtures.json, Plans/sir_jj_recovery_dispatch.schema.json, Plans/sir_jj_recovery_dispatch_fixtures.json, scripts/pm_jj_operation_recovery.py, scripts/pm_jj_recovery_response.py, tests/test_pm_jj_operation_recovery.py, tests/test_pm_jj_recovery_response.py, tests/test_pm_ui_command_response.py, FileSafe complement tests, conflict and restart recovery tests]
 risk_class: destructive_or_false_jj_recovery
 reasoning_tier: high
 context_scope: jujutsu_recovery
-implementation_surfaces: [future JJ adapter, Plans/FileSafe.md, future Runtime Artifacts projections]
+implementation_surfaces: [Plans/jj_operation_recovery.schema.json, Plans/jj_operation_recovery_fixtures.json, Plans/sir_jj_recovery_dispatch.schema.json, Plans/sir_jj_recovery_dispatch_fixtures.json, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Plans/FileSafe.md, future JJ adapter, future Runtime Artifacts projections]
 node_compile_hint: {mode: jujutsu_recovery_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-register:SCM-02]
 preserved_exact_tokens: [jj undo, jj op restore, FileSafe safe points, operation log, conflict]
@@ -532,9 +542,9 @@ This owner adjudicates exactly 30 previously unbound primary commands. The table
 | `cmd.jujutsu.git.push` | `handlers::jujutsu::git_push` | `Plans/jj_publication_selected.schema.json#/$defs/request` -> `Plans/jj_publication_selected.schema.json#/$defs/result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
 | `cmd.jujutsu.history.open` | `handlers::jujutsu::history_open` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
 | `cmd.jujutsu.operation.log` | `handlers::jujutsu::operation_log` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
-| `cmd.jujutsu.operation.restore` | `handlers::jujutsu::operation_restore` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
+| `cmd.jujutsu.operation.restore` | `handlers::jujutsu::operation_restore` | `Plans/jj_operation_recovery.schema.json#/$defs/request` -> `Plans/jj_operation_recovery.schema.json#/$defs/result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
 | `cmd.jujutsu.operation.show` | `handlers::jujutsu::operation_show` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
-| `cmd.jujutsu.operation.undo` | `handlers::jujutsu::operation_undo` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
+| `cmd.jujutsu.operation.undo` | `handlers::jujutsu::operation_undo` | `Plans/jj_operation_recovery.schema.json#/$defs/request` -> `Plans/jj_operation_recovery.schema.json#/$defs/result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
 | `cmd.jujutsu.status.refresh` | `handlers::jujutsu::status_refresh` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
 | `cmd.jujutsu.workspace.create` | `handlers::jujutsu::workspace_create` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |
 | `cmd.jujutsu.workspace.list` | `handlers::jujutsu::workspace_list` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record` / `Plans/jujutsu_integration_contracts.schema.json#/$defs/permission_decision` |

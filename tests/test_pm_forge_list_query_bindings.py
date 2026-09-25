@@ -4,6 +4,7 @@ import importlib.util,json,subprocess,unittest
 from pathlib import Path
 from referencing import Resource
 from jsonschema import Draft202012Validator
+from pm_historical_storage_expectations import with_recorded_usage_id_correction
 ROOT=Path(__file__).resolve().parents[1]
 BASE='64a63133a2266ee38d894f2494208027e364cfb9'
 SCHEMA='Plans/forge_list_query_contracts.schema.json'
@@ -14,7 +15,7 @@ def baseline(p):return json.loads(subprocess.check_output(['git','show',BASE+':'
 class Bindings(unittest.TestCase):
  def test_only_exact_routes_handlers_and_receipts(self):
   p='Plans/Wiring_Matrix.production.json';now=load(p)['entries'];old=baseline(p)['entries'];keys={'catalog.forge_repository_list','catalog.forge_pipeline_list'}
-  self.assertEqual(1142,len(now));self.assertEqual(keys|{'catalog.forge_pipeline_retry','catalog.forge_pipeline_run','catalog.git_push','catalog.git_fetch','catalog.forge_review_create'},{k for k in now if now[k]!=old[k]})
+  self.assertEqual(1142,len(now));self.assertEqual(keys|{'catalog.forge_pipeline_retry','catalog.forge_pipeline_run','catalog.git_push','catalog.git_fetch','catalog.forge_review_create','catalog.jujutsu_operation_restore','catalog.jujutsu_operation_undo'},{k for k in now if now[k]!=old[k]})
   for k in keys:
    for f in ('handler_location','expected_event_types','ui_command_id'):self.assertEqual(old[k][f],now[k][f])
    for kind in ('request','result'):self.assertEqual(SCHEMA+'#/$defs/'+kind,now[k][kind+'_schema_ref'])
@@ -38,14 +39,15 @@ class Bindings(unittest.TestCase):
    q=case['value']['request'];seen.add(q['authority']['command_id']);self.assertEqual([],list(admission.iter_errors(q)));self.assertEqual([],list(historical.iter_errors(q['authority'])));self.assertTrue(list(admission.iter_errors(q['authority'])))
   self.assertEqual(CMDS,seen)
  def test_touch_only_two_rows_and_one_profile(self):
-  p='Plans/touch_closure.json';d=load(p);old=baseline(p);self.assertEqual((646,148),(len(d['rows']),len(d['profiles'])));self.assertEqual([dict(p,**ALIAS_REFS.get(p['profile_id'],{})) for p in old['profiles']],d['profiles'][:-5])
-  self.assertEqual({'TOUCH-FGI-001','TOUCH-FGI-027','TOUCH-FGI-030','TOUCH-FGI-029','TOUCH-GITREMOTE-001','TOUCH-GITREMOTE-002','TOUCH-FGI-009'},{r[0] for r in d['rows'] if r not in old['rows']})
+  p='Plans/touch_closure.json';d=load(p);old=baseline(p);self.assertEqual((646,149),(len(d['rows']),len(d['profiles'])));self.assertEqual([dict(p,**ALIAS_REFS.get(p['profile_id'],{})) for p in old['profiles']],d['profiles'][:-6])
+  self.assertEqual({'TOUCH-FGI-001','TOUCH-FGI-027','TOUCH-FGI-030','TOUCH-FGI-029','TOUCH-GITREMOTE-001','TOUCH-GITREMOTE-002','TOUCH-FGI-009','TOUCH-JJI-025','TOUCH-JJI-026'},{r[0] for r in d['rows'] if r not in old['rows']})
+  for command in ('cmd.jujutsu.operation.undo','cmd.jujutsu.operation.restore'):self.assertEqual('TCP-JJ-RECOVERY',next(r for r in d['rows'] if r[3]==command)[1])
   for r in d['rows']:
    if r[3] in CMDS:self.assertEqual('TCP-FORGE-LIST-QUERY',r[1])
   for k in ('alias_bindings','excluded_tokens','external_disposition_registries'):self.assertEqual(old[k],d[k])
   self.assertEqual(SCHEMA+'#/$defs/result',next(p for p in d['profiles'] if p['profile_id']=='TCP-FORGE-LIST-QUERY')['result_schema_ref'])
  def test_all_kinds_owner_separated_no_physical_admission(self):
-  p='Plans/storage_value_registry.json';d=load(p);old=baseline(p);self.assertEqual(old['families'],d['families']);self.assertEqual(294,len(d['families']));rows=d['contract_family_dispositions'];self.assertEqual(146,len(rows));self.assertEqual(old['contract_family_dispositions'],rows[:121]);new=rows[121:127]
+  p='Plans/storage_value_registry.json';d=load(p);old=baseline(p);self.assertEqual(old['families'],d['families']);self.assertEqual(294,len(d['families']));rows=d['contract_family_dispositions'];self.assertEqual(150,len(rows));self.assertEqual(with_recorded_usage_id_correction(old['contract_family_dispositions']),rows[:121]);new=rows[121:127]
   expected={v['properties']['schema_id']['const'] for k,v in load(SCHEMA)['$defs'].items() if k!='fixture_case' and 'schema_id' in v.get('properties',{})};actual=[k for r in new for k in r['record_kinds']];self.assertEqual(expected,set(actual));self.assertEqual(11,len(actual))
   for r in new:
    self.assertFalse(r['runtime_evidence']);self.assertEqual([],r['existing_family_refs'])

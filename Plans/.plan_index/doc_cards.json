@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6019,
+      "line_count": 6022,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "e6827d588136856d68d2c74ba8d628e8bf76d44004c37dc686a2f65b49ba7bbf",
+      "sha256": "0fc24942b74d82a4058956f9a5542e0d6a7cfb6fc69f0eb8e5590b6f403730a1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -3790,7 +3790,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "47641d94e771915b79a2c60664e57cff69b573c8fb78ded5113c6ad9bcc42df8",
+      "sha256": "b83336ae367b63c5f342525dd0c07f4a985b24b3eb29c0d77019e7339925ac16",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80
@@ -5439,10 +5439,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 43,
-        "True": 42
+        "False": 44,
+        "True": 44
       },
-      "heading_count": 176,
+      "heading_count": 182,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5524,9 +5524,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 7005,
+      "line_count": 7161,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 85,
+      "plan_unit_count": 88,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5612,6 +5612,9 @@
         "DL-096",
         "DL-097",
         "DL-098",
+        "DL-099",
+        "DL-100",
+        "DL-101",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5700,16 +5703,16 @@
         "weak_integration_underclassification",
         "workflow_verification_exception_route_drift"
       ],
-      "sha256": "6ebb4b3956ae21e910f046f98888691cd31c5beb48319ca3573d426ad18bd483",
+      "sha256": "49395660afcd5843aff22bc3c00aa93105bf71782ce4f3fcde624682753ad7cd",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 85
+        "accepted": 88
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 82
+        "requirement": 85
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -9292,8 +9295,12 @@
         "Plans/Settings_System.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
+        "Plans/jj_operation_recovery.schema.json",
+        "Plans/jj_operation_recovery_fixtures.json",
         "Plans/jujutsu_integration_contract_fixtures.json",
         "Plans/jujutsu_integration_contracts.schema.json",
+        "Plans/sir_jj_recovery_dispatch.schema.json",
+        "Plans/sir_jj_recovery_dispatch_fixtures.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
         "Plans/touch_closure.json",
@@ -9306,7 +9313,7 @@
         "future qualified owner adapter and typed contract extensions",
         "future signed compatibility catalog and qualified owner adapter"
       ],
-      "line_count": 1718,
+      "line_count": 1728,
       "path": "Plans/Jujutsu_Integration.md",
       "plan_unit_count": 22,
       "plan_unit_ids": [
@@ -9360,7 +9367,7 @@
         "verified_group_undo_redo_and_selected_operation_reversal",
         "version_comparison_and_focused_change_evolution"
       ],
-      "sha256": "d6e7184135c3ce890d5ff465b412e036d905ba5afa919dfcff5a071f914bdd8e",
+      "sha256": "9ed3dc39313e3d93e682feb7414e507b0c68e47c1940c4c76bdf0f23194ae934",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 22
@@ -9384,10 +9391,14 @@
         "Plans/backup_drill_result_contracts.schema.json",
         "Plans/backup_restore_system_contract_fixtures.json",
         "Plans/backup_restore_system_contracts.schema.json",
+        "Plans/jj_operation_recovery.schema.json",
+        "Plans/jj_operation_recovery_fixtures.json",
         "Plans/jujutsu_change_operand_contract_fixtures.json",
         "Plans/jujutsu_change_operand_contracts.schema.json",
         "Plans/jujutsu_integration_contract_fixtures.json",
         "Plans/jujutsu_integration_contracts.schema.json",
+        "Plans/sir_jj_recovery_dispatch.schema.json",
+        "Plans/sir_jj_recovery_dispatch_fixtures.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
         "Plans/source_control_contracts.schema.json#/$defs/jj_effective_capability_snapshot",
@@ -9424,9 +9435,13 @@
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-touch-closure-verify.py --json",
+        "scripts/pm_jj_operation_recovery.py",
+        "scripts/pm_jj_recovery_response.py",
         "stale operation tests",
+        "tests/test_pm_jj_operation_recovery.py",
+        "tests/test_pm_jj_recovery_response.py",
         "tests/test_pm_jujutsu_change_operands.py",
-        "undo/op restore fixtures"
+        "tests/test_pm_ui_command_response.py"
       ]
     },
     {
@@ -16820,6 +16835,7 @@
         "Plans/shared_integration_runtime_fixtures.json",
         "Plans/shared_runtime_command_contract_fixtures.json",
         "Plans/shared_runtime_command_contracts.schema.json",
+        "Plans/sir_jj_recovery_dispatch.schema.json",
         "Plans/storage-plan.md",
         "Plans/storage_value_registry.json",
         "Plans/touch_closure.json",
@@ -16838,7 +16854,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 3258,
+      "line_count": 3264,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 52,
       "plan_unit_ids": [
@@ -16952,7 +16968,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "adaf228c22ddc7964891661c9ee135d6b6da61009f77cf0c7e45a684453d662e",
+      "sha256": "f9fd12639476d239f7c62756cd2575b1ffbf873496e6f37dc55542205e696e04",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -17042,6 +17058,8 @@
         "Plans/shared_runtime_command_contract_fixtures.json",
         "Plans/shared_runtime_command_contracts.schema.json",
         "Plans/shared_runtime_contracts.schema.json",
+        "Plans/sir_jj_recovery_dispatch.schema.json",
+        "Plans/sir_jj_recovery_dispatch_fixtures.json",
         "Plans/storage-plan.md#SP-304",
         "Plans/storage-plan.md#SP-310",
         "Plans/storage_retention_hold_contracts.schema.json",
@@ -17138,6 +17156,7 @@
         "tests/test_pm_capability_ensure_custody.py",
         "tests/test_pm_full_thread_contracts.py",
         "tests/test_pm_installation_update_preferences.py",
+        "tests/test_pm_jj_recovery_response.py",
         "tests/test_pm_runtime_identity_scope.py",
         "tests/test_pm_runtime_vocabulary_migration.py",
         "tests/test_pm_ui_command_response.py",
@@ -18802,7 +18821,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13302,
+      "line_count": 13304,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 164,
       "plan_unit_ids": [
@@ -19037,7 +19056,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "4ac61466bd92fdc64cc15310ecd39b172a84db48292173f61db8dc4a025d0be2",
+      "sha256": "ff5e327b4e5cdc98b34e48586c361d20f938d050970dc2f7f6bcd0f54bc84cef",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163,
@@ -20103,7 +20122,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T16:02:45Z",
+  "generated_at_utc": "2026-09-25T16:31:32Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20111,13 +20130,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3535,
-      "True": 3205
+      "False": 3536,
+      "True": 3207
     },
-    "plan_unit_count": 6740,
+    "plan_unit_count": 6743,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6549,
+      "accepted": 6552,
       "retired": 182,
       "superseded": 9
     },
@@ -20184,7 +20203,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5292,
+      "requirement": 5295,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

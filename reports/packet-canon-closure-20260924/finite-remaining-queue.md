@@ -1,6 +1,13 @@
 # Current finite remaining queue — 2026-09-25
 
 Current-state override: `decisions-and-handoff.md` and
+`jj-operation-recovery-integration.md` record the later JJ ACT037/038 static
+integration, leaving eight selected occurrences, not ten. Dictionary now follows
+the Project (DL-099), the Server question remains Ask (DL-100), and the bounded
+SCM follow-up is approved (DL-101); see `remaining-boundary-answers-20260925.md`.
+These override the older pending/choice labels below without erasing source history.
+
+The earlier `decisions-and-handoff.md` and
 `usage-and-stash-owner-decisions.md` supersede this historical queue's unmade-choice
 and final-review labels. All five cards were answered; Usage and stash owner
 prose are integrated, while their typed companions remain pending. The later

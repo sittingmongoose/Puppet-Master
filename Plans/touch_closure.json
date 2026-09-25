@@ -8535,6 +8535,62 @@
       "evidence_refs": [
         "static_schema_and_fixture_only"
       ]
+    },
+    {
+      "profile_id": "TCP-JJ-RECOVERY",
+      "requirement_refs": [
+        "Plans/Jujutsu_Integration.md#JJI-005",
+        "Plans/Jujutsu_Integration.md#JJI-007"
+      ],
+      "owner_plan": "Plans/Jujutsu_Integration.md",
+      "plan_unit": "JJI-005",
+      "dry_contract_ref": "Plans/jj_operation_recovery.schema.json",
+      "payload_schema_ref": "Plans/jj_operation_recovery.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/jj_operation_recovery.schema.json#/$defs/result",
+      "error_schema_ref": "Plans/jujutsu_integration_contracts.schema.json#/$defs/command_error_record",
+      "availability_rule": "Exact original target.operation_id, the native-owner preview for the same command, instance, RepositoryContext, expected current operation/workspace snapshot and selected operation, and the actual selected/current native operation sources are required; undo and restore cannot exchange previews. Unknown, incomplete or unqualified ancestry/effects cannot authorize application, and every native write revalidates SCS-018 currentness, lease, Permissions, FileSafe and exact target-bound confirmation. Native producer/disclosure authentication and physical original/preview/receipt custody remain unproved.",
+      "permission_gate": "Permissions, FileSafe, writer/credential lease, setup, colocation fencing, and confirmation apply.",
+      "disabled_reason_rule": "Expose setup, unsupported capability, stale operation, lease, conflict, permission, degraded, quarantine, or recovery blocker.",
+      "handler_owner": "Jujutsu adapter under Source Control System; native JJ handlers are absent. The 30 commands added by the central Touch closure have sole future routes in Plans/Jujutsu_Integration.md#JJI-007; target strings are not native proof.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static exact-command schema/fixture/response composition and future production-intent route only; native execution, disclosure authentication and physical original/preview/receipt custody remain absent.",
+      "gui_triggers": [
+        "Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log"
+      ],
+      "return_route": "Exact repository/workspace/change/operation and caller focus.",
+      "reverse_consumers": [
+        "Plans/Source_Control_System.md",
+        "Plans/Forge_Integrations.md",
+        "Plans/Settings_System.md"
+      ],
+      "event_refs": [
+        "JJ owner events pending Event Authority"
+      ],
+      "receipt_refs": [
+        "JJ operation receipt extension"
+      ],
+      "observable_work": [
+        "Required for clone, fetch, push, import/export, rebase, restore, and long operations."
+      ],
+      "persistence_refs": [
+        "JJ backend, workspace, operation, change, bookmark refs"
+      ],
+      "migration_refs": [
+        "Plans/Jujutsu_Integration.md#7.1"
+      ],
+      "test_refs": [
+        "Plans/source_control_contract_fixtures.json",
+        "Plans/jujutsu_integration_contract_fixtures.json",
+        "Plans/jj_operation_recovery_fixtures.json",
+        "Plans/sir_jj_recovery_dispatch_fixtures.json",
+        "tests/test_pm_jj_operation_recovery.py",
+        "tests/test_pm_jj_recovery_response.py",
+        "tests/test_pm_ui_command_response.py"
+      ],
+      "evidence_refs": [
+        "static_schema_fixture_and_concept_only"
+      ]
     }
   ],
   "row_columns": [
@@ -10564,7 +10620,7 @@
     ],
     [
       "TOUCH-JJI-025",
-      "TCP-JJ",
+      "TCP-JJ-RECOVERY",
       "command",
       "cmd.jujutsu.operation.undo",
       "partial",
@@ -10572,7 +10628,7 @@
     ],
     [
       "TOUCH-JJI-026",
-      "TCP-JJ",
+      "TCP-JJ-RECOVERY",
       "command",
       "cmd.jujutsu.operation.restore",
       "partial",

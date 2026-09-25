@@ -73,7 +73,9 @@ from pm_forge_retry_selected_semantics import retry_selected_semantic_failures
 from pm_forge_run_selected_semantics import run_selected_semantic_failures
 from pm_forge_review_create_selected_semantics import review_create_selected_semantic_failures
 from pm_jj_publication_selected import publication_semantic_failures
+from pm_jj_operation_recovery import recovery_semantic_failures
 from pm_jj_publication_response import jj_publication_dispatch_semantic_failures
+from pm_jj_recovery_response import jj_recovery_dispatch_semantic_failures
 from pm_forge_log_selection_semantics import log_selection_semantic_failures
 from pm_git_selected_three import git_selected_semantic_failures
 from pm_forge_review_decisions import review_decision_semantic_failures
@@ -135,6 +137,8 @@ CONTRACT_PAIRS = (
     ("Plans/backup_bounded_read_contracts.schema.json", "Plans/backup_bounded_read_fixtures.json"),
     ("Plans/jj_publication_selected.schema.json", "Plans/jj_publication_selected_fixtures.json"),
     ("Plans/sir_jj_publication_dispatch.schema.json", "Plans/sir_jj_publication_dispatch_fixtures.json"),
+    ("Plans/jj_operation_recovery.schema.json", "Plans/jj_operation_recovery_fixtures.json"),
+    ("Plans/sir_jj_recovery_dispatch.schema.json", "Plans/sir_jj_recovery_dispatch_fixtures.json"),
     ("Plans/forge_log_selection_contracts.schema.json", "Plans/forge_log_selection_contract_fixtures.json"),
     ("Plans/credential_source_add_contracts.schema.json", "Plans/credential_source_add_fixtures.json"),
     ("Plans/forge_cancel_selected_contracts.schema.json", "Plans/forge_cancel_selected_contract_fixtures.json"),
@@ -154,7 +158,7 @@ CONTRACT_PAIRS = (
     ("Plans/forge_review_create_selected_contracts.schema.json", "Plans/forge_review_create_selected_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 70
+EXPECTED_CONTRACT_PAIR_COUNT = 72
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1323,6 +1327,10 @@ def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any
         return publication_semantic_failures(definition_name, value)
     if schema_rel == "Plans/sir_jj_publication_dispatch.schema.json":
         return jj_publication_dispatch_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/jj_operation_recovery.schema.json":
+        return recovery_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/sir_jj_recovery_dispatch.schema.json":
+        return jj_recovery_dispatch_semantic_failures(definition_name, value)
     if schema_rel == "Plans/forge_log_selection_contracts.schema.json":
         return log_selection_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_bounded_read_contracts.schema.json":

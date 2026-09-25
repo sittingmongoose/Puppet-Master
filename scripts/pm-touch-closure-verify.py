@@ -469,9 +469,19 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     jj = tokens(between(jj_text, "### 3.1 Canonical command inventory", "### 3.2 JJ receipt extension"))
     jj_operands = {f"cmd.jujutsu.change.{suffix}" for suffix in ("new", "describe", "abandon", "squash", "rebase")}
     jj_publication = {"cmd.jujutsu.git.push"}
+    # Exact new recovery profile comes from the actual command discriminators of the
+    # recovery successor schema, not from the Touch rows.
+    recovery_commands = schema_enum_actions(
+        "Plans/jj_operation_recovery.schema.json",
+        "/$defs/request/allOf/0/properties/authority/properties/command_id/enum",
+        "/$defs/preview/properties/command_id/enum",
+    )
+    if recovery_commands != {"cmd.jujutsu.operation.undo", "cmd.jujutsu.operation.restore"}:
+        raise ValueError("selected recovery owner discriminator drift")
     add("TCP-JJ-OPERANDS", "command", jj_operands)
     add("TCP-JJ-PUBLICATION", "command", jj_publication)
-    add("TCP-JJ", "command", {item for item in jj if item.startswith("cmd.jujutsu.") and item != "cmd.jujutsu"} - jj_operands - jj_publication)
+    add("TCP-JJ-RECOVERY", "command", recovery_commands)
+    add("TCP-JJ", "command", {item for item in jj if item.startswith("cmd.jujutsu.") and item != "cmd.jujutsu"} - jj_operands - jj_publication - recovery_commands)
 
     forge_text = read("Plans/Forge_Integrations.md")
     forge = tokens(between(forge_text, "### 3.1 Canonical commands", "Setup reuses shared runtime commands:"))
@@ -1916,6 +1926,10 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # 64 -> 65 aliases, 1143 -> 1142 production rows; no new Touch row or proof.
     # ACT017 adds one missing existing core Git pull consumer and exact profile:
     # 643 -> 644 rows, 141 -> 142 profiles; no new public command or runtime proof.
+    # JJ operation recovery (2026-09-25) adds exactly one bounded successor profile,
+    # TCP-JJ-RECOVERY, for the two existing undo/restore routes. Both existing rows
+    # are repointed rather than added: 148 -> 149 profiles, 646 rows unchanged.
+    # No new public command, handler, event or runtime proof.
     exact_resolved_denominators = {
         "row_count": 646,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
@@ -1926,7 +1940,9 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # selected logs use four bounded successor profiles. No new Touch rows.
         # Credential source-add has one exact successor, leaving nine peers intact.
         # Exact Forge cancellation consumes its bounded successor, no new row.
-        "profile_count": 148,
+        # JJ operation recovery consumes its bounded successor for the two
+        # existing undo/restore routes: profile total moves 148 -> 149 only.
+        "profile_count": 149,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1142,

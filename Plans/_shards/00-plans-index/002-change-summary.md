@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L97
+Source lines: L7-L100
 
-Source SHA256: `e6827d588136856d68d2c74ba8d628e8bf76d44004c37dc686a2f65b49ba7bbf`
+Source SHA256: `0fc24942b74d82a4058956f9a5542e0d6a7cfb6fc69f0eb8e5590b6f403730a1`
 
 ---
 
 ## Change Summary
+
+- 2026-09-25: Materialized the typed operation-recovery companion for exactly `cmd.jujutsu.operation.undo` and `cmd.jujutsu.operation.restore`: the closed request/result/preview/observation/qualification family in `Plans/jj_operation_recovery.schema.json` with `Plans/jj_operation_recovery_fixtures.json`, and the SIR authentic-original dispatch binding plus nullable error projection in `Plans/sir_jj_recovery_dispatch.schema.json` with `Plans/sir_jj_recovery_dispatch_fixtures.json`, joined through `scripts/pm_jj_operation_recovery.py` and `scripts/pm_jj_recovery_response.py` and checked by `tests/test_pm_jj_operation_recovery.py` and `tests/test_pm_jj_recovery_response.py`. JJI-005 and SIR-042 name those exact surfaces; the two owner binding rows in `Plans/Jujutsu_Integration.md#JJI-007`, the two public command rows and the two production-intent wiring rows bind only the existing undo/restore identities, which keep `handler_unavailable` with `expected_event_types=[]`; `Plans/touch_closure.json` gains the exact `TCP-JJ-RECOVERY` profile for those two routes. Accepted work is nonterminal, unknown effects stay recovery-required, and a truthful cancelled result may keep the common and projected UI error null while retaining the genuine owner error, its reference and all known partial effects. The new logical values are nonpersisted transport and projection, or retained native originals/preview/observation/dispatch with physical registration pending; no EventRecord, physical family, writer, retention interval, storage admission, native dispatcher, producer authentication, runtime execution or governance seal is claimed.
+  ContractRef: ContractName:Plans/Jujutsu_Integration.md#JJI-005, ContractName:Plans/Jujutsu_Integration.md#JJI-007, ContractName:Plans/Shared_Integration_Runtime.md#SIR-042, ContractName:Plans/jj_operation_recovery.schema.json, ContractName:Plans/sir_jj_recovery_dispatch.schema.json, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/touch_closure.json
 
 - 2026-09-25: Materialized three further bounded non-GUI companions: SIR-003 original capability demand/waiter/readiness/currentness and continuation settlement; N2-152 finite Doctor query/controller composition with Permissions-owned human read admission (PS-133) and one BackupCoordinator-owned metadata query (BRS-004); and SMPFS-147 typed finite Browser control flow with versioned compiler/program joins. Existing policies, public commands and handler availability remain unchanged. The closed static gate registers `capability_provisioning_continuation_contracts`, `doctor_query_controller_contracts` and `browser_control_flow_contracts`. Doctor query completion is not health, capability readiness is not permission to resume, and bounded AST proof is not runtime execution. Storage dispositions preserve existing owners and physical families; unresolved versioned writer/custody admission remains explicit. The 52 Doctor source-occurrence mappings, native proof, broader packet review and protected newer designs are not declared closed by this step.
   ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-003, ContractName:Plans/newtools.md#N2-152, ContractName:Plans/Permissions_System.md#PS-133, ContractName:Plans/Backup_Restore_System.md#BRS-004, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-147

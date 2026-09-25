@@ -1,0 +1,845 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/jj-operation-recovery/1.0.0/jj_operation_recovery.schema.json",
+  "$defs": {
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "object_id"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "present",
+            "absent",
+            "unknown"
+          ]
+        },
+        "object_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "present"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "object_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "object_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "conflict_id",
+        "change_id",
+        "path",
+        "native_state",
+        "materialized_state",
+        "sides"
+      ],
+      "properties": {
+        "conflict_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "change_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "$ref": "#/$defs/path"
+        },
+        "native_state": {
+          "enum": [
+            "unresolved",
+            "resolved",
+            "unknown"
+          ]
+        },
+        "materialized_state": {
+          "enum": [
+            "conflicted",
+            "clean",
+            "absent",
+            "unknown"
+          ]
+        },
+        "sides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "content"
+            ],
+            "properties": {
+              "role": {
+                "type": "string",
+                "minLength": 1
+              },
+              "content": {
+                "$ref": "#/$defs/content"
+              }
+            }
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "view": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "changes",
+        "bookmarks",
+        "workspaces",
+        "conflicts",
+        "files"
+      ],
+      "properties": {
+        "changes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "change_id",
+              "commit_id"
+            ],
+            "properties": {
+              "change_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "commit_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "minItems": 0
+        },
+        "bookmarks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "change_id",
+              "commit_id"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "change_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "commit_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              }
+            }
+          },
+          "minItems": 0
+        },
+        "workspaces": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "workspace_id",
+              "snapshot_id",
+              "conflict_ids",
+              "change_id",
+              "commit_id"
+            ],
+            "properties": {
+              "workspace_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "snapshot_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "conflict_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 0
+              },
+              "change_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "commit_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/conflict"
+          },
+          "minItems": 0
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_location_id",
+              "path",
+              "content"
+            ],
+            "properties": {
+              "source_location_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "$ref": "#/$defs/path"
+              },
+              "content": {
+                "$ref": "#/$defs/content"
+              }
+            }
+          },
+          "minItems": 0
+        }
+      }
+    },
+    "effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "identity",
+        "disposition"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "change",
+            "bookmark",
+            "workspace",
+            "conflict",
+            "file"
+          ]
+        },
+        "identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "disposition": {
+          "enum": [
+            "preserved",
+            "reversed",
+            "restored",
+            "conflicted",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "operation_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "source_id",
+        "repository_context_ref",
+        "repo_id",
+        "operation_id",
+        "parent_operation_ids",
+        "view",
+        "source_evidence_refs",
+        "read_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.jujutsu.recovery_operation_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository_context_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repo_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_operation_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "view": {
+          "$ref": "#/$defs/view"
+        },
+        "source_evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "read_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "authority",
+        "preview_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.jujutsu.operation_recovery.request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/command_request"
+        },
+        "preview_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "authority": {
+              "properties": {
+                "command_id": {
+                  "enum": [
+                    "cmd.jujutsu.operation.undo",
+                    "cmd.jujutsu.operation.restore"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "preview_id",
+        "command_id",
+        "command_instance_id",
+        "repository_context_ref",
+        "expected_revision",
+        "snapshot_id",
+        "selected_source_ref",
+        "current_source_ref",
+        "native_toolchain_ref",
+        "semantics_ref",
+        "qualification",
+        "selected_parent_operation_id",
+        "complete",
+        "before",
+        "proposed",
+        "effects",
+        "file_safe_decision_ref",
+        "writer_lease_ref",
+        "permission_snapshot_ref",
+        "confirmation_id",
+        "source_evidence_refs",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.jujutsu.operation_recovery.preview.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "preview_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command_id": {
+          "enum": [
+            "cmd.jujutsu.operation.undo",
+            "cmd.jujutsu.operation.restore"
+          ]
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository_context_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_revision": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/jujutsu_revision"
+        },
+        "snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selected_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_toolchain_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "semantics_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "qualification": {
+          "enum": [
+            "qualified",
+            "blocked",
+            "unknown"
+          ]
+        },
+        "selected_parent_operation_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "before": {
+          "$ref": "#/$defs/view"
+        },
+        "proposed": {
+          "$ref": "#/$defs/view"
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/effect"
+          },
+          "minItems": 0
+        },
+        "file_safe_decision_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writer_lease_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confirmation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "issued_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "observation_id",
+        "original_request_ref",
+        "preview_ref",
+        "operation_id",
+        "selected_operation_id",
+        "before_source_ref",
+        "after_source_ref",
+        "effect_state",
+        "completion",
+        "complete",
+        "effects",
+        "native_receipt_ref",
+        "file_safe_decision_ref",
+        "evidence_refs",
+        "observed_at_utc",
+        "affected_identities"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.jujutsu.operation_recovery.observation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "observation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preview_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selected_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "before_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "after_source_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "effect_state": {
+          "enum": [
+            "not_attempted",
+            "known_applied",
+            "known_not_applied",
+            "unknown"
+          ]
+        },
+        "completion": {
+          "enum": [
+            "completed",
+            "partial",
+            "not_applied",
+            "unknown"
+          ]
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/effect"
+          },
+          "minItems": 0
+        },
+        "native_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "file_safe_decision_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "observed_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        },
+        "affected_identities": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/affected_identities"
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "original_request_ref",
+        "owner_result",
+        "observation_ref",
+        "error_projection_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.jujutsu.operation_recovery.result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "original_request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_result": {
+          "$ref": "https://puppetmaster.local/schemas/jujutsu-integration/1.0.0/jujutsu_integration_contracts.schema.json#/$defs/command_result"
+        },
+        "observation_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "error_projection_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      }
+    },
+    "fixture_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "result",
+        "records"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "result": {
+          "$ref": "#/$defs/result"
+        },
+        "records": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "qualification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "repository_context_ref",
+        "expected_revision",
+        "snapshot_id",
+        "selected_source_ref",
+        "current_source_ref",
+        "native_toolchain_ref",
+        "qualification",
+        "selected_parent_operation_id",
+        "complete",
+        "before",
+        "proposed",
+        "effects",
+        "source_evidence_refs",
+        "issued_at_utc",
+        "qualification_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.jujutsu.recovery_native_qualification.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.jujutsu.operation.undo",
+            "cmd.jujutsu.operation.restore"
+          ]
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository_context_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_revision": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/jujutsu_revision"
+        },
+        "snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selected_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_toolchain_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "qualification": {
+          "enum": [
+            "qualified",
+            "blocked",
+            "unknown"
+          ]
+        },
+        "selected_parent_operation_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "before": {
+          "$ref": "#/$defs/view"
+        },
+        "proposed": {
+          "$ref": "#/$defs/view"
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/effect"
+          },
+          "minItems": 0
+        },
+        "source_evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "issued_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/source-control/1.0.0/source_control_contracts.schema.json#/$defs/timestamp"
+        },
+        "qualification_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/preview"
+    },
+    {
+      "$ref": "#/$defs/operation_source"
+    },
+    {
+      "$ref": "#/$defs/observation"
+    },
+    {
+      "$ref": "#/$defs/result"
+    },
+    {
+      "$ref": "#/$defs/qualification"
+    }
+  ]
+}

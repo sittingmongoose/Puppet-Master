@@ -5560,6 +5560,138 @@
         "Plans/forge_review_create_selected_contracts.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.source_control.jj_recovery_transport.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "schema_ref": "Plans/jj_operation_recovery.schema.json",
+      "record_kinds": [
+        "pm.jujutsu.operation_recovery.request.v1",
+        "pm.jujutsu.operation_recovery.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Exact independently retained originals, native operation sources, owner previews, observations, the actual owner error and the owner receipt needed for replay, effect-unknown reconciliation, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original, preview or observation required for replay. Never reconstruct a recovery mutation from current UI selection or from a reissued preview."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Historical generic JJ command request/result meanings remain unchanged. No transport migration reconstructs original selection, native preview/qualification, operation source or caller facts; fixture wrappers are not runtime records.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Transient exact-command transport only. Nested authority values and preview references are not independent durable families. Genuine originals, native operation sources, previews, observations and the actual error/receipt retain separately pending custody; no physical family, event or native proof.",
+      "source_refs": [
+        "Plans/Jujutsu_Integration.md#JJI-005",
+        "Plans/jj_operation_recovery.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.source_control.jj_recovery_metadata.v1",
+      "system_id": "source_control",
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "schema_ref": "Plans/jj_operation_recovery.schema.json",
+      "record_kinds": [
+        "pm.jujutsu.recovery_operation_source.v1",
+        "pm.jujutsu.operation_recovery.preview.v1",
+        "pm.jujutsu.recovery_native_qualification.v1",
+        "pm.jujutsu.operation_recovery.observation.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain the actual independently authenticated native operation sources, owner-qualified preview/selection and known/unknown post-state observation while the owner receipt, replay, effect-unknown reconciliation, backup or audit requires them. The unchanged Source Control operation receipt and the actual JJ command error retain their own existing owner custody. Exact physical owner and per-kind retention assignment remain pending; no completion anchor or source-lifetime extension is inferred.",
+        "expiry_rule": "No cleanup writer or retention interval is admitted. Register exact physical key/value, producer/readers, active reference holds, deletion and original replay/backup custody before writes; transient transport disposal is not release of original or preview authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not cast unchanged predecessor generic JJ records, historical operation logs or retained receipts into these complete successor values. No selected identity, native qualification, preview content, post-state observation or caller provenance is synthesized; versioned writer/reader/migration admission remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Actual native recovery operation sources, owner preview/qualification and post-state observation under the JJ owner: the separately retained values replay and reconciliation depend on. Existing receipt and error families keep their own custody and their eventual physical binding stays an open owner decision; no parallel recovery store, writer or native proof.",
+      "source_refs": [
+        "Plans/Jujutsu_Integration.md#JJI-005",
+        "Plans/jj_operation_recovery.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.jj_recovery_dispatch_binding.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/sir_jj_recovery_dispatch.schema.json",
+      "record_kinds": [
+        "pm.sir.jj_recovery_dispatch_binding.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Retain actual independently authenticated original and owner metadata while receipt, replay, reconciliation, backup or audit requires them. Exact physical owner and per-kind retention assignment remain pending; no completion anchor or source-lifetime extension is inferred.",
+        "expiry_rule": "No cleanup writer or retention interval is admitted. Register exact physical key/value, producer/readers, active reference holds, deletion and original replay/backup custody before writes; transient transport disposal is not release of original authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Do not cast unchanged predecessor originals, receipts or projections into these complete successor values. No selected identity, native qualification, operation observation or caller provenance is synthesized; versioned writer/reader/migration admission remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Authentic SIR original for exactly the undo/restore recovery commands; it retains the full identity, selected arguments/digest and nullable original caller without an inferred dispatcher, peer store or physical admission.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-042",
+        "Plans/sir_jj_recovery_dispatch.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.sir.jj_recovery_error_projection.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/sir_jj_recovery_dispatch.schema.json",
+      "record_kinds": [
+        "pm.sir.jj_recovery_error_projection.v1"
+      ],
+      "persistence_disposition": "ephemeral_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "No independent durable hold or replay authority. The unchanged actual JJ command error, its outcome error_ref and the known partial/recovery effects remain retained under their authentic owner custody.",
+        "expiry_rule": "Dispose of the safe disclosure when delivery ends or the source/current disclosure is invalidated; disposing of a projection never releases the retained original error, reference or effect authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No persisted migration target. A missing authentic original, owner error, reference or effect remains unavailable rather than reconstructed from a transient projection.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Internal nonpersisted safe error disclosure binding the exact actual owner error to the original request/identity/caller. A truthful cancelled result may keep projection.ui_error and the common UI error null without erasing the owner error, its reference or known partial effects; not a new error store.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-042",
+        "Plans/sir_jj_recovery_dispatch.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [

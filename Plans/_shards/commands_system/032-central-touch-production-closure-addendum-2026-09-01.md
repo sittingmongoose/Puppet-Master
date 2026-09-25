@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L5460-L5741
 
-Source SHA256: `47641d94e771915b79a2c60664e57cff69b573c8fb78ded5113c6ad9bcc42df8`
+Source SHA256: `b83336ae367b63c5f342525dd0c07f4a985b24b3eb29c0d77019e7339925ac16`
 
 ---
 
@@ -111,9 +111,9 @@ The following exact 231 primary commands complete the remaining actionable Touch
 | `cmd.jujutsu.git.push` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::git_push` | `Plans/jj_publication_selected.schema.json#/$defs/request` -> `Plans/jj_publication_selected.schema.json#/$defs/result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.jujutsu.history.open` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::history_open` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.jujutsu.operation.log` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_log` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
-| `cmd.jujutsu.operation.restore` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_restore` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.operation.restore` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_restore` | `Plans/jj_operation_recovery.schema.json#/$defs/request` -> `Plans/jj_operation_recovery.schema.json#/$defs/result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.jujutsu.operation.show` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_show` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
-| `cmd.jujutsu.operation.undo` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_undo` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.jujutsu.operation.undo` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::operation_undo` | `Plans/jj_operation_recovery.schema.json#/$defs/request` -> `Plans/jj_operation_recovery.schema.json#/$defs/result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.jujutsu.status.refresh` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::status_refresh` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.jujutsu.workspace.create` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::workspace_create` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.jujutsu.workspace.list` | `Plans/Jujutsu_Integration.md#JJI-007` | `handlers::jujutsu::workspace_list` | `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_request` -> `Plans/jujutsu_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
