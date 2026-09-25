@@ -31,7 +31,7 @@ The plan says four v8-pinned owner files differ from the reviewed base. Among th
 
 ## 2. Package authentication
 
-- The package repository copy (`replan-v8/`, 11 directories) verifies against its `SHA256SUMS` (SHA-256 `6a85be039ad1805fdcc9dc51b66467d24690973b9ae391e2c80d4a24e940ea53`): 6,005 files, `sha256sum -c` exit 0, no unlisted file and no symlink.
+- The package repository copy (`replan-v8/`, 10 top-level directories; the plan's count of 11 is not reproduced in the copy) verifies against its `SHA256SUMS` (SHA-256 `6a85be039ad1805fdcc9dc51b66467d24690973b9ae391e2c80d4a24e940ea53`): 6,005 files, `sha256sum -c` exit 0, no unlisted file and no symlink.
 - All 16 frozen manifests in it hash to the values the plan and the reviews cite. All 5,989 members they list authenticate.
 - The chain of custody holds:
   - v2 `ceaaa4ce…` → Stop review v2 `cc383394…` → v3 `9ed8ba4f…` → Stop review v3 `c9271320…` → root acceptance `dc58f7d2…`.
