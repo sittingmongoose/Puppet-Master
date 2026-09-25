@@ -192,6 +192,8 @@ A0 section 9 and root's `remains_open_after_a1`, against the owner units:
 | B01 | The condition that puts a run into `blocked` | A3, by the Q-09 route |
 | composition.json source_reviews | The three canonical-draft review entries stay null in canon; record their manifests in a later edition | Designated Plans agent, next v8 edition |
 | Q-10 (A0) | The narrow Replan v3 root review `13437dc7…` and the full prebirth plan exist only on the NAS. The cloud session did not read them; canon cites the prebirth plan by hash only (`21e672ca…`, `composition.json` line 1114) and does not cite the root review. Read both on the VM before landing, or record that A1 relies on them by hash only | A1 lander, on the VM |
+| Q-U4-11 | The inherited `GoalBodySelector` names family `goal_body` with header `pm.storage_value.goal_body.v1`, which no Storage row registers (CV-354) | Storage and Goal owners |
+| U3-Q10 | The `governance_record.v1:{project_id}:graph_patch:{graph_patch_id}` projection target is an unregistered template and is unavailable (SP-321) | Storage and Contracts owners |
 
 A0's Q-05 is settled by O-02, Q-06 by the durable-token repair (C06), Q-11 by O-21, and Q-12 by the process answers. Q-10 stays open (Open questions).
 
