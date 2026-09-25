@@ -29,7 +29,7 @@
 ## Effect on the depth grade
 
 The branch closes the depth42 producer gap by name for both Browser families: SP-286/CV-339 `resolve.v2` is adopted in SMPFS-167 and SMPFS-168. It changes no grade, because grades move only at a regrade. At the next Step 8 regrade:
-- **`browser.workspace.created`.** It can reach at most 10 of 12. Its consumers and oracles cells are untouched here; the second half of 8(c) addresses them.
+- **`browser.workspace.created`.** It can reach at most 10 of 12. Its consumers and oracles cells are untouched here; the second half of 8(c) addresses them. SMPFS-167-A006 likewise has a named native obligation (S-08) but no executable oracle of its own.
 - **`browser.workspace.reset`.** It reaches 12 of 12 only if both of these hold:
   - the restore half (review S-02, now applied) holds;
   - the oracle cell is not lowered for SMPFS-168-A005.
