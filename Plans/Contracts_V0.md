@@ -3042,6 +3042,8 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/orchestrator
 | `coordination.agent_aborted` | lineage envelope, `abort_reason`, `aborted_by_ref`, `aborted_at_utc` | Parent/user/runtime abort resolution. |
 | `coordination.debug_mirror_exported` | `project_id`, `mirror_path`, `mirror_kind`, `source_checkpoint`, `source_sequence_id`, `export_status`, `exported_at_utc`, `error_code?`, `quarantine_ref?` | Optional debug/export mirror write or recovery result. |
 
+The closed form of these rows is `Plans/coordination_event_payloads.schema.json`, one closed definition per row with a shared lineage envelope; the rows remain the payload minima. The binding is "Closed coordination payload schema (DL-045, 2026-09-25)" below (CV-353), a newly authored owner contract under DL-045. These rows and that schema govern over the Orchestrator sketch structs.
+
 Coordination consumers use `coordination_agent_projection.v1:{project_id}:{agent_id}`, `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}`, `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}`, `coordination_snapshot_projection.v1:{project_id}:{projection_scope}`, and `projector.checkpoint.coordination:{project_id}` for authority. Scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, and validation decisions MUST NOT read `.puppet-master/state/*.json` mirrors as authority.
 
 ContractRef: ContractName:Plans/storage-plan.md#Coordination-record-projection-and-mirror-export-families, ContractName:Plans/orchestrator-subagent-integration.md#Canonical-active-agent-coordination-records-and-projections
@@ -3069,6 +3071,107 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orc
 | `crew.disbanded` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `reason` | Crew dissolved. |
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+<a id="closed-coordination-payload-schema-dl-045-2026-09-25"></a>
+#### Closed coordination payload schema (DL-045, 2026-09-25)
+
+This is a **newly authored owner contract under DL-045** for the seven agent families of the coordination table under "Stable active-agent coordination event families". It is backed by the per-family search `reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md`, which found the rows and no payload schema. The rows stay the payload minima. Their closed form is `Plans/coordination_event_payloads.schema.json`, schema ID `https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json`. The semantic owner of the seven is OSI-438 in `Plans/orchestrator-subagent-integration.md`; Storage persistence, identity and transitions are SP-320 in `Plans/storage-plan.md`. Nothing here admits a family: each stays quarantined before append or projection until its own Storage admission landing.
+
+The schema's `$defs`:
+
+| `$defs` entry | Schema ID, used as the registry row's `payload_schema_id` | Row |
+|---|---|---|
+| `lineage_envelope` | shared part, never a payload by itself | the lineage envelope list under "Stable active-agent coordination event families" |
+| `non_secret_ref` | shared reference form | none |
+| `agent_registered` | `pm.coordination_event.agent_registered.schema.v1` | `coordination.agent_registered` |
+| `agent_status_updated` | `pm.coordination_event.agent_status_updated.schema.v1` | `coordination.agent_status_updated` |
+| `agent_operation_updated` | `pm.coordination_event.agent_operation_updated.schema.v1` | `coordination.agent_operation_updated` |
+| `agent_file_ownership_updated` | `pm.coordination_event.agent_file_ownership_updated.schema.v1` | `coordination.agent_file_ownership_updated` |
+| `agent_unregistered` | `pm.coordination_event.agent_unregistered.schema.v1` | `coordination.agent_unregistered` |
+| `agent_crashed` | `pm.coordination_event.agent_crashed.schema.v1` | `coordination.agent_crashed` |
+| `agent_aborted` | `pm.coordination_event.agent_aborted.schema.v1` | `coordination.agent_aborted` |
+| `debug_mirror_exported` | `pm.coordination_event.debug_mirror_exported.schema.v1`, prepared and not admitted, outside this batch | `coordination.debug_mirror_exported` |
+
+Each family definition is a closed object (`additionalProperties: false`). The seven agent definitions include the lineage envelope and add their row's fields. The rules:
+
+1. **`schema_version`.** Every coordination payload carries a required `schema_version` string, `1.0.0` for these definitions, as the `run.started` payload does and as the Storage registry family `coordination_event_records` already requires. It versions the payload, not the EventRecord envelope, whose own `schema_version` stays `2.0.0`. A later payload change needs a new definition and version, and readers reject an unsupported one. Apart from `schema_version`, no row gains a field.
+2. **Lineage envelope.** `project_id`, `run_id`, `agent_id`, `platform`, `idempotency_key` and `schema_version` are required. `thread_id`, `agent_type`, `parent_run_id`, `child_run_id`, `node_id`, `lane_id`, `worktree_id`, `expected_previous_revision` and `last_applied_event_id` are optional. For the seven agent families `agent_revision` is required too, an integer of at least 1, because SP-320's idempotency key contains it. `coordination.agent_registered` also requires `agent_type`, as its row does.
+3. **No nulls.** An optional field without a value is omitted; `null` is never used. Each value then has one encoding, so a retry reproduces the same producer semantic digest.
+4. **Revisions.** `coordination.agent_registered` has `agent_revision` 1 and carries neither `expected_previous_revision` nor `last_applied_event_id`. Every later event of the same agent has an `agent_revision` one higher than the agent's previous event. `expected_previous_revision`, when present, equals `agent_revision` minus 1. `last_applied_event_id`, when present, is the event ID of that previous event. SP-320 checks both.
+5. **Bounds.** IDs, `agent_type` and `model_id` are nonempty strings of at most 256 characters. `status_reason` is plain text of at most 256 characters, and `operation_summary` of at most 512. Neither carries prompt text, model output, file content, diffs, tool arguments or secrets. `progress_pct` is an integer from 0 to 100. `operation_refs` holds at most 16 distinct references. Timestamps are RFC 3339 UTC strings ending in `Z`. `heartbeat_age_ms` is a non-negative integer. `path_ref` is a normalized project-relative path of at most 1,024 characters and `path_hash` is 64 lowercase hex digits, both as SP-320 defines them.
+6. **References.** `non_secret_ref` has the form `kind:value`. The kind is lowercase letters, digits and underscores, starting with a letter. The whole reference has at most 256 characters and no whitespace. It names an object; it grants no access and holds no credential, account identifier, local absolute path or content. `operation_refs`, `result_ref`, `process_ref`, `worktree_ref` and `aborted_by_ref` use it. `aborted_by_ref` has kind `run` and the parent run ID when `abort_reason` is `parent`, and then `parent_run_id` is present and equal. It has kind `actor` and the command's actor reference when the reason is `user`, and kind `component` and the runtime component ID when it is `runtime`.
+7. **Closed domains.** `platform`, `status`, `terminal_status`, `claim_kind`, `claim_confidence`, `crash_reason` and `abort_reason` take exactly the values OSI-438 lists. `status` never takes a terminal value.
+8. **EventRecord joins.** A coordination EventRecord has `scope_kind` `project` and the payload's `project_id` and `run_id`. Its `thread_id` and `node_id` equal the payload's, or are null when the payload omits them; `attempt_id` is null. Its `event_type` names the family and its `payload_schema_id` is the family's schema ID. Its `idempotency_key` equals the payload's. `payload_ref` is null, `redaction_profile` is `no_secrets` and `replay_policy` is `dedupe_by_idempotency_key`. `event_id` and `idempotency_key` follow SP-320's recipe. `occurred_at_utc` equals the payload's family timestamp: `started_at_utc`, `observed_at_utc`, `finished_at_utc`, `detected_at_utc` or `aborted_at_utc`. The payload's `observed_at_utc` is the time the producer observed the change. The envelope's `observed_at_utc` stays Storage's writer-observed time. `actor_ref` names the component that initiated the event through `AgentCoordinator`: the Orchestrator or scheduler path for registration, updates and unregistration, the scheduler or crash detector for a crash, and the resolving component for an abort.
+9. **Precedence.** These rows and the closed schema govern over the Orchestrator sketch structs: `RegisterAgent`, `AgentStatusUpdate`, `AgentOperationUpdate`, `AgentFileOwnershipUpdate`, `AgentTerminalUpdate`, `FileActivityClaim` and the projection JSON example. Those sketches are source lineage, and OSI-438 maps their fields.
+10. **The debug mirror row.** `debug_mirror_exported` is prepared from its row, with `schema_version`, so that Storage's record family covers every key shape. It stays not admitted, and gets no identity recipe or producer binding here.
+
+##### CV-353 - Closed Coordination Payload Schema Binding
+
+```yaml
+plan_unit_id: CV-353
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Newly authored owner contract under DL-045. The closed payload form of the seven coordination agent families is
+  Plans/coordination_event_payloads.schema.json, with a shared lineage_envelope and non_secret_ref and one closed
+  definition per family, each with its own schema ID pm.coordination_event.<family>.schema.v1;
+  debug_mirror_exported is prepared there and not admitted. Every coordination payload carries a required
+  schema_version, 1.0.0 here, as the run.started payload does. project_id, run_id, agent_id, platform,
+  idempotency_key and agent_revision are required, and optional fields are omitted rather than null. Revision
+  fields, text and number bounds, typed non-secret references, the OSI-438 closed domains and the EventRecord
+  envelope joins are fixed here, with event_id and idempotency_key from SP-320. The Contracts rows remain the
+  payload minima and, with the closed schema, govern over the Orchestrator sketch structs. Apart from
+  schema_version no row gains a field. Nothing is admitted.
+gui_related: false
+gui_classification_reason: This unit defines runtime event payload contracts, not GUI presentation.
+depends_on: [DL-045, CV-310, OSI-438]
+unblocks: []
+acceptance_criteria:
+  - The schema has exactly one closed definition per coordination row plus the shared lineage envelope and reference definitions, and each family definition resolves to its own schema ID.
+  - Every coordination payload requires schema_version 1.0.0 and rejects an unknown field, a null, an out-of-domain value or a missing required lineage field.
+  - agent_registered has agent_revision 1 and no expected previous revision; every later expected_previous_revision, when present, equals agent_revision minus 1.
+  - Status reasons and operation summaries are bounded plain text with no prompt, output, file content, diff, tool argument or secret.
+  - The aborted_by_ref kind matches abort_reason, and a parent abort names the payload's parent_run_id.
+  - The EventRecord joins hold, with project scope, envelope identity equal to the payload, the family schema ID, no_secrets redaction and dedupe_by_idempotency_key replay.
+  - No Orchestrator sketch struct widens or renames a payload field.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Plans/coordination_event_payloads.schema.json
+  - reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md
+risk_class: coordination_payload_contract_regression
+reasoning_tier: high
+context_scope: coordination_event_authority_seven_families
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md
+  - Plans/Contracts_V0.md#CV-310
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`lineage_envelope`"
+  - "`non_secret_ref`"
+  - "`schema_version`"
+  - "`pm.coordination_event.agent_registered.schema.v1`"
+negative_constraints:
+  - Do not add a payload field other than schema_version, and do not admit a family.
+  - Do not let Orchestrator sketch structs define payload fields.
+  - Do not use null for an absent optional field.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/orchestrator-subagent-integration.md#OSI-438, ContractName:Plans/storage-plan.md#SP-320, ContractName:Plans/Contracts_V0.md#CV-310, SchemaID:pm.event.v0
+
 ### Dynamic context shrinking and effective-context projection
 
 
