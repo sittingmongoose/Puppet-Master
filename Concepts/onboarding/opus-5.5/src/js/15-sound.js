@@ -160,8 +160,70 @@
       finish: (c, o, t) => { [72, 76, 79, 84, 88, 91, 96].forEach((m, i) => chip(c, o, t + i * 0.045, m, 0.05, 0.04)); }
     }
   };
+  /* ---- music: the journey has a key. Each chapter plays on its own chord (Welcome I, Computer IV, Project V, AI vi,
+     Ready I an octave up), so choices vary but always fit; moving forward climbs with progress and Back descends;
+     choices rotate through the chord; each helper has its own cheer voice; celebrations crackle like the confetti;
+     typing ticks quietly in the family's material. k = { m(i, octave) chord note, step, voice, rot }. ---- */
+  const CHORDS = { welcome: [0, 4, 7], computer: [5, 9, 12], project: [7, 11, 14], ai: [9, 12, 16], ready: [12, 16, 19], tour: [0, 4, 7] };
+  const music = { chapter: 'welcome', step: 0, x: 0.5, rot: {} };
+  S.setContext = (o) => { Object.assign(music, o || {}); };
+  function mk(root, event, o) {
+    const ch = CHORDS[music.chapter] || CHORDS.welcome, rot = (music.rot[event] = (music.rot[event] || 0) + 1);
+    return { step: music.step, voice: (o && o.voice) || 0, rot, m: (i, oct) => root + ch[((i % 3) + 3) % 3] + 12 * (Math.floor(i / 3) + (oct || 0)) };
+  }
+  const sparkle = (c, o, t, dur, n, fn) => { for (let i = 0; i < n; i++) { const at = t + Math.pow(i / n, 0.8) * dur + Math.random() * 0.03; fn(at, i); } };
+  const MUSIC = {
+    basic: {
+      tap: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, f: 3200 * v, q: 3, gain: 0.07 }); tone(c, o, t, { f: note(k.m(k.rot % 3, 2)), dur: 0.045, gain: 0.045 }); },
+      select: (c, o, t, v, k) => { const r = k.rot % 3; tone(c, o, t, { f: note(k.m(r, 1)) * v, dur: 0.11, gain: 0.07 }); tone(c, o, t + 0.045, { f: note(k.m(r + 1, 1)) * v, dur: 0.14, gain: 0.06 }); },
+      next: (c, o, t, v, k) => { const b = k.step % 4; noise(c, o, t, { dur: 0.06, f: 4600, q: 1.6, gain: 0.03 }); [0, 1, 2].forEach((i) => tone(c, o, t + 0.01 + i * 0.05, { f: note(k.m(b + i, 1)) * v, dur: 0.12 + i * 0.03, gain: 0.055 })); },
+      back: (c, o, t, v, k) => { const b = k.step % 4; [2, 1].forEach((i, j) => tone(c, o, t + j * 0.05, { f: note(k.m(b + i, 1)) * v, dur: 0.13, gain: 0.05 })); },
+      step: (c, o, t, v, k) => { tone(c, o, t, { f: note(k.m(2, 1)), dur: 0.12, gain: 0.05 }); tone(c, o, t + 0.07, { f: note(k.m(4, 1)), dur: 0.22, gain: 0.045 }); },
+      cheer: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.01, f: 5200, q: 4, gain: 0.05 }); tone(c, o, t + 0.01, { f: note(k.m(3 + k.voice, 1)), dur: 0.16, gain: 0.05 }); tone(c, o, t + 0.07, { f: note(k.m(5 + k.voice, 1)), dur: 0.22, gain: 0.04, type: 'triangle' }); },
+      celebrate: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.5, f: 2400, f2: 7000, q: 0.9, gain: 0.02 }); [0, 1, 2, 3].forEach((i) => tone(c, o, t + i * 0.06, { f: note(k.m(i, 1)), dur: 0.5, gain: 0.045, type: i % 2 ? 'triangle' : 'sine' }));
+        sparkle(c, o, t + 0.2, 1.1, 14, (at, i) => tone(c, panned(c, o), at, { f: note(k.m(3 + (i * 2) % 7, 2)), dur: 0.09, gain: 0.05 })); },
+      type: (c, o, t) => noise(c, o, t, { dur: 0.018 + Math.random() * 0.02, f: 3600 + Math.random() * 1800, q: 2.4, gain: 0.02 })
+    },
+    friendly: {
+      tap: (c, o, t, v, k) => { tone(c, o, t, { f: note(k.m(k.rot % 3, 2)) * v, dur: 0.03, gain: 0.06 }); noise(c, o, t, { dur: 0.02, f: 2200, q: 2, gain: 0.05 }); },
+      select: (c, o, t, v, k) => { const r = k.rot % 3; marimba(c, o, t, k.m(r, 1), 0.15); if (k.rot % 2) kalimba(c, o, t + 0.06, k.m(r + 2, 2), 0.05); },
+      next: (c, o, t, v, k) => { const b = k.step % 4; noise(c, o, t, { dur: 0.16, filter: 'lowpass', f: 2400, f2: 500, gain: 0.03 }); [0, 1, 2].forEach((i) => marimba(c, o, t + 0.02 + i * 0.06, k.m(b + i, 1), 0.11)); },
+      back: (c, o, t, v, k) => { const b = k.step % 4; [2, 0].forEach((i, j) => marimba(c, o, t + j * 0.07, k.m(b + i, 1), 0.1)); },
+      step: (c, o, t, v, k) => { marimba(c, o, t, k.m(2, 1), 0.1); marimba(c, o, t + 0.08, k.m(4, 1), 0.09); },
+      cheer: (c, o, t, v, k) => { const b = k.voice * 2; kalimba(c, o, t, k.m(b, 2), 0.07); kalimba(c, o, t + 0.07, k.m(b + 2, 2), 0.08); noise(c, o, t, { dur: 0.03, filter: 'lowpass', f: 900, gain: 0.04 }); },
+      celebrate: (c, o, t, v, k) => { [0, 1, 2, 3, 4, 5].forEach((i) => marimba(c, o, t + i * 0.05, k.m(i, 1), 0.09)); sparkle(c, o, t + 0.3, 1.2, 12, (at, i) => { const p = panned(c, o); if (i % 3) kalimba(c, p, at, k.m(3 + (i % 4), 2), 0.04); else noise(c, p, at, { dur: 0.05, filter: 'highpass', f: 3000, gain: 0.03 }); }); },
+      type: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.02, f: 1500 + Math.random() * 900, q: 1.6, gain: 0.03 }); if (Math.random() < 0.3) marimba(c, o, t, k.m(Math.floor(Math.random() * 3), 2), 0.025); }
+    },
+    glass: {
+      tap: (c, o, t, v, k) => fm(c, o, t, { f: note(k.m(k.rot % 3, 2)) * v, ratio: 3.5, index: 1.5, dur: 0.16, gain: 0.035 }),
+      select: (c, o, t, v, k) => fm(c, o, t, { f: note(k.m(k.rot % 3, 1)) * v, ratio: 1.38 + Math.random() * 0.05, index: 3, dur: 0.9, gain: 0.05, send: reverb(c, o) }),
+      next: (c, o, t, v, k) => { const b = k.step % 4; noise(c, o, t, { dur: 0.28, f: 900, f2: 4200, q: 1.4, gain: 0.03, send: reverb(c, o) }); [0, 1].forEach((i) => fm(c, o, t + 0.1 + i * 0.07, { f: note(k.m(b + i + 1, 1)), ratio: 1.4, index: 2.4, dur: 0.8, gain: 0.035, send: reverb(c, o) })); },
+      back: (c, o, t, v, k) => { const b = k.step % 4; noise(c, o, t, { dur: 0.24, f: 4200, f2: 900, q: 1.4, gain: 0.028, send: reverb(c, o) }); fm(c, o, t + 0.1, { f: note(k.m(b, 1)), ratio: 1.4, index: 2.4, dur: 0.7, gain: 0.035, send: reverb(c, o) }); },
+      step: (c, o, t, v, k) => fm(c, o, t, { f: note(k.m(4, 1)), ratio: 1.4, index: 2, dur: 0.6, gain: 0.035, send: reverb(c, o) }),
+      cheer: (c, o, t, v, k) => { const f = note(k.m(3 + k.voice, 1)); fm(c, o, t, { f, ratio: 1.4, index: 2.2, dur: 0.7, gain: 0.03, send: reverb(c, o) }); fm(c, o, t + 0.05, { f: f * 1.5, ratio: 2.76, index: 1.4, dur: 0.6, gain: 0.02, send: reverb(c, o) }); },
+      celebrate: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.8, f: 800, f2: 7000, q: 1.1, gain: 0.025, send: reverb(c, o) }); sparkle(c, o, t + 0.1, 1.5, 12, (at, i) => fm(c, panned(c, o), at, { f: note(k.m(3 + (i * 2) % 8, 1)), ratio: 1.4, index: 2.6, dur: 1.1, gain: 0.025, send: reverb(c, o) })); },
+      type: (c, o, t, v, k) => fm(c, o, t, { f: note(k.m(Math.floor(Math.random() * 3), 3)), ratio: 3.1, index: 0.8, dur: 0.05, gain: 0.012 })
+    },
+    retro: {
+      tap: (c, o, t, v, k) => chip(c, o, t, k.m(k.rot % 3, 1), 0.03, 0.05),
+      select: (c, o, t, v, k) => { const r = k.rot % 3; chip(c, o, t, k.m(r, 1), 0.045, 0.05); chip(c, o, t + 0.045, k.m(r + 2, 1), 0.07, 0.05); },
+      next: (c, o, t, v, k) => { const b = k.step % 4; [0, 1, 2].forEach((i) => chip(c, o, t + i * 0.04, k.m(b + i, 0), 0.045, 0.05)); },
+      back: (c, o, t, v, k) => { const b = k.step % 4; [2, 1, 0].forEach((i, j) => chip(c, o, t + j * 0.04, k.m(b + i, 0), 0.045, 0.045)); },
+      step: (c, o, t, v, k) => { chip(c, o, t, k.m(2, 1), 0.05, 0.045); chip(c, o, t + 0.05, k.m(4, 1), 0.1, 0.045); },
+      cheer: (c, o, t, v, k) => { chip(c, o, t, k.m(3 + k.voice, 1), 0.05, 0.045); chip(c, o, t + 0.05, k.m(5 + k.voice, 1), 0.11, 0.045); },
+      celebrate: (c, o, t, v, k) => { [0, 1, 2, 3, 4, 5, 6].forEach((i) => chip(c, o, t + i * 0.045, k.m(i, 0), 0.05, 0.045)); tone(c, o, t, { f: note(k.m(0, -2)), type: 'triangle', dur: 0.5, gain: 0.09 });
+        sparkle(c, o, t + 0.35, 1, 10, (at, i) => { const p = panned(c, o); if (i % 2) chip(c, p, at, k.m(4 + (i % 3), 1), 0.03, 0.03); else noise(c, p, at, { dur: 0.04, filter: 'highpass', f: 5000, gain: 0.03 }); }); },
+      type: (c, o, t, v, k) => { noise(c, o, t, { dur: 0.012, filter: 'highpass', f: 4000, gain: 0.03 }); chip(c, o, t, k.m(Math.floor(Math.random() * 3), 2), 0.018, 0.02); }
+    }
+  };
+  /* a note of a celebration placed somewhere across the stereo field */
+  function panned(c, o) { if (!c.createStereoPanner) return o; const p = c.createStereoPanner(); p.pan.value = (Math.random() - 0.5) * 1.4; p.connect(o); return p; }
+  const ROOT = { basic: 72, friendly: 67, glass: 72, retro: 72 };
+  Object.keys(MUSIC).forEach((f) => Object.assign(KITS[f], MUSIC[f]));
   S.KITS = KITS;
   S.EVENTS = Object.keys(KITS.basic);
+  /* where the last click was, for left-right placement of what it plays */
+  document.addEventListener('pointerdown', (e) => { music.x = Math.max(0, Math.min(1, e.clientX / Math.max(1, innerWidth))); }, true);
 
   /* ---- live context: created on the first user gesture (browsers block autoplay) ---- */
   function ensureContext() {
@@ -190,7 +252,12 @@
     if (!fn) return false;
     const ctx = ensureContext(); if (!ctx || ctx.state === 'closed') return false;
     const t0 = ctx.currentTime + 0.004, v = 1 + (Math.random() - 0.5) * 0.04;
-    try { fn(ctx, S.master, t0, v); entry.played = true; } catch (err) { entry.error = String(err && err.message || err); }
+    /* each sound: a little louder or softer than the last, and placed toward where the click was */
+    let out = ctx.createGain(); out.gain.value = 0.86 + Math.random() * 0.26;
+    let tail = out;
+    if (ctx.createStereoPanner) { const p = ctx.createStereoPanner(); p.pan.value = (music.x - 0.5) * 0.9; out.connect(p); tail = p; }
+    tail.connect(S.master);
+    try { fn(ctx, out, t0, v, mk(ROOT[family] || 72, event, opts)); entry.played = true; } catch (err) { entry.error = String(err && err.message || err); }
     return true;
   };
 
@@ -217,7 +284,7 @@
     const rate = 44100, dur = seconds || 2.4;
     const ctx = new OfflineAudioContext(1, Math.ceil(rate * dur), rate);
     const master = ctx.createGain(); master.gain.value = 0.9; master.connect(ctx.destination);
-    fn(ctx, master, 0.01, 1);
+    fn(ctx, master, 0.01, 1, mk(ROOT[family] || 72, event));
     const buf = await ctx.startRendering(), data = buf.getChannelData(0);
     let peak = 0; for (let i = 0; i < data.length; i++) peak = Math.max(peak, Math.abs(data[i]));
     const bytes = new DataView(new ArrayBuffer(44 + data.length * 2));

@@ -264,6 +264,8 @@
     S.sess.screen = id; S.save();
     const def = SCREENS.defs[id];
     if (def.enter) def.enter(S, opts);
+    /* the music follows the journey: the chapter's chord, and how far along the person is */
+    O55.sound.setContext({ chapter: (def.chapterFor ? def.chapterFor(S) : def.chapter) || 'welcome', step: S.sess.history.length });
     if (!opts.silent) O55.sound.play(opts.dir === 'back' ? 'back' : 'next');
     transition(opts.dir || 'fwd');
   }
@@ -313,8 +315,11 @@
     if (!tip) { tip = document.createElement('div'); tip.className = 'o55-reason'; tip.setAttribute('role', 'note'); layer.querySelector('.o55-foot').appendChild(tip); }
     tip.textContent = reason; tip.classList.remove('o55-reason-show'); void tip.offsetWidth; tip.classList.add('o55-reason-show');
   }
+  let lastType = 0;
   function onInput(e) {
     const t = e.target.closest('[data-o55-bind]'); if (!t) return;
+    /* typing ticks quietly in the family's material (never for a protected field) */
+    if (t.type !== 'password' && !t.hasAttribute('data-o55-protected') && performance.now() - lastType > 45) { lastType = performance.now(); O55.sound.play('type'); }
     const def = SCREENS.defs[S.sess.screen];
     const key = t.getAttribute('data-o55-bind');
     const fn = def && def.bind && def.bind[key];

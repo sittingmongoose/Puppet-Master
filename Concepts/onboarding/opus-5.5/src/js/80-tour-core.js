@@ -371,6 +371,7 @@
     st.step = TR.defs[Math.max(0, i)]; st.sess.index = st.step.index; st.missing = false; st.missingSince = 0; st.advancing = false; st.lastReady = undefined; st.side = null; st.fixed = null;
     if (!o.back) st.entries[st.step.id] = entrySnap();
     save();
+    O55.sound.setContext({ chapter: 'tour', step: st.step.index });
     if (st.step.enter) { try { await st.step.enter(st, o); } catch (err) { console.warn('O55 tour: enter failed', st.step.id, err); } }
     if (my !== st.seq) return;
     await stillTarget(); /* a page that slides in, a card that grows: place against where things come to rest */

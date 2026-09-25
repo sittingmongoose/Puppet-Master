@@ -33,7 +33,8 @@
   A.react = function react(host) {
     const svg = sceneSvg(host); if (!svg || quiet()) return false;
     const hs = helpers(svg); if (!hs.length) return false;
-    const g = hs[turn++ % hs.length], key = g.getAttribute('data-key'), fam = svg.getAttribute('data-family');
+    const i = turn++ % hs.length, g = hs[i], key = g.getAttribute('data-key'), fam = svg.getAttribute('data-family');
+    O55.sound.play('cheer', { voice: i }); /* each helper has its own voice */
     if (tied(svg, key) && A.rig) return A.rig.cheer(svg, key);
     hop(g, fam, false, 0);
     return true;
@@ -47,6 +48,7 @@
     if (A.rig && hs.some((g) => tied(svg, g.getAttribute('data-key')))) A.rig.cheer(svg, 'all', { big: true });
     hs.filter((g) => !tied(svg, g.getAttribute('data-key'))).forEach((g, i) => hop(g, fam, true, i * 110));
     confetti(svg, fam, o.at || [240, 300], o.count || 34);
+    O55.sound.play('celebrate');
     return true;
   };
 
