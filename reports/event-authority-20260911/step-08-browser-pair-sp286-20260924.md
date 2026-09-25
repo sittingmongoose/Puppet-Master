@@ -26,6 +26,18 @@
 - **Tests.** Browser created 63 OK, reset 53 OK, admission 38 OK, and `pm-browser-event-admission.py` passes, all as on `main`.
 - **An earlier run.** The same checks on the pre-rebase commit `a6252abe46` gave the same Section 15 deltas against `main` `3c4a64b2b5`. They are in the parent directory, whose `SHA256SUMS` has SHA-256 `6414216ac827848e663c73971e4e9c1f139cdd19f74f20fa1d8ca92d05342b02`; its `NOTE.txt` explains the base line in `context.txt`.
 
+## Effect on the depth grade
+
+The branch closes the depth42 producer gap by name for both Browser families: SP-286/CV-339 `resolve.v2` is adopted in SMPFS-167 and SMPFS-168. It changes no grade, because grades move only at a regrade. At the next Step 8 regrade:
+- **`browser.workspace.created`.** It can reach at most 10 of 12. Its consumers and oracles cells are untouched here; the second half of 8(c) addresses them.
+- **`browser.workspace.reset`.** It reaches 12 of 12 only if both of these hold:
+  - the restore half (review S-02, now applied) holds;
+  - the oracle cell is not lowered for SMPFS-168-A005.
+
+  A005 has a named native obligation (S-08) but no executable oracle of its own, so the reset oracle cell rests on the existing lost-acknowledgement and unknown-append model cases.
+
+The DL-077 admission records of both families still fail closed until they are re-pinned to a regraded assessment with all twelve criteria passing.
+
 ## Expected at landing
 
 Every landing-check row this branch adds is governance staleness on `Plans/Section15_MVP_Promoted_Features_Spec.md`. These figures were measured against `main` `a6480b0f7c`, after the anchors landing. In each aggregate, `run-gates` and `audit-governance`:
