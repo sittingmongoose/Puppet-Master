@@ -3798,6 +3798,162 @@ Concurrency and atomicity rules:
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:pm.event.v0
 
+<a id="coordination-event-authority-dl-045-2026-09-25"></a>
+#### Coordination event authority (DL-045, 2026-09-25)
+
+This section is a **newly authored owner contract under DL-045**. It is the semantic owner text for exactly seven families: `coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`, `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed` and `coordination.agent_aborted`. The per-family search that DL-045 requires is `reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md`. It found each family's partial contract, and no producer binding, closed domain, identity rule or transition rule. `Plans/Contracts_V0.md` owns the closed payload schema (CV-353). `Plans/storage-plan.md` owns persistence, the projector, the checkpoint and the transition table (SP-320). `coordination.debug_mirror_exported` is not covered here; it belongs to DL-045's Storage batch.
+
+Nothing here admits a family. Each of the seven stays quarantined before append or projection, and absent from `Plans/event_family_registry.json`, until its own Storage admission landing, one family per landing. Preparing the seven together is not admission.
+
+Where earlier text in this document differs, this section governs. That covers the family list under "Canonical active-agent coordination records and projections", the `AgentCoordinator` sketch, the `RegisterAgent` example, the "Coordination event updates" bullets, and Gaps #30, #31, #33 and #34. The Contracts payload rows govern over every sketch struct in this document.
+
+**Agent identity.** `agent_id` names one registration of one agent. The component that registers the agent allocates it once, before the first append attempt, and reuses it for every retry of that registration. It is unique within its project for the lifetime of the app data root. A registered `agent_id` is never registered again, even after its terminal event. The sketch value `format!("{}-{}", subagent_name, node_id)` repeats across runs, so it is source lineage only. The subagent or persona name goes in `agent_type`.
+
+**Producers.** Every coordination event is appended by `AgentCoordinator` through Storage's coordination append admission, `storage.coordination_append.v1@1.0.0` (SP-320). Child agents, provider adapters and platform hooks never append. Hooks, provider stream events, output parsing and git diff detection only supply observations. The Orchestrator's execution path normalizes those observations and calls the coordinator. So "Agent appends" in "Coordination event updates" and in "Subagent Conflict Prevention" means an append this path makes for the agent.
+
+| Family | Entry point | Called by | When |
+|---|---|---|---|
+| `coordination.agent_registered` | `register_agent(RegisterAgent)` | the Orchestrator | once, before node execution; execution starts only after its first receipt returns |
+| `coordination.agent_status_updated` | `update_status(AgentStatusUpdate)` | the Orchestrator's execution path for the agent | on an actual change of `status` or `status_reason` |
+| `coordination.agent_operation_updated` | `update_operation(AgentOperationUpdate)` | the same path | on an actual change of the current operation or its progress, and once for the initial operation |
+| `coordination.agent_file_ownership_updated` | `update_file_ownership(AgentFileOwnershipUpdate)`; Gap #33's `update_file_activity_claim` is a sketch of the same append | the same path, from normalized extractor results | on a new claim, or on a changed `claim_kind`, `claim_confidence` or `operation_id` for the same path |
+| `coordination.agent_unregistered` | `unregister_agent(AgentTerminalUpdate)` | the Orchestrator's node completion path, or the scheduler's cleanup | once, when the agent ends with a known outcome |
+| `coordination.agent_crashed` | `record_crash(AgentCrashResolution)`, newly defined here | only the scheduler or the crash detector | once, on crash evidence |
+| `coordination.agent_aborted` | `record_abort(AgentAbortResolution)`, newly defined here | only the component that resolves the abort: the parent run's orchestration path, the user command path or the runtime | once, when the abort is resolved |
+
+The `unregister_agent(&agent_id)` calls in the tier execution sketch under "Orchestrator Modifications" and in the `RegisterAgent` example are source lineage. The entry point takes an `AgentTerminalUpdate`.
+
+Each entry point builds one complete closed payload, including the next `agent_revision` and the idempotency key that SP-320 defines, and submits it once. Storage admits it, appends it and issues its first AppendReceipt. The coordinator returns that receipt, and only then does the caller continue. After a lost acknowledgement or an uncertain append, the coordinator resolves the original append only through the explicitly adopted SP-286/CV-339 `storage.first_append_receipt.resolve.v2`, as SP-320 binds it, and never asks for a first mint. The coordinator keeps the prepared payload for its retries, so a retry carries the same bytes. After a restart it does not rebuild a lost request; it reloads the agent's projection. A stale revision returns `coordination_conflict`. The caller then reloads the projection and appends a successor event, or stops if the agent is terminal.
+
+**Crash and abort resolution.** Gap #30's "Automatic cleanup" rule governs over the "After execution" bullet of "Coordination event updates". An agent never appends `coordination.agent_crashed` or `coordination.agent_aborted` about itself, because it cannot observe its own crash. `record_crash` and `record_abort` append through the same admission and revision check as the other entry points. When a crash races a normal unregister or an abort, the first terminal event to append wins. The other gets `coordination_conflict` and appends nothing (SP-320).
+
+The crash detector records one of four reasons, each from direct evidence:
+- `process_exit`: the agent's process ended without a terminal event.
+- `process_lost`: the agent's process cannot be found, for example after a restart or a restore. A `permission_denied` process check counts as neither liveness nor loss; it needs a fresh verification first ("Cross-Platform Process Existence Check").
+- `worktree_lost`: the agent's worktree was deleted.
+- `heartbeat_expired`: the agent's last liveness signal is older than the heartbeat-expiry threshold.
+
+The threshold is the runtime policy value `coordination_heartbeat_expiry_ms`. Gap #33 puts timeout constants in runtime or storage policy, and this section assigns no number: the "e.g., 5 minutes" of Gap #30 stays an example. Until runtime policy supplies the value, no heartbeat expiry is inferred, and crashes are resolved from the other three kinds of evidence. The event records the observed `heartbeat_age_ms`, not the threshold.
+
+**Append on change; heartbeats are liveness.** A coordination event is appended at registration, on an actual change, and at termination:
+- a status event when `status` or `status_reason` differs from the agent's projection;
+- an operation event when the operation is new, or when its summary, progress or refs differ from the operation's projection row;
+- a file claim when the agent holds no claim on that path, or when the claim's `claim_kind`, `claim_confidence` or `operation_id` differs.
+
+An observation that changes nothing is not appended. Storage's admission returns `coordination_unchanged` for it and advances no revision (SP-320). Liveness heartbeats are runtime liveness. The runtime keeps each agent's last liveness signal for the crash detector, and no heartbeat is a coordination record. The "every 30 seconds" of "Coordination event updates" and of Gap #30 is an example of how often agents are observed, and `last_update` is a sketch field that no Contracts row has.
+
+This is an event contract, not a retention choice. It states which facts these families record, and Storage already describes those facts as changes ("records status/lifecycle changes", "records current operation/progress state"). It changes nothing about how long records are kept, how many are kept or what is deleted. `RP-COORDINATION-180D`'s 180-day window, its cap of 1,000,000 per project, its overflow rule and its expiry apply unchanged to every appended record.
+
+**Registration and the initial operation.** Registration carries no operation, because the Contracts row for `coordination.agent_registered` has no operation field, and no field is added. When the registering path has an initial operation description, such as "Starting node 1.1.1", it appends it as `coordination.agent_operation_updated` right after registration returns its first receipt, at `agent_revision` 2. This is how "Agent appends `coordination.agent_registered` with initial operation description" is read. The agent's first status change, for example to `running`, is its own `coordination.agent_status_updated`.
+
+**Closed domains.**
+
+| Field | Family | Values | Basis |
+|---|---|---|---|
+| `platform` | all seven, in the lineage envelope | `codex`, `claude`, `cursor`, `gemini`, `copilot` | "All platforms (Codex, Claude, Cursor, Gemini, Copilot)" under "When to use coordination modes", lowercase as in the coordination examples (`"platform": "codex"`); OSI-258 takes the value from `node_config.platform` |
+| `status` | `coordination.agent_status_updated` | `queued`, `running`, `awaiting_parent`, `blocked` | the non-terminal members of the canonical child lifecycle enum in `Plans/Contracts_V0.md` |
+| `terminal_status` | `coordination.agent_unregistered` | `complete`, `failed`, `cancelled` | the terminal members of the same enum |
+| `crash_reason` | `coordination.agent_crashed` | `process_exit`, `heartbeat_expired`, `process_lost`, `worktree_lost` | Storage: "crash, heartbeat-expiry, process-loss, or worktree-loss resolution"; Gap #30: "process exit, worktree deletion, heartbeat expiry" |
+| `abort_reason` | `coordination.agent_aborted` | `parent`, `user`, `runtime` | "parent/user/runtime abort resolution" |
+| `claim_kind` | `coordination.agent_file_ownership_updated` | `editing`, `reviewing`, `generated_output`, `read_dependency` | Gap #33's `FileActivityClaim` |
+| `claim_confidence` | `coordination.agent_file_ownership_updated` | `high`, `medium` | Gap #31: "Only include high/medium confidence files in coordination state." A low-confidence observation is never appended. |
+
+The lifecycle enum applies to every coordination agent, including node agents, because orchestrated child runs project into the same child model. Contracts forbids a parallel enum, so the families share this one: status updates carry its non-terminal members, and its terminal members arise only from terminal events. In the agent projection, registration sets `queued`, `coordination.agent_unregistered` sets its `terminal_status`, `coordination.agent_crashed` sets `failed` and `coordination.agent_aborted` sets `cancelled`. A status update never stands in for a terminal event. `superseded` is a child-run terminal reason recorded by child-run events, not a coordination field. A replaced agent unregisters with the terminal status its child run presents.
+
+`aborted_by_ref` names the authority that resolved the abort, and its kind follows `abort_reason`: the parent run for `parent`, the user command's actor for `user`, and the runtime component for `runtime`. CV-353 fixes the reference forms.
+
+**Legacy sketch fields.** These do not govern:
+
+| Sketch field | Where | Governing form |
+|---|---|---|
+| `worktree_path` | the `RegisterAgent` example and the projection JSON example | `worktree_id`; no path is stored |
+| `files_being_edited` | the same, OSI-259 and OSI-260 | one `coordination.agent_file_ownership_updated` per claimed path |
+| `current_operation` | the same | `coordination.agent_operation_updated` |
+| `started_at` | the same | `started_at_utc` |
+| `last_update` | the same, and Gap #30's heartbeat | none: runtime liveness, not a record |
+| `expected_agent_revision` | the `RegisterAgent` example | `agent_revision` (1 at registration) and `expected_previous_revision` on later events |
+| `unregister_agent(&str)` | the tier execution sketch and the `RegisterAgent` example | `unregister_agent(AgentTerminalUpdate)` |
+| `FileActivityClaim.file_path: PathBuf`, `claimed_by`, `last_event_id` | Gap #33 | `path_ref` and `path_hash` (SP-320's recipe), the envelope's `agent_id`, the projection's source event |
+| `agent_id` built as `format!("{}-{}", subagent_name, node_id)` | the tier execution sketch and the `RegisterAgent` example | a per-registration `agent_id` (above) |
+
+**File claims.** A claim warns and sequences agents. It is not a FileSafe lock or a lease. Paths are normalized as Gap #34 requires, into the `path_ref` and `path_hash` that SP-320 defines. A newer claim by the same agent on the same `path_hash` supersedes the older one. A claim ends only when the agent's terminal event is applied; heartbeat expiry reaches the claims only through `coordination.agent_crashed` with `heartbeat_expired`. There is no release value. Gap #31's git diff validation runs before the agent's terminal event. A mismatch found later is logged and appends nothing.
+
+**Restart and restore.** After an Orchestrator restart, or after a verified restore of an older backup, every non-terminal agent whose process no longer exists is resolved by the crash detector with `process_lost`, as a new operation. A restored or lost request is never replayed as a new event. An agent started after the restart gets a new `agent_id`.
+
+**Readers.** The scheduler, the `AgentCoordinator` context and conflict reads, the prompt context assembler, the debug mirror exporter and the inspection views read coordination state only through the versioned Storage readers of SP-320, after checkpoint coverage is verified. When coverage cannot be verified, the scheduler treats it as `coordination_conflict`. It neither schedules nor injects context from stale rows or mirrors.
+
+**Owner text per family.** Each family keeps its own lines, refined by this section:
+- `coordination.agent_registered`: "records agent registration before execution" in the canonical records list; `register_agent` in the `AgentCoordinator` sketch; "Before execution" in "Coordination event updates"; OSI-258.
+- `coordination.agent_status_updated`: "records lifecycle/status changes" in the canonical records list; `update_status`; OSI-259 and OSI-260; the blocked or awaiting-parent event of Gap #33.
+- `coordination.agent_operation_updated`: "records the current operation summary, progress note, and operation refs"; `update_operation`; "During execution".
+- `coordination.agent_file_ownership_updated`: "records file activity claims for coordination warnings"; `update_file_ownership`; Gaps #31, #33 and #34; "Subagent Conflict Prevention".
+- `coordination.agent_unregistered`: "records normal completion or explicit unregister"; `unregister_agent`; OSI-261; Gap #30's "Automatic cleanup".
+- `coordination.agent_crashed`: "records crash/heartbeat expiry resolution"; Gap #30's "Automatic cleanup" and "Crash detection"; OSI-261 and OSI-264.
+- `coordination.agent_aborted`: "records parent/user/runtime abort resolution"; Gap #30's "Automatic cleanup"; OSI-261.
+
+**Boundaries.** This section admits no family and registers nothing. It adds no payload field, retention policy, Storage key or table. It creates no WorkNode or NodeSeed and proves nothing native: the producers, the crash detector and the append path remain NOT_RUN.
+
+```yaml
+plan_unit_id: OSI-438
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Newly authored owner contract under DL-045 and the semantic owner text for coordination.agent_registered,
+  coordination.agent_status_updated, coordination.agent_operation_updated,
+  coordination.agent_file_ownership_updated, coordination.agent_unregistered, coordination.agent_crashed and
+  coordination.agent_aborted. AgentCoordinator is the only appender, through storage.coordination_append.v1:
+  register_agent, update_status, update_operation, update_file_ownership and unregister_agent(AgentTerminalUpdate),
+  plus the newly defined record_crash for the scheduler or crash detector only and record_abort for the component
+  that resolves the abort. The Gap #30 automatic-cleanup rule governs over the after-execution "Agent appends"
+  wording. An agent_id names one registration and is never registered again. The closed domains are platform
+  (codex, claude, cursor, gemini, copilot), status (the four non-terminal members of the canonical child lifecycle
+  enum, for every coordination agent), terminal_status (complete, failed, cancelled), claim_kind (editing,
+  reviewing, generated_output, read_dependency), claim_confidence (high, medium), crash_reason (process_exit,
+  heartbeat_expired, process_lost, worktree_lost) and abort_reason (parent, user, runtime). Events are appended at
+  registration, on actual change and at termination. Heartbeats are runtime liveness, and the heartbeat-expiry
+  threshold is the runtime policy value coordination_heartbeat_expiry_ms, with no number assigned here. The initial
+  operation is its own agent_operation_updated event after registration. Legacy sketch fields do not govern. Lost
+  acknowledgement resolves through the adopted SP-286/CV-339 storage.first_append_receipt.resolve.v2. Nothing is
+  admitted.
+gui_related: false
+gui_classification_reason: Defines backend coordination producers, identities and event semantics, not presentation.
+depends_on: [DL-045, OSI-432, CV-310, SP-232, SP-286, CV-339]
+unblocks: []
+acceptance_criteria:
+  - Each family has one appending entry point with named callers; child agents, provider adapters and platform hooks never append, and only the scheduler or the crash detector calls record_crash.
+  - An agent_id registers once; a second registration, an event before registration and an event after the agent's terminal event are refused.
+  - Status updates carry only queued, running, awaiting_parent or blocked; complete, failed and cancelled arise only from terminal events, and each agent has exactly one terminal event.
+  - An observation that changes nothing appends nothing and advances no revision; no heartbeat is a coordination record.
+  - Heartbeat expiry is inferred only after the runtime policy value coordination_heartbeat_expiry_ms exists and is exceeded; permission_denied counts as neither liveness nor loss.
+  - Registration carries no operation; the initial operation is the next event, at agent_revision 2.
+  - Legacy sketch fields and the repeating sketch agent identity never govern payloads or identity.
+  - After a lost acknowledgement the coordinator resolves the original append through storage.first_append_receipt.resolve.v2 and never requests a first mint.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md
+  - Plans/coordination_event_payloads.schema.json
+risk_class: coordination_producer_identity_or_lifecycle_drift
+reasoning_tier: high
+context_scope: coordination_event_authority_seven_families
+implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md
+  - Plans/orchestrator-subagent-integration.md#OSI-432
+  - Plans/Contracts_V0.md#CV-310
+  - Plans/storage-plan.md#SP-232
+preserved_exact_tokens: [record_crash, record_abort, coordination_heartbeat_expiry_ms, coordination_unchanged, coordination_conflict]
+negative_constraints:
+  - No admission, registry row, retention policy, payload field, Storage key or native proof.
+  - No append by a child agent, provider adapter, platform hook or mirror, and no inference of a sibling family's state.
+  - No heartbeat record and no fixed heartbeat-expiry number.
+owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Contracts_V0.md#CV-353, ContractName:Plans/storage-plan.md#SP-320, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/Contracts_V0.md#Stable-active-agent-coordination-event-families
+
 #### Compatibility and debug mirror contract
 
 `.puppet-master/state/active-agents.json`, `.puppet-master/state/agent-messages.json`, `.puppet-master/state/verification-{node_id}-end.json`, and `.puppet-master/state/handoff-validation-{node_id}.json` are compatibility/debug/export artifacts only. They are written by PM-owned projection or export code after redb commits, may lag canonical storage, and may be absent in headless or clean-room runs.

@@ -11559,7 +11559,7 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 372,
+        "False": 373,
         "True": 65
       },
       "heading_count": 48,
@@ -11586,11 +11586,12 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 31654,
+      "line_count": 31810,
       "path": "Plans/orchestrator-subagent-integration.md",
-      "plan_unit_count": 437,
+      "plan_unit_count": 438,
       "plan_unit_ids": [
         "OSI-431",
+        "OSI-438",
         "OSI-001",
         "OSI-002",
         "OSI-003",
@@ -12118,6 +12119,7 @@
         "coordination_metrics_and_logging_visibility",
         "coordination_modes_hook_enrichment",
         "coordination_owner_boundary",
+        "coordination_producer_identity_or_lifecycle_drift",
         "coordination_prompt_injection_content",
         "coordination_query_filtering",
         "coordination_query_methods_example",
@@ -12471,16 +12473,16 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "935bdd9dc15ccc0df609a8baa99a4ace5d9eb4cc9a337a4d84cba49a276c5467",
+      "sha256": "85fbc30630fcf307a2c1870bf8272fa0865bea484ed8a4929d721aff62b0f1f5",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 436,
+        "accepted": 437,
         "retired": 1
       },
       "title": "Orchestrator Subagent Integration -- Implementation Plan",
       "unit_type_counts": {
         "compatibility_disposition": 3,
-        "requirement": 433,
+        "requirement": 434,
         "schema_contract": 1
       },
       "validation_surfaces": [
@@ -12488,6 +12490,7 @@
         "Future ambient trigger/skip rule tests.",
         "Future orchestrated no-path bug-fix test.",
         "Orchestrator DRY consumer conformance fixtures",
+        "Plans/coordination_event_payloads.schema.json",
         "future Orchestrator subagent wave runtime review",
         "future durable thread-operation fixtures",
         "future subagent host-capability authority fixture",
@@ -12499,6 +12502,7 @@
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+        "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md",
         "restart and duplicate-request fixtures",
         "thread operation contract fixtures"
       ]
@@ -20011,7 +20015,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T07:00:06Z",
+  "generated_at_utc": "2026-09-25T08:01:57Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20019,13 +20023,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3541,
+      "False": 3542,
       "True": 3197
     },
-    "plan_unit_count": 6738,
+    "plan_unit_count": 6739,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6547,
+      "accepted": 6548,
       "retired": 182,
       "superseded": 9
     },
@@ -20092,7 +20096,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5294,
+      "requirement": 5295,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

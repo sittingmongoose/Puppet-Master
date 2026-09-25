@@ -6197,6 +6197,7 @@
     "PS-131",
     "MA-042",
     "OSI-391",
+    "OSI-438",
     "OSI-339",
     "OSI-344",
     "OSI-345",
@@ -41133,6 +41134,36 @@
       "edge_type": "depends_on",
       "from": "OSI-437",
       "to": "OSI-436"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-438",
+      "to": "CV-310"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-438",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-438",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-438",
+      "to": "OSI-432"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-438",
+      "to": "SP-232"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OSI-438",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -98815,7 +98846,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-25T07:00:06Z",
+  "generated_at_utc": "2026-09-25T08:01:57Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -168459,8 +168490,8 @@
       "source_location": {
         "heading": "OSI-001 - Orchestrator Subagent Integration Residual Source-Preserving PlanUnit",
         "heading_level": 3,
-        "heading_line": 6413,
-        "line": 6415,
+        "heading_line": 6569,
+        "line": 6571,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "retired",
@@ -168476,8 +168507,8 @@
       "source_location": {
         "heading": "OSI-002 - Document Canonical Owner Scope",
         "heading_level": 3,
-        "heading_line": 6487,
-        "line": 6489,
+        "heading_line": 6643,
+        "line": 6645,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168493,8 +168524,8 @@
       "source_location": {
         "heading": "OSI-003 - Tier Era Vocabulary Retirement",
         "heading_level": 3,
-        "heading_line": 6535,
-        "line": 6537,
+        "heading_line": 6691,
+        "line": 6693,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168510,8 +168541,8 @@
       "source_location": {
         "heading": "OSI-004 - ProviderTransport Integration Boundary",
         "heading_level": 3,
-        "heading_line": 6584,
-        "line": 6586,
+        "heading_line": 6740,
+        "line": 6742,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168527,8 +168558,8 @@
       "source_location": {
         "heading": "OSI-005 - Plan Only And Research Transfer Gate",
         "heading_level": 3,
-        "heading_line": 6640,
-        "line": 6642,
+        "heading_line": 6796,
+        "line": 6798,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168544,8 +168575,8 @@
       "source_location": {
         "heading": "OSI-006 - PM Native Child Orchestration Ownership",
         "heading_level": 3,
-        "heading_line": 6690,
-        "line": 6692,
+        "heading_line": 6846,
+        "line": 6848,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168561,8 +168592,8 @@
       "source_location": {
         "heading": "OSI-007 - External Bridge And A2A Boundary",
         "heading_level": 3,
-        "heading_line": 6743,
-        "line": 6745,
+        "heading_line": 6899,
+        "line": 6901,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168578,8 +168609,8 @@
       "source_location": {
         "heading": "OSI-008 - Child Lineage And Resume Envelopes",
         "heading_level": 3,
-        "heading_line": 6798,
-        "line": 6800,
+        "heading_line": 6954,
+        "line": 6956,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168595,8 +168626,8 @@
       "source_location": {
         "heading": "OSI-009 - Child Authority Clamp And Outcomes",
         "heading_level": 3,
-        "heading_line": 6856,
-        "line": 6858,
+        "heading_line": 7012,
+        "line": 7014,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168612,8 +168643,8 @@
       "source_location": {
         "heading": "OSI-010 - Retired Crew Cap Example",
         "heading_level": 3,
-        "heading_line": 6912,
-        "line": 6914,
+        "heading_line": 7068,
+        "line": 7070,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168629,8 +168660,8 @@
       "source_location": {
         "heading": "OSI-011 - Task Tool Delegation Lifecycle",
         "heading_level": 3,
-        "heading_line": 6962,
-        "line": 6964,
+        "heading_line": 7118,
+        "line": 7120,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168646,8 +168677,8 @@
       "source_location": {
         "heading": "OSI-012 - Parent Owned Clarification Escalation",
         "heading_level": 3,
-        "heading_line": 7016,
-        "line": 7018,
+        "heading_line": 7172,
+        "line": 7174,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168663,8 +168694,8 @@
       "source_location": {
         "heading": "OSI-013 - Child Launch Snapshot Propagation",
         "heading_level": 3,
-        "heading_line": 7066,
-        "line": 7068,
+        "heading_line": 7222,
+        "line": 7224,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168680,8 +168711,8 @@
       "source_location": {
         "heading": "OSI-014 - AgentCard Selection Boundary",
         "heading_level": 3,
-        "heading_line": 7120,
-        "line": 7122,
+        "heading_line": 7276,
+        "line": 7278,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168697,8 +168728,8 @@
       "source_location": {
         "heading": "OSI-015 - Timeout Heading Retirement",
         "heading_level": 3,
-        "heading_line": 7172,
-        "line": 7174,
+        "heading_line": 7328,
+        "line": 7330,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168714,8 +168745,8 @@
       "source_location": {
         "heading": "OSI-016 - Crew Message Board Surface",
         "heading_level": 3,
-        "heading_line": 7224,
-        "line": 7226,
+        "heading_line": 7380,
+        "line": 7382,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168731,8 +168762,8 @@
       "source_location": {
         "heading": "OSI-017 - Runtime Schema Ownership Boundary",
         "heading_level": 3,
-        "heading_line": 7282,
-        "line": 7284,
+        "heading_line": 7438,
+        "line": 7440,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168748,8 +168779,8 @@
       "source_location": {
         "heading": "OSI-018 - Graph Native Scheduler Identity",
         "heading_level": 3,
-        "heading_line": 7336,
-        "line": 7338,
+        "heading_line": 7492,
+        "line": 7494,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168765,8 +168796,8 @@
       "source_location": {
         "heading": "OSI-019 - Runtime Identity And Override Lifecycle",
         "heading_level": 3,
-        "heading_line": 7405,
-        "line": 7407,
+        "heading_line": 7561,
+        "line": 7563,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168782,8 +168813,8 @@
       "source_location": {
         "heading": "OSI-020 - Package Based Worktree Policy",
         "heading_level": 3,
-        "heading_line": 7459,
-        "line": 7461,
+        "heading_line": 7615,
+        "line": 7617,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168799,8 +168830,8 @@
       "source_location": {
         "heading": "OSI-021 - Parent Owned Delegated Work Memory",
         "heading_level": 3,
-        "heading_line": 7516,
-        "line": 7518,
+        "heading_line": 7672,
+        "line": 7674,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168816,8 +168847,8 @@
       "source_location": {
         "heading": "OSI-022 - Provider And Permission Event Projection",
         "heading_level": 3,
-        "heading_line": 7572,
-        "line": 7574,
+        "heading_line": 7728,
+        "line": 7730,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168833,8 +168864,8 @@
       "source_location": {
         "heading": "OSI-023 - Packet Emission Fidelity Gate",
         "heading_level": 3,
-        "heading_line": 7631,
-        "line": 7633,
+        "heading_line": 7787,
+        "line": 7789,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168850,8 +168881,8 @@
       "source_location": {
         "heading": "OSI-024 - Owner Audit And Storage Gap Posture",
         "heading_level": 3,
-        "heading_line": 7682,
-        "line": 7684,
+        "heading_line": 7838,
+        "line": 7840,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168867,8 +168898,8 @@
       "source_location": {
         "heading": "OSI-025 - Destructive Action Compatibility Vocabulary",
         "heading_level": 3,
-        "heading_line": 7736,
-        "line": 7738,
+        "heading_line": 7892,
+        "line": 7894,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168884,8 +168915,8 @@
       "source_location": {
         "heading": "OSI-026 - Crew Coordination Identity Keys",
         "heading_level": 3,
-        "heading_line": 7793,
-        "line": 7795,
+        "heading_line": 7949,
+        "line": 7951,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168901,8 +168932,8 @@
       "source_location": {
         "heading": "OSI-027 - Command Metadata And GUI Execution Policy",
         "heading_level": 3,
-        "heading_line": 7844,
-        "line": 7846,
+        "heading_line": 8000,
+        "line": 8002,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168918,8 +168949,8 @@
       "source_location": {
         "heading": "OSI-028 - Tier View Projection Boundary",
         "heading_level": 3,
-        "heading_line": 7902,
-        "line": 7904,
+        "heading_line": 8058,
+        "line": 8060,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168935,8 +168966,8 @@
       "source_location": {
         "heading": "OSI-029 - Structured Attempt Handoff",
         "heading_level": 3,
-        "heading_line": 7956,
-        "line": 7958,
+        "heading_line": 8112,
+        "line": 8114,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168952,8 +168983,8 @@
       "source_location": {
         "heading": "OSI-030 - Lane Pool Parallelism Capacity",
         "heading_level": 3,
-        "heading_line": 8010,
-        "line": 8012,
+        "heading_line": 8166,
+        "line": 8168,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168969,8 +169000,8 @@
       "source_location": {
         "heading": "OSI-031 - Rewrite Alignment Event Model",
         "heading_level": 3,
-        "heading_line": 8062,
-        "line": 8064,
+        "heading_line": 8218,
+        "line": 8220,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -168986,8 +169017,8 @@
       "source_location": {
         "heading": "OSI-032 - Persistence And Event Emission",
         "heading_level": 3,
-        "heading_line": 8115,
-        "line": 8117,
+        "heading_line": 8271,
+        "line": 8273,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169003,8 +169034,8 @@
       "source_location": {
         "heading": "OSI-033 - Config Wiring Option B",
         "heading_level": 3,
-        "heading_line": 8171,
-        "line": 8173,
+        "heading_line": 8327,
+        "line": 8329,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169020,8 +169051,8 @@
       "source_location": {
         "heading": "OSI-034 - Test Strategy Loading",
         "heading_level": 3,
-        "heading_line": 8225,
-        "line": 8227,
+        "heading_line": 8381,
+        "line": 8383,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169037,8 +169068,8 @@
       "source_location": {
         "heading": "OSI-035 - Rewrite Runtime Ontology",
         "heading_level": 3,
-        "heading_line": 8277,
-        "line": 8279,
+        "heading_line": 8433,
+        "line": 8435,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169054,8 +169085,8 @@
       "source_location": {
         "heading": "OSI-036 - Graph Owned Worker Runtime Selection",
         "heading_level": 3,
-        "heading_line": 8337,
-        "line": 8339,
+        "heading_line": 8493,
+        "line": 8495,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169071,8 +169102,8 @@
       "source_location": {
         "heading": "OSI-037 - Debug Capable Investigation Orchestration",
         "heading_level": 3,
-        "heading_line": 8394,
-        "line": 8396,
+        "heading_line": 8550,
+        "line": 8552,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169088,8 +169119,8 @@
       "source_location": {
         "heading": "OSI-038 - Project Context Detection Model",
         "heading_level": 3,
-        "heading_line": 8447,
-        "line": 8449,
+        "heading_line": 8603,
+        "line": 8605,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169105,8 +169136,8 @@
       "source_location": {
         "heading": "OSI-039 - Subagent Selector Identity Carry Through",
         "heading_level": 3,
-        "heading_line": 8510,
-        "line": 8512,
+        "heading_line": 8666,
+        "line": 8668,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169122,8 +169153,8 @@
       "source_location": {
         "heading": "OSI-040 - Orchestrator Integration And Overseer Role",
         "heading_level": 3,
-        "heading_line": 8565,
-        "line": 8567,
+        "heading_line": 8721,
+        "line": 8723,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169139,8 +169170,8 @@
       "source_location": {
         "heading": "OSI-041 - Orchestrator Subagent Selector And Manager Initialization",
         "heading_level": 3,
-        "heading_line": 8615,
-        "line": 8617,
+        "heading_line": 8771,
+        "line": 8773,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169156,8 +169187,8 @@
       "source_location": {
         "heading": "OSI-042 - Frozen Execution Unit Context Construction",
         "heading_level": 3,
-        "heading_line": 8670,
-        "line": 8672,
+        "heading_line": 8826,
+        "line": 8828,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169173,8 +169204,8 @@
       "source_location": {
         "heading": "OSI-043 - Registry Validated Subagent Selection Controls",
         "heading_level": 3,
-        "heading_line": 8736,
-        "line": 8738,
+        "heading_line": 8892,
+        "line": 8894,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169190,8 +169221,8 @@
       "source_location": {
         "heading": "OSI-044 - Platform Model And Coordination Registration",
         "heading_level": 3,
-        "heading_line": 8798,
-        "line": 8800,
+        "heading_line": 8954,
+        "line": 8956,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169207,8 +169238,8 @@
       "source_location": {
         "heading": "OSI-045 - Sequential And Parallel Subagent Execution Lifecycle",
         "heading_level": 3,
-        "heading_line": 8857,
-        "line": 8859,
+        "heading_line": 9013,
+        "line": 9015,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169224,8 +169255,8 @@
       "source_location": {
         "heading": "OSI-046 - Single Subagent Invocation And Coordination Updates",
         "heading_level": 3,
-        "heading_line": 8911,
-        "line": 8913,
+        "heading_line": 9067,
+        "line": 9069,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169241,8 +169272,8 @@
       "source_location": {
         "heading": "OSI-047 - Platform Specs Invocation Format Boundary",
         "heading_level": 3,
-        "heading_line": 8969,
-        "line": 8971,
+        "heading_line": 9125,
+        "line": 9127,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169258,8 +169289,8 @@
       "source_location": {
         "heading": "OSI-048 - Subagent File Operation Extraction Evidence",
         "heading_level": 3,
-        "heading_line": 9029,
-        "line": 9031,
+        "heading_line": 9185,
+        "line": 9187,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169275,8 +169306,8 @@
       "source_location": {
         "heading": "OSI-049 - Orchestrator Subagent Failure Handling",
         "heading_level": 3,
-        "heading_line": 9083,
-        "line": 9085,
+        "heading_line": 9239,
+        "line": 9241,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169292,8 +169323,8 @@
       "source_location": {
         "heading": "OSI-050 - Runtime-Facing Execution Unit Context",
         "heading_level": 3,
-        "heading_line": 9140,
-        "line": 9142,
+        "heading_line": 9296,
+        "line": 9298,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169309,8 +169340,8 @@
       "source_location": {
         "heading": "OSI-051 - Execution Unit UI Inspection Anchor",
         "heading_level": 3,
-        "heading_line": 9206,
-        "line": 9208,
+        "heading_line": 9362,
+        "line": 9364,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169326,8 +169357,8 @@
       "source_location": {
         "heading": "OSI-052 - Lane-Managed Worktree Lease Policy",
         "heading_level": 3,
-        "heading_line": 9256,
-        "line": 9258,
+        "heading_line": 9412,
+        "line": 9414,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169343,8 +169374,8 @@
       "source_location": {
         "heading": "OSI-053 - SCM Lineage Snapshot Field Contract",
         "heading_level": 3,
-        "heading_line": 9314,
-        "line": 9316,
+        "heading_line": 9470,
+        "line": 9472,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169360,8 +169391,8 @@
       "source_location": {
         "heading": "OSI-054 - SCM Snapshot UI Consumer Projection",
         "heading_level": 3,
-        "heading_line": 9374,
-        "line": 9376,
+        "heading_line": 9530,
+        "line": 9532,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169377,8 +169408,8 @@
       "source_location": {
         "heading": "OSI-055 - Compatibility Retirement Targets",
         "heading_level": 3,
-        "heading_line": 9435,
-        "line": 9437,
+        "heading_line": 9591,
+        "line": 9593,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169394,8 +169425,8 @@
       "source_location": {
         "heading": "OSI-056 - Child Timeout Outcome Taxonomy",
         "heading_level": 3,
-        "heading_line": 9495,
-        "line": 9497,
+        "heading_line": 9651,
+        "line": 9653,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169411,8 +169442,8 @@
       "source_location": {
         "heading": "OSI-057 - Child Timeout Envelope And Shell Isolation",
         "heading_level": 3,
-        "heading_line": 9550,
-        "line": 9552,
+        "heading_line": 9706,
+        "line": 9708,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169428,8 +169459,8 @@
       "source_location": {
         "heading": "OSI-058 - Subagent Adaptation Benefit Intent",
         "heading_level": 3,
-        "heading_line": 9606,
-        "line": 9608,
+        "heading_line": 9762,
+        "line": 9764,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169445,8 +169476,8 @@
       "source_location": {
         "heading": "OSI-059 - Phase 1 Project Context Detection Backlog",
         "heading_level": 3,
-        "heading_line": 9660,
-        "line": 9662,
+        "heading_line": 9816,
+        "line": 9818,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169462,8 +169493,8 @@
       "source_location": {
         "heading": "OSI-060 - Phase 2 Subagent Selector Backlog",
         "heading_level": 3,
-        "heading_line": 9711,
-        "line": 9713,
+        "heading_line": 9867,
+        "line": 9869,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169479,8 +169510,8 @@
       "source_location": {
         "heading": "OSI-061 - Phase 3 Orchestrator Integration Backlog",
         "heading_level": 3,
-        "heading_line": 9763,
-        "line": 9765,
+        "heading_line": 9919,
+        "line": 9921,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169496,8 +169527,8 @@
       "source_location": {
         "heading": "OSI-062 - Phase 4 Error Pattern Detection Backlog",
         "heading_level": 3,
-        "heading_line": 9815,
-        "line": 9817,
+        "heading_line": 9971,
+        "line": 9973,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169513,8 +169544,8 @@
       "source_location": {
         "heading": "OSI-063 - Phase 5 Verification Family Summary",
         "heading_level": 3,
-        "heading_line": 9866,
-        "line": 9868,
+        "heading_line": 10022,
+        "line": 10024,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169530,8 +169561,8 @@
       "source_location": {
         "heading": "OSI-064 - Provider Smoke Scope And Gating",
         "heading_level": 3,
-        "heading_line": 9918,
-        "line": 9920,
+        "heading_line": 10074,
+        "line": 10076,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169547,8 +169578,8 @@
       "source_location": {
         "heading": "OSI-065 - Provider Probe Matrix And Assertions",
         "heading_level": 3,
-        "heading_line": 9977,
-        "line": 9979,
+        "heading_line": 10133,
+        "line": 10135,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169564,8 +169595,8 @@
       "source_location": {
         "heading": "OSI-066 - Provider Smoke Test Location And Cursor Example",
         "heading_level": 3,
-        "heading_line": 10032,
-        "line": 10034,
+        "heading_line": 10188,
+        "line": 10190,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169581,8 +169612,8 @@
       "source_location": {
         "heading": "OSI-067 - Subagent Invocation Scope And DRY Builder",
         "heading_level": 3,
-        "heading_line": 10087,
-        "line": 10089,
+        "heading_line": 10243,
+        "line": 10245,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169598,8 +169629,8 @@
       "source_location": {
         "heading": "OSI-068 - Subagent Invocation Test Matrix",
         "heading_level": 3,
-        "heading_line": 10139,
-        "line": 10141,
+        "heading_line": 10295,
+        "line": 10297,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169615,8 +169646,8 @@
       "source_location": {
         "heading": "OSI-069 - Cursor Invocation Builder Example",
         "heading_level": 3,
-        "heading_line": 10195,
-        "line": 10197,
+        "heading_line": 10351,
+        "line": 10353,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169632,8 +169663,8 @@
       "source_location": {
         "heading": "OSI-070 - Plan Mode CLI Scope And Gating",
         "heading_level": 3,
-        "heading_line": 10252,
-        "line": 10254,
+        "heading_line": 10408,
+        "line": 10410,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169649,8 +169680,8 @@
       "source_location": {
         "heading": "OSI-071 - Plan Mode CLI Commands And Assertions",
         "heading_level": 3,
-        "heading_line": 10305,
-        "line": 10307,
+        "heading_line": 10461,
+        "line": 10463,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169666,8 +169697,8 @@
       "source_location": {
         "heading": "OSI-072 - Cursor Plan Mode Example And Runner Parity",
         "heading_level": 3,
-        "heading_line": 10357,
-        "line": 10359,
+        "heading_line": 10513,
+        "line": 10515,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169683,8 +169714,8 @@
       "source_location": {
         "heading": "OSI-073 - Ask Plan Delegated Child Authority Ceiling",
         "heading_level": 3,
-        "heading_line": 10410,
-        "line": 10412,
+        "heading_line": 10566,
+        "line": 10568,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169700,8 +169731,8 @@
       "source_location": {
         "heading": "OSI-074 - Planning Child Required Optional Classification",
         "heading_level": 3,
-        "heading_line": 10470,
-        "line": 10472,
+        "heading_line": 10626,
+        "line": 10628,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169717,8 +169748,8 @@
       "source_location": {
         "heading": "OSI-075 - GUI Backend Scope Now In Scope",
         "heading_level": 3,
-        "heading_line": 10522,
-        "line": 10524,
+        "heading_line": 10678,
+        "line": 10680,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169734,8 +169765,8 @@
       "source_location": {
         "heading": "OSI-076 - Plan Mode Defaults And Global GuiConfig State",
         "heading_level": 3,
-        "heading_line": 10574,
-        "line": 10576,
+        "heading_line": 10730,
+        "line": 10732,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169751,8 +169782,8 @@
       "source_location": {
         "heading": "OSI-077 - Plan Mode Config And Wizard Controls",
         "heading_level": 3,
-        "heading_line": 10634,
-        "line": 10636,
+        "heading_line": 10790,
+        "line": 10792,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169768,8 +169799,8 @@
       "source_location": {
         "heading": "OSI-078 - Subagent ExecutionRequest Plan Mode Propagation",
         "heading_level": 3,
-        "heading_line": 10693,
-        "line": 10695,
+        "heading_line": 10849,
+        "line": 10851,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169785,8 +169816,8 @@
       "source_location": {
         "heading": "OSI-079 - PM Child Run Backend And Parent Rollups",
         "heading_level": 3,
-        "heading_line": 10751,
-        "line": 10753,
+        "heading_line": 10907,
+        "line": 10909,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169802,8 +169833,8 @@
       "source_location": {
         "heading": "OSI-080 - Delegated Task Contract And Aggressive Defaults",
         "heading_level": 3,
-        "heading_line": 10810,
-        "line": 10812,
+        "heading_line": 10966,
+        "line": 10968,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169819,8 +169850,8 @@
       "source_location": {
         "heading": "OSI-081 - SubagentGuiConfig Storage And Override Semantics",
         "heading_level": 3,
-        "heading_line": 10871,
-        "line": 10873,
+        "heading_line": 11027,
+        "line": 11029,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169836,8 +169867,8 @@
       "source_location": {
         "heading": "OSI-082 - Subagents Config UI And Registry Validation",
         "heading_level": 3,
-        "heading_line": 10936,
-        "line": 10938,
+        "heading_line": 11092,
+        "line": 11094,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169853,8 +169884,8 @@
       "source_location": {
         "heading": "OSI-083 - Agent Config Personas UI And Import Seeds",
         "heading_level": 3,
-        "heading_line": 10998,
-        "line": 11000,
+        "heading_line": 11154,
+        "line": 11156,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169870,8 +169901,8 @@
       "source_location": {
         "heading": "OSI-084 - Persona Storage And Injection Boundary",
         "heading_level": 3,
-        "heading_line": 11055,
-        "line": 11057,
+        "heading_line": 11211,
+        "line": 11213,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169887,8 +169918,8 @@
       "source_location": {
         "heading": "OSI-085 - Google-Family Provider Validation And Config Loading",
         "heading_level": 3,
-        "heading_line": 11111,
-        "line": 11113,
+        "heading_line": 11267,
+        "line": 11269,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169904,8 +169935,8 @@
       "source_location": {
         "heading": "OSI-086 - Gemini Project Context UX And Copy Boundary",
         "heading_level": 3,
-        "heading_line": 11177,
-        "line": 11179,
+        "heading_line": 11333,
+        "line": 11335,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169921,8 +169952,8 @@
       "source_location": {
         "heading": "OSI-087 - Config Message Variants And App Handlers",
         "heading_level": 3,
-        "heading_line": 11235,
-        "line": 11237,
+        "heading_line": 11391,
+        "line": 11393,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169938,8 +169969,8 @@
       "source_location": {
         "heading": "OSI-088 - Interview Built But Not Wired Audit",
         "heading_level": 3,
-        "heading_line": 11291,
-        "line": 11293,
+        "heading_line": 11447,
+        "line": 11449,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169955,8 +169986,8 @@
       "source_location": {
         "heading": "OSI-089 - Interview Min Max Runtime Contract",
         "heading_level": 3,
-        "heading_line": 11349,
-        "line": 11351,
+        "heading_line": 11505,
+        "line": 11507,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169972,8 +170003,8 @@
       "source_location": {
         "heading": "OSI-090 - Interview Question Limit UI Prompt And Test Wiring",
         "heading_level": 3,
-        "heading_line": 11405,
-        "line": 11407,
+        "heading_line": 11561,
+        "line": 11563,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -169989,8 +170020,8 @@
       "source_location": {
         "heading": "OSI-091 - Platform Specs And Subagent Registry DRY Requirements",
         "heading_level": 3,
-        "heading_line": 11461,
-        "line": 11463,
+        "heading_line": 11617,
+        "line": 11619,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170006,8 +170037,8 @@
       "source_location": {
         "heading": "OSI-092 - GUI Widget Catalog And DRY Tagging",
         "heading_level": 3,
-        "heading_line": 11522,
-        "line": 11524,
+        "heading_line": 11678,
+        "line": 11680,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170023,8 +170054,8 @@
       "source_location": {
         "heading": "OSI-093 - Platform Output Parser And Hook Reliability",
         "heading_level": 3,
-        "heading_line": 11585,
-        "line": 11587,
+        "heading_line": 11741,
+        "line": 11743,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170040,8 +170071,8 @@
       "source_location": {
         "heading": "OSI-094 - Parser Failure Recovery UX",
         "heading_level": 3,
-        "heading_line": 11645,
-        "line": 11647,
+        "heading_line": 11801,
+        "line": 11803,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170057,8 +170088,8 @@
       "source_location": {
         "heading": "OSI-095 - Platform Persona Prompt Adapter",
         "heading_level": 3,
-        "heading_line": 11696,
-        "line": 11698,
+        "heading_line": 11852,
+        "line": 11854,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170074,8 +170105,8 @@
       "source_location": {
         "heading": "OSI-096 - Project Context Detection Cache Boundary",
         "heading_level": 3,
-        "heading_line": 11749,
-        "line": 11751,
+        "heading_line": 11905,
+        "line": 11907,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170091,8 +170122,8 @@
       "source_location": {
         "heading": "OSI-097 - Config Dirty State Atomic Persistence",
         "heading_level": 3,
-        "heading_line": 11803,
-        "line": 11805,
+        "heading_line": 11959,
+        "line": 11961,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170108,8 +170139,8 @@
       "source_location": {
         "heading": "OSI-098 - Tier Quality Verification Policy",
         "heading_level": 3,
-        "heading_line": 11860,
-        "line": 11862,
+        "heading_line": 12016,
+        "line": 12018,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170125,8 +170156,8 @@
       "source_location": {
         "heading": "OSI-099 - Interview Architecture Confirmation Gate",
         "heading_level": 3,
-        "heading_line": 11918,
-        "line": 11920,
+        "heading_line": 12074,
+        "line": 12076,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170142,8 +170173,8 @@
       "source_location": {
         "heading": "OSI-100 - Interview Vision Provider Selection",
         "heading_level": 3,
-        "heading_line": 11975,
-        "line": 11977,
+        "heading_line": 12131,
+        "line": 12133,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170159,8 +170190,8 @@
       "source_location": {
         "heading": "OSI-101 - Main Run Config Source Alignment",
         "heading_level": 3,
-        "heading_line": 12030,
-        "line": 12032,
+        "heading_line": 12186,
+        "line": 12188,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170176,8 +170207,8 @@
       "source_location": {
         "heading": "OSI-102 - Execution Config Wiring Checklist",
         "heading_level": 3,
-        "heading_line": 12085,
-        "line": 12087,
+        "heading_line": 12241,
+        "line": 12243,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170193,8 +170224,8 @@
       "source_location": {
         "heading": "OSI-103 - GUI Wiring Matrix Enforcement",
         "heading_level": 3,
-        "heading_line": 12143,
-        "line": 12145,
+        "heading_line": 12299,
+        "line": 12301,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170210,8 +170241,8 @@
       "source_location": {
         "heading": "OSI-104 - Tier Boundary Config Wiring Validation",
         "heading_level": 3,
-        "heading_line": 12197,
-        "line": 12199,
+        "heading_line": 12353,
+        "line": 12355,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170227,8 +170258,8 @@
       "source_location": {
         "heading": "OSI-105 - Config Wiring Validator Entrypoint And Failure Policy",
         "heading_level": 3,
-        "heading_line": 12259,
-        "line": 12261,
+        "heading_line": 12415,
+        "line": 12417,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170244,8 +170275,8 @@
       "source_location": {
         "heading": "OSI-106 - Checklist And Validation Complementarity",
         "heading_level": 3,
-        "heading_line": 12313,
-        "line": 12315,
+        "heading_line": 12469,
+        "line": 12471,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170261,8 +170292,8 @@
       "source_location": {
         "heading": "OSI-107 - Tier Verification Lifecycle And HITL Boundary",
         "heading_level": 3,
-        "heading_line": 12366,
-        "line": 12368,
+        "heading_line": 12522,
+        "line": 12524,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170278,8 +170309,8 @@
       "source_location": {
         "heading": "OSI-108 - Tier Start Pre-Spawn Verification Checklist",
         "heading_level": 3,
-        "heading_line": 12425,
-        "line": 12427,
+        "heading_line": 12581,
+        "line": 12583,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170295,8 +170326,8 @@
       "source_location": {
         "heading": "OSI-109 - Tier Start Responsibility Phases And Persistence",
         "heading_level": 3,
-        "heading_line": 12481,
-        "line": 12483,
+        "heading_line": 12637,
+        "line": 12639,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170312,8 +170343,8 @@
       "source_location": {
         "heading": "OSI-110 - Orchestrator Tier Start Integration Flow",
         "heading_level": 3,
-        "heading_line": 12538,
-        "line": 12540,
+        "heading_line": 12694,
+        "line": 12696,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170329,8 +170360,8 @@
       "source_location": {
         "heading": "OSI-111 - Start Verification Result Types And Categories",
         "heading_level": 3,
-        "heading_line": 12595,
-        "line": 12597,
+        "heading_line": 12751,
+        "line": 12753,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170346,8 +170377,8 @@
       "source_location": {
         "heading": "OSI-112 - Verify Tier Start Algorithm",
         "heading_level": 3,
-        "heading_line": 12657,
-        "line": 12659,
+        "heading_line": 12813,
+        "line": 12815,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170363,8 +170394,8 @@
       "source_location": {
         "heading": "OSI-113 - Tier Start Helper Function Boundaries",
         "heading_level": 3,
-        "heading_line": 12715,
-        "line": 12717,
+        "heading_line": 12871,
+        "line": 12873,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170380,8 +170411,8 @@
       "source_location": {
         "heading": "OSI-114 - Tier Start Error Handling Policy",
         "heading_level": 3,
-        "heading_line": 12771,
-        "line": 12773,
+        "heading_line": 12927,
+        "line": 12929,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170397,8 +170428,8 @@
       "source_location": {
         "heading": "OSI-115 - End Tier Wiring And Acceptance Recheck",
         "heading_level": 3,
-        "heading_line": 12827,
-        "line": 12829,
+        "heading_line": 12983,
+        "line": 12985,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170414,8 +170445,8 @@
       "source_location": {
         "heading": "OSI-116 - Required Agent Driven Quality Verification",
         "heading_level": 3,
-        "heading_line": 12882,
-        "line": 12884,
+        "heading_line": 13038,
+        "line": 13040,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170431,8 +170462,8 @@
       "source_location": {
         "heading": "OSI-117 - Document Packaging Verification Gate",
         "heading_level": 3,
-        "heading_line": 12940,
-        "line": 12942,
+        "heading_line": 13096,
+        "line": 13098,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170448,8 +170479,8 @@
       "source_location": {
         "heading": "OSI-118 - Quality Gate Severity Defaults And Overrides",
         "heading_level": 3,
-        "heading_line": 12994,
-        "line": 12996,
+        "heading_line": 13150,
+        "line": 13152,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170465,8 +170496,8 @@
       "source_location": {
         "heading": "OSI-119 - BeforeTierEnd Verification Context Preparation",
         "heading_level": 3,
-        "heading_line": 13057,
-        "line": 13059,
+        "heading_line": 13213,
+        "line": 13215,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170482,8 +170513,8 @@
       "source_location": {
         "heading": "OSI-120 - DuringTierEnd Verification Execution",
         "heading_level": 3,
-        "heading_line": 13110,
-        "line": 13112,
+        "heading_line": 13266,
+        "line": 13268,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170499,8 +170530,8 @@
       "source_location": {
         "heading": "OSI-121 - AfterTierEnd Persistence Feedback And Failure Handling",
         "heading_level": 3,
-        "heading_line": 13170,
-        "line": 13172,
+        "heading_line": 13326,
+        "line": 13328,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170516,8 +170547,8 @@
       "source_location": {
         "heading": "OSI-122 - Tier End Orchestrator Integration Example",
         "heading_level": 3,
-        "heading_line": 13225,
-        "line": 13227,
+        "heading_line": 13381,
+        "line": 13383,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170533,8 +170564,8 @@
       "source_location": {
         "heading": "OSI-123 - EndVerificationResult Schema And Algorithm",
         "heading_level": 3,
-        "heading_line": 13283,
-        "line": 13285,
+        "heading_line": 13439,
+        "line": 13441,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170550,8 +170581,8 @@
       "source_location": {
         "heading": "OSI-124 - Quality Verification Composition",
         "heading_level": 3,
-        "heading_line": 13344,
-        "line": 13346,
+        "heading_line": 13500,
+        "line": 13502,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170567,8 +170598,8 @@
       "source_location": {
         "heading": "OSI-125 - Reviewer Subagent Registry And DRY Invocation Boundary",
         "heading_level": 3,
-        "heading_line": 13398,
-        "line": 13400,
+        "heading_line": 13554,
+        "line": 13556,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170584,8 +170615,8 @@
       "source_location": {
         "heading": "OSI-126 - Tier Quality Criteria Catalog And Runner",
         "heading_level": 3,
-        "heading_line": 13458,
-        "line": 13460,
+        "heading_line": 13614,
+        "line": 13616,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170601,8 +170632,8 @@
       "source_location": {
         "heading": "OSI-127 - End Tier Verification Error Handling Policy",
         "heading_level": 3,
-        "heading_line": 13522,
-        "line": 13524,
+        "heading_line": 13678,
+        "line": 13680,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170618,8 +170649,8 @@
       "source_location": {
         "heading": "OSI-128 - Start/End Verification Timing Matrix",
         "heading_level": 3,
-        "heading_line": 13581,
-        "line": 13583,
+        "heading_line": 13737,
+        "line": 13739,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170635,8 +170666,8 @@
       "source_location": {
         "heading": "OSI-129 - Canonical Validation Table Source Of Truth",
         "heading_level": 3,
-        "heading_line": 13645,
-        "line": 13647,
+        "heading_line": 13801,
+        "line": 13803,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170652,8 +170683,8 @@
       "source_location": {
         "heading": "OSI-130 - Tier Start Verification Preconditions",
         "heading_level": 3,
-        "heading_line": 13717,
-        "line": 13719,
+        "heading_line": 13873,
+        "line": 13875,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170669,8 +170700,8 @@
       "source_location": {
         "heading": "OSI-131 - Tier End Verification Sequence",
         "heading_level": 3,
-        "heading_line": 13779,
-        "line": 13781,
+        "heading_line": 13935,
+        "line": 13937,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170686,8 +170717,8 @@
       "source_location": {
         "heading": "OSI-132 - Canonical Tier Quality Matrix",
         "heading_level": 3,
-        "heading_line": 13836,
-        "line": 13838,
+        "heading_line": 13992,
+        "line": 13994,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170703,8 +170734,8 @@
       "source_location": {
         "heading": "OSI-133 - Reviewer Participation Required",
         "heading_level": 3,
-        "heading_line": 13899,
-        "line": 13901,
+        "heading_line": 14055,
+        "line": 14057,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170720,8 +170751,8 @@
       "source_location": {
         "heading": "OSI-134 - Failure Warning Category Invariant",
         "heading_level": 3,
-        "heading_line": 13957,
-        "line": 13959,
+        "heading_line": 14113,
+        "line": 14115,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170737,8 +170768,8 @@
       "source_location": {
         "heading": "OSI-135 - Interview Phase Lifecycle Mirror",
         "heading_level": 3,
-        "heading_line": 14022,
-        "line": 14024,
+        "heading_line": 14178,
+        "line": 14180,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170754,8 +170785,8 @@
       "source_location": {
         "heading": "OSI-136 - Unrelated Failure Escalation Policy",
         "heading_level": 3,
-        "heading_line": 14084,
-        "line": 14086,
+        "heading_line": 14240,
+        "line": 14242,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170771,8 +170802,8 @@
       "source_location": {
         "heading": "OSI-137 - Structured Verification Feedback Loop",
         "heading_level": 3,
-        "heading_line": 14147,
-        "line": 14149,
+        "heading_line": 14303,
+        "line": 14305,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170788,8 +170819,8 @@
       "source_location": {
         "heading": "OSI-138 - BeforeUnit/AfterUnit Middleware Boundary",
         "heading_level": 3,
-        "heading_line": 14210,
-        "line": 14212,
+        "heading_line": 14366,
+        "line": 14368,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170805,8 +170836,8 @@
       "source_location": {
         "heading": "OSI-139 - Platform Hook Registration Policy",
         "heading_level": 3,
-        "heading_line": 14272,
-        "line": 14274,
+        "heading_line": 14428,
+        "line": 14430,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170822,8 +170853,8 @@
       "source_location": {
         "heading": "OSI-140 - BeforeUnit Context Schema",
         "heading_level": 3,
-        "heading_line": 14350,
-        "line": 14352,
+        "heading_line": 14506,
+        "line": 14508,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170839,8 +170870,8 @@
       "source_location": {
         "heading": "OSI-141 - AfterUnit Context And Completion Status Schema",
         "heading_level": 3,
-        "heading_line": 14417,
-        "line": 14419,
+        "heading_line": 14573,
+        "line": 14575,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170856,8 +170887,8 @@
       "source_location": {
         "heading": "OSI-142 - Hook Trait Interfaces",
         "heading_level": 3,
-        "heading_line": 14488,
-        "line": 14490,
+        "heading_line": 14644,
+        "line": 14646,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170873,8 +170904,8 @@
       "source_location": {
         "heading": "OSI-143 - Hook Result Contracts",
         "heading_level": 3,
-        "heading_line": 14545,
-        "line": 14547,
+        "heading_line": 14701,
+        "line": 14703,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170890,8 +170921,8 @@
       "source_location": {
         "heading": "OSI-144 - Hook Registry Registration Model",
         "heading_level": 3,
-        "heading_line": 14606,
-        "line": 14608,
+        "heading_line": 14762,
+        "line": 14764,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170907,8 +170938,8 @@
       "source_location": {
         "heading": "OSI-145 - BeforeUnit Hook Execution Semantics",
         "heading_level": 3,
-        "heading_line": 14662,
-        "line": 14664,
+        "heading_line": 14818,
+        "line": 14820,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170924,8 +170955,8 @@
       "source_location": {
         "heading": "OSI-146 - AfterUnit Hook Execution Semantics",
         "heading_level": 3,
-        "heading_line": 14723,
-        "line": 14725,
+        "heading_line": 14879,
+        "line": 14881,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170941,8 +170972,8 @@
       "source_location": {
         "heading": "OSI-147 - Safe Hook Wrapper And Built-In Integration",
         "heading_level": 3,
-        "heading_line": 14783,
-        "line": 14785,
+        "heading_line": 14939,
+        "line": 14941,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170958,8 +170989,8 @@
       "source_location": {
         "heading": "OSI-148 - Structured Handoff Report Required Output Gate",
         "heading_level": 3,
-        "heading_line": 14851,
-        "line": 14853,
+        "heading_line": 15007,
+        "line": 15009,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170975,8 +171006,8 @@
       "source_location": {
         "heading": "OSI-149 - Handoff Validation Phase Responsibilities",
         "heading_level": 3,
-        "heading_line": 14911,
-        "line": 14913,
+        "heading_line": 15067,
+        "line": 15069,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -170992,8 +171023,8 @@
       "source_location": {
         "heading": "OSI-150 - SubagentOutput Finding And ValidationError Schema",
         "heading_level": 3,
-        "heading_line": 14980,
-        "line": 14982,
+        "heading_line": 15136,
+        "line": 15138,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171009,8 +171040,8 @@
       "source_location": {
         "heading": "OSI-151 - OutputParser Structured Handoff Extension",
         "heading_level": 3,
-        "heading_line": 15049,
-        "line": 15051,
+        "heading_line": 15205,
+        "line": 15207,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171026,8 +171057,8 @@
       "source_location": {
         "heading": "OSI-152 - Cursor Structured Output Parser Example",
         "heading_level": 3,
-        "heading_line": 15111,
-        "line": 15113,
+        "heading_line": 15267,
+        "line": 15269,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171043,8 +171074,8 @@
       "source_location": {
         "heading": "OSI-153 - Cursor Text Extraction Fallback Example",
         "heading_level": 3,
-        "heading_line": 15178,
-        "line": 15180,
+        "heading_line": 15334,
+        "line": 15336,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171060,8 +171091,8 @@
       "source_location": {
         "heading": "OSI-154 - HandoffValidator Parser Selection And Retry Workflow",
         "heading_level": 3,
-        "heading_line": 15241,
-        "line": 15243,
+        "heading_line": 15397,
+        "line": 15399,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171077,8 +171108,8 @@
       "source_location": {
         "heading": "OSI-155 - Required Field And Finding Severity Validation",
         "heading_level": 3,
-        "heading_line": 15310,
-        "line": 15312,
+        "heading_line": 15466,
+        "line": 15468,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171094,8 +171125,8 @@
       "source_location": {
         "heading": "OSI-156 - Orchestrator Handoff Validation Retry Loop",
         "heading_level": 3,
-        "heading_line": 15374,
-        "line": 15376,
+        "heading_line": 15530,
+        "line": 15532,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171111,8 +171142,8 @@
       "source_location": {
         "heading": "OSI-157 - Handoff Validation Failure Outcome Policy",
         "heading_level": 3,
-        "heading_line": 15447,
-        "line": 15449,
+        "heading_line": 15603,
+        "line": 15605,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171128,8 +171159,8 @@
       "source_location": {
         "heading": "OSI-158 - Codex JSONL Subagent Output Parser Example",
         "heading_level": 3,
-        "heading_line": 15512,
-        "line": 15514,
+        "heading_line": 15668,
+        "line": 15670,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171145,8 +171176,8 @@
       "source_location": {
         "heading": "OSI-159 - Claude Structured Output Parser Example",
         "heading_level": 3,
-        "heading_line": 15583,
-        "line": 15585,
+        "heading_line": 15739,
+        "line": 15741,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171162,8 +171193,8 @@
       "source_location": {
         "heading": "OSI-160 - Gemini Text-Wrapped JSON Parser Example",
         "heading_level": 3,
-        "heading_line": 15653,
-        "line": 15655,
+        "heading_line": 15809,
+        "line": 15811,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171179,8 +171210,8 @@
       "source_location": {
         "heading": "OSI-161 - Copilot Task And Downstream Text Section Parser",
         "heading_level": 3,
-        "heading_line": 15721,
-        "line": 15723,
+        "heading_line": 15877,
+        "line": 15879,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171196,8 +171227,8 @@
       "source_location": {
         "heading": "OSI-162 - Copilot Findings Regex Parser Example",
         "heading_level": 3,
-        "heading_line": 15788,
-        "line": 15790,
+        "heading_line": 15944,
+        "line": 15946,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171213,8 +171244,8 @@
       "source_location": {
         "heading": "OSI-163 - Hook-Level Handoff Validation Function",
         "heading_level": 3,
-        "heading_line": 15861,
-        "line": 15863,
+        "heading_line": 16017,
+        "line": 16019,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171230,8 +171261,8 @@
       "source_location": {
         "heading": "OSI-164 - AfterTier Handoff Validation Retry Policy",
         "heading_level": 3,
-        "heading_line": 15928,
-        "line": 15930,
+        "heading_line": 16084,
+        "line": 16086,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171247,8 +171278,8 @@
       "source_location": {
         "heading": "OSI-165 - ParsedOutput SubagentOutput Population Example",
         "heading_level": 3,
-        "heading_line": 15999,
-        "line": 16001,
+        "heading_line": 16155,
+        "line": 16157,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171264,8 +171295,8 @@
       "source_location": {
         "heading": "OSI-166 - Remediation Severity Completion Gate",
         "heading_level": 3,
-        "heading_line": 16067,
-        "line": 16069,
+        "heading_line": 16223,
+        "line": 16225,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171281,8 +171312,8 @@
       "source_location": {
         "heading": "OSI-167 - Reviewer Findings Filter And Nonblocking Exit",
         "heading_level": 3,
-        "heading_line": 16129,
-        "line": 16131,
+        "heading_line": 16285,
+        "line": 16287,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171298,8 +171329,8 @@
       "source_location": {
         "heading": "OSI-168 - Registry-Backed Overseer And Reviewer Reruns",
         "heading_level": 3,
-        "heading_line": 16193,
-        "line": 16195,
+        "heading_line": 16349,
+        "line": 16351,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171315,8 +171346,8 @@
       "source_location": {
         "heading": "OSI-169 - Remediation Progress Detection And Escalation Loop",
         "heading_level": 3,
-        "heading_line": 16259,
-        "line": 16261,
+        "heading_line": 16415,
+        "line": 16417,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171332,8 +171363,8 @@
       "source_location": {
         "heading": "OSI-170 - Remediation Prompt Finding Detail Format",
         "heading_level": 3,
-        "heading_line": 16321,
-        "line": 16323,
+        "heading_line": 16477,
+        "line": 16479,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171349,8 +171380,8 @@
       "source_location": {
         "heading": "OSI-171 - Finding Comparison And Logging Example",
         "heading_level": 3,
-        "heading_line": 16382,
-        "line": 16384,
+        "heading_line": 16538,
+        "line": 16540,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171366,8 +171397,8 @@
       "source_location": {
         "heading": "OSI-172 - Orchestrator Post-Gate Remediation Integration",
         "heading_level": 3,
-        "heading_line": 16446,
-        "line": 16448,
+        "heading_line": 16602,
+        "line": 16604,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171383,8 +171414,8 @@
       "source_location": {
         "heading": "OSI-173 - Canonical Cross-Run Continuity Sources",
         "heading_level": 3,
-        "heading_line": 16515,
-        "line": 16517,
+        "heading_line": 16671,
+        "line": 16673,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171400,8 +171431,8 @@
       "source_location": {
         "heading": "OSI-174 - Continuity Persistence And Run-Start Loading Lifecycle",
         "heading_level": 3,
-        "heading_line": 16580,
-        "line": 16582,
+        "heading_line": 16736,
+        "line": 16738,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171417,8 +171448,8 @@
       "source_location": {
         "heading": "OSI-175 - Active Child Tracking Projection Source Of Truth",
         "heading_level": 3,
-        "heading_line": 16647,
-        "line": 16649,
+        "heading_line": 16803,
+        "line": 16805,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171434,8 +171465,8 @@
       "source_location": {
         "heading": "OSI-176 - Safe Hook Wrapper Structured-Output Envelope",
         "heading_level": 3,
-        "heading_line": 16723,
-        "line": 16725,
+        "heading_line": 16879,
+        "line": 16881,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171451,8 +171482,8 @@
       "source_location": {
         "heading": "OSI-177 - Safe Handling Application Surfaces",
         "heading_level": 3,
-        "heading_line": 16788,
-        "line": 16790,
+        "heading_line": 16944,
+        "line": 16946,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171468,8 +171499,8 @@
       "source_location": {
         "heading": "OSI-178 - Lazy Verification State Creation Compatibility Envelope",
         "heading_level": 3,
-        "heading_line": 16850,
-        "line": 16852,
+        "heading_line": 17006,
+        "line": 17008,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171485,8 +171516,8 @@
       "source_location": {
         "heading": "OSI-179 - Stale Verification-State Pruning Compatibility Envelope",
         "heading_level": 3,
-        "heading_line": 16914,
-        "line": 16916,
+        "heading_line": 17070,
+        "line": 17072,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171502,8 +171533,8 @@
       "source_location": {
         "heading": "OSI-180 - Runtime Handoff Contract Enforcement Retry Policy",
         "heading_level": 3,
-        "heading_line": 16979,
-        "line": 16981,
+        "heading_line": 17135,
+        "line": 17137,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171519,8 +171550,8 @@
       "source_location": {
         "heading": "OSI-181 - Platform Validators And Provider Capability Guard",
         "heading_level": 3,
-        "heading_line": 17047,
-        "line": 17049,
+        "heading_line": 17203,
+        "line": 17205,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171536,8 +171567,8 @@
       "source_location": {
         "heading": "OSI-182 - Platform Implementation Responsibility Matrix",
         "heading_level": 3,
-        "heading_line": 17126,
-        "line": 17128,
+        "heading_line": 17282,
+        "line": 17284,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171553,8 +171584,8 @@
       "source_location": {
         "heading": "OSI-183 - Orchestrator-Level Versus Parser-Specific Boundary",
         "heading_level": 3,
-        "heading_line": 17195,
-        "line": 17197,
+        "heading_line": 17351,
+        "line": 17353,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171570,8 +171601,8 @@
       "source_location": {
         "heading": "OSI-184 - Start/End Verification Lifecycle Ordering",
         "heading_level": 3,
-        "heading_line": 17260,
-        "line": 17262,
+        "heading_line": 17416,
+        "line": 17418,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171587,8 +171618,8 @@
       "source_location": {
         "heading": "OSI-185 - Platform-Native Hook Discovery Config And Fallback",
         "heading_level": 3,
-        "heading_line": 17327,
-        "line": 17329,
+        "heading_line": 17483,
+        "line": 17485,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171604,8 +171635,8 @@
       "source_location": {
         "heading": "OSI-186 - Hook Execution Order Shared Context And Blocking Policy",
         "heading_level": 3,
-        "heading_line": 17394,
-        "line": 17396,
+        "heading_line": 17550,
+        "line": 17552,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171621,8 +171652,8 @@
       "source_location": {
         "heading": "OSI-187 - Structured-Output Parser Reliability Fallbacks And Versioning",
         "heading_level": 3,
-        "heading_line": 17462,
-        "line": 17464,
+        "heading_line": 17618,
+        "line": 17620,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171638,8 +171669,8 @@
       "source_location": {
         "heading": "OSI-188 - Remediation Retry Ceiling Progress Detection Timeout Escalation",
         "heading_level": 3,
-        "heading_line": 17534,
-        "line": 17536,
+        "heading_line": 17690,
+        "line": 17692,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171655,8 +171686,8 @@
       "source_location": {
         "heading": "OSI-189 - Memory Persistence Conflict And Staleness Retired-Source Disposition",
         "heading_level": 3,
-        "heading_line": 17598,
-        "line": 17600,
+        "heading_line": 17754,
+        "line": 17756,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171672,8 +171703,8 @@
       "source_location": {
         "heading": "OSI-190 - Active-Subagent Tracking Accuracy Source-Of-Truth Partial",
         "heading_level": 3,
-        "heading_line": 17667,
-        "line": 17669,
+        "heading_line": 17823,
+        "line": 17825,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171689,8 +171720,8 @@
       "source_location": {
         "heading": "OSI-191 - Active-Subagent Tracking Validation And Inference Fallback",
         "heading_level": 3,
-        "heading_line": 17732,
-        "line": 17734,
+        "heading_line": 17888,
+        "line": 17890,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171706,8 +171737,8 @@
       "source_location": {
         "heading": "OSI-192 - Safe Hook Wrapping Performance Budget",
         "heading_level": 3,
-        "heading_line": 17795,
-        "line": 17797,
+        "heading_line": 17951,
+        "line": 17953,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171723,8 +171754,8 @@
       "source_location": {
         "heading": "OSI-193 - Lazy Lifecycle State Directory Permission Fallback",
         "heading_level": 3,
-        "heading_line": 17863,
-        "line": 17865,
+        "heading_line": 18019,
+        "line": 18021,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171740,8 +171771,8 @@
       "source_location": {
         "heading": "OSI-194 - Structured Handoff Prompt-Injection Enforcement And Retry Feedback",
         "heading_level": 3,
-        "heading_line": 17926,
-        "line": 17928,
+        "heading_line": 18082,
+        "line": 18084,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171757,8 +171788,8 @@
       "source_location": {
         "heading": "OSI-195 - Platform Hook Adapter Trait And Protocol Boundary",
         "heading_level": 3,
-        "heading_line": 17999,
-        "line": 18001,
+        "heading_line": 18155,
+        "line": 18157,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171774,8 +171805,8 @@
       "source_location": {
         "heading": "OSI-196 - Phase 1 Memory Extraction And Persona Boundary",
         "heading_level": 3,
-        "heading_line": 18071,
-        "line": 18073,
+        "heading_line": 18227,
+        "line": 18229,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171791,8 +171822,8 @@
       "source_location": {
         "heading": "OSI-197 - Remediation Re-Execution Context Preservation",
         "heading_level": 3,
-        "heading_line": 18142,
-        "line": 18144,
+        "heading_line": 18298,
+        "line": 18300,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171808,8 +171839,8 @@
       "source_location": {
         "heading": "OSI-198 - Hook Performance Budget Async Selective Execution And Caching",
         "heading_level": 3,
-        "heading_line": 18204,
-        "line": 18206,
+        "heading_line": 18360,
+        "line": 18362,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171825,8 +171856,8 @@
       "source_location": {
         "heading": "OSI-199 - Structured Output Validation Strictness And False Positive Tuning",
         "heading_level": 3,
-        "heading_line": 18277,
-        "line": 18279,
+        "heading_line": 18433,
+        "line": 18435,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171842,8 +171873,8 @@
       "source_location": {
         "heading": "OSI-200 - Hook Lifecycle Placement Summary",
         "heading_level": 3,
-        "heading_line": 18349,
-        "line": 18351,
+        "heading_line": 18505,
+        "line": 18507,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171859,8 +171890,8 @@
       "source_location": {
         "heading": "OSI-201 - Continuity Persistence Placement Compatibility",
         "heading_level": 3,
-        "heading_line": 18415,
-        "line": 18417,
+        "heading_line": 18571,
+        "line": 18573,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171876,8 +171907,8 @@
       "source_location": {
         "heading": "OSI-202 - Structured Handoff Parser Placement Summary",
         "heading_level": 3,
-        "heading_line": 18484,
-        "line": 18486,
+        "heading_line": 18640,
+        "line": 18642,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171893,8 +171924,8 @@
       "source_location": {
         "heading": "OSI-203 - Remediation Trigger Placement Summary",
         "heading_level": 3,
-        "heading_line": 18549,
-        "line": 18551,
+        "heading_line": 18705,
+        "line": 18707,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171910,8 +171941,8 @@
       "source_location": {
         "heading": "OSI-204 - Selector Detection Cache And Recompute Guardrail",
         "heading_level": 3,
-        "heading_line": 18613,
-        "line": 18615,
+        "heading_line": 18769,
+        "line": 18771,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171927,8 +171958,8 @@
       "source_location": {
         "heading": "OSI-205 - Selector Fallback And Availability Guardrails",
         "heading_level": 3,
-        "heading_line": 18674,
-        "line": 18676,
+        "heading_line": 18830,
+        "line": 18832,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171944,8 +171975,8 @@
       "source_location": {
         "heading": "OSI-206 - Parallel Invocation And Override Guardrails",
         "heading_level": 3,
-        "heading_line": 18742,
-        "line": 18744,
+        "heading_line": 18898,
+        "line": 18900,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171961,8 +171992,8 @@
       "source_location": {
         "heading": "OSI-207 - Multi-Language Detection Guardrail",
         "heading_level": 3,
-        "heading_line": 18809,
-        "line": 18811,
+        "heading_line": 18965,
+        "line": 18967,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171978,8 +172009,8 @@
       "source_location": {
         "heading": "OSI-208 - Platform Capability Next-Steps Coverage Disposition",
         "heading_level": 3,
-        "heading_line": 18871,
-        "line": 18873,
+        "heading_line": 19027,
+        "line": 19029,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -171995,8 +172026,8 @@
       "source_location": {
         "heading": "OSI-209 - Implementation Notes Placement Boundary",
         "heading_level": 3,
-        "heading_line": 18939,
-        "line": 18941,
+        "heading_line": 19095,
+        "line": 19097,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172012,8 +172043,8 @@
       "source_location": {
         "heading": "OSI-210 - Project Context Module Placement",
         "heading_level": 3,
-        "heading_line": 18993,
-        "line": 18995,
+        "heading_line": 19149,
+        "line": 19151,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172029,8 +172060,8 @@
       "source_location": {
         "heading": "OSI-211 - Project Context Detection And Cache API",
         "heading_level": 3,
-        "heading_line": 19045,
-        "line": 19047,
+        "heading_line": 19201,
+        "line": 19203,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172046,8 +172077,8 @@
       "source_location": {
         "heading": "OSI-212 - Registry-Backed Selector Canonical List",
         "heading_level": 3,
-        "heading_line": 19102,
-        "line": 19104,
+        "heading_line": 19258,
+        "line": 19260,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172063,8 +172094,8 @@
       "source_location": {
         "heading": "OSI-213 - Pure Subagent Selector API",
         "heading_level": 3,
-        "heading_line": 19156,
-        "line": 19158,
+        "heading_line": 19312,
+        "line": 19314,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172080,8 +172111,8 @@
       "source_location": {
         "heading": "OSI-214 - Orchestrator Tier Config And Subagent Merge Policy",
         "heading_level": 3,
-        "heading_line": 19209,
-        "line": 19211,
+        "heading_line": 19365,
+        "line": 19367,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172097,8 +172128,8 @@
       "source_location": {
         "heading": "OSI-215 - Subagent ExecutionRequest Runner Boundary",
         "heading_level": 3,
-        "heading_line": 19266,
-        "line": 19268,
+        "heading_line": 19422,
+        "line": 19424,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172114,8 +172145,8 @@
       "source_location": {
         "heading": "OSI-216 - Orchestrator Coordination State Around Execution",
         "heading_level": 3,
-        "heading_line": 19326,
-        "line": 19328,
+        "heading_line": 19482,
+        "line": 19484,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172131,8 +172162,8 @@
       "source_location": {
         "heading": "OSI-217 - Error Pattern Detection Selection Feed",
         "heading_level": 3,
-        "heading_line": 19381,
-        "line": 19383,
+        "heading_line": 19537,
+        "line": 19539,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172148,8 +172179,8 @@
       "source_location": {
         "heading": "OSI-218 - SubagentManager Optional V1 Boundary",
         "heading_level": 3,
-        "heading_line": 19437,
-        "line": 19439,
+        "heading_line": 19593,
+        "line": 19595,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172165,8 +172196,8 @@
       "source_location": {
         "heading": "OSI-219 - Config Wiring Module Placement And Orchestrator/Interview Ownership",
         "heading_level": 3,
-        "heading_line": 19493,
-        "line": 19495,
+        "heading_line": 19649,
+        "line": 19651,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172182,8 +172213,8 @@
       "source_location": {
         "heading": "OSI-220 - Config Wiring Tier Matrix And Non-Skip Timing",
         "heading_level": 3,
-        "heading_line": 19547,
-        "line": 19549,
+        "heading_line": 19703,
+        "line": 19705,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172199,8 +172230,8 @@
       "source_location": {
         "heading": "OSI-221 - Tier Start/End Verification Placement",
         "heading_level": 3,
-        "heading_line": 19605,
-        "line": 19607,
+        "heading_line": 19761,
+        "line": 19763,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172216,8 +172247,8 @@
       "source_location": {
         "heading": "OSI-222 - GUI Readiness Verification Criterion",
         "heading_level": 3,
-        "heading_line": 19666,
-        "line": 19668,
+        "heading_line": 19822,
+        "line": 19824,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172233,8 +172264,8 @@
       "source_location": {
         "heading": "OSI-223 - Quality Review And Gate Criteria",
         "heading_level": 3,
-        "heading_line": 19716,
-        "line": 19718,
+        "heading_line": 19872,
+        "line": 19874,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172250,8 +172281,8 @@
       "source_location": {
         "heading": "OSI-224 - Hook/Verification Ordering Compatibility",
         "heading_level": 3,
-        "heading_line": 19775,
-        "line": 19777,
+        "heading_line": 19931,
+        "line": 19933,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172267,8 +172298,8 @@
       "source_location": {
         "heading": "OSI-225 - Agent Coordination Module And Canonical Projection Boundary",
         "heading_level": 3,
-        "heading_line": 19834,
-        "line": 19836,
+        "heading_line": 19990,
+        "line": 19992,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172284,8 +172315,8 @@
       "source_location": {
         "heading": "OSI-226 - Coordination Lifecycle Status Projection",
         "heading_level": 3,
-        "heading_line": 19894,
-        "line": 19896,
+        "heading_line": 20050,
+        "line": 20052,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172301,8 +172332,8 @@
       "source_location": {
         "heading": "OSI-227 - Prompt Injection And Conflict Prevention",
         "heading_level": 3,
-        "heading_line": 19947,
-        "line": 19949,
+        "heading_line": 20103,
+        "line": 20105,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172318,8 +172349,8 @@
       "source_location": {
         "heading": "OSI-228 - Lifecycle Hooks Placement And Storage Projections",
         "heading_level": 3,
-        "heading_line": 20003,
-        "line": 20005,
+        "heading_line": 20159,
+        "line": 20161,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172335,8 +172366,8 @@
       "source_location": {
         "heading": "OSI-229 - Platform Hook Adapter And Middleware Boundary",
         "heading_level": 3,
-        "heading_line": 20060,
-        "line": 20062,
+        "heading_line": 20216,
+        "line": 20218,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172352,8 +172383,8 @@
       "source_location": {
         "heading": "OSI-230 - Structured Handoff Validation And Contract Enforcement",
         "heading_level": 3,
-        "heading_line": 20116,
-        "line": 20118,
+        "heading_line": 20272,
+        "line": 20274,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172369,8 +172400,8 @@
       "source_location": {
         "heading": "OSI-231 - Remediation Loop Completion Block",
         "heading_level": 3,
-        "heading_line": 20175,
-        "line": 20177,
+        "heading_line": 20331,
+        "line": 20333,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172386,8 +172417,8 @@
       "source_location": {
         "heading": "OSI-232 - Continuity And Active Subagent Runtime Projection",
         "heading_level": 3,
-        "heading_line": 20230,
-        "line": 20232,
+        "heading_line": 20386,
+        "line": 20388,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172403,8 +172434,8 @@
       "source_location": {
         "heading": "OSI-233 - Safe Hook Error Handling And Lazy Verification State",
         "heading_level": 3,
-        "heading_line": 20291,
-        "line": 20293,
+        "heading_line": 20447,
+        "line": 20449,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172420,8 +172451,8 @@
       "source_location": {
         "heading": "OSI-234 - Subagent Availability File-Existence Optional V1",
         "heading_level": 3,
-        "heading_line": 20344,
-        "line": 20346,
+        "heading_line": 20500,
+        "line": 20502,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172437,8 +172468,8 @@
       "source_location": {
         "heading": "OSI-235 - Parallel Execution Capability Baseline",
         "heading_level": 3,
-        "heading_line": 20401,
-        "line": 20403,
+        "heading_line": 20557,
+        "line": 20559,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172454,8 +172485,8 @@
       "source_location": {
         "heading": "OSI-236 - Dependency-Level Worktree Group Execution",
         "heading_level": 3,
-        "heading_line": 20455,
-        "line": 20457,
+        "heading_line": 20611,
+        "line": 20613,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172471,8 +172502,8 @@
       "source_location": {
         "heading": "OSI-237 - Independent Per-Subtask Selection Context",
         "heading_level": 3,
-        "heading_line": 20508,
-        "line": 20510,
+        "heading_line": 20664,
+        "line": 20666,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172488,8 +172519,8 @@
       "source_location": {
         "heading": "OSI-238 - Frontend/UI Selection Example Evidence",
         "heading_level": 3,
-        "heading_line": 20559,
-        "line": 20561,
+        "heading_line": 20715,
+        "line": 20717,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172505,8 +172536,8 @@
       "source_location": {
         "heading": "OSI-239 - Registry-Backed Selector Validation",
         "heading_level": 3,
-        "heading_line": 20611,
-        "line": 20613,
+        "heading_line": 20767,
+        "line": 20769,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172522,8 +172553,8 @@
       "source_location": {
         "heading": "OSI-240 - Platform-Specific Invocation Boundary",
         "heading_level": 3,
-        "heading_line": 20665,
-        "line": 20667,
+        "heading_line": 20821,
+        "line": 20823,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172539,8 +172570,8 @@
       "source_location": {
         "heading": "OSI-241 - Dependency Context Selector API",
         "heading_level": 3,
-        "heading_line": 20714,
-        "line": 20716,
+        "heading_line": 20870,
+        "line": 20872,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172556,8 +172587,8 @@
       "source_location": {
         "heading": "OSI-242 - Registry-Backed Inherited Language Priority",
         "heading_level": 3,
-        "heading_line": 20765,
-        "line": 20767,
+        "heading_line": 20921,
+        "line": 20923,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172573,8 +172604,8 @@
       "source_location": {
         "heading": "OSI-243 - Dependency Domain Inheritance Fallback",
         "heading_level": 3,
-        "heading_line": 20819,
-        "line": 20821,
+        "heading_line": 20975,
+        "line": 20977,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172590,8 +172621,8 @@
       "source_location": {
         "heading": "OSI-244 - Coordination Owner Boundary",
         "heading_level": 3,
-        "heading_line": 20868,
-        "line": 20870,
+        "heading_line": 21024,
+        "line": 21026,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172607,8 +172638,8 @@
       "source_location": {
         "heading": "OSI-245 - Crew Board Coordination Surface And Persistence Boundary",
         "heading_level": 3,
-        "heading_line": 20923,
-        "line": 20925,
+        "heading_line": 21079,
+        "line": 21081,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172624,8 +172655,8 @@
       "source_location": {
         "heading": "OSI-246 - Projection Versus Message-Board Responsibility Split",
         "heading_level": 3,
-        "heading_line": 20982,
-        "line": 20984,
+        "heading_line": 21138,
+        "line": 21140,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172641,8 +172672,8 @@
       "source_location": {
         "heading": "OSI-247 - Canonical Crew Message Schema",
         "heading_level": 3,
-        "heading_line": 21036,
-        "line": 21038,
+        "heading_line": 21192,
+        "line": 21194,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172658,8 +172689,8 @@
       "source_location": {
         "heading": "OSI-248 - Crew Message Routing And Visibility",
         "heading_level": 3,
-        "heading_line": 21090,
-        "line": 21092,
+        "heading_line": 21246,
+        "line": 21248,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172675,8 +172706,8 @@
       "source_location": {
         "heading": "OSI-249 - Priority Rate Limits And Throttling Diagnostics",
         "heading_level": 3,
-        "heading_line": 21145,
-        "line": 21147,
+        "heading_line": 21301,
+        "line": 21303,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172692,8 +172723,8 @@
       "source_location": {
         "heading": "OSI-250 - Threading Lifecycle And Annotation Separation",
         "heading_level": 3,
-        "heading_line": 21200,
-        "line": 21202,
+        "heading_line": 21356,
+        "line": 21358,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172709,8 +172740,8 @@
       "source_location": {
         "heading": "OSI-251 - Coordination Mechanisms And Canonical Projection",
         "heading_level": 3,
-        "heading_line": 21258,
-        "line": 21260,
+        "heading_line": 21414,
+        "line": 21416,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172726,8 +172757,8 @@
       "source_location": {
         "heading": "OSI-252 - Provider-Bridge Coordination Boundary",
         "heading_level": 3,
-        "heading_line": 21320,
-        "line": 21322,
+        "heading_line": 21476,
+        "line": 21478,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172743,8 +172774,8 @@
       "source_location": {
         "heading": "OSI-253 - Cross-Worktree Awareness",
         "heading_level": 3,
-        "heading_line": 21372,
-        "line": 21374,
+        "heading_line": 21528,
+        "line": 21530,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172760,8 +172791,8 @@
       "source_location": {
         "heading": "OSI-254 - Coordination Prompt Injection Content",
         "heading_level": 3,
-        "heading_line": 21424,
-        "line": 21426,
+        "heading_line": 21580,
+        "line": 21582,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172777,8 +172808,8 @@
       "source_location": {
         "heading": "OSI-255 - Cross-Platform Coordination Scenario Evidence",
         "heading_level": 3,
-        "heading_line": 21477,
-        "line": 21479,
+        "heading_line": 21633,
+        "line": 21635,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172794,8 +172825,8 @@
       "source_location": {
         "heading": "OSI-256 - Platform Field In Active-Agent Projection",
         "heading_level": 3,
-        "heading_line": 21531,
-        "line": 21533,
+        "heading_line": 21687,
+        "line": 21689,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172811,8 +172842,8 @@
       "source_location": {
         "heading": "OSI-257 - ActiveAgent And Coordination State Data Model",
         "heading_level": 3,
-        "heading_line": 21585,
-        "line": 21587,
+        "heading_line": 21741,
+        "line": 21743,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172828,8 +172859,8 @@
       "source_location": {
         "heading": "OSI-258 - AgentCoordinator Construction And Registration API",
         "heading_level": 3,
-        "heading_line": 21644,
-        "line": 21646,
+        "heading_line": 21800,
+        "line": 21802,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172845,8 +172876,8 @@
       "source_location": {
         "heading": "OSI-259 - Partial Status Update API Opening",
         "heading_level": 3,
-        "heading_line": 21705,
-        "line": 21707,
+        "heading_line": 21861,
+        "line": 21863,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172862,8 +172893,8 @@
       "source_location": {
         "heading": "OSI-260 - Complete Status Update Mutation",
         "heading_level": 3,
-        "heading_line": 21763,
-        "line": 21765,
+        "heading_line": 21919,
+        "line": 21921,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172879,8 +172910,8 @@
       "source_location": {
         "heading": "OSI-261 - Agent Unregistration",
         "heading_level": 3,
-        "heading_line": 21820,
-        "line": 21822,
+        "heading_line": 21976,
+        "line": 21978,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172896,8 +172927,8 @@
       "source_location": {
         "heading": "OSI-262 - Coordination Context Active-Agent Prompt Block",
         "heading_level": 3,
-        "heading_line": 21877,
-        "line": 21879,
+        "heading_line": 22033,
+        "line": 22035,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172913,8 +172944,8 @@
       "source_location": {
         "heading": "OSI-263 - Files Being Modified Prompt Aggregation",
         "heading_level": 3,
-        "heading_line": 21932,
-        "line": 21934,
+        "heading_line": 22088,
+        "line": 22090,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172930,8 +172961,8 @@
       "source_location": {
         "heading": "OSI-264 - Load State And Prune Stale Active Agents",
         "heading_level": 3,
-        "heading_line": 21987,
-        "line": 21989,
+        "heading_line": 22143,
+        "line": 22145,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172947,8 +172978,8 @@
       "source_location": {
         "heading": "OSI-265 - Save Coordination State Serialization",
         "heading_level": 3,
-        "heading_line": 22047,
-        "line": 22049,
+        "heading_line": 22203,
+        "line": 22205,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172964,8 +172995,8 @@
       "source_location": {
         "heading": "OSI-266 - Duration Formatting Helper Evidence",
         "heading_level": 3,
-        "heading_line": 22102,
-        "line": 22104,
+        "heading_line": 22258,
+        "line": 22260,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172981,8 +173012,8 @@
       "source_location": {
         "heading": "OSI-267 - Orchestrator Pre-Execution Registration",
         "heading_level": 3,
-        "heading_line": 22154,
-        "line": 22156,
+        "heading_line": 22310,
+        "line": 22312,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -172998,8 +173029,8 @@
       "source_location": {
         "heading": "OSI-268 - Prompt Injection From Coordination Context",
         "heading_level": 3,
-        "heading_line": 22209,
-        "line": 22211,
+        "heading_line": 22365,
+        "line": 22367,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173015,8 +173046,8 @@
       "source_location": {
         "heading": "OSI-269 - Execution Update And Unregister Lifecycle",
         "heading_level": 3,
-        "heading_line": 22262,
-        "line": 22264,
+        "heading_line": 22418,
+        "line": 22420,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173032,8 +173063,8 @@
       "source_location": {
         "heading": "OSI-270 - Provider Coordination Model",
         "heading_level": 3,
-        "heading_line": 22317,
-        "line": 22319,
+        "heading_line": 22473,
+        "line": 22475,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173049,8 +173080,8 @@
       "source_location": {
         "heading": "OSI-271 - Coordination Modes And Hook Enrichment",
         "heading_level": 3,
-        "heading_line": 22373,
-        "line": 22375,
+        "heading_line": 22529,
+        "line": 22531,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173066,8 +173097,8 @@
       "source_location": {
         "heading": "OSI-272 - Coordination Benefit Examples",
         "heading_level": 3,
-        "heading_line": 22431,
-        "line": 22433,
+        "heading_line": 22587,
+        "line": 22589,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173083,8 +173114,8 @@
       "source_location": {
         "heading": "OSI-273 - Coordination State Update Cadence",
         "heading_level": 3,
-        "heading_line": 22484,
-        "line": 22486,
+        "heading_line": 22640,
+        "line": 22642,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173100,8 +173131,8 @@
       "source_location": {
         "heading": "OSI-274 - File Operation Extraction Sources",
         "heading_level": 3,
-        "heading_line": 22539,
-        "line": 22541,
+        "heading_line": 22695,
+        "line": 22697,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173117,8 +173148,8 @@
       "source_location": {
         "heading": "OSI-275 - Cross-Platform Flow Registration And Edit Update",
         "heading_level": 3,
-        "heading_line": 22593,
-        "line": 22595,
+        "heading_line": 22749,
+        "line": 22751,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173134,8 +173165,8 @@
       "source_location": {
         "heading": "OSI-276 - Cross-Platform Reader Waits And Proceeds",
         "heading_level": 3,
-        "heading_line": 22646,
-        "line": 22648,
+        "heading_line": 22802,
+        "line": 22804,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173151,8 +173182,8 @@
       "source_location": {
         "heading": "OSI-277 - Platform Runner Coordination Contract",
         "heading_level": 3,
-        "heading_line": 22699,
-        "line": 22701,
+        "heading_line": 22855,
+        "line": 22857,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173168,8 +173199,8 @@
       "source_location": {
         "heading": "OSI-278 - Agent Coordination Implementation Placement Notes",
         "heading_level": 3,
-        "heading_line": 22752,
-        "line": 22754,
+        "heading_line": 22908,
+        "line": 22910,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173185,8 +173216,8 @@
       "source_location": {
         "heading": "OSI-279 - Crew Mode Canonical Rules",
         "heading_level": 3,
-        "heading_line": 22808,
-        "line": 22810,
+        "heading_line": 22964,
+        "line": 22966,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173202,8 +173233,8 @@
       "source_location": {
         "heading": "OSI-280 - Gap-Era Crew Notes Retired",
         "heading_level": 3,
-        "heading_line": 22875,
-        "line": 22877,
+        "heading_line": 23031,
+        "line": 23033,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173219,8 +173250,8 @@
       "source_location": {
         "heading": "OSI-281 - ExecutionLimits Crew Admission Caps",
         "heading_level": 3,
-        "heading_line": 22931,
-        "line": 22933,
+        "heading_line": 23087,
+        "line": 23089,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173236,8 +173267,8 @@
       "source_location": {
         "heading": "OSI-282 - Crew Lifecycle Uses Parent/Child Runtime Contracts",
         "heading_level": 3,
-        "heading_line": 23001,
-        "line": 23003,
+        "heading_line": 23157,
+        "line": 23159,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173253,8 +173284,8 @@
       "source_location": {
         "heading": "OSI-283 - Crew GUI And Assistant Surfaces Are Consumer Projections",
         "heading_level": 3,
-        "heading_line": 23057,
-        "line": 23059,
+        "heading_line": 23213,
+        "line": 23215,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173270,8 +173301,8 @@
       "source_location": {
         "heading": "OSI-284 - Future Assistant Crew Surface Guardrails",
         "heading_level": 3,
-        "heading_line": 23114,
-        "line": 23116,
+        "heading_line": 23270,
+        "line": 23272,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173287,8 +173318,8 @@
       "source_location": {
         "heading": "OSI-285 - Future Crew Template Save Surface",
         "heading_level": 3,
-        "heading_line": 23174,
-        "line": 23176,
+        "heading_line": 23330,
+        "line": 23332,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173304,8 +173335,8 @@
       "source_location": {
         "heading": "OSI-286 - CrewTemplate Schema Example",
         "heading_level": 3,
-        "heading_line": 23222,
-        "line": 23224,
+        "heading_line": 23378,
+        "line": 23380,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173321,8 +173352,8 @@
       "source_location": {
         "heading": "OSI-287 - Crew Performance Metrics",
         "heading_level": 3,
-        "heading_line": 23276,
-        "line": 23278,
+        "heading_line": 23432,
+        "line": 23434,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173338,8 +173369,8 @@
       "source_location": {
         "heading": "OSI-288 - Crew Learning And Adaptation",
         "heading_level": 3,
-        "heading_line": 23328,
-        "line": 23330,
+        "heading_line": 23484,
+        "line": 23486,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173355,8 +173386,8 @@
       "source_location": {
         "heading": "OSI-289 - Crew Scheduling By Tier And Quota",
         "heading_level": 3,
-        "heading_line": 23379,
-        "line": 23381,
+        "heading_line": 23535,
+        "line": 23537,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173372,8 +173403,8 @@
       "source_location": {
         "heading": "OSI-290 - User Reorders Queued Crew Execution",
         "heading_level": 3,
-        "heading_line": 23427,
-        "line": 23429,
+        "heading_line": 23583,
+        "line": 23585,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173389,8 +173420,8 @@
       "source_location": {
         "heading": "OSI-291 - Crew-Aware PRD Plan Generation Hints",
         "heading_level": 3,
-        "heading_line": 23476,
-        "line": 23478,
+        "heading_line": 23632,
+        "line": 23634,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173406,8 +173437,8 @@
       "source_location": {
         "heading": "OSI-292 - Crew Recommendation PRD JSON Example",
         "heading_level": 3,
-        "heading_line": 23531,
-        "line": 23533,
+        "heading_line": 23687,
+        "line": 23689,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173423,8 +173454,8 @@
       "source_location": {
         "heading": "OSI-293 - Interview Phase Crew Uses",
         "heading_level": 3,
-        "heading_line": 23586,
-        "line": 23588,
+        "heading_line": 23742,
+        "line": 23744,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173440,8 +173471,8 @@
       "source_location": {
         "heading": "OSI-294 - Research Coverage Caveat",
         "heading_level": 3,
-        "heading_line": 23639,
-        "line": 23641,
+        "heading_line": 23795,
+        "line": 23797,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173457,8 +173488,8 @@
       "source_location": {
         "heading": "OSI-295 - Interview Crews Are Separate From Execution-Tier Crews",
         "heading_level": 3,
-        "heading_line": 23692,
-        "line": 23694,
+        "heading_line": 23848,
+        "line": 23850,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173474,8 +173505,8 @@
       "source_location": {
         "heading": "OSI-296 - Crew Value Rationale",
         "heading_level": 3,
-        "heading_line": 23740,
-        "line": 23742,
+        "heading_line": 23896,
+        "line": 23898,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173491,8 +173522,8 @@
       "source_location": {
         "heading": "OSI-297 - Native Teams/Fleets Comparison Evidence",
         "heading_level": 3,
-        "heading_line": 23792,
-        "line": 23794,
+        "heading_line": 23948,
+        "line": 23950,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173508,8 +173539,8 @@
       "source_location": {
         "heading": "OSI-298 - Agent Message Board Architecture Example",
         "heading_level": 3,
-        "heading_line": 23846,
-        "line": 23848,
+        "heading_line": 24002,
+        "line": 24004,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173525,8 +173556,8 @@
       "source_location": {
         "heading": "OSI-299 - AgentMessage Structure Example",
         "heading_level": 3,
-        "heading_line": 23906,
-        "line": 23908,
+        "heading_line": 24062,
+        "line": 24064,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173542,8 +173573,8 @@
       "source_location": {
         "heading": "OSI-300 - MessageType Enum Example",
         "heading_level": 3,
-        "heading_line": 23964,
-        "line": 23966,
+        "heading_line": 24120,
+        "line": 24122,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173559,8 +173590,8 @@
       "source_location": {
         "heading": "OSI-301 - MessageContext And Board Example",
         "heading_level": 3,
-        "heading_line": 24019,
-        "line": 24021,
+        "heading_line": 24175,
+        "line": 24177,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173576,8 +173607,8 @@
       "source_location": {
         "heading": "OSI-302 - Message Routing Modes",
         "heading_level": 3,
-        "heading_line": 24074,
-        "line": 24076,
+        "heading_line": 24230,
+        "line": 24232,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173593,8 +173624,8 @@
       "source_location": {
         "heading": "OSI-303 - Help Request Message Example",
         "heading_level": 3,
-        "heading_line": 24130,
-        "line": 24132,
+        "heading_line": 24286,
+        "line": 24288,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173610,8 +173641,8 @@
       "source_location": {
         "heading": "OSI-304 - Architecture Decision Message Example",
         "heading_level": 3,
-        "heading_line": 24183,
-        "line": 24185,
+        "heading_line": 24339,
+        "line": 24341,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173627,8 +173658,8 @@
       "source_location": {
         "heading": "OSI-305 - File Conflict Warning Example",
         "heading_level": 3,
-        "heading_line": 24235,
-        "line": 24237,
+        "heading_line": 24391,
+        "line": 24393,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173644,8 +173675,8 @@
       "source_location": {
         "heading": "OSI-306 - Orchestrator Message Monitoring",
         "heading_level": 3,
-        "heading_line": 24291,
-        "line": 24293,
+        "heading_line": 24447,
+        "line": 24449,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173661,8 +173692,8 @@
       "source_location": {
         "heading": "OSI-307 - Communication Pattern GUI Insights",
         "heading_level": 3,
-        "heading_line": 24343,
-        "line": 24345,
+        "heading_line": 24499,
+        "line": 24501,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173678,8 +173709,8 @@
       "source_location": {
         "heading": "OSI-308 - Agent Prompt Message Injection Introduction",
         "heading_level": 3,
-        "heading_line": 24390,
-        "line": 24392,
+        "heading_line": 24546,
+        "line": 24548,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173695,8 +173726,8 @@
       "source_location": {
         "heading": "OSI-309 - Prompt Message Injection Rust Example",
         "heading_level": 3,
-        "heading_line": 24440,
-        "line": 24442,
+        "heading_line": 24596,
+        "line": 24598,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173712,8 +173743,8 @@
       "source_location": {
         "heading": "OSI-310 - Agent Message Relevance Filters",
         "heading_level": 3,
-        "heading_line": 24495,
-        "line": 24497,
+        "heading_line": 24651,
+        "line": 24653,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173729,8 +173760,8 @@
       "source_location": {
         "heading": "OSI-311 - Message Threading Fields",
         "heading_level": 3,
-        "heading_line": 24551,
-        "line": 24553,
+        "heading_line": 24707,
+        "line": 24709,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173746,8 +173777,8 @@
       "source_location": {
         "heading": "OSI-312 - Message Lifecycle And Retention Caveat",
         "heading_level": 3,
-        "heading_line": 24600,
-        "line": 24602,
+        "heading_line": 24756,
+        "line": 24758,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173763,8 +173794,8 @@
       "source_location": {
         "heading": "OSI-313 - AgentCommunicator Placement And Paths Example",
         "heading_level": 3,
-        "heading_line": 24655,
-        "line": 24657,
+        "heading_line": 24811,
+        "line": 24813,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173780,8 +173811,8 @@
       "source_location": {
         "heading": "OSI-314 - Post Message Validation And Persistence Example",
         "heading_level": 3,
-        "heading_line": 24717,
-        "line": 24719,
+        "heading_line": 24873,
+        "line": 24875,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173797,8 +173828,8 @@
       "source_location": {
         "heading": "OSI-315 - Prompt Formatting Uses Platform Display Contract",
         "heading_level": 3,
-        "heading_line": 24771,
-        "line": 24773,
+        "heading_line": 24927,
+        "line": 24929,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173814,8 +173845,8 @@
       "source_location": {
         "heading": "OSI-316 - Agent Execution Message Command Integration",
         "heading_level": 3,
-        "heading_line": 24832,
-        "line": 24834,
+        "heading_line": 24988,
+        "line": 24990,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173831,8 +173862,8 @@
       "source_location": {
         "heading": "OSI-317 - Orchestrator Communication Insights Example",
         "heading_level": 3,
-        "heading_line": 24887,
-        "line": 24889,
+        "heading_line": 25043,
+        "line": 25045,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173848,8 +173879,8 @@
       "source_location": {
         "heading": "OSI-318 - Message Board Benefits Rationale",
         "heading_level": 3,
-        "heading_line": 24943,
-        "line": 24945,
+        "heading_line": 25099,
+        "line": 25101,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173865,8 +173896,8 @@
       "source_location": {
         "heading": "OSI-319 - Message Board Operational Mitigations",
         "heading_level": 3,
-        "heading_line": 24999,
-        "line": 25001,
+        "heading_line": 25155,
+        "line": 25157,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173882,8 +173913,8 @@
       "source_location": {
         "heading": "OSI-320 - Message Board Backend Next-Step Checklist Evidence",
         "heading_level": 3,
-        "heading_line": 25054,
-        "line": 25056,
+        "heading_line": 25210,
+        "line": 25212,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173899,8 +173930,8 @@
       "source_location": {
         "heading": "OSI-321 - Agent Communication GUI Visualization Consumer",
         "heading_level": 3,
-        "heading_line": 25109,
-        "line": 25111,
+        "heading_line": 25265,
+        "line": 25267,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173916,8 +173947,8 @@
       "source_location": {
         "heading": "OSI-322 - Coordination Concurrent Write And Atomicity Gap",
         "heading_level": 3,
-        "heading_line": 25158,
-        "line": 25160,
+        "heading_line": 25314,
+        "line": 25316,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173933,8 +173964,8 @@
       "source_location": {
         "heading": "OSI-323 - Lock Timeout Fail-Open Stale Disposition",
         "heading_level": 3,
-        "heading_line": 25220,
-        "line": 25222,
+        "heading_line": 25376,
+        "line": 25378,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173950,8 +173981,8 @@
       "source_location": {
         "heading": "OSI-324 - Save State With Lock Rust Example",
         "heading_level": 3,
-        "heading_line": 25273,
-        "line": 25275,
+        "heading_line": 25429,
+        "line": 25431,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173967,8 +173998,8 @@
       "source_location": {
         "heading": "OSI-325 - Lock Acquisition And Stale Lock Cleanup Example",
         "heading_level": 3,
-        "heading_line": 25332,
-        "line": 25334,
+        "heading_line": 25488,
+        "line": 25490,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -173984,8 +174015,8 @@
       "source_location": {
         "heading": "OSI-326 - Platform-Specific Process Existence Placeholder",
         "heading_level": 3,
-        "heading_line": 25387,
-        "line": 25389,
+        "heading_line": 25543,
+        "line": 25545,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174001,8 +174032,8 @@
       "source_location": {
         "heading": "OSI-327 - File Corruption Recovery Gap Opening",
         "heading_level": 3,
-        "heading_line": 25440,
-        "line": 25442,
+        "heading_line": 25596,
+        "line": 25598,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174018,8 +174049,8 @@
       "source_location": {
         "heading": "OSI-328 - File Corruption Recovery Mitigations",
         "heading_level": 3,
-        "heading_line": 25498,
-        "line": 25500,
+        "heading_line": 25654,
+        "line": 25656,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174035,8 +174066,8 @@
       "source_location": {
         "heading": "OSI-329 - Load State Backup Recovery Example",
         "heading_level": 3,
-        "heading_line": 25553,
-        "line": 25555,
+        "heading_line": 25709,
+        "line": 25711,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174052,8 +174083,8 @@
       "source_location": {
         "heading": "OSI-330 - Coordination State Schema And Timestamp Validation",
         "heading_level": 3,
-        "heading_line": 25612,
-        "line": 25614,
+        "heading_line": 25768,
+        "line": 25770,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174069,8 +174100,8 @@
       "source_location": {
         "heading": "OSI-331 - Stale Agent Cleanup And Crash Recovery Gap",
         "heading_level": 3,
-        "heading_line": 25668,
-        "line": 25670,
+        "heading_line": 25824,
+        "line": 25826,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174086,8 +174117,8 @@
       "source_location": {
         "heading": "OSI-332 - Five-Minute Stale Prune Example",
         "heading_level": 3,
-        "heading_line": 25724,
-        "line": 25726,
+        "heading_line": 25880,
+        "line": 25882,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174103,8 +174134,8 @@
       "source_location": {
         "heading": "OSI-333 - File Operation Extraction Reliability Gap",
         "heading_level": 3,
-        "heading_line": 25778,
-        "line": 25780,
+        "heading_line": 25934,
+        "line": 25936,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174120,8 +174151,8 @@
       "source_location": {
         "heading": "OSI-334 - File Operation Extractor Rust Example",
         "heading_level": 3,
-        "heading_line": 25833,
-        "line": 25835,
+        "heading_line": 25989,
+        "line": 25991,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174137,8 +174168,8 @@
       "source_location": {
         "heading": "OSI-335 - Coordination State Size And Prompt Limits",
         "heading_level": 3,
-        "heading_line": 25886,
-        "line": 25888,
+        "heading_line": 26042,
+        "line": 26044,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174154,8 +174185,8 @@
       "source_location": {
         "heading": "OSI-336 - Filtered Coordination Context Example",
         "heading_level": 3,
-        "heading_line": 25943,
-        "line": 25945,
+        "heading_line": 26099,
+        "line": 26101,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174171,8 +174202,8 @@
       "source_location": {
         "heading": "OSI-337 - Conflict Resolution And File Locking Gap",
         "heading_level": 3,
-        "heading_line": 26000,
-        "line": 26002,
+        "heading_line": 26156,
+        "line": 26158,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174188,8 +174219,8 @@
       "source_location": {
         "heading": "OSI-338 - FileLock And Conflict Detection Example",
         "heading_level": 3,
-        "heading_line": 26057,
-        "line": 26059,
+        "heading_line": 26213,
+        "line": 26215,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174205,8 +174236,8 @@
       "source_location": {
         "heading": "OSI-339 - Acquire File Lock Compatibility Example",
         "heading_level": 3,
-        "heading_line": 26111,
-        "line": 26113,
+        "heading_line": 26267,
+        "line": 26269,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174222,8 +174253,8 @@
       "source_location": {
         "heading": "OSI-340 - Path Normalization And Worktree Handling",
         "heading_level": 3,
-        "heading_line": 26166,
-        "line": 26168,
+        "heading_line": 26322,
+        "line": 26324,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174239,8 +174270,8 @@
       "source_location": {
         "heading": "OSI-341 - Normalize Path Rust Example",
         "heading_level": 3,
-        "heading_line": 26220,
-        "line": 26222,
+        "heading_line": 26376,
+        "line": 26378,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174256,8 +174287,8 @@
       "source_location": {
         "heading": "OSI-342 - Coordination Event Ingestion Fallback",
         "heading_level": 3,
-        "heading_line": 26273,
-        "line": 26275,
+        "heading_line": 26429,
+        "line": 26431,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174273,8 +174304,8 @@
       "source_location": {
         "heading": "OSI-343 - Coordination Metrics And Logging Visibility",
         "heading_level": 3,
-        "heading_line": 26330,
-        "line": 26332,
+        "heading_line": 26486,
+        "line": 26488,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174290,8 +174321,8 @@
       "source_location": {
         "heading": "OSI-344 - Coordination GUI Monitoring Consumer",
         "heading_level": 3,
-        "heading_line": 26386,
-        "line": 26388,
+        "heading_line": 26542,
+        "line": 26544,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174307,8 +174338,8 @@
       "source_location": {
         "heading": "OSI-345 - Coordination Effectiveness Analytics",
         "heading_level": 3,
-        "heading_line": 26435,
-        "line": 26437,
+        "heading_line": 26591,
+        "line": 26593,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174324,8 +174355,8 @@
       "source_location": {
         "heading": "OSI-346 - Coordination State Query And Filtering Requirement",
         "heading_level": 3,
-        "heading_line": 26485,
-        "line": 26487,
+        "heading_line": 26641,
+        "line": 26643,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174341,8 +174372,8 @@
       "source_location": {
         "heading": "OSI-347 - AgentCoordinator Query Methods Example",
         "heading_level": 3,
-        "heading_line": 26537,
-        "line": 26539,
+        "heading_line": 26693,
+        "line": 26695,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174358,8 +174389,8 @@
       "source_location": {
         "heading": "OSI-348 - Coordination Backup Before Write Requirement",
         "heading_level": 3,
-        "heading_line": 26596,
-        "line": 26598,
+        "heading_line": 26752,
+        "line": 26754,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174375,8 +174406,8 @@
       "source_location": {
         "heading": "OSI-349 - Save State Backup And Cleanup Example",
         "heading_level": 3,
-        "heading_line": 26649,
-        "line": 26651,
+        "heading_line": 26805,
+        "line": 26807,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174392,8 +174423,8 @@
       "source_location": {
         "heading": "OSI-350 - Coordination Schema Versioning Requirement",
         "heading_level": 3,
-        "heading_line": 26703,
-        "line": 26705,
+        "heading_line": 26859,
+        "line": 26861,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174409,8 +174440,8 @@
       "source_location": {
         "heading": "OSI-351 - AgentCoordinationState Schema Version Example",
         "heading_level": 3,
-        "heading_line": 26752,
-        "line": 26754,
+        "heading_line": 26908,
+        "line": 26910,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174426,8 +174457,8 @@
       "source_location": {
         "heading": "OSI-352 - Parallel Subagent Execution Principles",
         "heading_level": 3,
-        "heading_line": 26804,
-        "line": 26806,
+        "heading_line": 26960,
+        "line": 26962,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174443,8 +174474,8 @@
       "source_location": {
         "heading": "OSI-353 - Parallel Worktree Example",
         "heading_level": 3,
-        "heading_line": 26859,
-        "line": 26861,
+        "heading_line": 27015,
+        "line": 27017,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174460,8 +174491,8 @@
       "source_location": {
         "heading": "OSI-354 - Conflict Types And Coordination Prevention",
         "heading_level": 3,
-        "heading_line": 26915,
-        "line": 26917,
+        "heading_line": 27071,
+        "line": 27073,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174477,8 +174508,8 @@
       "source_location": {
         "heading": "OSI-355 - Conflict Detector File-Overlap Example",
         "heading_level": 3,
-        "heading_line": 26972,
-        "line": 26974,
+        "heading_line": 27128,
+        "line": 27130,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174494,8 +174525,8 @@
       "source_location": {
         "heading": "OSI-356 - Architectural Conflict Heuristic Example",
         "heading_level": 3,
-        "heading_line": 27027,
-        "line": 27029,
+        "heading_line": 27183,
+        "line": 27185,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174511,8 +174542,8 @@
       "source_location": {
         "heading": "OSI-357 - Parallel Execution Concurrency Cap Ownership",
         "heading_level": 3,
-        "heading_line": 27082,
-        "line": 27084,
+        "heading_line": 27238,
+        "line": 27240,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174528,8 +174559,8 @@
       "source_location": {
         "heading": "OSI-358 - Parallel Subagent Benefits Rationale",
         "heading_level": 3,
-        "heading_line": 27145,
-        "line": 27147,
+        "heading_line": 27301,
+        "line": 27303,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174545,8 +174576,8 @@
       "source_location": {
         "heading": "OSI-359 - Multi-Language Backend Parallelization Example",
         "heading_level": 3,
-        "heading_line": 27196,
-        "line": 27198,
+        "heading_line": 27352,
+        "line": 27354,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174562,8 +174593,8 @@
       "source_location": {
         "heading": "OSI-360 - Frontend UI Parallelization Example",
         "heading_level": 3,
-        "heading_line": 27251,
-        "line": 27253,
+        "heading_line": 27407,
+        "line": 27409,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174579,8 +174610,8 @@
       "source_location": {
         "heading": "OSI-361 - Dependency-Level Execution Flow Example",
         "heading_level": 3,
-        "heading_line": 27303,
-        "line": 27305,
+        "heading_line": 27459,
+        "line": 27461,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174596,8 +174627,8 @@
       "source_location": {
         "heading": "OSI-362 - Parallel Execution Implementation Considerations",
         "heading_level": 3,
-        "heading_line": 27357,
-        "line": 27359,
+        "heading_line": 27513,
+        "line": 27515,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174613,8 +174644,8 @@
       "source_location": {
         "heading": "OSI-363 - Updated Orchestrator Flow",
         "heading_level": 3,
-        "heading_line": 27412,
-        "line": 27414,
+        "heading_line": 27568,
+        "line": 27570,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174630,8 +174661,8 @@
       "source_location": {
         "heading": "OSI-364 - Platform Capability Execution Classes",
         "heading_level": 3,
-        "heading_line": 27469,
-        "line": 27471,
+        "heading_line": 27625,
+        "line": 27627,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174647,8 +174678,8 @@
       "source_location": {
         "heading": "OSI-365 - CLI-Bridged Capability Surfaces",
         "heading_level": 3,
-        "heading_line": 27524,
-        "line": 27526,
+        "heading_line": 27680,
+        "line": 27682,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174664,8 +174695,8 @@
       "source_location": {
         "heading": "OSI-366 - Direct Provider No-CLI Runtime Surfaces",
         "heading_level": 3,
-        "heading_line": 27579,
-        "line": 27581,
+        "heading_line": 27735,
+        "line": 27737,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174681,8 +174712,8 @@
       "source_location": {
         "heading": "OSI-367 - Retired Gemini CLI Separate Provider Entry Lineage",
         "heading_level": 3,
-        "heading_line": 27635,
-        "line": 27637,
+        "heading_line": 27791,
+        "line": 27793,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174698,8 +174729,8 @@
       "source_location": {
         "heading": "OSI-368 - Direct Coding-Plan And OpenCode Surfaces",
         "heading_level": 3,
-        "heading_line": 27693,
-        "line": 27695,
+        "heading_line": 27849,
+        "line": 27851,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174715,8 +174746,8 @@
       "source_location": {
         "heading": "OSI-369 - Platform-Native Package Strategy",
         "heading_level": 3,
-        "heading_line": 27749,
-        "line": 27751,
+        "heading_line": 27905,
+        "line": 27907,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174732,8 +174763,8 @@
       "source_location": {
         "heading": "OSI-370 - Hook Lifecycle Strategy",
         "heading_level": 3,
-        "heading_line": 27804,
-        "line": 27806,
+        "heading_line": 27960,
+        "line": 27962,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174749,8 +174780,8 @@
       "source_location": {
         "heading": "OSI-371 - MCP Tool Exposure Strategy",
         "heading_level": 3,
-        "heading_line": 27858,
-        "line": 27860,
+        "heading_line": 28014,
+        "line": 28016,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174766,8 +174797,8 @@
       "source_location": {
         "heading": "OSI-372 - CLI Invocation Strategy Stale Disposition",
         "heading_level": 3,
-        "heading_line": 27912,
-        "line": 27914,
+        "heading_line": 28068,
+        "line": 28070,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174783,8 +174814,8 @@
       "source_location": {
         "heading": "OSI-373 - Platform Capability Manager And Snapshot Rules",
         "heading_level": 3,
-        "heading_line": 27969,
-        "line": 27971,
+        "heading_line": 28125,
+        "line": 28127,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174800,8 +174831,8 @@
       "source_location": {
         "heading": "OSI-374 - Enhanced Subagent Invoker Partial Fence Coverage",
         "heading_level": 3,
-        "heading_line": 28025,
-        "line": 28027,
+        "heading_line": 28181,
+        "line": 28183,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174817,8 +174848,8 @@
       "source_location": {
         "heading": "OSI-375 - Enhanced Subagent Invoker Capability Dispatch",
         "heading_level": 3,
-        "heading_line": 28079,
-        "line": 28081,
+        "heading_line": 28235,
+        "line": 28237,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174834,8 +174865,8 @@
       "source_location": {
         "heading": "OSI-376 - Platform Capability Benefits",
         "heading_level": 3,
-        "heading_line": 28137,
-        "line": 28139,
+        "heading_line": 28293,
+        "line": 28295,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174851,8 +174882,8 @@
       "source_location": {
         "heading": "OSI-377 - Capability Operational Considerations",
         "heading_level": 3,
-        "heading_line": 28197,
-        "line": 28199,
+        "heading_line": 28353,
+        "line": 28355,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174868,8 +174899,8 @@
       "source_location": {
         "heading": "OSI-378 - Capability Follow-Up Checklist",
         "heading_level": 3,
-        "heading_line": 28254,
-        "line": 28256,
+        "heading_line": 28410,
+        "line": 28412,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174885,8 +174916,8 @@
       "source_location": {
         "heading": "OSI-379 - Autonomous QA Reference Adoption Boundary",
         "heading_level": 3,
-        "heading_line": 28311,
-        "line": 28313,
+        "heading_line": 28467,
+        "line": 28469,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174902,8 +174933,8 @@
       "source_location": {
         "heading": "OSI-380 - Autonomous QA Backend Concept Catalog",
         "heading_level": 3,
-        "heading_line": 28367,
-        "line": 28369,
+        "heading_line": 28523,
+        "line": 28525,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174919,8 +174950,8 @@
       "source_location": {
         "heading": "OSI-381 - Autonomous QA Visual Status Symbols",
         "heading_level": 3,
-        "heading_line": 28421,
-        "line": 28423,
+        "heading_line": 28577,
+        "line": 28579,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174936,8 +174967,8 @@
       "source_location": {
         "heading": "OSI-382 - Progress Tracking Visual Status Model",
         "heading_level": 3,
-        "heading_line": 28472,
-        "line": 28474,
+        "heading_line": 28628,
+        "line": 28630,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174953,8 +174984,8 @@
       "source_location": {
         "heading": "OSI-383 - ProgressTracker State And Next-Task Selection",
         "heading_level": 3,
-        "heading_line": 28534,
-        "line": 28536,
+        "heading_line": 28690,
+        "line": 28692,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174970,8 +175001,8 @@
       "source_location": {
         "heading": "OSI-384 - Three-Tier QA System Interfaces",
         "heading_level": 3,
-        "heading_line": 28589,
-        "line": 28591,
+        "heading_line": 28745,
+        "line": 28747,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -174987,8 +175018,8 @@
       "source_location": {
         "heading": "OSI-385 - Task Inspector Subtask Feedback Integration",
         "heading_level": 3,
-        "heading_line": 28648,
-        "line": 28650,
+        "heading_line": 28804,
+        "line": 28806,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175004,8 +175035,8 @@
       "source_location": {
         "heading": "OSI-386 - Phase Inspector Completion Gate",
         "heading_level": 3,
-        "heading_line": 28706,
-        "line": 28708,
+        "heading_line": 28862,
+        "line": 28864,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175021,8 +175052,8 @@
       "source_location": {
         "heading": "OSI-387 - Pause Gate File Check",
         "heading_level": 3,
-        "heading_line": 28761,
-        "line": 28763,
+        "heading_line": 28917,
+        "line": 28919,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175038,8 +175069,8 @@
       "source_location": {
         "heading": "OSI-388 - Pause Gate GUI Event Projection",
         "heading_level": 3,
-        "heading_line": 28816,
-        "line": 28818,
+        "heading_line": 28972,
+        "line": 28974,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175055,8 +175086,8 @@
       "source_location": {
         "heading": "OSI-389 - Rework Commit Strategy Example",
         "heading_level": 3,
-        "heading_line": 28863,
-        "line": 28865,
+        "heading_line": 29019,
+        "line": 29021,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175072,8 +175103,8 @@
       "source_location": {
         "heading": "OSI-390 - Enhanced Loop Pause And Progress Selection",
         "heading_level": 3,
-        "heading_line": 28919,
-        "line": 28921,
+        "heading_line": 29075,
+        "line": 29077,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175089,8 +175120,8 @@
       "source_location": {
         "heading": "OSI-391 - Enhanced Loop DRY Selection And Invocation",
         "heading_level": 3,
-        "heading_line": 28973,
-        "line": 28975,
+        "heading_line": 29129,
+        "line": 29131,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175106,8 +175137,8 @@
       "source_location": {
         "heading": "OSI-392 - Enhanced Loop Preflight Failure Handling",
         "heading_level": 3,
-        "heading_line": 29029,
-        "line": 29031,
+        "heading_line": 29185,
+        "line": 29187,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175123,8 +175154,8 @@
       "source_location": {
         "heading": "OSI-393 - Enhanced Loop Task Inspection Feedback",
         "heading_level": 3,
-        "heading_line": 29083,
-        "line": 29085,
+        "heading_line": 29239,
+        "line": 29241,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175140,8 +175171,8 @@
       "source_location": {
         "heading": "OSI-394 - Enhanced Loop Phase Inspection Advancement",
         "heading_level": 3,
-        "heading_line": 29138,
-        "line": 29140,
+        "heading_line": 29294,
+        "line": 29296,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175157,8 +175188,8 @@
       "source_location": {
         "heading": "OSI-395 - Autonomous QA Benefits Backend Evidence",
         "heading_level": 3,
-        "heading_line": 29191,
-        "line": 29193,
+        "heading_line": 29347,
+        "line": 29349,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175174,8 +175205,8 @@
       "source_location": {
         "heading": "OSI-396 - Autonomous QA Clear Progress Visibility Evidence",
         "heading_level": 3,
-        "heading_line": 29250,
-        "line": 29252,
+        "heading_line": 29406,
+        "line": 29408,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175191,8 +175222,8 @@
       "source_location": {
         "heading": "OSI-397 - Autonomous QA Implementation Considerations Evidence",
         "heading_level": 3,
-        "heading_line": 29299,
-        "line": 29301,
+        "heading_line": 29455,
+        "line": 29457,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175208,8 +175239,8 @@
       "source_location": {
         "heading": "OSI-398 - Autonomous QA Config Example Backend Knobs",
         "heading_level": 3,
-        "heading_line": 29360,
-        "line": 29362,
+        "heading_line": 29516,
+        "line": 29518,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175225,8 +175256,8 @@
       "source_location": {
         "heading": "OSI-399 - Autonomous QA Visual Status Config Knob",
         "heading_level": 3,
-        "heading_line": 29417,
-        "line": 29419,
+        "heading_line": 29573,
+        "line": 29575,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175242,8 +175273,8 @@
       "source_location": {
         "heading": "OSI-400 - Media Capability Gating Change Summary",
         "heading_level": 3,
-        "heading_line": 29466,
-        "line": 29468,
+        "heading_line": 29622,
+        "line": 29624,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175259,8 +175290,8 @@
       "source_location": {
         "heading": "OSI-401 - Sharded User Project Plan Graph Consumption",
         "heading_level": 3,
-        "heading_line": 29520,
-        "line": 29522,
+        "heading_line": 29676,
+        "line": 29678,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175276,8 +175307,8 @@
       "source_location": {
         "heading": "OSI-402 - Persona Tier Label Compatibility And Frame Switching",
         "heading_level": 3,
-        "heading_line": 29576,
-        "line": 29578,
+        "heading_line": 29732,
+        "line": 29734,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175293,8 +175324,8 @@
       "source_location": {
         "heading": "OSI-403 - Orchestrator Persona Resolution Config Contract",
         "heading_level": 3,
-        "heading_line": 29649,
-        "line": 29651,
+        "heading_line": 29805,
+        "line": 29807,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175310,8 +175341,8 @@
       "source_location": {
         "heading": "OSI-404 - Requested Effective Persona Runtime Record",
         "heading_level": 3,
-        "heading_line": 29710,
-        "line": 29712,
+        "heading_line": 29866,
+        "line": 29868,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175327,8 +175358,8 @@
       "source_location": {
         "heading": "OSI-405 - Persona Runtime State UI Event Availability",
         "heading_level": 3,
-        "heading_line": 29766,
-        "line": 29768,
+        "heading_line": 29922,
+        "line": 29924,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175344,8 +175375,8 @@
       "source_location": {
         "heading": "OSI-406 - Auto Persona Resolution Inputs And Examples",
         "heading_level": 3,
-        "heading_line": 29813,
-        "line": 29815,
+        "heading_line": 29969,
+        "line": 29971,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175361,8 +175392,8 @@
       "source_location": {
         "heading": "OSI-407 - Persona Registry Normalization And Provider Seed Boundary",
         "heading_level": 3,
-        "heading_line": 29873,
-        "line": 29875,
+        "heading_line": 30029,
+        "line": 30031,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175378,8 +175409,8 @@
       "source_location": {
         "heading": "OSI-408 - Persona Acceptance Criteria Addendum",
         "heading_level": 3,
-        "heading_line": 29932,
-        "line": 29934,
+        "heading_line": 30088,
+        "line": 30090,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175395,8 +175426,8 @@
       "source_location": {
         "heading": "OSI-409 - Scored Ready Set Scheduler And Parallel Dispatch",
         "heading_level": 3,
-        "heading_line": 29993,
-        "line": 29995,
+        "heading_line": 30149,
+        "line": 30151,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175412,8 +175443,8 @@
       "source_location": {
         "heading": "OSI-410 - Worktree Native Conflict Control Observability",
         "heading_level": 3,
-        "heading_line": 30058,
-        "line": 30060,
+        "heading_line": 30214,
+        "line": 30216,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175429,8 +175460,8 @@
       "source_location": {
         "heading": "OSI-411 - Wake Reason Cascade Semantics",
         "heading_level": 3,
-        "heading_line": 30117,
-        "line": 30119,
+        "heading_line": 30273,
+        "line": 30275,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175446,8 +175477,8 @@
       "source_location": {
         "heading": "OSI-412 - Temporal Wait And Timeout Scheduler Semantics",
         "heading_level": 3,
-        "heading_line": 30180,
-        "line": 30182,
+        "heading_line": 30336,
+        "line": 30338,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175463,8 +175494,8 @@
       "source_location": {
         "heading": "OSI-413 - Runtime Projection Fields Surfaced By Orchestrator",
         "heading_level": 3,
-        "heading_line": 30245,
-        "line": 30247,
+        "heading_line": 30401,
+        "line": 30403,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175480,8 +175511,8 @@
       "source_location": {
         "heading": "OSI-414 - Remediation Child Lineage Flow",
         "heading_level": 3,
-        "heading_line": 30309,
-        "line": 30311,
+        "heading_line": 30465,
+        "line": 30467,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175497,8 +175528,8 @@
       "source_location": {
         "heading": "OSI-415 - Retry Backoff Classifier Matrix",
         "heading_level": 3,
-        "heading_line": 30368,
-        "line": 30370,
+        "heading_line": 30524,
+        "line": 30526,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175514,8 +175545,8 @@
       "source_location": {
         "heading": "OSI-416 - Decomposition Degradation Boundary",
         "heading_level": 3,
-        "heading_line": 30432,
-        "line": 30434,
+        "heading_line": 30588,
+        "line": 30590,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175531,8 +175562,8 @@
       "source_location": {
         "heading": "OSI-417 - Event Driven GUI Projection Alignment",
         "heading_level": 3,
-        "heading_line": 30490,
-        "line": 30492,
+        "heading_line": 30646,
+        "line": 30648,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175548,8 +175579,8 @@
       "source_location": {
         "heading": "OSI-418 - Runtime Scheduler Consumer Alignment And Required Fields",
         "heading_level": 3,
-        "heading_line": 30546,
-        "line": 30548,
+        "heading_line": 30702,
+        "line": 30704,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175565,8 +175596,8 @@
       "source_location": {
         "heading": "OSI-419 - Parent Child Attempt Lineage And Blocked Outcomes",
         "heading_level": 3,
-        "heading_line": 30610,
-        "line": 30612,
+        "heading_line": 30766,
+        "line": 30768,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175582,8 +175613,8 @@
       "source_location": {
         "heading": "OSI-420 - Immediate Wake Consumer Behavior",
         "heading_level": 3,
-        "heading_line": 30672,
-        "line": 30674,
+        "heading_line": 30828,
+        "line": 30830,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175599,8 +175630,8 @@
       "source_location": {
         "heading": "OSI-421 - Runtime Consumption Rules And Capacity Deferred Boundary",
         "heading_level": 3,
-        "heading_line": 30724,
-        "line": 30726,
+        "heading_line": 30880,
+        "line": 30882,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175616,8 +175647,8 @@
       "source_location": {
         "heading": "OSI-422 - Remediation Child Attempt Visibility And Replan Boundary",
         "heading_level": 3,
-        "heading_line": 30785,
-        "line": 30787,
+        "heading_line": 30941,
+        "line": 30943,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175633,8 +175664,8 @@
       "source_location": {
         "heading": "OSI-423 - Same-Cycle Scheduling For Unblocked And Remediation Work",
         "heading_level": 3,
-        "heading_line": 30844,
-        "line": 30846,
+        "heading_line": 31000,
+        "line": 31002,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175650,8 +175681,8 @@
       "source_location": {
         "heading": "OSI-424 - Runtime Enum And Counter Family Alignment",
         "heading_level": 3,
-        "heading_line": 30899,
-        "line": 30901,
+        "heading_line": 31055,
+        "line": 31057,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175667,8 +175698,8 @@
       "source_location": {
         "heading": "OSI-425 - Persona-Aware Subagent Configuration Recovery",
         "heading_level": 3,
-        "heading_line": 30985,
-        "line": 30987,
+        "heading_line": 31141,
+        "line": 31143,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175684,8 +175715,8 @@
       "source_location": {
         "heading": "OSI-426 - Canonical Subagent Registry Name Recovery",
         "heading_level": 3,
-        "heading_line": 31038,
-        "line": 31040,
+        "heading_line": 31194,
+        "line": 31196,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175701,8 +175732,8 @@
       "source_location": {
         "heading": "OSI-427 - Cross Run Knowledge Continuity Contract",
         "heading_level": 3,
-        "heading_line": 31081,
-        "line": 31083,
+        "heading_line": 31237,
+        "line": 31239,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175718,8 +175749,8 @@
       "source_location": {
         "heading": "OSI-428 - Bounded Extensive Subagent Waves",
         "heading_level": 3,
-        "heading_line": 31123,
-        "line": 31125,
+        "heading_line": 31279,
+        "line": 31281,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175735,8 +175766,8 @@
       "source_location": {
         "heading": "OSI-429 - Ambient Orchestrator Discovery For Agent Context",
         "heading_level": 3,
-        "heading_line": 31232,
-        "line": 31234,
+        "heading_line": 31388,
+        "line": 31390,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175752,8 +175783,8 @@
       "source_location": {
         "heading": "OSI-430 - Orchestrator DRY Consumer Retarget",
         "heading_level": 3,
-        "heading_line": 31284,
-        "line": 31286,
+        "heading_line": 31440,
+        "line": 31442,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175786,8 +175817,8 @@
       "source_location": {
         "heading": "OSI-432 - Coordination Canon Record Projection And Mirror Contract",
         "heading_level": 3,
-        "heading_line": 31345,
-        "line": 31347,
+        "heading_line": 31501,
+        "line": 31503,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175803,8 +175834,8 @@
       "source_location": {
         "heading": "OSI-433 - Durable Thread And Agent Lineage Consumer",
         "heading_level": 3,
-        "heading_line": 31496,
-        "line": 31498,
+        "heading_line": 31652,
+        "line": 31654,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175820,8 +175851,8 @@
       "source_location": {
         "heading": "OSI-434 - Sustainable Waves, Operational Awareness, And Truthful Work",
         "heading_level": 3,
-        "heading_line": 31528,
-        "line": 31530,
+        "heading_line": 31684,
+        "line": 31686,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175837,8 +175868,8 @@
       "source_location": {
         "heading": "OSI-435 - Agent Requested Thread Operations",
         "heading_level": 3,
-        "heading_line": 31562,
-        "line": 31564,
+        "heading_line": 31718,
+        "line": 31720,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175854,8 +175885,8 @@
       "source_location": {
         "heading": ".puppet-master/config.yaml (additions)",
         "heading_level": 1,
-        "heading_line": 6024,
-        "line": 31594,
+        "heading_line": 6180,
+        "line": 31750,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -175871,8 +175902,25 @@
       "source_location": {
         "heading": ".puppet-master/config.yaml (additions)",
         "heading_level": 1,
-        "heading_line": 6024,
-        "line": 31626,
+        "heading_line": 6180,
+        "line": 31782,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "coordination_event_authority_seven_families",
+      "gui_related": false,
+      "owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "plan_unit_id": "OSI-438",
+      "reasoning_tier": "high",
+      "risk_class": "coordination_producer_identity_or_lifecycle_drift",
+      "source_location": {
+        "heading": "[derive(Debug, thiserror::Error)]",
+        "heading_level": 1,
+        "heading_line": 2514,
+        "line": 3896,
         "path": "Plans/orchestrator-subagent-integration.md"
       },
       "status": "accepted",
@@ -213370,10 +213418,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15715,
+    "depends_on_edge_count": 15721,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18414,
-    "node_count": 6738,
+    "edge_count": 18420,
+    "node_count": 6739,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2699,
     "unresolved_reference_count": 0
