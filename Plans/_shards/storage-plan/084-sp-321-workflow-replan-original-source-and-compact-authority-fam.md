@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L27107-L27261
 
-Source SHA256: `e33f62aec07c22968f09e1caa410b0f688f0e5631c4fa4926f75a17e2fd56bfb`
+Source SHA256: `ec8f477e0e1e3eaa19e3532c956714f4f4343a50e9dbba00d8a28a093a0b2a17`
 
 ---
 
@@ -118,7 +118,7 @@ source_lineage:
 - currentness-readjudication:sha256:297b0f292bf478846a40f8b8a96ea3db6a0e6d21591d08ca1be8881944fc8a9c
 depends_on:
 - PDS-003
-- SP-319
+- SP-317
 - SP-308
 - SP-278
 - SP-316
