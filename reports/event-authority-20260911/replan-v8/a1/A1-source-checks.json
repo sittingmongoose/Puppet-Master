@@ -228,7 +228,7 @@
     "run_gates": "NOT_RUN_HERE; at landing via pm-landing-check.py",
     "audit_governance": "NOT_RUN_HERE; at landing via pm-landing-check.py",
     "plan_migration_validate": "NOT_RUN_HERE; at landing via pm-landing-check.py",
-    "landing_check_expectation": "exit 0 or 1; governance staleness on the edited documents only, after the lander regenerates node_readiness_report.json",
+    "landing_check_expectation": "exit 1 with 0 blocking items; governance staleness on the edited documents only, after the lander regenerates node_readiness_report.json",
     "canon_branch_blind_review": "PENDING (cycle cap two)"
   },
   "citation_census": {
