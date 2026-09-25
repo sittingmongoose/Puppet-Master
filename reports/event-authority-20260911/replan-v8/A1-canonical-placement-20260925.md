@@ -6,7 +6,7 @@ Step 8(b) Group A, branch A1 of `reports/event-authority-20260911/step-08-remain
 
 **Base.** `main` at `63cf2cb97f936c91dd7bb5c585d9a35d8409ed61` (2026-09-25 10:26Z), the package's landing base. Branch `plans/replan-v8-a1-20260925`. A0 (`plans/replan-v8-a0-20260925`, report at `632f557c0`) has not landed yet; see "Landing prerequisites".
 
-**Branch state.** Compiled on the branch, pending the blind review of the canon branch. Task 1, the owner prose, is `94585533b`; task 2, the companions, is `48a2b6840`; this report and its bundle are the commit after them. `Plans/.plan_index/node_readiness_report.json` is deliberately left at `main`'s version; the lander regenerates it (see "Landing prerequisites").
+**Branch state.** Compiled on the branch and reviewed. Task 1, the owner prose, is `94585533b`; task 2, the companions, is `48a2b6840`; this report and its bundle followed at `74c79b5bf`. The blind form-driven review of the canon branch ran two cycles, the cap: cycle 1 on `74c79b5bf` (`a1/review-cycle-1.json`) was ready with 8 should_fix findings and 5 notes, each repaired in its own commit (`a4485fcd1` to `74820a6a9`); cycle 2 on `74820a6a9` (`a1/review-cycle-2.json`) was ready with 4 notes. `Plans/.plan_index/node_readiness_report.json` is deliberately left at `main`'s version; the lander regenerates it (see "Landing prerequisites").
 
 ## Summary
 

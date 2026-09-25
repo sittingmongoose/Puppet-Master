@@ -1,5 +1,5 @@
 {
-  "status": "A1_COMPILED_ON_BRANCH_PENDING_CANON_BRANCH_BLIND_REVIEW",
+  "status": "A1_COMPILED_ON_BRANCH_REVIEWED_READY_FOR_LANDING",
   "base_commit": "63cf2cb97f936c91dd7bb5c585d9a35d8409ed61",
   "branch": "plans/replan-v8-a1-20260925",
   "source_review": {
@@ -229,7 +229,7 @@
     "audit_governance": "NOT_RUN_HERE; at landing via pm-landing-check.py",
     "plan_migration_validate": "NOT_RUN_HERE; at landing via pm-landing-check.py",
     "landing_check_expectation": "exit 1 with 0 blocking items; governance staleness on the edited documents only, after the lander regenerates node_readiness_report.json",
-    "canon_branch_blind_review": "PENDING (cycle cap two)"
+    "canon_branch_blind_review": "DONE: cycle 1 on 74c79b5bf ready (8 should_fix, 5 notes; repaired a4485fcd1..74820a6a9); cycle 2 on 74820a6a9 ready (4 notes); cycle cap reached"
   },
   "citation_census": {
     "path": "reports/event-authority-20260911/replan-v8/a1/citation-census.json",

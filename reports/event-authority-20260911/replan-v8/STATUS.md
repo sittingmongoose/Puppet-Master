@@ -57,11 +57,11 @@ The 2026-09-25 landing record names the `Goal_Runtime_System.md` member and note
 
 **What it does.** Installs `pm.executor.workflow_source.all_writers.v8`, with its Replan Stop route and its producer component `pm.goal_run_certified.producer_source.v3`, into canon as source contracts. It adds 13 owner units (EP-125 to 127, GRS-086 to 089, CV-354, SP-321, SP-322, ATS-059, ATS-060, BRS-031), an index section, 74 placed files, 34 registry rows and eight census re-pins. It adds no Event registry row, payload successor, consumer, projector or checkpoint, and nothing native. See `A1-canonical-placement-20260925.md`, with its evidence under `a1/`.
 
-**Where it stands.** Compiled on the branch, pending the blind review.
+**Where it stands.** Compiled on the branch and reviewed; ready to land after A0 and the process answers.
 - The canonical-draft package `replan-v8/goal-replan-v8-canonical-draft-20260925/v1` (manifest `bb6be609…`, commit `083be9a`) is accepted: independent review cycle 1 required repairs (3 blocking, 20 should_fix, 15 notes), cycle 2 accepted (1 should_fix, 4 notes, all applied), and root accepted it for the canon compile (`a7f5bb5f…`). The records are on branch `replan-v8-canonical-draft-20260925` (tip `3928dd6`) of `sittingmongoose/PuppetMaster-Packages`. That branch is merged to the repository's `main` (`3928dd6`).
-- Owner prose (task 1): `94585533b`. Companions (task 2): `48a2b6840`: the 74 files byte-identical to the package, the registry at `45e383b2…` (328 families), the eight re-pins and the index section. The report and its `a1/` bundle are the commit after them. The shard check passes, and the census unit tests run 95 OK.
+- Owner prose (task 1): `94585533b`. Companions (task 2): `48a2b6840`: the 74 files byte-identical to the package, the registry at `45e383b2…` (328 families), the eight re-pins and the index section. The report and its `a1/` bundle followed at `74c79b5bf`, then one repair commit per review finding. The shard check passes, and the census unit tests run 95 OK.
 - `Plans/.plan_index/node_readiness_report.json` is deliberately left at `main`'s version. The cloud session lacks the gitignored currentness receipt, so regenerating it here rewrites rows for documents A1 does not edit. The lander regenerates it (below).
-- Next: one blind form-driven review of the canon branch, cycle cap two, then the handover for landing.
+- The blind form-driven review of the canon branch ran two cycles, the cap: cycle 1 on `74c79b5bf` ready (8 should_fix, 5 notes, each repaired in its own commit), cycle 2 on `74820a6a9` ready (4 notes). The forms are `a1/review-cycle-1.json` and `a1/review-cycle-2.json`.
 
 **Decisions.** `a1/author-decisions-20260925.md`, ratified by Jared on 2026-09-25; the review questions were ruled by the independent and root reviews. O-13 (retention): root raised no card; the ruling is stated in the report for Jared's confirmation under DL-045.
 
@@ -112,4 +112,4 @@ A local session that Jared designates lands the branch. Prerequisites:
 
 ## Next
 
-The blind form-driven review of the A1 canon branch, then its handover for landing after A0 and the process answers. After A1: A2 (consumer adoption) and A3 (the Event contracts and registry rows, each with its own DL-036 card).
+The handover of the A1 canon branch for landing, after A0 and the process answers. After A1: A2 (consumer adoption) and A3 (the Event contracts and registry rows, each with its own DL-036 card).
