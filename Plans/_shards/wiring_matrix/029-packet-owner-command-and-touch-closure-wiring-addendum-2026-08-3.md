@@ -2,15 +2,17 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3988-L4061
+Source lines: L3988-L4063
 
-Source SHA256: `0de2e6abde2e596358185d3fbc7d431ef70adc6db31be2b0fa5c15c6c543647b`
+Source SHA256: `4eec7424ab8aa240f6c59800270256e4f9ee148fa1ce137a010d94f858996170`
 
 ---
 
 ## Packet-owner command and Touch Closure wiring addendum - 2026-08-31
 
 The Settings/Onboarding/Doctor/Server/WAN/Backup/Browser/Capture/SCM/Forge/plugin/performance wave uses `Plans/touch_closure.json` as its bidirectional coverage register and `Plans/Wiring_Matrix.production.json` as the production-intent row set. Each canonical command has one catalog entry and one sole handler target, while every GUI-required command has every intended visible consumer enumerated in reverse. Typed local UI actions use the same availability, disabled-reason, accessibility, return-route, and evidence discipline but do not receive fictitious domain handlers or EventRecords.
+
+For exactly `cmd.forge.review.approve` and `cmd.forge.review.request_changes`, the typed binding is `Plans/forge_review_decisions.schema.json#/$defs/request` -> `Plans/forge_review_decisions.schema.json#/$defs/result`. The unchanged common authority is nested under `authority`; original review/head/body selection joins actual RepositoryBinding, ReviewRevision, retained original, common receipt and provider-owned selected-decision observation. Null approval body differs from submitted empty text. Result/receipt operation, outcome, work, event references, recovery actions and optional AutomationBinding identity/generation remain consistent with the original. Static resolution is not native admission or provider authentication. Historical common v1 meanings, other routes, handlers, availability and event admission remain unchanged. Physical original/observation custody and replay/backup closure remain pending; no effect is automatically replayed.
 
 Current Product Onboarding consumes PWIZ-021's exact thirteen typed local actions and v2 main/connect-existing/deferred stage definitions. It adds no semantic command or production-wiring row. Draft choices and Settings copy previews remain uncommitted; the narrow owner-issued read-only/selected-source-auth exception is checked against actual owner inputs. PJCT-007 owns the one exact Review-bound Project commit chain. Paid-provider setup then Free Models consume that real Project, and explicit paid Skip still offers Free Models. WM-041 carries the reverse-wiring obligations; the roster and phase contract are not duplicated here.
 

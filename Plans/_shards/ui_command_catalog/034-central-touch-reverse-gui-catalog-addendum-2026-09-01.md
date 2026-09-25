@@ -2,15 +2,17 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12025-L12288
+Source lines: L12025-L12290
 
-Source SHA256: `e3a9cfb4bcee40340d7ef70bbd2da547714c141a4b46cb4c7f3ff1a99b95ff92`
+Source SHA256: `85cac9ef73d19589db937b8c3a2a3925ba18502d386fefff7d844b373c6ed147`
 
 ---
 
 ## Central Touch Reverse-GUI Catalog Addendum - 2026-09-01
 
 These 227 rows are the reverse-GUI projection of CS-074. They register no synthetic control: an existing same-intent control may be rebound, an owner surface may expose the action when required, and headless-only reachability remains explicitly classifiable. Every visible control must read typed availability and disabled reason before dispatch and return to the exact initiating route/focus/continuation.
+
+For exactly `cmd.forge.review.approve` and `cmd.forge.review.request_changes`, the typed binding is `Plans/forge_review_decisions.schema.json#/$defs/request` -> `Plans/forge_review_decisions.schema.json#/$defs/result`. The unchanged common authority is nested under `authority`; original review/head/body selection joins actual RepositoryBinding, ReviewRevision, retained original, common receipt and provider-owned selected-decision observation. Null approval body differs from submitted empty text. Result/receipt operation, outcome, work, event references, recovery actions and optional AutomationBinding identity/generation remain consistent with the original. Static resolution is not native admission or provider authentication. Historical common v1 meanings, other routes, handlers, availability and event admission remain unchanged. Physical original/observation custody and replay/backup closure remain pending; no effect is automatically replayed.
 
 | Command | Label | Owner binding | Sole future handler | Intended GUI consumers / return |
 |---|---|---|---|---|

@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/forge-review-decisions/1.0.0/forge_review_decisions.schema.json",
+  "$defs": {
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider_review_id",
+        "head_revision",
+        "body"
+      ],
+      "properties": {
+        "provider_review_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "head_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "authority",
+        "selection"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.review_decision.request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/command_request"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "authority": {
+              "properties": {
+                "command_id": {
+                  "enum": [
+                    "cmd.forge.review.approve",
+                    "cmd.forge.review.request_changes"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "authority": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.forge.review.request_changes"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "selection": {
+                "properties": {
+                  "body": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "original_request_ref",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "provider",
+        "repository_binding_ref",
+        "review_revision_ref",
+        "selection",
+        "provider_receipt_ref",
+        "target_ref",
+        "outcome"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.review_decision.observation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.forge.review.approve",
+            "cmd.forge.review.request_changes"
+          ]
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/provider"
+        },
+        "repository_binding_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "review_revision_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "selection": {
+          "$ref": "#/$defs/selection"
+        },
+        "provider_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "target_ref": {"$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"},
+        "outcome": {
+          "enum": [
+            "applied",
+            "rejected",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "original_request_ref",
+        "owner_result"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.forge.review_decision.result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "original_request_ref": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "owner_result": {
+          "$ref": "https://puppetmaster.local/schemas/forge-integrations/1.0.0/forge_integration_contracts.schema.json#/$defs/command_result"
+        }
+      }
+    },
+    "fixture_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "result",
+        "records"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "result": {
+          "$ref": "#/$defs/result"
+        },
+        "records": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "x-fixture-only": true
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/request"
+    },
+    {
+      "$ref": "#/$defs/observation"
+    },
+    {
+      "$ref": "#/$defs/result"
+    }
+  ]
+}

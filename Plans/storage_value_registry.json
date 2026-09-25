@@ -2703,6 +2703,76 @@
         "Plans/git_selected_three.schema.json",
         "Plans/storage-plan.md"
       ]
+    },
+    {
+      "disposition_id": "scd.forge.review_decision_transport.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_review_decisions.schema.json",
+      "record_kinds": [
+        "pm.forge.review_decision.request.v1",
+        "pm.forge.review_decision.result.v1"
+      ],
+      "persistence_disposition": "request_or_preview_nonpersisted",
+      "physical_family_status": "not_applicable_nonpersisted",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "not_applicable_nonpersisted",
+        "refs": [],
+        "hold_rule": "Exact independently retained originals, owner receipts and selected-effect observations needed for replay, effect-unknown reconciliation, backup and audit must outlive transport disposal; their actual physical binding remains pending.",
+        "expiry_rule": "Discard transient delivery copies after dispatch/response only; do not discard the independently held original or observation required for replay. Never reconstruct a mutation from current UI selection."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Historical common v1 retains its meaning; no migration fabricates selected review/head/body or provider observation. Transport has no physical migration; independently retained original custody remains pending.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Transient review-decision transport is not durable original custody or a provider receipt store. Fixture wrappers are not runtime records.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_review_decisions.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "disposition_id": "scd.forge.review_decision_observation.v1",
+      "system_id": "forge",
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "schema_ref": "Plans/forge_review_decisions.schema.json",
+      "record_kinds": [
+        "pm.forge.review_decision.observation.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [
+          "RP-AUTHORITY-INDEFINITE",
+          "RP-RUNTIME-365D",
+          "RP-PROJECTION-3GEN",
+          "Q-CRITICAL"
+        ],
+        "hold_rule": "Retain actual selected-decision observation and independent original while common Forge receipt, replay/idempotency, unknown-effect reconciliation, backup or audit references hold them. Exact physical admission and per-kind policy selection remain pending under the existing Forge durable owner.",
+        "expiry_rule": "This pending disposition admits no cleanup writer, TTL, automatic replay or token lifetime as metadata retention. Per-kind physical retention/deletion and active-hold handling must be registered before durable writes."
+      },
+      "redaction_transform_ids": [
+        "rt.scm_forge_metadata.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "Register exact physical key/value, producer, reader, independently authenticated original and migration before observation writes. Do not insert the observation into an unchanged common command_receipt or claim historical readers admit it.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "Durable intent only, reusing existing Forge owner policy references without selecting a new interval. Physical source/original/replay/backup custody and native provider authentication remain pending.",
+      "source_refs": [
+        "Plans/Forge_Integrations.md",
+        "Plans/forge_review_decisions.schema.json",
+        "Plans/storage-plan.md"
+      ]
     }
   ],
   "families": [

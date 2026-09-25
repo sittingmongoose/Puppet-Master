@@ -203,8 +203,21 @@ acceptance_criteria:
     producer/reader, original-value custody and migration binding remain unbound; do not write a new store or claim
     restart/replay/backup closure before those existing storage admission requirements are met. Central structural
     validation of the result is not the original/result/receipt/effect resolver: consumers must separately call
-    result_failures with the actual original and retained owner records. The current generic UI response adapter
-    does not establish this three-command original/outcome/caller composition. No EventRecord,
+    result_failures with the actual original and retained owner records. The three-command central response adapter
+    composes that resolver with the actual original request reference, command/instance/idempotency, receipt
+    operation/reference/outcome, and authentic original RepositoryContext topology. Its trusted-input prerequisite
+    is actual retained owner values plus the existing native canonical-digest contract, not native issuer or caller
+    authentication. The complete original request canonical digest, including exact nullable return_context, must
+    match the dispatcher/outcome payload hash; the mandatory digest callback is not a Python serialization
+    surrogate. normalized_request remains only the existing authenticated-dispatch fixture snapshot, without new
+    unchecked caller or lineage fields. Map existing Project/Home Server/Host/Environment/Source Location/topology,
+    plan_id to named_plan_id and goal_id; retain Run/agent in original RepositoryContext, not invented central
+    fields. Do not equate central operation/target generations with lease or topology generations. Preserve original
+    return context and replay identity; actual caller authentication and route delivery remain native obligations.
+    Map succeeded/blocked/failed/cancelled/recovery_required/effect_unknown receipts to
+    succeeded/rejected/failed/cancelled/terminal_unknown/terminal_unknown; unknown adapter completion also requires
+    terminal_unknown and no_op is not inferred. Reject foreign result families, local-projection escape, missing
+    resolver/digest and input mutation. The nineteen neutral SCM adapter contracts are unchanged. No EventRecord,
     handler availability, arbitrary retention interval or credential persistence is introduced.
   - A succeeded result cannot have effect_state=effect_unknown; an effect_unknown error cannot disguise itself as a known effect. Unknown effects keep retry_allowed=false and offer reconciliation without any retry action until effects are known.
   - Every established terminal source_control_command_result carries a non-secret operation_receipt_ref, including blocked, failed, cancelled, recovery_required and effect_unknown. This is not a requirement for pre-attempt availability or error records.

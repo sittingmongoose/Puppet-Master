@@ -7,6 +7,7 @@ shape validation or a caller-provided reference never grants that authority.
 
 from __future__ import annotations
 
+from copy import deepcopy
 from functools import lru_cache
 import hashlib
 import importlib.util
@@ -30,6 +31,8 @@ SHARED_SCHEMA = "Plans/shared_runtime_command_contracts.schema.json"
 BROWSER_SCHEMA = "Plans/section15_browser_program_contracts.schema.json"
 SERVER_SCHEMA = "Plans/server_system_contracts.schema.json"
 SOURCE_CONTROL_SCHEMA = "Plans/source_control_contracts.schema.json"
+GIT_THREE_COMMANDS = frozenset(("cmd.git.commit", "cmd.source_control.stash.create", "cmd.source_control.branch.create"))
+GIT_THREE_BINDING = {"path": "Plans/git_selected_three.schema.json", "json_pointer": "#/$defs/result", "schema_id": "pm.source_control.git_selected.result.v1"}
 
 
 @lru_cache(maxsize=None)
@@ -70,7 +73,29 @@ def structural_failures(path: str, value: Any, pointer: str = "#") -> list[str]:
     return [error.message for error in validator.iter_errors(value)]
 
 
-def response_bundle_failures(bundle: dict[str, Any]) -> list[str]:
+def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=None,
+                             canonical_request_digest=None) -> list[str]:
+    """Existing static bundle; Git-three additionally requires actual owner readers.
+
+    Both callbacks are trusted native contracts, not issuer/caller authentication
+    performed here. No new normalized-request caller or lineage fields exist.
+    """
+    response = bundle.get("response") or {}
+    result = bundle.get("owner_result") or {}
+    git_three = (response.get("command_id") in GIT_THREE_COMMANDS
+                 or result.get("schema_id") == GIT_THREE_BINDING["schema_id"])
+    if not git_three:
+        return _response_bundle_failures(bundle)
+    snapshot = deepcopy(bundle)
+    failures = _response_bundle_failures(snapshot, resolve_owner_record=resolve_owner_record,
+                                         canonical_request_digest=canonical_request_digest)
+    if bundle != snapshot:
+        failures.append("git3_bundle_mutated_during_resolution")
+    return sorted(set(failures))
+
+
+def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=None,
+                              canonical_request_digest=None) -> list[str]:
     """Validate independently owned records and then their exact binding.
 
     normalized_request is a fixture snapshot of the authenticated dispatcher
@@ -93,7 +118,7 @@ def response_bundle_failures(bundle: dict[str, Any]) -> list[str]:
         if response["response_kind"] == "local_projection":
             commands = schema(SHARED_SCHEMA)["$defs"]["canonical_command_id"]["enum"]
             scm_commands = schema(SOURCE_CONTROL_SCHEMA)["$defs"]["source_control_command_id"]["enum"]
-            if response["command_id"] in commands or response["command_id"] in scm_commands:
+            if response["command_id"] in commands or response["command_id"] in scm_commands or response["command_id"] in GIT_THREE_COMMANDS:
                 failures.append("durable_command_disguised_as_local_projection")
         return sorted(set(failures))
     if structural_failures(OUTCOME_SCHEMA, outcome, "#/$defs/CommandOutcomeRecord"):
@@ -129,6 +154,8 @@ def response_bundle_failures(bundle: dict[str, Any]) -> list[str]:
     for field in ("owner_result_ref", "owner_result_schema_ref"):
         if response[field] != outcome[field]:
             failures.append("outcome_" + field + "_mismatch")
+    if response["command_id"] in GIT_THREE_COMMANDS and response["owner_result_schema_ref"] != GIT_THREE_BINDING:
+        failures.append("git3_owner_result_binding")
     if response["owner_result_ref"] is None:
         if owner_result is not None:
             failures.append("unbound_owner_result")
@@ -162,6 +189,12 @@ def response_bundle_failures(bundle: dict[str, Any]) -> list[str]:
                 failures.extend(shared_owner_failures(response, outcome, owner_result))
             elif owner_result.get("record_kind") == "browser_command_result":
                 failures.extend(browser_owner_failures(response, outcome, owner_result))
+            elif owner_result.get("schema_id") == GIT_THREE_BINDING["schema_id"]:
+                from pm_git_selected_response import response_failures as git_three_response_failures
+                failures.extend(git_three_response_failures(
+                    response, outcome, owner_result, bundle.get("owner_request"), request,
+                    resolve_record=resolve_owner_record,
+                    canonical_request_digest=canonical_request_digest, canon_root=ROOT))
             elif owner_result.get("schema_id") == "pm.source_control.command_result.v1":
                 failures.extend(source_control_owner_failures(response, outcome, owner_result, bundle.get("owner_request")))
             elif owner_result.get("record_type") in {"server.command.result.v1", "server.owner_command.result.v1"}:
