@@ -1,5 +1,15 @@
 # Packet-to-current-owner reconciliation checkpoint
 
+## Latest additive checkpoint — 2026-09-25, after `7285bed42`
+
+Independently reviewed dispositions now cover **646 of 2,021 identities**, with **1,375 unreviewed**. This is review coverage, not completion. The new immutable external checkpoint is `case-reconciliation/checkpoints/matrix-3e625ff93797816b5889f501068526b0e4f322ff668edbb9d2de98067f539a8d.jsonl`, SHA-256 `3e625ff93797816b5889f501068526b0e4f322ff668edbb9d2de98067f539a8d`, beneath the evidence directory below.
+
+Root verified its hash, 2,021 unique identities, unchanged identity order and all historical assessment fields. Exactly 58 previously unreviewed rows gained reviewed dispositions: 35 from the protected/newer-owner family and 23 from Other/Project; the other 1,963 rows are unchanged. This does not credit all raw author verdicts: 132 protected-family and 104 Other/Project rows remain withheld. Six local Origin/Performance inspector dimensions remain `owner_authority_pending`, not newly authorized product features or established specification gaps. Older Chat/Home factory and panel assumptions are not restored merely because current owners differ.
+
+Settings owner classification prose is separately integrated in `7285bed42`; its typed value/source/destination joins remain open. Notifications and LSP candidates remain subject to causal original-request binding review. The 588-row checkpoint and evidence below are preserved as the prior milestone, not the latest count.
+
+## Prior checkpoint — 588 reviewed
+
 Status: in progress, not whole-packet closure or main landing. Inspected source/repair HEAD: `0b00d722a8515c3319af4751d980f83a465ba65a`.
 
 The 2,021 historical gap/conflict/unresolved identities are review dimensions, not 2,021 distinct defects. All identities and historical assessment hashes remain attached. They include 1,416 Touch dimensions across 429 distinct Touch IDs. The earlier count of 195 counted only rows with an optional explicit `touch_id` property and must not be used as the distinct-ID denominator.
