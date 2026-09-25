@@ -161,7 +161,7 @@ A1 first builds a canonical-draft package and has it independently and root revi
 | Pending-source boundaries (start association, certified current, replan inventory observer, storage headers) and the Stop install-at-birth rule | stated rules | no counterpart | A1, in full owner prose |
 | Replan v3 prebirth-composition gap | Replan v3 status `..._PREBIRTH_COMPOSITION_MISSING`; the combined source is the composition the prebirth plan `21e672ca…` recommends | none | A1: closed at source level by installing v8; native birth stays NOT_RUN |
 
-A1 therefore closes by compile: canonical placement; whole-package review, through its canonical-draft package; the four pending-source boundaries; the install-at-birth rule; and TRUTHFUL-UNAVAILABLE's statement. It leaves open: the other six positive-route discharges, D06 evidence, native execution and instances, consumer adoption (A2), and the Event contracts and registry rows (A3).
+A1 therefore closes by compile: canonical placement; whole-package review, through its canonical-draft package; the four pending-source boundaries; the install-at-birth rule; TRUTHFUL-UNAVAILABLE's statement; and, at source level, the Replan v3 prebirth-composition gap. It leaves open: the other six positive-route discharges, D06 evidence, native execution and instances, consumer adoption (A2), and the Event contracts and registry rows (A3).
 
 ## 10. Goal V2 check
 
