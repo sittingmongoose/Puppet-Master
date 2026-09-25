@@ -333,6 +333,8 @@ These are the grader's remaining items and observations. None lowers a grade, an
 
 The directory is `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09-coord-registered-admit-20260925/`. It holds 167 files, 3.2 MB, and its `SHA256SUMS` has SHA-256 `e09c2cc6c6818a557c404413849b55eeeeba0556f596fd3d96ca249f10f1c0bf`. `README.txt` describes the layout. The prep-stage evidence of this branch (R4-01 to R4-04 and R6) is in `step-09-coord-registered-prep-20260925/`, whose `SHA256SUMS` has SHA-256 `b4ffbbad73f822cb09a12a002aa07c5fb7c2f3383f551dd387a1b0cbc20dafa3`.
 
+The preparation review that DL-094 cites is `/mnt/Cursor/PM-Experiments/review-ea-s09-coordination-prep-20260925/`; its `RECHECK.md` (verdict "Landing-ready: yes") has SHA-256 `4aea2b6a89378eaae0007d8aee84ff6ef831efa724c7f57bce04f130194e44c8`.
+
 | File | SHA-256 |
 |---|---|
 | `depth/first-grade/step-09-depth-coordination.agent_registered.json` (10 of 12) | `a5245356e35e31b0919c202889b4fd2c58e8bea528790b3f6afa60fcd1169158` |
