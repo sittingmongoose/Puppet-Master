@@ -236,6 +236,8 @@ The branch tip is `9c97cb14fd` and `main` is `63cf2cb97f`. Both were exported wi
 | onboarding / runtime vocabulary | 42 / 9 | OK |
 | PNC-019 currentness | 9 | 1 failure, drift rows only, as on `main` |
 
+Two modules outside this table fail the same way on `main` and at the tip, with the same failure lists: `test_prd_planning_runtime_contracts` (`test_runtime_contract_validator_passes`) and `test_runtime_integration_disposition` (`test_bounded_validator_passes`, whose `owner_file_hash_stale` rows include two each on `Plans/storage-plan.md` and `Plans/Automated_Testing_System.md`, already stale on `main`).
+
 **Other checks at the tip:**
 - **The checker** `scripts/pm_coordination_events.py`: pass, 0 failures, with `admitted_rows` `[coordination.agent_registered]`. It covers:
   - 45 positive and 69 negative payload cases;
