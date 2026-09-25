@@ -80,6 +80,7 @@
       "validation_case_ids": [
         "a7_registered_full",
         "a7_registered_retry_changed",
+        "a7_registered_other_recovery_epoch",
         "a8_registered_minimal",
         "a9_registered",
         "a10_registered",
@@ -101,6 +102,8 @@
         "registered_invalid_calendar_date",
         "lifecycle_registration_to_unregister",
         "registration_retry_and_conflict",
+        "repeat_registration_of_registered_agent_refused",
+        "repeat_registration_of_terminal_agent_refused",
         "registration_not_admitted"
       ],
       "runtime_producer_status": "unimplemented_not_proven",

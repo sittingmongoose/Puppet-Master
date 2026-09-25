@@ -119,8 +119,8 @@ class StaticReportTests(unittest.TestCase):
             "transition_sequences", "transition_steps", "positive_projection_cases", "negative_projection_cases",
             "native_oracles_not_run")}
         self.assertEqual(counts, {
-            "positive_payload_cases": 44, "negative_payload_cases": 69, "negative_event_cases": 12, "identity_vectors": 7,
-            "path_vectors": 9, "transition_sequences": 22, "transition_steps": 83, "positive_projection_cases": 11,
+            "positive_payload_cases": 45, "negative_payload_cases": 69, "negative_event_cases": 12, "identity_vectors": 7,
+            "path_vectors": 9, "transition_sequences": 24, "transition_steps": 91, "positive_projection_cases": 11,
             "negative_projection_cases": 20, "native_oracles_not_run": 13})
 
     def test_every_family_has_positive_negative_and_transition_cases(self):
@@ -509,6 +509,23 @@ class FixtureTests(unittest.TestCase):
         changed = next(case for case in value["identity_vectors"] if "prior_recovery_epoch" in case)
         changed["prior_idempotency_key"] = changed["expected_idempotency_key"]
         self.assertEqual(CHECK.fixture_report(value)["failures"], [{"error": "identity_vector_mismatch", "case_id": vector["case_id"]}])
+
+    def test_fixtures_cover_both_repeat_registration_rows(self):
+        # SP-320's table refuses a repeated registration as already_registered (registered, not terminal) or
+        # already_terminal (terminal); each row has a sequence of its own, named by the registration ledger row.
+        sequences = {sequence["case_id"]: sequence for sequence in FIXTURES["transition_sequences"]}
+        for case_id, expected in (("repeat_registration_of_registered_agent_refused", "coordination_conflict:already_registered"),
+                                  ("repeat_registration_of_terminal_agent_refused", "coordination_conflict:already_terminal")):
+            with self.subTest(sequence=case_id):
+                last = sequences[case_id]["steps"][-1]
+                self.assertEqual(PAYLOADS[last["payload_case_id"]]["event_type"], "coordination.agent_registered")
+                self.assertEqual(last["expected"], expected)
+                self.assertIn(case_id, LEDGER["rows"][0]["validation_case_ids"])
+        value = copy.deepcopy(FIXTURES)
+        next(sequence for sequence in value["transition_sequences"]
+             if sequence["case_id"] == "repeat_registration_of_terminal_agent_refused")["steps"][-1]["expected"] = \
+            "coordination_conflict:already_registered"
+        self.assertIn("transition_step_mismatch", errors(CHECK.fixture_report(value)["failures"]))
 
 
 class TransitionModelTests(unittest.TestCase):

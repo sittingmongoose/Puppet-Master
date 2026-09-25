@@ -96,6 +96,28 @@
       }
     },
     {
+      "case_id": "a7_registered_other_recovery_epoch",
+      "event_type": "coordination.agent_registered",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "run_id": "run_fixture_child_7",
+        "agent_id": "agent_fixture_7",
+        "thread_id": "thr_fixture_1",
+        "agent_type": "rust-engineer",
+        "parent_run_id": "run_fixture_parent",
+        "child_run_id": "run_fixture_child_7",
+        "node_id": "node_1.1.1",
+        "lane_id": "lane_a",
+        "worktree_id": "wt_fixture_7",
+        "platform": "codex",
+        "agent_revision": 1,
+        "idempotency_key": "coordination:coordination.agent_registered:project_fixture_alpha:agent_fixture_7:4:1",
+        "model_id": "gpt-5-codex",
+        "started_at_utc": "2026-09-25T04:00:00Z"
+      }
+    },
+    {
       "case_id": "a7_operation_initial_r2",
       "event_type": "coordination.agent_operation_updated",
       "payload": {
@@ -1950,6 +1972,99 @@
           "agent_revision": 1,
           "last_applied_event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91",
           "active_claim_count": 0
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "repeat_registration_of_registered_agent_refused",
+      "description": "A registration of an agent that is registered and not terminal is refused as already_registered, before the revision rule, unless it is an exact retry. Prepared under another recovery epoch, it has another idempotency key, so it is not a retry and reaches the transition table.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "exact_retry_original_result",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_registered_other_recovery_epoch",
+          "expected": "coordination_conflict:already_registered"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_7": {
+          "status": "queued",
+          "agent_revision": 1,
+          "last_applied_event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91",
+          "active_claim_count": 0
+        }
+      },
+      "final_file_claims": [],
+      "final_operations": []
+    },
+    {
+      "case_id": "repeat_registration_of_terminal_agent_refused",
+      "description": "A registration of a terminal agent is refused as already_terminal, before the revision rule, unless it is an exact retry: after the terminal event an exact retry of the original registration still returns the original event, and the registration prepared under another recovery epoch is already_terminal.",
+      "admitted_event_types": [
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_unregistered",
+        "coordination.agent_crashed",
+        "coordination.agent_aborted"
+      ],
+      "steps": [
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "appended",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_status_running_r2",
+          "expected": "appended",
+          "event_id": "evt_coordination_a7bdc319a4601dc160b2c56a1617f8c83c165419f670b07f12b3b8b8ab0a16c6"
+        },
+        {
+          "payload_case_id": "a7_unregistered_failed_r3",
+          "expected": "appended",
+          "event_id": "evt_coordination_32874d870fa1714dc0a9a71c8cc88afa1905b9db3a0012f7a9b6e225ceb2199a"
+        },
+        {
+          "payload_case_id": "a7_registered_full",
+          "expected": "exact_retry_original_result",
+          "event_id": "evt_coordination_49a4280d7f29128baa0e5a0c11fe511e079452eba26e871675942e4de8ce4d91"
+        },
+        {
+          "payload_case_id": "a7_registered_other_recovery_epoch",
+          "expected": "coordination_conflict:already_terminal"
+        }
+      ],
+      "final_agents": {
+        "agent_fixture_7": {
+          "status": "failed",
+          "agent_revision": 3,
+          "last_applied_event_id": "evt_coordination_32874d870fa1714dc0a9a71c8cc88afa1905b9db3a0012f7a9b6e225ceb2199a",
+          "active_claim_count": 0,
+          "terminal": {
+            "event_type": "coordination.agent_unregistered",
+            "outcome": "failed",
+            "occurred_at_utc": "2026-09-25T04:02:00Z"
+          }
         }
       },
       "final_file_claims": [],
