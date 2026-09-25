@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2159-L2539
+Source lines: L2159-L2548
 
-Source SHA256: `086e22172c69772f4209ca44cc7db729dd818fce7787d9f4abb9bb37aed562c7`
+Source SHA256: `c1e53a55bb4fb027e625c63054ca646cd5cdd5c05e732d99e689949af89209dc`
 
 ---
 
@@ -202,6 +202,7 @@ acceptance_criteria:
   - "Application-scope operations do not invent a Project; local-only route/open and pre-dispatch refusals do not invent Server or operation scope."
   - "Replay preserves the original owner result, outcome, receipt and command identity with zero repeated effects; terminal_unknown remains recovery-required."
   - "Schema evolution is a pre-build contract correction; old minimal records remain explicit unbound read/import lineage until actual missing references are resolved."
+  - "The two Forge review decisions bind authenticated original SIR identity, arguments, caller and owner evidence; accepted is nonterminal, unknown effects require reconciliation, and degraded mutation qualification remains unsupported."
 validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
 risk_class: command_response_identity_or_false_completion
 reasoning_tier: high
@@ -215,6 +216,14 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
+
+For exactly `cmd.forge.review.approve` and `cmd.forge.review.request_changes`, `Plans/sir_forge_review_dispatch.schema.json#/$defs/dispatch_binding` is the narrow SIR-owned original dispatch binding. The existing authenticated dispatcher is its sole producer: preserve the actual full IdentityEnvelope, request/dispatch/frame/target identities, original actor/permission, admission time, idempotency, exact closed Forge arguments and canonical argument payload digest. Actual application or Project scope comes from SIR admission, never hosted repository/provider-project identity. All independently owned generations remain independent. The original binding is separately resolved and authenticated; agreeing fixture snapshots, refs or hashes do not establish it. This adds no physical store, native proof, identity envelope, Full Thread shape change or reinterpretation of historical Forge requests.
+
+The binding explicitly reuses the nullable `Plans/source_control_contracts.schema.json#/$defs/return_context` value grammar for genuine original caller/return facts, without borrowing Source Control producer or topology authority. Outer null means the actual caller has no such return value, not that a real route may be discarded. An explicit `delivery_return_context` input comes from the actual current delivery/caller owner under that same nullable grammar and must equal the independently authenticated original value. It is not a normalized_request or UICommandResponse field or a new durable record. Missing, foreign or null-substituted delivery fails this bounded profile; unavailable caller delivery does not change the genuine operation result or replay the hosted effect. Value equality proves neither caller authentication nor delivery. Unrepresentable caller values remain unsupported rather than inventing GUI focus for API/automation callers.
+
+The SIR payload hash remains the canonical digest of the actual closed Forge command arguments, not the enclosing caller/identity/custody container. Native canonical digest and authentic original/owner record resolution are mandatory dependencies. The central adapter invokes the actual Forge selected-decision original/result/receipt/observation oracle, then binds original identity, operation, instance, idempotency, request/dispatch/frame/target, payload, permission and exact receipt. Snapshot before dependent calls and reject late mutation. Preserve original replay with zero repeated effects. Native provider/dispatcher/Permissions/caller authentication and physical original/observation replay/backup custody remain separate prerequisites.
+
+Forge `accepted` stays central nonterminal progress with null result_receipt_ref and genuine owner ObservableWork joined to the original full identity. A common accepted receipt is acknowledgement/progress evidence only, never terminal or inferred same-frame completion. Work state remains independent of command outcome. Terminal succeeded/blocked/failed/cancelled/recovery_required/effect_unknown maps to succeeded/rejected/failed/cancelled/terminal_unknown/terminal_unknown with the actual owner receipt; no_op is not inferred. This exact-two adapter explicitly refuses common `degraded` outcome pending Forge mutation qualification; historical shared schemas and degraded read callers remain unchanged. Availability degradation is a different axis. This is bounded static composition, not all Forge-command or native completion closure. An actual typed error with unknown effect state or an actual provider observation reporting unknown effects overrides a terminal label: central outcome stays terminal_unknown/recovery_required until reconciliation; a failed or cancelled label cannot turn uncertainty into a known result.
 
 
 For the installed SP-285 pending recovery route, actual canonical pending custody delegates the original normalized identity/payload digest, original dispatch ID and genuine nonterminal SIR outcome. Initial dispatch authentication occurs before pending publication; restart never downgrades success or recreates raw dispatch payloads. SIR alone advances that same original operation. Preserve an existing acknowledgement; if absent, acknowledge in the actual current recovery frame. Bind current full owner identity, target generation, availability, frame and revision. Resolve the actual SP-286 receipt before the final complete owner-local guard, then publish terminal companion/result/outcome/response atomically with no dependent resolver between guard and publication. Stale completion preserves pending custody and current legitimate holds; no silent redispatch or new operation is allowed.

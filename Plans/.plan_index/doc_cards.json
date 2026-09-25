@@ -3341,7 +3341,7 @@
         "future ProviderRequestEnvelope and CLI bridge context payloads",
         "future bridged-provider adapter contracts"
       ],
-      "line_count": 2107,
+      "line_count": 2110,
       "path": "Plans/CLI_Bridged_Providers.md",
       "plan_unit_count": 31,
       "plan_unit_ids": [
@@ -3414,7 +3414,7 @@
         "stream_resilience_drift",
         "worktree_context_drift"
       ],
-      "sha256": "a26b726d384136bc35572f9aa46269bd2734029c6c43f6fb91c9c0ee3254dc02",
+      "sha256": "44c3cfa5c3806c6a9ba4babf74561c51c41a1c8bc149e4cfd6f42f185adff772",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 31
@@ -8191,16 +8191,16 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 12,
+        "False": 13,
         "True": 3
       },
-      "heading_count": 43,
+      "heading_count": 45,
       "implementation_surfaces": [
         "Plans/Formatters_System.md"
       ],
-      "line_count": 1106,
+      "line_count": 1154,
       "path": "Plans/Formatters_System.md",
-      "plan_unit_count": 15,
+      "plan_unit_count": 16,
       "plan_unit_ids": [
         "FS-002",
         "FS-003",
@@ -8216,6 +8216,7 @@
         "FS-013",
         "FS-014",
         "FS-015",
+        "FS-016",
         "FS-001"
       ],
       "reasoning_tiers": [
@@ -8223,19 +8224,21 @@
       ],
       "risk_classes": [
         "formatter_drift",
+        "formatter_test_effects",
         "migration_lineage"
       ],
-      "sha256": "1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0",
+      "sha256": "c0054654c7d37d0b7562a5751fbb510f87c716c16162e48db9a0c9ec76bdb019",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 15
+        "accepted": 16
       },
       "title": "Formatters System (Canonical SSOT)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 14
+        "requirement": 15
       },
       "validation_surfaces": [
+        "bounded owner prose and PlanUnit structure review",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -10135,7 +10138,7 @@
         "future Teacher thread model chips",
         "future model route resolver"
       ],
-      "line_count": 9720,
+      "line_count": 9723,
       "path": "Plans/Models_System.md",
       "plan_unit_count": 139,
       "plan_unit_ids": [
@@ -10416,7 +10419,7 @@
         "webresearch_tiering_automation_session_boundary",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "a1d01fbcf74156142a37be481531cc77d2b06e2a70710030977511ac0c3e8770",
+      "sha256": "6f1bc38af76db1a37030921dc1cce39365039781a53862e862ff9aa4b6151815",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 139
@@ -16802,7 +16805,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 3183,
+      "line_count": 3192,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 52,
       "plan_unit_ids": [
@@ -16916,7 +16919,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "086e22172c69772f4209ca44cc7db729dd818fce7787d9f4abb9bb37aed562c7",
+      "sha256": "c1e53a55bb4fb027e625c63054ca646cd5cdd5c05e732d99e689949af89209dc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -20060,7 +20063,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T08:03:11Z",
+  "generated_at_utc": "2026-09-25T08:11:07Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20068,13 +20071,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3533,
+      "False": 3534,
       "True": 3200
     },
-    "plan_unit_count": 6733,
+    "plan_unit_count": 6734,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6542,
+      "accepted": 6543,
       "retired": 182,
       "superseded": 9
     },
@@ -20141,7 +20144,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5285,
+      "requirement": 5286,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

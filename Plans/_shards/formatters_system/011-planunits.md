@@ -2,9 +2,9 @@
 
 Source: `Plans/Formatters_System.md`
 
-Source lines: L283-L1088
+Source lines: L289-L1136
 
-Source SHA256: `1f94b8a1d7a00702bb320c1f2c49f4933b6b5d113354c335476dece8d8fd4aa0`
+Source SHA256: `c0054654c7d37d0b7562a5751fbb510f87c716c16162e48db9a0c9ec76bdb019`
 
 ---
 
@@ -757,6 +757,48 @@ owner_hints:
 - Plans/Formatters_System.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md'
+```
+
+### FS-016 - Explicit Formatter Test Evidence And Effects
+
+```yaml
+plan_unit_id: FS-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Formatters_System.md
+canonical_text: Explicit formatter health tests bind the selected definition, execution context and approved input; detection or enablement is not successful execution, and test output cannot implicitly modify live Project files or buffers.
+gui_related: false
+gui_classification_reason: This unit defines execution evidence and file-effect authority rather than test-control presentation.
+split_recommended: false
+depends_on: [FS-004, FS-007, FS-009]
+unblocks: []
+acceptance_criteria:
+  - Actual definition, command/environment/extensions, Project, Host/Environment, input and permission are bound before an explicit test.
+  - Blocked, unavailable, cancelled or unexecuted tests cannot report pass; actual execution reports exit/failure and output/diff.
+  - In-place tests cannot mutate a live Project target implicitly; applying output requires the separate existing FileSafe authority.
+  - Disablement, HTE triggers and DAE exclusion remain authoritative; no synthetic HTE write event or DAE formatter history is produced.
+  - Doctor consumes actual test evidence rather than inferring success from detection.
+validation_surfaces:
+  - bounded owner prose and PlanUnit structure review
+  - python3 scripts/pm-plan-index.py validate
+risk_class: formatter_test_effects
+reasoning_tier: standard
+context_scope: formatters_test_boundary
+implementation_surfaces: [Plans/Formatters_System.md]
+node_compile_hint:
+  mode: formatter_test_boundary
+  create_worknodes: false
+source_lineage:
+  - packet Settings DECISION_COVERAGE MGR-010 health/test requirement
+preserved_exact_tokens: [health/test, enabled(), HTE, DAE, FileSafe]
+negative_constraints:
+  - No new public command, settings-local executor, default test language or physical store is introduced.
+  - Formatter domain-definition versus ordinary Settings custody classification and migration are not decided here.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+  - Existing formatter/process safety and FileSafe retain execution and file-write authority.
+owner_hints: [Plans/Formatters_System.md]
 ```
 
 ### FS-001 - Formatters System Source-Preserving Bridge Retired

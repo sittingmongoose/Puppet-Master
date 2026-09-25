@@ -1183,6 +1183,8 @@ Rules:
 - Every control disclosure shown to the user MUST be derivable from this snapshot without ad hoc UI-only logic.
 - `source` MUST be one of `documented`, `empirical`, or `inferred` so future verification work can distinguish hard facts from provisional assumptions.
 
+Capability reconciliation retains separately attributable catalog declaration, provider discovery, authenticated-account discovery, safe-probe, observed-use and admin/user-override inputs when present. Each input remains qualified by its actual provider/model/route/account applicability, observation/verification and currentness; evidence about another route, account or generation cannot establish this one. An override is requested policy or declared configuration, not fabricated probe evidence, credentials or a permission grant. The existing transport/model/runtime intersection still constrains effective support. The resolver preserves disagreements and the reason for the effective decision instead of silently replacing evidence with a generic supported flag. Supported/unsupported, likely/unverified, temporary unavailability, PM transformation and alternate-route explanations remain distinct disclosures derived from that same snapshot; a temporary failure is not a permanent capability declaration, and a transformed or alternate route names its actual transformation/route and still requires its existing admission. These labels do not introduce a replacement storage enum or authorize fallback dispatch.
+
 Account-routing capability fields are part of the same canonical snapshot when a provider participates in multi-account-related selection, account switching, or pressure routing. Provider capability modeling for those paths is explicitly required and MUST expose:
 - `supports_multi_account`
 - `account_identity_kind`
@@ -6014,6 +6016,7 @@ unblocks: []
 acceptance_criteria:
 - Snapshot rows expose context/max-token fields, fallback-chain entries, source refs, verification state, and staleness state.
 - Every control and context-window disclosure shown to the user is derivable from the snapshot without ad hoc UI-only logic.
+- Capability inputs preserve source, applicability, currentness and disagreements; overrides do not manufacture support, and transformed/alternate-route disclosure grants no fallback authority.
 - Requested/effective model identity and fallback/clamp state remain visible to runtime and GUI consumers.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:

@@ -2738,6 +2738,39 @@
       ]
     },
     {
+      "disposition_id": "scd.sir.forge_review_dispatch_binding.v1",
+      "system_id": "shared_integration_runtime",
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "schema_ref": "Plans/sir_forge_review_dispatch.schema.json",
+      "record_kinds": [
+        "pm.sir.forge_review_dispatch_binding.v1"
+      ],
+      "persistence_disposition": "durable",
+      "physical_family_status": "physical_family_registration_pending",
+      "existing_family_refs": [],
+      "retention_disposition": {
+        "mode": "physical_registration_pending",
+        "refs": [],
+        "hold_rule": "Preserve the authentic SIR original dispatch, full admitted identity, Forge arguments and caller binding while response, replay, effect reconciliation, backup or audit requires it. Exact physical retention owner and per-kind policy assignment remain pending; no Project/run completion anchor is invented.",
+        "expiry_rule": "No cleanup writer or retention interval is admitted by this pending logical record. Register actual physical key/value, producer/readers, reference holds, retention/deletion and original replay custody before durable writes; transient delivery disposal does not release original authority."
+      },
+      "redaction_transform_ids": [
+        "rt.no_secret_refs.v1",
+        "rt.auth_browser_session_exclusion.v1"
+      ],
+      "migration_rule": "No existing dispatcher/outcome/Forge receipt value is silently reinterpreted as this complete original binding. No historical caller, identity, permission or argument provenance is synthesized. Exact physical version/writer/reader/migration admission remains pending; no effect replay or peer store.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "auth_browser_session_disposition": "excluded_unpersisted_untargetable",
+      "runtime_evidence": false,
+      "rationale": "SIR-owned typed original dispatch facts have durable intent but no admitted physical family or native source authentication. The delivery_return_context value and fixture_case wrapper are not durable record kinds. This disposition introduces no TTL, store, dispatcher implementation or protected Full Thread schema change.",
+      "source_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-042",
+        "Plans/Forge_Integrations.md",
+        "Plans/sir_forge_review_dispatch.schema.json",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
       "disposition_id": "scd.forge.review_decision_observation.v1",
       "system_id": "forge",
       "owner_doc": "Plans/Forge_Integrations.md",

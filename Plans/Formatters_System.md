@@ -172,6 +172,12 @@ command = ["my-fmt", "--fix", "$FILE"]
 extensions = [".xyz", ".abc"]
 ```
 
+#### Explicit health and test boundary
+
+Formatter health and an explicit formatter test are distinct from availability detection and enabled state. A passed detector, executable presence or custom enabled() = true does not establish successful formatting. A test binds the actual selected definition and its command/environment/extensions, effective Project and Host/Environment, approved input and current permission context. It reports whether execution occurred, actual exit/failure evidence and resulting output/diff; blocked, unavailable, cancelled or unexecuted tests never report a pass. Test output does not replace a Project file or editor buffer implicitly: applying changes remains a separate existing FileSafe-authorized operation. Command execution uses the existing formatter/process safety owner, not an unvalidated shell string or a new settings-local executor. Existing disablement and DAE restrictions still apply. An in-place formatter test must not receive a live Project-file or editor-buffer target whose mutation would bypass the separate apply authorization. The normal HTE trigger and DAE no-post-hoc-formatting rules are unchanged; running a test does not manufacture an HTE write/edit event or DAE formatter history. Doctor may consume this actual result but may not infer it from detection.
+
+ContractRef: ContractName:Plans/Formatters_System.md#FS-016, ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md
+
 ### 4.5 Config persistence
 
 Formatter config is stored in:
@@ -1029,6 +1035,48 @@ owner_hints:
 - Plans/Formatters_System.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md'
+```
+
+### FS-016 - Explicit Formatter Test Evidence And Effects
+
+```yaml
+plan_unit_id: FS-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Formatters_System.md
+canonical_text: Explicit formatter health tests bind the selected definition, execution context and approved input; detection or enablement is not successful execution, and test output cannot implicitly modify live Project files or buffers.
+gui_related: false
+gui_classification_reason: This unit defines execution evidence and file-effect authority rather than test-control presentation.
+split_recommended: false
+depends_on: [FS-004, FS-007, FS-009]
+unblocks: []
+acceptance_criteria:
+  - Actual definition, command/environment/extensions, Project, Host/Environment, input and permission are bound before an explicit test.
+  - Blocked, unavailable, cancelled or unexecuted tests cannot report pass; actual execution reports exit/failure and output/diff.
+  - In-place tests cannot mutate a live Project target implicitly; applying output requires the separate existing FileSafe authority.
+  - Disablement, HTE triggers and DAE exclusion remain authoritative; no synthetic HTE write event or DAE formatter history is produced.
+  - Doctor consumes actual test evidence rather than inferring success from detection.
+validation_surfaces:
+  - bounded owner prose and PlanUnit structure review
+  - python3 scripts/pm-plan-index.py validate
+risk_class: formatter_test_effects
+reasoning_tier: standard
+context_scope: formatters_test_boundary
+implementation_surfaces: [Plans/Formatters_System.md]
+node_compile_hint:
+  mode: formatter_test_boundary
+  create_worknodes: false
+source_lineage:
+  - packet Settings DECISION_COVERAGE MGR-010 health/test requirement
+preserved_exact_tokens: [health/test, enabled(), HTE, DAE, FileSafe]
+negative_constraints:
+  - No new public command, settings-local executor, default test language or physical store is introduced.
+  - Formatter domain-definition versus ordinary Settings custody classification and migration are not decided here.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+  - Existing formatter/process safety and FileSafe retain execution and file-write authority.
+owner_hints: [Plans/Formatters_System.md]
 ```
 
 ### FS-001 - Formatters System Source-Preserving Bridge Retired

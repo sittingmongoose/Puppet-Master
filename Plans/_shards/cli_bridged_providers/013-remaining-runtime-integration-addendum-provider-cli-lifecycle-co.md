@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L1641-L1808
+Source lines: L1641-L1811
 
-Source SHA256: `a26b726d384136bc35572f9aa46269bd2734029c6c43f6fb91c9c0ee3254dc02`
+Source SHA256: `44c3cfa5c3806c6a9ba4babf74561c51c41a1c8bc149e4cfd6f42f185adff772`
 
 ---
 
@@ -49,6 +49,8 @@ usage_telemetry_state
 The native provider owner resolves the original query, setup binding, exact route/account/product/credential compatibility, and independently issued facts. Proof identities, dispositions and evidence must equal those original sources. Historical proof remains immutable; current consumers separately revalidate route/account/installation/topology and disclosure after helpers under the existing owner fence. Credential references, schema equality or earlier authentication are not readiness authority. This finite contract adds no command, writer, storage key, account/product/credential-proof family or second readiness engine. Actual probes, authentication, source verification and dispatch remain native implementation obligations. The query/proof values are nonpersisted owner-read projections, not newly admitted physical records.
 
 Claude CLI and Antigravity CLI OAuth/native login remain CLI-owned. PM may select an isolated supported profile root, launch the CLI-owned login, handle a protected human-only browser/device-code step, and verify identity/readiness afterward, but it must not label or copy that flow as PM-direct OAuth. PM-direct OAuth exists only for explicitly supported direct-provider clients. Provider setup manifests own exact official URLs/domains and trusted probe procedure IDs; manifests and clients cannot inject arbitrary shell commands.
+
+Account concurrency is an applicability fact of the actual provider route, executable generation, selected profile/account and exact Host/Environment—not a consequence of displaying several account rows or setting supports_multi_account. The provider adapter discloses which of its supported native-profile, isolated-home, auth-only-profile, credential-pool or PM-managed-connection forms is actually in use and what mutable login/profile state that form shares. Those are descriptive capabilities, not a promise that every provider supports every form or new credential-store variants. Auth-only import and a pool membership do not by themselves prove isolated concurrent execution. Where the selected CLI has a single-active-login limitation or cannot establish independent runnable account state, concurrent account use is unavailable with that owner reason; switching follows the existing supported switch boundary and does not rewrite an in-flight attempt's account/profile. Shared installation identity is not shared login authority. Existing provider-specific root, native-login and OS credential-store rules remain authoritative; no retired provider route is revived.
 
 `Plans/provider_setup_manifest_contracts.schema.json` defines the PM-owned declarative setup-method value consumed by the existing provider/auth owners. Its sixteen metadata dimensions are provider identity, setup-method identity, human label, credential owner (`cli`, `pm`, or `external_service`), account-creation destination, authorization/key-creation destination and exact domain allowlist, instructions, required scopes/organization/region, secure-input description, callback/device-code behavior, validation procedure, model-refresh procedure, Usage-refresh procedure, exact return destination, known limitations, and source/last-verification provenance. A method may explicitly mark an inapplicable destination or optional procedure null; absence never guesses a provider URL, callback, support or default. Provider identity resolves to the existing concrete provider entry, not just its family label.
 
@@ -117,6 +119,7 @@ acceptance_criteria:
   - Missing provider CLI demand returns typed provider_setup_required with exact Host/Environment and continuation evidence and never silently installs or cross-routes.
   - ProviderReadinessProof keeps installation, executable, auth, account, entitlement, model, adapter, capability, generation, and Usage facts independent.
   - Claude CLI and Antigravity CLI auth remain CLI-owned; PM-direct OAuth is not fabricated.
+  - Account concurrency follows proven route/profile/Host isolation; auth-only import, credential pools and multiple visible rows never prove concurrent runnable account state or erase single-active-login limits.
   - Post-consent activation or rollback revalidates every dependent route while preserving in-flight installation-generation truth.
   - Failure classes and fingerprints are typed; unchanged automatic failures are suppressed by shared-runtime loop policy.
   - Recovery choices bind the original failure and exact installation; Stop checking uses the current shared disabled policy, Keep current preserves verified activation without rewriting preferences, and Pin stays unavailable until its exact owner contract is admitted.

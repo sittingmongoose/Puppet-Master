@@ -31,6 +31,8 @@ SHARED_SCHEMA = "Plans/shared_runtime_command_contracts.schema.json"
 BROWSER_SCHEMA = "Plans/section15_browser_program_contracts.schema.json"
 SERVER_SCHEMA = "Plans/server_system_contracts.schema.json"
 SOURCE_CONTROL_SCHEMA = "Plans/source_control_contracts.schema.json"
+FORGE_REVIEW_COMMANDS = frozenset(("cmd.forge.review.approve", "cmd.forge.review.request_changes"))
+FORGE_REVIEW_BINDING = {"path": "Plans/forge_review_decisions.schema.json", "json_pointer": "#/$defs/result", "schema_id": "pm.forge.review_decision.result.v1"}
 GIT_THREE_COMMANDS = frozenset(("cmd.git.commit", "cmd.source_control.stash.create", "cmd.source_control.branch.create"))
 GIT_THREE_BINDING = {"path": "Plans/git_selected_three.schema.json", "json_pointer": "#/$defs/result", "schema_id": "pm.source_control.git_selected.result.v1"}
 
@@ -84,13 +86,15 @@ def response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=Non
     result = bundle.get("owner_result") or {}
     git_three = (response.get("command_id") in GIT_THREE_COMMANDS
                  or result.get("schema_id") == GIT_THREE_BINDING["schema_id"])
-    if not git_three:
+    forge_review = (response.get("command_id") in FORGE_REVIEW_COMMANDS
+                    or result.get("schema_id") == FORGE_REVIEW_BINDING["schema_id"])
+    if not git_three and not forge_review:
         return _response_bundle_failures(bundle)
     snapshot = deepcopy(bundle)
     failures = _response_bundle_failures(snapshot, resolve_owner_record=resolve_owner_record,
                                          canonical_request_digest=canonical_request_digest)
     if bundle != snapshot:
-        failures.append("git3_bundle_mutated_during_resolution")
+        failures.append("forge_bundle_mutated_during_resolution" if forge_review else "git3_bundle_mutated_during_resolution")
     return sorted(set(failures))
 
 
@@ -118,7 +122,7 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
         if response["response_kind"] == "local_projection":
             commands = schema(SHARED_SCHEMA)["$defs"]["canonical_command_id"]["enum"]
             scm_commands = schema(SOURCE_CONTROL_SCHEMA)["$defs"]["source_control_command_id"]["enum"]
-            if response["command_id"] in commands or response["command_id"] in scm_commands or response["command_id"] in GIT_THREE_COMMANDS:
+            if response["command_id"] in commands or response["command_id"] in scm_commands or response["command_id"] in GIT_THREE_COMMANDS or response["command_id"] in FORGE_REVIEW_COMMANDS:
                 failures.append("durable_command_disguised_as_local_projection")
         return sorted(set(failures))
     if structural_failures(OUTCOME_SCHEMA, outcome, "#/$defs/CommandOutcomeRecord"):
@@ -154,6 +158,8 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
     for field in ("owner_result_ref", "owner_result_schema_ref"):
         if response[field] != outcome[field]:
             failures.append("outcome_" + field + "_mismatch")
+    if response["command_id"] in FORGE_REVIEW_COMMANDS and response["owner_result_schema_ref"] != FORGE_REVIEW_BINDING:
+        failures.append("forge_review_owner_result_binding")
     if response["command_id"] in GIT_THREE_COMMANDS and response["owner_result_schema_ref"] != GIT_THREE_BINDING:
         failures.append("git3_owner_result_binding")
     if response["owner_result_ref"] is None:
@@ -189,6 +195,15 @@ def _response_bundle_failures(bundle: dict[str, Any], *, resolve_owner_record=No
                 failures.extend(shared_owner_failures(response, outcome, owner_result))
             elif owner_result.get("record_kind") == "browser_command_result":
                 failures.extend(browser_owner_failures(response, outcome, owner_result))
+            elif owner_result.get("schema_id") == FORGE_REVIEW_BINDING["schema_id"]:
+                if "delivery_return_context" not in bundle:
+                    failures.append("forge_delivery_owner_value_missing")
+                from pm_forge_review_response import response_failures as forge_response_failures
+                failures.extend(forge_response_failures(
+                    response, outcome, owner_result, bundle.get("owner_request"), request,
+                    bundle.get("original_binding_ref"), bundle.get("delivery_return_context"),
+                    resolve_record=resolve_owner_record, canonical_request_digest=canonical_request_digest,
+                    canon_root=ROOT, registry=registry()))
             elif owner_result.get("schema_id") == GIT_THREE_BINDING["schema_id"]:
                 from pm_git_selected_response import response_failures as git_three_response_failures
                 failures.extend(git_three_response_failures(

@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1433-L7479
+Source lines: L1435-L7482
 
-Source SHA256: `a1d01fbcf74156142a37be481531cc77d2b06e2a70710030977511ac0c3e8770`
+Source SHA256: `6f1bc38af76db1a37030921dc1cce39365039781a53862e862ff9aa4b6151815`
 
 ---
 
@@ -4592,6 +4592,7 @@ unblocks: []
 acceptance_criteria:
 - Snapshot rows expose context/max-token fields, fallback-chain entries, source refs, verification state, and staleness state.
 - Every control and context-window disclosure shown to the user is derivable from the snapshot without ad hoc UI-only logic.
+- Capability inputs preserve source, applicability, currentness and disagreements; overrides do not manufacture support, and transformed/alternate-route disclosure grants no fallback authority.
 - Requested/effective model identity and fallback/clamp state remain visible to runtime and GUI consumers.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:

@@ -11,12 +11,16 @@ Remaining categories are distinct:
 
 Latest owner-prose step and corrected Backup credits are in
 `selected-operation-prose-boundaries.md`. The selected-operation machine
-companions remain pending; prose and pre-existing typed-owner credit must not be
-reported as new native implementation or as whole-family completion.
+companions are partially integrated: Git ACT016/018/020 and their central response
+composition, Forge ACT051/052 and their SIR response binding, and Usage quota-aware
+refresh/export are now specified and statically tested. Remaining exact selections
+are listed below; this is not native implementation or whole-family completion.
 
-1. Exact Storage specification integration: the current registry has 22 explicitly
-   pending disposition rows after capability integration, including Guided Tour
-   and pairing custody. These are not 22 engines to build. Determine owner key/value/retention/migration
+1. Exact Storage specification integration: the current registry has 26 explicitly
+   pending disposition rows (25 physical-family and one external-store pending),
+   including Guided Tour, pairing and the original Forge dispatch binding. Its
+   64 dispositions leave the 294 physical families unchanged. These are not
+   26 engines to build. Determine owner key/value/retention/migration
    decisions separately from deployment of already specified native writers.
 2. Narrow authority adjudications: Settings exposure/import semantics, Vault
    sharing and supervisor scope, and remaining plugin applicability clauses.
@@ -54,12 +58,59 @@ the remaining distinctions above still apply.
 Refined Backup, pairing, application-check and Tour custody proposals remain
 external owner-review evidence, not newly admitted policies or physical writers.
 Tour original Chat/layout capture custody remains a protected-owner dependency;
-no generic reference or fixture claims to supply it. The limited Usage companion
-is integrated in `usage-core-command-companion.md`; additional Ledger filters and
-execution-free quota-only rows remain typed-profile gaps, not native-only work.
+no generic reference or fixture claims to supply it. The Usage core and execution-free
+quota successor are integrated in `usage-core-command-companion.md` and
+`usage-quota-successor.md`; additional Ledger type/event/session/tier/search/sort/
+selection grammar remains explicitly unresolved.
 The neutral SCM staging is partial: adoption/removal preview contents remain
 untyped and it is not enrolled as a sufficient current effect boundary. Its final
 second-cycle review also reproduced a resolver mutating the original request
 after earlier comparisons without detection. Both are recorded open, with no
 third review loop or public enrollment: `/mnt/Cursor/PM-Experiments/scm-selected-operands-20260925-LN2w1A/independent-final-cycle2.md`,
 SHA-256 `f0a270860e4d198c52304d9394ec53d7043e6bfe72067b913fe9cfaef97589e9`.
+
+## Exact current residuals
+
+All 21 Settings compound comparisons now have explicit adjudications, not 21
+closures. LSP and Debug are already specified; raw desktop maps existing IDs.
+PROV012 recovery meanings and PROV020 catalog LKG/history are repaired, with
+Pin's actual writer still unbound. PROV016 concurrency applicability, PROV022
+evidence preservation/disclosure and MGR010 safe test-versus-detection prose are
+now repaired. MGR019 retains only general non-file/provider-artifact action
+applicability. See the companion reports; frozen earlier overlays remain history.
+
+Remaining selected-input/result composition uses these existing source IDs:
+
+| Owner | Exact remaining IDs |
+| --- | --- |
+| Neutral SCM, final-review open | ACT006,008,009,012,013,045 |
+| Git | ACT017,019 |
+| JJ | ACT037,038,039 |
+| Forge | ACT048,053,060,062,067,070,071,072,075,156 |
+| Backup | ACT090,091,092,099,105,111,118,119,120 |
+| CredentialBroker | ACT087 |
+
+These are overlapping source occurrences, not a new feature denominator.
+Backup ACT094/109/124 already have actual typed owner values; do not add duplicates.
+JJ undo/restore already carry selected operation IDs; their remaining obligation
+is qualified preview contents and original/result joins. Two external bounded
+successors are in preparation: Backup discovery/browse ACT092/099 and JJ publication
+ACT039. Proposals are not integrated or closure evidence.
+
+Named decision blockers remain personal-dictionary custody; SET013 missing-ID
+merge/replace behavior; SET008 Expert/Risky facet; DRY application/Project writer
+mapping; MGR007 shortcut-import unknown-ID/duplicate-key behavior; MGR010 per-field
+formatter custody/migration; equally applicable conflicting capability evidence
+precedence; and the additional Ledger query grammar. No defaults are invented.
+Cookie telemetry remains conditional, not a required engine, and cross-Vault
+sharing constraints do not require a deduplication feature.
+
+Two other bounded seams: Client–Server relation to Environment supervisor authority
+is unbound (no second supervisor or guessed identity equivalence); the exact Ego
+legacy Codex import acceptance needs original manifest/skill input custody. A
+synthetic old PM hooks/tools migration fixture cannot stand in for that package.
+
+Consolidation snapshot before the additional Forge original-binding row:
+`/mnt/Cursor/PM-Experiments/settings-compound-overlay-20260925/FINITE-QUEUE-CONSOLIDATION.md`,
+SHA-256 `78a5711e8bf91bcfa7090ee9e674113db29c618880e8e7daa1958de689c243c8`.
+Its 25-pending count is historical; the current 26 above includes that new row.
