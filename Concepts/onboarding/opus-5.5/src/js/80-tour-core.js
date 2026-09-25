@@ -8,7 +8,7 @@
   const O55 = window.O55, U = O55.util, T = (k, v) => O55.t(k, v), M = O55.motion;
   const TR = O55.tour = { defs: [], byId: {}, running: false };
   const KEY = 'tour', ROOT = 'pm-o55-tour';
-  const st = TR.st = { sess: null, root: null, step: null, advancing: false, show: null, hole: null, spring: null, poll: null, raf: 0, snap: null, missingSince: 0, tips: 'normal', paused: false };
+  const st = TR.st = { sess: null, root: null, step: null, advancing: false, show: null, hole: null, spring: null, poll: null, raf: 0, snap: null, missingSince: 0, tips: 'normal', paused: false, entries: {}, rewinding: false, entering: false, pendingBack: false, seq: 0 };
   const CHAPTERS = ['ask', 'workspace', 'plan'];
   TR.CHAPTERS = CHAPTERS;
   TR.define = (def) => { def.index = TR.defs.length; TR.defs.push(def); TR.byId[def.id] = def; return def; };
@@ -358,6 +358,9 @@
   /* ------------------------------------------------------------------ step flow */
   async function goStep(i, o) {
     o = o || {};
+    /* one transition at a time: a newer one (Back pressed as a step arrives) makes this one stand down after its
+       awaits, and Back waits for the step to settle */
+    const my = ++st.seq; st.entering = true;
     /* the old step's loop stops first: while the new step's enter() runs (a page change, a card growing in) nothing
        may measure or place against a half-built layout */
     if (st.poll) { st.poll.cancel(); st.poll = null; }
@@ -365,13 +368,18 @@
     if (prev && prev.leave) { try { prev.leave(st); } catch (_) {} }
     if (i >= TR.defs.length) return finish(false);
     st.step = TR.defs[Math.max(0, i)]; st.sess.index = st.step.index; st.missing = false; st.missingSince = 0; st.advancing = false; st.lastReady = undefined; st.side = null; st.fixed = null;
+    if (!o.back) st.entries[st.step.id] = entrySnap();
     save();
     if (st.step.enter) { try { await st.step.enter(st, o); } catch (err) { console.warn('O55 tour: enter failed', st.step.id, err); } }
+    if (my !== st.seq) return;
     await stillTarget(); /* a page that slides in, a card that grows: place against where things come to rest */
+    if (my !== st.seq) return;
     renderBar(); renderCallout(true);
     if (!o.silent) O55.sound.play(st.step.kind === 'info' ? 'spot' : 'step');
     U.announce(T('tour.bar.progress', { n: CHAPTERS.indexOf(st.step.chapter) + 1, name: T('tour.chapters.' + st.step.chapter), s: TR.defs.filter((d) => d.chapter === st.step.chapter).indexOf(st.step) + 1, total: TR.defs.filter((d) => d.chapter === st.step.chapter).length }) + '. ' + copy(st.step.id, 'title'), st.root);
     watch();
+    st.entering = false;
+    if (st.pendingBack) { st.pendingBack = false; back(); }
   }
   /* wait (up to 700 ms) until the step's target holds the same rectangle for two frames running */
   async function stillTarget() {
@@ -414,7 +422,7 @@
     save(); O55.sound.play('step'); renderBar(); renderCallout(false);
     const hold = s.after ? 2200 : 900;
     st.root.querySelector('.o55t-callout').classList.add('o55t-success');
-    M.after(hold, () => { const c = st.root.querySelector('.o55t-callout'); c.classList.remove('o55t-success'); if (TR.running && st.step === s && !s.stay) goStep(s.index + 1); else st.advancing = false; });
+    M.after(hold, () => { const c = st.root.querySelector('.o55t-callout'); c.classList.remove('o55t-success'); if (TR.running && st.step === s && !s.stay && !st.rewinding && !st.entering) goStep(s.index + 1); else st.advancing = false; });
   }
   TR.complete = () => st.step && complete(st.step);
 
@@ -422,8 +430,9 @@
     const b = e.target.closest('[data-o55t]'); if (!b) return;
     e.preventDefault(); e.stopPropagation();
     const a = b.getAttribute('data-o55t'), arg = b.getAttribute('data-arg');
+    if (st.entering && (a === 'next' || a === 'showMe' || a === 'skipStep')) return; /* the new step's own controls come with it */
     if (a === 'next') { O55.sound.play('next'); if (st.step.onNext) st.step.onNext(st); return goStep(st.step.index + 1); }
-    if (a === 'back') { O55.sound.play('back'); return goStep(Math.max(0, st.step.index - 1), { back: true }); }
+    if (a === 'back') { O55.sound.play('back'); return back(); }
     if (a === 'showMe') return showMe();
     if (a === 'skip') return skip();
     if (a === 'pause') return togglePause();
@@ -434,12 +443,54 @@
     if (a === 'finish') return finish(arg === 'keep');
     if (st.step && st.step.actions && st.step.actions[a]) return st.step.actions[a](st, arg, b);
   }
+  /* ------------------------------------------------------------------ Back rewinds */
+  /* How the app looked when a step began, before its enter(): Chat's place, the dashboard's widgets, the page, the
+     guided conversation (persona, ELI5, the exchanges so far) and the practice plan. Back puts the app back to that, and
+     the step and every later one are undone, so the step can be done again or watched with Show Me. */
+  function entrySnap() {
+    const api = window.PM_HOME_WORKSPACE, chat = api && api.layout ? api.layout.surfaces.find((x) => x.surface_kind === 'chat') : null;
+    const tab = document.querySelector('.page-tab.active[data-page]');
+    return { chat: chat ? { host: chat.host, visible: !!chat.visible } : null, widgets: dashSnapshot(), page: tab ? tab.getAttribute('data-page') : null,
+      talk: TR.chat && TR.chat.mark ? TR.chat.mark() : null, practice: TR.practice && TR.practice.mark ? TR.practice.mark() : null };
+  }
+  function openPage(p) {
+    const cur = document.querySelector('.page-tab.active[data-page]');
+    if (!p || (cur && cur.getAttribute('data-page') === p)) return;
+    const t = document.querySelector(`.page-tab[data-page="${p}"]`) || document.querySelector(`#pageTabsMoreMenu .pm6-tb-pages-more-item[data-page="${p}"]`);
+    if (t) t.click();
+  }
+  async function rewind(e) {
+    const api = window.PM_HOME_WORKSPACE;
+    if (TR.practice && TR.practice.rewind) TR.practice.rewind(e.practice);
+    openPage(e.page);
+    if (TR.chat && TR.chat.rewind) await TR.chat.rewind(e.talk);
+    if (api && e.chat) {
+      const now = api.layout.surfaces.find((x) => x.surface_kind === 'chat');
+      if (now && now.host !== e.chat.host) { try { api.moveSurface('chat', e.chat.host); } catch (_) {} }
+      if (now && !!now.visible !== e.chat.visible) { try { api.setSurfaceVisible('chat', e.chat.visible, 'cmd.panel.switch'); } catch (_) {} }
+    }
+    if (e.widgets && JSON.stringify(dashSnapshot()) !== JSON.stringify(e.widgets)) await dashRestore(e.widgets);
+    await M.delay(120);
+  }
+  async function back() {
+    const cur = st.step; if (!cur || cur.index === 0 || st.rewinding) return;
+    if (st.entering) { st.pendingBack = true; return; }
+    st.rewinding = true; interruptShow();
+    if (st.poll) { st.poll.cancel(); st.poll = null; }
+    const to = TR.defs[cur.index - 1], e = st.entries[to.id];
+    st.sess.done = st.sess.done.filter((id) => TR.byId[id] && TR.byId[id].index < to.index);
+    try { if (e) await rewind(e); } catch (err) { console.warn('O55 tour: rewind failed', to.id, err); }
+    st.rewinding = false;
+    return goStep(to.index, { back: true });
+  }
+  TR.back = back;
+
   function togglePause() {
     st.paused = !st.paused; st.root.toggleAttribute('data-paused', st.paused);
     if (st.paused) interruptShow();
     renderBar(); O55.sound.play(st.paused ? 'toggleOff' : 'toggleOn');
   }
-  function save() { O55.store.set(KEY, { v: 1, status: st.sess.status, index: st.sess.index, done: st.sess.done, tips: st.tips, started: st.sess.started, project: st.sess.project, chatTucked: !!st.sess.chatTucked, snap: st.snap }); }
+  function save() { O55.store.set(KEY, { v: 1, status: st.sess.status, index: st.sess.index, done: st.sess.done, tips: st.tips, started: st.sess.started, project: st.sess.project, chatTucked: !!st.sess.chatTucked, snap: st.snap, entries: st.entries }); }
 
   /* ------------------------------------------------------------------ lifecycle */
   TR.start = async function start(o) {
@@ -450,6 +501,9 @@
     build(); syncTheme();
     st.sess = resume ? { status: 'running', index: saved.index, done: saved.done || [], started: saved.started, project: saved.project || o.project || null, chatTucked: !!saved.chatTucked } : { status: 'running', index: 0, done: [], started: new Date().toISOString(), project: o.project || null };
     st.tips = (resume && saved.tips) || 'normal';
+    /* a new run starts clean: nothing the last run sent, answered or planned counts as done */
+    if (!resume) { if (TR.chat && TR.chat.reset) TR.chat.reset(); if (TR.practice && TR.practice.reset) TR.practice.reset(); }
+    st.entries = resume && saved.entries ? saved.entries : {};
     st.snap = resume && saved.snap ? saved.snap : snapshot();
     st.counters = TR.counters();
     TR.running = true; st.paused = false;
@@ -484,7 +538,7 @@
       g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: 'ease', fill: 'forwards' }).finished.then(() => g.remove());
     }).catch(() => { c.classList.remove('o55t-morphing'); g.remove(); });
   }
-  async function end(status, keep) {
+  async function end(status, keep, o) {
     TR.running = false; if (st.poll) st.poll.cancel(); interruptShow();
     if (st.step && st.step.leave) { try { st.step.leave(st); } catch (_) {} }
     const res = await restore(st.snap, keep);
@@ -494,7 +548,7 @@
     st.sess.status = status; st.sess.restored = res; O55.store.set(KEY, { v: 1, status, done: st.sess.done, finished: new Date().toISOString(), keep: !!keep, restored: res });
     document.documentElement.removeAttribute('data-o55-tour');
     if (st.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }
-    st.root.classList.add('o55t-closing'); O55.sound.play(status === 'done' ? 'finish' : 'close');
+    st.root.classList.add('o55t-closing'); if (!(o && o.silent)) O55.sound.play(status === 'done' ? 'finish' : 'close');
     M.after(360, () => { st.root.hidden = true; st.root.classList.remove('o55t-closing'); st.step = null; st.hole = null; });
     return res;
   }
@@ -519,6 +573,16 @@
     TR.landing && TR.landing();
     window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: 'finished', keep: !!keep, restored: res } }));
   }
+  /* Run Onboarding Again: the tour starts over too. A running tour ends (the layout comes back); its saved progress,
+     its resume chip and what it remembers of the last run go. */
+  TR.reset = async function reset(o) {
+    if (TR.running) await end('skipped', false, o);
+    O55.store.clear(KEY);
+    st.entries = {};
+    if (TR.chat && TR.chat.reset) TR.chat.reset();
+    if (TR.practice && TR.practice.reset) TR.practice.reset();
+    const chip = document.getElementById('o55-tourchip'); if (chip) chip.remove();
+  };
   TR.skip = skip; TR.finish = finish; TR.go = (id) => goStep(TR.byId[id].index);
   TR.state = () => ({ running: TR.running, step: st.step && st.step.id, done: st.sess ? st.sess.done.slice() : [], paused: st.paused, tips: st.tips });
 

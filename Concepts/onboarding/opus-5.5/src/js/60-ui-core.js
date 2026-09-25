@@ -346,12 +346,32 @@
       inerted.forEach((n) => n.setAttribute('inert', ''));
     } else { inerted.forEach((n) => n.removeAttribute('inert')); inerted = []; }
   }
+  /* Run Onboarding Again (the Home menu, Settings, the demo pill) starts over for real: a new run, a clean fixture
+     world, no operation of the old run left running or reporting, and the Guided Tour back at its first step. */
+  function startOver() {
+    S.epoch = (S.epoch || 0) + 1;
+    O55.owners.resetOps(); O55.flow.clearInflight();
+    S.env = O55.fixtures.make(O55.store.get('scenario', 'fresh'));
+    O55.motion.setLowResource(!!S.env.lowResource, 'scenario');
+    if (O55.tour && O55.tour.reset) O55.tour.reset({ silent: true });
+  }
   function open(opts) {
     opts = opts || {};
     build();
+    /* a Project that is being created is never abandoned half-made: starting over waits for it, on its own screen */
+    let waitNote = false;
+    if (opts.fresh) {
+      const cur = S.sess || O55.store.get(KEY, null);
+      if (cur && cur.commit && cur.commit.state === 'running') { opts = Object.assign({}, opts, { fresh: false, screen: 'creating' }); waitNote = true; }
+      else startOver();
+    }
     S.env = S.env || O55.fixtures.make(O55.store.get('scenario', 'fresh'));
     const saved = opts.fresh ? null : O55.store.get(KEY, null);
-    S.sess = saved && saved.v === 1 && saved.status !== 'done' && saved.status !== 'skipped' ? Object.assign(freshSession(), saved) : freshSession();
+    const resumable = saved && saved.v === 1 && saved.status !== 'done' && saved.status !== 'skipped';
+    /* reopening the same run in the same page keeps the live session: operations still running (a Project being
+       created, a key being added) report into the objects they started with */
+    const live = resumable && S.sess && S.sess.started === saved.started;
+    S.sess = live ? S.sess : resumable ? Object.assign(freshSession(), saved) : freshSession();
     if (opts.fresh || (saved && (saved.status === 'done' || saved.status === 'skipped'))) S.sess = freshSession();
     S.resumed = !!(saved && !opts.fresh && saved.status === 'closed');
     /* facts the person established earlier (a trusted device, an installed key) are re-applied to the fixture world */
@@ -374,6 +394,8 @@
     const stage = r.querySelector('.o55-stage'); stage.innerHTML = ''; stage.removeAttribute('data-scene-key');
     transition('open');
     O55.sound.play('open');
+    const chip = document.getElementById('o55-resume'); if (chip) chip.remove();
+    if (waitNote) O55.motion.after(700, () => O55.ui.toast(T('chrome.startOverWait')));
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: 'opened', screen: S.sess.screen, resumed: S.resumed } }));
     return true;
   }

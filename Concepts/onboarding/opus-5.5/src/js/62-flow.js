@@ -17,9 +17,12 @@
        'running' op from before a reload is not in flight, so it resumes */
     if (inflight.has(key) || (cur && cur.state === 'done')) return Promise.resolve(cur);
     inflight.add(key);
+    /* an operation belongs to the run that started it: after Run Onboarding Again its late reports are dropped */
+    const epoch = S.epoch || 0, stale = () => (S.epoch || 0) !== epoch;
     S.sess.ops[key] = { state: 'running', phases: phases.map((p) => ({ key: p.key, status: 'waiting' })), code: null };
     S.save(); O55.ui.refresh();
     return O55.owners.dispatch(cmdId, opts.payload || {}, S.ctx(), () => O55.owners.operation(key, phases, (st) => {
+      if (stale()) return;
       S.sess.ops[key] = { state: st.state, phases: st.phases, code: st.code, failedAt: st.failedAt, receipt: O55.owners.opState(key) && O55.owners.opState(key).receipt };
       S.save();
       /* owners' completion handlers update the session first, so the refresh shows the settled state in one frame */
@@ -27,12 +30,14 @@
       if (st.state === 'failed') { O55.sound.play('error'); opts.onFail && opts.onFail(S, st); }
       if (!opts.quiet) O55.ui.refresh();
     })).then((res) => {
+      if (stale()) return null;
       inflight.delete(key);
       if (res && res.refused) { S.sess.ops[key] = { state: 'refused', phases: [], code: res.reason }; S.save(); O55.ui.refresh(); }
       return S.sess.ops[key];
     }, (err) => { inflight.delete(key); throw err; });
   };
   F.state = (S, key) => (S.sess.ops && S.sess.ops[key]) || null;
+  F.clearInflight = () => inflight.clear();
   F.reset = (S, key) => { inflight.delete(key); if (S.sess.ops) delete S.sess.ops[key]; const o = O55.owners.opState(key); if (o) { o.done = []; o.state = 'idle'; } };
   /* Phase list with plain labels; labels is {phaseKey: text}. Unknown ops render every phase as waiting. */
   F.phases = function phases(S, key, order, labels, details) {

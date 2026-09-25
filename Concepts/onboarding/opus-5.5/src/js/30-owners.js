@@ -94,6 +94,8 @@
       if (op.done.includes(ph.key)) continue;
       op.current = ph.key; onPhase && onPhase(snapshot(op, phases));
       await M().delay(ph.ms || 700);
+      /* starting onboarding over cancels what the old run left running, at the next phase boundary */
+      if (op.cancelled) return { ok: false, cancelled: true, receipt: op.receipt };
       const code = ph.fail ? ph.fail() : null;
       if (code) { op.state = 'failed'; op.failedAt = ph.key; op.code = code; op.current = null; onPhase && onPhase(snapshot(op, phases)); return { ok: false, failedAt: ph.key, code, receipt: op.receipt }; }
       op.done.push(ph.key);
@@ -106,7 +108,7 @@
       phases: phases.map((p) => ({ key: p.key, status: op.done.includes(p.key) ? 'done' : op.current === p.key ? 'active' : op.failedAt === p.key ? 'failed' : 'waiting' })) };
   }
   function opState(key) { return OPS[key] || null; }
-  function resetOps() { Object.keys(OPS).forEach((k) => delete OPS[k]); }
+  function resetOps() { Object.keys(OPS).forEach((k) => { OPS[k].cancelled = true; delete OPS[k]; }); }
 
   O55.owners = { TABLE, log, dispatch, operation, opState, resetOps, allowed, on(fn) { listeners.add(fn); return () => listeners.delete(fn); } };
 })();

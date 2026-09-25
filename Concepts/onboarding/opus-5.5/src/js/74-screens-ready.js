@@ -47,7 +47,8 @@
        the Planning Wizard, so the page is not switched here */
     const win = S.root && S.root.querySelector('.o55-win'), from = tour && win ? win.getBoundingClientRect() : null;
     O55.ui.close('done', { handoff: tour && !!from });
-    if (tour) O55.tour.start({ source: 'onboarding', project: projectId, from: from ? { left: from.left, top: from.top, width: from.width, height: from.height } : null });
+    /* a tour taken at the end of an onboarding run always starts at its first step (only the resume chip continues one) */
+    if (tour) O55.tour.start({ source: 'onboarding', fresh: true, project: projectId, from: from ? { left: from.left, top: from.top, width: from.width, height: from.height } : null });
     else O55.shell.openWizard();
   };
 

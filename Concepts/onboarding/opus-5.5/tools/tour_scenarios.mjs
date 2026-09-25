@@ -1,7 +1,8 @@
 /* Guided Tour acceptance, driven by real CDP input against the built concept.
  * node tools/tour_scenarios.mjs <out-dir> [--only t1,t2] [--theme basic-dark] [--snaps]
  * t1 every step by hand (real clicks, a real mouse drag) then Restore; t2 every action through Show Me then Keep;
- * t3 Skip restores everything; t4 resume after reload; t5 a missing target offers Take me there.
+ * t3 Skip restores everything; t4 resume after reload; t5 a missing target offers Take me there; t6 Back rewinds a
+ * step so it can be done again or watched with Show Me; t7 Run Onboarding Again (and a replay) start the tour over.
  * Each run asserts zero network requests and unchanged usage counters, and writes report.json + screenshots. */
 import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
 import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
@@ -80,7 +81,11 @@ async function openPage() {
       if (!c.hit) throw new Error((what || sel) + ' is covered by ' + c.over + ' at step ' + await t.step());
       await page.mouse(c.x, c.y); await sleep(350);
     },
-    async callout(action, arg) { await t.click(`#pm-o55-tour .o55t-callout [data-o55t="${action}"]${arg ? `[data-arg="${arg}"]` : ''}`, 'callout ' + action); },
+    /* like a person: the callout's controls are used once the step has arrived and its callout has been drawn */
+    async callout(action, arg) {
+      await t.until(() => !(window.O55.tour.st && window.O55.tour.st.entering), 'the step has settled', 9000);
+      await t.click(`#pm-o55-tour .o55t-callout [data-o55t="${action}"]${arg ? `[data-arg="${arg}"]` : ''}`, 'callout ' + action);
+    },
     /* a real mouse drag from an element to a point */
     async drag(sel, to) {
       /* like a person: wait until the grip has stopped moving (a new widget scrolls into view), then take hold of it */
@@ -257,6 +262,91 @@ def('t5', 'A missing target offers Take me there', async (t, A) => {
   await t.until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="takeMe"]'), 'missing-target state', 6000);
   await t.callout('takeMe'); await sleep(900);
   A.ok(await t.ev(() => !!document.querySelector('#o55pGoal') && (document.querySelector('.page-tab.active[data-page]') || {}).getAttribute('data-page') === 'wizard'), 'Take me there brings the target back');
+});
+
+/* ------------------------------------------------------------------------------------------ Back, starting over */
+const done = (id) => new Function(`return window.O55.tour.state().done.includes(${JSON.stringify(id)})`);
+const chatHost = (t) => t.ev(() => window.PM_HOME_WORKSPACE.layout.surfaces.find((s) => s.surface_kind === 'chat').host);
+const showMeOffered = (t) => t.ev(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="showMe"]'));
+def('t6', 'Back rewinds a step, so it can be done again or watched with Show Me', async (t, A) => {
+  const before = await counters(t);
+  const persona0 = await t.ev(() => window.O55.tour.snapshot().persona);
+  await t.ev(() => window.PM7_GUIDED_TOUR.start({ project: 'tastebook' })); await sleep(900);
+  await t.callout('next');
+  /* open Chat by hand, then Back: Chat is tucked away again and Show Me opens it */
+  await t.untilStep('open_chat'); await t.click('#activityBar .icon[data-ab-id="chat"]', 'Chat icon');
+  await t.untilStep('select_teacher'); await t.callout('back'); await t.untilStep('open_chat'); await sleep(400);
+  A.ok(!(await t.ev(done('open_chat'))), 'Back: Open Chat is not done any more');
+  A.ok(!(await t.ev(() => window.O55.tour.chat.chatVisible())), 'Back: Chat is tucked away again');
+  A.ok(await showMeOffered(t), 'Back: Show Me is offered on Open Chat');
+  await t.callout('showMe'); await t.untilStep('select_teacher', 12000);
+  /* choose Teacher by hand, then Back: the guide is what it was, and Show Me chooses Teacher */
+  await t.click('.pm6-chat-personabtn', 'persona picker'); await t.click('.pm6-chat-personaitem[data-persona="Teacher"]', 'Teacher');
+  await t.untilStep('send_question'); await t.callout('back'); await t.untilStep('select_teacher'); await sleep(500);
+  A.eq(await t.ev(() => window.O55.tour.chat.persona()), persona0, 'Back: the guide is ' + persona0 + ' again');
+  A.ok(await showMeOffered(t), 'Back: Show Me is offered on Choose Teacher');
+  await t.callout('showMe'); await t.untilStep('send_question', 12000);
+  /* send, read the answer, turn ELI5 on; Back: ELI5 off and the answer as it was; Back again: the exchange is gone */
+  await t.callout('fillQuestion'); await t.click('#chatPanel .pm6-chat-send', 'Send');
+  await t.untilStep('answer_stream'); await t.until(() => window.O55.tour.chat.answered('a1'), 'answer'); await t.callout('next');
+  await t.untilStep('same_answer_eli5'); await t.click('span.chat-toggle-btn.toggle-eli5', 'ELI5');
+  await t.until(done('same_answer_eli5'), 'ELI5 rewrite'); await sleep(1400);
+  await t.callout('back'); await t.untilStep('answer_stream'); await sleep(1600);
+  A.ok(await t.ev(() => !document.querySelector('span.chat-toggle-btn.toggle-eli5.active')), 'Back: ELI5 is off again');
+  A.ok(!(await t.ev(() => window.O55.tour.chat.eli5Shown())), 'Back: the answer reads the ordinary way again');
+  await t.callout('back'); await t.untilStep('send_question'); await sleep(500);
+  A.eq(await t.ev(() => [...document.querySelectorAll('#chatPanel .pm6-chat-msg')].filter((m) => m.getClientRects().length).length), 0, 'Back: the question and its answer are gone from the Guided example');
+  A.ok(!(await t.ev(done('send_question'))) && (await showMeOffered(t)), 'Back: the question is not counted as sent, and Show Me is offered');
+  await t.callout('showMe'); await t.untilStep('answer_stream', 12000); await t.until(() => window.O55.tour.chat.answered('a1'), 'answer again'); await t.callout('next');
+  await t.untilStep('same_answer_eli5'); await t.callout('showMe'); await t.until(done('same_answer_eli5'), 'ELI5 through Show Me'); await sleep(1400); await t.callout('next');
+  /* dock Chat through Show Me, then Back from the widget step: Chat is back where it was, Show Me docks it again */
+  await t.untilStep('workspace_orientation'); await t.until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]:not([aria-disabled])'), 'orientation ready', 9000); await t.callout('next');
+  await t.untilStep('move_or_dock_chat'); const host0 = await chatHost(t);
+  await t.callout('showMe'); await t.untilStep('widget_action', 15000);
+  await t.callout('back'); await t.untilStep('move_or_dock_chat'); await sleep(500);
+  A.eq(await chatHost(t), host0, 'Back: Chat is back in ' + host0);
+  A.ok(await showMeOffered(t), 'Back: Show Me is offered on Move Chat');
+  await t.callout('showMe'); await t.untilStep('widget_action', 15000);
+  /* add and place the widget through Show Me, then Back from Planning: the widget is gone, Show Me adds it again */
+  const dash0 = await t.ev(() => JSON.stringify(window.O55.tour.dashSnapshot()));
+  await t.callout('showMe'); await t.untilStep('open_planning', 20000);
+  await t.callout('back'); await t.untilStep('widget_action'); await sleep(600);
+  A.eq(await t.ev(() => JSON.stringify(window.O55.tour.dashSnapshot())), dash0, 'Back: the Approval queue is gone and every card is back in place');
+  await t.callout('showMe'); await t.untilStep('open_planning', 20000);
+  /* planning: use the goal, open an outcome; Back twice: no outcome open, then no practice and the goal offered again */
+  await t.callout('showMe'); await t.untilStep('book_club_goal', 12000);
+  await t.callout('showMe'); await t.untilStep('three_outcomes', 12000);
+  await t.callout('showMe'); await t.untilStep('access_answer', 12000);
+  await t.callout('back'); await t.untilStep('three_outcomes'); await sleep(400);
+  A.ok(await t.ev(() => window.O55.tour.practice.outcome == null) && (await showMeOffered(t)), 'Back: no outcome is open, and Show Me is offered');
+  await t.callout('back'); await t.untilStep('book_club_goal'); await sleep(600);
+  A.ok(await t.ev(() => !window.O55.tour.practice.active && !!document.getElementById('o55pGoal')), 'Back: the practice is gone and the goal is offered again');
+  await t.callout('showMe'); await t.untilStep('three_outcomes', 12000);
+  const after = await counters(t);
+  A.eq(after.net, before.net, 'no network requests'); A.eq(JSON.stringify(after.c.ledger), JSON.stringify(before.c.ledger), 'usage ledger unchanged');
+});
+def('t7', 'Run Onboarding Again, and a replay, start the tour over', async (t, A) => {
+  /* same page: a replay does not count the last run's question as sent */
+  await t.ev(() => window.PM7_GUIDED_TOUR.start({ project: 'tastebook' })); await sleep(900);
+  await t.callout('next'); await t.untilStep('open_chat'); await t.callout('showMe');
+  await t.untilStep('select_teacher', 12000); await t.callout('showMe');
+  await t.untilStep('send_question', 12000); await t.callout('showMe'); await t.untilStep('answer_stream', 12000);
+  await t.click('#pm-o55-tour .o55t-bar [data-o55t="skip"]', 'Skip Tour'); await sleep(1400);
+  await t.ev(() => window.PM7_GUIDED_TOUR.replay({ project: 'tastebook' })); await sleep(900);
+  A.eq(await t.step(), 'comfort_intro', 'a replay starts at the first step');
+  await t.callout('next'); await t.untilStep('open_chat'); await t.callout('showMe');
+  await t.untilStep('select_teacher', 12000); await t.callout('showMe');
+  await t.untilStep('send_question', 12000); await sleep(1500);
+  A.eq(await t.step(), 'send_question', 'the question sent in the last run does not count in this one');
+  /* leave the tour part-way (reload); Home ... > Run Onboarding Again clears it; the next tour starts at the first step */
+  await t.page.goto(pathToFileURL(PAGE).href + '?o55=off'); await sleep(1600);
+  A.eq(await t.ev(() => (window.O55.store.get('tour', {}) || {}).status), 'running', 'the unfinished tour is saved');
+  await t.click('#pm-home-more-btn', 'Home more options'); await t.click('#pm-home-more-menu [data-pm-home-action="run-onboarding"]', 'Run Onboarding Again'); await sleep(1500);
+  A.eq(await t.ev(() => window.O55.store.get('tour', null)), null, 'Run Onboarding Again clears the saved tour');
+  A.eq(await t.ev(() => window.O55.S.sess.screen), 'welcome', 'onboarding starts over at Welcome');
+  await t.ev(() => window.O55.finish(window.O55.S, { tour: true, project: 'tastebook' })); await sleep(1400);
+  A.eq(await t.step(), 'comfort_intro', 'the tour taken at the end of onboarding starts at the first step');
+  A.eq(await t.ev(() => window.O55.tour.state().done.length), 0, 'nothing counts as done');
 });
 
 /* ------------------------------------------------------------------------------------------ runner */

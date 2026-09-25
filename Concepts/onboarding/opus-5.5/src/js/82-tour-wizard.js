@@ -51,6 +51,20 @@
     P.active = false; P.saved = null;
   };
 
+  /* Back in the tour: the practice as a step began (mark), and back to it (rewind). Before the goal was used there is
+     no practice at all; after, the choices go back to what they were and the plan redraws from them. */
+  const FIELDS = ['outcome', 'answer', 'prev', 'why', 'reviewed', 'edited', 'changing'];
+  P.mark = () => { const m = { active: P.active }; FIELDS.forEach((k) => { m[k] = P[k] == null ? null : P[k]; }); return m; };
+  P.rewind = function rewind(m) {
+    if (!m) return;
+    if (!m.active) { if (P.active || P.goalShown) P.remove(); return; }
+    if (!P.active) return;
+    FIELDS.forEach((k) => { P[k] = m[k]; }); P.fresh = []; P.changed = [];
+    render(false);
+  };
+  /* a new run of the tour starts without the last run's practice */
+  P.reset = () => { P.remove(); FIELDS.forEach((k) => { P[k] = null; }); P.why = false; P.reviewed = false; P.edited = false; P.changing = false; P.fresh = []; P.changed = []; };
+
   /* ---------------------------------------------------------------- rendering into the Wizard's regions */
   const OUT = ['o1', 'o2', 'o3'];
   function topicsHtml() {

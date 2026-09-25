@@ -361,6 +361,74 @@ def('a6', 'fresh', 'Choosing This computer after setting up a Server leaves noth
   A.ok(m.server_mode === 'this_device' && m.server_ref === '' && m.remote_mode === 'none' && m.server_trust_confirmed === false, 'no Server reference, trust or access route left behind');
 });
 
+/* ---------------------------------------------------------------------------------------------- audit, second pass */
+async function toNasKey(d) {
+  await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary(); await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary();
+  await d.primary(); await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys tested', 5000);
+}
+const paneFits = (d) => d.state(() => { const p = document.querySelector('#pm-o55-onboarding .o55-pane').getBoundingClientRect(); return [...document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) *')].filter((e) => e.getClientRects().length).every((e) => { const r = e.getBoundingClientRect(); return r.width < 3 || (r.right <= p.right + 3 && r.left >= p.left - 3); }); });
+def('n8', 'fresh', "I'll add the key myself: a new key is made first, its own line is shown, and the check is real", async (d, A) => {
+  await toNasKey(d); await d.primary();
+  A.eq(await d.screen(), 'nas-signin', 'sign in once'); await d.act('selfOn');
+  A.ok(/yourself/i.test(await d.state(() => document.querySelector('#o55-h').textContent)), 'the title says the key is added by hand, not "Sign in"');
+  await until(d, "(window.O55.S.sess.ops['sshmake:nas-home']||{}).state === 'done'", 'new key made first', 5000); await d.settle(400);
+  const line = await d.state(() => (document.querySelector('.o55-codeline code') || {}).textContent || '');
+  A.ok(/^ssh-ed25519 AAAA\S+ puppet-master@MacBook-Pro$/.test(line), 'the line is the new key\'s public half (' + line.slice(0, 40) + '...)');
+  A.ok(await paneFits(d), 'the line and its Copy button fit inside the window');
+  await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-pm']||{}).state === 'done'", 'checked with the key', 9000);
+  A.ok(await d.state(() => window.O55.S.env.devices[0].authorized.includes('k-pm')), 'the device now has the key');
+  await d.primary(); A.eq(await d.screen(), 'nas-folder', 'on to the folder');
+});
+def('n9', 'selfKeyMissing', "I'll add the key myself, but it is not there yet: the check says so and nothing goes on", async (d, A) => {
+  await toNasKey(d); await d.act('pick', 'k-ed'); await d.primary();
+  await d.act('selfOn'); await d.settle(300);
+  const line = await d.state(() => (document.querySelector('.o55-codeline code') || {}).textContent || '');
+  A.ok(/ jared@MacBook-Pro$/.test(line), 'the line is the chosen key\'s (jared@MacBook-Pro)');
+  await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'failed'", 'the check fails', 9000);
+  A.ok(/isn't on Home NAS yet/.test(await d.state(() => document.body.textContent)), 'it says the key is not on Home NAS yet');
+  A.ok(!(await d.state(() => window.O55.S.env.devices[0].authorized.includes('k-ed'))), 'the check did not add the key itself');
+  await d.primary(); A.eq(await d.screen(), 'nas-signin', 'back to the key, to add it');
+  await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'done'", 'passes once it is there', 9000);
+});
+def('n10', 'fresh', 'A password typed before the window was closed does not count after it reopens', async (d, A) => {
+  await toNasKey(d); await d.primary(); await d.type('user', 'jared'); await d.type('pw', 'correct horse');
+  A.ok(!(await d.primaryInfo()).disabled, 'Add my key is ready with a password typed');
+  await d.page.click('#pm-o55-onboarding [data-o55-do="close"]'); await d.settle(900);
+  await d.state(() => window.O55.ui.open({})); await d.settle(1200);
+  A.eq(await d.screen(), 'nas-signin', 'resumes on the sign-in');
+  A.ok((await d.primaryInfo()).disabled, 'Add my key waits for the password again (the field is empty)');
+});
+def('x1', 'fresh', 'Run Onboarding Again starts over: a clean world, no finished operations carried over, no tour', async (d, A) => {
+  await toNasKey(d); await d.primary(); await d.type('user', 'jared'); await d.type('pw', 'correct horse'); await d.primary();
+  await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:new']||{}).state === 'done'", 'key installed', 9000);
+  await d.state(() => window.O55.store.set('tour', { v: 1, status: 'running', index: 4, done: ['open_chat'] }));
+  await d.page.click('#pm-o55-onboarding [data-o55-do="close"]'); await d.settle(900);
+  await d.page.click('#pm-home-more-btn'); await d.settle(400); await d.page.click('#pm-home-more-menu [data-pm-home-action="run-onboarding"]'); await d.settle(1500);
+  A.eq(await d.screen(), 'welcome', 'starts at Welcome');
+  A.eq(await d.state(() => window.O55.store.get('tour', null)), null, 'the saved tour is cleared');
+  await d.primary(); await d.primary(); await d.primary(); await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
+  await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary();
+  A.ok(!/connected to Home NAS before/.test(await d.state(() => document.body.textContent)), 'the device is new again in a clean world');
+  await d.primary();
+  A.eq(await d.state(() => (window.O55.S.sess.ops['keys:nas-home'] || {}).state), 'running', 'looking for keys runs again, step by step');
+  await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys tested', 5000);
+  A.ok(await d.state(() => !document.querySelector('.o55-card[data-arg="k-pm"]') && !!document.querySelector('.o55-card.o55-on[data-arg="new"]')), 'the key made in the last run is gone');
+});
+def('x2', 'fresh', 'Run Onboarding Again while a Project is being created waits for it', async (d, A) => {
+  await d.openOnboarding(); await toName(d); await d.type('name', 'Book club website'); await d.primary(); await d.primary();
+  await readyPrimary(d); await d.primary(); A.eq(await d.screen(), 'creating', 'creating');
+  await d.page.click('#pm-o55-onboarding [data-o55-do="close"]'); await d.settle(700);
+  await d.state(() => window.PM7_ONBOARDING_CINEMATIC.replay()); await d.settle(1500);
+  A.eq(await d.screen(), 'creating', 'the window shows the creation instead of starting over');
+  A.ok(/still being created/.test(await d.state(() => document.body.textContent)), 'it says the Project is still being created');
+  await until(d, "window.O55.S.sess.commit.state === 'done'", 'creation finishes', 25000);
+  A.eq(await d.state(() => document.querySelectorAll('#projectMenu [data-project="p-book-club-website"]').length), 1, 'exactly one Project was made');
+  await d.page.click('#pm-o55-onboarding [data-o55-do="close"]'); await d.settle(700);
+  await d.state(() => window.PM7_ONBOARDING_CINEMATIC.replay()); await d.settle(1500);
+  A.eq(await d.screen(), 'welcome', 'once it is made, Run Onboarding Again starts over');
+});
+
 /* ---------------------------------------------------------------------------------------------- runner */
 const report = [], drafts = [];
 for (const sc of SC) {

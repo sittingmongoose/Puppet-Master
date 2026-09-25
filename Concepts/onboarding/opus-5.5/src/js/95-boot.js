@@ -13,7 +13,13 @@
   const onboardingApi = {
     schema: 'pm.o55.onboarding.v1',
     open: (o) => O55.ui.open(Object.assign({ returnFocus: document.activeElement }, o || {})),
-    replay: () => O55.ui.open({ fresh: true, returnFocus: document.activeElement }),
+    /* Run Onboarding Again: a running Guided Tour ends first (its layout comes back), then onboarding starts over, tour
+       progress included (see startOver in 60-ui-core.js) */
+    replay: async () => {
+      const returnFocus = document.activeElement;
+      if (O55.tour && O55.tour.running && O55.tour.reset) await O55.tour.reset({ silent: true });
+      return O55.ui.open({ fresh: true, returnFocus });
+    },
     resume: () => O55.ui.open({ returnFocus: document.activeElement }),
     close: () => O55.ui.close('close'),
     skip: () => O55.ui.close('skip'),
