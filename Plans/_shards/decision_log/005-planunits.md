@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1967-L7132
+Source lines: L2152-L7599
 
-Source SHA256: `bb3332032c23b5840bcf9763a3e62451e19b20ceaf6bd82617aab3bf1524ca8b`
+Source SHA256: `c289962b2a9076637cf78bc397098396780fa4d107667af81a37a115ba56800b`
 
 ---
 
@@ -4930,6 +4930,76 @@ owner_hints:
   - Plans/orchestrator-subagent-integration.md
 ```
 
+### DL-087 - Six Older Crew Lifecycle Events Are Retired For The Shared Collaborative Workflow Events
+
+```yaml
+plan_unit_id: DL-087
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared gave no answer on 2026-09-25 to EA-S09B2-CREW-HISTORY-001 and wrote retire them
+  but register the shared collaborative workflow events, so adding scope to this. It is
+  recorded as retiring crew.formed, crew.member_added, crew.member_removed,
+  crew.coordination, crew.completed and crew.disbanded, the substance of the card's option
+  1 in his own words, and the scope he added, registering the shared collaborative
+  workflow events, is defined by DL-090 to DL-092. A Crew run is recorded only by the
+  shared collaborative workflow history. The Contracts owner removes the six rows, narrows
+  CV-270 to the board events and retires CV-271, and the orchestrator adds a pointer to
+  Collaborative Workflows. Nothing writes the six events, so no stored record is removed;
+  in the Step 9 campaign the six rows are excluded as retired with their legacy bucket and
+  cohort pins kept and no denominator removal claimed. Nothing is registered or admitted
+  and no registered family changes.
+gui_related: false
+gui_classification_reason: Retires six unwritten Crew event names; a Crew run is shown through the shared collaborative run.
+split_recommended: false
+depends_on: [DL-039, DL-045]
+unblocks: []
+acceptance_criteria:
+  - Contracts no longer lists crew.formed, crew.member_added, crew.member_removed, crew.coordination, crew.completed or crew.disbanded in its crew event table, CV-270 covers the three crew board families only, and CV-271 is retired.
+  - The orchestrator's Crew text points to Plans/Collaborative_Workflows.md for the Crew run lifecycle, and no second Crew lifecycle history is written.
+  - The J248 rows of the six families are RECLASSIFY_TO_EXCLUDED with their legacy bucket and cohort pins kept and no denominator removal claimed.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: crew_lifecycle_event_retirement_drift
+reasoning_tier: high
+context_scope: crew_lifecycle_event_retirement
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/Collaborative_Workflows.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md
+  - reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md
+  - reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md
+  - reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json
+preserved_exact_tokens:
+  - "EA-S09B2-CREW-HISTORY-001"
+  - "retire them but register the shared collaborative workflow events, so adding scope to this."
+  - "crew.formed"
+  - "crew.member_added"
+  - "crew.member_removed"
+  - "crew.coordination"
+  - "crew.completed"
+  - "crew.disbanded"
+  - "CV-270"
+  - "CV-271"
+negative_constraints:
+  - Do not keep the six crew lifecycle families as a second Crew history, now or until the shared events are registered.
+  - Do not retire or change the three crew board families or any registered family when the six names are removed.
+  - Do not read this entry as registering the shared collaborative workflow events; DL-090 to DL-092 define that scope, and each family still needs its own admission landing.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/Collaborative_Workflows.md
+```
+
 ### DL-088 - Subagent Spawn Request Event Names Are Retired
 
 ```yaml
@@ -5050,6 +5120,218 @@ negative_constraints:
 owner_hints:
   - Plans/storage-plan.md
   - Plans/storage_value_registry.json
+```
+
+### DL-090 - Registration Of All Seventeen Collaborative Workflow Events One Family Per Landing Under Bounded Technical Bindings
+
+```yaml
+plan_unit_id: DL-090
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared chose option 2 of EA-S09B2-COLLAB-EVENTS-001 on 2026-09-25, written in the note
+  with no radio button selected. All 17 event names of Collaborative Workflows section 13
+  are to be registered, collaboration.created, collaboration.started,
+  collaboration.paused, collaboration.resumed, collaboration.cancelled,
+  collaboration.completed, collaboration.participant_started,
+  collaboration.participant_completed, collaboration.message_added,
+  collaboration.artifact_added, collaboration.configuration_changed,
+  brainstorm.proposal_added, brainstorm.vote_added, brainstorm.plan_synthesized,
+  review.finding_added, review.finding_dispositioned and review.artifact_finalized, each
+  through its own Storage admission landing, one family per landing. The Collaborative
+  Workflows, Contracts and Storage owners receive a separate bounded technical-binding
+  permission for exactly these names on DL-045's terms, as DL-046 did for the Browser
+  families, and DL-045's 285-family scope is unchanged. The permission covers only
+  technical bindings for already specified behavior after per-family search and scoped
+  negative evidence, and decides no feature, retention, deletion or owner conflict. Every
+  family still needs its full contract, blind review and own admission landing. The 17
+  families are new campaign scope outside the 252 J248 rows. Nothing is registered by this
+  entry, and the run, message, proposal and finding records still need their own schemas.
+gui_related: false
+gui_classification_reason: Records event registration scope and bounded technical authority, not visual presentation.
+split_recommended: false
+depends_on: [DL-039, DL-045, DL-046, DL-087]
+unblocks: []
+acceptance_criteria:
+  - The exact 17-name scope equals Plans/Collaborative_Workflows.md section 13 at 1e5d9b097b and is disjoint from DL-045's 285 families and DL-046's 53 Browser names.
+  - Each new technical definition has a per-family current-source search, existing-contract citations and scoped negative evidence, is labelled newly authored, and stays limited to already specified behavior.
+  - Each family has its full owner-backed contract, exact schema references, positive and negative semantic checks, a blind form-driven review and its own Storage admission landing, and the contracts of events that carry proposal or finding text say how that text is protected and deleted.
+  - The run, message, proposal and finding records get their own contracts schema and fixture pair before anything is stored, and no family is emitted before its admission landing.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: collaborative_workflow_event_scope_expansion
+reasoning_tier: high
+context_scope: collaborative_workflow_event_registration_scope
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_CARD4_ADDENDUM.md
+  - reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md
+  - reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json
+preserved_exact_tokens:
+  - "EA-S09B2-COLLAB-EVENTS-001"
+  - "DL-045"
+  - "DL-046"
+  - "collaboration.created"
+  - "collaboration.started"
+  - "collaboration.paused"
+  - "collaboration.resumed"
+  - "collaboration.cancelled"
+  - "collaboration.completed"
+  - "collaboration.participant_started"
+  - "collaboration.participant_completed"
+  - "collaboration.message_added"
+  - "collaboration.artifact_added"
+  - "collaboration.configuration_changed"
+  - "brainstorm.proposal_added"
+  - "brainstorm.vote_added"
+  - "brainstorm.plan_synthesized"
+  - "review.finding_added"
+  - "review.finding_dispositioned"
+  - "review.artifact_finalized"
+negative_constraints:
+  - Do not expand the 17-name scope through later file edits, or change DL-045's 285-family scope or DL-046's 53 Browser names.
+  - Do not infer missing bindings or evidence from sibling names, and do not turn the technical permission into feature, retention, deletion or owner-conflict authority.
+  - Do not bulk admit, emit a family before its own admission landing, or treat registering these events as registering the run, message, proposal or finding records.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/event_family_registry.json
+```
+
+### DL-091 - A Failed Collaborative Run Gets Its Own Recorded Event
+
+```yaml
+plan_unit_id: DL-091
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on 2026-09-25 to EA-S09B2-COLLAB-FAILED-001:
+  Collaborative Workflows section 13 gains collaboration.failed, the recorded ending of a
+  collaborative run that fails, with its reason, beside collaboration.completed and
+  collaboration.cancelled. It is registered with the others under DL-090's permission, so
+  that permission's exact list is 18 names, the 17 of DL-090 and collaboration.failed;
+  DL-090's text is not edited. Its contract and its own Storage admission landing join
+  DL-090's set, one family per landing. Waiting and blocked get no events, and a failed
+  participant is recorded by its collaboration.participant_completed event. It is new
+  campaign scope outside the 252 J248 rows. Nothing is registered or admitted and no
+  registry row changes.
+gui_related: false
+gui_classification_reason: Adds a recorded run ending; the failed run state is already shown.
+split_recommended: false
+depends_on: [DL-039, DL-045, DL-090]
+unblocks: []
+acceptance_criteria:
+  - Plans/Collaborative_Workflows.md section 13 names collaboration.failed, and its contract records the failed ending of the whole run with its reason.
+  - collaboration.failed is registered under DL-090's permission as the eighteenth name, through its own Storage admission landing with its full contract, blind review and semantic checks.
+  - No event is added for the waiting or blocked states, and a failed participant stays recorded by collaboration.participant_completed.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: collaborative_run_failure_event_drift
+reasoning_tier: high
+context_scope: collaborative_run_failure_event
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_CARD4_ADDENDUM.md
+  - reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md
+  - reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json
+preserved_exact_tokens:
+  - "Approve"
+  - "EA-S09B2-COLLAB-FAILED-001"
+  - "collaboration.failed"
+  - "collaboration.completed"
+  - "collaboration.cancelled"
+  - "collaboration.participant_completed"
+  - "DL-090"
+negative_constraints:
+  - Do not record a failed collaborative run as completed or cancelled, or end its history without collaboration.failed once that family is registered.
+  - Do not add events for the waiting or blocked states on the strength of this entry.
+  - Do not register collaboration.failed outside its own admission landing or outside the terms of DL-090's permission.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+  - Plans/Contracts_V0.md
+```
+
+### DL-092 - Collaborative Workflow Event History Is Kept As Long As Its Chat Exists
+
+```yaml
+plan_unit_id: DL-092
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered Approve (option 1) on 2026-09-25 to EA-S09B2-COLLAB-RETENTION-001: the
+  recorded events of every Crew, BrainStorm, Review and Chat Room run, the 18 families of
+  DL-090 and DL-091, are kept as long as the run's chat exists, the lifetime DL-084 gave
+  child-run history; deleting the chat removes them within 24 hours unless it is on hold.
+  The policy object is RP-GOAL-THREAD-LIFETIME, subject to the same Storage owner DL-045
+  reuse check against the Chat content class as DL-084, and which count rule applies to a
+  very busy chat is that same Storage owner follow-up; the lifetime holds either way. The
+  Storage retention owner writes the Case L-3 assignment, and each family contract carries
+  the structured retention_policy_ref and reconciles chat deletion. This covers the
+  recorded events only, not the run record, transcript messages, proposals or findings.
+  Nothing is registered, admitted or removed and no registry row changes.
+gui_related: false
+gui_classification_reason: Assigns event retention; collaborative cards and panels are unchanged.
+split_recommended: false
+depends_on: [DL-039, DL-045, DL-084, DL-090, DL-091]
+unblocks: []
+acceptance_criteria:
+  - Storage owner text assigns RP-GOAL-THREAD-LIFETIME, or after its DL-045 reuse check a materialized Chat content class with the same lifetime, to the 18 collaborative workflow families in the Case L-3 retention text, and states which count rule applies to a very busy chat, as for DL-084's families.
+  - Each family's full contract carries the structured retention_policy_ref and removes the family's history with its chat, within 24 hours unless held.
+  - The run record, transcript messages, proposals and findings take no lifetime from this entry, and no registry row changes.
+validation_surfaces:
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: collaborative_workflow_history_retention_drift
+reasoning_tier: high
+context_scope: collaborative_workflow_history_retention
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/Collaborative_Workflows.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - /mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_CARD4_ADDENDUM.md
+  - reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md
+  - reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json
+preserved_exact_tokens:
+  - "Approve"
+  - "EA-S09B2-COLLAB-RETENTION-001"
+  - "RP-GOAL-THREAD-LIFETIME"
+  - "DL-084"
+negative_constraints:
+  - Do not keep the 18 collaborative workflow families for one year or 180 days after the run finishes, or keep their history after its chat is deleted beyond the chat's own deletion and hold rules.
+  - Do not decide the count rule for a very busy chat on the strength of this entry, or apply this lifetime to the run, transcript, proposal or finding records.
+  - Do not treat the retention assignment as registration, admission, binding or schema completion.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/Collaborative_Workflows.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

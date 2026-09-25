@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L1958
+Source lines: L13-L2143
 
-Source SHA256: `bb3332032c23b5840bcf9763a3e62451e19b20ceaf6bd82617aab3bf1524ca8b`
+Source SHA256: `c289962b2a9076637cf78bc397098396780fa4d107667af81a37a115ba56800b`
 
 ---
 
@@ -1866,6 +1866,52 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/orchestrator-subagent-integration.md
 
+### DL-087: The six older Crew events are retired in favor of the shared collaborative workflow events
+
+Jared gave **no answer** to `EA-S09B2-CREW-HISTORY-001` on 2026-09-25, in the Event Authority program's host session, from the card page, and wrote "retire them but register the shared collaborative workflow events, so adding scope to this." He selected no option. His words are recorded as retiring the six older Crew events, which is the substance of the card's option 1. The scope he added, registering the shared collaborative workflow events, was defined by an addendum of three cards that he answered the same day, recorded as DL-090 to DL-092.
+
+**Name:** The six older Crew events.
+
+**Question:** Should the six older Crew events be retired, so that a Crew run is recorded only by the history shared by all collaborative workflows, or kept as a second Crew history, now or until the shared events are registered?
+
+**Why:**
+
+- Crew is one of four collaborative workflows, with BrainStorm, Review and Chat Room. The Collaborative Workflows document is the only owner of their shared run: its identity, its lifecycle, its participants and its transcript. It says anything specific to one kind attaches to that one run and "never create[s] a second run identity".
+- The six older events (crew formed, member added, member removed, coordination, completed, disbanded) come from a Contracts table and give Crew its own separate identity. Nothing writes them today. The orchestrator does not describe them, and says a Crew's lifecycle follows the ordinary rules for child runs.
+- A Crew's members are fixed when the run starts, so "member added" and "member removed" describe something Crew does not do. "Coordination" has fields but no defined meaning, and the shared transcript already records the messages.
+- The six events are listed in accepted Contracts text, so retiring them is a Contracts edit.
+- The three crew board events are not part of this question (Card 2).
+
+**What you get:**
+
+- **Retire:** one Crew history, as the collaborative workflow rules require, with no second lifecycle to keep in step. Each Crew member's own work is still recorded, because members are child runs (Card 1), and the board keeps their messages (Card 2).
+- **Keep as a second history:** a registered Crew lifecycle history now, in this campaign.
+- **Keep until the shared events are registered:** the same, but only for the interim.
+
+**What it costs:**
+
+- **Retire:** the shared collaborative workflow events are not registered yet, are outside this campaign, and may not be written until they are. Until a later registration, a Crew run has no registered record of its own start, finish or cancellation, only its members' histories and the board. Retiring also removes accepted Contracts text.
+- **Keep as a second history:** two histories of the same run that must always agree, against the collaborative workflow rules. Six new full contracts for events nothing writes today, and the content of "coordination" and of membership changes would have to be defined from scratch.
+- **Keep until the shared events are registered:** the full cost of keeping now, plus a later retirement and a reader for the old records.
+
+**Options:**
+
+1. **Retire all six (recommended).** A Crew run's lifecycle is recorded by the shared collaborative workflow events once they are registered.
+2. **Keep all six as a second Crew history,** with a written boundary between the two histories. They are kept 180 days after the run finishes, like the other coordination records.
+3. **Keep all six until the shared collaborative workflow events are registered, then make them read-only history.** Also kept 180 days after the run finishes.
+
+**Recommendation:** Option 1. The collaborative workflow rules already say a Crew run has one identity and one lifecycle, and nothing writes these six events today. The gap until the shared events are registered is real, but members' histories and the board still record the work.
+
+**Answer:** No answer. Jared's words, verbatim:
+
+> retire them but register the shared collaborative workflow events, so adding scope to this.
+
+The six crew lifecycle families `crew.formed`, `crew.member_added`, `crew.member_removed`, `crew.coordination`, `crew.completed` and `crew.disbanded` are retired. A Crew run is recorded only by the history that all collaborative workflows share, and Crew keeps no second lifecycle history. As the card's owner edits for option 1 say, the Contracts owner removes the six rows from the crew event table, narrows CV-270 to the three crew board families and retires CV-271 (accepted text), and the orchestrator owner adds a pointer from its Crew text to `Plans/Collaborative_Workflows.md`. The three crew board families are not part of this answer (DL-085). Until the shared events are registered, a Crew run has no registered record of its own start, finish or cancellation, only its members' child-run histories (DL-084) and the board (DL-085), as the card said. Nothing writes the six events, so no stored record is removed. In the Step 9 campaign the six rows are excluded as retired, keeping their legacy bucket and cohort pins, and no denominator removal is claimed. The added scope is recorded in its own entries: which events are registered (DL-090), a failure event (DL-091) and how long their history is kept (DL-092). This entry itself edits no Contracts or orchestrator text, registers or admits nothing, and changes no registered family or registry row.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md`, SHA-256 `e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af`; card `reports/event-authority-20260911/step-09-batch2-orchestrator-cards-20260925.md` (Card 4); addendum `reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md`; application record `reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/orchestrator-subagent-integration.md
+
 ### DL-088: The two subagent start-request event names are retired
 
 Answered on 2026-09-25 by Jared, in the Event Authority program's host session, from the card page: **Approve** on `EA-S09B2-SPAWN-REQUEST-001`, which selects option 1.
@@ -1954,3 +2000,142 @@ Under `RP-OPERATIONAL-2555D`, the application-scoped evaluations of `platform.ca
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_STEP09_BATCH2.md`, SHA-256 `e224ff62776c277a7a763ed3b5f1ea259928290719180668b57bff386a59c2af`; card `reports/event-authority-20260911/step-09-platform-cardinality-card-20260925.md`; application record `reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json`.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/event_family_registry.json
+
+### DL-090: All 17 collaborative workflow events are to be registered, one family per landing, with bounded technical bindings
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session, from the card page: **option 2** on `EA-S09B2-COLLAB-EVENTS-001`, written in the note with no radio button selected.
+
+**Name:** Which collaborative workflow events to register.
+
+**Question:** Which collaborative workflow events should be registered?
+
+**Why:**
+
+- Crew, BrainStorm, Review and Chat Room are one shared runtime. Its document names 17 events. Eleven apply to every kind: a run created, started, paused, resumed, cancelled and completed; a participant started and completed; a message added; an artifact added; and a configuration changed.
+- The other six belong to one kind only: three for BrainStorm (a proposal added, a vote added, a plan put together) and three for Review (a finding added, a finding decided, the review's result finalized).
+- None of these events is registered. The document says none may be written until it is. None is among the 252 stored events this campaign works through.
+- Your 11 September approval lets owners define missing technical parts, such as identity links, checkpoints, replay and recovery, only for the events it lists. These events are not on that list.
+- Registering them also needs that same limited permission for their owners. Your answer did not mention it, so both options include it and say so. Without it, each missing technical part would come back to you as its own question.
+
+**What you get:**
+
+- **The 11 shared events:** every collaborative run of all four kinds has a recorded history of its lifecycle, its participants, its messages and its artifacts. A Crew run gets back a recorded start, finish and cancellation.
+- **All 17:** the same, plus a recorded history of BrainStorm proposals, votes and plans and of Review findings and results.
+
+**What it costs:**
+
+- **The 11 shared events:** 11 full contracts, each added to the product on its own. That is about one and a half times the coordination work now under way, which is seven families.
+- **All 17:** six more contracts, each added on its own. Proposals and findings carry their own text, so each of those contracts must also say how that text is protected and deleted.
+- **Either way:** the owners get the same limited permission you gave on 11 September. They may define only technical parts of behavior canon already specifies, after a documented search. They may not decide features, retention or which owner wins a conflict. Those still come to you. Registering these events does not register the run, message, proposal and finding records they point to. Those still need their own schemas before anything can be stored.
+
+**Options:**
+
+1. **Register the 11 shared events, with that same limited permission (recommended).**
+2. **Register all 17:** the 11 shared events and the six BrainStorm and Review events, with the same permission.
+
+**Recommendation:** Option 1. It matches the events that every kind uses, which is what Card 4 meant by the shared events. If you meant every event the shared runtime names, choose option 2. The BrainStorm and Review events can otherwise follow when those features need their own recorded history.
+
+**Answer:** Option 2. No radio button was selected; the note reads "option 2".
+
+All 17 event names of `Plans/Collaborative_Workflows.md` section 13 are to be registered: the 11 events every kind uses and the three BrainStorm and three Review events, listed below. Each is registered through its own Storage admission landing, one family per landing, after it is prepared, as for the coordination families. This entry also grants the Collaborative Workflows, Contracts and Storage owners a separate bounded technical-binding permission for exactly these names, on DL-045's terms, as DL-046 did for the Browser families. The card put this permission in both options and said so, because Jared's Card 4 words did not mention it. DL-045's 285-family scope is unchanged, and the names below are disjoint from it and from DL-046's 53 Browser names.
+
+The owners may define missing technical consumer, projector and checkpoint bindings for behavior that canon already specifies, only after a documented **per-family** search of current canonical sources, citations to relevant existing partial contracts, and scoped negative evidence for each missing definition. Existing definitions come first: reuse requires the owner-defined role, version and scope, not a sibling name, descriptive role or schema version. New definitions are labelled newly authored owner contracts. The permission covers identity and scope joins, versioned checkpoint values and cursors, atomic projection and advancement, replay, currentness, recovery and withdrawal for existing behavior. It does not choose features, user-visible integrations, retention or deletion policy, or which owner wins a conflict; those still go to Jared. Every family still needs its complete owner-backed Event Authority contract, exact schema references, positive and negative semantic checks, a blind form-driven review and its **own Storage admission landing** under DL-078. Proposals and findings carry their own text, so the contracts of the events that carry it also say how that text is protected and deleted. Preparing contracts together is not admission: a prepared family stays absent from the central event registry, and section 13's rule still holds for it: emission stays disabled until its registration closes.
+
+These 17 families are outside the 252 J248 rows. They are new campaign scope, worked as their own batch, and they do not change the J248 count. This entry registers nothing by itself. Registering these events does not register the records they point to: the run, message, proposal and finding records (`pm.collaboration.run.v1`, `pm.collaboration.message.v1`, `pm.brainstorm.proposal.v1` and `pm.review.finding.v1`) still need their own contracts schema and fixture pair before anything can be stored (section 12). The Collaborative Workflows owner makes section 13 cite this entry. This decision defines no binding identifier, admits no event, changes no registry row or runtime capability, and grants no bulk admission, native proof, Spec Lock update, readiness clearance or seal.
+
+#### Exact collaborative workflow scope
+
+The source is `Plans/Collaborative_Workflows.md` section 13 at `1e5d9b097b`, which names these 17 events. The answered card is `reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md` (Card 4a), SHA-256 `295f17d7ac6423d9f19dc5d82c001c03385db0fb3e45f2ee605cd405337ba30a`, a byte-identical copy of the presented file (artifact `QaLQRPQHwhsqQnNeRQ6g1z`, version 1). Later file edits do not enlarge the approved name set.
+
+- `collaboration.created`, `collaboration.started`, `collaboration.paused`, `collaboration.resumed`, `collaboration.cancelled`, `collaboration.completed`
+- `collaboration.participant_started`, `collaboration.participant_completed`
+- `collaboration.message_added`, `collaboration.artifact_added`, `collaboration.configuration_changed`
+- `brainstorm.proposal_added`, `brainstorm.vote_added`, `brainstorm.plan_synthesized`
+- `review.finding_added`, `review.finding_dispositioned`, `review.artifact_finalized`
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_CARD4_ADDENDUM.md`, SHA-256 `b09b2afdaed355e1170ef0a96db1d468fa00a35ef185cb8fddeed16b1bbea8c8`; card `reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md` (Card 4a); application record `reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json`.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Log.md#DL-045
+
+### DL-091: A collaborative run that fails gets its own recorded event
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session, from the card page: **Approve** on `EA-S09B2-COLLAB-FAILED-001`, which selects option 1.
+
+**Name:** Recording a collaborative run that fails.
+
+**Question:** Should a collaborative run that ends in failure get its own recorded event, as runs that complete or are cancelled do?
+
+**Why:**
+
+- A collaborative run ends in one of three ways: completed, cancelled or failed. The shared events record the first two. No event records a failure.
+- The older Crew "disbanded" event recorded a Crew that was dissolved, with a reason. Retiring it leaves a run that fails with no event of its own.
+- Waiting and blocked are temporary states with no events either. The run record and the live view show them. This card does not add events for them.
+- A participant that fails is recorded by its participant-completed event, whose contents say how it ended. Defining those contents is technical work. This card is only about the run as a whole.
+
+**What you get:**
+
+- **Add a failure event:** every ending is recorded the same way, with its reason, so nobody reading the history has to guess why a run stopped.
+- **No failure event:** nothing new. A failed run shows as failed in its run record, but its history ends without a final event.
+
+**What it costs:**
+
+- **Add a failure event:** one more event name in the Collaborative Workflows document, and one more contract, added on its own.
+- **No failure event:** anyone reading the history has to treat a run that stops without an ending event as failed or unknown.
+
+**Options:**
+
+1. **Add a failure event and register it with the others (recommended).**
+2. **No failure event.**
+
+**Recommendation:** Option 1. A run's history should say how it ended, and failure is the ending most worth finding later.
+
+**Answer:** Approve (option 1).
+
+`Plans/Collaborative_Workflows.md` section 13 gains `collaboration.failed`, the recorded ending of a collaborative run that fails, with its reason, as `collaboration.completed` and `collaboration.cancelled` record the other two endings; `failed` is already one of the closed run states (section 2.1). `collaboration.failed` is registered with the others under the permission DL-090 grants, so that permission's exact list is 18 names: the 17 names of DL-090 and `collaboration.failed`. DL-090's text is not edited; this entry adds the eighteenth name. Its contract and its own Storage admission landing join DL-090's set, one family per landing, on the same terms. Waiting and blocked get no events, and a participant that fails is recorded by its `collaboration.participant_completed` event, whose contents are technical work; this entry is about the run as a whole. The Collaborative Workflows owner writes the name into section 13. Like the other 17, it is new campaign scope outside the 252 J248 rows. This entry itself edits no owner text, registers or admits nothing, and changes no registry row.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_CARD4_ADDENDUM.md`, SHA-256 `b09b2afdaed355e1170ef0a96db1d468fa00a35ef185cb8fddeed16b1bbea8c8`; card `reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md` (Card 4b); application record `reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json`.
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### DL-092: Collaborative workflow history is kept as long as its chat exists
+
+Answered on 2026-09-25 by Jared, in the Event Authority program's host session, from the card page: **Approve** on `EA-S09B2-COLLAB-RETENTION-001`, which selects option 1.
+
+**Name:** How long collaborative workflow history is kept.
+
+**Question:** How long should the recorded history of each Crew, BrainStorm, Review and Chat Room run be kept?
+
+**Why:**
+
+- Every collaborative run belongs to a chat. Its definition carries the project and the chat. A message you send to it appears both in the chat and in the run's transcript.
+- A participant may run as a child run. You chose to keep child-run history as long as the chat exists (Card 1).
+- Retention is your choice. No earlier answer covers these events.
+- This card covers the run's recorded events only. How long the run record itself, its transcript messages, proposals and findings are kept is not set yet, and this card does not set it.
+
+**What you get:**
+
+- **As long as the chat exists:** a run's history lasts exactly as long as its participants' history and its chat. Deleting the chat removes it too, within 24 hours unless it is on hold.
+- **One year after the run finishes:** storage that stays bounded.
+- **180 days after the run finishes:** the same lifetime as the agents' coordination records and board messages.
+
+**What it costs:**
+
+- **As long as the chat exists:** busy chats keep growing. Storage still has to say whether a very busy chat has no count limit, as for Goal text, or rolls into a linked continuation after 250,000 records, as chat messages do, the same open point as Card 1.
+- **One year after the run finishes:** in chats older than a year, collaborative cards still show, but their history is gone, while their participants' histories are still there. Deleting a chat within the year does not remove this history unless each contract adds that rule.
+- **180 days after the run finishes:** the same gaps, after six months. This rule keeps at most 1,000,000 records per project; past that the oldest are dropped first, so a very busy project can lose history before 180 days.
+
+**Options:**
+
+1. **Keep it as long as the chat exists (recommended).** The same lifetime as the participants' child-run history.
+2. **Keep it for one year after the run finishes.**
+3. **Keep it for 180 days after the run finishes.**
+
+**Recommendation:** Option 1. A collaborative run and its participants' child-run histories should last equally long, and this uses the lifetime you chose in Card 1.
+
+**Answer:** Approve (option 1).
+
+The recorded events of every Crew, BrainStorm, Review and Chat Room run, the 18 families chosen in DL-090 and DL-091, are kept as long as the run's chat exists. This is the lifetime DL-084 gave child-run history, and the lifetime of Goal text (DL-047) and of chat messages: deleting the chat removes this history too, within 24 hours unless it is on hold. The policy object is `RP-GOAL-THREAD-LIFETIME`, subject to the same Storage owner reuse check under DL-045 as DL-084: that object has no count cap, while Storage's Chat content class caps a thread at 250,000 records and rolls into a linked successor, and no policy object exists for that class yet. Which count rule applies to a very busy chat is the Storage owner follow-up that DL-084 already carries, not decided here; either way the lifetime is the one approved, and if Storage finds the Goal-named object cannot be reused, it materializes the Chat content class for these families with the same lifetime. The Storage retention owner writes the assignment into the Case L-3 retention text, and each family's full contract carries the structured `retention_policy_ref` and reconciles its chat-deletion behavior. This covers the recorded events only: how long the run record itself, its transcript messages, proposals and findings are kept is not set here and stays open. No policy object is created and no policy value changes. This entry registers, admits or removes nothing and changes no registry row.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/decision-card-answers-20260925/ANSWERS_CARD4_ADDENDUM.md`, SHA-256 `b09b2afdaed355e1170ef0a96db1d468fa00a35ef185cb8fddeed16b1bbea8c8`; card `reports/event-authority-20260911/step-09-batch2-card4-addendum-20260925.md` (Card 4c); application record `reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json`.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Collaborative_Workflows.md
