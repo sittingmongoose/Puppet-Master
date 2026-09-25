@@ -1,6 +1,6 @@
 # Step 8(c), second half: the Browser-created v2 checkpoint becomes the current definition, 2026-09-25
 
-The `browser.workspace.created` v2 checkpoint successor landed on 2026-09-24 (`22e516b456`) as `conditional_not_admitted`: canon kept v1 as the current route. So the family's consumers and oracles cells stayed PARTIAL in the Step 8(a) depth assessment. SP-266 names what its admission needs: "its closed registered schema, explicit reader/admission revisions and native migration, source, permission and crash proofs before activation". This branch supplies the canon part, under DL-046 and the coordinator's go of 2026-09-24, given under the Step 8 authority Jared gave. The native proofs stay NOT_RUN, which never lowers a grade.
+The `browser.workspace.created` v2 checkpoint successor landed on 2026-09-24 (`22e516b456`) as `conditional_not_admitted`: canon kept v1 as the current route. So the family's consumers and oracles cells stayed PARTIAL in the Step 8(a) depth assessment. SP-266 names what its admission needs: "its closed registered schema, explicit reader/admission revisions and native migration, source, permission and crash proofs before activation". This branch supplies the canon part, under DL-046 and the coordinator's go of 2026-09-24, given under the Step 8 authority Jared gave. The native proofs stay NOT_RUN; the Step 8 plan holds that this does not lower a grade (see the last section).
 
 The branch was built on `plans/ea-browser-pair-sp286-20260924` (`2df56dd8a9`, the first half of 8(c)), because both edit SMPFS-167. That first half landed at `main` `a3d6bb616b` (record `1e5d9b097b`), and this branch is rebased onto `1e5d9b097b`: SMPFS-167 keeps this branch's v2 sentence and criterion 5 and `main`'s SP-286 sentence, criterion 6 and validation entry.
 
@@ -55,9 +55,9 @@ Measured on `git archive` exports of `1e5d9b097b` and of this branch, with the c
 
 ## Effect on the depth grades
 
-Once this lands with the first half, a regrade of `browser.workspace.created` should find:
+This is a forecast for the next regrade, not a result. If the regrade accepts the canon admission with the native proofs NOT_RUN, as the Step 8 plan says it should, `browser.workspace.created` can reach 12 of 12:
 - the producer passing (SP-286 by name);
-- the consumers passing (the v2 SP-278 reader is the current route);
-- the oracles passing (the v2 oracles now test the route in force).
+- the consumers passing (the v2 SP-278 reader is the specified current route);
+- the oracles passing (the v2 oracles test the route in force).
 
-That is 12 of 12. `browser.workspace.reset` is complete with the first half alone. Their DL-077 admission records then pass once they are re-pinned to the regraded assessment. The grades themselves move only in that regrade.
+Two things can hold it lower. The depth42 grader's note for this family says "text alone does not make v2 current". SMPFS-167-A006 has a named native obligation but no executable oracle. `browser.workspace.reset` reaches 12 only if the regrade keeps its oracle cell for SMPFS-168-A005, which likewise has no executable oracle. The DL-077 admission records of both families fail closed until they are re-pinned to a regraded assessment with all twelve criteria passing. The grades themselves move only in that regrade.
