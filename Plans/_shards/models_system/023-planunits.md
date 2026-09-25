@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1429-L7473
+Source lines: L1433-L7479
 
-Source SHA256: `018c37767997cac4e20f76cebc19a39c42985f28d5a738fc12e397b0ce0abf66`
+Source SHA256: `a1d01fbcf74156142a37be481531cc77d2b06e2a70710030977511ac0c3e8770`
 
 ---
 
@@ -922,6 +922,8 @@ status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: OpenCode models.dev, provider catalog, and cursor-agent models supply model-scoped capability metadata. Snapshots
   preserve requested_default and effective_capabilities for UI, default, and runtime explanation.
+  Models.dev check/import/validation/metadata-selection history retains source version and actual times; failed refresh keeps
+  last known-good metadata visibly stale without granting readiness or Free-Models-only runtime Auto Apply.
 gui_related: true
 gui_classification_reason: The unit includes selectable-unit snapshots that explain UI defaults and user-visible runtime choices.
 split_recommended: false

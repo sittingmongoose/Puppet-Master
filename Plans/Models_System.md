@@ -472,6 +472,10 @@ Provider/catalog discovery remains dynamic and model-scoped. OpenCode `models.de
 
 Capability snapshot provenance is mandatory for context-window, max-token, and fallback fields. Each snapshot records `capability_snapshot_id`, `provider_entry_id`, `model_id`, `runtime_surface_id`, `source_refs[]`, `source_kind`, `observed_at_utc`, `verification_state`, and `staleness_state`. Unknown, opaque, stale, inferred, clamped, and unsupported states must remain visible rather than silently substituting a legacy default.
 
+Models.dev refresh is catalog-evidence maintenance, not Free Models runtime Auto Apply. The existing catalog owner records each source identity/version (or exact content identity when no upstream version exists), check time/outcome, imported candidate identity/time, validation result and the time that a validated candidate becomes the selected catalog snapshot. That last transition activates metadata only: it grants no provider readiness, credentials, executable update or router/probe/runtime adaptation. Checks continue under the actual configured catalog refresh policy; this clause adds neither a cadence nor a second updater.
+
+A failed fetch, parse or validation leaves the last known-good catalog snapshot selected, with its original provenance and observed time intact and its current stale/failure status visible. Failure never publishes an empty successful catalog, advances the old snapshot's observation time, or manufactures a fallback when no validated snapshot exists. Catalog consumers still apply current route capability, verification and staleness constraints; last known-good metadata is not live support evidence. Retain source-qualified change history linking checks, candidates, validation/rejection and selected before/after snapshots under the existing catalog/storage retention owner; this does not create a new store or an arbitrary retention interval. No arbitrary credential writer, endpoint installer, upstream executable or runtime configuration is imported from Models.dev. MS-119's automatic runtime-behavior adaptation remains Free-Models-only.
+
 #### 3.3.2 `system_role_name` values
 
 Role-mapping is data-driven through `system_role_name`. OpenAI reasoning surfaces use developer-role semantics by setting `system_role_name = "developer"`, and bridged-provider adapters must stay aligned with `Plans/CLI_Bridged_Providers.md` rather than inventing local role names.
@@ -2340,6 +2344,8 @@ status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: OpenCode models.dev, provider catalog, and cursor-agent models supply model-scoped capability metadata. Snapshots
   preserve requested_default and effective_capabilities for UI, default, and runtime explanation.
+  Models.dev check/import/validation/metadata-selection history retains source version and actual times; failed refresh keeps
+  last known-good metadata visibly stale without granting readiness or Free-Models-only runtime Auto Apply.
 gui_related: true
 gui_classification_reason: The unit includes selectable-unit snapshots that explain UI defaults and user-visible runtime choices.
 split_recommended: false

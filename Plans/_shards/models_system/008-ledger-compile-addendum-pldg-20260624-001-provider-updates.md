@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L287-L533
+Source lines: L287-L537
 
-Source SHA256: `018c37767997cac4e20f76cebc19a39c42985f28d5a738fc12e397b0ce0abf66`
+Source SHA256: `a1d01fbcf74156142a37be481531cc77d2b06e2a70710030977511ac0c3e8770`
 
 ---
 
@@ -195,6 +195,10 @@ Capability checks are data-driven and must not devolve into scattered `if-else` 
 Provider/catalog discovery remains dynamic and model-scoped. OpenCode `models.dev` and provider `/catalog` evidence may supply model-level capability metadata such as reasoning, `/tool/temperature` support, limits, modalities, and pricing; PM records this as capability data rather than hardcoding provider defaults. Selectable-unit snapshots preserve `requested_default` and `effective_capabilities` so UI defaults and runtime routing can explain which provider/model entry was requested and what capability block was actually discovered. `cursor-agent models` is live catalog evidence whose returned IDs may encode reasoning variants directly, so PM must discover those IDs instead of inferring variants from vendor name alone.
 
 Capability snapshot provenance is mandatory for context-window, max-token, and fallback fields. Each snapshot records `capability_snapshot_id`, `provider_entry_id`, `model_id`, `runtime_surface_id`, `source_refs[]`, `source_kind`, `observed_at_utc`, `verification_state`, and `staleness_state`. Unknown, opaque, stale, inferred, clamped, and unsupported states must remain visible rather than silently substituting a legacy default.
+
+Models.dev refresh is catalog-evidence maintenance, not Free Models runtime Auto Apply. The existing catalog owner records each source identity/version (or exact content identity when no upstream version exists), check time/outcome, imported candidate identity/time, validation result and the time that a validated candidate becomes the selected catalog snapshot. That last transition activates metadata only: it grants no provider readiness, credentials, executable update or router/probe/runtime adaptation. Checks continue under the actual configured catalog refresh policy; this clause adds neither a cadence nor a second updater.
+
+A failed fetch, parse or validation leaves the last known-good catalog snapshot selected, with its original provenance and observed time intact and its current stale/failure status visible. Failure never publishes an empty successful catalog, advances the old snapshot's observation time, or manufactures a fallback when no validated snapshot exists. Catalog consumers still apply current route capability, verification and staleness constraints; last known-good metadata is not live support evidence. Retain source-qualified change history linking checks, candidates, validation/rejection and selected before/after snapshots under the existing catalog/storage retention owner; this does not create a new store or an arbitrary retention interval. No arbitrary credential writer, endpoint installer, upstream executable or runtime configuration is imported from Models.dev. MS-119's automatic runtime-behavior adaptation remains Free-Models-only.
 
 #### 3.3.2 `system_role_name` values
 
