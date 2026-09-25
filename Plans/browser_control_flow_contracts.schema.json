@@ -1,0 +1,755 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.browser_control_flow_contracts.schema.v1",
+  "x-schema-id": "pm.browser_control_flow.contracts.v1",
+  "description": "SMPFS-147 additive AST2 finite control tree and compiler/program successors. V1 contracts remain unchanged. Static compilation and actual complete-result-byte checks grant no browser effect or source authority.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/browser_compile_request_v2"
+    },
+    {
+      "$ref": "#/$defs/browser_compile_result_v2"
+    },
+    {
+      "$ref": "#/$defs/browser_program_v2"
+    }
+  ],
+  "$defs": {
+    "browser_current_program": {
+      "oneOf": [
+        {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program"},
+        {"$ref": "#/$defs/browser_program_v2"}
+      ]
+    },
+    "browser_dispatch_validation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["record_kind", "request", "program", "current_subject", "current_workspace_revision"],
+      "properties": {
+        "record_kind": {"const": "browser_control_dispatch_validation"},
+        "request": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_command_request"},
+        "program": {"$ref": "#/$defs/browser_current_program"},
+        "current_subject": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"},
+        "current_workspace_revision": {"type": "integer", "minimum": 0}
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "value_kind",
+        "value_ref",
+        "expected_value_revision",
+        "collection_max_items",
+        "item_kind"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+        },
+        "value_kind": {
+          "enum": [
+            "boolean",
+            "string",
+            "collection"
+          ]
+        },
+        "value_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "expected_value_revision": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+        },
+        "collection_max_items": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "item_kind": {
+          "enum": [
+            "boolean",
+            "string",
+            "object",
+            null
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "value_kind": {
+                "const": "collection"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "collection_max_items": {
+                "type": "integer"
+              },
+              "item_kind": {
+                "enum": [
+                  "boolean",
+                  "string",
+                  "object"
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "collection_max_items": {
+                "type": "null"
+              },
+              "item_kind": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "node": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "node_id",
+            "kind",
+            "source_span",
+            "children"
+          ],
+          "properties": {
+            "node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "kind": {
+              "const": "sequence"
+            },
+            "source_span": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/source_span"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+              },
+              "maxItems": 21000,
+              "uniqueItems": true
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "node_id",
+            "kind",
+            "source_span",
+            "action_id"
+          ],
+          "properties": {
+            "node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "kind": {
+              "const": "action"
+            },
+            "source_span": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/source_span"
+            },
+            "action_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "node_id",
+            "kind",
+            "source_span",
+            "operator_id"
+          ],
+          "properties": {
+            "node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "kind": {
+              "const": "local_operator"
+            },
+            "source_span": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/source_span"
+            },
+            "operator_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "node_id",
+            "kind",
+            "source_span",
+            "checkpoint_id"
+          ],
+          "properties": {
+            "node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "kind": {
+              "const": "checkpoint"
+            },
+            "source_span": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/source_span"
+            },
+            "checkpoint_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "node_id",
+            "kind",
+            "source_span",
+            "condition_ref",
+            "then_node_id",
+            "else_node_id"
+          ],
+          "properties": {
+            "node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "kind": {
+              "const": "if"
+            },
+            "source_span": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/source_span"
+            },
+            "condition_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "then_node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "else_node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "node_id",
+            "kind",
+            "source_span",
+            "value_ref",
+            "cases",
+            "default_node_id"
+          ],
+          "properties": {
+            "node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "kind": {
+              "const": "switch"
+            },
+            "source_span": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/source_span"
+            },
+            "value_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "cases": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "equals",
+                  "node_id"
+                ],
+                "properties": {
+                  "equals": {
+                    "type": "string",
+                    "maxLength": 262144
+                  },
+                  "node_id": {
+                    "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+                  }
+                }
+              },
+              "maxItems": 10000,
+              "minItems": 1
+            },
+            "default_node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "node_id",
+            "kind",
+            "source_span",
+            "collection_ref",
+            "item_name",
+            "max_iterations",
+            "body_node_id"
+          ],
+          "properties": {
+            "node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "kind": {
+              "const": "bounded_for_each"
+            },
+            "source_span": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/source_span"
+            },
+            "collection_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "item_name": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "max_iterations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000000
+            },
+            "body_node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "node_id",
+            "kind",
+            "source_span",
+            "condition_ref",
+            "max_iterations",
+            "body_node_id"
+          ],
+          "properties": {
+            "node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "kind": {
+              "const": "bounded_while"
+            },
+            "source_span": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/source_span"
+            },
+            "condition_ref": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            },
+            "max_iterations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000000
+            },
+            "body_node_id": {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+            }
+          }
+        }
+      ]
+    },
+    "browser_program_ast_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ast_version",
+        "actions",
+        "local_operators",
+        "checkpoints",
+        "bindings",
+        "nodes",
+        "root_node_id",
+        "ast_hash"
+      ],
+      "properties": {
+        "ast_version": {
+          "const": "2.0.0"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_action"
+          },
+          "maxItems": 10000
+        },
+        "local_operators": {
+          "type": "array",
+          "items": {
+            "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/local_operator"
+          },
+          "maxItems": 10000
+        },
+        "checkpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+          },
+          "maxItems": 1000,
+          "uniqueItems": true
+        },
+        "bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/binding"
+          },
+          "maxItems": 10000
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/node"
+          },
+          "maxItems": 21000,
+          "minItems": 1
+        },
+        "root_node_id": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"
+        },
+        "ast_hash": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+        }
+      }
+    },
+    "static_bounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_visits",
+        "local_operator_visits",
+        "checkpoint_visits"
+      ],
+      "properties": {
+        "action_visits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "local_operator_visits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "checkpoint_visits": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "browser_compile_request_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "compile_request_id",
+        "lineage",
+        "source",
+        "compiler",
+        "requested_capability_profile",
+        "permission_preflight_ref",
+        "filesafe_preflight_ref",
+        "budgets"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_program.compile_request.v2"
+        },
+        "record_kind": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_request/properties/record_kind"
+        },
+        "compile_request_id": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_request/properties/compile_request_id"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_request/properties/lineage"
+        },
+        "source": {
+          "oneOf": [
+            {
+              "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/pm_browser_script_source"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "source_language",
+                "source_hash",
+                "ast"
+              ],
+              "properties": {
+                "source_language": {
+                  "const": "validated_ast"
+                },
+                "source_hash": {
+                  "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"
+                },
+                "ast": {
+                  "$ref": "#/$defs/browser_program_ast_v2"
+                }
+              }
+            }
+          ]
+        },
+        "compiler": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_request/properties/compiler"
+        },
+        "requested_capability_profile": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_request/properties/requested_capability_profile"
+        },
+        "permission_preflight_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_request/properties/permission_preflight_ref"
+        },
+        "filesafe_preflight_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_request/properties/filesafe_preflight_ref"
+        },
+        "expected_ast_hash": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_request/properties/expected_ast_hash"
+        },
+        "budgets": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_request/properties/budgets"
+        }
+      }
+    },
+    "browser_compile_result_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "compile_request_id",
+        "compile_status",
+        "no_effect_before_execution",
+        "program_id",
+        "source_hash",
+        "compiler_hash",
+        "browser_program_api_digest",
+        "capability_profile_hash",
+        "ast_hash",
+        "ast",
+        "static_bounds"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_program.compile_result.v2"
+        },
+        "record_kind": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_result/properties/record_kind"
+        },
+        "compile_request_id": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_result/properties/compile_request_id"
+        },
+        "compile_status": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_result/properties/compile_status"
+        },
+        "no_effect_before_execution": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_result/properties/no_effect_before_execution"
+        },
+        "program_id": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_result/properties/program_id"
+        },
+        "source_hash": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_result/properties/source_hash"
+        },
+        "compiler_hash": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_result/properties/compiler_hash"
+        },
+        "browser_program_api_digest": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_result/properties/browser_program_api_digest"
+        },
+        "capability_profile_hash": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_result/properties/capability_profile_hash"
+        },
+        "ast_hash": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program_compile_result/properties/ast_hash"
+        },
+        "ast": {
+          "$ref": "#/$defs/browser_program_ast_v2"
+        },
+        "static_bounds": {
+          "$ref": "#/$defs/static_bounds"
+        }
+      }
+    },
+    "browser_program_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "program_id",
+        "lineage",
+        "subject",
+        "source_form",
+        "compiler",
+        "source_hash",
+        "ast",
+        "requested_execution_strategy",
+        "effective_execution_strategy",
+        "required_capabilities",
+        "program_workspace_id",
+        "expected_workspace_revision",
+        "budgets",
+        "result_mode",
+        "result_schema_ref",
+        "result_schema_sha256",
+        "result_schema_dependencies"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser_program.program.v2"
+        },
+        "record_kind": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/record_kind"
+        },
+        "program_id": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/program_id"
+        },
+        "lineage": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/lineage"
+        },
+        "subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/subject"
+        },
+        "source_form": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/source_form"
+        },
+        "compiler": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/compiler"
+        },
+        "source_hash": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/source_hash"
+        },
+        "ast": {
+          "$ref": "#/$defs/browser_program_ast_v2"
+        },
+        "requested_execution_strategy": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/requested_execution_strategy"
+        },
+        "effective_execution_strategy": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/effective_execution_strategy"
+        },
+        "required_capabilities": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/required_capabilities"
+        },
+        "program_workspace_id": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/program_workspace_id"
+        },
+        "expected_workspace_revision": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/expected_workspace_revision"
+        },
+        "budgets": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/budgets"
+        },
+        "result_mode": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/result_mode"
+        },
+        "result_schema_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/result_schema_ref"
+        },
+        "result_schema_sha256": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/result_schema_sha256"
+        },
+        "result_schema_dependencies": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/result_schema_dependencies"
+        },
+        "idempotency_key": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_program/properties/idempotency_key"
+        }
+      }
+    },
+    "browser_compile_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_kind",
+        "request",
+        "result",
+        "program"
+      ],
+      "properties": {
+        "record_kind": {
+          "const": "browser_control_compile_validation"
+        },
+        "request": {
+          "$ref": "#/$defs/browser_compile_request_v2"
+        },
+        "result": {
+          "$ref": "#/$defs/browser_compile_result_v2"
+        },
+        "program": {
+          "$ref": "#/$defs/browser_program_v2"
+        }
+      }
+    },
+    "browser_result_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_kind",
+        "program",
+        "resolved_schema_ref",
+        "result_schema_utf8",
+        "result_schema_resources",
+        "terminal_subject",
+        "terminal_workspace_revision",
+        "result_utf8"
+      ],
+      "properties": {
+        "record_kind": {
+          "const": "browser_control_result_validation"
+        },
+        "program": {
+          "$ref": "#/$defs/browser_program_v2"
+        },
+        "resolved_schema_ref": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"
+        },
+        "result_schema_utf8": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result_schema_resources": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "terminal_subject": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"
+        },
+        "terminal_workspace_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "result_utf8": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

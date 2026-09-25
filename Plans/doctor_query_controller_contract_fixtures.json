@@ -1,0 +1,288 @@
+{
+  "schema_id": "pm.doctor.query_controller_fixtures.v1",
+  "schema_version": "1.0.0",
+  "contract_schema_id": "pm.doctor.query_controller_contracts.v1",
+  "evidence_level": "schema_fixture_only",
+  "owner_schema": "Plans/doctor_query_controller_contracts.schema.json",
+  "valid": [
+    {
+      "name": "original_selected_batch",
+      "definition": "doctor_batch_request",
+      "value": {
+        "schema_id": "pm.doctor.batch_request.v1",
+        "schema_version": "1.0.0",
+        "batch_id": "doctor-batch:repository",
+        "actor_ref": "actor:human",
+        "scope": {
+          "kind": "server",
+          "server_id": "server:home-01",
+          "project_id": null
+        },
+        "selection_mode": "selected_checks",
+        "selection_evidence_ref": "selection:doctor-repository",
+        "members": [
+          {
+            "member_id": "doctor-member:repository",
+            "descriptor": {
+              "schema_id": "pm.doctor.check_descriptor.v1",
+              "schema_version": "1.0.0",
+              "check_id": "doctor.backup.repository.metadata",
+              "descriptor_revision": 1,
+              "owner_doc_ref": "Plans/Backup_Restore_System.md#BRS-004",
+              "target_kinds": [
+                "backup_repository"
+              ],
+              "request_schema_ref": "https://puppetmaster.local/schemas/doctor-query-controller/1.0.0/doctor_query_controller_contracts.schema.json#backup_repository_read_request",
+              "result_schema_ref": "https://puppetmaster.local/schemas/doctor-query-controller/1.0.0/doctor_query_controller_contracts.schema.json#backup_repository_binding_result",
+              "applicability_selector_ref": "selector:configured-backup-repositories",
+              "cost_class": "light_local",
+              "cache_ttl_seconds": 60,
+              "timeout_ms": 5000,
+              "side_effect_policy": "read_only",
+              "permission_class": "host_read",
+              "redaction_profile_ref": "redaction:doctor-repository",
+              "remediation_action_ids": [],
+              "support_state": "active"
+            },
+            "target": {
+              "kind": "backup_repository",
+              "identity_ref": "backup-repository:project-alpha",
+              "server_id": "server:home-01",
+              "project_id": "project:alpha",
+              "host_id": null,
+              "environment_id": null,
+              "route_ref": null
+            },
+            "expected_owner_generation": 7,
+            "expected_cache_generation": 3,
+            "applicability_ref": "applicability:repository"
+          }
+        ],
+        "requested_at_utc": "2026-09-25T12:00:00Z",
+        "deadline_utc": "2026-09-25T12:00:10Z",
+        "idempotency_key": "idempotency:doctor-repository",
+        "parent_batch_ref": null
+      }
+    },
+    {
+      "name": "human_server_scope_read_admission",
+      "definition": "doctor_read_admission",
+      "value": {
+        "schema_id": "pm.permissions.doctor_read_admission.v1",
+        "schema_version": "1.0.0",
+        "decision_id": "decision:doctor-repository",
+        "batch_id": "doctor-batch:repository",
+        "member_id": "doctor-member:repository",
+        "query_id": "doctor-query:repository",
+        "actor_ref": "actor:human",
+        "scope": {
+          "kind": "server",
+          "server_id": "server:home-01",
+          "project_id": null
+        },
+        "target": {
+          "kind": "backup_repository",
+          "identity_ref": "backup-repository:project-alpha",
+          "server_id": "server:home-01",
+          "project_id": "project:alpha",
+          "host_id": null,
+          "environment_id": null,
+          "route_ref": null
+        },
+        "descriptor_revision": 1,
+        "expected_owner_generation": 7,
+        "expected_cache_generation": 3,
+        "permission_class": "host_read",
+        "policy_ref": "policy:doctor-read",
+        "policy_generation": 4,
+        "authority_generation": 9,
+        "audit_admission_ref": "audit:doctor-read",
+        "redaction_profile_ref": "redaction:doctor-repository",
+        "decision": "allow",
+        "reason_ref": null,
+        "evaluated_at_utc": "2026-09-25T12:00:00Z",
+        "expires_at_utc": "2026-09-25T12:00:09Z"
+      }
+    },
+    {
+      "name": "actual_repository_query_binding",
+      "definition": "doctor_owner_query_request",
+      "value": {
+        "schema_id": "pm.doctor.owner_query_request.v1",
+        "schema_version": "1.0.0",
+        "query_id": "doctor-query:repository",
+        "batch_id": "doctor-batch:repository",
+        "member_id": "doctor-member:repository",
+        "admission_ref": "permission-ref:doctor-read",
+        "owner_request_ref": "owner-query:repository-read",
+        "owner_request_schema_ref": "https://puppetmaster.local/schemas/doctor-query-controller/1.0.0/doctor_query_controller_contracts.schema.json#backup_repository_read_request",
+        "governor_admission_ref": "governor:doctor-read",
+        "observable_work_ref": "work:repository-read",
+        "dispatched_at_utc": "2026-09-25T12:00:01Z",
+        "deadline_utc": "2026-09-25T12:00:06Z"
+      }
+    },
+    {
+      "name": "actual_repository_metadata_query",
+      "definition": "backup_repository_read_request",
+      "value": {
+        "schema_id": "pm.backup_restore_system.repository_read_request.v1",
+        "schema_version": "1.0.0",
+        "query_id": "doctor-query:repository",
+        "repository_binding_id": "repository-binding:project-alpha",
+        "repository_id": "backup-repository:project-alpha",
+        "server_id": "server:home-01",
+        "expected_currentness_ref": "currentness:repository:project-alpha"
+      }
+    },
+    {
+      "name": "actual_query_completed",
+      "definition": "doctor_owner_query_result",
+      "value": {
+        "schema_id": "pm.doctor.owner_query_result.v1",
+        "schema_version": "1.0.0",
+        "result_id": "doctor-query-result:repository",
+        "query_id": "doctor-query:repository",
+        "batch_id": "doctor-batch:repository",
+        "member_id": "doctor-member:repository",
+        "status": "completed",
+        "owner_result_ref": "owner-result:repository-metadata",
+        "owner_result_schema_ref": "https://puppetmaster.local/schemas/doctor-query-controller/1.0.0/doctor_query_controller_contracts.schema.json#backup_repository_binding_result",
+        "observed_owner_generation": 7,
+        "started_at_utc": "2026-09-25T12:00:01Z",
+        "finished_at_utc": "2026-09-25T12:00:02Z",
+        "evidence_refs": [
+          "evidence:repository-read"
+        ],
+        "failure_refs": []
+      }
+    },
+    {
+      "name": "complete_query_coverage_not_backup_health",
+      "definition": "doctor_batch_result",
+      "value": {
+        "schema_id": "pm.doctor.batch_result.v1",
+        "schema_version": "1.0.0",
+        "batch_id": "doctor-batch:repository",
+        "result_id": "doctor-batch-result:repository",
+        "status": "completed",
+        "outcomes": [
+          {
+            "member_id": "doctor-member:repository",
+            "status": "completed",
+            "query_ref": "query-ref:repository",
+            "result_ref": "query-result-ref:repository",
+            "finding_ref": "finding-ref:repository",
+            "disposition_evidence_ref": "disposition:repository"
+          }
+        ],
+        "controls": [
+          {
+            "control_id": "control:detach",
+            "action": "detach_viewer",
+            "member_id": null,
+            "query_ref": null,
+            "outcome": "applied",
+            "recorded_at_utc": "2026-09-25T12:00:01Z",
+            "evidence_ref": "control-evidence:detach"
+          }
+        ],
+        "started_at_utc": "2026-09-25T12:00:00Z",
+        "finished_at_utc": "2026-09-25T12:00:03Z"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "query_expires_before_dispatch",
+      "base_valid": "actual_repository_query_binding",
+      "patch": {
+        "deadline_utc": "2026-09-25T12:00:00Z"
+      },
+      "semantic_rule": "invalid_query_deadline"
+    },
+    {
+      "name": "completed_member_missing_original_result",
+      "base_valid": "complete_query_coverage_not_backup_health",
+      "patch": {
+        "outcomes.0.result_ref": null
+      },
+      "semantic_rule": "completed_member_missing_source"
+    },
+    {
+      "name": "detach_does_not_cancel_owner",
+      "base_valid": "complete_query_coverage_not_backup_health",
+      "patch": {
+        "controls.0.outcome": "owner_cancelled"
+      },
+      "semantic_rule": "global_control_wrong_shape"
+    },
+    {
+      "name": "read_admission_cannot_invent_project_in_server_scope",
+      "base_valid": "human_server_scope_read_admission",
+      "patch": {
+        "scope.project_id": "project:invented"
+      }
+    }
+  ],
+  "static_owner_sources": {
+    "description": "Explicit static doubles; not live registration, actual authority issuance, native execution or all-52 coverage.",
+    "repository_binding": {
+      "schema_id": "pm.backup_restore_system.backup_repository_binding.v2",
+      "schema_version": "2.0.0",
+      "repository_binding_id": "repository-binding:project-alpha",
+      "repository_id": "backup-repository:project-alpha",
+      "boundary_kind": "project",
+      "server_id": "server:home-01",
+      "project_id": "project:alpha",
+      "project_vault_id": "project-vault:alpha",
+      "recovery_set_id": "recovery-set:home-01",
+      "destination_binding_ids": [
+        "backup-destination:nas",
+        "backup-destination:b2"
+      ],
+      "writer_server_id": "server:home-01",
+      "maintenance_authority_ref": "maintenance-authority:project-alpha",
+      "source_location_refs": [
+        "source-location:alpha"
+      ],
+      "state": "ready",
+      "retention_policy_ref": "backup-policy:project-alpha",
+      "last_complete_snapshot_ref": "snapshot:project-alpha-01",
+      "quarantine_ref": null,
+      "currentness_ref": "currentness:repository:project-alpha"
+    },
+    "finding": {
+      "schema_id": "pm.doctor.finding_projection.v1",
+      "schema_version": "1.0.0",
+      "finding_id": "finding:repository-metadata",
+      "check_id": "doctor.backup.repository.metadata",
+      "descriptor_revision": 1,
+      "owner_doc_ref": "Plans/Backup_Restore_System.md#BRS-004",
+      "project_id": "project:alpha",
+      "target_kind": "backup_repository",
+      "target_id": "backup-repository:project-alpha",
+      "status": "unknown",
+      "severity": "info",
+      "task_impact": "none",
+      "applicability": "optional_on",
+      "reason": "Repository metadata read completed; integrity and recoverability are not established by this read.",
+      "observed_at_utc": "2026-09-25T12:00:02Z",
+      "freshness_state": "fresh",
+      "age_ms": 0,
+      "confidence": "high",
+      "owner_generation": 7,
+      "cache_generation": 3,
+      "last_known_result_ref": "owner-result:repository-metadata",
+      "details_ref": null,
+      "logs_ref": null,
+      "receipt_refs": [],
+      "evidence_refs": [
+        "evidence:repository-read"
+      ],
+      "remediation": null,
+      "check_cost_class": "light_local",
+      "redaction_state": "redacted"
+    }
+  }
+}

@@ -32,6 +32,9 @@ from pm_backup_action_semantics import backup_action_semantic_failures
 from pm_backup_snapshot_semantics import backup_snapshot_semantic_failures
 from pm_backup_compare_semantics import backup_compare_semantic_failures
 from pm_application_update_semantics import application_update_semantic_failures
+from pm_capability_continuation_semantics import capability_continuation_semantic_failures
+from pm_doctor_query_semantics import doctor_query_semantic_failures
+from pm_browser_control_flow_semantics import browser_control_flow_semantic_failures
 from pm_backup_drill_semantics import backup_drill_semantic_failures
 from pm_jujutsu_backup_semantics import jj_backup_pointer_failures, jj_backup_verification_failures
 from pm_browser_program_semantics import browser_program_semantic_failures
@@ -52,6 +55,9 @@ CONTRACT_PAIRS = (
     ("Plans/backup_compare_result_contracts.schema.json", "Plans/backup_compare_result_contract_fixtures.json"),
     ("Plans/backup_drill_result_contracts.schema.json", "Plans/backup_drill_result_contract_fixtures.json"),
     ("Plans/application_update_check_contracts.schema.json", "Plans/application_update_check_contract_fixtures.json"),
+    ("Plans/capability_provisioning_continuation_contracts.schema.json", "Plans/capability_provisioning_continuation_contract_fixtures.json"),
+    ("Plans/doctor_query_controller_contracts.schema.json", "Plans/doctor_query_controller_contract_fixtures.json"),
+    ("Plans/browser_control_flow_contracts.schema.json", "Plans/browser_control_flow_contract_fixtures.json"),
     ("Plans/doctor_contracts.schema.json", "Plans/doctor_contract_fixtures.json"),
     ("Plans/egolite_retained_requirement_contracts.schema.json", "Plans/egolite_retained_requirement_contract_fixtures.json"),
     ("Plans/external_research_contracts.schema.json", "Plans/external_research_contract_fixtures.json"),
@@ -85,7 +91,7 @@ CONTRACT_PAIRS = (
     ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 36
+EXPECTED_CONTRACT_PAIR_COUNT = 39
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -323,6 +329,14 @@ def offline_schema_registry() -> Registry:
     if not isinstance(expansion_uri, str) or not expansion_uri:
         raise ValueError("shared integration expansion schema has no canonical $id")
     registry = registry.with_resource(expansion_uri, Resource.from_contents(expansion_schema))
+    # The continuation companion references the existing capability operation
+    # and shared scalar types. Register that exact owner dependency offline;
+    # it is not a new fixture pair or permission to retrieve schemas remotely.
+    runtime_schema = load_json(ROOT / "Plans/shared_runtime_contracts.schema.json")
+    runtime_uri = runtime_schema.get("$id")
+    if not isinstance(runtime_uri, str) or not runtime_uri:
+        raise ValueError("shared runtime owner schema has no canonical $id")
+    registry = registry.with_resource(runtime_uri, Resource.from_contents(runtime_schema))
     return registry
 
 
@@ -1204,6 +1218,12 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel == "Plans/capability_provisioning_continuation_contracts.schema.json":
+        return capability_continuation_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/doctor_query_controller_contracts.schema.json":
+        return doctor_query_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/browser_control_flow_contracts.schema.json":
+        return browser_control_flow_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_drill_result_contracts.schema.json":
         failures = backup_drill_semantic_failures(definition_name, value)
         if definition_name == "backup_jj_context_verification_receipt_v2":

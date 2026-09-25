@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L8830-L9080
+Source lines: L8840-L9091
 
-Source SHA256: `ffb7defe4207388f29bc48b89b3a01b922c7f92f7df598b40529f80ae1defd3e`
+Source SHA256: `d936ba3b1ac832ec5559fb523cc702f06aa7e4dbba57f9df59a253a2a78dd54b`
 
 ---
 
@@ -59,9 +59,10 @@ unblocks: [SMPFS-148, SMPFS-149, SMPFS-151, SMPFS-152]
 acceptance_criteria:
   - Compact source and validated AST compile to the same reproducible typed program when hashes/digests match.
   - Parse/type/name/effect/limit/capability/permission/FileSafe failure returns exact spans and no_effect true before any mutation.
-  - AST admits only named actions, bounded queries/local operators, checkpoints, and declared capture/bookmark requests.
+  - AST admits only named actions, bounded queries/local operators, checkpoints, declared capture/bookmark requests and the closed v2 finite control tree; graph cycles, missing or repeated structural nodes/leaves, mistyped conditions, duplicate switch cases and unbounded loops are rejected.
+  - V2 compiler/program joins prove conservative nested branch/loop action and checkpoint bounds, preserve the original compile request and reuse SMPFS-169 complete-result byte/schema checks; all native effects and authority remain separately unproved.
   - Protected-auth, Python/host code, arbitrary page code, raw protocol, filesystem/process/environment/keychain/socket, and Playwright-shaped authority are structurally absent.
-validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, future compiler no-effect and hash-reproducibility matrix]
+validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, Plans/browser_control_flow_contracts.schema.json, Plans/browser_control_flow_contract_fixtures.json, tests/test_pm_browser_control_flow.py, future compiler no-effect and hash-reproducibility matrix]
 risk_class: browser_script_compiler_or_authority_escape
 reasoning_tier: high
 context_scope: pm_browser_script_compiler

@@ -9110,6 +9110,25 @@ owner_hints:
 
 ### PS-133 - Case L Denial Scope And Recovery Gate Composition
 
+Human Doctor reads use the Permissions-owned
+`pm.permissions.doctor_read_admission.v1` companion in
+`Plans/doctor_query_controller_contracts.schema.json` for their actual
+application, Server or Project scope. Permissions issues the decision for the
+original Doctor batch/member, actor, exact descriptor permission class and
+target/currentness, effective policy and authority generations, disclosure and
+redaction, and required audit disposition. Server scope is an exact Server
+target inside application authority, not a fabricated Project, executor node or
+attempt. The decision is immutable historical evidence; current Permissions and
+audit admission are checked before reading, and current disclosure again before
+returning results. Denied, prompt-pending, expired, revoked, wrong-target or
+unresolved decisions cannot execute a query. Descriptor permission class `none`
+still requires authentic scope/disclosure evaluation, not invented access.
+This read decision grants no installation, repair, sign-in, route change,
+secret/protected-browser access, restore or other mutation. Independent FileSafe,
+resource/cost/network and storage gates continue to intersect it. Doctor consumes
+this decision but cannot issue or widen it; static fixtures do not prove native
+Permissions issuance, audit durability or the dispatch/disclosure fence.
+
 ```yaml
 plan_unit_id: PS-133
 unit_type: requirement
@@ -9124,6 +9143,8 @@ canonical_text: >-
   and permission outcomes never clear recovery holds. Independently scoped capability provisioning retains its
   exact Permissions-owned operation decision without fabricating Project/attempt/node snapshot identity;
   originating executor/provider attempts still require their own applicable admission and immutable snapshot.
+  Human Doctor reads likewise require genuine target-bound read admission for their actual scope,
+  with immutable historical decisions and independently current read/disclosure checks, never mutation authority.
 gui_related: true
 gui_classification_reason: Denial, disabled-action, approval, viewer, and recovery-state explanations are user-visible permission behavior.
 depends_on: [PS-093, PS-097, CV-317, CV-320, SP-239, SP-240]
@@ -9132,6 +9153,8 @@ acceptance_criteria:
   - Project denials use project scope and application-level denials use null-project application scope without a fake snapshot key.
   - Application-scoped cmd.capability.ensure preserves null Project/NamedPlan and retains its exact Permissions-issued operation decision in the existing provisioning operation; it never manufactures a project/attempt/node snapshot.
   - Project-bound executor/provider attempt snapshots and independent continuation re-admission remain unchanged; static joins cannot issue permission, prove audit persistence, or execute an effect.
+  - Human Doctor batch/member reads bind the actual actor, descriptor permission class, target, policy and authority generations without fake executor identity; unresolved, denied, prompt-pending, expired, revoked or wrong-target decisions cannot execute a query.
+  - Doctor read admission intersects independent safety and resource gates, grants no mutation or protected-secret access, and requires fresh disclosure after actual owner-result resolution even when the original decision allowed the read.
   - A reader lacking EventRecord 2.0 validation refuses permission-history inspection, and routing consumes the full storage-owned v2 scope, sequence, and event lookup key.
   - dedupe_unavailable remains fail-closed for execution and projector_replay_only cannot alter current permission or scheduler state.
   - Approval cannot enable a mutation prohibited by storage viewer/blocked state, root continuity, integrity, or newer-store rules.
@@ -9141,6 +9164,8 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future EventRecord denial scope, duplicate denial, viewer bypass, and exact-restore permission fixtures
+  - Plans/doctor_query_controller_contracts.schema.json
+  - Plans/doctor_query_controller_contract_fixtures.json
 risk_class: permission_restore_storage_gate_bypass
 reasoning_tier: high
 context_scope: case_l_permission_denial_and_recovery
@@ -9161,6 +9186,7 @@ source_lineage:
   - Plans/Shared_Integration_Runtime.md#SIR-003
   - Plans/Shared_Integration_Runtime.md#SIR-015
   - Plans/Shared_Integration_Runtime.md#SIR-042
+  - Plans/newtools.md#N2-152
   - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/source_inputs/07_demand_driven_capability_provisioning_handoff.md:35-49,69-96
 negative_constraints:
   - Do not report a pre-mutation permission refusal as restore_failed.

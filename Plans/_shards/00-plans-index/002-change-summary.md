@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L94
+Source lines: L7-L97
 
-Source SHA256: `ef243c4a1e70a6652b49179cd09db4efdf10736e14ad5dbb5cc328b403a3db56`
+Source SHA256: `e6827d588136856d68d2c74ba8d628e8bf76d44004c37dc686a2f65b49ba7bbf`
 
 ---
 
 ## Change Summary
+
+- 2026-09-25: Materialized three further bounded non-GUI companions: SIR-003 original capability demand/waiter/readiness/currentness and continuation settlement; N2-152 finite Doctor query/controller composition with Permissions-owned human read admission (PS-133) and one BackupCoordinator-owned metadata query (BRS-004); and SMPFS-147 typed finite Browser control flow with versioned compiler/program joins. Existing policies, public commands and handler availability remain unchanged. The closed static gate registers `capability_provisioning_continuation_contracts`, `doctor_query_controller_contracts` and `browser_control_flow_contracts`. Doctor query completion is not health, capability readiness is not permission to resume, and bounded AST proof is not runtime execution. Storage dispositions preserve existing owners and physical families; unresolved versioned writer/custody admission remains explicit. The 52 Doctor source-occurrence mappings, native proof, broader packet review and protected newer designs are not declared closed by this step.
+  ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-003, ContractName:Plans/newtools.md#N2-152, ContractName:Plans/Permissions_System.md#PS-133, ContractName:Plans/Backup_Restore_System.md#BRS-004, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-147
 
 - 2026-09-25: BRS-030 machine companions bind original Backup selection to destination outcomes, immutable snapshot resolution and selected-set verification, isolated-drill target/cleanup and JJI-008 native context, and File/SCM comparison under F-085. Four current request/result bindings evolve; the other 37 remain exact and all handlers stay unavailable. RSC-014 application-check cadence and successful-source settlement are materialized separately, preserving existing RSC-008 metadata and bundled connector ownership. The closed static gate adds `backup_snapshot_result_contracts`, `backup_compare_result_contracts`, `backup_drill_result_contracts` and `application_update_check_contracts` schema/fixture pairs. Storage dispositions distinguish internal nonpersisted reads/transport from pending redacted domain metadata; no physical family or EventRecord is added. Original native source admission, physical persistence, execution and runtime proof remain prerequisites. Newer assistant-chat, Help/Teacher, Back Seat Driver and Context Lens designs are unchanged.
   ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-030, ContractName:Plans/FileManager.md#F-085, ContractName:Plans/Jujutsu_Integration.md#JJI-008, ContractName:Plans/Release_Supply_Chain.md#RSC-014
