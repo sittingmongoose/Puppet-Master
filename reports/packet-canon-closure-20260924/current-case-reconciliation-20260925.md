@@ -1,5 +1,15 @@
 # Packet-to-current-owner reconciliation checkpoint
 
+## Latest additive checkpoint — 2026-09-26, after `0d642c563`
+
+Independently reviewed dispositions cover **980 of 2,021 identities**, with **1,041 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-9d24ac792bd05339bc5097eae868444262c61f8222f2ca7672baeb303bd1bb0b.jsonl`, SHA-256 `9d24ac792bd05339bc5097eae868444262c61f8222f2ca7672baeb303bd1bb0b`. Root verified the hash, 2,021 unique unchanged identities, all historical fields preserved, and exactly 122 changed rows / 1,899 unchanged rows against the published 858-row checkpoint. Reviewed includes partial and unresolved owner findings; it is not completed repair or runtime coverage.
+
+The additions comprise four Home/Browser owner-projection findings, four existing Onboarding repairs, 31 Jujutsu fixture-pointer dimensions, 16 Source Control permission-pointer dimensions, four key-generation/export owner requirements, 33 SCM/Forge partial dispositions, two protected newer Assistant Chat dimensions, 15 checkout-alias request/result/receipt pointers, and 13 static-test evidence dimensions. The 33 partial dispositions do not establish operand, return-route, reverse-consumer or native closure. The two Chat findings preserve newer Assistant Chat authority: the old packet's access labels are not restored. A superseded overlay citing the wrong source line was not ingested.
+
+The latest 13-row overlay is `SCM-STATIC-TESTS13-SPARSE-OVERLAY.jsonl`, SHA-256 `52ccc9f03ac2f2dda86ee269f3b3be556e5c8070646fb03944cd705bf579cad8`; its independent review is `SCM-STATIC-TESTS13-INDEPENDENT-REVIEW.md`, SHA-256 `b9775c433743a2ddd1ab6f2254ba015a7fb35b81cb61f92cf7e1137169915df8`. The matrix pins the other exact overlay, review and source references. Existing tests supply static evidence only, not live provider or native controller proof.
+
+Separately, app-update local settlement was integrated and pushed as `0d642c563`, with 85 focused tests passing; see `app-update-local-settlement.md`. Repository-local profile integration remains held for a test-portability correction discovered at root final review; the detached-copy acceptance alone did not establish an installed-repository test. Two Sound candidates remain held for mixed-invalid-input settlement and unproved no-mutation claims. No credit is inferred from author Goal completion. No main landing, governance refresh, native implementation or whole-packet closure is claimed.
+
 ## Latest additive checkpoint — 2026-09-26, after `036a72530`
 
 Independently reviewed dispositions cover **858 of 2,021 identities**, with **1,163 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-b823ea28706b84e82f981da8e8cf2250ea70b471f12f9b0f70d300791e80439b.jsonl`, SHA-256 `b823ea28706b84e82f981da8e8cf2250ea70b471f12f9b0f70d300791e80439b`. Root verified its hash, 2,021 unique unchanged identities, preserved historical fields, exactly 40 changed rows and 1,981 unchanged rows against the published 818-row checkpoint. The intermediate 831-row checkpoint was separately verified; these are review counts, not repair or implementation completion percentages.
