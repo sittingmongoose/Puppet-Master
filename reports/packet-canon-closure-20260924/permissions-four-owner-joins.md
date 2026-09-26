@@ -71,3 +71,7 @@ Read-only source snapshot at branch `8e597cbe2`:
 `5d646f1f86c182f6c43a2f9e99ecbe0234cd1ac5a79cdd0669b15c90872efd8b`.
 No schema, predicate, fixture, owner prose or governance binding changed in
 this scope clarification.
+
+The independent read-only disposition is frozen at
+`/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/case-reconciliation/permissions-four-owner-joins-03/READONLY-MALFORMED-GLOB-DISPOSITION.md`,
+SHA-256 `cf6d560d629a54ca44ad210000d63759684b646f1f92d7040518751122426cad`.
