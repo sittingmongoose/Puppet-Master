@@ -11,7 +11,18 @@ unresolved facets remain explicit. Immutable external checkpoint:
 SHA-256 `ae6666e892a80c1cbf5fe07a0da4570a5128d77248bb12b048b5a78ebbf557c5`.
 No native, GUI or full Settings closure follows from this review credit.
 
-Latest nonflagged checkpoint: **2,697 / 11,395 reviewed; 8,698 pending**.
+Latest nonflagged checkpoint: **2,873 / 11,395 reviewed; 8,522 pending**.
+The 176 local-action facets add 143 bounded static and 33 protected newer-owner
+reviews, not native closure. Root verified all 2,697 prior records remain
+unchanged and exactly 176 unique records were added. Immutable checkpoint:
+`/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/case-reconciliation/checkpoints/full-impact-reviewed-ebf94aeda7b7b9e2ab649edae2e6233fe2eb7fa96092e15adb50bcb7a48d8eb3.jsonl`,
+SHA-256 `ebf94aeda7b7b9e2ab649edae2e6233fe2eb7fa96092e15adb50bcb7a48d8eb3`.
+Three protected-auth fixture/test evidence classifications were corrected using
+the existing pinned fixtures and tests, whose hashes root rechecked; missing
+files in the author's detached inputs were not treated as missing canon.
+The empty event lists create no new EventRecord admission requirement.
+
+Previous nonflagged checkpoint: **2,697 / 11,395 reviewed; 8,698 pending**.
 The Server batch adds 234 bounded static owner-law reviews, not native or
 whole-profile closure. Immutable external checkpoint:
 `/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/case-reconciliation/checkpoints/full-impact-reviewed-7ff8c6649df07304e78eca00eed20e8915e0b62516289767c61a743cc136dcb6.jsonl`,

@@ -594,6 +594,17 @@
         }
       ]
     },
+    "browser_representation_query_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Typed selected-query binding carried by the three Section 15 representation command requests. It binds the actual selected pm.browser_program.representation_query.v1 record by record schema identity, selected query identity and the SHA-256 of that authentic original record's exact bytes; it is not an opaque reference and not a copied witness. scripts/pm_browser_representation_query_binding.py checks the joined subject/page-generation, mode, base, scope-roots, detail-class, operator, budget and continuation relations of the bound record.",
+      "required": ["query_schema_id", "query_id", "query_record_sha256"],
+      "properties": {
+        "query_schema_id": {"const": "pm.browser_program.representation_query.v1"},
+        "query_id": {"$ref": "#/$defs/id"},
+        "query_record_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
     "coverage": {
       "type": "object",
       "additionalProperties": false,
@@ -1474,6 +1485,9 @@
         "representation_budget": {
           "$ref": "#/$defs/representation_budget"
         },
+        "scope_roots": {"type": "array", "maxItems": 256, "items": {"$ref": "#/$defs/id"}},
+        "continuation": {"$ref": "#/$defs/non_secret_ref"},
+        "selected_representation_query": {"$ref": "#/$defs/browser_representation_query_binding"},
         "browser_program_id": {
           "$ref": "#/$defs/id"
         },
@@ -1637,7 +1651,9 @@
               "page_generation",
               "representation_mode",
               "detail_classes",
-              "representation_budget"
+              "representation_budget",
+              "scope_roots",
+              "selected_representation_query"
             ]
           }
         },
@@ -1659,7 +1675,9 @@
               "page_generation",
               "base_representation_id",
               "representation_mode",
-              "representation_budget"
+              "representation_budget",
+              "scope_roots",
+              "selected_representation_query"
             ],
             "properties": {
               "representation_mode": {
@@ -1686,7 +1704,9 @@
               "page_generation",
               "representation_id",
               "query_operators",
-              "representation_budget"
+              "representation_budget",
+              "scope_roots",
+              "selected_representation_query"
             ]
           }
         },
