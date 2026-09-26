@@ -1977,7 +1977,9 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # successor for existing rows: profile total moves 149 -> 150 only.
         # The selected public Git binding replaces the now-unused legacy Git
         # profile, leaving the profile count unchanged by that successor.
-        "profile_count": 151,
+        # Credential transfer/remove repoints three existing rows into one
+        # bounded successor; all row/action/wiring counts stay unchanged.
+        "profile_count": 152,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1142,

@@ -19315,7 +19315,7 @@
     "catalog.credential_attachment_transfer_apply": {
       "acceptance_checks": [
         "cmd.credential_attachment.transfer.apply names exactly one specified target handlers::credential_broker::attachment_transfer_apply; the target string is not implementation or dispatch proof.",
-        "Validate the exact request/result pair Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest -> Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult and reject unknown, stale, conflicting, or authority-widening fields.",
+        "Validate the exact typed cmd.credential_attachment.transfer.apply request/result pair Plans/credential_transfer_remove_contracts.schema.json#/$defs/apply_request -> Plans/credential_transfer_remove_contracts.schema.json#/$defs/apply_result over the preserved IntegrationCredential authority, permission and error grammars; reject unknown, stale, copied-ref, conflicting, or authority-widening fields without inventing any new portability mode, disposition enum, or secret transport.",
         "Read state.commands.credential_attachment_transfer_apply.availability and state.commands.credential_attachment_transfer_apply.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
         "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return."
@@ -19331,7 +19331,7 @@
         "description": "Receipt/projection-only static intent; dispatch acceptance is not completion and no unregistered EventRecord is admitted.",
         "effect_kind": "receipt",
         "receipt_or_event_refs": [
-          "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult",
+          "Plans/credential_transfer_remove_contracts.schema.json#/$defs/transfer_effect_receipt",
           "missing_event_registration"
         ]
       },
@@ -19341,8 +19341,8 @@
       "evidence_required": "Future production evidence for cmd.credential_attachment.transfer.apply: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::credential_broker::attachment_transfer_apply",
-      "request_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest",
-      "result_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult",
+      "request_schema_ref": "Plans/credential_transfer_remove_contracts.schema.json#/$defs/apply_request",
+      "result_schema_ref": "Plans/credential_transfer_remove_contracts.schema.json#/$defs/apply_result",
       "state_selector": "state.commands.credential_attachment_transfer_apply.availability",
       "test_evidence": [
         {
@@ -19373,7 +19373,7 @@
     "catalog.credential_attachment_transfer_preview": {
       "acceptance_checks": [
         "cmd.credential_attachment.transfer.preview names exactly one specified target handlers::credential_broker::attachment_transfer_preview; the target string is not implementation or dispatch proof.",
-        "Validate the exact request/result pair Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest -> Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult and reject unknown, stale, conflicting, or authority-widening fields.",
+        "Validate the exact typed cmd.credential_attachment.transfer.preview request/result pair Plans/credential_transfer_remove_contracts.schema.json#/$defs/preview_request -> Plans/credential_transfer_remove_contracts.schema.json#/$defs/preview_result over the preserved IntegrationCredential authority, permission and error grammars; reject unknown, stale, copied-ref, conflicting, or authority-widening fields, and treat a preview as read-only, never an apply or portability grant.",
         "Read state.commands.credential_attachment_transfer_preview.availability and state.commands.credential_attachment_transfer_preview.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
         "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return."
@@ -19389,7 +19389,7 @@
         "description": "Receipt/projection-only static intent; dispatch acceptance is not completion and no unregistered EventRecord is admitted.",
         "effect_kind": "receipt",
         "receipt_or_event_refs": [
-          "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult",
+          "Plans/credential_transfer_remove_contracts.schema.json#/$defs/preview_record",
           "missing_event_registration"
         ]
       },
@@ -19399,8 +19399,8 @@
       "evidence_required": "Future production evidence for cmd.credential_attachment.transfer.preview: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::credential_broker::attachment_transfer_preview",
-      "request_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest",
-      "result_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult",
+      "request_schema_ref": "Plans/credential_transfer_remove_contracts.schema.json#/$defs/preview_request",
+      "result_schema_ref": "Plans/credential_transfer_remove_contracts.schema.json#/$defs/preview_result",
       "state_selector": "state.commands.credential_attachment_transfer_preview.availability",
       "test_evidence": [
         {
@@ -19489,7 +19489,7 @@
     "catalog.credential_source_remove": {
       "acceptance_checks": [
         "cmd.credential_source.remove names exactly one specified target handlers::credential_broker::source_remove; the target string is not implementation or dispatch proof.",
-        "Validate the exact request/result pair Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest -> Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult and reject unknown, stale, conflicting, or authority-widening fields.",
+        "Validate the exact typed cmd.credential_source.remove request/result pair Plans/credential_transfer_remove_contracts.schema.json#/$defs/remove_request -> Plans/credential_transfer_remove_contracts.schema.json#/$defs/remove_result over the preserved IntegrationCredential authority, permission and error grammars; reject unknown, stale, copied-ref, conflicting, or authority-widening fields without inventing any new portability mode, disposition enum, or secret transport.",
         "Read state.commands.credential_source_remove.availability and state.commands.credential_source_remove.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
         "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
         "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return."
@@ -19505,7 +19505,7 @@
         "description": "Receipt/projection-only static intent; dispatch acceptance is not completion and no unregistered EventRecord is admitted.",
         "effect_kind": "receipt",
         "receipt_or_event_refs": [
-          "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult",
+          "Plans/credential_transfer_remove_contracts.schema.json#/$defs/removal_effect_receipt",
           "missing_event_registration"
         ]
       },
@@ -19515,8 +19515,8 @@
       "evidence_required": "Future production evidence for cmd.credential_source.remove: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::credential_broker::source_remove",
-      "request_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandRequest",
-      "result_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult",
+      "request_schema_ref": "Plans/credential_transfer_remove_contracts.schema.json#/$defs/remove_request",
+      "result_schema_ref": "Plans/credential_transfer_remove_contracts.schema.json#/$defs/remove_result",
       "state_selector": "state.commands.credential_source_remove.availability",
       "test_evidence": [
         {

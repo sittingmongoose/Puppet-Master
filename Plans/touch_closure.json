@@ -8726,6 +8726,62 @@
         "static_schema_fixture_and_exact_join_only",
         "native_issuer_effect_and_physical_custody_absent"
       ]
+    },
+    {
+      "availability_rule": "The exact target remains unavailable with handler_unavailable until the named native handler, current owner projection, permission/FileSafe decision, and exact runtime evidence exist.",
+      "disabled_reason_rule": "Expose the exact owner disabled reason, including handler_unavailable or stale projection, and never simulate success.",
+      "dry_contract_ref": "Plans/credential_transfer_remove_contracts.schema.json",
+      "error_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandError",
+      "event_refs": [
+        "none_pending_event_authority"
+      ],
+      "evidence_refs": [
+        "static_owner_schema_and_fixture_only"
+      ],
+      "gui_triggers": [
+        "Doctor remediation",
+        "Project copy/move readiness",
+        "Settings > Integrations/Credentials",
+        "connection managers"
+      ],
+      "handler_owner": "Sole future targets: handlers::credential_broker::attachment_transfer_preview, handlers::credential_broker::attachment_transfer_apply, handlers::credential_broker::source_remove; all are specified only and native evidence is absent.",
+      "handler_status": "specified",
+      "migration_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-024"
+      ],
+      "observable_work": [
+        "Transfer and removal are observable_work operations; dispatch acceptance never equals completion, unknown effects stay reconciliation-only, and a preview is read-only and never an apply or portability grant."
+      ],
+      "owner_plan": "Plans/Shared_Integration_Runtime.md",
+      "payload_schema_ref": "Plans/credential_transfer_remove_contracts.schema.json",
+      "permission_gate": "Consume the owner-defined permission and FileSafe decision without widening identity, scope, credential, topology, or destructive authority; a Backup envelope or BRS authorization is never transfer approval.",
+      "persistence_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-024"
+      ],
+      "plan_unit": "SIR-024",
+      "production_or_simulation": "Production-intent contract only; a handler path names the sole future target and is not native implementation or runtime proof.",
+      "profile_id": "TCP-INTEGRATION-CREDENTIAL-TRANSFER-REMOVE",
+      "receipt_refs": [
+        "Plans/credential_transfer_remove_contracts.schema.json#/$defs/preview_record",
+        "Plans/credential_transfer_remove_contracts.schema.json#/$defs/transfer_effect_receipt",
+        "Plans/credential_transfer_remove_contracts.schema.json#/$defs/removal_effect_receipt"
+      ],
+      "requirement_refs": [
+        "Plans/Shared_Integration_Runtime.md#SIR-024"
+      ],
+      "result_schema_ref": "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/IntegrationCredentialCommandResult",
+      "return_route": "Settle the exact initiating route, surface, focus, invocation, continuation, and currentness context.",
+      "reverse_consumers": [
+        "Doctor remediation",
+        "Project copy/move readiness",
+        "Settings > Integrations/Credentials",
+        "connection managers"
+      ],
+      "test_refs": [
+        "Plans/credential_transfer_remove_fixtures.json",
+        "tests/test_pm_credential_transfer_remove.py"
+      ],
+      "wiring_status": "specified"
     }
   ],
   "row_columns": [
@@ -12459,7 +12515,7 @@
     ],
     [
       "TOUCH-SGAPCMD-036",
-      "TCP-INTEGRATION-CREDENTIAL",
+      "TCP-INTEGRATION-CREDENTIAL-TRANSFER-REMOVE",
       "command",
       "cmd.credential_attachment.transfer.apply",
       "partial",
@@ -12467,7 +12523,7 @@
     ],
     [
       "TOUCH-SGAPCMD-037",
-      "TCP-INTEGRATION-CREDENTIAL",
+      "TCP-INTEGRATION-CREDENTIAL-TRANSFER-REMOVE",
       "command",
       "cmd.credential_attachment.transfer.preview",
       "partial",
@@ -12483,7 +12539,7 @@
     ],
     [
       "TOUCH-SGAPCMD-040",
-      "TCP-INTEGRATION-CREDENTIAL",
+      "TCP-INTEGRATION-CREDENTIAL-TRANSFER-REMOVE",
       "command",
       "cmd.credential_source.remove",
       "partial",

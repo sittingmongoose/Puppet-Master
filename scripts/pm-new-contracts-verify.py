@@ -60,6 +60,7 @@ from pm_usage_quota_semantics import usage_quota_semantic_failures
 from pm_usage_ledger_query_semantics import usage_ledger_query_semantic_failures
 from pm_backup_bounded_reads import bounded_read_semantic_failures
 from pm_credential_source_add import credential_source_semantic_failures
+from pm_credential_transfer_remove import credential_transfer_remove_semantic_failures
 from pm_forge_cancel_selected_semantics import cancel_selected_semantic_failures
 from pm_forge_thread_reply_semantics import thread_reply_semantic_failures
 from pm_backup_destination_lifecycle import lifecycle_semantic_failures
@@ -180,9 +181,10 @@ CONTRACT_PAIRS = (
     ("Plans/sir_git_stash_apply_dispatch.schema.json", "Plans/sir_git_stash_apply_dispatch_fixtures.json"),
     ("Plans/application_update_local_result.schema.json", "Plans/application_update_local_result_fixtures.json"),
     ("Plans/permissions_rule_command_contracts.schema.json", "Plans/permissions_rule_command_fixtures.json"),
+    ("Plans/credential_transfer_remove_contracts.schema.json", "Plans/credential_transfer_remove_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 83
+EXPECTED_CONTRACT_PAIR_COUNT = 84
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1358,6 +1360,8 @@ def contract_semantic_failures(
         return cancel_selected_semantic_failures(definition_name, value)
     if schema_rel == "Plans/credential_source_add_contracts.schema.json":
         return credential_source_semantic_failures(definition_name, value, canon_root=ROOT)
+    if schema_rel == "Plans/credential_transfer_remove_contracts.schema.json":
+        return credential_transfer_remove_semantic_failures(definition_name, value, canon_root=ROOT)
     if schema_rel == "Plans/jj_publication_selected.schema.json":
         return publication_semantic_failures(definition_name, value)
     if schema_rel == "Plans/sir_jj_publication_dispatch.schema.json":
