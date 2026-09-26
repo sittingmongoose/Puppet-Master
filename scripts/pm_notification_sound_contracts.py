@@ -31,7 +31,7 @@ DISPATCH_FIXTURES = "Plans/sir_notifications_sound_dispatch_fixtures.json"
 TOUCH_REGISTRY = "Plans/touch_closure.json"
 WIRING_MATRIX = "Plans/Wiring_Matrix.production.json"
 SHARED_PROFILE = "TCP-NOTIFY-SOUND"
-SEALED_ACCOUNTING = {"profile_count": 151, "row_count": 646, "excluded_token_count": 58, "alias_binding_count": 65}
+SEALED_ACCOUNTING = {"profile_count": 152, "row_count": 646, "excluded_token_count": 58, "alias_binding_count": 65}
 ACTION_REF_DEFINITION = {
     "cmd.notifications.destination.test": {
         "payload_schema_ref": "destination_test_request",
