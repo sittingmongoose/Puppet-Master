@@ -43,8 +43,12 @@ Current-root verification on 2026-09-26:
   These are not claimed to be all pre-existing or all authorized exceptions:
   the later full main/branch failure-key comparison remains required.
 - The aggregate's new-contract check timed out after 180 seconds. Its standalone
-  rerun has a 900-second limit and writes `ROOT-NEW-CONTRACTS-2321.json`; its
-  result is pending, not a pass.
+  rerun with a 900-second limit passed: 85 contract pairs, 1,652 positive cases,
+  4,903 rejected negative cases and 12 internal self-tests; no failures/findings.
+  `ROOT-NEW-CONTRACTS-2321.json` has SHA-256
+  `557f3b984ea06c6b85439c841b2904af5a89a6b3cdc51d6c176d81f7954f1356`.
+  This resolves that timeout only, not the aggregate's other failures; LSP is
+  checked by its separate enrolled validator, not added to these 85 pairs.
 
 The native author turn timed out; no native Goal-completion receipt is claimed.
 Static trusted-original fixtures do not authenticate issuer custody or recompute
