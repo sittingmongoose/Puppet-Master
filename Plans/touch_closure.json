@@ -7323,8 +7323,8 @@
     {
       "availability_rule": "The exact typed local action is available only from a current owner projection and mounted local controller; it dispatches no domain command.",
       "disabled_reason_rule": "Expose the exact owner disabled reason, including handler_unavailable or stale projection, and never simulate success.",
-      "dry_contract_ref": "Plans/server_system_contracts.schema.json",
-      "error_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/ClientTrustLocalActionResult",
+      "dry_contract_ref": "Plans/client_trust_local_settlement.schema.json",
+      "error_schema_ref": "Plans/client_trust_local_settlement.schema.json#/$defs/ClientTrustLocalRefusal",
       "event_refs": [
         "none_pending_event_authority"
       ],
@@ -7360,7 +7360,7 @@
       "requirement_refs": [
         "Plans/Server_System.md#SRV-011"
       ],
-      "result_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/ClientTrustLocalActionResult",
+      "result_schema_ref": "Plans/client_trust_local_settlement.schema.json#/$defs/ClientTrustLocalSettlement",
       "return_route": "Settle the exact initiating route, surface, focus, invocation, continuation, and currentness context.",
       "reverse_consumers": [
         "Doctor",
@@ -7369,6 +7369,7 @@
         "pairing/trust surface"
       ],
       "test_refs": [
+        "Plans/client_trust_local_settlement_fixtures.json",
         "Plans/server_system_contract_fixtures.json"
       ],
       "wiring_status": "specified"

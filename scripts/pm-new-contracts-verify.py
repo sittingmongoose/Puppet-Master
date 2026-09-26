@@ -92,6 +92,7 @@ from pm_git_stash_apply_response import stash_apply_dispatch_semantic_failures
 from pm_forge_review_decisions import review_decision_semantic_failures
 from pm_forge_review_response import forge_dispatch_semantic_failures
 from pm_application_update_local_result import local_settlement_semantic_failures
+from pm_client_trust_local_settlement import client_trust_local_settlement_semantic_failures
 from pm_permissions_rule_command_contracts import permissions_rule_command_semantic_failures
 from pm_permissions_rule_command_owner_file_double import witness_for as permissions_rule_owner_original_witness
 
@@ -182,9 +183,10 @@ CONTRACT_PAIRS = (
     ("Plans/application_update_local_result.schema.json", "Plans/application_update_local_result_fixtures.json"),
     ("Plans/permissions_rule_command_contracts.schema.json", "Plans/permissions_rule_command_fixtures.json"),
     ("Plans/credential_transfer_remove_contracts.schema.json", "Plans/credential_transfer_remove_fixtures.json"),
+    ("Plans/client_trust_local_settlement.schema.json", "Plans/client_trust_local_settlement_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 84
+EXPECTED_CONTRACT_PAIR_COUNT = 85
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -346,7 +348,7 @@ def const_fingerprint(definition: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def select_definition(schema: dict[str, Any], case: dict[str, Any], value: Any, *, require_valid: bool) -> tuple[str, dict[str, Any]]:
+def select_definition(schema: dict[str, Any], case: dict[str, Any], value: Any, *, require_valid: bool, registry: Registry | None = None) -> tuple[str, dict[str, Any]]:
     defs = schema.get("$defs", {})
     explicit = case.get("definition")
     schema_ref = case.get("schema_ref")
@@ -365,7 +367,8 @@ def select_definition(schema: dict[str, Any], case: dict[str, Any], value: Any, 
     candidates = root_definition_names(schema)
     if not candidates:
         return "<root>", schema
-    validators = [(name, Draft202012Validator({**schema, "$ref": f"#/$defs/{name}"})) for name in candidates]
+    validator_options = {"registry": registry} if registry is not None else {}
+    validators = [(name, Draft202012Validator({**schema, "$ref": f"#/$defs/{name}"}, **validator_options)) for name in candidates]
     passing = [name for name, validator in validators if validator.is_valid(value)]
     if require_valid:
         if len(passing) != 1:
@@ -1439,6 +1442,8 @@ def contract_semantic_failures(
         return application_update_semantic_failures(definition_name, value)
     if schema_rel == "Plans/application_update_local_result.schema.json":
         return local_settlement_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/client_trust_local_settlement.schema.json":
+        return client_trust_local_settlement_semantic_failures(definition_name, value)
     if schema_rel == "Plans/permissions_rule_command_contracts.schema.json":
         # Recomputation of the owner-selected rule projection plus the independent
         # owner-original laws. The witness is the separate pinned owner-original
@@ -1765,7 +1770,7 @@ def main() -> int:
             value = case.get("value", case.get("record", case.get("instance")))
             positive_by_name[name] = value
             try:
-                definition_name, selected = select_definition(schema, case, value, require_valid=True)
+                definition_name, selected = select_definition(schema, case, value, require_valid=True, registry=schema_registry)
                 selected_by_name[name] = definition_name
                 errors = list(validator_for(schema, selected, schema_registry).iter_errors(value))
                 if errors:
@@ -1814,7 +1819,7 @@ def main() -> int:
                     base_name = selector_case.get("base_valid", selector_case.get("left_valid"))
                     if base_name in selected_by_name:
                         selector_case["definition"] = selected_by_name[base_name]
-                definition_name, selected = select_definition(schema, selector_case, value, require_valid=False)
+                definition_name, selected = select_definition(schema, selector_case, value, require_valid=False, registry=schema_registry)
                 accepted = validator_for(schema, selected, schema_registry).is_valid(value)
                 semantic_rule = case.get("semantic_rule")
                 if semantic_rule is not None:

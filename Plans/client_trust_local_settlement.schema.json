@@ -1,0 +1,364 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/client_trust_local_settlement/1.0.0/client_trust_local_settlement.schema.json",
+  "title": "Trusted Client details owner-local refusal and exact-return settlement",
+  "description": "Bounded typed companion for exactly the one redacted, lazy, non-mutating owner-local action ui.client.open_details (Plans/Server_System.md trusted Client management paragraph and SRV-011: a bounded redacted local projection with an owner-local UI controller only, no domain handler, and no domain EventRecord). The existing owner request (Plans/server_system_contracts.schema.json#/$defs/ClientTrustLocalActionRequest) binds projection ref, expected projection generation, and the exact initiating return context; the existing owner result (#/$defs/ClientTrustLocalActionResult) is success-shaped and requires a projection, an actual generation, and an accessible focus, but has no outcome or refusal variant, while the Touch profile TCP-CLIENT-TRUST-LOCAL requires visible stale-projection/controller refusal and therefore cannot name that success-only result as its error schema. This companion settles that exact request against the owner's independently selected current projection and independently obtained mounted-controller status, and admits the genuine stale-projection, controller-unavailable, and caller-unavailable outcomes without fabricating a success projection, focus, or return. The owner-selected current projection can be absent by settlement time; that absence is carried truthfully as a null owner_current_projection and must settle as the stale_projection refusal with a null owner success result, never as a fabricated projection record or a presented success. The opened accessible target is deliberately allowed to differ from the restored initiating focus; equality is not an owner law and is never inferred from fixture coincidence. It adds no command identity, no semantic-domain handler, no EventRecord, no durable state, no permission policy, and no UI policy; every reason token below is already owned by the TCP-CLIENT-TRUST-LOCAL disabled_reason_rule (handler_unavailable, stale projection), the central dispatcher error vocabulary (Plans/ui_command_response.schema.json#/$defs/UICommandError code stale_projection and handler_unavailable), or the owner exact-return rule (Plans/Server_System.md: caller_unavailable). The domain ClientTrustCommandError and ClientTrustCommandAvailability records are deliberately not reused: their command_id binds the closed four cmd.client.* ClientTrustCommandId values, which exclude this local action, and the central CV-333 UICommandResponse envelope is deliberately not used as the carrier because its CommandId accepts only cmd.* identities and its local_projection branch requires that command identity; domain_command_id stays null and the generic dispatcher identity policy is unchanged.",
+  "x-schema-id": "pm.client_trust.local_settlement_contracts.v1",
+  "x-owner-doc": "Plans/Server_System.md",
+  "x-owner-plan-unit": "SRV-011",
+  "x-touch-profile": "TCP-CLIENT-TRUST-LOCAL",
+  "x-case-ids": [
+    "TOUCH-SGAPLOCAL-019/disposition_and_residual_risk",
+    "TOUCH-SGAPLOCAL-019/payload_result_error_availability_permissions_disabled_reason"
+  ],
+  "x-local-action-ids": [
+    "ui.client.open_details"
+  ],
+  "x-owner-request-ref": "Plans/server_system_contracts.schema.json#/$defs/ClientTrustLocalActionRequest",
+  "x-owner-result-ref": "Plans/server_system_contracts.schema.json#/$defs/ClientTrustLocalActionResult",
+  "x-owner-return-context-ref": "Plans/server_system_contracts.schema.json#/$defs/ClientTrustReturnContext",
+  "x-refusal-reason-vocabulary": [
+    "stale_projection",
+    "handler_unavailable",
+    "caller_unavailable"
+  ],
+  "x-excluded-owner-reason-codes": {
+    "invalid_request": "A ClientTrustCommandError code bound to the four domain cmd.client.* commands; a malformed local request is rejected before any settlement exists and is not a truthful local outcome named by the owner for this action.",
+    "permission_denied": "A ClientTrustCommandError/DisabledReason code bound to the domain command family; the TCP-CLIENT-TRUST-LOCAL permission_gate is a presentation/currentness/accessibility gate only, so admitting this token would claim a semantic-domain permission decision the owner does not define for the local action.",
+    "filesafe_denied": "A domain command-family code; a redacted lazy local projection creates and consumes no FileSafe read or write authority.",
+    "stale_generation": "The domain command family's generation guard token; the owner names the same currentness failure for the local projection stale_projection (TCP-CLIENT-TRUST-LOCAL disabled_reason_rule and the central UICommandError vocabulary).",
+    "identity_mismatch": "A domain command-family code for command-target identity; a local projection whose requested snapshot is no longer the owner's current projection is reported with the owner-named stale_projection outcome instead.",
+    "operation_conflict": "No durable domain operation exists for a redacted lazy local action, so no operation can conflict.",
+    "duplicate_conflict": "No durable operation or idempotency record exists for a redacted lazy local action, so no duplicate can conflict.",
+    "plan_or_checkpoint_mismatch": "No plan, checkpoint, or durable journal is consumed by this local action.",
+    "recovery_required": "No durable state is written, so no recovery boundary exists to require.",
+    "internal_fail_closed": "Reserved for the domain command family's fail-closed internal dispatch; a local action has no dispatch to fail.",
+    "central_registration_missing": "A local action has no central command registration; its unavailability is the mounted-controller state reported as handler_unavailable.",
+    "schema_binding_missing": "A local action has no command-schema binding to miss; this typed companion is the binding.",
+    "permission_route_missing": "A local action dispatches no permission route; the presentation/currentness/accessibility gate is not a permission route.",
+    "production_wiring_missing": "A local action has no production UICommand wiring row by design, so its absence is never the local refusal cause.",
+    "receipt_or_event_disposition_missing": "A local action produces no receipt and admits no EventRecord, so no receipt-or-event disposition can be missing.",
+    "operation_in_progress": "In-flight operation conflict belongs to the domain command family; a presentation action holds no operation."
+  },
+  "x-claim-boundary": "static source contract only; no domain command dispatch, semantic-domain handler, domain EventRecord, durable state, permission decision, mounted local controller, production UICommand row, GUI surface, or native/runtime result is proven",
+  "x-reuse-boundary": "reuses the existing owner request, owner result, owner return context, owner non-secret ref bound, owner timestamp, the owner exact-return caller_unavailable rule, the TCP-CLIENT-TRUST-LOCAL disabled-reason tokens, and the central UICommandError currentness/unavailability tokens; adds no vocabulary, policy, command, event, or storage value",
+  "x-witness-binding": "The owner_current_projection member is a pinned static owner test double: it stands in for the projection admission and mounted-controller status an owner-local controller would select under its own authority. Currentness is never declared: it is derived by comparing the request's expected_projection_generation with this record's projection_generation and the projection_ref identity, so copying a witness value into a binding does not authenticate owner currentness. An absent selection is represented by the null member itself, and the stale-refusal requirement on absence is bound to that field, not to any copied declaration; that null is likewise an explicitly unproven binding and claims no native controller, runtime selection, or Event Authority admission.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ClientTrustLocalSettlement"
+    }
+  ],
+  "$defs": {
+    "ClientTrustLocalRefusalReason": {
+      "description": "Closed to reason tokens the owner or the central dispatcher already uses for this action. stale_projection: the requested projection is not the owner's current projection (superseded generation, altered subject, or no longer present), the exact failure named by the TCP-CLIENT-TRUST-LOCAL availability and disabled-reason rules. handler_unavailable: no owner-local presentation controller is mounted for this identity, the exact disabled reason the same rule names. caller_unavailable: the exact initiating return context cannot be restored, so the action reports caller_unavailable and never falls back to another connected Client (Plans/Server_System.md exact-return rule).",
+      "type": "string",
+      "enum": [
+        "stale_projection",
+        "handler_unavailable",
+        "caller_unavailable"
+      ]
+    },
+    "ClientTrustLocalSettlementOutcome": {
+      "description": "presented is the ordinary outcome whose exact success fields are the owner ClientTrustLocalActionResult. Every other value is a genuine refusal cause drawn from the same owner/central reason vocabulary.",
+      "oneOf": [
+        {
+          "const": "presented"
+        },
+        {
+          "$ref": "#/$defs/ClientTrustLocalRefusalReason"
+        }
+      ]
+    },
+    "ClientTrustLocalOwnerCurrentProjection": {
+      "description": "The owner's current projection admission for this local action at settlement time, obtained independently of the request and of any result: the exact projection identity, its actual generation, and the mounted owner-local presentation controller status. A missing projection identity, a copied projection ref, or an unmounted controller never substitutes for this record, and a declared witness copied into it never authenticates owner currentness. This object form is present exactly when the owner has a current projection to select; when that selection is absent at settlement time the settlement carries null in its owner_current_projection member instead and must refuse with stale_projection.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projection_ref",
+        "projection_generation",
+        "mounted_local_controller_ref"
+      ],
+      "properties": {
+        "projection_ref": {
+          "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/ClientTrustNonSecretRef"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mounted_local_controller_ref": {
+          "description": "Null exactly when no owner-local presentation controller is mounted for this identity; that state is reported as the owner disabled reason handler_unavailable and never as success.",
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/ClientTrustNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ClientTrustLocalRefusal": {
+      "description": "The refusal detail a local controller can present. reason_code restates the settlement outcome so a refusal is self-contained; the two must agree. safe_message is derived presentation text, never a field of the owner fact, and never carries secret material.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reason_code",
+        "safe_message",
+        "blocking_refs"
+      ],
+      "properties": {
+        "reason_code": {
+          "$ref": "#/$defs/ClientTrustLocalRefusalReason"
+        },
+        "safe_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "blocking_refs": {
+          "description": "Non-secret owner refs naming what blocked the presentation or the return, such as the owner's current projection ref, the missing local controller, or the unavailable caller return target. A command identity is never a blocking ref for a local action.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/ClientTrustNonSecretRef"
+          }
+        }
+      }
+    },
+    "ClientTrustLocalReturnSettlement": {
+      "description": "The exact return settlement of the initiating context. Every identity field must equal the corresponding field of the request return context (surface_id, route_id, focus_target, invocation_token, return_generation). focus_target is the focus the caller is returned to, which is the authentic initiating focus target; it is never the opened content target. The opened target stays in the owner result's accessible_focus_target and is deliberately allowed to differ. Plans/Server_System.md: the exact initiating surface/route/focus/generation is restored or caller_unavailable is reported; another connected Client is not a fallback.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface_ref",
+        "route_ref",
+        "focus_target",
+        "invocation_token",
+        "return_generation",
+        "restoration"
+      ],
+      "properties": {
+        "surface_ref": {
+          "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/ClientTrustNonSecretRef"
+        },
+        "route_ref": {
+          "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/ClientTrustNonSecretRef"
+        },
+        "focus_target": {
+          "description": "When restored, the authentic initiating focus target from the request return context, whatever the presented outcome opened. Null only when the caller context itself is unavailable.",
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/ClientTrustNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "invocation_token": {
+          "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/ClientTrustNonSecretRef"
+        },
+        "return_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "restoration": {
+          "enum": [
+            "restored",
+            "caller_unavailable"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "restoration": {
+                "const": "restored"
+              }
+            },
+            "required": [
+              "restoration"
+            ]
+          },
+          "then": {
+            "properties": {
+              "focus_target": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "restoration": {
+                "const": "caller_unavailable"
+              }
+            },
+            "required": [
+              "restoration"
+            ]
+          },
+          "then": {
+            "properties": {
+              "focus_target": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ClientTrustLocalSettlement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "settlement_id",
+        "request",
+        "owner_current_projection",
+        "outcome",
+        "owner_result",
+        "refusal",
+        "return_settlement",
+        "mutated_domain_state",
+        "domain_handler_invoked",
+        "domain_event_emitted",
+        "domain_command_id",
+        "secret_material_exposed",
+        "protected_auth_content_exposed",
+        "settled_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.client_trust.local_settlement.v1"
+        },
+        "record_kind": {
+          "const": "ClientTrustLocalSettlement"
+        },
+        "settlement_id": {
+          "description": "Identity of this settlement record. It is not a durable value, a receipt, or an operation identity; it correlates one request, one owner projection admission, and one return settlement.",
+          "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/ClientTrustNonSecretRef"
+        },
+        "request": {
+          "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/ClientTrustLocalActionRequest"
+        },
+        "owner_current_projection": {
+          "description": "The owner's independently selected current projection admission at settlement time, or null exactly when the owner has no current projection to select for this identity at settlement time. Null is the only truthful representation of absence and is never replaced by a fabricated record: a null member must settle as the stale_projection refusal with a null owner_result and a typed refusal, and a presented success on absence is rejected.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "if": {
+            "not": {
+              "type": "null"
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/ClientTrustLocalOwnerCurrentProjection"
+          }
+        },
+        "outcome": {
+          "$ref": "#/$defs/ClientTrustLocalSettlementOutcome"
+        },
+        "owner_result": {
+          "description": "The exact owner success result, present only for the presented outcome. A refused, stale, or unavailable settlement sets this to null and never fabricates a projection, a generation, or an accessible focus.",
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/ClientTrustLocalActionResult"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "refusal": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ClientTrustLocalRefusal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_settlement": {
+          "$ref": "#/$defs/ClientTrustLocalReturnSettlement"
+        },
+        "mutated_domain_state": {
+          "const": false
+        },
+        "domain_handler_invoked": {
+          "const": false
+        },
+        "domain_event_emitted": {
+          "const": false
+        },
+        "domain_command_id": {
+          "description": "Always null. This identity is not a command, has no semantic-domain handler, must never be restated as the retired cmd.client.open_details spelling, and must never be sent to the central UICommand response path, which admits only cmd.* identity.",
+          "const": null
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        },
+        "settled_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/ClientTrustTimestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "presented"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "owner_result": {
+                "type": "object"
+              },
+              "refusal": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "$ref": "#/$defs/ClientTrustLocalRefusalReason"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "owner_result": {
+                "type": "null"
+              },
+              "refusal": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

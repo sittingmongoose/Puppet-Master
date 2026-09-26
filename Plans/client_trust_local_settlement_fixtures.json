@@ -1,0 +1,1852 @@
+{
+  "schema_id": "pm.client_trust.local_settlement_fixtures.v1",
+  "schema_ref": "Plans/client_trust_local_settlement.schema.json",
+  "contract_schema_id": "pm.client_trust.local_settlement_contracts.v1",
+  "owner_request_schema": "Plans/server_system_contracts.schema.json",
+  "claim_boundary": "static schema and semantic fixtures only; every ref, generation, controller, projection and return target here is synthetic fixture data. No domain command, semantic-domain handler, EventRecord, durable state, permission decision, mounted local controller, production UICommand row, GUI surface, or native/runtime result is proven. owner_current_projection is a pinned static owner test double and an explicitly unproven binding: it stands in for what an owner-local controller would select under its own authority, and copying a witness value into it never authenticates owner currentness. A null owner_current_projection is that same field carrying an absent selection, and the stale-refusal requirement on absence is bound to the field itself.",
+  "composed_owner_family": {
+    "request": "Plans/server_system_contracts.schema.json#/$defs/ClientTrustLocalActionRequest",
+    "result": "Plans/server_system_contracts.schema.json#/$defs/ClientTrustLocalActionResult",
+    "return_context": "Plans/server_system_contracts.schema.json#/$defs/ClientTrustReturnContext",
+    "local_actions": [
+      "ui.client.open_details"
+    ],
+    "unchanged_owner_artifacts": true
+  },
+  "coverage": {
+    "local_action_rows": 1,
+    "positive_cases": 7,
+    "negative_cases": 22,
+    "presented_cases": 3,
+    "refused_cases": 4,
+    "presented_cases_with_differing_opened_target": 2,
+    "refusal_reasons": [
+      "caller_unavailable",
+      "handler_unavailable",
+      "stale_projection"
+    ],
+    "structural_negatives": 8,
+    "semantic_negatives": 14,
+    "required_negative_dimensions": [
+      "altered_current_generation_claimed_as_success",
+      "altered_current_subject_claimed_as_success",
+      "controller_absent_claimed_as_success",
+      "false_success_after_refusal",
+      "return_to_another_caller",
+      "opened_target_separate_from_return_focus",
+      "owner_result_return_context_identity",
+      "owner_result_generation_identity",
+      "foreign_owner_result_projection",
+      "stale_claim_without_generation_change",
+      "handler_unavailable_with_mounted_controller",
+      "refusal_reason_agreement",
+      "secret_material_in_safe_message",
+      "retired_action_identity_in_typed_slot",
+      "denial_reported_as_success",
+      "refusal_with_success_projection",
+      "owner_result_domain_event",
+      "no_domain_command_identity",
+      "secret_ref_rejected_by_owner_bound",
+      "return_settlement_required",
+      "no_other_client_fallback_restoration",
+      "absent_owner_projection_claimed_as_success"
+    ],
+    "runtime_evidence_claimed": false,
+    "central_ui_command_response_routed": false
+  },
+  "valid": [
+    {
+      "name": "positive.settlement.details.presented",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.settlement.details.presented_opened_sessions",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented_opened_sessions",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details/sessions/session-9",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.settlement.details.presented_doctor_opened_panel",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented_doctor_opened_panel",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:2",
+          "expected_projection_generation": 8,
+          "return_context": {
+            "surface_id": "doctor",
+            "route_id": "doctor/clients",
+            "focus_target": "doctor.client-trust",
+            "invocation_token": "return:doctor:7",
+            "return_generation": 11
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:2",
+          "projection_generation": 8,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:2",
+          "projection_generation": 8,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-trust:trust-panel",
+          "return_context": {
+            "surface_id": "doctor",
+            "route_id": "doctor/clients",
+            "focus_target": "doctor.client-trust",
+            "invocation_token": "return:doctor:7",
+            "return_generation": 11
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "doctor",
+          "route_ref": "doctor/clients",
+          "focus_target": "doctor.client-trust",
+          "invocation_token": "return:doctor:7",
+          "return_generation": 11,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.settlement.details.stale_generation_refused",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:stale_generation_refused",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 6,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "stale_projection",
+        "owner_result": null,
+        "refusal": {
+          "reason_code": "stale_projection",
+          "safe_message": "The saved Client details projection is not the current one.",
+          "blocking_refs": [
+            "projection:client_trust:1"
+          ]
+        },
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.settlement.details.controller_absent_refused",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:controller_absent_refused",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": null
+        },
+        "outcome": "handler_unavailable",
+        "owner_result": null,
+        "refusal": {
+          "reason_code": "handler_unavailable",
+          "safe_message": "The Client details local controller is not available.",
+          "blocking_refs": [
+            "controller:client_trust:local:unmounted"
+          ]
+        },
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.settlement.details.caller_unavailable",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:caller_unavailable",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "caller_unavailable",
+        "owner_result": null,
+        "refusal": {
+          "reason_code": "caller_unavailable",
+          "safe_message": "The initiating surface is no longer available for the exact return.",
+          "blocking_refs": [
+            "return:settings.clients:1"
+          ]
+        },
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": null,
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "caller_unavailable"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "positive.settlement.details.absent_projection_refused",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:absent_projection_refused",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:9",
+          "expected_projection_generation": 7,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": null,
+        "outcome": "stale_projection",
+        "owner_result": null,
+        "refusal": {
+          "reason_code": "stale_projection",
+          "safe_message": "The Client details projection is no longer present, so there is no current projection to open.",
+          "blocking_refs": [
+            "projection:client_trust:9"
+          ]
+        },
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "negative.settlement.details.retired_action_identity",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "cmd.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.denial_reported_as_success",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": {
+          "reason_code": "permission_denied",
+          "safe_message": "carried anyway",
+          "blocking_refs": [
+            "admission:client_trust:local"
+          ]
+        },
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.refusal_with_success_projection",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": null
+        },
+        "outcome": "handler_unavailable",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": {
+          "reason_code": "handler_unavailable",
+          "safe_message": "Refused while still carrying a success result.",
+          "blocking_refs": [
+            "controller:client_trust:local:unmounted"
+          ]
+        },
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.owner_result_domain_event",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": true,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.domain_command_identity",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": "cmd.client.rename",
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.raw_secret_ref",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:access_token",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.return_settlement_required",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.foreign_restoration_vocabulary",
+      "definition": "ClientTrustLocalSettlement",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "returned_to_peer_client"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.success_on_altered_generation",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_success_on_stale_projection",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 6,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.success_on_altered_subject",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_projection_identity_mismatch",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:9",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.success_without_mounted_controller",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_success_without_mounted_controller",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": null
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.false_success_after_refusal",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_caller_unavailable_mismatch",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": null,
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "caller_unavailable"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.return_to_another_caller",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_return_identity_mismatch",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "doctor",
+          "route_ref": "doctor/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:doctor:7",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.opened_and_return_focus_changed",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_return_focus_mismatch",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details/sessions/session-9",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.owner_result_return_context",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_owner_result_return_context_mismatch",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 5
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.owner_result_generation",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_owner_result_generation_mismatch",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 5,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.foreign_owner_result_projection",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_owner_result_projection_mismatch",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:9",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.stale_claim_unproven",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_stale_claim_without_generation_change",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "stale_projection",
+        "owner_result": null,
+        "refusal": {
+          "reason_code": "stale_projection",
+          "safe_message": "Declared stale without a generation change.",
+          "blocking_refs": [
+            "projection:client_trust:1"
+          ]
+        },
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.handler_unavailable_with_controller",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_handler_unavailable_with_mounted_controller",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": "controller:client_trust:local:1"
+        },
+        "outcome": "handler_unavailable",
+        "owner_result": null,
+        "refusal": {
+          "reason_code": "handler_unavailable",
+          "safe_message": "Declared unavailable with a mounted controller.",
+          "blocking_refs": [
+            "controller:client_trust:local:1"
+          ]
+        },
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.refusal_reason_mismatch",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_refusal_reason_mismatch",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": null
+        },
+        "outcome": "handler_unavailable",
+        "owner_result": null,
+        "refusal": {
+          "reason_code": "stale_projection",
+          "safe_message": "Reason code disagrees with the outcome.",
+          "blocking_refs": [
+            "projection:client_trust:1"
+          ]
+        },
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.secret_in_safe_message",
+      "definition": "ClientTrustLocalSettlement",
+      "semantic_rule": "client_trust_local_settlement_secret_material",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:presented",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": {
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "mounted_local_controller_ref": null
+        },
+        "outcome": "handler_unavailable",
+        "owner_result": null,
+        "refusal": {
+          "reason_code": "handler_unavailable",
+          "safe_message": "controller:access_token:1 could not present details.",
+          "blocking_refs": [
+            "controller:client_trust:local:unmounted"
+          ]
+        },
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      }
+    },
+    {
+      "name": "negative.settlement.details.success_on_absent_projection",
+      "value": {
+        "schema_id": "pm.client_trust.local_settlement.v1",
+        "record_kind": "ClientTrustLocalSettlement",
+        "settlement_id": "settlement:client-trust:details:success_on_absent_projection",
+        "request": {
+          "schema_id": "pm.client_trust.local_action_request.v1",
+          "record_kind": "ClientTrustLocalActionRequest",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "expected_projection_generation": 4,
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "owner_current_projection": null,
+        "outcome": "presented",
+        "owner_result": {
+          "schema_id": "pm.client_trust.local_action_result.v1",
+          "record_kind": "ClientTrustLocalActionResult",
+          "local_action_id": "ui.client.open_details",
+          "projection_ref": "projection:client_trust:1",
+          "projection_generation": 4,
+          "redacted": true,
+          "lazy": true,
+          "mutated_domain_state": false,
+          "domain_handler_invoked": false,
+          "domain_event_emitted": false,
+          "accessible_focus_target": "client-details",
+          "return_context": {
+            "surface_id": "settings.clients",
+            "route_id": "settings/clients",
+            "focus_target": "client-details",
+            "invocation_token": "return:settings.clients:1",
+            "return_generation": 3
+          }
+        },
+        "refusal": null,
+        "return_settlement": {
+          "surface_ref": "settings.clients",
+          "route_ref": "settings/clients",
+          "focus_target": "client-details",
+          "invocation_token": "return:settings.clients:1",
+          "return_generation": 3,
+          "restoration": "restored"
+        },
+        "mutated_domain_state": false,
+        "domain_handler_invoked": false,
+        "domain_event_emitted": false,
+        "domain_command_id": null,
+        "secret_material_exposed": false,
+        "protected_auth_content_exposed": false,
+        "settled_at_utc": "2026-09-26T00:00:00Z"
+      },
+      "semantic_rule": "client_trust_local_settlement_success_on_absent_projection",
+      "why": "The owner-selected current projection is absent at settlement time (owner_current_projection is null), so no presentation can have happened; the settlement must be the stale_projection refusal with a null owner_result, never a presented success."
+    }
+  ]
+}
