@@ -57,3 +57,19 @@ and actual post-write byte authenticity remain owner-interface or implementation
 work. These must be adjudicated against current owners; this slice does not
 claim full five-command behavior for every input. Native TOML writes, atomicity,
 issued permission, GUI behavior and runtime evidence remain unproved.
+
+## Follow-up owner adjudication, not a new product question
+
+At branch `8a1995faaf8b34bc409427548080bd52b1b4f4dc`, root found that
+the internal duplicate-pattern hold needs correction or narrowing: Permissions
+Section 9 explicitly says `tool_pattern` is not unique and must not be the
+durable identity; the stable `rule_id` is the update/revocation key. The helper's
+`DC-PERM-RULE-005` quotes that rule but then calls non-directory duplicate
+patterns unspecified. No additional user choice is established by that label.
+The separate external-directory duplicate-path error remains applicable to its
+own domain. Independent review of the exact helper behavior and missing fixture
+coverage is pending; this observation is not a claim that the companion already
+tests every duplicate-pattern case, nor permission to relax directory checks.
+
+Owner SHA-256: `48815a17511c29d076f3213a11db4ecae2a6b6832bb1ba88afccc81c9b1ef42d`.
+Helper SHA-256: `c0ee0d09a961f1f7253ddd720efe6641124b436bfaa7be417cd16ddfa8c91dfa`.
