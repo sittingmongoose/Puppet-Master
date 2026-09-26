@@ -1,5 +1,11 @@
 # Packet-to-current-owner reconciliation checkpoint
 
+## Latest additive checkpoint — 2026-09-26, after `8a79f180e`
+
+Independently reviewed dispositions cover **773 of 2,021 identities**, with **1,248 unreviewed**. Immutable checkpoint: `case-reconciliation/checkpoints/matrix-5b11af4d868f9de18bd4aa19777a79a33a3690e22d42a32f547a2c4ca06e9b92.jsonl`, SHA-256 `5b11af4d868f9de18bd4aa19777a79a33a3690e22d42a32f547a2c4ca06e9b92`. Root verified 20 added Browser dispositions, 2,001 unchanged identities, all historical fields and the checkpoint hash.
+
+These twenty dimensions remain partial. Manual Browser operations require shared-work correlation only when the owner operation is long/asynchronous; synchronous, local and refused paths do not invent work or a program identity. Workspace-created/reset event contracts are admitted statically; the other eight commands retain prepared/unadmitted event status. Native producers, effects, physical custody and GUI proof remain open. The rejected blanket-async predecessor is not used. Accepted overlay SHA-256: `0d5fb7dda3b8a43df5831b97a77fe2232bfbf3dc5c12388293c02d3510a457b3`; different-Sol review: `f3f553855ddfd28df17f130349f7d6004a05f602d773cf7e6d85e53615c8fb5e`.
+
 ## Latest additive checkpoint — 2026-09-26, after `b7b64e2cd`
 
 Independently reviewed dispositions cover **753 of 2,021 identities**, with **1,268 unreviewed**. Immutable checkpoint: `case-reconciliation/checkpoints/matrix-5744dc376cb56c5afdd821f4ac3071c1a74bec914571eb103227510307550eba.jsonl`, SHA-256 `5744dc376cb56c5afdd821f4ac3071c1a74bec914571eb103227510307550eba`, beneath the evidence directory below. Root verified the hash, unique identities, unchanged historical fields, exactly 107 newly reviewed rows and 1,914 unchanged rows against the previous checkpoint.
