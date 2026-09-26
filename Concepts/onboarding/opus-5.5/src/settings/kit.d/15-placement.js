@@ -27,5 +27,10 @@ scrollOffsetWithin = function (scroller, el) {
   const drop = new Set(['toolchain-containers']);
   for (const d of D.domains) for (const w of d.workspaces) if (Array.isArray(w.sections)) w.sections = w.sections.filter(s => !drop.has(s.id));
   drop.forEach(id => pm51SectionObjects.delete(id));
+  /* Single hand rows on the Advanced page repeat inventory rows with other defaults: "Diagnostic telemetry"
+     (crash reports on) against "Share anonymous usage and crash reports" (off), and "Restore default settings"
+     against "Reset settings to defaults". The inventory rows stay; the reset one runs the real preview. */
+  const dropRows = { advanced: new Set(['telemetry', 'restore-defaults']) };
+  for (const d of D.domains) for (const w of d.workspaces) if (dropRows[w.id] && Array.isArray(w.sections)) w.sections.forEach(s => { s.settings = (s.settings || []).filter(x => !dropRows[w.id].has(x.id)); });
   allSettingsCatalogCache = null; searchIndexDirty = true;
 })();

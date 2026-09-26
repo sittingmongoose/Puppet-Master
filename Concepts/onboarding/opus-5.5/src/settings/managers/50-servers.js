@@ -132,23 +132,40 @@
   const fingerprint = s => { let x = 0; for (const c of String(s.id + s.address)) x = (x * 31 + c.charCodeAt(0)) >>> 0; return 'SHA256:' + x.toString(16).padStart(8, '0').toUpperCase() + '…' + (x * 7 >>> 0).toString(16).slice(0, 6).toUpperCase(); };
   const runOptions = () => {
     const opts = [['Automatic', 'Automatic (Home server)']];
-    for (const s of sp().servers) if (isClaimed(s)) opts.push([s.id, s.role === 'This computer' ? `${s.name} (WSL)` : s.name]);
+    for (const s of sp().servers) if (isClaimed(s) && s.runsWork !== false) opts.push([s.id, s.role === 'This computer' ? `${s.name} (WSL)` : s.name]);
     for (const d of sp().devices) if (/runs work/i.test(d.role) && !opts.some(o => o[1].startsWith(d.name))) opts.push(['device:' + d.id, d.name]);
     return opts;
   };
+  /* SSH computers are the inventory's "Remote machines (SSH)" list; the old separate SSH folders list is its seed. */
+  const SSH = 'code.execution.ssh-remotes';
+  function sshRemotes() {
+    let v = PM51.value(SSH);
+    if ((!Array.isArray(v) || !v.length) && (sp().sshFolders || []).length && !PM51.s().o55SshSeeded) {
+      v = sp().sshFolders.map(f => { const [user, host] = String(f.address).includes('@') ? String(f.address).split('@') : ['', f.address]; return { name: f.name, address: host, user, folder: f.folder || '', auth: 'SSH key' }; });
+      PM51.s().o55SshSeeded = true; if (commitSettingValue(SSH, v)) saveState();
+    }
+    return (Array.isArray(v) ? v : []).map(x => typeof x === 'string' ? { name: x, address: x, user: '', folder: '', auth: 'SSH key' } : x);
+  }
+  const saveSsh = list => { if (commitSettingValue(SSH, list)) { saveState(); o55Notify(SSH, list); } refresh(); };
+  function sshSection() {
+    const list = sshRemotes();
+    const body = list.length ? PM51.list(list.map((f, i) => ({
+      title: f.name, meta: `${f.user ? f.user + '@' : ''}${f.address}${f.folder ? ' · ' + f.folder : ''} · ${f.auth || 'SSH key'}`, avatar: icon('terminal'),
+      end: PM51.btn({ label: 'Test', small: true, icon: 'test', callback: () => PM51.check({ title: `Check ${f.name}`, steps: [{ title: 'Address answers', desc: f.address, status: 'Example', tone: 'info' }, { title: 'Signs in with your SSH key', desc: 'The key stays in your keychain', status: 'Example', tone: 'info' }, { title: 'Folder is there', desc: f.folder || 'Home folder', status: 'Example', tone: 'info' }] }) })
+        + PM51.iconBtn({ icon: 'more', label: `More for ${f.name}`, callback: el => PM51.menu(el, [
+          { label: 'Edit', icon: 'edit', onClick: () => sshDialog(i) },
+          { label: 'Remove', icon: 'trash', danger: true, onClick: () => PM51.confirm(`Remove ${f.name}?`, 'Nothing on that computer is touched. Only the entry here is removed.', 'Remove', () => { const next = list.slice(); next.splice(i, 1); saveSsh(next); }, true) }
+        ], f.name) })
+    }))) : PM51.empty('No SSH computers', 'Add another computer you reach over SSH, for files or for running work.');
+    return PM51.section({ title: 'SSH computers', help: 'Other computers you reach over SSH. Keys stay in the system keychain.', action: { label: 'Add SSH computer', icon: 'plus', small: true, action: 'pm51-servers-ssh-add' }, body: PM51.home(SSH, body) });
+  }
   const runLabel = () => { const o = runOptions().find(x => x[0] === sp().executionHost); return o ? o[1] : 'Automatic (Home server)'; };
 
   /* ---------- Home & Location -------------------------------------------- */
   function renderHome() {
     const S = sp(), home = homeServer(), connected = S.devices.filter(d => d.state === 'Connected').length;
-    const thisDevice = S.devices.find(d => d.name === 'Windows Workstation') || S.devices[0];
+    const thisDevice = S.devices.find(d => d.current || d.thisDevice) || S.devices.find(d => d.name === 'Windows Workstation') || S.devices[0];
     const exec = runLabel();
-    const stats = PM51.stats([
-      { label: 'Home server', value: home.name, help: home.state, tone: home.state === 'Connected' ? 'ready' : 'attention' },
-      { label: 'Runs on', value: S.executionHost === 'Automatic' ? 'Automatic' : exec, help: S.executionHost === 'Automatic' ? `Currently ${home.name}` : 'Chosen by you' },
-      { label: 'Files', value: S.sourceLocation.kind, help: S.sourceLocation.path },
-      { label: 'Devices', value: `${connected} connected`, help: `${S.devices.length} paired` }
-    ]);
     const workspace = PM51.section({
       title: 'Your workspace',
       body: PM51.rows([
@@ -172,13 +189,11 @@
       PM51.rows([
         { label: 'Execution environments', help: 'Runtimes available where work runs.', value: [...new Set(S.servers.flatMap(s => s.environments || []))].join(' · ') || P.executionEnvironment || 'WSL2 · Ubuntu' },
         { label: 'File authority', help: 'Which copy of the files wins when they differ.', value: P.fileAuthority || 'Server host' },
-        { label: 'Conflict policy', value: S.conflicts.policy, action: { label: 'Change', action: 'pm51-servers-conflict-policy' } },
         { label: 'Sync mode', value: P.syncMode || 'Continuous metadata + on-demand artifacts' }
       ]),
-      PM51.section({ title: 'Continuity items', help: 'What can resume on another device. Change these under Devices.', body: PM51.kv(Object.entries(S.continuity).map(([k, v]) => [k, v ? 'On' : 'Off'])) }),
-      PM51.section({ title: 'Technical details', body: PM51.kv([['Server identity', fingerprint(home)], ['Home server address', home.address], ['Project path', S.sourceLocation.path], ['Diagnostics', 'Reachability, identity, file authority, continuity']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-servers-diagnostics', data: { scope: 'home' } })}${pm7ConsumerButton('local', 'ui.project.open_details', 'Project details')}${pm7ConsumerButton('local', 'ui.project.source_location.open_details', 'Source location details')}${pm7ConsumerButton('local', 'ui.project_template.open_details', 'Project template details')}${pm7ConsumerButton('local', 'ui.project.restore_archived', 'Restore archived Project')}</div>` })
+      PM51.section({ title: 'Technical details', body: PM51.kv([['Server identity', fingerprint(home)], ['Home server address', home.address], ['Project path', S.sourceLocation.path], ['Diagnostics', 'Reachability, identity, file authority, continuity']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${pm7ConsumerButton('local', 'ui.project.open_details', 'Project details')}${pm7ConsumerButton('local', 'ui.project.source_location.open_details', 'Where the files are')}</div>` })
     ].join(''));
-    return stats + workspace + status + advanced;
+    return workspace + status + advanced;
   }
 
   /* ---------- Servers ----------------------------------------------------- */
@@ -213,11 +228,11 @@
       });
     }
     const advanced = PM51.advanced([
-      PM51.section({ title: 'Claim and bootstrap', body: PM51.kv([['Claimed', isClaimed(srv) ? 'Yes · identity confirmed' : 'Not yet'], ['Identity', fingerprint(srv)], ['Trust', isClaimed(srv) ? 'Owner' : 'None until claimed'], ['Bootstrap', srv.role === 'This computer' ? 'Installed with the app' : 'Claimed from an existing install']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${pm7ConsumerButton('command', 'cmd.server.claim', 'Claim (command)')}${pm7ConsumerButton('command', 'cmd.server.bootstrap.start', 'Bootstrap (command)')}</div>` }),
+      PM51.section({ title: 'Claim and bootstrap', body: PM51.kv([['Claimed', isClaimed(srv) ? 'Yes · identity confirmed' : 'Not yet'], ['Identity', fingerprint(srv)], ['Trust', isClaimed(srv) ? 'Owner' : 'None until claimed'], ['Bootstrap', srv.role === 'This computer' ? 'Installed with the app' : 'Claimed from an existing install']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${pm7ConsumerButton('command', 'cmd.server.claim', 'Claim this server')}${pm7ConsumerButton('command', 'cmd.server.bootstrap.start', 'Set up a new server')}</div>` }),
       PM51.section({ title: 'Deployment', body: PM51.kv([['How it runs', srv.deployment || 'Unknown'], ['Image', /container/i.test(srv.deployment || '') ? 'puppetmaster/server:0.8.0' : 'Not a container'], ['Environments', (srv.environments || []).join(' · ') || 'None reported']]) }),
       PM51.section({ title: 'Full server backup', help: 'Backs up everything on this server, not just this workspace.', body: PM51.rows([{ label: 'Whole-server backup', help: 'Set up and run from Backup & Restore.', action: { label: 'Open Backup & Restore', action: 'pm51-go', data: { domain: 'system', workspace: 'backup' }, icon: 'arrowRight' } }]) }),
-      PM51.section({ title: 'Host and environment details', body: `<div class="pm51-servers-actions">${pm7ConsumerButton('local', 'ui.execution_host.open_details', 'Host details')}${pm7ConsumerButton('local', 'ui.execution_environment.open_details', 'Environment details')}${pm7ConsumerButton('local', 'ui.execution_environment.open_logs', 'Environment logs')}${pm7ConsumerButton('command', 'cmd.execution_host.capabilities.refresh', 'Refresh capabilities')}${pm7ConsumerButton('command', 'cmd.execution_host.register', 'Add host (command)')}</div>` }),
-      PM51.section({ title: 'Topology diagnostics', body: PM51.kv([['Servers', String(S.servers.length)], ['Devices', String(S.devices.length)], ['Routes ready', String(readyRoutes().length)]]) + `<div style="margin-top:10px">${PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-servers-diagnostics', data: { scope: 'servers' } })}</div>` })
+      PM51.section({ title: 'Host and environment details', body: `<div class="pm51-servers-actions">${pm7ConsumerButton('local', 'ui.execution_host.open_details', 'Host details')}${pm7ConsumerButton('local', 'ui.execution_environment.open_details', 'Environment details')}${pm7ConsumerButton('local', 'ui.execution_environment.open_logs', 'Environment logs')}${pm7ConsumerButton('command', 'cmd.execution_host.capabilities.refresh', 'Refresh capabilities')}${pm7ConsumerButton('command', 'cmd.execution_host.register', 'Add a host')}</div>` }),
+      PM51.section({ title: 'Topology diagnostics', body: PM51.kv([['Servers', String(S.servers.length)], ['Devices', String(S.devices.length)], ['Routes ready', String(readyRoutes().length)]]) + `<div style="margin-top:10px"></div>` })
     ].join(''));
     return PM51.listDetail({
       id: ID, rosterTitle: 'Servers', count: S.servers.length,
@@ -265,7 +280,7 @@
     const advanced = PM51.advanced([
       PM51.section({ title: 'Trust roles', body: PM51.kv([['Owner', 'Can change servers, pair and revoke devices, and restore backups.'], ['Member', 'Can open the workspace and run work.'], ...S.devices.map(d => [d.name, d.trust || 'Member'])]) }),
       PM51.section({ title: 'Pairing history', body: PM51.kv([['Last pairing', 'Browser session · today'], ['Codes issued', '4'], ['Current code', S.pairing.code ? `Expires in ${S.pairing.expiresIn}` : 'None']]) }),
-      PM51.section({ title: 'Danger zone', body: PM51.rows([{ label: 'Revoke all devices', help: 'Every device must pair again, including this one.', action: { label: 'Revoke all devices', danger: true, action: 'pm51-servers-revoke-all' } }]) + `<div style="margin-top:10px">${PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-servers-diagnostics', data: { scope: 'devices' } })}</div>` })
+      PM51.section({ title: 'Danger zone', body: PM51.rows([{ label: 'Revoke all devices', help: 'Every device must pair again, including this one.', action: { label: 'Revoke all devices', danger: true, action: 'pm51-servers-revoke-all' } }]) + `<div style="margin-top:10px"></div>` })
     ].join(''));
     return devices + pending + continuity + advanced;
   }
@@ -327,7 +342,8 @@
     const advanced = PM51.advanced([
       PM51.section({ title: 'Other Tailscale setup', help: 'For people who run their own coordination server (Headscale).', body: PM51.rows([
         { label: 'Self-hosted Headscale address', control: PM51.input(hs.address || '', { action: 'pm51-servers-headscale', placeholder: 'https://headscale.example.net', label: 'Headscale address' }) },
-        { label: 'Registration', control: PM51.dropdown(hs.registration || 'Automatic', ['Automatic', 'Ask administrator', 'One-time key'], { action: 'pm51-servers-headscale-reg', label: 'Registration' }) }
+        { label: 'Registration', control: PM51.dropdown(hs.registration || 'Automatic', ['Automatic', 'Ask administrator', 'One-time key'], { action: 'pm51-servers-headscale-reg', label: 'Registration' }) },
+        hs.registration === 'One-time key' ? { label: 'One-time key', help: 'From your Headscale server. Kept in the keychain and never shown again.', action: { label: hs.keySaved ? 'Replace key' : 'Add key', icon: 'key', action: 'pm51-servers-headscale-key' } } : null
       ]) }),
       PM51.section({ title: 'Browser access from anywhere', help: 'Lets anyone with the address reach the sign-in page. Prefer Tailscale, your VPN, or Remote Link.', body: PM51.rows([
         { label: 'Public browser access', help: pub ? 'On through Tailscale Funnel. It also shows in the route list above.' : 'Off. Your server is not reachable from the open internet.', control: PM51.status(pub ? 'On' : 'Off', pub ? 'attention' : 'off'), action: { label: pub ? 'Turn Off' : 'Turn On', action: 'pm51-servers-public', danger: !pub, disabled: !pub && headscaleOn, reason: 'Funnel is not available with a self-hosted Headscale.' } }
@@ -340,7 +356,7 @@
         ['Preference mode', R.order === 'custom' ? 'Custom · you changed the order' : 'Recommended · private and local first'],
         ['Actual route', `${actual.id} · ${actual.name}`],
         ['Public access', pub ? 'On · Funnel' : 'Off']
-      ]) + `<div class="pm51-servers-subhead">Route lifecycle names</div>` + PM51.kv(sorted.map(r => [r.name, `${r.status} → ${routeLifecycle(r)}`])) + `<div style="margin-top:10px">${PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-servers-diagnostics', data: { scope: 'away' } })}</div>` })
+      ]) + `<div class="pm51-servers-subhead">Route lifecycle names</div>` + PM51.kv(sorted.map(r => [r.name, `${r.status} → ${routeLifecycle(r)}`])) + `<div style="margin-top:10px"></div>` })
     ].join(''));
     return overview + routes + advanced;
   }
@@ -359,34 +375,27 @@
     });
     const copy = PM51.section({
       title: 'Copy',
-      body: PM51.rows([{ label: 'Copy workspace to…', help: 'Makes an independent copy. The original stays where it is.', action: { label: 'Copy…', icon: 'copy', action: 'pm51-servers-copy', data: { 'command-id': 'cmd.project.duplicate_with_history' } } }])
+      body: PM51.rows([{ label: 'Copy workspace to…', help: 'Makes an independent copy. The original stays where it is.', action: { label: 'Copy…', icon: 'copy', action: 'pm51-servers-copy', data: { 'command-id': 'cmd.project.duplicate_with_history' } } }, { label: 'Import from an SSH computer', help: 'Brings a project from one of your SSH computers into a new workspace.', action: { label: 'Import…', icon: 'download', action: 'pm51-servers-ssh-import', ui: 'ui.settings.project_sync.remote.preview_import' } }])
     });
     const conflicts = PM51.section({
       title: 'Conflicts',
       body: PM51.rows([
-        { label: 'When both sides changed', value: S.conflicts.policy, action: { label: 'Change', action: 'pm51-servers-conflict-policy' } },
+        { label: 'When both sides changed', help: 'The same file changed on two devices.', control: PM51.dropdown(S.conflicts.policy, (CONFLICT_POLICIES.includes(S.conflicts.policy) ? CONFLICT_POLICIES : [S.conflicts.policy, ...CONFLICT_POLICIES]).map(x => ({ value: x, label: x })), { action: 'pm51-servers-conflict-set', label: 'When both sides changed' }) },
         { label: 'Open conflicts', value: String(S.conflicts.open || 0), action: { label: 'View', action: 'pm51-servers-conflicts-view' } }
       ])
     });
-    const sshList = S.sshFolders.length ? PM51.list(S.sshFolders.map(f => ({
-      title: f.name, meta: `${f.address} · ${f.folder}`, avatar: icon('terminal'),
-      end: PM51.iconBtn({ icon: 'more', label: `More for ${f.name}`, callback: el => PM51.menu(el, [
-        { label: 'Edit', icon: 'edit', onClick: () => sshDialog(f) },
-        { label: 'Remove', icon: 'trash', danger: true, onClick: () => PM51.confirm(`Remove ${f.name}?`, 'The folder on the SSH computer is not touched. Only the shortcut here is removed.', 'Remove', () => { S.sshFolders = S.sshFolders.filter(x => x.id !== f.id); refresh(); }, true) }
-      ], f.name), ui: 'ui.settings.project_sync.remote.preview_edit' })
-    }))) : PM51.empty('No SSH folders', 'Add a folder on another computer you reach over SSH.');
     const advanced = PM51.advanced([
-      PM51.section({ title: 'SSH folders', help: 'Folders on other computers, reached over SSH.', action: { label: 'Add SSH folder', icon: 'plus', small: true, action: 'pm51-servers-ssh-add', ui: 'ui.settings.project_sync.remote.preview_add' }, body: sshList + `<div style="margin-top:10px">${PM51.btn({ label: 'Import from an SSH folder', small: true, icon: 'download', action: 'pm51-servers-ssh-import', ui: 'ui.settings.project_sync.remote.preview_import' })}</div>` }),
       PM51.section({ title: 'Move history', body: M.history.length ? PM51.kv(M.history.map(x => [`${x.time} · ${x.kind || 'Move'}`, `${x.destination} · ${x.result}`])) : PM51.empty('No moves yet', 'Moves and copies you start show up here.') }),
-      PM51.section({ title: 'Technical details', body: `<div class="pm51-servers-actions">${PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-servers-diagnostics', data: { scope: 'move' } })}${pm7ConsumerButton('local', 'ui.project.move.open_details', 'Move details')}${pm7ConsumerButton('command', 'cmd.project.move.preflight', 'Preflight move')}${pm7ConsumerButton('command', 'cmd.project.move.start', 'Start move')}${pm7ConsumerButton('command', 'cmd.project.duplicate_configuration', 'Copy configuration')}${pm7ConsumerButton('command', 'cmd.project.duplicate_with_history', 'Copy with history')}</div>` })
+      PM51.section({ title: 'Technical details', body: `<div class="pm51-servers-actions">${pm7ConsumerButton('local', 'ui.project.move.open_details', 'Move details')}${pm7ConsumerButton('command', 'cmd.project.move.preflight', 'Preflight move')}${pm7ConsumerButton('command', 'cmd.project.move.start', 'Start move')}${pm7ConsumerButton('command', 'cmd.project.duplicate_configuration', 'Copy configuration')}${pm7ConsumerButton('command', 'cmd.project.duplicate_with_history', 'Copy with history')}</div>` })
     ].join(''));
     return move + copy + conflicts + advanced;
   }
 
   function render() {
     const tab = PM51.tab(ID, 'home');
-    const body = tab === 'servers' ? renderServers() : tab === 'devices' ? renderDevices() : tab === 'away' ? renderAway() : tab === 'move' ? renderMove() : renderHome();
+    const body = tab === 'servers' ? renderServers() + sshSection() : tab === 'devices' ? renderDevices() : tab === 'away' ? renderAway() : tab === 'move' ? renderMove() : renderHome();
     return PM51.page({ id: ID, key: KEY, tabs: TABS, active: tab, body, quiet: [
+      { label: 'Check server and devices', action: 'pm51-servers-diagnostics', data: { scope: tab } },
       { label: 'Open Readiness & Doctor', action: 'pm51-go', data: { domain: 'system', workspace: 'doctor' } },
       { label: 'How servers and devices work', action: 'pm51-servers-help' }
     ] });
@@ -421,16 +430,18 @@
   function renameServer(srv) {
     openDialog({ title: `Rename ${srv.name}`, body: PM51.form([{ label: 'Name', name: 'name', value: srv.name, autofocus: true }]), saveLabel: 'Save', onSave: data => { const name = String(data.name || '').trim(); if (!name) return false; srv.name = name; refresh(); } });
   }
-  function sshDialog(f) {
-    const creating = !f;
-    openDialog({ title: creating ? 'Add SSH folder' : `Edit ${f.name}`, subtitle: 'Puppet Master uses your existing SSH keys. Passwords are never stored here.', body: PM51.form([
-      { label: 'Name', name: 'name', value: f ? f.name : '', autofocus: true, placeholder: 'Ubuntu VM' },
-      { label: 'Address', name: 'address', value: f ? f.address : '', placeholder: 'user@host' },
-      { label: 'Folder', name: 'folder', value: f ? f.folder : '', placeholder: '/home/user/projects' }
-    ]), saveLabel: creating ? 'Add folder' : 'Save', onSave: data => {
-      const name = String(data.name || '').trim(), address = String(data.address || '').trim(); if (!name || !address) { PM51.toast('Name and address are needed', 'Fill in both to continue.', 'warning'); return false; }
-      if (creating) sp().sshFolders.push({ id: uid('ssh', name), name, address, folder: String(data.folder || '') }); else Object.assign(f, { name, address, folder: String(data.folder || '') });
-      refresh();
+  function sshDialog(index) {
+    const list = sshRemotes(), f = index != null && index >= 0 ? list[index] : null, creating = !f;
+    openDialog({ title: creating ? 'Add SSH computer' : `Edit ${f.name}`, subtitle: 'Puppet Master uses your SSH keys from the system keychain. Passwords are never stored here.', body: PM51.form([
+      { label: 'Nickname', name: 'name', value: f ? f.name : '', autofocus: true, placeholder: 'Ubuntu VM' },
+      { label: 'Address', name: 'address', value: f ? f.address : '', placeholder: '192.168.50.200 or host.example.com' },
+      { label: 'User', name: 'user', value: f ? f.user : '', placeholder: 'ubuntu' },
+      { label: 'Folder', name: 'folder', value: f ? f.folder : '', placeholder: '/home/ubuntu/projects' },
+      { label: 'Signs in with', name: 'auth', value: f ? f.auth || 'SSH key' : 'SSH key', type: 'select', choices: ['SSH key', 'SSH agent', 'Security key'] }
+    ]), saveLabel: creating ? 'Add computer' : 'Save', onSave: data => {
+      const name = String(data.name || '').trim(), address = String(data.address || '').trim(); if (!name || !address) { PM51.toast('Nickname and address are needed', 'Fill in both to continue.', 'warning'); return false; }
+      const entry = { name, address, user: String(data.user || '').trim(), folder: String(data.folder || '').trim(), auth: String(data.auth || 'SSH key') };
+      const next = list.slice(); if (creating) next.push(entry); else next[index] = entry; saveSsh(next);
     } });
   }
   function conflictPolicyDialog() {
@@ -587,7 +598,7 @@
         { title: 'Order tried', desc: `${sorted.map(r => r.name).join(' → ')} · ${R.order === 'custom' ? 'your order' : 'recommended'}` },
         { title: 'Public access', desc: R.funnel && R.funnel.enabled ? 'On · Funnel' : 'Off', tone: R.funnel && R.funnel.enabled ? 'attention' : 'ready' }
       ]; })(),
-      move: [{ title: 'Destination reachable', desc: S.move.destination || 'No destination chosen' }, { title: 'Open conflicts', desc: String(S.conflicts.open || 0) }, { title: 'SSH folders reachable', desc: S.sshFolders.map(f => f.name).join(', ') || 'None' }]
+      move: [{ title: 'Destination reachable', desc: S.move.destination || 'No destination chosen' }, { title: 'Open conflicts', desc: String(S.conflicts.open || 0) }, { title: 'SSH computers reachable', desc: `${sshRemotes().length} saved`, status: 'Example', tone: 'info' }]
     }[scope] || [];
     PM51.check({ title: 'Server & Project Location diagnostics', steps });
   }
@@ -706,7 +717,7 @@
     refresh(); syncRouteSheet(r, el);
   });
   PM51.onInput('servers-headscale', el => { const R = ra(); R.headscale = Object.assign({}, R.headscale || {}, { address: el.value }); saveState(); });
-  PM51.onChange('servers-headscale-reg', el => { const R = ra(); R.headscale = Object.assign({}, R.headscale || {}, { registration: el.value }); saveState(); });
+  PM51.onChange('servers-headscale-reg', el => { const R = ra(); R.headscale = Object.assign({}, R.headscale || {}, { registration: el.value }); refresh(); });
   PM51.on('servers-public', () => {
     const R = ra();
     if (R.funnel && R.funnel.enabled) { R.funnel.enabled = false; refresh(); return; }
@@ -776,10 +787,17 @@
     const S = sp();
     PM51.panel({ title: 'Open conflicts', subtitle: 'Files changed on two sides at once.', status: { label: String(S.conflicts.open || 0) + ' open', tone: S.conflicts.open ? 'attention' : 'ready' }, body: S.conflicts.open ? PM51.panelSection('Conflicts', PM51.kv([['Waiting for you', String(S.conflicts.open)]])) : PM51.empty('No open conflicts', 'When both sides change the same file, it shows up here with a three-way comparison.') });
   });
-  PM51.on('servers-ssh-add', () => sshDialog(null));
+  PM51.on('servers-ssh-add', () => sshDialog(-1));
+  PM51.on('servers-headscale-key', () => {
+    const R = ra(); R.headscale = R.headscale || {};
+    PM51.panel({ title: 'Headscale one-time key', subtitle: 'Registers this server with your own Headscale', icon: 'key',
+      body: PM51.panelSection('Key', PM51.field('Key', '<input class="text-control o55-keyinput" type="password" autocomplete="off" placeholder="Paste it here" aria-label="Key"/>', 'Used once to join. Kept in the keychain, never shown again or copied into settings.')),
+      primaryLabel: 'Save key', onPrimary: w => { if (!w.querySelector('.o55-keyinput')?.value.trim()) { PM51.toast('Paste the key first', 'Your Headscale administrator gives you one.', 'info'); return false; } R.headscale.keySaved = true; refresh(); PM51.toast('Key saved', 'Example only: nothing was stored or sent in this preview.', 'info'); } });
+  });
+  PM51.onChange('servers-conflict-set', el => { const S = sp(); S.conflicts.policy = el.value; if (state.projectSync) state.projectSync.conflictPolicy = el.value; saveState(); PM51.toast('Saved', `When both sides changed: ${el.value}.`); });
   PM51.on('servers-ssh-import', () => {
-    const S = sp(); const choices = S.sshFolders.map(f => `${f.name} · ${f.folder}`);
-    if (!choices.length) { PM51.toast('Add an SSH folder first', 'Import needs a folder on another computer to read from.', 'info'); return; }
-    openDialog({ title: 'Import from an SSH folder', subtitle: 'Brings a project from another computer into a new workspace.', body: PM51.form([{ label: 'Folder', name: 'folder', value: choices[0], type: 'select', choices, full: true }, { label: 'Workspace name', name: 'name', value: 'Imported workspace', autofocus: true }]), saveLabel: 'Import', onSave: data => { PM51.toast('Import previewed', `Example data only. ${data.name} was not created in this preview.`, 'info'); } });
+    const choices = sshRemotes().map(f => `${f.name} · ${f.folder || f.address}`);
+    if (!choices.length) { PM51.toast('Add an SSH computer first', 'Import needs a computer to read from. Add one on the Servers tab.', 'info'); return; }
+    openDialog({ title: 'Import from an SSH computer', subtitle: 'Brings a project from another computer into a new workspace.', body: PM51.form([{ label: 'Folder', name: 'folder', value: choices[0], type: 'select', choices, full: true }, { label: 'Workspace name', name: 'name', value: 'Imported workspace', autofocus: true }]), saveLabel: 'Import', onSave: data => { PM51.toast('Import previewed', `Example data only. ${data.name} was not created in this preview.`, 'info'); } });
   });
 })();

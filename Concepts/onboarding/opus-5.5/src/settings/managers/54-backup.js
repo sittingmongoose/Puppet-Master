@@ -27,6 +27,9 @@
   const kitStatus = () => { const k = bk().recoveryKit; return !k.saved ? 'Not saved' : k.tested ? 'Saved · Tested' : 'Saved · Not tested'; };
 
   /* ---------- Backup ------------------------------------------------------ */
+  /* The old single choice mixed a time window with a speed ("Night schedule · 40 MB/s"). */
+  const speedOf = B => { const v = String(B.bandwidth || 'Night schedule · 40 MB/s'); return /no limit/i.test(v) ? 'No limit' : /10/.test(v) ? '10 MB/s' : '40 MB/s'; };
+  const dayOnly = B => B.bandwidthDayOnly != null ? !!B.bandwidthDayOnly : /night/i.test(String(B.bandwidth || 'Night schedule'));
   function renderBackup() {
     const B = bk(), E = eng(), last = latest();
     const protect = PM51.section({
@@ -34,6 +37,7 @@
       action: { label: 'Back Up Now', icon: 'archive', primary: true, action: 'pm51-backup-now' },
       body: PM51.rows([
         { label: 'Automatic backups', help: 'Runs on the schedule below.', control: PM51.toggle(!!B.automatic, { action: 'pm51-backup-auto', label: 'Automatic backups' }) },
+        { label: 'Backs up to', help: defaultDest() ? `${defaultDest().type} · ${defaultDest().state}` : 'No destination yet.', value: defaultDest() ? defaultDest().name : 'Nowhere yet', action: { label: defaultDest() ? 'Destinations' : 'Add destination', icon: defaultDest() ? 'arrowRight' : 'plus', action: 'pm51-backup-tab', data: { tab: 'destinations' } } },
         { label: 'Last backup', value: last ? `${last.time} · ${last.destination}` : 'Never', pill: last ? PM51.pill(last.result) : PM51.pill('Not set up') },
         { label: 'Restore…', help: 'Bring back files, the whole workspace, or the whole server.', action: { label: 'Restore…', icon: 'restore', action: 'pm51-backup-tab', data: { tab: 'restore' } } }
       ])
@@ -44,25 +48,25 @@
       { label: 'Version history (Git and Jujutsu)', help: 'Commits, branches, and change history.', control: PM51.toggle(!!B.protected.history, { action: 'pm51-backup-scope', data: { key: 'history' }, label: 'Version history' }) }
     ]) });
     const schedule = PM51.section({
-      title: 'Schedule', action: { label: 'Add schedule', icon: 'plus', small: true, action: 'pm51-backup-schedule', data: { id: '' } },
-      body: E.schedules.length ? PM51.rows(E.schedules.map(s => ({ label: s.name, help: `${s.when} · ${s.destination}`, pill: PM51.pill(s.enabled ? 'On' : 'Off'), action: { label: 'Edit', action: 'pm51-backup-schedule', data: { id: s.id } } }))) : PM51.empty('No schedules', 'Add a schedule so backups run on their own.')
+      title: 'Schedule', help: B.automatic ? 'Each schedule keeps its own number of backups.' : 'Paused while automatic backups are off.', action: { label: 'Add schedule', icon: 'plus', small: true, action: 'pm51-backup-schedule', data: { id: '' } },
+      body: E.schedules.length ? PM51.rows(E.schedules.map(s => ({ label: s.name, help: `${s.when} · ${s.destination} · keeps ${s.retention}`, pill: PM51.pill(!B.automatic ? 'Paused' : s.enabled ? 'On' : 'Off', !B.automatic ? 'off' : undefined), action: { label: 'Edit', action: 'pm51-backup-schedule', data: { id: s.id } } }))) : PM51.empty('No schedules', 'Add a schedule so backups run on their own.')
     });
     const kit = PM51.section({
       title: 'Recovery Kit', help: 'Separate from your account. You need it if this server is lost.',
       action: { label: 'Save Recovery Kit', icon: 'key', action: 'pm51-backup-kit-save' },
-      body: PM51.rows([{ label: 'Status', value: kitStatus(), pill: PM51.pill(B.recoveryKit.tested ? 'Tested' : B.recoveryKit.saved ? 'Not tested' : 'Not set up'), action: { label: 'Test Recovery Kit', icon: 'test', action: 'pm51-backup-kit-test', disabled: !B.recoveryKit.saved, reason: 'Save the Recovery Kit first.' } }])
+      body: PM51.rows([
+        { label: 'Status', value: kitStatus(), pill: PM51.pill(B.recoveryKit.tested ? 'Tested' : B.recoveryKit.saved ? 'Not tested' : 'Not set up'), action: { label: 'Test Recovery Kit', icon: 'test', action: 'pm51-backup-kit-test', disabled: !B.recoveryKit.saved, reason: 'Save the Recovery Kit first.' } },
+        { label: 'Recovery key', help: 'Hidden. Showing it asks for this device\'s password first.', value: '••••-••••-••••-••••', action: { label: 'Show once', icon: 'eye', action: 'pm51-backup-key-show' } }
+      ])
     });
-    const daily = E.schedules.find(s => /daily/i.test(s.name)), weekly = E.schedules.find(s => /weekly/i.test(s.name));
     const advanced = PM51.advanced([
-      PM51.section({ title: 'Keep backups for', body: PM51.rows([
-        { label: 'Daily backups', control: PM51.select(daily ? daily.retention : '30 daily', ['7 daily', '14 daily', '30 daily', '60 daily'], { action: 'pm51-backup-retention', data: { id: daily ? daily.id : '' }, label: 'Daily backups to keep' }) },
-        { label: 'Weekly backups', control: PM51.select(weekly ? weekly.retention : '12 weekly', ['4 weekly', '8 weekly', '12 weekly', '26 weekly'], { action: 'pm51-backup-retention', data: { id: weekly ? weekly.id : '' }, label: 'Weekly backups to keep' }) },
-        { label: 'Cleanup review', help: 'Old backups are listed before they are removed.', action: { label: 'Review', icon: 'eye', action: 'pm51-backup-cleanup' } }
+      PM51.section({ title: 'Old backups', body: PM51.rows([{ label: 'Cleanup review', help: 'Old backups are listed before they are removed. How many to keep is set in each schedule.', action: { label: 'Review', icon: 'eye', action: 'pm51-backup-cleanup' } }]) }),
+      PM51.section({ title: 'Full server backup', help: 'Everything on the server, not just this workspace.', body: PM51.kv([['Included', 'Server settings, every workspace, histories, and receipts'], ['Left out', 'Caches, running processes, and secret bytes (references only)']]) + `<div class="pm51-backup-actions" style="margin-top:10px">${PM51.btn({ label: 'Back up whole server', small: true, icon: 'archive', action: 'pm51-backup-server' })}</div>` }),
+      PM51.section({ title: 'Upload speed', body: PM51.rows([
+        { label: 'Upload speed limit', help: 'Slows backups so they do not crowd out other traffic.', control: PM51.select(speedOf(B), ['No limit', '10 MB/s', '40 MB/s'], { action: 'pm51-backup-bandwidth', label: 'Upload speed limit' }) },
+        speedOf(B) === 'No limit' ? null : { label: 'Only during the day', help: 'At night backups run at full speed.', control: PM51.toggle(dayOnly(B), { action: 'pm51-backup-bandwidth-day', label: 'Only during the day' }) }
       ]) }),
-      PM51.section({ title: 'Recovery key', help: 'The key inside your Recovery Kit. Keep it somewhere safe and offline.', body: PM51.rows([{ label: 'Copy Recovery Key', help: 'Asks you to confirm first.', action: { label: 'Copy Recovery Key', icon: 'copy', action: 'pm51-backup-key-copy' } }]) }),
-      PM51.section({ title: 'Full server backup', help: 'Everything on the server, not just this workspace.', body: PM51.kv([['Included', 'Server settings, every workspace, histories, and receipts'], ['Left out', 'Caches, running processes, and secret bytes (references only)']]) + `<div class="pm51-backup-actions" style="margin-top:10px">${PM51.btn({ label: 'Back up whole server', small: true, icon: 'archive', action: 'pm51-backup-server' })}${PM51.btn({ label: 'Verify latest backup', small: true, icon: 'test', action: 'pm51-backup-verify' })}</div>` }),
-      PM51.section({ title: 'Bandwidth', body: PM51.rows([{ label: 'Upload speed limit', help: 'Slows backups so they do not crowd out other traffic.', control: PM51.select(B.bandwidth || 'Night schedule · 40 MB/s', ['No limit', 'Night schedule · 40 MB/s', '10 MB/s all day'], { action: 'pm51-backup-bandwidth', label: 'Upload speed limit' }) }]) }),
-      PM51.section({ title: 'Technical details', body: PM51.kv([['Encryption', 'Each backup is encrypted before it leaves the server; the key lives in your Recovery Kit'], ['Last receipt', last ? `${last.receipt} · ${last.time}` : 'None'], ['Destination', defaultDest() ? defaultDest().name : 'None']]) + `<div style="margin-top:10px">${PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-backup-diagnostics' })}</div>` })
+      PM51.section({ title: 'Technical details', body: PM51.kv([['Encryption', 'Each backup is encrypted before it leaves the server; the key lives in your Recovery Kit'], ['Last receipt', last ? `${last.receipt} · ${last.time}` : 'None'], ['Destination', defaultDest() ? defaultDest().name : 'None']]) + `<div style="margin-top:10px">${PM51.btn({ label: 'Check backups', small: true, icon: 'test', action: 'pm51-backup-diagnostics' })}</div>` })
     ].join(''));
     return protect + scope + schedule + kit + advanced;
   }
@@ -79,7 +83,7 @@
       { label: 'Type', value: d.type },
       { label: 'Account', value: d.account },
       { label: 'Folder', value: d.path },
-      { label: 'Encryption', value: d.encryption, pill: PM51.pill('Ready') },
+      { label: 'Encryption', value: d.encryption, pill: /ready|encrypted/i.test(String(d.encryption)) ? PM51.pill('Ready') : PM51.pill('Needs attention', 'attention') },
       { label: 'Used by', value: d.usedBy },
       { label: 'Connection', value: d.lastCheck === 'Not checked' ? 'Not checked yet' : `Checked ${d.lastCheck}`, action: { label: 'Test destination', icon: 'test', action: 'pm51-backup-dest-test', data: { id: d.id } } }
     ]) });
@@ -108,12 +112,14 @@
   /* ---------- Restore ------------------------------------------------------ */
   function renderRestore() {
     const R = rs(), E = eng();
-    const which = E.history.map((x, i) => [String(i), `${x.time} · ${x.type} · ${x.size}`]);
-    const chosen = E.history[R.which] || E.history[0];
+    /* a whole-server restore needs a full server backup; workspaces and files can come from any backup */
+    const fits = x => R.what !== 'Whole server' || /server/i.test(String(x.type));
+    const which = E.history.map((x, i) => [String(i), `${x.time} · ${x.type} · ${x.size}`, x]).filter(r => fits(r[2])).map(r => [r[0], r[1]]);
+    const chosen = which.some(r => r[0] === String(R.which)) ? E.history[R.which] : (which.length ? E.history[Number(which[0][0])] : null);
     const steps = PM51.section({ title: 'Restore', help: 'Nothing changes until you confirm at the end.', body: PM51.steps([
       { title: 'What', desc: R.what === 'Some files' ? 'Pick files and folders from the backup.' : R.what === 'Whole server' ? 'Everything on the server, from a full server backup.' : 'Settings, history, Goals, chats, and files for this workspace.', action: PM51.segmented(R.what, RESTORE_WHAT, { action: 'pm51-backup-restore-what', label: 'What to restore' }) },
       { title: 'Which backup', desc: chosen ? `${chosen.destination} · ${chosen.result}` : 'No backups yet.', action: which.length ? PM51.select(String(R.which), which, { action: 'pm51-backup-restore-which', label: 'Which backup', cls: 'pm51-backup-step-select' }) : '' },
-      { title: 'Where', desc: R.where === 'In place' ? 'Replaces the current workspace. A safety copy is made first.' : 'Keeps the current workspace and creates a new one beside it.', action: PM51.segmented(R.where, RESTORE_WHERE, { action: 'pm51-backup-restore-where', label: 'Where to restore' }) },
+      R.what === 'Whole server' ? { title: 'Where', desc: 'The whole server is restored in place. A safety copy is made first.' } : { title: 'Where', desc: R.where === 'In place' ? 'Replaces the current workspace. A safety copy is made first.' : 'Keeps the current workspace and creates a new one beside it.', action: PM51.segmented(R.where, RESTORE_WHERE, { action: 'pm51-backup-restore-where', label: 'Where to restore' }) },
       { title: 'Review', desc: chosen ? `${R.what} from ${chosen.time}, ${R.where.toLowerCase()}.` : 'Nothing to restore yet.', action: { label: 'Start restore', primary: true, icon: 'restore', action: 'pm51-backup-restore-start', disabled: !chosen, reason: 'There is no backup to restore from yet.' } }
     ]) });
     const advanced = PM51.advanced([
@@ -148,6 +154,10 @@
   PM51.manager('backup', { render });
 
   /* ---------- dialogs & panels ---------------------------------------------- */
+  const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const to24 = s => { const m = /(\d{1,2}):(\d{2})\s*(AM|PM)?/i.exec(String(s || '')); if (!m) return '02:00'; let hh = Number(m[1]) % 12; if (/pm/i.test(m[3] || '')) hh += 12; if (!m[3] && Number(m[1]) >= 12) hh = Number(m[1]); return `${String(hh).padStart(2, '0')}:${m[2]}`; };
+  const to12 = v => { const [H, M] = String(v).split(':').map(Number); const pm = H >= 12; return `${((H + 11) % 12) + 1}:${String(M || 0).padStart(2, '0')} ${pm ? 'PM' : 'AM'}`; };
+  const whenParts = s => { const w = String(s ? s.when : '2:00 AM'); const day = DAYS.find(d => w.includes(d)); return { freq: day || /weekly/i.test(String(s && s.retention)) ? 'Every week' : 'Every day', day: day || 'Sunday', time: to24(w) }; };
   function schedulePanel(id) {
     const E = eng(), s = E.schedules.find(x => x.id === id) || null;
     const dests = bk().destinations.map(d => d.name);
@@ -155,15 +165,19 @@
       title: s ? s.name : 'Add schedule', subtitle: s ? `${s.when} · ${s.destination}` : 'When and where backups run on their own.',
       body: PM51.panelSection('Schedule', PM51.field('Name', PM51.input(s ? s.name : 'Nightly backup', { action: 'pm51-noop', label: 'Name', cls: 'pm51-backup-f-name' }))
         + PM51.field('Kind', PM51.select(s && /full/i.test(s.name) ? 'Full' : 'Incremental', ['Incremental', 'Full'], { action: 'pm51-noop', label: 'Kind', cls: 'pm51-backup-f-kind' }), 'Incremental saves only what changed. Full saves everything.')
-        + PM51.field('When', PM51.input(s ? s.when : '2:00 AM', { action: 'pm51-noop', label: 'When', cls: 'pm51-backup-f-when' }), 'For example 2:00 AM or Sunday · 3:00 AM.')
+        + PM51.field('How often', PM51.select(whenParts(s).freq, ['Every day', 'Every week'], { action: 'pm51-noop', label: 'How often', cls: 'pm51-backup-f-freq' }))
+        + PM51.field('Day (weekly only)', PM51.select(whenParts(s).day, DAYS, { action: 'pm51-noop', label: 'Day', cls: 'pm51-backup-f-day' }))
+        + PM51.field('Time', `<input class="text-control pm51-backup-f-time" type="time" value="${a(whenParts(s).time)}" aria-label="Time"/>`)
         + PM51.field('Destination', PM51.select(s ? s.destination : dests[0], dests, { action: 'pm51-noop', label: 'Destination', cls: 'pm51-backup-f-dest' }))
-        + PM51.field('Keep', PM51.input(s ? s.retention : '30 daily', { action: 'pm51-noop', label: 'Keep', cls: 'pm51-backup-f-keep' }), 'How many of these backups to keep.'))
+        + PM51.field('Keep this many', `<input class="text-control pm51-backup-f-keep" type="number" min="1" max="365" value="${a(parseInt(String(s ? s.retention : '30'), 10) || 30)}" aria-label="Backups to keep"/>`, 'Older ones are removed after a cleanup review.'))
         + PM51.panelSection('Enabled', PM51.rows([{ label: 'Run this schedule', control: PM51.toggle(s ? !!s.enabled : true, { action: 'pm51-backup-panel-toggle', label: 'Run this schedule' }) }])),
       primaryLabel: 'Save', onPrimary: wrap => {
         const val = cls => { const el = wrap.querySelector('.' + cls); return el ? el.value : ''; };
         const name = String(val('pm51-backup-f-name') || '').trim(); if (!name) { PM51.toast('Name the schedule', 'Give it a short name like Nightly backup.', 'warning'); return false; }
         const enabled = wrap.querySelector('.pm51-toggle')?.classList.contains('on');
-        const next = { name, when: String(val('pm51-backup-f-when') || '2:00 AM'), destination: String(val('pm51-backup-f-dest') || dests[0] || ''), retention: String(val('pm51-backup-f-keep') || '30 daily'), enabled: !!enabled };
+        const weekly = val('pm51-backup-f-freq') === 'Every week', time = to12(val('pm51-backup-f-time') || '02:00');
+        const keep = Math.max(1, parseInt(val('pm51-backup-f-keep'), 10) || 30);
+        const next = { name, when: weekly ? `${val('pm51-backup-f-day') || 'Sunday'} · ${time}` : time, destination: String(val('pm51-backup-f-dest') || dests[0] || ''), retention: `${keep} ${weekly ? 'weekly' : 'daily'}`, enabled: !!enabled };
         if (s) Object.assign(s, next); else E.schedules.push(Object.assign({ id: uid('backup-schedule', name) }, next));
         refresh();
       },
@@ -180,7 +194,7 @@
         { label: 'Kind', name: 'family', value: d ? d.family : familyNames[0], type: 'select', choices: familyNames, full: true },
         { label: 'Service', name: 'type', value: d ? d.type : families[0][1][0], type: 'select', choices: allServices, full: true },
         { label: 'Name', name: 'name', value: d ? d.name : '', placeholder: 'Office NAS', autofocus: !d },
-        { label: 'Account or address', name: 'account', value: d ? d.account : '', placeholder: 'you@example.com or nas.local' },
+        { label: 'Address (not for cloud accounts)', name: 'account', value: d && d.family !== 'Cloud account' ? d.account : '', placeholder: 'nas.local or sftp.example.com', help: 'Cloud accounts sign in on their own page after you add them. Other kinds ask for their password or key next, and it is kept in the keychain.' },
         { label: 'Folder or bucket', name: 'path', value: d ? d.path : 'Backups/Puppet-Master', full: true }
       ]),
       saveLabel: d ? 'Save' : 'Add destination',
@@ -193,7 +207,7 @@
       onSave: data => {
         const name = String(data.name || '').trim(); if (!name) { PM51.toast('Name the destination', 'A short name like Office NAS.', 'warning'); return false; }
         const cloud = data.family === 'Cloud account';
-        const next = { name, type: String(data.type), family: String(data.family), account: String(data.account || '').trim() || (cloud ? 'Not signed in yet' : 'Local network'), path: String(data.path || '').trim() || '/' };
+        const next = { name, type: String(data.type), family: String(data.family), account: cloud ? (d && d.family === 'Cloud account' ? d.account : 'Not signed in yet') : (String(data.account || '').trim() || 'Local network'), path: String(data.path || '').trim() || '/' };
         if (d) Object.assign(d, next); else { const id = uid('backup-destination', name); B.destinations.push(Object.assign({ id, state: cloud ? 'Needs sign-in' : 'Ready', encryption: 'Encrypted · key ready', usedBy: 'Nothing yet', lastCheck: 'Not checked', default: false }, next)); PM51.setSel(ID, id); }
         refresh();
       }
@@ -227,20 +241,23 @@
     { label: 'Passphrase for the kit', name: 'pass', value: '', type: 'password', help: 'Optional. Protects the kit if someone finds it.' }
   ]), saveLabel: 'Save kit', onSave: () => { bk().recoveryKit.saved = true; bk().recoveryKit.tested = false; refresh(); PM51.toast('Recovery Kit prepared', 'Example data only. No file was written in this preview. Test the kit when you have it.', 'info'); } }));
   PM51.on('backup-kit-test', checkKit);
-  PM51.onChange('backup-retention', el => { const s = eng().schedules.find(x => x.id === ds(el, 'id')); if (s) { s.retention = el.value; saveState(); } });
   PM51.on('backup-cleanup', () => PM51.panel({ title: 'Cleanup review', subtitle: 'Backups past their keep-for time. Nothing is removed until you choose.', body: PM51.panelSection('Ready to remove', PM51.list([
     { title: 'Daily backups older than 30 days', meta: '3 backups · 410 MB', avatar: icon('trash'), end: PM51.btn({ label: 'Remove', small: true, danger: true, action: 'pm51-backup-cleanup-remove', data: { what: 'daily' } }) },
     { title: 'Weekly backups older than 12 weeks', meta: '1 backup · 2.1 GB', avatar: icon('trash'), end: PM51.btn({ label: 'Remove', small: true, danger: true, action: 'pm51-backup-cleanup-remove', data: { what: 'weekly' } }) }
   ])) + PM51.note('The latest verified backup is always kept, no matter how old it is.', 'info') }));
   PM51.on('backup-cleanup-remove', el => PM51.confirm('Remove old backups?', 'They are gone for good once removed. Newer backups are kept.', 'Remove', () => { closeOverlay(); PM51.toast('Cleanup preview', `Example data only. Old ${ds(el, 'what')} backups would be removed now.`, 'info'); }, true));
-  PM51.on('backup-key-copy', () => PM51.confirm('Copy the recovery key?', 'Anyone with this key can read your backups. Paste it only somewhere safe, then clear your clipboard.', 'Copy key', () => { try { const p = navigator.clipboard && navigator.clipboard.writeText('EXAMPLE-KEY-not-a-real-recovery-key'); if (p && p.catch) p.catch(() => {}); } catch (_e) {} PM51.toast('Example key copied', 'Example data only. The real key comes from your Recovery Kit.', 'info'); }, true));
+  PM51.on('backup-key-show', () => PM51.panel({ title: 'Show the recovery key', subtitle: 'Only you can see it. It is never copied to the clipboard or saved by Puppet Master.', icon: 'key',
+    body: PM51.panelSection('Confirm it is you', PM51.field('This device\'s password', '<input class="text-control o55-keyinput" type="password" autocomplete="current-password" aria-label="Device password"/>', 'Needed every time the key is shown.'))
+      + PM51.note('Anyone with this key can read your backups. Write it down or print it, and keep it offline. If every copy is lost, the backups cannot be recovered.', 'attention'),
+    primaryLabel: 'Show key', onPrimary: w => { if (!w.querySelector('.o55-keyinput')?.value) { PM51.toast('Enter the password first', 'The key is shown only after this check.', 'info'); return false; } PM51.toast('Example only', 'A real recovery key would appear here once, and hide again when you close this.', 'info'); } }));
   PM51.on('backup-server', () => PM51.confirm('Back up the whole server?', 'Every workspace and the server settings are included. It runs in the background.', 'Back up whole server', () => PM51.toast('Full server backup preview', 'Example data only. A full server backup would start now.', 'info')));
   PM51.on('backup-verify', () => { const last = latest(); PM51.check({ title: 'Verify latest backup', steps: [
     { title: 'Backup found', desc: last ? `${last.time} · ${last.destination}` : 'None', tone: last ? 'ready' : 'attention', status: last ? 'Checked' : 'Missing' },
     { title: 'Contents match the manifest', desc: last ? last.size : '—' },
     { title: 'Can be read back', desc: 'A few files restored to a scratch folder and compared' }
   ] }); });
-  PM51.onChange('backup-bandwidth', el => { bk().bandwidth = el.value; saveState(); });
+  PM51.onChange('backup-bandwidth', el => { bk().bandwidth = el.value; refresh(); });
+  PM51.on('backup-bandwidth-day', el => { const B = bk(); B.bandwidthDayOnly = !dayOnly(B); refresh(); });
   PM51.on('backup-diagnostics', () => PM51.check({ title: 'Backup & Restore diagnostics', steps: [
     { title: 'Automatic backups', desc: bk().automatic ? 'On' : 'Off', tone: bk().automatic ? 'ready' : 'attention', status: bk().automatic ? 'Checked' : 'Off' },
     { title: 'Default destination reachable', desc: (defaultDest() || {}).name || 'None' },

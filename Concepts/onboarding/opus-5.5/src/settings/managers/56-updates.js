@@ -14,13 +14,17 @@
   const hasUpdate = () => { const U = up(); return !!U.availableVersion && U.availableVersion !== U.currentVersion; };
   const servers = () => (PM51.s().serverProject && PM51.s().serverProject.servers) || [];
 
+  const autoOn = () => { const v = PM51.value('system.advanced.auto-update'); return v !== false && v !== 'off'; };
+  const catalogsOn = () => { const v = PM51.value('system.advanced.catalog-updates'); return v !== false && v !== 'off'; };
+  ['system.advanced.auto-update', 'system.advanced.catalog-updates'].forEach(id => PM51.watch(id, () => PM51.refresh(ID, { swap: false })));
   function render() {
     const U = up(), X = ux();
     const app = PM51.section({
       title: 'Puppet Master', help: hasUpdate() ? `${U.availableVersion} is ready to install.` : 'You are on the latest version.',
       action: { label: 'Check now', icon: 'refresh', action: 'pm51-updates-check', data: { 'command-id': 'cmd.update.app.check' } },
       body: PM51.rows([
-        { label: 'Automatically keep Puppet Master up to date', help: 'Downloads in the background and installs when nothing is running.', control: PM51.toggle(!!U.automatic, { action: 'pm51-updates-auto', data: { 'command-id': 'cmd.update.app.automatic.set_enabled' }, label: 'Automatically keep Puppet Master up to date' }) },
+        { label: 'Look for updates automatically', help: 'You can still check at any time.', control: PM51.bound.toggle('system.advanced.auto-update') },
+        autoOn() ? { label: 'Also install on its own when idle', help: 'Otherwise you are asked before anything installs.', control: PM51.toggle(!!U.automatic, { action: 'pm51-updates-auto', data: { 'command-id': 'cmd.update.app.automatic.set_enabled' }, label: 'Also install on its own when idle' }) } : null,
         { label: 'Installed version', value: U.currentVersion, pill: hasUpdate() ? '' : PM51.pill('Current') },
         hasUpdate() ? { label: 'Available', value: U.availableVersion, pill: PM51.pill('Update ready'), action: { label: 'Install & restart', primary: true, icon: 'download', action: 'pm51-updates-install' } } : { label: 'Available', value: 'Nothing new', pill: PM51.pill('Current') },
         { label: 'Last check', value: U.lastCheck },
@@ -28,9 +32,9 @@
       ])
     });
     const catalogs = PM51.section({
-      title: 'Content and catalogs', help: 'Lists the app downloads on its own, like the models each service offers.',
+      title: 'Content and catalogs', help: 'Lists the app keeps fresh, like templates, personas and the models each service offers.',
       action: { label: 'Refresh catalogs', icon: 'refresh', small: true, action: 'pm51-updates-catalogs' },
-      body: PM51.rows((X.catalogs || []).map(([name, status]) => ({ label: name, value: status, pill: PM51.pill(status.split(' · ')[0]) })))
+      body: PM51.bound.rows(['system.advanced.catalog-updates']) + PM51.rows((X.catalogs || []).map(([name, status]) => ({ label: name, value: catalogsOn() ? status : 'Not kept up to date', pill: catalogsOn() ? PM51.pill(status.split(' · ')[0]) : PM51.pill('Off', 'off') })))
     });
     const history = PM51.section({
       title: 'History',
@@ -40,7 +44,7 @@
       }))) : PM51.empty('No updates yet', 'Installed versions show up here.')
     });
     const advanced = PM51.advanced([
-      PM51.section({ title: 'How updates arrive', body: PM51.rows([
+      PM51.section({ title: 'Installing updates', body: PM51.rows([
         { label: 'Source', value: U.source },
         { label: 'Restart', help: 'When an update needs a restart.', control: PM51.select(U.restartPolicy || 'Wait until idle', ['Wait until idle', 'Ask me first', 'Right away'], { action: 'pm51-updates-restart', label: 'Restart policy' }) },
         { label: 'Skip versions with known problems', help: 'Waits for the fixed release instead.', control: PM51.toggle(U.skipKnownBad !== false, { action: 'pm51-updates-skipbad', label: 'Skip versions with known problems' }) }
@@ -74,7 +78,7 @@
   PM51.on('updates-check', () => {
     const U = up(); U.lastCheck = 'Just now'; refresh();
     PM51.check({ title: 'Check for updates', outcome: hasUpdate() ? `${U.availableVersion} available · example data` : 'Up to date · example data', steps: [
-      { title: 'Release list read', desc: `${U.source} · ${U.channel}` },
+      { title: 'Release list read', desc: `${U.source} · ${PM51.valueLabel('system.advanced.release-channel', PM51.value('system.advanced.release-channel'))}` },
       { title: 'Compared with the installed version', desc: `${U.currentVersion} installed${hasUpdate() ? `, ${U.availableVersion} available` : ''}` },
       { title: 'Signature checked', desc: hasUpdate() ? U.availableVersion : 'Nothing new to check' }
     ] });
@@ -100,8 +104,6 @@
   });
   PM51.on('updates-rollback', el => rollback(Number(ds(el, 'index'))));
   PM51.on('updates-details', el => detailsPanel(Number(ds(el, 'index'))));
-  PM51.onChange('updates-channel', el => { up().channel = el.value; saveState(); });
-  PM51.onChange('updates-interval', el => { up().checkInterval = el.value; saveState(); });
   PM51.onChange('updates-restart', el => { up().restartPolicy = el.value; saveState(); });
   PM51.on('updates-skipbad', () => { const U = up(); U.skipKnownBad = U.skipKnownBad === false; refresh(); });
   PM51.on('updates-diagnostics', () => { const U = up(); PM51.check({ title: 'App Updates diagnostics', steps: [
@@ -110,7 +112,7 @@
     { title: 'Restore point available', desc: U.history.find(x => x.result === 'Available for rollback') ? `Roll back to ${U.history.find(x => x.result === 'Available for rollback').version}` : 'None yet' },
     { title: 'Automatic updates', desc: U.automatic ? 'On' : 'Off', tone: U.automatic ? 'ready' : 'attention', status: U.automatic ? 'Checked' : 'Off' }
   ] }); });
-  PM51.on('updates-reset', () => PM51.confirm('Reset update settings?', 'Automatic updates turn on, the Stable channel is used, and checks run on open and hourly.', 'Reset', () => { const U = up(); U.automatic = true; U.channel = 'Stable'; U.checkInterval = 'On open and hourly'; U.restartPolicy = 'Wait until idle'; U.skipKnownBad = true; refresh(); PM51.toast('Update settings restored'); }));
+  PM51.on('updates-reset', () => PM51.confirm('Reset update settings?', 'Automatic checks turn on, the Stable channel and the usual check frequency come back.', 'Reset', () => { const U = up(); U.automatic = true; U.restartPolicy = 'Wait until idle'; U.skipKnownBad = true; ['system.advanced.auto-update', 'system.advanced.release-channel', 'system.advanced.update-frequency', 'system.advanced.catalog-updates'].forEach(id => { try { restoreSettingDefault(id); } catch (e) { /* one row never blocks the rest */ } }); refresh(); PM51.toast('Update settings restored'); }));
   PM51.on('updates-help', () => PM51.panel({
     title: 'How updates work',
     body: PM51.panelSection('In short', '<p class="pm51-ps-text">Puppet Master checks for new versions on its own, downloads them in the background, and installs when nothing is running. Every download is verified before it is used.</p>')

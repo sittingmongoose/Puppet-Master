@@ -44,7 +44,7 @@
   function findingRow(g, f) {
     const focus = !!(PM51.s().doctorReturn && PM51.s().doctorReturn.gid === g.id && PM51.s().doctorReturn.fid === f.id && returnArmed);
     const fix = f.fix && f.state !== 'Checking' && f.state !== 'Ready' ? PM51.btn({ label: f.fix, small: true, action: 'pm51-doctor-fix', data: { gid: g.id, fid: f.id } }) : (f.fix && f.state === 'Ready' && g.id === 'updates' ? PM51.btn({ label: f.fix, small: true, action: 'pm51-doctor-fix', data: { gid: g.id, fid: f.id } }) : '');
-    return { label: f.title, pill: PM51.pill(f.state, tone(f.state)), id: `${g.id}:${f.id}`, cls: `pm51-doctor-row${focus ? ' is-focus' : ''}`, control: `<span class="pm51-doctor-checked">checked ${h(f.checked)}</span>${fix}${PM51.iconBtn({ icon: 'chevron', label: `Open ${f.title}`, action: 'pm51-doctor-open', data: { gid: g.id, fid: f.id } })}` };
+    return { label: PM51.serviceText(f.title), pill: PM51.pill(f.state, tone(f.state)), id: `${g.id}:${f.id}`, cls: `pm51-doctor-row${focus ? ' is-focus' : ''}`, control: `<span class="pm51-doctor-checked">checked ${h(f.checked)}</span>${fix}${PM51.iconBtn({ icon: 'chevron', label: `Open ${f.title}`, action: 'pm51-doctor-open', data: { gid: g.id, fid: f.id } })}` };
   }
 
   function render() {
@@ -62,12 +62,12 @@
     })).join('');
     const S = PM51.s();
     const advanced = PM51.advanced([
-      PM51.section({ title: 'Run All Checks', help: 'Checks every group in turn. Takes a moment and never changes anything on its own.', body: `<div class="pm51-doctor-actions">${PM51.btn({ label: 'Run All Checks', small: true, icon: 'refresh', action: 'pm51-doctor-check-all', disabled: groups().some(g => g.checking), reason: 'A check is already running.' })}${PM51.btn({ label: 'Export redacted report', small: true, icon: 'download', action: 'pm51-doctor-export' })}${PM51.btn({ label: 'Copy diagnostics', small: true, icon: 'copy', action: 'pm51-doctor-copy' })}</div>` }),
-      PM51.section({ title: 'Cached summary', body: PM51.kv([['Last check', S.doctorLastCheck || 'Loaded from cache · 2 min ago'], ['Findings cached', String(allFindings().length)], ['Oldest result', '2 h ago (Code & Version History)'], ['Cache age limit', 'Results older than a day are marked for a re-check']]) }),
-      PM51.section({ title: 'Technical evidence', help: 'Details, logs, and receipts open on demand from each finding.', body: PM51.kv(allFindings().map(f => [`${f.group.title} · ${f.title}`, `${f.state} · checked ${f.checked}`])) })
+      PM51.section({ title: 'Cached summary', body: PM51.kv([['Last check', S.doctorLastCheck || 'Loaded from cache · 2 min ago'], ['Findings cached', String(allFindings().length)], ['Oldest result', '2 h ago (Code & Version History)'], ['Cache age limit', 'Results older than a day are marked for a re-check']]) + `<div class="pm51-doctor-actions" style="margin-top:10px">${PM51.btn({ label: 'Copy support details', small: true, icon: 'copy', action: 'pm51-doctor-copy' })}</div>` })
     ].join(''));
+    /* The last checkup is a dated snapshot, not a promise; "Check everything" is the inventory's own action. */
+    const summary = `<div class="o55-toolbar o55-doctor-summary">${PM51.home('system.health.doctor-summary', `<span class="o55-doctor-last">${PM51.status(`Last checkup: ${c.Unavailable && !c.Ready ? 'Blocked' : c['Needs attention'] || c.Unavailable ? 'Ready with warnings' : 'Ready'}`, c['Needs attention'] || c.Unavailable ? 'attention' : 'ready')}<small>${h(S.doctorLastCheck || '2 min ago')}</small></span>`, 'span')}<span class="o55-toolbar-spacer"></span>${PM51.bound.action('system.health.run-doctor', { label: 'Check everything', icon: 'refresh' })}</div>`;
     scheduleReturn();
-    return PM51.page({ id: ID, key: KEY, body: stats + sections + advanced, quiet: [
+    return PM51.page({ id: ID, key: KEY, body: summary + stats + sections + advanced, quiet: [
       { label: 'Replay setup', action: 'replay-onboarding', data: { 'ui-action-id': 'settings.onboarding.run_again', 'source-surface': 'settings_rerun' } },
       { label: 'Guided Tour', action: 'start-guided-tour', data: { 'ui-action-id': 'settings.guided_tour.replay' } },
       { label: 'Export report', action: 'pm51-doctor-export' }

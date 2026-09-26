@@ -1,0 +1,66 @@
+{
+ "_about": "doctor: sections from the settings audit (2026-09-26).",
+ "sections": {
+  "doctor-onboarding": {
+   "title": "Setup and tour",
+   "help": "Pick up setup where you left it, or take the tour again."
+  },
+  "doctor-summary": {
+   "to": "doctor",
+   "title": "Last checkup",
+   "help": "When the setup was last checked, and a button to check everything now.",
+   "order": 1,
+   "composed": true
+  },
+  "doctor-checkups": {
+   "to": "doctor",
+   "title": "Automatic checkups",
+   "help": "How often the setup is checked and what it covers.",
+   "order": 2
+  },
+  "doctor-display": {
+   "to": "doctor",
+   "title": "What you see around the app",
+   "help": "Status labels, warnings and fix-it links outside this page.",
+   "order": 3
+  },
+  "doctor-tools": {
+   "to": "doctor",
+   "title": "For support",
+   "help": "Details a support person may ask for.",
+   "order": 4,
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "doctor-summary",
+   "ids": [
+    "system.health.doctor-summary",
+    "system.health.run-doctor"
+   ]
+  },
+  {
+   "section": "doctor-checkups",
+   "ids": [
+    "system.health.auto-run",
+    "system.health.check-frequency",
+    "system.health.check-scope"
+   ]
+  },
+  {
+   "section": "doctor-display",
+   "ids": [
+    "system.health.readiness-badges",
+    "system.health.degraded-visibility",
+    "system.health.remediation-links"
+   ]
+  },
+  {
+   "section": "doctor-tools",
+   "ids": [
+    "system.health.platform-diagnostics"
+   ]
+  }
+ ]
+}

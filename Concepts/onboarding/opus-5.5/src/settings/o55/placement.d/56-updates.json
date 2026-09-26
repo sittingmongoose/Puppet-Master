@@ -1,0 +1,47 @@
+{
+ "_about": "updates: sections from the settings audit (2026-09-26).",
+ "sections": {
+  "updates-app": {
+   "to": "updates",
+   "title": "Puppet Master",
+   "help": "Look for new versions on its own; you can always check now.",
+   "order": 1,
+   "composed": true
+  },
+  "updates-catalogs": {
+   "to": "updates",
+   "title": "Content and catalogs",
+   "help": "Lists the app keeps fresh, like templates, personas and model lists.",
+   "order": 2,
+   "composed": true
+  },
+  "updates-settings": {
+   "to": "updates",
+   "title": "How often and which releases",
+   "help": "Check frequency and release channel.",
+   "order": 3,
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "updates-app",
+   "ids": [
+    "system.advanced.auto-update"
+   ]
+  },
+  {
+   "section": "updates-catalogs",
+   "ids": [
+    "system.advanced.catalog-updates"
+   ]
+  },
+  {
+   "section": "updates-settings",
+   "ids": [
+    "system.advanced.update-frequency",
+    "system.advanced.release-channel"
+   ]
+  }
+ ]
+}

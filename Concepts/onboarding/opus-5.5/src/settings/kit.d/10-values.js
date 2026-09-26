@@ -193,11 +193,16 @@ renderSettingRow = function (setting, section, workspace) {
 };
 /* Placed sections inside managers: a titled group, no kicker, no "Section guide" button (each row has About). */
 const o55KitSection = renderSettingsSection;
+/* Every section reads the same way, placed or hand-written: a title, one line of help, the rows, and the owner
+   links the engine attaches ("Open Docker Manager"). The old "Section 1" kicker and "Section guide" button are gone;
+   each row has its own About. */
 renderSettingsSection = function (section, workspace, index) {
-  if (!section || !section.placement) return o55KitSection(section, workspace, index);
+  if (!section || !Array.isArray(section.settings) || (workspace && workspace.virtualAllSettings)) return o55KitSection(section, workspace, index);
+  let owners = '';
+  try { owners = typeof renderOwnerRedirects === 'function' ? renderOwnerRedirects(section) : ''; } catch (e) { owners = ''; }
   return `<section class="settings-section o55-group" id="section-${a(section.id)}" data-section-id="${a(section.id)}">
       <header class="o55-group-head"><h3 class="o55-group-title">${h(section.label)}</h3>${section.description ? `<p class="o55-group-help">${h(section.description)}</p>` : ''}</header>
-      <div class="setting-list">${section.settings.map(s => renderSettingRow(s, section, workspace)).join('')}</div>
+      ${owners}<div class="setting-list">${section.settings.map(s => renderSettingRow(s, section, workspace)).join('')}</div>
     </section>`;
 };
 
@@ -395,7 +400,9 @@ dispatchAction = function (action, el, event) {
     case 'open-structured-setting': if (found) { (found.setting.control === 'keyvalue' ? o55MapEditor : o55ListEditor)(found); return; } break;
     case 'set-slider-override': if (found) { o55NumberDialog(found); return; } break;
     case 'manage-credential-reference': if (found) { o55KeyPanel(found); return; } break;
-    case 'run-setting-action': if (found && found.setting.id !== 'restore-defaults') { o55RunAction(found); return; } break;
+    case 'run-setting-action':
+      if (found && found.setting.id === 'system.advanced.reset-defaults') { confirmDialog('Reset settings to defaults', 'Every setting in this project goes back to its default. Accounts, keys and history are kept, and a restore point is made first so you can undo it.', 'Reset', () => restoreAllProjectDefaults(), true); return; }
+      if (found && found.setting.id !== 'restore-defaults') { o55RunAction(found); return; } break;
     case 'o55-go-owner': if (id) { o55GoOwner(id); return; } break;
     case 'o55-auto-number': if (found) { if (restoreSettingDefault(id)) { saveState(); refreshSettingRow(id); showToast('Back to automatic', PM51.rowLabel(found.setting), 'success', 2200); } return; } break;
     case 'set-setting': {

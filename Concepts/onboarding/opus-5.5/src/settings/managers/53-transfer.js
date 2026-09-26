@@ -72,9 +72,14 @@
     if (!snaps.loom) snaps.loom = build('loom', 3, 2);
   }
 
+  function twinNote() {
+    const seen = new Set(), pairs = [];
+    CATS.forEach(([name, cats]) => { const k = cats.join('|'); const same = CATS.filter(c => c[1].join('|') === k).map(c => c[0]); if (same.length > 1 && !seen.has(k)) { seen.add(k); pairs.push(same.join(' and ')); } });
+    return pairs.length ? `${pairs.join('; ')} copy the same settings, so they are picked together.` : '';
+  }
   function chips() {
     const T = tr();
-    return `<div class="pm51-transfer-chips">${CATS.map(([name]) => { const on = T.cats.includes(name); return `<button type="button" class="pm51-transfer-chip${on ? ' is-on' : ''}" data-action="pm51-transfer-cat" data-cat="${a(name)}" aria-pressed="${on ? 'true' : 'false'}">${on ? icon('check') : ''}<span>${h(name)}</span></button>`; }).join('')}<span class="pm51-transfer-chips-note">${T.cats.length === CATS.length ? 'Everything is selected.' : `${T.cats.length} of ${CATS.length} selected.`} Passwords, keys, and device pairings are never copied.</span></div>`;
+    return `<div class="pm51-transfer-chips">${CATS.map(([name]) => { const on = T.cats.includes(name); return `<button type="button" class="pm51-transfer-chip${on ? ' is-on' : ''}" data-action="pm51-transfer-cat" data-cat="${a(name)}" aria-pressed="${on ? 'true' : 'false'}">${on ? icon('check') : ''}<span>${h(name)}</span></button>`; }).join('')}<span class="pm51-transfer-chips-note">${T.cats.length === CATS.length ? 'Everything is selected.' : `${T.cats.length} of ${CATS.length} selected.`} Passwords, keys, and device pairings are never copied. ${h(twinNote())}</span></div>`;
   }
 
   function render() {
@@ -91,8 +96,8 @@
     ]).replace('<span class="pm51-step-n">1</span>', '<span class="pm51-step-n">3</span>').replace('<span class="pm51-step-n">2</span>', '<span class="pm51-step-n">4</span>');
     const copy = PM51.section({ title: 'Copy Settings From Another Project', help: 'Bring over the setup you already like. Your workspace keeps its own accounts and secrets.', cls: 'pm51-transfer-flow', body: stepsA + chips() + stepsB });
     const file = PM51.section({ title: 'Save or load a file', body: PM51.rows([
-      { label: 'Export settings', help: 'Saves your settings to a file. Secrets are never included.', action: { label: 'Export…', icon: 'download', action: 'pm51-transfer-export' } },
-      { label: 'Import settings from a file', help: 'You see what would change before anything is applied.', action: { label: 'Import…', icon: 'upload', action: 'pm51-transfer-import' } }
+      { label: 'Save settings to a file', help: 'Passwords, keys and sign-ins are never included.', control: PM51.bound.action('system.advanced.export-settings', { label: 'Save to a file…', icon: 'download' }) },
+      { label: 'Load settings from a file', help: 'You see every change before anything is applied. Older files are converted first.', control: PM51.bound.action('system.advanced.import-settings', { label: 'Load a file…', icon: 'upload' }) }
     ]) });
     const H = history();
     const hist = PM51.section({ title: 'History', body: H.length ? PM51.list(H.map((x, i) => ({
@@ -102,7 +107,6 @@
     const snap = state.settingsSourceSnapshot;
     const advanced = PM51.advanced([
       PM51.section({ title: 'What is never copied', body: PM51.kv([['Credentials', 'Passwords, API keys, and sign-in sessions stay with their own workspace.'], ['Device pairings', 'Each device pairs with a server on its own.'], ['Server identity', 'Which server is home is decided per workspace.'], ['Account choices', 'Which account a provider uses is kept as it is here.']]) }),
-      PM51.section({ title: 'Import from an older version', help: 'Files from earlier versions are converted first, and you see the result before it is applied.', body: PM51.rows([{ label: 'Older settings file', action: { label: 'Convert and preview…', icon: 'upload', action: 'pm51-transfer-migrate' } }]) }),
       PM51.section({ title: 'Receipts', body: PM51.kv(snap ? [['Last copy from', snap.source_project_id], ['Settings copied', String((snap.copied_setting_ids || []).length)], ['Receipt', snap.receipt_id || 'Not supplied'], ['Restore point', snap.rollback_ref || 'None'], ['Copied at', snap.copied_at ? new Date(snap.copied_at).toLocaleString() : '—']] : [['Last copy', 'No copy receipt yet'], ['Restore point', 'None']]) }),
       PM51.section({ title: 'Technical details', body: PM51.kv(CATS.map(([name, cats]) => [name, cats.join(' · ')])) })
     ].join(''));
@@ -149,7 +153,10 @@
 
   /* ---------- actions ------------------------------------------------------ */
   PM51.on('transfer-source', chooseSource);
-  PM51.on('transfer-cat', el => { const T = tr(), name = ds(el, 'cat'); if (!CATS.some(c => c[0] === name)) return; T.cats = T.cats.includes(name) ? T.cats.filter(c => c !== name) : CATS.map(c => c[0]).filter(c => c === name || T.cats.includes(c)); invalidate(); refresh(); });
+  /* Two categories that copy the same settings (the engine groups them together) turn on and off together, so turning
+     one off never quietly copies it through its twin. */
+  const twinsOf = name => { const mine = (CATS.find(c => c[0] === name) || [, []])[1].join('|'); return CATS.filter(c => c[1].join('|') === mine).map(c => c[0]); };
+  PM51.on('transfer-cat', el => { const T = tr(), name = ds(el, 'cat'); if (!CATS.some(c => c[0] === name)) return; const group = twinsOf(name); T.cats = T.cats.includes(name) ? T.cats.filter(c => !group.includes(c)) : CATS.map(c => c[0]).filter(c => group.includes(c) || T.cats.includes(c)); invalidate(); refresh(); });
   PM51.on('transfer-all', () => { const T = tr(); T.cats = T.cats.length === CATS.length ? [] : CATS.map(c => c[0]); invalidate(); refresh(); });
   PM51.on('transfer-preview', preview);
   PM51.on('transfer-copy', copyNow);
@@ -162,14 +169,13 @@
       invalidate(); saveState(); PM51.refreshAll(); PM51.toast('Settings restored', 'Everything is back to how it was before the copy.');
     });
   });
-  PM51.on('transfer-export', () => openDialog({ title: 'Export settings', subtitle: 'Secrets are never included. The file is safe to share.', body: PM51.form([
-    { label: 'Format', name: 'format', value: 'Settings file (no secrets)', type: 'select', choices: ['Settings file (no secrets)', 'Encrypted archive'], full: true },
-    { label: 'Include my notes and labels', name: 'notes', value: true, type: 'checkbox', full: true }
-  ]), saveLabel: 'Export', onSave: data => { history().unshift({ time: `Today · ${nowLabel()}`, action: 'Exported project settings', categories: CATS.length, result: `${data.format} · example data`, rollback_available: false }); refresh(); PM51.toast('Export prepared', 'Example data only. No file was written in this preview.', 'info'); } }));
-  PM51.on('transfer-import', () => openDialog({ title: 'Import settings from a file', subtitle: 'You see every change before it is applied. A restore point is created first.', body: PM51.form([
+  PM51.on('transfer-export', () => openDialog({ title: 'Save settings to a file', subtitle: 'Passwords, keys and sign-ins are never included. The file is safe to share.', body: PM51.form([
+    { label: 'File', name: 'format', value: 'Settings file', type: 'select', choices: ['Settings file', 'Password-protected settings file (still no secrets)'], full: true }
+  ]), saveLabel: 'Save file', onSave: data => { history().unshift({ time: `Today · ${nowLabel()}`, action: 'Exported project settings', categories: CATS.length, result: `${data.format} · example data`, rollback_available: false }); refresh(); PM51.toast('Export prepared', 'Example data only. No file was written in this preview.', 'info'); } }));
+  PM51.on('transfer-import', () => openDialog({ title: 'Load settings from a file', subtitle: 'You see every change before it is applied. A restore point is created first. Files from older versions are converted first.', body: PM51.form([
     { label: 'Settings file', name: 'file', value: '', type: 'file', full: true },
-    { label: 'If a setting differs', name: 'conflict', value: 'Show me each one', type: 'select', choices: ['Show me each one', 'Keep mine', 'Use the file'] }
-  ]), saveLabel: 'Check file', onSave: data => { PM51.toast('Import preview', `Example data only. ${data.file || 'The file'} would be checked and previewed before anything changes.`, 'info'); } }));
+    { label: 'Where a setting differs', name: 'conflict', value: 'Merge (keep my values where they differ)', type: 'select', choices: ['Merge (keep my values where they differ)', 'Replace (use the file\'s values)'] }
+  ]), saveLabel: 'Preview changes', onSave: data => { PM51.toast('Import preview', `Example data only. ${data.file || 'The file'} would be checked and previewed before anything changes.`, 'info'); } }));
   PM51.on('transfer-migrate', () => openDialog({ title: 'Import from an older version', subtitle: 'The file is converted to the current format first. Nothing is applied until you approve the preview.', body: PM51.form([{ label: 'Older settings file', name: 'file', value: '', type: 'file', full: true }]), saveLabel: 'Convert and preview', onSave: data => { PM51.toast('Conversion preview', `Example data only. ${data.file || 'The file'} would be converted and shown as a preview.`, 'info'); } }));
   PM51.on('transfer-reset', () => { const s = PM51.s(); s.transfer = { source: '', sourceLabel: '', cats: CATS.map(c => c[0]), previewed: false, previewCount: 0 }; prepared = null; refresh(); PM51.toast('Transfer choices reset', 'Source cleared and every category selected again.'); });
   PM51.on('transfer-help', () => PM51.panel({

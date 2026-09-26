@@ -741,7 +741,7 @@ const pm51FindWs = id => { for (const d of D.domains) { const w = d.workspaces.f
     const domain = manager ? manager.domain : page.domain;
     if (page && def.hand_section) {
       const f = pm51FindWs(def.to); const host = f && (f.ws.sections || []).find(s => s.id === def.hand_section);
-      if (host) { host.settings = (host.settings || []).concat(settings); settings.forEach(st => { if (rowById.has(st.id)) pm51ById[st.id] = { id: st.id, setting: st, hand: false, page: true, workspace: def.to, domain, section: host.id, tab: null, advanced: false, composed: false }; }); continue; }
+      if (host) { if (def.title) host.label = def.title; if (def.help) host.description = def.help; host.settings = (host.settings || []).concat(settings); settings.forEach(st => { if (rowById.has(st.id)) pm51ById[st.id] = { id: st.id, setting: st, hand: false, page: true, workspace: def.to, domain, section: host.id, tab: null, advanced: false, composed: false }; }); continue; }
     }
     const tabLabel = manager && def.tab ? (manager.tabs || {})[def.tab] || def.tab : '';
     const section = { id: sid, label: def.title, eyebrow: manager ? (tabLabel || def.title) : (page.label || ''), description: def.help || '', settings, tab: def.tab || null, tabLabel, inline: !!manager, advanced: !!def.advanced, composed: !!def.composed, order: Number(def.order) || 0, placement: true };

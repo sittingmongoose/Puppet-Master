@@ -1,0 +1,31 @@
+{
+ "_about": "settings-transfer rows (settings audit).",
+ "rows": {
+  "system.advanced.export-settings": {
+   "label": "Save settings to a file",
+   "help": "Passwords, keys and sign-ins are never included.",
+   "actionLabel": "Save to a file…",
+   "pm51": "pm51-transfer-export",
+   "why": "The Save or load a file section of Settings Transfer."
+  },
+  "system.advanced.import-settings": {
+   "label": "Load settings from a file",
+   "help": "You see every change before anything is applied.",
+   "actionLabel": "Load a file…",
+   "pm51": "pm51-transfer-import"
+  },
+  "system.advanced.config-format": {
+   "label": "Settings file format",
+   "help": "How settings are written to disk; any of them loads."
+  },
+  "system.advanced.legacy-config-names": {
+   "label": "Also load old settings file names",
+   "help": "For projects made with older versions.",
+   "options": {
+    "puppetmaster.yaml (legacy)": "puppetmaster.yaml (old)",
+    "pm.config.json (legacy)": "pm.config.json (old)",
+    "bridge-config (scoped)": "bridge-config (per folder)"
+   }
+  }
+ }
+}
