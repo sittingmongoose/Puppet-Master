@@ -57,8 +57,37 @@ def _load_data() -> dict:
 
 
 def o55_data() -> dict:
-    """src/settings/o55/*.json, one key per file stem (labels.json -> O55S.labels)."""
-    return {p.stem: json.loads(p.read_text(encoding='utf-8')) for p in sorted((FORK / 'o55').glob('*.json'))}
+    """src/settings/o55/*.json, one key per file stem (labels.json -> O55S.labels). Per-row decisions are split by
+    manager in o55/rows.d/*.json and merged into O55S.rows.rows (a row id may be decided in one file only)."""
+    data = {p.stem: json.loads(p.read_text(encoding='utf-8')) for p in sorted((FORK / 'o55').glob('*.json'))}
+    rows, owner = {}, {}
+    for p in sorted((FORK / 'o55' / 'rows.d').glob('*.json')):
+        for rid, meta in json.loads(p.read_text(encoding='utf-8')).get('rows', {}).items():
+            if rid in rows:
+                raise ValueError(f'row {rid} is decided in both {owner[rid]} and {p.name}')
+            rows[rid], owner[rid] = meta, p.name
+    data['rows'] = {'rows': rows}
+    return data
+
+
+def placement() -> dict:
+    """placement.json plus o55/placement.d/*.json: `sections` merge by id (a patch may add or change fields, or drop a
+    section with null), `overrides` are prepended in file order (first match wins, so a patch beats the base), and
+    `managers` merge by id."""
+    base = json.loads((FORK / 'placement.json').read_text(encoding='utf-8'))
+    extra_rules = []
+    for p in sorted((FORK / 'o55' / 'placement.d').glob('*.json')):
+        patch = json.loads(p.read_text(encoding='utf-8'))
+        for sid, sec in patch.get('sections', {}).items():
+            if sec is None:
+                base['sections'].pop(sid, None)
+            else:
+                base['sections'][sid] = dict(base['sections'].get(sid, {}), **sec)
+        for mid, meta in patch.get('managers', {}).items():
+            base['managers'][mid] = dict(base['managers'].get(mid, {}), **meta)
+        extra_rules += [dict(r, _patch=p.name) for r in patch.get('overrides', [])]
+    base['overrides'] = extra_rules + base.get('overrides', [])
+    return base
 
 
 def module_source() -> str:
@@ -68,9 +97,8 @@ def module_source() -> str:
     extra = [f'/* ---- kit.d/{p.name} ---- */\n' + p.read_text(encoding='utf-8') for p in sorted((FORK / 'kit.d').glob('*.js'))]
     managers = [f'/* ---- {p.name} ---- */\n' + p.read_text(encoding='utf-8') for p in sorted((FORK / 'managers').glob('*.js'))]
     data = _load_data()
-    placement = json.loads((FORK / 'placement.json').read_text(encoding='utf-8'))
     body = ('const PM51_DATA = ' + json.dumps(data['extras'], ensure_ascii=False) + ';\n'
-            + 'const PM51_PLACEMENT = ' + json.dumps(placement, ensure_ascii=False) + ';\n'
+            + 'const PM51_PLACEMENT = ' + json.dumps(placement(), ensure_ascii=False) + ';\n'
             + 'const O55S = ' + json.dumps(o55_data(), ensure_ascii=False) + ';\n'
             + kit + '\n' + '\n'.join(extra) + '\n' + '\n'.join(managers))
     return "(function pm51SettingsRefresh(){\n'use strict';\n" + body + "\n})();\n"
@@ -80,6 +108,61 @@ def styles() -> str:
     parts = [(FORK / 'styles.css').read_text(encoding='utf-8')]
     parts += [f'/* ---- styles.d/{p.name} ---- */\n' + p.read_text(encoding='utf-8') for p in sorted((FORK / 'styles.d').glob('*.css'))]
     return '\n'.join(parts)
+
+
+def validate(merged: dict, engine: str, t50, need) -> dict:
+    """The kit resolves every canonical id first-match-wins (hand-rendered, then the first override rule that names or
+    globs it, then its subgroup, then its page default); a placement.d patch's rules come first, so it can re-home ids a
+    base rule also names. Checked: every id lands in a real section of a real manager tab or page, no page default is
+    used, every rule wins at least one id, subgroups cover the reference exactly, and managers named by sections exist
+    in exactly one manager file."""
+    import fnmatch
+    rows = t50.reference_rows(engine)
+    by_id = {r['id']: r for r in rows}
+    sections, managers, pages = merged['sections'], merged['managers'], merged['pages']
+    files = {p.name: p.read_text(encoding='utf-8') for p in sorted((FORK / 'managers').glob('*.js'))}
+    for mid, meta in managers.items():
+        owners = [n for n, body in files.items() if f"const ID = '{mid}';" in body]
+        need(len(owners) == 1, f'O55 placement: manager {mid!r} defined by {owners}')
+        tabs = set(re.findall(r"\{ id: '([a-z-]+)', label: '", files[owners[0]]))
+        for tab in meta.get('tabs', {}):
+            need(tab in tabs, f'O55 placement: manager {mid!r} tab {tab!r} not in {owners[0]}')
+    for sid, sec in sections.items():
+        to = sec['to']
+        need(to in managers or to in pages, f'O55 placement: section {sid!r} points at unknown {to!r}')
+        if to in managers and managers[to].get('tabs'):
+            need(sec.get('tab') in managers[to]['tabs'], f'O55 placement: section {sid!r} needs a tab of {to!r}')
+    hand = set(t50.HAND_CANONICAL_RE.findall(engine))
+    rules = merged.get('overrides', [])
+    wins = [0] * len(rules)
+    resolved = {}
+    for row in rows:
+        rid = row['id']
+        if rid in hand:
+            resolved[rid] = None
+            continue
+        hit = next((i for i, r in enumerate(rules) if rid in r.get('ids', []) or (r.get('glob') and fnmatch.fnmatchcase(rid, r['glob']))), None)
+        if hit is not None:
+            wins[hit] += 1
+            resolved[rid] = rules[hit]['section']
+        else:
+            resolved[rid] = merged['subgroups'].get(f"{row['cat']}.{row['sub']}")
+        need(resolved[rid] in sections, f'O55 placement: {rid} resolves to missing section {resolved[rid]!r}')
+        need(resolved[rid] not in set(merged['page_defaults'].values()), f'O55 placement: {rid} fell back to a page default')
+    for i, r in enumerate(rules):
+        for rid in r.get('ids', []):
+            need(rid in by_id, f'O55 placement: rule names unknown id {rid}')
+        if r.get('_patch'):
+            need(wins[i] >= 1, f"O55 placement: {r['_patch']} rule for {r['section']!r} wins no id")
+    declared = {f"{c}.{s['id']}" for c, meta in json.loads(engine[engine.index('window.PM12_REFERENCE = ') + 24:engine.index('\n', engine.index('window.PM12_REFERENCE = '))].rstrip(';'))['byCat'].items() for s in meta.get('subgroups', [])}
+    need(set(merged['subgroups']) == declared, 'O55 placement: subgroups must cover exactly the reference subgroups')
+    per = {}
+    for rid, sid in resolved.items():
+        if sid:
+            per[sections[sid]['to']] = per.get(sections[sid]['to'], 0) + 1
+    composed = sum(1 for rid, sid in resolved.items() if sid and sections[sid].get('composed'))
+    return {'ids': len(rows), 'hand': len(hand), 'per_destination': per, 'composed_rows': composed,
+            'advanced_rows': sum(1 for rid, sid in resolved.items() if sid and sections[sid].get('advanced'))}
 
 
 def _band(text: str, start: str, end: str, replacement: str, need, label: str) -> str:
@@ -93,7 +176,8 @@ def _band(text: str, start: str, end: str, replacement: str, need, label: str) -
 def apply(doc: str, need) -> tuple[str, dict]:
     t50 = _t50()
     data = _load_data()
-    placement = t50.load_placement()
+    t50.load_placement()  # duplicate-key guard on the base file
+    merged = placement()
     css = styles()
     for bad in ['backdrop-filter', 'url(#']:
         need(bad not in css, 'O55 settings: unsupported paint primitive in CSS: ' + bad)
@@ -106,7 +190,7 @@ def apply(doc: str, need) -> tuple[str, dict]:
     end = js.index(BOOT, start)
     engine = js[:js.index(MARKER)] + js[end:]  # the engine as T50 saw it, without any appended module
 
-    census = t50.validate_placement(placement, engine, need)
+    census = validate(merged, engine, t50, need)
     js = js[:start] + module_source() + '\n' + js[end:]
 
     band_js = lambda value: json.dumps(value, ensure_ascii=False, indent=2)
@@ -127,5 +211,4 @@ def apply(doc: str, need) -> tuple[str, dict]:
     s = doc.index(STYLE_OPEN) + len(STYLE_OPEN)
     e = doc.index('\n</style>', s)
     doc = doc[:s] + css + doc[e:]
-    return doc, {'providers': [p['id'] for p in data['providers']], 'rows': census['ids'],
-                 'manager_rows': census['manager_rows'], 'advanced_rows': census['advanced_rows']}
+    return doc, dict(census, providers=[p['id'] for p in data['providers']])

@@ -110,3 +110,20 @@
   #panel-settings .setting-row.o55-row.is-flash, #panel-settings .o55-pointed { animation: none; }
 }
 html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[data-motion="reduced"] #panel-settings .o55-pointed { animation: none; }
+
+/* ---- rows that matter only in some cases, and controls a manager draws itself -------------------------------- */
+#panel-settings .setting-row.o55-row.o55-dep-off { display: none; }
+#panel-settings .setting-row.o55-row { overflow: clip; }
+#panel-settings .o55-bound { display: inline-flex; align-items: center; gap: 6px; }
+#panel-settings .o55-bound-prefix { font-size: 12px; color: var(--k3-text-3); }
+#panel-settings .o55-bound-select .pm51-dd-trigger { min-width: 0; height: 32px; }
+#panel-settings .o55-bound-search { position: relative; flex: 1 1 200px; min-width: 160px; max-width: 320px; }
+#panel-settings .o55-bound-search { gap: 0; }
+#panel-settings .o55-bound-search > .icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 14px; height: 14px; color: var(--k3-text-3); pointer-events: none; }
+#panel-settings .o55-bound-search > .icon svg { width: 14px; height: 14px; }
+#panel-settings .o55-bound-search input { width: 100%; margin: 0; height: 32px; padding: 0 10px 0 30px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-1); color: var(--k3-text-1); font: inherit; font-size: 12.5px; }
+#panel-settings .o55-bound-search input:focus { outline: none; border-color: color-mix(in srgb, var(--k3-accent) 60%, transparent); box-shadow: 0 0 0 3px var(--k3-accent-soft); }
+#panel-settings .o55-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 18px; border-bottom: 1px solid var(--k3-line); }
+#panel-settings .o55-toolbar-spacer { flex: 1 1 auto; }
+#panel-settings :is(.o55-bound, .o55-home).is-flash { animation: o55Pointed 2.2s var(--k3-ease-out); border-radius: 10px; }
+#panel-settings .o55-bound-rows > .setting-row.o55-row:first-child { border-top: 0; }

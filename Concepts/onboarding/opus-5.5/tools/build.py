@@ -269,7 +269,7 @@ def build_text() -> str:
 
 
 def check(built: str) -> list[str]:
-    problems = lint_sources()
+    problems = lint_sources() + syntax_check(built)
     for removed in ['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                     'pm7-onboarding-css', 'pm7-guided-tour-css', "'.pm7gt-callout", ".closest('.pm7gt')",
                     "getElementById('pm7-onboarding')", "getElementById('pm7-guided-tour')"]:
@@ -281,6 +281,26 @@ def check(built: str) -> list[str]:
     if TARGET.exists() and TARGET.read_text(encoding='utf-8') != built:
         problems.append('Concepts/TestOpus5.5PmConcept.html is stale; run build.py')
     return problems
+
+
+def syntax_check(built: str) -> list[str]:
+    """node --check the scripts this package writes (the Settings engine with its managers, and the O55 module)."""
+    import subprocess
+    import tempfile
+    out = []
+    for sid in ('pm4-settings-js', 'pm-o55-js'):
+        m = re.search(r'<script\b[^>]*\bid="' + sid + r'"[^>]*>(.*?)</script>', built, re.S)
+        if not m:
+            out.append(f'script {sid} missing')
+            continue
+        with tempfile.NamedTemporaryFile('w', suffix='.js', delete=False, encoding='utf-8') as fh:
+            fh.write(m.group(1))
+            path = fh.name
+        r = subprocess.run(['node', '--check', path], capture_output=True, text=True)
+        Path(path).unlink(missing_ok=True)
+        if r.returncode:
+            out.append(f'syntax error in {sid}: ' + ' | '.join(r.stderr.strip().splitlines()[-4:])[:600])
+    return out
 
 
 def main() -> int:
@@ -295,7 +315,7 @@ def main() -> int:
             print('CHECK:', p)
         print('check', 'ok' if not problems else f'failed ({len(problems)})')
         return 0 if not problems else 1
-    problems = lint_sources()
+    problems = lint_sources() + syntax_check(built)
     if problems:
         for p in problems:
             print('LINT:', p)

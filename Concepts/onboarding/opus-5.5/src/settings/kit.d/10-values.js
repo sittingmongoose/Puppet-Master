@@ -225,7 +225,7 @@ function o55ListEditor(found) {
       const pending = w.querySelector('[data-o55-le-new]'); if (pending && pending.value.trim()) items.push(pending.value.trim());
       const next = items.filter(Boolean);
       if (!commitSettingValue(s.id, next)) return false;
-      saveState(); refreshSettingRow(s.id); showToast('Saved', `${PM51.rowLabel(s)}: ${next.length} ${next.length === 1 ? noun : noun + 's'}.`, 'success', 2200);
+      saveState(); refreshSettingRow(s.id); o55Notify(s.id, next); showToast('Saved', `${PM51.rowLabel(s)}: ${next.length} ${next.length === 1 ? noun : noun + 's'}.`, 'success', 2200);
     }
   });
   draw(wrap);
@@ -249,7 +249,9 @@ function o55MapEditor(found) {
   let pairs = Object.entries(o55IsFlatMap(value) ? value : {}).map(([k, v]) => [k, v == null ? '' : String(v)]);
   const [kName, vName] = row.pair || ['Name', 'Value'];
   const draw = wrap => {
-    wrap.querySelector('.o55-kv-list').innerHTML = pairs.length ? pairs.map(([k, v], i) => `<div class="o55-kv-row"><input class="text-control" value="${a(k)}" aria-label="${a(kName)}" data-k="${i}"/><input class="text-control" value="${a(PM51.valueLabel(s.id, v) === v ? v : v)}" aria-label="${a(vName)}" data-v="${i}"/><button type="button" class="icon-btn" data-o55-kv="remove" data-i="${i}" aria-label="Remove">${icon('trash')}</button></div>`).join('')
+    const vc = row.valueChoices;
+    const valueCell = (v, i) => vc ? `<select class="select-control o55-kv-select" data-v="${i}" aria-label="${a(vName)}">${vc.map(o => `<option value="${a(o)}"${String(o) === String(v) ? ' selected' : ''}>${h(PM51.valueLabel(s.id, o))}</option>`).join('')}</select>` : `<input class="text-control" value="${a(v)}" aria-label="${a(vName)}" data-v="${i}"/>`;
+    wrap.querySelector('.o55-kv-list').innerHTML = pairs.length ? pairs.map(([k, v], i) => `<div class="o55-kv-row"><input class="text-control" value="${a(k)}" aria-label="${a(kName)}" data-k="${i}"/>${valueCell(v, i)}<button type="button" class="icon-btn" data-o55-kv="remove" data-i="${i}" aria-label="Remove">${icon('trash')}</button></div>`).join('')
       : `<div class="o55-le-empty">${h(row.empty || 'Nothing here yet.')}</div>`;
   };
   const body = `<div class="o55-kv">${row.editorHelp ? `<p class="o55-le-help">${h(row.editorHelp)}</p>` : ''}<div class="o55-kv-cols"><span>${h(kName)}</span><span>${h(vName)}</span><span></span></div><div class="o55-kv-list"></div>
@@ -259,14 +261,14 @@ function o55MapEditor(found) {
     primaryLabel: 'Save', onPrimary: w => {
       const next = {}; w.querySelectorAll('.o55-kv-row').forEach((r, i) => { const k = r.querySelector('[data-k]').value.trim(), v = r.querySelector('[data-v]').value.trim(); if (k) next[k] = /^-?\d+(\.\d+)?$/.test(v) ? Number(v) : v; });
       if (!commitSettingValue(s.id, next)) return false;
-      saveState(); refreshSettingRow(s.id); showToast('Saved', `${PM51.rowLabel(s)} updated.`, 'success', 2200);
+      saveState(); refreshSettingRow(s.id); o55Notify(s.id, next); showToast('Saved', `${PM51.rowLabel(s)} updated.`, 'success', 2200);
     }
   });
   draw(wrap);
   wrap.addEventListener('click', e => {
     const b = e.target.closest('[data-o55-kv]'); if (!b) return;
     wrap.querySelectorAll('.o55-kv-row').forEach((r, i) => { pairs[i] = [r.querySelector('[data-k]').value, r.querySelector('[data-v]').value]; });
-    if (b.dataset.o55Kv === 'add') pairs.push(['', '']); else pairs.splice(Number(b.dataset.i), 1);
+    if (b.dataset.o55Kv === 'add') pairs.push(['', row.valueChoices ? row.valueChoices[0] : '']); else pairs.splice(Number(b.dataset.i), 1);
     draw(wrap); if (b.dataset.o55Kv === 'add') { const last = wrap.querySelectorAll('.o55-kv-row [data-k]'); last.length && last[last.length - 1].focus(); }
   });
   return true;
@@ -345,6 +347,7 @@ PM51.goOwner = o55GoOwner;
 function o55RunAction(found) {
   const s = found.setting, row = O55R[s.id] || {};
   if (row.route && !row.run) return o55GoOwner(s.id);
+  if (row.open) { const f = findSettingGlobal(row.open); if (f) { (f.setting.control === 'keyvalue' ? o55MapEditor : o55ListEditor)(f); return true; } }
   if (row.pm51) { const fn = actions[row.pm51.replace(/^pm51-/, '')]; if (fn) { fn(Object.assign(document.createElement('button'), { dataset: Object.assign({}, row.data || {}) }), null); return true; } }
   const steps = row.steps || [];
   PM51.panel({
