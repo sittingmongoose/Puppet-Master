@@ -1,31 +1,31 @@
 # Shard Index: Plans/Release_Supply_Chain.md
 
-Generated: 2026-09-25T22:06:00Z
+Generated: 2026-09-26T03:05:42Z
 
-Source SHA256: `a1a2b6bda689ac576b7438f55cab1285e633ee449f076cf72ed38c7d46dea005`
+Source SHA256: `0e5d2b5967351815d72b786da61d895a608d7e726be4e9aa97f29e579709ae18`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `6f7e1a5845494aefc19bb1dc33ae9da4f48f489e781076de1370a01df45d6fae`
-- [002 - 0. Scope](002-0.-scope.md) L6-L10 `c217a900a89bf5c42cdadb8c253f1afa694411ed1c52c50ab9a7b2f3122d6f4f`
-- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L12-L36 `608620f02e6d1e177d3245154790db8a59b85f7bfae634039a1e2430dd1fcfad`
-- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L38-L602 `5e341f4bb880e90e17b714f257e7a0cd495469f5653ee551ef01269a2baf2a9e`
-- [005 - 3. Contracts, Schemas, Events, Or Data Shapes](005-3.-contracts-schemas-events-or-data-shapes.md) L604-L606 `bec874da5e29cfdd41681580db4fd9dbb42c0b5d8525fdec4582bb46f069f48e`
-- [006 - 4. Integration Surfaces](006-4.-integration-surfaces.md) L608-L610 `4cc000493b50cec2d9413fcf44ad1cb51ee0c31354f2ed85abda416bc46909e5`
-- [007 - 5. Validation And Acceptance](007-5.-validation-and-acceptance.md) L612-L614 `1ab7882a88171832340afe0d0f3dbc5fcd623668ee12399a7a5fb1e8c2526aa6`
-- [008 - 6. Plan-To-Node Readiness](008-6.-plan-to-node-readiness.md) L616-L618 `e07191bc829699eaa9fba3e6212a4e183cad6b284d7253aaa99b7a1d708860c9`
-- [009 - 7. Deferred, Retired, Compatibility, And Non-Goals](009-7.-deferred-retired-compatibility-and-non-goals.md) L620-L622 `48f29c4e46f97603af3b5a21ee7aad894d448e911ddf100aa714fe4e03f852b2`
-- [010 - 8. Source Lineage And Governance](010-8.-source-lineage-and-governance.md) L624-L628 `126123233160a102d6fbb793e66553eca7907dd954a04ae7c4d53f1bcfe438a6`
-- [011 - FABLE Residual Release Supply Chain Cleanup Addendum - 2026-07-07](011-fable-residual-release-supply-chain-cleanup-addendum-2026-07-07.md) L630-L719 `e80ac6c756b4eca1440f2492ff84081f06fe93f2f96cc2a112d55b33eec3aefa`
-- [012 - Case L Release Migration And Recovery Gate Propagation - 2026-07-17](012-case-l-release-migration-and-recovery-gate-propagation-2026-07-1.md) L721-L810 `66c5fb614acee11d68fee0e69495665a0e9077882973845ad229503018b1e876`
-- [013 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L812-L821 `ae0fba14bd64f8741a6c03735c3fb557728bf50940f6b1e4a20ea5670874778d`
-- [014 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](014-fable-remaining-action-plan-repair-notes-2026-07-08.md) L822-L831 `ae5e6e603481252631c90e1b30548a7ebbe667b4e5ca3f1ad05cafd60892644a`
-- [015 - Provider CLI Acquisition Supply-Chain Addendum - 2026-08-13](015-provider-cli-acquisition-supply-chain-addendum-2026-08-13.md) L833-L962 `a163f62812adadd4bc728293fdebaea421c17c39f9954baee8f83dfcfdbc1460`
-- [016 - Plugin Package And Full-Thread Artifact Addendum - 2026-08-31](016-plugin-package-and-full-thread-artifact-addendum-2026-08-31.md) L964-L1103 `63444428d864ae1895842d9bc90e8811930f246ff1784f877d925fc3ffd714fd`
-- [017 - Typed Command Supply-Chain Handoff Addendum](017-typed-command-supply-chain-handoff-addendum.md) L1105-L1168 `e1cf7ea9008dbdeedc24da9951c0bda94f36dda42a36da86bf98a74df70f7f5b`
-- [018 - Server command-gap owner closure - application update lifecycle (2026-09-01)](018-server-command-gap-owner-closure-application-update-lifecycle-20.md) L1170-L1277 `e2768ab5e8c77c80227793493bcd3ffab1eb4f8ce371283de9f4c3b930f00f65`
-- [019 - Post-Integration Bundled Dependency And Provider-Registration Addendum - 2026-09-01](019-post-integration-bundled-dependency-and-provider-registration-ad.md) L1279-L1359 `35525e0990351e5fe2409cb944f7b5f556e4a449fab7edd83955832c334b8eb6`
-- [020 - Platform package support carrier and current installation authority](020-platform-package-support-carrier-and-current-installation-author.md) L1360-L1436 `ee654ad6ed9ed5412a58d03f56356a5c22ba75f8b854ce06cf1d7efc2a230784`
-- [021 - Goal-created reader package graph and original installation](021-goal-created-reader-package-graph-and-original-installation.md) L1437-L1536 `f267e54ac40de4169952e287e8e0cf177163144853266578a733108a68b2904d`
+- [001 - Preamble](001-preamble.md) L1-L4 `0ecf843208bb6e33d8a988eb3219ce791ea195dd2ac0925b8cc86cf8aa84d5a3`
+- [002 - 0. Scope](002-0.-scope.md) L6-L10 `404297c0ba18981e48aa2a32621b9a9643d8937ad870e8e691bc7b0bcb4835ed`
+- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L12-L36 `ee1d25e243f541b6c74f3b31673e89972b83717befa675ffcc57a5d6407faf15`
+- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L38-L602 `97e55d3f5250f1112b791a5daa82ed39a4c9b5277d0f3148aaaffab57d3ea972`
+- [005 - 3. Contracts, Schemas, Events, Or Data Shapes](005-3.-contracts-schemas-events-or-data-shapes.md) L604-L606 `339a017749d98e70249cd6c7362a37d2aed7b79e6d0242e93b74229946e76c5c`
+- [006 - 4. Integration Surfaces](006-4.-integration-surfaces.md) L608-L610 `83df0045698d0499aebbdb69a1059163c0c2548e02f12bd331e671ee08f1c57a`
+- [007 - 5. Validation And Acceptance](007-5.-validation-and-acceptance.md) L612-L614 `9540cf6d82f2a2dd3ded52a4d6df746b731d0566ecea1e7a99e95487a827f596`
+- [008 - 6. Plan-To-Node Readiness](008-6.-plan-to-node-readiness.md) L616-L618 `59ad0d09c1210d4cbc2c883082d8d2feff87434c70593140d02464a063f9ee0e`
+- [009 - 7. Deferred, Retired, Compatibility, And Non-Goals](009-7.-deferred-retired-compatibility-and-non-goals.md) L620-L622 `a35366c5be161759cce751a41133b176caf466ea64760083c9b777719dd262fe`
+- [010 - 8. Source Lineage And Governance](010-8.-source-lineage-and-governance.md) L624-L628 `33c648f347660d9c502212be3e4b054b254c076eeb9afd9c3e0c81d10f1a8fcc`
+- [011 - FABLE Residual Release Supply Chain Cleanup Addendum - 2026-07-07](011-fable-residual-release-supply-chain-cleanup-addendum-2026-07-07.md) L630-L719 `8d709d2eb410dbf3d3f08b305ff4e226f72bbe848603125c84a7ce971613145a`
+- [012 - Case L Release Migration And Recovery Gate Propagation - 2026-07-17](012-case-l-release-migration-and-recovery-gate-propagation-2026-07-1.md) L721-L810 `d6bd5a0bf439f94ec34dd3bf2e265c8ea30d89a57e26d1859149da2cd1283b16`
+- [013 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L812-L821 `2ebd7aad8a87ae51fa992a5e4e9699cf8882c1845516d3e4d480bb837fc4172b`
+- [014 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](014-fable-remaining-action-plan-repair-notes-2026-07-08.md) L822-L831 `65a2f3b873468e2b4730411dbdd151db37191ca853841b9a3b622d15ff821109`
+- [015 - Provider CLI Acquisition Supply-Chain Addendum - 2026-08-13](015-provider-cli-acquisition-supply-chain-addendum-2026-08-13.md) L833-L962 `a253cfda4d4b6bca83b62e48b1ab989fd92c2031ba11fd621d3be808504e38c7`
+- [016 - Plugin Package And Full-Thread Artifact Addendum - 2026-08-31](016-plugin-package-and-full-thread-artifact-addendum-2026-08-31.md) L964-L1103 `5e25071306eb64dabcc131f8e9c01a7a7d0f61ff66b837fceccdcd05b43792c3`
+- [017 - Typed Command Supply-Chain Handoff Addendum](017-typed-command-supply-chain-handoff-addendum.md) L1105-L1168 `8e39deca03f6c9066d2983c034007151df69fd2ad6a2d47727f8e70e8454e097`
+- [018 - Server command-gap owner closure - application update lifecycle (2026-09-01)](018-server-command-gap-owner-closure-application-update-lifecycle-20.md) L1170-L1282 `2404b55b9ac193817a011d461d6a14d3ad60ec2da2e32e3f0f3f8aed5b7a03c9`
+- [019 - Post-Integration Bundled Dependency And Provider-Registration Addendum - 2026-09-01](019-post-integration-bundled-dependency-and-provider-registration-ad.md) L1284-L1364 `206a25b4e8562ea2a2c28e83e5a37989f67b07733c5f191ab7a8e04182e7086c`
+- [020 - Platform package support carrier and current installation authority](020-platform-package-support-carrier-and-current-installation-author.md) L1365-L1441 `a724e0d11d6030ebeb7f5f53bd6e58ddb1ca75076170a58475ed66cdf37b0f6f`
+- [021 - Goal-created reader package graph and original installation](021-goal-created-reader-package-graph-and-original-installation.md) L1442-L1541 `6fba24fd9704eac76ff73309947d6f18527d52ab630b08dc23365319d0eb906f`
