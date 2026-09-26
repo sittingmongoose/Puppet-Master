@@ -231,3 +231,25 @@ Root checked both checkpoint hashes and verified all prior 413 records unchanged
 with exactly 176 additions. This is bounded carry-forward, not fresh whole-claim,
 current-main, native, GUI, security or physical-custody certification. Later
 independent-owner conflicts still require re-adjudication before final closure.
+
+## Protected-topic checkpoint: 1,359 flagged reviewed
+
+Flagged checkpoint
+`checkpoints/matrix-a6707a97b21c31c3dda831bb2b510672eca87c96e3643d447b8517c460e5f228.jsonl`
+has SHA-256 `a6707a97b21c31c3dda831bb2b510672eca87c96e3643d447b8517c460e5f228`:
+1,359 reviewed and 662 pending out of 2,021. Root verified the hash, identical
+identity set, exactly 88 changed records against checkpoint `91e446b08e9b3f9ba7572b5cc4eb6c20895c8ce2fe05b5559d8fc6daa6b242ee`,
+and unchanged historical fields. The 88 records mirror 44 source cases; they
+are not 88 newly completed features.
+
+Accepted overlay `protected-correction44-native-01/REVIEWED-88-DIFFERENT-SOL-CORRECTED.jsonl`
+has SHA-256 `4c3fcc4ed2d8d0cc20f064297f56d577a2db0d492e53aa6bbe28be082bf2f28b`.
+It preserves technical joins and GUI/protected-platform partials as unresolved,
+and combined-scenario execution evidence as NOT_RUN. Newer left-edge Activity
+Bar and Browser compatibility-key isolation laws supersede the older packet
+premises. Project Named Plan is distinct from Assistant Plan; conditional future
+clone/copy does not admit the packet's old lifecycle bundle. Authenticated ingress
+policy does not establish an exact authentication mechanism, and a pricing
+reference formula does not define provider fairness. External-constraint
+reverification is an existing implementation obligation, not a missing spec.
+These distinctions are reviewed dispositions, not whole-packet closure.
