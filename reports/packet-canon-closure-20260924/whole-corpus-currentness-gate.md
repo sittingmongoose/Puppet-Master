@@ -210,3 +210,24 @@ and `SERVER-ACCEPTANCE45-DIFFERENT-SOL-REVIEW-V2.md`
 All paths are under the external evidence directory above. The acceptance
 review explicitly withdraws overclaims about Funnel bandwidth, NPM/Docker-label
 instructions and the old status-bar inventory; newer owner rules are preserved.
+
+## Later other-identity checkpoint: 589 reviewed
+
+The separate full-impact registry now contains 589 reviewed identities and
+10,806 pending out of 11,395. Immutable checkpoint under the same external
+`case-reconciliation/` evidence directory:
+`checkpoints/full-impact-reviewed-b5c0e64c8e1f5c2475aad39d8c0f99cbddc8cc9e8eb58775cc78d25fef2b68e3.jsonl`,
+SHA-256 `b5c0e64c8e1f5c2475aad39d8c0f99cbddc8cc9e8eb58775cc78d25fef2b68e3`.
+
+The intermediate 413 checkpoint added 231 command-census reviews: 214 bounded
+registration findings and 17 unresolved owner-route findings, not full behavior
+certification. Its SHA-256 is
+`f39169c2a22772a39aeaa845c99fc5a3cb66a0dea92a0eea419052b7c6a464eb`.
+The next 176 preserve 164 previously cited byte-stable owner clauses and 12
+unexecuted process obligations. Different-Sol review
+`UNCHANGED176-DIFFERENT-SOL-REVIEW.md` has SHA-256
+`44fa5455f10317d307d8e91ca4280d51438eedf6dffff8c7231beffccb7ee2b8`.
+Root checked both checkpoint hashes and verified all prior 413 records unchanged,
+with exactly 176 additions. This is bounded carry-forward, not fresh whole-claim,
+current-main, native, GUI, security or physical-custody certification. Later
+independent-owner conflicts still require re-adjudication before final closure.

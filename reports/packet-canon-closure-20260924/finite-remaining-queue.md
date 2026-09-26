@@ -2,15 +2,18 @@
 
 ## Latest verified state (supersedes historical queue labels below)
 
-- September 26 current additions: Doctor application-update typed owner reads
-  and the bounded Permissions rule companion are integrated; all 83 contract
-  pairs passed. Search rebuild owner prose is integrated, with typed bindings
+- September 26 current additions: Doctor application-update typed owner reads,
+  the bounded Permissions rule companion, credential transfer/removal, and
+  Client details local settlement are integrated; all 85 contract pairs passed
+  (1,641 positive, 4,891 negative and 12 internal self-tests). Search rebuild owner prose is integrated, with typed bindings
   still pending. See `doctor-application-update-typed-binding.md`,
   `permissions-rule-typed-companion.md`, and `search-rebuild-owner-join.md`.
-- Current bounded corrections: credential-transfer apply must reuse the
-  existing preview destination-currentness and portability checks; Client
-  local details must represent a missing current projection as refusal; LSP
-  restart must bind exact retained original arguments. These are technical
+- Credential-transfer apply now reuses the existing preview destination-currentness
+  and portability checks; Client local details now represents a missing current
+  projection as refusal. Both repairs passed independent review and are branch-pushed;
+  see `credential-transfer-remove-integration.md` and
+  `client-details-local-settlement-integration.md`. LSP restart still must bind
+  exact retained original arguments. These are technical
   specification/companion gaps, not evidence of failed native implementation.
   Client's trusted-input co-mutation objection was withdrawn, not repaired.
 - Permissions follow-up is four technical joins, not eleven product choices:
