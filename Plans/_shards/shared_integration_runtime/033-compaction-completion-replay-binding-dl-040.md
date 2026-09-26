@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2164-L2630
+Source lines: L2164-L2631
 
-Source SHA256: `f7df1da29e4fdfebdbf8dd5f05b0653563ae6b32cd672b00c63c56b3fb255d60`
+Source SHA256: `754a810c12f555ad9934c59be4fb795b64b87e6fabd5e0afb7c38d05173530a9`
 
 ---
 
@@ -133,6 +133,7 @@ acceptance_criteria:
   - "Do not wait for all Vaults, providers/CLIs, CEF helpers, indexes, Chat/Goal histories, backups, integration-version checks, or remote hosts before presenting the shell."
   - "Hydrate only the selected visible surface before admitting unrelated deferred work."
   - "Display cached/currentness truth and enforce security and recovery fences before affected actions or mutations."
+  - "Startup initiates zero catalog, discovery, or availability probes for a provider lacking required configured connection fields. For CLI/server-bridged providers, CBP-012 identifies missing API key, URL, or other required connection fields as unconfigured; it does not define every provider's configuration. The provider catalog uses its existing cached/currentness projection state (section 5) rather than a startup refresh for an unconfigured provider. CBP-012 request-time eligibility, SIR-021 staggered checks and bounded scans for actual installed integrations, and explicit acquisition, installation selection, readiness, Doctor, and Settings actions retain their separate owner laws."
 validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, tests/test_pm_full_thread_contracts.py, future native startup and whole-process-tree performance captures]
 risk_class: startup_global_hydration_barrier
 reasoning_tier: high
