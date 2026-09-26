@@ -4078,10 +4078,10 @@
       ],
       "owner_plan": "Plans/Shared_Integration_Runtime.md",
       "plan_unit": "SIR-015",
-      "dry_contract_ref": "Plans/full_thread_runtime_contracts.schema.json",
-      "payload_schema_ref": "EnvironmentConnectionCommandRequest",
-      "result_schema_ref": "EnvironmentConnectionCommandResult plus CommandOutcomeRecord",
-      "error_schema_ref": "typed connection and admission blocker",
+      "dry_contract_ref": "Plans/shared_runtime_command_contracts.schema.json",
+      "payload_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/environment_connection_command_result",
+      "error_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/command_error",
       "availability_rule": "Exact ExecutionEnvironmentId, supervisor generation, connection epoch, topology, auth, and resource admission are required.",
       "permission_gate": "Environment owner, Permissions, topology, auth, rate, and governor gates remain independent.",
       "disabled_reason_rule": "Expose stale, already-in-state, operation, topology, auth, breaker, resource, permission, or policy blocker.",
@@ -4108,13 +4108,15 @@
         "Plans/full_thread_runtime_contracts.schema.json#/$defs/ObservableWorkRecord"
       ],
       "persistence_refs": [
-        "connection supervisor state and command lineage"
+        "Plans/storage_value_registry.json#/families/56",
+        "Plans/shared_runtime_contracts.schema.json#/$defs/environment_connection_state"
       ],
       "migration_refs": [
-        "Plans/Shared_Integration_Runtime.md#full-thread compatibility normalization"
+        "Plans/Shared_Integration_Runtime.md#SIR-015"
       ],
       "test_refs": [
-        "Plans/full_thread_runtime_contract_fixtures.json"
+        "Plans/full_thread_runtime_contract_fixtures.json",
+        "Plans/shared_runtime_command_contract_fixtures.json"
       ],
       "evidence_refs": [
         "static_schema_catalog_and_wiring_only"
