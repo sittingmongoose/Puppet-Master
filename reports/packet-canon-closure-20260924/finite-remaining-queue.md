@@ -2,6 +2,30 @@
 
 ## Latest verified state (supersedes historical queue labels below)
 
+- September 26 current additions: Doctor application-update typed owner reads
+  and the bounded Permissions rule companion are integrated; all 83 contract
+  pairs passed. Search rebuild owner prose is integrated, with typed bindings
+  still pending. See `doctor-application-update-typed-binding.md`,
+  `permissions-rule-typed-companion.md`, and `search-rebuild-owner-join.md`.
+- Current bounded corrections: credential-transfer apply must reuse the
+  existing preview destination-currentness and portability checks; Client
+  local details must represent a missing current projection as refusal; LSP
+  restart must bind exact retained original arguments. These are technical
+  specification/companion gaps, not evidence of failed native implementation.
+  Client's trusted-input co-mutation objection was withdrawn, not repaired.
+- Permissions follow-up is four technical joins, not eleven product choices:
+  non-writable refusal projection, wildcard validity, stale validate-only
+  response, and existing permission action/scope to current runtime episode.
+  Section 6 already owns `deny`, `approve_once`, `approve_for_session`,
+  `approve_always`, `open_permissions`; no new action IDs are needed. Independent
+  addendum SHA-256 `4720b76eb3939ac187c61febdd47459c23afde395c8ba5ac7bf96d2e500d8e13`
+  is at the external campaign's
+  `case-reconciliation/permissions-rule-five-correction-02/REVIEW-FOUR-OWNER-JOINS-ADDENDUM.md`.
+- The full 13,416-case currentness review remains open. The flagged and other
+  historical registries are separate, and reviewed counts include unresolved
+  claims. `whole-corpus-currentness-gate.md` records pinned checkpoints; no
+  passing companion test or historical covered label proves whole-packet
+  closure. Newer protected owners remain authoritative over older packets.
 - Six neutral Source Control routes are integrated and independently reviewed:
   `scm-six-neutral-integration.md`. Public Git fetch/push is now integrated after
   the approved narrow safeguard-to-selected-remote repair, different-Sol review
