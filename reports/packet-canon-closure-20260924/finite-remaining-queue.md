@@ -2,6 +2,30 @@
 
 ## Latest verified state (supersedes historical queue labels below)
 
+- Recovery checkpoint, September 26 at 16:29 UTC: branch `5876ab198` is clean
+  and pushed. Search typed binding is integrated with its genuine central-owner
+  checks and 78 causal tests. Settings V11 is integrated with real installed
+  helpers (the detached no-failure stubs were removed), 124 combined tests and
+  the full 87-pair gate passing. Browser capture is integrated; the separate
+  Browser selected-query original-byte binding is branch-pushed with 37 focused
+  tests and 161 combined tests passing, but its gate carry remains under review.
+  See `search-rebuild-companion-integration.md`,
+  `settings-typed-companion-integration.md`, and
+  `browser-query-binding-integration.md`. These supersede the older pending
+  Search/Settings descriptions below, not runtime or GUI proof obligations.
+- The corrected Settings Source87 review is now incorporated as reviewed/held,
+  not closed: flagged coverage is 1,848/2,021, with 173 pending. Nonflagged
+  currentness coverage is 2,873/11,395, with 8,522 pending. Exact hashes and
+  unchanged-history checks are in `whole-corpus-currentness-gate.md`. Source87
+  residuals are batched by owner; six Settings exposure classes and the
+  cross-project grant matrix have narrow owner drafts in external review.
+  DRY/formatter carry must preserve the current full Settings classification and
+  DL-041's disabled guard writer; the older 883-ordinary assumption is invalid.
+- After the interruption, no prior external driver process was found live.
+  Three fresh Sol-high recovery/review agents are inspecting saved results and
+  native Goal receipts. This is not evidence that the external Goals completed;
+  retained jobs must be reconciled before any restart or completion credit.
+
 - September 26 current additions: Doctor application-update typed owner reads,
   the bounded Permissions rule companion, credential transfer/removal, and
   Client details local settlement are integrated; all 85 contract pairs passed
