@@ -8,10 +8,10 @@ native or GUI implementation credit.
 |---|---|---|
 | Settings import | Owner value-classification prose is integrated in `7285bed42`; the accepted review explicitly excludes typed preview/apply closure. | Recover the native Goal state and materialize the 16-row value-shape/source/destination/currentness companion under the already accepted policy. |
 | DRY/formatter | The external v7 review accepts only a hygiene delta over v6, conditional on root composition and full gates. The F3-441 versus Settings taxonomy conflict remains held. | Identify the exact cross-package conflict against current Settings before applying the package; no inferred alias, writer or migration. |
-| Search rebuild | Owner prose is integrated. V3 typed candidate remains independently held; V4 timed out with all four candidate files unchanged. | Continue the same retained Goal on actual central outcome composition, terminal typed-result joins and authenticated original argument digest. A timeout is not accepted repair or Goal completion. |
+| Search rebuild | Owner prose is integrated. V4B is held because its projected outcome fails the real full central schema; V4C ended without a candidate correction. | Same retained Goal continues with the already-staged complete owner schema and full-record regression. The denied upward/home scan must not be repeated. A timeout is not accepted repair or Goal completion. |
 | Browser to Chat | Current-owner adjudication establishes the required product behavior by existing Browser/Chat composition; a new Chat carrier is not required by this comparison. Two helper digest false accepts remain. | Repair only the authentic normalized-argument and typed owner-result digest joins; preserve isolated sends and existing Chat ownership. See `browser-current-owner-adjudication.md`. |
 | Persona/Tour | Current owner law already specifies current-thread selection and effective Teacher. V2 still over-prescribes a new thread carrier and wrongly retires selection_scope. | Do not compile the proposal or allocate UCC-166; retain causal dispatcher/result/readback and native/GUI proof as unproved. See `persona-current-owner-adjudication.md`. |
-| LSP restart | Original-argument binding remains held; the retained native task has a recorded approval/infrastructure obstruction. | Resolve the existing task state without duplicate Goals or treating a timeout as completion. |
+| LSP restart | Seven-file reviewed original-argument companion is integrated and branch-pushed in 2321a21bc. Eight focused and eight independent mutation probes pass; aggregate LSP/wiring/shards pass. | Resolve/report the separate full aggregate failures and pending timed-out contract rerun; native restart and authenticity remain unproved. See lsp-selected-companion-integration.md. |
 
 Evidence root:
 `/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/`.
@@ -23,7 +23,13 @@ Evidence root:
 - Persona: `case-reconciliation/persona-tour-selected-interface-proposal-01/DIFFERENT-SOL-REVIEW-V1.md`, SHA-256 `375e04d83655cf9145b02d82e1f2132c16665d47f5f78319bd6ad332e4da90d1`.
 
 Permissions' bounded follow-up is already verified and branch-pushed as
-`d12f004da`; its malformed-glob predicate remains explicitly held. Main
+`d12f004da`; the malformed-glob predicate is an implementation-proof boundary,
+not a demonstrated additional specification gap. Settings Touch129 likewise
+adds no demonstrated non-GUI gap; its local controls are GUI work and the
+guard preserves DL-041's specified disabled policy. In contrast, the proposed
+Settings Source33 dismissal is withdrawn: original fixed packet decisions must
+be checked for explicit newer supersession, not discarded because omitted from
+current prose. Those source rows remain unreviewed. Main
 reconciliation, Decision Log collision handling, remaining packet comparisons,
 the unanswered Server clarification and the authorized full landing comparison
 are separate unfinished obligations. No governance binding is refreshed here.

@@ -1,6 +1,6 @@
 # LSP selected restart companion — bounded integration
 
-Status: integrated on repair branch; full aggregate check running; not landed.
+Status: integrated on repair branch; aggregate failures recorded; not landed.
 
 All seven integrated files match the reviewed carry byte-for-byte. External
 evidence directory:
@@ -33,9 +33,18 @@ Current-root verification on 2026-09-26:
 - Touch closure reports only the previously recorded Settings disposition-registry
   hash drift (expected `10e1ffd1062a9a3aebd5c418acc7289fb5bb3d0261ef08edc65a461a47685632`,
   actual `43e215863fc05d2d2bc1bd863cbaca64042e167af6331e99eac3122a6b68e866`).
-- Full `run-gates` started with complete report destination
-  `ROOT-RUN-GATES-F8CB-LSP.json` in the external evidence directory; its result
-  remains pending and is not represented as passing.
+- Full `run-gates` finished with failure at 2026-09-26 05:50:51 UTC. Complete
+  report `ROOT-RUN-GATES-F8CB-LSP.json` in the external evidence directory has
+  SHA-256 `e718a2cdcf18f4c6dd85c51c65c70ead40cad52e416b138bf9ef21550a491f84`.
+  LSP, Wiring and shards pass within that run. Failing checks include unresolved
+  raw capture paths, governance/evidence/readiness/migration staleness, planning
+  runtime local references, four sound-validator Touch census mismatches,
+  the known Settings drift, and audit-index resolution outside this worktree.
+  These are not claimed to be all pre-existing or all authorized exceptions:
+  the later full main/branch failure-key comparison remains required.
+- The aggregate's new-contract check timed out after 180 seconds. Its standalone
+  rerun has a 900-second limit and writes `ROOT-NEW-CONTRACTS-2321.json`; its
+  result is pending, not a pass.
 
 The native author turn timed out; no native Goal-completion receipt is claimed.
 Static trusted-original fixtures do not authenticate issuer custody or recompute

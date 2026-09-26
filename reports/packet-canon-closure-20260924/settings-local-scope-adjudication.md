@@ -1,6 +1,6 @@
 # Settings local-control scope adjudication
 
-Status: current-owner review accepted; registry ingestion pending.
+Status: current-owner review accepted; exact registry ingestion verified.
 
 The independently reviewed 129 Settings Touch facets demonstrate no additional
 non-GUI specification gap: 85 have bounded static/concept coverage, 43 concern
@@ -33,3 +33,14 @@ V2 corrects exactly 44 proposed gap labels, preserves the other 85 rows and
 all identities/source hashes, and leaves V1 frozen. No owner prose, GUI,
 governance binding, or product decision was changed. No native or whole-packet
 completion is claimed.
+
+Root verified flagged checkpoint
+`matrix-ff6791ace299d4311fb1f7927aa8a90780c02ee5e163b4fc406097510852079f.jsonl`
+under the external campaign's `case-reconciliation/checkpoints/`, SHA-256
+`ff6791ace299d4311fb1f7927aa8a90780c02ee5e163b4fc406097510852079f`.
+Exactly 129 records changed from checkpoint `aceb4138`; 1,892 are unchanged,
+all 2,021 unique identities and historical/source fields are preserved.
+The flagged review is now 1,663 reviewed and 358 pending. The 87 source rows
+are not credited, including the later proposed Source33 subset: current canon's
+omission alone cannot retire an older packet requirement without evidence of
+its proposal status or superseding decision/design.
