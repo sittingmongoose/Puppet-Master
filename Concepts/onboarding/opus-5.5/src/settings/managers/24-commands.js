@@ -1,12 +1,29 @@
 /* Commands & Shortcuts — type / commands and press keys to do things faster.
    A user command is a prompt template (Plans/Commands_System.md §1.1, §3): the text it sends, with
    $ARGUMENTS / $1..$N placeholders, @path file includes and !`command` output. Persona, mode, model
-   and permissions profile are optional overrides, never the definition. */
+   and permissions profile are optional overrides, never the definition.
+   Shortcuts are one list in three groups: everywhere (the app's shortcuts, your commands' keys and the model
+   variant key), in the message box (extensions.commands.text-editing-keys) and in the terminal
+   (code.terminal.shortcuts). Every key uses the same capture button, and a clash is flagged across groups, so the
+   Ctrl+K that searches settings and the Ctrl+K that deletes to the end of a line are caught. The list writes the
+   inventory's map of changed keys; its search box, hints switch, reset and save/load are the inventory rows and
+   actions, not second copies. On the Commands tab the scope, mode, model, persona and permissions rows are what
+   they are: defaults for a new command, which the New command dialog starts from. */
 (function () {
   const ID = 'commands';
   const KEY = 'commands-shortcuts';
   const TABS = [{ id: 'shortcuts', label: 'Shortcuts' }, { id: 'commands', label: 'Commands' }];
-  const PREF_DEFAULTS = { hints: true, layout: 'Auto-detect', palette: true, filter: '' };
+  const PREF_DEFAULTS = { layout: 'Auto-detect', palette: true };
+  const SID = {
+    list: 'extensions.commands.keyboard-shortcuts', hints: 'extensions.commands.shortcut-hints', search: 'extensions.commands.search-shortcuts', clash: 'extensions.commands.conflict-handling',
+    text: 'extensions.commands.text-editing-keys', term: 'code.terminal.shortcuts', variant: 'extensions.commands.variant-cycling-key', reset: 'extensions.commands.reset-shortcuts',
+    backup: 'extensions.commands.backup-shortcuts', custom: 'extensions.commands.custom-commands', scope: 'extensions.commands.command-scope', mode: 'extensions.commands.command-mode',
+    model: 'extensions.commands.command-model', persona: 'extensions.commands.command-persona', perms: 'extensions.commands.command-permissions',
+    builtinName: 'extensions.commands.override-builtin', git: 'extensions.commands.git-routing', confirm: 'command-confirm'
+  };
+  /* The terminal's own keys (the inventory stores only the ones you change, as "Name: keys"). */
+  const TERMINAL_DEFAULTS = [['Search the terminal', 'Ctrl+Shift+F'], ['Next match', 'F3'], ['Previous match', 'Shift+F3'], ['Jump to the top', 'Ctrl+Home'], ['Jump to the bottom', 'Ctrl+End'], ['Bigger text', 'Ctrl+='], ['Smaller text', 'Ctrl+-'], ['Clear the terminal', 'Ctrl+Shift+K']];
+  const BOX_LABELS = { 'Cursor back one char': 'Back one character', 'Cursor forward one char': 'Forward one character', 'Cursor back one word': 'Back one word', 'Cursor forward one word': 'Forward one word', 'Delete char under cursor': 'Delete the character under the cursor', 'Cancel popups / stop response': 'Close pop-ups or stop the reply' };
   const SHAPE_VERSION = 2;
   const NAME_RE = /^[a-z][a-z0-9_-]{0,48}[a-z0-9]$/;
   const RESERVED_NAMES = ['new', 'model', 'effort', 'mode', 'export', 'compact', 'stop', 'resume', 'rewind', 'revert', 'share', 'settings', 'doctor', 'help', 'web', 'skill', 'cancel', 'clear', 'worktree', 'plugins'];
@@ -15,9 +32,9 @@
     { value: 'ask', label: 'Ask', meta: 'Read-only answers' },
     { value: 'plan', label: 'Plan', meta: 'Read-only planning' },
     { value: 'regular', label: 'Regular', meta: 'Normal approvals' },
-    { value: 'yolo', label: 'YOLO', meta: 'No approvals' }
+    { value: 'yolo', label: 'No pauses', meta: 'No approvals' }
   ];
-  const MODE_LABELS = { ask: 'Ask', plan: 'Plan', regular: 'Regular', yolo: 'YOLO' };
+  const MODE_LABELS = { ask: 'Ask', plan: 'Plan', regular: 'Regular', yolo: 'No pauses' };
   const OLD_MODES = { plan: 'plan', regular: 'regular', 'ask first': 'ask', ask: 'ask', yolo: 'yolo' };
   const OVERRIDE_KEYS = ['persona', 'mode', 'model', 'permissionsProfile'];
   const SCOPE_LABELS = { Project: 'This project', Global: 'Every project' };
@@ -80,7 +97,45 @@
   const keysFor = c => { const s = shortcutForCommand(c.id); return s && s.keys ? s.keys : ''; };
   const scopeLabel = s => SCOPE_LABELS[s] || s;
   const pathFor = c => c.scope === 'Global' ? `~/.config/puppet-master/commands/${c.id}.md` : `.puppet-master/commands/${c.id}.md`;
-  const conflictsFor = s => s.keys ? shortcuts().filter(o => o.id !== s.id && o.keys && o.keys.toLowerCase() === s.keys.toLowerCase()).map(o => o.name) : [];
+  /* ---------- every key in one index: clashes are checked across the three groups ---------- */
+  const commitIf = (id, v) => { if (PM51.setting(id) && JSON.stringify(PM51.value(id)) !== JSON.stringify(v) && commitSettingValue(id, v)) { saveState(); return true; } return false; };
+  const defaultOf = id => { const s = PM51.setting(id); return s ? clone(s.value) : undefined; };
+  const textKeys = () => { const v = PM51.value(SID.text); return v && typeof v === 'object' && !Array.isArray(v) ? v : {}; };
+  const termKeys = () => {
+    const map = Object.fromEntries(TERMINAL_DEFAULTS); const v = PM51.value(SID.term);
+    if (Array.isArray(v)) v.forEach(x => { const m = /^(.+?):\s*(.*)$/.exec(String(x)); if (m && m[1] in map) map[m[1]] = /^none$/i.test(m[2]) ? '' : m[2]; });
+    return map;
+  };
+  function saveTerm(map) {
+    const changed = TERMINAL_DEFAULTS.filter(([n, k]) => (map[n] || '') !== k).map(([n]) => `${n}: ${map[n] || 'None'}`);
+    if (changed.length) commitIf(SID.term, changed); else if (JSON.stringify(PM51.value(SID.term)) !== JSON.stringify(defaultOf(SID.term))) { restoreSettingDefault(SID.term); saveState(); }
+  }
+  const variantKeys = () => { const v = String(PM51.value(SID.variant) || ''); return /^unbound$/i.test(v) ? '' : v; };
+  const fixtureShortcut = id => ((DATA.commands && DATA.commands.shortcuts) || []).find(x => x.id === id);
+  function allKeys() {
+    const out = shortcuts().filter(s => s.keys).map(s => ({ id: s.id, group: 'app', name: s.name, keys: s.keys }));
+    if (variantKeys()) out.push({ id: 'variant', group: 'app', name: 'Switch model variant', keys: variantKeys() });
+    Object.entries(textKeys()).forEach(([n, k]) => { if (k) out.push({ id: 'box:' + n, group: 'box', name: BOX_LABELS[n] || n, keys: k }); });
+    Object.entries(termKeys()).forEach(([n, k]) => { if (k) out.push({ id: 'term:' + n, group: 'term', name: n, keys: k }); });
+    return out;
+  }
+  const WHERE = { box: ' (message box)', term: ' (terminal)', app: '' };
+  /* app-wide keys clash with every group; the message box and the terminal never see each other's keys */
+  const clashesFor = (id, group, keys) => !keys ? [] : allKeys().filter(o => o.id !== id && o.keys.toLowerCase() === String(keys).toLowerCase() && (o.group === group || o.group === 'app' || group === 'app')).map(o => o.name + (o.group === group ? '' : WHERE[o.group]));
+  const conflictsFor = s => clashesFor(s.id, 'app', s.keys);
+  /* A key target that is not one of the app's shortcuts: the variant key, a message-box key or a terminal key. */
+  function keyTarget(id) {
+    if (id === 'variant') return { name: 'Switch model variant', group: 'app', keys: variantKeys(), def: '', save: k => commitIf(SID.variant, k || 'unbound') };
+    if (id.startsWith('box:')) { const n = id.slice(4); return { name: BOX_LABELS[n] || n, group: 'box', keys: textKeys()[n] || '', def: (defaultOf(SID.text) || {})[n] || '', save: k => commitIf(SID.text, Object.assign({}, textKeys(), { [n]: k || '' })) }; }
+    if (id.startsWith('term:')) { const n = id.slice(5); return { name: n, group: 'term', keys: termKeys()[n] || '', def: Object.fromEntries(TERMINAL_DEFAULTS)[n] || '', save: k => { const m = termKeys(); m[n] = k || ''; saveTerm(m); } }; }
+    return null;
+  }
+  /* the inventory keeps only the keys you changed */
+  function syncStores() {
+    const map = {}; shortcuts().forEach(s => { const d = fixtureShortcut(s.id); if (!d || d.keys !== s.keys) map[s.name] = s.keys || 'None'; });
+    commitIf(SID.list, map);
+    commitIf(SID.custom, custom().map(c => c.name));
+  }
   const personas = () => state.personas || [];
   const personaGroup = p => p.locked ? 'Core' : (p.group || 'Custom');
   const profiles = () => state.permissionProfiles || [];
@@ -166,6 +221,11 @@
 #panel-settings .pm51-commands-keys span { color: var(--k3-text-3); }
 #panel-settings .pm51-commands-keys.is-empty { color: var(--k3-text-3); }
 #panel-settings .pm51-row.is-hidden { display: none; }
+#panel-settings .pm51-commands-group { margin: 16px 0 2px; }
+#panel-settings .pm51-commands-group:first-child { margin-top: 6px; }
+#panel-settings .pm51-commands-group-title { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--k3-text-3); }
+#panel-settings .pm51-commands-group-help { margin-top: 2px; font-size: 11.5px; color: var(--k3-text-3); }
+#panel-settings .pm51-commands-search .o55-bound-search { max-width: 380px; }
 #panel-settings .pm51-commands-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 #panel-settings .pm51-commands-actions:first-child { margin-top: 0; }
 #panel-settings .pm51-commands-tag svg { width: 11px; height: 11px; margin-right: 2px; vertical-align: -2px; }
@@ -218,53 +278,53 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
   /* ---------- keys ----------------------------------------------------------- */
   const keysHtml = keys => String(keys || '').split('+').map(k => k.trim()).filter(Boolean).map(k => PM51.kbd(k)).join('<span>+</span>');
   const keyButton = s => `<button type="button" class="pm51-commands-keys${s.keys ? '' : ' is-empty'}" data-action="pm51-commands-rebind" data-id="${a(s.id)}" aria-label="Change shortcut for ${a(s.name)}" data-pm-hover-label="Change shortcut">${s.keys ? keysHtml(s.keys) : 'Not set'}</button>`;
+  const searchQuery = () => String(PM51.value(SID.search) || '').trim().toLowerCase();
+  function keyRow({ id, name, keys, group, help, extra }) {
+    const others = clashesFor(id, group, keys); const q = searchQuery();
+    const search = (name + ' ' + (keys || '') + ' ' + (help || '')).toLowerCase();
+    return {
+      label: name, pill: others.length ? PM51.status(`Clashes with ${others.join(', ')}`, 'attention') : '',
+      help: others.length ? 'Only one of them can win. Change one.' : help,
+      control: keyButton({ id, name, keys }) + (extra || ''), cls: q && !search.includes(q) ? 'is-hidden' : '', data: { search, shortcut: id }
+    };
+  }
+  const groupTitle = (title, help) => `<div class="pm51-commands-group"><div class="pm51-commands-group-title">${h(title)}</div>${help ? `<div class="pm51-commands-group-help">${h(help)}</div>` : ''}</div>`;
   const keyStatic = keys => `<span class="pm51-commands-keys is-static${keys ? '' : ' is-empty'}">${keys ? keysHtml(keys) : 'No shortcut'}</span>`;
   const actionRow = (...buttons) => `<div class="pm51-commands-actions">${buttons.join('')}</div>`;
 
   /* ---------- Shortcuts tab ------------------------------------------------ */
   function renderShortcuts() {
     const p = prefs();
-    const q = String(p.filter || '').trim().toLowerCase();
-    const list = shortcuts();
-    const rows = list.map(s => {
-      const others = conflictsFor(s);
+    const app = shortcuts().map(s => {
       const cmd = s.command ? commandById(s.command) : null;
-      const searchText = (s.name + ' ' + (s.keys || '') + (cmd ? ' ' + cmd.description : '')).toLowerCase();
-      const hidden = q && !searchText.includes(q);
-      const help = others.length ? 'Two actions share these keys, so only one can win. Change one of them.' : (cmd ? `Runs ${cmd.name}${cmd.description ? ' · ' + cmd.description : ''}` : '');
-      return {
-        label: s.name, pill: others.length ? PM51.status(`Conflicts with ${others.join(', ')}`, 'attention') : '',
-        help, control: keyButton(s) + (s.command ? PM51.iconBtn({ action: 'pm51-commands-shortcut-remove', data: { id: s.id }, icon: 'trash', label: `Remove shortcut for ${s.name}` }) : ''),
-        cls: hidden ? 'is-hidden' : '', data: { search: searchText, shortcut: s.id }
-      };
+      return keyRow({ id: s.id, name: s.name, keys: s.keys, group: 'app', help: cmd ? `Runs ${cmd.name}${cmd.description ? ' · ' + cmd.description : ''}` : '', extra: s.command ? PM51.iconBtn({ action: 'pm51-commands-shortcut-remove', data: { id: s.id }, icon: 'trash', label: `Remove shortcut for ${s.name}` }) : '' });
     });
-    const conflictCount = list.filter(s => conflictsFor(s).length).length;
+    app.push(keyRow({ id: 'variant', name: 'Switch model variant', keys: variantKeys(), group: 'app', help: 'Flips between a model\'s variants without opening the picker.' }));
+    const box = Object.entries(textKeys()).map(([n, k]) => keyRow({ id: 'box:' + n, name: BOX_LABELS[n] || n, keys: k, group: 'box' }));
+    const term = Object.entries(termKeys()).map(([n, k]) => keyRow({ id: 'term:' + n, name: n, keys: k, group: 'term' }));
+    const clashes = allKeys().filter(k => clashesFor(k.id, k.group, k.keys).length).length;
     const free = custom().filter(c => !keysFor(c)).length;
+    const list = groupTitle('Everywhere', 'Work anywhere in Puppet Master.') + PM51.rows(app)
+      + PM51.home(SID.text, groupTitle('In the message box', 'For moving and deleting while you type.') + PM51.rows(box))
+      + PM51.home(SID.term, groupTitle('In the terminal', 'Only while the terminal has focus.') + PM51.rows(term));
     return [
       PM51.section({
         title: 'Keyboard shortcuts', help: 'Click a shortcut to change it. Your own commands can have keys too.',
         action: { label: 'Add shortcut', icon: 'plus', action: 'pm51-commands-add-shortcut', data: { free: String(free) } },
-        body: `<div class="pm51-commands-search">${PM51.input(p.filter || '', { action: 'pm51-commands-filter', placeholder: 'Search shortcuts', type: 'search', label: 'Search shortcuts' })}</div>`
-          + (conflictCount ? PM51.note(`${conflictCount} shortcuts share the same keys. Change one of each pair so both work.`, 'attention') : '')
-          + (rows.length ? PM51.rows(rows) : PM51.empty('No shortcuts yet', 'Shortcuts appear here once actions have keys.'))
+        body: `<div class="pm51-commands-search">${PM51.bound.search(SID.search, { placeholder: 'Search shortcuts by name or keys' })}</div>`
+          + (clashes ? PM51.note(`${clashes} shortcuts share keys with another. Change one of each pair so both work.`, 'attention') : '')
+          + PM51.home(SID.list, PM51.home(SID.variant, list))
       }),
       PM51.section({
-        title: 'Hints',
-        body: PM51.rows([
-          { label: 'Show shortcut hints', help: 'Shows the keys next to menu items and buttons.', control: PM51.toggle(!!p.hints, { action: 'pm51-commands-pref', data: { pref: 'hints' }, label: 'Show shortcut hints' }) },
-          { label: 'Cheat sheet', help: 'Every shortcut and command on one page.', action: { label: 'Open cheat sheet', icon: 'file', action: 'pm51-commands-sheet' } }
-        ])
+        title: 'Hints and clashes',
+        body: PM51.bound.rows([SID.hints, SID.clash]) + PM51.rows([{ label: 'Cheat sheet', help: 'Every shortcut and command on one page.', action: { label: 'Open cheat sheet', icon: 'file', action: 'pm51-commands-sheet' } }])
       }),
       PM51.advanced([
         PM51.rows([
           { label: 'Keyboard layout', help: 'Auto-detect follows your system. Pick one if keys land in the wrong place.', control: PM51.select(p.layout, ['Auto-detect', 'US (QWERTY)', 'UK', 'German (QWERTZ)', 'French (AZERTY)'], { action: 'pm51-commands-layout', label: 'Keyboard layout' }) }
         ]),
         PM51.section({ title: 'Reserved shortcuts', help: 'These belong to the system and cannot be changed.', body: `<div class="pm51-commands-sheet">${PM51.kv(RESERVED_KEYS)}</div>` }),
-        actionRow(
-          PM51.btn({ label: 'Reset all shortcuts', small: true, icon: 'restore', action: 'pm51-commands-reset-shortcuts' }),
-          PM51.btn({ label: 'Export', small: true, icon: 'download', action: 'pm51-commands-export', data: { what: 'shortcuts' } }),
-          PM51.btn({ label: 'Import', small: true, icon: 'upload', action: 'pm51-commands-import', data: { what: 'shortcuts' } })
-        )
+        actionRow(PM51.bound.action(SID.reset, { label: 'Reset all shortcuts', icon: 'restore' }), PM51.bound.action(SID.backup, { label: 'Save or load shortcuts', icon: 'download' }))
       ].join(''))
     ].join('');
   }
@@ -282,16 +342,19 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
       return { label: c.command, help: c.name, pill: `<span class="pm51-tag pm51-commands-tag">${icon('lock')} Built in</span>`, control: keyStatic(bound ? bound.keys : c.shortcut) };
     });
     return [
+      PM51.setting(SID.confirm) ? PM51.section({ title: 'Safety', body: PM51.bound.rows([SID.confirm]) }) : '',
       PM51.section({
         title: 'Your commands', help: 'Type the name in chat to send its text. Open one to see what it sends and how it runs.',
         action: { label: 'New command', icon: 'plus', action: 'pm51-commands-new' },
-        body: items.length ? PM51.list(items, { cls: 'pm51-commands-list' }) : PM51.empty('No commands yet', 'Make one to send a prompt you use often with a few keystrokes.', { label: 'New command', action: 'pm51-commands-new', icon: 'plus' })
+        body: PM51.home(SID.custom, items.length ? PM51.list(items, { cls: 'pm51-commands-list' }) : PM51.empty('No commands yet', 'Make one to send a prompt you use often with a few keystrokes.', { label: 'New command', action: 'pm51-commands-new', icon: 'plus' }))
       }),
       PM51.section({
         title: 'Built-in commands', help: 'These come with Puppet Master. Change their keys in the Shortcuts tab.',
         body: PM51.rows(builtRows)
       }),
       PM51.advanced([
+        PM51.section({ title: 'Defaults for new commands', help: 'A new command starts with these. Each command can change them in its own panel.', body: PM51.bound.rows([SID.scope, SID.mode, SID.model, SID.persona, SID.perms]) }),
+        PM51.section({ title: 'Built-in names', body: PM51.bound.rows([SID.builtinName, SID.git]) }),
         PM51.rows([
           { label: 'Show your commands in the command palette', help: 'The palette opens with Ctrl+K and lists everything you can run.', control: PM51.toggle(!!p.palette, { action: 'pm51-commands-pref', data: { pref: 'palette' }, label: 'Show your commands in the command palette' }) }
         ]),
@@ -314,10 +377,22 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
 
   function render() {
     const tab = PM51.tab(ID, 'shortcuts');
+    syncStores();
     const body = tab === 'commands' ? renderCommands() : renderShortcuts();
     return PM51.page({ id: ID, key: KEY, tabs: TABS, active: tab, body, quiet: [{ label: 'Reset commands and shortcuts', action: 'pm51-commands-reset' }, { label: 'How commands work', action: 'pm51-commands-help' }] });
   }
   PM51.manager('commands', { render });
+  PM51.owner(ID, id => { const e = PM51.placement.byId[id]; if (e && e.tab) PM51.setTab(ID, e.tab); });
+  /* the search box is the inventory row: filter the rows in place so the box keeps focus */
+  PM51.watch(SID.search, v => {
+    const q = String(v || '').trim().toLowerCase();
+    root.querySelectorAll(`[data-pm51-manager="${ID}"] .pm51-row[data-search]`).forEach(row => row.classList.toggle('is-hidden', !!q && !row.dataset.search.includes(q)));
+  });
+  [SID.hints, SID.clash, SID.text, SID.term, SID.variant, SID.builtinName].forEach(id => PM51.watch(id, () => PM51.refresh(ID, { swap: false })));
+  /* model, persona and permissions defaults offer what you really have, not "Choose model..." */
+  PM51.moreChoices(SID.model, () => readyProviders().flatMap(p => enabledModels(p).map(m => ({ value: m.id, label: m.name, meta: p.name }))));
+  PM51.moreChoices(SID.persona, () => personas().map(p => ({ value: p.name, label: p.name, meta: personaGroup(p) })));
+  PM51.moreChoices(SID.perms, () => profiles().map(p => ({ value: p.id, label: p.name, meta: p.scope || '' })));
 
   /* ---------- shortcuts behaviour ------------------------------------------ */
   const keyName = e => {
@@ -352,13 +427,22 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
     if (others.length) PM51.toast('Shortcut saved, but it clashes', `${s.keys} is also used by ${others.join(', ')}. Change one of them.`, 'info');
     else PM51.toast('Shortcut saved', s.keys ? `${s.name} is now ${s.keys}.` : `${s.name} has no shortcut now.`);
   }
-  PM51.onInput('commands-filter', el => {
-    prefs().filter = el.value;
-    const q = el.value.trim().toLowerCase();
-    const section = el.closest('.pm51-section'); if (!section) return;
-    section.querySelectorAll('.pm51-row[data-search]').forEach(row => row.classList.toggle('is-hidden', !!q && !row.dataset.search.includes(q)));
-  });
   PM51.on('commands-rebind', el => {
+    const target = ds(el, 'id') ? keyTarget(ds(el, 'id')) : null;
+    if (target) {
+      openDialog({
+        title: `${target.keys ? 'Change' : 'Add'} shortcut for ${target.name}`, subtitle: target.group === 'box' ? 'Works while you type in the message box.' : target.group === 'term' ? 'Works while the terminal has focus.' : 'Press the keys you want to use.',
+        body: captureField(target.keys, 'Hold Ctrl, Alt, or Shift with a key. Backspace clears it.') + (target.def && target.def !== target.keys ? `<p class="form-help"><button type="button" class="o55-textbtn" data-action="pm51-commands-use-default" data-keys="${a(target.def)}">Use the default (${h(target.def)})</button></p>` : ''),
+        saveLabel: 'Use these keys', onOpen: bindCapture,
+        onSave: form => {
+          const keys = String(form.keys || '').trim(); target.save(keys); PM51.refresh(ID, { swap: false });
+          const others = clashesFor(ds(el, 'id'), target.group, keys);
+          if (others.length) PM51.toast('Saved, but it clashes', `${keys} is also used by ${others.join(', ')}. Change one of them.`, 'info');
+          else PM51.toast('Shortcut saved', keys ? `${target.name} is now ${keys}.` : `${target.name} has no shortcut now.`);
+        }
+      });
+      return;
+    }
     const cmdId = ds(el, 'command');
     const cmd = cmdId ? commandById(cmdId) : null;
     if (cmdId && !cmd) return;
@@ -368,7 +452,7 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
     const back = ds(el, 'return') === 'sheet' && cmd ? cmd.id : '';
     openDialog({
       title: `${existing && existing.keys ? 'Change' : 'Add'} shortcut for ${name}`, subtitle: cmd ? 'Press the keys that should run this command.' : 'Press the keys you want to use.',
-      body: captureField(existing ? existing.keys : '', 'Hold Ctrl, Alt, or Shift with a key. Backspace clears it.'),
+      body: captureField(existing ? existing.keys : '', 'Hold Ctrl, Alt, or Shift with a key. Backspace clears it.') + (() => { const d = existing && fixtureShortcut(existing.id); return d && d.keys && d.keys !== existing.keys ? `<p class="form-help"><button type="button" class="o55-textbtn" data-action="pm51-commands-use-default" data-keys="${a(d.keys)}">Use the default (${h(d.keys)})</button></p>` : ''; })(),
       saveLabel: 'Use these keys',
       onOpen: bindCapture,
       onSave: form => {
@@ -428,10 +512,21 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
       body: groups.filter(g => g[1].length).map(g => PM51.panelSection(g[0], `<div class="pm51-commands-sheet">${PM51.kv(g[1])}</div>`)).join('')
     });
   });
-  PM51.on('commands-pref', el => { const key = ds(el, 'pref'); if (!(key in PREF_DEFAULTS)) return; prefs()[key] = !prefs()[key]; saveState(); PM51.refresh(ID, { swap: false }); });
+  PM51.on('commands-pref', el => { const key = ds(el, 'pref'); if (key !== 'palette') return; prefs()[key] = !prefs()[key]; saveState(); PM51.refresh(ID, { swap: false }); });
+  PM51.on('commands-use-default', el => { const input = el.closest('form, .dialog, .overlay, body').querySelector('.pm51-commands-capture'); if (input) { input.value = el.dataset.keys || ''; clearError(input); } });
   PM51.onChange('commands-layout', el => { prefs().layout = el.value; saveState(); });
-  PM51.on('commands-reset-shortcuts', () => PM51.confirm('Reset all shortcuts?', 'Every shortcut goes back to its default keys, including the ones on your own commands.', 'Reset', () => {
-    data().shortcuts = clone(DATA.commands.shortcuts).filter(s => !s.command || commandById(s.command)); saveState(); PM51.refresh(ID, { swap: false }); PM51.toast('Shortcuts reset', 'Default keys are back.');
+  PM51.on('commands-reset-shortcuts', () => PM51.confirm('Reset all shortcuts?', 'Every shortcut goes back to its default keys: the app\'s, your commands\', the message box\'s, the terminal\'s and the model variant key. To reset one, open it and choose Use the default.', 'Reset', () => {
+    data().shortcuts = clone(DATA.commands.shortcuts).filter(s => !s.command || commandById(s.command));
+    [SID.text, SID.term, SID.variant].forEach(id => { if (PM51.setting(id)) restoreSettingDefault(id); });
+    saveState(); PM51.refresh(ID, { swap: false }); PM51.toast('Shortcuts reset', 'Default keys are back.');
+  }));
+  /* Save or load shortcuts: one dialog for the inventory action's three choices. */
+  PM51.on('commands-backup', () => openDialog({
+    title: 'Save or load shortcuts', subtitle: 'A small file you can keep as a backup or move to another computer.',
+    body: formField('What to do', 'how', 'Export', { type: 'select', full: true, choices: [{ value: 'Export', label: 'Save my shortcuts to a file' }, { value: 'Import (Replace)', label: 'Load a file and replace mine' }, { value: 'Import (Merge)', label: 'Load a file and add to mine' }] })
+      + formField('File', 'file', '', { placeholder: 'shortcuts.json', full: true, help: 'Only needed when loading. Keys already on your list are kept when you add to them.' }),
+    saveLabel: 'Continue',
+    onSave: form => { const how = String(form.how || 'Export'); PM51.toast(how === 'Export' ? 'Save is preview only' : 'Load is preview only', how === 'Export' ? 'Nothing was written. In the app the file holds every key you changed, never secrets.' : 'Nothing was loaded. In the app the file is read and shown to you before anything changes.', 'info'); }
   }));
   PM51.on('commands-export', el => {
     const what = ds(el, 'what') === 'commands' ? 'commands' : 'shortcuts';
@@ -477,16 +572,21 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
   };
 
   /* ---------- New command dialog ------------------------------------------- */
-  PM51.on('commands-new', () => openDialog({
+  /* A new command starts from the inventory's defaults for new commands. */
+  const newDefaults = () => {
+    const pick = (id, none) => { const v = PM51.value(id); return v == null || v === none ? '' : String(v); };
+    return { scope: PM51.value(SID.scope) === 'Project' ? 'Project' : 'Global', mode: pick(SID.mode, 'inherit'), model: pick(SID.model, 'Inherit'), persona: pick(SID.persona, 'Inherit'), permissionsProfile: pick(SID.perms, 'Inherit') };
+  };
+  PM51.on('commands-new', () => { const nd = newDefaults(); return openDialog({
     title: 'New command', subtitle: 'A piece of text you send often, ready to run by typing its name.', wide: true,
     body: `<div class="pm51-commands-form form-grid">`
       + `<label class="form-field"><span class="form-label">Name</span><span class="pm51-commands-name"><span class="pm51-commands-adorn" aria-hidden="true">/x-</span><input class="form-input" name="name" placeholder="tidy-docs" data-autofocus autocomplete="off" spellcheck="false" aria-label="Command name after /x-"/></span>${helpBlock('Lowercase letters, numbers, - and _. Built-in names such as help are taken.', 'name')}</label>`
       + `<label class="form-field"><span class="form-label">Description</span><input class="form-input" name="description" placeholder="One line that says what it does" autocomplete="off"/>${helpBlock('Shown next to the name in chat and in the command palette.', 'description')}</label>`
       + `<label class="form-field full"><span class="form-label">What it sends</span><textarea class="form-textarea pm51-commands-template" name="template" rows="5" spellcheck="false" placeholder="${a(TEMPLATE_PLACEHOLDER)}"></textarea><div class="form-help pm51-commands-ph" data-placeholders>${placeholderLine('')}</div>${helpBlock('$ARGUMENTS is everything typed after the name. $1 $2 are single words. @path pastes a file. !`command` pastes what a command prints. Leave it empty to send the description as written.', 'template')}</label>`
       + `<label class="form-field"><span class="form-label">Arguments hint</span><input class="form-input" name="argumentsHint" placeholder="For example: <branch name>" autocomplete="off"/>${helpBlock('Shown while you type the command, so you remember what to pass.', 'argumentsHint')}</label>`
-      + `<div class="form-field"><span class="form-label">Where it is available</span>${PM51.dropdown('Project', [{ value: 'Project', label: 'This project', meta: '.puppet-master/commands/' }, { value: 'Global', label: 'Every project', meta: 'Your user folder' }], { name: 'scope', label: 'Where it is available' })}${helpBlock('This project: .puppet-master/commands/. Every project: your user folder. The project one wins when both have the same name.', 'scope')}</div>`
-      + `<details class="pm51-dialog-group"><summary>${icon('chevron')}<span>Overrides</span><small>(optional)</small></summary><div class="pm51-dialog-group-body"><p class="form-help">Leave these on Inherit and the command runs exactly like a message you typed yourself.</p>`
-      + overrideField('persona', '') + overrideField('mode', '') + overrideField('model', '') + overrideField('permissionsProfile', '')
+      + `<div class="form-field"><span class="form-label">Where it is available</span>${PM51.dropdown(nd.scope, [{ value: 'Project', label: 'This project', meta: '.puppet-master/commands/' }, { value: 'Global', label: 'Every project', meta: 'Your user folder' }], { name: 'scope', label: 'Where it is available' })}${helpBlock('This project: .puppet-master/commands/. Every project: your user folder. The project one wins when both have the same name.', 'scope')}</div>`
+      + `<details class="pm51-dialog-group"${nd.mode || nd.model || nd.persona || nd.permissionsProfile ? ' open' : ''}><summary>${icon('chevron')}<span>Overrides</span><small>(optional)</small></summary><div class="pm51-dialog-group-body"><p class="form-help">Leave these on Inherit and the command runs exactly like a message you typed yourself. They start from your defaults for new commands.</p>`
+      + overrideField('persona', nd.persona) + overrideField('mode', nd.mode) + overrideField('model', nd.model) + overrideField('permissionsProfile', nd.permissionsProfile)
       + `</div></details></div>`,
     saveLabel: 'Create command',
     onOpen: overlay => {
@@ -516,7 +616,7 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
       saveState(); PM51.refresh(ID, { swap: false });
       PM51.toast('Command created', `Type ${c.name} in chat to run it. It lives in ${pathFor(c)}.`);
     }
-  }));
+  }); });
 
   /* ---------- command hero sheet ------------------------------------------- */
   let sheet = null;
@@ -627,7 +727,8 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
     }, true);
   });
   PM51.on('commands-reset', () => PM51.confirm('Reset commands and shortcuts?', 'Your commands, shortcuts, and hint settings go back to their defaults.', 'Reset', () => {
-    PM51.s().commands = clone(DATA.commands); migrateCommands(PM51.s().commands); PM51.s().commandsPrefs = clone(PREF_DEFAULTS); saveState(); PM51.refresh(ID, { swap: false }); PM51.toast('Commands and shortcuts reset', 'Defaults are back.');
+    PM51.s().commands = clone(DATA.commands); migrateCommands(PM51.s().commands); PM51.s().commandsPrefs = clone(PREF_DEFAULTS);
+    [SID.text, SID.term, SID.variant, SID.hints, SID.search].forEach(id => { if (PM51.setting(id)) restoreSettingDefault(id); }); saveState(); PM51.refresh(ID, { swap: false }); PM51.toast('Commands and shortcuts reset', 'Defaults are back.');
   }));
   PM51.on('commands-help', () => PM51.panel({
     title: 'How commands work', icon: 'terminal',

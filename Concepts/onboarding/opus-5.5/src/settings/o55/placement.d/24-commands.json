@@ -1,0 +1,114 @@
+{
+ "_about": "Commands & Shortcuts: one shortcut list in three groups (everywhere, message box, terminal) that writes the changed-keys map; hints and clash handling beside it; reset and save/load are the inventory actions; on Commands, the confirm switch first, the command list, and the five command rows as defaults for new commands.",
+ "sections": {
+  "commands-keys": {
+   "to": "commands",
+   "tab": "shortcuts",
+   "title": "Keyboard shortcuts",
+   "help": "Click a shortcut to change it. Clashes are shown in every group.",
+   "order": 10,
+   "composed": true
+  },
+  "commands-hints": {
+   "to": "commands",
+   "tab": "shortcuts",
+   "title": "Hints and clashes",
+   "help": "Show keys next to buttons, and what happens when two share keys.",
+   "order": 15,
+   "composed": true
+  },
+  "commands-key-tools": {
+   "to": "commands",
+   "tab": "shortcuts",
+   "title": "Reset and back up",
+   "help": "Put shortcuts back, or save and load them as a file.",
+   "order": 20,
+   "advanced": true,
+   "composed": true
+  },
+  "commands-behaviour": {
+   "to": "commands",
+   "tab": "commands",
+   "title": "Safety",
+   "help": "Ask for a second step before a high-impact command runs.",
+   "order": 25,
+   "composed": true
+  },
+  "commands-list": {
+   "to": "commands",
+   "tab": "commands",
+   "title": "Your commands",
+   "help": "Open a command to change what it sends and how it runs.",
+   "order": 30,
+   "advanced": false,
+   "composed": true
+  },
+  "commands-defaults": {
+   "to": "commands",
+   "tab": "commands",
+   "title": "Defaults for new commands",
+   "help": "A new command starts with these.",
+   "order": 40,
+   "advanced": true,
+   "composed": true
+  },
+  "commands-builtins": {
+   "to": "commands",
+   "tab": "commands",
+   "title": "Built-in names",
+   "help": "Whether your own commands may take a built-in name.",
+   "order": 45,
+   "advanced": true,
+   "composed": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "commands-keys",
+   "ids": [
+    "extensions.commands.keyboard-shortcuts",
+    "extensions.commands.search-shortcuts",
+    "extensions.commands.text-editing-keys",
+    "code.terminal.shortcuts",
+    "extensions.commands.variant-cycling-key"
+   ]
+  },
+  {
+   "section": "commands-hints",
+   "ids": [
+    "extensions.commands.shortcut-hints",
+    "extensions.commands.conflict-handling"
+   ]
+  },
+  {
+   "section": "commands-key-tools",
+   "ids": [
+    "extensions.commands.reset-shortcuts",
+    "extensions.commands.backup-shortcuts"
+   ]
+  },
+  {
+   "section": "commands-list",
+   "ids": [
+    "extensions.commands.custom-commands"
+   ]
+  },
+  {
+   "section": "commands-defaults",
+   "ids": [
+    "extensions.commands.command-scope",
+    "extensions.commands.command-mode",
+    "extensions.commands.command-model",
+    "extensions.commands.command-persona",
+    "extensions.commands.command-permissions"
+   ]
+  },
+  {
+   "section": "commands-builtins",
+   "ids": [
+    "extensions.commands.override-builtin",
+    "extensions.commands.git-routing"
+   ]
+  }
+ ]
+}
