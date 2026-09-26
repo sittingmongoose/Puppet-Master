@@ -337,8 +337,9 @@ status: accepted
 owner_doc: Plans/Server_System.md
 canonical_text: >-
   The Server manager, Settings, Onboarding, Doctor, palette, native/web UI, natural-language routing, and API/automation
-  surfaces use the exact 32-command owner inventory listed here: the retained 26-command cmd.server manager inventory
-  plus six narrowly owned bootstrap/pairing/trust commands. Each visible action requires one central
+  surfaces use the exact 36-command owner inventory listed here: the retained 26-command cmd.server manager inventory,
+  six narrowly owned bootstrap/pairing/trust commands, and four separately owned ClientTrustRegistry commands
+  (cmd.client.access.update, cmd.client.remove, cmd.client.rename, cmd.client.session.revoke). Each visible action requires one central
   registration, typed request/result/error, sole handler, permission and confirmation policy, idempotency/currentness,
   ObservableWork when asynchronous, receipt or explicit no-persist result, accessibility/focus return, and production
   wiring. UI projections use stable IDs, route to owner details, and show truthful availability and disabled reasons.
@@ -446,13 +447,13 @@ owner_hints: [Plans/Server_System.md, Plans/Automated_Testing_System.md]
 - `DiscoveryObservation` with metadata-minimal disclosure and expiry;
 - `ClientTrustRecord`, `PairingRun`, `ServerBootstrapRun`, and `SessionRecord` trust/currentness and product-bootstrap shapes;
 - command result and availability projections with currentness and mismatch states;
-- discriminated command payload, result, error, availability, permission, and disabled-reason records for the retained 26 primary `cmd.server.*` manager commands plus six supplemental owner commands for bootstrap, pairing, and Client trust revocation;
+- discriminated command payload, result, error, availability, permission, and disabled-reason records for the retained 26 primary `cmd.server.*` manager commands, six supplemental owner commands for bootstrap, pairing, and Client trust revocation, and the four separately owned `ClientTrustRegistry` commands for trusted Client management (26 + 6 + 4 = 36);
 - exact return-context round trips, explicit integration-evidence gates, and `ObservableWork` links; and
 - durable Server lifecycle and Catalog-migration records with restart convergence, verified-backup activation, and Client-close non-cancellation invariants.
 
 `Plans/server_system_contract_fixtures.json` supplies one positive payload instance for every retained primary manager command, at least one for every supplemental owner command, method/peer/bootstrap variants, and positive and negative identity, trust, lifecycle, migration, exact-return, availability, permission, secret-redaction, and disabled-reason instances. These schemas close data shape only. They do not register a command or EventRecord producer, create storage-family rows, implement trust cryptography, or prove runtime behavior.
 
-The schema root carries aggregate identity `x-schema-id = pm.server_system.contracts.v1`, the retained validator-bound `x-primary-command-count = 26` / `x-command-contracts` inventory, and the owner-total `x-owner-command-count = 32` with an exact six-row `x-supplemental-command-contracts` inventory. Each command entry names payload/result/error/availability/permission/disabled refs, availability/disabled selectors, permission class, persistence expectation, `ObservableWork` expectation, and the truthful pending central-registration/handler/wiring/event state. The split preserves the existing manager-inventory validator while making the six new domain commands explicit; it does not demote them to aliases. The fixture envelope ID `pm.server_system.contract_fixtures.v1` is test-only; its `contract_schema_id` points to the aggregate owner and is never a runtime record discriminator.
+The schema root carries aggregate identity `x-schema-id = pm.server_system.contracts.v1`, the retained validator-bound `x-primary-command-count = 26` / `x-command-contracts` inventory, and the owner-total `x-owner-command-count = 36` with an exact six-row `x-supplemental-command-contracts` inventory plus the four separately owned `ClientTrustRegistry` commands `cmd.client.access.update`, `cmd.client.remove`, `cmd.client.rename`, and `cmd.client.session.revoke` (26 + 6 + 4). Each primary and supplemental command entry names payload/result/error/availability/permission/disabled refs, availability/disabled selectors, permission class, persistence expectation, `ObservableWork` expectation, and the truthful pending central-registration/handler/wiring/event state. The split preserves the existing manager-inventory validator while making the six new domain commands explicit; it does not demote them to aliases. The fixture envelope ID `pm.server_system.contract_fixtures.v1` is test-only; its `contract_schema_id` points to the aggregate owner and is never a runtime record discriminator.
 
 ### 3.2 Identity and state rules
 
@@ -584,7 +585,7 @@ Schema fixtures validate shape and explicit invariants only. Runtime, native-pla
 | Area | Canonical classification | Required before node-ready |
 |---|---|---|
 | Owner placement and PlanUnits | `specified` | Index and owner-map integration by the authorized central lane |
-| Record schemas and fixtures | `specified_static` | Fixture validation plus storage/event/command registry integration; the 32-command owner inventory remains static only |
+| Record schemas and fixtures | `specified_static` | Fixture validation plus storage/event/command registry integration; the 36-command owner inventory remains static only |
 | Command/event/handler/wiring | `blocked_integration_missing` | Central registration, one handler, production row, reverse coverage |
 | Native/web Server runtime | `not_implemented_or_proven` | Build, lifecycle, security, platform, parity, and failure evidence |
 | Migration | `specified_not_executed` | Clean-room migration and per-phase crash receipts |

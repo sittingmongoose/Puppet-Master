@@ -2,6 +2,15 @@
 
 Status: required final verification, not yet satisfied.
 
+Latest flagged checkpoint: **1,848 / 2,021 reviewed; 173 pending**. The 87
+new Settings source rows are reviewed/held classifications, not 87 closures.
+Root verified 2,021 records, exactly 87 changed and all 1,934 other records
+unchanged against the prior checkpoint. Their full fixed propositions and
+unresolved facets remain explicit. Immutable external checkpoint:
+`/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/case-reconciliation/checkpoints/matrix-ae6666e892a80c1cbf5fe07a0da4570a5128d77248bb12b048b5a78ebbf557c5.jsonl`,
+SHA-256 `ae6666e892a80c1cbf5fe07a0da4570a5128d77248bb12b048b5a78ebbf557c5`.
+No native, GUI or full Settings closure follows from this review credit.
+
 Latest nonflagged checkpoint: **2,697 / 11,395 reviewed; 8,698 pending**.
 The Server batch adds 234 bounded static owner-law reviews, not native or
 whole-profile closure. Immutable external checkpoint:
