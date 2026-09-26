@@ -181,3 +181,32 @@ The registry owner's frozen combined QA handoff is
 `5ca3bd9a04b4debb30ee77dd34607017e3af07d6ef24d7397a0ca4e0eaab26bb`,
 under the same external evidence directory. Reviewed counts include unresolved
 claims and must not be presented as a closure percentage.
+
+## Reviewed checkpoint: 1,261 flagged and 182 other identities
+
+Later immutable checkpoints supersede the counts above, not their evidence:
+
+- Flagged: `checkpoints/matrix-1192a5f678dbd6bd58838671252e84565e775c64db7edcc1809cc0cf20365e84.jsonl`,
+  SHA-256 `1192a5f678dbd6bd58838671252e84565e775c64db7edcc1809cc0cf20365e84`;
+  1,261 reviewed and 760 pending. Exactly six reverse-consumer facets changed;
+  root verified every historical assessment hash/history unchanged and all
+  other rows identical. This establishes only the specified consumer routes,
+  not native controls or complete command behavior.
+- Other historical identities:
+  `checkpoints/full-impact-reviewed-124c06b1089197f83553bfb1851efd6b4f0485562c99fbc4b8f09a3d4100d6b3.jsonl`,
+  SHA-256 `124c06b1089197f83553bfb1851efd6b4f0485562c99fbc4b8f09a3d4100d6b3`;
+  182 reviewed and 11,213 pending. Root verified the previous 137 rows are
+  identical and exactly 45 reviewed Server acceptance identities were added:
+  30 bounded owner clauses, 11 unresolved whole claims, four superseded cases.
+  Historical acceptance text is not evidence of executed acceptance tests.
+
+Combined external QA handoff `CHECKPOINT-1261-FLAGGED-182-FULL-IMPACT.md`
+has SHA-256 `111989e4b14908b9202f6765fbf6868276310ffe8fece707edbeb3fa539a377b`.
+Root verified both checkpoint file hashes and keyed deltas. Independent reviews
+are `other-reverse-six-review-01/DIFFERENT-SOL-REVIEW.md`
+(`1342d8a9f63b6957bbb811849fd7a1da5322a09def610086f8ad5ea7da304c56`)
+and `SERVER-ACCEPTANCE45-DIFFERENT-SOL-REVIEW-V2.md`
+(`05c558360b20e8d66eaff09bc2a34f94e40ebfa02af4e9a26056090875c2d07d`).
+All paths are under the external evidence directory above. The acceptance
+review explicitly withdraws overclaims about Funnel bandwidth, NPM/Docker-label
+instructions and the old status-bar inventory; newer owner rules are preserved.
