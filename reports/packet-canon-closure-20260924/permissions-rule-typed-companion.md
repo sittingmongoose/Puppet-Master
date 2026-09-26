@@ -89,3 +89,24 @@ current-owner adjudication before any new user question is justified.
 Different-Sol review accepted the exact two-file annotation/test diff; all
 16 focused checks pass after that change, including this pair's central-gate
 protocol. No full-gate rerun is claimed for annotation-only hygiene.
+
+## Exact remaining response joins
+
+Independent current-owner review `REVIEW-FOUR-OWNER-JOINS.md` (same evidence
+directory, SHA-256
+`397f0ce149d036d72584974d5991a6e029197cd20c5658c745cdd500cccd7b20`)
+narrows the remaining specification work to four joins:
+
+- Non-writable configuration already means unavailable with a projected reason;
+  its exact typed refusal/disabled value is missing, not the no-write policy.
+- External-directory wildcard matching and the invalid-glob error are owned;
+  the precise validity predicate and boundary fixtures remain unmaterialized.
+- Validate-only never writes or approves; the pre-rename write-conflict rule
+  alone does not decide its response to a stale validation snapshot.
+- Approval routes already use `cmd.runtime.approve` and `cmd.runtime.decline`;
+  ordered allowed actions and exact episode/scope arguments still need the
+  runtime-owner crosswalk, not new Permissions approval commands.
+
+Further runtime/decision-owner checks are pending before declaring any genuine
+product choice. These are not eleven questions, nor proof that all four need
+new policy. Native execution/readback and serialization choices stay separate.
