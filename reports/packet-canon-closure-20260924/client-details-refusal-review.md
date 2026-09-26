@@ -1,6 +1,7 @@
 # Client details local refusal boundary
 
-Status: root review; independent review pending. Snapshot `cb8ebd628`.
+Status: owner finding independently confirmed; first companion requires one
+bounded correction. Original owner-review snapshot `cb8ebd628`.
 
 Exact scope: `touch_closure_dimensions` identities
 `TOUCH-SGAPLOCAL-019/disposition_and_residual_risk` and
@@ -44,3 +45,31 @@ ClientTrustCommandAvailability; `Plans/touch_closure.json` TCP-CLIENT-TRUST-LOCA
 `Plans/ui_command_response.schema.json` CommandId and local_projection branch.
 
 No matrix credit, canonical edit, native execution or closure claim is made.
+
+## Frozen first companion review
+
+External evidence directory:
+`/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/case-reconciliation/client-details-local-settlement-01/`.
+The immutable `freeze-v1-20260926T0347Z/companion.patch` SHA-256 is
+`bc3f1e9db775a684e9dd7f108fdcadfd77b4bb8eddbad7ba7a92f311a8768294`;
+its report SHA-256 is
+`d605d38f5ec58022664ccbf7beec9015cd619c5ec37bf7dc6ed57ef9d9625c9e`.
+Root independently reran all 23 focused tests successfully after verifying all
+pinned input hashes. The snapshot omits an `inputs/` copy: direct invocation
+failed path resolution, so the diagnostic runner used the original pinned input
+directory while keeping all candidate code and fixtures frozen. This was not a
+product defect or a modification of the frozen snapshot.
+
+Independent review `REVIEW-DIFFERENT-SOL-V1.md`, SHA-256
+`4db3f5ff36d898768d7ddc2a78c0138d42412a1b3fe0f4dcd4dd48fd8556a396`,
+requires an explicit absent-current-projection refusal branch: the schema
+currently requires a non-null current projection even for that refusal. A
+missing projection must be representable without inventing an owner value or
+allowing successful presentation. Positive refusal and negative success cases
+are required before acceptance.
+
+The coordinator's other probe changed both candidate values and the trusted
+owner projection. Independent review correctly rejected that as a static
+counterexample; no extra witness chain is required on that basis. Only the
+absent-projection correction is authorized here, preserving the existing owner
+authority, local-action identity and native-proof boundary.
