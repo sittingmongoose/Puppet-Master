@@ -7201,7 +7201,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 38217,
+      "line_count": 38242,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 561,
       "plan_unit_ids": [
@@ -7865,7 +7865,7 @@
         "visualizer_script_policy_drift",
         "wand_overflow_or_demo_command_pollution"
       ],
-      "sha256": "2bfc2f0397bcf5b482c1bf0c610c93d64084692901a4d99af2ae5838d7f9c7ed",
+      "sha256": "e74a3e4cd64e9788376d8d083b68708cfaa28d2ac4b1e38cbd3545ffdca22d93",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 560,
@@ -13646,7 +13646,7 @@
         "future Product Onboarding and Bootstrap projection controllers",
         "future Product Onboarding native controller"
       ],
-      "line_count": 2655,
+      "line_count": 2672,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 29,
       "plan_unit_ids": [
@@ -13702,7 +13702,7 @@
         "tour_fake_shell_or_layout_loss",
         "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "9d517875ab7a5c6dfc9d7b88537fea140961e2fe95ec4ad5175bf6cad4e243c6",
+      "sha256": "717b3fbf01f4aa873a60edcb35edb010ede8daaed5594749a4fa8b3bdfb401d0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 28,
@@ -14375,7 +14375,7 @@
         "False": 2,
         "True": 6
       },
-      "heading_count": 23,
+      "heading_count": 24,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/GitHub_Integration.md",
@@ -14391,7 +14391,7 @@
         "scripts/pm_project_forge_contract.py",
         "scripts/pm_ui_command_response.py"
       ],
-      "line_count": 530,
+      "line_count": 571,
       "path": "Plans/Project_System.md",
       "plan_unit_count": 8,
       "plan_unit_ids": [
@@ -14418,7 +14418,7 @@
         "project_identity_or_owner_collapse",
         "project_registration_or_migration_data_loss"
       ],
-      "sha256": "0fcf5569fd89659d882b810c5d6c88c516473cd7b5b632f9f8a8abb3c7f06ac3",
+      "sha256": "ba2ab066c734d294f5825f218a4fd9faead993586b461ce7d2deeb944ef4eb18",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -15101,7 +15101,7 @@
         "future deployment wrappers",
         "future proxy configuration service"
       ],
-      "line_count": 1002,
+      "line_count": 1007,
       "path": "Plans/Remote_Access_System.md",
       "plan_unit_count": 15,
       "plan_unit_ids": [
@@ -15141,7 +15141,7 @@
         "static_remote_contract_promoted_to_wan_readiness",
         "tailscale_identity_or_product_claim_drift"
       ],
-      "sha256": "c900516374b5bb2e7b12166b350744e906af48c709d74cdd467bdabe2192f4d5",
+      "sha256": "98381ac5b20245281d0df00034acaae76b0039a69e52ad814b29b17bfa0a7312",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 15
@@ -20051,7 +20051,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-25T19:15:50Z",
+  "generated_at_utc": "2026-09-26T21:06:52Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

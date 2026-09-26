@@ -94,6 +94,16 @@ Before executing an Onboarding creation request, Project System resolves the exa
 
 Standalone versus containerized Server execution is not Project registration semantics. Project System records the selected Project Home Server reference but does not choose, create, or certify a standalone/container execution form; that residual stays with Server/Deployment owners and their central commands.
 
+### 3.1.1 Generic remote-create/local-failure recovery composition (PJCT-007)
+
+When an Onboarding creation path creates a remote repository and a later step fails — source preparation, clone/connect, history initialization, Settings rebind/apply, or registry publication — the operation exposes recovery-required truth through the central outcome contract, never a half-listed Project and never a new command or receipt family. This composition is provider-neutral and lives here, not in the GitHub-only PJCT-008: each actual Forge/SCM/Project command chain supplies its own verified remote result, and no arbitrary Forge create is routed through `cmd.project.new_github_repo`. The retained recovery context is the original operation identity (command instance, idempotency key, and operation ID), the terminal provider result and receipt carrying the verified repository binding (provider, normalized host, account, and provider repository identity), the exact reviewed draft binding (plan/hash, draft identity/revision, commit consent, preflight, and Settings preview ref), and the exact return context with current fences. No `project_setup_commit_binding` forms: that read model requires a listed persisted result, so provider setup stays fenced until recovery completes the commit.
+
+A timeout or otherwise ambiguous remote effect reconciles before any repeat create, through the Forge/SCM owners, never inside Project System: `reconcile ambiguous timeouts before retrying`. A Forge `effect_unknown` result admits only a reconciliation-only retry to a settled outcome (Forge §3.3); SCM reconciles the exact remote by object, commit, run, or correlation evidence and never blindly repeats a non-idempotent effect (SCS-016). Unknown is not failed: while the remote effect is unknown, only reconciliation runs — Project System repeats no create, deletes nothing, offers no Delete path, and infers no repository identity; failed-before-effect retains no remote identity; only a verified created identity unlocks the recovery routes. Never silently create it again or silently delete it. The user-facing name for the created thing is repository; packet wording for the notice is source lineage only, not frozen copy.
+
+An exact idempotent replay of a terminal result re-observes that original result with `replayed=true` and no new effects; a rejected terminal result never advances by replay. Advancing past a failure requires an explicitly authorized Project-owned recovery/resume transition joined to the original operation, the reviewed draft, the verified create result, and the known settled versus remaining effects. No such transition is currently contracted: the ten `project_action_id` values admit no resume or recovery action, and `project_action_result` carries only `outcome`, `error_code`, opaque `receipt_refs`, and `replayed`, with no typed remote-effect or per-route availability state. The outstanding owner contract — a required integration gap, not a fresh user choice — is a Project-owned recovery context/projection or narrowly typed extension/join naming the original Project operation, the reviewed setup binding, the exact Forge terminal create result/receipt and repository binding, the settled versus unknown remote effect, per-route availability with reasons, and the remaining child steps. No resume command ID or recovery field is named here beyond what the owner contracts already admit.
+
+The three routes project that retained owner state. Continue Setup is enabled only with that explicit transition and typed join: it then resumes the original operation under its original command instance, idempotency key, and reviewed draft binding, reconciles unknown effects first, and executes only unsettled steps — no second remote create, no second clone of settled content, no second registry write, no second Settings apply of settled values. Until the transition is contracted, Continue Setup is visible intent but unavailable, with the exact fail-closed reason that no Project-owned recovery/resume transition is contracted in the current Project action family. A changed draft under the same binding still fails closed, and an owner cancellation still leaves no half-row. Open Repository is enabled only on the verified binding and dispatches the existing `cmd.forge.repository.open_in_browser`; it mutates nothing and proves nothing about the Project. Delete Repository is a separate explicit destructive intent: it requires its own permission grant and target-bound confirmation against the verified repository identity, routes through the Forge owner, and never runs as automatic rollback, as part of Continue Setup, speculatively while the remote effect is unknown, or on provider-scope reuse — selected-source authentication (MACS-005 / FGI-011) never authorizes deletion. No repository-delete command exists in the current 46-command Forge catalog (§3.1), so the Delete path is visible intent but undispatched until the Forge owner admits a repository-delete contract with catalog, wiring, and target-bound confirmation; no phantom command is ever dispatched and no such command ID is named here. Settings rebind (SSYS-036) settles under the resumed operation before listing, exactly as on the first attempt.
+
 ### 3.2 Project-context Backup and Restore routes
 
 The Projects page, Project card, Project details, and Project-bound Settings may expose the following contextual actions, but each action routes directly to the Backup/Restore owner contract in `Plans/Backup_Restore_System.md`. Project System defines no private backup, snapshot, repository, browse, download, export, or restore handler and never treats dispatch acceptance, a preview, or a browse result as Project registration.
@@ -397,7 +407,9 @@ canonical_text: Project System consumes one explicitly confirmed Onboarding draf
   commit consent. Publication as listed and usable waits for required configuration, content/history, Settings rebind/apply/readback
   and terminal owner receipts. project_setup_commit_binding is an exact read model of the actual ProjectActionResult
   and required receipt chain, never new physical commit authority. Provider setup requires that committed real Project
-  and cannot uncreate it on navigation or failure.
+  and cannot uncreate it on navigation or failure. For any remote-create path whose later local steps fail, the same
+  unit owns the provider-neutral recovery composition — reconcile-before-retry, retained recovery context, and three
+  gated routes — with exact replay re-observing and never advancing a rejected result.
 gui_related: true
 gui_classification_reason: Determines the visible Review commit, truthful Project creation progress/listing and
   provider handoff.
@@ -405,6 +417,9 @@ depends_on:
 - PJCT-001
 - PJCT-002
 - SSYS-036
+- SCS-016
+- FGI-009
+- FGI-010
 unblocks: []
 acceptance_criteria:
 - Onboarding creation/add requests require the exact Project-owned setup/review/draft/consent/preflight binding;
@@ -421,6 +436,21 @@ acceptance_criteria:
 - Same idempotency/binding yields original result and identity; conflict, stale revision, rejected/failed/cancelled
   result or mismatched receipt fails closed.
 - Close/Back/provider Skip and failure preserve an already committed Project and do not replay the owner operation.
+- A timeout or otherwise unknown remote effect reconciles through the Forge/SCM owners before any repeat create;
+  reconcile ambiguous timeouts before retrying; a Forge effect_unknown result admits only reconciliation-only retry,
+  and unknown is never retried blind, never treated as failed, never deleted speculatively, and never given an
+  inferred identity.
+- Failed-before-effect retains no remote identity; a verified created remote with later local failure retains the
+  original operation/idempotency, the verified repository binding, the exact reviewed draft binding, and the return
+  context, with no half-listed Project and no commit binding; exact idempotent replay re-observes the original
+  terminal result with replayed=true and no new effects, and never advances a rejected result.
+- Continue Setup is enabled only with an explicit Project-owned recovery/resume transition and typed join to the
+  original operation, reviewed draft, verified create result, and settled/remaining effects; that transition is not
+  currently contracted, so Continue Setup is visible but unavailable with that exact fail-closed reason; Open Repository
+  uses the verified binding through cmd.forge.repository.open_in_browser; Delete Repository is separate explicit
+  destructive intent, never automatic, and undispatched until the Forge delete contract exists.
+- A changed draft under the same binding fails closed; an owner cancellation leaves no half-row; selected-source
+  authentication never authorizes deletion; Settings rebind settles under the resumed operation before listing.
 validation_surfaces:
 - Plans/project_system_contract_fixtures.json
 - tests/test_pm_onboarding_phases.py
@@ -438,10 +468,18 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/02_PROJECT_DRAFT_COPY_AND_COMMIT.md
+- Plans/Forge_Integrations.md#33-typed-command-admission-and-result-boundary
+- Plans/Source_Control_System.md#SCS-016
+- source_packet:PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/01_COMBINED_HANDOFF.md:103-124
+- source_packet:PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/10_ACCEPTANCE_FAILURE_AND_USABILITY_MATRIX.md:81-83
+preserved_exact_tokens: ["Continue Setup", "Open Repository", "Delete Repository", "effect_unknown", "reconcile ambiguous timeouts before retrying"]
 negative_constraints:
 - Do not mint a generic Project or Onboarding command or physical receipt family.
 - Do not confuse owner acceptance, preview or provisional identity with committed listing.
 - Do not fabricate child results, overwrite unrelated Project state or claim native persistence proof.
+- Do not speculate a repository deletion after an unknown remote effect.
+- Do not duplicate Forge/SCM reconciliation inside Project System.
+- Do not dispatch a resume or delete without the contracted owner transition or Forge delete action.
 ```
 
 ## 11. Existing GitHub creation handoff — PJCT-008
@@ -499,6 +537,8 @@ accepted result with `replayed=true`, no new API/clone/registry/event effects an
 no identity change. Changed content under the same binding fails closed. Navigation
 does not cancel owner work.
 
+For the exact `cmd.project.new_github_repo` / GI-042 creation case, this unit consumes the PJCT-007 generic recovery composition in §3.1.1; it is not all-provider recovery authority. The verified remote result is the GI-042 terminal create result and receipt with its repository binding, and GI-032 remains the remote-side-effect and durable-receipt boundary. An exact retry re-observes the original terminal result — accepted or rejected — with `replayed=true`, no new API/clone/registry/event effects, and no identity change; a rejected result never advances by replay. The PJCT-007 gates apply unchanged: Continue Setup stays unavailable until the Project-owned recovery/resume transition and typed join are contracted, Open Repository uses only the verified binding, and Delete Repository stays undispatched until the Forge owner admits the delete contract. Provider routes other than this exact GitHub case stay open under PJCT-007 until their own command chains supply verified remote results.
+
 ### PJCT-008 - Typed GitHub-to-Project commit and event binding
 
 ```yaml
@@ -517,6 +557,7 @@ acceptance_criteria:
 - The Project-bound candidate joins the original application-scoped operation without changing that operation's identity or granting persisted-event admission.
 - EventRecord append/replay remains denied under DL-039 without identity consumption or checkpoint/projection changes, independently of candidate validity and command-result retry.
 - Static validation grants no native availability, runtime proof, readiness, WorkNodes or governance certification.
+- For the exact cmd.project.new_github_repo / GI-042 creation case only, this unit consumes the PJCT-007 generic recovery composition in §3.1.1, with the GI-042 terminal create result as the verified remote result and GI-032 as the remote-side-effect boundary; it is not all-provider recovery authority, exact replay re-observes without advancing a rejected result, and the PJCT-007 Continue-unavailable and Delete-undispatched gates apply unchanged.
 validation_surfaces: [Plans/project_system_contracts.schema.json, Plans/github_project_event_payloads.schema.json, Plans/github_project_event_fixtures.json, scripts/pm-github-project-integration.py, tests/test_pm_github_project_integration.py]
 risk_class: premature_project_publication_or_duplicate_remote_effect
 reasoning_tier: high
@@ -527,4 +568,4 @@ source_lineage: [Plans/Decision_Log.md#DL-039, Plans/Project_System.md#3-actions
 negative_constraints: [No fake Project identity., No consumer-owned Project writer., No automatic repository deletion or duplicate create., No Onboarding or Settings design change., No native or global audit closure claim.]
 ```
 
-ContractRef: ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-007, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe
+ContractRef: ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-007, ContractName:Plans/Forge_Integrations.md#FGI-009, ContractName:Plans/Forge_Integrations.md#FGI-010, ContractName:Plans/Source_Control_System.md#SCS-016, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe

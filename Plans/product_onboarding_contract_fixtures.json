@@ -6264,7 +6264,7 @@
     {
       "name": "invalid.nonexistent_source_control_repository_init",
       "definition": "onboarding_action_request",
-      "expected_error": "new local Project setup must use cmd.project.new_local with init_git true; no Source Control repository.init action exists",
+      "expected_error": "new local Project setup must use cmd.project.new_local with the reviewed draft history choice; no Source Control repository.init action exists",
       "value": {
         "schema_id": "pm.product_onboarding.action_request.v2",
         "schema_version": "2.0.0",

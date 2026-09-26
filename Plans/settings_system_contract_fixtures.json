@@ -897,7 +897,7 @@
     },
     "general-appearance-input": {
       "title": "General, Appearance, Accessibility, and Input",
-      "purpose": "Project appearance, accessibility, interaction, input, and spellcheck settings.",
+      "purpose": "Project appearance, accessibility, interaction, input, and startup settings.",
       "owner_refs": [
         "Plans/Settings_System.md",
         "Plans/FinalGUISpec.md"
@@ -1128,7 +1128,7 @@
         "project_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": null
+      "owner_gap_reason": "Commands_System §6.1/§6.2 own create/edit/delete/validation/preview semantics and §1 owns invocation/binding surfaces (§6.3 is heading-only per CS-036); typed native mutation routing for the manager's mutating controls is not yet census-routed, so no owner action IDs are named here. User Commands are file-backed presets, not UICommands."
     },
     "tools-integrations": {
       "title": "Tools and Integrations",
