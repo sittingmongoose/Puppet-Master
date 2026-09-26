@@ -1,5 +1,15 @@
 # Packet-to-current-owner reconciliation checkpoint
 
+## Latest additive checkpoint — 2026-09-26, after `8fb7ddd88`
+
+Independently reviewed dispositions cover **1,035 of 2,021 flagged identities**, with **986 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-176a99aafd2484ed243c857272ab40af84fab51545cb5d236a54190fc26a6415.jsonl`, SHA-256 `176a99aafd2484ed243c857272ab40af84fab51545cb5d236a54190fc26a6415`. Root verified its hash, all 2,021 unique unchanged identities and historical fields, exactly 32 changed and 1,989 unchanged rows against the published 1,003-row checkpoint.
+
+The additions are six Backup browse/export owner/partial-disposition dimensions, six Backup selected-payload dimensions, and twenty Project Sync local disposition/residual dimensions. The latter preserve concept-only/partial status, not typed, production, GUI or native closure. Six Settings spelling/notice findings repeated already-reviewed identities and correctly earned zero new count.
+
+The Backup payload check corrected a false-gap inference: the actual Touch-selected current request/result unions already select specialized companions and exclude those commands from the legacy fallback. The causal probe accepts the six selected requests/results and rejects missing operands, legacy request shapes and wrong result kinds. No replacement reference-map task was launched; extract remains separate. Probe SHA-256 `3cdb85ec7356e93d340bd07b41c6d97639a71bd9a4778ca59a6fec781b4e56c3`, sparse review SHA-256 `2b5e077bbbe6c105d0d846018d88c7a8ed4a5e5229903b79d2c3334ddfd9ea0b`; exact paths and all source/overlay hashes are retained in the immutable matrix.
+
+Separately, checkpoint permission-class joins are integrated in `59550481c` and Sound delete/export in `422efca65`, with independent review and root checks recorded in their integration reports. Browser and LSP technical holds are preserved in `browser-lsp-review-residuals-20260926.md`, not counted as native-only obligations or repaired companions. This milestone remains review coverage of the flagged subset; the whole-corpus currentness gate and main landing remain open.
+
 ## Latest additive checkpoint — 2026-09-26, after `9c4cea1be`
 
 Independently reviewed dispositions cover **1,003 of 2,021 flagged identities**, with **1,018 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-df631d0370e9e49052356d729363e00e21ed322b3c2501a34265a44a64c4cc6b.jsonl`, SHA-256 `df631d0370e9e49052356d729363e00e21ed322b3c2501a34265a44a64c4cc6b`. Root verified the hash, 2,021 unique unchanged identities and historical fields, exactly 23 changed and 1,998 unchanged rows against the published 980-row checkpoint.
