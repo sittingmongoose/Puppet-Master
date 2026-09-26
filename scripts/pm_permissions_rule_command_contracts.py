@@ -293,11 +293,12 @@ DECISION_CARDS: tuple[dict[str, str], ...] = (
         "slice": "duplicate tool_pattern on create",
         "owner_text": "Rule metadata: 'tool_pattern is not unique and MUST NOT be used as the durable identity'.",
         "held": (
-            "The owner names external_directory_duplicate_path for duplicate directory paths only. Duplicate "
-            "non-directory tool patterns are unspecified; the join neither requires nor forbids a duplicate "
-            "tool_pattern refusal."
+            "Resolved by Section 9: non-directory tool_pattern values are not unique; distinct rule_id "
+            "values retain distinct durable identities. The existing create join permits this case. "
+            "The separately owned external_directory_duplicate_path condition is unchanged. "
+            "This internal annotation is not a user decision card."
         ),
-        "status": "held_for_owner",
+        "status": "resolved_existing_owner",
     },
     {
         "card_id": "DC-PERM-RULE-006",

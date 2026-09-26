@@ -68,8 +68,24 @@ durable identity; the stable `rule_id` is the update/revocation key. The helper'
 patterns unspecified. No additional user choice is established by that label.
 The separate external-directory duplicate-path error remains applicable to its
 own domain. Independent review of the exact helper behavior and missing fixture
-coverage is pending; this observation is not a claim that the companion already
+coverage was independently completed; this observation is not a claim that the companion already
 tests every duplicate-pattern case, nor permission to relax directory checks.
 
 Owner SHA-256: `48815a17511c29d076f3213a11db4ecae2a6b6832bb1ba88afccc81c9b1ef42d`.
 Helper SHA-256: `c0ee0d09a961f1f7253ddd720efe6641124b436bfaa7be417cd16ddfa8c91dfa`.
+
+The independent held-slice review (`REVIEW-HELD-SLICE-ADJUDICATION.md` in the
+evidence directory, SHA-256
+`dbc7fead6552827f4b89ac183f642a56914b35aed2e132995f58801c48c5834a`)
+confirmed that the create branch already permits distinct rules with the same
+non-directory pattern. Root corrected only annotation 005's wording/status and
+its status assertion; command behavior and directory validation are unchanged.
+The frozen accepted author version remains unchanged in external evidence.
+Hash/timestamp/position serialization and actual post-write byte authenticity
+are implementation or native-proof obligations, not established product choices.
+Unwritable-config, glob, stale-validation and HITL-action joins still need
+current-owner adjudication before any new user question is justified.
+
+Different-Sol review accepted the exact two-file annotation/test diff; all
+16 focused checks pass after that change, including this pair's central-gate
+protocol. No full-gate rerun is claimed for annotation-only hygiene.

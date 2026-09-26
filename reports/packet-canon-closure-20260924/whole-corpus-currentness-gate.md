@@ -165,3 +165,19 @@ ingestion after independent review and exact membership verification: 15 static
 owner clauses, six unresolved whole claims and 12 process-only lines. They are
 not included in the 104 checkpoint above. Neither these batches nor static
 contract test passes establish that only GUI work remains.
+
+The subsequent immutable registry includes those 33: 137 reviewed and 11,258
+pending, at `checkpoints/full-impact-reviewed-a17f0cbfbb1503fc6ea4c26adfd4477f96eb4c83b07db967402e6ab89bae573d.jsonl`
+(SHA-256 `a17f0cbfbb1503fc6ea4c26adfd4477f96eb4c83b07db967402e6ab89bae573d`).
+Registry QA preserved all prior 104 rows exactly. Separately, the flagged
+checkpoint is now 1,255 reviewed and 766 pending out of 2,021, at
+`checkpoints/matrix-0d73a7646f8a88add362ecedbacd5eac60140cc4e651f69b9df00c76d72142bd.jsonl`
+(SHA-256 `0d73a7646f8a88add362ecedbacd5eac60140cc4e651f69b9df00c76d72142bd`).
+Its two added reviews are SRC-015/017 selected-source reconciliation owner
+clauses, not native Move/handoff execution. Root read both independent reviews
+and reran the exact two-row and 33-row membership checks before ingestion.
+The registry owner's frozen combined QA handoff is
+`CHECKPOINT-1255-FLAGGED-137-FULL-IMPACT.md`, SHA-256
+`5ca3bd9a04b4debb30ee77dd34607017e3af07d6ef24d7397a0ca4e0eaab26bb`,
+under the same external evidence directory. Reviewed counts include unresolved
+claims and must not be presented as a closure percentage.

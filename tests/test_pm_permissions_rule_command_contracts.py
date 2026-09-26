@@ -775,7 +775,8 @@ def test_decision_cards_are_explicit() -> None:
     for card in cards:
         for field in ("card_id", "slice", "owner_text", "held", "status"):
             assert card[field].strip(), (card["card_id"], field)
-        assert card["status"] == "held_for_owner"
+        expected_status = "resolved_existing_owner" if card["card_id"] == "DC-PERM-RULE-005" else "held_for_owner"
+        assert card["status"] == expected_status
     held_text = " ".join(card["held"] for card in cards).lower()
     assert "owner" in held_text and "authority" in held_text
 
