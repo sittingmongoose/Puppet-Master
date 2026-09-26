@@ -1,0 +1,152 @@
+{
+  "audit": "onboarding-tour-doctor packet integration",
+  "authority": "current main; Plans beat older packet text on explicit newer decisions; Concepts/TestOpus5.5PmConcept.html leads GUI",
+  "baseline": "9a40601e93fb136856c0ec4f92018f956276f94c; subsequent task changes tracked separately",
+  "date": "2026-09-26",
+  "findings": [
+    {
+      "affected_paths": [
+        "Plans/Server_System.md (claim/bootstrap consumer)",
+        "Plans/FinalGUISpec.md (presentation consumer)",
+        "Plans/Remote_Access_System.md (pairing rows)"
+      ],
+      "authority": "Server_System cmd.client.pair.start ll.166-169,445,485-493; PWIZ-024 ll.2117-2120; PWIZ-025 ll.2238-2240",
+      "concept_ref": "Concepts/onboarding/opus-5.5/src/js/68-screens-server.js:128-174 (existing s-ready card)",
+      "id": "F-01",
+      "kind": "owner_composition",
+      "packet_ref": "Sept-03 01_COMBINED_HANDOFF.md \u00a77; 02_NEWBIE_FIRST_FLOW_AND_STATE_MODEL.md \u00a7C step 3; 05_REMOTE_ACCESS_DISCOVERY_AND_PAIRING.md \u00a73; machine/remote_access_pairing.json immediate_pairing",
+      "requirement": "Preserve existing post-claim pairing card; compose claim, separate ServerBootstrapRun and PairingRun/ClientTrustRecord truth for ready/trust/code/link states.",
+      "smallest_correction": "Preserve selected Ready card. Future consumer integration must distinguish claim, SRV-005 bootstrap, PairingRun and ClientTrustRecord. A rejected draft was not published; no source fix is claimed.",
+      "status": "open_concept_owner_projection"
+    },
+    {
+      "affected_paths": [
+        "Plans/Project_System.md \u00a73.1 / PJCT-007",
+        "Plans/Planning_Wizard.md PWIZ-021 consumer",
+        "Plans/Automated_Testing_System.md ATS-020 commit rows"
+      ],
+      "authority": "PWIZ-021 ll.1811-1813,1908-1913; Project_System.md l.71; ATS-020 commit rows",
+      "concept_ref": "Concepts/onboarding/opus-5.5/src/js/62-flow.js phased owner ops (concept-local failure states, not the typed recovery contract)",
+      "id": "F-02",
+      "kind": "mechanical_omission",
+      "packet_ref": "Sept-03 01_COMBINED_HANDOFF.md \u00a76; 09_COMMAND_EVENT_WIRING_DRY_PLAN_DELTAS.md \u00a76; 10_ACCEPTANCE_FAILURE_AND_USABILITY_MATRIX.md \u00a7F-60/61",
+      "requirement": "Partial-creation recovery: reconcile-before-retry on timeout; Continue Setup / Open Repository / Delete Repository surface; deletion separate, destructive, permission-gated, never silent",
+      "smallest_correction": "PJCT-007/PWIZ-021 now define fail-closed recovery composition. Typed Project recovery/resume join, Forge delete admission and consumer fixtures remain required; replay alone never advances a rejected result.",
+      "status": "owner_prose_updated_typed_integration_open"
+    },
+    {
+      "affected_paths": [],
+      "authority": "N2-151 (newtools.md:8725-8765); FGI-015 (Forge_Integrations.md:918-974); SCM-003/SCS-014; MS-122; UF-085/087; ORI-006/008",
+      "concept_ref": "Concepts/TestOpus5.5PmConcept.html Settings Doctor surface (all 8 ui.doctor.* actions present)",
+      "id": "F-03",
+      "kind": "covered_note",
+      "packet_ref": "Sept-03 07_DOCTOR_HEALTH_AND_REMEDIATION.md \u00a74; machine/doctor_check_matrix.json; bakeoff 05_DOCTOR_IN_SETTINGS.md domain list",
+      "requirement": "Forge API readiness is separate from push credentials; generation readiness permits Usage unknown; Origin CLI is optional unless selected.",
+      "smallest_correction": "None. The current owner prose already requires these independent truths and does not mandate a fixed check-ID inventory. A missing illustrative fixture is not proof of a missing contract or registration.",
+      "status": "already_covered"
+    },
+    {
+      "affected_paths": [],
+      "authority": "newtools.md N2-153 ll.8794-8821; TestOpus5.5PmConcept.html ui.doctor.* surface",
+      "concept_ref": "Concepts/TestOpus5.5PmConcept.html (Doctor surface; grouping is concept-local)",
+      "id": "F-04",
+      "kind": "covered_note",
+      "packet_ref": "Sept-03 07_DOCTOR_HEALTH_AND_REMEDIATION.md \u00a72; machine/doctor_check_matrix.json groups",
+      "requirement": "Doctor beginner group labels (7 groups) and 5 visible states",
+      "smallest_correction": "None. Projection/return mechanism pinned in canon; labels are concept-local choice",
+      "status": "already_covered"
+    },
+    {
+      "affected_paths": [],
+      "authority": "PWIZ-025 l.2226, l.2278; PWIZ-024 l.2129; PWIZ-021 l.1823, l.1827; UCC-106 ll.7703-7838; N2-155 ll.8866-8901; PWIZ-023 ll.2031-2078; RAS-015; SP-252",
+      "concept_ref": "TestOpus5.5 uses 'Built into Puppet Master' (5x); 13 ui.onboarding.* + 11 ui.guided_tour.* censuses asserted in ATS-020",
+      "id": "F-05",
+      "kind": "superseded",
+      "packet_ref": "Bakeoff 00/01/03/10 + WAN ref \u00a73 + Sept-03 01 \u00a78, 08 \u00a75, 09 \u00a7\u00a72-5,7; correction register \u00a721/\u00a724",
+      "requirement": "Superseded spellings/names: unspaced Built into PuppetMaster; Not-now prohibition; mandatory Do This Later; cmd.onboarding.* family; cmd.doctor.cancel/run_all; onboarding.* events; OnboardingRun/ProjectCreationDraft names; 5-chapter/Usage-first tour; full-Tailscale packaging",
+      "smallest_correction": "No old command/event spellings are restored. Retained behavior under new owners stays required; tsnet retains Tailscale behavior, and pairing-card semantics are handled in F-01 rather than discarded by a copy change.",
+      "status": "superseded"
+    },
+    {
+      "affected_paths": [],
+      "authority": "Concepts/onboarding/opus-5.5/AUDIT.md:107-121 and current compiled source",
+      "concept_ref": "Concepts/onboarding/opus-5.5/AUDIT.md, README.md",
+      "id": "F-06",
+      "kind": "rejected_stale_finding",
+      "packet_ref": "N/A (current-concept self-report, verified against current canon, not a packet gap)",
+      "requirement": "Earlier C1/C6-C8 concept candidates are already fixed in current source.",
+      "smallest_correction": "None. Do not reopen resolved audit candidates as current defects. Fresh browser/native acceptance is not inferred from historical audit notes.",
+      "status": "superseded"
+    },
+    {
+      "id": "F-07",
+      "status": "corrected_and_reviewed",
+      "kind": "owner_conflict",
+      "requirement": "F3-520 must consume PWIZ-029 selected-source pairing exception while keeping Connected Server pairing after Review.",
+      "authority": "Planning_Wizard.md#PWIZ-029; FinalGUISpec.md#F3-520",
+      "affected_paths": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "smallest_correction": "Applied to F3-520/F3-521, reviewed twice; see gui-owner-alignment.md. Existing schemas cover the semantics; corrected one stale history fixture explanation."
+    },
+    {
+      "id": "F-08",
+      "status": "corrected_and_reviewed",
+      "kind": "owner_conflict",
+      "requirement": "Reviewed Git/Jujutsu/no-history selection must control new Project creation; init_git:true is not unconditional.",
+      "authority": "Project_System.md#PJCT-007; FinalGUISpec.md#F3-520",
+      "affected_paths": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "smallest_correction": "Applied to F3-520/F3-521, reviewed twice; see gui-owner-alignment.md. Existing schemas cover the semantics; corrected one stale history fixture explanation."
+    },
+    {
+      "id": "F-09",
+      "status": "corrected_and_reviewed",
+      "kind": "gui_prose_delta",
+      "requirement": "Persistent Look and sound controls in onboarding header and Tour bar remain reachable beyond Welcome.",
+      "authority": "60-ui-core.js:40,254-267,314-317; 80-tour-core.js:125-126,443-447; FinalGUISpec.md#F3-520/F3-521",
+      "affected_paths": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "smallest_correction": "Applied to F3-520/F3-521, reviewed twice; see gui-owner-alignment.md. Existing schemas cover the semantics; corrected one stale history fixture explanation."
+    }
+  ],
+  "packets": [
+    "PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03",
+    "PM_Onboarding_Doctor_Concept_Bakeoff_Packet_2026-08-15",
+    "PM_Onboarding_Doctor_Dependency_and_Work_Correction_2026-08-13"
+  ],
+  "review_notes": {
+    "duplicate_detected": "bakeoff reference/PROVIDER_CLI_FINAL_ADJUDICATION.md is byte-identical to correction-packet copy (verified by diff); counted once",
+    "legacy_prompts_not_executed": [
+      "IMPLEMENTATION_PROMPT.md",
+      "AUDIT_PROMPT.md",
+      "PROMPT_USAGE.md",
+      "CORRECTION_GOAL_PROMPT.md"
+    ],
+    "lightly_covered_server_agent_scope": [
+      "reference/FINAL_WAN_REMOTE_ACCESS_AUTHORITY.md (\u00a7\u00a710-11 checked; route internals left to server agent)",
+      "reference/REMOTE_ACCESS_REQUIREMENTS.json"
+    ],
+    "packaging_only": [
+      "manifest.json / PACKET_MANIFEST.json / CORRECTION_PACKET_MANIFEST.json",
+      "SHA256SUMS.txt",
+      "VALIDATION_REPORT.md/json",
+      "SOURCE_MAP.md",
+      "IMPACT_REGISTER.template.json"
+    ]
+  },
+  "review_status": "independently_reviewed_and_root_adjudicated; verified repairs in progress",
+  "draft_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/onboarding-draft/onboarding.md",
+      "sha256": "79a04a4182b97556fc2a063b24f367e5b77658d0dbb7f8cd114fb7a7de0606a1"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/onboarding-draft/onboarding.json",
+      "sha256": "f3321f3cfdae956254d70881e35abe0fc51bacb784f2afcc352da25b07858e0d"
+    }
+  ],
+  "verdict": "Reviewed all three packets. F07/F08/F09 corrected; F02 prose corrected with typed integration still open; F01 remains a selected-prototype/native-owner projection gap. Rejected false Doctor/stale-concept backlog. No native runtime proof."
+}

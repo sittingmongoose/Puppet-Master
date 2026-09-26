@@ -1,0 +1,173 @@
+{
+  "audit": "concept-packet-integration-20260926",
+  "report": "reports/concept-packet-integration-20260926/browser-performance.md",
+  "audit_date": "2026-09-26",
+  "review_date": "2026-09-26",
+  "packets": [
+    "PM_Egolite_Hermes_Origin_Browser_SCM_Implementation_Package_2026-08-17",
+    "PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08"
+  ],
+  "authority_rules": {
+    "plans_supersede_packets_on_newer_decisions": true,
+    "leading_gui_reference": "Concepts/TestOpus5.5PmConcept.html",
+    "settings_geometry_lineage": "Concepts/settings-redesign-concepts/kimi-k3-polish/concept-12-tome-tabs.html (geometry only; TestOpus refinements prevail)",
+    "packet_prompts_are_historical_only": true,
+    "no_native_runtime_claims": true,
+    "governance_artifacts_untouched": true
+  },
+  "verdict": "substantially_integrated",
+  "summary": "Both packets are integrated into current owners (Section15 SMPFS-142..159, TCME, SCS/JJI/FGI/ORI-001..009, SIR, Plugins_System, UI_Command_Catalog, Wiring_Matrix.production.json, Release_Supply_Chain, Named_Plan_System). The packets' proposed new owner filenames (Browser_Runtime.md, Integration_Runtime.md, Agent_Plugins_Compatibility.md) were superseded by the 2026-08-31 packet-authoritative owner map; content was audited in its current owners. After independent review: F4 closed (explicit owner mapping); F2 packet numbers preserved in-report as provisional calibration input, not canonical thresholds; F1 open as unresolved thread.branch applicability/source lineage for owner adjudication; F3 narrowed to the concrete missing capture-card fixture examples on the correct O55 source chain.",
+  "findings": [
+    {
+      "id": "F1",
+      "title": "thread.branch: unresolved applicability / source lineage (owner adjudication needed)",
+      "packet_source": "PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/02_FINAL_DECISION_REGISTER.md §12 lines 185-188 ('copy-on-write branching where applicable'); 12_COVERAGE_MATRIX.md THR-001",
+      "current_authority": "Plans/orchestrator-subagent-integration.md:31646; Plans/UI_Command_Catalog.md:11487-11489; Plans/Commands_System.md:4067-4069 enumerate only thread.request/thread.spawn/thread.await; cmd.chat.branch_from_restore is a Chat restore-point operation, not an Orchestrator branch (assistant-chat-design.md:1228-1242); canon has not established general-branch applicability, target identity, or permission/lineage behavior",
+      "requirement": "thread.spawn, thread.request, thread.await, and thread.branch are durable logical operations with per-thread ordering, idempotency, and copy-on-write branching where applicable",
+      "status": "open_unresolved_applicability",
+      "classification": "unresolved_applicability_source_lineage",
+      "not": "automatic command admission or silent retirement on the strength of an absent spelling",
+      "affected_paths": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Shared_Integration_Runtime.md (owner adjudication)"
+      ],
+      "smallest_correction": "One-line applicability pointer in the orchestrator thread unit only after the owners decide whether a general branch is applicable."
+    },
+    {
+      "id": "F2",
+      "title": "Packet numeric targets preserved as PROVISIONAL calibration input (not canonical thresholds)",
+      "packet_source": "PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/07_PERFORMANCE_PLATFORM_STORAGE_BENCHMARKS.md lines 5-14, 39-46 ('All targets are implementation gates to calibrate, not claims of existing performance')",
+      "current_authority": "Plans/Shared_Integration_Runtime.md SIR-017 requires gate families and P50/P95/P99 evidence but freezes no numeric thresholds (correct); Plans/Release_Supply_Chain.md:1005-1019 requires versioned scenario/profile/toolchain hashes and raw receipts",
+      "provisional_input_preserved_in_report": {
+        "input_to_visible_ack_p95": {"modern_ms": 50, "legacy_ms": 75},
+        "pause_stop_under_saturation_p95": {"modern_ms": 100, "legacy_ms": 150},
+        "provider_fragment_receive_to_paint_p95": {"modern_ms": 50, "legacy_ms": 100},
+        "framing": "implementation gates to calibrate with measurement before any admission; not claims"
+      },
+      "status": "closed_preserved_provisional_in_report",
+      "classification": "provisional_calibration_input_no_owner_edit",
+      "not": "fixed canonical thresholds or performance claims; no SIR-017 acceptance-criteria edit proposed"
+    },
+    {
+      "id": "F3",
+      "title": "Capture-card fixture examples missing from the leading concept (narrow concept-side partial; corrected scans and source chain)",
+      "packet_source": "PM_Egolite_Hermes_Origin_Browser_SCM_Implementation_Package_2026-08-17/06_GUI_PMCONCEPT7_CONTRACT.md §2-§5 lines 28-181",
+      "current_authority": "Owner canon exists: Plans/Cursor_Origin_Integration.md:288-311 (ORI-008 labels/fixtures), Plans/Source_Control_System.md:218-250 (Source of Truth / Mirror Health sections), Plans/Test_Capture_and_Motion_Evidence.md:152-154,304 + UI_Command_Catalog.md:12026-12027 (RawTestCapture/DerivedDemonstrationVideo, TCME-008), Plans/Section15_MVP_Promoted_Features_Spec.md:8746-8770 (SMPFS-154 user_step_label)",
+      "corrected_html_scan": {
+        "file": "Concepts/TestOpus5.5PmConcept.html",
+        "present_exact": {"Mirrored from GitHub": 1, "Connect Cursor Origin": 1},
+        "case_insensitive_substring_only_not_packet_fixtures_in_context": {
+          "inspect provenance": "1 (lowercase App-Updates prose about GitHub Releases)",
+          "Browser engine": "2 ('Browser engine present' Doctor-style example steps)"
+        },
+        "absent_even_case_insensitive": ["Raw Test Capture", "Demonstration Video", "View Source Capture"],
+        "absent_literal_text_not_proof_of_absent_behavior": ["Review version 4", "user_step_label", "Mirror is catching up", "Detached from GitHub", "Hidden Browser", "Guided Browser Actions"],
+        "supersedes": "original report 'none' claim (false zero)"
+      },
+      "corrected_source_chain": {
+        "build": "Concepts/onboarding/opus-5.5/tools/build.py from pinned TestPMConcept.html plus onboarding/opus-5.5/src",
+        "testpm_lineage": "pm7-tools Settings checkpoint plus authored transforms",
+        "wrong_path_superseded": "Concepts/TestOpusPMConcpet-src/ is an older separate tree, not the correction surface",
+        "rule": "never hand-edit generated HTML"
+      },
+      "status": "partial_narrow_capture_cards_only",
+      "classification": "concept_side_narrow_partial_no_product_choice",
+      "pending": "distinct Raw Test Capture / Demonstration Video artifact cards with View Source Capture / Inspect Provenance actions, via the source-owned O55 chain",
+      "no_product_choice": "TestOpus is already the selected reference; no TestOpus-vs-successor decision needed",
+      "no_plans_edit": true
+    },
+    {
+      "id": "F4",
+      "title": "cmd.browser.run_code / cmd.browser.evaluate aliases explicitly mapped in the owner (CLOSED)",
+      "packet_source": "PM_Egolite_Hermes_Origin_Browser_SCM_Implementation_Package_2026-08-17/04_COMMAND_EVENT_WIRING_REGISTER.md §2 Aliases lines 42-52",
+      "current_authority": "Plans/Section15_MVP_Promoted_Features_Spec.md:916-930 maps cmd.browser.run_code|browser_run_code only to cmd.browser.program.run {source_form: pm_browser_script, capability_profile: advanced} and cmd.browser.evaluate|browser_evaluate only to cmd.browser.page.evaluate, no arbitrary-code behavior (older table :9502-9507 is lineage); UCC :8228 classifies the inputs compatibility-only; safety via SMPFS-147/148 (:8862-8916)",
+      "requirement": "Legacy cmd.browser.run_code/browser_run_code normalize to cmd.browser.program.run {source_form: pm_browser_script}; cmd.browser.evaluate/browser_evaluate to cmd.browser.page.evaluate; unsupported payloads fail with typed compile diagnostics and no effect",
+      "status": "closed",
+      "classification": "explicitly_mapped_in_owner",
+      "correction": "original 'mapping exists in no live row' claim was wrong; no catalog note needed for closure"
+    }
+  ],
+  "checked_no_gap": [
+    {
+      "topic": "RepositoryAuthority / RepositoryAuthorityProjection / MirrorTopologyProjection exact tokens",
+      "detail": "Absent from live canon; Forge_Integrations.md:21-25,97-118 (FGI-002) owns the equivalent shape as RepositoryForgeBinding + independent authority roles + MirrorTopology. Renamed-equivalent; optional source-lineage alias note in FGI-002 preserved_exact_tokens.",
+      "status": "already_covered_renamed_equivalent"
+    },
+    {
+      "topic": "cmd.onboarding.* command family",
+      "detail": "Durably rejected by UCC-106 (UI_Command_Catalog.md:7703-7726); Product Onboarding owned by Planning_Wizard.md PWIZ-021/023 typed local actions + ui.onboarding.* routes; Doctor by newtools.md N2-151/152/153 + ui.doctor.* (Settings_System.md SSYS-014).",
+      "status": "superseded"
+    },
+    {
+      "topic": "cmd.github.actions.* vs cmd.github_actions.*",
+      "detail": "Superseded by provider-neutral repository_automation / Actions & Pipelines shell with independent AutomationBinding (Forge_Integrations.md FGI-013 2026-09-01; Crosswalk.md:167-185).",
+      "status": "superseded"
+    },
+    {
+      "topic": "Git 2.55.0 / Jujutsu 0.44.0 floors",
+      "detail": "Source_Control_System.md:185-186,428 treats them as initial packet inputs with signed moving catalogs owning current values, matching the packet's own §5.3 refinement.",
+      "status": "already_covered"
+    },
+    {
+      "topic": "Settings Hosting Services -> Cursor Origin manager",
+      "detail": "Route defined by forge owners (Forge_Integrations.md:527, Cursor_Origin_Integration.md:344); Settings defers per SSYS-013 and the Forge/Backup/tsnet Settings consumer addendum (Settings_System.md:1331-1363); settings_inventory.json intentionally has no Origin rows (manager destinations outside the 828 ordinary-setting denominator).",
+      "status": "verify_only"
+    },
+    {
+      "topic": "Fetch-first routing, Browser Routines, adapter hardening, no-Expert-Mode, screenshot modality",
+      "detail": "Section15_MVP_Promoted_Features_Spec.md:894, 8989, 9010 (SMPFS-151); promoted-routine lifecycle Plugins_System.md:4515-4546.",
+      "status": "already_covered"
+    },
+    {
+      "topic": "Renderer bakeoff (packet-2 REN-001)",
+      "detail": "Superseded by the settled renderer order (Winit+Skia default, FemtoVG-wgpu fallback, software emergency) per explicit user approval 2026-09-09, Release_Supply_Chain.md:1003.",
+      "status": "superseded"
+    },
+    {
+      "topic": "Named Plan aggregate name",
+      "detail": "PlanWorkstream/plan_workstream_id are migration aliases; canonical NamedPlan/named_plan_id (Named_Plan_System.md:7).",
+      "status": "superseded"
+    }
+  ],
+  "coverage_summary": {
+    "clusters": [
+      {"name": "Browser runtime (P1 §2-3; EGO/HBU/BRW)", "status": "retained_covered", "owners": "Section15 §3.18A + SMPFS-147..157; cmd.browser.* 15 IDs; browser event/schema registries"},
+      {"name": "Capture/recording/motion evidence (P1 §4; CAP)", "status": "retained_covered", "owners": "Test_Capture_and_Motion_Evidence.md; TCME-008 commands"},
+      {"name": "Source control + Jujutsu + forges (P1 §5; SCM)", "status": "retained_covered", "owners": "Source_Control_System, Jujutsu_Integration, Forge_Integrations, GitLab/Azure_DevOps/Bitbucket_Integration, GitHub_Integration"},
+      {"name": "Cursor Origin Preview (P1 §5.6/11; ORI-001..033)", "status": "retained_covered_extended", "owners": "Cursor_Origin_Integration.md ORI-001..009; forge schema/fixtures; 46-ID cmd.forge.* set"},
+      {"name": "Shared Integration Runtime + provider-CLI exception (P1 §6; IRT)", "status": "retained_covered", "owners": "Shared_Integration_Runtime.md; CLI_Bridged_Providers.md:1689; BinaryLocator_Spec.md:1891"},
+      {"name": "Agent Plugins (P1 §7; PLG)", "status": "retained_covered", "owners": "Plugins_System.md package/promoted-routine contracts"},
+      {"name": "Server/WSL/container placement (P1 §2.11; SRV)", "status": "retained_covered", "owners": "Architecture/Server/Containers_Registry_and_Unraid; Release_Supply_Chain platform admission"},
+      {"name": "Full-thread runtime (P2 §1-7,12; OPT/CON/MEM/STO/LOAD/THR)", "status": "retained_covered_F1_open_lineage_F2_preserved_provisional", "owners": "Shared_Integration_Runtime.md SIR rows; thread command family"},
+      {"name": "Platform/distribution (P2 §3,5,10; CPU/MAC/WIN/LNX/SIZE/REN)", "status": "retained_covered_ren_superseded", "owners": "Release_Supply_Chain.md:995-1003"},
+      {"name": "Named Plans / Approve And Build / Orchestrator scopes (P2 §14; PLAN)", "status": "retained_covered_naming_superseded", "owners": "Named_Plan_System.md; cmd.named_plan.*; cmd.planning_wizard.approve_and_build"},
+      {"name": "PMConcept7 factory state + authored pipeline (P2 §13; PM7)", "status": "retained_covered", "owners": "home_workspace_layout.schema.json; F3-501..504 wave; TestOpus5.5 factory tokens"},
+      {"name": "Onboarding/Doctor (P2 §15 + handoff; ONB/DOC)", "status": "superseded_by_newer_owners", "owners": "PWIZ-021/023, SMPFS-146, N2-151/152/153, SSYS-014, UCC-106"},
+      {"name": "Commands/wiring/DRY closure (P1 §11 + 04 register; P2 05, §17)", "status": "retained_covered_F4_closed", "owners": "UI_Command_Catalog, Wiring_Matrix.production.json, DRY_Rules, touch_closure.json; Section15:916-930 alias map"}
+    ],
+    "packet_files": {
+      "packet_1_total_files": 59,
+      "packet_1_substantive_read": ["00_READ_ME_FIRST.md", "01_IMPLEMENTATION_PACKET.md", "03_REQUIREMENTS_COVERAGE_MATRIX.md", "04_COMMAND_EVENT_WIRING_REGISTER.md", "05_PLAN_DOC_PLANUNIT_MAP.md", "06_GUI_PMCONCEPT7_CONTRACT.md", "07_VALIDATION_AND_ACCEPTANCE.md", "08_AUTHORITY_AND_SUPERSESSION.md", "09_HERMES_BROWSER_USE_INTEGRATION_DELTA.md", "10_REQUIREMENT_RETENTION_AUDIT.md", "11_CURSOR_ORIGIN_INTEGRATION_DELTA.md"],
+      "packet_1_legacy_prompts": ["02_GOAL_PROMPT.md"],
+      "packet_1_packet_internal_assets": ["MANIFEST.json", "SHA256SUMS.txt", "VALIDATION_REPORT.md"],
+      "packet_1_sources_classification": "sources/01-31 historical research/handoffs incl. 2026-08-09 package (22-31); sources/32 Origin research; sources/33-44 2026-08-11 retention-proof snapshots (reference assets)",
+      "packet_2_total_files": 33,
+      "packet_2_substantive_read": ["00_READ_ME_FIRST.md", "01_OBJECTIVE_SCOPE_AND_COMPLETION.md", "02_FINAL_DECISION_REGISTER.md", "03_CANONICAL_OWNER_DOC_AND_PLANUNIT_MAP.md", "04_DATA_CONTRACTS_AND_STATE_MACHINES.md", "05_COMMAND_ID_WIRING_DRY_CLOSURE.md", "06_GUI_PMCONCEPT7_ONBOARDING_DOCTOR_SPEC.md", "07_PERFORMANCE_PLATFORM_STORAGE_BENCHMARKS.md", "08_ACCEPTANCE_TEST_AND_FAILURE_MATRIX.md", "09_IMPLEMENTATION_SEQUENCE_AND_GOVERNANCE.md", "10_SOURCE_PRECEDENCE_AND_SUPERSESSION.md", "12_COVERAGE_MATRIX (.md/.json pair)", "13_VALIDATION_REPORT (.md/.json pair)", "handoffs/ 00-05"],
+      "packet_2_legacy_prompts": ["11_GOAL_PROMPT_UNDER_4000_CHARS.md"],
+      "packet_2_sources_classification": "source_inputs/00 notice; 01-11 historical source handoffs",
+      "exact_duplicates_detected_read_once": [
+        "packet1 sources/15_BACKBONE_V6_DECISION_REGISTER.md == packet2 source_inputs/02_server_backbone_current_decision_register_v6.md",
+        "packet1 sources/08_DEMAND_PROVISIONING_HANDOFF.md == packet2 source_inputs/07_demand_driven_capability_provisioning_handoff.md",
+        "packet1 sources/03_FINAL_DECISION_REGISTER_V4.md == packet2 source_inputs/03_egolite_browser_source_control_final_decision_register_v4.md",
+        "packet1 sources/14_SETTINGS_TO_OPTIMIZATION_HANDOFF.md == packet2 source_inputs/09_optimization_settings_load_handoff.md",
+        "packet1 sources/11_CROSS_SYSTEM_COMPLETENESS_AUDIT.md == packet2 source_inputs/08_cross_system_completeness_audit.md"
+      ]
+    }
+  },
+  "boundaries_respected": {
+    "plans_or_concept_edits": "none in this report lane (settings-lane fixture fields owned separately)",
+    "governance_reseal": "none",
+    "repository_writes": ["reports/concept-packet-integration-20260926/browser-performance.md", "reports/concept-packet-integration-20260926/browser-performance.json"],
+    "no_runtime_acceptance_claimed": true
+  }
+}

@@ -1,0 +1,313 @@
+{
+  "audit": "concept-packet-integration-20260926/server-backup",
+  "basis": "origin/main == worktree HEAD 9a40601e9 at audit; review cites re-verified in worktree (HEAD 2b244a15b; FinalGUISpec/Planning_Wizard/Project_System under concurrent edit, cited by unit id)",
+  "concept": "Concepts/ selected sources (settings_refresh managers, onboarding/opus-5.5 screens)",
+  "coverage": [
+    {
+      "cite": "SBI/02 L7-29; SBI/03 L59-63; SBI/04 L4-28",
+      "cluster": "C1 server/client/home ownership",
+      "owners": [
+        "Plans/Server_System.md SRV-001..013",
+        "Plans/Project_System.md PJCT-001..008 (concurrent edit; no proposals here)",
+        "Plans/storage-plan.md",
+        "Plans/Settings_System.md SSYS-012"
+      ],
+      "status": "already_covered"
+    },
+    {
+      "cite": "SBI/05 \u00a78; SBI/10 L47-58,126-139; SBO/01 L68-80; SBO/02; SBO/03; v5/10 \u00a74",
+      "cluster": "C2 discovery/pairing/claim",
+      "concept": "s-ready QR/code/link/countdown card present (68-screens-server.js:151-175); claim op local pair phase + server_trust_confirmed=true (:125-138) precedes distinct bootstrap/PairingRun evidence",
+      "note": "Existing Ready card preserved. Future owner projection must distinguish bootstrap and explicit pairing/trust results. Rejected source draft not published.",
+      "owners": [
+        "Plans/Server_System.md SRV-002..005",
+        "Plans/Remote_Access_System.md RAS-001,RAS-014",
+        "Plans/Planning_Wizard.md PWIZ-024/025"
+      ],
+      "status": "owner_covered_concept_gap_open"
+    },
+    {
+      "cite": "SBI/05 \u00a73 + SBI/18 superseded by FB/13 TSX-001..005 + tsnet/01..10",
+      "cluster": "C3 tailscale/tsnet connector",
+      "concept": "Away From Home route model; Tailscale/Headscale/Funnel states",
+      "owners": [
+        "Plans/Remote_Access_System.md RAS-015",
+        "Plans/Shared_Integration_Runtime.md SIR-032/033",
+        "Plans/remote_access_system_contracts.schema.json"
+      ],
+      "status": "superseded_with_record"
+    },
+    {
+      "cite": "SBI/05 \u00a7\u00a74-7; SBO/01 L93-117",
+      "cluster": "C4 funnel/proxy/vpn/remote-link",
+      "owners": [
+        "Plans/Remote_Access_System.md RAS-002,RAS-004/005/006/007"
+      ],
+      "status": "already_covered"
+    },
+    {
+      "cite": "SBI/05 \u00a79; SBI/06; tsnet/03",
+      "cluster": "C5 packaging + WSL",
+      "owners": [
+        "Plans/Remote_Access_System.md RAS-008/010/015",
+        "Plans/Release_Supply_Chain.md"
+      ],
+      "status": "already_covered"
+    },
+    {
+      "cite": "FB/02 SCM-001..009; FB/03 FORGE-001..009; FB/05 MAT-001..005; FB/06 SAUTH-001..005",
+      "cluster": "C6 forge capability/auth/providers",
+      "note": "G1 alias repairs rejected; selected official-service previews covered, native CI artifact/admin commands and exact link payloads still incomplete under already-decided FGI-015 fallback.",
+      "owners": [
+        "Plans/Source_Control_System.md SCS-001..020",
+        "Plans/Jujutsu_Integration.md JJI-001..012",
+        "Plans/Forge_Integrations.md FGI-001..020",
+        "Plans/Cursor_Origin_Integration.md + GitLab/Azure/Bitbucket owners"
+      ],
+      "status": "already_covered"
+    },
+    {
+      "cite": "FB/04 GUI-001..008",
+      "cluster": "C7 left-rail GUI",
+      "concept": "Actions & Pipelines occupant; review/publish copy",
+      "owners": [
+        "Plans/Forge_Integrations.md FGI \u00a77 (github_actions alias)",
+        "Plans/FinalGUISpec.md F3 consumers",
+        "Concepts/pm7-tools/settings_refresh/placement.json source-manager tabs"
+      ],
+      "status": "already_covered"
+    },
+    {
+      "cite": "SBI/08 L37-45; FB/07 BKP-001..012; v5/09 lineage via 243-row coverage + baseline_dispositions.json",
+      "cluster": "C8 backup architecture/capture/engine",
+      "owners": [
+        "Plans/Backup_Restore_System.md BRS-001..010,BRS-017"
+      ],
+      "status": "already_covered"
+    },
+    {
+      "cite": "FB/08 CLOUD-001..008",
+      "cluster": "C9 destinations/auth",
+      "concept": "destination picker (NAS/Drive/OneDrive/S3/SFTP)",
+      "owners": [
+        "Plans/Backup_Restore_System.md BRS-013,BRS-018",
+        "FB machine/backup_destinations.json (11)"
+      ],
+      "status": "already_covered"
+    },
+    {
+      "cite": "FB/09 KEY-001..007",
+      "cluster": "C10 encryption/recovery kit",
+      "concept": "Save/Print/Test covered; protected handoff + rotation/compromise projection gap pending (see G2)",
+      "owners": [
+        "Plans/Backup_Restore_System.md BRS-012",
+        "Plans/Permissions_System.md",
+        "Plans/FinalGUISpec.md F3-528"
+      ],
+      "status": "owner_covered_concept_gap_open"
+    },
+    {
+      "cite": "FB/10 REST-001..009",
+      "cluster": "C11 restore/browse/retrieve",
+      "concept": "restore-from-kit flow incl. unlock phrase, preview, never-restore-secrets",
+      "owners": [
+        "Plans/Backup_Restore_System.md BRS-006,BRS-014",
+        "Plans/Project_System.md PJCT-004,005",
+        "Plans/Server_System.md SRV-013"
+      ],
+      "status": "already_covered"
+    },
+    {
+      "cite": "FB/11 AUTO-001..006",
+      "cluster": "C12 automation/retention/verification",
+      "concept": "retention; daily-backup copy",
+      "owners": [
+        "Plans/Backup_Restore_System.md BRS-015,BRS-004/005"
+      ],
+      "status": "already_covered"
+    },
+    {
+      "cite": "SBI/09; SBI/16; SBO/01..03; FB/12 BGUI-001..005; FB handoffs x2",
+      "cluster": "C13 settings/onboarding/doctor",
+      "concept": "placement tabs; Away From Home; kit screens",
+      "owners": [
+        "Plans/Settings_System.md SSYS-012/015/020/026",
+        "Plans/Planning_Wizard.md PWIZ-024/025",
+        "Plans/newtools.md N2-156",
+        "Plans/FinalGUISpec.md F3-520/522"
+      ],
+      "status": "already_covered"
+    },
+    {
+      "cite": "SBI/10; SBI/11; SBO/02; FB/14 CMDX + 168-action census; FB/15 OWN-001..006; tsnet/05; tsnet/06",
+      "cluster": "C14 commands/wiring/DRY/schemas",
+      "note": "G1 rejected; no new alias/external-only/deferred rows prescribed",
+      "owners": [
+        "Plans/Commands_System.md CS-073,CS-074",
+        "Plans/UI_Command_Catalog.md UCC-151/152",
+        "Plans/Wiring_Matrix.md WM-050/051",
+        "Plans/UI_Wiring_Rules.md UIW-016",
+        "Plans/Wiring_Matrix.production.json + exclusions",
+        "Plans/touch_closure.json"
+      ],
+      "status": "already_covered"
+    },
+    {
+      "cite": "SBI/14; SBO/03; tsnet/08; FB/16 TEST-001..003; FB/18",
+      "cluster": "C15 tests/acceptance",
+      "note": "NOT_RUN by design is not a failure; no runtime proof claimed",
+      "owners": [
+        "Plans/Automated_Testing_System.md ATS-043/044",
+        "Plans/forge_backup_tsnet_acceptance.json (67 scenarios, 132 joins)"
+      ],
+      "status": "already_covered"
+    },
+    {
+      "cite": "SBI/01 L67-85; SBI/15; tsnet/09; FB/18",
+      "cluster": "C16 negatives/retirements",
+      "owners": [
+        "Plans/Crosswalk.md C-052, AUTH-006",
+        "Plans/FinalGUISpec.md F3 negatives",
+        "Plans/Server_System.md",
+        "Plans/Remote_Access_System.md RAS-015 negatives"
+      ],
+      "status": "already_covered"
+    }
+  ],
+  "date": "2026-09-26",
+  "duplicate_groups": 16,
+  "findings": [
+    {
+      "current_authority": "FGI \u00a73.1 closed 46-ID census (L401-467); FGI-013 nine admissions, explicitly not aliases (L807-839); packet reconciliation-first rule (FB/14 L5, L41)",
+      "disposition": "Current Plans + selected GUI trump packet spellings. Non-admission is not a finding. No aliases, exclusions, Touch Closure rows, UI commands, handlers, events, or runtime claims admitted or prescribed.",
+      "ids": [
+        "cmd.forge.review.list",
+        "cmd.forge.pipeline.definitions",
+        "cmd.forge.pipeline.definition.pin",
+        "cmd.forge.pipeline.artifacts.list",
+        "cmd.forge.pipeline.artifact.download",
+        "cmd.forge.pipeline.secret.set",
+        "cmd.forge.pipeline.secret.remove",
+        "cmd.forge.pipeline.variable.set",
+        "cmd.forge.pipeline.variable.remove",
+        "cmd.forge.capabilities.refresh",
+        "cmd.source_control.publication.preview"
+      ],
+      "kind": "false_positive_rejected",
+      "mapping": [
+        {
+          "candidates": [
+            "cmd.forge.review.list"
+          ],
+          "disposition": "covered_by_function",
+          "evidence": "SCS-016 ReviewRequest projection (Source_Control_System.md:1047-1053); cmd.forge.review.open|refresh (Forge_Integrations.md:416-417)"
+        },
+        {
+          "candidates": [
+            "cmd.forge.pipeline.definitions",
+            "cmd.forge.pipeline.artifacts.list"
+          ],
+          "disposition": "covered_by_function",
+          "evidence": "SCS-016 AutomationDefinition/RemoteArtifact; pipeline list|refresh|open_job|open_logs; F3-529 definition/artifact regions (FinalGUISpec.md:35773-35775)"
+        },
+        {
+          "candidates": [
+            "cmd.forge.pipeline.definition.pin"
+          ],
+          "disposition": "covered_gui_owner_scoped",
+          "evidence": "Settings pins workflows (35-source.js:314-318,468); cmd.github.actions.pin|unpin retained (FinalGUISpec.md:1697). Provider-neutral pinning needs owner decision."
+        },
+        {
+          "candidates": [
+            "cmd.forge.pipeline.artifact.download"
+          ],
+          "disposition": "existing_external_preview_native_command_gap",
+          "evidence": "Selected Open artifacts in service uses preview-disabled cmd.forge.pipeline.open_in_browser. FGI-015 already owns native capability gates and official fallback. Native CI download/import command coverage remains incomplete; release asset is distinct. Distinct exact route metadata still required."
+        },
+        {
+          "candidates": [
+            "cmd.forge.pipeline.secret.set",
+            "cmd.forge.pipeline.secret.remove",
+            "cmd.forge.pipeline.variable.set",
+            "cmd.forge.pipeline.variable.remove"
+          ],
+          "disposition": "existing_external_preview_native_command_gap",
+          "evidence": "Selected Open service settings uses preview-disabled cmd.forge.pipeline.open_in_browser. FGI-015 already owns capability-gated admin and official fallback; native mutation command contracts incomplete. Human-only broker remains mandatory. Distinct exact route metadata still required."
+        },
+        {
+          "candidates": [
+            "cmd.forge.capabilities.refresh"
+          ],
+          "disposition": "covered_by_function",
+          "evidence": "Shared setup family cmd.integration.connection.add|update|test|remove|open_details (Forge_Integrations.md:452-456; Commands_System.md:5315)"
+        },
+        {
+          "candidates": [
+            "cmd.source_control.publication.preview"
+          ],
+          "disposition": "covered_by_function",
+          "evidence": "Preview/approval retained before cmd.source_control.remote.publish (Source_Control_System.md:312,396); not policy.preview"
+        }
+      ],
+      "packet_cite": "FB/14_COMMAND_CONTRACTS.md ACT table L43-212 (ACT-010,046,066,069,077,078,079,159,160,161,162); FB/04 section census L110-140",
+      "requirement": "Sept-1 candidate forge/publication spellings reconciled to current function without inventing commands",
+      "status": "rejected"
+    },
+    {
+      "covered": [
+        "Save Recovery Kit action (54-backup.js:50-54)",
+        "Print it save target (:225-228)",
+        "Test Recovery Kit three-step check (:206-211)",
+        "Status Not saved / Saved\u00b7Not tested / Saved\u00b7Tested (:27)",
+        "Onboarding Recovery Kit check after Project commit (72-screens-review.js:273-342; cmd.backup.recovery_key.export/test)",
+        "BRS-012 owns actions, handlers unavailable (Backup_Restore_System.md:484-510)"
+      ],
+      "current_authority": "BRS-012 (Save/Copy/Print/Test, rotation-adds-slot-first, compromise-needs-new-domain; negatives); F3-528 human-only step-up no-store handoff, masked state, no bytes in fixtures/clipboard (FinalGUISpec.md:35695)",
+      "kind": "open_concept_projection_gap",
+      "packet_cite": "FB/09 KEY-004 L31-37, KEY-005 L39-45; FB/12 BGUI-003 L23-29",
+      "repair_owner": "Future Backup/GUI consumer integration; attempted source draft rejected, no repair published.",
+      "requirement": "Recovery Kit flow covers Save/Copy/Print/Test; rotation vs re-encrypt-after-compromise distinct; protected secret-free handoff",
+      "residual_gap": [
+        "No distinct rotation vs suspected-compromise/new-domain re-encryption presentation",
+        "No owner-bound protected handoff/step-up/currentness for Save/Copy/Print/Test",
+        "Copy writes example key to clipboard (54-backup.js:236); onboarding renders six example words (72-screens-review.js:305,330-333) vs F3-528 prohibition"
+      ],
+      "status": "open_selected_source_preserved"
+    },
+    {
+      "applied_edit": "Reader pointer references complete RAS-015 supersedes list, including full-install/component and per-WSL mechanics; no dependency edge or semantics added.",
+      "companion_need": "none (prose pointer; no schema/fixture/catalog/wiring/touch change; shard/index regen left to landing flow)",
+      "current_authority": "RAS-015 (Remote_Access_System.md:854-881) supersedes list: existing-install reuse, Serve/private transport, per-WSL host-serving, initiating-active-Client lifetime; serve IDs non-discoverable compatibility inputs invoking no CLI",
+      "evidence": "RAS-015 supersedes list already decided the conflict; pointer adds routing only. RAS-003 historical text preserved.",
+      "kind": "reader_routing",
+      "packet_cite": "FB/tsnet/01_AUTHORITY_AND_SUPERSESSION.md L21-33; FB/tsnet/05_COMMAND_EVENT_RECEIPT_WIRING_DRY_DELTAS.md L42-48",
+      "requirement": "Superseded full-client/Serve mechanics carry in-unit pointer to the connector authority",
+      "status": "accepted_applied"
+    }
+  ],
+  "legacy_assets_not_executed": [
+    "SBI/prompts/EXECUTION_GOAL_PROMPT.txt + INDEPENDENT_AUDIT_GOAL_PROMPT.txt (+2 identical delivery-root txt copies)",
+    "SBI/tools/validate_packet.py",
+    "FB/prompts/EXECUTION_GOAL.txt + INDEPENDENT_AUDIT_GOAL.txt",
+    "FB/scripts/validate_packet.py",
+    "FB/19_SOURCES_AND_EVIDENCE.md (50-section research register; head+headings+spot read)",
+    "SBO/07_OFFICIAL_RESEARCH_NOTES.md + SBO/08_OFFICIAL_SOURCE_URLS.md (+2 dup copies each)",
+    "SHA256SUMS.txt / manifest.json / VALIDATION_REPORT files (integrity records; delivery reports read)"
+  ],
+  "method": "fresh single pass; no old transcripts/census/review cycles inspected; packet dates + explicit supersession; duplicates hashed, read once; independent-review correction with in-tree re-verification of load-bearing cites; no global audits run",
+  "non_findings": [
+    "Visible copy spacing 'Built into Puppet Master' is deliberate (Crosswalk AUTH-006); source token preserved; concept matches.",
+    "Scalar settings_inventory.json legitimately lacks manager rows; routing lives in placement.json.",
+    "cmd.connection.* recorded via catalog + production exclusions; accepted.",
+    "handler_unavailable + expected_event_types=[] is current planning posture, not scored.",
+    "Packet candidate spellings absent from central files = non-admission, not a finding."
+  ],
+  "packet_scope": [
+    "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14 (delivery + both nested bundles)",
+    "PM_Forge_Backup_Tsnet_Post_Integration_Packet_2026-09-01 (root + handoffs + machine + source_baseline + tsnet)"
+  ],
+  "product_choices": "No new binary native-versus-external decision: FGI-015 already sets capability-gated native behavior plus official external fallback. Existing provider-neutral pinning and other domain questions remain with their owners.",
+  "report": "reports/concept-packet-integration-20260926/server-backup.md",
+  "review_basis": "/home/sittingmongoose/PM-Experiments/concept-packet-integration-20260926/server-backup/sol-review.md; all load-bearing cites re-verified in-tree",
+  "verdict": "G1 missing-alias repairs rejected; existing official-service previews preserved with conditional native coverage limits. G2/C2 remain open concept-owner projection gaps; attempted draft rejected. G3 pointer applied and reviewed. No runtime proof."
+}

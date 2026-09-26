@@ -1,0 +1,87 @@
+{
+  "schema_id": "pm.packet_reconciliation_evidence.v1",
+  "date": "2026-09-26",
+  "boundary": "Static plan/fixture and selected HTML concept evidence only; no native runtime or governance certification.",
+  "evidence": [
+    {
+      "kind": "independent_review",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/reviews/onboarding.md",
+      "sha256": "fb8b347fec6e42efe683cc15fae9ee1221a4a958eb74f50b5ce8789b04788930"
+    },
+    {
+      "kind": "independent_review",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/reviews/server-backup.md",
+      "sha256": "09b918d3099f43594a2a2dcb72bb020144aff0b65a7062e325cacb899d8fa1d1"
+    },
+    {
+      "kind": "independent_review",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/reviews/browser-performance.md",
+      "sha256": "dd8a18b08d630b78c2bc7073c7d72f780faeb9aa1bf21031efe9195855d17474"
+    },
+    {
+      "kind": "independent_review",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/reviews/settings.md",
+      "sha256": "3e4e7f90e6d6e4a40112961bdc1c9b65ede02f48657cf42ef89098c1900a1e4d"
+    },
+    {
+      "kind": "independent_review",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/reviews/gui-owner-alignment.md",
+      "sha256": "094a8807bc33849a288dcbd3c9903521fdd93c8fb287a75fc42487c23d5a0862"
+    },
+    {
+      "kind": "independent_review",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/reviews/project-recovery-owner.md",
+      "sha256": "034f64355859c0843a026fcacdf88442ef8e3abd3c272ae9d88ce60b1719ac13"
+    },
+    {
+      "kind": "independent_review",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/reviews/audit-report-finalization.md",
+      "sha256": "d1eb90a53f9e90d7f0934356805a25261d119d90ef2e3c14e78bc0486f9b867b"
+    },
+    {
+      "kind": "independent_review",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/reviews/concept-owner-projections.md",
+      "sha256": "5d1028852d1d519d907065bde511fd0ee6f0a7c21345dba0d3f92c853b9012f7"
+    },
+    {
+      "kind": "packet_member_inventory",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/source-manifest.json",
+      "sha256": "37542fb88752ddb26ee22615422bb53def965cfdc8f2d44349b9aa655ba15a15"
+    },
+    {
+      "kind": "publication_probe_manifest",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/publication/evidence.json",
+      "sha256": "1f4320afa55a025b756c592dd22fa0510821be54f914e7ed34610681240b3d11"
+    },
+    {
+      "kind": "original_onboarding_audit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/onboarding-draft/onboarding.json",
+      "sha256": "f3321f3cfdae956254d70881e35abe0fc51bacb784f2afcc352da25b07858e0d"
+    },
+    {
+      "kind": "audit_review_inputs",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/review-inputs/manifest.json",
+      "sha256": "806653ca66b1d15c9a0ea7c035c311ac6ae15e673ac4f7f4deaf90b15e255f2a"
+    },
+    {
+      "kind": "rejected_draft_manifest",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/rejected-concept-projections/manifest.json",
+      "sha256": "86afb6b28dcbda7b038d357a0eaf3c2adb3c6ba9d099c953246d1a3085e724d0"
+    },
+    {
+      "kind": "static_contract_check",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/validation/new-contracts.json",
+      "sha256": "46080a97f854b5e3efaa2b8b62028bdadaa924c4c660c557c6b4234012338eb5"
+    },
+    {
+      "kind": "targeted_tests",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/gui-owner-alignment/preserved-manifest.json",
+      "sha256": "b7c6de64858ecdf5db5e337c0a78ed20915f9416f3e43bd2a3f3f11dfeaf89c5"
+    },
+    {
+      "kind": "selected_concept_browser_smoke",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/scratch/concept-packet-integration-20260926/concept-owner-projections/final-smoke-settled.json",
+      "sha256": "47ef4162f234ba42a0a76098c8ce742530c0949817f9b7dbb88fd8cf3103f01b"
+    }
+  ]
+}
