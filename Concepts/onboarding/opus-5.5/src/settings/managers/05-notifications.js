@@ -36,6 +36,7 @@
   PM51.style(`
     #panel-settings .o55-notif-master { margin-bottom: 14px; }
     #panel-settings .o55-notif-master .pm51-note { margin-top: 8px; }
+    #panel-settings .pm51-sound-styles { margin: 0 0 12px; overflow-x: auto; scrollbar-width: none; }
     #panel-settings .o55-notif-master ~ :not(.pm51-quiet) { transition: opacity var(--k3-dur-base, 220ms) var(--k3-ease-out, ease); }
     #panel-settings .o55-notif-master.is-off ~ :not(.pm51-quiet) { opacity: .55; }
     /* events: the sound choice sits on the row; nothing on the row is whole-row clickable */
@@ -156,6 +157,14 @@
     const all = list || dests(); const d = all.find(x => x.name === m[1]) || all.find(x => x.name.toLowerCase().includes(m[1].toLowerCase()));
     return { to: d ? d.name : 'none', after: m[2] };
   }
+  /* The built-in library grows to two dozen sounds in six styles; each new one carries its own recipe (tones). */
+  function migrateSounds() {
+    const n = state.notifications; if (!n || PM51.s().o55NotifSoundsV1) return;
+    n.sounds = n.sounds || []; const styles = X().builtinStyles || {};
+    n.sounds.forEach(s => { if (!s.style && styles[s.id]) s.style = styles[s.id]; });
+    (X().builtinSounds || []).forEach(b => { if (!n.sounds.some(s => s.id === b.id)) n.sounds.push(clone(b)); });
+    PM51.s().o55NotifSoundsV1 = true;
+  }
   const escStore = p => p.to === 'none' ? 'None' : p.to === 'repeat' ? `Repeat urgent after ${p.after}` : `${p.to} after ${p.after}`;
   const escText = g => { const p = escParts(g); return p.to === 'none' ? 'No escalation' : p.to === 'repeat' ? `Repeats after ${p.after}` : `Then ${p.to} after ${p.after}`; };
   const pm51NotifPrevEnsure = ensureStateShape;
@@ -183,6 +192,8 @@
   const soundByName = name => sounds().find(s => s.name === name);
   const isBuiltInSound = s => /^Built-in/.test(String(s.source || ''));
   const sourceLabel = s => isBuiltInSound(s) ? 'Built-in' : /pack/i.test(String(s.source || '')) ? 'Imported pack' : 'Uploaded';
+  const styleOf = s => isBuiltInSound(s) ? (s.style || 'Chimes') : 'Yours';
+  const STYLE_ORDER = () => [...(X().soundStyles || ['Chimes', 'Pings', 'Alerts', 'Soft', 'Playful', 'Retro']), 'Yours'];
   const eventsUsing = s => events().filter(e => e.sound === s.name);
   const groups = () => Object.assign({}, SOUND_GROUPS, X().soundGroups || {});
   const priorities = () => { const list = Array.isArray(X().priorities) ? X().priorities : []; return PRIORITIES.map(p => { const f = list.find(x => x && x.value === p) || {}; return { value: p, label: f.label || p, meta: f.meta || '' }; }); };
@@ -192,8 +203,9 @@
   /* Options for every event-sound dropdown: No sound / Built-in / Uploaded; a missing upload says so. */
   function soundOptions(current) {
     const g = groups();
-    const rows = sounds().map(s => ({ value: s.name, label: s.name, group: isBuiltInSound(s) ? g.builtIn : g.uploaded, meta: soundAvailable(s) ? durationText(s.duration) : 'File missing' }));
-    rows.sort((x, y) => (x.group === g.builtIn ? 0 : 1) - (y.group === g.builtIn ? 0 : 1));
+    const order = STYLE_ORDER();
+    const rows = sounds().map(s => ({ value: s.name, label: s.name, group: isBuiltInSound(s) ? styleOf(s) : g.uploaded, meta: soundAvailable(s) ? durationText(s.duration) : 'File missing', rank: order.indexOf(styleOf(s)) }));
+    rows.sort((x, y) => x.rank - y.rank);
     if (current && current !== 'None' && !soundByName(current)) rows.push({ value: current, label: current, group: g.uploaded, meta: 'File missing' });
     return [{ value: 'None', label: 'None', group: g.none }, ...rows];
   }
@@ -255,7 +267,6 @@
       isBuiltIn(d) ? orow({ label: 'Where it goes', control: valueWith(mask(d)) })
         : orow({ label: addressLabel(d.type), help: 'Kept on your server. Only its ends are shown.', control: valueWith(mask(d), { label: 'Replace', icon: 'key', action: 'pm51-notifications-dest-address', data }) }),
       orow({ label: 'During quiet hours', help: 'Whether alerts here wait for quiet hours to end.', control: PM51.dropdown(d.quiet || 'hold', QUIET_CHOICES, { action: 'pm51-notifications-dest-quiet', data, label: 'During quiet hours' }) }),
-      orow({ label: 'Used by', help: used.length ? used.join(', ') : 'No events yet. Pick it under Events.', control: valueWith(used.length ? `${used.length} ${used.length === 1 ? 'event or group' : 'events and groups'}` : 'Nothing yet') }),
       orow({ label: 'Last delivery', control: valueWith(lastDelivery(d)) })
     ];
     const own = d.id === 'in-app' || d.type === 'Built-in' || d.type === 'In-app' ? PM51.bound.rows([S.method]) : d.type === 'Operating system' || d.type === 'System / tray' ? PM51.bound.rows([S.tray]) : '';
@@ -269,7 +280,9 @@
         { separator: true },
         { label: 'Delivery history', icon: 'history', onClick: () => { PM51.setTab(ID, 'history'); PM51.refresh(ID); } }
       ], d.name),
-      body: PM51.section({ title: 'Destination', body: PM51.scoped.rows(rows) + own }) + destAdvanced(d)
+      body: PM51.section({ title: 'Destination', body: PM51.scoped.rows(rows) + own })
+        + PM51.section({ title: 'Alerts that arrive here', help: 'Switch an alert on to send it here too. The same choice is on each alert under Events.', body: PM51.rows(events().map(e => ({ label: e.name, help: `${e.priority || 'Normal'}${e.enabled ? '' : ' · this alert is off'}`, control: PM51.toggle(e.destinations.includes(d.name), { action: 'pm51-notifications-event-dest', data: { event: e.id, dest: d.id }, label: `Send ${e.name} to ${d.name}` }) }))) + ((N().agents || []).some(g => g.destinations.includes(d.name)) ? PM51.note(`Agents that also send here: ${(N().agents || []).filter(g => g.destinations.includes(d.name)).map(g => g.name).join(', ')}.`, 'info') : '') })
+        + destAdvanced(d)
     };
   }
   function removeDest(d) {
@@ -329,8 +342,8 @@
       meta: `${g.events.join(', ')} · ${escText(g)}`,
       end: icon('chevron'), action: 'pm51-notifications-group', data: { id: g.id }
     }));
-    return PM51.section({ title: 'Events', help: 'Turn each alert on or off, choose its sound here, or open one to change where it goes.', action: { label: 'Add event', icon: 'plus', small: true, action: 'pm51-notifications-add-event' }, body: PM51.home(S.map, ev.length ? `<div class="pm51-list pm51-event-list">${ev.map(eventRow).join('')}</div>` : PM51.note('No events yet. Add one to get started.')) })
-      + PM51.section({ title: 'Escalation groups', help: 'When an alert is not handled, these groups send it somewhere louder.', body: groupRows.length ? PM51.list(groupRows) : PM51.note('No escalation groups yet.') })
+    return PM51.section({ title: 'Events', help: 'Turn each alert on or off, choose its sound here, or open one to change where it goes.', action: { label: 'Add an alert', icon: 'plus', small: true, action: 'pm51-notifications-add-event' }, body: PM51.home(S.map, ev.length ? `<div class="pm51-list pm51-event-list">${ev.map(eventRow).join('')}</div>` : PM51.note('No events yet. Add one to get started.')) })
+      + PM51.section({ title: 'Notification agents', help: 'An agent watches a few alerts, sends them where you choose, and escalates when nobody responds.', action: { label: 'Add agent', icon: 'plus', small: true, action: 'pm51-notifications-add-agent' }, body: groupRows.length ? PM51.list(groupRows) : PM51.empty('No agents yet', 'Add one to send important alerts somewhere louder when nobody responds.', { label: 'Add agent', icon: 'plus', action: 'pm51-notifications-add-agent' }) })
       + PM51.advanced(PM51.section({ title: 'Import and export', body: '<div class="pm51-notif-inline">' + PM51.btn({ label: 'Export events', icon: 'download', small: true, action: 'pm51-notifications-export-events' }) + PM51.btn({ label: 'Import events', icon: 'upload', small: true, action: 'pm51-notifications-import-events' }) + '</div>' }));
   }
   /* Event hero sheet: what it is, where it goes, how it sounds, how loud it is; custom events can be renamed or removed. */
@@ -379,24 +392,35 @@
     e.name = name;
   }
   const nameTaken = (name, except) => events().some(e => e !== except && e.name.toLowerCase() === String(name).toLowerCase());
+  const groupFacts = g => [{ label: 'Watches', value: g.events.length ? `${g.events.length} ${g.events.length === 1 ? 'alert' : 'alerts'}` : 'Nothing yet' }, { label: 'Sends to', value: g.destinations.length ? g.destinations.join(', ') : 'Nowhere yet' }, { label: 'Escalation', value: escText(g) }];
+  const syncGroupSheet = (el, g) => { const w = el.closest('.drawer-wrap'); if (!w) return; const facts = groupFacts(g); w.querySelectorAll('.pm51-hero-facts dd').forEach((dd, i) => { if (facts[i]) dd.textContent = facts[i].value; }); const st = w.querySelector('.pm51-hero-status'); if (st) st.innerHTML = PM51.status(g.status === 'active' ? 'On' : 'Off', g.status === 'active' ? 'ready' : 'off'); };
   function groupPanel(id) {
     const g = (N().agents || []).find(x => x.id === id); if (!g) return;
     const p = escParts(g);
     const then = [{ value: 'none', label: 'Nothing more' }, { value: 'repeat', label: 'Repeat the alert' }, ...destsSorted().map(d => ({ value: d.name, label: `Also send to ${d.name}`, meta: typeLabel(d), group: 'Your destinations' }))];
     PM51.panel({
-      icon: 'users', eyebrow: 'Escalation group', title: g.name, status: { label: g.status === 'active' ? 'Ready' : 'Off', tone: g.status === 'active' ? 'ready' : 'off' },
-      facts: [{ label: 'Watches', value: `${g.events.length} ${g.events.length === 1 ? 'event' : 'events'}` }, { label: 'Sends to', value: g.destinations.length ? g.destinations.join(', ') : 'Nowhere yet' }, { label: 'Escalation', value: escText(g) }],
-      body: PM51.panelSection('Watches', PM51.kv([['Events', g.events.join(', ')], ['Sends to', g.destinations.join(', ') || 'Nowhere yet']]), undefined, { icon: 'eye' })
+      icon: 'users', eyebrow: 'Notification agent', title: g.name, status: { label: g.status === 'active' ? 'On' : 'Off', tone: g.status === 'active' ? 'ready' : 'off' },
+      facts: groupFacts(g),
+      body: PM51.panelSection('Name', PM51.field('Name', PM51.input(g.name, { action: 'pm51-notifications-group-name', data: { id }, label: 'Agent name', placeholder: 'e.g. Release watcher' })) + PM51.rows([{ label: 'Agent is on', control: PM51.toggle(g.status === 'active', { action: 'pm51-notifications-group-toggle', data: { id }, label: 'Agent is on' }) }]), undefined, { icon: 'edit' })
+        + PM51.panelSection('Watches these alerts', events().length ? PM51.rows(events().map(e => ({ label: e.name, help: e.priority || 'Normal', control: PM51.toggle(g.events.includes(e.name), { action: 'pm51-notifications-group-event', data: { id, event: e.name }, label: `Watch ${e.name}` }) }))) : PM51.note('Add alerts under Events first.'), 'When one of them fires, the agent takes over.', { icon: 'eye' })
+        + PM51.panelSection('Sends them to', PM51.rows(destsSorted().map(d => ({ label: d.name, help: typeLabel(d), control: PM51.toggle(g.destinations.includes(d.name), { action: 'pm51-notifications-group-dest', data: { id, dest: d.name }, label: `Send to ${d.name}` }) }))), undefined, { icon: 'route' })
         + PM51.panelSection('If nobody responds', PM51.field('Then', PM51.dropdown(p.to, then, { action: 'pm51-notifications-group-escalation', data: { id, part: 'to' }, label: 'Then' }))
           + PM51.field('After', PM51.dropdown(p.after, DELAYS, { action: 'pm51-notifications-group-escalation', data: { id, part: 'after' }, label: 'After' })), undefined, { icon: 'clock' })
-        + PM51.panelSection('Status', PM51.rows([{ label: 'Group is active', control: PM51.toggle(g.status === 'active', { action: 'pm51-notifications-group-toggle', data: { id }, label: 'Group is active' }) }])),
+        + PM51.panelSection('Remove', `<div class="pm51-notif-inline">${PM51.btn({ label: 'Remove agent', icon: 'trash', danger: true, small: true, action: 'pm51-notifications-group-remove', data: { id } })}</div>`, 'Its alerts keep going to their own destinations.', { icon: 'trash' }),
       primaryLabel: 'Done', onPrimary: () => save()
     });
   }
 
   /* ---------- Sounds ------------------------------------------------------- */
-  function waveform() {
-    const hs = [7, 13, 19, 10, 22, 16, 8, 18, 24, 12, 20, 9, 15, 23, 11, 17, 8, 14];
+  /* Each card's bars follow its own sound: the recipe's notes and levels where it has one, else a shape seeded by its name. */
+  function waveform(s) {
+    const n = 18; let hs;
+    if (s && Array.isArray(s.tones) && s.tones.length) {
+      hs = Array.from({ length: n }, (_, i) => { const p = (i + .5) / n; let amp = 0; s.tones.forEach(([f, off, len, type, glide, level]) => { if (p >= off && p <= off + len) { const k = 1 - (p - off) / Math.max(len, .01); amp = Math.max(amp, (level || .42) * (.35 + .65 * k) * (type === 'square' || type === 'sawtooth' ? 1.4 : 1)); } }); return Math.round(4 + Math.min(1, amp * 2.2) * 20); });
+    } else {
+      let seed = [...String((s && (s.id || s.name)) || 'x')].reduce((x, c) => (x * 31 + c.charCodeAt(0)) >>> 0, 7);
+      hs = Array.from({ length: n }, () => { seed = (seed * 1103515245 + 12345) >>> 0; return 7 + (seed >>> 16) % 17; });
+    }
     return `<span class="sound-waveform">${hs.map((hgt, i) => `<i style="--h:${hgt}px;--n:${i}"></i>`).join('')}</span>`;
   }
   /* Library card: play + name + menu, source tag + length, "Used by …" + Use for events… */
@@ -410,16 +434,20 @@
     return `<div class="sound-row pm51-sound-card${playing ? ' is-playing' : ''}${available ? '' : ' is-unavailable'}" data-sound-row="${a(s.id)}">
       <button type="button" class="sound-play${playing ? ' is-playing' : ''}" data-action="play-sound" data-id="${a(s.id)}" aria-pressed="${playing ? 'true' : 'false'}" aria-label="${playing ? 'Stop' : 'Play'} ${a(s.name)} preview"${hover}${disabled}>${icon(playing ? 'volume' : 'play')}</button>
       <span class="sound-copy"><strong>${h(s.name)}</strong>${available ? '' : PM51.status('File missing', 'attention')}</span>
-      ${waveform()}
+      ${waveform(s)}
       <button type="button" class="icon-btn" data-action="pm51-notifications-sound-menu" data-id="${a(s.id)}" aria-label="Manage ${a(s.name)}" data-pm-hover-label="Manage ${a(s.name)}" data-pm-hover-detail="Rename, replace the file, or choose which events use it.">${icon('more')}</button>
-      <span class="pm51-sound-lines"><span class="pm51-sound-meta">${PM51.tag(sourceLabel(s))} · ${h(durationText(s.duration))}${!isBuiltInSound(s) && s.format ? ' · ' + h(String(s.format)) : ''}</span><span class="pm51-sound-used"><span class="pm51-sound-used-text" title="${a(usedText)}">${h(usedText)}</span>${PM51.link({ label: 'Use for events…', action: 'pm51-notifications-assign-open', data: { id: s.id } })}</span></span>
+      <span class="pm51-sound-lines"><span class="pm51-sound-meta">${PM51.tag(isBuiltInSound(s) ? styleOf(s) : sourceLabel(s))} · ${h(durationText(s.duration))}${!isBuiltInSound(s) && s.format ? ' · ' + h(String(s.format)) : ''}</span><span class="pm51-sound-used"><span class="pm51-sound-used-text" title="${a(usedText)}">${h(usedText)}</span>${PM51.link({ label: 'Use for events…', action: 'pm51-notifications-assign-open', data: { id: s.id } })}</span></span>
     </div>`;
   }
   function soundsTab() {
     const ev = events();
     const packs = N().packs || [];
     const adv = N().soundSettings || (N().soundSettings = { volume: 70, whenFocused: true });
-    const library = PM51.home(S.catalog, sounds().length ? `<div class="pm51-sound-list pm51-sound-grid">${sounds().map(soundCard).join('')}</div>` : PM51.note('No sounds yet. Add one to get started.'));
+    const styleNow = STYLE_ORDER().includes(PM51.s().notifSoundStyle) ? PM51.s().notifSoundStyle : 'All';
+    const shown = sounds().filter(s => styleNow === 'All' || styleOf(s) === styleNow);
+    const styles = ['All', ...STYLE_ORDER().filter(st => sounds().some(s => styleOf(s) === st))];
+    const library = `<div class="pm51-sound-styles">${PM51.segmented(styleNow, styles.map(st => [st, st === 'Yours' ? 'Uploaded' : st]), { action: 'pm51-notifications-sound-style', label: 'Show sounds' })}</div>`
+      + PM51.home(S.catalog, shown.length ? `<div class="pm51-sound-list pm51-sound-grid">${shown.map(soundCard).join('')}</div>` : PM51.note(styleNow === 'Yours' ? 'No uploaded sounds yet. Use Add sound to upload one or import a pack.' : 'No sounds in this style.'));
     const sfxOn = !!PM51.value(S.sfx);
     const basics = PM51.bound.rows([S.sfx]) + PM51.scoped.rows([
       orow({ label: 'Volume', help: 'Used unless a sound sets its own.', control: `<label class="o55-num"><input class="text-control" type="number" inputmode="numeric" min="0" max="100" step="5" value="${a(adv.volume)}" data-action="pm51-notifications-volume" aria-label="Volume"><span class="o55-unit">%</span></label>` }),
@@ -428,7 +456,7 @@
     const eventRows = ev.map(e => ({ label: e.name, help: e.enabled ? undefined : 'This alert is off.', control: soundControl(e) }));
     const packRows = packs.map(p => ({ label: p.name, help: `${p.sounds} sounds · Licence ${String(p.license || 'unknown').toLowerCase()} · example only, not playable`, control: PM51.toggle(p.status === 'active', { action: 'pm51-notifications-pack-toggle', data: { id: p.id }, label: p.name }) }));
     return PM51.section({ title: 'Sounds', body: basics })
-      + PM51.section({ title: 'Sound library', help: 'Six demo tones are built in. Upload your own or import a pack.', action: PM51.bound.action(S.manage, { label: 'Add sound', icon: 'plus' }), body: library })
+      + PM51.section({ title: 'Sound library', help: `${sounds().filter(isBuiltInSound).length} sounds are built in, in six styles. Press play to hear one, or upload your own.`, action: PM51.bound.action(S.manage, { label: 'Add sound', icon: 'plus' }), body: library })
       + PM51.section({ title: 'Event sounds', help: 'Which sound plays for each alert. Press play to hear it.', body: PM51.home(S.soundMap, ev.length ? PM51.rows(eventRows) : PM51.note('No events yet. Add one under Events.')) })
       + PM51.section({ title: 'Sound packs', help: 'Sets of sounds made for PeonPing-compatible apps.', action: { label: 'Import pack', icon: 'download', small: true, action: 'import-peonping-pack' }, body: packRows.length ? PM51.rows(packRows) : PM51.note('No packs imported yet.') })
       + PM51.advanced([
@@ -513,7 +541,7 @@
 
   /* ---------- page --------------------------------------------------------- */
   function render() {
-    migrateV2(); syncStores();
+    migrateV2(); migrateSounds(); syncStores();
     const t = tab();
     const inner = t === 'events' ? eventsTab() : t === 'sounds' ? soundsTab() : t === 'quiet' ? quietTab() : t === 'history' ? historyTab() : destinationsTab();
     /* no wrapper around the tab: placed sections and More options must stay direct children of the page */
@@ -644,31 +672,67 @@
     const p = escParts(g); p[ds(el, 'part') === 'after' ? 'after' : 'to'] = el.value; g.escalation = escStore(p); save();
     const dd = el.closest('.drawer-wrap')?.querySelectorAll('.pm51-hero-facts dd')[2]; if (dd) dd.textContent = escText(g);
   });
+  const groupOf = el => (N().agents || []).find(x => x.id === ds(el, 'id'));
+  const toggleIn = (list, v) => list.includes(v) ? list.filter(x => x !== v) : [...list, v];
+  PM51.on('notifications-group-event', el => { const g = groupOf(el); if (!g) return; g.events = toggleIn(g.events, ds(el, 'event')); el.classList.toggle('on'); el.setAttribute('aria-checked', String(el.classList.contains('on'))); saveState(); PM51.refresh(ID, { swap: false }); syncGroupSheet(el, g); });
+  PM51.on('notifications-group-dest', el => { const g = groupOf(el); if (!g) return; g.destinations = toggleIn(g.destinations, ds(el, 'dest')); el.classList.toggle('on'); el.setAttribute('aria-checked', String(el.classList.contains('on'))); saveState(); PM51.refresh(ID, { swap: false }); syncGroupSheet(el, g); });
+  PM51.onInput('notifications-group-name', el => { const g = groupOf(el); if (!g) return; const v = String(el.value || '').trim(); if (!v) return; g.name = v; saveState(); const title = el.closest('.drawer-wrap')?.querySelector('.pm51-panel-title'); if (title) title.textContent = v; });
+  PM51.onChange('notifications-group-name', () => PM51.refresh(ID, { swap: false }));
+  PM51.on('notifications-group-remove', el => { const g = groupOf(el); if (!g) return; PM51.confirm(`Remove ${g.name}?`, 'Its alerts keep going to their own destinations; nothing escalates for them any more.', 'Remove', () => { N().agents = (N().agents || []).filter(x => x !== g); closeOverlay(false); save(); PM51.toast('Agent removed', `${g.name} is gone.`); }, true); });
+  PM51.on('notifications-add-agent', () => {
+    const inApp = dests().find(d => d.type === 'Built-in' || d.type === 'In-app');
+    const g = { id: uid('agent', 'agent'), name: 'New agent', events: [], destinations: inApp ? [inApp.name] : [], escalation: 'None', status: 'active' };
+    (N().agents = N().agents || []).push(g); save(); groupPanel(g.id);
+    requestAnimationFrame(() => { const i = document.querySelector('.drawer-wrap input[data-action="pm51-notifications-group-name"]'); if (i) { i.focus(); i.select(); } });
+  });
+  PM51.on('notifications-sound-style', el => { PM51.s().notifSoundStyle = el.dataset.value; saveState(); PM51.refresh(ID, { swap: false }); });
   PM51.on('notifications-group-toggle', el => { const g = (N().agents || []).find(x => x.id === ds(el, 'id')); if (!g) return; g.status = g.status === 'active' ? 'disabled' : 'active'; el.classList.toggle('on', g.status === 'active'); el.setAttribute('aria-checked', g.status === 'active' ? 'true' : 'false'); saveState(); });
-  /* Add event: name, when it fires, priority, where it goes (working destinations first, In-app pre-checked), sound. */
+  /* Add an alert: pick one Puppet Master can raise (or your own, raised by scripts), then where it goes and how it sounds. */
   PM51.on('notifications-add-event', () => {
-    const inApp = dests().find(d => TYPE_LABEL[d.type] === 'In this app');
-    const checks = destsSorted().map(d => formField(d.name, 'dest:' + d.id, !!inApp && d.id === inApp.id, { type: 'checkbox', help: `${typeLabel(d)} · ${destStatus(d)}` })).join('');
-    openDialog({
-      title: 'Add event', subtitle: 'An alert your own scripts and automations can raise.',
-      body: PM51.form([
-        { label: 'Name', name: 'name', placeholder: 'e.g. Nightly report ready', autofocus: true, full: true, help: 'Scripts raise the event by this exact name.' },
-        { label: 'When it fires', name: 'description', placeholder: 'e.g. Raised by the nightly report script', full: true }
-      ])
-      + `<label class="form-field"><span class="form-label">Priority</span>${PM51.dropdown('Normal', priorities(), { name: 'priority', label: 'Priority' })}</label>`
-      + `<label class="form-field"><span class="form-label">Sound</span>${PM51.dropdown('None', soundOptions(), { name: 'sound', label: 'Sound' })}</label>`
-      + `<div class="form-field full"><span class="form-label">Send to</span><div class="pm51-check-list">${checks || '<div class="form-help">No destinations yet. Add one under Destinations.</div>'}</div><div class="form-help">Working destinations are listed first. You can change this later from the event.</div></div>`,
-      saveLabel: 'Add event', onOpen: focusField, onSave: data => {
-        const name = String(data.name || '').trim();
-        if (!name) { PM51.toast('Give the event a name', 'Something like Nightly report ready.', 'info'); return false; }
-        if (nameTaken(name)) { PM51.toast('That name is taken', `There is already an event called ${name}. Pick another name.`, 'info'); return false; }
-        const destinations = dests().filter(d => data['dest:' + d.id]).map(d => d.name);
-        const e = { id: uniqueId(uid('event', name), new Set(events().map(x => x.id))), name, description: String(data.description || '').trim() || 'Raised by your own automation.', enabled: true, destinations, sound: data.sound || 'None', priority: PRIORITIES.includes(data.priority) ? data.priority : 'Normal', custom: true };
-        N().events.push(e); PM51.setTab(ID, 'events'); save();
-        PM51.toast('Event added', `Your scripts and automations raise it by name: "${name}". It goes to ${destinations.length ? destinations.join(', ') : 'nowhere yet'}.`);
-      }
+    const have = new Set(events().map(e => e.name.toLowerCase()));
+    const cat = (X().eventCatalog || []).filter(c => !have.has(c.name.toLowerCase()));
+    const groupsOrder = [...new Set(cat.map(c => c.group))];
+    PM51.panel({
+      title: 'Add an alert', subtitle: 'Pick what should tell you something. Next you choose where it goes and how it sounds.', icon: 'bell',
+      body: (cat.length ? groupsOrder.map(g => PM51.panelSection(g, PM51.rows(cat.filter(c => c.group === g).map(c => ({ label: c.name, help: c.description, control: PM51.btn({ label: 'Add', icon: 'plus', small: true, action: 'pm51-notifications-add-catalog', data: { id: c.id } }) }))))).join('') : PM51.note('Every alert Puppet Master can raise is already on your list.', 'info'))
+        + PM51.panelSection('Your own alert', PM51.rows([{ label: 'An alert your scripts raise', help: 'Scripts and automations raise it by its exact name.', control: PM51.btn({ label: 'Set up', icon: 'plus', small: true, action: 'pm51-notifications-add-custom' }) }]), '', { icon: 'terminal' })
     });
   });
+  const afterPanel = fn => { closeOverlay(false); window.setTimeout(fn, 220); };
+  PM51.on('notifications-add-catalog', el => { const c = (X().eventCatalog || []).find(x => x.id === ds(el, 'id')); if (c) afterPanel(() => eventSetup(c)); });
+  PM51.on('notifications-add-custom', () => afterPanel(() => eventSetup(null)));
+  /* One setup dialog for both: a known alert keeps its name; your own needs one. The sound plays as you pick it. */
+  function eventSetup(preset) {
+    const inApp = dests().find(d => TYPE_LABEL[d.type] === 'In this app');
+    const checks = destsSorted().map(d => formField(d.name, 'dest:' + d.id, !!inApp && d.id === inApp.id, { type: 'checkbox', help: `${typeLabel(d)} · ${destStatus(d)}` })).join('');
+    const sound = preset && soundByName(preset.sound) ? preset.sound : 'None';
+    const s0 = sound !== 'None' ? soundByName(sound) : null;
+    openDialog({
+      title: preset ? `Add “${preset.name}”` : 'Add your own alert', subtitle: preset ? preset.description : 'An alert your own scripts and automations can raise.',
+      body: (preset ? '' : PM51.form([
+        { label: 'Name', name: 'name', placeholder: 'e.g. Nightly report ready', autofocus: true, full: true, help: 'Scripts raise the alert by this exact name.' },
+        { label: 'When it fires', name: 'description', placeholder: 'e.g. Raised by the nightly report script', full: true }
+      ]))
+      + `<label class="form-field"><span class="form-label">Priority</span>${PM51.dropdown(preset ? preset.priority : 'Normal', priorities(), { name: 'priority', label: 'Priority' })}</label>`
+      + `<div class="form-field"><span class="form-label">Sound</span><span class="pm51-sound-pick">${PM51.dropdown(sound, soundOptions(sound), { name: 'sound', label: 'Sound', cls: 'pm51-setup-sound' })}${playButton(s0)}</span></div>`
+      + `<div class="form-field full"><span class="form-label">Send to</span><div class="pm51-check-list">${checks || '<div class="form-help">No destinations yet. Add one under Destinations.</div>'}</div><div class="form-help">Working destinations are listed first. You can change this later from the alert or from each destination.</div></div>`,
+      saveLabel: 'Add alert',
+      onOpen: overlay => {
+        focusField(overlay);
+        const sel = overlay.querySelector('select.pm51-setup-sound'); const pick = sel && sel.closest('.pm51-sound-pick');
+        if (sel && pick) sel.addEventListener('change', () => { const btn = pick.querySelector('.pm51-sound-inline-play'); if (btn) btn.outerHTML = playButton(sel.value !== 'None' ? soundByName(sel.value) : null); });
+      },
+      onSave: data => {
+        const name = preset ? preset.name : String(data.name || '').trim();
+        if (!name) { PM51.toast('Give the alert a name', 'Something like Nightly report ready.', 'info'); return false; }
+        if (nameTaken(name)) { PM51.toast('That name is taken', `There is already an alert called ${name}. Pick another name.`, 'info'); return false; }
+        const destinations = dests().filter(d => data['dest:' + d.id]).map(d => d.name);
+        const e = { id: uniqueId(preset ? preset.id : uid('event', name), new Set(events().map(x => x.id))), name, description: preset ? preset.description : (String(data.description || '').trim() || 'Raised by your own automation.'), enabled: true, destinations, sound: data.sound || 'None', priority: PRIORITIES.includes(data.priority) ? data.priority : 'Normal', custom: !preset };
+        N().events.push(e); PM51.setTab(ID, 'events'); save();
+        PM51.toast('Alert added', preset ? `${name} goes to ${destinations.length ? destinations.join(', ') : 'nowhere yet'}${e.sound !== 'None' ? ` with ${e.sound}` : ''}.` : `Your scripts raise it by name: "${name}". It goes to ${destinations.length ? destinations.join(', ') : 'nowhere yet'}.`);
+      }
+    });
+  }
   PM51.on('notifications-export-events', () => PM51.panel({ icon: 'download', title: 'Export events', body: PM51.panelSection('What is included', PM51.kv([['Events', `${events().length}`], ['Destinations', 'Names only, never addresses'], ['Sounds', 'Names only']])), primaryLabel: 'Save file', onPrimary: () => example('Export ready', 'Example data only. No file was written in this preview.') }));
   PM51.on('notifications-import-events', () => openDialog({ title: 'Import events', subtitle: 'Bring event settings from another workspace.', body: PM51.form([{ label: 'File', name: 'file', type: 'file', full: true, help: 'A file exported from Puppet Master.' }]), saveLabel: 'Import', onSave: () => example('Import requested', 'Example data only. Nothing was imported in this preview.') }));
 
@@ -716,11 +780,11 @@
   /* ---------- actions: history & page ------------------------------------- */
   PM51.on('notifications-history', el => historyPanel(Number(ds(el, 'index'))));
   PM51.on('notifications-reset', () => PM51.confirm('Reset notification defaults?', 'Destinations, events, sounds, and quiet hours go back to the example defaults. Uploaded recordings are forgotten.', 'Reset', () => {
-    settingsSoundPreview.clearFiles(); state.notifications = clone(D.notifications); migrateEvents(); PM51.s().o55NotifV2 = false; migrateV2(); state.soundPlaying = null; eventSheet = null; PM51.setSel(ID, 'in-app'); save(); PM51.toast('Notifications reset', 'Defaults are back.');
+    settingsSoundPreview.clearFiles(); state.notifications = clone(D.notifications); migrateEvents(); PM51.s().o55NotifV2 = false; PM51.s().o55NotifSoundsV1 = false; migrateV2(); migrateSounds(); state.soundPlaying = null; eventSheet = null; PM51.setSel(ID, 'in-app'); save(); PM51.toast('Notifications reset', 'Defaults are back.');
   }, true));
   PM51.on('notifications-help', () => PM51.panel({
     icon: 'info', title: 'How notifications work',
     body: PM51.panelSection('In short', '<p class="pm51-ps-text">An event is something worth telling you about. Each event goes to the destinations you pick, with the sound you choose, unless quiet hours say otherwise.</p>')
-      + PM51.panelSection('The pieces', PM51.kv([['Destinations', 'Places an alert can arrive: this app, your system tray, a chat service, or your phone.'], ['Events', 'What triggers an alert, and where it goes. Add your own for scripts and automations; they raise it by name.'], ['Sounds', 'Demo tones are built in. Upload your own or import a pack.'], ['Quiet hours', 'A daily window when alerts wait. Each destination says whether urgent alerts, or everything, still get through.'], ['Escalation groups', 'If nobody responds, the alert is sent somewhere louder.']]))
+      + PM51.panelSection('The pieces', PM51.kv([['Destinations', 'Places an alert can arrive: this app, your system tray, a chat service, or your phone.'], ['Events', 'What triggers an alert, and where it goes. Add your own for scripts and automations; they raise it by name.'], ['Sounds', 'Two dozen built-in sounds in six styles. Upload your own or import a pack.'], ['Quiet hours', 'A daily window when alerts wait. Each destination says whether urgent alerts, or everything, still get through.'], ['Notification agents', 'Watch a few alerts and, if nobody responds, send them somewhere louder.']]))
   }));
 })();

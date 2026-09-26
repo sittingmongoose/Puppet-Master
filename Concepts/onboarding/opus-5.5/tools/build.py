@@ -191,6 +191,17 @@ PATCHES = [
     (".pm7u-card:has(.pm7u-setup-cta) .pm7u-setup-cta > * {",
      ".pm7u-card .pm7u-setup-cta.pm7u-setup-cta > * {",
      'usage card cta :has restyle'),
+    # Notification sounds: a built-in sound may carry its own recipe (sound.tones), so the library can hold more,
+    # and more varied, sounds than the name-matched demo tones. A note may glide to a second pitch and set its level.
+    ("    const profileFor = sound => {\n      const key = `${sound && sound.id || ''} ${sound && sound.name || ''}`.toLowerCase();",
+     "    const profileFor = sound => {\n      if (sound && Array.isArray(sound.tones) && sound.tones.length) return sound.tones;\n      const key = `${sound && sound.id || ''} ${sound && sound.name || ''}`.toLowerCase();",
+     'sound recipe from the sound'),
+    ("        for (const [frequency, offset, length, type] of profileFor(sound)) {",
+     "        for (const [frequency, offset, length, type, glideTo, level] of profileFor(sound)) {",
+     'sound recipe note fields'),
+    ("          oscillator.frequency.setValueAtTime(frequency, noteStart);\n          envelope.gain.setValueAtTime(.0001, noteStart);\n          envelope.gain.exponentialRampToValueAtTime(.42, noteStart + Math.min(.025, duration * .04));",
+     "          oscillator.frequency.setValueAtTime(frequency, noteStart);\n          if (glideTo) oscillator.frequency.exponentialRampToValueAtTime(glideTo, noteEnd);\n          envelope.gain.setValueAtTime(.0001, noteStart);\n          envelope.gain.exponentialRampToValueAtTime(level || .42, noteStart + Math.min(.025, duration * .04));",
+     'sound recipe glide and level'),
     # The Settings rail and Home count the real AI services (the list grew from 13 to 22 and each one's state is
     # live), not a fixed "7 ready · 2 need attention". Providers & Accounts defines window.O55ProviderSummary.
     ("<strong>AI Providers</strong><small>7 ready · 2 need attention</small>",
