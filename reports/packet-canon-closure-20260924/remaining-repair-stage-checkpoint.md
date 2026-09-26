@@ -6,15 +6,22 @@ native or GUI implementation credit.
 
 | Stage | Verified current boundary | Next work |
 |---|---|---|
-| Settings import | Owner value-classification prose is integrated in `7285bed42`; the accepted review explicitly excludes typed preview/apply closure. | Recover the native Goal state and materialize the 16-row value-shape/source/destination/currentness companion under the already accepted policy. |
+| Settings import | Owner value-classification prose is integrated. Typed V10 passes 28 focused tests but independent review reproduces a duplicate setting-ID overwrite that accepts a foreign value-form binding. | Correct the duplicate-key join in the retained native Goal; independently review V11. Merge its gate hook additively into root's 86-pair gate, preserving Browser. |
 | DRY/formatter | The external v7 review accepts only a hygiene delta over v6, conditional on root composition and full gates. The F3-441 versus Settings taxonomy conflict remains held. | Identify the exact cross-package conflict against current Settings before applying the package; no inferred alias, writer or migration. |
-| Search rebuild | Owner prose is integrated. V4B is held because its projected outcome fails the real full central schema; V4C ended without a candidate correction. | Same retained Goal continues with the already-staged complete owner schema and full-record regression. The denied upward/home scan must not be repeated. A timeout is not accepted repair or Goal completion. |
+| Search rebuild | Owner prose is integrated. Frozen V4F composes the complete central schema and existing acknowledgement/outcome semantic helpers; the coordinator reports 78 focused tests passing. | Different-Sol causal and installability review, then root integration and gates. The retained Goal is active, not complete; passing candidate tests are not native proof. |
 | Browser to Chat | Existing Browser/Chat composition is preserved; the reviewed capture companion is integrated in 25515fa08. The two original/digest mutations reject, 17 focused tests and the 86-pair contract gate pass. | Native issuer/adapter/capture proof remains open; the bounded codec is not a general RFC encoder. The separate representation-query command binding is under repair. See browser-capture-companion-integration.md. |
 | Persona/Tour | Current owner law already specifies current-thread selection and effective Teacher. V2 still over-prescribes a new thread carrier and wrongly retires selection_scope. | Do not compile the proposal or allocate UCC-166; retain causal dispatcher/result/readback and native/GUI proof as unproved. See `persona-current-owner-adjudication.md`. |
 | LSP restart | Seven-file reviewed original-argument companion is integrated and branch-pushed in 2321a21bc. Eight focused and eight independent mutation probes pass; aggregate LSP/wiring/shards pass; the timed-out 85-pair contract check passes on standalone rerun. | Resolve/report the separate full aggregate failures under the required later main comparison; native restart and authenticity remain unproved. See lsp-selected-companion-integration.md. |
 
 Evidence root:
 `/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/`.
+
+Current candidate evidence (supersedes earlier candidate stages below, not their
+immutable historical records):
+
+- Settings V10: `jobs/settings-import-typed-owner-value-01/REVIEW-DIFFERENT-SOL-V10.md`, SHA-256 `aada550fbdc243153c1652ea2e46628c98b5076eb2ee88ded5bfa1bf3155cfff`; root reread the counterexample and verified this file hash. No candidate integration credit.
+- Search V4F: `jobs/search-rebuild-typed-01/freeze-v4f-20260926T0633Z/COORDINATOR-FREEZE.md`, SHA-256 `d8fb1eec56856698d4f0f5a7bb2ab8cba2dfaaec28bfc5e960bd7f666633bf55`; root read and hash-verified the freeze receipt. The 78-test result is coordinator evidence, not a root rerun or independent acceptance.
+- Server command inventory: root confirmed three stale 32-command statements in `Plans/Server_System.md` (SRV-008, section 3.1 and the static-status table). The current schema and fixture metadata total 36: 26 retained primary, six supplemental, four ClientTrust commands already specified by the owner. A narrow prose correction is queued; no new command or event is authorized by this count repair.
 
 - Settings: `jobs/settings-import-authoritative-joins/REVIEW-V7-OWNER-PROSE-SOL.md`, SHA-256 `e2f646161cf5a642ca80e38c77ced2bb79055a7bfa9f1418ecd85d8dbd6cae72`; reviewed owner patch SHA-256 `50b087a188906cb782320d5669177250a69c606661c22c92167735d621b22f06`.
 - DRY/formatter: `jobs/dry-formatter-owner-authoring/review-corrected-v7/REVIEW-DIFFERENT-SOL.md`, SHA-256 `2a75e0d76308af2d7004e11b51ade4aebacc624f9a9d0784a88862bd93bab47c`; accepted hygiene delta SHA-256 `ebeb2c653b2ed8699d8fec7af36d9002dc7e5fbb4b6cf1375b300b18691a59ff`.
