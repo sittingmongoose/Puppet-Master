@@ -13,3 +13,31 @@ Newer owner decisions requiring preservation and affected-case re-adjudication:
 Non-generated overlapping paths since the common ancestor are Automated_Testing_System, Contracts_V0, Decision_Log, FinalGUISpec, Planning_Wizard, Remote_Access_System, Section15_MVP_Promoted_Features_Spec, product_onboarding schema/fixtures, storage-plan and storage_value_registry. Overlap alone does not prove a conflict. Each cited passage must be re-read and re-adjudicated at rebase; generated shards/index must be regenerated, not hand-merged. Frozen decision cards and answer evidence remain immutable; Decision Log ID collisions require next-free routing without rewriting their approved text.
 
 The active Server139 and breadth89 reviews were notified of the newer onboarding authority. They retain original input lineage, but affected findings receive no current-main closure credit until checked against these additions. This does not invalidate unrelated reviewed cases or license a broad reread/restart of every native Goal. Final landing still requires the user's landing lock, fresh fetch, rebase, complete applicable failure-key delta and prescribed checks.
+
+## Follow-up at repair branch c2a07701a
+
+A read-only remote lookup still returned main `9a40601e93fb136856c0ec4f92018f956276f94c`;
+local `origin/main` matches. No fetch or landing lock was taken. The newer main
+Decision Log contains DL-087 through DL-094, whereas this repair branch has no
+DL-087..093 and uses DL-094 for its historical personal-dictionary decision.
+The latter is superseded by this branch's Project-dictionary DL-099, but its
+answer/source lineage must still be retained and routed to the then-next free
+ID at reconciliation. Do not overwrite main's DL-094 or rewrite frozen answers.
+
+Main decisions to preserve in prose and PlanUnit sections:
+
+- DL-087 retires six older Crew events in favor of shared collaborative events.
+- DL-088 retires two subagent start-request event names.
+- DL-089 gives application-wide capability evaluations their own usage bucket.
+- DL-090 authorizes bounded registration of 17 collaborative event families.
+- DL-091 requires a separate recorded failed collaborative-run event.
+- DL-092 retains collaborative workflow history with its chat.
+- DL-093 identifies the coordination registration entries as the decision authority.
+- DL-094 registers `coordination.agent_registered` and advances its checkpoint.
+
+Main also adds OSI-438, PWIZ-029 and SP-320. Current branch index-validation
+retention findings reflect this unreconciled main delta; they are not permission
+to delete those units or refresh the baseline. The Settings source87 reviewer
+was notified so Crew/event adjudication accounts for the newer decisions before
+claiming current-main coverage. Shared collaborative ownership and explicit
+newer Assistant Chat protection remain controlling.
