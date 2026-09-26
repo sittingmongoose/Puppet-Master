@@ -253,3 +253,35 @@ policy does not establish an exact authentication mechanism, and a pricing
 reference formula does not define provider fairness. External-constraint
 reverification is an existing implementation obligation, not a missing spec.
 These distinctions are reviewed dispositions, not whole-packet closure.
+
+## Later checkpoints and main-delta boundary
+
+Root verified these immutable external checkpoints and their identity-keyed deltas:
+
+- `checkpoints/matrix-f08b5922c41adae0a19fbf6d11a8f60ed17989e64fe2570c777b76fbc92a7753.jsonl`
+  (SHA-256 `f08b5922c41adae0a19fbf6d11a8f60ed17989e64fe2570c777b76fbc92a7753`):
+  1,363 flagged reviewed, 658 pending. Exactly four reverse-consumer facets
+  changed: three Onboarding/Tour routes have bounded static support; Persona
+  selection retains its selected request/result/currentness interface gap.
+  Independent review SHA-256 `c2f88a5c3b2a22b2f0b73674a4dc4c051b69273bef91af377c960d7293cb2ebf`.
+- `checkpoints/full-impact-reviewed-6a236007411b40005056663ad94304dd1a46574f262aa9ecc1accd7d209a5704.jsonl`
+  (SHA-256 `6a236007411b40005056663ad94304dd1a46574f262aa9ecc1accd7d209a5704`):
+  679 other identities reviewed, 10,716 pending. Exactly 90 historical command
+  spellings were added: 47 normalization routes, 38 local actions, two Browser
+  compatibility inputs and three rejected generic operations. This does not
+  certify their target behavior. Independent review SHA-256
+  `db2ec31143982b33aabfeab73832ba9efd88b0bc6bfac5a0535acda25de14de0`.
+
+All historical fields remain unchanged. These are review counts, not closure
+percentages. Reviews are branch-snapshot bounded until final main reconciliation.
+
+A read-only comparison against locally available `main`/`origin/main`
+`9a40601e93fb136856c0ec4f92018f956276f94c` identified newer owner changes:
+F3-520/RAS-014 replace the VPN discovery checkbox with discovery on already
+connected VPNs; PWIZ-029 adds paired `puppet_master` source/backup/storage
+transport without changing Connected Server or Execution Host; SMPFS-167 makes
+the v2 workspace-created historical reader current while native store migration
+remains NOT_RUN. Contracts, Storage, testing and Decision Log also have later
+changes. These must be preserved and their affected evidence re-adjudicated;
+no fetch, rebase, landing, decision-ID collision repair or governance reseal was
+performed by this check.
