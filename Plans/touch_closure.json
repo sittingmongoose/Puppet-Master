@@ -4226,12 +4226,12 @@
       "owner_plan": "Plans/Shared_Integration_Runtime.md",
       "plan_unit": "SIR-020",
       "dry_contract_ref": "Plans/shared_integration_runtime.schema.json",
-      "payload_schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectCommandRequest",
-      "result_schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectCommandResult",
-      "error_schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectCommandError",
-      "availability_rule": "Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectAvailability; exact verified installation, generations, proof, continuation, activation proof, and return context apply to select.",
-      "permission_gate": "Plans/shared_integration_runtime.schema.json#/$defs/SharedIntegrationPermissionDecision; installation_select scope, no acquisition/authentication, no credential exposure or authority widening.",
-      "disabled_reason_rule": "Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectDisabledReasonCode for select; existing lifecycle commands retain their separate reasons.",
+      "payload_schema_ref": "cmd.installation.select -> Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectCommandRequest; cmd.installation.install, cmd.installation.update, cmd.installation.repair, cmd.installation.rollback, cmd.installation.verify -> Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_request",
+      "result_schema_ref": "cmd.installation.select -> Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectCommandResult; cmd.installation.install, cmd.installation.update, cmd.installation.repair, cmd.installation.rollback, cmd.installation.verify -> Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_result",
+      "error_schema_ref": "cmd.installation.select -> Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectCommandError; cmd.installation.install, cmd.installation.update, cmd.installation.repair, cmd.installation.rollback, cmd.installation.verify -> Plans/shared_runtime_command_contracts.schema.json#/$defs/command_error",
+      "availability_rule": "cmd.installation.select -> Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectAvailability; exact verified installation, generations, proof, continuation, activation proof, and return context apply to select. The five lifecycle commands consume their existing owner admission and Plans/shared_runtime_command_contracts.schema.json#/$defs/command_result_envelope disabled_reason/error, not InstallationSelectAvailability; a typed result or copied ref is not native admission proof.",
+      "permission_gate": "cmd.installation.select -> Plans/shared_integration_runtime.schema.json#/$defs/SharedIntegrationPermissionDecision with installation_select scope and no acquisition/authentication. The five lifecycle commands retain Plans/shared_runtime_command_contracts.schema.json#/$defs/command_request_envelope permission_snapshot_ref and their lifecycle-owner policy, including explicit user acquisition of a provider CLI; a ref alone does not prove permission. No credential exposure or authority widening.",
+      "disabled_reason_rule": "cmd.installation.select -> Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectDisabledReasonCode; the five lifecycle commands -> Plans/shared_runtime_command_contracts.schema.json#/$defs/disabled_reason and command_error through their existing result envelope.",
       "handler_owner": "InstallationResolver/InstallationLifecycleManager semantic owner; select native handler/activation path absent. The 1 commands added by the central Touch closure have sole future routes in Plans/Shared_Integration_Runtime.md#SIR-030; target strings are not native proof.",
       "handler_status": "specified",
       "wiring_status": "specified",
@@ -4253,7 +4253,7 @@
       ],
       "receipt_refs": [
         "Plans/shared_integration_runtime.schema.json#/$defs/InstallationSelectCommandResult",
-        "existing InstallationLifecycleCommandResult"
+        "Plans/shared_runtime_command_contracts.schema.json#/$defs/installation_lifecycle_command_result"
       ],
       "observable_work": [
         "Install, verify, repair, select/activate, and rollback owner work."
