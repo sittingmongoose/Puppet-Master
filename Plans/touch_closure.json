@@ -7735,22 +7735,23 @@
       ],
       "owner_plan": "Plans/FinalGUISpec.md",
       "plan_unit": "F3-529",
-      "dry_contract_ref": "Plans/final_gui_interaction_contracts.schema.json#/$defs/local_action_common_request",
-      "payload_schema_ref": "Plans/final_gui_interaction_contracts.schema.json#/$defs/local_action_common_request",
-      "result_schema_ref": "Plans/final_gui_interaction_contracts.schema.json#/$defs/local_action_common_result",
-      "error_schema_ref": "Plans/final_gui_interaction_contracts.schema.json#/$defs/local_action_common_result",
+      "dry_contract_ref": "ui.source_control.profile.preview -> Plans/final_gui_interaction_contracts.schema.json#/$defs/source_control_profile_preview_local_action_request; ui.repository_automation.binding.select -> Plans/final_gui_interaction_contracts.schema.json#/$defs/repository_local_action_request; ui.source_control.backup_history.open -> Plans/final_gui_interaction_contracts.schema.json#/$defs/source_control_backup_local_action_request",
+      "payload_schema_ref": "ui.source_control.profile.preview -> Plans/final_gui_interaction_contracts.schema.json#/$defs/source_control_profile_preview_local_action_request; ui.repository_automation.binding.select -> Plans/final_gui_interaction_contracts.schema.json#/$defs/repository_local_action_request; ui.source_control.backup_history.open -> Plans/final_gui_interaction_contracts.schema.json#/$defs/source_control_backup_local_action_request",
+      "result_schema_ref": "ui.source_control.profile.preview -> Plans/final_gui_interaction_contracts.schema.json#/$defs/source_control_profile_preview_local_action_result; ui.repository_automation.binding.select -> Plans/final_gui_interaction_contracts.schema.json#/$defs/repository_local_action_result; ui.source_control.backup_history.open -> Plans/final_gui_interaction_contracts.schema.json#/$defs/source_control_backup_local_action_result",
+      "error_schema_ref": "ui.source_control.profile.preview -> Plans/final_gui_interaction_contracts.schema.json#/$defs/source_control_profile_preview_local_action_result; ui.repository_automation.binding.select -> Plans/final_gui_interaction_contracts.schema.json#/$defs/repository_local_action_result; ui.source_control.backup_history.open -> Plans/final_gui_interaction_contracts.schema.json#/$defs/source_control_backup_local_action_result",
       "availability_rule": "The exact current repository projection, project and repository identities, accessibility description, caller return context, and mounted owner-local presentation controller are required; binding selection additionally requires at least two already-authorized AutomationBinding refs, and Backup navigation requires an immutable revision plus exact Backup-owner route and deep link.",
-      "permission_gate": "Presentation/currentness/accessibility gate only. Neither action grants provider, installation, authentication, filesystem, browser, restore, Source Control, Backup, repository-binding, or AutomationBinding mutation authority.",
+      "permission_gate": "Presentation/currentness/accessibility gate only. None of the three local presentation actions grants provider, installation, authentication, filesystem, browser, restore, Source Control, Backup, repository-binding, or AutomationBinding mutation authority.",
       "disabled_reason_rule": "Return stale_projection or caller_unavailable with deterministic return settlement; never register or simulate a semantic-domain command, provider mutation, restore, or owner work.",
       "handler_owner": "Owner-local typed UI controller only; semantic_domain_handler is null and no domain handler exists.",
       "handler_status": "specified",
       "wiring_status": "specified",
       "production_or_simulation": "Typed owner-local request/result contract and static fixtures only; no production UICommand row, EventRecord, persistent-state mutation, native Slint controller, or runtime claim.",
       "gui_triggers": [
+        "Source Control header Git/Jujutsu presentation switch (concept or future comparison surface)",
         "Source Control > Actions & Pipelines AutomationBinding selector",
         "Source Control > Recovery > Open Backup history"
       ],
-      "return_route": "Deterministically restore the initiating binding-picker context or open the exact Backup history target while preserving the supplied caller context.",
+      "return_route": "Deterministically restore the initiating profile-preview surface, restore the initiating binding-picker context, or open the exact Backup history target while preserving the supplied caller context.",
       "reverse_consumers": [
         "Source Control workbench",
         "Actions & Pipelines panel",
@@ -7760,6 +7761,7 @@
         "none_local_presentation_action"
       ],
       "receipt_refs": [
+        "Plans/final_gui_interaction_contracts.schema.json#/$defs/source_control_profile_preview_local_action_result",
         "Plans/final_gui_interaction_contracts.schema.json#/$defs/repository_local_action_result",
         "Plans/final_gui_interaction_contracts.schema.json#/$defs/source_control_backup_local_action_result"
       ],
@@ -7771,7 +7773,8 @@
         "Packet command-like tokens normalize to these typed local UI actions and are never registered as domain commands."
       ],
       "test_refs": [
-        "Plans/final_gui_interaction_contract_fixtures.json#/positive_instance/contracts/7/local_action_pairs"
+        "Plans/final_gui_interaction_contract_fixtures.json#/positive_instance/contracts/7/local_action_pairs",
+        "tests/test_pm_repository_local_profile_mapping.py"
       ],
       "evidence_refs": [
         "static_owner_schema_and_fixture_only"
