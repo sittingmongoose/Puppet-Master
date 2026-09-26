@@ -72,6 +72,11 @@ def validate_coverage(catalog, *, repo_root, schema):
         errors.append("application_update_occurrence_identity")
     if any(r["shared_fact_key"] != "application_update" for r in updates):
         errors.append("application_update_duplicate_fact")
+    bound = [r for r in rows if r["full_dimension_query_binding"] != "unbound"]
+    if [r["occurrence_id"] for r in bound] != ["sep03-doctor-008", "sep03-doctor-043"]:
+        errors.append("full_dimension_binding_scope")
+    if len({json.dumps(r["full_dimension_query_binding"], sort_keys=True) for r in bound}) != 1:
+        errors.append("full_dimension_binding_not_one_shared_read")
 
     def resolve(reference, category):
         try:
@@ -95,6 +100,44 @@ def validate_coverage(catalog, *, repo_root, schema):
             owner = resolve("Plans/newtools.md#N2-154", "descriptor_owner_unresolved")
             if owner is not None and check_id not in owner:
                 errors.append("descriptor_not_declared:" + check_id)
+        binding = row["full_dimension_query_binding"]
+        if isinstance(binding, dict):
+            if binding["fact_key"] != row["shared_fact_key"]:
+                errors.append("full_dimension_binding_fact_key")
+            if (binding["state"], binding["evidence_level"], binding["native_claim"]) != (
+                    "bound_to_typed_owner_read", "static_typed_contract_join_only", "none"):
+                errors.append("full_dimension_binding_claim")
+            companion = resolve("Plans/doctor_application_update_owner_read_contracts.schema.json",
+                                "binding_owner_read_unresolved")
+            owner_schema_id = companion.get("$id") if isinstance(companion, dict) else None
+            descriptor = resolve(binding["descriptor_ref"], "binding_descriptor_unresolved")
+            owner_read = resolve(binding["owner_read_schema_ref"], "binding_owner_read_unresolved")
+            request_definition = resolve(binding["request_schema_ref"], "binding_request_unresolved")
+            result_definition = resolve(binding["result_schema_ref"], "binding_result_unresolved")
+            protocol_definition = resolve(binding["server_protocol_join_ref"], "binding_protocol_unresolved")
+            for reference in binding["owner_value_refs"]:
+                resolve(reference, "binding_owner_value_unresolved")
+            if not isinstance(owner_schema_id, str) or not owner_schema_id:
+                errors.append("binding_owner_schema_identity")
+            elif isinstance(descriptor, dict):
+                if (
+                    descriptor.get("schema_id") != "pm.doctor.check_descriptor.v1"
+                    or descriptor.get("check_id") != binding["descriptor_check_id"]
+                    or descriptor.get("descriptor_revision") != binding["descriptor_revision"]
+                    or descriptor.get("owner_doc_ref") != binding["descriptor_owner_doc_ref"]
+                    or descriptor.get("target_kinds") != ["application"]
+                    or descriptor.get("side_effect_policy") != "read_only"
+                ):
+                    errors.append("full_dimension_binding_descriptor_mismatch")
+                for key, definition in (("request_schema_ref", "application_update_owner_read_request"),
+                                        ("result_schema_ref", "application_update_owner_read_result")):
+                    if descriptor.get(key) != owner_schema_id + "#" + definition:
+                        errors.append("full_dimension_binding_descriptor_route:" + key)
+            else:
+                errors.append("full_dimension_binding_descriptor_unresolved:" + binding["descriptor_ref"])
+            if not all(isinstance(value, dict) for value in (
+                    owner_read, request_definition, result_definition, protocol_definition)):
+                errors.append("full_dimension_binding_typed_join_incomplete")
         leaf = row["bounded_leaf"]
         if leaf is None:
             continue

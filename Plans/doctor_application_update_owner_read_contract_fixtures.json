@@ -1,0 +1,1954 @@
+{
+  "schema_id": "pm.doctor.application_update_owner_read.fixtures.v1",
+  "schema_version": "1.0.0",
+  "contract_schema_id": "pm.doctor.application_update_owner_read.contracts.v1",
+  "owner_schema": "Plans/doctor_application_update_owner_read_contracts.schema.json",
+  "evidence_level": "schema_fixture_only",
+  "claim_boundary": "Static fabricated examples only. The owner-original authority block below is an explicitly injected fixture double: it is not a native issuer, not an issued permission decision, not physical owner custody and not an observed update or Server result.",
+  "coverage": {
+    "positive_cases": 8,
+    "negative_cases": 25,
+    "runtime_evidence_claimed": false,
+    "owner_reads_for_the_fact": 1,
+    "bound_occurrences": [
+      "sep03-doctor-008",
+      "sep03-doctor-043"
+    ]
+  },
+  "valid": [
+    {
+      "name": "application_update_owner_read_descriptor",
+      "definition": "doctor_check_descriptor",
+      "value": {
+        "schema_id": "pm.doctor.check_descriptor.v1",
+        "schema_version": "1.0.0",
+        "check_id": "doctor.application_update.owner_read",
+        "descriptor_revision": 1,
+        "owner_doc_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+        "target_kinds": [
+          "application"
+        ],
+        "request_schema_ref": "https://puppetmaster.local/schemas/doctor-application-update-owner-read/1.0.0/doctor_application_update_owner_read_contracts.schema.json#application_update_owner_read_request",
+        "result_schema_ref": "https://puppetmaster.local/schemas/doctor-application-update-owner-read/1.0.0/doctor_application_update_owner_read_contracts.schema.json#application_update_owner_read_result",
+        "applicability_selector_ref": "selector:installed-application-installations",
+        "cost_class": "network_bounded",
+        "cache_ttl_seconds": 21600,
+        "timeout_ms": 30000,
+        "side_effect_policy": "read_only",
+        "permission_class": "host_read",
+        "redaction_profile_ref": "redaction:doctor-application-update",
+        "remediation_action_ids": [],
+        "support_state": "active"
+      }
+    },
+    {
+      "name": "one_owner_read_request_for_two_occurrences",
+      "definition": "application_update_owner_read_request",
+      "value": {
+        "schema_id": "pm.application_update.owner_read_request.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "ApplicationUpdateOwnerReadRequest",
+        "owner_read_ref": "owner-read:application-update:home-01:pm-app-01",
+        "fact_key": "application_update",
+        "scope": {
+          "server_id": "server:home-01",
+          "installation_id": "installation:pm-app-01",
+          "installation_generation": 4,
+          "source_id": "update-source:stable-channel",
+          "source_generation": 11,
+          "channel_id": "stable"
+        },
+        "target": {
+          "target_kind": "application",
+          "identity_ref": "installation:pm-app-01",
+          "server_id": "server:home-01",
+          "installation_generation": 4
+        },
+        "member_bindings": [
+          {
+            "batch_id": "doctor-batch:application-update",
+            "member_id": "doctor-member:app-update-server",
+            "query_id": "doctor-query:app-update-server"
+          },
+          {
+            "batch_id": "doctor-batch:application-update",
+            "member_id": "doctor-member:app-update-updates",
+            "query_id": "doctor-query:app-update-updates"
+          }
+        ],
+        "requested_fields": [
+          "version",
+          "channel",
+          "install_source",
+          "available_update",
+          "restart_requirement",
+          "protocol"
+        ],
+        "expected_descriptor_revision": 1,
+        "expected_owner_generation": 7,
+        "expected_cache_generation": 3,
+        "expected_state_revision": 12,
+        "expected_policy_version": "policy:application-check:v1",
+        "submitted_conditional_validator": "validator:stable:2026-09-23",
+        "read_admission_ref": "permissions:doctor-read-admission:application-update",
+        "governor_admission_ref": "governor:admission:application-update-owner-read",
+        "observable_work_ref": "observable-work:application-update-owner-read",
+        "redaction_profile_ref": "redaction:doctor-application-update",
+        "read_only": true,
+        "requested_at_utc": "2026-09-24T12:00:05Z",
+        "deadline_utc": "2026-09-24T12:00:35Z"
+      }
+    },
+    {
+      "name": "one_owner_read_result_union_dimensions",
+      "definition": "application_update_owner_read_result",
+      "value": {
+        "schema_id": "pm.application_update.owner_read_result.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "ApplicationUpdateOwnerReadResult",
+        "result_id": "owner-read-result:application-update:2026-09-24T12:00:30Z",
+        "owner_read_ref": "owner-read:application-update:home-01:pm-app-01",
+        "fact_key": "application_update",
+        "scope": {
+          "server_id": "server:home-01",
+          "installation_id": "installation:pm-app-01",
+          "installation_generation": 4,
+          "source_id": "update-source:stable-channel",
+          "source_generation": 11,
+          "channel_id": "stable"
+        },
+        "target": {
+          "target_kind": "application",
+          "identity_ref": "installation:pm-app-01",
+          "server_id": "server:home-01",
+          "installation_generation": 4
+        },
+        "member_bindings": [
+          {
+            "batch_id": "doctor-batch:application-update",
+            "member_id": "doctor-member:app-update-server",
+            "query_id": "doctor-query:app-update-server"
+          },
+          {
+            "batch_id": "doctor-batch:application-update",
+            "member_id": "doctor-member:app-update-updates",
+            "query_id": "doctor-query:app-update-updates"
+          }
+        ],
+        "status": "completed",
+        "observed_owner_generation": 7,
+        "observed_cache_generation": 3,
+        "observed_state_revision": 12,
+        "observed_policy_version": "policy:application-check:v1",
+        "fields": {
+          "version": {
+            "installed_version": "1.4.2",
+            "installed_version_ref": "owner-value:installed-version:pm-app-01",
+            "installed_version_record": {
+              "schema_id": "pm.release_update.installed_version_value.v1",
+              "schema_version": "1.0.0",
+              "record_kind": "ApplicationUpdateInstalledVersionValue",
+              "server_id": "server:home-01",
+              "installation_id": "installation:pm-app-01",
+              "installation_generation": 4,
+              "source_id": "update-source:stable-channel",
+              "source_generation": 11,
+              "installed_version": "1.4.2",
+              "installation_authority_ref": "installation-authority:pm-app-01",
+              "authority_generation": 4,
+              "observed_at_utc": "2026-09-24T11:59:30Z",
+              "currentness_ref": "currentness:installed-version:pm-app-01"
+            },
+            "installed_provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "currentness:installed-version:pm-app-01",
+              "observed_at_utc": "2026-09-24T11:59:30Z",
+              "evidence_refs": [
+                "evidence:release:installed-version:pm-app-01"
+              ]
+            },
+            "candidate_version": {
+              "publication_revision": "publication:stable:2026-09-24",
+              "version": "1.5.0",
+              "channel": "stable",
+              "metadata_ref": "release:metadata:stable:1.5.0"
+            },
+            "candidate_provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "release:metadata:stable:1.5.0",
+              "observed_at_utc": "2026-09-24T12:00:00Z",
+              "evidence_refs": [
+                "evidence:release:publication:stable"
+              ]
+            }
+          },
+          "channel": {
+            "scope_channel_id": "stable",
+            "publication_channel": "stable",
+            "provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "owner-record:release:application-check-scope:pm-app-01",
+              "observed_at_utc": "2026-09-24T12:00:00Z",
+              "evidence_refs": [
+                "evidence:release:application-check-scope:pm-app-01"
+              ]
+            }
+          },
+          "install_source": {
+            "source_id": "update-source:stable-channel",
+            "source_generation": 11,
+            "installation_authority_ref": "installation-authority:pm-app-01",
+            "installation_authority_generation": 4,
+            "installation_authority_owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+            "provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "owner-record:release:installation-authority:pm-app-01",
+              "observed_at_utc": "2026-09-24T12:00:00Z",
+              "evidence_refs": [
+                "evidence:release:installation-authority:pm-app-01"
+              ]
+            }
+          },
+          "available_update": {
+            "source_result": {
+              "schema_id": "pm.application_update_check.source_result.v1",
+              "schema_version": "1.0.0",
+              "record_kind": "ApplicationSourceResult",
+              "scope": {
+                "server_id": "server:home-01",
+                "installation_id": "installation:pm-app-01",
+                "installation_generation": 4,
+                "source_id": "update-source:stable-channel",
+                "source_generation": 11,
+                "channel_id": "stable"
+              },
+              "policy_version": "policy:application-check:v1",
+              "operation_id": "operation:application-check:2026-09-24T12:00:00Z",
+              "result_id": "source-result:application-update:2026-09-24T11:59:00Z",
+              "completed_at_utc": "2026-09-24T12:00:00Z",
+              "outcome": "validated",
+              "publication": {
+                "publication_revision": "publication:stable:2026-09-24",
+                "metadata": [
+                  {
+                    "channel": "stable",
+                    "version": "1.5.0",
+                    "previous_version": "1.4.2",
+                    "minimum_supported_version": "1.2.0",
+                    "rollout_percentage": 25,
+                    "migration_plan_ref": "release:migration:1.5.0",
+                    "rollback_ref": "release:rollback:1.4.2",
+                    "release_notes_ref": "release:notes:1.5.0",
+                    "failure_state_copy_ref": "release:failure-copy:1.5.0"
+                  }
+                ],
+                "conditional_validator": "validator:stable:2026-09-24",
+                "source_result_id": "source-result:application-update:2026-09-24T11:59:00Z"
+              },
+              "source_evidence_ref": "evidence:update-source:stable:2026-09-24",
+              "submitted_validator": "validator:stable:2026-09-23"
+            },
+            "outcome": "validated",
+            "publication_revision": "publication:stable:2026-09-24",
+            "metadata": [
+              {
+                "channel": "stable",
+                "version": "1.5.0",
+                "previous_version": "1.4.2",
+                "minimum_supported_version": "1.2.0",
+                "rollout_percentage": 25,
+                "migration_plan_ref": "release:migration:1.5.0",
+                "rollback_ref": "release:rollback:1.4.2",
+                "release_notes_ref": "release:notes:1.5.0",
+                "failure_state_copy_ref": "release:failure-copy:1.5.0"
+              }
+            ],
+            "submitted_validator": "validator:stable:2026-09-23",
+            "provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "source-result:application-update:2026-09-24T11:59:00Z",
+              "observed_at_utc": "2026-09-24T12:00:00Z",
+              "evidence_refs": [
+                "evidence:release:source-result:stable"
+              ]
+            }
+          },
+          "restart_requirement": {
+            "lifecycle_disclosure": {
+              "schema_id": "pm.release_update.lifecycle_disclosure.v1",
+              "schema_version": "1.0.0",
+              "record_kind": "ApplicationUpdateLifecycleDisclosure",
+              "application_operation": "install_restart",
+              "operation_id": "operation:application-update:install-restart:pm-app-01",
+              "server_id": "server:home-01",
+              "installation_id": "installation:pm-app-01",
+              "installation_generation": 4,
+              "source_id": "update-source:stable-channel",
+              "source_generation": 11,
+              "phase": "restart-required",
+              "phase_revision": 3,
+              "journal_ref": "update-journal:pm-app-01",
+              "journal_generation": 6,
+              "observed_at_utc": "2026-09-24T11:59:45Z",
+              "currentness_ref": "currentness:update-journal:pm-app-01"
+            },
+            "selected_current_original": {
+              "schema_id": "pm.release_update.selected_current_journal_original.v1",
+              "schema_version": "1.0.0",
+              "record_kind": "ApplicationUpdateSelectedCurrentJournalOriginal",
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "original_ref": "update-service-original:selected-current:pm-app-01",
+              "currentness_ref": "currentness:update-journal:pm-app-01",
+              "server_id": "server:home-01",
+              "installation_id": "installation:pm-app-01",
+              "installation_generation": 4,
+              "source_id": "update-source:stable-channel",
+              "source_generation": 11,
+              "channel_id": "stable",
+              "application_operation": "install_restart",
+              "operation_id": "operation:application-update:install-restart:pm-app-01",
+              "journal_ref": "update-journal:pm-app-01",
+              "journal_generation": 6,
+              "phase": "restart-required",
+              "phase_revision": 3,
+              "observed_at_utc": "2026-09-24T11:59:45Z",
+              "resolution_ref": "update-service-resolution:selected-current:pm-app-01",
+              "resolved_at_utc": "2026-09-24T12:00:20Z",
+              "journal_authority_generation": 12
+            },
+            "phase": "restart-required",
+            "restart_required": true,
+            "provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "currentness:update-journal:pm-app-01",
+              "observed_at_utc": "2026-09-24T11:59:45Z",
+              "evidence_refs": [
+                "evidence:release:update-journal:pm-app-01"
+              ]
+            }
+          },
+          "protocol": {
+            "server_value": {
+              "record_type": "server_protocol_compatibility_value",
+              "schema_id": "pm.server_protocol_compatibility_value.v1",
+              "plan_unit_refs": [
+                "Plans/Server_System.md#SRV-007",
+                "Plans/Server_System.md#SRV-008"
+              ],
+              "server_id": "server:home-01",
+              "installation_id": "installation:pm-app-01",
+              "installation_generation": 4,
+              "server_protocol_range": {
+                "minimum": 3,
+                "maximum": 5
+              },
+              "client_protocol_version": 5,
+              "connection_projection_ref": "server-connection:home-01:client-01",
+              "connection_state": "current",
+              "disabled_reason": null,
+              "observed_at_utc": "2026-09-24T11:59:50Z",
+              "currentness_ref": "currentness:server-connection:home-01",
+              "runtime_claim": false
+            },
+            "connection_state": "current",
+            "provenance": {
+              "owner_ref": "Plans/Server_System.md#SRV-007",
+              "owner_record_ref": "currentness:server-connection:home-01",
+              "observed_at_utc": "2026-09-24T11:59:50Z",
+              "evidence_refs": [
+                "evidence:server:protocol-compatibility:home-01"
+              ]
+            }
+          }
+        },
+        "payload_digest": "061e08f1c83f97ef3cf6aba1cc7032323c2b05d0ed4b66ef9f7939cb3bb37bd9",
+        "owner_original_join": {
+          "fact_key": "application_update",
+          "scope_ref": "owner-record:release:application-check-scope:pm-app-01",
+          "installed_version_original_ref": "currentness:installed-version:pm-app-01",
+          "installation_authority_original_ref": "installation-authority:pm-app-01",
+          "server_protocol_original_ref": "currentness:server-connection:home-01",
+          "state_original_ref": "owner-record:release:application-check-state:pm-app-01",
+          "source_result_original_ref": "source-result:application-update:2026-09-24T11:59:00Z",
+          "lifecycle_journal_original_ref": "update-journal:pm-app-01",
+          "resolver_generation": 77,
+          "caller_copied_values_authority": false
+        },
+        "started_at_utc": "2026-09-24T12:00:10Z",
+        "finished_at_utc": "2026-09-24T12:00:30Z",
+        "evidence_refs": [
+          "evidence:application-update:owner-read"
+        ],
+        "failure_refs": []
+      }
+    },
+    {
+      "name": "distinct_generation_domains_owner_read",
+      "definition": "application_update_owner_read_result",
+      "value": {
+        "schema_id": "pm.application_update.owner_read_result.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "ApplicationUpdateOwnerReadResult",
+        "result_id": "owner-read-result:application-update:distinct-generation-domains",
+        "owner_read_ref": "owner-read:application-update:home-01:pm-app-01",
+        "fact_key": "application_update",
+        "scope": {
+          "server_id": "server:home-01",
+          "installation_id": "installation:pm-app-01",
+          "installation_generation": 4,
+          "source_id": "update-source:stable-channel",
+          "source_generation": 11,
+          "channel_id": "stable"
+        },
+        "target": {
+          "target_kind": "application",
+          "identity_ref": "installation:pm-app-01",
+          "server_id": "server:home-01",
+          "installation_generation": 4
+        },
+        "member_bindings": [
+          {
+            "batch_id": "doctor-batch:application-update",
+            "member_id": "doctor-member:app-update-server",
+            "query_id": "doctor-query:app-update-server"
+          },
+          {
+            "batch_id": "doctor-batch:application-update",
+            "member_id": "doctor-member:app-update-updates",
+            "query_id": "doctor-query:app-update-updates"
+          }
+        ],
+        "status": "completed",
+        "observed_owner_generation": 7,
+        "observed_cache_generation": 3,
+        "observed_state_revision": 12,
+        "observed_policy_version": "policy:application-check:v1",
+        "fields": {
+          "version": {
+            "installed_version": "1.4.2",
+            "installed_version_ref": "owner-value:installed-version:pm-app-01",
+            "installed_version_record": {
+              "schema_id": "pm.release_update.installed_version_value.v1",
+              "schema_version": "1.0.0",
+              "record_kind": "ApplicationUpdateInstalledVersionValue",
+              "server_id": "server:home-01",
+              "installation_id": "installation:pm-app-01",
+              "installation_generation": 4,
+              "source_id": "update-source:stable-channel",
+              "source_generation": 11,
+              "installed_version": "1.4.2",
+              "installation_authority_ref": "installation-authority:pm-app-01",
+              "authority_generation": 7,
+              "observed_at_utc": "2026-09-24T11:59:30Z",
+              "currentness_ref": "currentness:installed-version:pm-app-01"
+            },
+            "installed_provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "currentness:installed-version:pm-app-01",
+              "observed_at_utc": "2026-09-24T11:59:30Z",
+              "evidence_refs": [
+                "evidence:release:installed-version:pm-app-01"
+              ]
+            },
+            "candidate_version": {
+              "publication_revision": "publication:stable:2026-09-24",
+              "version": "1.5.0",
+              "channel": "stable",
+              "metadata_ref": "release:metadata:stable:1.5.0"
+            },
+            "candidate_provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "release:metadata:stable:1.5.0",
+              "observed_at_utc": "2026-09-24T12:00:00Z",
+              "evidence_refs": [
+                "evidence:release:publication:stable"
+              ]
+            }
+          },
+          "channel": {
+            "scope_channel_id": "stable",
+            "publication_channel": "stable",
+            "provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "owner-record:release:application-check-scope:pm-app-01",
+              "observed_at_utc": "2026-09-24T12:00:00Z",
+              "evidence_refs": [
+                "evidence:release:application-check-scope:pm-app-01"
+              ]
+            }
+          },
+          "install_source": {
+            "source_id": "update-source:stable-channel",
+            "source_generation": 11,
+            "installation_authority_ref": "installation-authority:pm-app-01",
+            "installation_authority_generation": 7,
+            "installation_authority_owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+            "provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "owner-record:release:installation-authority:pm-app-01",
+              "observed_at_utc": "2026-09-24T12:00:00Z",
+              "evidence_refs": [
+                "evidence:release:installation-authority:pm-app-01"
+              ]
+            }
+          },
+          "available_update": {
+            "source_result": {
+              "schema_id": "pm.application_update_check.source_result.v1",
+              "schema_version": "1.0.0",
+              "record_kind": "ApplicationSourceResult",
+              "scope": {
+                "server_id": "server:home-01",
+                "installation_id": "installation:pm-app-01",
+                "installation_generation": 4,
+                "source_id": "update-source:stable-channel",
+                "source_generation": 11,
+                "channel_id": "stable"
+              },
+              "policy_version": "policy:application-check:v1",
+              "operation_id": "operation:application-check:2026-09-24T12:00:00Z",
+              "result_id": "source-result:application-update:2026-09-24T11:59:00Z",
+              "completed_at_utc": "2026-09-24T12:00:00Z",
+              "outcome": "validated",
+              "publication": {
+                "publication_revision": "publication:stable:2026-09-24",
+                "metadata": [
+                  {
+                    "channel": "stable",
+                    "version": "1.5.0",
+                    "previous_version": "1.4.2",
+                    "minimum_supported_version": "1.2.0",
+                    "rollout_percentage": 25,
+                    "migration_plan_ref": "release:migration:1.5.0",
+                    "rollback_ref": "release:rollback:1.4.2",
+                    "release_notes_ref": "release:notes:1.5.0",
+                    "failure_state_copy_ref": "release:failure-copy:1.5.0"
+                  }
+                ],
+                "conditional_validator": "validator:stable:2026-09-24",
+                "source_result_id": "source-result:application-update:2026-09-24T11:59:00Z"
+              },
+              "source_evidence_ref": "evidence:update-source:stable:2026-09-24",
+              "submitted_validator": "validator:stable:2026-09-23"
+            },
+            "outcome": "validated",
+            "publication_revision": "publication:stable:2026-09-24",
+            "metadata": [
+              {
+                "channel": "stable",
+                "version": "1.5.0",
+                "previous_version": "1.4.2",
+                "minimum_supported_version": "1.2.0",
+                "rollout_percentage": 25,
+                "migration_plan_ref": "release:migration:1.5.0",
+                "rollback_ref": "release:rollback:1.4.2",
+                "release_notes_ref": "release:notes:1.5.0",
+                "failure_state_copy_ref": "release:failure-copy:1.5.0"
+              }
+            ],
+            "submitted_validator": "validator:stable:2026-09-23",
+            "provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "source-result:application-update:2026-09-24T11:59:00Z",
+              "observed_at_utc": "2026-09-24T12:00:00Z",
+              "evidence_refs": [
+                "evidence:release:source-result:stable"
+              ]
+            }
+          },
+          "restart_requirement": {
+            "lifecycle_disclosure": {
+              "schema_id": "pm.release_update.lifecycle_disclosure.v1",
+              "schema_version": "1.0.0",
+              "record_kind": "ApplicationUpdateLifecycleDisclosure",
+              "application_operation": "install_restart",
+              "operation_id": "operation:application-update:install-restart:pm-app-01",
+              "server_id": "server:home-01",
+              "installation_id": "installation:pm-app-01",
+              "installation_generation": 4,
+              "source_id": "update-source:stable-channel",
+              "source_generation": 11,
+              "phase": "restart-required",
+              "phase_revision": 3,
+              "journal_ref": "update-journal:pm-app-01",
+              "journal_generation": 6,
+              "observed_at_utc": "2026-09-24T11:59:45Z",
+              "currentness_ref": "currentness:update-journal:pm-app-01"
+            },
+            "selected_current_original": {
+              "schema_id": "pm.release_update.selected_current_journal_original.v1",
+              "schema_version": "1.0.0",
+              "record_kind": "ApplicationUpdateSelectedCurrentJournalOriginal",
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "original_ref": "update-service-original:selected-current:pm-app-01",
+              "currentness_ref": "currentness:update-journal:pm-app-01",
+              "server_id": "server:home-01",
+              "installation_id": "installation:pm-app-01",
+              "installation_generation": 4,
+              "source_id": "update-source:stable-channel",
+              "source_generation": 11,
+              "channel_id": "stable",
+              "application_operation": "install_restart",
+              "operation_id": "operation:application-update:install-restart:pm-app-01",
+              "journal_ref": "update-journal:pm-app-01",
+              "journal_generation": 6,
+              "phase": "restart-required",
+              "phase_revision": 3,
+              "observed_at_utc": "2026-09-24T11:59:45Z",
+              "resolution_ref": "update-service-resolution:selected-current:pm-app-01",
+              "resolved_at_utc": "2026-09-24T12:00:20Z",
+              "journal_authority_generation": 12
+            },
+            "phase": "restart-required",
+            "restart_required": true,
+            "provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "currentness:update-journal:pm-app-01",
+              "observed_at_utc": "2026-09-24T11:59:45Z",
+              "evidence_refs": [
+                "evidence:release:update-journal:pm-app-01"
+              ]
+            }
+          },
+          "protocol": {
+            "server_value": {
+              "record_type": "server_protocol_compatibility_value",
+              "schema_id": "pm.server_protocol_compatibility_value.v1",
+              "plan_unit_refs": [
+                "Plans/Server_System.md#SRV-007",
+                "Plans/Server_System.md#SRV-008"
+              ],
+              "server_id": "server:home-01",
+              "installation_id": "installation:pm-app-01",
+              "installation_generation": 4,
+              "server_protocol_range": {
+                "minimum": 3,
+                "maximum": 5
+              },
+              "client_protocol_version": 5,
+              "connection_projection_ref": "server-connection:home-01:client-01",
+              "connection_state": "current",
+              "disabled_reason": null,
+              "observed_at_utc": "2026-09-24T11:59:50Z",
+              "currentness_ref": "currentness:server-connection:home-01",
+              "runtime_claim": false
+            },
+            "connection_state": "current",
+            "provenance": {
+              "owner_ref": "Plans/Server_System.md#SRV-007",
+              "owner_record_ref": "currentness:server-connection:home-01",
+              "observed_at_utc": "2026-09-24T11:59:50Z",
+              "evidence_refs": [
+                "evidence:server:protocol-compatibility:home-01"
+              ]
+            }
+          }
+        },
+        "payload_digest": "8d03bd0530a4bd4ce7fa5b6e66417bfffa501d9021d5b97d01e651fe17ff18b4",
+        "owner_original_join": {
+          "fact_key": "application_update",
+          "scope_ref": "owner-record:release:application-check-scope:pm-app-01",
+          "installed_version_original_ref": "currentness:installed-version:pm-app-01",
+          "installation_authority_original_ref": "installation-authority:pm-app-01",
+          "server_protocol_original_ref": "currentness:server-connection:home-01",
+          "state_original_ref": "owner-record:release:application-check-state:pm-app-01",
+          "source_result_original_ref": "source-result:application-update:2026-09-24T11:59:00Z",
+          "lifecycle_journal_original_ref": "update-journal:pm-app-01",
+          "resolver_generation": 77,
+          "caller_copied_values_authority": false
+        },
+        "started_at_utc": "2026-09-24T12:00:10Z",
+        "finished_at_utc": "2026-09-24T12:00:30Z",
+        "evidence_refs": [
+          "evidence:application-update:owner-read"
+        ],
+        "failure_refs": []
+      }
+    },
+    {
+      "name": "older_still_current_owner_facts",
+      "definition": "application_update_owner_read_result",
+      "value": {
+        "schema_id": "pm.application_update.owner_read_result.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "ApplicationUpdateOwnerReadResult",
+        "result_id": "owner-read-result:application-update:older-still-current",
+        "owner_read_ref": "owner-read:application-update:home-01:pm-app-01",
+        "fact_key": "application_update",
+        "scope": {
+          "server_id": "server:home-01",
+          "installation_id": "installation:pm-app-01",
+          "installation_generation": 4,
+          "source_id": "update-source:stable-channel",
+          "source_generation": 11,
+          "channel_id": "stable"
+        },
+        "target": {
+          "target_kind": "application",
+          "identity_ref": "installation:pm-app-01",
+          "server_id": "server:home-01",
+          "installation_generation": 4
+        },
+        "member_bindings": [
+          {
+            "batch_id": "doctor-batch:application-update",
+            "member_id": "doctor-member:app-update-server",
+            "query_id": "doctor-query:app-update-server"
+          },
+          {
+            "batch_id": "doctor-batch:application-update",
+            "member_id": "doctor-member:app-update-updates",
+            "query_id": "doctor-query:app-update-updates"
+          }
+        ],
+        "status": "completed",
+        "observed_owner_generation": 7,
+        "observed_cache_generation": 3,
+        "observed_state_revision": 12,
+        "observed_policy_version": "policy:application-check:v1",
+        "fields": {
+          "version": {
+            "installed_version": "1.4.2",
+            "installed_version_ref": "owner-value:installed-version:pm-app-01",
+            "installed_version_record": {
+              "schema_id": "pm.release_update.installed_version_value.v1",
+              "schema_version": "1.0.0",
+              "record_kind": "ApplicationUpdateInstalledVersionValue",
+              "server_id": "server:home-01",
+              "installation_id": "installation:pm-app-01",
+              "installation_generation": 4,
+              "source_id": "update-source:stable-channel",
+              "source_generation": 11,
+              "installed_version": "1.4.2",
+              "installation_authority_ref": "installation-authority:pm-app-01",
+              "authority_generation": 4,
+              "observed_at_utc": "2026-09-24T11:20:00Z",
+              "currentness_ref": "currentness:installed-version:pm-app-01"
+            },
+            "installed_provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "currentness:installed-version:pm-app-01",
+              "observed_at_utc": "2026-09-24T11:20:00Z",
+              "evidence_refs": [
+                "evidence:release:installed-version:pm-app-01"
+              ]
+            },
+            "candidate_version": {
+              "publication_revision": "publication:stable:2026-09-24",
+              "version": "1.5.0",
+              "channel": "stable",
+              "metadata_ref": "release:metadata:stable:1.5.0"
+            },
+            "candidate_provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "release:metadata:stable:1.5.0",
+              "observed_at_utc": "2026-09-24T11:30:00Z",
+              "evidence_refs": [
+                "evidence:release:publication:stable"
+              ]
+            }
+          },
+          "channel": {
+            "scope_channel_id": "stable",
+            "publication_channel": "stable",
+            "provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "owner-record:release:application-check-scope:pm-app-01",
+              "observed_at_utc": "2026-09-24T11:30:00Z",
+              "evidence_refs": [
+                "evidence:release:application-check-scope:pm-app-01"
+              ]
+            }
+          },
+          "install_source": {
+            "source_id": "update-source:stable-channel",
+            "source_generation": 11,
+            "installation_authority_ref": "installation-authority:pm-app-01",
+            "installation_authority_generation": 4,
+            "installation_authority_owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+            "provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "owner-record:release:installation-authority:pm-app-01",
+              "observed_at_utc": "2026-09-24T11:30:00Z",
+              "evidence_refs": [
+                "evidence:release:installation-authority:pm-app-01"
+              ]
+            }
+          },
+          "available_update": {
+            "source_result": {
+              "schema_id": "pm.application_update_check.source_result.v1",
+              "schema_version": "1.0.0",
+              "record_kind": "ApplicationSourceResult",
+              "scope": {
+                "server_id": "server:home-01",
+                "installation_id": "installation:pm-app-01",
+                "installation_generation": 4,
+                "source_id": "update-source:stable-channel",
+                "source_generation": 11,
+                "channel_id": "stable"
+              },
+              "policy_version": "policy:application-check:v1",
+              "operation_id": "operation:application-check:2026-09-24T12:00:00Z",
+              "result_id": "source-result:application-update:2026-09-24T11:59:00Z",
+              "completed_at_utc": "2026-09-24T11:30:00Z",
+              "outcome": "validated",
+              "publication": {
+                "publication_revision": "publication:stable:2026-09-24",
+                "metadata": [
+                  {
+                    "channel": "stable",
+                    "version": "1.5.0",
+                    "previous_version": "1.4.2",
+                    "minimum_supported_version": "1.2.0",
+                    "rollout_percentage": 25,
+                    "migration_plan_ref": "release:migration:1.5.0",
+                    "rollback_ref": "release:rollback:1.4.2",
+                    "release_notes_ref": "release:notes:1.5.0",
+                    "failure_state_copy_ref": "release:failure-copy:1.5.0"
+                  }
+                ],
+                "conditional_validator": "validator:stable:2026-09-24",
+                "source_result_id": "source-result:application-update:2026-09-24T11:59:00Z"
+              },
+              "source_evidence_ref": "evidence:update-source:stable:2026-09-24",
+              "submitted_validator": "validator:stable:2026-09-23"
+            },
+            "outcome": "validated",
+            "publication_revision": "publication:stable:2026-09-24",
+            "metadata": [
+              {
+                "channel": "stable",
+                "version": "1.5.0",
+                "previous_version": "1.4.2",
+                "minimum_supported_version": "1.2.0",
+                "rollout_percentage": 25,
+                "migration_plan_ref": "release:migration:1.5.0",
+                "rollback_ref": "release:rollback:1.4.2",
+                "release_notes_ref": "release:notes:1.5.0",
+                "failure_state_copy_ref": "release:failure-copy:1.5.0"
+              }
+            ],
+            "submitted_validator": "validator:stable:2026-09-23",
+            "provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "source-result:application-update:2026-09-24T11:59:00Z",
+              "observed_at_utc": "2026-09-24T11:30:00Z",
+              "evidence_refs": [
+                "evidence:release:source-result:stable"
+              ]
+            }
+          },
+          "restart_requirement": {
+            "lifecycle_disclosure": {
+              "schema_id": "pm.release_update.lifecycle_disclosure.v1",
+              "schema_version": "1.0.0",
+              "record_kind": "ApplicationUpdateLifecycleDisclosure",
+              "application_operation": "install_restart",
+              "operation_id": "operation:application-update:install-restart:pm-app-01",
+              "server_id": "server:home-01",
+              "installation_id": "installation:pm-app-01",
+              "installation_generation": 4,
+              "source_id": "update-source:stable-channel",
+              "source_generation": 11,
+              "phase": "restart-required",
+              "phase_revision": 3,
+              "journal_ref": "update-journal:pm-app-01",
+              "journal_generation": 6,
+              "observed_at_utc": "2026-09-24T11:25:00Z",
+              "currentness_ref": "currentness:update-journal:pm-app-01"
+            },
+            "selected_current_original": {
+              "schema_id": "pm.release_update.selected_current_journal_original.v1",
+              "schema_version": "1.0.0",
+              "record_kind": "ApplicationUpdateSelectedCurrentJournalOriginal",
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "original_ref": "update-service-original:selected-current:pm-app-01",
+              "currentness_ref": "currentness:update-journal:pm-app-01",
+              "server_id": "server:home-01",
+              "installation_id": "installation:pm-app-01",
+              "installation_generation": 4,
+              "source_id": "update-source:stable-channel",
+              "source_generation": 11,
+              "channel_id": "stable",
+              "application_operation": "install_restart",
+              "operation_id": "operation:application-update:install-restart:pm-app-01",
+              "journal_ref": "update-journal:pm-app-01",
+              "journal_generation": 6,
+              "phase": "restart-required",
+              "phase_revision": 3,
+              "observed_at_utc": "2026-09-24T11:25:00Z",
+              "resolution_ref": "update-service-resolution:selected-current:pm-app-01",
+              "resolved_at_utc": "2026-09-24T12:00:20Z",
+              "journal_authority_generation": 12
+            },
+            "phase": "restart-required",
+            "restart_required": true,
+            "provenance": {
+              "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "owner_record_ref": "currentness:update-journal:pm-app-01",
+              "observed_at_utc": "2026-09-24T11:25:00Z",
+              "evidence_refs": [
+                "evidence:release:update-journal:pm-app-01"
+              ]
+            }
+          },
+          "protocol": {
+            "server_value": {
+              "record_type": "server_protocol_compatibility_value",
+              "schema_id": "pm.server_protocol_compatibility_value.v1",
+              "plan_unit_refs": [
+                "Plans/Server_System.md#SRV-007",
+                "Plans/Server_System.md#SRV-008"
+              ],
+              "server_id": "server:home-01",
+              "installation_id": "installation:pm-app-01",
+              "installation_generation": 4,
+              "server_protocol_range": {
+                "minimum": 3,
+                "maximum": 5
+              },
+              "client_protocol_version": 5,
+              "connection_projection_ref": "server-connection:home-01:client-01",
+              "connection_state": "current",
+              "disabled_reason": null,
+              "observed_at_utc": "2026-09-24T11:26:00Z",
+              "currentness_ref": "currentness:server-connection:home-01",
+              "runtime_claim": false
+            },
+            "connection_state": "current",
+            "provenance": {
+              "owner_ref": "Plans/Server_System.md#SRV-007",
+              "owner_record_ref": "currentness:server-connection:home-01",
+              "observed_at_utc": "2026-09-24T11:26:00Z",
+              "evidence_refs": [
+                "evidence:server:protocol-compatibility:home-01"
+              ]
+            }
+          }
+        },
+        "payload_digest": "3e2d7d334d1b62bfb1164311ac55cfe0855fdf35dc131d347e49939577d8aeac",
+        "owner_original_join": {
+          "fact_key": "application_update",
+          "scope_ref": "owner-record:release:application-check-scope:pm-app-01",
+          "installed_version_original_ref": "currentness:installed-version:pm-app-01",
+          "installation_authority_original_ref": "installation-authority:pm-app-01",
+          "server_protocol_original_ref": "currentness:server-connection:home-01",
+          "state_original_ref": "owner-record:release:application-check-state:pm-app-01",
+          "source_result_original_ref": "source-result:application-update:2026-09-24T11:59:00Z",
+          "lifecycle_journal_original_ref": "update-journal:pm-app-01",
+          "resolver_generation": 77,
+          "caller_copied_values_authority": false
+        },
+        "started_at_utc": "2026-09-24T12:00:10Z",
+        "finished_at_utc": "2026-09-24T12:00:30Z",
+        "evidence_refs": [
+          "evidence:application-update:owner-read"
+        ],
+        "failure_refs": []
+      }
+    },
+    {
+      "name": "two_occurrence_projection_of_one_read",
+      "definition": "application_update_owner_read_pair",
+      "value": {
+        "schema_id": "pm.application_update.owner_read_pair.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "ApplicationUpdateOwnerReadPair",
+        "fact_key": "application_update",
+        "owner_read_ref": "owner-read:application-update:home-01:pm-app-01",
+        "observable_work_ref": "observable-work:application-update-owner-read",
+        "descriptor_ref": "Plans/doctor_application_update_owner_read_contract_fixtures.json#/valid/0/value",
+        "descriptor_check_id": "doctor.application_update.owner_read",
+        "descriptor_revision": 1,
+        "request_schema_ref": "https://puppetmaster.local/schemas/doctor-application-update-owner-read/1.0.0/doctor_application_update_owner_read_contracts.schema.json#application_update_owner_read_request",
+        "result_schema_ref": "https://puppetmaster.local/schemas/doctor-application-update-owner-read/1.0.0/doctor_application_update_owner_read_contracts.schema.json#application_update_owner_read_result",
+        "shared_scope": {
+          "server_id": "server:home-01",
+          "installation_id": "installation:pm-app-01",
+          "installation_generation": 4,
+          "source_id": "update-source:stable-channel",
+          "source_generation": 11,
+          "channel_id": "stable"
+        },
+        "shared_target": {
+          "target_kind": "application",
+          "identity_ref": "installation:pm-app-01",
+          "server_id": "server:home-01",
+          "installation_generation": 4
+        },
+        "shared_owner_generation": 7,
+        "shared_cache_generation": 3,
+        "occurrence_members": [
+          {
+            "occurrence_id": "sep03-doctor-008",
+            "source_pointer": "/groups/0/checks/7",
+            "source_group": "Puppet Master Server",
+            "source_label": "app_update",
+            "required_dimensions": [
+              "version",
+              "channel",
+              "install source",
+              "available update",
+              "restart requirement"
+            ],
+            "query_ref": "doctor-query:app-update-server",
+            "result_ref": "doctor-query-result:app-update-server"
+          },
+          {
+            "occurrence_id": "sep03-doctor-043",
+            "source_pointer": "/groups/5/checks/0",
+            "source_group": "Updates",
+            "source_label": "app_update",
+            "required_dimensions": [
+              "version",
+              "channel",
+              "install source",
+              "restart",
+              "protocol"
+            ],
+            "query_ref": "doctor-query:app-update-updates",
+            "result_ref": "doctor-query-result:app-update-updates"
+          }
+        ],
+        "second_owner_read": false,
+        "second_check_dispatched": false,
+        "second_descriptor_created": false,
+        "mutation_dispatched": false,
+        "evidence_level": "static_typed_contract_join_only",
+        "native_claim": "none"
+      }
+    },
+    {
+      "name": "release_owned_installed_version_value",
+      "definition": "application_update_installed_version_value",
+      "value": {
+        "schema_id": "pm.release_update.installed_version_value.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "ApplicationUpdateInstalledVersionValue",
+        "server_id": "server:home-01",
+        "installation_id": "installation:pm-app-01",
+        "installation_generation": 4,
+        "source_id": "update-source:stable-channel",
+        "source_generation": 11,
+        "installed_version": "1.4.2",
+        "installation_authority_ref": "installation-authority:pm-app-01",
+        "authority_generation": 4,
+        "observed_at_utc": "2026-09-24T11:59:30Z",
+        "currentness_ref": "currentness:installed-version:pm-app-01"
+      }
+    },
+    {
+      "name": "release_owned_lifecycle_disclosure",
+      "definition": "application_update_lifecycle_disclosure",
+      "value": {
+        "schema_id": "pm.release_update.lifecycle_disclosure.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "ApplicationUpdateLifecycleDisclosure",
+        "application_operation": "install_restart",
+        "operation_id": "operation:application-update:install-restart:pm-app-01",
+        "server_id": "server:home-01",
+        "installation_id": "installation:pm-app-01",
+        "installation_generation": 4,
+        "source_id": "update-source:stable-channel",
+        "source_generation": 11,
+        "phase": "restart-required",
+        "phase_revision": 3,
+        "journal_ref": "update-journal:pm-app-01",
+        "journal_generation": 6,
+        "observed_at_utc": "2026-09-24T11:59:45Z",
+        "currentness_ref": "currentness:update-journal:pm-app-01"
+      }
+    },
+    {
+      "name": "server_owned_protocol_compatibility_value",
+      "definition": "server_protocol_compatibility_value",
+      "value": {
+        "record_type": "server_protocol_compatibility_value",
+        "schema_id": "pm.server_protocol_compatibility_value.v1",
+        "plan_unit_refs": [
+          "Plans/Server_System.md#SRV-007",
+          "Plans/Server_System.md#SRV-008"
+        ],
+        "server_id": "server:home-01",
+        "installation_id": "installation:pm-app-01",
+        "installation_generation": 4,
+        "server_protocol_range": {
+          "minimum": 3,
+          "maximum": 5
+        },
+        "client_protocol_version": 5,
+        "connection_projection_ref": "server-connection:home-01:client-01",
+        "connection_state": "current",
+        "disabled_reason": null,
+        "observed_at_utc": "2026-09-24T11:59:50Z",
+        "currentness_ref": "currentness:server-connection:home-01",
+        "runtime_claim": false
+      }
+    },
+    {
+      "name": "terminal_application_source_result",
+      "definition": "application_source_result",
+      "value": {
+        "schema_id": "pm.application_update_check.source_result.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "ApplicationSourceResult",
+        "scope": {
+          "server_id": "server:home-01",
+          "installation_id": "installation:pm-app-01",
+          "installation_generation": 4,
+          "source_id": "update-source:stable-channel",
+          "source_generation": 11,
+          "channel_id": "stable"
+        },
+        "policy_version": "policy:application-check:v1",
+        "operation_id": "operation:application-check:2026-09-24T12:00:00Z",
+        "result_id": "source-result:application-update:2026-09-24T11:59:00Z",
+        "completed_at_utc": "2026-09-24T12:00:00Z",
+        "outcome": "validated",
+        "publication": {
+          "publication_revision": "publication:stable:2026-09-24",
+          "metadata": [
+            {
+              "channel": "stable",
+              "version": "1.5.0",
+              "previous_version": "1.4.2",
+              "minimum_supported_version": "1.2.0",
+              "rollout_percentage": 25,
+              "migration_plan_ref": "release:migration:1.5.0",
+              "rollback_ref": "release:rollback:1.4.2",
+              "release_notes_ref": "release:notes:1.5.0",
+              "failure_state_copy_ref": "release:failure-copy:1.5.0"
+            }
+          ],
+          "conditional_validator": "validator:stable:2026-09-24",
+          "source_result_id": "source-result:application-update:2026-09-24T11:59:00Z"
+        },
+        "source_evidence_ref": "evidence:update-source:stable:2026-09-24",
+        "submitted_validator": "validator:stable:2026-09-23"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "request_dispatch_field_rejected",
+      "base_valid": "one_owner_read_request_for_two_occurrences",
+      "patch": {
+        "command_id": "cmd.update.app.check"
+      }
+    },
+    {
+      "name": "request_without_channel_scope",
+      "base_valid": "one_owner_read_request_for_two_occurrences",
+      "remove": [
+        "scope.channel_id"
+      ]
+    },
+    {
+      "name": "result_without_bounded_evidence",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "remove": [
+        "evidence_refs"
+      ]
+    },
+    {
+      "name": "pair_occurrence_dropped",
+      "base_valid": "two_occurrence_projection_of_one_read",
+      "remove": [
+        "occurrence_members.1"
+      ]
+    },
+    {
+      "name": "pair_second_check_rejected",
+      "base_valid": "two_occurrence_projection_of_one_read",
+      "patch": {
+        "second_check_dispatched": true
+      }
+    },
+    {
+      "name": "installed_record_authority_epoch_not_cited_authority",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.version.installed_version_record.authority_generation": 999
+      },
+      "semantic_rule": "installed_version_record_authority_epoch"
+    },
+    {
+      "name": "installed_record_observed_after_read_finish",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.version.installed_version_record.observed_at_utc": "2026-09-24T12:30:00Z"
+      },
+      "semantic_rule": "installed_version_record_after_finish"
+    },
+    {
+      "name": "lifecycle_record_observed_after_read_finish",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.restart_requirement.lifecycle_disclosure.observed_at_utc": "2026-09-24T12:30:00Z"
+      },
+      "semantic_rule": "lifecycle_record_after_finish"
+    },
+    {
+      "name": "source_result_record_completed_after_read_finish",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.available_update.source_result.completed_at_utc": "2026-09-24T12:30:00Z"
+      },
+      "semantic_rule": "source_result_record_after_finish"
+    },
+    {
+      "name": "protocol_record_observed_after_read_finish",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.protocol.server_value.observed_at_utc": "2026-09-24T12:30:00Z"
+      },
+      "semantic_rule": "protocol_record_after_finish"
+    },
+    {
+      "name": "restart_phase_not_disclosure",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.restart_requirement.phase": "available"
+      },
+      "semantic_rule": "owner_read_restart_phase_not_disclosure"
+    },
+    {
+      "name": "restart_requirement_from_command_outcome",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.restart_requirement.restart_required": false
+      },
+      "semantic_rule": "owner_read_restart_requirement_derivation"
+    },
+    {
+      "name": "installed_version_owner_from_command_output",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.version.installed_provenance.owner_ref": "command_output:cmd.update.app.check"
+      },
+      "semantic_rule": "installed_version_source_command_result_source"
+    },
+    {
+      "name": "installed_version_owner_from_client_banner",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.version.installed_provenance.owner_ref": "client_banner:pm-app-window"
+      },
+      "semantic_rule": "installed_version_source_client_display_source"
+    },
+    {
+      "name": "protocol_from_handler_default",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.protocol.provenance.owner_ref": "handler_default:protocol-version"
+      },
+      "semantic_rule": "protocol_source_client_display_source"
+    },
+    {
+      "name": "protocol_state_not_server_projection",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.protocol.connection_state": "protocol_mismatch"
+      },
+      "semantic_rule": "owner_read_protocol_connection_state"
+    },
+    {
+      "name": "available_update_projection_tampered",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.available_update.metadata.0.version": "9.9.9"
+      },
+      "semantic_rule": "owner_read_source_result_metadata"
+    },
+    {
+      "name": "available_update_nonsuccess_with_publication",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.available_update.outcome": "offline"
+      },
+      "semantic_rule": "owner_read_available_update_nonsuccess_source_claim"
+    },
+    {
+      "name": "payload_digest_after_value_tamper",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.version.installed_version": "9.9.9"
+      },
+      "semantic_rule": "owner_read_payload_digest"
+    },
+    {
+      "name": "pair_duplicate_query",
+      "base_valid": "two_occurrence_projection_of_one_read",
+      "patch": {
+        "occurrence_members.1.query_ref": "doctor-query:app-update-server"
+      },
+      "semantic_rule": "owner_read_pair_duplicate_query"
+    },
+    {
+      "name": "pair_occurrence_dimension_dropped",
+      "base_valid": "two_occurrence_projection_of_one_read",
+      "remove": [
+        "occurrence_members.1.required_dimensions.4"
+      ],
+      "semantic_rule": "owner_read_pair_dimensions:sep03-doctor-043"
+    },
+    {
+      "name": "pair_occurrence_identity_collapsed",
+      "base_valid": "two_occurrence_projection_of_one_read",
+      "patch": {
+        "occurrence_members.0.occurrence_id": "sep03-doctor-043"
+      },
+      "semantic_rule": "owner_read_pair_occurrence_identity"
+    },
+    {
+      "name": "installed_version_ref_names_update_credentials",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "owner_original_join.installed_version_original_ref": "owner-record:update-credential:pm-app-01"
+      },
+      "semantic_rule": "installed_version_record_key"
+    },
+    {
+      "name": "result_completed_without_protocol_dimension",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "fields.protocol": null
+      },
+      "semantic_rule": "owner_read_completed_fields_missing:protocol"
+    },
+    {
+      "name": "result_failed_with_disclosed_fields",
+      "base_valid": "one_owner_read_result_union_dimensions",
+      "patch": {
+        "status": "failed"
+      },
+      "semantic_rule": "owner_read_noncompleted_fields_present:available_update,channel,install_source,protocol,restart_requirement,version"
+    }
+  ],
+  "owner_original_fixture_authority": {
+    "authority_class": "fixture_only_static_double",
+    "label": "Injected static double. Not a native issuer, not an issued permission decision, not physical owner custody, not an observed update or Server result.",
+    "fact_key": "application_update",
+    "scope": {
+      "server_id": "server:home-01",
+      "installation_id": "installation:pm-app-01",
+      "installation_generation": 4,
+      "source_id": "update-source:stable-channel",
+      "source_generation": 11,
+      "channel_id": "stable"
+    },
+    "target": {
+      "target_kind": "application",
+      "identity_ref": "installation:pm-app-01",
+      "server_id": "server:home-01",
+      "installation_generation": 4
+    },
+    "state": {
+      "state_ref": "owner-record:release:application-check-state:pm-app-01",
+      "revision": 12,
+      "policy_version": "policy:application-check:v1",
+      "owner_generation": 7,
+      "cache_generation": 3,
+      "cache": {
+        "publication_revision": "publication:stable:2026-09-23",
+        "conditional_validator": "validator:stable:2026-09-23"
+      }
+    },
+    "installed_version": {
+      "version": "1.4.2",
+      "value_ref": "owner-value:installed-version:pm-app-01",
+      "record_ref": "currentness:installed-version:pm-app-01",
+      "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+      "record": {
+        "schema_id": "pm.release_update.installed_version_value.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "ApplicationUpdateInstalledVersionValue",
+        "server_id": "server:home-01",
+        "installation_id": "installation:pm-app-01",
+        "installation_generation": 4,
+        "source_id": "update-source:stable-channel",
+        "source_generation": 11,
+        "installed_version": "1.4.2",
+        "installation_authority_ref": "installation-authority:pm-app-01",
+        "authority_generation": 4,
+        "observed_at_utc": "2026-09-24T11:59:30Z",
+        "currentness_ref": "currentness:installed-version:pm-app-01"
+      }
+    },
+    "installation_authority": {
+      "authority_ref": "installation-authority:pm-app-01",
+      "authority_generation": 4,
+      "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+      "installation_id": "installation:pm-app-01",
+      "installation_generation": 4,
+      "source_id": "update-source:stable-channel",
+      "source_generation": 11
+    },
+    "channel": {
+      "scope_channel_id": "stable",
+      "publication_channel": "stable",
+      "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014"
+    },
+    "lifecycle": {
+      "phase": "restart-required",
+      "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+      "disclosure": {
+        "schema_id": "pm.release_update.lifecycle_disclosure.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "ApplicationUpdateLifecycleDisclosure",
+        "application_operation": "install_restart",
+        "operation_id": "operation:application-update:install-restart:pm-app-01",
+        "server_id": "server:home-01",
+        "installation_id": "installation:pm-app-01",
+        "installation_generation": 4,
+        "source_id": "update-source:stable-channel",
+        "source_generation": 11,
+        "phase": "restart-required",
+        "phase_revision": 3,
+        "journal_ref": "update-journal:pm-app-01",
+        "journal_generation": 6,
+        "observed_at_utc": "2026-09-24T11:59:45Z",
+        "currentness_ref": "currentness:update-journal:pm-app-01"
+      },
+      "selected_current": {
+        "resolution_ref": "update-service-resolution:selected-current:pm-app-01",
+        "resolved_at_utc": "2026-09-24T12:00:20Z",
+        "journal_authority_generation": 12,
+        "candidates": [
+          {
+            "schema_id": "pm.release_update.selected_current_journal_original.v1",
+            "schema_version": "1.0.0",
+            "record_kind": "ApplicationUpdateSelectedCurrentJournalOriginal",
+            "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+            "original_ref": "update-service-original:selected-current:pm-app-01",
+            "currentness_ref": "currentness:update-journal:pm-app-01",
+            "server_id": "server:home-01",
+            "installation_id": "installation:pm-app-01",
+            "installation_generation": 4,
+            "source_id": "update-source:stable-channel",
+            "source_generation": 11,
+            "channel_id": "stable",
+            "application_operation": "install_restart",
+            "operation_id": "operation:application-update:install-restart:pm-app-01",
+            "journal_ref": "update-journal:pm-app-01",
+            "journal_generation": 6,
+            "phase": "restart-required",
+            "phase_revision": 3,
+            "observed_at_utc": "2026-09-24T11:59:45Z",
+            "resolution_ref": "update-service-resolution:selected-current:pm-app-01",
+            "resolved_at_utc": "2026-09-24T12:00:20Z",
+            "journal_authority_generation": 12
+          }
+        ]
+      }
+    },
+    "server_protocol": {
+      "owner_ref": "Plans/Server_System.md#SRV-007",
+      "record_ref": "currentness:server-connection:home-01",
+      "projection_ref": "server-connection:home-01:client-01",
+      "connection_state": "current",
+      "value": {
+        "record_type": "server_protocol_compatibility_value",
+        "schema_id": "pm.server_protocol_compatibility_value.v1",
+        "plan_unit_refs": [
+          "Plans/Server_System.md#SRV-007",
+          "Plans/Server_System.md#SRV-008"
+        ],
+        "server_id": "server:home-01",
+        "installation_id": "installation:pm-app-01",
+        "installation_generation": 4,
+        "server_protocol_range": {
+          "minimum": 3,
+          "maximum": 5
+        },
+        "client_protocol_version": 5,
+        "connection_projection_ref": "server-connection:home-01:client-01",
+        "connection_state": "current",
+        "disabled_reason": null,
+        "observed_at_utc": "2026-09-24T11:59:50Z",
+        "currentness_ref": "currentness:server-connection:home-01",
+        "runtime_claim": false
+      }
+    },
+    "source_result": {
+      "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+      "record": {
+        "schema_id": "pm.application_update_check.source_result.v1",
+        "schema_version": "1.0.0",
+        "record_kind": "ApplicationSourceResult",
+        "scope": {
+          "server_id": "server:home-01",
+          "installation_id": "installation:pm-app-01",
+          "installation_generation": 4,
+          "source_id": "update-source:stable-channel",
+          "source_generation": 11,
+          "channel_id": "stable"
+        },
+        "policy_version": "policy:application-check:v1",
+        "operation_id": "operation:application-check:2026-09-24T12:00:00Z",
+        "result_id": "source-result:application-update:2026-09-24T11:59:00Z",
+        "completed_at_utc": "2026-09-24T12:00:00Z",
+        "outcome": "validated",
+        "publication": {
+          "publication_revision": "publication:stable:2026-09-24",
+          "metadata": [
+            {
+              "channel": "stable",
+              "version": "1.5.0",
+              "previous_version": "1.4.2",
+              "minimum_supported_version": "1.2.0",
+              "rollout_percentage": 25,
+              "migration_plan_ref": "release:migration:1.5.0",
+              "rollback_ref": "release:rollback:1.4.2",
+              "release_notes_ref": "release:notes:1.5.0",
+              "failure_state_copy_ref": "release:failure-copy:1.5.0"
+            }
+          ],
+          "conditional_validator": "validator:stable:2026-09-24",
+          "source_result_id": "source-result:application-update:2026-09-24T11:59:00Z"
+        },
+        "source_evidence_ref": "evidence:update-source:stable:2026-09-24",
+        "submitted_validator": "validator:stable:2026-09-23"
+      }
+    },
+    "admission": {
+      "admission_ref": "permissions:doctor-read-admission:application-update",
+      "decision": "allow",
+      "evaluated_at_utc": "2026-09-24T12:00:00Z",
+      "expires_at_utc": "2026-09-24T12:05:00Z",
+      "authority_generation": 7
+    },
+    "governor": {
+      "admission_ref": "governor:admission:application-update-owner-read",
+      "observable_work_ref": "observable-work:application-update-owner-read"
+    },
+    "resolver_generation": 77
+  },
+  "controller_projection_double": {
+    "label": "Reduced static doubles of the Doctor controller records for the focused pair join in this job copy; they are not registry evidence.",
+    "records": [
+      {
+        "kind": "doctor_owner_query_request",
+        "ref": "doctor-query:app-update-server",
+        "value": {
+          "schema_id": "pm.doctor.owner_query_request.v1",
+          "schema_version": "1.0.0",
+          "query_id": "doctor-query:app-update-server",
+          "batch_id": "doctor-batch:application-update",
+          "member_id": "doctor-member:app-update-server",
+          "admission_ref": "permissions:doctor-read-admission:application-update",
+          "owner_request_ref": "owner-read:application-update:home-01:pm-app-01",
+          "owner_request_schema_ref": "https://puppetmaster.local/schemas/doctor-application-update-owner-read/1.0.0/doctor_application_update_owner_read_contracts.schema.json#application_update_owner_read_request",
+          "governor_admission_ref": "governor:admission:application-update-owner-read",
+          "observable_work_ref": "observable-work:application-update-owner-read",
+          "dispatched_at_utc": "2026-09-24T12:00:10Z",
+          "deadline_utc": "2026-09-24T12:00:30Z"
+        }
+      },
+      {
+        "kind": "doctor_owner_query_result",
+        "ref": "doctor-query-result:app-update-server",
+        "value": {
+          "schema_id": "pm.doctor.owner_query_result.v1",
+          "schema_version": "1.0.0",
+          "result_id": "doctor-query-result:app-update-server",
+          "query_id": "doctor-query:app-update-server",
+          "batch_id": "doctor-batch:application-update",
+          "member_id": "doctor-member:app-update-server",
+          "status": "completed",
+          "owner_result_ref": "owner-read-result:application-update:2026-09-24T12:00:30Z",
+          "owner_result_schema_ref": "https://puppetmaster.local/schemas/doctor-application-update-owner-read/1.0.0/doctor_application_update_owner_read_contracts.schema.json#application_update_owner_read_result",
+          "observed_owner_generation": 7,
+          "started_at_utc": "2026-09-24T12:00:10Z",
+          "finished_at_utc": "2026-09-24T12:00:28Z",
+          "evidence_refs": [
+            "evidence:application-update:owner-read"
+          ],
+          "failure_refs": []
+        }
+      },
+      {
+        "kind": "doctor_owner_query_request",
+        "ref": "doctor-query:app-update-updates",
+        "value": {
+          "schema_id": "pm.doctor.owner_query_request.v1",
+          "schema_version": "1.0.0",
+          "query_id": "doctor-query:app-update-updates",
+          "batch_id": "doctor-batch:application-update",
+          "member_id": "doctor-member:app-update-updates",
+          "admission_ref": "permissions:doctor-read-admission:application-update",
+          "owner_request_ref": "owner-read:application-update:home-01:pm-app-01",
+          "owner_request_schema_ref": "https://puppetmaster.local/schemas/doctor-application-update-owner-read/1.0.0/doctor_application_update_owner_read_contracts.schema.json#application_update_owner_read_request",
+          "governor_admission_ref": "governor:admission:application-update-owner-read",
+          "observable_work_ref": "observable-work:application-update-owner-read",
+          "dispatched_at_utc": "2026-09-24T12:00:10Z",
+          "deadline_utc": "2026-09-24T12:00:30Z"
+        }
+      },
+      {
+        "kind": "doctor_owner_query_result",
+        "ref": "doctor-query-result:app-update-updates",
+        "value": {
+          "schema_id": "pm.doctor.owner_query_result.v1",
+          "schema_version": "1.0.0",
+          "result_id": "doctor-query-result:app-update-updates",
+          "query_id": "doctor-query:app-update-updates",
+          "batch_id": "doctor-batch:application-update",
+          "member_id": "doctor-member:app-update-updates",
+          "status": "completed",
+          "owner_result_ref": "owner-read-result:application-update:2026-09-24T12:00:30Z",
+          "owner_result_schema_ref": "https://puppetmaster.local/schemas/doctor-application-update-owner-read/1.0.0/doctor_application_update_owner_read_contracts.schema.json#application_update_owner_read_result",
+          "observed_owner_generation": 7,
+          "started_at_utc": "2026-09-24T12:00:10Z",
+          "finished_at_utc": "2026-09-24T12:00:28Z",
+          "evidence_refs": [
+            "evidence:application-update:owner-read"
+          ],
+          "failure_refs": []
+        }
+      },
+      {
+        "kind": "owner_request",
+        "ref": "owner-read:application-update:home-01:pm-app-01",
+        "value": {
+          "schema_id": "pm.application_update.owner_read_request.v1",
+          "schema_version": "1.0.0",
+          "record_kind": "ApplicationUpdateOwnerReadRequest",
+          "owner_read_ref": "owner-read:application-update:home-01:pm-app-01",
+          "fact_key": "application_update",
+          "scope": {
+            "server_id": "server:home-01",
+            "installation_id": "installation:pm-app-01",
+            "installation_generation": 4,
+            "source_id": "update-source:stable-channel",
+            "source_generation": 11,
+            "channel_id": "stable"
+          },
+          "target": {
+            "target_kind": "application",
+            "identity_ref": "installation:pm-app-01",
+            "server_id": "server:home-01",
+            "installation_generation": 4
+          },
+          "member_bindings": [
+            {
+              "batch_id": "doctor-batch:application-update",
+              "member_id": "doctor-member:app-update-server",
+              "query_id": "doctor-query:app-update-server"
+            },
+            {
+              "batch_id": "doctor-batch:application-update",
+              "member_id": "doctor-member:app-update-updates",
+              "query_id": "doctor-query:app-update-updates"
+            }
+          ],
+          "requested_fields": [
+            "version",
+            "channel",
+            "install_source",
+            "available_update",
+            "restart_requirement",
+            "protocol"
+          ],
+          "expected_descriptor_revision": 1,
+          "expected_owner_generation": 7,
+          "expected_cache_generation": 3,
+          "expected_state_revision": 12,
+          "expected_policy_version": "policy:application-check:v1",
+          "submitted_conditional_validator": "validator:stable:2026-09-23",
+          "read_admission_ref": "permissions:doctor-read-admission:application-update",
+          "governor_admission_ref": "governor:admission:application-update-owner-read",
+          "observable_work_ref": "observable-work:application-update-owner-read",
+          "redaction_profile_ref": "redaction:doctor-application-update",
+          "read_only": true,
+          "requested_at_utc": "2026-09-24T12:00:05Z",
+          "deadline_utc": "2026-09-24T12:00:35Z"
+        }
+      },
+      {
+        "kind": "owner_result",
+        "ref": "owner-read-result:application-update:2026-09-24T12:00:30Z",
+        "value": {
+          "schema_id": "pm.application_update.owner_read_result.v1",
+          "schema_version": "1.0.0",
+          "record_kind": "ApplicationUpdateOwnerReadResult",
+          "result_id": "owner-read-result:application-update:2026-09-24T12:00:30Z",
+          "owner_read_ref": "owner-read:application-update:home-01:pm-app-01",
+          "fact_key": "application_update",
+          "scope": {
+            "server_id": "server:home-01",
+            "installation_id": "installation:pm-app-01",
+            "installation_generation": 4,
+            "source_id": "update-source:stable-channel",
+            "source_generation": 11,
+            "channel_id": "stable"
+          },
+          "target": {
+            "target_kind": "application",
+            "identity_ref": "installation:pm-app-01",
+            "server_id": "server:home-01",
+            "installation_generation": 4
+          },
+          "member_bindings": [
+            {
+              "batch_id": "doctor-batch:application-update",
+              "member_id": "doctor-member:app-update-server",
+              "query_id": "doctor-query:app-update-server"
+            },
+            {
+              "batch_id": "doctor-batch:application-update",
+              "member_id": "doctor-member:app-update-updates",
+              "query_id": "doctor-query:app-update-updates"
+            }
+          ],
+          "status": "completed",
+          "observed_owner_generation": 7,
+          "observed_cache_generation": 3,
+          "observed_state_revision": 12,
+          "observed_policy_version": "policy:application-check:v1",
+          "fields": {
+            "version": {
+              "installed_version": "1.4.2",
+              "installed_version_ref": "owner-value:installed-version:pm-app-01",
+              "installed_version_record": {
+                "schema_id": "pm.release_update.installed_version_value.v1",
+                "schema_version": "1.0.0",
+                "record_kind": "ApplicationUpdateInstalledVersionValue",
+                "server_id": "server:home-01",
+                "installation_id": "installation:pm-app-01",
+                "installation_generation": 4,
+                "source_id": "update-source:stable-channel",
+                "source_generation": 11,
+                "installed_version": "1.4.2",
+                "installation_authority_ref": "installation-authority:pm-app-01",
+                "authority_generation": 4,
+                "observed_at_utc": "2026-09-24T11:59:30Z",
+                "currentness_ref": "currentness:installed-version:pm-app-01"
+              },
+              "installed_provenance": {
+                "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+                "owner_record_ref": "currentness:installed-version:pm-app-01",
+                "observed_at_utc": "2026-09-24T11:59:30Z",
+                "evidence_refs": [
+                  "evidence:release:installed-version:pm-app-01"
+                ]
+              },
+              "candidate_version": {
+                "publication_revision": "publication:stable:2026-09-24",
+                "version": "1.5.0",
+                "channel": "stable",
+                "metadata_ref": "release:metadata:stable:1.5.0"
+              },
+              "candidate_provenance": {
+                "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+                "owner_record_ref": "release:metadata:stable:1.5.0",
+                "observed_at_utc": "2026-09-24T12:00:00Z",
+                "evidence_refs": [
+                  "evidence:release:publication:stable"
+                ]
+              }
+            },
+            "channel": {
+              "scope_channel_id": "stable",
+              "publication_channel": "stable",
+              "provenance": {
+                "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+                "owner_record_ref": "owner-record:release:application-check-scope:pm-app-01",
+                "observed_at_utc": "2026-09-24T12:00:00Z",
+                "evidence_refs": [
+                  "evidence:release:application-check-scope:pm-app-01"
+                ]
+              }
+            },
+            "install_source": {
+              "source_id": "update-source:stable-channel",
+              "source_generation": 11,
+              "installation_authority_ref": "installation-authority:pm-app-01",
+              "installation_authority_generation": 4,
+              "installation_authority_owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+              "provenance": {
+                "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+                "owner_record_ref": "owner-record:release:installation-authority:pm-app-01",
+                "observed_at_utc": "2026-09-24T12:00:00Z",
+                "evidence_refs": [
+                  "evidence:release:installation-authority:pm-app-01"
+                ]
+              }
+            },
+            "available_update": {
+              "source_result": {
+                "schema_id": "pm.application_update_check.source_result.v1",
+                "schema_version": "1.0.0",
+                "record_kind": "ApplicationSourceResult",
+                "scope": {
+                  "server_id": "server:home-01",
+                  "installation_id": "installation:pm-app-01",
+                  "installation_generation": 4,
+                  "source_id": "update-source:stable-channel",
+                  "source_generation": 11,
+                  "channel_id": "stable"
+                },
+                "policy_version": "policy:application-check:v1",
+                "operation_id": "operation:application-check:2026-09-24T12:00:00Z",
+                "result_id": "source-result:application-update:2026-09-24T11:59:00Z",
+                "completed_at_utc": "2026-09-24T12:00:00Z",
+                "outcome": "validated",
+                "publication": {
+                  "publication_revision": "publication:stable:2026-09-24",
+                  "metadata": [
+                    {
+                      "channel": "stable",
+                      "version": "1.5.0",
+                      "previous_version": "1.4.2",
+                      "minimum_supported_version": "1.2.0",
+                      "rollout_percentage": 25,
+                      "migration_plan_ref": "release:migration:1.5.0",
+                      "rollback_ref": "release:rollback:1.4.2",
+                      "release_notes_ref": "release:notes:1.5.0",
+                      "failure_state_copy_ref": "release:failure-copy:1.5.0"
+                    }
+                  ],
+                  "conditional_validator": "validator:stable:2026-09-24",
+                  "source_result_id": "source-result:application-update:2026-09-24T11:59:00Z"
+                },
+                "source_evidence_ref": "evidence:update-source:stable:2026-09-24",
+                "submitted_validator": "validator:stable:2026-09-23"
+              },
+              "outcome": "validated",
+              "publication_revision": "publication:stable:2026-09-24",
+              "metadata": [
+                {
+                  "channel": "stable",
+                  "version": "1.5.0",
+                  "previous_version": "1.4.2",
+                  "minimum_supported_version": "1.2.0",
+                  "rollout_percentage": 25,
+                  "migration_plan_ref": "release:migration:1.5.0",
+                  "rollback_ref": "release:rollback:1.4.2",
+                  "release_notes_ref": "release:notes:1.5.0",
+                  "failure_state_copy_ref": "release:failure-copy:1.5.0"
+                }
+              ],
+              "submitted_validator": "validator:stable:2026-09-23",
+              "provenance": {
+                "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+                "owner_record_ref": "source-result:application-update:2026-09-24T11:59:00Z",
+                "observed_at_utc": "2026-09-24T12:00:00Z",
+                "evidence_refs": [
+                  "evidence:release:source-result:stable"
+                ]
+              }
+            },
+            "restart_requirement": {
+              "lifecycle_disclosure": {
+                "schema_id": "pm.release_update.lifecycle_disclosure.v1",
+                "schema_version": "1.0.0",
+                "record_kind": "ApplicationUpdateLifecycleDisclosure",
+                "application_operation": "install_restart",
+                "operation_id": "operation:application-update:install-restart:pm-app-01",
+                "server_id": "server:home-01",
+                "installation_id": "installation:pm-app-01",
+                "installation_generation": 4,
+                "source_id": "update-source:stable-channel",
+                "source_generation": 11,
+                "phase": "restart-required",
+                "phase_revision": 3,
+                "journal_ref": "update-journal:pm-app-01",
+                "journal_generation": 6,
+                "observed_at_utc": "2026-09-24T11:59:45Z",
+                "currentness_ref": "currentness:update-journal:pm-app-01"
+              },
+              "selected_current_original": {
+                "schema_id": "pm.release_update.selected_current_journal_original.v1",
+                "schema_version": "1.0.0",
+                "record_kind": "ApplicationUpdateSelectedCurrentJournalOriginal",
+                "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+                "original_ref": "update-service-original:selected-current:pm-app-01",
+                "currentness_ref": "currentness:update-journal:pm-app-01",
+                "server_id": "server:home-01",
+                "installation_id": "installation:pm-app-01",
+                "installation_generation": 4,
+                "source_id": "update-source:stable-channel",
+                "source_generation": 11,
+                "channel_id": "stable",
+                "application_operation": "install_restart",
+                "operation_id": "operation:application-update:install-restart:pm-app-01",
+                "journal_ref": "update-journal:pm-app-01",
+                "journal_generation": 6,
+                "phase": "restart-required",
+                "phase_revision": 3,
+                "observed_at_utc": "2026-09-24T11:59:45Z",
+                "resolution_ref": "update-service-resolution:selected-current:pm-app-01",
+                "resolved_at_utc": "2026-09-24T12:00:20Z",
+                "journal_authority_generation": 12
+              },
+              "phase": "restart-required",
+              "restart_required": true,
+              "provenance": {
+                "owner_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+                "owner_record_ref": "currentness:update-journal:pm-app-01",
+                "observed_at_utc": "2026-09-24T11:59:45Z",
+                "evidence_refs": [
+                  "evidence:release:update-journal:pm-app-01"
+                ]
+              }
+            },
+            "protocol": {
+              "server_value": {
+                "record_type": "server_protocol_compatibility_value",
+                "schema_id": "pm.server_protocol_compatibility_value.v1",
+                "plan_unit_refs": [
+                  "Plans/Server_System.md#SRV-007",
+                  "Plans/Server_System.md#SRV-008"
+                ],
+                "server_id": "server:home-01",
+                "installation_id": "installation:pm-app-01",
+                "installation_generation": 4,
+                "server_protocol_range": {
+                  "minimum": 3,
+                  "maximum": 5
+                },
+                "client_protocol_version": 5,
+                "connection_projection_ref": "server-connection:home-01:client-01",
+                "connection_state": "current",
+                "disabled_reason": null,
+                "observed_at_utc": "2026-09-24T11:59:50Z",
+                "currentness_ref": "currentness:server-connection:home-01",
+                "runtime_claim": false
+              },
+              "connection_state": "current",
+              "provenance": {
+                "owner_ref": "Plans/Server_System.md#SRV-007",
+                "owner_record_ref": "currentness:server-connection:home-01",
+                "observed_at_utc": "2026-09-24T11:59:50Z",
+                "evidence_refs": [
+                  "evidence:server:protocol-compatibility:home-01"
+                ]
+              }
+            }
+          },
+          "payload_digest": "061e08f1c83f97ef3cf6aba1cc7032323c2b05d0ed4b66ef9f7939cb3bb37bd9",
+          "owner_original_join": {
+            "fact_key": "application_update",
+            "scope_ref": "owner-record:release:application-check-scope:pm-app-01",
+            "installed_version_original_ref": "currentness:installed-version:pm-app-01",
+            "installation_authority_original_ref": "installation-authority:pm-app-01",
+            "server_protocol_original_ref": "currentness:server-connection:home-01",
+            "state_original_ref": "owner-record:release:application-check-state:pm-app-01",
+            "source_result_original_ref": "source-result:application-update:2026-09-24T11:59:00Z",
+            "lifecycle_journal_original_ref": "update-journal:pm-app-01",
+            "resolver_generation": 77,
+            "caller_copied_values_authority": false
+          },
+          "started_at_utc": "2026-09-24T12:00:10Z",
+          "finished_at_utc": "2026-09-24T12:00:30Z",
+          "evidence_refs": [
+            "evidence:application-update:owner-read"
+          ],
+          "failure_refs": []
+        }
+      }
+    ]
+  }
+}

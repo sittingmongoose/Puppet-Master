@@ -179,7 +179,29 @@
         "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandOutput"
       ],
       "declared_descriptor_ids": [],
-      "full_dimension_query_binding": "unbound",
+      "full_dimension_query_binding": {
+        "state": "bound_to_typed_owner_read",
+        "fact_key": "application_update",
+        "owner_read_schema_ref": "Plans/doctor_application_update_owner_read_contracts.schema.json#/$defs/application_update_owner_read_pair",
+        "descriptor_ref": "Plans/doctor_application_update_owner_read_contract_fixtures.json#/valid/0/value",
+        "descriptor_check_id": "doctor.application_update.owner_read",
+        "descriptor_revision": 1,
+        "descriptor_owner_doc_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+        "request_schema_ref": "Plans/doctor_application_update_owner_read_contracts.schema.json#/$defs/application_update_owner_read_request",
+        "result_schema_ref": "Plans/doctor_application_update_owner_read_contracts.schema.json#/$defs/application_update_owner_read_result",
+        "owner_value_refs": [
+          "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateInstalledVersionValue",
+          "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateLifecycleDisclosure",
+          "Plans/server_system_contracts.schema.json#/$defs/server_protocol_compatibility_value"
+        ],
+        "server_protocol_join_ref": "Plans/server_system_contracts.schema.json#/$defs/server_protocol_compatibility_value",
+        "bound_occurrences": [
+          "sep03-doctor-008",
+          "sep03-doctor-043"
+        ],
+        "evidence_level": "static_typed_contract_join_only",
+        "native_claim": "none"
+      },
       "shared_fact_key": "application_update",
       "bounded_leaf": null
     },
@@ -992,7 +1014,29 @@
         "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateCommandOutput"
       ],
       "declared_descriptor_ids": [],
-      "full_dimension_query_binding": "unbound",
+      "full_dimension_query_binding": {
+        "state": "bound_to_typed_owner_read",
+        "fact_key": "application_update",
+        "owner_read_schema_ref": "Plans/doctor_application_update_owner_read_contracts.schema.json#/$defs/application_update_owner_read_pair",
+        "descriptor_ref": "Plans/doctor_application_update_owner_read_contract_fixtures.json#/valid/0/value",
+        "descriptor_check_id": "doctor.application_update.owner_read",
+        "descriptor_revision": 1,
+        "descriptor_owner_doc_ref": "Plans/Release_Supply_Chain.md#RSC-014",
+        "request_schema_ref": "Plans/doctor_application_update_owner_read_contracts.schema.json#/$defs/application_update_owner_read_request",
+        "result_schema_ref": "Plans/doctor_application_update_owner_read_contracts.schema.json#/$defs/application_update_owner_read_result",
+        "owner_value_refs": [
+          "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateInstalledVersionValue",
+          "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateLifecycleDisclosure",
+          "Plans/server_system_contracts.schema.json#/$defs/server_protocol_compatibility_value"
+        ],
+        "server_protocol_join_ref": "Plans/server_system_contracts.schema.json#/$defs/server_protocol_compatibility_value",
+        "bound_occurrences": [
+          "sep03-doctor-008",
+          "sep03-doctor-043"
+        ],
+        "evidence_level": "static_typed_contract_join_only",
+        "native_claim": "none"
+      },
       "shared_fact_key": "application_update",
       "bounded_leaf": null
     },

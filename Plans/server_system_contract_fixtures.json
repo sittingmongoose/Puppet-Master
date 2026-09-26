@@ -71,8 +71,8 @@
     "command_action_parity": "command_result.command_id must equal command_result.output.action"
   },
   "fixture_summary": {
-    "total_cases": 139,
-    "positive_cases": 89,
+    "total_cases": 140,
+    "positive_cases": 90,
     "negative_cases": 50,
     "preserved_system_positive_cases": 6,
     "preserved_system_negative_cases": 6,
@@ -95,6 +95,32 @@
     "Plans/server_contract_fixtures.json": "32dc356eb16f2ac1c26c33878a4039e14bbb3e714c0761fa06d21a0f4a47676f"
   },
   "valid": [
+    {
+      "name": "server_protocol_compatibility_value_is_not_a_permission_decision",
+      "definition": "server_protocol_compatibility_value",
+      "value": {
+        "record_type": "server_protocol_compatibility_value",
+        "schema_id": "pm.server_protocol_compatibility_value.v1",
+        "plan_unit_refs": [
+          "Plans/Server_System.md#SRV-007",
+          "Plans/Server_System.md#SRV-008"
+        ],
+        "server_id": "server:home-01",
+        "installation_id": "installation:pm-app-01",
+        "installation_generation": 4,
+        "server_protocol_range": {
+          "minimum": 3,
+          "maximum": 5
+        },
+        "client_protocol_version": 5,
+        "connection_projection_ref": "server-connection:home-01:client-01",
+        "connection_state": "current",
+        "disabled_reason": null,
+        "observed_at_utc": "2026-09-24T11:59:50Z",
+        "currentness_ref": "currentness:server-connection:home-01",
+        "runtime_claim": false
+      }
+    },
     {
       "name": "catalog_keeps_only_small_registration_and_reference_state",
       "definition": "server_catalog",

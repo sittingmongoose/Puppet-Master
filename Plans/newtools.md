@@ -8836,6 +8836,8 @@ source_lineage:
 negative_constraints: [Do not let Doctor own domain truth., Do not run mutating or unbounded probes., Do not expose protected authentication content.]
 ```
 
+**Static application-update binding.** The exact typed owner result, Server protocol join and descriptor/query binding that the acceptance criterion above requires now exist as the closed static companion of `Plans/Release_Supply_Chain.md#RSC-014`'s Doctor application-update subsection: `Plans/doctor_application_update_owner_read_contracts.schema.json` with `Plans/doctor_application_update_owner_read_contract_fixtures.json`, the Release-owned `ApplicationUpdateInstalledVersionValue`/`ApplicationUpdateLifecycleDisclosure`, the Server-owned `server_protocol_compatibility_value` (`SRV-007`/`SRV-008`), the single descriptor `doctor.application_update.owner_read` revision 1, and the catalog rows recording `bound_to_typed_owner_read` for exactly `sep03-doctor-008` and `sep03-doctor-043`. Both occurrences keep their identity, pointer, group, label and dimension list and share one read-only owner fact with no second check, query, probe, scheduler, cache, store, command, event or policy; the shared result carries the actual Release/Server value records so its original references and scope/generation currentness are re-checked independently of the result's own declarations; the other fifty occurrences stay `unbound`, the other fifteen source dimensions and the three established bounded leaves are unchanged, and no registry activation, native issuer, permission issuance, handler availability or empirical update/Server result is claimed.
+
 ### N2-153 - Doctor finding projection and remediation return
 
 ```yaml

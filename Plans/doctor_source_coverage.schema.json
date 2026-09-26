@@ -55,6 +55,96 @@
       "type": "string",
       "pattern": "^Plans/[A-Za-z0-9_.-]+(?:#[A-Za-z0-9_./$~-]+)?$"
     },
+    "full_dimension_query_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "fact_key",
+        "owner_read_schema_ref",
+        "descriptor_ref",
+        "descriptor_check_id",
+        "descriptor_revision",
+        "descriptor_owner_doc_ref",
+        "request_schema_ref",
+        "result_schema_ref",
+        "owner_value_refs",
+        "server_protocol_join_ref",
+        "bound_occurrences",
+        "evidence_level",
+        "native_claim"
+      ],
+      "properties": {
+        "state": {
+          "const": "bound_to_typed_owner_read"
+        },
+        "fact_key": {
+          "const": "application_update"
+        },
+        "owner_read_schema_ref": {
+          "$ref": "#/$defs/local_ref"
+        },
+        "descriptor_ref": {
+          "$ref": "#/$defs/local_ref"
+        },
+        "descriptor_check_id": {
+          "const": "doctor.application_update.owner_read"
+        },
+        "descriptor_revision": {
+          "const": 1
+        },
+        "descriptor_owner_doc_ref": {
+          "const": "Plans/Release_Supply_Chain.md#RSC-014"
+        },
+        "request_schema_ref": {
+          "$ref": "#/$defs/local_ref"
+        },
+        "result_schema_ref": {
+          "$ref": "#/$defs/local_ref"
+        },
+        "owner_value_refs": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "const": "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateInstalledVersionValue"
+            },
+            {
+              "const": "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateLifecycleDisclosure"
+            },
+            {
+              "const": "Plans/server_system_contracts.schema.json#/$defs/server_protocol_compatibility_value"
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "server_protocol_join_ref": {
+          "const": "Plans/server_system_contracts.schema.json#/$defs/server_protocol_compatibility_value"
+        },
+        "bound_occurrences": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "const": "sep03-doctor-008"
+            },
+            {
+              "const": "sep03-doctor-043"
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "evidence_level": {
+          "const": "static_typed_contract_join_only"
+        },
+        "native_claim": {
+          "const": "none"
+        }
+      },
+      "description": "Static binding of one shared application-update owner read to the two exact source occurrences, supported by the authored descriptor, typed request/result definitions and owner value definitions. It is not a runtime registry activation, a native issuer, an issued permission or an observed update/Server result, and it does not change the other catalog rows."
+    },
     "occurrence": {
       "allOf": [
         {
@@ -1055,6 +1145,33 @@
       ],
       "type": "object",
       "additionalProperties": false,
+      "if": {
+        "properties": {
+          "occurrence_id": {
+            "enum": [
+              "sep03-doctor-008",
+              "sep03-doctor-043"
+            ]
+          }
+        },
+        "required": [
+          "occurrence_id"
+        ]
+      },
+      "then": {
+        "properties": {
+          "full_dimension_query_binding": {
+            "$ref": "#/$defs/full_dimension_query_binding"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "full_dimension_query_binding": {
+            "const": "unbound"
+          }
+        }
+      },
       "required": [
         "occurrence_id",
         "source_pointer",
@@ -1112,7 +1229,14 @@
           "uniqueItems": true
         },
         "full_dimension_query_binding": {
-          "const": "unbound"
+          "oneOf": [
+            {
+              "const": "unbound"
+            },
+            {
+              "$ref": "#/$defs/full_dimension_query_binding"
+            }
+          ]
         },
         "shared_fact_key": {
           "enum": [

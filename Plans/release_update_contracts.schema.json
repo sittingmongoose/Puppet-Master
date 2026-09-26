@@ -1598,6 +1598,273 @@
           "$ref": "#/$defs/ApplicationUpdateReturnContext"
         }
       }
+    },
+    "ApplicationUpdateInstalledVersionValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "server_id",
+        "installation_id",
+        "installation_generation",
+        "source_id",
+        "source_generation",
+        "installed_version",
+        "installation_authority_ref",
+        "authority_generation",
+        "observed_at_utc",
+        "currentness_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.installed_version_value.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateInstalledVersionValue"
+        },
+        "server_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "installation_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "installation_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "source_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "installed_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "installation_authority_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "authority_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/ApplicationUpdateTimestamp"
+        },
+        "currentness_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        }
+      },
+      "description": "Narrowly scoped Release-owned value for the currently installed application version of one exact Server/installation/generation/source/generation scope, resolved by the owner that holds installation authority. It is not derived from a candidate publication, package filename, Client banner, command output or cache, and its presence is not an update, restart or activation result."
+    },
+    "ApplicationUpdateSelectedCurrentJournalOriginal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "owner_ref",
+        "original_ref",
+        "currentness_ref",
+        "server_id",
+        "installation_id",
+        "installation_generation",
+        "source_id",
+        "source_generation",
+        "channel_id",
+        "application_operation",
+        "operation_id",
+        "journal_ref",
+        "journal_generation",
+        "phase",
+        "phase_revision",
+        "observed_at_utc",
+        "resolution_ref",
+        "resolved_at_utc",
+        "journal_authority_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.selected_current_journal_original.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateSelectedCurrentJournalOriginal"
+        },
+        "owner_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "original_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "currentness_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "server_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "installation_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "installation_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "source_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "channel_id": {
+          "enum": [
+            "stable",
+            "canary",
+            "nightly"
+          ]
+        },
+        "application_operation": {
+          "$ref": "#/$defs/ApplicationUpdateOperation"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "journal_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "journal_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "phase": {
+          "$ref": "#/$defs/ApplicationUpdateLifecycleDisclosure/properties/phase"
+        },
+        "phase_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/ApplicationUpdateTimestamp"
+        },
+        "resolution_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "resolved_at_utc": {
+          "$ref": "#/$defs/ApplicationUpdateTimestamp"
+        },
+        "journal_authority_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "description": "Narrowly scoped Release-owned ApplicationUpdateService selected-current update-journal/operation original. It materializes the fields the owner contract names: owner and original record/currentness reference, operation id, journal reference and generation, lifecycle phase and phase revision, observation time, the exact Server/installation/installation-generation/source/source-generation/channel scope and its own resolution provenance. It is issued from the service's restart-surviving journal/current-operation authority, never selected by the Doctor request, a disclosure, a resealed digest, a command result, the separate source-check operation, a cached projection or a fixture/resolver label, and its journal authority epoch is its own domain rather than the installation authority, installation or source generation epoch."
+    },
+    "ApplicationUpdateLifecycleDisclosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "application_operation",
+        "operation_id",
+        "server_id",
+        "installation_id",
+        "installation_generation",
+        "source_id",
+        "source_generation",
+        "phase",
+        "phase_revision",
+        "journal_ref",
+        "journal_generation",
+        "observed_at_utc",
+        "currentness_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.lifecycle_disclosure.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateLifecycleDisclosure"
+        },
+        "application_operation": {
+          "$ref": "#/$defs/ApplicationUpdateOperation"
+        },
+        "operation_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "server_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "installation_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "installation_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_id": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "source_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "phase": {
+          "enum": [
+            "idle",
+            "checking",
+            "available",
+            "downloading",
+            "downloaded",
+            "verifying",
+            "awaiting-user",
+            "quiescing",
+            "pre-update-backup",
+            "installing",
+            "restart-required",
+            "migrating",
+            "post-verify",
+            "complete",
+            "rollback-available",
+            "rolling-back",
+            "blocked"
+          ]
+        },
+        "phase_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "journal_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "journal_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/ApplicationUpdateTimestamp"
+        },
+        "currentness_ref": {
+          "$ref": "#/$defs/ApplicationUpdateNonSecretRef"
+        }
+      },
+      "description": "Typed materialization of the application lifecycle phase vocabulary owned by RSC-014, bound to the exact operation, Server, installation, source and generations and resolved against the durable update journal that survives restart. Displaying a phase is never activation, installation, migration or completion proof, and no command outcome substitutes for it."
     }
   },
   "oneOf": [
@@ -1627,6 +1894,15 @@
     },
     {
       "$ref": "#/$defs/ApplicationUpdateLocalActionResult"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdateInstalledVersionValue"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdateLifecycleDisclosure"
+    },
+    {
+      "$ref": "#/$defs/ApplicationUpdateSelectedCurrentJournalOriginal"
     },
     {
       "$ref": "#/$defs/ReleaseBundledArtifactAdmission"

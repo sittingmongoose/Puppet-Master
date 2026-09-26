@@ -11017,7 +11017,7 @@
         "future Doctor descriptor registry fixtures",
         "future Doctor report export native handler"
       ],
-      "line_count": 9144,
+      "line_count": 9146,
       "path": "Plans/newtools.md",
       "plan_unit_count": 157,
       "plan_unit_ids": [
@@ -11342,7 +11342,7 @@
         "web_tool_search_site_reader",
         "worktree_config_cleanup_boundary"
       ],
-      "sha256": "1bce487b7d1d90c28942d99a8b1c7e9f4f06d9da0698e048b2a084dfa225f91f",
+      "sha256": "04604db1aac1d204b6ee4f2c3765f5e19ce67a09562cdba06f81d1b6aa99cf38",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 157
@@ -15007,7 +15007,7 @@
         "future ApplicationUpdateService handler",
         "future release/supply-chain receipt contracts"
       ],
-      "line_count": 1541,
+      "line_count": 1543,
       "path": "Plans/Release_Supply_Chain.md",
       "plan_unit_count": 18,
       "plan_unit_ids": [
@@ -15052,7 +15052,7 @@
         "release_platform_or_performance_false_claim",
         "unproved_or_incompatible_reader_installation"
       ],
-      "sha256": "0e5d2b5967351815d72b786da61d895a608d7e726be4e9aa97f29e579709ae18",
+      "sha256": "3ee7c3d4760a3289ea97a10ba3986a6f9cba73d55bb7da06af928b0d33477723",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -15088,6 +15088,10 @@
         "Plans/Automated_Testing_System.md#ATS-024",
         "Plans/application_update_check_contract_fixtures.json",
         "Plans/application_update_check_contracts.schema.json",
+        "Plans/doctor_application_update_owner_read_contract_fixtures.json",
+        "Plans/doctor_application_update_owner_read_contracts.schema.json",
+        "Plans/doctor_source_coverage.json",
+        "Plans/doctor_source_coverage.schema.json",
         "Plans/goal_created_reader_contracts/resource-bindings.json",
         "Plans/goal_created_reader_support_map.schema.json",
         "Plans/platform_package_support_map.schema.json",
@@ -15097,6 +15101,8 @@
         "Plans/protected_auth_browser_contracts.schema.json",
         "Plans/release_update_contract_fixtures.json",
         "Plans/release_update_contracts.schema.json",
+        "Plans/server_system_contract_fixtures.json",
+        "Plans/server_system_contracts.schema.json",
         "Plans/shared_integration_runtime_fixtures.json",
         "Platform matrix CI includes macOS quarantine/signature, Windows sandbox/network, Linux static/dynamic library checks.",
         "Protocol version mismatch blocks with actionable message.",
@@ -15134,6 +15140,8 @@
         "selected renderer-order and fallback-path verification",
         "size-budget receipts",
         "tests/test_pm_application_update_checks.py",
+        "tests/test_pm_doctor_application_update_read.py",
+        "tests/test_pm_doctor_source_coverage.py",
         "update",
         "update diff"
       ]
@@ -20159,7 +20167,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-26T03:06:22Z",
+  "generated_at_utc": "2026-09-26T03:27:07Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

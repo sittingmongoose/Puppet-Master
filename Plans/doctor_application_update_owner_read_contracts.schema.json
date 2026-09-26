@@ -1,0 +1,877 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/doctor-application-update-owner-read/1.0.0/doctor_application_update_owner_read_contracts.schema.json",
+  "x-schema-id": "pm.doctor.application_update_owner_read.contracts.v1",
+  "title": "Doctor application-update typed owner read for the two sep03 app_update occurrences",
+  "description": "Static typed materialization of the accepted RSC-014 Doctor application-update owner-read subsection and the N2-152 acceptance criterion for sep03-doctor-008 and sep03-doctor-043. One read-only owner fact is read once and projected twice; the two occurrences keep their own identity, pointer, label and dimension list. Owner values reuse the RSC-014 application-check scope/state/source-result family, existing RSC-008 UpdateMetadata, the Release-owned installed-version and lifecycle-phase values, and the Server-owned protocol/version compatibility value. Nothing here is a native issuer, a registered handler, an issued permission decision, or an observed update/Server result.",
+  "x-claim-boundary": "Static typed contract only. Fixtures and validator callbacks supplied here are labeled static doubles; they cannot certify a native issuer, exact returned permissions, physical owner custody, command dispatch, or empirical update/Server outcomes.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/application_update_owner_read_request"
+    },
+    {
+      "$ref": "#/$defs/application_update_owner_read_result"
+    },
+    {
+      "$ref": "#/$defs/application_update_owner_read_pair"
+    }
+  ],
+  "$defs": {
+    "safe_ref": {
+      "$ref": "https://puppetmaster.local/schemas/doctor/1.0.0/doctor_contracts.schema.json#/$defs/safe_ref"
+    },
+    "nullable_safe_ref": {
+      "$ref": "https://puppetmaster.local/schemas/doctor/1.0.0/doctor_contracts.schema.json#/$defs/nullable_safe_ref"
+    },
+    "doctor_check_descriptor": {
+      "$ref": "https://puppetmaster.local/schemas/doctor/1.0.0/doctor_contracts.schema.json#/$defs/doctor_check_descriptor"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "nullable_non_empty_string": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "application_check_scope": {
+      "$ref": "https://puppetmaster.local/schemas/application_update_check_contracts.schema.json#/$defs/ApplicationCheckScope"
+    },
+    "publication_metadata": {
+      "$ref": "https://puppetmaster.local/schemas/application_update_check_contracts.schema.json#/$defs/UpdateMetadata"
+    },
+    "application_source_result": {
+      "$ref": "https://puppetmaster.local/schemas/application_update_check_contracts.schema.json#/$defs/ApplicationSourceResult"
+    },
+    "application_update_installed_version_value": {
+      "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateInstalledVersionValue"
+    },
+    "application_update_lifecycle_disclosure": {
+      "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateLifecycleDisclosure"
+    },
+    "application_update_selected_current_original": {
+      "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateSelectedCurrentJournalOriginal"
+    },
+    "server_protocol_compatibility_value": {
+      "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/server_protocol_compatibility_value"
+    },
+    "server_connection_state": {
+      "$ref": "https://puppetmaster.local/schemas/server_system/1.0.0/server_system_contracts.schema.json#/$defs/server_connection_projection/properties/state"
+    },
+    "application_update_owner_target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_kind",
+        "identity_ref",
+        "server_id",
+        "installation_generation"
+      ],
+      "properties": {
+        "target_kind": {
+          "const": "application"
+        },
+        "identity_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "server_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "installation_generation": {
+          "$ref": "#/$defs/generation"
+        }
+      },
+      "description": "Doctor target for the application-update fact: the installation is the identity, the Server stays a separate field, and no route/focus/panel/session value is target identity."
+    },
+    "member_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "batch_id",
+        "member_id",
+        "query_id"
+      ],
+      "properties": {
+        "batch_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "member_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "query_id": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "owner_field_provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref",
+        "owner_record_ref",
+        "observed_at_utc",
+        "evidence_refs"
+      ],
+      "properties": {
+        "owner_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "owner_record_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "observed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        }
+      },
+      "description": "Each disclosed field names the owner that produced it, the exact owner record, its observation time and bounded redacted evidence refs. A copied projection, a caller-supplied value and a display label are not owner records."
+    },
+    "candidate_version_value": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "publication_revision",
+        "version",
+        "channel",
+        "metadata_ref"
+      ],
+      "properties": {
+        "publication_revision": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "channel": {
+          "$ref": "https://puppetmaster.local/schemas/application_update_check_contracts.schema.json#/$defs/UpdateMetadata/properties/channel"
+        },
+        "metadata_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      },
+      "description": "Candidate version carried by the available publication. It is an RSC-008 UpdateMetadata value and never the installed version."
+    },
+    "version_fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "installed_version",
+        "installed_version_ref",
+        "installed_version_record",
+        "installed_provenance",
+        "candidate_version",
+        "candidate_provenance"
+      ],
+      "properties": {
+        "installed_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "installed_version_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "installed_version_record": {
+          "$ref": "#/$defs/application_update_installed_version_value"
+        },
+        "installed_provenance": {
+          "$ref": "#/$defs/owner_field_provenance"
+        },
+        "candidate_version": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/candidate_version_value"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "candidate_provenance": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/owner_field_provenance"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "description": "Installed version and candidate version are separate values with separate owners and never derive from each other. The installed half embeds the actual Release-owned value record so its owner-issued currentness key and exact Server/installation/source/generation scope can be re-checked independently of the result's own refs."
+    },
+    "channel_fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope_channel_id",
+        "publication_channel",
+        "provenance"
+      ],
+      "properties": {
+        "scope_channel_id": {
+          "$ref": "https://puppetmaster.local/schemas/application_update_check_contracts.schema.json#/$defs/ApplicationCheckScope/properties/channel_id"
+        },
+        "publication_channel": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/application_update_check_contracts.schema.json#/$defs/UpdateMetadata/properties/channel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "provenance": {
+          "$ref": "#/$defs/owner_field_provenance"
+        }
+      }
+    },
+    "install_source_fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "source_generation",
+        "installation_authority_ref",
+        "installation_authority_generation",
+        "installation_authority_owner_ref",
+        "provenance"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "installation_authority_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "installation_authority_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "installation_authority_owner_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "provenance": {
+          "$ref": "#/$defs/owner_field_provenance"
+        }
+      },
+      "description": "The scope's source identity/generation plus the actual install-source owner's current installation authority. A source identity alone is not a validated publication and transport is not trust."
+    },
+    "available_update_fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_result",
+        "outcome",
+        "publication_revision",
+        "metadata",
+        "submitted_validator",
+        "provenance"
+      ],
+      "properties": {
+        "source_result": {
+          "$ref": "#/$defs/application_source_result"
+        },
+        "outcome": {
+          "$ref": "https://puppetmaster.local/schemas/application_update_check_contracts.schema.json#/$defs/ApplicationSourceResult/properties/outcome"
+        },
+        "publication_revision": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "metadata": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "$ref": "#/$defs/publication_metadata"
+          }
+        },
+        "submitted_validator": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "provenance": {
+          "$ref": "#/$defs/owner_field_provenance"
+        }
+      },
+      "description": "Terminal source-result projection. `validated` with an empty release list is a successful source validation with no published candidates; `not_modified` binds the exact validator submitted for the prior admitted publication. Availability is never download, installation or activation authority."
+    },
+    "restart_requirement_fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lifecycle_disclosure",
+        "selected_current_original",
+        "phase",
+        "restart_required",
+        "provenance"
+      ],
+      "properties": {
+        "lifecycle_disclosure": {
+          "$ref": "#/$defs/application_update_lifecycle_disclosure"
+        },
+        "selected_current_original": {
+          "$ref": "#/$defs/application_update_selected_current_original"
+        },
+        "phase": {
+          "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateLifecycleDisclosure/properties/phase"
+        },
+        "restart_required": {
+          "type": "boolean"
+        },
+        "provenance": {
+          "$ref": "#/$defs/owner_field_provenance"
+        }
+      },
+      "description": "The restart requirement is exactly the `restart-required` phase of the one RSC-014 lifecycle vocabulary resolved against the durable update journal; no outcome enum substitutes for the phase vocabulary. The embedded selected-current original is the ApplicationUpdateService-issued anchor the disclosure must be compared with; it is resolved independently of this request, result, digest, command outcome, source-check operation, cache and any fixture label."
+    },
+    "protocol_fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "server_value",
+        "connection_state",
+        "provenance"
+      ],
+      "properties": {
+        "server_value": {
+          "$ref": "#/$defs/server_protocol_compatibility_value"
+        },
+        "connection_state": {
+          "$ref": "#/$defs/server_connection_state"
+        },
+        "provenance": {
+          "$ref": "#/$defs/owner_field_provenance"
+        }
+      },
+      "description": "Server owner's current protocol/version compatibility value for the same Server and installation, joined with the Server-owned connection projection state that names `protocol_mismatch`."
+    },
+    "owner_read_dimension_fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "channel",
+        "install_source",
+        "available_update",
+        "restart_requirement",
+        "protocol"
+      ],
+      "properties": {
+        "version": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/version_fields"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "channel": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/channel_fields"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "install_source": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/install_source_fields"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "available_update": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/available_update_fields"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "restart_requirement": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/restart_requirement_fields"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "protocol": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/protocol_fields"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "owner_original_join": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fact_key",
+        "scope_ref",
+        "installed_version_original_ref",
+        "installation_authority_original_ref",
+        "server_protocol_original_ref",
+        "state_original_ref",
+        "source_result_original_ref",
+        "lifecycle_journal_original_ref",
+        "resolver_generation",
+        "caller_copied_values_authority"
+      ],
+      "properties": {
+        "fact_key": {
+          "const": "application_update"
+        },
+        "scope_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "installed_version_original_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "installation_authority_original_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "server_protocol_original_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "state_original_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "source_result_original_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "lifecycle_journal_original_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "resolver_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "caller_copied_values_authority": {
+          "const": false
+        }
+      },
+      "description": "Resolver-side join refs for this read. They name the original owner records the resolver read; they are not proof and cannot be replaced by the caller's copied JSON, hash or boolean."
+    },
+    "application_update_owner_read_request": {
+      "$anchor": "application_update_owner_read_request",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "owner_read_ref",
+        "fact_key",
+        "scope",
+        "target",
+        "member_bindings",
+        "requested_fields",
+        "expected_descriptor_revision",
+        "expected_owner_generation",
+        "expected_cache_generation",
+        "expected_state_revision",
+        "expected_policy_version",
+        "submitted_conditional_validator",
+        "read_admission_ref",
+        "governor_admission_ref",
+        "observable_work_ref",
+        "redaction_profile_ref",
+        "read_only",
+        "requested_at_utc",
+        "deadline_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.application_update.owner_read_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateOwnerReadRequest"
+        },
+        "owner_read_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "fact_key": {
+          "const": "application_update"
+        },
+        "scope": {
+          "$ref": "#/$defs/application_check_scope"
+        },
+        "target": {
+          "$ref": "#/$defs/application_update_owner_target"
+        },
+        "member_bindings": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/member_binding"
+          }
+        },
+        "requested_fields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "version",
+              "channel",
+              "install_source",
+              "available_update",
+              "restart_requirement",
+              "protocol"
+            ]
+          }
+        },
+        "expected_descriptor_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_owner_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "expected_cache_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "expected_state_revision": {
+          "$ref": "#/$defs/generation"
+        },
+        "expected_policy_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "submitted_conditional_validator": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "read_admission_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "governor_admission_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "observable_work_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "redaction_profile_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "read_only": {
+          "const": true
+        },
+        "requested_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "deadline_utc": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "description": "Read-only request for the one application-update fact. Serialized caller values are requests to compare, never proof of authority; the request carries no command id and cannot dispatch cmd.update.app.check, download, install/restart or rollback."
+    },
+    "application_update_owner_read_result": {
+      "$anchor": "application_update_owner_read_result",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "result_id",
+        "owner_read_ref",
+        "fact_key",
+        "scope",
+        "target",
+        "member_bindings",
+        "status",
+        "observed_owner_generation",
+        "observed_cache_generation",
+        "observed_state_revision",
+        "observed_policy_version",
+        "fields",
+        "payload_digest",
+        "owner_original_join",
+        "started_at_utc",
+        "finished_at_utc",
+        "evidence_refs",
+        "failure_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.application_update.owner_read_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateOwnerReadResult"
+        },
+        "result_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "owner_read_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "fact_key": {
+          "const": "application_update"
+        },
+        "scope": {
+          "$ref": "#/$defs/application_check_scope"
+        },
+        "target": {
+          "$ref": "#/$defs/application_update_owner_target"
+        },
+        "member_bindings": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/member_binding"
+          }
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "failed",
+            "cancelled",
+            "interrupted"
+          ]
+        },
+        "observed_owner_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "observed_cache_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "observed_state_revision": {
+          "$ref": "#/$defs/generation"
+        },
+        "observed_policy_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "fields": {
+          "$ref": "#/$defs/owner_read_dimension_fields"
+        },
+        "payload_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "owner_original_join": {
+          "$ref": "#/$defs/owner_original_join"
+        },
+        "started_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "finished_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "failure_refs": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        }
+      },
+      "description": "One owner result for the one read, carrying the union of both occurrences' dimensions with each field's own owner source, observation and bounded evidence refs. Query completion is not health and a schema-valid digest is not owner evidence."
+    },
+    "occurrence_projection_member": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "occurrence_id",
+        "source_pointer",
+        "source_group",
+        "source_label",
+        "required_dimensions",
+        "query_ref",
+        "result_ref"
+      ],
+      "properties": {
+        "occurrence_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_pointer": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_group": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_label": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "required_dimensions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        "query_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "result_ref": {
+          "$ref": "#/$defs/safe_ref"
+        }
+      }
+    },
+    "application_update_owner_read_pair": {
+      "$anchor": "application_update_owner_read_pair",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record_kind",
+        "fact_key",
+        "owner_read_ref",
+        "observable_work_ref",
+        "descriptor_ref",
+        "descriptor_check_id",
+        "descriptor_revision",
+        "request_schema_ref",
+        "result_schema_ref",
+        "shared_scope",
+        "shared_target",
+        "shared_owner_generation",
+        "shared_cache_generation",
+        "occurrence_members",
+        "second_owner_read",
+        "second_check_dispatched",
+        "second_descriptor_created",
+        "mutation_dispatched",
+        "evidence_level",
+        "native_claim"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.application_update.owner_read_pair.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateOwnerReadPair"
+        },
+        "fact_key": {
+          "const": "application_update"
+        },
+        "owner_read_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "observable_work_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "descriptor_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "descriptor_check_id": {
+          "const": "doctor.application_update.owner_read"
+        },
+        "descriptor_revision": {
+          "const": 1
+        },
+        "request_schema_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "result_schema_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "shared_scope": {
+          "$ref": "#/$defs/application_check_scope"
+        },
+        "shared_target": {
+          "$ref": "#/$defs/application_update_owner_target"
+        },
+        "shared_owner_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "shared_cache_generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "occurrence_members": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/occurrence_projection_member"
+          }
+        },
+        "second_owner_read": {
+          "const": false
+        },
+        "second_check_dispatched": {
+          "const": false
+        },
+        "second_descriptor_created": {
+          "const": false
+        },
+        "mutation_dispatched": {
+          "const": false
+        },
+        "evidence_level": {
+          "const": "static_typed_contract_join_only"
+        },
+        "native_claim": {
+          "const": "none"
+        }
+      },
+      "description": "One owner read projected to the two exact sep03 occurrences, with their distinct identity, pointer, group, label and dimension list preserved and no second owner read, check, descriptor or mutation."
+    }
+  }
+}

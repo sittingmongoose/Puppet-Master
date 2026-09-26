@@ -34,6 +34,7 @@ from pm_backup_compare_semantics import backup_compare_semantic_failures
 from pm_application_update_semantics import application_update_semantic_failures
 from pm_capability_continuation_semantics import capability_continuation_semantic_failures
 from pm_doctor_query_semantics import doctor_query_semantic_failures
+from pm_doctor_application_update_read import application_update_owner_read_semantic_failures
 from pm_browser_control_flow_semantics import browser_control_flow_semantic_failures
 from pm_server_pairing_issuance_semantics import pairing_issuance_semantic_failures
 from pm_doctor_source_coverage import validate_coverage
@@ -102,6 +103,7 @@ CONTRACT_PAIRS = (
     ("Plans/capability_provisioning_continuation_contracts.schema.json", "Plans/capability_provisioning_continuation_contract_fixtures.json"),
     ("Plans/capability_ensure_custody_contracts.schema.json", "Plans/capability_ensure_custody_contract_fixtures.json"),
     ("Plans/doctor_query_controller_contracts.schema.json", "Plans/doctor_query_controller_contract_fixtures.json"),
+    ("Plans/doctor_application_update_owner_read_contracts.schema.json", "Plans/doctor_application_update_owner_read_contract_fixtures.json"),
     ("Plans/browser_control_flow_contracts.schema.json", "Plans/browser_control_flow_contract_fixtures.json"),
     ("Plans/doctor_contracts.schema.json", "Plans/doctor_contract_fixtures.json"),
     ("Plans/egolite_retained_requirement_contracts.schema.json", "Plans/egolite_retained_requirement_contract_fixtures.json"),
@@ -177,7 +179,7 @@ CONTRACT_PAIRS = (
     ("Plans/application_update_local_result.schema.json", "Plans/application_update_local_result_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 81
+EXPECTED_CONTRACT_PAIR_COUNT = 82
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1413,6 +1415,8 @@ def contract_semantic_failures(
         return capability_continuation_semantic_failures(definition_name, value)
     if schema_rel == "Plans/doctor_query_controller_contracts.schema.json":
         return doctor_query_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/doctor_application_update_owner_read_contracts.schema.json":
+        return application_update_owner_read_semantic_failures(definition_name, value)
     if schema_rel == "Plans/browser_control_flow_contracts.schema.json":
         return browser_control_flow_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_drill_result_contracts.schema.json":
