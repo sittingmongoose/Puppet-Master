@@ -1,5 +1,13 @@
 # Packet-to-current-owner reconciliation checkpoint
 
+## Latest additive checkpoint — 2026-09-26, after `b0ce58ef4`
+
+Independently reviewed dispositions cover **1,153 of 2,021 flagged identities**, with **868 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-a187db1ee449317e3b3ca6e141b3723befbaabfb00d45824055e8f275f60eab7.jsonl`, SHA-256 `a187db1ee449317e3b3ca6e141b3723befbaabfb00d45824055e8f275f60eab7`. Root verified its hash, all 2,021 unique unchanged identities and historical fields, exactly 63 changed and 1,958 unchanged rows against the published 1,106-row checkpoint: 47 newly reviewed identities and 16 reclassified existing reviews.
+
+The new reviews comprise three Settings concept-wiring facets, seven Doctor status/product facets, seventeen Doctor full-query facets, eleven repository-local facets, and nine environment-connection facets. Doctor's 85 reviewed identities are not 85 closures: source-specific typed-query gaps remain, including the explicitly required application-update owner read. Three environment reverse-consumer facets likewise remain unproved. Existing concept wiring earns concept-only credit, not native execution.
+
+The sixteen reclassifications retire ten installation profile-binding gaps and six application-update local settlement gaps already repaired on this branch. Root independently reran the sixteen focused tests successfully. These do not increase the reviewed count or remove the remaining native, currentness, storage and GUI obligations. Exact overlay and review hashes are retained in the immutable checkpoint. Whole-corpus currentness verification and main landing remain open.
+
 ## Latest additive checkpoint — 2026-09-26, after `e07be7f24`
 
 Independently reviewed dispositions cover **1,106 of 2,021 flagged identities**, with **915 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-d65e3be2b758c603d5fa378dadd5803dab5ef29def28e3f1d7bb4fe2995d644f.jsonl`, SHA-256 `d65e3be2b758c603d5fa378dadd5803dab5ef29def28e3f1d7bb4fe2995d644f`. Root verified its hash, all 2,021 unique unchanged identities and historical fields, exactly 71 changed and 1,950 unchanged rows against the published 1,035-row checkpoint.
