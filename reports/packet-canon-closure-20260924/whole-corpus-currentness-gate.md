@@ -354,3 +354,41 @@ Both reviews corrected unsupported demands for new Event Authority admission
 where the current route is event-silent. They retain real receipt, permission,
 currentness, generation/race, protected-target and GUI obligations. These are
 static owner-law classifications, not executed handlers or whole-profile closure.
+
+## SCM/Forge/JJ reviewed batch and precise residual corrections
+
+Root verified immutable flagged checkpoint
+`checkpoints/matrix-aceb41387dcf7bbc8ec57f3ac49b975946eae7e17199e2b0c733961c04d68dee.jsonl`
+(SHA-256 `aceb41387dcf7bbc8ec57f3ac49b975946eae7e17199e2b0c733961c04d68dee`):
+1,534 of 2,021 reviewed, 487 pending. Exactly 156 rows changed from checkpoint
+`fa74189d5b0af14fc181bd1fba19d8476b8552d70d5da0f4c4d76fa3f2fd4e8f`;
+all identities and historical fields remain intact. Of these 156, 142 have
+bounded static owner coverage and 14 retain implementation-proof obligations.
+The earlier five-row delta from checkpoint `114d3e96d6c43f70bc52dba924cbb630556b8d0edd53df0517b7eda26b692b52`
+reclassified four Browser and one Persona facets without increasing coverage;
+see their current-owner adjudication reports.
+
+The independent SCM V2 review is
+`case-reconciliation/different-sol-scm156-02/DIFFERENT-SOL-REVIEW-V2.md`,
+SHA-256 `5b4e49439bd9aa62d86f402d8585df3d2232045d213db41af51b17d8846195df`;
+its overlay SHA-256 is
+`b4f33e0ec4fc02452153c9eca48ead8d9e6259b80dd560b79b262ac851911922`.
+This supersedes the provisional V1 inference that four runner facets required
+a new typed preview producer. Current FGI-013, common target schema and Touch
+rows already require a current admitted preview, exact target, no synthesis
+inside apply and direct revalidation; they do not demand a new preview command.
+Real producer/handler evidence remains unproved. The JJ publication source-copy
+omission was resolved from the same-base schema supplement, not called a gap.
+
+Separately, verified full-impact checkpoint
+`checkpoints/full-impact-reviewed-0733eef3dc92f4a1d519ef7909cab46f42af38263f1c7652bb8605a39c172b58.jsonl`
+(SHA-256 `0733eef3dc92f4a1d519ef7909cab46f42af38263f1c7652bb8605a39c172b58`)
+adds 104 Server facets to the prior 1,342 unchanged records: 1,446 reviewed,
+9,949 pending. Different-Sol review SHA-256
+`47ff0e8f3ec5d4751996756728a2ac7babf91a8c88d170d84396e38af01f631c`
+and corrected overlay SHA-256
+`46731914f4ac93012ba8069aef3c4f14bc8d1e539e3b55cd1fd1fac1cd931c78`
+are under `case-reconciliation/touch-server104-native-01/`. The 26 commands
+remain unavailable natively; receipt-only routes do not require new event
+admission merely because future event names exist. These remain review counts,
+not completed-feature percentages or main-landing proof.
