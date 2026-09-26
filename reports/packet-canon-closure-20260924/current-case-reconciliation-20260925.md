@@ -1,5 +1,15 @@
 # Packet-to-current-owner reconciliation checkpoint
 
+## Latest additive checkpoint — 2026-09-26, after `fd211a2dc`
+
+Independently reviewed dispositions cover **799 of 2,021 identities**, with **1,222 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-192b6a5e2c58b125636bca863603dafb7d8616d2c611788648f44e80060b386c.jsonl`, SHA-256 `192b6a5e2c58b125636bca863603dafb7d8616d2c611788648f44e80060b386c`. Root verified its hash, all unique identities and historical fields, exactly 12 changed rows and 2,009 unchanged rows against the 787-row checkpoint.
+
+The additions retain ten technical-gap dimensions: three Server restore identity-binding dimensions, one Jujutsu split selection/editor contract, two GUI Move/Paused presentation dimensions, and four universal command/wiring census dimensions. They are not ten new features and do not turn native implementation obligations into missing specification. One Storage preservation case protects the newer aggregate canonical-store lock and per-Vault failure containment; it does not restore the old per-Vault lock design or close separate verify/archive/delete obligations. One Remote Link case acknowledges the branch's explicit short-lived relay credential requirement as `branch_static_repair_not_landed`.
+
+Evidence beneath the external directory below: `server-backup139-native-01/INDEPENDENT-SPARSE-REVIEW-V1.md`, SHA-256 `06c4c6a16f55b3980b2b3feb1d43c2672afd41b3c46e154833a6bdf3476150f7`; `SPARSE-REVIEWED-11.jsonl`, SHA-256 `fe421daf6893130ae25298a4a3bbae2290ee8c5cc048d9956baec8d55c0bb43b`; `SERVER-WAN9-INDEPENDENT-REVIEW.md`, SHA-256 `eb3abc3943faec490518518f1f860214b10503f09038787fe447f76242f71e21`; `SPARSE-WAN9-ACCEPTED-1.jsonl`, SHA-256 `419451802294978594c4055b0522b7236c34e5863e200887a16e2ae4bb459cd5`.
+
+The other WAN findings remain uncredited: seven exact Advanced-field placements are GUI-related specification residuals; the packet's public-reachability requirement for a self-hosted gateway still needs current-owner intent/supersession adjudication. Public-only operation is not inferred merely from protocol support. No new product decision, native completion, governance clearance or main landing is claimed.
+
 ## Latest additive checkpoint — 2026-09-26, after `2e9361a61`
 
 Independently reviewed dispositions cover **787 of 2,021 identities**, with **1,234 unreviewed**. Immutable checkpoint beneath the external evidence directory below: `checkpoints/matrix-4cdd68ec1011eeebde3333c88471efd2d15879d80c37090c20b42d9bcc05331c.jsonl`, SHA-256 `4cdd68ec1011eeebde3333c88471efd2d15879d80c37090c20b42d9bcc05331c`. Root verified its hash, 2,021 unique identities, unchanged historical fields, exactly 14 changed rows and 2,007 unchanged rows against the 773-row checkpoint.
