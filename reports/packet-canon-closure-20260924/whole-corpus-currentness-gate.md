@@ -416,3 +416,35 @@ receipts, conditional event admission and GUI proof remain implementation work.
 The subsequent LSP-only Wiring/Touch patch does not change Remote entries;
 future owner/main changes still require impact review. No whole-packet or
 landing completion is inferred from these counts.
+
+## Backup and Settings local-control review checkpoints
+
+Root verified nonflagged checkpoint
+`checkpoints/full-impact-reviewed-139af3665ea25d5503e02654040e3d2ba1faa0ec11676b1ab19d1a35f0776aeb.jsonl`,
+SHA-256 `139af3665ea25d5503e02654040e3d2ba1faa0ec11676b1ab19d1a35f0776aeb`.
+It adds 463 unique Backup facets to the unchanged prior 2,000 records:
+2,463 reviewed, 8,932 pending. The additions comprise 439 bounded-static and
+24 protected-successor classifications, not native or whole-profile closure.
+All 41 selected Backup Touch/Wiring entries remain unchanged by the LSP patch.
+
+The reviewed full overlay is pinned by SHA-256
+`591ed75a88f554d186ee4928c5a66e4fa2f06ac94a114d2d0cb13689f5e7206a`;
+the exact sparse correction is
+`b814a0fa63a87261a8a28ca4d7d9fb3f3ea56b0795a5b1ff43a600bb1a173610`.
+It changes 244 review records, leaves 219 unchanged, and preserves all historical
+identities/source hashes. It resolves omitted source copies and overly broad
+Doctor-supersession labels, not product behavior. The external
+`touch-backup463-native-01/PROVENANCE-ADDENDUM-V3.md`, SHA-256
+`48d15912dd5c5b736483cc69cc783da0a0e9ce04009efafcc2a7c11649151153`,
+records a caught post-freeze evidence edit, exact archived prior bytes and
+versioned current evidence. No credit was granted before that repair.
+
+The separate flagged checkpoint is now
+`checkpoints/matrix-ff6791ace299d4311fb1f7927aa8a90780c02ee5e163b4fc406097510852079f.jsonl`,
+SHA-256 `ff6791ace299d4311fb1f7927aa8a90780c02ee5e163b4fc406097510852079f`:
+1,663 reviewed, 358 pending after exactly 129 Settings Touch reviews; see
+`settings-local-scope-adjudication.md`. No Settings Source33 credit was granted.
+Its omission-as-retirement reasoning was withdrawn because original fixed
+packet decisions require actual supersession evidence. A targeted review of
+earlier similarly worded dispositions remains open; these counts do not certify
+that every recorded disposition has passed that additional fidelity check.
