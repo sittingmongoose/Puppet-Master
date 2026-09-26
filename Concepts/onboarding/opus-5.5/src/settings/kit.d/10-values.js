@@ -140,9 +140,13 @@ function o55Text(setting, value) {
   const row = O55R[setting.id] || {};
   return `<input class="text-control" value="${a(value == null ? '' : value)}" placeholder="${a(row.placeholder || '')}" data-action="input-setting" data-setting="${a(setting.id)}" aria-label="${a(setting.label)}"${row.wide ? ' data-wide="1"' : ''}/>`;
 }
+const O55_PROJECT_BASE = '${PROJECT_ROOT}/';
 function o55Path(setting, value) {
   const row = O55R[setting.id] || {};
-  return `<div class="path-control o55-path"><input class="text-control" value="${a(value == null ? '' : value)}" placeholder="${a(row.placeholder || 'Automatic')}" data-action="input-setting" data-setting="${a(setting.id)}" aria-label="${a(setting.label)}"><button type="button" class="btn small" data-action="browse-setting-path" data-setting="${a(setting.id)}">${icon('folder')}<span>Choose</span></button></div>`;
+  /* a path kept relative to the project reads as "project/…"; typing keeps the ${PROJECT_ROOT}/ part */
+  const base = typeof value === 'string' && value.startsWith(O55_PROJECT_BASE) ? O55_PROJECT_BASE : '';
+  const shown = base ? value.slice(base.length) : value;
+  return `<div class="path-control o55-path${base ? ' has-base' : ''}">${base ? `<span class="o55-path-base" title="Inside your project folder">project/</span>` : ''}<input class="text-control" value="${a(shown == null ? '' : shown)}" placeholder="${a(row.placeholder || 'Automatic')}" data-action="${base ? 'o55-path-input' : 'input-setting'}" data-setting="${a(setting.id)}"${base ? ` data-base="${a(base)}"` : ''} aria-label="${a(setting.label)}"><button type="button" class="btn small" data-action="browse-setting-path" data-setting="${a(setting.id)}">${icon('folder')}<span>Choose</span></button></div>`;
 }
 function o55Status(setting, value) {
   const row = O55R[setting.id] || {};

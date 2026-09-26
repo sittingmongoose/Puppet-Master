@@ -62,7 +62,10 @@
 #panel-settings .o55-actionbtn, #panel-settings .o55-routebtn { white-space: nowrap; }
 #panel-settings .o55-routebtn svg:last-child, #panel-settings .o55-actionbtn .icon:last-child svg { width: 13px; height: 13px; }
 #panel-settings .o55-readout { display: inline-flex; }
-#panel-settings .o55-path { display: inline-flex; gap: 6px; }
+#panel-settings .o55-path { display: inline-flex; gap: 6px; align-items: center; }
+#panel-settings .o55-path.has-base { gap: 0; }
+#panel-settings .o55-path-base { display: inline-flex; align-items: center; height: 32px; padding: 0 4px 0 10px; border: 1px solid var(--k3-line, var(--border)); border-right: 0; border-radius: 8px 0 0 8px; font: 500 12px/1 var(--k3-mono, ui-monospace, monospace); color: var(--k3-text-3, var(--text-muted)); background: var(--k3-bg-2, transparent); }
+#panel-settings .o55-path.has-base input.text-control { border-top-left-radius: 0; border-bottom-left-radius: 0; margin-right: 6px; font-family: var(--k3-mono, ui-monospace, monospace); font-size: 12px; }
 #panel-settings .o55-path .text-control { width: 220px; }
 
 /* ---- placed groups inside managers ------------------------------------------------------------------------ */
@@ -136,3 +139,8 @@ html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[
 #panel-settings .pm51-section-body > .setting-list.o55-bound-rows > .setting-row.o55-row { padding-left: 0; }
 /* A wide row's chips use the row's width (the engine caps chip groups at 300 px for the narrow control column). */
 #panel-settings .o55-row.is-wide .o55-chips { max-width: none; }
+
+/* Dropdown choices with a long hint ("Sign in to … first") keep their name readable: the name keeps at least half the
+   row and the hint gives way with an ellipsis (its full text is the toast shown when a greyed choice is clicked). */
+.pm51-popout-item .pm51-popout-label { flex: 1 0 auto; max-width: 100%; min-width: min(50%, max-content); }
+.pm51-popout-item .pm51-popout-meta { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right; }

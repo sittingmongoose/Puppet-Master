@@ -57,6 +57,11 @@ handleInputAction = function (action, el) {
     if (commitSettingValue(id, Math.round(n * scale))) { saveState(); o55MarkChanged(id); clearTimeout(o55InputTimer); o55InputTimer = window.setTimeout(() => o55Notify(id, Math.round(n * scale)), 120); }
     return;
   }
+  if (action === 'o55-path-input' && el && el.dataset && el.dataset.setting) {
+    const id = el.dataset.setting, v = (el.dataset.base || '') + el.value.replace(/^\/+/, '');
+    if (commitSettingValue(id, v)) { saveState(); o55MarkChanged(id); clearTimeout(o55InputTimer); o55InputTimer = window.setTimeout(() => o55Notify(id, v), 240); }
+    return;
+  }
   const r = o55BoundInput.apply(this, arguments);
   if (action === 'input-setting' && el && el.dataset && el.dataset.setting) {
     const id = el.dataset.setting; clearTimeout(o55InputTimer);
