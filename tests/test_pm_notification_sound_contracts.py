@@ -213,14 +213,21 @@ class NotificationSoundActionContractTests(unittest.TestCase):
                                   ("error_schema_ref", "action_error")):
             self.assertIn(f"cmd.notifications.destination.test -> {ADAPTER.ACTION_SCHEMA}#/$defs/{definition}",
                           profile[field])
-            self.assertIn("unmaterialized", profile[field])
-        for action in ("cmd.sound.upload", "cmd.sound.pack.import"):
+            self.assertNotIn("unmaterialized", profile[field])
+        for action in ("cmd.sound.upload", "cmd.sound.pack.import",
+                       "cmd.sound.asset.delete", "cmd.sound.asset.export"):
             self.assertEqual(rows[action][4], "partial")
             self.assertIn("remain implementation and verification work", rows[action][5])
             self.assertNotIn("remain specification work", rows[action][5])
-        for action in ("cmd.sound.asset.delete", "cmd.sound.asset.export"):
-            self.assertEqual(rows[action][4], "partial")
-            self.assertIn("remain specification work", rows[action][5])
+        for action, schema, definitions in (
+                ("cmd.sound.asset.delete", "Plans/sound_asset_delete_action_contracts.schema.json",
+                 {"payload_schema_ref": "delete_request", "result_schema_ref": "delete_result",
+                  "error_schema_ref": "action_error"}),
+                ("cmd.sound.asset.export", "Plans/sound_asset_export_action_contracts.schema.json",
+                 {"payload_schema_ref": "export_request", "result_schema_ref": "export_result",
+                  "error_schema_ref": "action_error"})):
+            for field, definition in definitions.items():
+                self.assertIn(f"{action} -> {schema}#/$defs/{definition}", profile[field])
 
     def test_touch_accounting_and_retired_spelling_are_unchanged(self):
         self.assertEqual(

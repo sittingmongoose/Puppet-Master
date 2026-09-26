@@ -46,11 +46,22 @@ ACTION_REF_DEFINITION = {
         "error_schema_ref": "action_error",
     },
 }
-# Routes this companion does not bind. They stay explicitly unmaterialized on the
-# shared profile until their own owner-authorized companion lands.
-UNBOUND_SOUND_ACTIONS = {
-    "cmd.sound.asset.delete",
-    "cmd.sound.asset.export",
+# No Sound route remains unmaterialized on this shared profile. These two routes
+# are bound by their own static companions, not by this upload/import gate.
+UNBOUND_SOUND_ACTIONS: set[str] = set()
+B_COMPANION_SCHEMA = {
+    "cmd.sound.asset.delete": "Plans/sound_asset_delete_action_contracts.schema.json",
+    "cmd.sound.asset.export": "Plans/sound_asset_export_action_contracts.schema.json",
+}
+B_COMPANION_BINDING = {
+    "cmd.sound.asset.delete": {
+        "payload_schema_ref": "delete_request", "result_schema_ref": "delete_result",
+        "error_schema_ref": "action_error",
+    },
+    "cmd.sound.asset.export": {
+        "payload_schema_ref": "export_request", "result_schema_ref": "export_result",
+        "error_schema_ref": "action_error",
+    },
 }
 ACCEPTED_COMPANION_SCHEMA = "Plans/notifications_sound_action_contracts.schema.json"
 ACCEPTED_COMPANION_BINDING = {
@@ -256,6 +267,11 @@ def touch_failures() -> tuple[list[str], dict[str, Any]]:
                 if clauses.get(unbound) != "unmaterialized":
                     failures.append(f"touch: {field} must leave unbound route {unbound} unmaterialized, "
                                     f"found {clauses.get(unbound)!r}")
+            for other_action, other_definitions in B_COMPANION_BINDING.items():
+                expected = f"{B_COMPANION_SCHEMA[other_action]}#/$defs/{other_definitions[field]}"
+                if clauses.get(other_action) != expected:
+                    failures.append(f"touch: {field} must preserve the Sound asset companion binding for "
+                                    f"{other_action}, found {clauses.get(other_action)!r}")
             for accepted_action, accepted_definitions in ACCEPTED_COMPANION_BINDING.items():
                 accepted_definition = accepted_definitions[field]
                 expected = f"{accepted_action} -> {ACCEPTED_COMPANION_SCHEMA}#/$defs/{accepted_definition}"

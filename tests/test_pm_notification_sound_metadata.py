@@ -105,7 +105,7 @@ class NotificationSoundMetadataTests(unittest.TestCase):
         self.assertIn("plan_unit_id: ACD-426", owner)
         self.assertIn("| `cmd.chat.open_thread` | Open Chat Thread | `navigation_wrapper` | selection (`thread_exists`) | none | `stale_projection` | chat |", catalog)
 
-    def test_all_seven_rows_retain_partial_and_explicit_specification_work(self):
+    def test_seven_rows_keep_partial_with_truthful_specification_residuals(self):
         commands = {values[0] for values in COMMANDS.values()} | {"cmd.sound.preview", "cmd.chat.open_thread"}
         rows = [r for r in self.touch["rows"] if r[1] in {"TCP-NOTIFY-SOUND", "TCP-TEACHER-HELP"}]
         self.assertEqual(commands, {r[3] for r in rows})
@@ -113,7 +113,11 @@ class NotificationSoundMetadataTests(unittest.TestCase):
         for row in rows:
             with self.subTest(command=row[3]):
                 self.assertEqual("partial", row[4])
-                self.assertIn("remain specification work", row[5])
+                if row[3] == "cmd.chat.open_thread":
+                    self.assertIn("remain specification work", row[5])
+                else:
+                    self.assertIn("remain implementation and verification work", row[5])
+                    self.assertNotIn("remain specification work", row[5])
         teacher = next(r for r in rows if r[3] == "cmd.chat.open_thread")
         self.assertIn("does not implement a new Teacher launch", teacher[5])
 

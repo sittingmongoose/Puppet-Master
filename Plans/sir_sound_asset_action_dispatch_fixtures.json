@@ -1,0 +1,341 @@
+{
+ "schema_id": "pm.sir.sound_asset_dispatch_fixtures.v1",
+ "schema_version": "1.0.0",
+ "claim_boundary": "Static original/dispatcher binding fixtures for exactly cmd.sound.asset.delete and cmd.sound.asset.export. Synthetic static doubles authenticate no issuer, dispatcher, caller, permission, handler, receipt writer or physical custody.",
+ "valid": [
+  {
+   "name": "dispatch_binding_delete",
+   "definition": "dispatch_case",
+   "value": {
+    "schema_id": "pm.sir.sound_asset_dispatch_binding.v1",
+    "record_kind": "sir_sound_asset_dispatch_binding",
+    "action_id": "cmd.sound.asset.delete",
+    "request_ref": "request:sound-asset-delete:user-chime",
+    "command_instance_id": "command-instance:sound-asset-delete:user-chime",
+    "dispatch_id": "dispatch:sound-asset-delete:user-chime",
+    "dispatch_frame_id": "dispatch-frame:sound-asset-delete:user-chime",
+    "operation_id": "operation:sound-asset-delete:user-chime",
+    "identity": {
+     "scope_kind": "project",
+     "operation_id": "operation:sound-asset-delete:user-chime",
+     "operation_generation": 1,
+     "attempt_id": null,
+     "command_instance_id": "command-instance:sound-asset-delete:user-chime",
+     "server_id": "server-1",
+     "project_id": "project-1",
+     "project_home_server_id": "server-1",
+     "named_plan_id": null,
+     "thread_id": null,
+     "goal_id": null,
+     "execution_host_id": "host-1",
+     "execution_environment_id": "env-1",
+     "source_location_id": null,
+     "topology_generation": 9
+    },
+    "idempotency_key": "idempotency:sound-asset-delete:user-chime",
+    "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "arguments_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "target": {
+     "kind": "sound_asset",
+     "asset_ref": "sound-asset:user:chime-01",
+     "source_kind": "user_uploaded",
+     "asset_generation": 4
+    },
+    "target_generation": 7,
+    "actor_ref": "caller:human:operator-1",
+    "permission_snapshot": {
+     "explicit_action": true,
+     "asset_present": true,
+     "asset_soft_deletable": true,
+     "asset_mutation_authority": true
+    },
+    "caller_return_context": "caller-return-context:settings:sound-library",
+    "admitted_at": "2026-09-25T20:00:01Z"
+   }
+  },
+  {
+   "name": "dispatcher_binding_delete",
+   "definition": "dispatcher_case",
+   "value": {
+    "schema_id": "pm.sir.sound_asset_dispatcher_binding.v1",
+    "record_kind": "sound_asset_dispatcher_binding",
+    "action_id": "cmd.sound.asset.delete",
+    "handler_id": "handlers::sound::asset_delete",
+    "handler_status": "specified",
+    "wiring_status": "specified",
+    "request_ref": "request:sound-asset-delete:user-chime",
+    "command_instance_id": "command-instance:sound-asset-delete:user-chime",
+    "dispatch_id": "dispatch:sound-asset-delete:user-chime",
+    "dispatch_frame_id": "dispatch-frame:sound-asset-delete:user-chime",
+    "idempotency_key": "idempotency:sound-asset-delete:user-chime",
+    "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "availability_selector": "state.commands.sound_asset_delete.availability",
+    "disabled_reason_selector": "state.commands.sound_asset_delete.disabled_reason",
+    "availability": "available",
+    "disabled_reason": null,
+    "current_caller_ref": "caller-return-context:settings:sound-library",
+    "current_permission_snapshot": {
+     "explicit_action": true,
+     "asset_present": true,
+     "asset_soft_deletable": true,
+     "asset_mutation_authority": true
+    },
+    "current_target_generation": 7,
+    "evaluated_at": "2026-09-25T20:00:01Z"
+   }
+  },
+  {
+   "name": "dispatch_binding_export",
+   "definition": "dispatch_case",
+   "value": {
+    "schema_id": "pm.sir.sound_asset_dispatch_binding.v1",
+    "record_kind": "sir_sound_asset_dispatch_binding",
+    "action_id": "cmd.sound.asset.export",
+    "request_ref": "request:sound-asset-export:user-chime",
+    "command_instance_id": "command-instance:sound-asset-export:user-chime",
+    "dispatch_id": "dispatch:sound-asset-export:user-chime",
+    "dispatch_frame_id": "dispatch-frame:sound-asset-export:user-chime",
+    "operation_id": "operation:sound-asset-export:user-chime",
+    "identity": {
+     "scope_kind": "project",
+     "operation_id": "operation:sound-asset-export:user-chime",
+     "operation_generation": 1,
+     "attempt_id": null,
+     "command_instance_id": "command-instance:sound-asset-export:user-chime",
+     "server_id": "server-1",
+     "project_id": "project-1",
+     "project_home_server_id": "server-1",
+     "named_plan_id": null,
+     "thread_id": null,
+     "goal_id": null,
+     "execution_host_id": "host-1",
+     "execution_environment_id": "env-1",
+     "source_location_id": null,
+     "topology_generation": 9
+    },
+    "idempotency_key": "idempotency:sound-asset-export:user-chime",
+    "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "arguments_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "target": {
+     "kind": "sound_asset",
+     "asset_ref": "sound-asset:user:chime-01",
+     "source_kind": "user_uploaded",
+     "asset_generation": 4
+    },
+    "target_generation": 7,
+    "actor_ref": "caller:human:operator-1",
+    "permission_snapshot": {
+     "explicit_action": true,
+     "asset_present": true,
+     "read_admission": true,
+     "output_scope_bound": true
+    },
+    "caller_return_context": "caller-return-context:settings:sound-library",
+    "admitted_at": "2026-09-25T20:00:01Z"
+   }
+  },
+  {
+   "name": "dispatcher_binding_export",
+   "definition": "dispatcher_case",
+   "value": {
+    "schema_id": "pm.sir.sound_asset_dispatcher_binding.v1",
+    "record_kind": "sound_asset_dispatcher_binding",
+    "action_id": "cmd.sound.asset.export",
+    "handler_id": "handlers::sound::asset_export",
+    "handler_status": "specified",
+    "wiring_status": "specified",
+    "request_ref": "request:sound-asset-export:user-chime",
+    "command_instance_id": "command-instance:sound-asset-export:user-chime",
+    "dispatch_id": "dispatch:sound-asset-export:user-chime",
+    "dispatch_frame_id": "dispatch-frame:sound-asset-export:user-chime",
+    "idempotency_key": "idempotency:sound-asset-export:user-chime",
+    "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "availability_selector": "state.commands.sound_asset_export.availability",
+    "disabled_reason_selector": "state.commands.sound_asset_export.disabled_reason",
+    "availability": "available",
+    "disabled_reason": null,
+    "current_caller_ref": "caller-return-context:settings:sound-library",
+    "current_permission_snapshot": {
+     "explicit_action": true,
+     "asset_present": true,
+     "read_admission": true,
+     "output_scope_bound": true
+    },
+    "current_target_generation": 7,
+    "evaluated_at": "2026-09-25T20:00:01Z"
+   }
+  }
+ ],
+ "invalid": [
+  {
+   "name": "dispatch_delete_digest_collapse",
+   "definition": "dispatch_case",
+   "value": {
+    "schema_id": "pm.sir.sound_asset_dispatch_binding.v1",
+    "record_kind": "sir_sound_asset_dispatch_binding",
+    "action_id": "cmd.sound.asset.delete",
+    "request_ref": "request:sound-asset-delete:user-chime",
+    "command_instance_id": "command-instance:sound-asset-delete:user-chime",
+    "dispatch_id": "dispatch:sound-asset-delete:user-chime",
+    "dispatch_frame_id": "dispatch-frame:sound-asset-delete:user-chime",
+    "operation_id": "operation:sound-asset-delete:user-chime",
+    "identity": {
+     "scope_kind": "project",
+     "operation_id": "operation:sound-asset-delete:user-chime",
+     "operation_generation": 1,
+     "attempt_id": null,
+     "command_instance_id": "command-instance:sound-asset-delete:user-chime",
+     "server_id": "server-1",
+     "project_id": "project-1",
+     "project_home_server_id": "server-1",
+     "named_plan_id": null,
+     "thread_id": null,
+     "goal_id": null,
+     "execution_host_id": "host-1",
+     "execution_environment_id": "env-1",
+     "source_location_id": null,
+     "topology_generation": 9
+    },
+    "idempotency_key": "idempotency:sound-asset-delete:user-chime",
+    "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "arguments_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "target": {
+     "kind": "sound_asset",
+     "asset_ref": "sound-asset:user:chime-01",
+     "source_kind": "user_uploaded",
+     "asset_generation": 4
+    },
+    "target_generation": 7,
+    "actor_ref": "caller:human:operator-1",
+    "permission_snapshot": {
+     "explicit_action": true,
+     "asset_present": true,
+     "asset_soft_deletable": true,
+     "asset_mutation_authority": true
+    },
+    "caller_return_context": "caller-return-context:settings:sound-library",
+    "admitted_at": "2026-09-25T20:00:01Z"
+   },
+   "semantic_rule": "sound_asset_arguments_digest",
+   "shape_failure": false
+  },
+  {
+   "name": "dispatch_export_digest_collapse",
+   "definition": "dispatch_case",
+   "value": {
+    "schema_id": "pm.sir.sound_asset_dispatch_binding.v1",
+    "record_kind": "sir_sound_asset_dispatch_binding",
+    "action_id": "cmd.sound.asset.export",
+    "request_ref": "request:sound-asset-export:user-chime",
+    "command_instance_id": "command-instance:sound-asset-export:user-chime",
+    "dispatch_id": "dispatch:sound-asset-export:user-chime",
+    "dispatch_frame_id": "dispatch-frame:sound-asset-export:user-chime",
+    "operation_id": "operation:sound-asset-export:user-chime",
+    "identity": {
+     "scope_kind": "project",
+     "operation_id": "operation:sound-asset-export:user-chime",
+     "operation_generation": 1,
+     "attempt_id": null,
+     "command_instance_id": "command-instance:sound-asset-export:user-chime",
+     "server_id": "server-1",
+     "project_id": "project-1",
+     "project_home_server_id": "server-1",
+     "named_plan_id": null,
+     "thread_id": null,
+     "goal_id": null,
+     "execution_host_id": "host-1",
+     "execution_environment_id": "env-1",
+     "source_location_id": null,
+     "topology_generation": 9
+    },
+    "idempotency_key": "idempotency:sound-asset-export:user-chime",
+    "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "arguments_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "target": {
+     "kind": "sound_asset",
+     "asset_ref": "sound-asset:user:chime-01",
+     "source_kind": "user_uploaded",
+     "asset_generation": 4
+    },
+    "target_generation": 7,
+    "actor_ref": "caller:human:operator-1",
+    "permission_snapshot": {
+     "explicit_action": true,
+     "asset_present": true,
+     "read_admission": true,
+     "output_scope_bound": true
+    },
+    "caller_return_context": "caller-return-context:settings:sound-library",
+    "admitted_at": "2026-09-25T20:00:01Z"
+   },
+   "semantic_rule": "sound_asset_arguments_digest",
+   "shape_failure": false
+  },
+  {
+   "name": "dispatcher_delete_implemented_claim",
+   "definition": "dispatcher_case",
+   "value": {
+    "schema_id": "pm.sir.sound_asset_dispatcher_binding.v1",
+    "record_kind": "sound_asset_dispatcher_binding",
+    "action_id": "cmd.sound.asset.delete",
+    "handler_id": "handlers::sound::asset_delete",
+    "handler_status": "implemented",
+    "wiring_status": "specified",
+    "request_ref": "request:sound-asset-delete:user-chime",
+    "command_instance_id": "command-instance:sound-asset-delete:user-chime",
+    "dispatch_id": "dispatch:sound-asset-delete:user-chime",
+    "dispatch_frame_id": "dispatch-frame:sound-asset-delete:user-chime",
+    "idempotency_key": "idempotency:sound-asset-delete:user-chime",
+    "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "availability_selector": "state.commands.sound_asset_delete.availability",
+    "disabled_reason_selector": "state.commands.sound_asset_delete.disabled_reason",
+    "availability": "available",
+    "disabled_reason": null,
+    "current_caller_ref": "caller-return-context:settings:sound-library",
+    "current_permission_snapshot": {
+     "explicit_action": true,
+     "asset_present": true,
+     "asset_soft_deletable": true,
+     "asset_mutation_authority": true
+    },
+    "current_target_generation": 7,
+    "evaluated_at": "2026-09-25T20:00:01Z"
+   },
+   "semantic_rule": "sound_asset_handler_status",
+   "shape_failure": false
+  },
+  {
+   "name": "dispatcher_export_available_with_reason",
+   "definition": "dispatcher_case",
+   "value": {
+    "schema_id": "pm.sir.sound_asset_dispatcher_binding.v1",
+    "record_kind": "sound_asset_dispatcher_binding",
+    "action_id": "cmd.sound.asset.export",
+    "handler_id": "handlers::sound::asset_export",
+    "handler_status": "specified",
+    "wiring_status": "specified",
+    "request_ref": "request:sound-asset-export:user-chime",
+    "command_instance_id": "command-instance:sound-asset-export:user-chime",
+    "dispatch_id": "dispatch:sound-asset-export:user-chime",
+    "dispatch_frame_id": "dispatch-frame:sound-asset-export:user-chime",
+    "idempotency_key": "idempotency:sound-asset-export:user-chime",
+    "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "availability_selector": "state.commands.sound_asset_export.availability",
+    "disabled_reason_selector": "state.commands.sound_asset_export.disabled_reason",
+    "availability": "available",
+    "disabled_reason": "policy_refused",
+    "current_caller_ref": "caller-return-context:settings:sound-library",
+    "current_permission_snapshot": {
+     "explicit_action": true,
+     "asset_present": true,
+     "read_admission": true,
+     "output_scope_bound": true
+    },
+    "current_target_generation": 7,
+    "evaluated_at": "2026-09-25T20:00:01Z"
+   },
+   "semantic_rule": "sound_asset_disabled_reason_projection",
+   "shape_failure": false
+  }
+ ]
+}

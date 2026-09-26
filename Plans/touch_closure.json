@@ -5517,9 +5517,9 @@
       "owner_plan": "Plans/UI_Command_Catalog.md",
       "plan_unit": "UCC-103",
       "dry_contract_ref": "Plans/UI_Command_Catalog.md#UCC-103",
-      "payload_schema_ref": "cmd.notifications.destination.test -> Plans/notifications_sound_action_contracts.schema.json#/$defs/destination_test_request; cmd.sound.preview -> Plans/notifications_sound_action_contracts.schema.json#/$defs/sound_preview_request; cmd.sound.upload -> Plans/sound_upload_import_action_contracts.schema.json#/$defs/sound_upload_request; cmd.sound.pack.import -> Plans/sound_upload_import_action_contracts.schema.json#/$defs/sound_pack_import_request; cmd.sound.asset.delete/cmd.sound.asset.export -> unmaterialized",
-      "result_schema_ref": "cmd.notifications.destination.test -> Plans/notifications_sound_action_contracts.schema.json#/$defs/destination_test_result; cmd.sound.preview -> Plans/notifications_sound_action_contracts.schema.json#/$defs/sound_preview_result; cmd.sound.upload -> Plans/sound_upload_import_action_contracts.schema.json#/$defs/sound_upload_result; cmd.sound.pack.import -> Plans/sound_upload_import_action_contracts.schema.json#/$defs/sound_pack_import_result; cmd.sound.asset.delete/cmd.sound.asset.export -> unmaterialized",
-      "error_schema_ref": "cmd.notifications.destination.test -> Plans/notifications_sound_action_contracts.schema.json#/$defs/action_error; cmd.sound.preview -> Plans/notifications_sound_action_contracts.schema.json#/$defs/action_error; cmd.sound.upload -> Plans/sound_upload_import_action_contracts.schema.json#/$defs/action_error; cmd.sound.pack.import -> Plans/sound_upload_import_action_contracts.schema.json#/$defs/action_error; cmd.sound.asset.delete/cmd.sound.asset.export -> unmaterialized",
+      "payload_schema_ref": "cmd.notifications.destination.test -> Plans/notifications_sound_action_contracts.schema.json#/$defs/destination_test_request; cmd.sound.preview -> Plans/notifications_sound_action_contracts.schema.json#/$defs/sound_preview_request; cmd.sound.upload -> Plans/sound_upload_import_action_contracts.schema.json#/$defs/sound_upload_request; cmd.sound.pack.import -> Plans/sound_upload_import_action_contracts.schema.json#/$defs/sound_pack_import_request; cmd.sound.asset.delete -> Plans/sound_asset_delete_action_contracts.schema.json#/$defs/delete_request; cmd.sound.asset.export -> Plans/sound_asset_export_action_contracts.schema.json#/$defs/export_request",
+      "result_schema_ref": "cmd.notifications.destination.test -> Plans/notifications_sound_action_contracts.schema.json#/$defs/destination_test_result; cmd.sound.preview -> Plans/notifications_sound_action_contracts.schema.json#/$defs/sound_preview_result; cmd.sound.upload -> Plans/sound_upload_import_action_contracts.schema.json#/$defs/sound_upload_result; cmd.sound.pack.import -> Plans/sound_upload_import_action_contracts.schema.json#/$defs/sound_pack_import_result; cmd.sound.asset.delete -> Plans/sound_asset_delete_action_contracts.schema.json#/$defs/delete_result; cmd.sound.asset.export -> Plans/sound_asset_export_action_contracts.schema.json#/$defs/export_result",
+      "error_schema_ref": "cmd.notifications.destination.test -> Plans/notifications_sound_action_contracts.schema.json#/$defs/action_error; cmd.sound.preview -> Plans/notifications_sound_action_contracts.schema.json#/$defs/action_error; cmd.sound.upload -> Plans/sound_upload_import_action_contracts.schema.json#/$defs/action_error; cmd.sound.pack.import -> Plans/sound_upload_import_action_contracts.schema.json#/$defs/action_error; cmd.sound.asset.delete -> Plans/sound_asset_delete_action_contracts.schema.json#/$defs/action_error; cmd.sound.asset.export -> Plans/sound_asset_export_action_contracts.schema.json#/$defs/action_error",
       "availability_rule": "Exact destination/asset identity and owner availability are required; destination test is explicit and rate-limited.",
       "permission_gate": "Notification and sound owners retain delivery, asset, filesystem, credential and persistence authority.",
       "disabled_reason_rule": "Expose unavailable destination/asset, rate, policy, permission, or handler reason; local preview never sends externally.",
@@ -5560,7 +5560,12 @@
         "scripts/pm_notification_sound_contracts.py",
         "Plans/sound_upload_import_action_fixtures.json",
         "Plans/sir_sound_upload_import_dispatch_fixtures.json",
-        "scripts/pm_sound_upload_import_contracts.py"
+        "scripts/pm_sound_upload_import_contracts.py",
+        "Plans/sound_asset_delete_action_fixtures.json",
+        "Plans/sound_asset_export_action_fixtures.json",
+        "Plans/sir_sound_asset_action_dispatch_fixtures.json",
+        "scripts/pm_sound_asset_delete_contracts.py",
+        "scripts/pm_sound_asset_export_contracts.py"
       ],
       "evidence_refs": [
         "static_catalog_and_wiring_only"
@@ -12223,7 +12228,7 @@
       "command",
       "cmd.sound.asset.delete",
       "partial",
-      "Canonical sound-asset delete catalog and production-intent row exist; native protected/built-in policy, recovery, and runtime evidence are absent. Typed action request/result/error/permission/currentness and causal companion fixtures remain specification work; corrected wiring prose alone is not their completion."
+      "Canonical sound-asset delete catalog, production-intent row and action-qualified static typed request/result/error/availability/currentness companion with causal fixtures now exist (Plans/sound_asset_delete_action_contracts.schema.json, Plans/sir_sound_asset_action_dispatch.schema.json, joined through scripts/pm_sound_asset_action_response.py). Native protected/built-in refusal enforcement, user-asset soft-delete persistence and restoration, dispatcher registration and runtime evidence remain implementation and verification work; static shape is not delete or restoration proof and never silently becomes hide or disable."
     ],
     [
       "TOUCH-SOUND-005",
@@ -12231,7 +12236,7 @@
       "command",
       "cmd.sound.asset.export",
       "partial",
-      "Canonical sound-asset export catalog and production-intent row exist; native redaction/FileSafe export and runtime evidence are absent. Typed action request/result/error/permission/currentness and causal companion fixtures remain specification work; corrected wiring prose alone is not their completion. RAP-039 receipt/export projection composition also remains to be proven."
+      "Canonical sound-asset export catalog, production-intent row and action-qualified static typed request/result/error/availability/currentness companion with causal fixtures now exist (Plans/sound_asset_export_action_contracts.schema.json, Plans/sir_sound_asset_action_dispatch.schema.json, joined through scripts/pm_sound_asset_action_response.py). Native redaction/FileSafe export, dispatcher registration and runtime evidence remain implementation and verification work; static shape is not export proof, and RAP-039 receipt/export projection composition remains to be proven at runtime."
     ],
     [
       "TOUCH-THEME-001",

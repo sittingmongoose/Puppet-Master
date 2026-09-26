@@ -27,7 +27,7 @@ WIRING = json.loads((ROOT / "Plans/Wiring_Matrix.production.json").read_text())[
 PROFILE = {profile["profile_id"]: profile for profile in TOUCH["profiles"]}["TCP-NOTIFY-SOUND"]
 ROWS = {row[3]: row for row in TOUCH["rows"]}
 ROUTES = {"cmd.sound.upload", "cmd.sound.pack.import"}
-UNBOUND = {"cmd.sound.asset.delete", "cmd.sound.asset.export"}
+OTHER_BOUND = {"cmd.sound.asset.delete", "cmd.sound.asset.export"}
 ACCEPTED_SCHEMA = "Plans/notifications_sound_action_contracts.schema.json"
 VERIFY = ROOT / "scripts/pm-plans-verify.py"
 VERIFY_MARKERS = (
@@ -45,7 +45,7 @@ OWNER_LIMIT_TOKENS = ("5MiB", "10s", "warn >3s")
 
 
 class SoundUploadImportMetadataTests(unittest.TestCase):
-    def test_touch_profile_binds_the_two_routes_and_leaves_the_other_two_unbound(self):
+    def test_touch_profile_binds_all_four_sound_routes_to_their_companions(self):
         for field in GATE.ACTION_REF_DEFINITION["cmd.sound.upload"]:
             with self.subTest(field=field):
                 clauses = GATE.profile_clauses(field, PROFILE)
@@ -53,8 +53,10 @@ class SoundUploadImportMetadataTests(unittest.TestCase):
                     binding = f"{ADAPTER.ACTION_SCHEMA}#/$defs/{definitions[field]}"
                     self.assertIn(f"{action} -> {binding}", PROFILE[field])
                     self.assertEqual(clauses[action], binding)
-                for unbound in UNBOUND:
-                    self.assertEqual(clauses[unbound], "unmaterialized")
+                for other in OTHER_BOUND:
+                    expected = (f"{GATE.B_COMPANION_SCHEMA[other]}#/$defs/"
+                                f"{GATE.B_COMPANION_BINDING[other][field]}")
+                    self.assertEqual(clauses[other], expected)
                 for accepted, definition in (
                         ("cmd.notifications.destination.test", GATE.ACCEPTED_COMPANION_BINDING[
                             "cmd.notifications.destination.test"][field]),
@@ -75,8 +77,10 @@ class SoundUploadImportMetadataTests(unittest.TestCase):
                 self.assertNotIn("verified native", row[5].lower())
         self.assertEqual(PROFILE["handler_status"], "specified")
         self.assertEqual(PROFILE["wiring_status"], "specified")
-        for action in UNBOUND:
+        for action in OTHER_BOUND:
             self.assertEqual(ROWS[action][4], "partial")
+            self.assertIn("remain implementation and verification work", ROWS[action][5])
+            self.assertNotIn("remain specification work", ROWS[action][5])
 
     def test_touch_accounting_and_retired_spelling_are_unchanged(self):
         self.assertEqual(
@@ -219,8 +223,8 @@ class SoundUploadImportMetadataTests(unittest.TestCase):
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["failures"], [])
         self.assertFalse(report["stats"]["native_proof"])
-        self.assertEqual(accepted.UNBOUND_SOUND_ACTIONS, set(UNBOUND))
-        self.assertEqual(set(accepted.COMPANION_BOUND_SOUND_ACTIONS), ROUTES)
+        self.assertEqual(accepted.UNBOUND_SOUND_ACTIONS, set())
+        self.assertEqual(set(accepted.COMPANION_BOUND_SOUND_ACTIONS), ROUTES | OTHER_BOUND)
 
     def test_gate_reports_static_only_and_stays_green(self):
         report = GATE.validate()

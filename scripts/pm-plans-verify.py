@@ -570,6 +570,8 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "validate_ui_command_response": "validate-ui-command-response",
     "validate_notification_sound_contracts": "validate-notification-sound-contracts",
     "validate_sound_upload_import_contracts": "validate-sound-upload-import-contracts",
+    "validate_sound_asset_delete_contracts": "validate-sound-asset-delete-contracts",
+    "validate_sound_asset_export_contracts": "validate-sound-asset-export-contracts",
     "validate_working_notebook_contracts": "validate-working-notebook-contracts",
     "validate_server_command_gap": "validate-server-command-gap",
     "validate_touch_closure": "validate-touch-closure",
@@ -607,6 +609,8 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "ui_command_response": "validate-ui-command-response",
     "notification_sound_contracts": "validate-notification-sound-contracts",
     "sound_upload_import_contracts": "validate-sound-upload-import-contracts",
+    "sound_asset_delete_contracts": "validate-sound-asset-delete-contracts",
+    "sound_asset_export_contracts": "validate-sound-asset-export-contracts",
     "working_notebook_contracts": "validate-working-notebook-contracts",
     "touch_closure": "validate-touch-closure",
     "filesafe_security_policy": "validate-filesafe-security-policy",
@@ -641,6 +645,10 @@ _AGGREGATE_NAMES_WITH_TIMEOUT_ARG = {
     "notification_sound_contracts",
     "validate_sound_upload_import_contracts",
     "sound_upload_import_contracts",
+    "validate_sound_asset_delete_contracts",
+    "sound_asset_delete_contracts",
+    "validate_sound_asset_export_contracts",
+    "sound_asset_export_contracts",
     "validate_working_notebook_contracts",
     "working_notebook_contracts",
     "validate_touch_closure",
@@ -6778,6 +6786,40 @@ def cmd_validate_sound_upload_import_contracts(args: argparse.Namespace) -> dict
     )
 
 
+def cmd_validate_sound_asset_delete_contracts(args: argparse.Namespace) -> dict[str, Any]:
+    """Validate the typed Sound asset delete companion for its single route."""
+    validator = ROOT / "scripts" / "pm_sound_asset_delete_contracts.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-sound-asset-delete-contracts", [sys.executable, str(validator), "validate"],
+        timeout_seconds=timeout_seconds, extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-sound-asset-delete-contracts",
+        proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
+def cmd_validate_sound_asset_export_contracts(args: argparse.Namespace) -> dict[str, Any]:
+    """Validate the typed Sound asset export companion for its single route."""
+    validator = ROOT / "scripts" / "pm_sound_asset_export_contracts.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-sound-asset-export-contracts", [sys.executable, str(validator), "validate"],
+        timeout_seconds=timeout_seconds, extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-sound-asset-export-contracts",
+        proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
 def cmd_validate_working_notebook_contracts(args: argparse.Namespace) -> dict[str, Any]:
     """Validate Working Notebook contract schemas and static fixtures."""
     validator = ROOT / "scripts" / "pm-working-notebook-contracts.py"
@@ -7135,6 +7177,8 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_ui_command_response", cmd_validate_ui_command_response, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_notification_sound_contracts", cmd_validate_notification_sound_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_sound_upload_import_contracts", cmd_validate_sound_upload_import_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_sound_asset_delete_contracts", cmd_validate_sound_asset_delete_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_sound_asset_export_contracts", cmd_validate_sound_asset_export_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_working_notebook_contracts", cmd_validate_working_notebook_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_server_command_gap", cmd_validate_server_command_gap, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
@@ -7194,6 +7238,8 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("ui_command_response", cmd_validate_ui_command_response, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("notification_sound_contracts", cmd_validate_notification_sound_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("sound_upload_import_contracts", cmd_validate_sound_upload_import_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("sound_asset_delete_contracts", cmd_validate_sound_asset_delete_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("sound_asset_export_contracts", cmd_validate_sound_asset_export_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("working_notebook_contracts", cmd_validate_working_notebook_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
         ("implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
@@ -7255,6 +7301,8 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ui_command_response=compact_gate_report(check_map["ui_command_response"]),
         notification_sound_contracts=compact_gate_report(check_map["notification_sound_contracts"]),
         sound_upload_import_contracts=compact_gate_report(check_map["sound_upload_import_contracts"]),
+        sound_asset_delete_contracts=compact_gate_report(check_map["sound_asset_delete_contracts"]),
+        sound_asset_export_contracts=compact_gate_report(check_map["sound_asset_export_contracts"]),
         working_notebook_contracts=compact_gate_report(check_map["working_notebook_contracts"]),
         touch_closure=compact_gate_report(check_map["touch_closure"]),
         audit_closure=compact_gate_report(check_map["audit_closure"]),
@@ -7284,6 +7332,8 @@ COMMANDS = {
     "validate-ui-command-response": cmd_validate_ui_command_response,
     "validate-notification-sound-contracts": cmd_validate_notification_sound_contracts,
     "validate-sound-upload-import-contracts": cmd_validate_sound_upload_import_contracts,
+    "validate-sound-asset-delete-contracts": cmd_validate_sound_asset_delete_contracts,
+    "validate-sound-asset-export-contracts": cmd_validate_sound_asset_export_contracts,
     "validate-working-notebook-contracts": cmd_validate_working_notebook_contracts,
     "validate-server-command-gap": cmd_validate_server_command_gap,
     "validate-touch-closure": cmd_validate_touch_closure,
@@ -7326,6 +7376,8 @@ def main() -> int:
         "validate-ui-command-response",
         "validate-notification-sound-contracts",
         "validate-sound-upload-import-contracts",
+        "validate-sound-asset-delete-contracts",
+        "validate-sound-asset-export-contracts",
         "validate-working-notebook-contracts",
         "validate-server-command-gap",
         "validate-touch-closure",

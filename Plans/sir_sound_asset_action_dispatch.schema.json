@@ -1,0 +1,400 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://puppetmaster.local/schemas/sir-sound-asset-dispatch/1.0.0/sir_sound_asset_action_dispatch.schema.json",
+ "title": "Authentic original dispatch binding for exactly cmd.sound.asset.delete and cmd.sound.asset.export",
+ "description": "Closed logical original/dispatcher binding for the two authored Sound asset routes. It preserves the authentic Full Thread IdentityEnvelope, the exact selected typed arguments with argument-only digest, request/dispatch/frame identity, independent target generation, idempotency, the actor/permission snapshot, admission time and the genuine nullable caller return context, and it carries the dispatcher-side route, handler, projected selector, current permission and current generation values that the adapter must join against the original. Static records authenticate no issuer, dispatcher, caller, permission, handler, receipt writer or physical custody.",
+ "x-owner-ref": "Plans/Shared_Integration_Runtime.md#SIR-042",
+ "x-owner-units": [
+  "Plans/Shared_Integration_Runtime.md#SIR-042",
+  "Plans/UI_Command_Catalog.md#UCC-103",
+  "Plans/Contracts_V0.md#CV-298",
+  "Plans/Contracts_V0.md#CV-333",
+  "Plans/Permissions_System.md#PS-124",
+  "Plans/storage-plan.md#SP-222",
+  "Plans/Wiring_Matrix.md#WM-039"
+ ],
+ "oneOf": [
+  {
+   "$ref": "#/$defs/dispatch_binding"
+  },
+  {
+   "$ref": "#/$defs/dispatcher_binding"
+  }
+ ],
+ "$defs": {
+  "action_id": {
+   "enum": [
+    "cmd.sound.asset.delete",
+    "cmd.sound.asset.export"
+   ]
+  },
+  "digest": {
+   "description": "Bare lowercase SHA-256 hex, the form the existing Full Thread Sha256 contract uses.",
+   "type": "string",
+   "pattern": "^[a-f0-9]{64}$"
+  },
+  "utc": {
+   "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/UtcTimestamp"
+  },
+  "non_secret_ref": {
+   "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+  },
+  "identity_envelope": {
+   "description": "Actual existing Full Thread IdentityEnvelope retained as the original; RepositoryContext or a default identity never replaces it.",
+   "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+  },
+  "generation": {
+   "type": "integer",
+   "minimum": 0
+  },
+  "asset_authority": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "kind",
+    "asset_ref",
+    "source_kind",
+    "asset_generation"
+   ],
+   "properties": {
+    "kind": {
+     "const": "sound_asset"
+    },
+    "asset_ref": {
+     "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "source_kind": {
+     "$ref": "https://puppetmaster.local/schemas/notifications-sound-actions/1.0.0/notifications_sound_action_contracts.schema.json#/$defs/sound_source_kind"
+    },
+    "asset_generation": {
+     "$ref": "#/$defs/generation"
+    }
+   }
+  },
+  "permission_snapshot": {
+   "oneOf": [
+    {
+     "$ref": "https://puppetmaster.local/schemas/sound-asset-delete-actions/1.0.0/sound_asset_delete_action_contracts.schema.json#/$defs/delete_permission_basis"
+    },
+    {
+     "$ref": "https://puppetmaster.local/schemas/sound-asset-export-actions/1.0.0/sound_asset_export_action_contracts.schema.json#/$defs/export_permission_basis"
+    }
+   ]
+  },
+  "dispatch_binding": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "record_kind",
+    "action_id",
+    "request_ref",
+    "command_instance_id",
+    "dispatch_id",
+    "dispatch_frame_id",
+    "operation_id",
+    "identity",
+    "idempotency_key",
+    "payload_sha256",
+    "arguments_sha256",
+    "target",
+    "target_generation",
+    "actor_ref",
+    "permission_snapshot",
+    "caller_return_context",
+    "admitted_at"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.sir.sound_asset_dispatch_binding.v1"
+    },
+    "record_kind": {
+     "const": "sir_sound_asset_dispatch_binding"
+    },
+    "action_id": {
+     "$ref": "#/$defs/action_id"
+    },
+    "request_ref": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "command_instance_id": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "dispatch_id": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "dispatch_frame_id": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "operation_id": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "identity": {
+     "$ref": "#/$defs/identity_envelope"
+    },
+    "idempotency_key": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "payload_sha256": {
+     "$ref": "#/$defs/digest"
+    },
+    "arguments_sha256": {
+     "$ref": "#/$defs/digest"
+    },
+    "target": {
+     "$ref": "#/$defs/asset_authority"
+    },
+    "target_generation": {
+     "$ref": "#/$defs/generation"
+    },
+    "actor_ref": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "permission_snapshot": {
+     "$ref": "#/$defs/permission_snapshot"
+    },
+    "caller_return_context": {
+     "description": "Genuine nullable caller value; missing, foreign and null substitution are not equivalent.",
+     "oneOf": [
+      {
+       "$ref": "#/$defs/non_secret_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "admitted_at": {
+     "$ref": "#/$defs/utc"
+    }
+   },
+   "allOf": [
+    {
+     "if": {
+      "properties": {
+       "action_id": {
+        "const": "cmd.sound.asset.delete"
+       }
+      }
+     },
+     "then": {
+      "properties": {
+       "permission_snapshot": {
+        "$ref": "https://puppetmaster.local/schemas/sound-asset-delete-actions/1.0.0/sound_asset_delete_action_contracts.schema.json#/$defs/delete_permission_basis"
+       }
+      }
+     }
+    },
+    {
+     "if": {
+      "properties": {
+       "action_id": {
+        "const": "cmd.sound.asset.export"
+       }
+      }
+     },
+     "then": {
+      "properties": {
+       "permission_snapshot": {
+        "$ref": "https://puppetmaster.local/schemas/sound-asset-export-actions/1.0.0/sound_asset_export_action_contracts.schema.json#/$defs/export_permission_basis"
+       }
+      }
+     }
+    }
+   ]
+  },
+  "dispatcher_binding": {
+   "description": "Dispatcher-side route/handler identity with the projected availability selector and the current permission/generation snapshot that must equal the authentic original.",
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema_id",
+    "record_kind",
+    "action_id",
+    "handler_id",
+    "handler_status",
+    "wiring_status",
+    "request_ref",
+    "command_instance_id",
+    "dispatch_id",
+    "dispatch_frame_id",
+    "idempotency_key",
+    "payload_sha256",
+    "availability_selector",
+    "disabled_reason_selector",
+    "availability",
+    "disabled_reason",
+    "current_caller_ref",
+    "current_permission_snapshot",
+    "current_target_generation",
+    "evaluated_at"
+   ],
+   "properties": {
+    "schema_id": {
+     "const": "pm.sir.sound_asset_dispatcher_binding.v1"
+    },
+    "record_kind": {
+     "const": "sound_asset_dispatcher_binding"
+    },
+    "action_id": {
+     "$ref": "#/$defs/action_id"
+    },
+    "handler_id": {
+     "type": "string",
+     "minLength": 1
+    },
+    "handler_status": {
+     "enum": [
+      "absent",
+      "specified",
+      "implemented",
+      "verified"
+     ]
+    },
+    "wiring_status": {
+     "enum": [
+      "absent",
+      "specified",
+      "concept_simulated",
+      "verified"
+     ]
+    },
+    "request_ref": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "command_instance_id": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "dispatch_id": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "dispatch_frame_id": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "idempotency_key": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "payload_sha256": {
+     "$ref": "#/$defs/digest"
+    },
+    "availability_selector": {
+     "type": "string",
+     "minLength": 1
+    },
+    "disabled_reason_selector": {
+     "type": "string",
+     "minLength": 1
+    },
+    "availability": {
+     "enum": [
+      "available",
+      "unavailable",
+      "disabled"
+     ]
+    },
+    "disabled_reason": {
+     "description": "Route-owned disabled reason; the action branches below bind the exact closed set. Both sound-asset routes share one vocabulary, so a single closed reference is used instead of an ambiguous exclusive union.",
+     "oneOf": [
+      {
+       "$ref": "https://puppetmaster.local/schemas/sound-asset-delete-actions/1.0.0/sound_asset_delete_action_contracts.schema.json#/$defs/disabled_reason"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "current_caller_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/non_secret_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "current_permission_snapshot": {
+     "$ref": "#/$defs/permission_snapshot"
+    },
+    "current_target_generation": {
+     "$ref": "#/$defs/generation"
+    },
+    "evaluated_at": {
+     "$ref": "#/$defs/utc"
+    }
+   },
+   "allOf": [
+    {
+     "if": {
+      "properties": {
+       "action_id": {
+        "const": "cmd.sound.asset.delete"
+       }
+      }
+     },
+     "then": {
+      "properties": {
+       "handler_id": {
+        "const": "handlers::sound::asset_delete"
+       },
+       "availability_selector": {
+        "const": "state.commands.sound_asset_delete.availability"
+       },
+       "disabled_reason_selector": {
+        "const": "state.commands.sound_asset_delete.disabled_reason"
+       },
+       "disabled_reason": {
+        "oneOf": [
+         {
+          "$ref": "https://puppetmaster.local/schemas/sound-asset-delete-actions/1.0.0/sound_asset_delete_action_contracts.schema.json#/$defs/disabled_reason"
+         },
+         {
+          "type": "null"
+         }
+        ]
+       },
+       "current_permission_snapshot": {
+        "$ref": "https://puppetmaster.local/schemas/sound-asset-delete-actions/1.0.0/sound_asset_delete_action_contracts.schema.json#/$defs/delete_permission_basis"
+       }
+      }
+     }
+    },
+    {
+     "if": {
+      "properties": {
+       "action_id": {
+        "const": "cmd.sound.asset.export"
+       }
+      }
+     },
+     "then": {
+      "properties": {
+       "handler_id": {
+        "const": "handlers::sound::asset_export"
+       },
+       "availability_selector": {
+        "const": "state.commands.sound_asset_export.availability"
+       },
+       "disabled_reason_selector": {
+        "const": "state.commands.sound_asset_export.disabled_reason"
+       },
+       "disabled_reason": {
+        "oneOf": [
+         {
+          "$ref": "https://puppetmaster.local/schemas/sound-asset-export-actions/1.0.0/sound_asset_export_action_contracts.schema.json#/$defs/disabled_reason"
+         },
+         {
+          "type": "null"
+         }
+        ]
+       },
+       "current_permission_snapshot": {
+        "$ref": "https://puppetmaster.local/schemas/sound-asset-export-actions/1.0.0/sound_asset_export_action_contracts.schema.json#/$defs/export_permission_basis"
+       }
+      }
+     }
+    }
+   ]
+  }
+ }
+}
