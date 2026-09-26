@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L643-L2979
+Source lines: L657-L2995
 
-Source SHA256: `aeef65e96c82bbe9268797e05aafcfd3e7c01907536be6b1486110e305e273ae`
+Source SHA256: `cf659115f6f2034ea117514feea93754d59b51584b0d84ef62f066ce14a5ee1f`
 
 ---
 
@@ -1854,6 +1854,8 @@ acceptance_criteria:
 - The IndexBuilder build_full edge uses the existing cmd.search.rebuild_index identity from the UI catalog and production wiring; the historical rebuild_regex_index spelling supplies no alternate dispatch or alias.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- The WM-029 rebuild prose joins the authenticated project_id original, native current source and generation, build_full result, Storage-owned durable publication, owner result and receipt, applicable ObservableWork, and CV-333 response causally, while accepted stays admission and status-bar progress never proves completion.
+- The prose invents no command, alias, handler, event, storage family, permission class, generation-in-request field, scheduler, output enum, or runtime proof, static definition stays distinct from native builder, storage, and receipt evidence, and any concurrent-dispatch coalescing choice stays an explicit Search-owner gap.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
