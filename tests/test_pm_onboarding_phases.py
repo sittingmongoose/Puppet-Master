@@ -323,11 +323,14 @@ class OnboardingStorageTests(unittest.TestCase):
             [row["family_id"] for row in families[88:90]],
             ["run_started_index_checkpoint", "browser_workspace_created_index_checkpoint"],
         )
+        # 2026-09-26 packet integration materializes onboarding_state from current Project,
+        # Settings and Onboarding owners via pm-onboarding-contracts.py --materialize.
+        # Against origin/main only onboarding_state changes; 294 families and all policies remain.
         prior = families[:88]
         self.assertEqual(len(prior), 88)
         def canonical_digest(value):
             return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-        self.assertEqual(canonical_digest(prior), "8f038450b828a724fdeebeb0500f7ba5110fd91db80e5cbb1b2345f33beb41a0")
+        self.assertEqual(canonical_digest(prior), "f28f8926b74cd025e74f645a91a1fd59abc02dbbf1c6a6621b76231f60eeaff7")
         self.assertEqual(canonical_digest(added[0]), "24060bdb4077754dc609915d59ffd6357f3ae042e4ff34e75f91683937055842")
         spec = importlib.util.spec_from_file_location("browser_created_storage_pin", ROOT / "scripts/pm_browser_workspace_created.py")
         browser = importlib.util.module_from_spec(spec)

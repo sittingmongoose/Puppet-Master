@@ -61,5 +61,14 @@
       "status": "required_landing_gate_pending"
     }
   ],
-  "published_sha256": "fb5040bdb7fc6a2fa1b799eb43200d4d4d1e044797adbca681faa42b590d9f78"
+  "published_sha256": "fb5040bdb7fc6a2fa1b799eb43200d4d4d1e044797adbca681faa42b590d9f78",
+  "landing_first_pass": {
+    "blocking_count": 9,
+    "infrastructure_count": 0,
+    "repairs": [
+      "UCC-166 forbidden namespace prose now refers to CS-081",
+      "existing onboarding_state value schema materialized from owner contracts"
+    ],
+    "final_recheck": "required"
+  }
 }
