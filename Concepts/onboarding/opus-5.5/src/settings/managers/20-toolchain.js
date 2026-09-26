@@ -1,4 +1,9 @@
-/* Toolchain — language servers, formatters, and the tools the assistant can use. */
+/* Toolchain — language servers, formatters, and the tools the assistant can use.
+   O55: each list owns its rows (the server and formatter catalogs are the lists; Add is the list's add button;
+   Restart and Restart all are in a server's menu; which folder a server is attached to is shown in its details).
+   Below the servers: a short Language help group, the Code health gate (its options appear once it is on) and the
+   timing limits under More options. Docker and registry settings moved to Containers & Execution, where the rest
+   of the Docker settings live. */
 (function () {
   const ID = 'toolchain';
   const KEY = 'tools-integrations';
@@ -23,6 +28,8 @@
   const toneFor = x => !isOn(x) ? 'off' : x.status === 'ready' ? 'ready' : x.status === 'attention' ? 'attention' : 'neutral';
   const statusText = (x, runningWord) => !isOn(x) ? 'Off · not used in this project' : x.status === 'ready' ? runningWord : x.status === 'attention' ? 'Needs a restart' : 'Not checked yet';
   const actionRow = (...buttons) => `<div class="pm51-toolchain-actions">${buttons.join('')}</div>`;
+  const S = { lspCatalog: 'code.editing.lsp-server-catalog', lspCustom: 'code.editing.lsp-custom-servers', lspRestart: 'code.editing.lsp-restart', lspAttach: 'code.editing.lsp-host-attachment', fmtCatalog: 'code.editing.formatter-catalog', fmtCustom: 'code.editing.formatter-custom' };
+  const homes = (ids, html) => ids.reduceRight((acc, id) => PM51.home(id, acc), html);
   const managedIn = tool => tool.owner === 'GitHub plugin' ? { label: 'Managed in Plugins', workspace: 'plugins' } : tool.owner === 'Filesystem MCP' ? { label: 'Managed in MCP Servers', workspace: 'mcp' } : null;
 
   PM51.style(`
@@ -47,6 +54,7 @@
       { label: 'Language', value: s.language },
       { label: 'Where it came from', value: sourceLabel(s.source) },
       { label: 'Used in this project', help: 'Turn off to stop using it here without removing it.', control: PM51.toggle(isOn(s), { action: 'pm51-toolchain-lsp-on', data: { id: s.id }, label: 'Used in this project' }) },
+      { label: 'Attached to', help: 'The folder this server understands as the project.', value: isOn(s) && s.status === 'ready' ? (PM51.value(S.lspAttach) && PM51.value(S.lspAttach) !== 'Auto' ? PM51.value(S.lspAttach) : 'This project\'s folder (found automatically)') : 'Not attached while it isn\'t running' },
       { label: 'Status', value: statusText(s, 'Running'), action: { label: 'Check server', icon: 'test', action: 'pm51-toolchain-check-lsp', data: { id: s.id } } }
     ]) + PM51.advanced([
       PM51.kv([
@@ -61,7 +69,7 @@
         PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-toolchain-diagnostics', data: { kind: 'lsps', id: s.id } })
       )
     ].join(''));
-    return PM51.listDetail({
+    return homes([S.lspCatalog, S.lspCustom, S.lspRestart, S.lspAttach], PM51.listDetail({
       id: ID, rosterId: 'toolchain-servers', rosterTitle: 'Language servers', count: list.length,
       add: { action: 'pm51-toolchain-add-lsp', label: 'Add language server' },
       filter: { placeholder: 'Filter language servers' },
@@ -71,7 +79,8 @@
         title: s.name, subtitle: `${s.language} · ${sourceLabel(s.source)}`, pill: pillFor(s),
         primary: { label: 'Edit', icon: 'edit', action: 'pm51-toolchain-edit-lsp', data: { id: s.id } },
         menu: anchor => PM51.menu(anchor, [
-          { label: 'Restart', icon: 'refresh', onClick: () => PM51.unavailable('Restart', 'Language servers only run inside the real app.') },
+          { label: 'Restart', icon: 'refresh', onClick: () => PM51.toast(`Restarting ${s.name}`, 'Example only: language servers run in the real app.', 'info') },
+          { label: 'Restart all language servers', icon: 'refresh', onClick: () => PM51.toast('Restarting every language server', 'The usual fix when highlights or errors get stuck. Example only.', 'info') },
           { label: isOn(s) ? 'Turn off' : 'Turn on', icon: isOn(s) ? 'pause' : 'play', onClick: () => { s.enabled = !isOn(s); saveState(); PM51.refresh(ID, { swap: false }); } },
           { label: 'View logs', icon: 'terminal', onClick: () => openLogs('lsps', s.id) },
           { separator: true },
@@ -79,7 +88,7 @@
         ], s.name),
         body
       }
-    });
+    }));
   }
 
   /* ---------- Formatters --------------------------------------------------- */
@@ -114,7 +123,7 @@
         PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-toolchain-diagnostics', data: { kind: 'formatters', id: f.id } })
       )
     ].join(''));
-    return PM51.listDetail({
+    return homes([S.fmtCatalog, S.fmtCustom], PM51.listDetail({
       id: ID, rosterId: 'toolchain-formatters', rosterTitle: 'Formatters', count: list.length,
       add: { action: 'pm51-toolchain-add-fmt', label: 'Add formatter' },
       filter: { placeholder: 'Filter formatters' },
@@ -131,7 +140,7 @@
         ], f.name),
         body
       }
-    });
+    }));
   }
 
   /* ---------- Agent tools -------------------------------------------------- */
@@ -191,7 +200,7 @@
   const splitWords = text => String(text || '').split(/\s+/).filter(Boolean);
   const splitList = text => String(text || '').split(/[,\s]+/).filter(Boolean);
 
-  PM51.on('toolchain-pick', el => { PM51.setSel(ID + '-' + ds(el, 'kind'), ds(el, 'id')); state.resourceRosterOpen = false; PM51.refresh(ID, { swap: false }); });
+  PM51.on('toolchain-pick', el => { PM51.setSel(ID + '-' + ds(el, 'kind'), ds(el, 'id')); state.resourceRosterOpen = false; PM51.swapDetail(ID, ds(el, 'id')); });
 
   /* language servers */
   PM51.on('toolchain-lsp-on', el => { const s = byId('lsps', ds(el, 'id')); if (!s) return; s.enabled = !isOn(s); saveState(); PM51.refresh(ID, { swap: false }); });

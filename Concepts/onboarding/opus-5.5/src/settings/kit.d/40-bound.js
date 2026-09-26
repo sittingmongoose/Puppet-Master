@@ -97,3 +97,6 @@ renderSettingRow = function (setting, section, workspace) {
 /* every commit path in 10-values/30-inspector ends in o55Changed; notify watchers and dependents from there */
 const o55BoundChanged = o55Changed;
 o55Changed = function (setting, raw) { const r = o55BoundChanged.apply(this, arguments); o55Notify(setting.id, raw); return r; };
+/* One word for the one disclosure in each view: "More options" (a few managers said Advanced, others More options). */
+const o55AdvancedKit = PM51.advanced;
+PM51.advanced = (body, opts = {}) => o55AdvancedKit(body, Object.assign({}, opts, { label: opts.label && !/^advanced$/i.test(opts.label) ? opts.label : 'More options' }));

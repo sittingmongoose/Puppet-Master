@@ -1,0 +1,23 @@
+{
+  "_about": "Toolchain: the server and formatter lists own their catalog, add, restart and attachment rows; Language help, the Code health gate and timing limits on the Language Servers tab; the tidy-code switch on Formatters. Docker and registry rows moved to Containers & Execution (two groups), next to the rest of the Docker settings.",
+  "sections": {
+    "toolchain-lsp-home": { "to": "toolchain", "tab": "servers", "title": "Language servers", "help": "The list, adding a server, restarting, and where each one is attached.", "order": 1, "composed": true },
+    "toolchain-lsp": { "to": "toolchain", "tab": "servers", "title": "Language help", "help": "Error checking, hover tips and autocomplete while you read and write code.", "order": 10 },
+    "toolchain-code-gate": { "to": "toolchain", "tab": "servers", "title": "Code health gate", "help": "Keep work from moving on while the code still shows problems.", "order": 20 },
+    "toolchain-lsp-tools": { "to": "toolchain", "tab": "servers", "title": "Timing and limits", "help": "How long language servers may take, and how much of this computer they may use.", "order": 30, "advanced": true },
+    "toolchain-fmt-home": { "to": "toolchain", "tab": "formatters", "title": "Formatters", "help": "The list and adding your own formatter.", "order": 35, "composed": true },
+    "toolchain-formatters": { "to": "toolchain", "tab": "formatters", "title": "Tidy code", "help": "Whether code is tidied automatically. Each formatter's own choices are in its details.", "order": 40 },
+    "exec-docker-local": { "to": "code-reference", "title": "Docker on this computer", "help": "Which container engine Puppet Master uses, and when the Docker tools show.", "order": 5 },
+    "exec-docker-registry": { "to": "code-reference", "title": "Docker Hub and other registries", "help": "Where images are published, and how Puppet Master signs in there.", "order": 6 }
+  },
+  "overrides": [
+    { "section": "toolchain-lsp-home", "ids": ["code.editing.lsp-server-catalog", "code.editing.lsp-custom-servers", "code.editing.lsp-restart", "code.editing.lsp-host-attachment"] },
+    { "section": "toolchain-lsp", "ids": ["code.editing.lsp-enabled", "general.interaction.language-detection", "code.editing.lsp-auto-restart", "code.editing.lsp-subagent-bias"] },
+    { "section": "toolchain-code-gate", "ids": ["planning.verification.lsp-gate", "planning.verification.lsp-gate-scope", "planning.verification.lsp-gate-severity", "planning.verification.lsp-gate-boundaries", "planning.verification.lsp-gate-timeout", "planning.verification.lsp-gate-unavailable"] },
+    { "section": "toolchain-lsp-tools", "ids": ["code.editing.lsp-hover-delay", "code.editing.lsp-hover-timeout", "code.editing.lsp-completion-timeout", "code.editing.lsp-symbol-timeout", "code.editing.lsp-change-debounce", "code.editing.lsp-max-memory", "code.editing.lsp-max-cpu", "code.editing.lsp-root-override"] },
+    { "section": "toolchain-fmt-home", "ids": ["code.editing.formatter-catalog", "code.editing.formatter-custom"] },
+    { "section": "toolchain-formatters", "ids": ["code.editing.formatters-enabled"] },
+    { "section": "exec-docker-local", "ids": ["code.execution.container-runtime", "code.execution.docker-binary-path", "code.execution.docker-manager-visibility", "code.execution.docker-display-context"] },
+    { "section": "exec-docker-registry", "ids": ["code.execution.default-registry", "code.execution.dockerhub-auth-method", "code.execution.dockerhub-signin", "code.execution.dockerhub-token", "code.execution.dockerhub-namespace", "code.execution.dockerhub-repository", "code.execution.repo-privacy", "code.execution.create-repository", "code.execution.registry-credentials", "code.execution.enterprise-registries"] }
+  ]
+}
