@@ -1,0 +1,1301 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/sound-upload-import-actions/1.0.0/sound_upload_import_action_contracts.schema.json",
+  "title": "Puppet Master sound upload and sound pack import typed action companion",
+  "description": "Closed static typed request/result/error/availability/currentness/effect companion for exactly cmd.sound.upload and cmd.sound.pack.import (SP-222, UCC-103, CV-298, PS-124, F3-405, WM-039, ATS-016, Plans/FileSafe.md, CV-333, SIR-042). It is technical specification only: shape validity, a schema-valid boolean, a copied reference, a hash equality or fixture self-consistency authenticates no issuer, dispatcher, FileSafe decision, permission, writer, managed asset, pack member or physical custody. Handler status stays specified and both Touch rows stay partial. The declared owner limits are SP-222's existing 5 MiB source, 10-second decoded and warn-above-3-second values; this companion introduces no command, alias, event, storage key, TTL, retry, retention or numerical default.",
+  "x-owner-ref": "Plans/storage-plan.md#SP-222",
+  "x-owner-units": [
+    "Plans/storage-plan.md#SP-222",
+    "Plans/UI_Command_Catalog.md#UCC-103",
+    "Plans/Contracts_V0.md#CV-298",
+    "Plans/Contracts_V0.md#CV-333",
+    "Plans/Permissions_System.md#PS-124",
+    "Plans/FinalGUISpec.md#F3-405",
+    "Plans/Wiring_Matrix.md#WM-039",
+    "Plans/Automated_Testing_System.md#ATS-016",
+    "Plans/Runtime_Artifacts_Panel.md#RAP-039",
+    "Plans/FileSafe.md#F2-045",
+    "Plans/FileSafe.md#F2-046",
+    "Plans/FileSafe.md#F2-070",
+    "Plans/FileSafe.md#F2-209",
+    "Plans/Shared_Integration_Runtime.md#SIR-042"
+  ],
+  "x-action-scope": [
+    "cmd.sound.upload",
+    "cmd.sound.pack.import"
+  ],
+  "x-owner-limits": {
+    "source_size_limit_bytes": 5242880,
+    "decoded_duration_limit_ms": 10000,
+    "duration_warning_ms": 3000
+  },
+  "x-negative-constraints": [
+    "No new command, alias, EventRecord, storage key, TTL, probe count, retry policy, retention rule or numerical default is introduced.",
+    "cmd.settings.open_notifications stays retired, unregistered and non-alias.",
+    "FileSafe source admission, the owner's existing 5 MiB source / 10-second decoded limits and the warn-above-3-second rule are consumed, never replaced or extended.",
+    "Raw audio bodies, private or absolute paths, credential material and executable assets never enter the record set or a central receipt.",
+    "Duplicate content links retained or relabelled managed assets; filenames, labels and category collisions never authorize silent asset or mapping replacement.",
+    "Unknown manifest versions require manual review; unsupported formats are rejected per member; per-member validation is never an all-or-nothing transaction.",
+    "No Runtime Artifacts delivery, storage, export, permission or alert-state authority is gained; RAP-039 projects destination-test and asset-export evidence only.",
+    "A schema-valid boolean, copied reference or matching hash authenticates no issuer, permission, FileSafe decision, writer, asset or pack member."
+  ],
+  "oneOf": [
+    {"$ref": "#/$defs/sound_upload_request"},
+    {"$ref": "#/$defs/sound_upload_original"},
+    {"$ref": "#/$defs/sound_upload_result"},
+    {"$ref": "#/$defs/sound_pack_import_request"},
+    {"$ref": "#/$defs/sound_pack_import_original"},
+    {"$ref": "#/$defs/sound_pack_import_member_record"},
+    {"$ref": "#/$defs/sound_pack_import_result"},
+    {"$ref": "#/$defs/sound_manifest_projection"},
+    {"$ref": "#/$defs/availability_projection"},
+    {"$ref": "#/$defs/action_error"},
+    {"$ref": "#/$defs/sound_upload_effect_binding"},
+    {"$ref": "#/$defs/sound_pack_import_effect_binding"}
+  ],
+  "$defs": {
+    "action_id": {
+      "description": "Exact action-qualified closure of the two authored routes; no other command, alias or sound-family member is admitted, and the destination-test/local-preview routes stay outside this companion.",
+      "enum": [
+        "cmd.sound.upload",
+        "cmd.sound.pack.import"
+      ]
+    },
+    "digest": {
+      "description": "Bare lowercase SHA-256 hex, the form the existing Full Thread Sha256 contract and the owner manifest sha256 use.",
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "utc": {
+      "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/UtcTimestamp"
+    },
+    "non_secret_ref": {
+      "description": "Secret-free reference grammar owned by the shared runtime command contracts. A local file or pack is referenced by such a ref; a private path is never a record value.",
+      "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "identity_envelope": {
+      "description": "Actual existing Full Thread IdentityEnvelope; no local identity is invented for this companion.",
+      "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+    },
+    "central_error_code": {
+      "description": "The exact closed central UICommandError code enumeration, reused by reference instead of restated.",
+      "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json#/$defs/UICommandError/properties/code"
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "asset_scope": {
+      "description": "SP-222 sound manifest scope: global or a project-scoped record.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": {"kind": {"const": "global"}}
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "project_ref"],
+          "properties": {
+            "kind": {"const": "project"},
+            "project_ref": {"$ref": "#/$defs/non_secret_ref"}
+          }
+        }
+      ]
+    },
+    "sound_source_kind": {
+      "description": "SP-222 sound manifest source_kind vocabulary.",
+      "enum": ["built_in", "user_uploaded", "imported"]
+    },
+    "container_format": {
+      "description": "The owner-declared WAV/MP3/OGG compatibility set for uploaded assets and imported pack members.",
+      "enum": ["wav", "mp3", "ogg"]
+    },
+    "mime_type": {
+      "description": "Declared MIME type checked against header and decode by the owner; a declaration is not native sniffing proof.",
+      "type": "string",
+      "pattern": "^[a-z]+/[a-z0-9.+-]+$",
+      "maxLength": 160
+    },
+    "label": {
+      "description": "Display name or member label. Path separators are refused so no private path can be carried as a label.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[^/\\\\]{1,160}$"
+    },
+    "relative_member_path": {
+      "description": "Declared pack member path. Absolute paths, drive letters and backslash separators are structurally refused; traversal containment is a named owner rule checked by the adapter so a rejected unsafe path stays representable as an evaluated member.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)[^:\\\\]{1,512}$"
+    },
+    "owner_limits": {
+      "description": "SP-222's existing owner limits, consumed as exact values. This companion invents no additional limit.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_size_limit_bytes", "decoded_duration_limit_ms", "duration_warning_ms"],
+      "properties": {
+        "source_size_limit_bytes": {"const": 5242880},
+        "decoded_duration_limit_ms": {"const": 10000},
+        "duration_warning_ms": {"const": 3000}
+      }
+    },
+    "sound_write_permission_basis": {
+      "description": "Owner admission facts for a managed sound write: explicit gesture, owner write admission and the actual FileSafe source-admission decision. A boolean is a claim, never native authentication.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["explicit_gesture", "write_admission", "file_safe_decision", "file_safe_decision_ref"],
+      "properties": {
+        "explicit_gesture": {"const": true},
+        "write_admission": {"type": "boolean"},
+        "file_safe_decision": {"enum": ["admitted", "refused"]},
+        "file_safe_decision_ref": {"$ref": "#/$defs/non_secret_ref"}
+      }
+    },
+    "disabled_reason": {
+      "description": "Closed disabled-reason set reused from the shared TCP-NOTIFY-SOUND rule (unavailable asset/source, policy, permission, handler). No rate-limit or destination reason is imported into these two routes.",
+      "enum": [
+        "unavailable_asset",
+        "policy_refused",
+        "permission_denied",
+        "handler_unavailable"
+      ]
+    },
+    "sound_upload_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "command_id",
+        "handler_id",
+        "original_request_ref",
+        "command_instance_id",
+        "dispatch_id",
+        "caller_ref",
+        "sir_dispatch_ref",
+        "dispatcher_ref",
+        "scope",
+        "source_file_ref",
+        "source_selection_gesture_ref",
+        "source_kind",
+        "source_generation",
+        "expected_target_generation",
+        "file_safe_admission_ref",
+        "declared_source_bytes",
+        "declared_container_format",
+        "declared_mime_type",
+        "display_name",
+        "attribution_ref",
+        "secret_refs_only",
+        "raw_audio_body_included",
+        "private_path_included",
+        "idempotency_key"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.sound_upload_import.upload_request.v1"},
+        "command_id": {"const": "cmd.sound.upload"},
+        "handler_id": {"const": "handlers::sound::upload"},
+        "original_request_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "command_instance_id": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatch_id": {"$ref": "#/$defs/non_secret_ref"},
+        "caller_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "sir_dispatch_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatcher_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "scope": {"$ref": "#/$defs/asset_scope"},
+        "source_file_ref": {
+          "description": "Sealed reference to the user-selected local source file. The record carries no path, and the bytes never enter a central receipt.",
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "source_selection_gesture_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "source_kind": {"const": "user_uploaded"},
+        "source_generation": {"$ref": "#/$defs/generation"},
+        "expected_target_generation": {"$ref": "#/$defs/generation"},
+        "file_safe_admission_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "declared_source_bytes": {"type": "integer", "minimum": 0},
+        "declared_container_format": {"$ref": "#/$defs/container_format"},
+        "declared_mime_type": {"$ref": "#/$defs/mime_type"},
+        "display_name": {"$ref": "#/$defs/label"},
+        "attribution_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "secret_refs_only": {"const": true},
+        "raw_audio_body_included": {"const": false},
+        "private_path_included": {"const": false},
+        "idempotency_key": {"$ref": "#/$defs/non_secret_ref"}
+      }
+    },
+    "sound_upload_original": {
+      "description": "Authentic owner original for cmd.sound.upload: the admitted selection plus the validation facts the owner holds. Nothing here proves that a decoder or FileSafe guard actually ran.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "request_ref",
+        "command_instance_id",
+        "dispatch_id",
+        "caller_ref",
+        "scope",
+        "source_file_ref",
+        "source_selection_gesture_ref",
+        "source_kind",
+        "source_generation",
+        "target_generation",
+        "display_name",
+        "owner_limits",
+        "declared_source_bytes",
+        "measured_source_bytes",
+        "decoded_duration_ms",
+        "container_format",
+        "mime_type",
+        "header_format",
+        "decoded_format",
+        "source_available",
+        "path_admitted",
+        "permission_basis",
+        "file_safe_admission_ref",
+        "idempotency_key",
+        "payload_sha256",
+        "arguments_sha256",
+        "admitted_at"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.sound_upload_import.upload_original.v1"},
+        "record_kind": {"const": "sound_upload_original"},
+        "command_id": {"const": "cmd.sound.upload"},
+        "request_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "command_instance_id": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatch_id": {"$ref": "#/$defs/non_secret_ref"},
+        "caller_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "scope": {"$ref": "#/$defs/asset_scope"},
+        "source_file_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "source_selection_gesture_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "source_kind": {"const": "user_uploaded"},
+        "source_generation": {"$ref": "#/$defs/generation"},
+        "target_generation": {"$ref": "#/$defs/generation"},
+        "display_name": {"$ref": "#/$defs/label"},
+        "owner_limits": {"$ref": "#/$defs/owner_limits"},
+        "declared_source_bytes": {"type": "integer", "minimum": 0},
+        "measured_source_bytes": {"type": "integer", "minimum": 0},
+        "decoded_duration_ms": {"type": "integer", "minimum": 0},
+        "container_format": {"$ref": "#/$defs/container_format"},
+        "mime_type": {"$ref": "#/$defs/mime_type"},
+        "header_format": {"$ref": "#/$defs/container_format"},
+        "decoded_format": {"$ref": "#/$defs/container_format"},
+        "source_available": {
+          "description": "Whether the selected source file was still present at owner admission; an absent source is an unavailable-selection outcome, not a decode failure.",
+          "type": "boolean"
+        },
+        "path_admitted": {"type": "boolean"},
+        "permission_basis": {"$ref": "#/$defs/sound_write_permission_basis"},
+        "file_safe_admission_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "idempotency_key": {"$ref": "#/$defs/non_secret_ref"},
+        "payload_sha256": {"$ref": "#/$defs/digest"},
+        "arguments_sha256": {"$ref": "#/$defs/digest"},
+        "admitted_at": {"$ref": "#/$defs/utc"}
+      }
+    },
+    "sound_manifest_projection": {
+      "description": "The SP-222 managed sound manifest fields reported for a resulting asset or retained/relabelled manifest. Secret material and source paths appear as refs only.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_ref",
+        "scope",
+        "sound_id_ref",
+        "source_kind",
+        "display_name",
+        "source_ref",
+        "license_ref",
+        "attribution",
+        "version",
+        "format",
+        "duration_ms",
+        "loudness_normalization",
+        "sha256",
+        "disabled",
+        "hidden",
+        "default_event_category_mappings"
+      ],
+      "properties": {
+        "manifest_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "scope": {"$ref": "#/$defs/asset_scope"},
+        "sound_id_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "source_kind": {"$ref": "#/$defs/sound_source_kind"},
+        "display_name": {"$ref": "#/$defs/label"},
+        "source_ref": {
+          "description": "SP-222 source_url_or_package_ref for the manifest, held as a non-secret reference.",
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "license_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "attribution": {
+          "oneOf": [
+            {"type": "string", "minLength": 1, "maxLength": 320},
+            {"type": "null"}
+          ]
+        },
+        "version": {
+          "oneOf": [
+            {"type": "string", "minLength": 1, "maxLength": 64},
+            {"type": "null"}
+          ]
+        },
+        "format": {"$ref": "#/$defs/container_format"},
+        "duration_ms": {"type": "integer", "minimum": 0},
+        "loudness_normalization": {"type": "boolean"},
+        "sha256": {"$ref": "#/$defs/digest"},
+        "disabled": {"type": "boolean"},
+        "hidden": {"type": "boolean"},
+        "default_event_category_mappings": {
+          "description": "Existing notification categories this asset is mapped to. Import never overrides current routing, quiet/focus or safety policy and registers no EventRecord.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "run_blocked",
+              "approval_required",
+              "human_input_requested",
+              "run_failed",
+              "run_completed",
+              "goal_blocked",
+              "provider_attention",
+              "system_error",
+              "security_attention",
+              "quiet_digest",
+              "test_send"
+            ]
+          }
+        }
+      }
+    },
+    "sound_upload_result": {
+      "description": "Owner managed-asset outcome for cmd.sound.upload. 'rejected_*' outcomes mutate nothing and never report an asset; duplicate content links a retained/relabelled manifest instead of silently replacing an asset.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "command_instance_id",
+        "dispatch_id",
+        "original_request_ref",
+        "sir_dispatch_ref",
+        "dispatcher_ref",
+        "scope",
+        "source_file_ref",
+        "source_kind",
+        "asset_generation",
+        "target_generation",
+        "outcome",
+        "asset_ref",
+        "manifest",
+        "content_sha256",
+        "duplicate_of_asset_ref",
+        "duplicate_of_content_sha256",
+        "duration_ms",
+        "duration_warning",
+        "normalization_applied",
+        "silence_trimmed",
+        "rejection_reason",
+        "file_safe_decision_ref",
+        "receipt_ref",
+        "persisted_event_refs",
+        "built_in_asset_mutated",
+        "mapping_replaced",
+        "alert_state_mutated",
+        "raw_audio_body_embedded",
+        "private_path_embedded",
+        "secret_refs_only",
+        "observed_at"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.sound_upload_import.upload_result.v1"},
+        "record_kind": {"const": "sound_upload_result"},
+        "command_id": {"const": "cmd.sound.upload"},
+        "command_instance_id": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatch_id": {"$ref": "#/$defs/non_secret_ref"},
+        "original_request_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "sir_dispatch_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatcher_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "scope": {"$ref": "#/$defs/asset_scope"},
+        "source_file_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "source_kind": {"const": "user_uploaded"},
+        "asset_generation": {"$ref": "#/$defs/generation"},
+        "target_generation": {"$ref": "#/$defs/generation"},
+        "outcome": {
+          "enum": [
+            "stored",
+            "duplicate_linked",
+            "rejected_unsupported_format",
+            "rejected_decode_failure",
+            "rejected_source_too_large",
+            "rejected_duration_too_long",
+            "effect_unknown"
+          ]
+        },
+        "asset_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "manifest": {
+          "oneOf": [
+            {"$ref": "#/$defs/sound_manifest_projection"},
+            {"type": "null"}
+          ]
+        },
+        "content_sha256": {
+          "oneOf": [
+            {"$ref": "#/$defs/digest"},
+            {"type": "null"}
+          ]
+        },
+        "duplicate_of_asset_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "duplicate_of_content_sha256": {
+          "oneOf": [
+            {"$ref": "#/$defs/digest"},
+            {"type": "null"}
+          ]
+        },
+        "duration_ms": {
+          "oneOf": [
+            {"type": "integer", "minimum": 0},
+            {"type": "null"}
+          ]
+        },
+        "duration_warning": {"type": "boolean"},
+        "normalization_applied": {"type": "boolean"},
+        "silence_trimmed": {"type": "boolean"},
+        "rejection_reason": {
+          "oneOf": [
+            {"type": "string", "minLength": 1, "maxLength": 512},
+            {"type": "null"}
+          ]
+        },
+        "file_safe_decision_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "persisted_event_refs": {
+          "description": "Expected event types stay empty; no persistent domain event is admitted for this action.",
+          "type": "array",
+          "maxItems": 0,
+          "items": {"$ref": "#/$defs/non_secret_ref"}
+        },
+        "built_in_asset_mutated": {"const": false},
+        "mapping_replaced": {"const": false},
+        "alert_state_mutated": {"const": false},
+        "raw_audio_body_embedded": {"const": false},
+        "private_path_embedded": {"const": false},
+        "secret_refs_only": {"const": true},
+        "observed_at": {"$ref": "#/$defs/utc"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"outcome": {"enum": ["stored", "duplicate_linked"]}}, "required": ["outcome"]},
+          "then": {
+            "properties": {
+              "asset_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "manifest": {"$ref": "#/$defs/sound_manifest_projection"},
+              "content_sha256": {"$ref": "#/$defs/digest"},
+              "duration_ms": {"type": "integer", "minimum": 0},
+              "rejection_reason": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "rejected_unsupported_format",
+                  "rejected_decode_failure",
+                  "rejected_source_too_large",
+                  "rejected_duration_too_long"
+                ]
+              }
+            },
+            "required": ["outcome"]
+          },
+          "then": {
+            "properties": {
+              "asset_ref": {"type": "null"},
+              "manifest": {"type": "null"},
+              "content_sha256": {"type": "null"},
+              "duplicate_of_asset_ref": {"type": "null"},
+              "duplicate_of_content_sha256": {"type": "null"},
+              "rejection_reason": {"type": "string", "minLength": 1, "maxLength": 512}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"outcome": {"const": "duplicate_linked"}}, "required": ["outcome"]},
+          "then": {
+            "properties": {
+              "duplicate_of_asset_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "duplicate_of_content_sha256": {"$ref": "#/$defs/digest"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"outcome": {"const": "stored"}}, "required": ["outcome"]},
+          "then": {
+            "properties": {
+              "duplicate_of_asset_ref": {"type": "null"},
+              "duplicate_of_content_sha256": {"type": "null"}
+            }
+          }
+        }
+      ]
+    },
+    "sound_pack_import_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "command_id",
+        "handler_id",
+        "original_request_ref",
+        "command_instance_id",
+        "dispatch_id",
+        "caller_ref",
+        "sir_dispatch_ref",
+        "dispatcher_ref",
+        "scope",
+        "pack_source_ref",
+        "pack_selection_gesture_ref",
+        "source_kind",
+        "pack_generation",
+        "expected_target_generation",
+        "file_safe_admission_ref",
+        "declared_manifest_version",
+        "manifest_version_reviewed",
+        "declared_member_count",
+        "declared_pack_bytes",
+        "compatibility_profile_ref",
+        "category_mapping_ref",
+        "pack_license_ref",
+        "secret_refs_only",
+        "raw_audio_body_included",
+        "private_path_included",
+        "idempotency_key"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.sound_upload_import.pack_import_request.v1"},
+        "command_id": {"const": "cmd.sound.pack.import"},
+        "handler_id": {"const": "handlers::sound::pack_import"},
+        "original_request_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "command_instance_id": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatch_id": {"$ref": "#/$defs/non_secret_ref"},
+        "caller_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "sir_dispatch_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatcher_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "scope": {"$ref": "#/$defs/asset_scope"},
+        "pack_source_ref": {
+          "description": "Sealed reference to the user-selected pack source. The record carries no path and no member bytes.",
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "pack_selection_gesture_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "source_kind": {"const": "imported"},
+        "pack_generation": {"$ref": "#/$defs/generation"},
+        "expected_target_generation": {"$ref": "#/$defs/generation"},
+        "file_safe_admission_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "declared_manifest_version": {"type": "string", "minLength": 1, "maxLength": 64},
+        "manifest_version_reviewed": {
+          "description": "Owner review state of the declared manifest version. An unreviewed version requires manual review instead of import.",
+          "type": "boolean"
+        },
+        "declared_member_count": {"type": "integer", "minimum": 1},
+        "declared_pack_bytes": {"type": "integer", "minimum": 0},
+        "compatibility_profile_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "category_mapping_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "pack_license_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "secret_refs_only": {"const": true},
+        "raw_audio_body_included": {"const": false},
+        "private_path_included": {"const": false},
+        "idempotency_key": {"$ref": "#/$defs/non_secret_ref"}
+      }
+    },
+    "sound_pack_import_original": {
+      "description": "Authentic owner original for cmd.sound.pack.import: the admitted pack selection, review state, limits and admission refs. Nothing here proves that extraction, decoding or licensing review actually ran.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "request_ref",
+        "command_instance_id",
+        "dispatch_id",
+        "caller_ref",
+        "scope",
+        "pack_source_ref",
+        "pack_selection_gesture_ref",
+        "source_kind",
+        "pack_generation",
+        "target_generation",
+        "owner_limits",
+        "declared_manifest_version",
+        "manifest_version_reviewed",
+        "declared_member_count",
+        "declared_pack_bytes",
+        "source_available",
+        "path_admitted",
+        "permission_basis",
+        "file_safe_admission_ref",
+        "compatibility_profile_ref",
+        "category_mapping_ref",
+        "pack_license_ref",
+        "idempotency_key",
+        "payload_sha256",
+        "arguments_sha256",
+        "admitted_at"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.sound_upload_import.pack_import_original.v1"},
+        "record_kind": {"const": "sound_pack_import_original"},
+        "command_id": {"const": "cmd.sound.pack.import"},
+        "request_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "command_instance_id": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatch_id": {"$ref": "#/$defs/non_secret_ref"},
+        "caller_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "scope": {"$ref": "#/$defs/asset_scope"},
+        "pack_source_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "pack_selection_gesture_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "source_kind": {"const": "imported"},
+        "pack_generation": {"$ref": "#/$defs/generation"},
+        "target_generation": {"$ref": "#/$defs/generation"},
+        "owner_limits": {"$ref": "#/$defs/owner_limits"},
+        "declared_manifest_version": {"type": "string", "minLength": 1, "maxLength": 64},
+        "manifest_version_reviewed": {"type": "boolean"},
+        "declared_member_count": {"type": "integer", "minimum": 1},
+        "declared_pack_bytes": {"type": "integer", "minimum": 0},
+        "source_available": {
+          "description": "Whether the selected pack source was still present at owner admission.",
+          "type": "boolean"
+        },
+        "path_admitted": {"type": "boolean"},
+        "permission_basis": {"$ref": "#/$defs/sound_write_permission_basis"},
+        "file_safe_admission_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "compatibility_profile_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "category_mapping_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "pack_license_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "idempotency_key": {"$ref": "#/$defs/non_secret_ref"},
+        "payload_sha256": {"$ref": "#/$defs/digest"},
+        "arguments_sha256": {"$ref": "#/$defs/digest"},
+        "admitted_at": {"$ref": "#/$defs/utc"}
+      }
+    },
+    "sound_pack_import_member_record": {
+      "description": "One evaluated pack member. Rejection is per member and never all-or-nothing; a rejected or unmapped member never reports an asset, and no member replaces another asset silently.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "member_index",
+        "member_name",
+        "retained_identity",
+        "declared_relative_path",
+        "category",
+        "mapping_disposition",
+        "category_mapping_target",
+        "routing_override_applied",
+        "source_kind",
+        "format",
+        "mime_type",
+        "header_format",
+        "decoded_format",
+        "source_bytes",
+        "duration_ms",
+        "duration_warning",
+        "content_sha256",
+        "declared_license_ref",
+        "license_verification",
+        "declared_attribution",
+        "declared_version",
+        "disposition",
+        "asset_ref",
+        "manifest_ref",
+        "duplicate_of_asset_ref",
+        "duplicate_of_content_sha256",
+        "replaced_asset_ref",
+        "silent_replacement",
+        "rejection_reason"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.sound_upload_import.pack_import_member.v1"},
+        "record_kind": {"const": "sound_pack_import_member"},
+        "member_index": {"type": "integer", "minimum": 0},
+        "member_name": {"$ref": "#/$defs/label"},
+        "retained_identity": {
+          "description": "The manifest identity the member retains, possibly relabelled. Retention or relabelling is never a silent asset or mapping replacement.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "declared_relative_path": {"$ref": "#/$defs/relative_member_path"},
+        "category": {
+          "description": "SP-222 compatibility category. A null category is the unknown case, which stays unmapped and disabled with a warning.",
+          "oneOf": [
+            {
+              "enum": [
+                "session.start",
+                "task.complete",
+                "task.acknowledge",
+                "input.required",
+                "task.error",
+                "resource.limit",
+                "user.spam"
+              ]
+            },
+            {"type": "null"}
+          ]
+        },
+        "mapping_disposition": {
+          "enum": ["mapped_to_existing_meaning", "unmapped_disabled_with_warning"]
+        },
+        "category_mapping_target": {
+          "description": "The exact existing notification meaning the category maps to. Import registers no EventRecord and does not make routine events audible.",
+          "oneOf": [
+            {
+              "enum": [
+                "routine_run_start",
+                "routine_or_long_running_completion",
+                "acknowledgement_visual_or_optional_sound",
+                "input_or_approval_required",
+                "failure",
+                "rate_or_resource_limit",
+                "repeated_prompt_user_spam"
+              ]
+            },
+            {"type": "null"}
+          ]
+        },
+        "routing_override_applied": {"const": false},
+        "source_kind": {"const": "imported"},
+        "format": {"$ref": "#/$defs/container_format"},
+        "mime_type": {"$ref": "#/$defs/mime_type"},
+        "header_format": {"$ref": "#/$defs/container_format"},
+        "decoded_format": {"$ref": "#/$defs/container_format"},
+        "source_bytes": {"type": "integer", "minimum": 0},
+        "duration_ms": {"type": "integer", "minimum": 0},
+        "duration_warning": {"type": "boolean"},
+        "content_sha256": {"$ref": "#/$defs/digest"},
+        "declared_license_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "license_verification": {"enum": ["verified_by_owner", "absent"]},
+        "declared_attribution": {
+          "oneOf": [
+            {"type": "string", "minLength": 1, "maxLength": 320},
+            {"type": "null"}
+          ]
+        },
+        "declared_version": {
+          "oneOf": [
+            {"type": "string", "minLength": 1, "maxLength": 64},
+            {"type": "null"}
+          ]
+        },
+        "disposition": {
+          "enum": [
+            "imported",
+            "duplicate_content_linked",
+            "unmapped_category_disabled_with_warning",
+            "rejected_unsupported_format",
+            "rejected_unsafe_path",
+            "rejected_decode_failure",
+            "rejected_source_too_large",
+            "rejected_duration_too_long",
+            "rejected_unlicensed"
+          ]
+        },
+        "asset_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "manifest_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "duplicate_of_asset_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "duplicate_of_content_sha256": {
+          "oneOf": [
+            {"$ref": "#/$defs/digest"},
+            {"type": "null"}
+          ]
+        },
+        "replaced_asset_ref": {
+          "description": "Never set: a member cannot replace an existing asset, silently or otherwise.",
+          "type": "null"
+        },
+        "silent_replacement": {"const": false},
+        "rejection_reason": {
+          "oneOf": [
+            {"type": "string", "minLength": 1, "maxLength": 512},
+            {"type": "null"}
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"disposition": {"enum": ["imported", "duplicate_content_linked"]}}, "required": ["disposition"]},
+          "then": {
+            "properties": {
+              "asset_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "manifest_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "rejection_reason": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"disposition": {"const": "duplicate_content_linked"}}, "required": ["disposition"]},
+          "then": {
+            "properties": {
+              "duplicate_of_asset_ref": {"$ref": "#/$defs/non_secret_ref"},
+              "duplicate_of_content_sha256": {"$ref": "#/$defs/digest"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"disposition": {"const": "imported"}}, "required": ["disposition"]},
+          "then": {
+            "properties": {
+              "duplicate_of_asset_ref": {"type": "null"},
+              "duplicate_of_content_sha256": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "enum": [
+                  "unmapped_category_disabled_with_warning",
+                  "rejected_unsupported_format",
+                  "rejected_unsafe_path",
+                  "rejected_decode_failure",
+                  "rejected_source_too_large",
+                  "rejected_duration_too_long",
+                  "rejected_unlicensed"
+                ]
+              }
+            },
+            "required": ["disposition"]
+          },
+          "then": {
+            "properties": {
+              "asset_ref": {"type": "null"},
+              "manifest_ref": {"type": "null"},
+              "duplicate_of_asset_ref": {"type": "null"},
+              "duplicate_of_content_sha256": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"disposition": {"const": "unmapped_category_disabled_with_warning"}},
+            "required": ["disposition"]
+          },
+          "then": {
+            "properties": {
+              "category": {"type": "null"},
+              "category_mapping_target": {"type": "null"},
+              "rejection_reason": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"disposition": {"enum": ["rejected_unsupported_format", "rejected_unsafe_path", "rejected_decode_failure", "rejected_source_too_large", "rejected_duration_too_long", "rejected_unlicensed"]}},
+            "required": ["disposition"]
+          },
+          "then": {
+            "properties": {"rejection_reason": {"type": "string", "minLength": 1, "maxLength": 512}}
+          }
+        }
+      ]
+    },
+    "sound_pack_import_result": {
+      "description": "Per-member import outcome for cmd.sound.pack.import. Partial acceptance is explicit; rejected members are never counted or presented as imported; an unreviewed manifest version yields review_required with no import.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "command_id",
+        "command_instance_id",
+        "dispatch_id",
+        "original_request_ref",
+        "sir_dispatch_ref",
+        "dispatcher_ref",
+        "scope",
+        "pack_source_ref",
+        "source_kind",
+        "pack_generation",
+        "target_generation",
+        "declared_manifest_version",
+        "manifest_version_reviewed",
+        "outcome",
+        "declared_member_count",
+        "evaluated_member_count",
+        "accepted_member_count",
+        "rejected_member_count",
+        "duplicate_linked_member_count",
+        "unmapped_member_count",
+        "members",
+        "imported_asset_refs",
+        "retained_manifest_refs",
+        "preexisting_asset_refs",
+        "review_required",
+        "rejection_reason",
+        "collision_dispositions",
+        "file_safe_decision_ref",
+        "mapping_replacement_refs",
+        "routing_override_applied",
+        "built_in_asset_mutated",
+        "alert_state_mutated",
+        "raw_audio_body_embedded",
+        "private_path_embedded",
+        "secret_refs_only",
+        "receipt_ref",
+        "persisted_event_refs",
+        "observed_at"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.sound_upload_import.pack_import_result.v1"},
+        "record_kind": {"const": "sound_pack_import_result"},
+        "command_id": {"const": "cmd.sound.pack.import"},
+        "command_instance_id": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatch_id": {"$ref": "#/$defs/non_secret_ref"},
+        "original_request_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "sir_dispatch_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatcher_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "scope": {"$ref": "#/$defs/asset_scope"},
+        "pack_source_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "source_kind": {"const": "imported"},
+        "pack_generation": {"$ref": "#/$defs/generation"},
+        "target_generation": {"$ref": "#/$defs/generation"},
+        "declared_manifest_version": {"type": "string", "minLength": 1, "maxLength": 64},
+        "manifest_version_reviewed": {"type": "boolean"},
+        "outcome": {
+          "enum": [
+            "imported_all",
+            "imported_partial",
+            "review_required",
+            "rejected_no_members",
+            "effect_unknown"
+          ]
+        },
+        "declared_member_count": {"type": "integer", "minimum": 1},
+        "evaluated_member_count": {"type": "integer", "minimum": 0},
+        "accepted_member_count": {"type": "integer", "minimum": 0},
+        "rejected_member_count": {"type": "integer", "minimum": 0},
+        "duplicate_linked_member_count": {"type": "integer", "minimum": 0},
+        "unmapped_member_count": {"type": "integer", "minimum": 0},
+        "members": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/sound_pack_import_member_record"}
+        },
+        "imported_asset_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/non_secret_ref"}
+        },
+        "retained_manifest_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/non_secret_ref"}
+        },
+        "preexisting_asset_refs": {
+          "description": "Already-managed asset refs the import may link to for duplicate content. Linking retains the existing asset; it never replaces it.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/non_secret_ref"}
+        },
+        "review_required": {"type": "boolean"},
+        "rejection_reason": {
+          "oneOf": [
+            {"type": "string", "minLength": 1, "maxLength": 512},
+            {"type": "null"}
+          ]
+        },
+        "collision_dispositions": {
+          "description": "How filename, label and category collisions were resolved: identity retention or relabelling only, never silent replacement.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"enum": ["retained_identity", "relabelled_identity", "linked_duplicate_content"]}
+        },
+        "file_safe_decision_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "mapping_replacement_refs": {
+          "description": "Category collisions never authorize silent mapping replacement, so no replaced mapping is admitted.",
+          "type": "array",
+          "maxItems": 0,
+          "items": {"$ref": "#/$defs/non_secret_ref"}
+        },
+        "routing_override_applied": {"const": false},
+        "built_in_asset_mutated": {"const": false},
+        "alert_state_mutated": {"const": false},
+        "raw_audio_body_embedded": {"const": false},
+        "private_path_embedded": {"const": false},
+        "secret_refs_only": {"const": true},
+        "receipt_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "persisted_event_refs": {
+          "description": "Expected event types stay empty; import admits no persistent domain event and registers no EventRecord.",
+          "type": "array",
+          "maxItems": 0,
+          "items": {"$ref": "#/$defs/non_secret_ref"}
+        },
+        "observed_at": {"$ref": "#/$defs/utc"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"outcome": {"const": "review_required"}}, "required": ["outcome"]},
+          "then": {
+            "properties": {
+              "review_required": {"const": true},
+              "evaluated_member_count": {"const": 0},
+              "members": {"maxItems": 0},
+              "imported_asset_refs": {"maxItems": 0},
+              "retained_manifest_refs": {"maxItems": 0}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"outcome": {"enum": ["imported_all", "imported_partial"]}}, "required": ["outcome"]},
+          "then": {
+            "properties": {
+              "review_required": {"const": false},
+              "manifest_version_reviewed": {"const": true},
+              "rejection_reason": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"outcome": {"const": "rejected_no_members"}}, "required": ["outcome"]},
+          "then": {
+            "properties": {
+              "imported_asset_refs": {"maxItems": 0},
+              "accepted_member_count": {"const": 0},
+              "duplicate_linked_member_count": {"const": 0}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"outcome": {"const": "imported_all"}}, "required": ["outcome"]},
+          "then": {
+            "properties": {
+              "rejected_member_count": {"const": 0},
+              "unmapped_member_count": {"const": 0},
+              "duplicate_linked_member_count": {"const": 0},
+              "accepted_member_count": {"type": "integer", "minimum": 1}
+            }
+          }
+        }
+      ]
+    },
+    "availability_projection": {
+      "description": "Action-qualified projected availability and currentness read from the existing production state selectors.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "action_id",
+        "availability_selector",
+        "disabled_reason_selector",
+        "availability",
+        "disabled_reason",
+        "currentness",
+        "evaluated_at"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.sound_upload_import.availability.v1"},
+        "action_id": {"$ref": "#/$defs/action_id"},
+        "availability_selector": {"type": "string", "minLength": 1},
+        "disabled_reason_selector": {"type": "string", "minLength": 1},
+        "availability": {"enum": ["available", "unavailable", "disabled"]},
+        "disabled_reason": {
+          "oneOf": [
+            {"$ref": "#/$defs/disabled_reason"},
+            {"type": "null"}
+          ]
+        },
+        "currentness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["target_generation", "observed_generation", "stale"],
+          "properties": {
+            "target_generation": {"$ref": "#/$defs/generation"},
+            "observed_generation": {"$ref": "#/$defs/generation"},
+            "stale": {"type": "boolean"}
+          }
+        },
+        "evaluated_at": {"$ref": "#/$defs/utc"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"action_id": {"const": "cmd.sound.upload"}}},
+          "then": {
+            "properties": {
+              "availability_selector": {"const": "state.commands.sound_upload.availability"},
+              "disabled_reason_selector": {"const": "state.commands.sound_upload.disabled_reason"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "cmd.sound.pack.import"}}},
+          "then": {
+            "properties": {
+              "availability_selector": {"const": "state.commands.sound_pack_import.availability"},
+              "disabled_reason_selector": {"const": "state.commands.sound_pack_import.disabled_reason"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"availability": {"const": "available"}}},
+          "then": {
+            "properties": {"disabled_reason": {"type": "null"}}
+          }
+        },
+        {
+          "if": {"properties": {"availability": {"enum": ["unavailable", "disabled"]}}},
+          "then": {
+            "properties": {"disabled_reason": {"$ref": "#/$defs/disabled_reason"}}
+          }
+        }
+      ]
+    },
+    "action_error": {
+      "description": "Action-qualified error projection over the unchanged closed central UICommandError grammar; no new error code is introduced.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "action_id", "phase", "code", "reason", "offending_field", "availability_reason"],
+      "properties": {
+        "schema_id": {"const": "pm.sound_upload_import.action_error.v1"},
+        "action_id": {"$ref": "#/$defs/action_id"},
+        "phase": {"enum": ["pre_dispatch", "post_dispatch", "execution"]},
+        "code": {"$ref": "#/$defs/central_error_code"},
+        "reason": {"type": "string", "minLength": 1, "maxLength": 512},
+        "offending_field": {
+          "oneOf": [
+            {"type": "string", "maxLength": 160},
+            {"type": "null"}
+          ]
+        },
+        "availability_reason": {
+          "oneOf": [
+            {"$ref": "#/$defs/disabled_reason"},
+            {"type": "null"}
+          ]
+        }
+      }
+    },
+    "sound_upload_effect_binding": {
+      "description": "Exact existing-owner effect values for cmd.sound.upload as declared by the current production-intent row: a receipt-only, secret-free managed-asset effect with FileSafe source admission and no expected event type.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "action_id",
+        "effect_kind",
+        "receipt_or_event_refs",
+        "expected_event_types",
+        "receipt_kind",
+        "source_admission_rule",
+        "alert_state_mutation_authorized",
+        "projection_owner_ref"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.sound_upload_import.effect_binding.v1"},
+        "action_id": {"const": "cmd.sound.upload"},
+        "effect_kind": {"const": "receipt"},
+        "receipt_or_event_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {"const": "cmd.sound.upload.dispatch_receipt"}
+        },
+        "expected_event_types": {"type": "array", "maxItems": 0, "items": {"type": "string"}},
+        "receipt_kind": {"const": "owner_managed_asset_receipt"},
+        "source_admission_rule": {"const": "file_safe_source_admission_and_explicit_gesture_and_write_admission"},
+        "alert_state_mutation_authorized": {"const": false},
+        "projection_owner_ref": {"const": null}
+      }
+    },
+    "sound_pack_import_effect_binding": {
+      "description": "Exact existing-owner effect values for cmd.sound.pack.import: a receipt-only effect reporting real imported managed assets or manifests, with per-member validation and no Runtime Artifacts projection.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "action_id",
+        "effect_kind",
+        "receipt_or_event_refs",
+        "expected_event_types",
+        "receipt_kind",
+        "partial_acceptance_rule",
+        "alert_state_mutation_authorized",
+        "projection_owner_ref"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.sound_upload_import.effect_binding.v1"},
+        "action_id": {"const": "cmd.sound.pack.import"},
+        "effect_kind": {"const": "receipt"},
+        "receipt_or_event_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {"const": "cmd.sound.pack.import.dispatch_receipt"}
+        },
+        "expected_event_types": {"type": "array", "maxItems": 0, "items": {"type": "string"}},
+        "receipt_kind": {"const": "owner_pack_import_receipt"},
+        "partial_acceptance_rule": {"const": "per_member_validation_never_all_or_nothing"},
+        "alert_state_mutation_authorized": {"const": false},
+        "projection_owner_ref": {"const": null}
+      }
+    }
+  }
+}

@@ -214,8 +214,11 @@ class NotificationSoundActionContractTests(unittest.TestCase):
             self.assertIn(f"cmd.notifications.destination.test -> {ADAPTER.ACTION_SCHEMA}#/$defs/{definition}",
                           profile[field])
             self.assertIn("unmaterialized", profile[field])
-        for action in ("cmd.sound.upload", "cmd.sound.pack.import", "cmd.sound.asset.delete",
-                       "cmd.sound.asset.export"):
+        for action in ("cmd.sound.upload", "cmd.sound.pack.import"):
+            self.assertEqual(rows[action][4], "partial")
+            self.assertIn("remain implementation and verification work", rows[action][5])
+            self.assertNotIn("remain specification work", rows[action][5])
+        for action in ("cmd.sound.asset.delete", "cmd.sound.asset.export"):
             self.assertEqual(rows[action][4], "partial")
             self.assertIn("remain specification work", rows[action][5])
 

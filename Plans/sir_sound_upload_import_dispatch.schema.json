@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/sir-sound-upload-import-dispatch/1.0.0/sir_sound_upload_import_dispatch.schema.json",
+  "title": "Authentic original dispatch binding for exactly cmd.sound.upload and cmd.sound.pack.import",
+  "description": "Closed logical original/dispatcher binding for the two authored Sound asset-intake routes. It preserves the authentic Full Thread IdentityEnvelope, the exact selected typed arguments with an argument-only digest, request/dispatch/frame identity, independent target generation, idempotency, the actor/permission snapshot including the actual FileSafe source-admission decision, admission time and the genuine nullable caller return context; it also carries the dispatcher-side route, handler, projected selector, current permission and current generation values the adapter must join against the original. Static records authenticate no issuer, dispatcher, caller, FileSafe decision, permission, decoder, writer, managed asset or pack member.",
+  "x-owner-ref": "Plans/Shared_Integration_Runtime.md#SIR-042",
+  "x-owner-units": [
+    "Plans/Shared_Integration_Runtime.md#SIR-042",
+    "Plans/storage-plan.md#SP-222",
+    "Plans/UI_Command_Catalog.md#UCC-103",
+    "Plans/Contracts_V0.md#CV-333",
+    "Plans/Permissions_System.md#PS-124",
+    "Plans/FileSafe.md#F2-045",
+    "Plans/FileSafe.md#F2-046",
+    "Plans/FileSafe.md#F2-209",
+    "Plans/Wiring_Matrix.md#WM-039"
+  ],
+  "oneOf": [
+    {"$ref": "#/$defs/dispatch_binding"},
+    {"$ref": "#/$defs/dispatcher_binding"}
+  ],
+  "$defs": {
+    "action_id": {
+      "enum": [
+        "cmd.sound.upload",
+        "cmd.sound.pack.import"
+      ]
+    },
+    "digest": {
+      "description": "Bare lowercase SHA-256 hex, the form the existing Full Thread Sha256 contract and the owner manifest sha256 use.",
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "utc": {
+      "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/UtcTimestamp"
+    },
+    "non_secret_ref": {
+      "description": "Secret-free reference grammar owned by the shared runtime command contracts. The selected local file or pack is a sealed reference, never a private path.",
+      "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+    },
+    "identity_envelope": {
+      "description": "Actual existing Full Thread IdentityEnvelope; no local identity is invented for this companion.",
+      "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sound_source_authority": {
+      "description": "Selected intake target: the sealed uploaded-file reference or the sealed pack reference with its own generation domain. No destination identity is imported into these routes.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "source_file_ref", "source_kind", "source_generation"],
+          "properties": {
+            "kind": {"const": "sound_upload_source"},
+            "source_file_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "source_kind": {"const": "user_uploaded"},
+            "source_generation": {"$ref": "#/$defs/generation"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "pack_source_ref", "source_kind", "pack_generation"],
+          "properties": {
+            "kind": {"const": "sound_pack_source"},
+            "pack_source_ref": {"$ref": "#/$defs/non_secret_ref"},
+            "source_kind": {"const": "imported"},
+            "pack_generation": {"$ref": "#/$defs/generation"}
+          }
+        }
+      ]
+    },
+    "source_permission_snapshot": {
+      "description": "Actor admission snapshot: explicit gesture, owner write admission and the actual FileSafe source-admission decision. A boolean or decision string is a claim, never native authorization proof.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["explicit_gesture", "write_admission", "file_safe_decision", "file_safe_decision_ref"],
+      "properties": {
+        "explicit_gesture": {"const": true},
+        "write_admission": {"type": "boolean"},
+        "file_safe_decision": {"enum": ["admitted", "refused"]},
+        "file_safe_decision_ref": {"$ref": "#/$defs/non_secret_ref"}
+      }
+    },
+    "dispatch_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_ref",
+        "command_instance_id",
+        "dispatch_id",
+        "dispatch_frame_id",
+        "operation_id",
+        "identity",
+        "idempotency_key",
+        "payload_sha256",
+        "arguments_sha256",
+        "target",
+        "target_generation",
+        "actor_ref",
+        "permission_snapshot",
+        "caller_return_context",
+        "admitted_at"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.sir.sound_upload_import_dispatch_binding.v1"},
+        "record_kind": {"const": "sir_sound_upload_import_dispatch_binding"},
+        "action_id": {"$ref": "#/$defs/action_id"},
+        "request_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "command_instance_id": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatch_id": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatch_frame_id": {"$ref": "#/$defs/non_secret_ref"},
+        "operation_id": {"$ref": "#/$defs/non_secret_ref"},
+        "identity": {"$ref": "#/$defs/identity_envelope"},
+        "idempotency_key": {"$ref": "#/$defs/non_secret_ref"},
+        "payload_sha256": {"$ref": "#/$defs/digest"},
+        "arguments_sha256": {
+          "description": "Argument-only digest of the exact selected route arguments; it is its own owner value and must not be a copy of the payload digest.",
+          "$ref": "#/$defs/digest"
+        },
+        "target": {"$ref": "#/$defs/sound_source_authority"},
+        "target_generation": {"$ref": "#/$defs/generation"},
+        "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "permission_snapshot": {"$ref": "#/$defs/source_permission_snapshot"},
+        "caller_return_context": {
+          "description": "Genuine nullable caller return context; a missing value is null rather than an invented route.",
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "admitted_at": {"$ref": "#/$defs/utc"}
+      }
+    },
+    "dispatcher_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "handler_id",
+        "handler_status",
+        "wiring_status",
+        "request_ref",
+        "command_instance_id",
+        "dispatch_id",
+        "dispatch_frame_id",
+        "idempotency_key",
+        "payload_sha256",
+        "availability_selector",
+        "disabled_reason_selector",
+        "availability",
+        "disabled_reason",
+        "current_caller_ref",
+        "current_permission_snapshot",
+        "current_target_generation",
+        "evaluated_at"
+      ],
+      "properties": {
+        "schema_id": {"const": "pm.sir.sound_upload_import_dispatcher_binding.v1"},
+        "record_kind": {"const": "sound_upload_import_dispatcher_binding"},
+        "action_id": {"$ref": "#/$defs/action_id"},
+        "handler_id": {
+          "enum": [
+            "handlers::sound::upload",
+            "handlers::sound::pack_import"
+          ]
+        },
+        "handler_status": {
+          "description": "Touch Closure handler status vocabulary. Only 'specified' is admissible; an implemented/verified claim is refused by the adapter, not by shape.",
+          "enum": ["absent", "specified", "implemented", "verified"]
+        },
+        "wiring_status": {
+          "description": "Touch Closure wiring status vocabulary. Only 'specified' is admissible; a concept-simulated or verified claim is refused by the adapter.",
+          "enum": ["absent", "specified", "concept_simulated", "verified"]
+        },
+        "request_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "command_instance_id": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatch_id": {"$ref": "#/$defs/non_secret_ref"},
+        "dispatch_frame_id": {"$ref": "#/$defs/non_secret_ref"},
+        "idempotency_key": {"$ref": "#/$defs/non_secret_ref"},
+        "payload_sha256": {"$ref": "#/$defs/digest"},
+        "availability_selector": {
+          "enum": [
+            "state.commands.sound_upload.availability",
+            "state.commands.sound_pack_import.availability"
+          ]
+        },
+        "disabled_reason_selector": {
+          "enum": [
+            "state.commands.sound_upload.disabled_reason",
+            "state.commands.sound_pack_import.disabled_reason"
+          ]
+        },
+        "availability": {"enum": ["available", "unavailable", "disabled"]},
+        "disabled_reason": {
+          "oneOf": [
+            {
+              "enum": [
+                "unavailable_asset",
+                "policy_refused",
+                "permission_denied",
+                "handler_unavailable"
+              ]
+            },
+            {"type": "null"}
+          ]
+        },
+        "current_caller_ref": {
+          "oneOf": [
+            {"$ref": "#/$defs/non_secret_ref"},
+            {"type": "null"}
+          ]
+        },
+        "current_permission_snapshot": {"$ref": "#/$defs/source_permission_snapshot"},
+        "current_target_generation": {"$ref": "#/$defs/generation"},
+        "evaluated_at": {"$ref": "#/$defs/utc"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"action_id": {"const": "cmd.sound.upload"}}},
+          "then": {"properties": {"handler_id": {"const": "handlers::sound::upload"}}}
+        },
+        {
+          "if": {"properties": {"action_id": {"const": "cmd.sound.pack.import"}}},
+          "then": {"properties": {"handler_id": {"const": "handlers::sound::pack_import"}}}
+        }
+      ]
+    }
+  }
+}
