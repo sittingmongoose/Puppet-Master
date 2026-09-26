@@ -575,6 +575,7 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "validate_working_notebook_contracts": "validate-working-notebook-contracts",
     "validate_server_command_gap": "validate-server-command-gap",
     "validate_touch_closure": "validate-touch-closure",
+    "validate_lsp_restart_selected": "validate-lsp-restart-selected",
     "validate_filesafe_security_policy": "validate-filesafe-security-policy",
     "validate_wiring_matrix": "validate-wiring-matrix",
     "validate_audit_closure": "validate-audit-closure",
@@ -613,6 +614,7 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "sound_asset_export_contracts": "validate-sound-asset-export-contracts",
     "working_notebook_contracts": "validate-working-notebook-contracts",
     "touch_closure": "validate-touch-closure",
+    "lsp_restart_selected": "validate-lsp-restart-selected",
     "filesafe_security_policy": "validate-filesafe-security-policy",
     "wiring_matrix": "validate-wiring-matrix",
     "audit_closure": "validate-audit-closure",
@@ -653,6 +655,8 @@ _AGGREGATE_NAMES_WITH_TIMEOUT_ARG = {
     "working_notebook_contracts",
     "validate_touch_closure",
     "touch_closure",
+    "validate_lsp_restart_selected",
+    "lsp_restart_selected",
     "validate_case_l_non_event_materialization",
     "case_l_non_event_materialization",
     "validate_implementation_readiness",
@@ -6820,6 +6824,22 @@ def cmd_validate_sound_asset_export_contracts(args: argparse.Namespace) -> dict[
     )
 
 
+def cmd_validate_lsp_restart_selected(args: argparse.Namespace) -> dict[str, Any]:
+    """Validate the LSP restart selected-server companion without native proof claims."""
+    validator = ROOT / "scripts" / "pm-lsp-restart-selected.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-lsp-restart-selected", [sys.executable, str(validator)],
+        timeout_seconds=timeout_seconds, extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-lsp-restart-selected", proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
 def cmd_validate_working_notebook_contracts(args: argparse.Namespace) -> dict[str, Any]:
     """Validate Working Notebook contract schemas and static fixtures."""
     validator = ROOT / "scripts" / "pm-working-notebook-contracts.py"
@@ -7195,6 +7215,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_filesafe_security_policy", cmd_validate_filesafe_security_policy, argparse.Namespace()),
         ("validate_wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
         ("validate_touch_closure", cmd_validate_touch_closure, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_lsp_restart_selected", cmd_validate_lsp_restart_selected, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
         ("validate_audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("check_shards", cmd_check_shards, argparse.Namespace(report=None)),
@@ -7255,6 +7276,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("filesafe_security_policy", cmd_validate_filesafe_security_policy, argparse.Namespace()),
         ("wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
         ("touch_closure", cmd_validate_touch_closure, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("lsp_restart_selected", cmd_validate_lsp_restart_selected, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
         ("audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
     ]
@@ -7305,6 +7327,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         sound_asset_export_contracts=compact_gate_report(check_map["sound_asset_export_contracts"]),
         working_notebook_contracts=compact_gate_report(check_map["working_notebook_contracts"]),
         touch_closure=compact_gate_report(check_map["touch_closure"]),
+        lsp_restart_selected=compact_gate_report(check_map["lsp_restart_selected"]),
         audit_closure=compact_gate_report(check_map["audit_closure"]),
         audit_status_index=compact_gate_report(check_map["audit_status_index"]),
         subcheck_timeout_seconds=timeout_seconds,
@@ -7337,6 +7360,7 @@ COMMANDS = {
     "validate-working-notebook-contracts": cmd_validate_working_notebook_contracts,
     "validate-server-command-gap": cmd_validate_server_command_gap,
     "validate-touch-closure": cmd_validate_touch_closure,
+    "validate-lsp-restart-selected": cmd_validate_lsp_restart_selected,
     "validate-case-l-non-event-materialization": cmd_validate_case_l_non_event_materialization,
     "validate-implementation-readiness": cmd_validate_implementation_readiness,
     "validate-plan-migration": cmd_validate_plan_migration,
@@ -7381,6 +7405,7 @@ def main() -> int:
         "validate-working-notebook-contracts",
         "validate-server-command-gap",
         "validate-touch-closure",
+        "validate-lsp-restart-selected",
         "validate-case-l-non-event-materialization",
         "validate-implementation-readiness",
         "validate-plan-migration",

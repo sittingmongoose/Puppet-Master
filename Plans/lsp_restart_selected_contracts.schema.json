@@ -1,0 +1,1041 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/lsp-restart-selected/1.0.0/lsp_restart_selected_contracts.schema.json",
+  "title": "Typed restart companion for exactly cmd.lsp.restart_server; static only, no native proof",
+  "description": "LSPS-113 machine companion. Binds the immutable original selected server identity and the current LSP session generation, environment connection epoch, and topology generation through the current permission snapshot and owner request; preserves pre-write cancellation versus post-commit pending reconciliation; carries the owner-qualified terminal/deferred result, error, and redacted receipt. Each case also carries an owner_witness channel (complete original SIR dispatch with canonical payload digest, dispatch frame, independent SIR target generation, and full source IdentityEnvelope; live current; outcome refs; full SIR CommandOutcomeRecord) and the full central v2 response so joins compare the claim against an independent channel instead of against itself. SIR target generation is an independent domain, never equated with LSP session generation, connection epoch, topology generation, or operation generation. Static shape only: authenticates no issuer, grants no permission, proves no restart, and admits no handler, event, family, or retention.",
+  "x-owner-ref": "Plans/LSPSupport.md#LSPS-113",
+  "x-command-id": "cmd.lsp.restart_server",
+  "$defs": {
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "idempotency_key",
+        "project_id",
+        "project_home_server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "topology_generation",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "server_ref",
+        "reason",
+        "recovery_of_operation_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.lsp.restart_selected.request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "const": "cmd.lsp.restart_server"
+        },
+        "command_instance_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "idempotency_key": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "project_home_server_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "execution_host_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "execution_environment_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "source_location_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "actor_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "server_ref": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "server_id",
+            "root_identity",
+            "expected_session_generation",
+            "expected_connection_epoch"
+          ],
+          "properties": {
+            "server_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "root_identity": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "expected_session_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "expected_connection_epoch": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "reason": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "recovery_of_operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_empty_string"
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "operation_id",
+        "command_instance_id",
+        "command_outcome_ref",
+        "original",
+        "phase",
+        "terminal",
+        "observable_work",
+        "restart",
+        "per_server",
+        "diagnostic_status",
+        "changed_paths",
+        "current_topology_generation",
+        "current_connection_epoch",
+        "current_session_generation",
+        "receipt_ref",
+        "error_ref",
+        "replayed",
+        "original_operation_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.lsp.restart_selected.result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "const": "cmd.lsp.restart_server"
+        },
+        "operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "command_instance_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "command_outcome_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "original": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "server_id",
+            "root_identity",
+            "topology_generation",
+            "session_generation",
+            "connection_epoch"
+          ],
+          "properties": {
+            "server_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "root_identity": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "topology_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "session_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "connection_epoch": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "phase": {
+          "enum": [
+            "cancelled_before_write",
+            "committed_reconciliation_pending",
+            "terminal"
+          ]
+        },
+        "terminal": {
+          "type": "boolean"
+        },
+        "observable_work": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "observable_work_id",
+            "phase"
+          ],
+          "properties": {
+            "observable_work_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "phase": {
+              "enum": [
+                "starting",
+                "cancelled",
+                "completed",
+                "failed",
+                "recovery_required"
+              ]
+            }
+          }
+        },
+        "restart": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "prior_session_generation",
+            "current_session_generation",
+            "prior_connection_epoch",
+            "current_connection_epoch",
+            "responses_invalidated",
+            "reconciliation_preserved",
+            "preserved_reconciliation_refs",
+            "reissued_reconciliation_refs",
+            "resynchronized_uri_refs"
+          ],
+          "properties": {
+            "prior_session_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "current_session_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "prior_connection_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "current_connection_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "responses_invalidated": {
+              "type": "boolean"
+            },
+            "reconciliation_preserved": {
+              "type": "boolean"
+            },
+            "preserved_reconciliation_refs": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/ref_list"
+            },
+            "reissued_reconciliation_refs": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/ref_list"
+            },
+            "resynchronized_uri_refs": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/ref_list"
+            }
+          }
+        },
+        "per_server": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "server_id",
+              "observed_generation",
+              "diagnostic_state",
+              "fresh_empty"
+            ],
+            "properties": {
+              "server_id": {
+                "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+              },
+              "observed_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "diagnostic_state": {
+                "enum": [
+                  "fresh",
+                  "pending",
+                  "unavailable",
+                  "cancelled",
+                  "timed_out",
+                  "stale_discarded",
+                  "unversioned_unverified",
+                  "not_applicable"
+                ]
+              },
+              "fresh_empty": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "diagnostic_status": {
+          "enum": [
+            "fresh_complete",
+            "fresh_partial_pending",
+            "fresh_unavailable",
+            "not_applicable"
+          ]
+        },
+        "changed_paths": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/ref_list"
+        },
+        "current_topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "current_connection_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "current_session_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "error_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_secret_ref"
+        },
+        "replayed": {
+          "type": "boolean"
+        },
+        "original_operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_empty_string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "cancelled_before_write"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "terminal": {
+                "const": true
+              },
+              "changed_paths": {
+                "maxItems": 0
+              },
+              "observable_work": {
+                "properties": {
+                  "phase": {
+                    "const": "cancelled"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "committed_reconciliation_pending"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "terminal": {
+                "const": false
+              },
+              "observable_work": {
+                "properties": {
+                  "phase": {
+                    "const": "starting"
+                  }
+                }
+              },
+              "restart": {
+                "properties": {
+                  "reconciliation_preserved": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "terminal"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "terminal": {
+                "const": true
+              },
+              "observable_work": {
+                "properties": {
+                  "phase": {
+                    "enum": [
+                      "completed",
+                      "failed",
+                      "cancelled",
+                      "recovery_required"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "replayed": {
+                "const": true
+              }
+            },
+            "required": [
+              "replayed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "original_operation_id": {
+                "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "command_error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "code",
+        "safe_user_message",
+        "detail_ref",
+        "expected_generation",
+        "observed_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.lsp.restart_selected.error.v1"
+        },
+        "code": {
+          "enum": [
+            "server_missing",
+            "server_disabled",
+            "stale_session_generation",
+            "stale_topology_generation",
+            "stale_connection_epoch",
+            "foreign_original",
+            "mutated_original",
+            "permission_denied",
+            "policy_denied",
+            "reconciliation_lost",
+            "reconciliation_unavailable",
+            "restart_failed",
+            "handler_unavailable"
+          ]
+        },
+        "safe_user_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "detail_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_secret_ref"
+        },
+        "expected_generation": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "observed_generation": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    },
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "operation_id",
+        "attempt_id",
+        "observable_work_id",
+        "transaction_id",
+        "project_id",
+        "project_home_server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "topology_generation",
+        "capability_snapshot_ref",
+        "root_identity",
+        "environment_connection_epoch",
+        "uri_refs",
+        "pre_file_revision",
+        "result_file_revision",
+        "pre_document_version",
+        "result_document_version",
+        "servers",
+        "governor_admission_ref",
+        "lease_ref",
+        "sync_outcome",
+        "notification_outcome",
+        "formatter_provenance_ref",
+        "code_action_provenance_ref",
+        "filesafe_receipt_ref",
+        "filesafe_evidence_ref",
+        "diagnostic_status",
+        "diagnostic_summary_ref",
+        "cancellation_state",
+        "prior_receipt_ref",
+        "started_utc",
+        "completed_utc",
+        "failure_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.lsp.restart_selected.receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "observable_work_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "transaction_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "project_home_server_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "execution_host_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "execution_environment_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "source_location_id": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "capability_snapshot_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+        },
+        "root_identity": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+        },
+        "environment_connection_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "uri_refs": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/ref_list"
+        },
+        "pre_file_revision": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "result_file_revision": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "pre_document_version": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "result_document_version": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "servers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "server_id",
+              "prior_session_generation",
+              "current_session_generation"
+            ],
+            "properties": {
+              "server_id": {
+                "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+              },
+              "prior_session_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "current_session_generation": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "governor_admission_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_secret_ref"
+        },
+        "lease_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_secret_ref"
+        },
+        "sync_outcome": {
+          "enum": [
+            "resynchronized",
+            "not_required",
+            "failed",
+            "pending"
+          ]
+        },
+        "notification_outcome": {
+          "enum": [
+            "reconciled",
+            "pending",
+            "unavailable",
+            "not_required"
+          ]
+        },
+        "formatter_provenance_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_secret_ref"
+        },
+        "code_action_provenance_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_secret_ref"
+        },
+        "filesafe_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_secret_ref"
+        },
+        "filesafe_evidence_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_secret_ref"
+        },
+        "diagnostic_status": {
+          "enum": [
+            "fresh_complete",
+            "fresh_partial_pending",
+            "fresh_unavailable",
+            "not_applicable"
+          ]
+        },
+        "diagnostic_summary_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_secret_ref"
+        },
+        "cancellation_state": {
+          "enum": [
+            "cancelled_before_write",
+            "committed_reconciliation_pending",
+            null
+          ]
+        },
+        "prior_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_secret_ref"
+        },
+        "started_utc": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/timestamp"
+        },
+        "completed_utc": {
+          "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_timestamp"
+        },
+        "failure_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/command_error"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "available",
+        "disabled_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.lsp.restart_selected.availability.v1"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "disabled_reason": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/disabled_reason"
+                },
+                {
+                  "enum": [
+                    "target_missing",
+                    "stale_projection",
+                    "session_state_mismatch",
+                    "operation_in_progress",
+                    "permission_required",
+                    "policy_denied",
+                    "resource_blocked",
+                    "topology_unavailable",
+                    "host_environment_mismatch"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "then": {
+            "properties": {
+              "disabled_reason": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": false
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "then": {
+            "properties": {
+              "disabled_reason": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "owner_witness": {
+      "x-fixture-only": true,
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_dispatch",
+        "live_current",
+        "outcome",
+        "outcome_record"
+      ],
+      "properties": {
+        "original_dispatch": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "command_id",
+            "command_instance_id",
+            "idempotency_key",
+            "operation_id",
+            "dispatch_id",
+            "dispatch_frame_id",
+            "payload_sha256",
+            "target_generation",
+            "identity",
+            "original_request",
+            "request_ref",
+            "server_id",
+            "root_identity",
+            "topology_generation",
+            "session_generation",
+            "connection_epoch",
+            "project_id",
+            "project_home_server_id",
+            "execution_host_id",
+            "execution_environment_id",
+            "source_location_id",
+            "actor_ref",
+            "permission_snapshot_ref"
+          ],
+          "properties": {
+            "command_id": {
+              "const": "cmd.lsp.restart_server"
+            },
+            "command_instance_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "idempotency_key": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "operation_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "dispatch_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "dispatch_frame_id": {
+              "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"
+            },
+            "payload_sha256": {
+              "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Sha256"
+            },
+            "target_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "identity": {
+              "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+            },
+            "original_request": {
+              "$ref": "#/$defs/request"
+            },
+            "request_ref": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            "server_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "root_identity": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "topology_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "session_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "connection_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "project_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "project_home_server_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "execution_host_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "execution_environment_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_empty_string"
+            },
+            "source_location_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_empty_string"
+            },
+            "actor_ref": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            "permission_snapshot_ref": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+            }
+          }
+        },
+        "live_current": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "topology_generation",
+            "connection_epoch",
+            "session_generation"
+          ],
+          "properties": {
+            "topology_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "connection_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "session_generation": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "outcome": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "command_outcome_ref",
+            "owner_result_ref",
+            "receipt_ref"
+          ],
+          "properties": {
+            "command_outcome_ref": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            "owner_result_ref": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+            },
+            "receipt_ref": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+            }
+          }
+        },
+        "outcome_record": {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"
+        }
+      }
+    },
+    "response_case": {
+      "x-fixture-only": true,
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "current",
+        "result",
+        "error",
+        "receipt",
+        "availability",
+        "owner_witness",
+        "central"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/request"
+        },
+        "current": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "topology_generation",
+            "connection_epoch",
+            "session_generation",
+            "original_operation_id",
+            "original_receipt_ref"
+          ],
+          "properties": {
+            "topology_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "connection_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "session_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_operation_id": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_empty_string"
+            },
+            "original_receipt_ref": {
+              "$ref": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/nullable_non_secret_ref"
+            }
+          }
+        },
+        "result": {
+          "$ref": "#/$defs/result"
+        },
+        "error": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/command_error"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receipt": {
+          "$ref": "#/$defs/receipt"
+        },
+        "availability": {
+          "$ref": "#/$defs/availability"
+        },
+        "owner_witness": {
+          "$ref": "#/$defs/owner_witness"
+        },
+        "central": {
+          "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json#"
+        }
+      }
+    }
+  }
+}

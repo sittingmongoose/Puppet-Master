@@ -37620,22 +37620,25 @@
       "ui_location": "Lsp surface > Restart Server",
       "ui_command_id": "cmd.lsp.restart_server",
       "handler_location": "handlers::lsp::restart_server",
+      "request_schema_ref": "Plans/lsp_restart_selected_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/lsp_restart_selected_contracts.schema.json#/$defs/result",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.lsp.restart_server must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.lsp.restart_server must expose projected state selector and disabled reason before dispatch",
-        "cmd.lsp.restart_server dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.lsp.restart_server must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.lsp.restart_server must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "Dispatching cmd.lsp.restart_server reaches only handlers::lsp::restart_server with LspRestartSelectedRequest and returns LspRestartSelectedResult; cmd.lsp.server.restart is rejected and never dispatched.",
+        "cmd.lsp.restart_server is available only when the exact selected server, root identity, session generation, connection epoch, and topology generation resolve current; disabled reasons are exactly target_missing, stale_projection, session_state_mismatch, operation_in_progress, permission_required, policy_denied, resource_blocked, topology_unavailable, host_environment_mismatch.",
+        "cmd.lsp.restart_server reads state.commands.lsp_restart_server.availability and state.commands.lsp_restart_server.disabled_reason before dispatch and preserves command_instance_id, idempotency_key, exact server/root identity, expected session generation and connection epoch, actor, and permission snapshot.",
+        "cmd.lsp.restart_server cancels pre-write work with zero mutation and leaves post-commit notification/diagnostic reconciliation pending or explicitly unavailable; restart invalidates prior-generation responses, increments session generation or connection epoch, resynchronizes committed documents, and emits the typed redacted receipt for every terminal or deferred outcome.",
+        "Central accepted ack never equals domain success: succeeded requires the genuine completed owner result, receipt, and CommandOutcome refs; cancelled keeps the common UI error null; failed and recovery_required retain the owner error."
       ],
-      "evidence_required": "Production wiring contract for cmd.lsp.restart_server; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production wiring evidence for cmd.lsp.restart_server: render/control proof, exact-handler dispatcher fixture, LspRestartSelectedRequest -> LspRestartSelectedResult assertion, selector and closed disabled-reason fixtures, typed redacted receipt assertion with generation/invalidation/reconciliation checks, restart/idempotency/race proof, accessibility regression, and proof of zero unregistered EventRecord effects.",
       "state_selector": "state.commands.lsp_restart_server.availability",
       "disabled_reason_projection": "state.commands.lsp_restart_server.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.lsp.restart_server has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "cmd.lsp.restart_server returns LspRestartSelectedResult with LspRestartSelectedResult.receipt_ref and records no persisted domain event; every terminal or deferred outcome emits the typed redacted receipt.",
         "receipt_or_event_refs": [
-          "cmd.lsp.restart_server.dispatch_receipt"
+          "LspRestartSelectedResult.receipt_ref",
+          "LspRestartSelectedResult.command_outcome_ref"
         ]
       },
       "accessibility_contract": {
@@ -37648,17 +37651,17 @@
         {
           "test_id": "wiring.catalog.lsp_restart_server.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.lsp.restart_server reaches handlers::lsp::restart_server with typed args/result contract."
+          "requirement": "Dispatching cmd.lsp.restart_server reaches only handlers::lsp::restart_server; schema fixtures validate LspRestartSelectedRequest -> LspRestartSelectedResult and reject cmd.lsp.server.restart."
         },
         {
           "test_id": "wiring.catalog.lsp_restart_server.state_projection",
           "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.lsp_restart_server.availability and disabled copy reads state.commands.lsp_restart_server.disabled_reason."
+          "requirement": "Availability reads state.commands.lsp_restart_server.availability; disabled copy reads state.commands.lsp_restart_server.disabled_reason; closed disabled reasons are target_missing, stale_projection, session_state_mismatch, operation_in_progress, permission_required, policy_denied, resource_blocked, topology_unavailable, host_environment_mismatch."
         },
         {
           "test_id": "wiring.catalog.lsp_restart_server.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.lsp.restart_server has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.lsp.restart_server returns typed receipt and CommandOutcome refs with no persisted domain event; pre-write cancellation keeps zero mutation and post-commit reconciliation stays pending or explicitly unavailable."
         },
         {
           "test_id": "wiring.catalog.lsp_restart_server.accessibility",
@@ -37667,7 +37670,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.lsp.restart_server records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.lsp.restart_server returns typed receipt/CommandOutcome references and emits no unexpected persisted domain event."
       ]
     },
     "catalog.mcp_server_connect": {

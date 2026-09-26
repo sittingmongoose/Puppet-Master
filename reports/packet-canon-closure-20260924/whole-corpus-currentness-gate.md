@@ -392,3 +392,27 @@ are under `case-reconciliation/touch-server104-native-01/`. The 26 commands
 remain unavailable natively; receipt-only routes do not require new event
 admission merely because future event names exist. These remain review counts,
 not completed-feature percentages or main-landing proof.
+
+## Remote full-impact batch — 2,000 reviewed
+
+Root verified the immutable checkpoint
+`checkpoints/full-impact-reviewed-17be5a957b74608465376c099e88b726cea9747c008afa2b0669948352c0d248.jsonl`
+(SHA-256 `17be5a957b74608465376c099e88b726cea9747c008afa2b0669948352c0d248`).
+It adds 554 distinct Remote facets, preserves all previous 1,446 records
+object-identically, and has no duplicate identities: 2,000 of 11,395 reviewed,
+9,395 pending. The separate flagged matrix remains 1,534 of 2,021 reviewed.
+
+The 554 additions comprise 507 bounded-static and 47 protected-successor
+classifications. Independent review and complete class-coverage addendum under
+the external campaign's `case-reconciliation/` are pinned by SHA-256
+`02761f7f979c859d524ee7def09073fa89d50517b4bc5f2ca89d8fa35bfc9368`
+and `a356fb4d2d02deb59f1b90b198324ca63c1d53e6700b7bfa0b0b04db890b4376`.
+The exact 85-row correction review is
+`240eab10ed55c2545ca6c014f20af10b73f2f99c323f3bc86b79fc5e60c9fc70`:
+44 event-silent facets no longer invent new Event Authority admission, and
+41 unaffected handler facets no longer claim protected supersession. Three
+actual successor targets remain protected. Runtime, WAN/security, actual
+receipts, conditional event admission and GUI proof remain implementation work.
+The subsequent LSP-only Wiring/Touch patch does not change Remote entries;
+future owner/main changes still require impact review. No whole-packet or
+landing completion is inferred from these counts.

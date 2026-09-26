@@ -5468,9 +5468,9 @@
       "owner_plan": "Plans/LSPSupport.md",
       "plan_unit": "LSPS-113",
       "dry_contract_ref": "Plans/LSPSupport.md#LSPS-113",
-      "payload_schema_ref": "typed server identity and current LSP session generation",
-      "result_schema_ref": "typed redacted restart and reconciliation receipt",
-      "error_schema_ref": "missing server, stale generation, cancellation, permission, or reconciliation failure",
+      "payload_schema_ref": "Plans/lsp_restart_selected_contracts.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/lsp_restart_selected_contracts.schema.json#/$defs/result",
+      "error_schema_ref": "Plans/lsp_restart_selected_contracts.schema.json#/$defs/command_error",
       "availability_rule": "Exact server/session identity and current generation are required.",
       "permission_gate": "LSP owner and Shared Integration Runtime retain process, environment, and reconciliation authority.",
       "disabled_reason_rule": "Expose missing/stale server, operation, permission, or reconciliation blocker.",
@@ -5489,7 +5489,7 @@
       ],
       "event_refs": [],
       "receipt_refs": [
-        "typed redacted LSP restart receipt"
+        "Plans/lsp_restart_selected_contracts.schema.json#/$defs/receipt"
       ],
       "observable_work": [
         "Post-commit reconciliation remains observable until truthful terminal state."
@@ -5502,7 +5502,9 @@
       ],
       "test_refs": [
         "Plans/LSPSupport.md#LSPS-113 acceptance criteria",
-        "scripts/pm-touch-closure-verify.py"
+        "scripts/pm-touch-closure-verify.py",
+        "Plans/lsp_restart_selected_contract_fixtures.json",
+        "tests/test_pm_lsp_restart_selected.py"
       ],
       "evidence_refs": [
         "static_contract_and_wiring_only"
