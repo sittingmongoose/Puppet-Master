@@ -156,6 +156,9 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .thread-row.active { background:color-mix(in srgb,var(--accent) 12%,var(--surface-3));color:var(--text); }
 
 .thread-copy { min-width:0;padding-right:2px; }
+.thread-row:hover .thread-copy,
+.thread-row:has(.thread-more:focus) .thread-copy,
+.thread-row:has(.thread-more:focus-visible) .thread-copy { padding-right:30px; }
 .thread-title { display:flex;align-items:center;gap:5px;font-weight:620;font-size:13px;white-space:nowrap; min-width:0; }
 .thread-time { flex:0 0 auto; white-space:nowrap; font-variant-numeric:tabular-nums; color:var(--subtle); font-weight:500; font-size:12px; }
 .thread-name { min-width:0; overflow:hidden; text-overflow:ellipsis; }
@@ -163,9 +166,8 @@ body[data-theme^="glass"]::before { content:"";position:fixed;inset:-25%;z-index
 .thread-sub .summary { overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
 .thread-lead { position:relative;width:28px;min-height:28px;display:grid;place-items:center;align-self:start;flex-shrink:0; }
 .thread-status-slot { width:18px;height:18px;display:grid;place-items:center;transition:opacity 130ms,transform var(--spring-soft); }
-.thread-more { position:absolute;inset:0;width:28px;height:28px;margin:0;padding:0;opacity:0;transform:scale(.82);pointer-events:none;transition:opacity 130ms,transform var(--spring-soft); }
-.thread-row:hover .thread-more,.thread-row:focus-within .thread-more { opacity:1;transform:scale(1);pointer-events:auto; }
-.thread-row:hover .thread-status-slot,.thread-row:focus-within .thread-status-slot { opacity:0;transform:scale(.6);pointer-events:none; }
+.thread-more { position:absolute;top:50%;right:4px;width:28px;height:28px;margin:0;padding:0;opacity:0;transform:translateY(-50%) scale(.82);pointer-events:none;transition:opacity 130ms,transform var(--spring-soft); }
+.thread-row:hover .thread-more,.thread-more:focus,.thread-more:focus-visible { opacity:1;transform:translateY(-50%) scale(1);pointer-events:auto; }
 .status-dot { width:7px;height:7px;border-radius:50%;background:var(--subtle); }
 .status-dot.working,.status-dot.reviewing { background:var(--warning);animation:status-pulse 1.5s ease-in-out infinite; }
 .status-dot.complete,.status-dot.idle { background:var(--positive); }.status-dot.blocked,.status-dot.failed { background:var(--danger); }.status-dot.waiting,.status-dot.paused { background:var(--accent-2); }
