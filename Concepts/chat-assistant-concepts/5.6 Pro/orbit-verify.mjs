@@ -694,9 +694,14 @@ await safe('Multi-orbit turn: A runs, compacts under B; strips reopen in two bea
   }));
   check('turn playback: one live card, the later turn is hidden', t1.cards === 1 && !t1.interim, t1);
   await p9.click('.transcript-inner .working-card [data-action="complete-working"]');
-  /* A no longer compacts at completion — B spawns at +1400ms and A's collapse
-     choreography (430+240ms) lands after that. */
-  await p9.waitForTimeout(2600);
+  /* A no longer compacts at completion. Chat WOW: the interim reply now STREAMS
+     in when A completes and holds B until it has finished (turn-stream.js), then
+     B spawns at +1400ms and A's collapse choreography (430+240ms) lands after
+     that -- so wait for that end state rather than a fixed delay. */
+  await p9.waitForFunction(() => {
+    const c = [...document.querySelectorAll('.transcript-inner .working-card')];
+    return c.length === 2 && !!c[1].querySelector('.orbit-stage.is-open') && c[0].querySelectorAll('.orbit-strip-item').length === 3;
+  }, null, { timeout: 12000 }).catch(() => {});
   const t2 = await p9.evaluate(() => {
     const cards = [...document.querySelectorAll('.transcript-inner .working-card')];
     return { n: cards.length,
@@ -707,7 +712,9 @@ await safe('Multi-orbit turn: A runs, compacts under B; strips reopen in two bea
   check('A done: the interim text reveals, B spawns live, A compacts to its subject strip',
     t2.n === 2 && t2.interim && t2.aStrip === 3 && t2.bLive, t2);
   await p9.locator('.transcript-inner .working-card').nth(1).locator('[data-action="complete-working"]').click();
-  await p9.waitForTimeout(1900);
+  /* the summary streams in; wait until it has been written out */
+  await p9.waitForFunction(() => document.querySelector('.transcript-inner').textContent.includes('Either work summary reopens its orbit on any subject.') && !document.querySelector('.transcript-inner [data-streaming]'), null, { timeout: 12000 }).catch(() => {});
+  await p9.waitForTimeout(900);
   const t3 = await p9.evaluate(() => {
     const cards = [...document.querySelectorAll('.transcript-inner .working-card')];
     const bSt = cards[1] && cards[1].querySelector('.orbit-stage');
@@ -880,7 +887,8 @@ await safe('Shell rows open an inline terminal box; Step Rail chevron stays on t
   });
   await p11.waitForTimeout(400);
   await p11.click('.transcript-inner .working-card [data-action="complete-working"]');
-  await p11.waitForTimeout(1600);
+  await p11.waitForFunction(() => document.querySelectorAll('.transcript-inner .working-card').length >= 2, null, { timeout: 12000 }).catch(() => {});
+  await p11.waitForTimeout(300);
   const second = p11.locator('.transcript-inner .working-card').nth(1).locator('[data-action="complete-working"]');
   if (await second.count()) await second.click();
   await p11.waitForTimeout(500);
@@ -1055,7 +1063,9 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
   });
   await p12.waitForTimeout(500);
   await p12.click('.transcript-inner .working-card [data-action="complete-working"]');
-  await p12.waitForTimeout(1600);
+  /* B spawns once the interim reply has streamed in (Chat WOW) */
+  await p12.waitForFunction(() => document.querySelectorAll('.transcript-inner .working-card').length >= 2, null, { timeout: 12000 }).catch(() => {});
+  await p12.waitForTimeout(300);
   const second = p12.locator('.transcript-inner .working-card').nth(1).locator('[data-action="complete-working"]');
   if (await second.count()) await second.click();
   await p12.waitForTimeout(500);

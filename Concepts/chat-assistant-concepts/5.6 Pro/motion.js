@@ -119,6 +119,18 @@
 
   window.PM56_MOTION = { words, wordCount, roll, flip, flipHeight, reduced, esc };
 
+  /* Chat WOW: one clock for JS-driven motion, with a time scale so a film tool can
+     slow the JS side by exactly the factor it slows CSS and Web Animations with
+     (CDP Animation.setPlaybackRate). Everything the live-turn modules time --
+     word release, height springs, the send flight, the work tick -- reads it. */
+  const clock = {
+    scale: 1, _v: performance.now(), _r: performance.now(),
+    now() { const r = performance.now(); this._v += (r - this._r) * this.scale; this._r = r; return this._v; },
+    setScale(k) { this.now(); this.scale = Math.max(0, Number(k) || 0); },
+    ms(realMs) { return this.scale > 0 ? realMs / this.scale : realMs; }   /* a real-time delay for a motion-time one */
+  };
+  window.PM56_CLOCK = clock;
+
   /* Registry for working-animation takes that live outside app.js.
      A take is `(ctx) => htmlString`; see makeWorkCtx() in app.js for the
      shape of ctx. Registering index N makes it option N in the mixer. */

@@ -79,8 +79,12 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:fo
 svg { display:block; }
 ::selection { background:color-mix(in srgb,var(--accent) 32%,transparent); }
 
-body[data-theme="basic-dark"] { color-scheme:dark; --canvas:#080a11;--surface:#0e111a;--surface-2:#131725;--surface-3:#1a2030;--surface-4:#222a3b;--text:#f3f5fb;--muted:#8e97aa;--subtle:#626b7d;--border:#252b39;--border-strong:#353d50;--accent:#8b72ff;--accent-2:#5cc8ff;--positive:#5cd69b;--warning:#f5bd55;--danger:#ff6c7d;--glass:rgba(18,22,34,.92);--code:#090d16;--user:#22203a;--assistant:#111621; }
-body[data-theme="basic-light"] { color-scheme:light; --canvas:#edf0f6;--surface:#ffffff;--surface-2:#f5f7fb;--surface-3:#e9edf5;--surface-4:#dfe4ee;--text:#111827;--muted:#667085;--subtle:#8d96a8;--border:#dce1eb;--border-strong:#c8cfdd;--accent:#6552df;--accent-2:#187da8;--positive:#16845a;--warning:#a96400;--danger:#c73b52;--glass:rgba(255,255,255,.94);--code:#f3f5f8;--user:#ece9ff;--assistant:#fff; }
+/* Chat WOW accent rule (2026-09-26): Basic neutrals were navy (hue ~225), so with a violet
+   accent and a violet user bubble the whole transcript read as one blue-purple wash. The
+   neutrals are now graphite; the accent stays violet and is spent only on live work and
+   on items that need the reader. */
+body[data-theme="basic-dark"] { color-scheme:dark; --canvas:#09090b;--surface:#101012;--surface-2:#151518;--surface-3:#1c1c20;--surface-4:#242429;--text:#f3f3f5;--muted:#96969f;--subtle:#686871;--border:#25252a;--border-strong:#35353c;--accent:#8b72ff;--accent-2:#5cc8ff;--positive:#5cd69b;--warning:#f5bd55;--danger:#ff6c7d;--glass:rgba(20,20,23,.92);--code:#0b0b0d;--user:#232327;--assistant:#131316; }
+body[data-theme="basic-light"] { color-scheme:light; --canvas:#f1f1f3;--surface:#ffffff;--surface-2:#f7f7f8;--surface-3:#ececef;--surface-4:#e2e2e6;--text:#16161a;--muted:#6b6b74;--subtle:#95959d;--border:#e1e1e5;--border-strong:#cdcdd3;--accent:#6552df;--accent-2:#187da8;--positive:#16845a;--warning:#a96400;--danger:#c73b52;--glass:rgba(255,255,255,.94);--code:#f4f4f6;--user:#efeff2;--assistant:#fff; }
 body[data-theme="friendly-dark"] { color-scheme:dark; --on-accent:#3d1020;--canvas:#111018;--surface:#191824;--surface-2:#211f2e;--surface-3:#2a2738;--surface-4:#343043;--text:#fff8f4;--muted:#b5aebd;--subtle:#827a8d;--border:#373243;--border-strong:#4b4458;--accent:#ff8eb0;--accent-2:#8fdbcf;--positive:#86d8a7;--warning:#ffd078;--danger:#ff7e87;--glass:rgba(29,27,40,.92);--code:#12111a;--user:#38243a;--assistant:#1d1c29; }
 body[data-theme="friendly-light"] { color-scheme:light; --canvas:#f8f2ef;--surface:#fffaf7;--surface-2:#f7ece8;--surface-3:#efdfda;--surface-4:#e5d2cc;--text:#382e35;--muted:#756772;--subtle:#a3929d;--border:#eadbd6;--border-strong:#d8c3bc;--accent:#cf5f85;--accent-2:#268f83;--positive:#2f8d63;--warning:#9b6815;--danger:#c94f5c;--glass:rgba(255,250,247,.94);--code:#f4e9e6;--user:#f8dde7;--assistant:#fffaf7; }
 body[data-theme="glass-dark"] { color-scheme:dark; --on-accent:#1b1030;--canvas:#130d2b;--surface:rgba(22,16,47,.72);--surface-2:rgba(34,25,65,.72);--surface-3:rgba(54,40,88,.68);--surface-4:rgba(71,53,107,.72);--text:#faf7ff;--muted:#b0a8c9;--subtle:#7c7298;--border:rgba(181,159,255,.16);--border-strong:rgba(196,179,255,.28);--accent:#b287ff;--accent-2:#75d7ef;--positive:#7be0af;--warning:#ffd074;--danger:#ff8198;--glass:rgba(24,17,52,.82);--code:rgba(8,6,22,.72);--user:rgba(104,67,160,.35);--assistant:rgba(25,20,50,.72); }
@@ -12760,6 +12764,399 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
  * chrome classes; no new visual identity. */
 .b19-guide .b18-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 
+/* turn-stage.css -- Chat WOW (2026-09-26). OWNER: turn-stage.js.
+ *
+ * 1. Role tokens for all eight themes: the accent budget. Surfaces stay neutral,
+ *    the user bubble is a raised neutral, the accent is spent only on live work
+ *    and on items that need the reader, and three quiet family hues mark what a
+ *    card IS (deliverable / people / time) on its eyebrow tile and spine tick.
+ * 2. Item families, keyed on the data-family stamp app.js writes on every
+ *    transcript item. Each family has its own silhouette, so a plan, a crew run,
+ *    a scheduled message and a receipt no longer read as the same card. These
+ *    rules are :where()-light so any lab take's own rules still win.
+ * 3. The Stage take (transcript data-variant 16, the default): turn anatomy --
+ *    a presence mark opens each assistant turn, a hairline spine runs through
+ *    the turn's items and ends in a dot, items hang off it with a family tick,
+ *    ledger receipts sit ON the spine, and turns are separated by rhythm, not
+ *    by boxes.
+ */
+
+/* ---------------------------------------------------------------- 1 tokens */
+body[data-theme] {
+  --tx-gutter: 26px;
+  --tx-gap: 14px;
+  --tx-turn-gap: 34px;
+  --tx-spine: color-mix(in srgb, var(--text) 12%, transparent);
+  --tx-spine-strong: color-mix(in srgb, var(--text) 32%, transparent);
+  --tx-mark: color-mix(in srgb, var(--text) 62%, transparent);
+  --tx-user-bg: color-mix(in srgb, var(--text) 8%, var(--surface));
+  --tx-user-edge: color-mix(in srgb, var(--text) 9%, transparent);
+  --tx-sheet: color-mix(in srgb, var(--text) 5%, var(--surface-2));
+  --tx-sheet-edge: color-mix(in srgb, var(--text) 10%, transparent);
+  --tx-sunken: color-mix(in srgb, #000 24%, var(--surface));
+  --tx-sunken-edge: color-mix(in srgb, var(--text) 8%, transparent);
+  --tx-live: var(--accent);
+  --tx-needs: var(--accent);
+  --tx-shadow: 0 1px 0 color-mix(in srgb, #fff 5%, transparent) inset, 0 16px 34px -22px rgb(0 0 0 / .8);
+  --fam-deliverable: #4cc6b2;
+  --fam-people: #f3957c;
+  --fam-time: #e9b353;
+}
+body[data-theme$="-light"] {
+  --tx-sunken: color-mix(in srgb, var(--text) 4%, var(--surface-2));
+  --tx-mark: color-mix(in srgb, var(--text) 55%, transparent);
+  --tx-shadow: 0 1px 2px rgb(20 20 30 / .05), 0 14px 30px -20px rgb(20 20 40 / .32);
+  --fam-deliverable: #11806f;
+  --fam-people: #c0553a;
+  --fam-time: #a26a0c;
+}
+body[data-theme="friendly-dark"] { --fam-deliverable: #7fd6c4; --fam-people: #ffab8f; --fam-time: #ffd07a; }
+body[data-theme^="glass"] { --tx-sheet: color-mix(in srgb, #fff 6%, var(--surface-2)); --tx-user-bg: color-mix(in srgb, #fff 10%, var(--surface)); }
+body[data-theme="glass-dark"] { --tx-sunken: color-mix(in srgb, #000 30%, var(--surface)); --fam-deliverable: #7fe0d0; --fam-people: #ffb3a6; --fam-time: #ffd98a; }
+body[data-theme="glass-light"] { --tx-sheet: color-mix(in srgb, #fff 55%, var(--surface-2)); --tx-user-bg: color-mix(in srgb, #fff 40%, var(--surface-3)); }
+body[data-theme^="retro"] { --tx-shadow: none; --tx-mark: var(--accent); }
+body[data-theme="retro-dark"] { --fam-deliverable: #59d6ff; --fam-people: #ffb454; --fam-time: #f2d35e; }
+body[data-theme="retro-light"] { --fam-deliverable: #166d83; --fam-people: #9a4b12; --fam-time: #86600d; }
+
+/* ------------------------------------------------------- 3 the Stage take */
+.transcript[data-variant="16"] .transcript-inner { gap: var(--tx-gap); max-width: 940px; }
+/* assistant-side items hang in the gutter; the user side does not */
+.transcript[data-variant="16"] .transcript-inner > [data-turn-pos]:not([data-turn-pos="user"]) {
+  position: relative; margin-left: var(--tx-gutter); width: auto; max-width: calc(100% - var(--tx-gutter));
+}
+/* turn rhythm: a user turn opens with air above it */
+.transcript[data-variant="16"] .transcript-inner > [data-turn-pos="user"]:not(:first-child) { margin-top: calc(var(--tx-turn-gap) - var(--tx-gap)); }
+/* prose: the only full-contrast reading text; the mark replaces the role label */
+.transcript[data-variant="16"] .message-assistant .message-role { display: none; }
+.transcript[data-variant="16"] .message-assistant .message-body { font-size: 14px; line-height: 1.66; color: var(--text); }
+.transcript[data-variant="16"] .message-assistant .message-surface { padding: 0; }
+/* the user turn: a raised neutral, no accent tint, no border colour */
+.transcript[data-variant="16"] .message-user .message-surface {
+  width: auto; max-width: min(80%, 700px);
+  background: var(--tx-user-bg); border: 1px solid var(--tx-user-edge);
+  border-radius: 18px 18px 6px 18px; padding: 10px 14px;
+}
+.transcript[data-variant="16"] .message-user .message-body { font-size: 13.5px; line-height: 1.6; }
+/* ledger receipts sit on the spine: the icon rides the line */
+.transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] > .event-icon {
+  position: absolute; left: calc(-1 * var(--tx-gutter) + 1px); top: 4px; z-index: 1;
+  width: 17px; height: 17px; border-radius: 50%;
+  background: var(--surface); box-shadow: 0 0 0 3px var(--surface);
+}
+.transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] { padding-left: 0; }
+
+/* the spine layer (turn-stage.js draws it): marks, hairlines, ticks, end dots,
+   and the comet that runs to whatever is live. It sits behind the items. */
+.transcript { position: relative; isolation: isolate; }
+.tx-spine-layer { position: absolute; left: 0; top: 0; width: 100%; height: 0; pointer-events: none; z-index: -1; }
+.tx-spine-layer .sp-svg { position: absolute; left: 0; top: 0; overflow: visible; }
+.sp-line { fill: none; stroke: var(--tx-spine); stroke-width: 1; }
+.sp-end { fill: var(--tx-spine-strong); }
+.sp-tick { fill: var(--tx-spine-strong); stroke: var(--surface); stroke-width: 3; paint-order: stroke; }
+.sp-tick[data-f="deliverable"] { fill: var(--fam-deliverable); }
+.sp-tick[data-f="needs"] { fill: var(--tx-needs); }
+.sp-tick[data-f="people"] { fill: var(--fam-people); }
+.sp-tick[data-f="time"] { fill: var(--fam-time); }
+.sp-mark .sp-ring { fill: none; stroke: var(--tx-mark); stroke-width: 1.7; }
+.sp-mark .sp-sat { fill: var(--tx-mark); }
+.sp-mark .sp-orbit { transform-box: fill-box; transform-origin: center; }
+.sp-mark .sp-hub { fill: none; stroke: none; }
+.sp-mark[data-state="pending"] .sp-ring { stroke: var(--tx-live); animation: sp-breathe 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.sp-mark[data-state="pending"] .sp-sat { fill: var(--tx-live); }
+.sp-mark[data-state="pending"] .sp-orbit { animation: sp-orbit 1.15s linear infinite; }
+.sp-mark[data-state="live"] .sp-ring { stroke: var(--tx-live); }
+.sp-mark[data-state="live"] .sp-sat { fill: var(--tx-live); filter: drop-shadow(0 0 3px var(--tx-live)); }
+.sp-mark[data-state="live"] .sp-orbit { animation: sp-orbit 3.2s linear infinite; }
+@keyframes sp-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes sp-breathe { 0%, 100% { transform: scale(.92); opacity: .75; } 50% { transform: scale(1.08); opacity: 1; } }
+.sp-comet {
+  fill: none; stroke: var(--tx-live); stroke-width: 2; stroke-linecap: round;
+  stroke-dasharray: 12 100; stroke-dashoffset: 112;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--tx-live) 80%, transparent));
+  animation: sp-comet 1.7s cubic-bezier(.45, 0, .55, 1) infinite;
+}
+@keyframes sp-comet { from { stroke-dashoffset: 112; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } to { stroke-dashoffset: 0; opacity: 0; } }
+body[data-theme$="-light"] .sp-comet { filter: none; }
+/* voices */
+.transcript[data-voice="friendly"] .sp-line { stroke-dasharray: 1 5; stroke-linecap: round; stroke-width: 2; stroke: var(--tx-spine-strong); }
+.transcript[data-voice="friendly"] .sp-comet { stroke-width: 3; stroke-dasharray: 1 7 1 7 1 100; }
+.transcript[data-voice="glass"] .sp-line { stroke-width: 2; stroke: color-mix(in srgb, var(--text) 9%, transparent); }
+.transcript[data-voice="glass"] .sp-comet { stroke-width: 4; stroke-dasharray: 6 100; filter: drop-shadow(0 0 7px var(--tx-live)); }
+.transcript[data-voice="retro"] .sp-line { stroke-dasharray: 2 3; stroke-linecap: square; stroke: var(--tx-spine-strong); }
+.transcript[data-voice="retro"] .sp-comet { stroke-linecap: square; stroke-width: 3; stroke-dasharray: 3 100; animation-timing-function: steps(14, end); filter: none; }
+.transcript[data-voice="retro"] .sp-mark .sp-orbit { animation-timing-function: steps(8, end); }
+.transcript[data-voice="retro"] .sp-mark .sp-ring { stroke-width: 2; }
+@media (prefers-reduced-motion: reduce) { .sp-comet { display: none; } .sp-mark .sp-orbit, .sp-mark .sp-ring { animation: none !important; } }
+
+/* ------------------------------------------------------- 2 item families */
+/* WORK -- a sunken instrument. The accent belongs to it only while it is live. */
+.transcript-inner > .working-card {
+  background: var(--tx-sunken);
+  border: 1px solid var(--tx-sunken-edge);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #000 22%, transparent), inset 0 0 0 1px color-mix(in srgb, #fff 2%, transparent);
+  border-radius: 16px;
+}
+.transcript-inner > .working-card:not(.is-done) {
+  border-color: color-mix(in srgb, var(--tx-live) 30%, var(--tx-sunken-edge));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #000 22%, transparent), 0 0 0 4px color-mix(in srgb, var(--tx-live) 6%, transparent), 0 18px 40px -26px color-mix(in srgb, var(--tx-live) 55%, transparent);
+}
+.transcript-inner > .working-card .working-head { border-bottom-color: var(--tx-sunken-edge); }
+/* accent rule: the model chip in the hover row is information, not decoration */
+.transcript-inner .message-meta .meta-model { background: color-mix(in srgb, var(--text) 6%, transparent); color: color-mix(in srgb, var(--text) 78%, transparent); border-color: transparent; }
+.transcript-inner .message-meta .meta-model svg { color: var(--muted); }
+.transcript-inner > .working-card.is-done .work-phase-icon {
+  background: color-mix(in srgb, var(--text) 7%, transparent); color: var(--muted); box-shadow: none;
+}
+
+/* DELIVERABLE -- a raised sheet: lighter surface, paper shadow, eyebrow tile */
+.transcript-inner > [data-family="deliverable"]:is(.system-card, .work-output, .plan-doc, article) {
+  background: var(--tx-sheet);
+  border: 1px solid var(--tx-sheet-edge);
+  border-radius: 16px;
+  box-shadow: var(--tx-shadow);
+}
+.transcript-inner > [data-family="deliverable"] .system-card-head { border-bottom-color: var(--tx-sheet-edge); padding: 11px 14px; }
+.transcript-inner > [data-family="deliverable"] .system-card-head .title { font-size: 14px; letter-spacing: -.005em; }
+.transcript-inner > [data-family="deliverable"] :is(.system-card-head > .event-icon, .work-output-icon) {
+  background: color-mix(in srgb, var(--fam-deliverable) 15%, transparent); color: var(--fam-deliverable); border-radius: 9px;
+}
+.transcript-inner > [data-family="deliverable"] .plan-preview-kicker svg { color: var(--fam-deliverable); }
+.transcript-inner > [data-family="deliverable"] .system-card-body { padding: 12px 14px 14px; }
+.transcript-inner > [data-family="deliverable"] .artifact-preview {
+  border-radius: 12px; border-color: var(--tx-sheet-edge);
+  background: color-mix(in srgb, #000 18%, var(--code));
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / .35);
+}
+body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .artifact-preview { background: var(--code); box-shadow: inset 0 1px 2px rgb(0 0 0 / .06); }
+.transcript-inner > [data-family="deliverable"] .mini-graph i {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fam-deliverable) 85%, #fff), color-mix(in srgb, var(--fam-deliverable) 55%, transparent));
+}
+
+/* NEEDS YOU -- the only family that spends the accent */
+.transcript-inner > [data-family="needs"].event-card {
+  --needs: var(--tx-needs);
+  background: color-mix(in srgb, var(--needs) 9%, var(--surface-2));
+  border: 1px solid color-mix(in srgb, var(--needs) 40%, transparent);
+  border-radius: 16px; padding: 13px 15px; gap: 12px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--needs) 6%, transparent);
+}
+.transcript-inner > [data-family="needs"].event-card.danger { --needs: var(--danger); }
+.transcript-inner > [data-family="needs"] > .event-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: color-mix(in srgb, var(--needs) 20%, transparent); color: var(--needs);
+}
+.transcript-inner > [data-family="needs"] .event-kind { color: var(--needs); }
+.transcript-inner > [data-family="needs"] .event-copy strong { font-size: 13.5px; }
+.transcript-inner > [data-family="needs"] .plan-actions > .soft-button:first-child {
+  background: var(--needs); color: var(--on-accent); border-color: transparent; font-weight: 650;
+}
+
+/* PEOPLE -- a roster: warm band, avatar stack, participant tone rings */
+.transcript-inner > [data-family="people"]:is(.event-card, .system-card, .work-output) {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fam-people) 8%, var(--tx-sheet)), var(--tx-sheet) 70%);
+  border: 1px solid color-mix(in srgb, var(--fam-people) 22%, var(--tx-sheet-edge));
+  border-radius: 16px;
+}
+.transcript-inner > [data-family="people"] :is(.collab-kind-badge, .system-card-head > .event-icon, > .event-icon, .work-output-icon) {
+  color: var(--fam-people); background: color-mix(in srgb, var(--fam-people) 14%, transparent);
+}
+.transcript-inner > [data-family="people"] .system-card-head { border-bottom-color: color-mix(in srgb, var(--fam-people) 16%, var(--tx-sheet-edge)); }
+.tx-avatars { display: inline-flex; align-items: center; padding-left: 6px; flex: 0 0 auto; }
+.tx-avatars > i {
+  width: 22px; height: 22px; margin-left: -6px; border-radius: 50%;
+  display: grid; place-items: center; font: 700 8.5px/1 var(--font-ui); font-style: normal; letter-spacing: .02em;
+  color: var(--text); background: color-mix(in srgb, var(--fam-people) 26%, var(--surface-3));
+  box-shadow: 0 0 0 2px var(--tx-sheet);
+}
+.tx-avatars > i[data-tone="run"] { box-shadow: 0 0 0 2px var(--tx-sheet), 0 0 0 3.5px color-mix(in srgb, var(--tx-live) 70%, transparent); }
+.tx-avatars > i[data-tone="bad"] { box-shadow: 0 0 0 2px var(--tx-sheet), 0 0 0 3.5px color-mix(in srgb, var(--danger) 70%, transparent); }
+.tx-avatars > i.more { background: var(--surface-3); color: var(--muted); }
+
+/* TIME -- a ticket: stub with the time, perforated edge, punched notches */
+.transcript-inner > [data-family="time"].sched-card {
+  --stub: 84px;
+  display: grid; grid-template-columns: var(--stub) minmax(0, 1fr); align-items: start;
+  padding: 0; border-radius: 14px;
+  background: var(--tx-sheet); border: 1px solid color-mix(in srgb, var(--fam-time) 26%, var(--tx-sheet-edge));
+  -webkit-mask: radial-gradient(circle 7px at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle 7px at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
+  mask: radial-gradient(circle 7px at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle 7px at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
+}
+.transcript-inner > [data-family="time"].sched-card > :not(.sched-stub) { grid-column: 2; padding-left: 15px; padding-right: 14px; }
+.transcript-inner > [data-family="time"].sched-card > .sched-card-head { padding-top: 12px; }
+.transcript-inner > [data-family="time"].sched-card > :last-child { padding-bottom: 11px; }
+.sched-stub {
+  grid-column: 1; grid-row: 1 / span 12; align-self: stretch;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  padding: 12px 6px; text-align: center; color: var(--fam-time);
+  border-right: 1.5px dashed color-mix(in srgb, var(--fam-time) 42%, transparent);
+  background: color-mix(in srgb, var(--fam-time) 7%, transparent);
+}
+.sched-stub b { font-size: 15px; font-weight: 750; letter-spacing: -.01em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.sched-stub span { font-size: 11px; color: color-mix(in srgb, var(--fam-time) 80%, var(--text)); }
+.sched-stub small { font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.transcript-inner > [data-family="time"].sched-card:is(.sched-card-sent, .sched-card-canceled, .sched-card-expired) .sched-stub { color: var(--muted); background: color-mix(in srgb, var(--text) 3%, transparent); border-right-color: var(--tx-sheet-edge); }
+
+/* LEDGER -- not a card: one quiet line (icon, title, first line of detail) */
+.transcript-inner > [data-family="ledger"].event-card {
+  background: transparent; border: 0; border-radius: 0; box-shadow: none;
+  padding: 3px 0; gap: 8px; align-items: center; min-height: 26px;
+}
+.transcript-inner > [data-family="ledger"] > .event-icon {
+  width: 18px; height: 18px; border-radius: 6px; background: transparent; color: var(--muted);
+}
+.transcript-inner > [data-family="ledger"] > .event-icon svg { width: 12px; height: 12px; }
+.transcript-inner > [data-family="ledger"].warning > .event-icon { color: var(--warning); }
+.transcript-inner > [data-family="ledger"].danger > .event-icon { color: var(--danger); }
+.transcript-inner > [data-family="ledger"].positive > .event-icon { color: var(--positive); }
+.transcript-inner > [data-family="ledger"] .event-copy { display: flex; align-items: baseline; gap: 7px; min-width: 0; flex: 1 1 auto; }
+.transcript-inner > [data-family="ledger"] .event-kind { display: none; }
+.transcript-inner > [data-family="ledger"] .event-copy strong { flex: 0 0 auto; font-size: 12px; font-weight: 620; color: color-mix(in srgb, var(--text) 84%, transparent); white-space: nowrap; }
+.transcript-inner > [data-family="ledger"] .event-copy p { margin: 0; font-size: 12px; color: var(--subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.transcript-inner > [data-family="ledger"] .event-copy p:empty { display: none; }
+.transcript-inner > [data-family="ledger"] .event-copy p:not(:empty) ~ p:not(:empty) { display: none; }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy { flex-wrap: wrap; row-gap: 2px; }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy p { white-space: normal; flex-basis: 100%; }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy p:not(:empty) ~ p:not(:empty) { display: block; }
+.transcript-inner > [data-family="ledger"] .plan-actions { margin: 0; flex: 0 0 auto; }
+.transcript-inner > [data-family="ledger"] .plan-actions > .soft-button {
+  min-height: 24px; padding: 0 8px; font-size: 11px; background: transparent; border-color: var(--tx-sheet-edge); color: var(--muted);
+}
+.transcript-inner > [data-family="ledger"] .pm-tops-card { font-size: 12px; }
+
+/* the accent leaves decoration: event icons outside Needs-you are neutral */
+.transcript-inner > :not([data-family="needs"]) .event-icon:not(.work-output-icon) { background: color-mix(in srgb, var(--text) 7%, transparent); color: var(--muted); }
+.transcript-inner > [data-family="deliverable"] .system-card-head > .event-icon,
+.transcript-inner > [data-family="people"] .system-card-head > .event-icon,
+.transcript-inner > [data-family="people"] > .event-icon { background: color-mix(in srgb, var(--tx-fam, var(--fam-people)) 14%, transparent); }
+
+/* needs-you: the action sits at the far edge, the copy takes the room */
+.transcript-inner > [data-family="needs"].event-card { align-items: center; }
+.transcript-inner > [data-family="needs"] .event-copy { flex: 1 1 auto; }
+.transcript-inner > [data-family="needs"] > .plan-actions { margin: 0 0 0 auto; flex: 0 0 auto; }
+/* people: live agent rows read as a roster, left-aligned, warm avatars */
+.transcript-inner > [data-family="people"] .live-agent-row { text-align: left; background: color-mix(in srgb, var(--text) 4%, transparent); border-color: var(--tx-sheet-edge); }
+.transcript-inner > [data-family="people"] .agent-avatar { background: color-mix(in srgb, var(--fam-people) 30%, var(--surface-3)); color: var(--text); box-shadow: none; }
+.transcript-inner > [data-family="people"] .live-agent-row > span:nth-child(2) { display: grid; gap: 1px; justify-items: start; }
+
+/* The gutter holds the spine, so the transcript's own left padding can give that
+   room back: the reading column stays as wide as it was before the spine, and
+   the hover row keeps its provider and model chips at the same widths. */
+.transcript[data-variant="16"] { padding-left: clamp(4px, 1vw, 10px); padding-right: clamp(12px, 2vw, 22px); }
+body[data-theme] { --tx-gutter: 24px; }
+
+/* turn-stream.css -- Chat WOW (2026-09-26). OWNER: turn-stream.js.
+ * Streaming replies, the send flight, the waiting presence, and rich reply
+ * bodies. Every entrance has one voice per theme family (data-voice on the
+ * transcript): basic = ink, friendly = hop, glass = depth, retro = type.
+ * Durations match across voices; only path, easing and texture change.
+ */
+
+/* ---------------------------------------------------------- rich bodies */
+.message-body :is(ul, ol) { margin: 2px 0 10px; padding-left: 20px; }
+.message-body li { margin: 3px 0; padding-left: 2px; }
+.message-body li::marker { color: color-mix(in srgb, var(--text) 45%, transparent); }
+.message-body h4 { margin: 14px 0 6px; font-size: 14.5px; font-weight: 700; letter-spacing: -.005em; }
+.message-body h5 { margin: 12px 0 5px; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.message-body :is(h4, h5):first-child { margin-top: 0; }
+.message-body code { font-family: var(--font-mono); font-size: .9em; padding: 1px 5px; border-radius: 5px; background: color-mix(in srgb, var(--text) 8%, transparent); }
+.message-body pre {
+  margin: 4px 0 10px; padding: 11px 13px; overflow: auto;
+  border-radius: 11px; border: 1px solid color-mix(in srgb, var(--text) 9%, transparent);
+  background: color-mix(in srgb, #000 22%, var(--code));
+  font: 12px/1.6 var(--font-mono); white-space: pre;
+}
+body[data-theme$="-light"] .message-body pre { background: var(--code); }
+.message-body pre code { padding: 0; background: none; font-size: inherit; }
+
+/* ------------------------------------------------------ the stream island */
+.tx-stream .tx-clip { position: relative; clip-path: inset(-12px -16px 0 -16px); }
+.tx-stream .tx-flow { position: relative; }
+.transcript-inner > [data-streaming] { animation: tx-arrive 360ms cubic-bezier(.17, .84, .29, .99) both; }
+@keyframes tx-arrive { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+/* the chrome keeps its space while the reply is written, then peeks once */
+.transcript-inner > [data-streaming] .message-chrome { visibility: hidden !important; opacity: 0 !important; }
+.transcript-inner > .tx-peek .message-chrome { visibility: visible; opacity: 1; transform: none; transition: opacity 260ms ease 120ms, transform 260ms ease 120ms; }
+
+/* waiting: the model's name, and a verb that shimmers */
+.tx-pending { display: inline-flex; align-items: baseline; gap: 6px; font-size: 12.5px; color: var(--muted); animation: tx-pending-in 300ms 120ms both; }
+@keyframes tx-pending-in { from { opacity: 0; } to { opacity: 1; } }
+.tx-pending b { font-weight: 620; color: color-mix(in srgb, var(--text) 72%, transparent); }
+.tx-pending-verb {
+  background: linear-gradient(90deg, var(--muted) 0%, var(--muted) 35%, var(--text) 50%, var(--muted) 65%, var(--muted) 100%) 0 0 / 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: tx-shimmer 1.6s linear infinite;
+}
+.tx-pending-t { font-style: normal; font-variant-numeric: tabular-nums; color: var(--subtle); }
+@keyframes tx-shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+
+/* ---------------------------------------------------------- words: voices */
+.tx-w { animation: tx-ink 220ms cubic-bezier(.2, .8, .2, 1) both; }
+.tx-w.tx-still, .tx-still .tx-c { animation: none !important; }
+@keyframes tx-ink {
+  0% { opacity: 0; filter: blur(3px); text-shadow: 0 0 10px color-mix(in srgb, var(--tx-live) 70%, transparent); }
+  55% { opacity: 1; }
+  100% { opacity: 1; filter: none; text-shadow: 0 0 0 transparent; }
+}
+[data-voice="friendly"] .tx-w { position: relative; animation: tx-hop 260ms cubic-bezier(.34, 1.56, .64, 1) both; }
+@keyframes tx-hop { 0% { opacity: 0; top: 6px; } 45% { opacity: 1; } 100% { opacity: 1; top: 0; } }
+[data-voice="glass"] .tx-w { animation: tx-depth 320ms cubic-bezier(.05, .7, .1, 1) both; }
+@keyframes tx-depth { 0% { opacity: 0; filter: blur(7px) brightness(1.7); } 100% { opacity: 1; filter: none; } }
+[data-voice="retro"] .tx-w { animation: tx-phosphor 700ms steps(4, end) both; }
+[data-voice="retro"] .tx-c { animation: tx-type 1ms steps(1, end) both; animation-delay: calc(var(--i) * 14ms); }
+@keyframes tx-type { from { opacity: 0; } to { opacity: 1; } }
+@keyframes tx-phosphor { 0% { text-shadow: 0 0 8px var(--accent), 0 0 2px var(--accent); } 100% { text-shadow: 0 0 0 transparent; } }
+
+/* structure arrives with character */
+.tx-flow li.tx-born { animation: tx-li 260ms cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes tx-li { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: none; } }
+.tx-flow pre.tx-born { animation: tx-pre 240ms cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes tx-pre { from { clip-path: inset(0 0 100% 0 round 11px); opacity: .4; } to { clip-path: inset(0 0 0 0 round 11px); opacity: 1; } }
+.tx-flow :is(h4, h5).tx-born { animation: tx-head 360ms cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes tx-head { from { opacity: 0; letter-spacing: .08em; } to { opacity: 1; } }
+[data-voice="retro"] .tx-flow :is(li, pre, h4, h5).tx-born { animation-timing-function: steps(3, end); }
+
+/* ------------------------------------------------------------------ caret */
+.tx-caret {
+  position: absolute; left: 0; top: 0; width: 2px; height: 16px; border-radius: 2px;
+  background: var(--tx-live); pointer-events: none; opacity: 0;
+  box-shadow: 0 0 10px 1px color-mix(in srgb, var(--tx-live) 55%, transparent);
+  transition: transform 90ms cubic-bezier(.2, .8, .2, 1), height 90ms, opacity 160ms;
+}
+[data-streaming="live"] .tx-caret { opacity: 1; animation: tx-caret 1.1s ease-in-out infinite; }
+[data-streaming="settling"] .tx-caret { opacity: 0; transform-origin: 50% 50%; }
+@keyframes tx-caret { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+[data-voice="friendly"] .tx-caret { width: 7px; height: 7px !important; border-radius: 50%; margin-top: 5px; }
+[data-voice="glass"] .tx-caret { width: 3px; border-radius: 3px; background: color-mix(in srgb, #fff 60%, var(--tx-live)); box-shadow: 0 0 14px 3px color-mix(in srgb, var(--tx-live) 45%, transparent); }
+[data-voice="retro"] .tx-caret { width: .62em; border-radius: 0; box-shadow: 0 0 8px var(--accent); transition: none; }
+[data-voice="retro"] [data-streaming="live"] .tx-caret { animation: tx-block 900ms steps(1, end) infinite; }
+@keyframes tx-block { 0%, 60% { opacity: 1; } 61%, 100% { opacity: 0; } }
+body[data-theme$="-light"] .tx-caret { box-shadow: none; }
+
+/* ------------------------------------------------------------ send flight */
+.tx-fly { position: fixed; z-index: 9990; margin: 0; pointer-events: none; white-space: pre-wrap; overflow-wrap: anywhere; will-change: transform, opacity; transform-origin: 50% 50%; }
+/* the composer's placeholder waits until the text has left the field */
+body.tx-flying textarea[data-input="composer"]::placeholder { color: transparent; }
+textarea[data-input="composer"]::placeholder { transition: color 220ms ease; }
+/* the reply's waiting line and the turn's mark arrive after the bubble lands */
+.transcript-inner > [data-streaming="pending"] { animation-delay: 380ms; }
+.sp-mark[data-state="pending"] { animation: sp-in 260ms cubic-bezier(.17, .84, .29, .99) 380ms both; }
+@keyframes sp-in { from { opacity: 0; } to { opacity: 1; } }
+.transcript-inner > [data-flight="1"] .message-surface { opacity: 0; }
+.transcript-inner > [data-flight="1"] .message-chrome { visibility: hidden; }
+
+/* -------------------------------------------------------- terminal marker */
+.tx-terminal {
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 9px;
+  padding: 2px 9px 2px 7px; border-radius: 999px; font-size: 11px; font-weight: 600;
+  color: var(--muted); background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+.tx-terminal-error { color: var(--warning); background: color-mix(in srgb, var(--warning) 10%, transparent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tx-w, .tx-c, .tx-pending, .tx-flow .tx-born, .transcript-inner > [data-streaming] { animation: none !important; }
+  .tx-caret { transition: none; animation: none !important; }
+}
+
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
  * Concatenated after feature modules so these rules win over styles.css
@@ -15428,8 +15825,26 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
       'Mute and Focus apply immediately as selection toggles; Subcompact needs an explicit Apply because it writes a local summary artifact.',
       ' The cap is 25 messages per operation, not per thread, so operations accumulate.'],
       followUp:{ type:'context-focus', title:'Context Lens · Focus', detail:'Included the current renderer, the current tests, and the final reference.' } }),
-    reply({ id:'sr-default', match:[], chunks:[
-      'Added as an ordinary conversational turn so the reading rhythm, message actions, wide response layout, and the persistent More Details surface can all be evaluated on real text rather than on a placeholder.'] })
+    /* Chat WOW: two replies with structure, so lists, headings and code can be
+       seen arriving mid-stream (turn-stream.js renders a small markdown subset). */
+    reply({ id:'sr-steps', match:['steps','walk me','checklist','how would','how should'], delayMs:700, chunkMs:360, chunks:[
+      '## The rollout, in order\n\n',
+      '1. Split **0043** out of the migration wrapper and mark it no-transaction.\n',
+      '2. Build the index concurrently: `CREATE INDEX CONCURRENTLY idx_events_tenant_created`.\n',
+      '3. Batch the two N+1 call sites behind one tenant-first query.\n',
+      '4. Re-run the benchmark against the 128,400-row fixture and record both directions.\n\n',
+      'The check that has to pass before anything ships:\n\n',
+      '```\npm bench analytics_query --rows 128400 --assert p95<100ms\npm bench analytics_query --rollback --assert rows=128400\n```\n\n',
+      'If the second command fails, the rollback is not rehearsed yet and the rollout waits.'] }),
+    reply({ id:'sr-summary', match:['summar','recap','tl;dr','where are we'], delayMs:640, chunkMs:320, chunks:[
+      'Where things stand:\n\n',
+      '- **Read path:** p95 482 ms to 71 ms on the corrected fixture.\n',
+      '- **Write cost:** +4.8% on inserts, measured over 50,000 rows.\n',
+      '- **Rollback:** rehearsed in both directions, table readable throughout.\n\n',
+      'Still open: whether the payload bound applies to existing rows. That is your call, not mine.'] }),
+    reply({ id:'sr-default', match:[], delayMs:620, chunkMs:300, chunks:[
+      'Added as an ordinary conversational turn, so the reading rhythm, the message actions and the wide response layout can be judged on real text.',
+      ' Try asking me to **walk through the steps**, to **summarize** where things stand, or to explain the **benchmark** — each reply streams in the way a live model would, with its own pace, pauses at sentence ends, and structure arriving as it is written.'] })
   ];
 
   /* =====================================================================
@@ -16101,7 +16516,9 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
     'Wide Prose','Assistant Cards','Speaker Grid','Journal Stream',
     'Editorial Reading','Layered Technical','Terminal Dense','Stage Layout',
     'Aligned Bubbles','Zebra Rows','Sticky Rail','Timeline Gutter',
-    'Notebook Cells','Focus Reader','Print Sheet','Threaded Turns'
+    'Notebook Cells','Focus Reader','Print Sheet','Threaded Turns',
+    /* 16 -- Chat WOW default (turn-stage.css): presence mark, turn spine, item families. */
+    'Turn Stage'
   ];
 
 
@@ -16325,6 +16742,18 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
   const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   window.PM56_MOTION = { words, wordCount, roll, flip, flipHeight, reduced, esc };
+
+  /* Chat WOW: one clock for JS-driven motion, with a time scale so a film tool can
+     slow the JS side by exactly the factor it slows CSS and Web Animations with
+     (CDP Animation.setPlaybackRate). Everything the live-turn modules time --
+     word release, height springs, the send flight, the work tick -- reads it. */
+  const clock = {
+    scale: 1, _v: performance.now(), _r: performance.now(),
+    now() { const r = performance.now(); this._v += (r - this._r) * this.scale; this._r = r; return this._v; },
+    setScale(k) { this.now(); this.scale = Math.max(0, Number(k) || 0); },
+    ms(realMs) { return this.scale > 0 ? realMs / this.scale : realMs; }   /* a real-time delay for a motion-time one */
+  };
+  window.PM56_CLOCK = clock;
 
   /* Registry for working-animation takes that live outside app.js.
      A take is `(ctx) => htmlString`; see makeWorkCtx() in app.js for the
@@ -25044,6 +25473,11 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       var out = '<div class="qs-reel-out qs-reel-out-' + dir + '" aria-hidden="true">' + st.outgoingHtml + '</div>';
       st.outgoingHtml = null;
       st.outgoingH = null;
+      /* The outgoing reel lives for exactly one render. It used to be cleared by
+         whatever full render came next -- usually the half-second work tick --
+         but the tick now patches only the live cards (Chat WOW), so the reel asks
+         for its own clearing render once its 80ms exit has played. */
+      setTimeout(function () { if (!st.outgoingHtml && ctx.renderApp) ctx.renderApp(); }, 120);
       return '<div class="qs-reel-stage" data-k="qs-reel-stage">' + out + live + '</div>';
     }
     return live;
@@ -34684,6 +35118,18 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
       (c.clean_completion ? '' : '<strong>Needs attention</strong>') + bits.join('') + '</div>';
   }
 
+  /* Chat WOW: the roster reads at a glance -- up to four participant initials,
+     ringed by their live state, then +N. Presentation only; the list stays in
+     the expanded body and the panel. */
+  function avatarStack(run) {
+    var list = run.participants || [];
+    if (!list.length) return '';
+    var shown = list.slice(0, 4), more = list.length - shown.length;
+    return '<span class="tx-avatars" aria-hidden="true">' + shown.map(function (p) {
+      var tone = PSTATE_TONE[p.status] || 'idle';
+      return '<i data-tone="' + esc(tone === 'working' ? 'run' : tone === 'blocked' ? 'bad' : tone) + '">' + esc((p.name || '?').slice(0, 2).toUpperCase()) + '</i>';
+    }).join('') + (more > 0 ? '<i class="more">+' + more + '</i>' : '') + '</span>';
+  }
   function renderCard(ctx, run) {
     if(run.crew?.planBinding)refreshPlanCrew(run.crew.planBinding.plan_id);
     var expanded = !!UI.expanded[run.id];
@@ -34701,6 +35147,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     return '<article class="event-card collab-card collab-kind-' + esc(run.kind) + '" data-k="collab-card-' + esc(run.id) + '" data-run-id="' + esc(run.id) + '">' +
       '<div class="collab-card-head">' +
         '<span class="collab-kind-badge">' + ctx.icon(KIND_ICON[run.kind], 13) + esc(KIND_LABEL[run.kind]) + '</span>' +
+        avatarStack(run) +
         '<strong class="collab-card-title">' + esc(run.title) + '</strong>' +
         statusChip(run.status, run.blockedReason) +
       '</div>' +
@@ -38327,10 +38774,21 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     });
   }
 
+  /* Chat WOW: the ticket stub -- the time, large, in the schedule's own zone. The
+     full line stays in .sched-card-time; the stub is presentation only. */
+  function stubParts(iso,zone){
+    if(!iso||!Number.isFinite(Date.parse(iso)))return null;
+    try{var d=new Date(iso),z=zone||'UTC';
+      var time=new Intl.DateTimeFormat('en-US',{timeZone:z,hour:'numeric',minute:'2-digit'}).format(d);
+      var day=new Intl.DateTimeFormat('en-US',{timeZone:z,month:'short',day:'numeric'}).format(d);
+      var tz=(new Intl.DateTimeFormat('en-US',{timeZone:z,timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';})||{}).value||'';
+      return {time:time,day:day,tz:tz};}catch(e){return null;}
+  }
+  function stubHtml(m){var p=stubParts(m.scheduled_at_utc,m.timezone);if(!p)return '';return '<div class="sched-stub" aria-hidden="true"><b>'+esc(p.time)+'</b><span>'+esc(p.day)+'</span><small>'+esc(p.tz)+'</small></div>';}
   function renderMessageCard(ctx,m){
     var pr=messageProjection(m),st=SM_STATE[m.state]||{label:m.state,tone:'idle'},id=esc(m.scheduled_dispatch_id),open=!!ui.cardOpen?.[m.scheduled_dispatch_id];
     var why=pr.held_reason||pr.failure_reason||pr.expired_reason;
-    return '<article class="sched-card sched-card-'+esc(m.state)+'" data-k="sched-card-'+id+'" data-schedule-id="'+id+'" data-schedule-state="'+esc(m.state)+'"><div class="sched-card-head"><span class="sched-kind">'+ctx.icon('history',14)+' Scheduled message</span>'+chip(st.label,st.tone)+'</div>'+
+    return '<article class="sched-card sched-card-'+esc(m.state)+'" data-k="sched-card-'+id+'" data-schedule-id="'+id+'" data-schedule-state="'+esc(m.state)+'">'+stubHtml(m)+'<div class="sched-card-head"><span class="sched-kind">'+ctx.icon('history',14)+' Scheduled message</span>'+chip(st.label,st.tone)+'</div>'+
       '<p class="sched-card-preview">'+esc(pr.text_preview)+(m.text.length>120?'…':'')+'</p>'+
       '<div class="sched-card-route">'+esc(destinationLabel(m))+' · '+esc(m.requested_runtime?.modelName||'Default')+'</div><div class="sched-card-time">'+esc(whenLabel(m.scheduled_at_utc,m.timezone)+' · '+m.timezone)+(pr.attachment_count?' · '+pr.attachment_count+' attached':'')+'</div>'+
       (why&&['held','failed','expired'].includes(m.state)?'<div class="schedule-attention">'+ctx.icon('warning',12)+'<span>'+esc(attentionLabel(m))+'</span></div>':'')+
@@ -46029,6 +46487,785 @@ const g=PM56_REPAIR_DEMOS,prior=g.gallery;
 g.gallery=ctx=>'<section class="demo-section"><h3>Attachments &amp; bounded folders · Batch 19</h3><div class="demo-section-body">'+[['intake','Attach, retry and remove','Real intake, tracer, Retry and Remove that preserve siblings and text.'],['live','Live references and drift','Exact per-turn captures; changed-since disclosure without rewriting history.'],['folder','Folders stay bounded','Bounded manifests, separate receipts, frozen scheduled dispatch.']].map(([id,title,detail])=>'<button class="demo-trigger" data-action="b19-start" data-flow="'+id+'"><strong>'+title+'</strong><small>'+detail+'</small></button>').join('')+'</div></section>'+prior(ctx);
 window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=current();return r?{...clone(r),tray:clone(trayOf(E.ctx()).map(a=>({id:a.id,name:a.name,origin:a.origin,command:a.command,source_path:a.source_path,process_state:a.process_state})))}:null;}};
 })();
+
+/* turn-stage.js -- Chat WOW (2026-09-26). OWNER of turn-stage.css and the spine.
+ *
+ * 1. Families. app.js stamps every transcript item with data-family from its own
+ *    default map (renderTranscriptItems / familyOf). This module answers the
+ *    `transcriptFamily` slot for types whose family depends on their content.
+ * 2. The spine layer (Turn Stage take). Cards clip their own overflow, so a spine
+ *    drawn from each item's pseudo-elements disappears behind every card. Instead
+ *    one SVG layer sits behind the whole transcript (.tx-spine-layer, JS-owned):
+ *    per assistant turn it draws the presence mark, a hairline through the turn's
+ *    items, a family tick where each card meets it, and a dot where the turn ends.
+ *    While a turn is live the mark lights, its satellite orbits while the
+ *    assistant is thinking, and a comet of light runs down the line to whatever is
+ *    being written or worked on. Nodes are reused by key so CSS animations never
+ *    restart on redraw.
+ *
+ * Families: prose | user | work | deliverable | needs | people | time | ledger.
+ */
+(function () {
+  'use strict';
+  var EXT = window.PM56_EXT;
+  if (!EXT || !EXT.slot) return;
+  var FAMILIES = ['prose', 'user', 'work', 'deliverable', 'needs', 'people', 'time', 'ledger'];
+  var EXTRA = { 'collab-receipt': 'people', 'af-revert-result': 'ledger', 'b13-lens-controls': 'ledger' };
+  EXT.slot('transcriptFamily', function (ctx) {
+    var m = ctx.m;
+    if (!m) return '';
+    if (m.type === 'agent-work' && window.PM56_RECORDS) {
+      var k = (window.PM56_RECORDS.reference(m) || {}).kind;
+      return k === 'activity' ? 'people' : k === 'inspection' ? 'ledger' : 'deliverable';
+    }
+    return EXTRA[m.type] || '';
+  });
+
+  /* ------------------------------------------------------------ spine layer */
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var TICKED = { work: 1, deliverable: 1, needs: 1, people: 1, time: 1 };
+  var raf = 0, ro = null, mo = null, observed = null;
+  var nodes = new Map();           // key -> element, reused across draws
+
+  function el(tag, cls) { var e = document.createElementNS(SVGNS, tag); if (cls) e.setAttribute('class', cls); return e; }
+  function group(svg, cls) { var g = svg.querySelector(':scope > g.' + cls); if (!g) { g = el('g', cls); svg.appendChild(g); } return g; }
+  function node(svg, key, tag, cls) {
+    var e = nodes.get(key);
+    if (!e || !e.isConnected) { e = el(tag, cls); nodes.set(key, e); group(svg, cls === 'sp-tick' ? 'sp-ticks' : 'sp-lines').appendChild(e); }
+    e.__seen = true;
+    return e;
+  }
+  function set(e, attrs) { for (var k in attrs) { var v = String(attrs[k]); if (e.getAttribute(k) !== v) e.setAttribute(k, v); } }
+  function markNode(svg, key) {
+    var g = nodes.get(key);
+    if (!g || !g.isConnected) {
+      g = el('g', 'sp-mark');
+      var ring = el('circle', 'sp-ring'); ring.setAttribute('r', '5.4'); g.appendChild(ring);
+      /* the invisible hub circle centres the group's fill-box on the mark, so a
+         CSS rotation about the fill-box centre orbits the satellite round it */
+      var orbit = el('g', 'sp-orbit'); var hub = el('circle', 'sp-hub'); hub.setAttribute('r', '8.4'); orbit.appendChild(hub); var sat = el('circle', 'sp-sat'); sat.setAttribute('r', '2.2'); sat.setAttribute('cx', '5.9'); sat.setAttribute('cy', '-5.9'); orbit.appendChild(sat); g.appendChild(orbit);
+      group(svg, 'sp-marks').appendChild(g); nodes.set(key, g);
+    }
+    g.__seen = true;
+    return g;
+  }
+
+  function schedule() { if (!raf) raf = requestAnimationFrame(draw); }
+  function arm() {
+    var tr = document.querySelector('.transcript'), inner = tr && tr.querySelector('.transcript-inner');
+    if (!inner || inner === observed) return;
+    if (ro) ro.disconnect(); if (mo) mo.disconnect();
+    observed = inner; nodes.clear();
+    var layer = tr.querySelector('.tx-spine-layer'); if (layer) layer.textContent = '';
+    ro = new ResizeObserver(schedule); ro.observe(inner);
+    mo = new MutationObserver(schedule);
+    mo.observe(inner, { childList: true, attributes: true, subtree: true, attributeFilter: ['data-streaming', 'data-turn-pos', 'data-flight', 'data-turn'] });
+    schedule();
+  }
+
+  function draw() {
+    raf = 0;
+    var tr = document.querySelector('.transcript');
+    var inner = tr && tr.querySelector('.transcript-inner');
+    var layer = tr && tr.querySelector('.tx-spine-layer');
+    if (!inner || !layer) return;
+    if (inner !== observed) { arm(); return; }
+    if (tr.getAttribute('data-variant') !== '16') { if (layer.firstChild) { layer.textContent = ''; nodes.clear(); } return; }
+    var svg = layer.firstChild;
+    if (!svg || String(svg.tagName).toLowerCase() !== 'svg') {
+      layer.textContent = ''; nodes.clear(); svg = el('svg', 'sp-svg'); layer.appendChild(svg);
+      group(svg, 'sp-lines'); group(svg, 'sp-ticks'); group(svg, 'sp-marks');   /* paint order: lines, ticks, marks */
+    }
+    var tR = tr.getBoundingClientRect(), sT = tr.scrollTop;
+    var gutter = parseFloat(getComputedStyle(inner).getPropertyValue('--tx-gutter')) || 26;
+    var H = inner.offsetTop + inner.offsetHeight + 8;
+    layer.style.height = H + 'px';
+    set(svg, { width: Math.round(tR.width), height: Math.round(H), viewBox: '0 0 ' + Math.round(tR.width) + ' ' + Math.round(H) });
+    nodes.forEach(function (n) { n.__seen = false; });
+    var turns = {}, order = [];
+    var kids = inner.children;
+    for (var i = 0; i < kids.length; i++) {
+      var k = kids[i], pos = k.getAttribute('data-turn-pos');
+      if (!pos || pos === 'user') continue;
+      var t = k.getAttribute('data-turn') || '0';
+      if (!turns[t]) { turns[t] = []; order.push(t); }
+      turns[t].push(k);
+    }
+    order.forEach(function (t) {
+      var list = turns[t];
+      var r0 = list[0].getBoundingClientRect();
+      var x = Math.round(r0.left - tR.left - gutter + 9) + 0.5;
+      var yMark = r0.top - tR.top + sT + 10;
+      var last = list[list.length - 1], rl = last.getBoundingClientRect();
+      var yEnd = rl.top - tR.top + sT + 17;
+      var live = null, pending = false;
+      list.forEach(function (it) {
+        var s = it.getAttribute('data-streaming');
+        if (s === 'pending') pending = true;
+        if ((s && s !== 'pending') || (it.classList.contains('working-card') && !it.classList.contains('is-done')) || it.querySelector(':scope > .working-card:not(.is-done)')) live = it;
+      });
+      var mk = markNode(svg, 'm' + t);
+      set(mk, { transform: 'translate(' + x + ' ' + yMark.toFixed(1) + ')', 'data-state': pending ? 'pending' : live ? 'live' : 'rest' });
+      if (list.length > 1) {
+        var line = node(svg, 'l' + t, 'path', 'sp-line');
+        set(line, { d: 'M' + x + ' ' + (yMark + 9).toFixed(1) + 'V' + yEnd.toFixed(1) });
+        var end = node(svg, 'e' + t, 'circle', 'sp-end');
+        set(end, { cx: x, cy: yEnd.toFixed(1), r: 2.4 });
+      }
+      list.forEach(function (it, j) {
+        if (j === 0) return;
+        var fam = it.getAttribute('data-family');
+        if (!TICKED[fam]) return;
+        var r = it.getBoundingClientRect();
+        var tk = node(svg, 't' + t + ':' + (it.getAttribute('data-k') || j), 'circle', 'sp-tick');
+        var attrs = { cx: x, cy: (r.top - tR.top + sT + 17).toFixed(1), r: 3.4, 'data-f': fam };
+        if (fam === 'work') { var src = it.classList.contains('working-card') ? it : (it.querySelector('.working-card') || it); var c = getComputedStyle(src).getPropertyValue('--pm-step').trim(); attrs.style = c ? 'fill:' + c : ''; }
+        set(tk, attrs);
+      });
+      /* the comet: light running from the mark down to what is live */
+      if (live) {
+        var rL = live.getBoundingClientRect();
+        var yLive = live.getAttribute('data-streaming') ? rL.bottom - tR.top + sT - 12 : rL.top - tR.top + sT + 17;
+        if (yLive - yMark > 18) {
+          var cm = node(svg, 'c' + t, 'path', 'sp-comet');
+          set(cm, { d: 'M' + x + ' ' + (yMark + 9).toFixed(1) + 'V' + yLive.toFixed(1), pathLength: 100 });
+        }
+      }
+    });
+    nodes.forEach(function (n, key) { if (!n.__seen) { if (n.parentNode) n.parentNode.removeChild(n); nodes.delete(key); } });
+  }
+
+  /* app.js re-renders the transcript; re-arm whenever its inner list is a new
+     element, and redraw on anything that changes geometry. */
+  function boot() {
+    arm();
+    var root = document.getElementById('pmRoot');
+    if (root) new MutationObserver(function () { if (!observed || !observed.isConnected) arm(); }).observe(root, { childList: true, subtree: true });
+    window.addEventListener('resize', schedule);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(boot, 0); });
+  else setTimeout(boot, 0);
+
+  window.PM56_STAGE = { families: FAMILIES.slice(), redraw: function () { draw(); } };
+})();
+
+/* turn-stream.js -- Chat WOW (2026-09-26). OWNER of live assistant turns.
+ *
+ *   1. PM56_RICH   one op list, two renderers: the streaming writer and the final
+ *                  template produce the same layout, so hand-back never reflows.
+ *   2. Streams     a reply is a keyed placeholder whose body is a JS-owned island
+ *                  (data-pm-keep). A rAF loop releases words from chunked arrival
+ *                  through a rate smoother; the island's height follows its text
+ *                  through a critically damped spring so new lines open, never jump.
+ *   3. Flights     the text you send leaves the composer and becomes the bubble.
+ *   4. Reveals     messages gated on a work run (revealAfter) stream in when the
+ *                  run completes, and hold the chain's next run until they finish.
+ *   5. Owner       registers as a turn owner: sends queue and Stop shows while a
+ *                  reply is being written; Stop keeps the partial text.
+ *
+ * Voices: the transcript carries data-voice (basic | friendly | glass | retro).
+ * Timing and order are identical across voices; only path, easing and texture
+ * differ (turn-stream.css). Reduced motion lands every end state at once.
+ */
+(function () {
+  'use strict';
+  var EXT = window.PM56_EXT;
+  if (!EXT || !EXT.slot) return;
+  var D = window.PM56_DATA || {};
+
+  function C() { return EXT.ctx(); }
+  function reduced() { var M = window.PM56_MOTION; return !!(M && M.reduced && M.reduced()); }
+  function now() { return window.PM56_CLOCK ? window.PM56_CLOCK.now() : performance.now(); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function sound(ev) { try { if (window.PM56_SOUND) window.PM56_SOUND.play(ev); } catch (e) { } }
+  function voice() { var tr = document.querySelector('.transcript'); return (tr && tr.getAttribute('data-voice')) || 'basic'; }
+
+  /* ================================================================ 1 rich text
+     ops: {t:'block',tag,list} {t:'w',text,mark} {t:'s'} {t:'br'} {t:'line',text}
+     Every op carries `end`, its offset in the source, so arrival can gate it. */
+  function inline(text, base, ops) {
+    var re = /(\*\*[^*]+\*\*|`[^`]+`)/g, last = 0, m;
+    function plain(str, off) {
+      var parts = str.split(/(\s+)/);
+      var o = off;
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i]; if (!p) continue;
+        o += p.length;
+        if (/^\s+$/.test(p)) ops.push({ t: 's', end: o });
+        else ops.push({ t: 'w', text: p, mark: null, end: o });
+      }
+    }
+    while ((m = re.exec(text))) {
+      if (m.index > last) plain(text.slice(last, m.index), base + last);
+      var tok = m[0];
+      if (tok[0] === '`') ops.push({ t: 'w', text: tok.slice(1, -1), mark: 'code', end: base + m.index + tok.length });
+      else {
+        var inner = tok.slice(2, -2), words = inner.split(/(\s+)/), o = base + m.index + 2;
+        for (var j = 0; j < words.length; j++) {
+          var w = words[j]; if (!w) continue; o += w.length;
+          if (/^\s+$/.test(w)) ops.push({ t: 's', end: o }); else ops.push({ t: 'w', text: w, mark: 'b', end: o });
+        }
+        ops[ops.length - 1].end = base + m.index + tok.length;
+      }
+      last = m.index + tok.length;
+    }
+    if (last < text.length) plain(text.slice(last), base + last);
+  }
+  function tokenize(src, opts) {
+    var plainOnly = !!(opts && opts.plain);
+    var text = String(src || '').replace(/\r\n/g, '\n');
+    var ops = [], lines = text.split('\n'), off = 0, cur = null, blank = true, inCode = false;
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i], start = off; off += line.length + 1;
+      if (!plainOnly && /^```/.test(line)) {
+        if (!inCode) { ops.push({ t: 'block', tag: 'pre', end: start }); cur = 'pre'; inCode = true; }
+        else { inCode = false; cur = null; blank = true; }
+        continue;
+      }
+      if (inCode) { ops.push({ t: 'line', text: line, end: start + line.length }); continue; }
+      if (!line.trim()) { blank = true; continue; }
+      var mm;
+      if (!plainOnly && (mm = /^(#{2,3})\s+(.*)$/.exec(line))) {
+        ops.push({ t: 'block', tag: mm[1].length === 2 ? 'h4' : 'h5', end: start }); inline(mm[2], start + mm[1].length + 1, ops); cur = 'h'; blank = true; continue;
+      }
+      if (!plainOnly && (mm = /^(\s*)([-*]|\d+\.)\s+(.*)$/.exec(line))) {
+        var list = /\d/.test(mm[2]) ? 'ol' : 'ul';
+        ops.push({ t: 'block', tag: 'li', list: list, end: start }); inline(mm[3], start + mm[1].length + mm[2].length + 1, ops); cur = 'li:' + list; blank = false; continue;
+      }
+      if (blank || cur !== 'p') { ops.push({ t: 'block', tag: 'p', end: start }); cur = 'p'; }
+      else ops.push({ t: 'br', end: start });
+      inline(line, start, ops); blank = false;
+    }
+    return ops;
+  }
+  function wordHtml(op) {
+    var t = esc(op.text);
+    return op.mark === 'b' ? '<strong>' + t + '</strong>' : op.mark === 'code' ? '<code>' + t + '</code>' : t;
+  }
+  function opsToHtml(ops) {
+    var out = '', block = null, list = null;
+    function closeBlock() { if (block) { out += block === 'pre' ? '</code></pre>' : '</' + block + '>'; block = null; } }
+    function closeList() { if (list) { out += '</' + list + '>'; list = null; } }
+    for (var i = 0; i < ops.length; i++) {
+      var op = ops[i];
+      if (op.t === 'block') {
+        closeBlock();
+        if (op.tag === 'li') { if (list !== op.list) { closeList(); out += '<' + op.list + '>'; list = op.list; } }
+        else closeList();
+        out += op.tag === 'pre' ? '<pre><code>' : '<' + op.tag + '>'; block = op.tag;
+      } else if (op.t === 'w') out += wordHtml(op);
+      else if (op.t === 's') out += ' ';
+      else if (op.t === 'br') out += '<br>';
+      else if (op.t === 'line') out += esc(op.text) + '\n';
+    }
+    closeBlock(); closeList();
+    return out;
+  }
+  window.PM56_RICH = { tokenize: tokenize, html: function (text) { return opsToHtml(tokenize(text)); }, plainHtml: function (text) { return opsToHtml(tokenize(text, { plain: true })); } };
+
+  /* ================================================================ 2 streams */
+  var streams = new Map();       // message id -> stream
+  var loop = 0;
+  var revealedRecs = typeof WeakSet !== 'undefined' ? new WeakSet() : new Set();
+
+  function pickReply(raw, pref) {
+    var list = D.scriptedReplies || [], low = String(raw || '').toLowerCase();
+    if (pref && pref.effective) return { id: 'sr-simple', chunks: ['This example adds a reply to the conversation.', ' You can try the message buttons and panels without changing your files.'], delayMs: 520, chunkMs: 260, terminal: 'complete' };
+    for (var i = 0; i < list.length; i++) {
+      var r = list[i];
+      if (r.match && r.match.some(function (k) { return low.indexOf(k) >= 0; })) return r;
+    }
+    return list.filter(function (r) { return r.id === 'sr-default'; })[0] || { chunks: ['Understood.'], delayMs: 500, chunkMs: 260, terminal: 'complete' };
+  }
+
+  function runtimeFor(c, m) {
+    var mdl = c.selectedModel ? c.selectedModel() : null;
+    return {
+      provider: (mdl && mdl.provider) || 'Anthropic', account: 'Work', model: (mdl && mdl.name) || 'Claude Sonnet 4.6', modelId: mdl && mdl.id,
+      mode: String(c.state.mode || 'agent').toLowerCase().replace(/\s+/g, '_'), persona: c.state.persona, effort: 'high',
+      startedAt: new Date().toISOString(), completedAt: null, tokens: {}, context: {}, cost: {}
+    };
+  }
+
+  /* reply(): called by deliverSend's generic branch. Pushes the placeholder and
+     starts it; returns true so the fixed reply is skipped. */
+  function reply(c, t, raw, opts) {
+    var spec = pickReply(raw, opts && opts.explanationPreference);
+    var m = {
+      id: c.uid('assistant'), role: 'assistant', type: 'text', body: '', rich: true,
+      streaming: true, streamPhase: 'pending', time: new Date().toISOString(), sourceMessageId: opts && opts.sourceId,
+      explanationPreference: opts && opts.explanationPreference ? JSON.parse(JSON.stringify(opts.explanationPreference)) : null
+    };
+    m.runtime = runtimeFor(c, m);
+    t.messages.push(m);
+    begin(m, t.id, spec, { rich: true });
+    return true;
+  }
+
+  function begin(m, tid, spec, opts) {
+    var full = (spec.chunks || []).join('');
+    var ops = tokenize(full, { plain: !(opts && opts.rich) });
+    var chunkAt = [], acc = 0, arrive = [];
+    (spec.chunks || []).forEach(function (ch, i) { acc += ch.length; chunkAt.push((spec.delayMs || 500) + i * (spec.chunkMs || 260)); arrive.push(acc); });
+    var st = {
+      id: m.id, tid: tid, m: m, spec: spec, full: full, ops: ops, cursor: 0, t0: now(),
+      chunkAt: chunkAt, arrive: arrive, nextAt: 0, phase: 'pending', words: 0,
+      island: null, clip: null, flow: null, caret: null, h: 0, hv: 0, lastFrame: 0,
+      block: null, list: null, rich: !!(opts && opts.rich), revealRec: (opts && opts.revealRec) || null,
+      minPending: opts && opts.minPending != null ? opts.minPending : 420, settleAt: 0
+    };
+    if (opts && opts.instantArrival) { st.chunkAt = st.chunkAt.map(function () { return 0; }); }
+    streams.set(m.id, st);
+    m.streaming = true; m.streamPhase = 'pending';
+    kick();
+    return st;
+  }
+
+  function kick() { if (!loop) loop = requestAnimationFrame(frame); }
+
+  function arrivedChars(st, t) {
+    var n = 0;
+    for (var i = 0; i < st.chunkAt.length; i++) if (t - st.t0 >= st.chunkAt[i]) n = st.arrive[i];
+    return n;
+  }
+  function allArrived(st, t) { return !st.chunkAt.length || t - st.t0 >= st.chunkAt[st.chunkAt.length - 1]; }
+
+  /* The island: .message-body[data-pm-keep] > .tx-clip (height spring) > .tx-flow.
+     If the article was remounted (thread churn), rebuild what was released so far
+     without animation. */
+  function ensureIsland(st) {
+    var host = document.querySelector('[data-k="tx-island:' + CSS.escape(st.id) + '"]');
+    if (!host) return null;
+    if (st.island === host && st.flow && st.flow.isConnected) return host;
+    st.island = host;
+    host.textContent = '';
+    st.clip = document.createElement('div'); st.clip.className = 'tx-clip';
+    st.flow = document.createElement('div'); st.flow.className = 'tx-flow';
+    st.caret = document.createElement('i'); st.caret.className = 'tx-caret'; st.caret.setAttribute('aria-hidden', 'true');
+    st.clip.appendChild(st.flow); st.clip.appendChild(st.caret); host.appendChild(st.clip);
+    st.block = null; st.list = null;
+    var upto = st.cursor; st.cursor = 0;
+    for (var i = 0; i < upto; i++) exec(st, st.ops[i], true);
+    st.cursor = upto;
+    if (st.phase === 'pending') pendingLabel(st, true);
+    st.h = st.flow.offsetHeight; st.clip.style.height = st.h + 'px';
+    return host;
+  }
+
+  function pendingLabel(st, on) {
+    var el = st.flow && st.flow.querySelector('.tx-pending');
+    if (on && !el && st.flow) {
+      var c = C(), mdl = c.selectedModel ? c.selectedModel() : null;
+      el = document.createElement('span'); el.className = 'tx-pending';
+      el.innerHTML = '<b>' + esc((mdl && mdl.name) || 'Assistant') + '</b><span class="tx-pending-verb">is thinking</span><em class="tx-pending-t"></em>';
+      st.flow.appendChild(el);
+    } else if (!on && el) {
+      el.remove();
+    }
+    return el;
+  }
+
+  function currentBlock(st) {
+    if (!st.block) { var p = document.createElement('p'); st.flow.appendChild(p); st.block = p; }
+    return st.block;
+  }
+  function exec(st, op, quiet) {
+    var v = voice();
+    if (op.t === 'block') {
+      var el;
+      if (op.tag === 'li') {
+        if (!st.list || st.list.tagName.toLowerCase() !== op.list) { st.list = document.createElement(op.list); st.flow.appendChild(st.list); if (!quiet) st.list.classList.add('tx-born'); }
+        el = document.createElement('li'); st.list.appendChild(el);
+      } else if (op.tag === 'pre') {
+        st.list = null;
+        var pre = document.createElement('pre'); el = document.createElement('code'); pre.appendChild(el); st.flow.appendChild(pre);
+        if (!quiet) pre.classList.add('tx-born');
+      } else {
+        st.list = null; el = document.createElement(op.tag); st.flow.appendChild(el);
+      }
+      if (!quiet) el.classList.add('tx-born');
+      st.block = el;
+      return;
+    }
+    var blk = currentBlock(st);
+    if (op.t === 's') { blk.appendChild(document.createTextNode(' ')); return; }
+    if (op.t === 'br') { blk.appendChild(document.createElement('br')); return; }
+    if (op.t === 'line') { blk.appendChild(document.createTextNode(op.text + '\n')); if (!quiet) flashLine(blk); return; }
+    if (op.t === 'w') {
+      var span = document.createElement('span');
+      span.className = quiet ? 'tx-w tx-still' : 'tx-w';
+      var target = span;
+      if (op.mark === 'b') { var b = document.createElement('strong'); span.appendChild(b); target = b; }
+      else if (op.mark === 'code') { var cd = document.createElement('code'); span.appendChild(cd); target = cd; }
+      if (!quiet && v === 'retro') {
+        /* Retro types each character in, stepped, inside the same word slot. */
+        for (var i = 0; i < op.text.length; i++) { var ch = document.createElement('span'); ch.className = 'tx-c'; ch.style.setProperty('--i', i); ch.textContent = op.text[i]; target.appendChild(ch); }
+      } else target.textContent = op.text;
+      blk.appendChild(span);
+      st.words++;
+    }
+  }
+  function flashLine(code) { code.classList.remove('tx-line'); void code.offsetWidth; code.classList.add('tx-line'); }
+
+  /* Word pacing: a steady natural rate that speeds up when text is waiting and
+     breathes at sentence ends. Bursts never dump. */
+  var BASE_MS = 1000 / 30;
+  function interval(st, op, backlog) {
+    var iv = BASE_MS / (1 + backlog / 16);
+    if (op.t === 'w' && /[.!?:]$/.test(op.text)) iv += Math.max(30, 150 - backlog * 6);
+    else if (op.t === 'w' && /[,;]$/.test(op.text)) iv += Math.max(10, 50 - backlog * 3);
+    return Math.max(9, iv);
+  }
+  function backlogOf(st, arrived) { var n = 0; for (var i = st.cursor; i < st.ops.length && st.ops[i].end <= arrived; i++) if (st.ops[i].t === 'w' || st.ops[i].t === 'line') n++; return n; }
+
+  function setPhase(st, ph) {
+    st.phase = ph; st.m.streamPhase = ph;
+    var art = document.querySelector('.transcript-inner > [data-k="msg:' + CSS.escape(st.id) + '"]');
+    if (art) art.setAttribute('data-streaming', ph);
+  }
+
+  function frame(ts) {
+    loop = 0;
+    var t = now(), any = false;
+    streams.forEach(function (st) {
+      any = true;
+      if (!ensureIsland(st)) return;            // not on screen (another thread); keeps its clock
+      var arrived = arrivedChars(st, t);
+      if (st.phase === 'pending') {
+        var pe = st.flow.querySelector('.tx-pending-t');
+        var waited = (t - st.t0) / 1000;
+        if (pe) pe.textContent = waited >= 4 ? ' · ' + Math.floor(waited) + 's' : '';
+        if (arrived > 0 && t - st.t0 >= st.minPending) {
+          pendingLabel(st, false);
+          setPhase(st, 'live');
+          sound('first');
+          st.nextAt = t + (reduced() ? 0 : 60);
+        }
+      }
+      if (st.phase === 'live') {
+        var released = 0, cap = reduced() ? 1e9 : 4;
+        while (st.cursor < st.ops.length && st.ops[st.cursor].end <= arrived && t >= st.nextAt && released < cap) {
+          var op = st.ops[st.cursor];
+          var backlog = backlogOf(st, arrived);
+          exec(st, op, reduced());
+          st.cursor++;
+          if (op.t === 'w' || op.t === 'line') { released++; st.nextAt = t + (reduced() ? 0 : interval(st, op, backlog)); }
+          else if (op.t === 'block' && st.cursor > 1) st.nextAt = t + (reduced() ? 0 : 90);
+        }
+        placeCaret(st);
+        if (st.cursor >= st.ops.length && allArrived(st, t)) { setPhase(st, 'settling'); st.settleAt = t; }
+      }
+      springHeight(st, ts);
+      if (st.phase === 'settling') {
+        var still = Math.abs(st.flow.offsetHeight - st.h) < 0.5;
+        if ((still && t - st.settleAt > 170) || reduced() || t - st.settleAt > 900) finalize(st, st.spec.terminal || 'complete');
+      }
+    });
+    if (any && streams.size) loop = requestAnimationFrame(frame);
+  }
+
+  /* Height follows the flow through a critically damped spring (omega ~ 26/s),
+     so a new line opens over ~200ms instead of stepping by a line height. */
+  function springHeight(st, ts) {
+    if (!st.clip || !st.flow) return;
+    var target = st.flow.offsetHeight;
+    if (reduced()) { st.h = target; st.hv = 0; st.clip.style.height = target + 'px'; return; }
+    var tnow = now();
+    var dt = st.lastFrame ? Math.min(0.05, Math.max(0.0005, (tnow - st.lastFrame) / 1000)) : 1 / 60;
+    st.lastFrame = tnow;
+    var w = 26, x = st.h - target;
+    var a = -2 * w * st.hv - w * w * x;
+    st.hv += a * dt; st.h += st.hv * dt;
+    if (Math.abs(st.h - target) < 0.4 && Math.abs(st.hv) < 4) { st.h = target; st.hv = 0; }
+    if (st.h < target - 40) st.h = target - 40;            // never lag more than ~2 lines
+    st.clip.style.height = Math.max(0, st.h) + 'px';
+  }
+
+  function placeCaret(st) {
+    if (!st.caret || !st.flow) return;
+    var words = st.flow.querySelectorAll('.tx-w');
+    var last = words[words.length - 1];
+    var cr = st.clip.getBoundingClientRect();
+    if (!last) { st.caret.style.transform = 'translate(0px, 3px)'; return; }
+    var rects = last.getClientRects(), r = rects[rects.length - 1] || last.getBoundingClientRect();
+    st.caret.style.transform = 'translate(' + (r.right - cr.left + 2).toFixed(1) + 'px,' + (r.top - cr.top + 2).toFixed(1) + 'px)';
+    st.caret.style.height = Math.max(12, r.height - 4).toFixed(1) + 'px';
+  }
+
+  function releasedText(st) {
+    var i = st.cursor - 1; while (i >= 0 && st.ops[i].t !== 'w' && st.ops[i].t !== 'line') i--;
+    return i < 0 ? '' : st.full.slice(0, st.ops[i].end).replace(/\s+$/, '');
+  }
+
+  function finalize(st, terminal) {
+    if (!streams.has(st.id)) return;
+    streams.delete(st.id);
+    var c = C(), m = st.m;
+    var body = terminal === 'complete' ? st.full : releasedText(st);
+    m.body = body; m.streaming = false; delete m.streamPhase;
+    if (body.length > 460) m.streamedLong = true;
+    if (terminal !== 'complete') { m.terminal = terminal; if (terminal === 'error' && st.spec.error) m.terminalNote = st.spec.error; }
+    if (m.runtime) {
+      var secs = Math.max(1, Math.round((now() - st.t0) / 1000));
+      m.runtime.completedAt = new Date().toISOString(); m.runtime.workedSeconds = secs; m.runtime.durationMs = Math.round(now() - st.t0);
+      m.runtime.terminal = terminal === 'complete' ? 'complete' : terminal;
+      m.runtime.tokens = { input: 1800 + body.length, output: Math.round(body.split(/\s+/).length * 1.35) };
+    }
+    c.renderApp();
+    var art = document.querySelector('.transcript-inner > [data-k="msg:' + CSS.escape(st.id) + '"]');
+    if (art && !reduced()) { art.classList.add('tx-peek'); setTimeout(function () { art.classList.remove('tx-peek'); }, window.PM56_CLOCK ? window.PM56_CLOCK.ms(1500) : 1500); }
+    var t = (c.state.threads || []).filter(function (x) { return x.id === st.tid; })[0];
+    if (t && terminal === 'complete' && window.PM56_AUTO_MEMORY) window.PM56_AUTO_MEMORY.boundary(t, m);
+    if (terminal === 'complete' && st.spec.followUp && t) followUp(c, t, st.spec.followUp);
+    if (terminal === 'error' && st.spec.followUp && t) followUp(c, t, st.spec.followUp);
+    sound(terminal === 'complete' ? 'complete' : 'stop');
+    if (st.revealRec) { var others = false; streams.forEach(function (o) { if (o.revealRec === st.revealRec) others = true; }); if (!others) c.releaseNextRun(st.revealRec); }
+    c.followIfSticky();
+    if (st.tid === c.state.selectedThread) c.maybeFlushQueue();
+  }
+
+  function followUp(c, t, f) {
+    var id = c.uid(f.type || 'follow');
+    if (f.type === 'plan-card') t.messages.push({ id: id, role: 'system', type: 'plan-card', artifactId: f.artifactId || 'plan-query', deep: !!f.deep });
+    else if (f.type === 'live-agents') t.messages.push({ id: id, role: 'system', type: 'live-agents', title: f.title });
+    else if (f.type === 'working') {
+      var wid = c.uid('run');
+      t.messages.push({ id: id, role: 'system', type: 'working', title: f.title || 'Working', workId: wid });
+      c.state.works[wid] = { step: 0, running: true, expanded: false, started: true, completed: false, elapsed: 0, openPhase: null, clock: 0 };
+      c.armWorkTimer();
+    } else t.messages.push({ id: id, role: 'system', type: f.type, title: f.title, detail: f.detail || '', time: new Date().toISOString() });
+    c.renderApp(); c.followIfSticky();
+  }
+
+  /* Owner: busy while any stream of that thread runs. Stop keeps what was
+     written; leaving the thread lets the reply finish in the background (it
+     lands complete); a global reset forgets every stream. */
+  var owner = {
+    busy: function (tid) { var b = false; streams.forEach(function (st) { if (st.tid === tid) b = true; }); return b; },
+    stop: function (tid) { streams.forEach(function (st) { if (st.tid === tid) finalize(st, st.phase === 'pending' ? 'stopped' : 'stopped'); }); },
+    cancel: function (tid) { streams.forEach(function (st) { if (st.tid === tid) { st.cursor = st.ops.length; finalize(st, st.spec.terminal || 'complete'); } }); },
+    reset: function () { streams.clear(); flights.clear(); }
+  };
+
+  /* ================================================================ 4 reveals */
+  function onComplete(rec) {
+    var c = C(), t = c.activeThread && c.activeThread();
+    if (!t || !rec) return false;
+    if (revealedRecs.has(rec)) return false;
+    var id = rec.id || rec.runId, held = false;
+    if (!id) return false;
+    t.messages.forEach(function (m) {
+      if (m.revealAfter !== id || m.role !== 'assistant' || m.type !== 'text' || m.streaming) return;
+      if (c.state.replyMode === 'instant' || reduced()) return;
+      var words = String(m.body || '').split(/(\s+)/);
+      /* A revealed fixture message streams from its own text in two-to-four chunks. */
+      var chunks = [], per = Math.ceil(words.length / 3);
+      for (var i = 0; i < words.length; i += per) chunks.push(words.slice(i, i + per).join(''));
+      begin(m, t.id, { chunks: chunks, delayMs: 380, chunkMs: 320, terminal: 'complete' }, { rich: false, revealRec: id, minPending: 300 });
+      held = true;
+    });
+    if (held) revealedRecs.add(rec);
+    return held;
+  }
+
+  /* ================================================================ 3 flights */
+  var flights = new Map();   // message id -> snapshot
+  var snap = null;
+  function snapshotComposer() {
+    var ta = document.querySelector('textarea[data-input="composer"]');
+    if (!ta || !ta.value.trim()) { snap = null; return; }
+    var cs = getComputedStyle(ta), r = ta.getBoundingClientRect();
+    snap = {
+      text: ta.value, at: now(),
+      rect: { left: r.left, top: r.top, width: r.width, height: r.height },
+      pad: { l: parseFloat(cs.paddingLeft), t: parseFloat(cs.paddingTop), r: parseFloat(cs.paddingRight) },
+      font: cs.font, fontSize: cs.fontSize, lh: cs.lineHeight, color: cs.color, scroll: ta.scrollTop,
+      send: (function () { var b = document.querySelector('[data-k="send-btn"]'); if (!b) return null; var q = b.getBoundingClientRect(); return { left: q.left, top: q.top, width: q.width, height: q.height }; })()
+    };
+  }
+  document.addEventListener('click', function (e) { if (e.target && e.target.closest && e.target.closest('[data-action="send"]')) snapshotComposer(); }, true);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && e.target && e.target.matches && e.target.matches('textarea[data-input="composer"]')) snapshotComposer();
+  }, true);
+
+  function sent(m, t) {
+    if (!snap || now() - snap.at > 1200 || reduced()) { snap = null; return; }
+    if (String(m.body || '').trim() !== snap.text.trim()) { snap = null; return; }
+    /* The text layer is created NOW, in the same task that clears the field, so
+       the typed text never vanishes for a frame before it starts to move. */
+    snap.A = textLayer(snap.text, snap.font, snap.lh, snap.color, snap.rect.width - snap.pad.l - snap.pad.r);
+    snap.A.style.left = (snap.rect.left + snap.pad.l) + 'px'; snap.A.style.top = (snap.rect.top + snap.pad.t - snap.scroll) + 'px';
+    document.body.classList.add('tx-flying');
+    flights.set(m.id, snap); snap = null;
+    sound('send');
+    requestAnimationFrame(function () { fly(m.id); });
+  }
+  function flightPending(id) { return flights.has(id); }
+
+  /* Flight timing is shared by every voice (the house rule: voices differ in
+     path, easing and texture, never in timing). */
+  var FLY_MS = 440;
+  function bez(p, x1, y1, x2, y2) {
+    /* cubic-bezier(x1,y1,x2,y2) at progress p, solved for x by Newton steps */
+    var t = p;
+    for (var i = 0; i < 8; i++) {
+      var x = 3 * (1 - t) * (1 - t) * t * x1 + 3 * (1 - t) * t * t * x2 + t * t * t - p;
+      var dx = 3 * (1 - t) * (1 - t) * x1 + 6 * (1 - t) * t * (x2 - x1) + 3 * t * t * (1 - x2);
+      if (Math.abs(dx) < 1e-6) break; t -= x / dx; t = Math.min(1, Math.max(0, t));
+    }
+    return 3 * (1 - t) * (1 - t) * t * y1 + 3 * (1 - t) * t * t * y2 + t * t * t;
+  }
+  function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function seg(t, a, b) { return clamp01((t - a) / (b - a)); }
+  function textLayer(text, font, lh, color, width) {
+    var d = document.createElement('div'); d.className = 'tx-fly tx-fly-text'; d.textContent = text;
+    Object.assign(d.style, { font: font, lineHeight: lh, color: color, width: width + 'px', transformOrigin: '0 0' });
+    document.body.appendChild(d); return d;
+  }
+
+  /* The text you typed leaves the composer and becomes the bubble.
+     TEXT: one layer that keeps the typed glyphs and scales from the composer's
+     size to the bubble's -- no doubled text. Only when the line breaks differ
+     between the two widths do two layers cross-fade (the middle 30%).
+     SHAPE: the bubble itself, a separate layer that forms per voice --
+       basic   grows out of the text's own bounds (clip-path), zero overshoot
+       friendly pops out of the Send button and swings up to meet the text
+       glass   condenses out of depth (blur and scale settle)
+       retro   the text blinks out and the bubble prints in, in steps
+     The landing slot is re-read every frame: the transcript is still gliding. */
+  function fly(id) {
+    var s = flights.get(id);
+    var art = document.querySelector('.transcript-inner > [data-k="msg:' + CSS.escape(id) + '"]');
+    var surf = art && art.querySelector('.message-surface');
+    var body = surf && surf.querySelector('.message-body');
+    if (!s || !surf || !body) { if (s && s.A) s.A.remove(); document.body.classList.remove('tx-flying'); land(id); return; }
+    art.getAnimations().forEach(function (a) { try { if (a.effect.getTiming().iterations !== Infinity) a.finish(); } catch (e) { } });
+    var v = voice();
+    var scs = getComputedStyle(surf), bcs = getComputedStyle(body);
+    var r0 = surf.getBoundingClientRect(), br0 = body.getBoundingClientRect();
+    var fA = parseFloat(s.fontSize) || 13, fB = parseFloat(bcs.fontSize) || 13.5;
+    var wA = s.rect.width - s.pad.l - s.pad.r, wB = br0.width;
+    /* TEXT */
+    var A = s.A || textLayer(s.text, s.font, s.lh, s.color, wA);
+    var B2 = textLayer(s.text, bcs.font, bcs.lineHeight, bcs.color, wB);
+    var single = A.offsetHeight <= (parseFloat(s.lh) || fA * 1.5) * 1.6 && B2.offsetHeight <= (parseFloat(bcs.lineHeight) || fB * 1.6) * 1.6;
+    if (single && v !== 'retro') { B2.remove(); B2 = null; }
+    else B2.style.opacity = '0';
+    /* SHAPE */
+    var S = document.createElement('div'); S.className = 'tx-fly tx-fly-shape';
+    Object.assign(S.style, { width: r0.width + 'px', height: r0.height + 'px', background: scs.backgroundColor, border: scs.border, borderRadius: scs.borderRadius, boxSizing: 'border-box' });
+    document.body.insertBefore(S, A);
+    var radius = parseFloat(scs.borderTopLeftRadius) || 16;
+    var sx = s.rect.left + s.pad.l, sy = s.rect.top + s.pad.t - s.scroll;
+    var sendR = s.send;
+    document.body.classList.add('tx-flying');
+    var start = now();
+    function frame() {
+      var t = Math.min(1, (now() - start) / FLY_MS);
+      var r = surf.isConnected ? surf.getBoundingClientRect() : r0;
+      var brr = body.isConnected ? body.getBoundingClientRect() : br0;
+      var tx = brr.left, ty = brr.top;                                  // where the text lands
+      var padL = brr.left - r.left, padT = brr.top - r.top, padR = r.right - brr.right, padB = r.bottom - brr.bottom;
+      if (t > 0.55) document.body.classList.remove('tx-flying');
+      if (v === 'retro') {
+        /* print whole lines: the wipe steps one line of the bubble at a time */
+        var lineH = parseFloat(bcs.lineHeight) || 21, lines = Math.max(1, Math.round((brr.height || lineH) / lineH));
+        var steps = lines + 1, st = Math.min(1, Math.ceil(seg(t, 0.34, 1) * steps) / steps);
+        A.style.transform = 'none'; A.style.left = sx + 'px'; A.style.top = sy + 'px';
+        A.style.opacity = t < 0.34 ? (Math.floor(t * 12) % 2 ? '0' : '1') : '0';
+        var T = B2 || A.cloneNode(true);
+        if (!B2) { B2 = T; B2.style.width = wB + 'px'; B2.style.font = bcs.font; B2.style.lineHeight = bcs.lineHeight; B2.style.color = bcs.color; document.body.appendChild(B2); }
+        B2.style.left = tx + 'px'; B2.style.top = ty + 'px'; B2.style.transform = 'none';
+        var wipe = t < 0.34 ? 0 : (st >= 1 ? 1 : (padT + st * lines * lineH) / Math.max(1, r.height));
+        B2.style.opacity = wipe > 0 ? '1' : '0';
+        B2.style.clipPath = 'inset(0 0 ' + ((1 - wipe) * 100).toFixed(1) + '% 0)';
+        S.style.left = r.left + 'px'; S.style.top = r.top + 'px'; S.style.transform = 'none';
+        S.style.opacity = wipe > 0 ? '1' : '0';
+        S.style.clipPath = 'inset(0 0 ' + ((1 - wipe) * 100).toFixed(1) + '% 0)';
+      } else {
+        var ease = v === 'friendly' ? [0.34, 1.32, 0.64, 1] : v === 'glass' ? [0.05, 0.7, 0.1, 1] : [0.2, 0.8, 0.2, 1];
+        var p = bez(t, ease[0], ease[1], ease[2], ease[3]);
+        var arc = (v === 'friendly' ? -42 : v === 'glass' ? -8 : -14) * Math.sin(Math.PI * Math.min(1, t));
+        var dx = (tx - sx) * p, dy = (ty - sy) * p + arc;
+        var sc = (fA / fB) + (1 - fA / fB) * p;                        // composer size -> bubble size
+        A.style.left = sx + 'px'; A.style.top = sy + 'px';
+        A.style.transform = 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) scale(' + (single ? (sc * fB / fA) : 1).toFixed(4) + ')';
+        if (!single) {
+          var x = seg(t, 0.35, 0.65);
+          A.style.opacity = String(1 - x);
+          B2.style.left = sx + 'px'; B2.style.top = sy + 'px';
+          B2.style.transform = 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) scale(' + sc.toFixed(4) + ')';
+          B2.style.opacity = String(x);
+        }
+        /* the shape */
+        var bx, by, ss = 1, op = 1, blur = 0, clip = 'none';
+        if (v === 'friendly' && sendR) {
+          /* the pill pops out of Send, catches the text by mid-flight, and
+             carries it the rest of the way (so the two never drift apart) */
+          var q = bez(seg(t, 0, 0.55), 0.34, 1.5, 0.64, 1);
+          var ox = sendR.left + sendR.width / 2 - (r.left + r.width / 2), oy = sendR.top + sendR.height / 2 - (r.top + r.height / 2);
+          var rideX = (sx - tx) * (1 - p), rideY = (sy - ty) * (1 - p) + arc;
+          bx = ox + (rideX - ox) * q; by = oy + (rideY - oy) * q;
+          ss = 0.18 + 0.82 * q; op = seg(t, 0, 0.1);
+        } else {
+          bx = (sx - tx) * (1 - p); by = (sy - ty) * (1 - p) + arc;
+          if (v === 'glass') { ss = 1.05 - 0.05 * p; op = seg(t, 0.05, 0.6); blur = 9 * (1 - seg(t, 0.1, 0.85)); }
+          else {
+            var f = bez(seg(t, 0.1, 1), 0.2, 0.8, 0.2, 1);
+            op = seg(t, 0, 0.3);
+            clip = 'inset(' + (padT * (1 - f)).toFixed(1) + 'px ' + (padR * (1 - f)).toFixed(1) + 'px ' + (padB * (1 - f)).toFixed(1) + 'px ' + (padL * (1 - f)).toFixed(1) + 'px round ' + radius + 'px)';
+          }
+        }
+        S.style.left = r.left + 'px'; S.style.top = r.top + 'px';
+        S.style.transform = 'translate(' + bx.toFixed(2) + 'px,' + by.toFixed(2) + 'px) scale(' + ss.toFixed(4) + ')';
+        S.style.opacity = String(op); S.style.filter = blur ? 'blur(' + blur.toFixed(2) + 'px)' : 'none'; S.style.clipPath = clip;
+      }
+      if (t < 1) requestAnimationFrame(frame);
+      else {
+        document.body.classList.remove('tx-flying');
+        land(id);
+        requestAnimationFrame(function () { A.remove(); if (B2) B2.remove(); S.remove(); });
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  function land(id) {
+    flights.delete(id);
+    var art = document.querySelector('.transcript-inner > [data-k="msg:' + CSS.escape(id) + '"]');
+    if (!art) return;
+    art.removeAttribute('data-flight');
+    var surf = art.querySelector('.message-surface');
+    if (surf && surf.animate && !reduced()) {
+      var v = voice();
+      var kf = v === 'friendly' ? [{ transform: 'scale(.97)' }, { transform: 'scale(1.015)', offset: .6 }, { transform: 'none' }]
+        : v === 'retro' ? [{ opacity: .6 }, { opacity: 1 }]
+          : [{ transform: 'scale(.99)' }, { transform: 'none' }];
+      surf.animate(kf, { duration: v === 'friendly' ? 240 : 150, easing: v === 'retro' ? 'steps(2,end)' : 'cubic-bezier(.17,.84,.29,.99)' });
+    }
+  }
+
+  /* ================================================================ wiring */
+  var wired = false;
+  function wire() {
+    if (wired) return;
+    var c; try { c = C(); } catch (e) { return; }
+    if (!c || !c.registerTurnOwner) return;
+    wired = true;
+    c.registerTurnOwner(owner);
+    c.onWorkComplete(onComplete);
+  }
+  setTimeout(wire, 0);
+  document.addEventListener('DOMContentLoaded', wire);
+
+  window.PM56_STREAM = {
+    reply: function (c, t, raw, opts) { wire(); return reply(c, t, raw, opts); },
+    sent: function (m, t) { wire(); sent(m, t); },
+    flightPending: flightPending,
+    active: function () { var out = []; streams.forEach(function (st) { out.push({ id: st.id, tid: st.tid, phase: st.phase, cursor: st.cursor, ops: st.ops.length, words: st.words }); }); return out; },
+    begin: function (m, tid, spec, opts) { wire(); return begin(m, tid, spec, opts); },
+    owner: owner
+  };
+})();
 </script>
   <script>(() => {
   'use strict';
@@ -46113,7 +47350,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   }
 
   const DEFAULT = {
-    theme:'basic-dark', recipe:-1, variants:[7,5,1,0,1,0,8], selectedThread:'query',
+    /* variants[5]=16: the Turn Stage transcript (Chat WOW) is the default take. */
+    theme:'basic-dark', recipe:-1, variants:[7,5,1,0,1,16,8], selectedThread:'query',
     threads:clone(D.threads), editorTabs:['plan-query'], activeEditor:'plan-query',
     historyMode:'pinned', historySearch:'', historyWidth:224, editorWidth:54, activityWidth:280,
     historySections:{pinned:true, recent:true, archived:false},
@@ -46244,7 +47482,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     'transcriptMessage','composerTray','composerRibbon','composerBelow','wandRows','submenu','modeRows',
     /* Append points inside context.js's own replace-slot output, so BSD adds a row and a
        section without re-registering (and therefore duplicating) the whole Context menu. */
-    'contextBsdRow','contextBsdSection','editorTabLabel','editorDocument','workRecord'];
+    'contextBsdRow','contextBsdSection','editorTabLabel','editorDocument','workRecord',
+    /* Chat WOW: FIRST-non-empty (not concatenated) -- a module names the family
+       of a message type it renders: prose|user|work|deliverable|needs|people|time|ledger. */
+    'transcriptFamily'];
 
   function ensureExt(){
     /* Keep in sync with EXT_SHIM in build.py: whichever of the two runs first
@@ -46294,7 +47535,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       /* mutators -- each triggers the render the change actually needs */
       renderApp, renderGoals: renderGoalSurfaces, renderOverlays, toast, addReceipt, openEditor, closeEditor,
       switchThread, mutateThread, appendMessage, openMenu, closeMenu, setSubmenu,
-      openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation
+      openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation,
+      /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
+      turnBusy, registerTurnOwner, maybeFlushQueue, startWorkingRec, onWorkComplete, releaseNextRun,
+      followIfSticky, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx
     }, extra);
   }
   function extEach(name, extra, each){
@@ -46310,6 +47554,13 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   }
   /* Append: the built-in markup stays, the slot adds to it. */
   function extRender(name, extra){ return extEach(name, extra) || ''; }
+  /* First answer wins: for slots that name one thing rather than add markup. */
+  function extFirst(name, extra){
+    const fns=EXT._slots[name]; if(!fns||!fns.length) return '';
+    const ctx=extCtx(extra);
+    for(const fn of fns){ try{ const v=fn(ctx); if(v) return v; }catch(err){ console.error(`PM56_EXT slot "${name}" threw`, err); } }
+    return '';
+  }
   /* Replace: the slot substitutes the built-in markup, but only if a module
      registered one -- so the concept still renders with no modules loaded. */
   function extReplace(name, extra, fallback){
@@ -46717,12 +47968,103 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return esc(body).split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
   }
 
+  /* ---- transcript item identity (Chat WOW M1) ------------------------
+     Every item's root tag is stamped with a stable key and with what it IS:
+       data-k        msg:<id>, unless the item already keys itself
+       data-role     user | assistant | system
+       data-msg-type the message type (the generic event card had no hook)
+       data-family   prose | user | work | deliverable | needs | people | time | ledger
+       data-turn     turn ordinal (a user turn opens one)
+       data-turn-pos first | mid | last | only (assistant side), user (user side)
+     Keys make an insert or a reveal animate the RIGHT item: unkeyed items
+     matched by position, so a mid-list reveal rewrote every later article and
+     played the entrance on the last one. Families let one stylesheet give each
+     kind of item its own silhouette without touching the modules that render
+     them. The list stays flat -- no wrappers -- so direct-child selectors and
+     every harness that walks .transcript-inner keep working. */
+  const FAMILY_BY_TYPE={
+    'eli5-example-answer':'prose','bc-capture':'user',
+    working:'work','order-export-work':'work','b16-work':'work','b17-work':'work',
+    'plan-card':'deliverable','plan-card-v2':'deliverable',artifact:'deliverable','af-eli5-preview':'deliverable',
+    'b18-result':'deliverable','agent-work':'deliverable','revert-turn':'deliverable','debug-investigation':'deliverable',
+    'af-investigation':'deliverable','b14-discovery':'deliverable','b13-wonderer':'deliverable',
+    permission:'needs','question-receipt':'needs','bsd-advice':'needs','bsd-advice-v3':'needs','tool-error':'needs',
+    'model-unavailable':'needs',blocked:'needs',waiting:'needs',
+    'collab-run':'people','live-agents':'people',crew:'people',
+    'sched-message':'time'
+  };
+  function familyOf(m){
+    const ext=extFirst('transcriptFamily',{m});
+    if(ext) return ext;
+    if(m.type==='text') return m.role==='user'?'user':'prose';
+    return FAMILY_BY_TYPE[m.type]||'ledger';
+  }
+  const STAMP_HEAD=/^(\s*(?:<!--[\s\S]*?-->\s*)*)<([a-zA-Z][\w-]*)((?:\s[^>]*)?)>/;
+  function stampItem(html,attrs){
+    const mt=STAMP_HEAD.exec(html);
+    if(!mt) return html;
+    const at=mt[3]||'';
+    let add='';
+    for(const [k,v] of attrs){
+      if(v==null) continue;
+      if(new RegExp('\\s'+k+'\\s*=').test(at)) continue;   // the item's own value wins
+      add+=` ${k}="${esc(String(v))}"`;
+    }
+    return mt[1]+'<'+mt[2]+add+at+'>'+html.slice(mt[0].length);
+  }
+  function renderTranscriptItems(t){
+    const items=[];
+    let turn=0;
+    for(const m of t.messages){
+      if(!messageVisible(m)) continue;
+      const html=renderMessage(m,t);
+      if(!html||!String(html).trim()) continue;
+      const fam=familyOf(m);
+      if(fam==='user') turn++;
+      items.push({m,html,fam,turn,side:fam==='user'?'user':'assistant'});
+    }
+    const byTurn={};
+    for(const it of items) if(it.side==='assistant') (byTurn[it.turn]=byTurn[it.turn]||[]).push(it);
+    for(const k in byTurn){ const list=byTurn[k]; list.forEach((it,i)=>{ it.pos=list.length===1?'only':i===0?'first':i===list.length-1?'last':'mid'; }); }
+    return items.map(it=>stampItem(it.html,[
+      ['data-k',it.m.id?'msg:'+it.m.id:null],
+      ['data-role',it.m.role||'system'],
+      ['data-msg-type',it.m.type||'text'],
+      ['data-family',it.fam],
+      ['data-turn',it.turn],
+      ['data-turn-pos',it.side==='user'?'user':it.pos],
+      ['data-flight',window.PM56_STREAM&&window.PM56_STREAM.flightPending(it.m.id)?'1':null]
+    ])).join('');
+  }
+  /* A thread switch (and boot) mounts every item at once; their entrances are
+     finished so the thread arrives as one piece instead of thirty cards fading
+     in together. Only items that arrive afterwards animate in. */
+  function finishEntrances(root){
+    root=root||document.querySelector('.transcript-inner');
+    if(!root||!root.getAnimations) return;
+    for(const a of root.getAnimations({subtree:true})){
+      if(typeof CSSAnimation!=='undefined' && !(a instanceof CSSAnimation)) continue;
+      const tm=a.effect&&a.effect.getTiming&&a.effect.getTiming();
+      if(!tm||tm.iterations===Infinity) continue;
+      try{ a.finish(); }catch(e){}
+    }
+  }
+
+  /* Chat WOW theme voices: one choreography, four personalities (basic, friendly,
+     glass, retro). Light and dark share a voice. Demo Studio can pin a voice to
+     judge it on any theme. */
+  function motionVoice(){
+    const v=state.motionVoice;
+    if(v&&v!=='auto') return v;
+    const fam=String(state.theme||'basic').split('-')[0];
+    return ['basic','friendly','glass','retro'].includes(fam)?fam:'basic';
+  }
   function renderChat(){
     const t=activeThread();
     return `<section class="chat-stage" data-shell="${state.variants[0]}">
       ${renderChatHeader(t)}
       <div class="lens-dock" data-k="context-lens-dock">${renderInlineLens()}</div>
-      <div class="transcript" data-variant="${state.variants[5]}" data-scroll-key="transcript"><div class="transcript-inner">${t.messages.filter(messageVisible).map(m=>renderMessage(m,t)).join('')}</div></div>
+      <div class="transcript" data-variant="${state.variants[5]}" data-voice="${motionVoice()}" data-scroll-key="transcript"><div class="tx-spine-layer" data-k="tx-spine" data-pm-keep aria-hidden="true"></div><div class="transcript-inner">${renderTranscriptItems(t)}</div></div>
       ${renderDecisionHost()}
       ${renderChatFloat()}
       ${renderComposer()}
@@ -46808,7 +48150,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
 
   function renderTextMessage(m){
     const expanded=!!state.messageExpanded[m.id], details=!!state.messageDetails[m.id];
-    const isLong=m.long || String(m.body).length>460;
+    /* Chat WOW: a reply still being written is never clamped -- the clamp would
+       snap shut mid-stream -- and a streamed reply that ended long ends open. */
+    const isLong=!m.streaming && !m.streamedLong && (m.long || String(m.body).length>460);
     const expandTip=expanded?'Collapse the response':'Expand the full response';
     const copied=state.copyFlashId===m.id;
     const copyBtn=`<button class="text-button icon-only${copied?' is-copied':''}" data-action="copy-message" data-id="${esc(m.id)}"${hoverAttrs('msg-copy-'+m.id,copied?'Copied':'Copy this message without changing the thread')}>${icon(copied?'check':'copy',13)}<span>Copy</span></button>`;
@@ -46820,7 +48164,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const overflowOpen=window.PM56_MSG_OVERFLOW&&window.PM56_MSG_OVERFLOW.isOpen(m.id);
     const chromeCls=`message-chrome${m.role==='user'?' message-chrome-user':''}${overflowOpen?' is-overflow-open':''}`;
     const chrome=`<div class="${chromeCls}">${extRender('messageMeta',{message:m})}${actions}${overflowPanel}</div>`;
-    return `<article class="message message-${m.role}" data-message-id="${esc(m.id)}" data-speaker="${m.role==='user'?'You':'Assistant'}" data-index="${msgIndex(m.id)}" data-time="${esc(msgClock(m))}" style="--msg-index:${msgIndex(m.id)}">${extRender('messageAffordance',{message:m})}<div class="message-surface">${m.role==='assistant'?`<div class="message-role">${icon('sparkles',12)} Assistant</div>`:''}<div class="message-body ${isLong&&!expanded?'long-fade':''}">${formatText(m.body)}</div>${isLong?`<button class="text-button" data-action="toggle-message" data-id="${esc(m.id)}"${hoverAttrs('msg-expand-'+m.id,expandTip)}>${icon(expanded?'collapse':'expand',12)} ${expanded?'Collapse':'Expand response'}</button>`:''}${details?renderMessageDetails(m):''}</div>${chrome}</article>`;
+    /* Chat WOW: while streaming, the body is a JS-owned island (data-pm-keep) that
+       turn-stream.js writes word by word; the surface and the island are keyed so
+       an affordance inserted before the surface can never be patched onto them. */
+    const bodyHtml=m.streaming
+      ? `<div class="message-body tx-stream" data-pm-keep data-k="tx-island:${esc(m.id)}"></div>`
+      : `<div class="message-body ${isLong&&!expanded?'long-fade':''}">${m.rich&&window.PM56_RICH?window.PM56_RICH.html(m.body):formatText(m.body)}</div>`;
+    const terminalHtml=(!m.streaming&&(m.terminal==='stopped'||m.terminal==='error'))
+      ? `<div class="tx-terminal tx-terminal-${esc(m.terminal)}" data-k="tx-term:${esc(m.id)}">${icon(m.terminal==='error'?'warning':'stop',11)}<span>${m.terminal==='error'?esc(m.terminalNote||'Stopped by an error'):'Stopped'}</span></div>` : '';
+    const streamAttr=m.streaming?` data-streaming="${esc(m.streamPhase||'pending')}"`:'';
+    return `<article class="message message-${m.role}" data-message-id="${esc(m.id)}" data-speaker="${m.role==='user'?'You':'Assistant'}" data-index="${msgIndex(m.id)}" data-time="${esc(msgClock(m))}" style="--msg-index:${msgIndex(m.id)}"${streamAttr}>${extRender('messageAffordance',{message:m})}<div class="message-surface"${m.streaming?` data-k="tx-surface:${esc(m.id)}"`:''}>${m.role==='assistant'?`<div class="message-role">${icon('sparkles',12)} Assistant</div>`:''}${bodyHtml}${terminalHtml}${isLong?`<button class="text-button" data-action="toggle-message" data-id="${esc(m.id)}"${hoverAttrs('msg-expand-'+m.id,expandTip)}>${icon(expanded?'collapse':'expand',12)} ${expanded?'Collapse':'Expand response'}</button>`:''}${details?renderMessageDetails(m):''}</div>${chrome}</article>`;
   }
 
   function renderMessageDetails(m){
@@ -47585,7 +48938,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="activity-wrap" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}"><i class="state-mark ${d.state}"></i>${icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`;}).join('')}</div></div>`;
   }
   function renderJumpBottom(){
-    const working=runningRecs().length>0;
+    const working=turnBusy();
     const tip=working?'Scroll to latest':'Scroll to bottom';
     const cls=`jump-bottom${jumpBottomVisible?' is-visible':''}${working?' is-working':''}`;
     return `<button type="button" class="${cls}" data-k="jump-bottom" data-action="scroll-to-bottom"${hoverAttrs('jump-bottom',tip)} aria-label="${esc(tip)}">${icon('down',12)}</button>`;
@@ -47734,7 +49087,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="send-queue" data-k="send-queue">${q.map(e=>`<div class="send-queue-row" data-k="q:${esc(e.id)}"><span class="send-queue-text"${hoverAttrs('q-text-'+e.id,e.text)}>${esc(e.text)}</span><button class="icon-button" data-action="queue-edit" data-id="${esc(e.id)}"${hoverAttrs('q-edit-'+e.id,'Edit')}>${icon('edit',13)}</button><button class="icon-button" data-action="queue-send-now" data-id="${esc(e.id)}"${hoverAttrs('q-send-'+e.id,'Send now')}>${icon('send',13)}</button></div>`).join('')}</div>`;
   }
   function sendButtonHtml(){
-    const liveGoal=window.PM56_GOAL?.get(activeThread().id),livePlan=window.PM56_PLANS?.current(activeThread().id);const busy=runningRecs().length>0||!!(liveGoal?.status==='active'&&liveGoal.workRef&&(liveGoal.workRef.kind==='order_export'||livePlan?.workRef))||!!(livePlan?.workRef&&livePlan.status==='building'&&!livePlan.attention);
+    const liveGoal=window.PM56_GOAL?.get(activeThread().id),livePlan=window.PM56_PLANS?.current(activeThread().id);const busy=turnBusy()||!!(liveGoal?.status==='active'&&liveGoal.workRef&&(liveGoal.workRef.kind==='order_export'||livePlan?.workRef))||!!(livePlan?.workRef&&livePlan.status==='building'&&!livePlan.attention);
     const qlen=(state.sendQueue[state.selectedThread]||[]).length;
     const queueFull=busy&&qlen>=2;
     if(busy && !state.composer.trim()){
@@ -48021,15 +49374,45 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     document.documentElement.style.setProperty('--activity-w',`${state.activityWidth}px`);
     pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
     document.getElementById('pmRoot').setAttribute('aria-busy','false');
-    flipHeights(flipTargets, flipBefore);
+    const post=snapScroll();
+    const flips=flipHeights(flipTargets, flipBefore);
     flipMoves(moveTargets, moveBefore);
     rollDigits(rollBefore);
-    restoreScroll(positions,{workH});
+    restoreScroll(positions,{workH, post, workGrow:workFlipGrowth(flips)});
     renderOverlays();
     retainHoverAfterRender();
     armComposerObserver();
     armJumpBottomListener();
+    armFollowObserver();
     syncJumpBottom();
+  }
+
+  /* patchScope (Chat WOW M1): re-render ONE keyed live node with the same
+     before/after steps renderApp runs around a full patch -- height FLIPs,
+     move FLIPs, rolling digits, scroll custody, hover retention -- so a caller
+     that knows only one surface changed (the work tick, a streaming turn) does
+     not pay for rebuilding the whole shell. Returns false when there is
+     nothing to patch, so callers can fall back to renderApp(). */
+  function patchScope(live, html){
+    if(!live||!live.isConnected||!html) return false;
+    const tpl=document.createElement('template'); tpl.innerHTML=String(html).trim();
+    const src=tpl.content.firstElementChild; if(!src) return false;
+    if(src.getAttribute('data-k')!==live.getAttribute('data-k')) return false;
+    const positions=captureScroll();
+    const flipTargets=[...live.querySelectorAll('[data-flip]')]; if(live.hasAttribute('data-flip')) flipTargets.unshift(live);
+    const flipBefore=new Map(flipTargets.map(el=>[el, el.getBoundingClientRect().height]));
+    const rollBefore=new Map([...live.querySelectorAll('.pm-roll')].map(el=>[el, el.textContent]));
+    const moveTargets=[...live.querySelectorAll('[data-flip-move]')];
+    const moveBefore=new Map(moveTargets.map(el=>{const r=el.getBoundingClientRect();return [el,{x:r.left,y:r.top}];}));
+    const workH=live.classList.contains('working-card')?live.getBoundingClientRect().height:null;
+    pmPatchNode(live,src);
+    const post=snapScroll();
+    const flips=flipHeights(flipTargets, flipBefore);
+    flipMoves(moveTargets, moveBefore);
+    rollDigits(rollBefore);
+    restoreScroll(positions,{workH, post, workGrow:workFlipGrowth(flips)});
+    retainHoverAfterRender();
+    return true;
   }
 
   /* G2: goal mutations project into a handful of in-tree islands. Patch those
@@ -48160,7 +49543,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      and it degrades to the motion Orbit already does well, since the panel
      track grows smoothly on its own. */
   function flipHeights(targets, before){
-    if(window.PM56_MOTION && window.PM56_MOTION.reduced()) return;
+    const done=[];
+    if(window.PM56_MOTION && window.PM56_MOTION.reduced()) return done;
     for(const el of targets){
       if(!el.isConnected) continue;
       const h0=before.get(el); if(h0==null) continue;
@@ -48189,7 +49573,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
          hold, which is still clipping. Only an honest finish releases here. */
       a.finished.then(release, ()=>{});
       guardFlip(el, a, h0, release, layoutTransitionPending(el));
+      done.push({el,h0,h1});
     }
+    return done;
   }
 
   /* Properties whose transition, anywhere in this subtree, could change this
@@ -48320,6 +49706,72 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   for(const ev of ['wheel','touchstart'])
     document.addEventListener(ev,()=>scrollIntents.clear(),{passive:true,capture:true});
   function scrollKeyEl(key){ return document.querySelector(`[data-scroll-key="${key}"]`); }
+
+  /* ---- stick-to-bottom follow (Chat WOW M1) ---------------------------
+     The transcript follows its bottom edge while the reader is AT the bottom
+     (tStick) and never otherwise. Growth -- a streaming reply, a working card
+     opening, a card landing -- is observed on .transcript-inner and closed with
+     a critically damped glide written as INSTANT scrolls (the element carries
+     scroll-behavior:smooth, which would otherwise animate every write and fight
+     the next one). Only real input unsticks it: wheel-up, touch, a scrollbar
+     drag, or a scrolling key outside a text field. Scroll events we cause are
+     not input, so anchoring and clamping never flip the state. */
+  let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null;
+  let glideRAF=0, glideTs=0, tRO=null, tROTarget=null;
+  const GLIDE_TAU=70;
+  function tEl(){ return scrollKeyEl('transcript'); }
+  function tAtBottom(el){ el=el||tEl(); if(!el) return true; return el.scrollHeight-el.clientHeight-el.scrollTop<=24; }
+  function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; }
+  function cancelGlide(){ if(glideRAF){ cancelAnimationFrame(glideRAF); glideRAF=0; } glideTs=0; }
+  function glideStep(ts){
+    glideRAF=0;
+    const el=tEl(); if(!el||!tStick){ glideTs=0; return; }
+    const max=el.scrollHeight-el.clientHeight, cur=el.scrollTop, d=max-cur;
+    if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
+    const dt=glideTs?Math.min(50,Math.max(1,ts-glideTs)):16.7; glideTs=ts;
+    let next;
+    if(window.PM56_MOTION&&window.PM56_MOTION.reduced()) next=max;
+    else if(d>el.clientHeight*1.25) next=max-el.clientHeight*0.6;   /* far off: close most of it in one frame */
+    else next=cur+d*(1-Math.exp(-dt/GLIDE_TAU));
+    if(max-next<0.75) next=max;
+    writeScrollInstant(el,next);
+    glideRAF=requestAnimationFrame(glideStep);
+  }
+  function kickFollow(){ if(tStick&&!glideRAF){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }
+  function followIfSticky(){ kickFollow(); }
+  function stickToBottom(instant){
+    tStick=true;
+    const el=tEl();
+    if(instant&&el){ cancelGlide(); writeScrollInstant(el,el.scrollHeight); requestAnimationFrame(()=>{ const e2=tEl(); if(e2&&tStick) writeScrollInstant(e2,e2.scrollHeight); syncJumpBottom(); }); return; }
+    kickFollow();
+  }
+  function armFollowObserver(){
+    const el=tEl(), inner=el&&el.querySelector('.transcript-inner');
+    if(inner===tROTarget) return;
+    if(tRO){ tRO.disconnect(); tRO=null; }
+    tROTarget=inner;
+    if(inner){ tRO=new ResizeObserver(()=>kickFollow()); tRO.observe(inner); tRO.observe(el); }
+  }
+  function inTranscript(t){ return !!(t&&t.closest&&t.closest('[data-scroll-key="transcript"]')); }
+  const T_SCROLL_KEYS=new Set(['PageUp','PageDown','ArrowUp','ArrowDown','Home','End',' ']);
+  const T_UP_KEYS=new Set(['PageUp','ArrowUp','Home']);
+  document.addEventListener('wheel',e=>{ if(!inTranscript(e.target)) return; tUserInputAt=performance.now(); if(e.deltaY<0){ tStick=false; cancelGlide(); } },{passive:true,capture:true});
+  document.addEventListener('touchstart',e=>{ if(!inTranscript(e.target)) return; tUserInputAt=performance.now(); tStick=false; cancelGlide(); },{passive:true,capture:true});
+  document.addEventListener('keydown',e=>{
+    const a=document.activeElement;
+    if(a&&(a.tagName==='TEXTAREA'||a.tagName==='INPUT'||a.tagName==='SELECT'||a.isContentEditable)) return;
+    if(!T_SCROLL_KEYS.has(e.key)) return;
+    tUserInputAt=performance.now();
+    if(T_UP_KEYS.has(e.key)){ tStick=false; cancelGlide(); }
+  },{capture:true});
+  document.addEventListener('pointerdown',e=>{
+    const el=tEl(); if(!el||e.target!==el) return;
+    const r=el.getBoundingClientRect();
+    if(e.clientX>r.left+el.clientWidth){ tDragging=true; tUserInputAt=performance.now(); tStick=false; cancelGlide(); }
+  },{capture:true});
+  document.addEventListener('pointerup',()=>{ if(tDragging){ tDragging=false; tUserInputAt=performance.now(); const el=tEl(); if(el) tStick=tAtBottom(el); } },{capture:true});
+  function snapScroll(){ const out={}; document.querySelectorAll('[data-scroll-key]').forEach(el=>{ out[el.dataset.scrollKey]=el.scrollTop; }); return out; }
+  function workFlipGrowth(flips){ let g=0; for(const f of flips||[]) if(f.el.closest&&f.el.closest('.working-card')) g+=f.h1-f.h0; return g; }
   function transcriptAwayFromBottom(){
     const el=scrollKeyEl('transcript');
     if(!el) return false;
@@ -48334,6 +49786,21 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(btn) btn.classList.toggle('is-visible', on);
   }
   function onTranscriptScroll(){
+    /* Stickiness: our own glide writes never change it. Arriving at the bottom
+       re-engages it. Leaving the bottom disengages it when it follows real input
+       or when something else moved the view UP -- a jump to a search result, a
+       scrollIntoView -- which is a reader going somewhere. Anchoring moves the
+       view DOWN when content above grows, so it never unsticks. */
+    const el=tEl();
+    if(el){
+      const top=el.scrollTop, prev=tLastTop; tLastTop=top;
+      const ours=tExpectTop!=null&&Math.abs(top-tExpectTop)<=1;
+      if(!ours){
+        tExpectTop=null;
+        if(tAtBottom(el)) tStick=true;
+        else if(tDragging||performance.now()-tUserInputAt<700||(prev!=null&&top<prev-8)){ tStick=false; cancelGlide(); }
+      }
+    }
     syncJumpBottom();
     requestAnimationFrame(syncJumpBottom);
   }
@@ -48350,6 +49817,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     }
   }
   function scrollToEnd(key,instant=false){
+    if(key==='transcript'){ stickToBottom(instant); syncJumpBottom(); return; }
     scrollIntents.set(key,{to:'end',at:performance.now()});
     requestAnimationFrame(()=>{
       const el=scrollKeyEl(key);
@@ -48378,7 +49846,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const out={};
     document.querySelectorAll('[data-scroll-key]').forEach(el=>{
       const k=el.dataset.scrollKey, intent=scrollIntents.get(k);
-      out[k]=intent?intent.to:el.scrollTop;
+      out[k]=(k==='transcript'&&tStick)?'follow':intent?intent.to:el.scrollTop;
     });
     return out;
   }
@@ -48387,6 +49855,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       document.querySelectorAll('[data-scroll-key]').forEach(el=>{
         const v=pos?pos[el.dataset.scrollKey]:null;
         if(v==null) return;
+        if(v==='follow'){ kickFollow(); return; }
+        /* The reader moved between the patch and this frame: their position
+           wins over the one captured before the patch. */
+        const post=opts&&opts.post;
+        if(typeof v==='number'&&post&&post[el.dataset.scrollKey]!=null&&Math.abs(el.scrollTop-post[el.dataset.scrollKey])>0.5) return;
         if(v==='end'){
           /* A commanded scroll owns this scroller. Re-aim it at the bottom --
              the patch may have grown the content out from under the animation --
@@ -48409,10 +49882,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
          Clock-only ticks (|Δh| < 1px) must NOT start a new 420ms follower —
          that fights the user's wheel for nearly the entire 500ms tick period. */
       const startH=opts&&opts.workH;
-      if(startH!=null){
+      /* P1: the working body's FLIP is holding it at its OLD height when this
+         runs, so the live card height alone never showed the change and the
+         follower never started; the FLIP's own target delta does. A reader
+         who is stuck to the bottom is served by the follow glide instead. */
+      if(startH!=null&&!tStick){
         const card=(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
         const hNow=card?card.getBoundingClientRect().height:startH;
-        if(Math.abs(hNow-startH)>=1) followWorkCardHeight(startH);
+        if(Math.abs(hNow-startH)>=1||Math.abs((opts&&opts.workGrow)||0)>=1) followWorkCardHeight(startH);
       }
       syncJumpBottom();
     });
@@ -48431,6 +49908,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     document.addEventListener('wheel',cancel,{once:true,passive:true,capture:true});
     document.addEventListener('touchstart',cancel,{once:true,passive:true,capture:true});
     const t0=performance.now();
+    let lastH=startH, still=0;
     const tick=()=>{
       if(cancelled||scrollIntents.has('transcript')||!tr.isConnected){
         tr.style.overflowAnchor=prevAnchor; return;
@@ -48448,7 +49926,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
           tr.style.scrollBehavior=prev;
         }
       }
-      if(performance.now()-t0<420) requestAnimationFrame(tick);
+      /* Follow until the card has been still for six frames (the FLIP and its
+         guard can run to ~640ms), with a hard stop at 1100ms. */
+      if(Math.abs(h-lastH)>0.25){ lastH=h; still=0; } else still++;
+      const el=performance.now()-t0;
+      if(el<1100 && (el<360 || still<6)) requestAnimationFrame(tick);
       else tr.style.overflowAnchor=prevAnchor;
     };
     requestAnimationFrame(tick);
@@ -48962,6 +50444,9 @@ recommended path                  migration 0043 + rollback</div></div></section
   function switchThread(id){
     const t=state.threads.find(x=>x.id===id);if(!t)return;
     const prev=activeThread(); if(prev) state.drafts[prev.id]=state.composer;
+    /* A turn still being written in the thread we leave finishes in the
+       background: owners land their end state now, so returning shows it done. */
+    if(prev&&prev.id!==id) notifyTurnOwners('cancel',prev.id);
     state.selectedThread=id;t.unread=0;state.composer=state.drafts[id]||'';state.menu=null;state.hover=null;state.decision=null;decisionExit=null;
     /* Leaving the thread abandons its work sequence; abandoning it without
        stopping the clock is the leak described above. state.work.running is
@@ -48970,7 +50455,12 @@ recommended path                  migration 0043 + rollback</div></div></section
     stopWorkTimer(true); state.work.running=false;
     for(const k in state.works) state.works[k].running=false;
     renderApp(false);
-  window.__PM56_BOOT_OK=true;scrollTranscriptToEnd();
+  window.__PM56_BOOT_OK=true;scrollTranscriptToEnd(true);finishEntrances();
+    /* The thread arrives as one piece: a short crossfade of the whole list
+       rather than each item's own entrance. */
+    { const inner=document.querySelector('.transcript-inner');
+      if(inner&&inner.animate&&!(window.PM56_MOTION&&window.PM56_MOTION.reduced()))
+        inner.animate([{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:200,easing:'cubic-bezier(.17,.84,.29,.99)'}); }
     /* The Multi Orbit demo thread plays its turn on entry: the first scripted
        run spawns just after the switch settles, and the chain does the rest. */
     if(id==='orbit-run'&&!state.works.orbitA){ setTimeout(()=>{ if(state.selectedThread==='orbit-run'&&!state.works.orbitA) startWorkingRec('orbitA'); },350); }
@@ -48993,11 +50483,33 @@ recommended path                  migration 0043 + rollback</div></div></section
      so a sent message landed 2787px below the fold and stayed there --
      inView:false for 3s and elementFromPoint over its box returning null. */
   function scrollTranscriptToEnd(instant=false){ scrollToEnd('transcript',instant); }
+  /* Chat WOW M1: an append follows the reader only when they are already at the
+     bottom. A reader who scrolled up to read is never dragged back down by a
+     receipt landing; the jump-to-latest control tells them something arrived. */
   function appendMessage(msg,thread=activeThread()){
     const TX=window.PM56_TX;
-    if(TX?.isActive()){TX.append(thread,'messages',msg);TX.set(thread,'updated','now');TX.defer(()=>{renderApp();scrollTranscriptToEnd();});return msg;}
-    thread.messages.push(msg);thread.updated='now';renderApp();scrollTranscriptToEnd();return msg;
+    if(TX?.isActive()){TX.append(thread,'messages',msg);TX.set(thread,'updated','now');TX.defer(()=>{renderApp();followIfSticky();});return msg;}
+    thread.messages.push(msg);thread.updated='now';renderApp();followIfSticky();return msg;
   }
+
+  /* ---- turn owners (Chat WOW M1) -------------------------------------
+     "Busy" used to mean runningRecs() alone, so anything else that holds the
+     assistant's turn -- a streaming reply, a scripted live turn -- could not
+     make a send queue, show Stop, or hold the queue flush. Owners register
+     {busy(tid), stop(tid), cancel(tid), reset()} and every busy test goes
+     through turnBusy(). */
+  const turnOwners=[];
+  function registerTurnOwner(o){ if(o&&!turnOwners.includes(o)) turnOwners.push(o); return o; }
+  function ownersBusy(tid){ for(const o of turnOwners){ try{ if(o.busy&&o.busy(tid)) return true; }catch(e){ console.error('PM56 turn owner busy() threw',e); } } return false; }
+  function turnBusy(tid=state.selectedThread){ return runningRecs().length>0 || ownersBusy(tid); }
+  function notifyTurnOwners(kind,tid){ for(const o of turnOwners){ try{ if(o[kind]) o[kind](tid); }catch(e){ console.error(`PM56 turn owner ${kind}() threw`,e); } } }
+  /* Work-complete hooks may HOLD a chain's next run (return true) until they
+     call releaseNextRun(recId) -- a revealed reply streaming under a finished
+     card must finish before the next card mounts beneath it. */
+  const workCompleteHooks=[];
+  const heldNextRuns={};
+  function onWorkComplete(fn){ workCompleteHooks.push(fn); }
+  function releaseNextRun(recId){ const go=heldNextRuns[recId]; if(go){ delete heldNextRuns[recId]; go(); } }
 
   function startWorking(reset=false,rec=state.work){
     if(reset||rec.completed){
@@ -49021,11 +50533,13 @@ recommended path                  migration 0043 + rollback</div></div></section
      time because renderers gate them on the half-second clock. */
   function armWorkTimer(){
     clearInterval(workTimer);
-    workTimer=setInterval(workTick,500);
+    /* 500ms of MOTION time: a film tool that slows the clock slows the tick too. */
+    workTimer=setInterval(workTick,window.PM56_CLOCK?window.PM56_CLOCK.ms(500):500);
   }
   function workTick(){
     const live=runningRecs();
     if(!live.length){ stopWorkTimer(); return; }
+    let transition=false;
     for(const rec of live){
       const list=workInstancesFor(rec);
       rec.clock=workClock(rec)+0.5;
@@ -49035,12 +50549,41 @@ recommended path                  migration 0043 + rollback</div></div></section
         rec.clock=workRunEnd(list); rec.step=list.length-1;
         rec.completed=true; rec.running=false;
         onRecComplete(rec);
+        transition=true;
       }
     }
-    renderApp();
+    /* Chat WOW M1: a tick that only advanced clocks re-renders just the live
+       cards (and the status bar's elapsed time). Completion, reveals and anything
+       the light path cannot find fall back to the full render. */
+    if(transition||!lightTick(live)) renderApp();
     if(!runningRecs().length){ stopWorkTimer(); maybeFlushQueue(); }
   }
-  function stopWorkTimer(killSequence){ clearInterval(workTimer); workTimer=null; if(killSequence){ clearTimeout(seqTimer); seqTimer=null; } }
+  const STAMP_KEEP=['data-role','data-msg-type','data-family','data-turn','data-turn-pos'];
+  function lightTick(live){
+    const t=activeThread(), inner=document.querySelector('.transcript-inner');
+    if(!t||!inner) return false;
+    const recs=new Set(live), covered=new Set();
+    for(const m of t.messages){
+      if(m.type!=='working'||!messageVisible(m)) continue;
+      const rec=workRecFor(m); if(!rec||!recs.has(rec)) continue;
+      const raw=renderMessage(m,t); if(!raw) return false;
+      let html=stampItem(raw,[['data-k',m.id?'msg:'+m.id:null]]);
+      const key=(STAMP_HEAD.exec(html)||[])[3]; const km=key&&/\sdata-k="([^"]+)"/.exec(key);
+      if(!km) return false;
+      const node=inner.querySelector(`:scope > [data-k="${CSS.escape(km[1])}"]`);
+      if(!node) return false;
+      html=stampItem(html,STAMP_KEEP.map(a=>[a,node.getAttribute(a)]));
+      if(!patchScope(node,html)) return false;
+      covered.add(rec);
+    }
+    for(const r of live) if(!covered.has(r)) return false;
+    const sb=document.querySelector('.status-bar');
+    if(sb){ const tpl=document.createElement('template'); tpl.innerHTML=renderStatusBar(); if(tpl.content.firstElementChild) pmPatchNode(sb,tpl.content.firstElementChild); }
+    renderOverlays();
+    syncJumpBottom();
+    return true;
+  }
+  function stopWorkTimer(killSequence){ clearInterval(workTimer); workTimer=null; if(killSequence){ clearTimeout(seqTimer); seqTimer=null; for(const k in heldNextRuns) delete heldNextRuns[k]; } }
   /* Sequencer. A finished scripted run reveals its gated messages (the
      renderChat filter reads `completed`), then either spawns the next run in
      the chain -- compacting this card via supersededBy -- or, as the turn's
@@ -49048,24 +50591,31 @@ recommended path                  migration 0043 + rollback</div></div></section
      stopping (stopWorkTimer() without the kill flag keeps it); only
      switchThread/reset/globalReset kill the chain. */
   function onRecComplete(rec){
+    let hold=false;
+    for(const fn of workCompleteHooks){ try{ if(fn(rec)===true) hold=true; }catch(e){ console.error('PM56 workComplete hook threw',e); } }
     const def=rec.runId&&D.workRuns&&D.workRuns[rec.runId];
     if(!def) return;                 // a PRIMARY record completing must not scroll the reader
-    scrollTranscriptToEnd();
+    followIfSticky();
     clearTimeout(seqTimer);
-    /* A finished card NEVER compacts itself: the LAST work activity in a
-       turn stays expanded indefinitely, and an earlier one collapses only
-       when its successor actually enters the thread — startWorkingRec sets
-       supersededBy at spawn time, which drives the collapse choreography. */
+    /* A finished card compacts when its successor enters the thread (startWorkingRec
+       sets supersededBy at spawn time) or when the turn's answer starts streaming
+       (turn-stream.js). */
     if(def.next&&D.workRuns[def.next.run]){
-      const nid=def.next.run, pid=rec.runId;
-      seqTimer=setTimeout(()=>{ startWorkingRec(nid,pid); },def.next.delayMs||1200);
+      const nid=def.next.run, pid=rec.id||rec.runId, delay=def.next.delayMs||1200;
+      const go=()=>{ clearTimeout(seqTimer); seqTimer=setTimeout(()=>{ seqTimer=null; startWorkingRec(nid,pid); },delay); };
+      if(hold) heldNextRuns[pid]=go; else go();
     }
   }
-  function startWorkingRec(runId,prevId){
+  /* recId separates the RECORD from the fixture RUN it plays, so a scripted
+     live turn can replay a run without colliding with the fixture thread's
+     record of the same run. Fixture chains keep recId === runId. */
+  function startWorkingRec(runId,prevId,opts){
     if(!(D.workRuns&&D.workRuns[runId])) return;
-    state.works[runId]={step:0,running:true,expanded:false,started:true,completed:false,elapsed:0,openPhase:null,clock:0,runId};
-    if(prevId&&state.works[prevId]){ state.works[prevId].supersededBy=runId; state.works[prevId].expanded=false; }
-    armWorkTimer(); renderApp(); scrollTranscriptToEnd();
+    const recId=(opts&&opts.recId)||runId;
+    state.works[recId]={step:0,running:true,expanded:false,started:true,completed:false,elapsed:0,openPhase:null,clock:0,runId,id:recId};
+    if(prevId&&state.works[prevId]){ state.works[prevId].supersededBy=recId; state.works[prevId].expanded=false; }
+    armWorkTimer(); renderApp(); followIfSticky();
+    return state.works[recId];
   }
   function chainRootOf(runId){
     let cur=runId, guard=0;
@@ -49102,9 +50652,11 @@ recommended path                  migration 0043 + rollback</div></div></section
   function pauseWorking(rec=state.work){ rec.running=false; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
   function stepWorking(rec=state.work){ rec.running=false; rec.started=true; scrubTo(rec,rec.step+1); if(!rec.runId) rec.elapsed+=3; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
   function completeWorking(rec=state.work){ rec.running=false; rec.started=true; scrubTo(rec,1e9); if(!rec.runId) rec.elapsed=Math.max(rec.elapsed,134); rec.expanded=false; rec.openPhase=null; if(!runningRecs().length) stopWorkTimer(); renderApp(); if(!runningRecs().length) maybeFlushQueue(); }
-  function resetWorking(rec=state.work){ if(rec.runId){ resetChain(rec.runId); return; } state.work=clone(DEFAULT.work); state.workTerminal={}; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
+  function restartRec(rec){ rec.step=0; rec.clock=0; rec.elapsed=0; rec.completed=false; rec.running=true; rec.started=true; rec.openPhase=null; delete rec.supersededBy; state.workTerminal={}; armWorkTimer(); renderApp(); }
+  function resetWorking(rec=state.work){ if(rec.runId){ if(rec.id&&rec.id!==rec.runId){ restartRec(rec); return; } resetChain(rec.runId); return; } state.work=clone(DEFAULT.work); state.workTerminal={}; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
 
   function globalReset(){
+    notifyTurnOwners('reset');
     stopWorkTimer(true);if(window.PM56_CTX&&window.PM56_CTX.reset)window.PM56_CTX.reset();safeStorage.del('pm56-prefs');D.models=clone(FIXTURE0.models);D.artifacts=clone(FIXTURE0.artifacts);state=clone(DEFAULT);state.threads=clone(D.threads);state.questions=clone(D.questions);renderApp(false);toast('Concept reset','All recipes, components, panels, threads, answers, artifacts, and working states returned to stock.');setTimeout(()=>{if(state.demoAutoStart)startWorking(true);},900);
   }
 
@@ -49118,7 +50670,7 @@ recommended path                  migration 0043 + rollback</div></div></section
   }
   function handleSend(){
     const raw=state.composer.trim();if(!raw)return;
-    if(runningRecs().length){
+    if(turnBusy()){
       const q=queueOf();
       if(q.length>=2){ toast('Queue full','Send, edit, or cancel a queued message before adding another.'); return; }
       q.push({id:uid('q'), text:raw});
@@ -49130,7 +50682,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     deliverSend(raw);
   }
   function maybeFlushQueue(){
-    if(runningRecs().length || seqTimer) return;
+    if(turnBusy() || seqTimer) return;
     const q=queueOf();
     if(!q.length) return;
     const next=q.shift();
@@ -49143,6 +50695,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(outcome && outcome.admitted!==true && outcome.restoreQueue===true){ q.unshift(next); renderApp(); }
   }
   function stopCurrentWork(){
+    notifyTurnOwners('stop',state.selectedThread);
     stopWorkTimer(true);
     if(state.work.running) state.work.running=false;
     for(const k in state.works) if(state.works[k].running) state.works[k].running=false;
@@ -49215,6 +50768,8 @@ recommended path                  migration 0043 + rollback</div></div></section
     const admittedMessage={id:uid('user'),role:'user',type:'text',body:raw,time:new Date().toISOString()};
     if(explanationPreference?.ok)admittedMessage.explanationPreference=clone(explanationPreference);
     t.messages.push(admittedMessage);
+    /* Chat WOW: the composer text flies into this bubble (turn-stream.js). */
+    window.PM56_STREAM?.sent(admittedMessage,t);
     const low=raw.toLowerCase();
     if(RTc && RTc.destination && (RTc.destination.kind==='plan-revision'||window.PM56_ROOM?.owns(RTc.destination.refId))){
       /* Plan revisions are normally claimed atomically by their pre-send owner. */
@@ -49229,12 +50784,16 @@ recommended path                  migration 0043 + rollback</div></div></section
     else if(low.startsWith('/web')){const wid=uid('run');t.messages.push({id:uid('work'),role:'system',type:'working',title:'Web research',workId:wid});state.works[wid]={step:3,running:false,expanded:false,started:true,completed:false,elapsed:6,openPhase:null};}
     else{
       const example=window.PM56_ELI5_DEMOS?.reply(t,raw,explanationPreference,admittedMessage.id);
-      t.messages.push(example||{id:uid('assistant'),role:'assistant',type:'text',body:explanationPreference?.effective
+      /* Chat WOW: an ordinary reply streams in (turn-stream.js) unless a recorded
+         example answers it, or a harness asked for instant replies. */
+      const streamed=!example&&state.replyMode!=='instant'&&window.PM56_STREAM?.reply(extCtx(),t,raw,{explanationPreference,sourceId:admittedMessage.id});
+      if(!streamed) t.messages.push(example||{id:uid('assistant'),role:'assistant',type:'text',body:explanationPreference?.effective
         ?'This example adds a reply to the conversation. You can try the message buttons and panels without changing your files.'
         :'I added this as a normal conversational turn so you can evaluate the reading rhythm, message actions, wide response layout, and persistent More Details surface.',time:new Date().toISOString(),explanationPreference:clone(explanationPreference||null)});
     }
     const finalMessage=t.messages[t.messages.length-1];
-    if(finalMessage?.role==='assistant') window.PM56_AUTO_MEMORY?.boundary(t,finalMessage);
+    /* A streaming placeholder is empty: the boundary is recorded when it finishes. */
+    if(finalMessage?.role==='assistant'&&!finalMessage.streaming) window.PM56_AUTO_MEMORY?.boundary(t,finalMessage);
     RTc?.commitAccepted?.(extCtx(),t,admittedMessage);
     renderApp();
     scrollTranscriptToEnd();
@@ -49495,6 +51054,9 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='queue-send-now'){
       const q=queueOf(); const i=q.findIndex(x=>x.id===btn.dataset.id); if(i<0)return;
       const [entry]=q.splice(i,1);
+      /* Send now interrupts a reply that is still being written, rather than
+         starting a second one alongside it. */
+      if(ownersBusy(state.selectedThread)) notifyTurnOwners('stop',state.selectedThread);
       const outcome=deliverSend(entry.text);
       /* B20-R3-F3: a veto or validator exception keeps the queue entry in its
          slot unless the held input is already visible again (restored to the
@@ -49721,6 +51283,12 @@ recommended path                  migration 0043 + rollback</div></div></section
     openPlan:()=>{decisionExit=null;state.decision={type:'plan',mode:'review'};renderApp();},
     openPermission:()=>{decisionExit=null;state.decision={type:'permission'};renderApp();},
     startWorking:()=>startWorking(true),pauseWorking,stepWorking,completeWorking,resetWorking,
+    /* Test hooks (Chat WOW): advance every running record by one tick now, and
+       choose how new assistant replies arrive ('stream' default, 'instant' for
+       harnesses that send twice in quick succession). */
+    tickOnce:()=>workTick(),
+    setVoice:(v)=>{ state.motionVoice=['basic','friendly','glass','retro'].includes(v)?v:'auto'; renderApp(); },
+    setReplyMode:(mode)=>{ state.replyMode=mode==='instant'?'instant':'stream'; },
     setWorkStep:(i)=>{state.work.started=true;state.work.running=false;scrubTo(state.work,Number(i));if(!runningRecs().length)stopWorkTimer();renderApp();},
     trigger:runDemoTrigger,
     listTriggers:allDemoTriggers,
@@ -49731,6 +51299,7 @@ recommended path                  migration 0043 + rollback</div></div></section
   // Initial full render and a real, one-shot working sequence so the first open is not static.
   renderApp(false);
   scrollTranscriptToEnd(true);
+  finishEntrances();
   setTimeout(()=>{if(state.demoAutoStart&&!state.work.started&&state.selectedThread==='query')startWorking(true);},250);
 })();
 

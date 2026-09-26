@@ -1753,10 +1753,21 @@
     });
   }
 
+  /* Chat WOW: the ticket stub -- the time, large, in the schedule's own zone. The
+     full line stays in .sched-card-time; the stub is presentation only. */
+  function stubParts(iso,zone){
+    if(!iso||!Number.isFinite(Date.parse(iso)))return null;
+    try{var d=new Date(iso),z=zone||'UTC';
+      var time=new Intl.DateTimeFormat('en-US',{timeZone:z,hour:'numeric',minute:'2-digit'}).format(d);
+      var day=new Intl.DateTimeFormat('en-US',{timeZone:z,month:'short',day:'numeric'}).format(d);
+      var tz=(new Intl.DateTimeFormat('en-US',{timeZone:z,timeZoneName:'short'}).formatToParts(d).find(function(p){return p.type==='timeZoneName';})||{}).value||'';
+      return {time:time,day:day,tz:tz};}catch(e){return null;}
+  }
+  function stubHtml(m){var p=stubParts(m.scheduled_at_utc,m.timezone);if(!p)return '';return '<div class="sched-stub" aria-hidden="true"><b>'+esc(p.time)+'</b><span>'+esc(p.day)+'</span><small>'+esc(p.tz)+'</small></div>';}
   function renderMessageCard(ctx,m){
     var pr=messageProjection(m),st=SM_STATE[m.state]||{label:m.state,tone:'idle'},id=esc(m.scheduled_dispatch_id),open=!!ui.cardOpen?.[m.scheduled_dispatch_id];
     var why=pr.held_reason||pr.failure_reason||pr.expired_reason;
-    return '<article class="sched-card sched-card-'+esc(m.state)+'" data-k="sched-card-'+id+'" data-schedule-id="'+id+'" data-schedule-state="'+esc(m.state)+'"><div class="sched-card-head"><span class="sched-kind">'+ctx.icon('history',14)+' Scheduled message</span>'+chip(st.label,st.tone)+'</div>'+
+    return '<article class="sched-card sched-card-'+esc(m.state)+'" data-k="sched-card-'+id+'" data-schedule-id="'+id+'" data-schedule-state="'+esc(m.state)+'">'+stubHtml(m)+'<div class="sched-card-head"><span class="sched-kind">'+ctx.icon('history',14)+' Scheduled message</span>'+chip(st.label,st.tone)+'</div>'+
       '<p class="sched-card-preview">'+esc(pr.text_preview)+(m.text.length>120?'…':'')+'</p>'+
       '<div class="sched-card-route">'+esc(destinationLabel(m))+' · '+esc(m.requested_runtime?.modelName||'Default')+'</div><div class="sched-card-time">'+esc(whenLabel(m.scheduled_at_utc,m.timezone)+' · '+m.timezone)+(pr.attachment_count?' · '+pr.attachment_count+' attached':'')+'</div>'+
       (why&&['held','failed','expired'].includes(m.state)?'<div class="schedule-attention">'+ctx.icon('warning',12)+'<span>'+esc(attentionLabel(m))+'</span></div>':'')+
