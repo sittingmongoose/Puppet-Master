@@ -332,3 +332,25 @@ Corrected sparse overlay `case-reconciliation/PROTECTED12-CORRECTED-24-OVERLAY.j
 has SHA-256 `655d2a772aaf15aedd5d48e82714aeee0106e8a083373115b687520eead5b6ea`.
 Neither unresolved wording nor missing native proof automatically becomes a
 product decision or permission to overwrite newer protected designs.
+
+## Execution-topology and authentication-alias batches
+
+Root verified checkpoint
+`checkpoints/full-impact-reviewed-d0426e4aeac7da730148bed165b22941e697d68c936a50694499834fc9f91bf4.jsonl`
+(SHA-256 `d0426e4aeac7da730148bed165b22941e697d68c936a50694499834fc9f91bf4`):
+1,342 of 11,395 other identities reviewed, 10,053 pending. The 364 additions
+preserve every prior 978 record unchanged and all identities remain unique.
+
+- Execution topology: 260 identities, 22 current actions, 13 classes.
+  Different-Sol review SHA-256 `ee7293a531aa215d0f7ed76ed67df2b1db24ecee5cbbde92dd1938edf48d1ab8`;
+  corrected overlay SHA-256 `6cefe48c5a4e3515a6a9a75d45b35574bdb626d80b44f77f8247fb5b884b1b9e`
+  under `case-reconciliation/touch-execution-topology260-native-01/`.
+- Authentication aliases: 104 identities, eight aliases, 19 classes.
+  Different-Sol review SHA-256 `869d2424e4612ec1af9fd7cecb4d3d5625e51125c2be78a5bf5ec96d61e03b73`;
+  corrected overlay SHA-256 `c524700b667243e451906fe7c09ab3c31106c34872398ce965f1d71a9e96087e`
+  under `case-reconciliation/touch-sir-auth-alias104-native-01/`.
+
+Both reviews corrected unsupported demands for new Event Authority admission
+where the current route is event-silent. They retain real receipt, permission,
+currentness, generation/race, protected-target and GUI obligations. These are
+static owner-law classifications, not executed handlers or whole-profile closure.

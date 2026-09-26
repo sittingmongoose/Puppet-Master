@@ -5,7 +5,8 @@
 - September 26 current additions: Doctor application-update typed owner reads,
   the bounded Permissions rule companion, credential transfer/removal, and
   Client details local settlement are integrated; all 85 contract pairs passed
-  (1,641 positive, 4,891 negative and 12 internal self-tests). Search rebuild owner prose is integrated, with typed bindings
+  (1,652 positive, 4,903 negative and 12 internal self-tests after the Permissions
+  four-join follow-up). Search rebuild owner prose is integrated, with typed bindings
   still pending. See `doctor-application-update-typed-binding.md`,
   `permissions-rule-typed-companion.md`, and `search-rebuild-owner-join.md`.
 - Credential-transfer apply now reuses the existing preview destination-currentness
@@ -16,11 +17,14 @@
   exact retained original arguments. These are technical
   specification/companion gaps, not evidence of failed native implementation.
   Client's trusted-input co-mutation objection was withdrawn, not repaired.
-- Permissions follow-up is four technical joins, not eleven product choices:
-  non-writable refusal projection, wildcard validity, stale validate-only
-  response, and existing permission action/scope to current runtime episode.
+- Permissions follow-up is integrated in `d12f004da`: non-writable unmet
+  precondition projection, nonauthoritative validate-only hashes, and existing
+  permission action/scope to current runtime episode have bounded static joins.
+  Literal brackets/braces/backslashes are not newly prohibited path characters.
+  The malformed-glob rejection predicate remains held; this is not full glob
+  semantics or native episode-selection proof. See `permissions-four-owner-joins.md`.
   Section 6 already owns `deny`, `approve_once`, `approve_for_session`,
-  `approve_always`, `open_permissions`; no new action IDs are needed. Independent
+  `approve_always`, `open_permissions`; no new action IDs are needed. Earlier independent
   addendum SHA-256 `4720b76eb3939ac187c61febdd47459c23afde395c8ba5ac7bf96d2e500d8e13`
   is at the external campaign's
   `case-reconciliation/permissions-rule-five-correction-02/REVIEW-FOUR-OWNER-JOINS-ADDENDUM.md`.
