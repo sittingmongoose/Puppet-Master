@@ -1,11 +1,18 @@
-/* Notifications & Sounds — where alerts go, what they sound like, and when to stay quiet. */
+/* Notifications & Sounds — where alerts go, what they sound like, and when to stay quiet.
+   The master switch sits at the top of every tab. The lists are the homes of the inventory rows they used to
+   repeat: the Destinations list writes general.interaction.notification-destinations, each event's destinations
+   write notification-mapping, and each event's sound writes sound-mapping, so the stored values and the lists can
+   no longer disagree. How the in-app pop-up looks and whether the tray shows only big events live in those two
+   destinations. Whether an alert gets through quiet hours is one choice per destination (it used to be set in three
+   places), and escalation picks one of your destinations and a delay instead of naming destinations that may not
+   exist. Addresses are typed like keys: kept on your server and only ever shown masked. */
 (function () {
   const ID = 'notifications';
   const KEY = 'notifications-sounds';
   const N = () => state.notifications;
   /* Fixture extras: the shipped copy (data.d/05-notifications.json) under whatever an older session persisted. */
   const X = () => Object.assign({}, DATA.notifications || {}, PM51.s().notifications || {});
-  const TABS = [{ id: 'destinations', label: 'Destinations' }, { id: 'events', label: 'Events' }, { id: 'sounds', label: 'Sounds' }, { id: 'quiet', label: 'Quiet Hours' }, { id: 'history', label: 'History' }];
+  const TABS = [{ id: 'destinations', label: 'Destinations' }, { id: 'events', label: 'Events' }, { id: 'sounds', label: 'Sounds' }, { id: 'quiet', label: 'Quiet hours' }, { id: 'history', label: 'History' }];
   const tab = () => PM51.tab(ID, 'destinations');
   const save = () => { saveState(); PM51.refresh(ID, { swap: false }); };
   const example = (title, message) => PM51.toast(title, message || 'Example data only. Nothing was sent or changed outside this preview.', 'info');
@@ -15,12 +22,22 @@
   const RATE = ['Up to 20 per minute', 'Up to 5 per minute', 'No limit'];
   const PAYLOAD = ['Standard', 'Compact', 'Full details'];
   const REDACTION = ['Hide file paths and secrets', 'Hide secrets only', 'Send everything'];
-  const ESCALATIONS = ['None', 'Discord after 5 minutes', 'Repeat urgent after 10 minutes', 'Phone alerts after 15 minutes'];
+  const DELAYS = ['5 minutes', '10 minutes', '15 minutes', '30 minutes'];
+  const QUIET_CHOICES = [{ value: 'hold', label: 'Hold everything', meta: 'Delivered when quiet hours end' }, { value: 'urgent', label: 'Let urgent alerts through' }, { value: 'always', label: 'Always deliver' }];
+  const S = {
+    master: 'general.interaction.notifications-enabled', dests: 'general.interaction.notification-destinations', method: 'general.interaction.notification-method',
+    tray: 'general.interaction.tray-notifications', map: 'general.interaction.notification-mapping', sfx: 'general.interaction.sound-effects',
+    catalog: 'general.interaction.sound-catalog', manage: 'general.interaction.sound-management', soundMap: 'general.interaction.sound-mapping'
+  };
   const PRIORITIES = ['Low', 'Normal', 'Urgent'];
   const SOUND_GROUPS = { none: 'No sound', builtIn: 'Built-in', uploaded: 'Uploaded' };
   const TIMES = []; for (let hh = 0; hh < 24; hh++) for (const mm of ['00', '30']) TIMES.push(`${hh % 12 || 12}:${mm} ${hh < 12 ? 'AM' : 'PM'}`);
 
   PM51.style(`
+    #panel-settings .o55-notif-master { margin-bottom: 14px; }
+    #panel-settings .o55-notif-master .pm51-note { margin-top: 8px; }
+    #panel-settings .o55-notif-master ~ :not(.pm51-quiet) { transition: opacity var(--k3-dur-base, 220ms) var(--k3-ease-out, ease); }
+    #panel-settings .o55-notif-master.is-off ~ :not(.pm51-quiet) { opacity: .55; }
     /* events: the sound choice sits on the row; nothing on the row is whole-row clickable */
     #panel-settings .pm51-mgr .pm51-event-row { gap: 14px; }
     #panel-settings .pm51-mgr .pm51-event-row.is-off .pm51-item-title { color: var(--k3-text-2); }
@@ -122,6 +139,25 @@
       e.custom = e.custom === true;
     });
   }
+  /* One quiet-hours choice per destination (it was a destination's urgent flag, a global "let urgent through" and an
+     exceptions list); escalation names a destination you really have. */
+  function migrateV2() {
+    const n = state.notifications; if (!n || PM51.s().o55NotifV2) return;
+    const q = n.quiet || {}; const ex = q.exceptions || {};
+    (n.destinations || []).forEach(d => { if (!d.quiet) d.quiet = ex[d.id] ? 'always' : d.urgent && q.urgentOverride !== false ? 'urgent' : 'hold'; delete d.urgent; });
+    delete q.exceptions; delete q.urgentOverride;
+    (n.agents || []).forEach(g => { g.escalation = escStore(escParts(g, n.destinations || [])); });
+    PM51.s().o55NotifV2 = true;
+  }
+  function escParts(g, list) {
+    const s = String(g.escalation || 'None'); const m = /^(.*) after (\d+ minutes?)$/.exec(s);
+    if (!m) return { to: 'none', after: '10 minutes' };
+    if (/^repeat/i.test(m[1])) return { to: 'repeat', after: m[2] };
+    const all = list || dests(); const d = all.find(x => x.name === m[1]) || all.find(x => x.name.toLowerCase().includes(m[1].toLowerCase()));
+    return { to: d ? d.name : 'none', after: m[2] };
+  }
+  const escStore = p => p.to === 'none' ? 'None' : p.to === 'repeat' ? `Repeat urgent after ${p.after}` : `${p.to} after ${p.after}`;
+  const escText = g => { const p = escParts(g); return p.to === 'none' ? 'No escalation' : p.to === 'repeat' ? `Repeats after ${p.after}` : `Then ${p.to} after ${p.after}`; };
   const pm51NotifPrevEnsure = ensureStateShape;
   ensureStateShape = function () { pm51NotifPrevEnsure(); migrateEvents(); };
   migrateEvents();
@@ -176,16 +212,26 @@
   /* After a body re-render, put focus back on the control the user was using. */
   const refocus = selector => requestAnimationFrame(() => { const el = root.querySelector(selector); if (!el) return; const t = el.classList.contains('pm51-dd-native') ? el.closest('.pm51-dd')?.querySelector('.pm51-dd-trigger') : el; if (t && typeof t.focus === 'function') { try { t.focus({ preventScroll: true }); } catch (err) { t.focus(); } } });
 
-  /* ---------- Destinations ------------------------------------------------ */
-  function stats() {
-    const ev = events();
-    return PM51.stats([
-      { label: 'Destinations', value: dests().length, help: `${dests().filter(d => d.status === 'active').length} working` },
-      { label: 'Events routed', value: `${ev.filter(e => e.enabled).length} of ${ev.length}`, help: 'Alerts that are turned on' },
-      { label: 'Sounds', value: sounds().filter(soundAvailable).length, help: 'Ready to play' },
-      { label: 'Quiet hours', value: N().quiet?.enabled ? 'On' : 'Off', help: N().quiet?.enabled ? `${N().quiet.start} to ${N().quiet.end}` : 'Alerts arrive any time' }
-    ]);
+  /* The lists are the truth; the inventory rows they stand for are written from them after every change. */
+  const same = (x, y) => JSON.stringify(x) === JSON.stringify(y);
+  const commitIf = (id, v) => { if (PM51.setting(id) && !same(PM51.value(id), v) && commitSettingValue(id, v)) saveState(); };
+  function syncStores() {
+    commitIf(S.dests, dests().map(d => d.name));
+    commitIf(S.map, Object.fromEntries(events().filter(e => e.destinations.length).map(e => [e.name, e.destinations.join(', ')])));
+    commitIf(S.soundMap, Object.fromEntries(events().filter(e => e.sound && e.sound !== 'None').map(e => [e.name, e.sound])));
   }
+  const masterOn = () => PM51.value(S.master) !== false;
+  const orow = ({ label, help, control, home }) => `<div class="setting-row o55-row o55-scoped"${home ? ` data-setting-id="${a(home)}"` : ''}><div class="setting-copy"><div class="setting-label">${h(label)}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div><div class="setting-control">${control}</div><span></span></div>`;
+  const valueWith = (text, btn) => `<span class="pm51-row-value">${h(text)}</span>${btn ? PM51.btn(Object.assign({ small: true }, btn)) : ''}`;
+  const quietLabel = d => (QUIET_CHOICES.find(x => x.value === d.quiet) || QUIET_CHOICES[0]).label;
+  const hideAddress = s => { s = String(s || '').trim(); return !s ? '' : s.length <= 6 ? '••••' : s.slice(0, 2) + '••••' + s.slice(-4); };
+  const ADDRESS_LABEL = { 'Discord webhook': 'Webhook address', Discord: 'Webhook address', Slack: 'Webhook address', 'Generic webhook': 'Webhook address', ntfy: 'Topic', Telegram: 'Chat id', Pushover: 'User key' };
+  const addressLabel = type => ADDRESS_LABEL[type] || 'Address';
+  function masterBlock() {
+    return `<div class="o55-notif-master${masterOn() ? '' : ' is-off'}">${PM51.bound.rows([S.master])}${masterOn() ? '' : PM51.note('Notifications are off. Nothing alerts you until you turn them back on; the choices below are kept.', 'info')}</div>`;
+  }
+
+  /* ---------- Destinations ------------------------------------------------ */
   function destAdvanced(d) {
     const adv = d.advanced || (d.advanced = {});
     const data = k => ({ dest: d.id, key: k });
@@ -198,19 +244,21 @@
       { label: 'Message format', control: PM51.dropdown(adv.payload || PAYLOAD[0], PAYLOAD, { action: 'pm51-notifications-dest-adv', data: data('payload'), label: 'Message format' }) },
       { label: 'Redaction', help: 'What is left out of the alert text.', control: PM51.dropdown(adv.redaction || REDACTION[0], REDACTION, { action: 'pm51-notifications-dest-adv', data: data('redaction'), label: 'Redaction' }) }
     ];
-    return PM51.advanced(PM51.rows(rows) + PM51.section({ title: 'Technical details', body: PM51.kv([['Destination id', d.id], ['Type', d.type], ['Where it goes', mask(d)], ['Last delivery', lastDelivery(d)]]) + '<div class="pm51-notif-inline">' + PM51.btn({ label: 'Export log', icon: 'download', small: true, action: 'pm51-notifications-export', data: { dest: d.id } }) + PM51.btn({ label: 'Run diagnostics', icon: 'test', small: true, action: 'pm51-notifications-diagnostics', data: { dest: d.id } }) + '</div>' }));
+    return PM51.advanced(PM51.rows(rows));
   }
   function destDetail(d) {
     const off = d.status === 'disabled';
     const data = { dest: d.id };
     const used = usedBy(d);
     const rows = [
-      { label: 'Type', value: typeLabel(d) },
-      { label: 'Where it goes', help: isBuiltIn(d) ? undefined : 'Shown masked. Edit it from the menu.', value: mask(d) },
-      { label: 'Allow urgent alerts', help: 'Urgent alerts get through even during quiet hours.', control: PM51.toggle(!!d.urgent, { action: 'pm51-notifications-dest-urgent', data, label: 'Allow urgent alerts' }) },
-      { label: 'Used by', value: used.length ? used.join(', ') : 'No events yet. Pick it under Events.' },
-      { label: 'Last delivery', value: lastDelivery(d) }
+      orow({ label: 'Type', control: valueWith(typeLabel(d)) }),
+      isBuiltIn(d) ? orow({ label: 'Where it goes', control: valueWith(mask(d)) })
+        : orow({ label: addressLabel(d.type), help: 'Kept on your server. Only its ends are shown.', control: valueWith(mask(d), { label: 'Replace', icon: 'key', action: 'pm51-notifications-dest-address', data }) }),
+      orow({ label: 'During quiet hours', help: 'Whether alerts here wait for quiet hours to end.', control: PM51.dropdown(d.quiet || 'hold', QUIET_CHOICES, { action: 'pm51-notifications-dest-quiet', data, label: 'During quiet hours' }) }),
+      orow({ label: 'Used by', help: used.length ? used.join(', ') : 'No events yet. Pick it under Events.', control: valueWith(used.length ? `${used.length} ${used.length === 1 ? 'event or group' : 'events and groups'}` : 'Nothing yet') }),
+      orow({ label: 'Last delivery', control: valueWith(lastDelivery(d)) })
     ];
+    const own = d.id === 'in-app' || d.type === 'Built-in' || d.type === 'In-app' ? PM51.bound.rows([S.method]) : d.type === 'Operating system' || d.type === 'System / tray' ? PM51.bound.rows([S.tray]) : '';
     return {
       title: d.name, pill: PM51.status(destStatus(d)), subtitle: `${typeLabel(d)} · ${mask(d)}`,
       primary: off ? { label: 'Turn on', icon: 'play', action: 'pm51-notifications-dest-on', data } : { label: 'Send test', icon: 'bell', action: 'pm51-notifications-test', data },
@@ -221,42 +269,41 @@
         { separator: true },
         { label: 'Delivery history', icon: 'history', onClick: () => { PM51.setTab(ID, 'history'); PM51.refresh(ID); } }
       ], d.name),
-      body: PM51.section({ title: 'Destination', body: PM51.rows(rows) }) + destAdvanced(d)
+      body: PM51.section({ title: 'Destination', body: PM51.scoped.rows(rows) + own }) + destAdvanced(d)
     };
   }
   function removeDest(d) {
     N().destinations = dests().filter(x => x.id !== d.id);
     events().forEach(e => { e.destinations = e.destinations.filter(n => n !== d.name); });
-    (N().agents || []).forEach(a => { a.destinations = a.destinations.filter(n => n !== d.name); });
+    (N().agents || []).forEach(a => { a.destinations = a.destinations.filter(n => n !== d.name); if (escParts(a).to === d.name) a.escalation = 'None'; });
     PM51.setSel(ID, dests()[0]?.id || 'in-app'); save(); PM51.toast('Destination removed', `${d.name} is gone.`);
   }
   function editDest(d) {
     openDialog({
-      title: `Edit ${d.name}`, subtitle: 'The address is stored in the credential store on your server.',
+      title: `Edit ${d.name}`, subtitle: isBuiltIn(d) ? 'Built into Puppet Master.' : 'The address is kept on your server and only shown masked.',
       body: PM51.form([
         { label: 'Name', name: 'name', value: d.name, autofocus: true },
         { label: 'Type', name: 'type', value: TYPE_LABEL[d.type] && (X().destinationTypes || []).includes(TYPE_LABEL[d.type]) ? TYPE_LABEL[d.type] : d.type, type: 'select', choices: [...new Set([...(X().destinationTypes || []), d.type])] },
-        { label: 'Where it goes', name: 'address', value: isBuiltIn(d) ? d.address : '', placeholder: isBuiltIn(d) ? '' : 'Leave empty to keep the current address', full: true, help: isBuiltIn(d) ? 'Built into Puppet Master.' : 'Webhook address, topic, or chat id.' },
-        { label: 'Allow urgent alerts', name: 'urgent', value: !!d.urgent, type: 'checkbox', full: true }
-      ]),
+        isBuiltIn(d) ? null : { label: addressLabel(d.type), name: 'address', value: '', type: 'password', placeholder: 'Leave empty to keep the current one', full: true, help: 'Kept on your server and only shown masked.' }
+      ].filter(Boolean)),
       saveLabel: 'Save', onOpen: focusField, onSave: data => {
         const name = String(data.name || '').trim() || d.name;
         events().forEach(e => { e.destinations = e.destinations.map(n => n === d.name ? name : n); });
-        (N().agents || []).forEach(a => { a.destinations = a.destinations.map(n => n === d.name ? name : n); });
+        (N().agents || []).forEach(a => { a.destinations = a.destinations.map(n => n === d.name ? name : n); const p = escParts(a); if (p.to === d.name) a.escalation = escStore(Object.assign(p, { to: name })); });
         (N().history || []).forEach(hrow => { if (hrow.destination === d.name) hrow.destination = name; });
-        d.name = name; if (data.type) d.type = data.type; if (String(data.address || '').trim()) d.address = String(data.address).trim(); d.urgent = !!data.urgent;
+        d.name = name; if (data.type) d.type = data.type; if (String(data.address || '').trim()) d.address = hideAddress(data.address);
         save(); PM51.toast('Destination saved', `${d.name} was updated.`);
       }
     });
   }
   function destinationsTab() {
     const d = currentDest();
-    if (!d) return stats() + PM51.empty('No destinations yet', 'Add one so alerts have somewhere to go.', { label: 'Add destination', icon: 'plus', action: 'pm51-notifications-add-dest' });
-    return stats() + PM51.listDetail({
+    if (!d) return PM51.home(S.dests, PM51.empty('No destinations yet', 'Add one so alerts have somewhere to go.', { label: 'Add destination', icon: 'plus', action: 'pm51-notifications-add-dest' }));
+    return PM51.home(S.dests, PM51.listDetail({
       id: ID, rosterTitle: 'Destinations', count: dests().length, add: { action: 'pm51-notifications-add-dest', label: 'Add destination' },
       items: dests().map(x => ({ id: x.id, title: x.name, meta: `${typeLabel(x)} · ${destStatus(x)}`, tone: PM51.tone(destStatus(x)), avatar: icon(isBuiltIn(x) ? 'bell' : 'external'), selected: x.id === d.id })),
       detail: destDetail(d)
-    });
+    }));
   }
 
   /* ---------- Events ------------------------------------------------------- */
@@ -279,16 +326,12 @@
     const ev = events();
     const groupRows = (N().agents || []).map(g => ({
       title: g.name, pill: PM51.status(g.status === 'active' ? 'Ready' : 'Off'),
-      meta: `${g.events.join(', ')} · ${g.escalation === 'None' ? 'No escalation' : g.escalation}`,
+      meta: `${g.events.join(', ')} · ${escText(g)}`,
       end: icon('chevron'), action: 'pm51-notifications-group', data: { id: g.id }
     }));
-    const map = PM51.kv(ev.map(e => [e.name, e.destinations.length ? e.destinations.join(', ') : 'Nowhere']));
-    return PM51.section({ title: 'Events', help: 'Turn each alert on or off, choose its sound here, or open one to change where it goes.', action: { label: 'Add event', icon: 'plus', small: true, action: 'pm51-notifications-add-event' }, body: ev.length ? `<div class="pm51-list pm51-event-list">${ev.map(eventRow).join('')}</div>` : PM51.note('No events yet. Add one to get started.') })
+    return PM51.section({ title: 'Events', help: 'Turn each alert on or off, choose its sound here, or open one to change where it goes.', action: { label: 'Add event', icon: 'plus', small: true, action: 'pm51-notifications-add-event' }, body: PM51.home(S.map, ev.length ? `<div class="pm51-list pm51-event-list">${ev.map(eventRow).join('')}</div>` : PM51.note('No events yet. Add one to get started.')) })
       + PM51.section({ title: 'Escalation groups', help: 'When an alert is not handled, these groups send it somewhere louder.', body: groupRows.length ? PM51.list(groupRows) : PM51.note('No escalation groups yet.') })
-      + PM51.advanced([
-        PM51.section({ title: 'Event to destination map', help: 'Read-only. Where each event goes right now.', body: map }),
-        PM51.section({ title: 'Import and export', body: '<div class="pm51-notif-inline">' + PM51.btn({ label: 'Export events', icon: 'download', small: true, action: 'pm51-notifications-export-events' }) + PM51.btn({ label: 'Import events', icon: 'upload', small: true, action: 'pm51-notifications-import-events' }) + '</div>' })
-      ].join(''));
+      + PM51.advanced(PM51.section({ title: 'Import and export', body: '<div class="pm51-notif-inline">' + PM51.btn({ label: 'Export events', icon: 'download', small: true, action: 'pm51-notifications-export-events' }) + PM51.btn({ label: 'Import events', icon: 'upload', small: true, action: 'pm51-notifications-import-events' }) + '</div>' }));
   }
   /* Event hero sheet: what it is, where it goes, how it sounds, how loud it is; custom events can be renamed or removed. */
   let eventSheet = null;
@@ -338,11 +381,14 @@
   const nameTaken = (name, except) => events().some(e => e !== except && e.name.toLowerCase() === String(name).toLowerCase());
   function groupPanel(id) {
     const g = (N().agents || []).find(x => x.id === id); if (!g) return;
+    const p = escParts(g);
+    const then = [{ value: 'none', label: 'Nothing more' }, { value: 'repeat', label: 'Repeat the alert' }, ...destsSorted().map(d => ({ value: d.name, label: `Also send to ${d.name}`, meta: typeLabel(d), group: 'Your destinations' }))];
     PM51.panel({
       icon: 'users', eyebrow: 'Escalation group', title: g.name, status: { label: g.status === 'active' ? 'Ready' : 'Off', tone: g.status === 'active' ? 'ready' : 'off' },
-      facts: [{ label: 'Watches', value: `${g.events.length} ${g.events.length === 1 ? 'event' : 'events'}` }, { label: 'Sends to', value: g.destinations.length ? g.destinations.join(', ') : 'Nowhere yet' }, { label: 'Escalation', value: g.escalation === 'None' ? 'None' : g.escalation }],
+      facts: [{ label: 'Watches', value: `${g.events.length} ${g.events.length === 1 ? 'event' : 'events'}` }, { label: 'Sends to', value: g.destinations.length ? g.destinations.join(', ') : 'Nowhere yet' }, { label: 'Escalation', value: escText(g) }],
       body: PM51.panelSection('Watches', PM51.kv([['Events', g.events.join(', ')], ['Sends to', g.destinations.join(', ') || 'Nowhere yet']]), undefined, { icon: 'eye' })
-        + PM51.panelSection('If nobody responds', PM51.field('Escalation', PM51.dropdown(g.escalation, ESCALATIONS.includes(g.escalation) ? ESCALATIONS : [g.escalation, ...ESCALATIONS], { action: 'pm51-notifications-group-escalation', data: { id }, label: 'Escalation' })), undefined, { icon: 'clock' })
+        + PM51.panelSection('If nobody responds', PM51.field('Then', PM51.dropdown(p.to, then, { action: 'pm51-notifications-group-escalation', data: { id, part: 'to' }, label: 'Then' }))
+          + PM51.field('After', PM51.dropdown(p.after, DELAYS, { action: 'pm51-notifications-group-escalation', data: { id, part: 'after' }, label: 'After' })), undefined, { icon: 'clock' })
         + PM51.panelSection('Status', PM51.rows([{ label: 'Group is active', control: PM51.toggle(g.status === 'active', { action: 'pm51-notifications-group-toggle', data: { id }, label: 'Group is active' }) }])),
       primaryLabel: 'Done', onPrimary: () => save()
     });
@@ -373,17 +419,19 @@
     const ev = events();
     const packs = N().packs || [];
     const adv = N().soundSettings || (N().soundSettings = { volume: 70, whenFocused: true });
-    const library = sounds().length ? `<div class="pm51-sound-list pm51-sound-grid">${sounds().map(soundCard).join('')}</div>` : PM51.note('No sounds yet. Add one to get started.');
+    const library = PM51.home(S.catalog, sounds().length ? `<div class="pm51-sound-list pm51-sound-grid">${sounds().map(soundCard).join('')}</div>` : PM51.note('No sounds yet. Add one to get started.'));
+    const sfxOn = !!PM51.value(S.sfx);
+    const basics = PM51.bound.rows([S.sfx]) + PM51.scoped.rows([
+      orow({ label: 'Volume', help: 'Used unless a sound sets its own.', control: `<label class="o55-num"><input class="text-control" type="number" inputmode="numeric" min="0" max="100" step="5" value="${a(adv.volume)}" data-action="pm51-notifications-volume" aria-label="Volume"><span class="o55-unit">%</span></label>` }),
+      orow({ label: 'Also while you are using this app', help: 'Off plays sounds only while you are in another window.', control: PM51.toggle(adv.whenFocused !== false, { action: 'pm51-notifications-when-focused', label: 'Also while you are using this app' }) })
+    ]) + (sfxOn ? '' : PM51.note('Sounds are off. The choices on this tab apply when you turn them on.', 'info'));
     const eventRows = ev.map(e => ({ label: e.name, help: e.enabled ? undefined : 'This alert is off.', control: soundControl(e) }));
     const packRows = packs.map(p => ({ label: p.name, help: `${p.sounds} sounds · Licence ${String(p.license || 'unknown').toLowerCase()} · example only, not playable`, control: PM51.toggle(p.status === 'active', { action: 'pm51-notifications-pack-toggle', data: { id: p.id }, label: p.name }) }));
-    return PM51.section({ title: 'Sound library', help: 'Six demo tones are built in. Upload your own or import a pack.', action: { label: 'Add sound', icon: 'plus', small: true, action: 'pm51-notifications-add-sound' }, body: library })
-      + PM51.section({ title: 'Event sounds', help: 'Which sound plays for each alert. Press play to hear it.', body: ev.length ? PM51.rows(eventRows) : PM51.note('No events yet. Add one under Events.') })
+    return PM51.section({ title: 'Sounds', body: basics })
+      + PM51.section({ title: 'Sound library', help: 'Six demo tones are built in. Upload your own or import a pack.', action: PM51.bound.action(S.manage, { label: 'Add sound', icon: 'plus' }), body: library })
+      + PM51.section({ title: 'Event sounds', help: 'Which sound plays for each alert. Press play to hear it.', body: PM51.home(S.soundMap, ev.length ? PM51.rows(eventRows) : PM51.note('No events yet. Add one under Events.')) })
       + PM51.section({ title: 'Sound packs', help: 'Sets of sounds made for PeonPing-compatible apps.', action: { label: 'Import pack', icon: 'download', small: true, action: 'import-peonping-pack' }, body: packRows.length ? PM51.rows(packRows) : PM51.note('No packs imported yet.') })
       + PM51.advanced([
-        PM51.rows([
-          { label: 'Default volume', help: 'Used unless a sound sets its own.', control: PM51.input(adv.volume, { type: 'number', action: 'pm51-notifications-volume', label: 'Default volume', placeholder: '0 to 100' }) },
-          { label: 'Play when this app is focused', help: 'Off means sounds only play while you are elsewhere.', control: PM51.toggle(adv.whenFocused !== false, { action: 'pm51-notifications-when-focused', label: 'Play when this app is focused' }) }
-        ]),
         PM51.section({ title: 'Licence details', body: packs.length ? PM51.kv(packs.map(p => [p.name, `Licence ${String(p.license || 'unknown').toLowerCase()} · version ${p.version || '?'} · ${p.source}`])) : PM51.note('No packs imported yet.') }),
         PM51.section({ title: 'Export', body: '<div class="pm51-notif-inline">' + PM51.btn({ label: 'Export pack', icon: 'download', small: true, action: 'pm51-notifications-export-pack' }) + '</div>' })
       ].join(''));
@@ -416,8 +464,8 @@
 
   /* ---------- Quiet hours -------------------------------------------------- */
   function quietTab() {
-    const q = N().quiet || (N().quiet = { enabled: false, start: '10:30 PM', end: '8:00 AM', urgentOverride: true, weekends: 'Same schedule' });
-    q.exceptions = q.exceptions || {};
+    const q = N().quiet || (N().quiet = { enabled: false, start: '10:30 PM', end: '8:00 AM', weekends: 'Same schedule' });
+    const through = dests().filter(d => d.quiet === 'urgent' || d.quiet === 'always');
     const sel = (key, value, options) => PM51.dropdown(value, options.includes(value) ? options : [value, ...options], { action: 'pm51-notifications-quiet', data: { key }, label: humanize(key) });
     return PM51.section({
       title: 'Quiet hours', help: 'A daily window when alerts wait instead of interrupting you.',
@@ -426,16 +474,15 @@
         { label: 'Start', control: sel('start', q.start, TIMES) },
         { label: 'End', control: sel('end', q.end, TIMES) },
         { label: 'Weekends', control: sel('weekends', q.weekends, ['Same schedule', 'Quiet all weekend', 'No quiet hours on weekends']) },
-        { label: 'Let urgent alerts through', help: 'Only to destinations that allow urgent alerts.', control: PM51.toggle(!!q.urgentOverride, { action: 'pm51-notifications-quiet-toggle', data: { key: 'urgentOverride' }, label: 'Let urgent alerts through' }) }
+        { label: 'Still reaches you', help: through.length ? through.map(d => `${d.name} (${d.quiet === 'always' ? 'everything' : 'urgent only'})`).join(', ') : 'Nothing. Every destination holds its alerts.', value: `${through.length} of ${dests().length} destinations`, action: { label: 'Change', icon: 'route', action: 'pm51-notifications-quiet-dests' } }
       ])
     }) + PM51.section({
       title: 'During quiet hours',
       body: PM51.rows([
         { label: 'Other alerts', help: 'Deliver later sends them when quiet hours end.', control: PM51.segmented(q.during || 'Deliver later', ['Deliver later', 'Skip'], { action: 'pm51-notifications-quiet-during', label: 'Other alerts' }) },
-        { label: 'Repeat urgent every', help: 'Until someone responds.', control: sel('repeatUrgent', q.repeatUrgent || '10 minutes', ['5 minutes', '10 minutes', '15 minutes', '30 minutes', 'Never']) }
+        { label: 'Repeat urgent alerts every', help: 'Until someone responds.', control: sel('repeatUrgent', q.repeatUrgent || '10 minutes', ['5 minutes', '10 minutes', '15 minutes', '30 minutes', 'Never']) }
       ])
     }) + PM51.advanced([
-      PM51.section({ title: 'Destination exceptions', help: 'These always deliver, even during quiet hours.', body: PM51.rows(dests().map(d => ({ label: d.name, help: typeLabel(d), control: PM51.toggle(!!q.exceptions[d.id], { action: 'pm51-notifications-quiet-exception', data: { dest: d.id }, label: d.name }) }))) }),
       PM51.rows([
         { label: 'Escalation groups', control: sel('escalation', q.escalation || 'Follow quiet hours', ['Follow quiet hours', 'Ignore quiet hours']) },
         { label: 'Time zone', help: 'Quiet hours follow this clock.', control: sel('timeZone', q.timeZone || 'Same as this device', ['Same as this device', 'Same as your server']) }
@@ -451,7 +498,7 @@
       action: 'pm51-notifications-history', data: { index: i }
     }));
     return PM51.section({ title: 'Delivery history', help: 'The most recent alerts and what happened to them.', body: rows.length ? PM51.list(rows) : PM51.note('Nothing delivered yet.') })
-      + PM51.advanced(PM51.section({ title: 'Log', body: PM51.kv([['Kept for', '30 days'], ['Secrets', 'Never written to the log']]) + '<div class="pm51-notif-inline">' + PM51.btn({ label: 'Export log', icon: 'download', small: true, action: 'pm51-notifications-export' }) + PM51.btn({ label: 'Run diagnostics', icon: 'test', small: true, action: 'pm51-notifications-diagnostics' }) + '</div>' }));
+      + PM51.advanced(PM51.section({ title: 'Log', body: PM51.kv([['Kept for', '30 days'], ['Addresses and secrets', 'Never written to the log']]) + '<div class="pm51-notif-inline">' + PM51.btn({ label: 'Export log', icon: 'download', small: true, action: 'pm51-notifications-export' }) + '</div>' }));
   }
   function historyPanel(i) {
     const hrow = (N().history || [])[i]; if (!hrow) return;
@@ -466,11 +513,21 @@
 
   /* ---------- page --------------------------------------------------------- */
   function render() {
+    migrateV2(); syncStores();
     const t = tab();
-    const body = t === 'events' ? eventsTab() : t === 'sounds' ? soundsTab() : t === 'quiet' ? quietTab() : t === 'history' ? historyTab() : destinationsTab();
-    return PM51.page({ id: ID, key: KEY, tabs: TABS, active: t, body, quiet: [{ label: 'Reset notification defaults', action: 'pm51-notifications-reset' }, { label: 'How notifications work', action: 'pm51-notifications-help' }, { label: 'Run diagnostics', action: 'pm51-notifications-diagnostics' }] });
+    const inner = t === 'events' ? eventsTab() : t === 'sounds' ? soundsTab() : t === 'quiet' ? quietTab() : t === 'history' ? historyTab() : destinationsTab();
+    /* no wrapper around the tab: placed sections and More options must stay direct children of the page */
+    const body = masterBlock() + inner;
+    return PM51.page({ id: ID, key: KEY, tabs: TABS, active: t, body, quiet: [{ label: 'How notifications work', action: 'pm51-notifications-help' }, { label: 'Check every destination', action: 'pm51-notifications-diagnostics' }, { label: 'Reset notification defaults', action: 'pm51-notifications-reset' }] });
   }
   PM51.manager('notifications', { render });
+  PM51.watch(S.master, () => PM51.refresh(ID, { swap: false }));
+  PM51.watch(S.sfx, () => PM51.refresh(ID, { swap: false }));
+  PM51.owner(ID, id => {
+    if (id === S.method) { PM51.setTab(ID, 'destinations'); PM51.setSel(ID, (dests().find(d => d.type === 'Built-in' || d.type === 'In-app') || {}).id || 'in-app'); return; }
+    if (id === S.tray) { PM51.setTab(ID, 'destinations'); PM51.setSel(ID, (dests().find(d => d.type === 'Operating system' || d.type === 'System / tray') || {}).id || 'system'); return; }
+    const e = PM51.placement.byId[id]; if (e && e.tab) PM51.setTab(ID, e.tab);
+  });
 
   /* ---------- actions: destinations ---------------------------------------- */
   PM51.on('notifications-add-dest', () => openDialog({
@@ -478,14 +535,14 @@
     body: PM51.form([
       { label: 'Type', name: 'type', type: 'select', choices: X().destinationTypes || ['Slack', 'Discord', 'Generic webhook', 'ntfy', 'Pushover', 'Telegram', 'In-app', 'System / tray'] },
       { label: 'Name', name: 'name', placeholder: 'e.g. Team Slack', autofocus: true },
-      { label: 'Where it goes', name: 'address', placeholder: 'Webhook address, topic, or chat id', full: true, help: 'Stored in the credential store on your server and shown masked afterwards. Not needed for In-app or System / tray.' },
-      { label: 'Allow urgent alerts', name: 'urgent', value: true, type: 'checkbox', full: true }
+      { label: 'Where it goes', name: 'address', type: 'password', placeholder: 'Webhook address, topic, or chat id', full: true, help: 'Kept on your server and only shown masked afterwards. Not needed for In-app or System / tray.' },
+      { label: 'During quiet hours', name: 'quiet', type: 'select', value: 'urgent', choices: QUIET_CHOICES.map(x => ({ value: x.value, label: x.label })), full: true }
     ]),
     saveLabel: 'Add destination', onOpen: focusField, onSave: data => {
       const name = String(data.name || '').trim(); if (!name) { PM51.toast('Give it a name', 'Something you will recognise, like Team Slack.', 'info'); return false; }
       const type = data.type || 'Generic webhook'; const builtIn = BUILT_IN_TYPES.includes(type);
       if (!builtIn && !String(data.address || '').trim()) { PM51.toast('Add the address', 'The webhook address, topic, or chat id it should reach.', 'info'); return false; }
-      const d = { id: uid('dest', name), name, type, status: builtIn ? 'active' : 'setup', address: builtIn ? (type === 'In-app' ? 'Activity center' : 'This device') : String(data.address).trim(), urgent: !!data.urgent };
+      const d = { id: uid('dest', name), name, type, status: builtIn ? 'active' : 'setup', address: builtIn ? (type === 'In-app' ? 'Activity center' : 'This device') : hideAddress(data.address), quiet: QUIET_CHOICES.some(x => x.value === data.quiet) ? data.quiet : 'hold' };
       N().destinations.push(d); PM51.setSel(ID, d.id); PM51.setTab(ID, 'destinations'); save();
       PM51.toast('Destination added', builtIn ? `${name} is ready.` : `${name} is saved. Send a test to make sure it works.`);
     }
@@ -496,7 +553,20 @@
     { title: 'Delivered', desc: isBuiltIn(d) ? 'Appears in this app' : 'Waits for the service to confirm', status: 'Example', tone: 'info' }
   ] }); });
   PM51.on('notifications-dest-on', el => { const d = destById(ds(el, 'dest')); d.status = d.prevStatus || 'active'; delete d.prevStatus; save(); });
-  PM51.on('notifications-dest-urgent', el => { const d = destById(ds(el, 'dest')); d.urgent = !d.urgent; save(); });
+  PM51.onChange('notifications-dest-quiet', el => { const d = destById(ds(el, 'dest')); d.quiet = QUIET_CHOICES.some(x => x.value === el.value) ? el.value : 'hold'; save(); PM51.toast('Saved', `${d.name} during quiet hours: ${quietLabel(d).toLowerCase()}.`, 'success'); });
+  /* A new address is typed once, kept on the server, and only ever shown masked here. */
+  PM51.on('notifications-dest-address', el => {
+    const d = destById(ds(el, 'dest'));
+    PM51.panel({
+      title: `${d.name}: ${addressLabel(d.type).toLowerCase()}`, subtitle: typeLabel(d), icon: 'key', status: { label: `Saved · ${mask(d)}`, tone: 'ready' },
+      body: PM51.panelSection('Replace it', PM51.field(addressLabel(d.type), '<input class="text-control o55-keyinput" type="password" autocomplete="off" spellcheck="false" placeholder="Paste it here" aria-label="New address"/>', 'Kept on your server. It is never shown again, never exported and never written to the delivery log.')),
+      primaryLabel: 'Replace', onPrimary: w => {
+        const v = w.querySelector('.o55-keyinput')?.value.trim(); if (!v) { PM51.toast('Paste it first', `The ${addressLabel(d.type).toLowerCase()} from ${typeLabel(d)}.`, 'info'); return false; }
+        d.address = hideAddress(v); d.status = d.status === 'setup' ? 'setup' : d.status; save(); PM51.toast('Replaced', 'Example only: nothing was stored or sent in this preview. Send a test to make sure it works.', 'info');
+      }
+    });
+  });
+  PM51.on('notifications-quiet-dests', () => { PM51.setTab(ID, 'destinations'); PM51.refresh(ID); PM51.toast('Set it in each destination', 'Pick a destination, then choose "During quiet hours".', 'info'); });
   PM51.onChange('notifications-dest-adv', el => { const d = destById(ds(el, 'dest')); d.advanced = d.advanced || {}; d.advanced[ds(el, 'key')] = el.value; saveState(); });
   PM51.on('notifications-export', el => PM51.panel({
     icon: 'download', title: 'Export delivery log', subtitle: ds(el, 'dest') ? destById(ds(el, 'dest')).name : 'All destinations',
@@ -504,7 +574,7 @@
     primaryLabel: 'Save log', onPrimary: () => example('Log ready', 'Example data only. No file was written in this preview.')
   }));
   PM51.on('notifications-diagnostics', el => { const d = ds(el, 'dest') ? destById(ds(el, 'dest')) : null; PM51.check({ title: d ? `${d.name} diagnostics` : 'Notifications diagnostics', steps: d ? [
-    { title: 'Settings readable', desc: 'Type, address, and urgent flag resolved' },
+    { title: 'Settings readable', desc: `Type, address and quiet-hours choice (${quietLabel(d).toLowerCase()}) resolved` },
     { title: 'Address well formed', desc: mask(d), status: isBuiltIn(d) ? 'Checked' : 'Example', tone: isBuiltIn(d) ? 'ready' : 'info' },
     { title: 'Service answers', desc: 'A tiny test message', status: 'Example', tone: 'info' }
   ] : [
@@ -569,7 +639,11 @@
     }, true);
   });
   PM51.on('notifications-group', el => groupPanel(ds(el, 'id')));
-  PM51.onChange('notifications-group-escalation', el => { const g = (N().agents || []).find(x => x.id === ds(el, 'id')); if (g) { g.escalation = el.value; saveState(); } });
+  PM51.onChange('notifications-group-escalation', el => {
+    const g = (N().agents || []).find(x => x.id === ds(el, 'id')); if (!g) return;
+    const p = escParts(g); p[ds(el, 'part') === 'after' ? 'after' : 'to'] = el.value; g.escalation = escStore(p); save();
+    const dd = el.closest('.drawer-wrap')?.querySelectorAll('.pm51-hero-facts dd')[2]; if (dd) dd.textContent = escText(g);
+  });
   PM51.on('notifications-group-toggle', el => { const g = (N().agents || []).find(x => x.id === ds(el, 'id')); if (!g) return; g.status = g.status === 'active' ? 'disabled' : 'active'; el.classList.toggle('on', g.status === 'active'); el.setAttribute('aria-checked', g.status === 'active' ? 'true' : 'false'); saveState(); });
   /* Add event: name, when it fires, priority, where it goes (working destinations first, In-app pre-checked), sound. */
   PM51.on('notifications-add-event', () => {
@@ -599,10 +673,13 @@
   PM51.on('notifications-import-events', () => openDialog({ title: 'Import events', subtitle: 'Bring event settings from another workspace.', body: PM51.form([{ label: 'File', name: 'file', type: 'file', full: true, help: 'A file exported from Puppet Master.' }]), saveLabel: 'Import', onSave: () => example('Import requested', 'Example data only. Nothing was imported in this preview.') }));
 
   /* ---------- actions: sounds ---------------------------------------------- */
-  PM51.on('notifications-add-sound', el => PM51.menu(el, [
+  /* Also reached from the Add sound setting's own button (a detached element): anchor on the button on the page. */
+  PM51.on('notifications-add-sound', el => { const anchor = el && el.isConnected ? el : root.querySelector(`[data-pm51-manager="${ID}"] [data-setting-id="${S.manage}"]`); if (!anchor) { editSound(); return; } addSoundMenu(anchor); });
+  PM51.on('notifications-browse', () => PM51.revealSetting(S.catalog));
+  const addSoundMenu = el => PM51.menu(el, [
     { label: 'Upload file', icon: 'upload', meta: 'WAV, MP3, OGG, M4A', onClick: () => editSound() },
     { label: 'Import pack', icon: 'download', meta: 'PeonPing-compatible', onClick: () => dispatchAction('import-peonping-pack', el, null) }
-  ], 'Add sound'));
+  ], 'Add sound');
   PM51.on('notifications-assign-open', el => { const s = sounds().find(x => x.id === ds(el, 'id')); if (s) assignPanel(s); });
   PM51.on('notifications-sound-menu', el => {
     const s = sounds().find(x => x.id === ds(el, 'id')); if (!s) return;
@@ -635,16 +712,15 @@
   PM51.on('notifications-quiet-toggle', el => { const q = N().quiet; const k = ds(el, 'key'); q[k] = !q[k]; save(); });
   PM51.onChange('notifications-quiet', el => { N().quiet[ds(el, 'key')] = el.value; save(); });
   PM51.on('notifications-quiet-during', el => { N().quiet.during = ds(el, 'value'); save(); });
-  PM51.on('notifications-quiet-exception', el => { const q = N().quiet; q.exceptions = q.exceptions || {}; const id = ds(el, 'dest'); q.exceptions[id] = !q.exceptions[id]; save(); });
 
   /* ---------- actions: history & page ------------------------------------- */
   PM51.on('notifications-history', el => historyPanel(Number(ds(el, 'index'))));
   PM51.on('notifications-reset', () => PM51.confirm('Reset notification defaults?', 'Destinations, events, sounds, and quiet hours go back to the example defaults. Uploaded recordings are forgotten.', 'Reset', () => {
-    settingsSoundPreview.clearFiles(); state.notifications = clone(D.notifications); migrateEvents(); state.soundPlaying = null; eventSheet = null; PM51.setSel(ID, 'in-app'); save(); PM51.toast('Notifications reset', 'Defaults are back.');
+    settingsSoundPreview.clearFiles(); state.notifications = clone(D.notifications); migrateEvents(); PM51.s().o55NotifV2 = false; migrateV2(); state.soundPlaying = null; eventSheet = null; PM51.setSel(ID, 'in-app'); save(); PM51.toast('Notifications reset', 'Defaults are back.');
   }, true));
   PM51.on('notifications-help', () => PM51.panel({
     icon: 'info', title: 'How notifications work',
     body: PM51.panelSection('In short', '<p class="pm51-ps-text">An event is something worth telling you about. Each event goes to the destinations you pick, with the sound you choose, unless quiet hours say otherwise.</p>')
-      + PM51.panelSection('The pieces', PM51.kv([['Destinations', 'Places an alert can arrive: this app, your system tray, a chat service, or your phone.'], ['Events', 'What triggers an alert, and where it goes. Add your own for scripts and automations; they raise it by name.'], ['Sounds', 'Demo tones are built in. Upload your own or import a pack.'], ['Quiet hours', 'A daily window when alerts wait. Urgent ones can still get through.'], ['Escalation groups', 'If nobody responds, the alert is sent somewhere louder.']]))
+      + PM51.panelSection('The pieces', PM51.kv([['Destinations', 'Places an alert can arrive: this app, your system tray, a chat service, or your phone.'], ['Events', 'What triggers an alert, and where it goes. Add your own for scripts and automations; they raise it by name.'], ['Sounds', 'Demo tones are built in. Upload your own or import a pack.'], ['Quiet hours', 'A daily window when alerts wait. Each destination says whether urgent alerts, or everything, still get through.'], ['Escalation groups', 'If nobody responds, the alert is sent somewhere louder.']]))
   }));
 })();
