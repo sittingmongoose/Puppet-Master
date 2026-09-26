@@ -5584,9 +5584,9 @@
       "owner_plan": "Plans/Permissions_System.md",
       "plan_unit": "PS-065",
       "dry_contract_ref": "Plans/Permissions_System.md#Permissions-UI-Commands-And-Error-States",
-      "payload_schema_ref": "typed rule identity, scope, draft, order, loaded_config_hash and idempotency",
-      "result_schema_ref": "typed validation or atomic permission-rule result",
-      "error_schema_ref": "rule_not_found, target_index_out_of_range, scope_mismatch, parse, write-conflict, permission, or invalid-glob reason",
+      "payload_schema_ref": "Plans/permissions_rule_command_contracts.schema.json#/$defs/permissions_rule_command_request",
+      "result_schema_ref": "Plans/permissions_rule_command_contracts.schema.json#/$defs/permissions_rule_command_result",
+      "error_schema_ref": "Plans/permissions_rule_command_contracts.schema.json#/$defs/permissions_rule_error",
       "availability_rule": "Exact Project/scope, current rule/config hash and writable owner state are required for mutation; validation requires a draft.",
       "permission_gate": "Permissions System is the sole durable rule and approval-policy owner.",
       "disabled_reason_rule": "Expose exact rule/config/currentness/permission error and never overwrite a newer file.",
@@ -5616,6 +5616,9 @@
       "migration_refs": [],
       "test_refs": [
         "Plans/Permissions_System.md#Permissions-UI-Commands-And-Error-States",
+        "Plans/permissions_rule_command_fixtures.json",
+        "scripts/pm_permissions_rule_command_contracts.py",
+        "tests/test_pm_permissions_rule_command_contracts.py",
         "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [

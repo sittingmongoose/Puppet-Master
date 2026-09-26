@@ -1,0 +1,858 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/permissions_rule_commands/1.0.0/permissions_rule_command_contracts.schema.json",
+  "title": "Puppet Master permissions rule command contracts",
+  "description": "Additive pre-build typed request/result/error/availability/permission-evidence companion for exactly the five existing rule commands cmd.permissions.create_project_rule, cmd.permissions.update_rule, cmd.permissions.reorder_rule, cmd.permissions.delete_rule and cmd.permissions.validate_rule. It reuses only the vocabulary already owned by Plans/Permissions_System.md (Sections 2/3/8/9, Permissions UI Commands And Error States, TOML Persistence Failure And Atomicity Rules, blocked-outcome addendum), Plans/UI_Command_Catalog.md#UCC-113 and the selected central wiring rows. loaded_config_hash stays the owner's opaque current config file hash: the cited owner text requires comparing it with the current file hash before rename and chooses no digest, encoding or serialization here, so no hash grammar, file bytes or digest attributes cross this contract and the value is carried verbatim and never re-derived. Currentness is proven only by an independent owner file read at the write boundary: a currentness-bearing binding without an independent current/pre-rename owner hash, and a persisted claim without an independent owner post-write read-back, is reported as an explicit unproven binding instead of passing. Every record is static contract evidence only: no native handler, no production wiring, no admitted EventRecord, no storage family or key, no migration, no retry, no new command, alias, default, disabled reason, permission class or owner-prose policy.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/permissions_rule_command_request"
+    },
+    {
+      "$ref": "#/$defs/permissions_rule_owner_snapshot"
+    },
+    {
+      "$ref": "#/$defs/permissions_rule_command_result"
+    },
+    {
+      "$ref": "#/$defs/permissions_rule_error"
+    },
+    {
+      "$ref": "#/$defs/permissions_rule_command_availability"
+    },
+    {
+      "$ref": "#/$defs/permissions_rule_permission_evidence"
+    },
+    {
+      "$ref": "#/$defs/permissions_rule_command_binding"
+    }
+  ],
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Shape law only: a non-empty string. The cited owner text chooses no maximum length, so none is asserted."
+    },
+    "rule_command_id": {
+      "type": "string",
+      "enum": [
+        "cmd.permissions.create_project_rule",
+        "cmd.permissions.update_rule",
+        "cmd.permissions.reorder_rule",
+        "cmd.permissions.delete_rule",
+        "cmd.permissions.validate_rule"
+      ]
+    },
+    "rule_action": {
+      "type": "string",
+      "enum": [
+        "allow",
+        "ask",
+        "deny"
+      ]
+    },
+    "requested_permission_state": {
+      "type": "string",
+      "enum": [
+        "allow",
+        "ask",
+        "deny",
+        "unset"
+      ]
+    },
+    "effective_permission_state": {
+      "type": "string",
+      "enum": [
+        "allow",
+        "ask",
+        "deny"
+      ]
+    },
+    "permission_layer": {
+      "type": "string",
+      "enum": [
+        "mode_override",
+        "parent_run_ceiling",
+        "session_cache",
+        "persona_overrides",
+        "project_level",
+        "global_level",
+        "defaults"
+      ]
+    },
+    "rule_scope_key": {
+      "type": "string",
+      "pattern": "^(global|project|package:.+|seam:.+|lane:.+)$",
+      "description": "Closed owner scope inventory from Plans/Permissions_System.md Section 2.4: global, project, package:{package_id}, seam:{seam_id}, lane:{lane_id}. The body of a package/seam/lane identifier stays owner-owned; this companion asserts no identifier grammar."
+    },
+    "config_layer": {
+      "type": "string",
+      "enum": [
+        "project",
+        "global"
+      ]
+    },
+    "rule_id": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+      "description": "Section 9 makes rule_id a stable UUID generated at rule creation. Only the UUID text form is asserted, case-insensitively; no version/variant nibble is pinned."
+    },
+    "owner_file_hash": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Opaque owner-computed hash of the Permissions config file, carried verbatim. The cited owner text (TOML Persistence Failure And Atomicity Rules) compares loaded_config_hash with the current file hash before rename and chooses no digest algorithm, text encoding or serialization; this companion therefore asserts no hash grammar and never re-derives the value. The declared value is a declaration only: an independent owner file read is required to prove currentness, and without it the binding is reported unproven."
+    },
+    "owner_timestamp": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Owner timestamp value carried verbatim. The cited owner text names created_at and timestamp_utc but chooses no serialization here, so no timestamp format is asserted (held slice owner_timestamp_serialization)."
+    },
+    "rule_pattern": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Shape law only: a non-empty rule pattern. The wildcard grammar (*, ? and a trailing ' *' making the tail optional) is owned by Plans/Permissions_System.md Section 3.1 and is not restated or narrowed here; no glob validity predicate, length cap, whitespace or control-character rule is asserted (held slice external_directory_glob_predicate)."
+    },
+    "pattern_class": {
+      "type": "string",
+      "enum": [
+        "tool_pattern",
+        "external_directory_pattern"
+      ]
+    },
+    "rule_error_code": {
+      "type": "string",
+      "enum": [
+        "rule_not_found",
+        "target_index_out_of_range",
+        "scope_mismatch",
+        "permission_config_parse_failed",
+        "permission_config_write_conflict",
+        "external_directory_duplicate_path",
+        "external_directory_invalid_glob",
+        "handler_unavailable"
+      ]
+    },
+    "dirty_state": {
+      "type": "string",
+      "enum": [
+        "clean",
+        "dirty",
+        "saving",
+        "saved",
+        "save_failed",
+        "conflict_refresh_required"
+      ]
+    },
+    "blocked_family": {
+      "type": "string",
+      "enum": [
+        "blocked_policy",
+        "blocked_approval",
+        "blocked_preflight",
+        "blocked_governance"
+      ]
+    },
+    "blocked_reason_code": {
+      "type": "string",
+      "enum": [
+        "approval_required",
+        "policy_denied",
+        "preflight_failed",
+        "state_changed",
+        "domain_sensitive_action",
+        "secret_required",
+        "network_forbidden",
+        "external_side_effect",
+        "operation_in_progress"
+      ]
+    },
+    "rule_draft": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool_pattern",
+        "action",
+        "pattern_class"
+      ],
+      "properties": {
+        "tool_pattern": {
+          "$ref": "#/$defs/rule_pattern"
+        },
+        "action": {
+          "$ref": "#/$defs/rule_action"
+        },
+        "pattern_class": {
+          "$ref": "#/$defs/pattern_class"
+        }
+      }
+    },
+    "rule_order": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_index"
+      ],
+      "properties": {
+        "target_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Nonnegative order index (owner law). The cited owner text names no upper bound; an index the owner refuses is reported through the owner's own named refusal (target_index_out_of_range), not as a schema error."
+        }
+      }
+    },
+    "rule_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule_id",
+        "tool_pattern",
+        "action",
+        "scope_key",
+        "pattern_class",
+        "created_at",
+        "created_by_thread_id"
+      ],
+      "properties": {
+        "rule_id": {
+          "$ref": "#/$defs/rule_id"
+        },
+        "tool_pattern": {
+          "$ref": "#/$defs/rule_pattern"
+        },
+        "action": {
+          "$ref": "#/$defs/rule_action"
+        },
+        "scope_key": {
+          "$ref": "#/$defs/rule_scope_key"
+        },
+        "pattern_class": {
+          "$ref": "#/$defs/pattern_class"
+        },
+        "created_at": {
+          "$ref": "#/$defs/owner_timestamp"
+        },
+        "created_by_thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "permissions_rule_command_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_kind",
+        "command_id",
+        "request_id",
+        "idempotency_key",
+        "scope_key",
+        "settings_route",
+        "focus_ref"
+      ],
+      "properties": {
+        "record_kind": {
+          "const": "permissions_rule_command_request"
+        },
+        "command_id": {
+          "$ref": "#/$defs/rule_command_id"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope_key": {
+          "$ref": "#/$defs/rule_scope_key"
+        },
+        "rule_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/rule_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "draft": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/rule_draft"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/rule_order"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_loaded_config_hash": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/owner_file_hash"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The config file hash the caller loaded before the write. It is a declaration, never authority: the owner's pre-rename comparison is proven only by an independent owner file read."
+        },
+        "settings_route": {
+          "const": "settings.permissions"
+        },
+        "focus_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "permissions_rule_owner_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_kind",
+        "config_layer",
+        "selectable_scope_keys",
+        "declared_loaded_config_hash",
+        "writable_state",
+        "ordered_rules"
+      ],
+      "properties": {
+        "record_kind": {
+          "const": "permissions_rule_owner_snapshot"
+        },
+        "config_layer": {
+          "$ref": "#/$defs/config_layer"
+        },
+        "selectable_scope_keys": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/rule_scope_key"
+          },
+          "description": "Closed owner scope inventory offered by the selected config layer: at most the five owner scopes, each at most once, and at least the layer's own scope. No other inventory cap is asserted."
+        },
+        "declared_loaded_config_hash": {
+          "$ref": "#/$defs/owner_file_hash"
+        },
+        "writable_state": {
+          "type": "string",
+          "enum": [
+            "writable",
+            "not_writable"
+          ]
+        },
+        "ordered_rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/rule_record"
+          },
+          "description": "The owner's ordered rule projection. The cited owner text names no rule-count cap, so none is asserted; rule identity uniqueness is enforced by the companion's record and join laws."
+        }
+      }
+    },
+    "effect_disposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "overwrote_newer_file",
+        "reconciliation_required"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "persisted_atomic",
+            "refused",
+            "blocked",
+            "unknown",
+            "validated_no_persistence"
+          ]
+        },
+        "atomic_steps": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 4,
+          "items": {
+            "type": "string",
+            "enum": [
+              "write_temp",
+              "fsync_temp",
+              "atomic_rename",
+              "fsync_parent_directory"
+            ]
+          }
+        },
+        "overwrote_newer_file": {
+          "const": false
+        },
+        "reconciliation_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "result_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_scope",
+        "native_handler_status",
+        "native_write_evidence",
+        "native_handler_claim",
+        "native_execution_observed",
+        "emitted_event_types",
+        "admitted_event_record"
+      ],
+      "properties": {
+        "evidence_scope": {
+          "const": "static_owner_schema_and_fixture_only"
+        },
+        "native_handler_status": {
+          "const": "specified"
+        },
+        "native_write_evidence": {
+          "const": "absent"
+        },
+        "native_handler_claim": {
+          "const": false
+        },
+        "native_execution_observed": {
+          "const": false
+        },
+        "emitted_event_types": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "admitted_event_record": {
+          "const": false
+        }
+      }
+    },
+    "permissions_rule_command_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_kind",
+        "command_id",
+        "request_id",
+        "rule_id",
+        "scope_key",
+        "order_index",
+        "dirty_state",
+        "observed_rule",
+        "observed_ordered_rules",
+        "observed_config_hash",
+        "effect_disposition",
+        "approval_created",
+        "persistence_receipt_ref",
+        "dispatch_receipt_ref",
+        "evidence",
+        "error"
+      ],
+      "properties": {
+        "record_kind": {
+          "const": "permissions_rule_command_result"
+        },
+        "command_id": {
+          "$ref": "#/$defs/rule_command_id"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "rule_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/rule_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope_key": {
+          "$ref": "#/$defs/rule_scope_key"
+        },
+        "order_index": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dirty_state": {
+          "$ref": "#/$defs/dirty_state"
+        },
+        "observed_rule": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/rule_record"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_ordered_rules": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/rule_record"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_config_hash": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/owner_file_hash"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The file hash the owner observed for this outcome. A post-write claim is proven only by an independent owner post-write read-back; a no-write claim is compared with the independent pre-write read. Neither value is ever re-derived from the rule projection."
+        },
+        "effect_disposition": {
+          "$ref": "#/$defs/effect_disposition"
+        },
+        "approval_created": {
+          "type": "boolean"
+        },
+        "persistence_receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dispatch_receipt_ref": {
+          "type": "string",
+          "pattern": "^cmd\\.permissions\\.(create_project_rule|update_rule|reorder_rule|delete_rule|validate_rule)\\.dispatch_receipt$"
+        },
+        "evidence": {
+          "$ref": "#/$defs/result_evidence"
+        },
+        "error": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/permissions_rule_error"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "permissions_rule_error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_kind",
+        "command_id",
+        "error_code",
+        "recovery_action_ids",
+        "allowed_action_ids",
+        "executed"
+      ],
+      "properties": {
+        "record_kind": {
+          "const": "permissions_rule_error"
+        },
+        "command_id": {
+          "$ref": "#/$defs/rule_command_id"
+        },
+        "error_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/rule_error_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "config_path": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "line": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "description": "Optional parse-failure position. The cited owner text names path/line?/column? and chooses no numeric domain, so none is asserted (held slice parse_detail_position_domain)."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "column": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recovery_action_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        "blocked_family": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/blocked_family"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blocked_reason_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/blocked_reason_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowed_action_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "description": "Ordered blocked-outcome action ids. The cited owner text names the ordered list and no membership cap; human response labels are never minted as ids here."
+        },
+        "executed": {
+          "const": false
+        }
+      }
+    },
+    "permissions_rule_command_availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_kind",
+        "command_id",
+        "state_selector",
+        "disabled_reason_projection",
+        "availability",
+        "native_handler_claim",
+        "disabled_reason_ref"
+      ],
+      "properties": {
+        "record_kind": {
+          "const": "permissions_rule_command_availability"
+        },
+        "command_id": {
+          "$ref": "#/$defs/rule_command_id"
+        },
+        "state_selector": {
+          "type": "string",
+          "pattern": "^state\\.commands\\.permissions_(create_project_rule|update_rule|reorder_rule|delete_rule|validate_rule)\\.availability$"
+        },
+        "disabled_reason_projection": {
+          "type": "string",
+          "pattern": "^state\\.commands\\.permissions_(create_project_rule|update_rule|reorder_rule|delete_rule|validate_rule)\\.disabled_reason$"
+        },
+        "availability": {
+          "type": "string",
+          "enum": [
+            "available",
+            "unavailable"
+          ]
+        },
+        "native_handler_claim": {
+          "const": false
+        },
+        "disabled_reason_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^#/",
+              "description": "Companion envelope convention only: a pack-local JSON Pointer (RFC 6901 fragment) into this static fixture document, which binds the projected disabled reason to a declared error record. It restricts no owner value domain; a native producer binds the owner's projected state ref instead."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "permissions_rule_permission_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_kind",
+        "command_id",
+        "requested_permission_state",
+        "effective_permission_state",
+        "downgrade_reason",
+        "governing_layer",
+        "approval_scope_key",
+        "permission_snapshot_id",
+        "blocked_reason_code",
+        "allowed_action_ids",
+        "native_handler_claim",
+        "native_execution_observed"
+      ],
+      "properties": {
+        "record_kind": {
+          "const": "permissions_rule_permission_evidence"
+        },
+        "command_id": {
+          "$ref": "#/$defs/rule_command_id"
+        },
+        "requested_permission_state": {
+          "$ref": "#/$defs/requested_permission_state"
+        },
+        "effective_permission_state": {
+          "$ref": "#/$defs/effective_permission_state"
+        },
+        "downgrade_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "governing_layer": {
+          "$ref": "#/$defs/permission_layer"
+        },
+        "approval_scope_key": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "permission_snapshot_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blocked_reason_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/blocked_reason_code"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowed_action_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "description": "Ordered recovery action ids carried by the permission evidence. No membership cap is asserted; the four human response labels of Section 2.2/6 are copy, not canonical ids."
+        },
+        "native_handler_claim": {
+          "const": false
+        },
+        "native_execution_observed": {
+          "const": false
+        }
+      }
+    },
+    "permissions_rule_command_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_kind",
+        "binding_id",
+        "command_id",
+        "request",
+        "owner_snapshot",
+        "observed_result",
+        "observed_error",
+        "availability",
+        "permission_evidence"
+      ],
+      "properties": {
+        "record_kind": {
+          "const": "permissions_rule_command_binding"
+        },
+        "binding_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "$ref": "#/$defs/rule_command_id"
+        },
+        "request": {
+          "$ref": "#/$defs/permissions_rule_command_request"
+        },
+        "owner_snapshot": {
+          "$ref": "#/$defs/permissions_rule_owner_snapshot"
+        },
+        "observed_result": {
+          "$ref": "#/$defs/permissions_rule_command_result"
+        },
+        "observed_error": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/permissions_rule_error"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "$ref": "#/$defs/permissions_rule_command_availability"
+        },
+        "permission_evidence": {
+          "$ref": "#/$defs/permissions_rule_permission_evidence"
+        }
+      }
+    }
+  }
+}

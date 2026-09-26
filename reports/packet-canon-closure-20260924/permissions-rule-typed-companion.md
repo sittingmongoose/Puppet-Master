@@ -1,0 +1,59 @@
+# Permissions rule command companion
+
+Status: independently accepted bounded static companion applied and verified.
+No main landing or native implementation completion is claimed.
+
+Exact commands: `cmd.permissions.create_project_rule`, `update_rule`,
+`reorder_rule`, `delete_rule`, and `validate_rule`. Their existing identities,
+handlers, selectors, receipts, permission/atomicity requirements and empty
+EventRecord expectations remain in force. Touch stays partial.
+
+The companion binds requests to independently supplied current owner-file
+hashes, selected original rules, results and post-write readback. Missing
+independent reads are explicitly unproven. The separate pinned static test
+double is not a native producer. Fixed-original mutations reject stale hashes,
+changed rule values/metadata/order and false readback claims. Validation neither
+persists nor grants approval. Unsupported rule-count, order-index, hash syntax,
+string-length and timestamp restrictions from the first candidate were removed;
+existing owner restrictions remain.
+
+Only the independently reviewed frozen snapshot was applied. Later changes in
+the external author's active directory are not part of this integration.
+Seven files match that snapshot exactly; the central gate is additively rebased
+to preserve the Doctor companion and increase the closed pair count from 82
+to 83. No owner Markdown or generated governance artifact is changed here.
+
+Evidence directory:
+`/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/case-reconciliation/permissions-rule-five-correction-02/`.
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `freeze-v2-20260926T0331Z/FREEZE-MANIFEST.md` | `493cd7dc133709718e32ee07e0454078c347b9a2a30ceacb2d360326b9f9c426` |
+| `freeze-v2-20260926T0331Z/companion-v2.patch` | `48cf72686e721c94bd2b72b3ada7bd61997b2491b64bfc9c33453f790a498bdb` |
+| `freeze-v2-20260926T0331Z/REPORT-V2.md` | `95e04ab0408e7da41a7a7a8aeaa5ec63a09a94f6c552d819f9c6ab1ca2276249` |
+| `REVIEW-DIFFERENT-SOL-V2.md` | `d77c3ad137f64fbac71beaeba2ed2657fdec762f9f3e45a7ddbc0ce5d217d78c` |
+
+The frozen report cites an earlier checkpoint hash. The freeze manifest pins
+the actual checkpoint bytes; no frozen report was silently rewritten.
+
+Root verification: all 83 contract pairs pass, with 1,621 positive cases,
+4,833 rejected negative cases and 12 internal self-tests; findings are empty.
+The 16 focused checks pass in the frozen candidate and again in the full
+worktree; production wiring verification passes. Touch
+Closure reports exactly one Settings disposition-registry hash drift, identical
+when the same verifier loads the committed `c500eb75c` Touch and Wiring inputs:
+expected `10e1ffd1062a9a3aebd5c418acc7289fb5bb3d0261ef08edc65a461a47685632`,
+found `43e215863fc05d2d2bc1bd863cbaca64042e167af6331e99eac3122a6b68e866`.
+No TCR refresh or waiver is performed. An initial process-substitution baseline
+attempt could not resolve its pipe paths; the successful comparison instead
+injected the two exact Git blobs into the unchanged verifier loader.
+
+The eleven `DC-PERM-*` labels are internal held-axis annotations, not presented
+Jared decision cards, approvals or eleven product blockers. Remaining axes
+include exact external-directory glob validity, unwritable-config outcome,
+stale-hash validation behavior, duplicate non-directory patterns, actor binding
+and exact human-approval action IDs. Hash/timestamp/parse-position serialization
+and actual post-write byte authenticity remain owner-interface or implementation
+work. These must be adjudicated against current owners; this slice does not
+claim full five-command behavior for every input. Native TOML writes, atomicity,
+issued permission, GUI behavior and runtime evidence remain unproved.
