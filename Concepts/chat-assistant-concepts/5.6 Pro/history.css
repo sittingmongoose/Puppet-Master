@@ -169,7 +169,10 @@
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent);
 }
 .thread-row.active .thread-title{ font-weight:650; color:var(--text); }
-.thread-row.active .thread-copy{ padding-right:4px; }
+.thread-row.active .thread-copy{ padding-right:2px; }
+.thread-row:hover .thread-copy,
+.thread-row:has(.thread-more:focus) .thread-copy,
+.thread-row:has(.thread-more:focus-visible) .thread-copy{ padding-right:30px; }
 .thread-row.active:hover{ background:color-mix(in srgb,var(--accent) 21%,var(--surface-3)); }
 
 /* =====================================================================
@@ -244,16 +247,10 @@
   }
   .thread-status-slot,
   .thread-time{ display:none !important; }
-  .thread-row{ grid-template-columns:minmax(0,1fr) !important; }
+  .thread-row{ grid-template-columns:minmax(0,1fr) !important; padding-left:10px; }
   .thread-lead{
     display:none !important; width:0 !important; min-width:0 !important;
     overflow:hidden; margin:0;
-  }
-  .thread-row:hover,
-  .thread-row:focus-within{ grid-template-columns:28px minmax(0,1fr) !important; }
-  .thread-row:hover .thread-lead,
-  .thread-row:focus-within .thread-lead{
-    display:grid !important; width:28px !important; min-width:28px !important; overflow:visible;
   }
 }
 
@@ -275,32 +272,12 @@
 .history-flyout.is-history-narrow .thread-row,
 .history-flyout:has(.history-head.is-hh-compact) .thread-row,
 .history-panel.is-history-narrow .thread-row,
-.history-panel:has(.history-head.is-hh-compact) .thread-row{ grid-template-columns:minmax(0,1fr) !important; }
+.history-panel:has(.history-head.is-hh-compact) .thread-row{ grid-template-columns:minmax(0,1fr) !important; padding-left:10px; }
 .history-flyout.is-history-narrow .thread-lead,
 .history-flyout:has(.history-head.is-hh-compact) .thread-lead,
 .history-panel.is-history-narrow .thread-lead,
 .history-panel:has(.history-head.is-hh-compact) .thread-lead{
   display:none !important; width:0 !important; min-width:0 !important; overflow:hidden; margin:0;
-}
-.history-flyout.is-history-narrow .thread-row:hover,
-.history-flyout.is-history-narrow .thread-row:focus-within,
-.history-flyout:has(.history-head.is-hh-compact) .thread-row:hover,
-.history-flyout:has(.history-head.is-hh-compact) .thread-row:focus-within,
-.history-panel.is-history-narrow .thread-row:hover,
-.history-panel.is-history-narrow .thread-row:focus-within,
-.history-panel:has(.history-head.is-hh-compact) .thread-row:hover,
-.history-panel:has(.history-head.is-hh-compact) .thread-row:focus-within{
-  grid-template-columns:28px minmax(0,1fr) !important;
-}
-.history-flyout.is-history-narrow .thread-row:hover .thread-lead,
-.history-flyout.is-history-narrow .thread-row:focus-within .thread-lead,
-.history-flyout:has(.history-head.is-hh-compact) .thread-row:hover .thread-lead,
-.history-flyout:has(.history-head.is-hh-compact) .thread-row:focus-within .thread-lead,
-.history-panel.is-history-narrow .thread-row:hover .thread-lead,
-.history-panel.is-history-narrow .thread-row:focus-within .thread-lead,
-.history-panel:has(.history-head.is-hh-compact) .thread-row:hover .thread-lead,
-.history-panel:has(.history-head.is-hh-compact) .thread-row:focus-within .thread-lead{
-  display:grid !important; width:28px !important; min-width:28px !important; overflow:visible;
 }
 
 /* =====================================================================

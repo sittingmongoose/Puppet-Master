@@ -519,13 +519,19 @@
      attribute set activity-bar.js's own activityHoverCard registrant uses
      (id/data-overlay/data-k/data-domain/data-tone/role) so aria-controls on
      the Activity Bar button still resolves once this owns the 'todo' domain. */
+  var HOVER_STATUS = { pending:'Pending', in_progress:'Working', completed:'Done', blocked:'Blocked', skipped:'Skipped' };
   function renderCompact(ctx){
     var feed=hoverFeed(currentThreadId(ctx)); if(!feed) return '';
     var rows=feed.rows.slice(0,4);
+    var list=rows.length?rows.map(function(r){
+      var it=r.item, tone=STATUS_TONE[it.status]||'idle';
+      return '<button type="button" class="todo-hover-row'+(r.current?' is-current':'')+'" data-k="todo-hr:'+esc(it.todo_id)+'" data-action="todo-show-item" data-thread="'+esc(it.thread_id)+'" data-id="'+esc(it.todo_id)+'"><span class="todo-hover-glyph todo-glyph-'+esc(it.status)+'">'+glyph(it.status)+'</span><span class="todo-hover-title">'+esc(it.title)+'</span><span class="todo-hover-status" data-tone="'+esc(tone)+'">'+esc(HOVER_STATUS[it.status]||STATUS_LABEL[it.status])+'</span></button>';
+    }).join(''):'<p class="todo-hover-empty">Nothing waiting.</p>';
+    var more=feed.total>rows.length, blocked=feed.blockedCount;
+    var foot=(more||blocked)?'<div class="todo-hover-foot-row">'+(more?'<button class="todo-hover-overflow" data-action="open-activity" data-domain="todo">Open all '+feed.total+'</button>':'<span></span>')+(blocked?'<button type="button" class="todo-hover-blocked" data-action="open-activity" data-domain="todo">'+ctx.icon('lock',11)+' '+blocked+' blocked</button>':'')+'</div>':'';
     return '<button type="button" class="todo-hover-head" data-action="open-activity" data-domain="todo">'+
       '<span class="todo-hover-head-icon">'+ctx.icon('todo',13)+'</span><strong>To-Dos</strong><span class="todo-hover-head-meta">'+feed.done+' of '+feed.total+'</span></button>'+
-      '<div class="todo-hover-list">'+(rows.length?rows.map(function(r){var it=r.item;return '<button type="button" class="todo-hover-row'+(r.current?' is-current':'')+'" data-k="todo-hr:'+esc(it.todo_id)+'" data-action="todo-show-item" data-thread="'+esc(it.thread_id)+'" data-id="'+esc(it.todo_id)+'"><span class="todo-hover-glyph todo-glyph-'+esc(it.status)+'">'+glyph(it.status)+'</span><span class="todo-hover-title">'+esc(it.title)+'</span></button>';}).join(''):'<p class="todo-hover-empty">Nothing waiting.</p>')+'</div>'+
-      (feed.total>rows.length?'<button class="todo-hover-overflow" data-action="open-activity" data-domain="todo">Open all '+feed.total+' items</button>':'')+(feed.blockedCount?'<button type="button" class="todo-hover-blocked" data-action="open-activity" data-domain="todo">'+ctx.icon('lock',11)+' '+feed.blockedCount+' blocked</button>':'');
+      '<div class="todo-hover-list">'+list+'</div>'+foot;
   }
 
   /* extReplace('activityPanelBody',{domain:d,transient}, ...) (app.js) passes
@@ -614,7 +620,7 @@
 
   /* View-only virtual hierarchy. The complete graph remains in ToDoController.
      Fixed row geometry keeps deep/large trees bounded in DOM, never in data. */
-  const ROW_HEIGHT=88;
+  const ROW_HEIGHT=78;
   const treeViews=new Map();
   function treeView(tid){if(!treeViews.has(tid))treeViews.set(tid,{query:'',searchCollapsed:{},top:0,selected:null,work:null});return treeViews.get(tid);}
   function visibleTree(tid){
@@ -643,15 +649,18 @@
     return rows.slice(start,end).map((row,n)=>{
       const t=row.item,kids=childrenOf(list,t.todo_id),view=treeView(tid),selected=view.selected===t.todo_id,scope=rowScope(tid,t),collapsed=!!(view.query.trim()?view.searchCollapsed[t.todo_id]:ui.collapsed[t.todo_id]);
       const wait=t.owner_wait||workOwner(t)?.waitState?.(t.workflow_ref,t),next=kids.length?childSummary(list,t):wait?.reason||wait?.kind||t.blocked_reason_ref||(t.status==='pending'&&!runnable(list,t)?'Waiting for dependencies':STATUS_LABEL[t.status]);
+      const actions=rowActions(ctx,list,t);
+      const foot=(t.explicit_assignment_label||actions)?(t.explicit_assignment_label?'<small class="todo-assign">'+esc(t.explicit_assignment_label)+'</small>':'')+actions:'';
       return '<div class="todo-node todo-virtual-row" data-todo-id="'+esc(t.todo_id)+'" data-status="'+esc(t.status)+'" data-k="todo-node:'+esc(t.todo_id)+'" style="top:'+((start+n)*ROW_HEIGHT)+'px;--todo-indent:'+Math.min(row.depth*12,48)+'px" role="treeitem" aria-level="'+(row.depth+1)+'"'+(kids.length?' aria-expanded="'+!collapsed+'"':'')+' aria-selected="'+selected+'">'+
-        '<div class="todo-row">'+(kids.length?'<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" data-action="todo-toggle-parent"'+scope+' aria-label="'+(collapsed?'Expand ':'Collapse ')+esc(t.title)+'" aria-expanded="'+!collapsed+'">'+ctx.icon('chevron',11)+'</button>':'<span class="todo-caret-spacer"></span>')+
-        '<span class="todo-glyph todo-glyph-'+esc(t.status)+'" title="'+esc(STATUS_LABEL[t.status])+'">'+glyph(t.status)+'</span><button class="todo-copy todo-title-button" data-action="todo-toggle-detail"'+scope+' aria-expanded="'+selected+'" title="'+esc(t.title)+'"><span class="todo-title'+(t.status==='completed'?' is-struck':'')+'">'+esc(t.title)+'</span><small>'+esc(next)+'</small></button></div><div class="todo-row-actions">'+(t.explicit_assignment_label?'<small>'+esc(t.explicit_assignment_label)+'</small>':'')+rowActions(ctx,list,t)+'</div></div>';
+        '<div class="todo-row-top">'+(kids.length?'<button class="todo-caret'+(collapsed?' is-collapsed':'')+'" data-action="todo-toggle-parent"'+scope+' aria-label="'+(collapsed?'Expand ':'Collapse ')+esc(t.title)+'" aria-expanded="'+!collapsed+'">'+ctx.icon('chevron',11)+'</button>':'<span class="todo-caret-spacer"></span>')+
+        '<span class="todo-glyph todo-glyph-'+esc(t.status)+'" title="'+esc(STATUS_LABEL[t.status])+'">'+glyph(t.status)+'</span><button class="todo-copy todo-title-button" data-action="todo-toggle-detail"'+scope+' aria-expanded="'+selected+'" title="'+esc(t.title)+'"><span class="todo-title'+(t.status==='completed'?' is-struck':'')+'">'+esc(t.title)+'</span></button></div>'+
+        '<div class="todo-meta"><small>'+esc(next)+'</small>'+(foot?'<div class="todo-row-foot">'+foot+'</div>':'')+'</div></div>';
     }).join('');
   }
   function selectedDetail(ctx,tid){
     const view=treeView(tid),list=itemsOf(tid),item=findItem(list,view.selected);if(!item)return '';
-    return '<section class="todo-selected-detail todo-detail" data-k="todo-detail:'+esc(item.todo_id)+'"><header><strong>'+esc(item.title)+'</strong><button class="text-button" data-action="todo-toggle-detail"'+rowScope(tid,item)+'>Close details</button></header><p>'+esc(item.expected_outcome||childSummary(list,item))+'</p>'+depChip(list,item)+(item.source_room_run_id&&item.source_room_message_id?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(item.source_room_run_id)+'" data-message="'+esc(item.source_room_message_id)+'">Open source message</button>':'')+(item.source_review_run_id&&item.source_finding_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+
-      '<details data-k="todo-technical:'+esc(item.todo_id)+'"><summary>Dependencies, attempts and receipts</summary><pre>'+esc(JSON.stringify({todo_id:item.todo_id,list_revision:threadStore(tid).revision||1,item_revision:item.revision,dependencies:item.depends_on,bindings:itemBindings(tid,item.todo_id),transitions:item.transitions},null,2))+'</pre></details>'+ 
+    const outcome=esc(item.expected_outcome||childSummary(list,item));
+    return '<section class="todo-selected-detail todo-detail" data-k="todo-detail:'+esc(item.todo_id)+'"><header class="todo-detail-head"><strong class="todo-detail-title">'+esc(item.title)+'</strong><button class="icon-button todo-detail-close" data-action="todo-toggle-detail"'+rowScope(tid,item)+' data-hover-key="todo-detail-close-'+esc(item.todo_id)+'" data-hover-tip="Close details" aria-label="Close details">'+ctx.icon('close',13)+'</button></header><div class="todo-detail-well"><span class="todo-detail-label">Expected</span><p class="todo-detail-outcome">'+outcome+'</p></div>'+depChip(list,item)+(item.source_room_run_id&&item.source_room_message_id?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(item.source_room_run_id)+'" data-message="'+esc(item.source_room_message_id)+'">Open source message</button>':'')+(item.source_review_run_id&&item.source_finding_id?'<button class="text-button" data-action="review-open-report" data-run="'+esc(item.source_review_run_id)+'" data-finding="'+esc(item.source_finding_id)+'">Open source finding</button>':'')+
       (view.work?.todo_id===item.todo_id?'<div class="todo-opened-work" data-k="todo-opened-work"><strong>Exact work · '+esc(view.work.attempt_id)+'</strong><p>'+esc(view.work.work_id)+'</p><pre>'+esc(JSON.stringify(view.work.detail,null,2))+'</pre></div>':'')+'</section>';
   }
   function renderPanel(ctx){

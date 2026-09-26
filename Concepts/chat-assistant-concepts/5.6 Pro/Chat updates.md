@@ -294,14 +294,19 @@ Question changes pull rows off on overlapping elastic stagger with light blur.
   collapses New thread to a **+** icon (`is-hh-compact`), and thread rows enter
   **narrow** mode (`is-history-narrow`) at the same threshold (JS measures the
   scroll rect; CSS `@container history-drawer` stays aligned).
-- Thread rows are a **2-column** grid: left **lead** (status glyph + hover **⋯**
-  menu) | copy (title + optional time). On hover, status fades and the more
-  menu appears **in the lead** (not on the right). Each row’s hover tip is the
-  status label; the more button has its own tip. History row / lead /
-  status-slot use `overflow: visible`. Row horizontal padding is slightly
-  tighter so the active inset ring does not crowd the title text. The **active**
-  row keeps a **one-line ellipsized title**, the timestamp, and the **summary
-  preview**; `box-sizing: border-box` and a slightly wider copy gutter keep the
+- Thread rows are a **2-column** grid: left **lead** (status glyph only) | copy
+  (title + optional time). The **⋯** thread-options control sits on the **right**
+  edge of the row (absolute), hidden until the row is hovered or the button
+  itself is focused — not when the row merely holds keyboard focus after a
+  click. The status glyph **stays visible** on hover; it is not replaced by
+  the menu. Each row’s hover tip is the status label; the more button has its
+  own tip. History row / lead / status-slot use `overflow: visible`. At rest the
+  title and summary use the full row width; copy only reserves right padding
+  while the row is hovered or the options button is focused, so the text does
+  not sit under the menu. Row horizontal padding is
+  slightly tighter so the active inset ring does not crowd the title text. The
+  **active** row keeps a **one-line ellipsized title**, the timestamp, and the
+  **summary preview**; `box-sizing: border-box` and the copy gutter keep the
   inset ring from clipping. Long names like **Inline Visualizer Gallery** may
   still ellipsize.
 - Preview Rows: working / reviewing keep the outer spinning satellite **on**
@@ -312,7 +317,9 @@ Question changes pull rows off on overlapping elastic stagger with light blur.
   Other history takes that still use `.status-orbit` keep the same on-ring
   satellite.
 - In narrow mode: status glyph and timestamp are hidden so the title gets full
-  width; on hover the lead expands only enough to show the more menu.
+  width; the lead column stays collapsed (no hover expansion). Thread options
+  still appear on the **right** on row hover only. Rows gain a little extra
+  **left** inset so title and summary are not flush with the selection ring.
 - Pinned / Recent / Archived are **collapsible** section heads with an always-
   visible chevron (rotates when collapsed). **Archived defaults collapsed**;
   Pinned and Recent default open. **No count badges** on section heads.
@@ -404,8 +411,14 @@ tabular right-aligned values, 13–14px primary copy, 12–13px support copy, an
 compact semantic marks instead of broad tinted boxes. Focused Changes show the
 basename first with path context below; add/delete counts are green and red
 on the file rows, the Added/Deleted facts, and the Change mix label — not a
-boxed hunk. The entire row opens its real diff. Focused Goal has no summary card — the
-compact Goal projection and a **View Goal** footer stand alone. Focused
+boxed hunk. On each file row those counts sit in a content-sized column with a
+4px gap from the text. The entire row opens its real diff. Focused Goal has no summary card — the
+compact Goal projection and a **View Goal** footer stand alone. The full Goal
+section exposes lifecycle controls, **Objective history**, and **Ask for a
+replacement** only — not continuation-decision dumps, session JSON **Details**,
+or **Evaluate next turn**. The activity-bar Goal preview stays the short card.
+**Edit objective** and **Details** close that preview and open this panel.
+Focused
 Subagents keep a slim head plus the one-line agent summary; focused Artifacts
 keep the head and count only.
 
@@ -413,10 +426,16 @@ The Activity Bar previews use the same explicit status vocabulary as the board:
 Blocked, Needs attention/Needs retry, Working, Changed, Queued/Waiting, and
 Settled/Ready do not change meaning between surfaces. Each 354px preview has a
 44px header, at most five 48px rows, a stable 68px status/time column, and one
-34px **Open Activity** footer. Preview rows have no identity glyphs and no
+34px **Open Activity** footer. The To-Do preview is the checklist form used by
+agent plan lists: one line per item (status mark, ellipsized title, status
+word in that same 68px column) and a single footer line that pairs **Open all**
+with the blocked count. Preview rows have no identity glyphs and no
 agent-initial badges; Subagents rows match Activity Detail (name, model and
 current/blocker, status plus elapsed). Header totals are retained; duplicate
 footer histograms are not.
+
+Activity Detail body scroll uses **8px** horizontal inset (10px vertical) so
+domain panels keep more readable line length in narrow widths.
 
 The final Activity-specific verifier covers the default, Show all/drill-down,
 preview footer, keyboard focus, pin/unpin/close focus restoration, independent
@@ -723,7 +742,15 @@ child sub-To-Dos; every leaf carries a bounded expected outcome.
   dependencies permit. A pending item with an unmet dependency is *not* blocked.
 - Transitions are **individually receipted** for that item. Bulk completion,
   a provider whole-list replacement, and a stale-revision write are all
-  **refused**, with the refusal visible.
+  **refused**, with the refusal visible (via **Show refused attempts**, not a
+  raw JSON disclosure on the selected item).
+- The **selected To-Do detail** is a header bar (title and an icon-only **Close details** mark),
+  an inset **Expected** well, then a full-width wrapping dependency or waiting
+  line when one exists, plus source links. It does not show dependency,
+  attempt, or receipt dumps.
+- Each virtual row is a bordered card: the title sits with the status glyph,
+  and progress or status sits in a full-width meta strip under a hairline.
+  Expand carets point **right** when collapsed and **down** when expanded.
 - There is **no verification status** anywhere user-visible; validation, when
   needed, is its own To-Do. There is **no separate Done section and no source
   grouping** — completed items stay inline, in place, struck through.
@@ -871,8 +898,9 @@ and deliberately not in the Multi-Agent Workflows manager.
   and is never partial; an ineligible turn says why.
 - **Thread title policy** is Default resolver, None, or an explicit available
   model. A manual rename **locks** the auto-title until an explicit Regenerate,
-  and an unavailable model is disclosed rather than silently substituted. An
-  untitled thread reads **New chat**.
+  and an unavailable model is disclosed rather than silently substituted. The
+  thread menu shows **Regenerate title** only — no **Title:** policy status
+  line. An untitled thread reads **New chat**.
 
 ## What is fixture and what is not
 
