@@ -3,7 +3,7 @@
   "fixture_format": "permissions rule command companion v1",
   "owner_schema": "Plans/permissions_rule_command_contracts.schema.json",
   "contract_schema": "Plans/permissions_rule_command_contracts.schema.json",
-  "claim_boundary": "Static owner schema and fixture evidence only. Every record binds a declared request to the owner-selected rule projection and an observed result through scripts/pm_permissions_rule_command_contracts.py. An owner original is never proven by a field of the same binding: the declared current file hash and the declared pre-state rule projection are declarations that an independent owner read must confirm, and a binding without that independent read is reported explicitly unproven. The static gate's separate pinned owner-original double (scripts/pm_permissions_rule_command_owner_file_double.py) is static test evidence and never a native producer. No native handler, production wiring, filesystem write, permission decision, receipt, admitted EventRecord, storage family or key, migration, or readiness claim is made; a receipt/no-event disposition is not an admitted EventRecord.",
+  "claim_boundary": "Static owner schema and fixture evidence only. Every record binds a declared request to the owner-selected rule projection and an observed result through scripts/pm_permissions_rule_command_contracts.py. An owner original is never proven by a field of the same binding: the declared current file hash and the declared pre-state rule projection are declarations that an independent owner read must confirm, and a binding without that independent read is reported explicitly unproven. The static gate's separate pinned owner-original double (scripts/pm_permissions_rule_command_owner_file_double.py) is static test evidence and never a native producer. No native handler, production wiring, filesystem write, permission decision, receipt, admitted EventRecord, storage family or key, migration, or readiness claim is made; a receipt/no-event disposition is not an admitted EventRecord. The external-directory glob law is the Section 3.1 accept side for directory-pattern drafts (literal path text including `[`, `]`, `{`, `}` and a backslash stays valid; the owner-defined reject predicate is held as external_directory_glob_predicate), and the permission-blocked episode action join binds the selected episode, action and approval_scope_key to the existing cmd.runtime.approve, cmd.runtime.decline and cmd.permissions.open commands, admitting an action only when the current blocked episode exposes it. The current blocked episode reaches that join only from an independent read supplied by the separately pinned static owner episode test double (scripts/pm_permissions_rule_owner_episode_double.py): the claimed episode and the claimed action list are declarations that never witness themselves, native episode selection is unproven, no permissions-family approve/decline command is minted, and no approval decision, dispatch or EventRecord is claimed.",
   "coverage": {
     "exact_command_ids": [
       "cmd.permissions.create_project_rule",
@@ -33,7 +33,13 @@
       "Plans/UI_Command_Catalog.md#UCC-113",
       "Plans/Wiring_Matrix.production.json catalog.permissions_*",
       "Plans/touch_closure.json#TCP-PERMISSIONS",
-      "Plans/Settings_System.md#SSYS-023"
+      "Plans/Settings_System.md#SSYS-023",
+      "Plans/Permissions_System.md Section 6",
+      "Plans/Permissions_System.md Section 6.1",
+      "Plans/UI_Command_Catalog.md canonical recovery commands",
+      "Plans/human-in-the-loop.md HITL Button Labels (Resolved)",
+      "Plans/runtime_artifact_hitl_approval.schema.json",
+      "Plans/Contracts_V0.md dispatcher and projection safety"
     ],
     "join_checks": [
       "join_request_field_laws",
@@ -66,16 +72,21 @@
       "join_dirty_state_binding",
       "join_atomic_steps_binding",
       "join_event_boundary",
-      "join_unwritable_config_must_not_persist"
+      "join_unwritable_config_must_not_persist",
+      "join_episode_original",
+      "join_episode_original_unproven",
+      "join_episode_advertised_action",
+      "join_episode_dispatch_binding",
+      "join_episode_refusal_binding"
     ],
     "held_slices": [
       "unwritable_config_outcome",
       "request_field_laws",
-      "external_directory_glob_predicate",
       "owner_file_hash_syntax",
       "owner_timestamp_serialization",
       "parse_detail_position_domain",
-      "post_write_file_byte_authenticity"
+      "post_write_file_byte_authenticity",
+      "external_directory_glob_predicate"
     ],
     "decision_cards": [
       "DC-PERM-RULE-001",
@@ -92,7 +103,30 @@
     ],
     "owner_original_witness": "scripts/pm_permissions_rule_command_owner_file_double.py supplies the separate pinned owner-file generations and the pinned owner-selected rule originals for the static scenarios as static test evidence only; it is never a native producer, and a scenario it does not pin is reported unproven.",
     "owner_file_hash_syntax": "File hashes are opaque owner-computed tokens (no digest, encoding or serialization is chosen by the cited owner text): generation-1 is the scenario's current load, generation-2 a post-write read-back and the superseded token a generation the owner no longer has.",
-    "removed_unowned_caps": "The owner names no 64-rule cap, no 4096 order index, no string-length cap, no glob grammar and no timestamp or parse-position format; those restrictions were removed rather than re-pinned, and positives above the removed rule/index caps are declared here."
+    "removed_unowned_caps": "The owner names no 64-rule cap, no 4096 order index, no string-length cap, no glob grammar and no timestamp or parse-position format; those restrictions were removed rather than re-pinned, and positives above the removed rule/index caps are declared here.",
+    "owner_episode_witness": "scripts/pm_permissions_rule_owner_episode_double.py supplies the separate pinned owner blocked episode per static selection scenario as static test evidence only; it is never a native producer, native episode selection stays unproven, and a scenario it does not pin is reported unproven.",
+    "external_directory_glob_validity": {
+      "owner_inventory": [
+        "*",
+        "?",
+        "trailing ' *'"
+      ],
+      "owner_valid_examples": [
+        "~/.cargo/**",
+        "/usr/local/include/**",
+        "src/auth/**",
+        "include/**",
+        "include/[draft].txt",
+        "/tmp/{literal}/file",
+        "include/back\\slash",
+        "git *",
+        ".env*",
+        "*",
+        "?"
+      ],
+      "held_reject_predicate": "The owner names external_directory_invalid_glob for invalid glob input on directory-pattern rules but states no malformed-input condition, so the reject side stays the held slice external_directory_glob_predicate and this pack claims no malformedness. Every listed example above is admissible owner Section 3.1 text; no absolute-path, home-prefix, metacharacter, Unicode, length or count ban is imposed."
+    },
+    "unwritable_config_disabled_reason": "An unavailable mutating control projects the owner's own unmet precondition `permission_config_writable` as its disabled reason (UCC-113 precondition plus the central rows' disabled_reason projection). It never projects handler_unavailable and never the mutation-only permission_config_write_conflict."
   },
   "errors": [
     {
@@ -1786,7 +1820,7 @@
       }
     },
     {
-      "name": "binding.validate_rule.observed_refusal.external_directory_invalid_glob",
+      "name": "binding.validate_rule.validated_literal_directory_pattern",
       "definition": "permissions_rule_command_binding",
       "instance": {
         "record_kind": "permissions_rule_command_binding",
@@ -1800,7 +1834,7 @@
           "scope_key": "project",
           "rule_id": null,
           "draft": {
-            "tool_pattern": "include/**",
+            "tool_pattern": "include/[draft].txt",
             "action": "ask",
             "pattern_class": "external_directory_pattern"
           },
@@ -1864,7 +1898,7 @@
           "rule_id": null,
           "scope_key": "project",
           "order_index": null,
-          "dirty_state": "dirty",
+          "dirty_state": "clean",
           "observed_rule": null,
           "observed_ordered_rules": [
             {
@@ -1906,7 +1940,7 @@
           ],
           "observed_config_hash": "owner-file-hash:static-test-double:generation-1:current",
           "effect_disposition": {
-            "kind": "refused",
+            "kind": "validated_no_persistence",
             "overwrote_newer_file": false,
             "reconciliation_required": false
           },
@@ -1922,33 +1956,9 @@
             "emitted_event_types": [],
             "admitted_event_record": false
           },
-          "error": {
-            "record_kind": "permissions_rule_error",
-            "command_id": "cmd.permissions.validate_rule",
-            "error_code": "external_directory_invalid_glob",
-            "config_path": null,
-            "line": null,
-            "column": null,
-            "recovery_action_ids": [],
-            "blocked_family": null,
-            "blocked_reason_code": null,
-            "allowed_action_ids": [],
-            "executed": false
-          }
+          "error": null
         },
-        "observed_error": {
-          "record_kind": "permissions_rule_error",
-          "command_id": "cmd.permissions.validate_rule",
-          "error_code": "external_directory_invalid_glob",
-          "config_path": null,
-          "line": null,
-          "column": null,
-          "recovery_action_ids": [],
-          "blocked_family": null,
-          "blocked_reason_code": null,
-          "allowed_action_ids": [],
-          "executed": false
-        },
+        "observed_error": null,
         "availability": {
           "record_kind": "permissions_rule_command_availability",
           "command_id": "cmd.permissions.validate_rule",
@@ -3414,195 +3424,6 @@
           "effective_permission_state": "allow",
           "downgrade_reason": null,
           "governing_layer": "project_level",
-          "approval_scope_key": null,
-          "permission_snapshot_id": null,
-          "blocked_reason_code": null,
-          "allowed_action_ids": [],
-          "native_handler_claim": false,
-          "native_execution_observed": false
-        }
-      }
-    },
-    {
-      "name": "binding.update_rule.held.not_writable_config",
-      "definition": "permissions_rule_command_binding",
-      "instance": {
-        "record_kind": "permissions_rule_command_binding",
-        "binding_id": "bind:notwritable:0001",
-        "command_id": "cmd.permissions.update_rule",
-        "request": {
-          "record_kind": "permissions_rule_command_request",
-          "command_id": "cmd.permissions.update_rule",
-          "request_id": "req:bind:notwritable:0001",
-          "idempotency_key": "idem:req:bind:notwritable:0001",
-          "scope_key": "project",
-          "rule_id": "11111111-1111-4111-8111-000000000002",
-          "draft": {
-            "tool_pattern": "git *",
-            "action": "deny",
-            "pattern_class": "tool_pattern"
-          },
-          "order": null,
-          "expected_loaded_config_hash": "owner-file-hash:static-test-double:generation-1:current",
-          "settings_route": "settings.permissions",
-          "focus_ref": "settings.permissions.rule_list"
-        },
-        "owner_snapshot": {
-          "record_kind": "permissions_rule_owner_snapshot",
-          "config_layer": "project",
-          "selectable_scope_keys": [
-            "project",
-            "lane:release"
-          ],
-          "declared_loaded_config_hash": "owner-file-hash:static-test-double:generation-1:current",
-          "writable_state": "not_writable",
-          "ordered_rules": [
-            {
-              "rule_id": "11111111-1111-4111-8111-000000000001",
-              "tool_pattern": "*",
-              "action": "ask",
-              "scope_key": "project",
-              "pattern_class": "tool_pattern",
-              "created_at": "2026-09-20T10:00:00Z",
-              "created_by_thread_id": "thread:settings-permissions:0001"
-            },
-            {
-              "rule_id": "11111111-1111-4111-8111-000000000002",
-              "tool_pattern": "git *",
-              "action": "allow",
-              "scope_key": "project",
-              "pattern_class": "tool_pattern",
-              "created_at": "2026-09-20T10:00:00Z",
-              "created_by_thread_id": "thread:settings-permissions:0001"
-            },
-            {
-              "rule_id": "11111111-1111-4111-8111-000000000003",
-              "tool_pattern": "rm *",
-              "action": "deny",
-              "scope_key": "lane:release",
-              "pattern_class": "tool_pattern",
-              "created_at": "2026-09-20T10:00:00Z",
-              "created_by_thread_id": "thread:settings-permissions:0001"
-            },
-            {
-              "rule_id": "11111111-1111-4111-8111-000000000004",
-              "tool_pattern": "~/.cargo/**",
-              "action": "allow",
-              "scope_key": "project",
-              "pattern_class": "external_directory_pattern",
-              "created_at": "2026-09-20T10:00:00Z",
-              "created_by_thread_id": "thread:settings-permissions:0001"
-            }
-          ]
-        },
-        "observed_result": {
-          "record_kind": "permissions_rule_command_result",
-          "command_id": "cmd.permissions.update_rule",
-          "request_id": "req:bind:notwritable:0001",
-          "rule_id": "11111111-1111-4111-8111-000000000002",
-          "scope_key": "project",
-          "order_index": null,
-          "dirty_state": "conflict_refresh_required",
-          "observed_rule": null,
-          "observed_ordered_rules": [
-            {
-              "rule_id": "11111111-1111-4111-8111-000000000001",
-              "tool_pattern": "*",
-              "action": "ask",
-              "scope_key": "project",
-              "pattern_class": "tool_pattern",
-              "created_at": "2026-09-20T10:00:00Z",
-              "created_by_thread_id": "thread:settings-permissions:0001"
-            },
-            {
-              "rule_id": "11111111-1111-4111-8111-000000000002",
-              "tool_pattern": "git *",
-              "action": "allow",
-              "scope_key": "project",
-              "pattern_class": "tool_pattern",
-              "created_at": "2026-09-20T10:00:00Z",
-              "created_by_thread_id": "thread:settings-permissions:0001"
-            },
-            {
-              "rule_id": "11111111-1111-4111-8111-000000000003",
-              "tool_pattern": "rm *",
-              "action": "deny",
-              "scope_key": "lane:release",
-              "pattern_class": "tool_pattern",
-              "created_at": "2026-09-20T10:00:00Z",
-              "created_by_thread_id": "thread:settings-permissions:0001"
-            },
-            {
-              "rule_id": "11111111-1111-4111-8111-000000000004",
-              "tool_pattern": "~/.cargo/**",
-              "action": "allow",
-              "scope_key": "project",
-              "pattern_class": "external_directory_pattern",
-              "created_at": "2026-09-20T10:00:00Z",
-              "created_by_thread_id": "thread:settings-permissions:0001"
-            }
-          ],
-          "observed_config_hash": "owner-file-hash:static-test-double:generation-1:current",
-          "effect_disposition": {
-            "kind": "refused",
-            "overwrote_newer_file": false,
-            "reconciliation_required": false
-          },
-          "approval_created": false,
-          "persistence_receipt_ref": null,
-          "dispatch_receipt_ref": "cmd.permissions.update_rule.dispatch_receipt",
-          "evidence": {
-            "evidence_scope": "static_owner_schema_and_fixture_only",
-            "native_handler_status": "specified",
-            "native_write_evidence": "absent",
-            "native_handler_claim": false,
-            "native_execution_observed": false,
-            "emitted_event_types": [],
-            "admitted_event_record": false
-          },
-          "error": {
-            "record_kind": "permissions_rule_error",
-            "command_id": "cmd.permissions.update_rule",
-            "error_code": "permission_config_write_conflict",
-            "config_path": ".puppet-master/permissions.toml",
-            "line": null,
-            "column": null,
-            "recovery_action_ids": [],
-            "blocked_family": null,
-            "blocked_reason_code": null,
-            "allowed_action_ids": [],
-            "executed": false
-          }
-        },
-        "observed_error": {
-          "record_kind": "permissions_rule_error",
-          "command_id": "cmd.permissions.update_rule",
-          "error_code": "permission_config_write_conflict",
-          "config_path": ".puppet-master/permissions.toml",
-          "line": null,
-          "column": null,
-          "recovery_action_ids": [],
-          "blocked_family": null,
-          "blocked_reason_code": null,
-          "allowed_action_ids": [],
-          "executed": false
-        },
-        "availability": {
-          "record_kind": "permissions_rule_command_availability",
-          "command_id": "cmd.permissions.update_rule",
-          "state_selector": "state.commands.permissions_update_rule.availability",
-          "disabled_reason_projection": "state.commands.permissions_update_rule.disabled_reason",
-          "availability": "unavailable",
-          "native_handler_claim": false,
-          "disabled_reason_ref": "#/errors/1"
-        },
-        "permission_evidence": {
-          "record_kind": "permissions_rule_permission_evidence",
-          "command_id": "cmd.permissions.update_rule",
-          "requested_permission_state": "allow",
-          "effective_permission_state": "allow",
-          "downgrade_reason": null,
-          "governing_layer": "global_level",
           "approval_scope_key": null,
           "permission_snapshot_id": null,
           "blocked_reason_code": null,
@@ -5820,6 +5641,541 @@
           "native_execution_observed": false
         }
       }
+    },
+    {
+      "name": "blocked_episode.permission_ask",
+      "definition": "permissions_blocked_episode",
+      "instance": {
+        "record_kind": "permissions_blocked_episode",
+        "run_id": "run:2026-09-26:permissions:0001",
+        "node_id": "node:permissions:ask:0001",
+        "blocked_sequence": 7,
+        "attempt_id": "attempt:0001:02",
+        "approval_scope_key": "scope:lane:release:0002",
+        "blocked_family": "blocked_approval",
+        "blocked_reason_code": "approval_required",
+        "allowed_action_ids": [
+          "deny",
+          "approve_once",
+          "approve_for_session",
+          "approve_always",
+          "open_permissions"
+        ],
+        "native_handler_claim": false,
+        "native_episode_selection_proven": false
+      }
+    },
+    {
+      "name": "blocked_episode.permission_ask_minimal",
+      "definition": "permissions_blocked_episode",
+      "instance": {
+        "record_kind": "permissions_blocked_episode",
+        "run_id": "run:2026-09-26:permissions:0002",
+        "node_id": "node:permissions:ask:0002",
+        "blocked_sequence": 3,
+        "attempt_id": "attempt:0002:01",
+        "approval_scope_key": "scope:lane:release:0002",
+        "blocked_family": "blocked_approval",
+        "blocked_reason_code": "approval_required",
+        "allowed_action_ids": [
+          "deny",
+          "approve_once"
+        ],
+        "native_handler_claim": false,
+        "native_episode_selection_proven": false
+      }
+    },
+    {
+      "name": "availability.unavailable.update_rule.not_writable",
+      "definition": "permissions_rule_command_availability",
+      "instance": {
+        "record_kind": "permissions_rule_command_availability",
+        "command_id": "cmd.permissions.update_rule",
+        "state_selector": "state.commands.permissions_update_rule.availability",
+        "disabled_reason_projection": "state.commands.permissions_update_rule.disabled_reason",
+        "availability": "unavailable",
+        "native_handler_claim": false,
+        "disabled_reason_ref": null,
+        "unmet_precondition_id": "permission_config_writable"
+      }
+    },
+    {
+      "name": "binding.update_rule.blocked.not_writable_config",
+      "definition": "permissions_rule_command_binding",
+      "instance": {
+        "record_kind": "permissions_rule_command_binding",
+        "binding_id": "bind:notwritable:0001",
+        "command_id": "cmd.permissions.update_rule",
+        "request": {
+          "record_kind": "permissions_rule_command_request",
+          "command_id": "cmd.permissions.update_rule",
+          "request_id": "req:bind:notwritable:0001",
+          "idempotency_key": "idem:req:bind:notwritable:0001",
+          "scope_key": "project",
+          "rule_id": "11111111-1111-4111-8111-000000000002",
+          "draft": {
+            "tool_pattern": "git *",
+            "action": "deny",
+            "pattern_class": "tool_pattern"
+          },
+          "order": null,
+          "expected_loaded_config_hash": "owner-file-hash:static-test-double:generation-1:current",
+          "settings_route": "settings.permissions",
+          "focus_ref": "settings.permissions.rule_list"
+        },
+        "owner_snapshot": {
+          "record_kind": "permissions_rule_owner_snapshot",
+          "config_layer": "project",
+          "selectable_scope_keys": [
+            "project",
+            "lane:release"
+          ],
+          "declared_loaded_config_hash": "owner-file-hash:static-test-double:generation-1:current",
+          "writable_state": "not_writable",
+          "ordered_rules": [
+            {
+              "rule_id": "11111111-1111-4111-8111-000000000001",
+              "tool_pattern": "*",
+              "action": "ask",
+              "scope_key": "project",
+              "pattern_class": "tool_pattern",
+              "created_at": "2026-09-20T10:00:00Z",
+              "created_by_thread_id": "thread:settings-permissions:0001"
+            },
+            {
+              "rule_id": "11111111-1111-4111-8111-000000000002",
+              "tool_pattern": "git *",
+              "action": "allow",
+              "scope_key": "project",
+              "pattern_class": "tool_pattern",
+              "created_at": "2026-09-20T10:00:00Z",
+              "created_by_thread_id": "thread:settings-permissions:0001"
+            },
+            {
+              "rule_id": "11111111-1111-4111-8111-000000000003",
+              "tool_pattern": "rm *",
+              "action": "deny",
+              "scope_key": "lane:release",
+              "pattern_class": "tool_pattern",
+              "created_at": "2026-09-20T10:00:00Z",
+              "created_by_thread_id": "thread:settings-permissions:0001"
+            },
+            {
+              "rule_id": "11111111-1111-4111-8111-000000000004",
+              "tool_pattern": "~/.cargo/**",
+              "action": "allow",
+              "scope_key": "project",
+              "pattern_class": "external_directory_pattern",
+              "created_at": "2026-09-20T10:00:00Z",
+              "created_by_thread_id": "thread:settings-permissions:0001"
+            }
+          ]
+        },
+        "observed_result": {
+          "record_kind": "permissions_rule_command_result",
+          "command_id": "cmd.permissions.update_rule",
+          "request_id": "req:bind:notwritable:0001",
+          "rule_id": "11111111-1111-4111-8111-000000000002",
+          "scope_key": "project",
+          "order_index": null,
+          "dirty_state": "dirty",
+          "observed_rule": null,
+          "observed_ordered_rules": [
+            {
+              "rule_id": "11111111-1111-4111-8111-000000000001",
+              "tool_pattern": "*",
+              "action": "ask",
+              "scope_key": "project",
+              "pattern_class": "tool_pattern",
+              "created_at": "2026-09-20T10:00:00Z",
+              "created_by_thread_id": "thread:settings-permissions:0001"
+            },
+            {
+              "rule_id": "11111111-1111-4111-8111-000000000002",
+              "tool_pattern": "git *",
+              "action": "allow",
+              "scope_key": "project",
+              "pattern_class": "tool_pattern",
+              "created_at": "2026-09-20T10:00:00Z",
+              "created_by_thread_id": "thread:settings-permissions:0001"
+            },
+            {
+              "rule_id": "11111111-1111-4111-8111-000000000003",
+              "tool_pattern": "rm *",
+              "action": "deny",
+              "scope_key": "lane:release",
+              "pattern_class": "tool_pattern",
+              "created_at": "2026-09-20T10:00:00Z",
+              "created_by_thread_id": "thread:settings-permissions:0001"
+            },
+            {
+              "rule_id": "11111111-1111-4111-8111-000000000004",
+              "tool_pattern": "~/.cargo/**",
+              "action": "allow",
+              "scope_key": "project",
+              "pattern_class": "external_directory_pattern",
+              "created_at": "2026-09-20T10:00:00Z",
+              "created_by_thread_id": "thread:settings-permissions:0001"
+            }
+          ],
+          "observed_config_hash": null,
+          "effect_disposition": {
+            "kind": "blocked",
+            "overwrote_newer_file": false,
+            "reconciliation_required": false
+          },
+          "approval_created": false,
+          "persistence_receipt_ref": null,
+          "dispatch_receipt_ref": "cmd.permissions.update_rule.dispatch_receipt",
+          "evidence": {
+            "evidence_scope": "static_owner_schema_and_fixture_only",
+            "native_handler_status": "specified",
+            "native_write_evidence": "absent",
+            "native_handler_claim": false,
+            "native_execution_observed": false,
+            "emitted_event_types": [],
+            "admitted_event_record": false
+          },
+          "error": {
+            "record_kind": "permissions_rule_error",
+            "command_id": "cmd.permissions.update_rule",
+            "error_code": null,
+            "config_path": null,
+            "line": null,
+            "column": null,
+            "recovery_action_ids": [],
+            "blocked_family": "blocked_preflight",
+            "blocked_reason_code": "preflight_failed",
+            "allowed_action_ids": [
+              "open_permissions"
+            ],
+            "executed": false
+          }
+        },
+        "observed_error": {
+          "record_kind": "permissions_rule_error",
+          "command_id": "cmd.permissions.update_rule",
+          "error_code": null,
+          "config_path": null,
+          "line": null,
+          "column": null,
+          "recovery_action_ids": [],
+          "blocked_family": "blocked_preflight",
+          "blocked_reason_code": "preflight_failed",
+          "allowed_action_ids": [
+            "open_permissions"
+          ],
+          "executed": false
+        },
+        "availability": {
+          "record_kind": "permissions_rule_command_availability",
+          "command_id": "cmd.permissions.update_rule",
+          "state_selector": "state.commands.permissions_update_rule.availability",
+          "disabled_reason_projection": "state.commands.permissions_update_rule.disabled_reason",
+          "availability": "unavailable",
+          "native_handler_claim": false,
+          "disabled_reason_ref": null,
+          "unmet_precondition_id": "permission_config_writable"
+        },
+        "permission_evidence": {
+          "record_kind": "permissions_rule_permission_evidence",
+          "command_id": "cmd.permissions.update_rule",
+          "requested_permission_state": "allow",
+          "effective_permission_state": "allow",
+          "downgrade_reason": null,
+          "governing_layer": "project_level",
+          "approval_scope_key": null,
+          "permission_snapshot_id": null,
+          "blocked_reason_code": null,
+          "allowed_action_ids": [],
+          "native_handler_claim": false,
+          "native_execution_observed": false
+        }
+      }
+    },
+    {
+      "name": "episode_selection.approve_once",
+      "definition": "permissions_blocked_episode_selection",
+      "instance": {
+        "record_kind": "permissions_blocked_episode_selection",
+        "selection_id": "select:approve_once:0001",
+        "claimed_episode": {
+          "run_id": "run:2026-09-26:permissions:0001",
+          "node_id": "node:permissions:ask:0001",
+          "blocked_sequence": 7,
+          "attempt_id": "attempt:0001:02"
+        },
+        "claimed_allowed_action_ids": [
+          "deny",
+          "approve_once",
+          "approve_for_session",
+          "approve_always",
+          "open_permissions"
+        ],
+        "selected_action_id": "approve_once",
+        "display_label_copy": "Approve once",
+        "disposition": "dispatch_admitted",
+        "refusal_reason": null,
+        "command_id": "cmd.runtime.approve",
+        "dispatch_args": {
+          "run_id": "run:2026-09-26:permissions:0001",
+          "node_id": "node:permissions:ask:0001",
+          "blocked_sequence": 7,
+          "attempt_id": "attempt:0001:02"
+        },
+        "hitl_decision": "once",
+        "approval_scope_key": "scope:lane:release:0002",
+        "scope_effect": "invocation",
+        "native_handler_claim": false,
+        "native_execution_observed": false,
+        "native_episode_selection_proven": false
+      }
+    },
+    {
+      "name": "episode_selection.approve_once_minimal",
+      "definition": "permissions_blocked_episode_selection",
+      "instance": {
+        "record_kind": "permissions_blocked_episode_selection",
+        "selection_id": "select:approve_once:minimal:0001",
+        "claimed_episode": {
+          "run_id": "run:2026-09-26:permissions:0002",
+          "node_id": "node:permissions:ask:0002",
+          "blocked_sequence": 3,
+          "attempt_id": "attempt:0002:01"
+        },
+        "claimed_allowed_action_ids": [
+          "deny",
+          "approve_once"
+        ],
+        "selected_action_id": "approve_once",
+        "display_label_copy": "Approve once",
+        "disposition": "dispatch_admitted",
+        "refusal_reason": null,
+        "command_id": "cmd.runtime.approve",
+        "dispatch_args": {
+          "run_id": "run:2026-09-26:permissions:0002",
+          "node_id": "node:permissions:ask:0002",
+          "blocked_sequence": 3,
+          "attempt_id": "attempt:0002:01"
+        },
+        "hitl_decision": "once",
+        "approval_scope_key": "scope:lane:release:0002",
+        "scope_effect": "invocation",
+        "native_handler_claim": false,
+        "native_execution_observed": false,
+        "native_episode_selection_proven": false
+      }
+    },
+    {
+      "name": "episode_selection.approve_for_session",
+      "definition": "permissions_blocked_episode_selection",
+      "instance": {
+        "record_kind": "permissions_blocked_episode_selection",
+        "selection_id": "select:approve_for_session:0001",
+        "claimed_episode": {
+          "run_id": "run:2026-09-26:permissions:0001",
+          "node_id": "node:permissions:ask:0001",
+          "blocked_sequence": 7,
+          "attempt_id": "attempt:0001:02"
+        },
+        "claimed_allowed_action_ids": [
+          "deny",
+          "approve_once",
+          "approve_for_session",
+          "approve_always",
+          "open_permissions"
+        ],
+        "selected_action_id": "approve_for_session",
+        "display_label_copy": "Approve for session",
+        "disposition": "dispatch_admitted",
+        "refusal_reason": null,
+        "command_id": "cmd.runtime.approve",
+        "dispatch_args": {
+          "run_id": "run:2026-09-26:permissions:0001",
+          "node_id": "node:permissions:ask:0001",
+          "blocked_sequence": 7,
+          "attempt_id": "attempt:0001:02"
+        },
+        "hitl_decision": "for_session",
+        "approval_scope_key": "scope:lane:release:0002",
+        "scope_effect": "session_cache",
+        "native_handler_claim": false,
+        "native_execution_observed": false,
+        "native_episode_selection_proven": false
+      }
+    },
+    {
+      "name": "episode_selection.approve_always",
+      "definition": "permissions_blocked_episode_selection",
+      "instance": {
+        "record_kind": "permissions_blocked_episode_selection",
+        "selection_id": "select:approve_always:0001",
+        "claimed_episode": {
+          "run_id": "run:2026-09-26:permissions:0001",
+          "node_id": "node:permissions:ask:0001",
+          "blocked_sequence": 7,
+          "attempt_id": "attempt:0001:02"
+        },
+        "claimed_allowed_action_ids": [
+          "deny",
+          "approve_once",
+          "approve_for_session",
+          "approve_always",
+          "open_permissions"
+        ],
+        "selected_action_id": "approve_always",
+        "display_label_copy": "Always",
+        "disposition": "dispatch_admitted",
+        "refusal_reason": null,
+        "command_id": "cmd.runtime.approve",
+        "dispatch_args": {
+          "run_id": "run:2026-09-26:permissions:0001",
+          "node_id": "node:permissions:ask:0001",
+          "blocked_sequence": 7,
+          "attempt_id": "attempt:0001:02"
+        },
+        "hitl_decision": "always",
+        "approval_scope_key": "scope:lane:release:0002",
+        "scope_effect": "durable_rule",
+        "native_handler_claim": false,
+        "native_execution_observed": false,
+        "native_episode_selection_proven": false
+      }
+    },
+    {
+      "name": "episode_selection.deny",
+      "definition": "permissions_blocked_episode_selection",
+      "instance": {
+        "record_kind": "permissions_blocked_episode_selection",
+        "selection_id": "select:deny:0001",
+        "claimed_episode": {
+          "run_id": "run:2026-09-26:permissions:0001",
+          "node_id": "node:permissions:ask:0001",
+          "blocked_sequence": 7,
+          "attempt_id": "attempt:0001:02"
+        },
+        "claimed_allowed_action_ids": [
+          "deny",
+          "approve_once",
+          "approve_for_session",
+          "approve_always",
+          "open_permissions"
+        ],
+        "selected_action_id": "deny",
+        "display_label_copy": "Deny",
+        "disposition": "dispatch_admitted",
+        "refusal_reason": null,
+        "command_id": "cmd.runtime.decline",
+        "dispatch_args": {
+          "run_id": "run:2026-09-26:permissions:0001",
+          "node_id": "node:permissions:ask:0001",
+          "blocked_sequence": 7,
+          "attempt_id": "attempt:0001:02"
+        },
+        "hitl_decision": "deny",
+        "approval_scope_key": "scope:lane:release:0002",
+        "scope_effect": "none",
+        "native_handler_claim": false,
+        "native_execution_observed": false,
+        "native_episode_selection_proven": false
+      }
+    },
+    {
+      "name": "episode_selection.open_permissions",
+      "definition": "permissions_blocked_episode_selection",
+      "instance": {
+        "record_kind": "permissions_blocked_episode_selection",
+        "selection_id": "select:open_permissions:0001",
+        "claimed_episode": {
+          "run_id": "run:2026-09-26:permissions:0001",
+          "node_id": "node:permissions:ask:0001",
+          "blocked_sequence": 7,
+          "attempt_id": "attempt:0001:02"
+        },
+        "claimed_allowed_action_ids": [
+          "deny",
+          "approve_once",
+          "approve_for_session",
+          "approve_always",
+          "open_permissions"
+        ],
+        "selected_action_id": "open_permissions",
+        "display_label_copy": "Open Permissions Settings",
+        "disposition": "dispatch_admitted",
+        "refusal_reason": null,
+        "command_id": "cmd.permissions.open",
+        "dispatch_args": null,
+        "hitl_decision": null,
+        "approval_scope_key": "scope:lane:release:0002",
+        "scope_effect": "none",
+        "native_handler_claim": false,
+        "native_execution_observed": false,
+        "native_episode_selection_proven": false
+      }
+    },
+    {
+      "name": "episode_selection.stale_episode_refused",
+      "definition": "permissions_blocked_episode_selection",
+      "instance": {
+        "record_kind": "permissions_blocked_episode_selection",
+        "selection_id": "select:stale:0001",
+        "claimed_episode": {
+          "run_id": "run:2026-09-26:permissions:0001",
+          "node_id": "node:permissions:ask:0001",
+          "blocked_sequence": 4,
+          "attempt_id": "attempt:0001:02"
+        },
+        "claimed_allowed_action_ids": [
+          "deny",
+          "approve_once",
+          "approve_for_session",
+          "approve_always",
+          "open_permissions"
+        ],
+        "selected_action_id": "approve_once",
+        "display_label_copy": "Approve once",
+        "disposition": "refused",
+        "refusal_reason": "stale_blocked_episode",
+        "command_id": null,
+        "dispatch_args": null,
+        "hitl_decision": null,
+        "approval_scope_key": "scope:lane:release:0002",
+        "scope_effect": "none",
+        "native_handler_claim": false,
+        "native_execution_observed": false,
+        "native_episode_selection_proven": false
+      }
+    },
+    {
+      "name": "episode_selection.unadvertised_action_refused",
+      "definition": "permissions_blocked_episode_selection",
+      "instance": {
+        "record_kind": "permissions_blocked_episode_selection",
+        "selection_id": "select:not_advertised:0001",
+        "claimed_episode": {
+          "run_id": "run:2026-09-26:permissions:0002",
+          "node_id": "node:permissions:ask:0002",
+          "blocked_sequence": 3,
+          "attempt_id": "attempt:0002:01"
+        },
+        "claimed_allowed_action_ids": [
+          "deny",
+          "approve_once",
+          "approve_always"
+        ],
+        "selected_action_id": "approve_always",
+        "display_label_copy": "Always",
+        "disposition": "refused",
+        "refusal_reason": "action_not_advertised",
+        "command_id": null,
+        "dispatch_args": null,
+        "hitl_decision": null,
+        "approval_scope_key": "scope:lane:release:0002",
+        "scope_effect": "none",
+        "native_handler_claim": false,
+        "native_execution_observed": false,
+        "native_episode_selection_proven": false
+      }
     }
   ],
   "invalid": [
@@ -6665,6 +7021,22 @@
       "patch": {
         "declared_loaded_config_hash": null
       }
+    },
+    {
+      "name": "invalid.selection.unknown_action_id",
+      "definition": "permissions_blocked_episode_selection",
+      "base_valid": "episode_selection.deny",
+      "patch": {
+        "selected_action_id": "approve"
+      }
+    },
+    {
+      "name": "invalid.episode.missing_allowed_action_ids",
+      "definition": "permissions_blocked_episode",
+      "base_valid": "blocked_episode.permission_ask",
+      "remove": [
+        "allowed_action_ids"
+      ]
     }
   ],
   "negative_cases": [
@@ -7330,6 +7702,148 @@
       },
       "semantic_rule": "join_file_hash_readback",
       "without_join": "a join that accepts the declared observed hash of a persisted write without an independent owner post-write read-back credits a write whose file state nobody observed"
+    },
+    {
+      "name": "causal.not_writable_config_conflict_mislabel",
+      "definition": "permissions_rule_command_binding",
+      "semantic_rule": "join_unwritable_config_must_not_persist",
+      "without_join": "A join that only checks that some refusal was observed accepts a not-writable config documented with the mutation-only concurrent-write conflict code and an available control projection.",
+      "base_valid": "binding.update_rule.refused.permission_config_write_conflict",
+      "patch": {
+        "owner_snapshot.writable_state": "not_writable"
+      }
+    },
+    {
+      "name": "causal.blocked_episode_policy_family_with_approval_actions",
+      "definition": "permissions_blocked_episode",
+      "semantic_rule": "episode_family_reason_mismatch",
+      "without_join": "A join that never pairs the blocked family with its reason accepts an approval-bearing episode labeled as a policy denial.",
+      "base_valid": "blocked_episode.permission_ask",
+      "patch": {
+        "blocked_family": "blocked_policy",
+        "blocked_reason_code": "policy_denied"
+      }
+    },
+    {
+      "name": "causal.episode_selection_wrong_episode_admitted",
+      "definition": "permissions_blocked_episode_selection",
+      "semantic_rule": "join_episode_original",
+      "without_join": "A join that witnesses the selection with its own claimed episode accepts an action admitted against a blocked episode that is no longer current.",
+      "base_valid": "episode_selection.approve_once",
+      "patch": {
+        "claimed_episode.blocked_sequence": 4,
+        "dispatch_args.blocked_sequence": 4
+      }
+    },
+    {
+      "name": "causal.episode_selection_forged_action_admitted",
+      "definition": "permissions_blocked_episode_selection",
+      "semantic_rule": "join_episode_advertised_action",
+      "without_join": "A join that trusts the displayed action list admits an action the current blocked episode does not expose.",
+      "base_valid": "episode_selection.approve_once_minimal",
+      "patch": {
+        "claimed_allowed_action_ids": [
+          "deny",
+          "approve_once",
+          "approve_always"
+        ],
+        "selected_action_id": "approve_always",
+        "hitl_decision": "always",
+        "scope_effect": "durable_rule"
+      }
+    },
+    {
+      "name": "causal.episode_selection_claimed_action_not_selected",
+      "definition": "permissions_blocked_episode_selection",
+      "semantic_rule": "join_episode_advertised_action",
+      "without_join": "A join that never checks the displayed action list admits a selection the surface never offered.",
+      "base_valid": "episode_selection.approve_once",
+      "patch": {
+        "claimed_allowed_action_ids": [
+          "deny"
+        ]
+      }
+    },
+    {
+      "name": "causal.episode_selection_dispatch_follows_display_label",
+      "definition": "permissions_blocked_episode_selection",
+      "semantic_rule": "join_episode_dispatch_binding",
+      "without_join": "A join that reads the human label instead of the action id dispatches approve for a deny selection.",
+      "base_valid": "episode_selection.deny",
+      "patch": {
+        "display_label_copy": "Approve & Continue",
+        "command_id": "cmd.runtime.approve",
+        "hitl_decision": "once",
+        "scope_effect": "invocation"
+      }
+    },
+    {
+      "name": "causal.episode_selection_refused_without_reason",
+      "definition": "permissions_blocked_episode_selection",
+      "semantic_rule": "join_episode_refusal_binding",
+      "without_join": "A join that accepts a refusal without its owner-named reason cannot tell a stale episode from an unadvertised action.",
+      "base_valid": "episode_selection.stale_episode_refused",
+      "patch": {
+        "refusal_reason": null
+      }
+    },
+    {
+      "name": "causal.episode_selection_unpinned_scenario",
+      "definition": "permissions_blocked_episode_selection",
+      "semantic_rule": "join_episode_original_unproven",
+      "without_join": "A join with no independent read of the current blocked episode accepts the selection's own claim as current.",
+      "base_valid": "episode_selection.approve_once",
+      "patch": {
+        "selection_id": "select:unpinned:0001"
+      }
+    },
+    {
+      "name": "causal.literal_directory_pattern_refused_as_invalid_glob",
+      "definition": "permissions_rule_command_binding",
+      "semantic_rule": "join_expected_success",
+      "without_join": "A join that treats `[`, `]`, `{`, `}` or a backslash as wildcard constructs refuses owner-valid literal path text with external_directory_invalid_glob.",
+      "base_valid": "binding.validate_rule.validated_literal_directory_pattern",
+      "patch": {
+        "observed_result.effect_disposition.kind": "refused",
+        "observed_result.dirty_state": "save_failed",
+        "observed_result.error": {
+          "record_kind": "permissions_rule_error",
+          "command_id": "cmd.permissions.validate_rule",
+          "error_code": "external_directory_invalid_glob",
+          "config_path": null,
+          "line": null,
+          "column": null,
+          "recovery_action_ids": [],
+          "blocked_family": null,
+          "blocked_reason_code": null,
+          "allowed_action_ids": [],
+          "executed": false
+        },
+        "observed_error": {
+          "record_kind": "permissions_rule_error",
+          "command_id": "cmd.permissions.validate_rule",
+          "error_code": "external_directory_invalid_glob",
+          "config_path": null,
+          "line": null,
+          "column": null,
+          "recovery_action_ids": [],
+          "blocked_family": null,
+          "blocked_reason_code": null,
+          "allowed_action_ids": [],
+          "executed": false
+        }
+      }
+    },
+    {
+      "name": "causal.directory_path_refusal_relabeled_invalid_glob",
+      "definition": "permissions_rule_command_binding",
+      "semantic_rule": "join_error_code_binding",
+      "without_join": "A join that accepts any directory-pattern error code cannot tell the owner's exact duplicate-path condition from the invalid-glob carrier.",
+      "base_valid": "binding.create_project_rule.refused.external_directory_duplicate_path",
+      "patch": {
+        "observed_result.error.error_code": "external_directory_invalid_glob",
+        "observed_error.error_code": "external_directory_invalid_glob"
+      }
     }
   ]
 }

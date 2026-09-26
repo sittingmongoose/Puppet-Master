@@ -95,6 +95,7 @@ from pm_application_update_local_result import local_settlement_semantic_failure
 from pm_client_trust_local_settlement import client_trust_local_settlement_semantic_failures
 from pm_permissions_rule_command_contracts import permissions_rule_command_semantic_failures
 from pm_permissions_rule_command_owner_file_double import witness_for as permissions_rule_owner_original_witness
+from pm_permissions_rule_owner_episode_double import witness_for as permissions_rule_owner_episode_witness
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -1446,12 +1447,18 @@ def contract_semantic_failures(
         return client_trust_local_settlement_semantic_failures(definition_name, value)
     if schema_rel == "Plans/permissions_rule_command_contracts.schema.json":
         # Recomputation of the owner-selected rule projection plus the independent
-        # owner-original laws. The witness is the separate pinned owner-original
-        # test double: static test evidence only, never a native producer. A
-        # binding whose scenario it does not pin stays explicitly unproven rather
-        # than passing on its own embedded snapshot or hash.
+        # owner-original laws. The witnesses are separate pinned test doubles:
+        # the owner-file double supplies the current/pre-rename hash and the
+        # owner-selected rule original, and the owner-episode double supplies the
+        # current blocked episode for a permission-blocked episode selection.
+        # Both are static test evidence only, never a native producer. A binding or
+        # selection whose scenario they do not pin stays explicitly unproven rather
+        # than passing on its own embedded snapshot, hash or claimed episode.
         return permissions_rule_command_semantic_failures(
-            definition_name, value, **permissions_rule_owner_original_witness(value)
+            definition_name,
+            value,
+            **permissions_rule_owner_original_witness(value),
+            **permissions_rule_owner_episode_witness(value),
         )
     if schema_rel == "Plans/forge_integration_contracts.schema.json":
         return forge_creation_semantic_failures(definition_name, value)

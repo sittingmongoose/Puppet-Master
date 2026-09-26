@@ -45,6 +45,7 @@ SCHEMA_REL = "Plans/permissions_rule_command_contracts.schema.json"
 FIXTURE_REL = "Plans/permissions_rule_command_fixtures.json"
 HELPER_REL = "scripts/pm_permissions_rule_command_contracts.py"
 DOUBLE_REL = "scripts/pm_permissions_rule_command_owner_file_double.py"
+EPISODE_DOUBLE_REL = "scripts/pm_permissions_rule_owner_episode_double.py"
 TOUCH_REL = "Plans/touch_closure.json"
 WIRING_REL = "Plans/Wiring_Matrix.production.json"
 OWNER_REL = "Plans/Permissions_System.md"
@@ -85,6 +86,7 @@ def _load_module(path: Path, name: str):
 
 HELPER = _load_module(ROOT / HELPER_REL, "pm_permissions_rule_command_contracts_under_test")
 DOUBLE = _load_module(ROOT / DOUBLE_REL, "pm_permissions_rule_command_owner_file_double_under_test")
+EPISODE_DOUBLE = _load_module(ROOT / EPISODE_DOUBLE_REL, "pm_permissions_rule_owner_episode_double_under_test")
 SCHEMA = json.loads((ROOT / SCHEMA_REL).read_text(encoding="utf-8"))
 FIXTURE = json.loads((ROOT / FIXTURE_REL).read_text(encoding="utf-8"))
 TOUCH_REGISTRY = json.loads((ROOT / TOUCH_REL).read_text(encoding="utf-8"))
@@ -136,13 +138,13 @@ def _semantic_failures(definition: str, value, **kwargs) -> list[str]:
     """
 
     if kwargs.pop("witness", True):
-        kwargs = {**DOUBLE.witness_for(value), **kwargs}
+        kwargs = {**DOUBLE.witness_for(value), **EPISODE_DOUBLE.witness_for(value), **kwargs}
     return HELPER.permissions_rule_command_semantic_failures(definition, value, **kwargs)
 
 
 def _join_failures(value, **kwargs) -> list[str]:
     if kwargs.pop("witness", True):
-        kwargs = {**DOUBLE.witness_for(value), **kwargs}
+        kwargs = {**DOUBLE.witness_for(value), **EPISODE_DOUBLE.witness_for(value), **kwargs}
     return HELPER.join_case_failures(value, document=FIXTURE, **kwargs)
 
 
@@ -251,6 +253,13 @@ def test_only_owner_backed_caps_and_patterns_survive() -> None:
             "/$defs/permissions_rule_permission_evidence/properties/allowed_action_ids",
             True,
         ),
+        ("minimum", "/$defs/blocked_episode_identity/properties/blocked_sequence", 0),
+        ("minimum", "/$defs/permissions_blocked_episode/properties/blocked_sequence", 0),
+        ("minimum", "/$defs/episode_dispatch_args/properties/blocked_sequence", 0),
+        ("minItems", "/$defs/permissions_blocked_episode/properties/allowed_action_ids", 1),
+        ("uniqueItems", "/$defs/permissions_blocked_episode/properties/allowed_action_ids", True),
+        ("minItems", "/$defs/permissions_blocked_episode_selection/properties/claimed_allowed_action_ids", 1),
+        ("uniqueItems", "/$defs/permissions_blocked_episode_selection/properties/claimed_allowed_action_ids", True),
     ]
     assert sorted(collected) == sorted(expected), (sorted(collected), sorted(expected))
     schema_text = json.dumps(SCHEMA)
@@ -651,6 +660,354 @@ def test_mutating_commands_stay_behind_permission_and_atomic_gates() -> None:
 
 
 # ---------------------------------------------------------------------------
+# owner fixes for the four held slices
+# ---------------------------------------------------------------------------
+
+
+@case
+def test_external_directory_glob_accept_side_preserves_literal_path_text() -> None:
+    """Section 3.1 admits literal path text; only its reject side stays held.
+
+    `*`, `?` and the trailing ` *` are the owner's whole wildcard inventory, so
+    `[`, `]`, `{`, `}` and a backslash are ordinary literal characters. The
+    companion must accept such entries, must not expose a rejection predicate for
+    them, and must fail a fabricated `external_directory_invalid_glob` refusal.
+    """
+
+    validity = FIXTURE["coverage"]["external_directory_glob_validity"]
+    assert validity["held_reject_predicate"].strip()
+    assert "external_directory_glob_predicate" in HELPER.HELD_SLICES
+    assert not hasattr(HELPER, "external_directory_glob_failures"), "the invented reject predicate must not exist"
+    for pattern in validity["owner_valid_examples"]:
+        assert HELPER.external_directory_glob_syntax_accepted(pattern) is True, pattern
+    assert HELPER.external_directory_glob_syntax_accepted("") is False
+    assert HELPER.external_directory_glob_syntax_accepted(None) is False
+
+    instances = _positive_instances()
+    snapshot = instances["snapshot.project_layer"]
+    positive = instances["binding.validate_rule.validated_literal_directory_pattern"]
+    assert positive["request"]["draft"]["tool_pattern"] == "include/[draft].txt"
+    assert positive["observed_result"]["effect_disposition"]["kind"] == "validated_no_persistence"
+    assert positive["observed_result"]["error"] is None
+    assert not _join_failures(positive), _join_failures(positive)
+
+    reject_case = next(
+        case
+        for case in FIXTURE["negative_cases"]
+        if case["name"] == "causal.literal_directory_pattern_refused_as_invalid_glob"
+    )
+    reject_record = reject_case["patch"]["observed_result.error"]
+    assert reject_record["error_code"] == "external_directory_invalid_glob"
+    assert reject_case["semantic_rule"] == "join_expected_success"
+
+    for pattern in (
+        "include/[draft].txt",
+        "/tmp/{literal}/file",
+        "include/back\\slash",
+        "src/auth/**",
+        "~/.cargo/**",
+        "/usr/local/include/**",
+        "with space/dir/**",
+        "~/ünïcode/**",
+        "/" + "a" * 512 + "/**",
+    ):
+        derived = HELPER.derive_expected(
+            {
+                "command_id": "cmd.permissions.validate_rule",
+                "scope_key": "project",
+                "draft": {"tool_pattern": pattern, "action": "ask", "pattern_class": "external_directory_pattern"},
+                "order": None,
+                "expected_loaded_config_hash": None,
+            },
+            snapshot,
+        )
+        assert derived["status"] == "success" and derived["refusal_code"] is None, (pattern, derived)
+        assert derived["held_slice"] is None, (pattern, derived)
+        accepted = _apply_recipe(
+            json.loads(json.dumps(positive)), {"request.draft.tool_pattern": pattern}
+        )
+        assert not _join_failures(accepted), (pattern, _join_failures(accepted))
+        fabricated = _apply_recipe(
+            json.loads(json.dumps(positive)),
+            {
+                "request.draft.tool_pattern": pattern,
+                "observed_result.effect_disposition.kind": "refused",
+                "observed_result.dirty_state": "save_failed",
+                "observed_result.error": reject_record,
+                "observed_error": reject_record,
+            },
+        )
+        assert _semantic_failures("permissions_rule_command_binding", fabricated) == [
+            "join_expected_success"
+        ], (pattern, _semantic_failures("permissions_rule_command_binding", fabricated))
+
+    # the owner's exact duplicate-path equality is untouched and still derived
+    duplicate = HELPER.derive_expected(
+        {
+            "command_id": "cmd.permissions.create_project_rule",
+            "scope_key": "project",
+            "draft": {"tool_pattern": "~/.cargo/**", "action": "allow", "pattern_class": "external_directory_pattern"},
+            "order": None,
+            "expected_loaded_config_hash": snapshot["declared_loaded_config_hash"],
+        },
+        snapshot,
+        observed_rule_id="44444444-4444-4444-8444-000000000002",
+    )
+    assert duplicate["refusal_code"] == "external_directory_duplicate_path", duplicate
+    relabeled = next(
+        case
+        for case in FIXTURE["negative_cases"]
+        if case["name"] == "causal.directory_path_refusal_relabeled_invalid_glob"
+    )
+    assert relabeled["semantic_rule"] == "join_error_code_binding"
+    assert _semantic_failures(
+        "permissions_rule_command_binding",
+        _apply_recipe(
+            json.loads(json.dumps(instances[relabeled["base_valid"]])), relabeled["patch"]
+        ),
+    ) == ["join_error_code_binding"]
+    # a literal-path draft still creates a rule, so acceptance is not validation-only
+    created = HELPER.derive_expected(
+        {
+            "command_id": "cmd.permissions.create_project_rule",
+            "scope_key": "project",
+            "draft": {"tool_pattern": "/tmp/{literal}/file", "action": "ask", "pattern_class": "external_directory_pattern"},
+            "order": None,
+            "expected_loaded_config_hash": snapshot["declared_loaded_config_hash"],
+        },
+        snapshot,
+        observed_rule_id="55555555-5555-4555-8555-000000000001",
+    )
+    assert created["status"] == "success" and created["post_rules"] is not None, created
+
+
+@case
+def test_validate_rule_is_draft_only_with_a_nonauthoritative_declared_hash() -> None:
+    """The declared hash is no validation input, so it creates no new outcome."""
+
+    assert "validate_declared_hash_response" not in HELPER.HELD_SLICES
+    validate_request: dict = {
+        "command_id": "cmd.permissions.validate_rule",
+        "scope_key": "project",
+        "draft": {"tool_pattern": "git *", "action": "ask", "pattern_class": "tool_pattern"},
+        "order": None,
+    }
+    # the owner requires a hash for the four mutating commands only
+    assert HELPER.request_field_law_failures({**validate_request, "expected_loaded_config_hash": None}) == []
+    assert HELPER.request_field_law_failures({**validate_request, "expected_loaded_config_hash": "stale"}) == []
+
+    snapshot = _positive_instances()["snapshot.project_layer"]
+    for declared in (None, "owner-file-hash:superseded-generation-0", snapshot["declared_loaded_config_hash"]):
+        derived = HELPER.derive_expected({**validate_request, "expected_loaded_config_hash": declared}, snapshot)
+        assert derived["status"] == "success", (declared, derived)
+        assert derived["refusal_code"] is None and derived["refusal_code"] != "permission_config_write_conflict"
+        assert derived["held_slice"] is None, derived
+        assert derived["validate_mode"] is True and derived["post_rules"] == derived["pre_rules"]
+
+    # the same stale declaration on a mutation is still the owner's conflict
+    mutating = HELPER.derive_expected(
+        {
+            "command_id": "cmd.permissions.update_rule",
+            "scope_key": "project",
+            "rule_id": "11111111-1111-4111-8111-000000000002",
+            "draft": {"tool_pattern": "git *", "action": "deny", "pattern_class": "tool_pattern"},
+            "order": None,
+            "expected_loaded_config_hash": "owner-file-hash:superseded-generation-0",
+        },
+        snapshot,
+    )
+    assert mutating["refusal_code"] == "permission_config_write_conflict", mutating
+
+
+@case
+def test_unwritable_config_projects_the_owner_precondition_reason() -> None:
+    """The not-writable case is the unmet owner precondition, never a conflict."""
+
+    instances = _positive_instances()
+    binding = instances["binding.update_rule.blocked.not_writable_config"]
+    availability = binding["availability"]
+    assert binding["owner_snapshot"]["writable_state"] == "not_writable"
+    assert availability["availability"] == "unavailable"
+    assert availability["unmet_precondition_id"] == "permission_config_writable"
+    assert availability["disabled_reason_ref"] is None
+    assert availability["disabled_reason_projection"] == "state.commands.permissions_update_rule.disabled_reason"
+    assert binding["observed_result"]["error"]["error_code"] is None
+    assert binding["observed_result"]["error"]["blocked_family"] == "blocked_preflight"
+    assert binding["observed_result"]["error"]["blocked_reason_code"] == "preflight_failed"
+    assert binding["observed_result"]["persistence_receipt_ref"] is None
+    assert binding["observed_result"]["observed_ordered_rules"] == binding["owner_snapshot"]["ordered_rules"]
+    assert not _join_failures(binding), _join_failures(binding)
+
+    # the derivation asserts no outcome for the held post-dispatch axis
+    derived = HELPER.derive_expected(binding["request"], binding["owner_snapshot"])
+    assert derived["status"] == "held" and derived["held_slice"] == "unwritable_config_outcome"
+
+    # the concurrent-hash case stays distinct and keeps its own named code
+    conflict = instances["binding.update_rule.refused.permission_config_write_conflict"]
+    assert conflict["owner_snapshot"]["writable_state"] == "writable"
+    assert conflict["observed_result"]["error"]["error_code"] == "permission_config_write_conflict"
+    assert not _join_failures(conflict)
+
+    # a write-conflict label on a not-writable config is the mislabel the law refuses
+    mislabel = _apply_recipe(
+        json.loads(json.dumps(conflict)), {"owner_snapshot.writable_state": "not_writable"}
+    )
+    assert _semantic_failures("permissions_rule_command_binding", mislabel) == [
+        "join_unwritable_config_must_not_persist"
+    ]
+
+    # an available projection with only an unmet precondition still fails the law
+    assert HELPER.availability_disabled_reason_failures(
+        {"availability": "available", "disabled_reason_ref": None, "unmet_precondition_id": None}
+    ) == []
+    assert HELPER.availability_disabled_reason_failures(
+        {
+            "availability": "unavailable",
+            "disabled_reason_ref": "#/errors/0",
+            "unmet_precondition_id": "permission_config_writable",
+        }
+    ) == ["unavailable_command_requires_exactly_one_projected_reason"]
+    assert HELPER.availability_disabled_reason_failures(
+        {"availability": "unavailable", "disabled_reason_ref": None, "unmet_precondition_id": "not_a_precondition"}
+    ) == ["unmet_precondition_outside_owner_command_preconditions"]
+
+
+@case
+def test_episode_selection_binds_current_episode_action_and_scope() -> None:
+    """Every selected action keeps its owner dispatch, ladder value and scope."""
+
+    instances = _positive_instances()
+    assert HELPER.PERMISSION_BLOCKED_ACTION_IDS == (
+        "deny",
+        "approve_once",
+        "approve_for_session",
+        "approve_always",
+        "open_permissions",
+    )
+    selections = {
+        instance["selected_action_id"]: instance
+        for name, instance in instances.items()
+        if instance.get("record_kind") == "permissions_blocked_episode_selection"
+        and instance["disposition"] == "dispatch_admitted"
+    }
+    assert set(selections) == set(HELPER.PERMISSION_BLOCKED_ACTION_IDS)
+
+    for action_id, instance in selections.items():
+        dispatch = HELPER.EPISODE_ACTION_DISPATCH[action_id]
+        assert instance["command_id"] == dispatch["command_id"], action_id
+        assert instance["hitl_decision"] == dispatch["hitl_decision"], action_id
+        assert instance["scope_effect"] == dispatch["scope_effect"], action_id
+        if dispatch["command_id"] == "cmd.permissions.open":
+            assert instance["dispatch_args"] is None
+        else:
+            assert set(instance["dispatch_args"]) == set(HELPER.EPISODE_DISPATCH_ARG_KEYS)
+            assert instance["dispatch_args"] == instance["claimed_episode"]
+        assert not _join_failures(instance), (action_id, _join_failures(instance))
+
+    # once/for-session/always/deny stay distinguishable on the one runtime command
+    assert selections["approve_once"]["command_id"] == "cmd.runtime.approve"
+    assert selections["approve_for_session"]["command_id"] == "cmd.runtime.approve"
+    assert selections["approve_always"]["command_id"] == "cmd.runtime.approve"
+    assert selections["deny"]["command_id"] == "cmd.runtime.decline"
+    assert [
+        selections[action]["hitl_decision"]
+        for action in ("approve_once", "approve_for_session", "approve_always", "deny")
+    ] == ["once", "for_session", "always", "deny"]
+    assert [
+        selections[action]["scope_effect"]
+        for action in ("approve_once", "approve_for_session", "approve_always", "deny")
+    ] == ["invocation", "session_cache", "durable_rule", "none"]
+
+    loaded_scope = {
+        selections[action]["approval_scope_key"]
+        for action in ("approve_once", "approve_for_session", "approve_always", "deny")
+    }
+    assert loaded_scope == {EPISODE_DOUBLE.EPISODE_PERMISSION_ASK_FULL["approval_scope_key"]}
+
+
+@case
+def test_episode_originals_are_independent_pinned_witnesses() -> None:
+    """The current blocked episode is a separate pinned artifact, never the claim."""
+
+    assert EPISODE_DOUBLE.NATIVE_PRODUCER is False
+    double_source = (ROOT / EPISODE_DOUBLE_REL).read_text(encoding="utf-8")
+    assert "static test evidence" in double_source.lower()
+    assert "never a native producer" in double_source.lower()
+    assert FIXTURE_REL not in double_source and "fixtures.json" not in double_source
+
+    instances = _positive_instances()
+    assert EPISODE_DOUBLE.PINNED_CURRENT_EPISODES["select:approve_once:0001"] == instances["blocked_episode.permission_ask"]
+    assert (
+        EPISODE_DOUBLE.PINNED_CURRENT_EPISODES["select:approve_once:minimal:0001"]
+        == instances["blocked_episode.permission_ask_minimal"]
+    )
+    assert instances["blocked_episode.permission_ask"]["native_episode_selection_proven"] is False
+    assert instances["episode_selection.approve_once"]["native_episode_selection_proven"] is False
+
+    # the positive selections carry the pinned current episode, not a copy of it
+    for instance in instances.values():
+        if instance.get("record_kind") == "permissions_blocked_episode_selection":
+            pinned = EPISODE_DOUBLE.PINNED_CURRENT_EPISODES.get(instance["selection_id"])
+            assert pinned is not None, instance["selection_id"]
+            assert instance["claimed_episode"]["run_id"] == pinned["run_id"]
+            assert instance["claimed_episode"]["node_id"] == pinned["node_id"]
+            assert instance["claimed_episode"]["attempt_id"] == pinned["attempt_id"]
+
+    stale = instances["episode_selection.stale_episode_refused"]
+    assert stale["claimed_episode"]["blocked_sequence"] != EPISODE_DOUBLE.PINNED_CURRENT_EPISODES["select:stale:0001"]["blocked_sequence"]
+    assert stale["refusal_reason"] == "stale_blocked_episode"
+    assert not _join_failures(stale), _join_failures(stale)
+
+    # with a copied witness the same forged currentness passes; the pinned double
+    # rejects it, which is the whole reason the witness is separate.
+    wrong_episode = _apply_recipe(
+        json.loads(json.dumps(instances["episode_selection.approve_once"])),
+        {"claimed_episode.blocked_sequence": 4, "dispatch_args.blocked_sequence": 4},
+    )
+    assert _semantic_failures("permissions_blocked_episode_selection", wrong_episode) == [
+        "join_episode_original"
+    ]
+
+    def copied_witness():
+        return {
+            **wrong_episode["claimed_episode"],
+            "approval_scope_key": wrong_episode["approval_scope_key"],
+            "allowed_action_ids": wrong_episode["claimed_allowed_action_ids"],
+        }
+
+    assert (
+        _semantic_failures(
+            "permissions_blocked_episode_selection", wrong_episode, owner_episode_read=copied_witness
+        )
+        == []
+    ), "a copied witness must not be able to prove the claimed episode"
+
+    # an unpinned scenario has no independent episode and stays unproven
+    unpinned = _apply_recipe(
+        json.loads(json.dumps(instances["episode_selection.approve_once"])),
+        {"selection_id": "select:unpinned:0001"},
+    )
+    assert EPISODE_DOUBLE.witness_for(unpinned) == {"owner_episode_read": None}
+    assert _semantic_failures("permissions_blocked_episode_selection", unpinned) == [
+        "join_episode_original_unproven"
+    ]
+
+    # the dispatch follows the action id, never the rendered label
+    label_led = _apply_recipe(
+        json.loads(json.dumps(instances["episode_selection.deny"])),
+        {
+            "display_label_copy": "Approve & Continue",
+            "command_id": "cmd.runtime.approve",
+            "hitl_decision": "once",
+            "scope_effect": "invocation",
+        },
+    )
+    assert _semantic_failures("permissions_blocked_episode_selection", label_led) == [
+        "join_episode_dispatch_binding"
+    ]
+
+
+# ---------------------------------------------------------------------------
 # copied owner bindings
 # ---------------------------------------------------------------------------
 
@@ -775,10 +1132,33 @@ def test_decision_cards_are_explicit() -> None:
     for card in cards:
         for field in ("card_id", "slice", "owner_text", "held", "status"):
             assert card[field].strip(), (card["card_id"], field)
-        expected_status = "resolved_existing_owner" if card["card_id"] == "DC-PERM-RULE-005" else "held_for_owner"
-        assert card["status"] == expected_status
+        expected_status = (
+            "held_for_owner"
+            if card["card_id"]
+            in {
+                "DC-PERM-RULE-001",
+                "DC-PERM-RULE-003",
+                "DC-PERM-RULE-006",
+                "DC-PERM-RULE-007",
+                "DC-PERM-RULE-009",
+                "DC-PERM-RULE-010",
+                "DC-PERM-RULE-011",
+            }
+            else "resolved_existing_owner"
+        )
+        assert card["status"] == expected_status, (card["card_id"], card["status"])
+    resolved = {card["card_id"] for card in cards if card["status"] == "resolved_existing_owner"}
+    assert resolved == {
+        "DC-PERM-RULE-002",
+        "DC-PERM-RULE-004",
+        "DC-PERM-RULE-005",
+        "DC-PERM-RULE-008",
+    }, resolved
     held_text = " ".join(card["held"] for card in cards).lower()
     assert "owner" in held_text and "authority" in held_text
+    for card in cards:
+        if card["status"] == "resolved_existing_owner":
+            assert "owner choice" not in card["held"].lower(), card["card_id"]
 
 
 @case

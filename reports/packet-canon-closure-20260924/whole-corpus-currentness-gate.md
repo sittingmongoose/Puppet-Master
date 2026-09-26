@@ -285,3 +285,50 @@ remains NOT_RUN. Contracts, Storage, testing and Decision Log also have later
 changes. These must be preserved and their affected evidence re-adjudicated;
 no fetch, rebase, landing, decision-ID collision repair or governance reseal was
 performed by this check.
+
+## Connection-alias batch — 2026-09-26
+
+Root verified immutable checkpoint
+`checkpoints/full-impact-reviewed-ac907d6a33f2fad9b2d805245beedc97470ada294d86484821bd838d66ab1570.jsonl`
+(SHA-256 `ac907d6a33f2fad9b2d805245beedc97470ada294d86484821bd838d66ab1570`):
+978 of 11,395 other identities reviewed, 10,417 pending. Its exact 299 additions
+leave all prior 679 records unchanged. They concern 23 connection aliases over
+13 dimensions, grouped into 78 target/consumer/dimension classes. This does not
+add any flagged-matrix review credit.
+
+Different-Sol review:
+`case-reconciliation/touch-sir-connection-alias299-native-01/REVIEW-DIFFERENT-SOL.md`,
+SHA-256 `1f64a1d7a326c9f7dacdf098e56ea91c5c96e5d6ca39ee63da2e6deb96bcb99a`.
+Reviewed overlay SHA-256
+`98b17f84511020b1c28a97a04d5813d16bbf13de8f49e4b01a9586a55359ea38`.
+The reviewer corrected 46 residual strings without changing identities or
+verdicts: expanded exact targets and removed an unsupported requirement for new
+alias Event Authority admission. Existing aliases inherit their canonical
+target's policy; they do not acquire a peer handler or a local event producer.
+
+This is bounded current-owner specification coverage, not native normalization,
+dispatch, permission, receipt, asynchronous-work or GUI execution proof.
+Current-main reconciliation and whole-corpus closure remain outstanding.
+
+## Protected owner-adoption correction
+
+Flagged checkpoint `checkpoints/matrix-114d3e96d6c43f70bc52dba924cbb630556b8d0edd53df0517b7eda26b692b52.jsonl`
+(SHA-256 `114d3e96d6c43f70bc52dba924cbb630556b8d0edd53df0517b7eda26b692b52`)
+retains 1,378 reviewed and 643 unreviewed identities. Root verified exactly 24
+changed mirror rows against checkpoint `733fd711ff00c0f0a7b66c057657105e85f035086300b4b2f37889142f43251d`,
+unchanged historical fields and all 2,021 unique identities. This reclassifies
+already reviewed rows and does not increase coverage.
+
+Four unique cases have compositional static support; eight remain mixed or
+uncertain. In particular, Tool Store deduplication and media-memory content
+addressing do not establish authority/privacy-gated Physical Project Vault
+sharing. That exact Vault-domain join remains unresolved. Existing observability
+and pressure/route adaptation do not require an invented unitary metric tuple
+or a quality-by-route formula to satisfy the historical wording.
+
+Different-Sol review `jobs/protected-owner-adoption12-01/DIFFERENT-SOL-REVIEW.md`
+has SHA-256 `359ce124b704d010f88b3d8be289525269575a6c29f50b439f7649e500f9bb46`.
+Corrected sparse overlay `case-reconciliation/PROTECTED12-CORRECTED-24-OVERLAY.jsonl`
+has SHA-256 `655d2a772aaf15aedd5d48e82714aeee0106e8a083373115b687520eead5b6ea`.
+Neither unresolved wording nor missing native proof automatically becomes a
+product decision or permission to overwrite newer protected designs.

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/permissions_rule_commands/1.0.0/permissions_rule_command_contracts.schema.json",
   "title": "Puppet Master permissions rule command contracts",
-  "description": "Additive pre-build typed request/result/error/availability/permission-evidence companion for exactly the five existing rule commands cmd.permissions.create_project_rule, cmd.permissions.update_rule, cmd.permissions.reorder_rule, cmd.permissions.delete_rule and cmd.permissions.validate_rule. It reuses only the vocabulary already owned by Plans/Permissions_System.md (Sections 2/3/8/9, Permissions UI Commands And Error States, TOML Persistence Failure And Atomicity Rules, blocked-outcome addendum), Plans/UI_Command_Catalog.md#UCC-113 and the selected central wiring rows. loaded_config_hash stays the owner's opaque current config file hash: the cited owner text requires comparing it with the current file hash before rename and chooses no digest, encoding or serialization here, so no hash grammar, file bytes or digest attributes cross this contract and the value is carried verbatim and never re-derived. Currentness is proven only by an independent owner file read at the write boundary: a currentness-bearing binding without an independent current/pre-rename owner hash, and a persisted claim without an independent owner post-write read-back, is reported as an explicit unproven binding instead of passing. Every record is static contract evidence only: no native handler, no production wiring, no admitted EventRecord, no storage family or key, no migration, no retry, no new command, alias, default, disabled reason, permission class or owner-prose policy.",
+  "description": "Additive pre-build typed request/result/error/availability/permission-evidence companion for exactly the five existing rule commands cmd.permissions.create_project_rule, cmd.permissions.update_rule, cmd.permissions.reorder_rule, cmd.permissions.delete_rule and cmd.permissions.validate_rule, plus two owner joins that belong to the same command family: the Section 3.1 accept side for external-directory allowlist entries (literal path text including `[`, `]`, `{`, `}` and a backslash stays valid; the owner-defined reject predicate is held), and the permission-blocked episode action selection that binds a selected episode/action/scope to the existing cmd.runtime.approve, cmd.runtime.decline and cmd.permissions.open commands. It reuses only the vocabulary already owned by Plans/Permissions_System.md (Sections 2/3/8/9, Permissions UI Commands And Error States, TOML Persistence Failure And Atomicity Rules, blocked-outcome addendum, permission snapshot reason-code enums), Plans/UI_Command_Catalog.md#UCC-113 and its canonical recovery command table, Plans/human-in-the-loop.md, the current HITL artifact schema and the selected central wiring rows. loaded_config_hash stays the owner's opaque current config file hash: the cited owner text requires comparing it with the current file hash before rename and chooses no digest, encoding or serialization here, so no hash grammar, file bytes or digest attributes cross this contract and the value is carried verbatim and never re-derived. Currentness is proven only by an independent owner file read at the write boundary, and a permission-blocked episode selection is proven only by an independent read of the owner's current blocked episode: a binding without an independent current/pre-rename owner hash, a persisted claim without an independent owner post-write read-back, or a selection without an independent current-episode read is reported as an explicit unproven binding instead of passing. Every record is static contract evidence only: no native handler, no production wiring, no admitted EventRecord, no storage family or key, no migration, no retry, no new command, alias, default, disabled reason, permission class or owner-prose policy, and native episode selection is never claimed.",
   "oneOf": [
     {
       "$ref": "#/$defs/permissions_rule_command_request"
@@ -24,6 +24,12 @@
     },
     {
       "$ref": "#/$defs/permissions_rule_command_binding"
+    },
+    {
+      "$ref": "#/$defs/permissions_blocked_episode"
+    },
+    {
+      "$ref": "#/$defs/permissions_blocked_episode_selection"
     }
   ],
   "$defs": {
@@ -109,7 +115,7 @@
     "rule_pattern": {
       "type": "string",
       "minLength": 1,
-      "description": "Shape law only: a non-empty rule pattern. The wildcard grammar (*, ? and a trailing ' *' making the tail optional) is owned by Plans/Permissions_System.md Section 3.1 and is not restated or narrowed here; no glob validity predicate, length cap, whitespace or control-character rule is asserted (held slice external_directory_glob_predicate)."
+      "description": "Shape law only: a non-empty rule pattern. The wildcard grammar (*, ? and a trailing ' *' making the tail optional) is owned by Plans/Permissions_System.md Section 3.1 and is not restated or narrowed here; no length cap, whitespace, control-character or metacharacter rule is asserted. Section 3.1 assigns no other character a special meaning, so literal path text such as include/[draft].txt, /tmp/{literal}/file or include/back\\slash is owner-valid: the companion's semantic law asserts that acceptance and never refuses it. The owner names external_directory_invalid_glob without stating a malformed-input condition, so that reject predicate stays the held slice external_directory_glob_predicate rather than a schema pattern."
     },
     "pattern_class": {
       "type": "string",
@@ -117,6 +123,20 @@
         "tool_pattern",
         "external_directory_pattern"
       ]
+    },
+    "permissions_command_precondition": {
+      "type": "string",
+      "enum": [
+        "settings_available",
+        "permission_config_writable",
+        "project_selected",
+        "rule_exists",
+        "rule_draft_present",
+        "approval_request_present",
+        "revocable_rule_exists",
+        "picker_available"
+      ],
+      "description": "The atomic precondition identifiers of the UCC-113 permissions command rows. An unmet precondition is the owner's own truthful projected disabled reason for an unavailable control, so no new error code, no handler_unavailable substitute and no mutation write-conflict label is needed."
     },
     "rule_error_code": {
       "type": "string",
@@ -302,7 +322,7 @@
               "type": "null"
             }
           ],
-          "description": "The config file hash the caller loaded before the write. It is a declaration, never authority: the owner's pre-rename comparison is proven only by an independent owner file read."
+          "description": "The config file hash the caller loaded before the write. It is a declaration, never authority: the owner's pre-rename comparison is proven only by an independent owner file read. It is required present for the four mutating commands and is nonauthoritative on cmd.permissions.validate_rule, which is draft-only: a validation may carry it null or absent, it creates no validation outcome, and the later mutation independently checks the current hash."
         },
         "settings_route": {
           "const": "settings.permissions"
@@ -711,6 +731,17 @@
               "type": "null"
             }
           ]
+        },
+        "unmet_precondition_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/permissions_command_precondition"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The owner-named command precondition that is unmet, projected as the disabled reason of an unavailable control. An unavailable record carries exactly one reason: this unmet precondition, or a declared owner error record through disabled_reason_ref. `permission_config_writable` is the non-writable-config case; `handler_unavailable` is never a substitute for it and the mutation-only permission_config_write_conflict is a different condition."
         }
       }
     },
@@ -853,6 +884,304 @@
           "$ref": "#/$defs/permissions_rule_permission_evidence"
         }
       }
+    },
+    "blocked_episode_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "attempt_id"
+      ],
+      "properties": {
+        "run_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "node_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "blocked_sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The blocked-episode sequence the runtime scheduler/executor layer owns. Plans/human-in-the-loop.md keys a blocked episode by run_id, node_id, blocked_sequence and attempt_id?, and the current HITL artifact schema carries blocked_sequence as a nonnegative integer; no other domain is asserted."
+        },
+        "attempt_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "permission_blocked_action_id": {
+      "type": "string",
+      "enum": [
+        "deny",
+        "approve_once",
+        "approve_for_session",
+        "approve_always",
+        "open_permissions"
+      ],
+      "description": "Closed ordered permission-blocked recovery action inventory of Plans/Permissions_System.md Section 6. The distinct FileSafe-blocked set (approve_once, filesafe_add_rule, open_filesafe_settings) belongs to FileSafe and is not bound by this companion."
+    },
+    "hitl_decision": {
+      "type": "string",
+      "enum": [
+        "once",
+        "for_session",
+        "always",
+        "deny"
+      ],
+      "description": "The four-step ladder value of Plans/Permissions_System.md Sections 6/6.1 in the decision vocabulary of the current HITL artifact schema. The generic approved value of that enum belongs to the generic approve path, not to the permission ladder bound here."
+    },
+    "episode_scope_effect": {
+      "type": "string",
+      "enum": [
+        "invocation",
+        "session_cache",
+        "durable_rule",
+        "none"
+      ],
+      "description": "Section 6.1 scope effect of the selected action: once approves only the current invocation, for session creates an ephemeral session-cache allow under the current approval_scope_key, and always is the durable, revocable project/global rule path. No TTL, duration or expiry is asserted."
+    },
+    "episode_dispatch_command_id": {
+      "type": "string",
+      "enum": [
+        "cmd.runtime.approve",
+        "cmd.runtime.decline",
+        "cmd.permissions.open"
+      ],
+      "description": "Existing owner commands only. Plans/human-in-the-loop.md dispatches approve to cmd.runtime.approve and decline to cmd.runtime.decline, and UCC-113 keeps every approval decision on those runtime commands while owning cmd.permissions.open for the settings route. No permissions-family approve/decline command is minted."
+    },
+    "episode_disposition": {
+      "type": "string",
+      "enum": [
+        "dispatch_admitted",
+        "refused"
+      ]
+    },
+    "episode_refusal_reason": {
+      "type": "string",
+      "enum": [
+        "stale_blocked_episode",
+        "action_not_advertised"
+      ],
+      "description": "Plans/Contracts_V0.md admits a recovery action only when the current blocked episode exposes the corresponding ordered actions and requires revalidation against canonical/current runtime state before execution; Plans/Permissions_System.md line 1144 aborts a materially changed selection with state_changed_refresh_required. These are the two refusal conditions the cited text settles; the companion mints no other refusal vocabulary."
+    },
+    "episode_dispatch_args": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "attempt_id"
+      ],
+      "properties": {
+        "run_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "node_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "blocked_sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "attempt_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "description": "The minimum args of UCC-113's recovery command table for approve and decline ({ run_id, node_id, blocked_sequence, attempt_id? })."
+    },
+    "permissions_blocked_episode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_kind",
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "attempt_id",
+        "approval_scope_key",
+        "blocked_family",
+        "blocked_reason_code",
+        "allowed_action_ids",
+        "native_handler_claim",
+        "native_episode_selection_proven"
+      ],
+      "properties": {
+        "record_kind": {
+          "const": "permissions_blocked_episode"
+        },
+        "run_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "node_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "blocked_sequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "attempt_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "approval_scope_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "blocked_family": {
+          "$ref": "#/$defs/blocked_family"
+        },
+        "blocked_reason_code": {
+          "$ref": "#/$defs/blocked_reason_code"
+        },
+        "allowed_action_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/permission_blocked_action_id"
+          },
+          "description": "Ordered recovery actions the current blocked episode exposes, as Plans/Permissions_System.md Section 6 requires. The owner states the set 'as applicable', so an episode may expose a subset; the current HITL artifact schema carries the same non-empty, unique shape."
+        },
+        "native_handler_claim": {
+          "const": false
+        },
+        "native_episode_selection_proven": {
+          "const": false,
+          "description": "The companion never claims that a native issuer selected this blocked episode; a real producer must supply its own authenticated episode read."
+        }
+      },
+      "description": "The owner's blocked-episode projection for a permission ask, sealed by Plans/human-in-the-loop.md identity (run_id, node_id, blocked_sequence, attempt_id?) with the approval_scope_key, blocked family/reason and ordered allowed_action_ids[] of Plans/Permissions_System.md Section 6. It carries no EventRecord, storage key, projection freshness or TTL."
+    },
+    "permissions_blocked_episode_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_kind",
+        "selection_id",
+        "claimed_episode",
+        "claimed_allowed_action_ids",
+        "selected_action_id",
+        "display_label_copy",
+        "disposition",
+        "refusal_reason",
+        "command_id",
+        "dispatch_args",
+        "hitl_decision",
+        "approval_scope_key",
+        "scope_effect",
+        "native_handler_claim",
+        "native_execution_observed",
+        "native_episode_selection_proven"
+      ],
+      "properties": {
+        "record_kind": {
+          "const": "permissions_blocked_episode_selection"
+        },
+        "selection_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "claimed_episode": {
+          "$ref": "#/$defs/blocked_episode_identity",
+          "description": "The blocked episode the surface displayed. A declaration only: an independent read of the owner's current blocked episode decides currentness, and the claimed episode is never its own witness."
+        },
+        "claimed_allowed_action_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/permission_blocked_action_id"
+          },
+          "description": "The ordered allowed_action_ids[] the blocked-flow projection previously displayed. Plans/Contracts_V0.md forbids guessing that a stale displayed action set is still valid: admission uses the current blocked episode's own ordered actions."
+        },
+        "selected_action_id": {
+          "$ref": "#/$defs/permission_blocked_action_id"
+        },
+        "display_label_copy": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "User-facing copy only. Plans/human-in-the-loop.md makes the display label a rendering of an action id; the dispatch is derived from the action id and never from this text."
+        },
+        "disposition": {
+          "$ref": "#/$defs/episode_disposition"
+        },
+        "refusal_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/episode_refusal_reason"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "command_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/episode_dispatch_command_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dispatch_args": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/episode_dispatch_args"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hitl_decision": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/hitl_decision"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "approval_scope_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "scope_effect": {
+          "$ref": "#/$defs/episode_scope_effect"
+        },
+        "native_handler_claim": {
+          "const": false
+        },
+        "native_execution_observed": {
+          "const": false
+        },
+        "native_episode_selection_proven": {
+          "const": false
+        }
+      },
+      "description": "One selected permission-blocked episode action bound to its existing runtime command. An admitted selection matches the independently read current episode, exposes the selected action, and carries the owner-named command, minimum args, ladder decision and scope effect; a refused selection carries no dispatch and exactly the derived refusal reason. Static contract evidence only: no approval decision, no native dispatch and no EventRecord."
     }
   }
 }

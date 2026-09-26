@@ -36,6 +36,25 @@ EventRecord, a storage family or key, or readiness. Every record carries
 ``native_handler_claim=false``, ``native_write_evidence=absent`` and an empty
 ``emitted_event_types`` list, and a receipt/no-event disposition is not an
 admitted EventRecord.
+
+Two further owner joins live here, both static:
+
+* the **external-directory glob accept side** -- Section 3.1 text is admissible
+  for a directory-pattern draft, so literal-path entries such as
+  ``include/[draft].txt``, ``/tmp/{literal}/file`` and ``include/back\\slash``
+  are accepted and never refused.  The owner names
+  ``external_directory_invalid_glob`` but states no malformed-input condition, so
+  that reject predicate stays the held slice ``external_directory_glob_predicate``
+  and this companion narrows nothing: no absolute-path, home-prefix,
+  metacharacter, Unicode, length or count ban; and
+* the **permission-blocked episode action selection** -- the selected blocked
+  episode, action id and ``approval_scope_key`` bound to the existing
+  ``cmd.runtime.approve`` / ``cmd.runtime.decline`` / ``cmd.permissions.open``
+  commands. The current blocked episode reaches that join only from an
+  independent read (a separately pinned static owner episode test double at the
+  static gate); the claimed episode and the previously displayed ordered action
+  list are declarations that never witness themselves, native episode selection
+  is unproven, and no permissions-family approve/decline command is minted.
 """
 
 from __future__ import annotations
@@ -132,6 +151,102 @@ DISPOSITION_KINDS: tuple[str, ...] = (
 )
 PERMISSION_LADDER: tuple[str, ...] = ("allow", "ask", "deny")
 
+# Section 3.1 matching syntax, closed: ``*`` matches zero or more characters,
+# ``?`` matches exactly one character, and a trailing `` *`` (space + wildcard)
+# makes the trailing portion optional.  Section 3.3 states that external
+# directory allowlist entries use that syntax and Section 10.3/10.5 that pattern
+# input supports it.  Every other glob metacharacter is outside the cited
+# vocabulary: PM refuses such input with the owner-named
+# ``external_directory_invalid_glob`` instead of silently reinterpreting it,
+# rather than inventing bracket/brace/escape semantics the owner does not own.
+# Section 3.1 gives exactly `*`, `?` and the trailing ` *` special meanings.
+# Every other character is literal text, including `[`, `]`, `{`, `}` and a
+# backslash: the owner never declares them invalid or wildcard-bearing, so a
+# directory allowlist entry such as `include/[draft].txt`, `/tmp/{literal}/file`
+# or `include/back\\slash` stays owner-valid and is never refused here.
+EXTERNAL_DIRECTORY_WILDCARD_INVENTORY: tuple[str, ...] = ("*", "?")
+EXTERNAL_DIRECTORY_TRAILING_OPTIONAL_TOKENS: tuple[str, ...] = (" *",)
+
+# Section 6 permission-blocked recovery surfaces, closed and ordered as the
+# owner lists them.  The FileSafe-blocked set (``approve_once``,
+# ``filesafe_add_rule``, ``open_filesafe_settings``) is a distinct family owned
+# by FileSafe and is deliberately not bound here.
+PERMISSION_BLOCKED_ACTION_IDS: tuple[str, ...] = (
+    "deny",
+    "approve_once",
+    "approve_for_session",
+    "approve_always",
+    "open_permissions",
+)
+# The four-step ladder carried by the HITL approval artifact for a permission
+# ask (UI_Command_Catalog UCC-113 labels, Permissions_System 6/6.1, and the
+# ``decision`` enum of the current HITL artifact schema).  The generic
+# ``approved`` value of that enum belongs to the generic approve path.
+HITL_DECISION_VALUES: tuple[str, ...] = ("once", "for_session", "always", "deny")
+EPISODE_DISPOSITIONS: tuple[str, ...] = ("dispatch_admitted", "refused")
+EPISODE_REFUSAL_REASONS: tuple[str, ...] = ("stale_blocked_episode", "action_not_advertised")
+EPISODE_DISPATCH_COMMAND_IDS: tuple[str, ...] = (
+    "cmd.runtime.approve",
+    "cmd.runtime.decline",
+    "cmd.permissions.open",
+)
+# ``allowed_action_id`` -> the existing command, the ladder value and the scope
+# effect the cited owner text gives it.  Minimum args are UCC-113's recovery
+# command table: ``{run_id, node_id, blocked_sequence, attempt_id?}``.
+# ``open_permissions`` is not an approval decision: it opens the existing
+# ``settings.permissions`` route through ``cmd.permissions.open`` (UCC-113) and
+# no new permissions-family approve/decline command is minted.
+EPISODE_ACTION_DISPATCH: dict[str, dict[str, str | None]] = {
+    "deny": {
+        "runtime_action_family": "decline",
+        "command_id": "cmd.runtime.decline",
+        "hitl_decision": "deny",
+        "scope_effect": "none",
+    },
+    "approve_once": {
+        "runtime_action_family": "approve",
+        "command_id": "cmd.runtime.approve",
+        "hitl_decision": "once",
+        "scope_effect": "invocation",
+    },
+    "approve_for_session": {
+        "runtime_action_family": "approve",
+        "command_id": "cmd.runtime.approve",
+        "hitl_decision": "for_session",
+        "scope_effect": "session_cache",
+    },
+    "approve_always": {
+        "runtime_action_family": "approve",
+        "command_id": "cmd.runtime.approve",
+        "hitl_decision": "always",
+        "scope_effect": "durable_rule",
+    },
+    "open_permissions": {
+        "runtime_action_family": None,
+        "command_id": "cmd.permissions.open",
+        "hitl_decision": None,
+        "scope_effect": "none",
+    },
+}
+EPISODE_DISPATCH_ARG_KEYS: tuple[str, ...] = ("run_id", "node_id", "blocked_sequence", "attempt_id")
+
+# Atomic precondition identifiers of the UCC-113 permissions command rows. The
+# owner names them as the precondition of each control, so an unmet precondition
+# is the owner's own truthful disabled reason for an unavailable control and
+# needs no new error code, no `handler_unavailable` substitute and no mutation
+# write-conflict label.
+PERMISSIONS_COMMAND_PRECONDITIONS: tuple[str, ...] = (
+    "settings_available",
+    "permission_config_writable",
+    "project_selected",
+    "rule_exists",
+    "rule_draft_present",
+    "approval_request_present",
+    "revocable_rule_exists",
+    "picker_available",
+)
+NOT_WRITABLE_PRECONDITION = "permission_config_writable"
+
 # ``saving`` is a live projection transient, never a settled observation.
 TRANSIENT_DIRTY_STATE = "saving"
 
@@ -167,6 +282,11 @@ CHECKS: tuple[str, ...] = (
     "join_atomic_steps_binding",
     "join_event_boundary",
     "join_unwritable_config_must_not_persist",
+    "join_episode_original",
+    "join_episode_original_unproven",
+    "join_episode_advertised_action",
+    "join_episode_dispatch_binding",
+    "join_episode_refusal_binding",
 )
 
 # Held slices: the owner names the condition but no exact owner/product rule
@@ -174,8 +294,8 @@ CHECKS: tuple[str, ...] = (
 # about the held axis.
 HELD_SLICES: tuple[str, ...] = (
     "unwritable_config_outcome",
-    "request_field_laws",
     "external_directory_glob_predicate",
+    "request_field_laws",
     "owner_file_hash_syntax",
     "owner_timestamp_serialization",
     "parse_detail_position_domain",
@@ -195,6 +315,7 @@ RECORD_CHECK_IDS: tuple[str, ...] = (
     "evidence_downgrade_reason_mismatch",
     "evidence_allowed_action_ids_mismatch",
     "evidence_transient_dirty_state",
+    "episode_family_reason_mismatch",
 )
 
 OWNER_CITATIONS: dict[str, str] = {
@@ -219,6 +340,14 @@ OWNER_CITATIONS: dict[str, str] = {
     "central_rows": "Plans/Wiring_Matrix.production.json catalog.permissions_*",
     "touch_binding": "Plans/touch_closure.json#TCP-PERMISSIONS",
     "settings_consumer": "Plans/Settings_System.md#SSYS-023",
+    "external_directory_glob": "Plans/Permissions_System.md Section 3.1 / Section 3.3 / Section 9.1 / Section 10.3 / Section 10.5",
+    "external_directory_glob_error_codes": "Plans/Permissions_System.md#Permissions-UI-Commands-And-Error-States",
+    "blocked_episode_identity": "Plans/human-in-the-loop.md HITL Button Labels (Resolved)",
+    "blocked_episode_action_ids": "Plans/Permissions_System.md Section 6",
+    "recovery_action_admission": "Plans/Contracts_V0.md dispatcher and projection safety",
+    "recovery_command_table": "Plans/UI_Command_Catalog.md canonical recovery commands",
+    "runtime_approve_decline": "Plans/UI_Command_Catalog.md#UCC-113",
+    "hitl_artifact_decisions": "Plans/runtime_artifact_hitl_approval.schema.json",
 }
 
 DECISION_CARDS: tuple[dict[str, str], ...] = (
@@ -246,47 +375,75 @@ DECISION_CARDS: tuple[dict[str, str], ...] = (
         "slice": "outcome vocabulary for a not-writable permission config",
         "owner_text": (
             "Central row: 'Unavailable with a projected disabled reason when the rule does not exist or "
-            "the config is not writable'."
+            "the config is not writable'; UCC-113 gives every mutating command the precondition "
+            "`permission_config_writable`; TCP-PERMISSIONS requires 'writable owner state' for mutation and "
+            "'exact rule/config/currentness/permission error' as the disabled reason."
         ),
         "held": (
-            "No owner error code or blocked reason is named for 'the config is not writable'. The join "
-            "therefore holds this slice: it asserts that no mutation persists, that the rule projection is "
-            "unchanged, that availability projects unavailable with a disabled reason, and it asserts "
-            "nothing about which closed error code documents the refusal."
+            "Resolved by the cited owner text without a new canonical code. The owner's own precondition "
+            "identifier `permission_config_writable` is the truthful projected disabled reason of an "
+            "unavailable mutating control, so the command projects "
+            "`state.commands.permissions_<element>.disabled_reason` from that unmet precondition and never "
+            "from `handler_unavailable` and never through `permission_config_write_conflict`, which is the "
+            "later pre-rename `loaded_config_hash` comparison of a mutation that was allowed to attempt a "
+            "write. The join asserts actual owner writability (the snapshot's not-writable state), the "
+            "unavailable projection with exactly that unmet precondition, no persistence receipt, an "
+            "unchanged rule set, and a blocked/refused outcome that is not documented as a write conflict; "
+            "the blocked scenario uses only the owner-named pre-dispatch family and reason. The one axis the "
+            "derivation still holds unasserted is the closed post-dispatch outcome vocabulary for an "
+            "attempted mutation, because the owner names no rule error code for it. This internal annotation "
+            "is not a user decision card and needs no canonical prose edit."
         ),
-        "status": "held_for_owner",
+        "status": "resolved_existing_owner",
     },
     {
         "card_id": "DC-PERM-RULE-003",
         "slice": "external-directory glob validity predicate",
         "owner_text": (
-            "Central row: 'Invalid glob input surfaces external_directory_invalid_glob for "
-            "directory-pattern rules'."
+            "Section 3.1: `*` matches zero or more characters, `?` matches exactly one character, and a "
+            "trailing ` *` (space + wildcard) makes the trailing portion optional; Section 3.3: allowlist "
+            "entries support wildcard syntax (Section 3.1); Section 3.4 gives the relative directory-prefix "
+            "shape `src/auth/**`; Section 9.1/3.3 give `~/.cargo/**` and `/usr/local/include/**`. Central "
+            "row: 'Invalid glob input surfaces external_directory_invalid_glob for directory-pattern rules'."
         ),
         "held": (
-            "The owner names the code but no validity predicate. The companion asserts NO glob grammar: it "
-            "does not require absolute or '~'-rooted patterns, does not derive validity from the Section 9.1 "
-            "allowlist examples, and treats a directory-pattern draft or rule as an unspecified slice. Only "
-            "the owner-specified duplicate path equality (external_directory_duplicate_path) is derived. "
-            "Fixtures record observed refusals for external_directory_invalid_glob without claiming the "
-            "predicate; minting it is an owner choice."
+            "Accept side resolved and materialized: Section 3.1 gives only `*`, `?` and the trailing ` *` "
+            "special meanings, so every other character - including `[`, `]`, `{`, `}` and a backslash - is "
+            "ordinary literal path text and a non-empty directory-pattern entry is admissible. The join "
+            "asserts that acceptance causally and refuses to narrow it: `include/[draft].txt`, "
+            "`/tmp/{literal}/file`, `include/back\\slash`, `src/auth/**`, `~/.cargo/**` and "
+            "`/usr/local/include/**` are owner-valid, and a fabricated `external_directory_invalid_glob` "
+            "refusal of such an entry fails the join. Reject side held: the owner names that error code for "
+            "invalid glob input but states no malformed-input condition, so this companion refuses no text "
+            "and the slice stays `external_directory_glob_predicate` - independent review "
+            "REVIEW-DIFFERENT-SOL-FOUR-JOINS-V1.md found the earlier out-of-inventory rejection unfaithful "
+            "to Section 3.1 and it is removed. The exact duplicate-path equality "
+            "(`external_directory_duplicate_path`) is unchanged; no absolute-path, home-prefix, "
+            "metacharacter, Unicode, length or count rule is imposed."
         ),
         "status": "held_for_owner",
     },
     {
         "card_id": "DC-PERM-RULE-004",
-        "slice": "stale declared hash on validate_rule",
+        "slice": "declared hash on validate_rule",
         "owner_text": (
             "Central row: 'Validation checks the rule draft and surfaces validation errors without "
-            "persisting anything'."
+            "persisting anything'; UCC-113 precondition `rule_draft_present`; TCP-PERMISSIONS: 'validation "
+            "requires a draft'; the atomicity paragraph compares `loaded_config_hash` to the current file "
+            "hash before rename, which governs mutation."
         ),
         "held": (
-            "Whether a pure validation that declares a stale loaded_config_hash reports "
-            "permission_config_write_conflict, a refresh-required state, or nothing at all is unspecified. "
-            "The join asserts nothing about the outcome for that axis; validate_rule still never persists "
-            "and never approves."
+            "Resolved as a companion-created branch, not an owner decision fork. `cmd.permissions.validate_rule` is "
+            "draft-only: its precondition is `rule_draft_present`, it never persists and never approves, and "
+            "the owner scopes every `loaded_config_hash` comparison to a mutation before rename while "
+            "requiring current hash and writable state for mutation only. The shared request shape's optional "
+            "`expected_loaded_config_hash` is therefore nonauthoritative on a validation: it may be null or "
+            "absent, it creates no new stale-validation outcome, and the later mutation independently checks "
+            "the current hash. The companion asserts no response branch for it, and no canonical prose change "
+            "is requested; a concrete owner-backed causal obligation would be re-adjudicated if one ever "
+            "appears. This internal annotation is not a user decision card."
         ),
-        "status": "held_for_owner",
+        "status": "resolved_existing_owner",
     },
     {
         "card_id": "DC-PERM-RULE-005",
@@ -324,20 +481,31 @@ DECISION_CARDS: tuple[dict[str, str], ...] = (
     },
     {
         "card_id": "DC-PERM-RULE-008",
-        "slice": "allowed_action_ids minting for a permissions approval ask",
+        "slice": "allowed_action_ids binding for a permissions approval ask",
         "owner_text": (
-            "Section 2.2 and Section 6 define the user's deny/once/for-session/always choice; the blocked "
-            "payload requires an ordered allowed_action_ids[] and forbids prose-only recovery hints. "
-            "UCC-113: approval decisions stay on the runtime HITL commands."
+            "Section 6: 'Permission-blocked recovery surfaces expose `deny`, `approve_once`, "
+            "`approve_for_session`, `approve_always`, and `open_permissions` as applicable'; the blocked "
+            "payload carries ordered `allowed_action_ids[]`. `Plans/human-in-the-loop.md` maps the "
+            "canonical display copy for `allowed_action_id = approve` to `cmd.runtime.approve` and for "
+            "`allowed_action_id = decline` to `cmd.runtime.decline`, orders buttons by the blocked "
+            "episode's ordered `allowed_action_ids[]`, and keys the episode by `run_id`, `node_id`, "
+            "`blocked_sequence` and `attempt_id?`. UCC-113 keeps every actual decision on those two runtime "
+            "commands and forbids permissions-family approve/decline commands."
         ),
         "held": (
-            "The four human response labels are user-facing copy, not canonical action-id strings, and the "
-            "owner does not mint permissions-family ids. The companion asserts only structural laws "
-            "(non-empty when the effective state is ask, empty when allow, unique, ordered as given) and "
-            "never treats a human label as an id; fixtures use existing command identities from the cited "
-            "surfaces. Exact id minting remains an owner choice."
+            "Resolved by the cited owner text; the earlier annotation's conjecture that the exact ids were "
+            "still an open owner decision is withdrawn. The ordered permission-blocked action ids are owner-named, the "
+            "minute args of the two runtime commands are owner-named by UCC-113's recovery command table, "
+            "and the once/for-session/always/deny ladder is owner-named by Section 6.1 and by the `decision` "
+            "enum of the current HITL artifact schema. The companion binds the selected episode, action and "
+            "scope to those existing commands, derives the dispatch from the action id and never from "
+            "display copy, admits a recovery action only when the current blocked episode exposes it, and "
+            "refuses a stale episode or an unadvertised action. Native episode selection is not proven: the "
+            "episode read is a separately pinned static owner episode test double and every episode record "
+            "carries `native_episode_selection_proven=false`. This internal annotation is not a user "
+            "decision card."
         ),
-        "status": "held_for_owner",
+        "status": "resolved_existing_owner",
     },
     {
         "card_id": "DC-PERM-RULE-009",
@@ -422,6 +590,86 @@ def dispatch_receipt_ref(command_id: str) -> str:
 
 def is_directory_pattern_class(pattern_class: Any) -> bool:
     return pattern_class == "external_directory_pattern"
+
+
+def external_directory_glob_syntax_accepted(pattern: Any) -> bool:
+    """Whether a directory-pattern entry is admissible owner §3.1 text.
+
+    Section 3.1 defines `*` (zero or more characters), `?` (exactly one
+    character) and a trailing ` *` (space + wildcard, trailing portion optional),
+    and Section 3.3 applies that syntax to external-directory allowlist entries.
+    It assigns no other character a special meaning and declares none of them
+    invalid, so `[`, `]`, `{`, `}` and a backslash are ordinary literal path text
+    and any non-empty entry is admissible.  This companion therefore narrows
+    nothing: it asserts no absolute-path, home-prefix, size, metacharacter,
+    Unicode or other ban, and its only held axis is the reject side.
+
+    The owner names ``external_directory_invalid_glob`` for invalid glob input on
+    directory-pattern rules but states no malformed-input condition, so that
+    reject predicate stays the held slice ``external_directory_glob_predicate``:
+    this function never refuses the text it checks, and no fixture may claim a
+    malformedness the owner has not defined.
+    """
+
+    return isinstance(pattern, str) and bool(pattern)
+
+
+def episode_action_dispatch(action_id: Any) -> dict[str, Any] | None:
+    """The owner-named dispatch for one permission-blocked action id."""
+
+    if not isinstance(action_id, str):
+        return None
+    dispatch = EPISODE_ACTION_DISPATCH.get(action_id)
+    return None if dispatch is None else dict(dispatch)
+
+
+def episode_dispatch_args(selection: Mapping[str, Any]) -> dict[str, Any] | None:
+    """The claimed episode identity in the runtime command's minimum args shape."""
+
+    claimed = selection.get("claimed_episode")
+    if not isinstance(claimed, Mapping):
+        return None
+    return {key: claimed.get(key) for key in EPISODE_DISPATCH_ARG_KEYS}
+
+
+def episode_derived_state(
+    selection: Mapping[str, Any],
+    current_episode: Mapping[str, Any] | None,
+) -> dict[str, Any]:
+    """Derive the admitted/refused state of one selection from the owner's reads.
+
+    The claimed episode and the claimed ordered action list are the previously
+    displayed blocked-flow projection; they are declarations.  Admission requires
+    the current blocked episode to match them and to expose the selected action:
+    ``Plans/Contracts_V0.md`` admits a recovery action only when the *current*
+    blocked episode exposes the corresponding ordered actions and requires
+    revalidation against canonical state before execution, and
+    ``Plans/Permissions_System.md`` line 1144 aborts a materially changed
+    selection with ``state_changed_refresh_required``.
+    """
+
+    claimed = selection.get("claimed_episode") if isinstance(selection.get("claimed_episode"), Mapping) else {}
+    identity = [claimed.get(key) for key in EPISODE_DISPATCH_ARG_KEYS]
+    selected_action_id = selection.get("selected_action_id")
+    state: dict[str, Any] = {
+        "read_available": isinstance(current_episode, Mapping),
+        "identity_matches": False,
+        "action_advertised": False,
+        "refusal_reason": None,
+    }
+    if not isinstance(current_episode, Mapping):
+        return state
+    current_identity = [current_episode.get(key) for key in EPISODE_DISPATCH_ARG_KEYS]
+    scope_matches = selection.get("approval_scope_key") == current_episode.get("approval_scope_key")
+    state["identity_matches"] = identity == current_identity and scope_matches
+    advertised = current_episode.get("allowed_action_ids")
+    advertised = advertised if isinstance(advertised, list) else []
+    state["action_advertised"] = selected_action_id in advertised
+    if not state["identity_matches"]:
+        state["refusal_reason"] = "stale_blocked_episode"
+    elif not state["action_advertised"]:
+        state["refusal_reason"] = "action_not_advertised"
+    return state
 
 
 def scope_allowed_in_layer(config_layer: Any, scope_key: Any) -> bool:
@@ -671,9 +919,12 @@ def request_field_law_failures(request: Mapping[str, Any]) -> list[str]:
 def draft_shape_failures(draft: Any) -> list[str]:
     """Shape only: the wildcard grammar itself stays owner-owned (Section 3.1).
 
-    No length cap, whitespace rule, control-character rule or glob validity
-    predicate is asserted here: the cited owner text defines ``*``, ``?`` and the
-    trailing `` *`` special case and no further grammar for a durable rule.
+    No length cap, whitespace rule or control-character rule is asserted here.
+    The accept side of the owner's Section 3.1 syntax is materialized as
+    ``external_directory_glob_syntax_accepted`` and applied by the derivation;
+    the reject side stays the held slice ``external_directory_glob_predicate``
+    because the owner names no malformed-input condition, and no part of this
+    shape law restates either.
     """
 
     if not isinstance(draft, dict):
@@ -785,7 +1036,13 @@ def derive_expected(
             result["reason"] = ";".join(draft_shape_failures(draft))
             return result
         if is_directory_pattern_class(draft.get("pattern_class")):
-            # Owner-specified equality only; glob validity is a held slice.
+            # Section 3.1 text is admissible and nothing here narrows it; only the
+            # owner-specified exact duplicate path equality is derived, and the
+            # reject predicate stays held.
+            if not external_directory_glob_syntax_accepted(draft.get("tool_pattern")):
+                result["held_slice"] = "external_directory_glob_predicate"
+                result["reason"] = "directory_pattern_text_not_admissible"
+                return result
             if any(
                 rule.get("scope_key") == scope_key
                 and is_directory_pattern_class(rule.get("pattern_class"))
@@ -798,9 +1055,6 @@ def derive_expected(
                     reason="duplicate_directory_path",
                 )
                 return result
-            result["held_slice"] = "external_directory_glob_predicate"
-            result["reason"] = "directory_pattern_validity_unspecified"
-            return result
         if not isinstance(observed_rule_id, str) or not observed_rule_id:
             result["held_slice"] = "request_field_laws"
             result["reason"] = "create_requires_observed_rule_identity"
@@ -868,9 +1122,11 @@ def derive_expected(
             result["held_slice"] = "request_field_laws"
             result["reason"] = "validate_draft_shape_invalid"
             return result
-        if is_directory_pattern_class(draft.get("pattern_class")):
+        if is_directory_pattern_class(draft.get("pattern_class")) and not external_directory_glob_syntax_accepted(
+            draft.get("tool_pattern")
+        ):
             result["held_slice"] = "external_directory_glob_predicate"
-            result["reason"] = "directory_pattern_validity_unspecified"
+            result["reason"] = "directory_pattern_text_not_admissible"
             return result
         result.update(status="success", post_rules=list(pre_rules), derived_order_index=None)
 
@@ -1083,9 +1339,8 @@ def _gate_checks(
     if availability.get("disabled_reason_projection") != disabled_reason_projection(element):
         checks["join_state_selector_binding"].append("disabled_reason_projection_mismatch")
 
-    disabled_ref = availability.get("disabled_reason_ref")
-    if (disabled_ref is None) != (availability.get("availability") == "available"):
-        checks["join_availability_binding"].append("disabled_reason_ref_must_track_availability")
+    if availability_disabled_reason_failures(availability):
+        checks["join_availability_binding"].append("projected_disabled_reason_mismatch")
     if availability.get("availability") == "unavailable" and kind in {
         "persisted_atomic",
         "validated_no_persistence",
@@ -1192,9 +1447,24 @@ def _gate_checks(
             checks["join_unwritable_config_must_not_persist"].append(f"not_writable_observed:{kind}")
         if result.get("persistence_receipt_ref") is not None:
             checks["join_unwritable_config_must_not_persist"].append("not_writable_claims_receipt")
-        if availability.get("availability") != "unavailable" or availability.get("disabled_reason_ref") is None:
+        if availability.get("availability") != "unavailable":
             checks["join_unwritable_config_must_not_persist"].append(
                 "not_writable_requires_unavailable_disabled_projection"
+            )
+        elif availability.get("unmet_precondition_id") != NOT_WRITABLE_PRECONDITION:
+            # The owner names `permission_config_writable` as the precondition of
+            # every mutating control, so the truthful projected disabled reason is
+            # that unmet precondition - never a generic handler reason and never
+            # the mutation-only write-conflict code.
+            checks["join_unwritable_config_must_not_persist"].append(
+                "not_writable_requires_unmet_precondition_reason"
+            )
+        # The concurrent-write conflict is a different, hash-comparison condition
+        # before rename: a config the owner reports as not writable never reaches
+        # that comparison, so it must not be documented with that named code.
+        if isinstance(error, Mapping) and error.get("error_code") == "permission_config_write_conflict":
+            checks["join_unwritable_config_must_not_persist"].append(
+                "not_writable_must_not_be_documented_as_write_conflict"
             )
 
     evidence_record = result.get("evidence") if isinstance(result.get("evidence"), dict) else {}
@@ -1212,6 +1482,94 @@ def _gate_checks(
     return checks
 
 
+def _episode_checks(
+    selection: Mapping[str, Any],
+    owner_episode_read: Callable[[], Mapping[str, Any]] | None,
+) -> dict[str, list[str]]:
+    """Laws of the permission-blocked episode selection join.
+
+    The claimed episode and the claimed ordered action list are the blocked-flow
+    projection that was displayed; the current blocked episode arrives only from
+    an independent owner read (the separately pinned static owner episode test
+    double at the static gate), so a record can never witness itself.  Admission
+    is derived from the selected action id through the owner-named command table
+    and never from display copy.
+    """
+
+    checks: dict[str, list[str]] = {name: [] for name in CHECKS}
+    if not isinstance(selection, Mapping):
+        return checks
+    if selection.get("record_kind") != "permissions_blocked_episode_selection":
+        return checks
+
+    current: Mapping[str, Any] | None = None
+    if callable(owner_episode_read):
+        observed = owner_episode_read()
+        current = observed if isinstance(observed, Mapping) else None
+    state = episode_derived_state(selection, current)
+    dispatch = episode_action_dispatch(selection.get("selected_action_id"))
+    disposition = selection.get("disposition")
+    admitted = disposition == "dispatch_admitted"
+    refused = disposition == "refused"
+    selected_action_id = selection.get("selected_action_id")
+    claimed_actions = selection.get("claimed_allowed_action_ids")
+    claimed_actions = claimed_actions if isinstance(claimed_actions, list) else None
+
+    if current is None:
+        checks["join_episode_original_unproven"].append("blocked_episode_original_not_independently_read")
+    elif admitted and not state["identity_matches"]:
+        checks["join_episode_original"].append("admitted_selection_episode_no_longer_current")
+
+    if admitted:
+        if claimed_actions is not None and selected_action_id not in claimed_actions:
+            checks["join_episode_advertised_action"].append("selected_action_not_in_claimed_action_list")
+        elif current is not None and state["identity_matches"] and not state["action_advertised"]:
+            checks["join_episode_advertised_action"].append(
+                "selected_action_not_exposed_by_current_blocked_episode"
+            )
+
+    if dispatch is None:
+        checks["join_episode_dispatch_binding"].append("selected_action_outside_owner_action_inventory")
+    elif refused:
+        if any(selection.get(field) is not None for field in ("command_id", "dispatch_args", "hitl_decision")):
+            checks["join_episode_dispatch_binding"].append("refused_selection_names_a_dispatch")
+        if selection.get("scope_effect") != "none":
+            checks["join_episode_dispatch_binding"].append("refused_selection_names_a_scope_effect")
+    else:
+        if selection.get("command_id") != dispatch["command_id"]:
+            checks["join_episode_dispatch_binding"].append(
+                f"expected_command:{dispatch['command_id']}:observed:{selection.get('command_id')}"
+            )
+        if selection.get("hitl_decision") != dispatch["hitl_decision"]:
+            checks["join_episode_dispatch_binding"].append(
+                f"expected_decision:{dispatch['hitl_decision']}:observed:{selection.get('hitl_decision')}"
+            )
+        if selection.get("scope_effect") != dispatch["scope_effect"]:
+            checks["join_episode_dispatch_binding"].append(
+                f"expected_scope_effect:{dispatch['scope_effect']}:observed:{selection.get('scope_effect')}"
+            )
+        args = selection.get("dispatch_args")
+        if dispatch["command_id"] == "cmd.permissions.open":
+            if args is not None:
+                checks["join_episode_dispatch_binding"].append("open_permissions_takes_no_episode_args")
+        elif not isinstance(args, Mapping) or set(args) != set(EPISODE_DISPATCH_ARG_KEYS):
+            checks["join_episode_dispatch_binding"].append("dispatch_args_not_the_owner_minimum_args")
+        elif dict(args) != episode_dispatch_args(selection):
+            checks["join_episode_dispatch_binding"].append("dispatch_args_differ_from_selected_episode")
+
+    refusal_reason = selection.get("refusal_reason")
+    if refused:
+        if refusal_reason is None:
+            checks["join_episode_refusal_binding"].append("refused_selection_without_owner_refusal_reason")
+        elif current is not None and state["refusal_reason"] is not None and refusal_reason != state["refusal_reason"]:
+            checks["join_episode_refusal_binding"].append(
+                f"expected:{state['refusal_reason']}:observed:{refusal_reason}"
+            )
+    elif refusal_reason is not None:
+        checks["join_episode_refusal_binding"].append("non_refused_selection_carries_refusal_reason")
+    return checks
+
+
 def _merge(target: dict[str, list[str]], source: Mapping[str, Sequence[str]]) -> None:
     for name, details in source.items():
         if details:
@@ -1226,6 +1584,7 @@ def join_case_detail_failures(
     owner_file_read: Callable[[], Mapping[str, Any]] | None = None,
     owner_post_write_read: Callable[[], Mapping[str, Any]] | None = None,
     owner_selected_rules_read: Callable[[], Sequence[Mapping[str, Any]]] | None = None,
+    owner_episode_read: Callable[[], Mapping[str, Any]] | None = None,
 ) -> list[dict[str, str]]:
     """Run the causal join and return ``{check, detail}`` rows in CHECKS order.
 
@@ -1255,6 +1614,18 @@ def join_case_detail_failures(
     if not isinstance(binding, Mapping):
         return [{"check": "join_command_identity", "detail": "binding_not_an_object"}]
     enabled = set(CHECKS) if enabled_checks is None else set(enabled_checks)
+    if binding.get("record_kind") == "permissions_blocked_episode_selection":
+        # The episode selection is not a rule-command binding: only its own laws
+        # apply, and the current blocked episode reaches them from an independent
+        # owner read.
+        findings = {name: [] for name in CHECKS}
+        _merge(findings, _episode_checks(binding, owner_episode_read))
+        return [
+            {"check": name, "detail": detail}
+            for name in CHECKS
+            if name in enabled
+            for detail in findings.get(name, [])
+        ]
     request = binding.get("request") if isinstance(binding.get("request"), Mapping) else {}
     snapshot = binding.get("owner_snapshot") if isinstance(binding.get("owner_snapshot"), Mapping) else {}
     result = binding.get("observed_result") if isinstance(binding.get("observed_result"), Mapping) else {}
@@ -1309,6 +1680,7 @@ def join_case_failures(
     owner_file_read: Callable[[], Mapping[str, Any]] | None = None,
     owner_post_write_read: Callable[[], Mapping[str, Any]] | None = None,
     owner_selected_rules_read: Callable[[], Sequence[Mapping[str, Any]]] | None = None,
+    owner_episode_read: Callable[[], Mapping[str, Any]] | None = None,
 ) -> list[str]:
     """Stable check ids that rejected the binding, sorted and de-duplicated."""
 
@@ -1319,6 +1691,7 @@ def join_case_failures(
         owner_file_read=owner_file_read,
         owner_post_write_read=owner_post_write_read,
         owner_selected_rules_read=owner_selected_rules_read,
+        owner_episode_read=owner_episode_read,
     )
     return sorted({row["check"] for row in rows})
 
@@ -1354,6 +1727,7 @@ def record_semantic_failures(
     owner_file_read: Callable[[], Mapping[str, Any]] | None = None,
     owner_post_write_read: Callable[[], Mapping[str, Any]] | None = None,
     owner_selected_rules_read: Callable[[], Sequence[Mapping[str, Any]]] | None = None,
+    owner_episode_read: Callable[[], Mapping[str, Any]] | None = None,
 ) -> list[str]:
     """Laws that JSON Schema annotations cannot express, per record definition.
 
@@ -1405,13 +1779,21 @@ def record_semantic_failures(
                 failures.add("availability_selector_command_mismatch")
             if value.get("disabled_reason_projection") != disabled_reason_projection(element):
                 failures.add("availability_selector_command_mismatch")
-        if (value.get("disabled_reason_ref") is None) != (value.get("availability") == "available"):
+        if availability_disabled_reason_failures(value):
             failures.add("availability_disabled_reason_mismatch")
         return report(failures)
     if definition_name == "permissions_rule_permission_evidence":
         return report(permission_evidence_failures(value))
     if definition_name == "permissions_rule_error":
         return report(error_record_failures(value))
+    if definition_name == "permissions_blocked_episode":
+        return report(episode_semantic_failures(value))
+    if definition_name == "permissions_blocked_episode_selection":
+        return join_case_failures(
+            value,
+            enabled_checks=enabled_checks,
+            owner_episode_read=owner_episode_read,
+        )
     if definition_name == "permissions_rule_command_binding":
         element = element_of(value.get("command_id"))
         if element is not None:
@@ -1548,6 +1930,53 @@ def error_record_failures(error: Mapping[str, Any]) -> set[str]:
     return failures
 
 
+def availability_disabled_reason_failures(availability: Mapping[str, Any]) -> list[str]:
+    """The projected disabled reason of one availability record.
+
+    An available control projects no reason. An unavailable control projects
+    exactly one truthful reason: a declared owner error record (the pack-local
+    ``disabled_reason_ref`` convention) or the owner-named precondition that is
+    unmet (``unmet_precondition_id``, UCC-113's own precondition identifiers -
+    ``permission_config_writable`` for the non-writable config). Neither form
+    replaces the other, and no new reason vocabulary is minted.
+    """
+
+    failures: list[str] = []
+    disabled_ref = availability.get("disabled_reason_ref")
+    precondition = availability.get("unmet_precondition_id")
+    if availability.get("availability") == "available":
+        if disabled_ref is not None or precondition is not None:
+            failures.append("available_command_must_not_project_a_disabled_reason")
+        return failures
+    if (disabled_ref is None) == (precondition is None):
+        failures.append("unavailable_command_requires_exactly_one_projected_reason")
+    elif precondition is not None and precondition not in PERMISSIONS_COMMAND_PRECONDITIONS:
+        failures.append("unmet_precondition_outside_owner_command_preconditions")
+    return failures
+
+
+def episode_semantic_failures(episode: Mapping[str, Any]) -> set[str]:
+    """Owner law of one blocked-episode projection.
+
+    ``Plans/Permissions_System.md`` Section 6 keeps the approval ladder and the
+    blocked payload distinct from policy denial, and the runtime blocked-outcome
+    addendum keeps ``blocked_approval`` and ``blocked_policy`` from collapsing
+    into one family.  An episode that exposes any approval-ladder action is
+    therefore the approval family with ``approval_required``, not a policy block.
+    """
+
+    failures: set[str] = set()
+    actions = episode.get("allowed_action_ids")
+    actions = actions if isinstance(actions, list) else []
+    approval_actions = [action for action in actions if action in {"approve_once", "approve_for_session", "approve_always"}]
+    if approval_actions and (
+        episode.get("blocked_family") != "blocked_approval"
+        or episode.get("blocked_reason_code") != "approval_required"
+    ):
+        failures.add("episode_family_reason_mismatch")
+    return failures
+
+
 def permissions_rule_command_semantic_failures(
     definition_name: str,
     value: Any,
@@ -1556,6 +1985,7 @@ def permissions_rule_command_semantic_failures(
     owner_file_read: Callable[[], Mapping[str, Any]] | None = None,
     owner_post_write_read: Callable[[], Mapping[str, Any]] | None = None,
     owner_selected_rules_read: Callable[[], Sequence[Mapping[str, Any]]] | None = None,
+    owner_episode_read: Callable[[], Mapping[str, Any]] | None = None,
 ) -> list[str]:
     """Validator entry point: stable codes, no detail strings.
 
@@ -1565,6 +1995,13 @@ def permissions_rule_command_semantic_failures(
     separate pinned owner-file test double
     (``pm_permissions_rule_command_owner_file_double``) as static test evidence;
     that proves the conditional algorithm only and never a native producer.
+
+    ``owner_episode_read`` is the independent read of the owner's *current*
+    blocked episode for a permission-blocked episode selection, supplied by the
+    separately pinned static owner episode test double
+    (``pm_permissions_rule_owner_episode_double``).  The claimed episode carried
+    by the selection is never its own witness: without this read the selection is
+    reported unproven through ``join_episode_original_unproven``.
     """
 
     return sorted(
@@ -1576,6 +2013,7 @@ def permissions_rule_command_semantic_failures(
                 owner_file_read=owner_file_read,
                 owner_post_write_read=owner_post_write_read,
                 owner_selected_rules_read=owner_selected_rules_read,
+                owner_episode_read=owner_episode_read,
             )
         )
     )
@@ -1588,12 +2026,21 @@ __all__ = [
     "CURRENTNESS_BOUNDARY",
     "DECISION_CARDS",
     "ELEMENT_IDS",
+    "EPISODE_ACTION_DISPATCH",
+    "EPISODE_DISPATCH_ARG_KEYS",
+    "EPISODE_DISPOSITIONS",
+    "EPISODE_DISPATCH_COMMAND_IDS",
+    "EPISODE_REFUSAL_REASONS",
+    "EXTERNAL_DIRECTORY_TRAILING_OPTIONAL_TOKENS",
+    "EXTERNAL_DIRECTORY_WILDCARD_INVENTORY",
     "FIXTURE_REL",
     "HELD_SLICES",
+    "HITL_DECISION_VALUES",
     "MUTATING_COMMAND_IDS",
     "MUTATING_ELEMENTS",
     "OWNER_CITATIONS",
     "OWNER_SCHEMA_REL",
+    "PERMISSION_BLOCKED_ACTION_IDS",
     "RECORD_CHECK_IDS",
     "RECORD_LAW_IDS",
     "RULE_ERROR_CODES",
@@ -1603,6 +2050,11 @@ __all__ = [
     "disabled_reason_projection",
     "dispatch_receipt_ref",
     "element_of",
+    "episode_action_dispatch",
+    "episode_derived_state",
+    "episode_dispatch_args",
+    "episode_semantic_failures",
+    "external_directory_glob_syntax_accepted",
     "join_case_detail_failures",
     "join_case_failures",
     "owner_current_hash_failures",
