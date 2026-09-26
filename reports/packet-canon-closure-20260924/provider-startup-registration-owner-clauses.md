@@ -41,5 +41,10 @@ parse as strings in the generated index. Shard generation/check passes (99
 documents, 2,766 shards); index generation passes (6,747 units), with only the
 two edited owner documents' 73 indexed records changed. No unrelated owner
 shards changed, no WorkNodes were created and runtime certification remains
-blocked. Separate index validation is pending at this checkpoint. No governance
+blocked. Separate index validation after generation finished reports failure,
+including existing ledger-record validation and `origin/main` PlanUnit-retention
+differences; it is not claimed as passing. The first overlapping validation
+read pre-generation artifacts and was discarded as a current-index result;
+the post-generation run reports 26,577 acceptance units. Current-main
+reconciliation and its full failure comparison remain required. No governance
 reseal, main landing, or full packet completion is claimed.
