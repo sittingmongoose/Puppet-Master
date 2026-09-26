@@ -832,7 +832,9 @@ function pm51PlaceInline(workspace, html) {
     if (anchor) scroll.insertBefore(block, anchor); else scroll.appendChild(block);
   }
   if (advanced.length) {
-    let host = children().find(n => n.matches('details.pm51-advanced')) || page.querySelector('details.pm51-advanced');
+    /* only the view's own disclosure (a direct child); a selected item's More options inside a list/detail is that
+       item's, and project-wide rows must not move with the selection */
+    let host = children().find(n => n.matches('details.pm51-advanced'));
     if (!host) {
       const holder = document.createElement('template'); holder.innerHTML = PM51.advanced('');
       host = holder.content.firstElementChild;

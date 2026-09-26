@@ -1,0 +1,349 @@
+{
+ "_about": "Permissions rows (audit C).",
+ "rows": {
+  "code.execution.run-mode": {
+   "label": "New agent runs start in",
+   "help": "Ask and Plan only look; Regular checks before big steps.",
+   "options": {
+    "Ask": "Ask first",
+    "Plan": "Plan only",
+    "Regular": "Regular",
+    "YOLO": "No pauses"
+   }
+  },
+  "safety.rules.chat-mode": {
+   "label": "New chats start in",
+   "help": "No pauses skips prompts; file and command guards still apply.",
+   "options": {
+    "Regular": "Regular",
+    "YOLO": "No pauses"
+   }
+  },
+  "code.execution.execution-strategy": {
+   "label": "Who carries out actions",
+   "help": "Puppet Master doing every action keeps all guards in charge.",
+   "options": {
+    "Hosted Tool Execution": "Puppet Master (recommended)",
+    "Delegated Agent Execution": "The agent's own app, in a sealed copy"
+   }
+  },
+  "code.execution.strategy-override": {
+   "label": "Let Regular runs use the agent's own app",
+   "help": "Only for app-based providers that allow it.",
+   "options": {
+    "None": "No",
+    "Force Delegated (DAE)": "Yes, when the provider allows it"
+   }
+  },
+  "safety.rules.permission-preset": {
+   "label": "Profile in use",
+   "help": "Built-in profiles are presets; your own profiles count as Custom.",
+   "options": {
+    "read_only": "Read only",
+    "plan": "Plan only",
+    "regular": "Regular",
+    "full": "Full",
+    "custom": "Custom"
+   },
+   "why": "Pick a profile under Profiles; its safety level is set for you."
+  },
+  "safety.rules.ui-mode": {
+   "label": "Permissions view",
+   "help": "Expert adds ordered rules, scopes and outside folders.",
+   "options": {
+    "ELI5": "Simple",
+    "Expert": "Expert"
+   }
+  },
+  "safety.rules.scoped-overrides": {
+   "label": "Let parts of the project have their own rules",
+   "help": "Narrower rules can only take freedom away, never add it."
+  },
+  "safety.rules.scope-selector": {
+   "label": "Editing rules for",
+   "help": "Narrower layers win over wider ones.",
+   "options": {
+    "global": "Everywhere",
+    "project": "This project",
+    "package": "A package",
+    "seam": "A seam",
+    "lane": "A lane"
+   },
+   "when": {
+    "id": "safety.rules.scoped-overrides",
+    "truthy": true
+   }
+  },
+  "safety.rules.rule-editor": {
+   "label": "Ordered rules",
+   "help": "Checked top to bottom; the last matching rule wins.",
+   "noun": "rule"
+  },
+  "safety.rules.default-tool-permission": {
+   "label": "Anything without a rule",
+   "help": "What happens when no rule matches a tool.",
+   "options": {
+    "allow": "Allow",
+    "ask": "Ask me first",
+    "deny": "Block"
+   }
+  },
+  "safety.rules.per-tool-permissions": {
+   "label": "Answer for each tool",
+   "help": "Reading and searching are safe to allow.",
+   "why": "Drawn as a table with one line per tool under Permissions › Rules."
+  },
+  "safety.protection.web-tool-permissions": {
+   "label": "Answer for each web ability",
+   "help": "Search, read pages, extract, research, crawl and map.",
+   "why": "Drawn as a table with one line per tool under Permissions › Rules."
+  },
+  "safety.rules.layer-origin-badge": {
+   "label": "Show where each rule comes from",
+   "help": "A small tag names the layer that set it."
+  },
+  "safety.rules.capability-disclosure": {
+   "label": "Show what was held back",
+   "help": "When the assistant gets less than it asked for, say why."
+  },
+  "safety.rules.storage-format": {
+   "label": "Rules file",
+   "help": "Where your rules are saved; editing by hand is rarely needed.",
+   "control": "status"
+  },
+  "safety.protection.filesafe-integration": {
+   "label": "Protect files and commands",
+   "help": "If protection can't start, risky actions are blocked."
+  },
+  "safety.protection.file-guard": {
+   "label": "Only change files the work said it would",
+   "help": "Stops surprise edits outside the current task."
+  },
+  "safety.protection.strict-mode": {
+   "label": "Check writes strictly",
+   "help": "Turn off only if normal edits keep getting blocked.",
+   "when": {
+    "id": "safety.protection.file-guard",
+    "truthy": true
+   }
+  },
+  "safety.protection.governance-unlock": {
+   "label": "Protected paths need extra sign-off",
+   "help": "Changing them needs more than a normal OK."
+  },
+  "safety.protection.allow-destructive": {
+   "label": "Let dangerous commands through",
+   "help": "Overrides the block list; each use still asks.",
+   "risk": "Can wipe files"
+  },
+  "safety.protection.approved-commands": {
+   "label": "Commands you trust",
+   "help": "Exempt from the block list; added from chat approvals.",
+   "noun": "command"
+  },
+  "safety.protection.custom-patterns-path": {
+   "label": "Extra block list file",
+   "help": "More patterns to block; it can't unblock anything."
+  },
+  "safety.protection.external-dir-action": {
+   "label": "Outside the project",
+   "help": "Folders on the list below skip this question."
+  },
+  "safety.protection.external-dir-allowlist": {
+   "label": "Folders it may use without asking",
+   "help": "Wildcards and ~ work.",
+   "noun": "folder"
+  },
+  "safety.protection.qa-gate-override": {
+   "label": "Allow resets while tests check work",
+   "help": "For example resetting a test database."
+  },
+  "safety.protection.security-audit-override": {
+   "label": "Let the security check read secret files",
+   "help": "Only during that check."
+  },
+  "safety.approvals.autonomy-mode": {
+   "label": "How runs pause",
+   "help": "Ask at checkpoints turns on the pauses below.",
+   "options": {
+    "hands-off": "Hands-off",
+    "ask-me-first": "Ask at checkpoints"
+   }
+  },
+  "safety.approvals.gate-seam": {
+   "label": "Pause before each big stretch of work",
+   "help": "The run waits for your OK at each seam.",
+   "when": {
+    "id": "safety.approvals.autonomy-mode",
+    "in": [
+     "ask-me-first"
+    ]
+   }
+  },
+  "safety.approvals.gate-package": {
+   "label": "Pause before each package",
+   "help": "The run waits for your OK before the next package.",
+   "when": {
+    "id": "safety.approvals.autonomy-mode",
+    "in": [
+     "ask-me-first"
+    ]
+   }
+  },
+  "safety.approvals.gate-lane": {
+   "label": "Pause before each lane",
+   "help": "The most frequent pause; expect many questions.",
+   "when": {
+    "id": "safety.approvals.autonomy-mode",
+    "in": [
+     "ask-me-first"
+    ]
+   }
+  },
+  "safety.approvals.auto-continue": {
+   "label": "After one OK, keep going",
+   "help": "Later pauses are skipped once you approve one."
+  },
+  "safety.approvals.pre-run-display": {
+   "label": "Show commands before they run",
+   "help": "See the command, folder and risk before you approve."
+  },
+  "safety.approvals.approval-ladder-default": {
+   "label": "Answer picked when you're asked",
+   "help": "Always creates a lasting rule.",
+   "options": {
+    "deny": "Reject",
+    "once": "Allow once",
+    "for_session": "Allow for this session",
+    "always": "Always allow"
+   }
+  },
+  "safety.approvals.wake-scheduler": {
+   "label": "Continue as soon as you answer",
+   "help": "Otherwise the run waits for its next check."
+  },
+  "safety.protection.safe-point-restore": {
+   "label": "Undo the attempt when you reject it",
+   "help": "Work restarts from the last good point."
+  },
+  "safety.approvals.recovery-actions": {
+   "label": "Choices on a blocked action",
+   "help": "The buttons you see when something is blocked.",
+   "control": "status",
+   "options": {
+    "approve_once": "Allow once",
+    "approve_for_session": "Allow for this session",
+    "approve_always": "Always allow",
+    "open_permissions": "Open Permissions",
+    "filesafe_add_rule": "Add a file rule",
+    "open_filesafe_settings": "Open Protected Files"
+   }
+  },
+  "safety.approvals.hitl-aware-defaults": {
+   "label": "Be stricter when you're away",
+   "help": "Unattended runs use stricter answers automatically."
+  },
+  "safety.approvals.lease-normalization": {
+   "label": "An OK covers only the exact command",
+   "help": "Same wording, folder and purpose."
+  },
+  "safety.approvals.plan-mode-boundary": {
+   "label": "Plan only can never change files",
+   "help": "Checked before every action."
+  },
+  "safety.approvals.boundary-default-strictness": {
+   "label": "How far one write approval reaches",
+   "help": "Narrow covers the least."
+  },
+  "safety.approvals.doom-loop-threshold": {
+   "label": "Repeats before it steps in",
+   "help": "Lower catches loops sooner.",
+   "min": 2,
+   "max": 10
+  },
+  "ai.usage.run-spend-budget": {
+   "label": "Spending limit per run",
+   "help": "0 means no limit; set when the run starts.",
+   "unit": "USD",
+   "min": 0
+  },
+  "ai.usage.max-wall-clock": {
+   "label": "Time limit per run",
+   "help": "Counts across pause and resume.",
+   "options": {
+    "600000": "10 minutes",
+    "1200000": "20 minutes",
+    "1800000": "30 minutes",
+    "3600000": "1 hour",
+    "7200000": "2 hours"
+   },
+   "control": "select",
+   "choices": [
+    600000,
+    1200000,
+    1800000,
+    3600000,
+    7200000
+   ]
+  },
+  "ai.usage.max-tool-rounds": {
+   "label": "Steps per agent",
+   "help": "Stops endless back-and-forth before it costs you.",
+   "min": 1,
+   "max": 2000
+  },
+  "ai.usage.max-goal-turns": {
+   "label": "Rounds before a Goal checks in",
+   "help": "Automatic uses the Goal's own limit.",
+   "control": "number-inherited"
+  },
+  "ai.usage.subagent-wave-cost": {
+   "label": "Spending limit per helper wave",
+   "help": "Stops a burst of parallel helpers overspending.",
+   "control": "number-inherited",
+   "unit": "USD"
+  },
+  "ai.usage.node-timeout": {
+   "label": "Time limit per step",
+   "help": "Can tighten the run's limit, never exceed it.",
+   "control": "number-inherited",
+   "unit": "ms"
+  },
+  "safety.approvals.max-shell-failures": {
+   "min": 1,
+   "max": 20
+  },
+  "safety.approvals.max-write-thrash": {
+   "min": 1,
+   "max": 20
+  },
+  "safety.approvals.max-retryable-errors": {
+   "min": 1,
+   "max": 20
+  },
+  "safety.approvals.alert-channel": {
+   "options": {
+    "dashboard": "The dashboard",
+    "tray": "The system tray",
+    "assistant_chat": "Assistant chat",
+    "all": "All of them"
+   }
+  },
+  "safety.approvals.timeout-mode": {
+   "label": "If you don't answer",
+   "options": {
+    "off": "Keep waiting",
+    "ask": "Ask again",
+    "long_wait": "Mark it as waiting a long time"
+   }
+  },
+  "safety.approvals.doom-loop-action": {
+   "label": "When it repeats itself",
+   "options": {
+    "allow": "Let it continue",
+    "ask": "Stop and ask me",
+    "deny": "Block it"
+   }
+  }
+ }
+}
