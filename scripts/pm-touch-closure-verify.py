@@ -45,7 +45,32 @@ CENTRAL_MAP_PATH = (
     / "central-contract-map"
     / "central-contract-map.json"
 )
-ACTION_RE = re.compile(r"^(?:cmd|ui|settings)\.[a-z0-9_.-]+$")
+COMMANDS_LOCAL_ACTIONS = frozenset({
+    "commands.create",
+    "commands.update",
+    "commands.delete",
+    "commands.preview",
+    "commands.import_preview",
+    "commands.import_commit",
+    "commands.export",
+    "commands.reset_all",
+})
+COMMANDSC_SETTINGS_ACTIONS = frozenset({
+    "settings.commands_shortcuts.shortcut_bind",
+    "settings.commands_shortcuts.shortcut_remove",
+    "settings.commands_shortcuts.shortcuts_reset",
+    "settings.commands_shortcuts.shortcuts_backup",
+    "settings.commands_shortcuts.hints_toggle",
+    "settings.commands_shortcuts.layout_select",
+    "settings.commands_shortcuts.palette_toggle",
+    "settings.commands_shortcuts.presentation",
+})
+ACTION_RE = re.compile(
+    r"^(?:(?:cmd|ui|settings)\.[a-z0-9_.-]+"
+    r"|commands\.(?:create|update|delete|preview|import_preview|import_commit|export|reset_all))$"
+)
+# TOKEN_RE stays narrow on purpose: commands.* local IDs are admitted only via
+# the exact census enum below, never by promoting ambient prose mentions.
 TOKEN_RE = re.compile(r"\b(?:cmd|ui|settings)\.[a-z0-9_.-]+")
 STALE_CENTRAL_UI_ACTIONS = {
     "ui.onboarding.choose_project",
@@ -685,6 +710,24 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
 
     add("TCP-HOVER", "presentation", {"ui.hover_tag.show", "ui.hover_tag.hide", "ui.hover_tag.dismiss", "ui.hover_tag.reposition"})
     add("TCP-TOOL-DISCOVERY", "command", {"cmd.tool.discover"})
+    # CS-081 Commands & Shortcuts census: eight Commands-owned local file
+    # actions from the exact owner enum plus eight Settings-owned transaction
+    # bindings/view rows. All sixteen are ui_action partials under TCP-CMDSC;
+    # no catalog primary or production row is minted here.
+    census_commands_actions = schema_enum_actions(
+        "Plans/commands_shortcuts_contracts.schema.json",
+        "/$defs/census_action_id/enum",
+    )
+    if census_commands_actions != set(COMMANDS_LOCAL_ACTIONS):
+        raise ValueError(
+            "Commands census exact eight-action inventory drift: missing=%s extra=%s"
+            % (
+                sorted(set(COMMANDS_LOCAL_ACTIONS) - census_commands_actions),
+                sorted(census_commands_actions - set(COMMANDS_LOCAL_ACTIONS)),
+            )
+        )
+    add("TCP-CMDSC", "ui_action", census_commands_actions)
+    add("TCP-CMDSC", "ui_action", set(COMMANDSC_SETTINGS_ACTIONS))
     uncovered_guided_actions = sorted(effective_guided_actions - set(expected))
     if uncovered_guided_actions:
         inventory_failures.append(
@@ -1792,14 +1835,22 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # Preserve the full guard obligation and its profile; do not invent an alias.
     # DL-044 retains the GitHub create obligation/profile as a Forge alias:
     # 64 -> 65 aliases, 1143 -> 1142 production rows; no new Touch row or proof.
+    # 2026-09-26 packet-integration +7 batch: TOUCH-PJCT-011 plus
+    # TOUCH-FGI-047..052 reuse TCP-PROJECT/TCP-FORGE with one production row
+    # each (rows 643->650, production 1142->1149, profiles unchanged).
+    # CS-081 Commands & Shortcuts census: +16 partial ui_action rows under new
+    # TCP-CMDSC (eight commands.* file actions, eight
+    # settings.commands_shortcuts.* bindings/view), zero catalog primaries and
+    # zero production rows (rows 650->666, profiles 133->134). Exclusions and
+    # aliases unchanged at 58/65.
     exact_resolved_denominators = {
-        "row_count": 643,
+        "row_count": 666,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
-        "profile_count": 133,
+        "profile_count": 134,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1142,
+        "production_wiring_entry_count": 1149,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

@@ -32,13 +32,13 @@
   "coverage": {
     "canonical_stage_count": 11,
     "typed_action_count": 13,
-    "valid_request_count": 27,
+    "valid_request_count": 30,
     "valid_applied_result_count": 29,
     "valid_disabled_result_count": 1,
     "valid_rejected_result_count": 1,
     "valid_session_count": 5,
     "valid_migration_receipt_count": 4,
-    "invalid_case_count": 196,
+    "invalid_case_count": 212,
     "valid_setup_plan_count": 15,
     "invalid_setup_plan_count": 43,
     "connect_existing_setup_plan_count": 6,
@@ -102,7 +102,10 @@
     "invalid_connector_owner_projection_count": 7,
     "connector_event_family_silent_fixture_count": 4,
     "browser_connector_concept_simulated_count": 2,
-    "phase_boundary_semantic_negative_count": 6
+    "phase_boundary_semantic_negative_count": 6,
+    "valid_project_recovery_route_projection_count": 8,
+    "invalid_project_recovery_route_projection_count": 16,
+    "recovery_open_owner_flow_request_count": 3
   },
   "valid": [
     {
@@ -5252,7 +5255,7 @@
         "schema_id": "pm.product_onboarding.action_request.v2",
         "schema_version": "2.0.0",
         "action_id": "ui.onboarding.open_owner_flow",
-        "action_instance_id": "action:onboarding:open_owner_flow:9",
+        "action_instance_id": "action:onboarding:fixture:postcommit_provider_owner_flow",
         "onboarding_session_id": "onboarding:action:open_owner_flow:9:request-postcommit_provider_owner_flow",
         "stage": "provider_setup",
         "expected_revision": 10,
@@ -5291,7 +5294,7 @@
         "schema_id": "pm.product_onboarding.action_request.v2",
         "schema_version": "2.0.0",
         "action_id": "ui.onboarding.open_owner_flow",
-        "action_instance_id": "action:onboarding:open_owner_flow:9",
+        "action_instance_id": "action:onboarding:fixture:free_models_underlying_owner",
         "onboarding_session_id": "onboarding:action:open_owner_flow:9:request-free_models_underlying_owner",
         "stage": "free_models_setup",
         "expected_revision": 10,
@@ -5404,7 +5407,7 @@
         "schema_id": "pm.product_onboarding.action_request.v2",
         "schema_version": "2.0.0",
         "action_id": "ui.onboarding.open_owner_flow",
-        "action_instance_id": "action:onboarding:open_owner_flow:9",
+        "action_instance_id": "action:onboarding:fixture:selected_source_auth_before_review",
         "onboarding_session_id": "onboarding:action:open_owner_flow:9:request-selected_source_auth_before_review",
         "stage": "source_control_setup",
         "expected_revision": 10,
@@ -5443,7 +5446,7 @@
         "schema_id": "pm.product_onboarding.action_request.v2",
         "schema_version": "2.0.0",
         "action_id": "ui.onboarding.open_owner_flow",
-        "action_instance_id": "action:onboarding:open_owner_flow:9",
+        "action_instance_id": "action:onboarding:fixture:settings_draft_preview_before_review",
         "onboarding_session_id": "onboarding:action:open_owner_flow:9:request-settings_draft_preview_before_review",
         "stage": "source_control_setup",
         "expected_revision": 10,
@@ -5559,7 +5562,7 @@
         "schema_id": "pm.product_onboarding.action_request.v2",
         "schema_version": "2.0.0",
         "action_id": "ui.onboarding.skip",
-        "action_instance_id": "action:onboarding:skip:project",
+        "action_instance_id": "action:onboarding:fixture:skip_provider",
         "onboarding_session_id": "onboarding:action:skip:project:request-skip_provider",
         "stage": "provider_setup",
         "expected_revision": 5,
@@ -5691,7 +5694,7 @@
         "schema_id": "pm.product_onboarding.action_request.v2",
         "schema_version": "2.0.0",
         "action_id": "ui.onboarding.skip",
-        "action_instance_id": "action:onboarding:skip:project",
+        "action_instance_id": "action:onboarding:fixture:skip_free_models",
         "onboarding_session_id": "onboarding:action:skip:project:request-skip_free_models",
         "stage": "free_models_setup",
         "expected_revision": 5,
@@ -5875,7 +5878,7 @@
         "schema_id": "pm.product_onboarding.action_request.v2",
         "schema_version": "2.0.0",
         "action_id": "ui.onboarding.next",
-        "action_instance_id": "action:onboarding:next:1",
+        "action_instance_id": "action:onboarding:fixture:review_commit",
         "onboarding_session_id": "onboarding:action:next:1:request-review_commit",
         "stage": "review_setup_plan",
         "expected_revision": 2,
@@ -6257,6 +6260,885 @@
         "preflight_result_refs": [],
         "source_access_authorization_refs": [],
         "project_created": false
+      }
+    },
+    {
+      "name": "valid.project_recovery.verified_observed_eligible_dispatch_unavailable",
+      "definition": "onboarding_project_recovery_route_projection",
+      "value": {
+        "schema_id": "pm.product_onboarding.project_recovery_route_projection.v2",
+        "schema_version": "2.0.0",
+        "projection_id": "projection:onboarding:recovery:1",
+        "onboarding_session_id": "onboarding:recovery:session:1",
+        "stage": "automatic_preparation",
+        "reviewed_setup_plan_revision": 1,
+        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+        "target_ref": "draft:onboarding-project-1",
+        "expected_revision": 12,
+        "continuation_generation": 2,
+        "projection_generation": 1,
+        "recovery_ref": "recovery:project:create:01",
+        "original_command_id": "cmd.project.new_github_repo",
+        "original_operation_ref": "operation:project:create:01",
+        "original_terminal_result_ref": "result:project:create:01",
+        "original_terminal_result_sha256": "8ef6cbcc28c152c447da7207f78fe14c361380eebbb35898753d328be05991c5",
+        "observation_kind": "original_result_observation",
+        "resume_attempt_command_instance_id": null,
+        "resume_attempt_idempotency_key": null,
+        "remote_effect_state": "verified_created",
+        "forge_create_result_ref": "result:forge:create:01",
+        "forge_create_receipt_ref": "receipt:forge:create:01",
+        "repository_binding": {
+          "provider": "github",
+          "normalized_host": "github.com",
+          "account_id": "account:user:01",
+          "provider_repository_id": "github-repo:01"
+        },
+        "reviewed_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
+        },
+        "recovery_composition_revision": 1,
+        "recovery_composition_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "settled_effect_names": [
+          "remote_repository_create",
+          "source_preparation"
+        ],
+        "remaining_effects": [
+          "clone_connect",
+          "history_init",
+          "settings_rebind_apply",
+          "registry_publication"
+        ],
+        "active_resume_claim": null,
+        "route_availability": {
+          "continue_setup": {
+            "available": false,
+            "reason": "central_dispatch_unavailable",
+            "resume_eligible": true,
+            "eligible_reason": "owner_join_holds"
+          },
+          "open_repository": {
+            "available": true,
+            "reason": "verified_binding_present"
+          },
+          "delete_repository": {
+            "available": false,
+            "reason": "forge_owner_gated"
+          }
+        },
+        "selected_route": null,
+        "listed_project_id": null,
+        "setup_commit_binding": null,
+        "currentness": {
+          "session_match": true,
+          "plan_revision_match": true,
+          "plan_hash_match": true,
+          "target_match": true,
+          "revision_match": true,
+          "continuation_match": true,
+          "generation_match": true,
+          "recovery_composition_match": true,
+          "disposition": "current"
+        },
+        "surface_dismissal_effect": "preserve_owner_work",
+        "resume_disposition": "observe_original_terminal_result",
+        "observed_at_utc": "2026-09-26T00:01:00Z"
+      }
+    },
+    {
+      "name": "valid.project_recovery.verified_authorized_resume_continue",
+      "definition": "onboarding_project_recovery_route_projection",
+      "value": {
+        "schema_id": "pm.product_onboarding.project_recovery_route_projection.v2",
+        "schema_version": "2.0.0",
+        "projection_id": "projection:onboarding:recovery:2",
+        "onboarding_session_id": "onboarding:recovery:session:1",
+        "stage": "automatic_preparation",
+        "reviewed_setup_plan_revision": 1,
+        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+        "target_ref": "draft:onboarding-project-1",
+        "expected_revision": 12,
+        "continuation_generation": 2,
+        "projection_generation": 2,
+        "recovery_ref": "recovery:project:create:01",
+        "original_command_id": "cmd.project.new_github_repo",
+        "original_operation_ref": "operation:project:create:01",
+        "original_terminal_result_ref": "result:project:create:01",
+        "original_terminal_result_sha256": "8ef6cbcc28c152c447da7207f78fe14c361380eebbb35898753d328be05991c5",
+        "observation_kind": "authorized_resume_attempt",
+        "resume_attempt_command_instance_id": "command:project:resume:01",
+        "resume_attempt_idempotency_key": "idempotency:project:resume:01",
+        "remote_effect_state": "verified_created",
+        "forge_create_result_ref": "result:forge:create:01",
+        "forge_create_receipt_ref": "receipt:forge:create:01",
+        "repository_binding": {
+          "provider": "github",
+          "normalized_host": "github.com",
+          "account_id": "account:user:01",
+          "provider_repository_id": "github-repo:01"
+        },
+        "reviewed_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
+        },
+        "recovery_composition_revision": 1,
+        "recovery_composition_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "settled_effect_names": [
+          "remote_repository_create",
+          "source_preparation"
+        ],
+        "remaining_effects": [
+          "clone_connect",
+          "history_init",
+          "settings_rebind_apply",
+          "registry_publication"
+        ],
+        "active_resume_claim": {
+          "attempt_command_instance_id": "command:project:resume:01",
+          "attempt_idempotency_key": "idempotency:project:resume:01",
+          "claim_generation": 1,
+          "claimed_at_utc": "2026-09-26T02:00:00Z"
+        },
+        "route_availability": {
+          "continue_setup": {
+            "available": false,
+            "reason": "central_dispatch_unavailable",
+            "resume_eligible": true,
+            "eligible_reason": "owner_join_holds"
+          },
+          "open_repository": {
+            "available": true,
+            "reason": "verified_binding_present"
+          },
+          "delete_repository": {
+            "available": false,
+            "reason": "forge_owner_gated"
+          }
+        },
+        "selected_route": "continue_setup",
+        "listed_project_id": null,
+        "setup_commit_binding": null,
+        "currentness": {
+          "session_match": true,
+          "plan_revision_match": true,
+          "plan_hash_match": true,
+          "target_match": true,
+          "revision_match": true,
+          "continuation_match": true,
+          "generation_match": true,
+          "recovery_composition_match": true,
+          "disposition": "current"
+        },
+        "surface_dismissal_effect": "preserve_owner_work",
+        "resume_disposition": "resume_by_fresh_authorized_attempt",
+        "observed_at_utc": "2026-09-26T00:02:00Z"
+      }
+    },
+    {
+      "name": "valid.project_recovery.unknown_reconcile_only",
+      "definition": "onboarding_project_recovery_route_projection",
+      "value": {
+        "schema_id": "pm.product_onboarding.project_recovery_route_projection.v2",
+        "schema_version": "2.0.0",
+        "projection_id": "projection:onboarding:recovery:3",
+        "onboarding_session_id": "onboarding:recovery:session:1",
+        "stage": "automatic_preparation",
+        "reviewed_setup_plan_revision": 1,
+        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+        "target_ref": "draft:onboarding-project-1",
+        "expected_revision": 12,
+        "continuation_generation": 2,
+        "projection_generation": 3,
+        "recovery_ref": "recovery:project:create:02",
+        "original_command_id": "cmd.project.new_github_repo",
+        "original_operation_ref": "operation:project:create:02",
+        "original_terminal_result_ref": "result:project:create:02",
+        "original_terminal_result_sha256": "009f6ef4aef2fa9f80d14734c1f25bac184dad6aed43ccd9f85b2f33e40041ad",
+        "observation_kind": "original_result_observation",
+        "resume_attempt_command_instance_id": null,
+        "resume_attempt_idempotency_key": null,
+        "remote_effect_state": "unknown",
+        "forge_create_result_ref": null,
+        "forge_create_receipt_ref": null,
+        "repository_binding": null,
+        "reviewed_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
+        },
+        "recovery_composition_revision": 1,
+        "recovery_composition_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+        "settled_effect_names": [],
+        "remaining_effects": [
+          "remote_repository_create",
+          "source_preparation",
+          "clone_connect",
+          "history_init",
+          "settings_rebind_apply",
+          "registry_publication"
+        ],
+        "active_resume_claim": null,
+        "route_availability": {
+          "continue_setup": {
+            "available": false,
+            "reason": "remote_unknown_reconcile_only",
+            "resume_eligible": false,
+            "eligible_reason": "owner_join_not_held"
+          },
+          "open_repository": {
+            "available": false,
+            "reason": "no_verified_binding"
+          },
+          "delete_repository": {
+            "available": false,
+            "reason": "remote_unknown_reconcile_only"
+          }
+        },
+        "selected_route": "reconcile_only",
+        "listed_project_id": null,
+        "setup_commit_binding": null,
+        "currentness": {
+          "session_match": true,
+          "plan_revision_match": true,
+          "plan_hash_match": true,
+          "target_match": true,
+          "revision_match": true,
+          "continuation_match": true,
+          "generation_match": true,
+          "recovery_composition_match": true,
+          "disposition": "current"
+        },
+        "surface_dismissal_effect": "preserve_owner_work",
+        "resume_disposition": "observe_original_terminal_result",
+        "observed_at_utc": "2026-09-26T00:03:00Z"
+      }
+    },
+    {
+      "name": "valid.project_recovery.failed_before_effect_no_identity",
+      "definition": "onboarding_project_recovery_route_projection",
+      "value": {
+        "schema_id": "pm.product_onboarding.project_recovery_route_projection.v2",
+        "schema_version": "2.0.0",
+        "projection_id": "projection:onboarding:recovery:4",
+        "onboarding_session_id": "onboarding:recovery:session:1",
+        "stage": "automatic_preparation",
+        "reviewed_setup_plan_revision": 1,
+        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+        "target_ref": "draft:onboarding-project-1",
+        "expected_revision": 12,
+        "continuation_generation": 2,
+        "projection_generation": 4,
+        "recovery_ref": "recovery:project:create:03",
+        "original_command_id": "cmd.project.new_github_repo",
+        "original_operation_ref": "operation:project:create:03",
+        "original_terminal_result_ref": "result:project:create:03",
+        "original_terminal_result_sha256": "bd14b07d3ad63301c4dce966a03d838ba94ef78491ff27161b724eec49e51f8a",
+        "observation_kind": "original_result_observation",
+        "resume_attempt_command_instance_id": null,
+        "resume_attempt_idempotency_key": null,
+        "remote_effect_state": "failed_before_effect",
+        "forge_create_result_ref": null,
+        "forge_create_receipt_ref": null,
+        "repository_binding": null,
+        "reviewed_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
+        },
+        "recovery_composition_revision": 1,
+        "recovery_composition_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "settled_effect_names": [
+          "source_preparation"
+        ],
+        "remaining_effects": [
+          "remote_repository_create",
+          "clone_connect",
+          "history_init",
+          "settings_rebind_apply",
+          "registry_publication"
+        ],
+        "active_resume_claim": null,
+        "route_availability": {
+          "continue_setup": {
+            "available": false,
+            "reason": "no_verified_remote_identity",
+            "resume_eligible": false,
+            "eligible_reason": "owner_join_not_held"
+          },
+          "open_repository": {
+            "available": false,
+            "reason": "no_verified_binding"
+          },
+          "delete_repository": {
+            "available": false,
+            "reason": "no_verified_binding"
+          }
+        },
+        "selected_route": "reconcile_only",
+        "listed_project_id": null,
+        "setup_commit_binding": null,
+        "currentness": {
+          "session_match": true,
+          "plan_revision_match": true,
+          "plan_hash_match": true,
+          "target_match": true,
+          "revision_match": true,
+          "continuation_match": true,
+          "generation_match": true,
+          "recovery_composition_match": true,
+          "disposition": "current"
+        },
+        "surface_dismissal_effect": "preserve_owner_work",
+        "resume_disposition": "observe_original_terminal_result",
+        "observed_at_utc": "2026-09-26T00:04:00Z"
+      }
+    },
+    {
+      "name": "valid.project_recovery.verified_concurrent_claim_holds_continue",
+      "definition": "onboarding_project_recovery_route_projection",
+      "value": {
+        "schema_id": "pm.product_onboarding.project_recovery_route_projection.v2",
+        "schema_version": "2.0.0",
+        "projection_id": "projection:onboarding:recovery:5",
+        "onboarding_session_id": "onboarding:recovery:session:1",
+        "stage": "automatic_preparation",
+        "reviewed_setup_plan_revision": 1,
+        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+        "target_ref": "draft:onboarding-project-1",
+        "expected_revision": 12,
+        "continuation_generation": 2,
+        "projection_generation": 5,
+        "recovery_ref": "recovery:project:create:01",
+        "original_command_id": "cmd.project.new_github_repo",
+        "original_operation_ref": "operation:project:create:01",
+        "original_terminal_result_ref": "result:project:create:01",
+        "original_terminal_result_sha256": "8ef6cbcc28c152c447da7207f78fe14c361380eebbb35898753d328be05991c5",
+        "observation_kind": "original_result_observation",
+        "resume_attempt_command_instance_id": null,
+        "resume_attempt_idempotency_key": null,
+        "remote_effect_state": "verified_created",
+        "forge_create_result_ref": "result:forge:create:01",
+        "forge_create_receipt_ref": "receipt:forge:create:01",
+        "repository_binding": {
+          "provider": "github",
+          "normalized_host": "github.com",
+          "account_id": "account:user:01",
+          "provider_repository_id": "github-repo:01"
+        },
+        "reviewed_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
+        },
+        "recovery_composition_revision": 1,
+        "recovery_composition_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "settled_effect_names": [
+          "remote_repository_create",
+          "source_preparation"
+        ],
+        "remaining_effects": [
+          "clone_connect",
+          "history_init",
+          "settings_rebind_apply",
+          "registry_publication"
+        ],
+        "active_resume_claim": {
+          "attempt_command_instance_id": "command:project:resume:07",
+          "attempt_idempotency_key": "idempotency:project:resume:07",
+          "claim_generation": 1,
+          "claimed_at_utc": "2026-09-26T00:01:00Z"
+        },
+        "route_availability": {
+          "continue_setup": {
+            "available": false,
+            "reason": "concurrent_resume_active",
+            "resume_eligible": true,
+            "eligible_reason": "owner_join_holds"
+          },
+          "open_repository": {
+            "available": true,
+            "reason": "verified_binding_present"
+          },
+          "delete_repository": {
+            "available": false,
+            "reason": "forge_owner_gated"
+          }
+        },
+        "selected_route": null,
+        "listed_project_id": null,
+        "setup_commit_binding": null,
+        "currentness": {
+          "session_match": true,
+          "plan_revision_match": true,
+          "plan_hash_match": true,
+          "target_match": true,
+          "revision_match": true,
+          "continuation_match": true,
+          "generation_match": true,
+          "recovery_composition_match": true,
+          "disposition": "current"
+        },
+        "surface_dismissal_effect": "preserve_owner_work",
+        "resume_disposition": "observe_original_terminal_result",
+        "observed_at_utc": "2026-09-26T00:05:00Z"
+      }
+    },
+    {
+      "name": "valid.project_recovery.verified_open_repository_selected",
+      "definition": "onboarding_project_recovery_route_projection",
+      "value": {
+        "schema_id": "pm.product_onboarding.project_recovery_route_projection.v2",
+        "schema_version": "2.0.0",
+        "projection_id": "projection:onboarding:recovery:6",
+        "onboarding_session_id": "onboarding:recovery:session:1",
+        "stage": "automatic_preparation",
+        "reviewed_setup_plan_revision": 1,
+        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+        "target_ref": "draft:onboarding-project-1",
+        "expected_revision": 12,
+        "continuation_generation": 2,
+        "projection_generation": 6,
+        "recovery_ref": "recovery:project:create:01",
+        "original_command_id": "cmd.project.new_github_repo",
+        "original_operation_ref": "operation:project:create:01",
+        "original_terminal_result_ref": "result:project:create:01",
+        "original_terminal_result_sha256": "8ef6cbcc28c152c447da7207f78fe14c361380eebbb35898753d328be05991c5",
+        "observation_kind": "original_result_observation",
+        "resume_attempt_command_instance_id": null,
+        "resume_attempt_idempotency_key": null,
+        "remote_effect_state": "verified_created",
+        "forge_create_result_ref": "result:forge:create:01",
+        "forge_create_receipt_ref": "receipt:forge:create:01",
+        "repository_binding": {
+          "provider": "github",
+          "normalized_host": "github.com",
+          "account_id": "account:user:01",
+          "provider_repository_id": "github-repo:01"
+        },
+        "reviewed_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
+        },
+        "recovery_composition_revision": 1,
+        "recovery_composition_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "settled_effect_names": [
+          "remote_repository_create",
+          "source_preparation"
+        ],
+        "remaining_effects": [
+          "clone_connect",
+          "history_init",
+          "settings_rebind_apply",
+          "registry_publication"
+        ],
+        "active_resume_claim": null,
+        "route_availability": {
+          "continue_setup": {
+            "available": false,
+            "reason": "central_dispatch_unavailable",
+            "resume_eligible": true,
+            "eligible_reason": "owner_join_holds"
+          },
+          "open_repository": {
+            "available": true,
+            "reason": "verified_binding_present"
+          },
+          "delete_repository": {
+            "available": false,
+            "reason": "forge_owner_gated"
+          }
+        },
+        "selected_route": "open_repository",
+        "listed_project_id": null,
+        "setup_commit_binding": null,
+        "currentness": {
+          "session_match": true,
+          "plan_revision_match": true,
+          "plan_hash_match": true,
+          "target_match": true,
+          "revision_match": true,
+          "continuation_match": true,
+          "generation_match": true,
+          "recovery_composition_match": true,
+          "disposition": "current"
+        },
+        "surface_dismissal_effect": "preserve_owner_work",
+        "resume_disposition": "observe_original_terminal_result",
+        "observed_at_utc": "2026-09-26T00:06:00Z"
+      }
+    },
+    {
+      "name": "valid.project_recovery.verified_delete_routes_to_forge_owner",
+      "definition": "onboarding_project_recovery_route_projection",
+      "value": {
+        "schema_id": "pm.product_onboarding.project_recovery_route_projection.v2",
+        "schema_version": "2.0.0",
+        "projection_id": "projection:onboarding:recovery:7",
+        "onboarding_session_id": "onboarding:recovery:session:1",
+        "stage": "automatic_preparation",
+        "reviewed_setup_plan_revision": 1,
+        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+        "target_ref": "draft:onboarding-project-1",
+        "expected_revision": 12,
+        "continuation_generation": 2,
+        "projection_generation": 7,
+        "recovery_ref": "recovery:project:create:01",
+        "original_command_id": "cmd.project.new_github_repo",
+        "original_operation_ref": "operation:project:create:01",
+        "original_terminal_result_ref": "result:project:create:01",
+        "original_terminal_result_sha256": "8ef6cbcc28c152c447da7207f78fe14c361380eebbb35898753d328be05991c5",
+        "observation_kind": "original_result_observation",
+        "resume_attempt_command_instance_id": null,
+        "resume_attempt_idempotency_key": null,
+        "remote_effect_state": "verified_created",
+        "forge_create_result_ref": "result:forge:create:01",
+        "forge_create_receipt_ref": "receipt:forge:create:01",
+        "repository_binding": {
+          "provider": "github",
+          "normalized_host": "github.com",
+          "account_id": "account:user:01",
+          "provider_repository_id": "github-repo:01"
+        },
+        "reviewed_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
+        },
+        "recovery_composition_revision": 1,
+        "recovery_composition_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "settled_effect_names": [
+          "remote_repository_create",
+          "source_preparation"
+        ],
+        "remaining_effects": [
+          "clone_connect",
+          "history_init",
+          "settings_rebind_apply",
+          "registry_publication"
+        ],
+        "active_resume_claim": null,
+        "route_availability": {
+          "continue_setup": {
+            "available": false,
+            "reason": "central_dispatch_unavailable",
+            "resume_eligible": true,
+            "eligible_reason": "owner_join_holds"
+          },
+          "open_repository": {
+            "available": true,
+            "reason": "verified_binding_present"
+          },
+          "delete_repository": {
+            "available": false,
+            "reason": "forge_owner_gated"
+          }
+        },
+        "selected_route": "delete_repository",
+        "listed_project_id": null,
+        "setup_commit_binding": null,
+        "currentness": {
+          "session_match": true,
+          "plan_revision_match": true,
+          "plan_hash_match": true,
+          "target_match": true,
+          "revision_match": true,
+          "continuation_match": true,
+          "generation_match": true,
+          "recovery_composition_match": true,
+          "disposition": "current"
+        },
+        "surface_dismissal_effect": "preserve_owner_work",
+        "resume_disposition": "observe_original_terminal_result",
+        "observed_at_utc": "2026-09-26T00:07:00Z"
+      }
+    },
+    {
+      "name": "valid.project_recovery.verified_resume_settled_settings_not_reapplied",
+      "definition": "onboarding_project_recovery_route_projection",
+      "value": {
+        "schema_id": "pm.product_onboarding.project_recovery_route_projection.v2",
+        "schema_version": "2.0.0",
+        "projection_id": "projection:onboarding:recovery:8",
+        "onboarding_session_id": "onboarding:recovery:session:1",
+        "stage": "automatic_preparation",
+        "reviewed_setup_plan_revision": 1,
+        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+        "target_ref": "draft:onboarding-project-1",
+        "expected_revision": 12,
+        "continuation_generation": 2,
+        "projection_generation": 8,
+        "recovery_ref": "recovery:project:create:01",
+        "original_command_id": "cmd.project.new_github_repo",
+        "original_operation_ref": "operation:project:create:01",
+        "original_terminal_result_ref": "result:project:create:01",
+        "original_terminal_result_sha256": "8ef6cbcc28c152c447da7207f78fe14c361380eebbb35898753d328be05991c5",
+        "observation_kind": "authorized_resume_attempt",
+        "resume_attempt_command_instance_id": "command:project:resume:02",
+        "resume_attempt_idempotency_key": "idempotency:project:resume:02",
+        "remote_effect_state": "verified_created",
+        "forge_create_result_ref": "result:forge:create:01",
+        "forge_create_receipt_ref": "receipt:forge:create:01",
+        "repository_binding": {
+          "provider": "github",
+          "normalized_host": "github.com",
+          "account_id": "account:user:01",
+          "provider_repository_id": "github-repo:01"
+        },
+        "reviewed_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
+        },
+        "recovery_composition_revision": 1,
+        "recovery_composition_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "settled_effect_names": [
+          "remote_repository_create",
+          "source_preparation",
+          "settings_rebind_apply"
+        ],
+        "remaining_effects": [
+          "clone_connect",
+          "history_init",
+          "registry_publication"
+        ],
+        "active_resume_claim": {
+          "attempt_command_instance_id": "command:project:resume:02",
+          "attempt_idempotency_key": "idempotency:project:resume:02",
+          "claim_generation": 1,
+          "claimed_at_utc": "2026-09-26T00:01:00Z"
+        },
+        "route_availability": {
+          "continue_setup": {
+            "available": true,
+            "reason": "resume_join_contracted",
+            "resume_eligible": true,
+            "eligible_reason": "owner_join_holds"
+          },
+          "open_repository": {
+            "available": true,
+            "reason": "verified_binding_present"
+          },
+          "delete_repository": {
+            "available": false,
+            "reason": "forge_owner_gated"
+          }
+        },
+        "selected_route": "continue_setup",
+        "listed_project_id": null,
+        "setup_commit_binding": null,
+        "currentness": {
+          "session_match": true,
+          "plan_revision_match": true,
+          "plan_hash_match": true,
+          "target_match": true,
+          "revision_match": true,
+          "continuation_match": true,
+          "generation_match": true,
+          "recovery_composition_match": true,
+          "disposition": "current"
+        },
+        "surface_dismissal_effect": "preserve_owner_work",
+        "resume_disposition": "resume_by_fresh_authorized_attempt",
+        "observed_at_utc": "2026-09-26T00:08:00Z"
+      }
+    },
+    {
+      "name": "valid.request.open_owner_flow.project_resume_continue",
+      "definition": "onboarding_action_request",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_request.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.open_owner_flow",
+        "action_instance_id": "action:onboarding:open_owner_flow:project-resume-continue",
+        "onboarding_session_id": "onboarding:recovery:session:1",
+        "stage": "automatic_preparation",
+        "expected_revision": 12,
+        "continuation_generation": 2,
+        "choice": null,
+        "local_context": {
+          "intent": "open_owner_flow",
+          "review_confirmation": "previously_confirmed_reviewed_plan",
+          "scope": "project",
+          "branch_kind": "project",
+          "branch_step": "continue_setup",
+          "selection_ref": null,
+          "target_ref": "draft:onboarding-project-1",
+          "owner_operation_ref": "recovery:project:create:01",
+          "owner_branch_ref": "branch:onboarding:project:resume:1",
+          "expanded": null,
+          "start_tour": null,
+          "recovery_condition": null,
+          "owner_phase": "project_commit",
+          "owner_command_id": "cmd.project.resume_creation",
+          "precommit_authorization_ref": null,
+          "project_commit_ref": null,
+          "setup_commit_binding": {
+            "setup_plan_ref": "setup-plan:queued:1",
+            "reviewed_setup_plan_revision": 1,
+            "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+            "project_draft_ref": "draft:onboarding-project-1",
+            "project_draft_revision": 3,
+            "commit_authorization_ref": "consent:project-commit-1",
+            "preflight_validation_ref": "preflight:project-draft-1",
+            "settings_transfer_draft_preview_ref": null,
+            "settings_transfer_draft_preview_sha256": null
+          }
+        },
+        "owner_route_ref": "route:project:resume_creation",
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:onboarding:open_owner_flow:project-resume-continue",
+        "source_surface": "owner_return",
+        "return_focus_id": "onboarding.automatic_preparation.project_recovery"
+      }
+    },
+    {
+      "name": "valid.request.open_owner_flow.forge_open_verified",
+      "definition": "onboarding_action_request",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_request.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.open_owner_flow",
+        "action_instance_id": "action:onboarding:open_owner_flow:forge-open-verified",
+        "onboarding_session_id": "onboarding:recovery:session:1",
+        "stage": "automatic_preparation",
+        "expected_revision": 12,
+        "continuation_generation": 2,
+        "choice": null,
+        "local_context": {
+          "intent": "open_owner_flow",
+          "review_confirmation": "previously_confirmed_reviewed_plan",
+          "scope": "source-control",
+          "branch_kind": "source-control",
+          "branch_step": "open_repository",
+          "selection_ref": null,
+          "target_ref": "github-repo:01",
+          "owner_operation_ref": "operation:forge:open:01",
+          "owner_branch_ref": "branch:onboarding:source-control:open:1",
+          "expanded": null,
+          "start_tour": null,
+          "recovery_condition": null,
+          "owner_phase": "project_commit",
+          "owner_command_id": "cmd.forge.repository.open_in_browser",
+          "precommit_authorization_ref": null,
+          "project_commit_ref": null,
+          "setup_commit_binding": {
+            "setup_plan_ref": "setup-plan:queued:1",
+            "reviewed_setup_plan_revision": 1,
+            "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+            "project_draft_ref": "draft:onboarding-project-1",
+            "project_draft_revision": 3,
+            "commit_authorization_ref": "consent:project-commit-1",
+            "preflight_validation_ref": "preflight:project-draft-1",
+            "settings_transfer_draft_preview_ref": null,
+            "settings_transfer_draft_preview_sha256": null
+          }
+        },
+        "owner_route_ref": "route:forge:repository_open",
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:onboarding:open_owner_flow:forge-open-verified",
+        "source_surface": "owner_return",
+        "return_focus_id": "onboarding.automatic_preparation.project_recovery"
+      }
+    },
+    {
+      "name": "valid.request.open_owner_flow.forge_delete_target_confirmed",
+      "definition": "onboarding_action_request",
+      "value": {
+        "schema_id": "pm.product_onboarding.action_request.v2",
+        "schema_version": "2.0.0",
+        "action_id": "ui.onboarding.open_owner_flow",
+        "action_instance_id": "action:onboarding:open_owner_flow:forge-delete-target-confirmed",
+        "onboarding_session_id": "onboarding:recovery:session:1",
+        "stage": "automatic_preparation",
+        "expected_revision": 12,
+        "continuation_generation": 2,
+        "choice": null,
+        "local_context": {
+          "intent": "open_owner_flow",
+          "review_confirmation": "previously_confirmed_reviewed_plan",
+          "scope": "source-control",
+          "branch_kind": "source-control",
+          "branch_step": "delete_repository",
+          "selection_ref": null,
+          "target_ref": "github-repo:01",
+          "owner_operation_ref": "operation:forge:delete:01",
+          "owner_branch_ref": "branch:onboarding:source-control:delete:1",
+          "expanded": null,
+          "start_tour": null,
+          "recovery_condition": null,
+          "owner_phase": "project_commit",
+          "owner_command_id": "cmd.forge.repository.delete",
+          "precommit_authorization_ref": null,
+          "project_commit_ref": null,
+          "setup_commit_binding": {
+            "setup_plan_ref": "setup-plan:queued:1",
+            "reviewed_setup_plan_revision": 1,
+            "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+            "project_draft_ref": "draft:onboarding-project-1",
+            "project_draft_revision": 3,
+            "commit_authorization_ref": "consent:project-commit-1",
+            "preflight_validation_ref": "preflight:project-draft-1",
+            "settings_transfer_draft_preview_ref": null,
+            "settings_transfer_draft_preview_sha256": null
+          }
+        },
+        "owner_route_ref": "route:forge:repository_delete",
+        "actor_ref": "actor:user:1",
+        "idempotency_key": "idempotency:onboarding:open_owner_flow:forge-delete-target-confirmed",
+        "source_surface": "owner_return",
+        "return_focus_id": "onboarding.automatic_preparation.project_recovery"
       }
     }
   ],
@@ -11647,6 +12529,184 @@
       },
       "semantic_rule": "onboarding_local_action_claims_owner_authorization",
       "expected_error": "onboarding_local_action_claims_owner_authorization"
+    },
+    {
+      "name": "invalid.project_recovery.unknown_remote_delete_requested",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_delete_routes_to_forge_owner",
+      "patch": {
+        "remote_effect_state": "unknown",
+        "forge_create_result_ref": null,
+        "forge_create_receipt_ref": null,
+        "repository_binding": null,
+        "settled_effect_names": [],
+        "remaining_effects": [
+          "remote_repository_create",
+          "source_preparation",
+          "clone_connect",
+          "history_init",
+          "settings_rebind_apply",
+          "registry_publication"
+        ],
+        "route_availability.continue_setup.reason": "remote_unknown_reconcile_only",
+        "route_availability.continue_setup.resume_eligible": false,
+        "route_availability.continue_setup.eligible_reason": "owner_join_not_held",
+        "route_availability.open_repository.available": false,
+        "route_availability.open_repository.reason": "no_verified_binding",
+        "route_availability.delete_repository.reason": "remote_unknown_reconcile_only"
+      }
+    },
+    {
+      "name": "invalid.project_recovery.failed_before_effect_claims_repository_identity",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.failed_before_effect_no_identity",
+      "patch": {
+        "repository_binding": {
+          "provider": "github",
+          "normalized_host": "github.com",
+          "account_id": "account:user:01",
+          "provider_repository_id": "github-repo:01"
+        }
+      }
+    },
+    {
+      "name": "invalid.project_recovery.resume_reuses_original_idempotency_namespace",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_authorized_resume_continue",
+      "patch": {
+        "resume_attempt_idempotency_key": "idempotency:project:new-github:01"
+      }
+    },
+    {
+      "name": "invalid.project_recovery.original_observation_carries_resume_attempt",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_observed_eligible_dispatch_unavailable",
+      "patch": {
+        "resume_attempt_command_instance_id": "command:project:resume:09",
+        "resume_attempt_idempotency_key": "idempotency:project:resume:09"
+      }
+    },
+    {
+      "name": "invalid.project_recovery.recovery_composition_currentness_mismatch",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_authorized_resume_continue",
+      "patch": {
+        "currentness.recovery_composition_match": false
+      }
+    },
+    {
+      "name": "invalid.project_recovery.projection_generation_currentness_mismatch",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_authorized_resume_continue",
+      "patch": {
+        "currentness.generation_match": false
+      }
+    },
+    {
+      "name": "invalid.project_recovery.concurrent_claim_claims_available",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_concurrent_claim_holds_continue",
+      "patch": {
+        "route_availability.continue_setup.available": true
+      }
+    },
+    {
+      "name": "invalid.project_recovery.settled_settings_effect_reapplied",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_resume_settled_settings_not_reapplied",
+      "patch": {
+        "remaining_effects": [
+          "clone_connect",
+          "history_init",
+          "registry_publication",
+          "settings_rebind_apply"
+        ]
+      }
+    },
+    {
+      "name": "invalid.project_recovery.verified_created_without_settled_remote_create",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_observed_eligible_dispatch_unavailable",
+      "patch": {
+        "settled_effect_names": [
+          "source_preparation"
+        ]
+      }
+    },
+    {
+      "name": "invalid.project_recovery.recovery_lists_speculative_project",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_observed_eligible_dispatch_unavailable",
+      "patch": {
+        "listed_project_id": "project:speculative:01"
+      }
+    },
+    {
+      "name": "invalid.project_recovery.recovery_mints_setup_commit_binding",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_observed_eligible_dispatch_unavailable",
+      "patch": {
+        "setup_commit_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
+        }
+      }
+    },
+    {
+      "name": "invalid.project_recovery.local_original_cannot_anchor_remote_recovery",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_observed_eligible_dispatch_unavailable",
+      "patch": {
+        "original_command_id": "cmd.project.new_local"
+      }
+    },
+    {
+      "name": "invalid.project_recovery.open_route_contradicts_missing_binding",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_open_repository_selected",
+      "patch": {
+        "route_availability.open_repository.reason": "no_verified_binding"
+      }
+    },
+    {
+      "name": "invalid.project_recovery.continue_selected_without_owner_eligibility",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_observed_eligible_dispatch_unavailable",
+      "patch": {
+        "observation_kind": "authorized_resume_attempt",
+        "resume_attempt_command_instance_id": "command:project:resume:09",
+        "resume_attempt_idempotency_key": "idempotency:project:resume:09",
+        "resume_disposition": "resume_by_fresh_authorized_attempt",
+        "selected_route": "continue_setup",
+        "route_availability.continue_setup.resume_eligible": false,
+        "route_availability.continue_setup.eligible_reason": "owner_join_not_held"
+      }
+    },
+    {
+      "name": "invalid.project_recovery.delete_route_contradicts_verified_binding",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_delete_routes_to_forge_owner",
+      "patch": {
+        "route_availability.delete_repository.reason": "no_verified_binding"
+      }
+    },
+    {
+      "name": "invalid.project_recovery.open_selected_with_resume_attempt",
+      "definition": "onboarding_project_recovery_route_projection",
+      "base_valid": "valid.project_recovery.verified_open_repository_selected",
+      "patch": {
+        "observation_kind": "authorized_resume_attempt",
+        "resume_attempt_command_instance_id": "command:project:resume:09",
+        "resume_attempt_idempotency_key": "idempotency:project:resume:09",
+        "resume_disposition": "resume_by_fresh_authorized_attempt"
+      }
     }
   ],
   "resolved_owner_inputs": {
@@ -11850,6 +12910,139 @@
           }
         }
       }
+    },
+    "request:project-resume-01": {
+      "owner_schema": "Plans/project_system_contracts.schema.json",
+      "definition": "project_action_request",
+      "value": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.resume_creation",
+        "command_instance_id": "command:project:resume:01",
+        "project_id": null,
+        "display_name": null,
+        "registration_kind": null,
+        "source_ref": null,
+        "project_home_server_ref": null,
+        "source_location_ref": null,
+        "repository_ref": null,
+        "owner_receipt_refs": [
+          "receipt:project:recovery:01"
+        ],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": null,
+        "expected_project_currentness_sha256": null,
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:resume:01",
+        "filesafe_evidence_ref": "filesafe:project:resume:01",
+        "idempotency_key": "idempotency:project:resume:01",
+        "source_surface": "onboarding",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.create_project",
+          "invocation_token": "return:project:resume:01",
+          "caller_context_ref": "onboarding-return:first-project:08",
+          "expected_caller_revision": 5,
+          "continuation_generation": 3
+        },
+        "creation_recovery_resume_binding": {
+          "recovery_ref": "recovery:project:create:01",
+          "recovery_composition_revision": 1,
+          "recovery_composition_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+          "original_command_id": "cmd.project.new_github_repo",
+          "original_command_instance_id": "command:project:new-github:01",
+          "original_idempotency_key": "idempotency:project:new-github:01",
+          "original_operation_ref": "operation:project:create:01",
+          "reviewed_setup_binding": {
+            "setup_plan_ref": "setup-plan:queued:1",
+            "reviewed_setup_plan_revision": 1,
+            "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+            "project_draft_ref": "draft:onboarding-project-1",
+            "project_draft_revision": 3,
+            "commit_authorization_ref": "consent:project-commit-1",
+            "preflight_validation_ref": "preflight:project-draft-1",
+            "settings_transfer_draft_preview_ref": null,
+            "settings_transfer_draft_preview_sha256": null
+          },
+          "remote_effect_state": "verified_created",
+          "forge_create_result_ref": "result:forge:create:01",
+          "forge_create_receipt_ref": "receipt:forge:create:01",
+          "repository_binding": {
+            "provider": "github",
+            "normalized_host": "github.com",
+            "account_id": "account:user:01",
+            "provider_repository_id": "github-repo:01"
+          },
+          "settled_effect_names": [
+            "remote_repository_create",
+            "source_preparation"
+          ],
+          "remaining_effects": [
+            "clone_connect",
+            "history_init",
+            "settings_rebind_apply",
+            "registry_publication"
+          ],
+          "resume_authorization_ref": "authorization:project:resume:01",
+          "resume_attempt_sequence": 2,
+          "join_checks": {
+            "original_operation_matches_recovery": true,
+            "reviewed_draft_matches_recovery": true,
+            "reviewed_draft_current": true,
+            "repository_binding_matches_recovery": true,
+            "no_settled_effect_repeated": true,
+            "recovery_composition_current": true
+          }
+        }
+      }
     }
-  }
+  },
+  "paired_recovery_scenarios": [
+    {
+      "scenario_id": "onbrec-blocked-observed",
+      "projection_case": "valid.project_recovery.verified_observed_eligible_dispatch_unavailable",
+      "project_case": "resume_round_trip_verified_match_pass",
+      "project_side": "round_trip",
+      "note": "Real observed blocked recovery: owner-eligible, dispatch unavailable."
+    },
+    {
+      "scenario_id": "onbrec-open-selected",
+      "projection_case": "valid.project_recovery.verified_open_repository_selected",
+      "project_case": "resume_round_trip_verified_match_pass",
+      "project_side": "round_trip",
+      "note": "Consumer-local route selection over the same retained recovery."
+    },
+    {
+      "scenario_id": "onbrec-delete-routed",
+      "projection_case": "valid.project_recovery.verified_delete_routes_to_forge_owner",
+      "project_case": "resume_round_trip_verified_match_pass",
+      "project_side": "round_trip",
+      "note": "Consumer-local route selection over the same retained recovery."
+    },
+    {
+      "scenario_id": "onbrec-authorized-continue-owner-eligible",
+      "projection_case": "valid.project_recovery.verified_authorized_resume_continue",
+      "project_case": "resume_round_trip_self_claim_pass",
+      "project_side": "round_trip",
+      "note": "Fresh resume intent retains exact owner availability: eligible while central dispatch remains unavailable."
+    },
+    {
+      "scenario_id": "onbrec-unknown-reconcile",
+      "projection_case": "valid.project_recovery.unknown_reconcile_only",
+      "project_case": "creation_recovery_context_unknown_remote_reconcile_only",
+      "project_side": "standalone_context",
+      "note": "Original Project terminal result bytes and retained context are joined and digested; no retry authority is inferred.",
+      "original_result_case": "project_creation_original_terminal_result_02"
+    },
+    {
+      "scenario_id": "onbrec-failed-no-identity",
+      "projection_case": "valid.project_recovery.failed_before_effect_no_identity",
+      "project_case": "creation_recovery_context_failed_before_effect",
+      "project_side": "standalone_context",
+      "note": "Original Project terminal result bytes and retained context are joined and digested; no retry authority is inferred.",
+      "original_result_case": "project_creation_original_terminal_result_03"
+    }
+  ]
 }

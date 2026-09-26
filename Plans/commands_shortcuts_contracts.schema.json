@@ -1,0 +1,2169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/commands_shortcuts/1.1.0/commands_shortcuts_contracts.schema.json",
+  "x-schema-id": "pm.commands_shortcuts.schema.v1",
+  "title": "Commands & Shortcuts selected-control routing contracts",
+  "description": "CS-081 owns the typed Settings Commands & Shortcuts selected-control census: eight Commands-owned local owner actions (commands.create/update/delete/preview/import_preview/import_commit/export/reset_all) over route:settings/commands-shortcuts, settings.transaction bindings for Project-scoped shortcut/pref values, and view-only presentation rows. Fail-closed currentness, CS-033 validation, FileSafe containment with symlink guard, atomic write with durable readback, and root-bound file identity. Static contract only: no native runtime, EventRecord, storage-family, or readiness fact is proved.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/CreateRequest"
+    },
+    {
+      "$ref": "#/$defs/UpdateRequest"
+    },
+    {
+      "$ref": "#/$defs/DeleteRequest"
+    },
+    {
+      "$ref": "#/$defs/PreviewRequest"
+    },
+    {
+      "$ref": "#/$defs/ImportPreviewRequest"
+    },
+    {
+      "$ref": "#/$defs/ImportCommitRequest"
+    },
+    {
+      "$ref": "#/$defs/ExportRequest"
+    },
+    {
+      "$ref": "#/$defs/ResetAllRequest"
+    },
+    {
+      "$ref": "#/$defs/SaveResult"
+    },
+    {
+      "$ref": "#/$defs/DeleteResult"
+    },
+    {
+      "$ref": "#/$defs/PreviewResult"
+    },
+    {
+      "$ref": "#/$defs/ImportPreviewResult"
+    },
+    {
+      "$ref": "#/$defs/ImportCommitResult"
+    },
+    {
+      "$ref": "#/$defs/ExportResult"
+    },
+    {
+      "$ref": "#/$defs/ResetAllResult"
+    },
+    {
+      "$ref": "#/$defs/ActionError"
+    },
+    {
+      "$ref": "#/$defs/ActionAvailability"
+    },
+    {
+      "$ref": "#/$defs/ControlRoute"
+    },
+    {
+      "$ref": "#/$defs/GenerationWitness"
+    }
+  ],
+  "$defs": {
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "nullable_project_id": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/project_id"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "command_name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]{0,48}[a-z0-9]$",
+      "description": "Exact Commands_System.md section 2.5 name rule; matches the selected manager NAME_RE."
+    },
+    "command_description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "description": "Required description, max 200 chars per section 6.1.3."
+    },
+    "arguments_hint": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "GUI argumentsHint; binds losslessly to file arguments[0].hint per section 3.2."
+    },
+    "template_body": {
+      "type": "string",
+      "maxLength": 65536
+    },
+    "nullable_non_empty_string": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "command_scope": {
+      "enum": [
+        "project",
+        "global"
+      ],
+      "description": "Command-file scope per section 2. Distinct from Project-only Settings scope."
+    },
+    "command_file_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^command_file:global:[a-z][a-z0-9_-]{0,48}[a-z0-9]$",
+          "description": "Global file under the single authorized root ~/.config/puppet-master/commands/."
+        },
+        {
+          "type": "string",
+          "pattern": "^command_file:project:[A-Za-z0-9][A-Za-z0-9_.-]{0,127}:[a-z][a-z0-9_-]{0,48}[a-z0-9]$",
+          "description": "Project file bound to the exact project id. Bare (scope,name) never identifies a project file."
+        }
+      ]
+    },
+    "root_fingerprint": {
+      "$ref": "#/$defs/non_secret_ref",
+      "description": "Storage-owner logical_root_fingerprint, opaque to this census."
+    },
+    "root_generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "mode_value": {
+      "enum": [
+        "inherit",
+        "ask",
+        "plan",
+        "regular",
+        "yolo"
+      ],
+      "description": "Exact GUI Mode vocabulary. File form omits inherit per the section 3.2 mapping."
+    },
+    "manager_route": {
+      "const": "route:settings/commands-shortcuts"
+    },
+    "list_generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "census_action_id": {
+      "enum": [
+        "commands.create",
+        "commands.update",
+        "commands.delete",
+        "commands.preview",
+        "commands.import_preview",
+        "commands.import_commit",
+        "commands.export",
+        "commands.reset_all"
+      ]
+    },
+    "command_target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "name"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/command_scope"
+        },
+        "name": {
+          "$ref": "#/$defs/command_name"
+        }
+      }
+    },
+    "gui_overrides": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "persona",
+        "mode",
+        "model",
+        "permissionsProfile"
+      ],
+      "properties": {
+        "persona": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/mode_value"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "model": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "permissionsProfile": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        }
+      },
+      "description": "GUI-shaped overrides; file mapping (persona_override/mode_override/model_override/permissions_profile_override) is owned by section 3.2 prose."
+    },
+    "draft_content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "description",
+        "template_body",
+        "arguments_hint",
+        "overrides",
+        "enabled",
+        "subtask",
+        "override_builtin"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/command_name"
+        },
+        "description": {
+          "$ref": "#/$defs/command_description"
+        },
+        "template_body": {
+          "$ref": "#/$defs/template_body"
+        },
+        "arguments_hint": {
+          "$ref": "#/$defs/arguments_hint"
+        },
+        "overrides": {
+          "$ref": "#/$defs/gui_overrides"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "subtask": {
+          "type": "boolean"
+        },
+        "override_builtin": {
+          "type": "boolean"
+        }
+      },
+      "description": "GUI-shaped full command content. subtask/override_builtin have no selected control and round-trip preserved (false on create)."
+    },
+    "update_field": {
+      "enum": [
+        "template",
+        "arguments_hint",
+        "description",
+        "scope",
+        "overrides",
+        "enabled"
+      ]
+    },
+    "action_error_id": {
+      "enum": [
+        "reserved_name_collision",
+        "invalid_name_format",
+        "missing_description",
+        "invalid_mode_value",
+        "invalid_model_format",
+        "override_builtin_misuse",
+        "target_exists",
+        "target_missing",
+        "target_changed",
+        "source_changed",
+        "stale_projection",
+        "stale_project_root",
+        "no_project_context",
+        "storage_read_only",
+        "storage_unavailable",
+        "target_in_use",
+        "confirmation_missing",
+        "confirmation_mismatch",
+        "plan_stale",
+        "plan_mismatch",
+        "collection_too_large",
+        "idempotency_conflict",
+        "permission_denied",
+        "permission_snapshot_stale",
+        "filesafe_denied",
+        "invalid_args",
+        "invalid_field",
+        "owner_unavailable",
+        "move_failed",
+        "recovery_required"
+      ]
+    },
+    "disabled_reason": {
+      "enum": [
+        "stale_projection",
+        "stale_project_root",
+        "target_changed",
+        "target_exists",
+        "target_missing",
+        "source_changed",
+        "no_project_context",
+        "storage_read_only",
+        "storage_unavailable",
+        "target_in_use",
+        "confirmation_missing",
+        "confirmation_mismatch",
+        "validation_failed",
+        "idempotency_conflict",
+        "permission_denied",
+        "permission_snapshot_stale",
+        "filesafe_denied",
+        "invalid_args",
+        "owner_unavailable",
+        "plan_stale",
+        "plan_mismatch",
+        "collection_too_large",
+        "move_failed",
+        "recovery_required"
+      ]
+    },
+    "CreateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "actor_ref",
+        "permission_snapshot_id",
+        "idempotency_key",
+        "project_id",
+        "manager_route",
+        "control_label",
+        "target",
+        "draft_content",
+        "expected_list_generation",
+        "asserts_target_absent"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_request.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_request"
+        },
+        "action_id": {
+          "const": "commands.create"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "manager_route": {
+          "$ref": "#/$defs/manager_route"
+        },
+        "control_label": {
+          "const": "Create command"
+        },
+        "target": {
+          "$ref": "#/$defs/command_target"
+        },
+        "draft_content": {
+          "$ref": "#/$defs/draft_content"
+        },
+        "expected_list_generation": {
+          "$ref": "#/$defs/list_generation"
+        },
+        "expected_root_generation": {
+          "$ref": "#/$defs/root_generation"
+        },
+        "expected_root_fingerprint": {
+          "$ref": "#/$defs/root_fingerprint"
+        },
+        "asserts_target_absent": {
+          "const": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "scope": {
+                    "const": "project"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "expected_root_generation",
+              "expected_root_fingerprint"
+            ],
+            "properties": {
+              "project_id": {
+                "$ref": "#/$defs/project_id"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "UpdateRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "actor_ref",
+        "permission_snapshot_id",
+        "idempotency_key",
+        "project_id",
+        "manager_route",
+        "control_label",
+        "target",
+        "field",
+        "value",
+        "expected_list_generation",
+        "expected_file_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_request.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_request"
+        },
+        "action_id": {
+          "const": "commands.update"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "manager_route": {
+          "$ref": "#/$defs/manager_route"
+        },
+        "control_label": {
+          "enum": [
+            "Text",
+            "Arguments hint",
+            "One line",
+            "Scope",
+            "Persona",
+            "Mode",
+            "Model",
+            "Permissions profile",
+            "Enabled"
+          ],
+          "description": "Exact hero-sheet field label that committed. (control_label, field) binding is a semantic check."
+        },
+        "target": {
+          "$ref": "#/$defs/command_target"
+        },
+        "field": {
+          "$ref": "#/$defs/update_field"
+        },
+        "value": true,
+        "expected_list_generation": {
+          "$ref": "#/$defs/list_generation"
+        },
+        "expected_root_generation": {
+          "$ref": "#/$defs/root_generation"
+        },
+        "expected_root_fingerprint": {
+          "$ref": "#/$defs/root_fingerprint"
+        },
+        "expected_file_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "asserts_target_absent": true,
+        "destination_target": {
+          "$ref": "#/$defs/command_target",
+          "description": "Scope move destination; name equals source name and scope equals value; the two targets differ."
+        },
+        "expected_destination_root_generation": {
+          "$ref": "#/$defs/root_generation"
+        },
+        "expected_destination_root_fingerprint": {
+          "$ref": "#/$defs/root_fingerprint"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "scope": {
+                    "const": "project"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "expected_root_generation",
+              "expected_root_fingerprint"
+            ],
+            "properties": {
+              "project_id": {
+                "$ref": "#/$defs/project_id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "field": {
+                "const": "template"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/template_body"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "field": {
+                "const": "arguments_hint"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/arguments_hint"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "field": {
+                "const": "description"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/command_description"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "field": {
+                "const": "scope"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "asserts_target_absent",
+              "destination_target",
+              "expected_root_generation",
+              "expected_root_fingerprint",
+              "expected_destination_root_generation",
+              "expected_destination_root_fingerprint"
+            ],
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/command_scope"
+              },
+              "asserts_target_absent": {
+                "const": true
+              }
+            }
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "asserts_target_absent"
+                  ]
+                },
+                {
+                  "required": [
+                    "destination_target"
+                  ]
+                },
+                {
+                  "required": [
+                    "expected_destination_root_generation"
+                  ]
+                },
+                {
+                  "required": [
+                    "expected_destination_root_fingerprint"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "field": {
+                "const": "overrides"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "$ref": "#/$defs/gui_overrides"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "field": {
+                "const": "enabled"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "field": {
+                "const": "scope"
+              },
+              "value": {
+                "const": "project"
+              }
+            },
+            "required": [
+              "field",
+              "value"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "$ref": "#/$defs/project_id"
+              }
+            }
+          }
+        }
+      ],
+      "x-semantic-invariants": [
+        "Scope moves bind independently current source and destination authorized roots; expected_root_* identifies source, expected_destination_root_* identifies destination.",
+        "destination_target.name == target.name; destination_target.scope == value; destination_target.scope != target.scope.",
+        "When either source or destination is project scoped, project_id is nonnull and resolves that exact current Project root.",
+        "A successful move result file_ref and root_* identify destination; moved_from identifies source. Both roots and absence are rechecked before promotion/unlink."
+      ]
+    },
+    "DeleteRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "actor_ref",
+        "permission_snapshot_id",
+        "idempotency_key",
+        "project_id",
+        "manager_route",
+        "control_label",
+        "target",
+        "expected_list_generation",
+        "expected_file_sha256",
+        "confirmation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_request.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_request"
+        },
+        "action_id": {
+          "const": "commands.delete"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "manager_route": {
+          "$ref": "#/$defs/manager_route"
+        },
+        "control_label": {
+          "const": "Delete command"
+        },
+        "target": {
+          "$ref": "#/$defs/command_target"
+        },
+        "expected_list_generation": {
+          "$ref": "#/$defs/list_generation"
+        },
+        "expected_root_generation": {
+          "$ref": "#/$defs/root_generation"
+        },
+        "expected_root_fingerprint": {
+          "$ref": "#/$defs/root_fingerprint"
+        },
+        "expected_file_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "confirmation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "modal_accepted",
+            "confirmed_name"
+          ],
+          "properties": {
+            "modal_accepted": {
+              "const": true
+            },
+            "confirmed_name": {
+              "$ref": "#/$defs/command_name"
+            }
+          },
+          "description": "Danger-modal proof. confirmed_name is the name the modal displayed; equality with target.name is a semantic check."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "target": {
+                "properties": {
+                  "scope": {
+                    "const": "project"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "expected_root_generation",
+              "expected_root_fingerprint"
+            ],
+            "properties": {
+              "project_id": {
+                "$ref": "#/$defs/project_id"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PreviewRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "actor_ref",
+        "project_id",
+        "manager_route",
+        "control_label",
+        "draft_content",
+        "sample_arguments"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_request.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_request"
+        },
+        "action_id": {
+          "const": "commands.preview"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "manager_route": {
+          "$ref": "#/$defs/manager_route"
+        },
+        "control_label": {
+          "const": "Preview (dry run)"
+        },
+        "draft_content": {
+          "$ref": "#/$defs/draft_content"
+        },
+        "sample_arguments": {
+          "type": "string"
+        }
+      },
+      "description": "Side-effect-free read: no idempotency key, no list generation, no permission snapshot."
+    },
+    "ImportPreviewRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "actor_ref",
+        "project_id",
+        "manager_route",
+        "control_label",
+        "picked_file"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_request.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_request"
+        },
+        "action_id": {
+          "const": "commands.import_preview"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "manager_route": {
+          "$ref": "#/$defs/manager_route"
+        },
+        "control_label": {
+          "const": "Import commands"
+        },
+        "picked_file": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "handle_ref",
+            "byte_size",
+            "sha256"
+          ],
+          "properties": {
+            "handle_ref": {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "byte_size": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2097152
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "description": "Opaque OS-picker handle. Typed paths are never valid here."
+        }
+      },
+      "description": "Plan-binding read: writes nothing, needs no idempotency key."
+    },
+    "import_entry": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "target",
+            "intent",
+            "asserts_target_absent",
+            "draft_content"
+          ],
+          "properties": {
+            "target": {
+              "$ref": "#/$defs/command_target"
+            },
+            "intent": {
+              "const": "create"
+            },
+            "asserts_target_absent": {
+              "const": true
+            },
+            "draft_content": {
+              "$ref": "#/$defs/draft_content"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "target",
+            "intent",
+            "expected_file_sha256",
+            "draft_content"
+          ],
+          "properties": {
+            "target": {
+              "$ref": "#/$defs/command_target"
+            },
+            "intent": {
+              "const": "update"
+            },
+            "expected_file_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "draft_content": {
+              "$ref": "#/$defs/draft_content"
+            }
+          }
+        }
+      ]
+    },
+    "ImportCommitRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "actor_ref",
+        "permission_snapshot_id",
+        "idempotency_key",
+        "project_id",
+        "manager_route",
+        "control_label",
+        "plan_id",
+        "plan_hash",
+        "entries",
+        "expected_list_generation",
+        "confirmation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_request.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_request"
+        },
+        "action_id": {
+          "const": "commands.import_commit"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "manager_route": {
+          "$ref": "#/$defs/manager_route"
+        },
+        "control_label": {
+          "const": "Import"
+        },
+        "plan_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "plan_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 200,
+          "items": {
+            "$ref": "#/$defs/import_entry"
+          }
+        },
+        "expected_list_generation": {
+          "$ref": "#/$defs/list_generation"
+        },
+        "confirmation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "modal_accepted",
+            "confirmed_plan_hash"
+          ],
+          "properties": {
+            "modal_accepted": {
+              "const": true
+            },
+            "confirmed_plan_hash": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "description": "Proof the reviewed plan was confirmed. Equality with plan_hash is a semantic check."
+        }
+      }
+    },
+    "ExportRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "actor_ref",
+        "project_id",
+        "manager_route",
+        "control_label",
+        "scope_filter"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_request.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_request"
+        },
+        "action_id": {
+          "const": "commands.export"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "manager_route": {
+          "$ref": "#/$defs/manager_route"
+        },
+        "control_label": {
+          "const": "Export commands"
+        },
+        "scope_filter": {
+          "enum": [
+            "project",
+            "global",
+            "both"
+          ]
+        }
+      },
+      "description": "Bounded manifest read: writes nothing, needs no idempotency key."
+    },
+    "ResetAllRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "actor_ref",
+        "permission_snapshot_id",
+        "idempotency_key",
+        "project_id",
+        "manager_route",
+        "control_label",
+        "expected_list_generation",
+        "expected_root_generation",
+        "expected_root_fingerprint",
+        "confirmation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_request.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_request"
+        },
+        "action_id": {
+          "const": "commands.reset_all"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/project_id"
+        },
+        "manager_route": {
+          "$ref": "#/$defs/manager_route"
+        },
+        "control_label": {
+          "const": "Reset commands and shortcuts"
+        },
+        "expected_list_generation": {
+          "$ref": "#/$defs/list_generation"
+        },
+        "expected_root_generation": {
+          "$ref": "#/$defs/root_generation"
+        },
+        "expected_root_fingerprint": {
+          "$ref": "#/$defs/root_fingerprint"
+        },
+        "confirmation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "modal_accepted",
+            "confirmed_command_count",
+            "confirmed_shortcut_count"
+          ],
+          "properties": {
+            "modal_accepted": {
+              "const": true
+            },
+            "confirmed_command_count": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 200
+            },
+            "confirmed_shortcut_count": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "description": "Count confirmation. Equality with current counts is a semantic check."
+        }
+      },
+      "description": "Composite reset requires project context: settings values are Project-bound."
+    },
+    "SaveResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "outcome",
+        "file_ref",
+        "file_sha256",
+        "root_generation",
+        "root_fingerprint",
+        "list_generation",
+        "project_shadows_global",
+        "updated_field",
+        "moved_from",
+        "replayed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_result.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_result"
+        },
+        "action_id": {
+          "enum": [
+            "commands.create",
+            "commands.update"
+          ]
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "const": "mutated"
+        },
+        "file_ref": {
+          "$ref": "#/$defs/command_file_ref"
+        },
+        "file_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "root_generation": {
+          "$ref": "#/$defs/root_generation"
+        },
+        "root_fingerprint": {
+          "$ref": "#/$defs/root_fingerprint"
+        },
+        "list_generation": {
+          "$ref": "#/$defs/list_generation"
+        },
+        "project_shadows_global": {
+          "type": "boolean"
+        },
+        "updated_field": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/update_field"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Null for create; the edited field for update."
+        },
+        "moved_from": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/command_file_ref"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Source ref for Scope moves; null otherwise."
+        },
+        "replayed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "DeleteResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "outcome",
+        "file_ref",
+        "root_generation",
+        "root_fingerprint",
+        "list_generation",
+        "resolution_after",
+        "replayed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_result.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_result"
+        },
+        "action_id": {
+          "const": "commands.delete"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "const": "mutated"
+        },
+        "file_ref": {
+          "$ref": "#/$defs/command_file_ref"
+        },
+        "root_generation": {
+          "$ref": "#/$defs/root_generation"
+        },
+        "root_fingerprint": {
+          "$ref": "#/$defs/root_fingerprint"
+        },
+        "list_generation": {
+          "$ref": "#/$defs/list_generation"
+        },
+        "resolution_after": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "visible_scope"
+          ],
+          "properties": {
+            "visible_scope": {
+              "enum": [
+                "project",
+                "global",
+                "none"
+              ],
+              "description": "Section 2.3 resolution after the unlink: shadow reveal, unchanged shadow, or name removed."
+            }
+          }
+        },
+        "replayed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "preview_substitution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "placeholder",
+        "value",
+        "highlighted"
+      ],
+      "properties": {
+        "placeholder": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "value": {
+          "type": "string"
+        },
+        "highlighted": {
+          "const": true
+        }
+      }
+    },
+    "preview_inert_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "placeholder"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "placeholder": {
+          "type": "string"
+        }
+      },
+      "description": "Inert placeholder: never read, never executed, never permission-evaluated."
+    },
+    "preview_inert_injection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command",
+        "placeholder"
+      ],
+      "properties": {
+        "command": {
+          "type": "string"
+        },
+        "placeholder": {
+          "type": "string"
+        }
+      },
+      "description": "Inert shell placeholder: never executed, never permission-evaluated."
+    },
+    "PreviewResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "outcome",
+        "rendered_markdown",
+        "persisted",
+        "submitted",
+        "executed",
+        "substitutions",
+        "inert_includes",
+        "inert_injections"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_result.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_result"
+        },
+        "action_id": {
+          "const": "commands.preview"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "const": "preview_only"
+        },
+        "rendered_markdown": {
+          "type": "string"
+        },
+        "persisted": {
+          "const": false
+        },
+        "submitted": {
+          "const": false
+        },
+        "executed": {
+          "const": false
+        },
+        "substitutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/preview_substitution"
+          }
+        },
+        "inert_includes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/preview_inert_ref"
+          }
+        },
+        "inert_injections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/preview_inert_injection"
+          }
+        }
+      },
+      "description": "Identical in viewer and writer modes: no degradation branch exists."
+    },
+    "ImportPreviewResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "outcome",
+        "plan_id",
+        "plan_hash",
+        "list_generation",
+        "entries",
+        "skipped_count",
+        "total_bytes",
+        "reviewed_plan"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_result.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_result"
+        },
+        "action_id": {
+          "const": "commands.import_preview"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "const": "plan_bound"
+        },
+        "plan_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "plan_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "list_generation": {
+          "$ref": "#/$defs/list_generation"
+        },
+        "entries": {
+          "type": "array",
+          "maxItems": 200,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "target",
+              "intent"
+            ],
+            "properties": {
+              "target": {
+                "$ref": "#/$defs/command_target"
+              },
+              "intent": {
+                "enum": [
+                  "create",
+                  "update"
+                ]
+              }
+            }
+          }
+        },
+        "skipped_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2097152
+        },
+        "reviewed_plan": {
+          "$ref": "#/$defs/reviewed_import_plan"
+        }
+      }
+    },
+    "ImportCommitResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "outcome",
+        "plan_id",
+        "applied",
+        "list_generation",
+        "replayed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_result.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_result"
+        },
+        "action_id": {
+          "const": "commands.import_commit"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "const": "mutated"
+        },
+        "plan_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "applied": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 200,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "file_ref",
+              "file_sha256"
+            ],
+            "properties": {
+              "file_ref": {
+                "$ref": "#/$defs/command_file_ref"
+              },
+              "file_sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        },
+        "list_generation": {
+          "$ref": "#/$defs/list_generation"
+        },
+        "replayed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ExportResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "outcome",
+        "manifest",
+        "total_bytes",
+        "truncated",
+        "nonsecret_attested",
+        "list_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_result.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_result"
+        },
+        "action_id": {
+          "const": "commands.export"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "const": "collected"
+        },
+        "manifest": {
+          "type": "array",
+          "maxItems": 200,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ref",
+              "sha256",
+              "byte_size"
+            ],
+            "properties": {
+              "ref": {
+                "$ref": "#/$defs/command_file_ref"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              },
+              "byte_size": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 65536
+              }
+            }
+          }
+        },
+        "total_bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2097152
+        },
+        "truncated": {
+          "const": false
+        },
+        "nonsecret_attested": {
+          "const": true
+        },
+        "list_generation": {
+          "$ref": "#/$defs/list_generation"
+        }
+      }
+    },
+    "ResetAllResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "outcome",
+        "removed_file_refs",
+        "shortcuts_restored",
+        "prefs_restored",
+        "list_generation",
+        "settings_revision_ref",
+        "replayed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_result.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_result"
+        },
+        "action_id": {
+          "const": "commands.reset_all"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "const": "mutated"
+        },
+        "removed_file_refs": {
+          "type": "array",
+          "maxItems": 200,
+          "items": {
+            "$ref": "#/$defs/command_file_ref"
+          }
+        },
+        "shortcuts_restored": {
+          "const": true
+        },
+        "prefs_restored": {
+          "const": true
+        },
+        "list_generation": {
+          "$ref": "#/$defs/list_generation"
+        },
+        "settings_revision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "replayed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ActionError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "request_id",
+        "outcome",
+        "error_id",
+        "detail",
+        "automatic_retry_permitted",
+        "wrote"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_error.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_error"
+        },
+        "action_id": {
+          "$ref": "#/$defs/census_action_id"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "outcome": {
+          "const": "rejected"
+        },
+        "error_id": {
+          "$ref": "#/$defs/action_error_id"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "automatic_retry_permitted": {
+          "const": false,
+          "description": "Every census failure fails closed: no automatic retry, ever."
+        },
+        "wrote": {
+          "type": "boolean",
+          "description": "False for every pre-mutation rejection; true only for recovery_required after a failed rollback."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "error_id": {
+                "const": "recovery_required"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "wrote": {
+                "const": true
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "wrote": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ActionAvailability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "action_id",
+        "target",
+        "available",
+        "disabled_reasons",
+        "expected_list_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.action_availability.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_action_availability"
+        },
+        "action_id": {
+          "$ref": "#/$defs/census_action_id"
+        },
+        "target": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/command_target"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "disabled_reasons": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/disabled_reason"
+          }
+        },
+        "expected_list_generation": {
+          "$ref": "#/$defs/list_generation"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "available": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "disabled_reasons": {
+                "maxItems": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "disabled_reasons": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ControlRoute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "control_label",
+        "manager_route",
+        "route_via",
+        "action_id",
+        "setting_id",
+        "setting_pending",
+        "effect",
+        "owner_basis",
+        "notes"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.control_route.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_control_route"
+        },
+        "control_label": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "not": {
+                "pattern": "cmd\\.",
+                "description": "No route label may be a cmd.* token spelling: resurrection-proof by construction."
+              }
+            }
+          ]
+        },
+        "manager_route": {
+          "$ref": "#/$defs/manager_route"
+        },
+        "route_via": {
+          "enum": [
+            "owner_action",
+            "settings_transaction",
+            "view_only"
+          ]
+        },
+        "action_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/census_action_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "setting_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "setting_pending": {
+          "type": "boolean"
+        },
+        "effect": {
+          "enum": [
+            "file_create",
+            "file_overwrite",
+            "file_move",
+            "file_delete",
+            "preview_only",
+            "import_plan",
+            "import_commit_apply",
+            "export_collect",
+            "reset_all",
+            "settings_value_write",
+            "settings_value_reset",
+            "view_only"
+          ]
+        },
+        "owner_basis": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "route_via": {
+                "const": "owner_action"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "action_id": {
+                "$ref": "#/$defs/census_action_id"
+              },
+              "setting_id": {
+                "type": "null"
+              },
+              "setting_pending": {
+                "const": false
+              },
+              "effect": {
+                "enum": [
+                  "file_create",
+                  "file_overwrite",
+                  "file_move",
+                  "file_delete",
+                  "preview_only",
+                  "import_plan",
+                  "import_commit_apply",
+                  "export_collect",
+                  "reset_all"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route_via": {
+                "const": "settings_transaction"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "action_id": {
+                "type": "null"
+              },
+              "effect": {
+                "enum": [
+                  "settings_value_write",
+                  "settings_value_reset"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route_via": {
+                "const": "view_only"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "action_id": {
+                "type": "null"
+              },
+              "setting_id": {
+                "type": "null"
+              },
+              "setting_pending": {
+                "const": false
+              },
+              "effect": {
+                "const": "view_only"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "setting_pending": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "route_via": {
+                "const": "settings_transaction"
+              },
+              "setting_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "x-primary-identity-fields": [
+        "manager_route",
+        "route_via",
+        "control_label"
+      ]
+    },
+    "reviewed_import_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actor_ref",
+        "project_id",
+        "list_generation",
+        "picked_file_sha256",
+        "entries"
+      ],
+      "properties": {
+        "actor_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "list_generation": {
+          "$ref": "#/$defs/list_generation"
+        },
+        "picked_file_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 200,
+          "items": {
+            "$ref": "#/$defs/import_entry"
+          }
+        }
+      },
+      "description": "Immutable full F5 plan witness. plan_hash is SHA-256 over RFC 8785 canonical JSON of this exact object, including entry order and all content/absence/hash assertions. The small entries summary is display-only."
+    },
+    "GenerationWitness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "request_id",
+        "project_id",
+        "list_generation",
+        "observed_phase"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.commands_shortcuts.generation_witness.v1"
+        },
+        "record_kind": {
+          "const": "commands_shortcuts_generation_witness"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nullable_project_id"
+        },
+        "list_generation": {
+          "$ref": "#/$defs/list_generation"
+        },
+        "observed_phase": {
+          "const": "before_dispatch"
+        }
+      },
+      "description": "Static linked-fixture observation of the current owner projection immediately before the named dispatch; not a new command, persistence family, or client-carriable native authorization record."
+    }
+  },
+  "x-runtime-schema-id-policy": "aggregate_plus_record_kind_and_action_id"
+}

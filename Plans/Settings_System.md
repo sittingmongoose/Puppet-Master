@@ -2180,7 +2180,9 @@ canonical_text: The original cmd.settings.transaction.preview request/result ref
   nothing. After the confirmed Project operation reserves an actual destination identity, Settings revalidates the
   source/draft/preview/inventory, emits settings_transfer_draft_rebind and an ordinary Project-bound preview, and
   uses the unchanged apply transaction with restore point, exact-ID readback and rollback. Onboarding renders this
-  owner result and never owns a copy engine.
+  owner result and never owns a copy engine. A Project creation resume consumes the same exact rebind result
+  and ordinary apply transaction outcome; an already settled settings_rebind_apply is skipped, never re-applied,
+  and an unknown Settings effect is reconciled through Settings before any retry.
 gui_related: true
 gui_classification_reason: Controls the user-visible Start fresh/Start like another Project preview, optional Choose
   settings, meaningful conflicts and copy result.
@@ -2204,6 +2206,8 @@ acceptance_criteria:
   cannot leave partial applied Settings or a half-ready listed Project.
 - The copy is detached; no source link, future propagation, credential duplication, account replacement or copied
   Goals/Plans/files/history is implied.
+- A Project resume consumes the settled rebind/apply result without re-applying it; an unknown Settings effect
+  resolves through Settings reconciliation first.
 validation_surfaces:
 - Plans/settings_system_contract_fixtures.json
 - tests/test_pm_settings_draft_transfer.py
@@ -2225,6 +2229,8 @@ negative_constraints:
 - Do not invent a destination Project ID or apply Settings before commit.
 - Do not fork the owner category/eligibility inventory or copy credentials.
 - Do not treat fixtures as native transaction, rollback, security or readiness evidence.
+- Do not invent a Settings recovery command, DTO, or second rebind path for Project resume; consume the exact
+  rebind and unchanged apply transaction.
 ```
 
 ## External research limits — 2026-09-17
@@ -2279,3 +2285,49 @@ owner_hints: [Plans/Settings_System.md, Plans/External_Research.md]
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/External_Research.md
+
+## Commands manager Project preferences — 2026-09-26
+
+The selected Commands & Shortcuts manager reads and writes two ordinary Project Settings values: `extensions.commands.keyboard-layout` is a select with `Auto-detect`, `US (QWERTY)`, `UK`, `German (QWERTZ)`, and `French (AZERTY)`, default `Auto-detect`; `extensions.commands.command-palette-visibility` is a toggle, default `on`. The concept boolean maps true to `on` and false to `off`. Auto-detect is the saved choice whose effective layout follows the system. Palette visibility affects user-command discovery only and never changes canonical UICommand registration, invocation permission or command-file contents.
+
+Both rows use SSYS-002 Project-only persistence and SSYS-009's `cmd.settings.transaction.preview` then bound `cmd.settings.transaction.apply`, with exact setting ID/value, Project identity/revision, actor/permission, schema version, idempotency and owner validation. Only `handlers::settings::transaction_preview` and `handlers::settings::transaction_apply` own this route; no new writer or per-setting command exists. No-Project writes fail closed, switching Projects rebinds the values, and Restore Defaults or CS-081's explicit composite reset uses the inventory defaults. Readback/rollback and admission-before-paint remain Settings-owned.
+
+### SSYS-038 - Commands Manager Layout And Palette Preferences
+
+```yaml
+plan_unit_id: SSYS-038
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  The Commands manager binds extensions.commands.keyboard-layout and
+  extensions.commands.command-palette-visibility to ordinary Project-only Settings transactions.
+  Keyboard layout preserves Auto-detect, US (QWERTY), UK, German (QWERTZ), and French (AZERTY),
+  default Auto-detect; the palette toggle defaults on and controls user-command discovery, never
+  UICommand registration or permission. Both consume cmd.settings.transaction.preview then
+  cmd.settings.transaction.apply with exact Project/revision/value/actor/permission/currentness,
+  validated readback/rollback, Project rebind and inventory-default reset; no-Project writes reject.
+gui_related: true
+gui_classification_reason: Keyboard layout and user-command palette visibility are existing selected manager controls.
+depends_on: [SSYS-002, SSYS-009, CS-081]
+unblocks: []
+acceptance_criteria:
+  - Both exact IDs exist once in settings_inventory.json with Project scope, selected options and defaults.
+  - S6/S7 and selected source metadata bind these IDs through the existing Settings transaction route with no pending owner row.
+  - Project switches rebind, no-Project writes reject, and reset consumes inventory defaults without changing command registration or permission.
+validation_surfaces: [Plans/settings_inventory.json, Plans/settings_system_contract_fixtures.json, Plans/commands_shortcuts_contract_fixtures.json]
+risk_class: unowned_preference_or_scope_drift
+reasoning_tier: medium
+context_scope: commands_manager_project_preferences
+implementation_surfaces: [Plans/Settings_System.md, Plans/settings_inventory.json, Concepts/pm7-tools/settings_refresh/managers/24-commands.js]
+node_compile_hint: {mode: settings_owner_binding_contract, create_worknodes: false}
+source_lineage: [Concepts/TestOpus5.5PmConcept.html, Plans/Commands_System.md#CS-081]
+preserved_exact_tokens: [extensions.commands.keyboard-layout, extensions.commands.command-palette-visibility, Auto-detect, "US (QWERTY)", UK, "German (QWERTZ)", "French (AZERTY)", cmd.settings.transaction.preview, cmd.settings.transaction.apply]
+negative_constraints:
+  - Do not create per-setting commands, a global durable preference, or another Settings writer.
+  - Do not grant command invocation permission or change UICommand registration through palette visibility.
+  - Do not claim native runtime or readiness from inventory registration.
+owner_hints: [Plans/Settings_System.md, Plans/Commands_System.md]
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Commands_System.md#CS-081

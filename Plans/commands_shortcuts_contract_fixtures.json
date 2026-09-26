@@ -1,0 +1,3081 @@
+{
+  "schema_id": "pm.commands_shortcuts.contract_fixtures.v1",
+  "owner_schema": "Plans/commands_shortcuts_contracts.schema.json",
+  "owner_doc": "Plans/Commands_System.md",
+  "owner_plan_unit": "CS-081",
+  "evidence_level": "static_contract_only",
+  "native_runtime_executed": false,
+  "coverage_note": "Valid cases cover every census route: 8 owner actions with per-field update labels, settings-transaction bindings S1-S7, and view-only rows. Counts are descriptive, not frozen gates; completeness is judged per control/action by the semantic checks.",
+  "valid": [
+    {
+      "case_id": "create_project_request",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.create",
+        "request_id": "req-create-001",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-create-001",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Create command",
+        "target": {
+          "scope": "project",
+          "name": "review-changes"
+        },
+        "draft_content": {
+          "name": "review-changes",
+          "description": "Review the working tree diff and list risky hunks.",
+          "template_body": "Review the changes in $1 and list anything risky.\n@CHANGELOG.md\n!`git status --short`",
+          "arguments_hint": "<file or revision>",
+          "overrides": {
+            "persona": "rust-engineer",
+            "mode": "regular",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "expected_list_generation": 7,
+        "expected_root_generation": 3,
+        "expected_root_fingerprint": "root-fp-demo-001",
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "create_global_request_no_project",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.create",
+        "request_id": "req-create-002",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-002",
+        "idempotency_key": "idem-create-002",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Create command",
+        "target": {
+          "scope": "global",
+          "name": "summarize-thread"
+        },
+        "draft_content": {
+          "name": "summarize-thread",
+          "description": "Summarize the active thread in five bullets.",
+          "template_body": "Summarize this thread in five bullets: $ARGUMENTS",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "expected_list_generation": 7,
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "update_template_request",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.update",
+        "request_id": "req-update-001",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-003",
+        "idempotency_key": "idem-update-001",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Text",
+        "target": {
+          "scope": "project",
+          "name": "review-changes"
+        },
+        "field": "template",
+        "value": "Review the changes in $1, $2 and list anything risky.",
+        "expected_list_generation": 11,
+        "expected_root_generation": 3,
+        "expected_root_fingerprint": "root-fp-demo-001",
+        "expected_file_sha256": "2123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      }
+    },
+    {
+      "case_id": "update_hint_request",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.update",
+        "request_id": "req-update-002",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-004",
+        "idempotency_key": "idem-update-002",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Arguments hint",
+        "target": {
+          "scope": "project",
+          "name": "review-changes"
+        },
+        "field": "arguments_hint",
+        "value": "<branch name>",
+        "expected_list_generation": 11,
+        "expected_root_generation": 3,
+        "expected_root_fingerprint": "root-fp-demo-001",
+        "expected_file_sha256": "2123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      }
+    },
+    {
+      "case_id": "update_description_request",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.update",
+        "request_id": "req-update-003",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-005",
+        "idempotency_key": "idem-update-003",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "One line",
+        "target": {
+          "scope": "global",
+          "name": "summarize-thread"
+        },
+        "field": "description",
+        "value": "Summarize the active thread in three bullets.",
+        "expected_list_generation": 11,
+        "expected_file_sha256": "1123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      }
+    },
+    {
+      "case_id": "update_scope_move_request",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.update",
+        "request_id": "req-update-004",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-006",
+        "idempotency_key": "idem-update-004",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Scope",
+        "target": {
+          "scope": "global",
+          "name": "summarize-thread"
+        },
+        "field": "scope",
+        "value": "project",
+        "expected_list_generation": 11,
+        "expected_root_generation": 1,
+        "expected_root_fingerprint": "root-fp-global-001",
+        "expected_file_sha256": "1123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "asserts_target_absent": true,
+        "destination_target": {
+          "scope": "project",
+          "name": "summarize-thread"
+        },
+        "expected_destination_root_generation": 3,
+        "expected_destination_root_fingerprint": "root-fp-demo-001"
+      }
+    },
+    {
+      "case_id": "update_overrides_request",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.update",
+        "request_id": "req-update-005",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-007",
+        "idempotency_key": "idem-update-005",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Mode",
+        "target": {
+          "scope": "project",
+          "name": "review-changes"
+        },
+        "field": "overrides",
+        "value": {
+          "persona": "rust-engineer",
+          "mode": "plan",
+          "model": null,
+          "permissionsProfile": "strict-review"
+        },
+        "expected_list_generation": 11,
+        "expected_root_generation": 3,
+        "expected_root_fingerprint": "root-fp-demo-001",
+        "expected_file_sha256": "2123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      }
+    },
+    {
+      "case_id": "update_enabled_request",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.update",
+        "request_id": "req-update-006",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-008",
+        "idempotency_key": "idem-update-006",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Enabled",
+        "target": {
+          "scope": "project",
+          "name": "review-changes"
+        },
+        "field": "enabled",
+        "value": false,
+        "expected_list_generation": 11,
+        "expected_root_generation": 3,
+        "expected_root_fingerprint": "root-fp-demo-001",
+        "expected_file_sha256": "2123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      }
+    },
+    {
+      "case_id": "delete_project_request_with_confirmation",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.delete",
+        "request_id": "req-delete-001",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-009",
+        "idempotency_key": "idem-delete-001",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Delete command",
+        "target": {
+          "scope": "project",
+          "name": "summarize-thread"
+        },
+        "expected_list_generation": 12,
+        "expected_root_generation": 3,
+        "expected_root_fingerprint": "root-fp-demo-001",
+        "expected_file_sha256": "3123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "confirmation": {
+          "modal_accepted": true,
+          "confirmed_name": "summarize-thread"
+        }
+      }
+    },
+    {
+      "case_id": "preview_request",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.preview",
+        "request_id": "req-preview-001",
+        "actor_ref": "actor:user:local",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Preview (dry run)",
+        "draft_content": {
+          "name": "review-changes",
+          "description": "Review the working tree diff and list risky hunks.",
+          "template_body": "Review the changes in $1 and list anything risky.\n@CHANGELOG.md\n!`git status --short`",
+          "arguments_hint": "<file or revision>",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "sample_arguments": "src/main.rs"
+      }
+    },
+    {
+      "case_id": "import_preview_request",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.import_preview",
+        "request_id": "req-import-001",
+        "actor_ref": "actor:user:local",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Import commands",
+        "picked_file": {
+          "handle_ref": "picker-handle-001",
+          "byte_size": 4096,
+          "sha256": "9123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+        }
+      }
+    },
+    {
+      "case_id": "import_commit_request",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.import_commit",
+        "request_id": "req-import-002",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-010",
+        "idempotency_key": "idem-import-001",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Import",
+        "plan_id": "plan-import-001",
+        "plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829",
+        "entries": [
+          {
+            "target": {
+              "scope": "project",
+              "name": "tidy-docs"
+            },
+            "intent": "create",
+            "asserts_target_absent": true,
+            "draft_content": {
+              "name": "tidy-docs",
+              "description": "Tidy stale documentation pages.",
+              "template_body": "Find stale docs under $1 and list them.",
+              "arguments_hint": "<docs dir>",
+              "overrides": {
+                "persona": null,
+                "mode": "inherit",
+                "model": null,
+                "permissionsProfile": null
+              },
+              "enabled": true,
+              "subtask": false,
+              "override_builtin": false
+            }
+          },
+          {
+            "target": {
+              "scope": "project",
+              "name": "review-changes"
+            },
+            "intent": "update",
+            "expected_file_sha256": "2123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+            "draft_content": {
+              "name": "review-changes",
+              "description": "Review the working tree diff and list risky hunks.",
+              "template_body": "Review the changes in $1 and list anything risky.",
+              "arguments_hint": "<file or revision>",
+              "overrides": {
+                "persona": "rust-engineer",
+                "mode": "regular",
+                "model": null,
+                "permissionsProfile": null
+              },
+              "enabled": true,
+              "subtask": false,
+              "override_builtin": false
+            }
+          }
+        ],
+        "expected_list_generation": 12,
+        "confirmation": {
+          "modal_accepted": true,
+          "confirmed_plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829"
+        }
+      }
+    },
+    {
+      "case_id": "export_request",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.export",
+        "request_id": "req-export-001",
+        "actor_ref": "actor:user:local",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Export commands",
+        "scope_filter": "both"
+      }
+    },
+    {
+      "case_id": "reset_all_request",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.reset_all",
+        "request_id": "req-reset-001",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-011",
+        "idempotency_key": "idem-reset-001",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Reset commands and shortcuts",
+        "expected_list_generation": 12,
+        "expected_root_generation": 3,
+        "expected_root_fingerprint": "root-fp-demo-001",
+        "confirmation": {
+          "modal_accepted": true,
+          "confirmed_command_count": 2,
+          "confirmed_shortcut_count": 5
+        }
+      }
+    },
+    {
+      "case_id": "create_result",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.create",
+        "request_id": "req-create-001",
+        "outcome": "mutated",
+        "file_ref": "command_file:project:proj-demo-001:review-changes",
+        "file_sha256": "4123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "root_generation": 3,
+        "root_fingerprint": "root-fp-demo-001",
+        "list_generation": 8,
+        "project_shadows_global": false,
+        "updated_field": null,
+        "moved_from": null,
+        "replayed": false
+      }
+    },
+    {
+      "case_id": "update_result_field",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.update",
+        "request_id": "req-update-001",
+        "outcome": "mutated",
+        "file_ref": "command_file:project:proj-demo-001:review-changes",
+        "file_sha256": "4223456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "root_generation": 3,
+        "root_fingerprint": "root-fp-demo-001",
+        "list_generation": 12,
+        "project_shadows_global": false,
+        "updated_field": "template",
+        "moved_from": null,
+        "replayed": false
+      }
+    },
+    {
+      "case_id": "update_result_scope_move",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.update",
+        "request_id": "req-update-004",
+        "outcome": "mutated",
+        "file_ref": "command_file:project:proj-demo-001:summarize-thread",
+        "file_sha256": "4323456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "root_generation": 3,
+        "root_fingerprint": "root-fp-demo-001",
+        "list_generation": 12,
+        "project_shadows_global": false,
+        "updated_field": "scope",
+        "moved_from": "command_file:global:summarize-thread",
+        "replayed": false
+      }
+    },
+    {
+      "case_id": "delete_result_shadow_reveal",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.delete",
+        "request_id": "req-delete-001",
+        "outcome": "mutated",
+        "file_ref": "command_file:project:proj-demo-001:summarize-thread",
+        "root_generation": 3,
+        "root_fingerprint": "root-fp-demo-001",
+        "list_generation": 13,
+        "resolution_after": {
+          "visible_scope": "global"
+        },
+        "replayed": false
+      }
+    },
+    {
+      "case_id": "delete_result_removed_entirely",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.delete",
+        "request_id": "req-delete-002",
+        "outcome": "mutated",
+        "file_ref": "command_file:global:summarize-thread",
+        "root_generation": 0,
+        "root_fingerprint": "root-fp-global",
+        "list_generation": 14,
+        "resolution_after": {
+          "visible_scope": "none"
+        },
+        "replayed": false
+      }
+    },
+    {
+      "case_id": "preview_result_writer",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.preview",
+        "request_id": "req-preview-001",
+        "outcome": "preview_only",
+        "rendered_markdown": "Review the changes in src/main.rs and list anything risky.\n[contents of CHANGELOG.md \u2014 not read in preview]\n[output of git status --short \u2014 not run in preview]",
+        "persisted": false,
+        "submitted": false,
+        "executed": false,
+        "substitutions": [
+          {
+            "placeholder": "$1",
+            "value": "src/main.rs",
+            "highlighted": true
+          }
+        ],
+        "inert_includes": [
+          {
+            "ref": "@CHANGELOG.md",
+            "placeholder": "[contents of CHANGELOG.md \u2014 not read in preview]"
+          }
+        ],
+        "inert_injections": [
+          {
+            "command": "git status --short",
+            "placeholder": "[output of git status --short \u2014 not run in preview]"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "preview_result_viewer",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.preview",
+        "request_id": "req-preview-002",
+        "outcome": "preview_only",
+        "rendered_markdown": "Review the changes in src/main.rs and list anything risky.\n[contents of CHANGELOG.md \u2014 not read in preview]\n[output of git status --short \u2014 not run in preview]",
+        "persisted": false,
+        "submitted": false,
+        "executed": false,
+        "substitutions": [
+          {
+            "placeholder": "$1",
+            "value": "src/main.rs",
+            "highlighted": true
+          }
+        ],
+        "inert_includes": [
+          {
+            "ref": "@CHANGELOG.md",
+            "placeholder": "[contents of CHANGELOG.md \u2014 not read in preview]"
+          }
+        ],
+        "inert_injections": [
+          {
+            "command": "git status --short",
+            "placeholder": "[output of git status --short \u2014 not run in preview]"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "import_plan_result",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.import_preview",
+        "request_id": "req-import-001",
+        "outcome": "plan_bound",
+        "plan_id": "plan-import-001",
+        "plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829",
+        "list_generation": 12,
+        "entries": [
+          {
+            "target": {
+              "scope": "project",
+              "name": "tidy-docs"
+            },
+            "intent": "create"
+          },
+          {
+            "target": {
+              "scope": "project",
+              "name": "review-changes"
+            },
+            "intent": "update"
+          }
+        ],
+        "skipped_count": 1,
+        "total_bytes": 4096,
+        "reviewed_plan": {
+          "actor_ref": "actor:user:local",
+          "project_id": "proj-demo-001",
+          "list_generation": 12,
+          "picked_file_sha256": "9123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "entries": [
+            {
+              "target": {
+                "scope": "project",
+                "name": "tidy-docs"
+              },
+              "intent": "create",
+              "asserts_target_absent": true,
+              "draft_content": {
+                "name": "tidy-docs",
+                "description": "Tidy stale documentation pages.",
+                "template_body": "Find stale docs under $1 and list them.",
+                "arguments_hint": "<docs dir>",
+                "overrides": {
+                  "persona": null,
+                  "mode": "inherit",
+                  "model": null,
+                  "permissionsProfile": null
+                },
+                "enabled": true,
+                "subtask": false,
+                "override_builtin": false
+              }
+            },
+            {
+              "target": {
+                "scope": "project",
+                "name": "review-changes"
+              },
+              "intent": "update",
+              "expected_file_sha256": "2123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+              "draft_content": {
+                "name": "review-changes",
+                "description": "Review the working tree diff and list risky hunks.",
+                "template_body": "Review the changes in $1 and list anything risky.",
+                "arguments_hint": "<file or revision>",
+                "overrides": {
+                  "persona": "rust-engineer",
+                  "mode": "regular",
+                  "model": null,
+                  "permissionsProfile": null
+                },
+                "enabled": true,
+                "subtask": false,
+                "override_builtin": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "import_commit_result_replayed",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.import_commit",
+        "request_id": "req-import-002",
+        "outcome": "mutated",
+        "plan_id": "plan-import-001",
+        "applied": [
+          {
+            "file_ref": "command_file:project:proj-demo-001:tidy-docs",
+            "file_sha256": "b123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+          },
+          {
+            "file_ref": "command_file:project:proj-demo-001:review-changes",
+            "file_sha256": "b223456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+          }
+        ],
+        "list_generation": 13,
+        "replayed": true
+      }
+    },
+    {
+      "case_id": "export_result",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.export",
+        "request_id": "req-export-001",
+        "outcome": "collected",
+        "manifest": [
+          {
+            "ref": "command_file:project:proj-demo-001:review-changes",
+            "sha256": "4123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+            "byte_size": 512
+          },
+          {
+            "ref": "command_file:global:summarize-thread",
+            "sha256": "5123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+            "byte_size": 256
+          }
+        ],
+        "total_bytes": 768,
+        "truncated": false,
+        "nonsecret_attested": true,
+        "list_generation": 12
+      }
+    },
+    {
+      "case_id": "reset_all_result",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.reset_all",
+        "request_id": "req-reset-001",
+        "outcome": "mutated",
+        "removed_file_refs": [
+          "command_file:project:proj-demo-001:review-changes",
+          "command_file:project:proj-demo-001:summarize-thread"
+        ],
+        "shortcuts_restored": true,
+        "prefs_restored": true,
+        "list_generation": 15,
+        "settings_revision_ref": "settings-rev-042",
+        "replayed": false
+      }
+    },
+    {
+      "case_id": "error_stale_projection",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_error.v1",
+        "record_kind": "commands_shortcuts_action_error",
+        "action_id": "commands.update",
+        "request_id": "req-update-009",
+        "outcome": "rejected",
+        "error_id": "stale_projection",
+        "detail": "expected_list_generation 9 does not match current generation 12; re-list and re-apply.",
+        "automatic_retry_permitted": false,
+        "wrote": false
+      }
+    },
+    {
+      "case_id": "error_stale_project_root",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_error.v1",
+        "record_kind": "commands_shortcuts_action_error",
+        "action_id": "commands.create",
+        "request_id": "req-create-009",
+        "outcome": "rejected",
+        "error_id": "stale_project_root",
+        "detail": "expected root generation 3 fingerprint root-fp-demo-001 does not match the active root; re-resolve and re-apply.",
+        "automatic_retry_permitted": false,
+        "wrote": false
+      }
+    },
+    {
+      "case_id": "error_confirmation_mismatch",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_error.v1",
+        "record_kind": "commands_shortcuts_action_error",
+        "action_id": "commands.delete",
+        "request_id": "req-delete-009",
+        "outcome": "rejected",
+        "error_id": "confirmation_mismatch",
+        "detail": "confirmed_name tidy-docs does not match target review-changes.",
+        "automatic_retry_permitted": false,
+        "wrote": false
+      }
+    },
+    {
+      "case_id": "error_filesafe_denied",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_error.v1",
+        "record_kind": "commands_shortcuts_action_error",
+        "action_id": "commands.create",
+        "request_id": "req-create-010",
+        "outcome": "rejected",
+        "error_id": "filesafe_denied",
+        "detail": "Resolved target escapes the authorized project commands root after canonicalization; symlink guard denied the write.",
+        "automatic_retry_permitted": false,
+        "wrote": false
+      }
+    },
+    {
+      "case_id": "error_permission_snapshot_stale",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_error.v1",
+        "record_kind": "commands_shortcuts_action_error",
+        "action_id": "commands.delete",
+        "request_id": "req-delete-010",
+        "outcome": "rejected",
+        "error_id": "permission_snapshot_stale",
+        "detail": "permission_snapshot_id perm-snap-000 no longer matches current permission state.",
+        "automatic_retry_permitted": false,
+        "wrote": false
+      }
+    },
+    {
+      "case_id": "error_plan_mismatch",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_error.v1",
+        "record_kind": "commands_shortcuts_action_error",
+        "action_id": "commands.import_commit",
+        "request_id": "req-import-009",
+        "outcome": "rejected",
+        "error_id": "plan_mismatch",
+        "detail": "confirmed_plan_hash does not match the bound plan_hash; the plan changed after preview.",
+        "automatic_retry_permitted": false,
+        "wrote": false
+      }
+    },
+    {
+      "case_id": "error_idempotency_conflict",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_error.v1",
+        "record_kind": "commands_shortcuts_action_error",
+        "action_id": "commands.create",
+        "request_id": "req-create-011",
+        "outcome": "rejected",
+        "error_id": "idempotency_conflict",
+        "detail": "idempotency_key idem-create-001 was already used for a different effective payload.",
+        "automatic_retry_permitted": false,
+        "wrote": false
+      }
+    },
+    {
+      "case_id": "error_recovery_required",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_error.v1",
+        "record_kind": "commands_shortcuts_action_error",
+        "action_id": "commands.update",
+        "request_id": "req-update-010",
+        "outcome": "rejected",
+        "error_id": "recovery_required",
+        "detail": "Scope-move destination write succeeded but source unlink and destination rollback both failed; both refs are fenced pending recovery.",
+        "automatic_retry_permitted": false,
+        "wrote": true
+      }
+    },
+    {
+      "case_id": "availability_ready",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_availability.v1",
+        "record_kind": "commands_shortcuts_action_availability",
+        "action_id": "commands.create",
+        "target": null,
+        "available": true,
+        "disabled_reasons": [],
+        "expected_list_generation": 7
+      }
+    },
+    {
+      "case_id": "availability_viewer_read_only",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_availability.v1",
+        "record_kind": "commands_shortcuts_action_availability",
+        "action_id": "commands.delete",
+        "target": {
+          "scope": "project",
+          "name": "review-changes"
+        },
+        "available": false,
+        "disabled_reasons": [
+          "storage_read_only"
+        ],
+        "expected_list_generation": 11
+      }
+    },
+    {
+      "case_id": "availability_no_project",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_availability.v1",
+        "record_kind": "commands_shortcuts_action_availability",
+        "action_id": "commands.reset_all",
+        "target": null,
+        "available": false,
+        "disabled_reasons": [
+          "no_project_context"
+        ],
+        "expected_list_generation": 12
+      }
+    },
+    {
+      "case_id": "availability_owner_unavailable",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_availability.v1",
+        "record_kind": "commands_shortcuts_action_availability",
+        "action_id": "commands.preview",
+        "target": null,
+        "available": false,
+        "disabled_reasons": [
+          "owner_unavailable"
+        ],
+        "expected_list_generation": 7
+      }
+    },
+    {
+      "case_id": "route_create_command_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Create command",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.create",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "file_create",
+        "owner_basis": "Commands_System.md F1",
+        "notes": "New-command dialog commit creates one command file and asserts target absence."
+      }
+    },
+    {
+      "case_id": "route_sheet_text_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Text",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.update",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "file_overwrite",
+        "owner_basis": "Commands_System.md F2",
+        "notes": "Hero-sheet template field commits commands.update field=template on edit (autosave)."
+      }
+    },
+    {
+      "case_id": "route_sheet_hint_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Arguments hint",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.update",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "file_overwrite",
+        "owner_basis": "Commands_System.md F2",
+        "notes": "Hero-sheet hint field commits commands.update field=arguments_hint on edit."
+      }
+    },
+    {
+      "case_id": "route_sheet_description_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "One line",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.update",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "file_overwrite",
+        "owner_basis": "Commands_System.md F2",
+        "notes": "Hero-sheet description field commits commands.update field=description on edit."
+      }
+    },
+    {
+      "case_id": "route_sheet_scope_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Scope",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.update",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "file_move",
+        "owner_basis": "Commands_System.md F2",
+        "notes": "Hero-sheet scope dropdown commits commands.update field=scope: atomic cross-root move."
+      }
+    },
+    {
+      "case_id": "route_sheet_persona_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Persona",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.update",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "file_overwrite",
+        "owner_basis": "Commands_System.md F2",
+        "notes": "Hero-sheet Persona dropdown commits commands.update field=overrides on change."
+      }
+    },
+    {
+      "case_id": "route_sheet_mode_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Mode",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.update",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "file_overwrite",
+        "owner_basis": "Commands_System.md F2",
+        "notes": "Hero-sheet Mode dropdown commits commands.update field=overrides on change."
+      }
+    },
+    {
+      "case_id": "route_sheet_model_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Model",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.update",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "file_overwrite",
+        "owner_basis": "Commands_System.md F2",
+        "notes": "Hero-sheet Model dropdown commits commands.update field=overrides on change."
+      }
+    },
+    {
+      "case_id": "route_sheet_permissions_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Permissions profile",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.update",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "file_overwrite",
+        "owner_basis": "Commands_System.md F2",
+        "notes": "Hero-sheet Permissions profile dropdown commits commands.update field=overrides on change."
+      }
+    },
+    {
+      "case_id": "route_sheet_enabled_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Enabled",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.update",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "file_overwrite",
+        "owner_basis": "Commands_System.md F2",
+        "notes": "Enabled toggle commits commands.update field=enabled immediately; the file stays in place."
+      }
+    },
+    {
+      "case_id": "route_delete_command_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Delete command",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.delete",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "file_delete",
+        "owner_basis": "Commands_System.md F3",
+        "notes": "Delete command with danger-modal proof naming the target; section 2.3 reveal."
+      }
+    },
+    {
+      "case_id": "route_preview_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Preview (dry run)",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.preview",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "preview_only",
+        "owner_basis": "Commands_System.md F4",
+        "notes": "Side-effect-free dry run: sample-argument substitution only, inert placeholders."
+      }
+    },
+    {
+      "case_id": "route_import_commands_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Import commands",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.import_preview",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "import_plan",
+        "owner_basis": "Commands_System.md F5",
+        "notes": "File choice binds an immutable import plan; writes nothing."
+      }
+    },
+    {
+      "case_id": "route_import_commit_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Import",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.import_commit",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "import_commit_apply",
+        "owner_basis": "Commands_System.md F6",
+        "notes": "Import-dialog commit applies the bound plan under the shared file-mutation contract."
+      }
+    },
+    {
+      "case_id": "route_export_commands_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Export commands",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.export",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "export_collect",
+        "owner_basis": "Commands_System.md F7",
+        "notes": "Bounded nonsecret manifest collection; writes nothing to command state."
+      }
+    },
+    {
+      "case_id": "route_reset_all_admitted",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Reset commands and shortcuts",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": "commands.reset_all",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "reset_all",
+        "owner_basis": "Commands_System.md F8",
+        "notes": "Count-confirmed composite reset with file plus settings rollback."
+      }
+    },
+    {
+      "case_id": "route_add_shortcut_transaction",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Add shortcut",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "settings_transaction",
+        "action_id": null,
+        "setting_id": "extensions.commands.keyboard-shortcuts",
+        "setting_pending": false,
+        "effect": "settings_value_write",
+        "owner_basis": "Commands_System.md S1",
+        "notes": "Shortcut creation writes the Project-scoped bindings delta via settings preview+apply."
+      }
+    },
+    {
+      "case_id": "route_change_shortcut_transaction",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Change shortcut",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "settings_transaction",
+        "action_id": null,
+        "setting_id": "extensions.commands.keyboard-shortcuts",
+        "setting_pending": false,
+        "effect": "settings_value_write",
+        "owner_basis": "Commands_System.md S1",
+        "notes": "Rebinding writes the Project-scoped bindings delta; collisions warn, never block."
+      }
+    },
+    {
+      "case_id": "route_use_keys_transaction",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Use these keys",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "settings_transaction",
+        "action_id": null,
+        "setting_id": "extensions.commands.keyboard-shortcuts",
+        "setting_pending": false,
+        "effect": "settings_value_write",
+        "owner_basis": "Commands_System.md S1",
+        "notes": "Dialog commit for add/change; clearing keys removes a command binding."
+      }
+    },
+    {
+      "case_id": "route_remove_shortcut_transaction",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Remove shortcut",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "settings_transaction",
+        "action_id": null,
+        "setting_id": "extensions.commands.keyboard-shortcuts",
+        "setting_pending": false,
+        "effect": "settings_value_write",
+        "owner_basis": "Commands_System.md S2",
+        "notes": "Per-row trash removes one binding immediately via the delta write."
+      }
+    },
+    {
+      "case_id": "route_reset_shortcuts_transaction",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Reset all shortcuts",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "settings_transaction",
+        "action_id": null,
+        "setting_id": "extensions.commands.keyboard-shortcuts",
+        "setting_pending": false,
+        "effect": "settings_value_reset",
+        "owner_basis": "Commands_System.md S3",
+        "notes": "Confirmation modal, then the delta is restored to defaults."
+      }
+    },
+    {
+      "case_id": "route_shortcuts_import_transaction",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Import",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "settings_transaction",
+        "action_id": null,
+        "setting_id": "extensions.commands.keyboard-shortcuts",
+        "setting_pending": false,
+        "effect": "settings_value_write",
+        "owner_basis": "Commands_System.md S4",
+        "notes": "Shortcuts backup import: picked file parsed, merge/replace plan shown, then preview+apply."
+      }
+    },
+    {
+      "case_id": "route_shortcuts_export_transaction",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Export",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "settings_transaction",
+        "action_id": null,
+        "setting_id": "extensions.commands.keyboard-shortcuts",
+        "setting_pending": false,
+        "effect": "settings_value_write",
+        "owner_basis": "Commands_System.md S4",
+        "notes": "Shortcuts backup export collects the nonsecret delta plus defaults; no state write."
+      }
+    },
+    {
+      "case_id": "route_hints_transaction",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Show shortcut hints",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "settings_transaction",
+        "action_id": null,
+        "setting_id": "extensions.commands.shortcut-hints",
+        "setting_pending": false,
+        "effect": "settings_value_write",
+        "owner_basis": "Commands_System.md S5",
+        "notes": "Hints toggle writes the Project-scoped toggle value."
+      }
+    },
+    {
+      "case_id": "route_layout_pending",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Keyboard layout",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "settings_transaction",
+        "action_id": null,
+        "setting_id": "extensions.commands.keyboard-layout",
+        "setting_pending": false,
+        "effect": "settings_value_write",
+        "owner_basis": "Commands_System.md S6",
+        "notes": "Bound to the registered Project-scoped inventory row; the layout select writes through settings preview+apply."
+      }
+    },
+    {
+      "case_id": "route_palette_pending",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Show your commands in the command palette",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "settings_transaction",
+        "action_id": null,
+        "setting_id": "extensions.commands.command-palette-visibility",
+        "setting_pending": false,
+        "effect": "settings_value_write",
+        "owner_basis": "Commands_System.md S7",
+        "notes": "Bound to the registered Project-scoped inventory row; the toggle writes on/off through settings preview+apply."
+      }
+    },
+    {
+      "case_id": "route_new_command_opener_view",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "New command",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "view_only",
+        "action_id": null,
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "view_only",
+        "owner_basis": "Commands_System.md view-only",
+        "notes": "Dialog opener only; the Create command commit dispatches commands.create."
+      }
+    },
+    {
+      "case_id": "route_search_view",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Search shortcuts",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "view_only",
+        "action_id": null,
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "view_only",
+        "owner_basis": "Commands_System.md view-only",
+        "notes": "Run-scoped filter text; ephemeral, dispatches nothing."
+      }
+    },
+    {
+      "case_id": "route_cheat_sheet_view",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Open cheat sheet",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "view_only",
+        "action_id": null,
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "view_only",
+        "owner_basis": "Commands_System.md view-only",
+        "notes": "Cheat sheet is a read-only projection of bindings plus commands."
+      }
+    },
+    {
+      "case_id": "route_help_view",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "How commands work",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "view_only",
+        "action_id": null,
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "view_only",
+        "owner_basis": "Commands_System.md view-only",
+        "notes": "Help panel; no state, no dispatch."
+      }
+    },
+    {
+      "case_id": "route_sample_input_view",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Sample input",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "view_only",
+        "action_id": null,
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "view_only",
+        "owner_basis": "Commands_System.md view-only",
+        "notes": "Dry-run sample text; input to the preview render, not a dispatch."
+      }
+    },
+    {
+      "case_id": "route_reserved_view",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Reserved shortcuts",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "view_only",
+        "action_id": null,
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "view_only",
+        "owner_basis": "Commands_System.md view-only",
+        "notes": "Static system-reserved list; cannot change."
+      }
+    },
+    {
+      "case_id": "route_builtin_view",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Built-in commands",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "view_only",
+        "action_id": null,
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "view_only",
+        "owner_basis": "Commands_System.md view-only",
+        "notes": "Built-in rows are display only; their keys change in the Shortcuts tab."
+      }
+    },
+    {
+      "case_id": "route_file_locations_view",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Where command files live",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "view_only",
+        "action_id": null,
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "view_only",
+        "owner_basis": "Commands_System.md view-only",
+        "notes": "File-location explainer; display only."
+      }
+    },
+    {
+      "case_id": "generation_witness_before_update",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.generation_witness.v1",
+        "record_kind": "commands_shortcuts_generation_witness",
+        "request_id": "req-update-001",
+        "project_id": "proj-demo-001",
+        "list_generation": 12,
+        "observed_phase": "before_dispatch"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "case_id": "reject_retired_save_new",
+      "reason": "First-draft commands.save_new is retired; creation routes via commands.create.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.save_new",
+        "request_id": "req-bad-001",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-001",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Create command",
+        "target": {
+          "scope": "global",
+          "name": "review-changes"
+        },
+        "draft_content": {
+          "name": "review-changes",
+          "description": "Review the working tree diff.",
+          "template_body": "Review $1.",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "expected_list_generation": 7,
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "reject_retired_save_existing",
+      "reason": "First-draft commands.save_existing is retired; edits route via commands.update.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.save_existing",
+        "request_id": "req-bad-002",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-002",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Create command",
+        "target": {
+          "scope": "global",
+          "name": "review-changes"
+        },
+        "draft_content": {
+          "name": "review-changes",
+          "description": "Review the working tree diff.",
+          "template_body": "Review $1.",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "expected_list_generation": 7,
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "reject_per_name_user_command_alias",
+      "reason": "Per-preset cmd.user_command.* aliases are never admitted routes.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "cmd.user_command.review-changes",
+        "request_id": "req-bad-003",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-003",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Create command",
+        "target": {
+          "scope": "global",
+          "name": "review-changes"
+        },
+        "draft_content": {
+          "name": "review-changes",
+          "description": "Review the working tree diff.",
+          "template_body": "Review $1.",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "expected_list_generation": 7,
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "reject_rejected_token_commands_create",
+      "reason": "Resurrecting rejected packet token cmd.commands.custom.create is forbidden.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "cmd.commands.custom.create",
+        "request_id": "req-bad-004",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-004",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Create command",
+        "target": {
+          "scope": "global",
+          "name": "review-changes"
+        },
+        "draft_content": {
+          "name": "review-changes",
+          "description": "Review the working tree diff.",
+          "template_body": "Review $1.",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "expected_list_generation": 7,
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "reject_cmd_label_route",
+      "reason": "No route label may be a cmd.* token spelling.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "cmd.shortcuts.bind",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "settings_transaction",
+        "action_id": null,
+        "setting_id": "extensions.commands.keyboard-shortcuts",
+        "setting_pending": false,
+        "effect": "settings_value_write",
+        "owner_basis": "RESURRECTION: rejected SSYS-023 token reused as a route",
+        "notes": "Invalid because the control label is a rejected token spelling, not an owned control."
+      }
+    },
+    {
+      "case_id": "reject_project_create_without_root_binding",
+      "reason": "Project-scope mutation without root generation/fingerprint binding is rejected.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.create",
+        "request_id": "req-bad-006",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-006",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Create command",
+        "target": {
+          "scope": "project",
+          "name": "review-changes"
+        },
+        "draft_content": {
+          "name": "review-changes",
+          "description": "Review the working tree diff.",
+          "template_body": "Review $1.",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "expected_list_generation": 7,
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "reject_project_scope_without_project",
+      "reason": "Project-scope target without project_id violates the envelope.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.create",
+        "request_id": "req-bad-007",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-007",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Create command",
+        "target": {
+          "scope": "project",
+          "name": "review-changes"
+        },
+        "draft_content": {
+          "name": "review-changes",
+          "description": "Review the working tree diff.",
+          "template_body": "Review $1.",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "expected_list_generation": 7,
+        "expected_root_generation": 3,
+        "expected_root_fingerprint": "root-fp-demo-001",
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "reject_uppercase_name",
+      "reason": "Name violates the section 2.5 lowercase pattern.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.create",
+        "request_id": "req-bad-008",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-008",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Create command",
+        "target": {
+          "scope": "global",
+          "name": "Review-Changes"
+        },
+        "draft_content": {
+          "name": "Review-Changes",
+          "description": "Review the working tree diff.",
+          "template_body": "Review $1.",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "expected_list_generation": 7,
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "reject_empty_description",
+      "reason": "Description is required and cannot be empty.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.create",
+        "request_id": "req-bad-009",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-009",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Create command",
+        "target": {
+          "scope": "global",
+          "name": "review-changes"
+        },
+        "draft_content": {
+          "name": "review-changes",
+          "description": "",
+          "template_body": "Review $1.",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "expected_list_generation": 7,
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "reject_bad_mode",
+      "reason": "Mode outside the exact GUI vocabulary is invalid.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.create",
+        "request_id": "req-bad-010",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-010",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Create command",
+        "target": {
+          "scope": "global",
+          "name": "review-changes"
+        },
+        "draft_content": {
+          "name": "review-changes",
+          "description": "Review the working tree diff.",
+          "template_body": "Review $1.",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "turbo",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "expected_list_generation": 7,
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "reject_scope_move_without_absence_assert",
+      "reason": "Scope moves must assert destination absence.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.update",
+        "request_id": "req-bad-011",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-011",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Scope",
+        "target": {
+          "scope": "global",
+          "name": "review-changes"
+        },
+        "field": "scope",
+        "value": "project",
+        "expected_list_generation": 11,
+        "expected_root_generation": 1,
+        "expected_root_fingerprint": "root-fp-global-001",
+        "expected_file_sha256": "2123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "destination_target": {
+          "scope": "project",
+          "name": "review-changes"
+        },
+        "expected_destination_root_generation": 3,
+        "expected_destination_root_fingerprint": "root-fp-demo-001"
+      }
+    },
+    {
+      "case_id": "reject_non_scope_with_absence_assert",
+      "reason": "Non-move updates must not carry asserts_target_absent.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.update",
+        "request_id": "req-bad-012",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-012",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Text",
+        "target": {
+          "scope": "project",
+          "name": "review-changes"
+        },
+        "field": "template",
+        "value": "Review $1.",
+        "expected_list_generation": 11,
+        "expected_root_generation": 3,
+        "expected_root_fingerprint": "root-fp-demo-001",
+        "expected_file_sha256": "2123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "reject_delete_without_confirmation",
+      "reason": "Delete requires confirmation-modal proof.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.delete",
+        "request_id": "req-bad-013",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-013",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Delete command",
+        "target": {
+          "scope": "global",
+          "name": "review-changes"
+        },
+        "expected_list_generation": 12,
+        "expected_file_sha256": "6123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+      }
+    },
+    {
+      "case_id": "reject_delete_unaccepted_modal",
+      "reason": "modal_accepted false is not confirmation proof.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.delete",
+        "request_id": "req-bad-014",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-014",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Delete command",
+        "target": {
+          "scope": "global",
+          "name": "review-changes"
+        },
+        "expected_list_generation": 12,
+        "expected_file_sha256": "6123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "confirmation": {
+          "modal_accepted": false,
+          "confirmed_name": "review-changes"
+        }
+      }
+    },
+    {
+      "case_id": "reject_preview_with_idempotency_key",
+      "reason": "Preview requests carry no idempotency key.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.preview",
+        "request_id": "req-bad-015",
+        "actor_ref": "actor:user:local",
+        "idempotency_key": "idem-bad-015",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Preview (dry run)",
+        "draft_content": {
+          "name": "review-changes",
+          "description": "Review the working tree diff.",
+          "template_body": "Review $1.",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "sample_arguments": ""
+      }
+    },
+    {
+      "case_id": "reject_preview_with_permission_snapshot",
+      "reason": "Preview evaluates no permission, so no snapshot is carried.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.preview",
+        "request_id": "req-bad-016",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Preview (dry run)",
+        "draft_content": {
+          "name": "review-changes",
+          "description": "Review the working tree diff.",
+          "template_body": "Review $1.",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "sample_arguments": ""
+      }
+    },
+    {
+      "case_id": "reject_raw_path_file_ref",
+      "reason": "Raw filesystem paths are never valid result identity.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.create",
+        "request_id": "req-create-001",
+        "outcome": "mutated",
+        "file_ref": "~/.config/puppet-master/commands/review-changes.md",
+        "file_sha256": "4123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "root_generation": 0,
+        "root_fingerprint": "root-fp-global",
+        "list_generation": 8,
+        "project_shadows_global": false,
+        "updated_field": null,
+        "moved_from": null,
+        "replayed": false
+      }
+    },
+    {
+      "case_id": "reject_bare_project_file_ref",
+      "reason": "Bare command_file:project:name collides across projects; the project id is required.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.create",
+        "request_id": "req-create-001",
+        "outcome": "mutated",
+        "file_ref": "command_file:project:review-changes",
+        "file_sha256": "4123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "root_generation": 3,
+        "root_fingerprint": "root-fp-demo-001",
+        "list_generation": 8,
+        "project_shadows_global": false,
+        "updated_field": null,
+        "moved_from": null,
+        "replayed": false
+      }
+    },
+    {
+      "case_id": "reject_short_sha",
+      "reason": "Content hashes must be lowercase 64-hex.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.create",
+        "request_id": "req-create-001",
+        "outcome": "mutated",
+        "file_ref": "command_file:project:proj-demo-001:review-changes",
+        "file_sha256": "abc123",
+        "root_generation": 3,
+        "root_fingerprint": "root-fp-demo-001",
+        "list_generation": 8,
+        "project_shadows_global": false,
+        "updated_field": null,
+        "moved_from": null,
+        "replayed": false
+      }
+    },
+    {
+      "case_id": "reject_preview_executed",
+      "reason": "Preview must never execute.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.preview",
+        "request_id": "req-preview-001",
+        "outcome": "preview_only",
+        "rendered_markdown": "hi",
+        "persisted": false,
+        "submitted": false,
+        "executed": true,
+        "substitutions": [],
+        "inert_includes": [],
+        "inert_injections": []
+      }
+    },
+    {
+      "case_id": "reject_preview_submitted",
+      "reason": "Preview must never submit to an agent.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.preview",
+        "request_id": "req-preview-001",
+        "outcome": "preview_only",
+        "rendered_markdown": "hi",
+        "persisted": false,
+        "submitted": true,
+        "executed": false,
+        "substitutions": [],
+        "inert_includes": [],
+        "inert_injections": []
+      }
+    },
+    {
+      "case_id": "reject_preview_resolved_injection_shape",
+      "reason": "The retired executed/permission_blocked injection shape is not a preview result.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.preview",
+        "request_id": "req-preview-001",
+        "outcome": "preview_only",
+        "rendered_markdown": "hi",
+        "persisted": false,
+        "submitted": false,
+        "substitutions": [],
+        "includes": [
+          {
+            "ref": "@CHANGELOG.md",
+            "status": "resolved",
+            "rendered": "[contents]"
+          }
+        ],
+        "injections": [
+          {
+            "command": "git status --short",
+            "status": "executed",
+            "output": "[output]"
+          }
+        ],
+        "shell_blocked_in_viewer": false
+      }
+    },
+    {
+      "case_id": "reject_automatic_retry",
+      "reason": "No census failure permits automatic retry.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_error.v1",
+        "record_kind": "commands_shortcuts_action_error",
+        "action_id": "commands.create",
+        "request_id": "req-create-009",
+        "outcome": "rejected",
+        "error_id": "stale_projection",
+        "detail": "stale",
+        "automatic_retry_permitted": true,
+        "wrote": false
+      }
+    },
+    {
+      "case_id": "reject_error_claiming_write",
+      "reason": "Only recovery_required may attest a write.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_error.v1",
+        "record_kind": "commands_shortcuts_action_error",
+        "action_id": "commands.create",
+        "request_id": "req-create-009",
+        "outcome": "rejected",
+        "error_id": "target_exists",
+        "detail": "exists",
+        "automatic_retry_permitted": false,
+        "wrote": true
+      }
+    },
+    {
+      "case_id": "reject_recovery_claiming_no_write",
+      "reason": "recovery_required attests the fenced write honestly.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_error.v1",
+        "record_kind": "commands_shortcuts_action_error",
+        "action_id": "commands.update",
+        "request_id": "req-update-010",
+        "outcome": "rejected",
+        "error_id": "recovery_required",
+        "detail": "fenced",
+        "automatic_retry_permitted": false,
+        "wrote": false
+      }
+    },
+    {
+      "case_id": "reject_unknown_error_id",
+      "reason": "Error IDs are a closed vocabulary.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_error.v1",
+        "record_kind": "commands_shortcuts_action_error",
+        "action_id": "commands.create",
+        "request_id": "req-create-009",
+        "outcome": "rejected",
+        "error_id": "boom",
+        "detail": "boom",
+        "automatic_retry_permitted": false,
+        "wrote": false
+      }
+    },
+    {
+      "case_id": "reject_available_with_reasons",
+      "reason": "An available action carries no disabled reasons.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_availability.v1",
+        "record_kind": "commands_shortcuts_action_availability",
+        "action_id": "commands.create",
+        "target": null,
+        "available": true,
+        "disabled_reasons": [
+          "stale_projection"
+        ],
+        "expected_list_generation": 7
+      }
+    },
+    {
+      "case_id": "reject_unavailable_without_reasons",
+      "reason": "An unavailable action must name at least one reason.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_availability.v1",
+        "record_kind": "commands_shortcuts_action_availability",
+        "action_id": "commands.create",
+        "target": null,
+        "available": false,
+        "disabled_reasons": [],
+        "expected_list_generation": 7
+      }
+    },
+    {
+      "case_id": "reject_route_owner_without_action",
+      "reason": "An owner_action route must name its owner action.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Create command",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "owner_action",
+        "action_id": null,
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "file_create",
+        "owner_basis": "Commands_System.md F1",
+        "notes": "Broken: owner route with no action."
+      }
+    },
+    {
+      "case_id": "reject_route_view_with_action",
+      "reason": "A view_only route must not name an owner action.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Search shortcuts",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "view_only",
+        "action_id": "commands.preview",
+        "setting_id": null,
+        "setting_pending": false,
+        "effect": "view_only",
+        "owner_basis": "none",
+        "notes": "Broken: view row with an action."
+      }
+    },
+    {
+      "case_id": "reject_route_pending_with_setting_id",
+      "reason": "A pending binding names no setting id yet.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.control_route.v1",
+        "record_kind": "commands_shortcuts_control_route",
+        "control_label": "Keyboard layout",
+        "manager_route": "route:settings/commands-shortcuts",
+        "route_via": "settings_transaction",
+        "action_id": null,
+        "setting_id": "extensions.commands.keyboard-layout",
+        "setting_pending": true,
+        "effect": "settings_value_write",
+        "owner_basis": "Commands_System.md S6",
+        "notes": "Broken: pending yet bound."
+      }
+    },
+    {
+      "case_id": "reject_import_update_without_sha",
+      "reason": "Import update entries must assert the current content hash.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.import_commit",
+        "request_id": "req-bad-030",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-030",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Import",
+        "plan_id": "plan-import-001",
+        "plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829",
+        "entries": [
+          {
+            "target": {
+              "scope": "project",
+              "name": "review-changes"
+            },
+            "intent": "update",
+            "draft_content": {
+              "name": "review-changes",
+              "description": "Review the working tree diff.",
+              "template_body": "Review $1.",
+              "arguments_hint": "",
+              "overrides": {
+                "persona": null,
+                "mode": "inherit",
+                "model": null,
+                "permissionsProfile": null
+              },
+              "enabled": true,
+              "subtask": false,
+              "override_builtin": false
+            }
+          }
+        ],
+        "expected_list_generation": 12,
+        "confirmation": {
+          "modal_accepted": true,
+          "confirmed_plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829"
+        }
+      }
+    },
+    {
+      "case_id": "reject_typed_import_path",
+      "reason": "Picked files arrive as opaque handles, never typed paths.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.import_preview",
+        "request_id": "req-bad-031",
+        "actor_ref": "actor:user:local",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Import commands",
+        "picked_file": {
+          "handle_ref": "/tmp/evil/commands.json",
+          "byte_size": 100,
+          "sha256": "9123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "path": "/tmp/evil/commands.json"
+        }
+      }
+    },
+    {
+      "case_id": "reject_export_truncated",
+      "reason": "Silent truncation is forbidden; over-cap collection fails instead.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.export",
+        "request_id": "req-export-001",
+        "outcome": "collected",
+        "manifest": [],
+        "total_bytes": 0,
+        "truncated": true,
+        "nonsecret_attested": true,
+        "list_generation": 12
+      }
+    },
+    {
+      "case_id": "reject_reset_without_project",
+      "reason": "Reset requires project context for its settings half.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.reset_all",
+        "request_id": "req-bad-033",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-033",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Reset commands and shortcuts",
+        "expected_list_generation": 12,
+        "expected_root_generation": 3,
+        "expected_root_fingerprint": "root-fp-demo-001",
+        "confirmation": {
+          "modal_accepted": true,
+          "confirmed_command_count": 0,
+          "confirmed_shortcut_count": 0
+        }
+      }
+    },
+    {
+      "case_id": "reject_wrong_control_label",
+      "reason": "Control labels are exact per-control routing evidence.",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.create",
+        "request_id": "req-bad-034",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-001",
+        "idempotency_key": "idem-bad-034",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "New Command",
+        "target": {
+          "scope": "global",
+          "name": "review-changes"
+        },
+        "draft_content": {
+          "name": "review-changes",
+          "description": "Review the working tree diff.",
+          "template_body": "Review $1.",
+          "arguments_hint": "",
+          "overrides": {
+            "persona": null,
+            "mode": "inherit",
+            "model": null,
+            "permissionsProfile": null
+          },
+          "enabled": true,
+          "subtask": false,
+          "override_builtin": false
+        },
+        "expected_list_generation": 7,
+        "asserts_target_absent": true
+      }
+    },
+    {
+      "case_id": "reject_scope_move_missing_project_id",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.update",
+        "request_id": "req-update-004",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-006",
+        "idempotency_key": "idem-update-004",
+        "project_id": null,
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Scope",
+        "target": {
+          "scope": "global",
+          "name": "summarize-thread"
+        },
+        "field": "scope",
+        "value": "project",
+        "expected_list_generation": 11,
+        "expected_root_generation": 1,
+        "expected_root_fingerprint": "root-fp-global-001",
+        "expected_file_sha256": "1123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "asserts_target_absent": true,
+        "destination_target": {
+          "scope": "project",
+          "name": "summarize-thread"
+        },
+        "expected_destination_root_generation": 3,
+        "expected_destination_root_fingerprint": "root-fp-demo-001"
+      },
+      "reason": "A scope move independently binds its destination and requires a Project identity when either endpoint is project scoped."
+    },
+    {
+      "case_id": "reject_scope_move_missing_expected_destination_root_generation",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.update",
+        "request_id": "req-update-004",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-006",
+        "idempotency_key": "idem-update-004",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Scope",
+        "target": {
+          "scope": "global",
+          "name": "summarize-thread"
+        },
+        "field": "scope",
+        "value": "project",
+        "expected_list_generation": 11,
+        "expected_root_generation": 1,
+        "expected_root_fingerprint": "root-fp-global-001",
+        "expected_file_sha256": "1123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "asserts_target_absent": true,
+        "destination_target": {
+          "scope": "project",
+          "name": "summarize-thread"
+        },
+        "expected_destination_root_fingerprint": "root-fp-demo-001"
+      },
+      "reason": "A scope move independently binds its destination and requires a Project identity when either endpoint is project scoped."
+    },
+    {
+      "case_id": "reject_scope_move_missing_expected_destination_root_fingerprint",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.update",
+        "request_id": "req-update-004",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-006",
+        "idempotency_key": "idem-update-004",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Scope",
+        "target": {
+          "scope": "global",
+          "name": "summarize-thread"
+        },
+        "field": "scope",
+        "value": "project",
+        "expected_list_generation": 11,
+        "expected_root_generation": 1,
+        "expected_root_fingerprint": "root-fp-global-001",
+        "expected_file_sha256": "1123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "asserts_target_absent": true,
+        "destination_target": {
+          "scope": "project",
+          "name": "summarize-thread"
+        },
+        "expected_destination_root_generation": 3
+      },
+      "reason": "A scope move independently binds its destination and requires a Project identity when either endpoint is project scoped."
+    },
+    {
+      "case_id": "reject_scope_move_missing_destination_target",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_request.v1",
+        "record_kind": "commands_shortcuts_action_request",
+        "action_id": "commands.update",
+        "request_id": "req-update-004",
+        "actor_ref": "actor:user:local",
+        "permission_snapshot_id": "perm-snap-006",
+        "idempotency_key": "idem-update-004",
+        "project_id": "proj-demo-001",
+        "manager_route": "route:settings/commands-shortcuts",
+        "control_label": "Scope",
+        "target": {
+          "scope": "global",
+          "name": "summarize-thread"
+        },
+        "field": "scope",
+        "value": "project",
+        "expected_list_generation": 11,
+        "expected_root_generation": 1,
+        "expected_root_fingerprint": "root-fp-global-001",
+        "expected_file_sha256": "1123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "asserts_target_absent": true,
+        "expected_destination_root_generation": 3,
+        "expected_destination_root_fingerprint": "root-fp-demo-001"
+      },
+      "reason": "A scope move independently binds its destination and requires a Project identity when either endpoint is project scoped."
+    },
+    {
+      "case_id": "import_plan_missing_reviewed_content",
+      "record": {
+        "schema_id": "pm.commands_shortcuts.action_result.v1",
+        "record_kind": "commands_shortcuts_action_result",
+        "action_id": "commands.import_preview",
+        "request_id": "req-import-001",
+        "outcome": "plan_bound",
+        "plan_id": "plan-import-001",
+        "plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829",
+        "list_generation": 12,
+        "entries": [
+          {
+            "target": {
+              "scope": "project",
+              "name": "tidy-docs"
+            },
+            "intent": "create"
+          },
+          {
+            "target": {
+              "scope": "project",
+              "name": "review-changes"
+            },
+            "intent": "update"
+          }
+        ],
+        "skipped_count": 1,
+        "total_bytes": 4096
+      }
+    }
+  ],
+  "semantic_cases": [
+    {
+      "case_id": "sem_preview_inert_accept",
+      "check": "cmdsc_preview_side_effect_free",
+      "verdict": "accept",
+      "record_refs": [
+        "preview_request",
+        "preview_result_writer",
+        "preview_result_viewer"
+      ],
+      "records": [],
+      "note": "Writer and viewer results carry identical inert effects: executed/persisted/submitted false, substitutions highlighted, includes/injections inert-only; the request carries no permission or idempotency fields."
+    },
+    {
+      "case_id": "sem_preview_lineage_mutated_reject",
+      "check": "cmdsc_preview_side_effect_free",
+      "verdict": "reject",
+      "record_refs": [
+        "preview_request"
+      ],
+      "records": [
+        {
+          "schema_id": "pm.commands_shortcuts.action_result.v1",
+          "record_kind": "commands_shortcuts_action_result",
+          "action_id": "commands.update",
+          "request_id": "req-preview-001",
+          "outcome": "mutated",
+          "file_ref": "command_file:project:proj-demo-001:review-changes",
+          "file_sha256": "4223456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "root_generation": 3,
+          "root_fingerprint": "root-fp-demo-001",
+          "list_generation": 12,
+          "project_shadows_global": false,
+          "updated_field": "template",
+          "moved_from": null,
+          "replayed": false
+        }
+      ],
+      "note": "A mutation result answering a preview request_id proves preview lineage mutated: reject."
+    },
+    {
+      "case_id": "sem_confirmed_name_accept",
+      "check": "cmdsc_confirmed_name_matches_target",
+      "verdict": "accept",
+      "record_refs": [
+        "delete_project_request_with_confirmation"
+      ],
+      "records": [],
+      "note": "confirmed_name summarize-thread equals target.name."
+    },
+    {
+      "case_id": "sem_confirmed_name_mismatch_reject",
+      "check": "cmdsc_confirmed_name_matches_target",
+      "verdict": "reject",
+      "record_refs": [],
+      "records": [
+        {
+          "schema_id": "pm.commands_shortcuts.action_request.v1",
+          "record_kind": "commands_shortcuts_action_request",
+          "action_id": "commands.delete",
+          "request_id": "req-delete-020",
+          "actor_ref": "actor:user:local",
+          "permission_snapshot_id": "perm-snap-009",
+          "idempotency_key": "idem-delete-020",
+          "project_id": "proj-demo-001",
+          "manager_route": "route:settings/commands-shortcuts",
+          "control_label": "Delete command",
+          "target": {
+            "scope": "project",
+            "name": "review-changes"
+          },
+          "expected_list_generation": 12,
+          "expected_root_generation": 3,
+          "expected_root_fingerprint": "root-fp-demo-001",
+          "expected_file_sha256": "3123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "confirmation": {
+            "modal_accepted": true,
+            "confirmed_name": "tidy-docs"
+          }
+        }
+      ],
+      "note": "confirmed_name tidy-docs does not match target review-changes: reject with confirmation_mismatch."
+    },
+    {
+      "case_id": "sem_plan_binding_accept",
+      "check": "cmdsc_confirmed_plan_matches",
+      "verdict": "accept",
+      "record_refs": [
+        "import_commit_request",
+        "import_plan_result",
+        "import_commit_result_replayed",
+        "import_preview_request"
+      ],
+      "records": [],
+      "note": "Commit plan_id/plan_hash equal the bound plan; confirmed_plan_hash equals plan_hash."
+    },
+    {
+      "case_id": "sem_plan_changed_reject",
+      "check": "cmdsc_confirmed_plan_matches",
+      "verdict": "reject",
+      "record_refs": [
+        "import_plan_result",
+        "import_preview_request"
+      ],
+      "records": [
+        {
+          "schema_id": "pm.commands_shortcuts.action_request.v1",
+          "record_kind": "commands_shortcuts_action_request",
+          "action_id": "commands.import_commit",
+          "request_id": "req-import-020",
+          "actor_ref": "actor:user:local",
+          "permission_snapshot_id": "perm-snap-010",
+          "idempotency_key": "idem-import-020",
+          "project_id": "proj-demo-001",
+          "manager_route": "route:settings/commands-shortcuts",
+          "control_label": "Import",
+          "plan_id": "plan-import-001",
+          "plan_hash": "0863995523cedccfab3cb0c27dd6f8d56947871738a23bb4f2132e7488ba3829",
+          "entries": [
+            {
+              "target": {
+                "scope": "project",
+                "name": "tidy-docs"
+              },
+              "intent": "create",
+              "asserts_target_absent": true,
+              "draft_content": {
+                "name": "tidy-docs",
+                "description": "Tidy stale documentation pages.",
+                "template_body": "Find stale docs.",
+                "arguments_hint": "",
+                "overrides": {
+                  "persona": null,
+                  "mode": "inherit",
+                  "model": null,
+                  "permissionsProfile": null
+                },
+                "enabled": true,
+                "subtask": false,
+                "override_builtin": false
+              }
+            }
+          ],
+          "expected_list_generation": 12,
+          "confirmation": {
+            "modal_accepted": true,
+            "confirmed_plan_hash": "c999456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+          }
+        }
+      ],
+      "note": "confirmed_plan_hash names a different plan than plan_hash: the reviewed plan changed; reject with plan_mismatch."
+    },
+    {
+      "case_id": "sem_reset_counts_accept",
+      "check": "cmdsc_reset_counts_match",
+      "verdict": "accept",
+      "record_refs": [
+        "reset_all_request",
+        "reset_all_result"
+      ],
+      "records": [],
+      "note": "len(removed_file_refs) == confirmed_command_count; shortcuts/prefs restored flags set."
+    },
+    {
+      "case_id": "sem_reset_counts_changed_reject",
+      "check": "cmdsc_reset_counts_match",
+      "verdict": "reject",
+      "record_refs": [
+        "reset_all_request"
+      ],
+      "records": [
+        {
+          "schema_id": "pm.commands_shortcuts.action_result.v1",
+          "record_kind": "commands_shortcuts_action_result",
+          "action_id": "commands.reset_all",
+          "request_id": "req-reset-001",
+          "outcome": "mutated",
+          "removed_file_refs": [
+            "command_file:project:proj-demo-001:review-changes",
+            "command_file:project:proj-demo-001:summarize-thread",
+            "command_file:project:proj-demo-001:tidy-docs"
+          ],
+          "shortcuts_restored": true,
+          "prefs_restored": true,
+          "list_generation": 15,
+          "settings_revision_ref": "settings-rev-042",
+          "replayed": false
+        }
+      ],
+      "note": "Three files removed against confirmed_command_count 2: the confirmed set changed; reject."
+    },
+    {
+      "case_id": "sem_stale_generation_accept",
+      "check": "cmdsc_stale_projection_rejected",
+      "verdict": "accept",
+      "record_refs": [
+        "error_stale_projection"
+      ],
+      "records": [],
+      "note": "Generation mismatch rejects with stale_projection, wrote false, no retry."
+    },
+    {
+      "case_id": "sem_stale_generation_mutated_reject",
+      "check": "cmdsc_stale_projection_rejected",
+      "verdict": "reject",
+      "record_refs": [
+        "update_template_request",
+        "generation_witness_before_update"
+      ],
+      "records": [
+        {
+          "schema_id": "pm.commands_shortcuts.action_result.v1",
+          "record_kind": "commands_shortcuts_action_result",
+          "action_id": "commands.update",
+          "request_id": "req-update-001",
+          "outcome": "mutated",
+          "file_ref": "command_file:project:proj-demo-001:review-changes",
+          "file_sha256": "4223456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "root_generation": 3,
+          "root_fingerprint": "root-fp-demo-001",
+          "list_generation": 13,
+          "project_shadows_global": false,
+          "updated_field": "template",
+          "moved_from": null,
+          "replayed": false
+        }
+      ],
+      "note": "Typed same-request/Project pre-dispatch witness is newer than the request expectation. A mutated result remains invalid even when its resulting generation is higher than the witness.",
+      "pre_dispatch_projection_ref": "generation_witness_before_update"
+    },
+    {
+      "case_id": "sem_stale_root_accept",
+      "check": "cmdsc_stale_project_root_rejected",
+      "verdict": "accept",
+      "record_refs": [
+        "error_stale_project_root"
+      ],
+      "records": [],
+      "note": "Root generation/fingerprint mismatch rejects with stale_project_root, wrote false, no retry."
+    },
+    {
+      "case_id": "sem_action_result_binding_accept",
+      "check": "cmdsc_action_result_binding",
+      "verdict": "accept",
+      "record_refs": [
+        "delete_project_request_with_confirmation",
+        "delete_result_shadow_reveal"
+      ],
+      "records": [],
+      "note": "DeleteResult answers the delete request_id with the matching action family and root-bound ref."
+    },
+    {
+      "case_id": "sem_action_result_binding_reject",
+      "check": "cmdsc_action_result_binding",
+      "verdict": "reject",
+      "record_refs": [
+        "delete_project_request_with_confirmation"
+      ],
+      "records": [
+        {
+          "schema_id": "pm.commands_shortcuts.action_result.v1",
+          "record_kind": "commands_shortcuts_action_result",
+          "action_id": "commands.create",
+          "request_id": "req-delete-001",
+          "outcome": "mutated",
+          "file_ref": "command_file:project:proj-demo-001:summarize-thread",
+          "file_sha256": "4123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "root_generation": 3,
+          "root_fingerprint": "root-fp-demo-001",
+          "list_generation": 13,
+          "project_shadows_global": false,
+          "updated_field": null,
+          "moved_from": null,
+          "replayed": false
+        }
+      ],
+      "note": "A create result answering a delete request_id is a wrong action-result binding: reject."
+    },
+    {
+      "case_id": "sem_idempotency_replay_accept",
+      "check": "cmdsc_idempotency_conflict",
+      "verdict": "accept",
+      "record_refs": [
+        "import_commit_request",
+        "import_commit_result_replayed"
+      ],
+      "records": [],
+      "note": "Same key plus identical payload replays the recorded result with replayed true and no second write."
+    },
+    {
+      "case_id": "sem_idempotency_conflict_reject",
+      "check": "cmdsc_idempotency_conflict",
+      "verdict": "reject",
+      "record_refs": [
+        "create_project_request"
+      ],
+      "records": [
+        {
+          "schema_id": "pm.commands_shortcuts.action_request.v1",
+          "record_kind": "commands_shortcuts_action_request",
+          "action_id": "commands.create",
+          "request_id": "req-create-021",
+          "actor_ref": "actor:user:local",
+          "permission_snapshot_id": "perm-snap-001",
+          "idempotency_key": "idem-create-001",
+          "project_id": "proj-demo-001",
+          "manager_route": "route:settings/commands-shortcuts",
+          "control_label": "Create command",
+          "target": {
+            "scope": "project",
+            "name": "tidy-docs"
+          },
+          "draft_content": {
+            "name": "tidy-docs",
+            "description": "Tidy stale documentation pages.",
+            "template_body": "Find stale docs.",
+            "arguments_hint": "",
+            "overrides": {
+              "persona": null,
+              "mode": "inherit",
+              "model": null,
+              "permissionsProfile": null
+            },
+            "enabled": true,
+            "subtask": false,
+            "override_builtin": false
+          },
+          "expected_list_generation": 7,
+          "expected_root_generation": 3,
+          "expected_root_fingerprint": "root-fp-demo-001",
+          "asserts_target_absent": true
+        },
+        {
+          "schema_id": "pm.commands_shortcuts.action_result.v1",
+          "record_kind": "commands_shortcuts_action_result",
+          "action_id": "commands.create",
+          "request_id": "req-create-021",
+          "outcome": "mutated",
+          "file_ref": "command_file:project:proj-demo-001:tidy-docs",
+          "file_sha256": "b123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "root_generation": 3,
+          "root_fingerprint": "root-fp-demo-001",
+          "list_generation": 8,
+          "project_shadows_global": false,
+          "updated_field": null,
+          "moved_from": null,
+          "replayed": false
+        }
+      ],
+      "note": "Same idempotency key idem-create-001 used for a different mutation (tidy-docs vs review-changes) with a fresh mutated result: must reject with idempotency_conflict instead."
+    },
+    {
+      "case_id": "sem_denied_no_write_accept",
+      "check": "cmdsc_permission_filesafe_denied_no_write",
+      "verdict": "accept",
+      "record_refs": [
+        "error_filesafe_denied",
+        "error_permission_snapshot_stale"
+      ],
+      "records": [],
+      "note": "FileSafe containment denial and stale permission snapshots reject with wrote false and no retry."
+    },
+    {
+      "case_id": "sem_denied_then_wrote_reject",
+      "check": "cmdsc_permission_filesafe_denied_no_write",
+      "verdict": "reject",
+      "record_refs": [
+        "error_filesafe_denied"
+      ],
+      "records": [
+        {
+          "schema_id": "pm.commands_shortcuts.action_result.v1",
+          "record_kind": "commands_shortcuts_action_result",
+          "action_id": "commands.create",
+          "request_id": "req-create-010",
+          "outcome": "mutated",
+          "file_ref": "command_file:project:proj-demo-001:review-changes",
+          "file_sha256": "4123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "root_generation": 3,
+          "root_fingerprint": "root-fp-demo-001",
+          "list_generation": 8,
+          "project_shadows_global": false,
+          "updated_field": null,
+          "moved_from": null,
+          "replayed": false
+        }
+      ],
+      "note": "A mutated result sharing the denied request_id proves a write after FileSafe denial: reject."
+    },
+    {
+      "case_id": "sem_collision_warn_accept",
+      "check": "cmdsc_shortcut_collision_warns",
+      "verdict": "accept",
+      "record_refs": [
+        "route_change_shortcut_transaction",
+        "route_add_shortcut_transaction"
+      ],
+      "records": [],
+      "note": "Shortcut controls bind to the Project-scoped bindings delta via settings preview+apply; the closed disabled_reason set carries no collision reason, so a clash warns through the conflict projection and never blocks the write."
+    },
+    {
+      "case_id": "sem_label_binding_accept",
+      "check": "cmdsc_action_label_binding",
+      "verdict": "accept",
+      "record_refs": [
+        "update_template_request",
+        "update_enabled_request",
+        "update_scope_move_request"
+      ],
+      "records": [],
+      "note": "(Text, template), (Enabled, enabled), (Scope, scope) are admitted label/field pairs."
+    },
+    {
+      "case_id": "sem_label_binding_reject",
+      "check": "cmdsc_action_label_binding",
+      "verdict": "reject",
+      "record_refs": [],
+      "records": [
+        {
+          "schema_id": "pm.commands_shortcuts.action_request.v1",
+          "record_kind": "commands_shortcuts_action_request",
+          "action_id": "commands.update",
+          "request_id": "req-update-021",
+          "actor_ref": "actor:user:local",
+          "permission_snapshot_id": "perm-snap-008",
+          "idempotency_key": "idem-update-021",
+          "project_id": "proj-demo-001",
+          "manager_route": "route:settings/commands-shortcuts",
+          "control_label": "Text",
+          "target": {
+            "scope": "project",
+            "name": "review-changes"
+          },
+          "field": "enabled",
+          "value": false,
+          "expected_list_generation": 11,
+          "expected_root_generation": 3,
+          "expected_root_fingerprint": "root-fp-demo-001",
+          "expected_file_sha256": "2123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+        }
+      ],
+      "note": "(Text, enabled) is not an admitted pair: the Text control edits template only; reject."
+    },
+    {
+      "case_id": "sem_hint_round_trip_accept",
+      "check": "cmdsc_arguments_hint_round_trip",
+      "verdict": "accept",
+      "record_refs": [
+        "create_project_request",
+        "update_hint_request"
+      ],
+      "records": [],
+      "note": "Every draft carries arguments_hint (never dropped at the contract surface); prose maps it losslessly to file arguments[0].hint with richer arrays preserved."
+    },
+    {
+      "case_id": "sem_project_identity_accept",
+      "check": "cmdsc_project_identity_bound",
+      "verdict": "accept",
+      "record_refs": [
+        "create_project_request",
+        "create_result"
+      ],
+      "records": [],
+      "note": "Project result ref embeds the requesting project_id with matching root binding."
+    },
+    {
+      "case_id": "sem_project_identity_collision_reject",
+      "check": "cmdsc_project_identity_bound",
+      "verdict": "reject",
+      "record_refs": [
+        "create_project_request"
+      ],
+      "records": [
+        {
+          "schema_id": "pm.commands_shortcuts.action_result.v1",
+          "record_kind": "commands_shortcuts_action_result",
+          "action_id": "commands.create",
+          "request_id": "req-create-001",
+          "outcome": "mutated",
+          "file_ref": "command_file:project:proj-other-002:review-changes",
+          "file_sha256": "4123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+          "root_generation": 3,
+          "root_fingerprint": "root-fp-demo-001",
+          "list_generation": 8,
+          "project_shadows_global": false,
+          "updated_field": null,
+          "moved_from": null,
+          "replayed": false
+        }
+      ],
+      "note": "Result ref embeds proj-other-002 while the request bound proj-demo-001: cross-project collision; reject."
+    },
+    {
+      "case_id": "sem_no_alias_accept",
+      "check": "cmdsc_no_cmd_alias_resurrection",
+      "verdict": "accept",
+      "record_refs": [],
+      "records": [],
+      "note": "Full-text scan of both companions: no cmd.user_command./cmd.keybinding./cmd.commands.custom./cmd.shortcuts. token appears outside reason/notes/detail documentary strings; prose names handlers::commands::apply_local_action as the sole file-action handler."
+    },
+    {
+      "case_id": "sem_applied_manifest_changed_reject",
+      "check": "cmdsc_confirmed_plan_matches",
+      "verdict": "reject",
+      "record_refs": [
+        "import_commit_request",
+        "import_preview_request",
+        "import_plan_result"
+      ],
+      "records": [
+        {
+          "schema_id": "pm.commands_shortcuts.action_result.v1",
+          "record_kind": "commands_shortcuts_action_result",
+          "action_id": "commands.import_commit",
+          "request_id": "req-import-002",
+          "outcome": "mutated",
+          "plan_id": "plan-import-001",
+          "applied": [
+            {
+              "file_ref": "command_file:project:proj-demo-001:tidy-docs",
+              "file_sha256": "b123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+            }
+          ],
+          "list_generation": 13,
+          "replayed": false
+        }
+      ],
+      "note": "Result applies one file while the committed plan has two entries: the applied manifest changed; reject."
+    }
+  ]
+}

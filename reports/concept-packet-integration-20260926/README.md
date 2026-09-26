@@ -1,5 +1,7 @@
 # Settings, onboarding and packet reconciliation — 2026-09-26
 
+The remaining-work table below is historical. Its follow-up implementation and final verification are recorded in [packet integration completion](../packet-integration-completion-20260926/README.md).
+
 The nine supplied archives have been reviewed against current owner Plans and the user-selected `Concepts/TestOpus5.5PmConcept.html`. **PMConcept7 now publishes that selected file byte-for-byte.** Its Settings, onboarding and tour design has been preserved. This report separates completed corrections from integration work that still needs contracts or consumer implementation; it does not declare the product fully wired.
 
 ## Authority and coverage
@@ -23,7 +25,7 @@ Archive hashes are in [sources.json](sources.json). Extracted-member inventory, 
 - RAS-003 points to the full RAS-015 tsnet supersession. Settings descriptors no longer promise a missing dictionary manager and explicitly disclose the Commands/Shortcuts mutation-routing gap.
 - Required shards and PlanUnit index were regenerated. No Spec Lock, governance evidence, migration snapshot, readiness certification, WorkNodes or NodeSeeds were resealed/created.
 
-## What still needs integration
+## Follow-up work identified by this earlier pass
 
 | Item | Remaining work and boundary |
 | --- | --- |

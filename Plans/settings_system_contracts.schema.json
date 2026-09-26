@@ -1578,6 +1578,24 @@
           },
           "uniqueItems": true
         },
+        "owner_local_action_refs": {
+          "description": "Closed typed refs to Commands-owned local file actions (Plans/Commands_System.md#CS-081 census_action_id). These are owner-local actions with a sole native owner handler, not UICommand primaries: they must never appear in owner_action_ids, the catalog, or production wiring, and no cmd.* spelling may shadow them.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "commands.create",
+              "commands.update",
+              "commands.delete",
+              "commands.preview",
+              "commands.import_preview",
+              "commands.import_commit",
+              "commands.export",
+              "commands.reset_all"
+            ]
+          },
+          "uniqueItems": true
+        },
         "required_target_fields": {
           "type": "array",
           "items": {

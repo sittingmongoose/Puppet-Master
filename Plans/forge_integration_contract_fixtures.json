@@ -3478,13 +3478,15 @@
           "source_revision": null,
           "target_revision": null,
           "pipeline_id": "pipeline:34",
+          "automation_run_id": "automation-run:gitlab:34",
           "pipeline_definition_ref": "pipeline-definition:34",
           "job_id": null,
           "delivery_id": null,
           "connection_id": null,
           "official_page_route_ref": "official-route:forge:34",
           "webhook_redelivery_gate": null,
-          "source_control_handoff_ref": null
+          "source_control_handoff_ref": null,
+          "official_destination_kind": "automation_run_artifacts"
         },
         "availability": {
           "requested": true,
@@ -5231,38 +5233,500 @@
       "name": "minimum_provider_capability_and_auth_matrix_is_explicit",
       "definition": "provider_capability_matrix",
       "value": {
-        "schema_id": "pm.forge.provider_capability_matrix.v1", "profile_generation": 1,
-        "local_vcs_profiles": ["git", "jj_git_colocated", "jj_git_noncolocated", "none"],
-        "capability_dimensions": ["git_transport", "repository_discovery", "repository_create", "review_read", "review_write", "review_approve_merge", "checks", "automation_definitions", "run_read", "log_read", "artifact_read", "dispatch_cancel_rerun", "webhook_poll", "branch_policy", "secrets_variables", "runner_management", "release_assets", "external_url_fallback"],
-        "profiles": [
-          {"profile_id": "github_cloud", "review_vocabulary": "Pull request", "automation_service": "GitHub Actions", "authentication_methods": ["PM_direct_OAuth", "GitHub_App", "scoped_token"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "not_applicable", "origin_windows_fallbacks": [], "implicit_wsl_enable": false, "provider_specific_facts": ["github_direct_api_no_gh_requirement"]},
-          {"profile_id": "github_enterprise", "review_vocabulary": "Pull request", "automation_service": "GitHub Actions when instance supports it", "authentication_methods": ["enterprise_registered_OAuth_or_App", "scoped_token"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "not_applicable", "origin_windows_fallbacks": [], "implicit_wsl_enable": false, "provider_specific_facts": ["enterprise_instance_version_sso_policy"]},
-          {"profile_id": "gitlab_saas", "review_vocabulary": "Merge request", "automation_service": "GitLab Pipelines", "authentication_methods": ["registered_OAuth_PKCE", "scoped_PAT"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "not_applicable", "origin_windows_fallbacks": [], "implicit_wsl_enable": false, "provider_specific_facts": ["gitlab_native_mr_pipeline_stage_job_trace_child_pipeline"]},
-          {"profile_id": "gitlab_self_managed", "review_vocabulary": "Merge request", "automation_service": "GitLab Pipelines when enabled", "authentication_methods": ["instance_registered_OAuth_PKCE", "scoped_PAT"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "not_applicable", "origin_windows_fallbacks": [], "implicit_wsl_enable": false, "provider_specific_facts": ["gitlab_native_mr_pipeline_stage_job_trace_child_pipeline"]},
-          {"profile_id": "azure_devops_services", "review_vocabulary": "Pull request", "automation_service": "Azure Pipelines", "authentication_methods": ["Microsoft_Entra_OAuth", "approved_scoped_PAT_or_workload_identity"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "not_applicable", "origin_windows_fallbacks": [], "implicit_wsl_enable": false, "provider_specific_facts": ["azure_repos_and_pipelines_separate", "azure_services_no_legacy_oauth", "tfvc_not_git_or_jj"]},
-          {"profile_id": "azure_devops_server", "review_vocabulary": "Pull request", "automation_service": "Azure Pipelines when supported", "authentication_methods": ["supported_onprem_token_or_enterprise_auth"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "not_applicable", "origin_windows_fallbacks": [], "implicit_wsl_enable": false, "provider_specific_facts": ["azure_server_versioned_onprem_profile", "tfvc_not_git_or_jj"]},
-          {"profile_id": "bitbucket_cloud", "review_vocabulary": "Pull request", "automation_service": "Bitbucket Pipelines", "authentication_methods": ["OAuth", "scoped_API_token"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "not_applicable", "origin_windows_fallbacks": [], "implicit_wsl_enable": false, "provider_specific_facts": ["bitbucket_cloud_current_oauth_or_scoped_api_token", "bitbucket_cloud_no_app_password_onboarding"]},
-          {"profile_id": "bitbucket_data_center", "review_vocabulary": "Pull request", "automation_service": null, "authentication_methods": ["instance_supported_PAT_or_enterprise_auth"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "not_applicable", "origin_windows_fallbacks": [], "implicit_wsl_enable": false, "provider_specific_facts": ["bitbucket_data_center_no_cloud_pipelines_inheritance"]},
-          {"profile_id": "forgejo", "review_vocabulary": "Pull request", "automation_service": "Forgejo Actions when enabled", "authentication_methods": ["instance_OAuth_PKCE_when_registered", "guided_scoped_PAT"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "not_applicable", "origin_windows_fallbacks": [], "implicit_wsl_enable": false, "provider_specific_facts": ["forgejo_distinct_versioned_adapter", "actions_enabled_runner_and_operations_probed_independently"]},
-          {"profile_id": "gitea", "review_vocabulary": "Pull request", "automation_service": "Gitea Actions when enabled", "authentication_methods": ["instance_OAuth_PKCE_when_registered", "guided_scoped_PAT"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "not_applicable", "origin_windows_fallbacks": [], "implicit_wsl_enable": false, "provider_specific_facts": ["gitea_distinct_versioned_adapter", "actions_enabled_runner_and_operations_probed_independently"]},
-          {"profile_id": "cursor_origin_native", "review_vocabulary": "Pull request", "automation_service": null, "authentication_methods": ["official_Origin_CLI_browser_auth", "verified_Git_credential_helper"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "unverified", "origin_windows_fallbacks": ["WSL", "remote_compatible_host"], "implicit_wsl_enable": false, "provider_specific_facts": ["origin_authoritative_git_read_write", "origin_cli_profile_not_cursor_agent_auth"]},
-          {"profile_id": "cursor_origin_github_mirror", "review_vocabulary": "Pull request", "automation_service": "GitHub Actions through mapped GitHub binding", "authentication_methods": ["Origin_CLI_profile", "GitHub_API_profile_for_GitHub_owned_features"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "not_applicable", "origin_windows_fallbacks": [], "implicit_wsl_enable": false, "provider_specific_facts": ["origin_mirror_github_write_review_ci_authority"]},
-          {"profile_id": "generic_git", "review_vocabulary": null, "automation_service": null, "authentication_methods": ["scoped_HTTPS_Git_credentials", "scoped_SSH_agent"], "git_transport": ["clone", "fetch", "push"], "transport_authority_independent_of_api": true, "capability_default": "unknown_until_supported_evidence", "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness", "account_password_allowed": false, "ordinary_admin_scope_grant": false, "native_windows_origin_cli_support": "not_applicable", "origin_windows_fallbacks": [], "implicit_wsl_enable": false, "provider_specific_facts": ["generic_git_transport_only", "jj_never_cloud_hosting_account", "no_fabricated_pr_or_ci"]}
+        "schema_id": "pm.forge.provider_capability_matrix.v1",
+        "profile_generation": 1,
+        "local_vcs_profiles": [
+          "git",
+          "jj_git_colocated",
+          "jj_git_noncolocated",
+          "none"
         ],
-        "github_regression_inventory_ref": "inventory:github:retained-actions-and-sections", "no_github_compatible_boolean": true, "runtime_support_claimed": false
+        "capability_dimensions": [
+          "git_transport",
+          "repository_discovery",
+          "repository_create",
+          "review_read",
+          "review_write",
+          "review_approve_merge",
+          "checks",
+          "automation_definitions",
+          "run_read",
+          "log_read",
+          "artifact_read",
+          "dispatch_cancel_rerun",
+          "webhook_poll",
+          "branch_policy",
+          "secrets_variables",
+          "runner_management",
+          "release_assets",
+          "external_url_fallback"
+        ],
+        "profiles": [
+          {
+            "profile_id": "github_cloud",
+            "review_vocabulary": "Pull request",
+            "automation_service": "GitHub Actions",
+            "authentication_methods": [
+              "PM_direct_OAuth",
+              "GitHub_App",
+              "scoped_token"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "not_applicable",
+            "origin_windows_fallbacks": [],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "github_direct_api_no_gh_requirement"
+            ]
+          },
+          {
+            "profile_id": "github_enterprise",
+            "review_vocabulary": "Pull request",
+            "automation_service": "GitHub Actions when instance supports it",
+            "authentication_methods": [
+              "enterprise_registered_OAuth_or_App",
+              "scoped_token"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "not_applicable",
+            "origin_windows_fallbacks": [],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "enterprise_instance_version_sso_policy"
+            ]
+          },
+          {
+            "profile_id": "gitlab_saas",
+            "review_vocabulary": "Merge request",
+            "automation_service": "GitLab Pipelines",
+            "authentication_methods": [
+              "registered_OAuth_PKCE",
+              "scoped_PAT"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "not_applicable",
+            "origin_windows_fallbacks": [],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "gitlab_native_mr_pipeline_stage_job_trace_child_pipeline"
+            ]
+          },
+          {
+            "profile_id": "gitlab_self_managed",
+            "review_vocabulary": "Merge request",
+            "automation_service": "GitLab Pipelines when enabled",
+            "authentication_methods": [
+              "instance_registered_OAuth_PKCE",
+              "scoped_PAT"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "not_applicable",
+            "origin_windows_fallbacks": [],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "gitlab_native_mr_pipeline_stage_job_trace_child_pipeline"
+            ]
+          },
+          {
+            "profile_id": "azure_devops_services",
+            "review_vocabulary": "Pull request",
+            "automation_service": "Azure Pipelines",
+            "authentication_methods": [
+              "Microsoft_Entra_OAuth",
+              "approved_scoped_PAT_or_workload_identity"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "not_applicable",
+            "origin_windows_fallbacks": [],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "azure_repos_and_pipelines_separate",
+              "azure_services_no_legacy_oauth",
+              "tfvc_not_git_or_jj"
+            ]
+          },
+          {
+            "profile_id": "azure_devops_server",
+            "review_vocabulary": "Pull request",
+            "automation_service": "Azure Pipelines when supported",
+            "authentication_methods": [
+              "supported_onprem_token_or_enterprise_auth"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "not_applicable",
+            "origin_windows_fallbacks": [],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "azure_server_versioned_onprem_profile",
+              "tfvc_not_git_or_jj"
+            ]
+          },
+          {
+            "profile_id": "bitbucket_cloud",
+            "review_vocabulary": "Pull request",
+            "automation_service": "Bitbucket Pipelines",
+            "authentication_methods": [
+              "OAuth",
+              "scoped_API_token"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "not_applicable",
+            "origin_windows_fallbacks": [],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "bitbucket_cloud_current_oauth_or_scoped_api_token",
+              "bitbucket_cloud_no_app_password_onboarding"
+            ]
+          },
+          {
+            "profile_id": "bitbucket_data_center",
+            "review_vocabulary": "Pull request",
+            "automation_service": null,
+            "authentication_methods": [
+              "instance_supported_PAT_or_enterprise_auth"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "not_applicable",
+            "origin_windows_fallbacks": [],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "bitbucket_data_center_no_cloud_pipelines_inheritance"
+            ]
+          },
+          {
+            "profile_id": "forgejo",
+            "review_vocabulary": "Pull request",
+            "automation_service": "Forgejo Actions when enabled",
+            "authentication_methods": [
+              "instance_OAuth_PKCE_when_registered",
+              "guided_scoped_PAT"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "not_applicable",
+            "origin_windows_fallbacks": [],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "forgejo_distinct_versioned_adapter",
+              "actions_enabled_runner_and_operations_probed_independently"
+            ]
+          },
+          {
+            "profile_id": "gitea",
+            "review_vocabulary": "Pull request",
+            "automation_service": "Gitea Actions when enabled",
+            "authentication_methods": [
+              "instance_OAuth_PKCE_when_registered",
+              "guided_scoped_PAT"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "not_applicable",
+            "origin_windows_fallbacks": [],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "gitea_distinct_versioned_adapter",
+              "actions_enabled_runner_and_operations_probed_independently"
+            ]
+          },
+          {
+            "profile_id": "cursor_origin_native",
+            "review_vocabulary": "Pull request",
+            "automation_service": null,
+            "authentication_methods": [
+              "official_Origin_CLI_browser_auth",
+              "verified_Git_credential_helper"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "unverified",
+            "origin_windows_fallbacks": [
+              "WSL",
+              "remote_compatible_host"
+            ],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "origin_authoritative_git_read_write",
+              "origin_cli_profile_not_cursor_agent_auth"
+            ]
+          },
+          {
+            "profile_id": "cursor_origin_github_mirror",
+            "review_vocabulary": "Pull request",
+            "automation_service": "GitHub Actions through mapped GitHub binding",
+            "authentication_methods": [
+              "Origin_CLI_profile",
+              "GitHub_API_profile_for_GitHub_owned_features"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "not_applicable",
+            "origin_windows_fallbacks": [],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "origin_mirror_github_write_review_ci_authority"
+            ]
+          },
+          {
+            "profile_id": "generic_git",
+            "review_vocabulary": null,
+            "automation_service": null,
+            "authentication_methods": [
+              "scoped_HTTPS_Git_credentials",
+              "scoped_SSH_agent"
+            ],
+            "git_transport": [
+              "clone",
+              "fetch",
+              "push"
+            ],
+            "transport_authority_independent_of_api": true,
+            "capability_default": "unknown_until_supported_evidence",
+            "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+            "account_password_allowed": false,
+            "ordinary_admin_scope_grant": false,
+            "native_windows_origin_cli_support": "not_applicable",
+            "origin_windows_fallbacks": [],
+            "implicit_wsl_enable": false,
+            "provider_specific_facts": [
+              "generic_git_transport_only",
+              "jj_never_cloud_hosting_account",
+              "no_fabricated_pr_or_ci"
+            ]
+          }
+        ],
+        "github_regression_inventory_ref": "inventory:github:retained-actions-and-sections",
+        "no_github_compatible_boolean": true,
+        "runtime_support_claimed": false
       }
     },
     {
       "name": "origin_cli_operations_are_explicit_and_mirror_safe",
       "definition": "origin_cli_operation_profile",
-      "value": {"schema_id": "pm.forge.origin_cli_operation_profile.v1", "adapter_ref": "adapter:cursor-origin:cli", "pinned_cli_version_ref": "catalog:origin-cli:verified-version", "operations": ["pr_list", "pr_view", "pr_create", "pr_diff", "pr_checks", "pr_edit", "pr_ready", "pr_draft", "review_approve", "review_request_changes", "review_comment", "review_thread_reply", "review_thread_resolve", "review_thread_reopen", "merge", "close", "reopen", "stale_version_refresh", "clone", "fetch", "pull", "push"], "json_output_required": true, "explicit_repository_head_base_target": true, "current_working_branch_defaults_allowed": false, "source_checkout_separate_from_read_only_review": true, "create_push_requires_publication_preview": true, "cursor_agent_auth_proves_origin_access": false, "mirror_github_authority_preserved": true, "duplicate_ci_dispatch_allowed": false, "github_workflow_files_are_tree_content": true, "runtime_support_claimed": false}
+      "value": {
+        "schema_id": "pm.forge.origin_cli_operation_profile.v1",
+        "adapter_ref": "adapter:cursor-origin:cli",
+        "pinned_cli_version_ref": "catalog:origin-cli:verified-version",
+        "operations": [
+          "pr_list",
+          "pr_view",
+          "pr_create",
+          "pr_diff",
+          "pr_checks",
+          "pr_edit",
+          "pr_ready",
+          "pr_draft",
+          "review_approve",
+          "review_request_changes",
+          "review_comment",
+          "review_thread_reply",
+          "review_thread_resolve",
+          "review_thread_reopen",
+          "merge",
+          "close",
+          "reopen",
+          "stale_version_refresh",
+          "clone",
+          "fetch",
+          "pull",
+          "push"
+        ],
+        "json_output_required": true,
+        "explicit_repository_head_base_target": true,
+        "current_working_branch_defaults_allowed": false,
+        "source_checkout_separate_from_read_only_review": true,
+        "create_push_requires_publication_preview": true,
+        "cursor_agent_auth_proves_origin_access": false,
+        "mirror_github_authority_preserved": true,
+        "duplicate_ci_dispatch_allowed": false,
+        "github_workflow_files_are_tree_content": true,
+        "runtime_support_claimed": false
+      }
     },
     {
       "name": "hosted_admin_actions_are_independently_gated",
       "definition": "hosted_administration_surface",
-      "value": {"schema_id": "pm.forge.hosted_administration_surface.v1", "provider": "forgejo", "instance_profile_ref": "instance-profile:forgejo:1", "field_schema_ref": "field-schema:forgejo:1:branch-policy", "actions": [
-        {"area": "repository_policy", "read_state": "ready", "write_state": "protected", "permission_ref": "permission:repository-policy", "receipt_or_external_route_ref": "receipt-schema:repository-policy"}, {"area": "branch_policy", "read_state": "ready", "write_state": "protected", "permission_ref": "permission:branch-policy", "receipt_or_external_route_ref": "receipt-schema:branch-policy"}, {"area": "ci_environments", "read_state": "ready", "write_state": "permission_denied", "permission_ref": "permission:ci-environments", "receipt_or_external_route_ref": "route:external:ci-environments"}, {"area": "deployment_approvals", "read_state": "ready", "write_state": "protected", "permission_ref": "permission:deployment-approval", "receipt_or_external_route_ref": "receipt-schema:deployment-approval"}, {"area": "secrets", "read_state": "ready", "write_state": "protected", "permission_ref": "permission:protected-values", "receipt_or_external_route_ref": "receipt-schema:write-only-value"}, {"area": "variables", "read_state": "ready", "write_state": "protected", "permission_ref": "permission:variables", "receipt_or_external_route_ref": "receipt-schema:variable-write"}, {"area": "runners", "read_state": "ready", "write_state": "protected", "permission_ref": "permission:runners", "receipt_or_external_route_ref": "receipt-schema:runner-registration"}, {"area": "release_assets", "read_state": "ready", "write_state": "external_only", "permission_ref": "permission:releases", "receipt_or_external_route_ref": "route:external:releases"}
-      ], "secret_submission": {"human_only_broker": true, "readback_allowed": false, "metadata_names_are_values": false}, "runner_registration": {"explicit_execution_host_target": true, "explicit_consent": true, "enabled_by_ci_connection_alone": false}, "unsupported_action_fallback": "clearly_labeled_external_link", "fake_success_allowed": false, "runtime_support_claimed": false}
+      "value": {
+        "schema_id": "pm.forge.hosted_administration_surface.v1",
+        "provider": "forgejo",
+        "instance_profile_ref": "instance-profile:forgejo:1",
+        "field_schema_ref": "field-schema:forgejo:1:branch-policy",
+        "actions": [
+          {
+            "area": "repository_policy",
+            "read_state": "ready",
+            "write_state": "protected",
+            "permission_ref": "permission:repository-policy",
+            "receipt_or_external_route_ref": "receipt-schema:repository-policy"
+          },
+          {
+            "area": "branch_policy",
+            "read_state": "ready",
+            "write_state": "protected",
+            "permission_ref": "permission:branch-policy",
+            "receipt_or_external_route_ref": "receipt-schema:branch-policy"
+          },
+          {
+            "area": "ci_environments",
+            "read_state": "ready",
+            "write_state": "permission_denied",
+            "permission_ref": "permission:ci-environments",
+            "receipt_or_external_route_ref": "route:external:ci-environments"
+          },
+          {
+            "area": "deployment_approvals",
+            "read_state": "ready",
+            "write_state": "protected",
+            "permission_ref": "permission:deployment-approval",
+            "receipt_or_external_route_ref": "receipt-schema:deployment-approval"
+          },
+          {
+            "area": "secrets",
+            "read_state": "ready",
+            "write_state": "protected",
+            "permission_ref": "permission:protected-values",
+            "receipt_or_external_route_ref": "receipt-schema:write-only-value"
+          },
+          {
+            "area": "variables",
+            "read_state": "ready",
+            "write_state": "protected",
+            "permission_ref": "permission:variables",
+            "receipt_or_external_route_ref": "receipt-schema:variable-write"
+          },
+          {
+            "area": "runners",
+            "read_state": "ready",
+            "write_state": "protected",
+            "permission_ref": "permission:runners",
+            "receipt_or_external_route_ref": "receipt-schema:runner-registration"
+          },
+          {
+            "area": "release_assets",
+            "read_state": "ready",
+            "write_state": "external_only",
+            "permission_ref": "permission:releases",
+            "receipt_or_external_route_ref": "route:external:releases"
+          }
+        ],
+        "secret_submission": {
+          "human_only_broker": true,
+          "readback_allowed": false,
+          "metadata_names_are_values": false
+        },
+        "runner_registration": {
+          "explicit_execution_host_target": true,
+          "explicit_consent": true,
+          "enabled_by_ci_connection_alone": false
+        },
+        "unsupported_action_fallback": "clearly_labeled_external_link",
+        "fake_success_allowed": false,
+        "runtime_support_claimed": false
+      }
     },
     {
       "name": "azure_review_revision_target_move_stales_without_a_head_change",
@@ -5462,6 +5926,2279 @@
           }
         ]
       }
+    },
+    {
+      "name": "command_request_forge_repository_delete",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.repository.delete",
+        "command_instance_id": "command:forge:47",
+        "idempotency_key": "idempotency:forge:47",
+        "provider": "github",
+        "provider_variant": "github_cloud",
+        "normalized_host": "github.com",
+        "account_id": "account:github:alpha",
+        "repo_id": "repo:alpha",
+        "repository_binding_ref": "forge-binding:github:alpha",
+        "expected_binding_generation": 9,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "repository",
+        "capability_snapshot_ref": "capability-snapshot:forge:47",
+        "api_compatibility_ref": "api-compatibility:forge:47",
+        "credential_or_grant_ref": "grant:forge:47",
+        "currentness": {
+          "binding_generation": 9,
+          "catalog_generation": 12,
+          "api_probe_ref": "api-probe:forge:47",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:47",
+          "rate_budget_ref": "rate-budget:forge:47"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:47",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:47",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:47",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-09-26T12:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "binding-generation:47"
+        },
+        "target": {
+          "target_kind": "repository",
+          "identity_source": "validated_repository_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:github:alpha",
+          "repository_locator_ref": "repository-locator:github:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "verified_create_result_ref": "provider-result:forge:create:47",
+          "verified_create_receipt_ref": "receipt:forge:create:47"
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-09-26T12:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null
+      }
+    },
+    {
+      "name": "command_request_forge_pipeline_artifact_download",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.pipeline.artifact.download",
+        "command_instance_id": "command:forge:48",
+        "idempotency_key": "idempotency:forge:48",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "account_id": "account:gitlab:alpha",
+        "repo_id": "repo:alpha",
+        "repository_binding_ref": "forge-binding:gitlab:alpha",
+        "expected_binding_generation": 7,
+        "automation_binding_ref": "automation-binding:gitlab:alpha",
+        "expected_automation_binding_generation": 4,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "pipeline_artifacts",
+        "capability_snapshot_ref": "capability-snapshot:forge:48",
+        "api_compatibility_ref": "api-compatibility:forge:48",
+        "credential_or_grant_ref": "grant:forge:48",
+        "currentness": {
+          "binding_generation": 7,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:48",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:48",
+          "rate_budget_ref": "rate-budget:forge:48"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:48",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:48",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:48",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-09-26T12:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "binding-generation:48"
+        },
+        "target": {
+          "target_kind": "pipeline_artifact",
+          "identity_source": "validated_automation_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": "pipeline:48",
+          "automation_run_id": "automation-run:gitlab:48",
+          "pipeline_definition_ref": "pipeline-definition:48",
+          "job_id": "job:test:48",
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "pipeline_artifact_id": "artifact:test-report:48",
+          "remote_artifact_record_ref": "remote-artifact:gitlab:48",
+          "artifact_disposition": "download",
+          "download_destination_ref": "destination:downloads:ci-artifact:48",
+          "artifact_import_handoff_ref": null,
+          "expected_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "observable_work_id": "observable-work:forge:48",
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-09-26T12:00:00Z",
+        "file_safe_decision_ref": "filesafe-decision:forge:48",
+        "browser_handoff": null
+      }
+    },
+    {
+      "name": "command_request_forge_pipeline_artifact_import",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.pipeline.artifact.download",
+        "command_instance_id": "command:forge:49",
+        "idempotency_key": "idempotency:forge:49",
+        "provider": "github",
+        "provider_variant": "github_cloud",
+        "normalized_host": "github.com",
+        "account_id": "account:github:alpha",
+        "repo_id": "repo:alpha",
+        "repository_binding_ref": "forge-binding:github:alpha",
+        "expected_binding_generation": 9,
+        "automation_binding_ref": "automation-binding:github:alpha",
+        "expected_automation_binding_generation": 5,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "pipeline_artifacts",
+        "capability_snapshot_ref": "capability-snapshot:forge:49",
+        "api_compatibility_ref": "api-compatibility:forge:49",
+        "credential_or_grant_ref": "grant:forge:49",
+        "currentness": {
+          "binding_generation": 9,
+          "catalog_generation": 12,
+          "api_probe_ref": "api-probe:forge:49",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:49",
+          "rate_budget_ref": "rate-budget:forge:49"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:49",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:49",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:49",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-09-26T12:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "binding-generation:49"
+        },
+        "target": {
+          "target_kind": "pipeline_artifact",
+          "identity_source": "validated_automation_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:github:alpha",
+          "repository_locator_ref": "repository-locator:github:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": "pipeline:49",
+          "automation_run_id": "automation-run:github:49",
+          "pipeline_definition_ref": "pipeline-definition:49",
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "pipeline_artifact_id": "artifact:coverage:49",
+          "remote_artifact_record_ref": "remote-artifact:github:49",
+          "artifact_disposition": "import",
+          "download_destination_ref": null,
+          "artifact_import_handoff_ref": "artifact-import:github:49",
+          "expected_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "observable_work_id": "observable-work:forge:49",
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-09-26T12:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null
+      }
+    },
+    {
+      "name": "command_request_forge_pipeline_secret_set",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.pipeline.secret.set",
+        "command_instance_id": "command:forge:50",
+        "idempotency_key": "idempotency:forge:50",
+        "provider": "github",
+        "provider_variant": "github_cloud",
+        "normalized_host": "github.com",
+        "account_id": "account:github:alpha",
+        "repo_id": "repo:alpha",
+        "repository_binding_ref": "forge-binding:github:alpha",
+        "expected_binding_generation": 9,
+        "automation_binding_ref": "automation-binding:github:alpha",
+        "expected_automation_binding_generation": 5,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "secrets",
+        "capability_snapshot_ref": "capability-snapshot:forge:50",
+        "api_compatibility_ref": "api-compatibility:forge:50",
+        "credential_or_grant_ref": "grant:forge:50",
+        "currentness": {
+          "binding_generation": 9,
+          "catalog_generation": 12,
+          "api_probe_ref": "api-probe:forge:50",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:50",
+          "rate_budget_ref": "rate-budget:forge:50"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:50",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:50",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:50",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-09-26T12:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "binding-generation:50"
+        },
+        "target": {
+          "target_kind": "hosted_secret",
+          "identity_source": "validated_automation_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:github:alpha",
+          "repository_locator_ref": "repository-locator:github:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "hosted_secret_name": "DEPLOY_TOKEN",
+          "hosted_variable_name": null,
+          "hosted_setting_scope_ref": "setting-scope:github:repo:alpha",
+          "secret_broker_ref": "broker:one-use:50",
+          "variable_value": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-09-26T12:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null
+      }
+    },
+    {
+      "name": "command_request_forge_pipeline_secret_remove",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.pipeline.secret.remove",
+        "command_instance_id": "command:forge:51",
+        "idempotency_key": "idempotency:forge:51",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "account_id": "account:gitlab:alpha",
+        "repo_id": "repo:alpha",
+        "repository_binding_ref": "forge-binding:gitlab:alpha",
+        "expected_binding_generation": 7,
+        "automation_binding_ref": "automation-binding:gitlab:alpha",
+        "expected_automation_binding_generation": 4,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "secrets",
+        "capability_snapshot_ref": "capability-snapshot:forge:51",
+        "api_compatibility_ref": "api-compatibility:forge:51",
+        "credential_or_grant_ref": "grant:forge:51",
+        "currentness": {
+          "binding_generation": 7,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:51",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:51",
+          "rate_budget_ref": "rate-budget:forge:51"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:51",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:51",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:51",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-09-26T12:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "binding-generation:51"
+        },
+        "target": {
+          "target_kind": "hosted_secret",
+          "identity_source": "validated_automation_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "hosted_secret_name": "DEPLOY_TOKEN",
+          "hosted_variable_name": null,
+          "hosted_setting_scope_ref": "setting-scope:gitlab:alpha",
+          "secret_broker_ref": null,
+          "variable_value": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-09-26T12:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null
+      }
+    },
+    {
+      "name": "command_request_forge_pipeline_variable_set",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.pipeline.variable.set",
+        "command_instance_id": "command:forge:52",
+        "idempotency_key": "idempotency:forge:52",
+        "provider": "forgejo",
+        "provider_variant": "forgejo_self_managed",
+        "normalized_host": "forgejo.example.invalid",
+        "account_id": "account:forgejo:alpha",
+        "repo_id": "repo:forgejo:alpha",
+        "repository_binding_ref": "forge-binding:forgejo:alpha",
+        "expected_binding_generation": 3,
+        "automation_binding_ref": "automation-binding:forgejo:alpha",
+        "expected_automation_binding_generation": 2,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "variables",
+        "capability_snapshot_ref": "capability-snapshot:forge:52",
+        "api_compatibility_ref": "api-compatibility:forge:52",
+        "credential_or_grant_ref": "grant:forge:52",
+        "currentness": {
+          "binding_generation": 3,
+          "catalog_generation": 12,
+          "api_probe_ref": "api-probe:forge:52",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:52",
+          "rate_budget_ref": "rate-budget:forge:52"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:52",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:52",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:52",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-09-26T12:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "binding-generation:52"
+        },
+        "target": {
+          "target_kind": "hosted_variable",
+          "identity_source": "validated_automation_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:forgejo:alpha",
+          "repository_locator_ref": "repository-locator:forgejo:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "hosted_secret_name": null,
+          "hosted_variable_name": "LOG_LEVEL",
+          "hosted_setting_scope_ref": "setting-scope:forgejo:alpha",
+          "secret_broker_ref": null,
+          "variable_value": "debug"
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-09-26T12:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null
+      }
+    },
+    {
+      "name": "command_request_forge_pipeline_variable_remove",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.pipeline.variable.remove",
+        "command_instance_id": "command:forge:53",
+        "idempotency_key": "idempotency:forge:53",
+        "provider": "github",
+        "provider_variant": "github_cloud",
+        "normalized_host": "github.com",
+        "account_id": "account:github:alpha",
+        "repo_id": "repo:alpha",
+        "repository_binding_ref": "forge-binding:github:alpha",
+        "expected_binding_generation": 9,
+        "automation_binding_ref": "automation-binding:github:alpha",
+        "expected_automation_binding_generation": 5,
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "requested_capability": "variables",
+        "capability_snapshot_ref": "capability-snapshot:forge:53",
+        "api_compatibility_ref": "api-compatibility:forge:53",
+        "credential_or_grant_ref": "grant:forge:53",
+        "currentness": {
+          "binding_generation": 9,
+          "catalog_generation": 12,
+          "api_probe_ref": "api-probe:forge:53",
+          "state": "current",
+          "mutation_safety": "verified",
+          "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+          "direct_revalidation_ref": "revalidation:forge:53",
+          "rate_budget_ref": "rate-budget:forge:53"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:53",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:53",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "confirmation": {
+          "confirmation_id": "confirmation:forge:53",
+          "actor_ref": "actor:human:1",
+          "confirmed_at_utc": "2026-09-26T12:00:00Z",
+          "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "expected_revision_ref": "binding-generation:53"
+        },
+        "target": {
+          "target_kind": "hosted_variable",
+          "identity_source": "validated_automation_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:github:alpha",
+          "repository_locator_ref": "repository-locator:github:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": null,
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "hosted_secret_name": null,
+          "hosted_variable_name": "LOG_LEVEL",
+          "hosted_setting_scope_ref": "setting-scope:github:repo:alpha",
+          "secret_broker_ref": null,
+          "variable_value": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-09-26T12:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": null
+      }
+    },
+    {
+      "name": "command_request_forge_pipeline_open_in_browser_service_settings",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.pipeline.open_in_browser",
+        "command_instance_id": "command:forge:54",
+        "idempotency_key": "idempotency:forge:54",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "account_id": "account:gitlab:alpha",
+        "repo_id": "repo:alpha",
+        "repository_binding_ref": "forge-binding:gitlab:alpha",
+        "expected_binding_generation": 7,
+        "automation_binding_ref": "automation-binding:gitlab:alpha",
+        "expected_automation_binding_generation": 4,
+        "requested_authority_role": "secondary",
+        "effective_authority_role": "secondary",
+        "requested_capability": "pipelines",
+        "capability_snapshot_ref": "capability-snapshot:forge:54",
+        "api_compatibility_ref": "api-compatibility:forge:54",
+        "credential_or_grant_ref": "grant:forge:54",
+        "currentness": {
+          "binding_generation": 7,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:54",
+          "state": "current",
+          "mutation_safety": "reads_only",
+          "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+          "direct_revalidation_ref": null,
+          "rate_budget_ref": "rate-budget:forge:54"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:54",
+          "decision": "allow",
+          "scope": "external_navigation",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:54",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "confirmation": null,
+        "target": {
+          "target_kind": "pipeline",
+          "identity_source": "validated_repository_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": "official-route:forge:54",
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "official_destination_kind": "hosted_service_settings",
+          "hosted_setting_scope_ref": "setting-scope:gitlab:alpha:54",
+          "automation_run_id": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-09-26T12:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": {
+          "session_class": "allowlisted_official_page",
+          "actor_class": "human",
+          "foreground_human_confirmation_ref": "foreground-confirmation:54",
+          "allowed_origin_ref": "allowed-origin:54",
+          "official_page_route_ref": "official-route:forge:54"
+        }
+      }
+    },
+    {
+      "name": "command_result_repository_delete_effect_unknown",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.forge.command_result.v1",
+        "command_id": "cmd.forge.repository.delete",
+        "command_instance_id": "command:forge:result:delete:1",
+        "operation_id": "operation:forge:result:delete:1",
+        "provider": "github",
+        "repository_binding_ref": "forge-binding:github:alpha",
+        "expected_binding_generation": 9,
+        "outcome": "effect_unknown",
+        "target_ref": "delete-target:github:alpha",
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "degraded",
+          "reason_codes": [
+            "effect_unknown_reconciliation_required"
+          ],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [
+            "cmd.forge.repository.refresh"
+          ],
+          "evaluated_at_utc": "2026-09-26T12:10:00Z"
+        },
+        "error": {
+          "code": "effect_unknown_reconciliation_required",
+          "message": "Repository delete effect is unknown; reconcile the exact remote before any repeat or any further delete.",
+          "retry_disposition": "after_reconciliation",
+          "effect_state": "unknown",
+          "provider_error_ref": "provider-error:forge:delete:1",
+          "recovery_action_ids": [
+            "cmd.forge.repository.refresh"
+          ]
+        },
+        "observable_work_id": "observable-work:forge:result:delete:1",
+        "terminal_provider_result_ref": null,
+        "receipt_ref": null,
+        "event_refs": [],
+        "recovery_action_ids": [
+          "cmd.forge.repository.refresh"
+        ],
+        "completed_at_utc": "2026-09-26T12:10:00Z"
+      }
+    },
+    {
+      "name": "command_availability_pipeline_artifact_download_unsupported",
+      "definition": "command_availability",
+      "value": {
+        "schema_id": "pm.forge.command_availability.v1",
+        "command_id": "cmd.forge.pipeline.artifact.download",
+        "provider": "bitbucket_data_center",
+        "repository_binding_ref": "forge-binding:bitbucket-dc:1",
+        "expected_binding_generation": 2,
+        "requested_capability": "pipeline_artifacts",
+        "availability": {
+          "requested": true,
+          "effective": false,
+          "state": "unsupported",
+          "reason_codes": [
+            "capability_unsupported"
+          ],
+          "disabled_reason_code": "capability_unsupported",
+          "allowed_action_ids": [
+            "cmd.forge.pipeline.open_in_browser"
+          ],
+          "evaluated_at_utc": "2026-09-26T12:12:00Z"
+        },
+        "currentness": {
+          "binding_generation": 2,
+          "catalog_generation": 8,
+          "api_probe_ref": "api-probe:forge:artifact-unsupported",
+          "state": "current",
+          "mutation_safety": "blocked",
+          "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+          "direct_revalidation_ref": null,
+          "rate_budget_ref": "rate-budget:forge:artifact-unsupported"
+        },
+        "recorded_at_utc": "2026-09-26T12:12:00Z"
+      }
+    },
+    {
+      "name": "command_request_forge_pipeline_open_in_browser_service_overview",
+      "definition": "command_request",
+      "value": {
+        "schema_id": "pm.forge.command_request.v1",
+        "command_id": "cmd.forge.pipeline.open_in_browser",
+        "command_instance_id": "command:forge:55",
+        "idempotency_key": "idempotency:forge:55",
+        "provider": "gitlab",
+        "provider_variant": "gitlab_com",
+        "normalized_host": "gitlab.com",
+        "account_id": "account:gitlab:alpha",
+        "repo_id": "repo:alpha",
+        "repository_binding_ref": "forge-binding:gitlab:alpha",
+        "expected_binding_generation": 7,
+        "automation_binding_ref": "automation-binding:gitlab:alpha",
+        "expected_automation_binding_generation": 4,
+        "requested_authority_role": "secondary",
+        "effective_authority_role": "secondary",
+        "requested_capability": "pipelines",
+        "capability_snapshot_ref": "capability-snapshot:forge:55",
+        "api_compatibility_ref": "api-compatibility:forge:55",
+        "credential_or_grant_ref": "grant:forge:55",
+        "currentness": {
+          "binding_generation": 7,
+          "catalog_generation": 11,
+          "api_probe_ref": "api-probe:forge:55",
+          "state": "current",
+          "mutation_safety": "reads_only",
+          "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+          "direct_revalidation_ref": null,
+          "rate_budget_ref": "rate-budget:forge:55"
+        },
+        "permission": {
+          "permission_snapshot_ref": "permission:forge:55",
+          "decision": "allow",
+          "scope": "external_navigation",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:55",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "confirmation": null,
+        "target": {
+          "target_kind": "pipeline",
+          "identity_source": "validated_repository_binding",
+          "remote_text_used_for_identity": false,
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator_ref": "repository-locator:alpha",
+          "mirror_id": null,
+          "source_binding_ref": null,
+          "destination_binding_ref": null,
+          "authority_resolution_state": null,
+          "provider_review_id": null,
+          "review_revision_ref": null,
+          "thread_id": null,
+          "left_review_revision_ref": null,
+          "right_review_revision_ref": null,
+          "source_revision": null,
+          "target_revision": null,
+          "pipeline_id": null,
+          "pipeline_definition_ref": null,
+          "job_id": null,
+          "delivery_id": null,
+          "connection_id": null,
+          "official_page_route_ref": "official-route:forge:55",
+          "webhook_redelivery_gate": null,
+          "source_control_handoff_ref": null,
+          "official_destination_kind": "automation_service_overview",
+          "hosted_setting_scope_ref": null,
+          "automation_run_id": null
+        },
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "observable_work_id": null,
+        "invocation_source": "gui",
+        "requested_at_utc": "2026-09-26T12:00:00Z",
+        "file_safe_decision_ref": null,
+        "browser_handoff": {
+          "session_class": "allowlisted_official_page",
+          "actor_class": "human",
+          "foreground_human_confirmation_ref": "foreground-confirmation:55",
+          "allowed_origin_ref": "allowed-origin:55",
+          "official_page_route_ref": "official-route:forge:55"
+        }
+      }
+    },
+    {
+      "name": "command_result_forge_pipeline_artifact_download_succeeded",
+      "definition": "command_result",
+      "value": {
+        "schema_id": "pm.forge.command_result.v1",
+        "command_id": "cmd.forge.pipeline.artifact.download",
+        "command_instance_id": "command:forge:48",
+        "operation_id": "operation:forge:48",
+        "provider": "gitlab",
+        "repository_binding_ref": "forge-binding:gitlab:alpha",
+        "expected_binding_generation": 7,
+        "automation_binding_ref": "automation-binding:gitlab:alpha",
+        "expected_automation_binding_generation": 4,
+        "outcome": "succeeded",
+        "target_ref": "remote-artifact:gitlab:48",
+        "availability": {
+          "requested": true,
+          "effective": true,
+          "state": "available",
+          "reason_codes": [],
+          "disabled_reason_code": null,
+          "allowed_action_ids": [],
+          "evaluated_at_utc": "2026-09-26T12:05:00Z"
+        },
+        "error": null,
+        "observable_work_id": "observable-work:forge:48",
+        "terminal_provider_result_ref": "provider-result:forge:artifact:48",
+        "receipt_ref": "receipt:forge:48",
+        "event_refs": [],
+        "recovery_action_ids": [],
+        "completed_at_utc": "2026-09-26T12:05:00Z",
+        "artifact_identity": {
+          "automation_run_id": "automation-run:gitlab:48",
+          "pipeline_artifact_id": "artifact:test-report:48",
+          "remote_artifact_record_ref": "remote-artifact:gitlab:48",
+          "expected_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        }
+      }
+    },
+    {
+      "name": "command_receipt_forge_pipeline_artifact_download_succeeded",
+      "definition": "command_receipt",
+      "value": {
+        "schema_id": "pm.forge.command_receipt.v1",
+        "receipt_id": "receipt:forge:48",
+        "command_id": "cmd.forge.pipeline.artifact.download",
+        "command_instance_id": "command:forge:48",
+        "operation_id": "operation:forge:48",
+        "provider": "gitlab",
+        "repository_binding_ref": "forge-binding:gitlab:alpha",
+        "requested_authority_role": "authority",
+        "effective_authority_role": "authority",
+        "review_revision_ref": null,
+        "expected_binding_generation": 7,
+        "automation_binding_ref": "automation-binding:gitlab:alpha",
+        "expected_automation_binding_generation": 4,
+        "credential_or_grant_ref": "grant:forge:48",
+        "idempotency_key": "idempotency:forge:48",
+        "outcome": "succeeded",
+        "observable_work_id": "observable-work:forge:48",
+        "event_refs": [],
+        "recovery_actions": [],
+        "completed_at_utc": "2026-09-26T12:05:00Z",
+        "artifact_identity": {
+          "automation_run_id": "automation-run:gitlab:48",
+          "pipeline_artifact_id": "artifact:test-report:48",
+          "remote_artifact_record_ref": "remote-artifact:gitlab:48",
+          "expected_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        }
+      }
+    },
+    {
+      "name": "hosted_ci_roundtrip_artifact_download",
+      "definition": "hosted_ci_command_roundtrip",
+      "value": {
+        "schema_id": "pm.forge.hosted_ci_command_roundtrip.v1",
+        "command_id": "cmd.forge.pipeline.artifact.download",
+        "request": {
+          "schema_id": "pm.forge.command_request.v1",
+          "command_id": "cmd.forge.pipeline.artifact.download",
+          "command_instance_id": "command:forge:48",
+          "idempotency_key": "idempotency:forge:48",
+          "provider": "gitlab",
+          "provider_variant": "gitlab_com",
+          "normalized_host": "gitlab.com",
+          "account_id": "account:gitlab:alpha",
+          "repo_id": "repo:alpha",
+          "repository_binding_ref": "forge-binding:gitlab:alpha",
+          "expected_binding_generation": 7,
+          "automation_binding_ref": "automation-binding:gitlab:alpha",
+          "expected_automation_binding_generation": 4,
+          "requested_authority_role": "authority",
+          "effective_authority_role": "authority",
+          "requested_capability": "pipeline_artifacts",
+          "capability_snapshot_ref": "capability-snapshot:forge:48",
+          "api_compatibility_ref": "api-compatibility:forge:48",
+          "credential_or_grant_ref": "grant:forge:48",
+          "currentness": {
+            "binding_generation": 7,
+            "catalog_generation": 11,
+            "api_probe_ref": "api-probe:forge:48",
+            "state": "current",
+            "mutation_safety": "verified",
+            "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+            "direct_revalidation_ref": "revalidation:forge:48",
+            "rate_budget_ref": "rate-budget:forge:48"
+          },
+          "permission": {
+            "permission_snapshot_ref": "permission:forge:48",
+            "decision": "allow",
+            "scope": "local_mutation",
+            "actor_kind": "human",
+            "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "preflight_revision": "preflight:forge:48",
+            "evaluated_at_utc": "2026-09-26T12:00:00Z"
+          },
+          "confirmation": {
+            "confirmation_id": "confirmation:forge:48",
+            "actor_ref": "actor:human:1",
+            "confirmed_at_utc": "2026-09-26T12:00:00Z",
+            "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "expected_revision_ref": "binding-generation:48"
+          },
+          "target": {
+            "target_kind": "pipeline_artifact",
+            "identity_source": "validated_automation_binding",
+            "remote_text_used_for_identity": false,
+            "provider_repository_id": "provider-repo:alpha",
+            "repository_locator_ref": "repository-locator:alpha",
+            "mirror_id": null,
+            "source_binding_ref": null,
+            "destination_binding_ref": null,
+            "authority_resolution_state": null,
+            "provider_review_id": null,
+            "review_revision_ref": null,
+            "thread_id": null,
+            "left_review_revision_ref": null,
+            "right_review_revision_ref": null,
+            "source_revision": null,
+            "target_revision": null,
+            "pipeline_id": "pipeline:48",
+            "automation_run_id": "automation-run:gitlab:48",
+            "pipeline_definition_ref": "pipeline-definition:48",
+            "job_id": "job:test:48",
+            "delivery_id": null,
+            "connection_id": null,
+            "official_page_route_ref": null,
+            "webhook_redelivery_gate": null,
+            "source_control_handoff_ref": null,
+            "pipeline_artifact_id": "artifact:test-report:48",
+            "remote_artifact_record_ref": "remote-artifact:gitlab:48",
+            "artifact_disposition": "download",
+            "download_destination_ref": "destination:downloads:ci-artifact:48",
+            "artifact_import_handoff_ref": null,
+            "expected_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          },
+          "availability": {
+            "requested": true,
+            "effective": true,
+            "state": "available",
+            "reason_codes": [],
+            "disabled_reason_code": null,
+            "allowed_action_ids": [],
+            "evaluated_at_utc": "2026-09-26T12:00:00Z"
+          },
+          "observable_work_id": "observable-work:forge:48",
+          "invocation_source": "gui",
+          "requested_at_utc": "2026-09-26T12:00:00Z",
+          "file_safe_decision_ref": "filesafe-decision:forge:48",
+          "browser_handoff": null
+        },
+        "result": {
+          "schema_id": "pm.forge.command_result.v1",
+          "command_id": "cmd.forge.pipeline.artifact.download",
+          "command_instance_id": "command:forge:48",
+          "operation_id": "operation:forge:48",
+          "provider": "gitlab",
+          "repository_binding_ref": "forge-binding:gitlab:alpha",
+          "expected_binding_generation": 7,
+          "automation_binding_ref": "automation-binding:gitlab:alpha",
+          "expected_automation_binding_generation": 4,
+          "outcome": "succeeded",
+          "target_ref": "remote-artifact:gitlab:48",
+          "availability": {
+            "requested": true,
+            "effective": true,
+            "state": "available",
+            "reason_codes": [],
+            "disabled_reason_code": null,
+            "allowed_action_ids": [],
+            "evaluated_at_utc": "2026-09-26T12:05:00Z"
+          },
+          "error": null,
+          "observable_work_id": "observable-work:forge:48",
+          "terminal_provider_result_ref": "provider-result:forge:artifact:48",
+          "receipt_ref": "receipt:forge:48",
+          "event_refs": [],
+          "recovery_action_ids": [],
+          "completed_at_utc": "2026-09-26T12:05:00Z",
+          "artifact_identity": {
+            "automation_run_id": "automation-run:gitlab:48",
+            "pipeline_artifact_id": "artifact:test-report:48",
+            "remote_artifact_record_ref": "remote-artifact:gitlab:48",
+            "expected_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          }
+        },
+        "receipt": {
+          "schema_id": "pm.forge.command_receipt.v1",
+          "receipt_id": "receipt:forge:48",
+          "command_id": "cmd.forge.pipeline.artifact.download",
+          "command_instance_id": "command:forge:48",
+          "operation_id": "operation:forge:48",
+          "provider": "gitlab",
+          "repository_binding_ref": "forge-binding:gitlab:alpha",
+          "requested_authority_role": "authority",
+          "effective_authority_role": "authority",
+          "review_revision_ref": null,
+          "expected_binding_generation": 7,
+          "automation_binding_ref": "automation-binding:gitlab:alpha",
+          "expected_automation_binding_generation": 4,
+          "credential_or_grant_ref": "grant:forge:48",
+          "idempotency_key": "idempotency:forge:48",
+          "outcome": "succeeded",
+          "observable_work_id": "observable-work:forge:48",
+          "event_refs": [],
+          "recovery_actions": [],
+          "completed_at_utc": "2026-09-26T12:05:00Z",
+          "artifact_identity": {
+            "automation_run_id": "automation-run:gitlab:48",
+            "pipeline_artifact_id": "artifact:test-report:48",
+            "remote_artifact_record_ref": "remote-artifact:gitlab:48",
+            "expected_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          }
+        },
+        "automation_binding": {
+          "schema_id": "pm.forge.automation_binding.v1",
+          "automation_binding_id": "automation-binding:gitlab:alpha",
+          "project_id": "project:alpha",
+          "repo_id": "repo:alpha",
+          "service_kind": "gitlab_pipelines",
+          "provider": "gitlab",
+          "instance_id": "instance:gitlab:alpha",
+          "normalized_host": "gitlab.com",
+          "account_id": "account:gitlab:alpha",
+          "repository_binding_ref": "forge-binding:gitlab:alpha",
+          "repository_relationship": "same_forge",
+          "capability_snapshot_ref": "capability-snapshot:forge:48",
+          "catalog_ref": "catalog:forge:48",
+          "permission_snapshot_ref": "permission:forge:48",
+          "currentness_ref": "currentness:forge:48",
+          "credential_or_grant_ref": "grant:forge:48",
+          "binding_generation": 4
+        },
+        "repository_binding": {
+          "schema_id": "pm.forge.repository_binding.v1",
+          "binding_id": "forge-binding:gitlab:alpha",
+          "provider": "gitlab",
+          "provider_variant": "gitlab_com",
+          "normalized_host": "gitlab.com",
+          "account_id": "account:gitlab:alpha",
+          "repo_id": "repo:alpha",
+          "provider_repository_id": "provider-repo:alpha",
+          "repository_locator": {
+            "organization_or_workspace": "group-alpha",
+            "project": null,
+            "repository_slug": "service-one"
+          },
+          "authority": {
+            "storage": "authority",
+            "review": "authority",
+            "checks": "authority",
+            "automation": "authority",
+            "issues": "authority",
+            "transport": "authority",
+            "mirror": "not_applicable"
+          },
+          "credential_ref": "credential:forge:gitlab:48",
+          "adapter_ref": "adapter:gitlab:1",
+          "capability_catalog_ref": "catalog:forge:48",
+          "binding_generation": 7
+        },
+        "verified_create_result": null,
+        "verified_create_receipt": null,
+        "artifact_evidence": {
+          "automation_run_id": "automation-run:gitlab:48",
+          "remote_artifact_record_ref": "remote-artifact:gitlab:48",
+          "pipeline_id": "pipeline:48",
+          "pipeline_definition_ref": "pipeline-definition:48",
+          "job_id": "job:test:48",
+          "automation_binding_ref": "automation-binding:gitlab:alpha",
+          "automation_binding_generation": 4,
+          "artifact_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "run_record": {
+            "schema_id": "pm.source_control.normalized_remote_record.v1",
+            "provider_kind": "gitlab",
+            "instance_id": "instance:gitlab:alpha",
+            "account_id": "account:gitlab:alpha",
+            "repository_id": "provider-repo:alpha",
+            "raw_status": "success",
+            "normalized_status": "succeeded",
+            "revision_ref": "sha:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "canonical_url": null,
+            "canonical_url_origin": "absent",
+            "url_absent_reason": "Fixture provider observation has no human-facing page",
+            "observed_at_utc": "2026-09-26T12:00:00Z",
+            "vendor_extensions": {},
+            "vendor_extensions_preserved": true,
+            "record_kind": "AutomationRun",
+            "immutable_external_id": "automation-run:gitlab:48",
+            "native_object_label": "Pipeline"
+          },
+          "artifact_record": {
+            "schema_id": "pm.source_control.normalized_remote_record.v1",
+            "provider_kind": "gitlab",
+            "instance_id": "instance:gitlab:alpha",
+            "account_id": "account:gitlab:alpha",
+            "repository_id": "provider-repo:alpha",
+            "raw_status": "success",
+            "normalized_status": "succeeded",
+            "revision_ref": "sha:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "canonical_url": null,
+            "canonical_url_origin": "absent",
+            "url_absent_reason": "Fixture provider observation has no human-facing page",
+            "observed_at_utc": "2026-09-26T12:00:00Z",
+            "vendor_extensions": {},
+            "vendor_extensions_preserved": true,
+            "record_kind": "RemoteArtifact",
+            "immutable_external_id": "artifact:test-report:48",
+            "native_object_label": "Artifact"
+          },
+          "service_repository_id": "provider-repo:alpha"
+        },
+        "verified_create_target": null
+      }
+    },
+    {
+      "name": "hosted_ci_roundtrip_secret_set",
+      "definition": "hosted_ci_command_roundtrip",
+      "value": {
+        "schema_id": "pm.forge.hosted_ci_command_roundtrip.v1",
+        "command_id": "cmd.forge.pipeline.secret.set",
+        "request": {
+          "schema_id": "pm.forge.command_request.v1",
+          "command_id": "cmd.forge.pipeline.secret.set",
+          "command_instance_id": "command:forge:50",
+          "idempotency_key": "idempotency:forge:50",
+          "provider": "github",
+          "provider_variant": "github_cloud",
+          "normalized_host": "github.com",
+          "account_id": "account:github:alpha",
+          "repo_id": "repo:alpha",
+          "repository_binding_ref": "forge-binding:github:alpha",
+          "expected_binding_generation": 9,
+          "automation_binding_ref": "automation-binding:github:alpha",
+          "expected_automation_binding_generation": 5,
+          "requested_authority_role": "authority",
+          "effective_authority_role": "authority",
+          "requested_capability": "secrets",
+          "capability_snapshot_ref": "capability-snapshot:forge:50",
+          "api_compatibility_ref": "api-compatibility:forge:50",
+          "credential_or_grant_ref": "grant:forge:50",
+          "currentness": {
+            "binding_generation": 9,
+            "catalog_generation": 12,
+            "api_probe_ref": "api-probe:forge:50",
+            "state": "current",
+            "mutation_safety": "verified",
+            "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+            "direct_revalidation_ref": "revalidation:forge:50",
+            "rate_budget_ref": "rate-budget:forge:50"
+          },
+          "permission": {
+            "permission_snapshot_ref": "permission:forge:50",
+            "decision": "allow",
+            "scope": "remote_side_effect",
+            "actor_kind": "human",
+            "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "preflight_revision": "preflight:forge:50",
+            "evaluated_at_utc": "2026-09-26T12:00:00Z"
+          },
+          "confirmation": {
+            "confirmation_id": "confirmation:forge:50",
+            "actor_ref": "actor:human:1",
+            "confirmed_at_utc": "2026-09-26T12:00:00Z",
+            "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "expected_revision_ref": "binding-generation:50"
+          },
+          "target": {
+            "target_kind": "hosted_secret",
+            "identity_source": "validated_automation_binding",
+            "remote_text_used_for_identity": false,
+            "provider_repository_id": "provider-repo:github:alpha",
+            "repository_locator_ref": "repository-locator:github:alpha",
+            "mirror_id": null,
+            "source_binding_ref": null,
+            "destination_binding_ref": null,
+            "authority_resolution_state": null,
+            "provider_review_id": null,
+            "review_revision_ref": null,
+            "thread_id": null,
+            "left_review_revision_ref": null,
+            "right_review_revision_ref": null,
+            "source_revision": null,
+            "target_revision": null,
+            "pipeline_id": null,
+            "pipeline_definition_ref": null,
+            "job_id": null,
+            "delivery_id": null,
+            "connection_id": null,
+            "official_page_route_ref": null,
+            "webhook_redelivery_gate": null,
+            "source_control_handoff_ref": null,
+            "hosted_secret_name": "DEPLOY_TOKEN",
+            "hosted_variable_name": null,
+            "hosted_setting_scope_ref": "setting-scope:github:repo:alpha",
+            "secret_broker_ref": "broker:one-use:50",
+            "variable_value": null
+          },
+          "availability": {
+            "requested": true,
+            "effective": true,
+            "state": "available",
+            "reason_codes": [],
+            "disabled_reason_code": null,
+            "allowed_action_ids": [],
+            "evaluated_at_utc": "2026-09-26T12:00:00Z"
+          },
+          "observable_work_id": null,
+          "invocation_source": "gui",
+          "requested_at_utc": "2026-09-26T12:00:00Z",
+          "file_safe_decision_ref": null,
+          "browser_handoff": null
+        },
+        "result": {
+          "schema_id": "pm.forge.command_result.v1",
+          "command_id": "cmd.forge.pipeline.secret.set",
+          "command_instance_id": "command:forge:50",
+          "operation_id": "operation:forge:50",
+          "provider": "github",
+          "repository_binding_ref": "forge-binding:github:alpha",
+          "expected_binding_generation": 9,
+          "automation_binding_ref": "automation-binding:github:alpha",
+          "expected_automation_binding_generation": 5,
+          "outcome": "succeeded",
+          "target_ref": "setting-scope:github:repo:alpha",
+          "availability": {
+            "requested": true,
+            "effective": true,
+            "state": "available",
+            "reason_codes": [],
+            "disabled_reason_code": null,
+            "allowed_action_ids": [],
+            "evaluated_at_utc": "2026-09-26T12:05:00Z"
+          },
+          "error": null,
+          "observable_work_id": null,
+          "terminal_provider_result_ref": "provider-result:forge:hosted:50",
+          "receipt_ref": "receipt:forge:50",
+          "event_refs": [],
+          "recovery_action_ids": [],
+          "completed_at_utc": "2026-09-26T12:05:00Z"
+        },
+        "receipt": {
+          "schema_id": "pm.forge.command_receipt.v1",
+          "receipt_id": "receipt:forge:50",
+          "command_id": "cmd.forge.pipeline.secret.set",
+          "command_instance_id": "command:forge:50",
+          "operation_id": "operation:forge:50",
+          "provider": "github",
+          "repository_binding_ref": "forge-binding:github:alpha",
+          "requested_authority_role": "authority",
+          "effective_authority_role": "authority",
+          "review_revision_ref": null,
+          "expected_binding_generation": 9,
+          "automation_binding_ref": "automation-binding:github:alpha",
+          "expected_automation_binding_generation": 5,
+          "credential_or_grant_ref": "grant:forge:50",
+          "idempotency_key": "idempotency:forge:50",
+          "outcome": "succeeded",
+          "observable_work_id": null,
+          "event_refs": [],
+          "recovery_actions": [],
+          "completed_at_utc": "2026-09-26T12:05:00Z"
+        },
+        "automation_binding": {
+          "schema_id": "pm.forge.automation_binding.v1",
+          "automation_binding_id": "automation-binding:github:alpha",
+          "project_id": "project:alpha",
+          "repo_id": "repo:alpha",
+          "service_kind": "github_actions",
+          "provider": "github",
+          "instance_id": "instance:github:alpha",
+          "normalized_host": "github.com",
+          "account_id": "account:github:alpha",
+          "repository_binding_ref": "forge-binding:github:alpha",
+          "repository_relationship": "same_forge",
+          "capability_snapshot_ref": "capability-snapshot:forge:50",
+          "catalog_ref": "catalog:forge:50",
+          "permission_snapshot_ref": "permission:forge:50",
+          "currentness_ref": "currentness:forge:50",
+          "credential_or_grant_ref": "grant:forge:50",
+          "binding_generation": 5
+        },
+        "repository_binding": {
+          "schema_id": "pm.forge.repository_binding.v1",
+          "binding_id": "forge-binding:github:alpha",
+          "provider": "github",
+          "provider_variant": "github_cloud",
+          "normalized_host": "github.com",
+          "account_id": "account:github:alpha",
+          "repo_id": "repo:alpha",
+          "provider_repository_id": "provider-repo:github:alpha",
+          "repository_locator": {
+            "organization_or_workspace": "group-alpha",
+            "project": null,
+            "repository_slug": "service-one"
+          },
+          "authority": {
+            "storage": "authority",
+            "review": "authority",
+            "checks": "authority",
+            "automation": "authority",
+            "issues": "authority",
+            "transport": "authority",
+            "mirror": "not_applicable"
+          },
+          "credential_ref": "credential:forge:github:50",
+          "adapter_ref": "adapter:gitlab:1",
+          "capability_catalog_ref": "catalog:forge:50",
+          "binding_generation": 9
+        },
+        "verified_create_result": null,
+        "verified_create_receipt": null,
+        "artifact_evidence": null,
+        "verified_create_target": null
+      }
+    },
+    {
+      "name": "hosted_ci_roundtrip_repository_delete",
+      "definition": "hosted_ci_command_roundtrip",
+      "value": {
+        "schema_id": "pm.forge.hosted_ci_command_roundtrip.v1",
+        "command_id": "cmd.forge.repository.delete",
+        "request": {
+          "schema_id": "pm.forge.command_request.v1",
+          "command_id": "cmd.forge.repository.delete",
+          "command_instance_id": "command:forge:47",
+          "idempotency_key": "idempotency:forge:47",
+          "provider": "github",
+          "provider_variant": "github_cloud",
+          "normalized_host": "github.com",
+          "account_id": "account:github:alpha",
+          "repo_id": "repo:alpha",
+          "repository_binding_ref": "forge-binding:github:alpha",
+          "expected_binding_generation": 9,
+          "requested_authority_role": "authority",
+          "effective_authority_role": "authority",
+          "requested_capability": "repository",
+          "capability_snapshot_ref": "capability-snapshot:forge:47",
+          "api_compatibility_ref": "api-compatibility:forge:47",
+          "credential_or_grant_ref": "grant:forge:47",
+          "currentness": {
+            "binding_generation": 9,
+            "catalog_generation": 12,
+            "api_probe_ref": "api-probe:forge:47",
+            "state": "current",
+            "mutation_safety": "verified",
+            "projection_updated_at_utc": "2026-09-26T12:00:00Z",
+            "direct_revalidation_ref": "revalidation:forge:47",
+            "rate_budget_ref": "rate-budget:forge:47"
+          },
+          "permission": {
+            "permission_snapshot_ref": "permission:forge:47",
+            "decision": "allow",
+            "scope": "remote_side_effect",
+            "actor_kind": "human",
+            "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "preflight_revision": "preflight:forge:47",
+            "evaluated_at_utc": "2026-09-26T12:00:00Z"
+          },
+          "confirmation": {
+            "confirmation_id": "confirmation:forge:47",
+            "actor_ref": "actor:human:1",
+            "confirmed_at_utc": "2026-09-26T12:00:00Z",
+            "confirmation_text_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "expected_revision_ref": "binding-generation:47"
+          },
+          "target": {
+            "target_kind": "repository",
+            "identity_source": "validated_repository_binding",
+            "remote_text_used_for_identity": false,
+            "provider_repository_id": "provider-repo:github:alpha",
+            "repository_locator_ref": "repository-locator:github:alpha",
+            "mirror_id": null,
+            "source_binding_ref": null,
+            "destination_binding_ref": null,
+            "authority_resolution_state": null,
+            "provider_review_id": null,
+            "review_revision_ref": null,
+            "thread_id": null,
+            "left_review_revision_ref": null,
+            "right_review_revision_ref": null,
+            "source_revision": null,
+            "target_revision": null,
+            "pipeline_id": null,
+            "pipeline_definition_ref": null,
+            "job_id": null,
+            "delivery_id": null,
+            "connection_id": null,
+            "official_page_route_ref": null,
+            "webhook_redelivery_gate": null,
+            "source_control_handoff_ref": null,
+            "verified_create_result_ref": "provider-result:forge:create:47",
+            "verified_create_receipt_ref": "receipt:forge:create:47"
+          },
+          "availability": {
+            "requested": true,
+            "effective": true,
+            "state": "available",
+            "reason_codes": [],
+            "disabled_reason_code": null,
+            "allowed_action_ids": [],
+            "evaluated_at_utc": "2026-09-26T12:00:00Z"
+          },
+          "observable_work_id": null,
+          "invocation_source": "gui",
+          "requested_at_utc": "2026-09-26T12:00:00Z",
+          "file_safe_decision_ref": null,
+          "browser_handoff": null
+        },
+        "result": {
+          "schema_id": "pm.forge.command_result.v1",
+          "command_id": "cmd.forge.repository.delete",
+          "command_instance_id": "command:forge:47",
+          "operation_id": "operation:forge:47",
+          "provider": "github",
+          "repository_binding_ref": "forge-binding:github:alpha",
+          "expected_binding_generation": 9,
+          "outcome": "succeeded",
+          "target_ref": "delete-target:github:alpha",
+          "availability": {
+            "requested": true,
+            "effective": true,
+            "state": "available",
+            "reason_codes": [],
+            "disabled_reason_code": null,
+            "allowed_action_ids": [],
+            "evaluated_at_utc": "2026-09-26T12:05:00Z"
+          },
+          "error": null,
+          "observable_work_id": null,
+          "terminal_provider_result_ref": "provider-result:forge:delete:47",
+          "receipt_ref": "receipt:forge:47",
+          "event_refs": [],
+          "recovery_action_ids": [],
+          "completed_at_utc": "2026-09-26T12:05:00Z"
+        },
+        "receipt": {
+          "schema_id": "pm.forge.command_receipt.v1",
+          "receipt_id": "receipt:forge:47",
+          "command_id": "cmd.forge.repository.delete",
+          "command_instance_id": "command:forge:47",
+          "operation_id": "operation:forge:47",
+          "provider": "github",
+          "repository_binding_ref": "forge-binding:github:alpha",
+          "requested_authority_role": "authority",
+          "effective_authority_role": "authority",
+          "review_revision_ref": null,
+          "expected_binding_generation": 9,
+          "credential_or_grant_ref": "grant:forge:47",
+          "idempotency_key": "idempotency:forge:47",
+          "outcome": "succeeded",
+          "observable_work_id": null,
+          "event_refs": [],
+          "recovery_actions": [],
+          "completed_at_utc": "2026-09-26T12:05:00Z"
+        },
+        "automation_binding": null,
+        "repository_binding": {
+          "schema_id": "pm.forge.repository_binding.v1",
+          "binding_id": "forge-binding:github:alpha",
+          "provider": "github",
+          "provider_variant": "github_cloud",
+          "normalized_host": "github.com",
+          "account_id": "account:github:alpha",
+          "repo_id": "repo:alpha",
+          "provider_repository_id": "provider-repo:github:alpha",
+          "repository_locator": {
+            "organization_or_workspace": "group-alpha",
+            "project": null,
+            "repository_slug": "service-one"
+          },
+          "authority": {
+            "storage": "authority",
+            "review": "authority",
+            "checks": "authority",
+            "automation": "authority",
+            "issues": "authority",
+            "transport": "authority",
+            "mirror": "not_applicable"
+          },
+          "credential_ref": "credential:forge:github:47",
+          "adapter_ref": "adapter:gitlab:1",
+          "capability_catalog_ref": "catalog:forge:47",
+          "binding_generation": 9
+        },
+        "verified_create_result": {
+          "schema_id": "pm.forge.command_result.v1",
+          "command_id": "cmd.forge.repository.create",
+          "command_instance_id": "command:forge:create:47",
+          "operation_id": "provider-result:forge:create:47",
+          "provider": "github",
+          "repository_binding_ref": "forge-binding:github:alpha",
+          "expected_binding_generation": 9,
+          "outcome": "succeeded",
+          "target_ref": "create-target:github:alpha",
+          "availability": {
+            "requested": true,
+            "effective": true,
+            "state": "available",
+            "reason_codes": [],
+            "disabled_reason_code": null,
+            "allowed_action_ids": [],
+            "evaluated_at_utc": "2026-09-26T11:55:00Z"
+          },
+          "error": null,
+          "observable_work_id": null,
+          "terminal_provider_result_ref": "provider-terminal:forge:create:47",
+          "receipt_ref": "receipt:forge:create:47",
+          "event_refs": [],
+          "recovery_action_ids": [],
+          "completed_at_utc": "2026-09-26T11:55:00Z"
+        },
+        "verified_create_receipt": {
+          "schema_id": "pm.forge.command_receipt.v1",
+          "receipt_id": "receipt:forge:create:47",
+          "command_id": "cmd.forge.repository.create",
+          "command_instance_id": "command:forge:create:47",
+          "operation_id": "provider-result:forge:create:47",
+          "provider": "github",
+          "repository_binding_ref": "forge-binding:github:alpha",
+          "requested_authority_role": "authority",
+          "effective_authority_role": "authority",
+          "review_revision_ref": null,
+          "expected_binding_generation": 9,
+          "credential_or_grant_ref": "grant:forge:47",
+          "idempotency_key": "idempotency:forge:create:47",
+          "outcome": "succeeded",
+          "observable_work_id": null,
+          "event_refs": [],
+          "recovery_actions": [],
+          "completed_at_utc": "2026-09-26T11:55:00Z"
+        },
+        "artifact_evidence": null,
+        "verified_create_target": {
+          "target_ref": "create-target:github:alpha",
+          "repository_binding": {
+            "schema_id": "pm.forge.repository_binding.v1",
+            "binding_id": "forge-binding:github:alpha",
+            "provider": "github",
+            "provider_variant": "github_cloud",
+            "normalized_host": "github.com",
+            "account_id": "account:github:alpha",
+            "repo_id": "repo:alpha",
+            "provider_repository_id": "provider-repo:github:alpha",
+            "repository_locator": {
+              "organization_or_workspace": "group-alpha",
+              "project": null,
+              "repository_slug": "service-one"
+            },
+            "authority": {
+              "storage": "authority",
+              "review": "authority",
+              "checks": "authority",
+              "automation": "authority",
+              "issues": "authority",
+              "transport": "authority",
+              "mirror": "not_applicable"
+            },
+            "credential_ref": "credential:forge:github:47",
+            "adapter_ref": "adapter:gitlab:1",
+            "capability_catalog_ref": "catalog:forge:47",
+            "binding_generation": 9
+          }
+        }
+      }
+    },
+    {
+      "name": "hosted_ci_admission_artifact_download",
+      "definition": "hosted_ci_capability_admission",
+      "value": {
+        "schema_id": "pm.forge.hosted_ci_capability_admission.v1",
+        "requested_capability": "pipeline_artifacts",
+        "provider_profile": "gitlab_saas",
+        "matrix_dimension": "artifact_read",
+        "matrix_state": "available",
+        "admin_area": null,
+        "admin_write_state": null,
+        "artifact_disposition": "download",
+        "download_authority": "filesafe_destination",
+        "permission_scope": "local_mutation",
+        "permission_decision": "allow",
+        "availability_state": "available",
+        "matrix_profile": {
+          "profile_id": "gitlab_saas",
+          "review_vocabulary": "Merge request",
+          "automation_service": "GitLab Pipelines",
+          "authentication_methods": [
+            "registered_OAuth_PKCE",
+            "scoped_PAT"
+          ],
+          "git_transport": [
+            "clone",
+            "fetch",
+            "push"
+          ],
+          "transport_authority_independent_of_api": true,
+          "capability_default": "unknown_until_supported_evidence",
+          "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+          "account_password_allowed": false,
+          "ordinary_admin_scope_grant": false,
+          "native_windows_origin_cli_support": "not_applicable",
+          "origin_windows_fallbacks": [],
+          "implicit_wsl_enable": false,
+          "provider_specific_facts": [
+            "gitlab_native_mr_pipeline_stage_job_trace_child_pipeline"
+          ]
+        },
+        "dimension_observation": {
+          "profile_id": "gitlab_saas",
+          "dimension": "artifact_read",
+          "state": "available",
+          "currentness": "current"
+        },
+        "instance_profile_ref": "instance-profile:gitlab_saas:1",
+        "permission_record": {
+          "permission_snapshot_ref": "permission:forge:48",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:48",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "admin_surface": null
+      }
+    },
+    {
+      "name": "hosted_ci_admission_artifact_import",
+      "definition": "hosted_ci_capability_admission",
+      "value": {
+        "schema_id": "pm.forge.hosted_ci_capability_admission.v1",
+        "requested_capability": "pipeline_artifacts",
+        "provider_profile": "github_cloud",
+        "matrix_dimension": "artifact_read",
+        "matrix_state": "available",
+        "admin_area": null,
+        "admin_write_state": null,
+        "artifact_disposition": "import",
+        "download_authority": "artifact_import_handoff",
+        "permission_scope": "local_mutation",
+        "permission_decision": "allow",
+        "availability_state": "available",
+        "matrix_profile": {
+          "profile_id": "github_cloud",
+          "review_vocabulary": "Pull request",
+          "automation_service": "GitHub Actions",
+          "authentication_methods": [
+            "PM_direct_OAuth",
+            "GitHub_App",
+            "scoped_token"
+          ],
+          "git_transport": [
+            "clone",
+            "fetch",
+            "push"
+          ],
+          "transport_authority_independent_of_api": true,
+          "capability_default": "unknown_until_supported_evidence",
+          "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+          "account_password_allowed": false,
+          "ordinary_admin_scope_grant": false,
+          "native_windows_origin_cli_support": "not_applicable",
+          "origin_windows_fallbacks": [],
+          "implicit_wsl_enable": false,
+          "provider_specific_facts": [
+            "github_direct_api_no_gh_requirement"
+          ]
+        },
+        "dimension_observation": {
+          "profile_id": "github_cloud",
+          "dimension": "artifact_read",
+          "state": "available",
+          "currentness": "current"
+        },
+        "instance_profile_ref": "instance-profile:github_cloud:1",
+        "permission_record": {
+          "permission_snapshot_ref": "permission:forge:48",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:48",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "admin_surface": null
+      }
+    },
+    {
+      "name": "hosted_ci_admission_secret_set",
+      "definition": "hosted_ci_capability_admission",
+      "value": {
+        "schema_id": "pm.forge.hosted_ci_capability_admission.v1",
+        "requested_capability": "secrets",
+        "provider_profile": "github_cloud",
+        "matrix_dimension": "secrets_variables",
+        "matrix_state": "available",
+        "admin_area": "secrets",
+        "admin_write_state": "ready",
+        "artifact_disposition": null,
+        "download_authority": "none",
+        "permission_scope": "remote_side_effect",
+        "permission_decision": "allow",
+        "availability_state": "available",
+        "matrix_profile": {
+          "profile_id": "github_cloud",
+          "review_vocabulary": "Pull request",
+          "automation_service": "GitHub Actions",
+          "authentication_methods": [
+            "PM_direct_OAuth",
+            "GitHub_App",
+            "scoped_token"
+          ],
+          "git_transport": [
+            "clone",
+            "fetch",
+            "push"
+          ],
+          "transport_authority_independent_of_api": true,
+          "capability_default": "unknown_until_supported_evidence",
+          "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+          "account_password_allowed": false,
+          "ordinary_admin_scope_grant": false,
+          "native_windows_origin_cli_support": "not_applicable",
+          "origin_windows_fallbacks": [],
+          "implicit_wsl_enable": false,
+          "provider_specific_facts": [
+            "github_direct_api_no_gh_requirement"
+          ]
+        },
+        "dimension_observation": {
+          "profile_id": "github_cloud",
+          "dimension": "secrets_variables",
+          "state": "available",
+          "currentness": "current"
+        },
+        "instance_profile_ref": "instance-profile:github_cloud:1",
+        "permission_record": {
+          "permission_snapshot_ref": "permission:forge:48",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:48",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "admin_surface": {
+          "schema_id": "pm.forge.hosted_administration_surface.v1",
+          "provider": "github",
+          "instance_profile_ref": "instance-profile:github_cloud:1",
+          "field_schema_ref": "field-schema:forgejo:1:branch-policy",
+          "actions": [
+            {
+              "area": "repository_policy",
+              "read_state": "ready",
+              "write_state": "protected",
+              "permission_ref": "permission:repository-policy",
+              "receipt_or_external_route_ref": "receipt-schema:repository-policy"
+            },
+            {
+              "area": "branch_policy",
+              "read_state": "ready",
+              "write_state": "protected",
+              "permission_ref": "permission:branch-policy",
+              "receipt_or_external_route_ref": "receipt-schema:branch-policy"
+            },
+            {
+              "area": "ci_environments",
+              "read_state": "ready",
+              "write_state": "permission_denied",
+              "permission_ref": "permission:ci-environments",
+              "receipt_or_external_route_ref": "route:external:ci-environments"
+            },
+            {
+              "area": "deployment_approvals",
+              "read_state": "ready",
+              "write_state": "protected",
+              "permission_ref": "permission:deployment-approval",
+              "receipt_or_external_route_ref": "receipt-schema:deployment-approval"
+            },
+            {
+              "area": "secrets",
+              "read_state": "ready",
+              "write_state": "ready",
+              "permission_ref": "permission:forge:48",
+              "receipt_or_external_route_ref": "receipt-schema:write-only-value"
+            },
+            {
+              "area": "variables",
+              "read_state": "ready",
+              "write_state": "permission_denied",
+              "permission_ref": "permission:variables",
+              "receipt_or_external_route_ref": "receipt-schema:variable-write"
+            },
+            {
+              "area": "runners",
+              "read_state": "ready",
+              "write_state": "protected",
+              "permission_ref": "permission:runners",
+              "receipt_or_external_route_ref": "receipt-schema:runner-registration"
+            },
+            {
+              "area": "release_assets",
+              "read_state": "ready",
+              "write_state": "external_only",
+              "permission_ref": "permission:releases",
+              "receipt_or_external_route_ref": "route:external:releases"
+            }
+          ],
+          "secret_submission": {
+            "human_only_broker": true,
+            "readback_allowed": false,
+            "metadata_names_are_values": false
+          },
+          "runner_registration": {
+            "explicit_execution_host_target": true,
+            "explicit_consent": true,
+            "enabled_by_ci_connection_alone": false
+          },
+          "unsupported_action_fallback": "clearly_labeled_external_link",
+          "fake_success_allowed": false,
+          "runtime_support_claimed": false
+        }
+      }
+    },
+    {
+      "name": "hosted_ci_admission_variable_set_readonly_blocked",
+      "definition": "hosted_ci_capability_admission",
+      "value": {
+        "schema_id": "pm.forge.hosted_ci_capability_admission.v1",
+        "requested_capability": "variables",
+        "provider_profile": "forgejo",
+        "matrix_dimension": "secrets_variables",
+        "matrix_state": "available",
+        "admin_area": "variables",
+        "admin_write_state": "permission_denied",
+        "artifact_disposition": null,
+        "download_authority": "none",
+        "permission_scope": "remote_side_effect",
+        "permission_decision": "allow",
+        "availability_state": "blocked",
+        "matrix_profile": {
+          "profile_id": "forgejo",
+          "review_vocabulary": "Pull request",
+          "automation_service": "Forgejo Actions when enabled",
+          "authentication_methods": [
+            "instance_OAuth_PKCE_when_registered",
+            "guided_scoped_PAT"
+          ],
+          "git_transport": [
+            "clone",
+            "fetch",
+            "push"
+          ],
+          "transport_authority_independent_of_api": true,
+          "capability_default": "unknown_until_supported_evidence",
+          "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+          "account_password_allowed": false,
+          "ordinary_admin_scope_grant": false,
+          "native_windows_origin_cli_support": "not_applicable",
+          "origin_windows_fallbacks": [],
+          "implicit_wsl_enable": false,
+          "provider_specific_facts": [
+            "forgejo_distinct_versioned_adapter",
+            "actions_enabled_runner_and_operations_probed_independently"
+          ]
+        },
+        "dimension_observation": {
+          "profile_id": "forgejo",
+          "dimension": "secrets_variables",
+          "state": "available",
+          "currentness": "current"
+        },
+        "instance_profile_ref": "instance-profile:forgejo:1",
+        "permission_record": {
+          "permission_snapshot_ref": "permission:forge:48",
+          "decision": "allow",
+          "scope": "remote_side_effect",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:48",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "admin_surface": {
+          "schema_id": "pm.forge.hosted_administration_surface.v1",
+          "provider": "forgejo",
+          "instance_profile_ref": "instance-profile:forgejo:1",
+          "field_schema_ref": "field-schema:forgejo:1:branch-policy",
+          "actions": [
+            {
+              "area": "repository_policy",
+              "read_state": "ready",
+              "write_state": "protected",
+              "permission_ref": "permission:repository-policy",
+              "receipt_or_external_route_ref": "receipt-schema:repository-policy"
+            },
+            {
+              "area": "branch_policy",
+              "read_state": "ready",
+              "write_state": "protected",
+              "permission_ref": "permission:branch-policy",
+              "receipt_or_external_route_ref": "receipt-schema:branch-policy"
+            },
+            {
+              "area": "ci_environments",
+              "read_state": "ready",
+              "write_state": "permission_denied",
+              "permission_ref": "permission:ci-environments",
+              "receipt_or_external_route_ref": "route:external:ci-environments"
+            },
+            {
+              "area": "deployment_approvals",
+              "read_state": "ready",
+              "write_state": "protected",
+              "permission_ref": "permission:deployment-approval",
+              "receipt_or_external_route_ref": "receipt-schema:deployment-approval"
+            },
+            {
+              "area": "secrets",
+              "read_state": "ready",
+              "write_state": "permission_denied",
+              "permission_ref": "permission:protected-values",
+              "receipt_or_external_route_ref": "receipt-schema:write-only-value"
+            },
+            {
+              "area": "variables",
+              "read_state": "ready",
+              "write_state": "permission_denied",
+              "permission_ref": "permission:forge:48",
+              "receipt_or_external_route_ref": "receipt-schema:variable-write"
+            },
+            {
+              "area": "runners",
+              "read_state": "ready",
+              "write_state": "protected",
+              "permission_ref": "permission:runners",
+              "receipt_or_external_route_ref": "receipt-schema:runner-registration"
+            },
+            {
+              "area": "release_assets",
+              "read_state": "ready",
+              "write_state": "external_only",
+              "permission_ref": "permission:releases",
+              "receipt_or_external_route_ref": "route:external:releases"
+            }
+          ],
+          "secret_submission": {
+            "human_only_broker": true,
+            "readback_allowed": false,
+            "metadata_names_are_values": false
+          },
+          "runner_registration": {
+            "explicit_execution_host_target": true,
+            "explicit_consent": true,
+            "enabled_by_ci_connection_alone": false
+          },
+          "unsupported_action_fallback": "clearly_labeled_external_link",
+          "fake_success_allowed": false,
+          "runtime_support_claimed": false
+        }
+      }
+    },
+    {
+      "name": "hosted_ci_admission_artifact_bitbucket_dc_unsupported",
+      "definition": "hosted_ci_capability_admission",
+      "value": {
+        "schema_id": "pm.forge.hosted_ci_capability_admission.v1",
+        "requested_capability": "pipeline_artifacts",
+        "provider_profile": "bitbucket_data_center",
+        "matrix_dimension": "artifact_read",
+        "matrix_state": "unsupported",
+        "admin_area": null,
+        "admin_write_state": null,
+        "artifact_disposition": "download",
+        "download_authority": "filesafe_destination",
+        "permission_scope": "local_mutation",
+        "permission_decision": "allow",
+        "availability_state": "unsupported",
+        "matrix_profile": {
+          "profile_id": "bitbucket_data_center",
+          "review_vocabulary": "Pull request",
+          "automation_service": null,
+          "authentication_methods": [
+            "instance_supported_PAT_or_enterprise_auth"
+          ],
+          "git_transport": [
+            "clone",
+            "fetch",
+            "push"
+          ],
+          "transport_authority_independent_of_api": true,
+          "capability_default": "unknown_until_supported_evidence",
+          "operation_admission": "instance_version_tier_adapter_permissions_policy_freshness",
+          "account_password_allowed": false,
+          "ordinary_admin_scope_grant": false,
+          "native_windows_origin_cli_support": "not_applicable",
+          "origin_windows_fallbacks": [],
+          "implicit_wsl_enable": false,
+          "provider_specific_facts": [
+            "bitbucket_data_center_no_cloud_pipelines_inheritance"
+          ]
+        },
+        "dimension_observation": {
+          "profile_id": "bitbucket_data_center",
+          "dimension": "artifact_read",
+          "state": "unsupported",
+          "currentness": "current"
+        },
+        "instance_profile_ref": "instance-profile:bitbucket_data_center:1",
+        "permission_record": {
+          "permission_snapshot_ref": "permission:forge:48",
+          "decision": "allow",
+          "scope": "local_mutation",
+          "actor_kind": "human",
+          "target_binding_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "preflight_revision": "preflight:forge:48",
+          "evaluated_at_utc": "2026-09-26T12:00:00Z"
+        },
+        "admin_surface": null
+      }
+    },
+    {
+      "name": "hosted_admin_readonly_secrets_variables",
+      "definition": "hosted_administration_surface",
+      "value": {
+        "schema_id": "pm.forge.hosted_administration_surface.v1",
+        "provider": "forgejo",
+        "instance_profile_ref": "instance-profile:forgejo:1",
+        "field_schema_ref": "field-schema:forgejo:1:branch-policy",
+        "actions": [
+          {
+            "area": "repository_policy",
+            "read_state": "ready",
+            "write_state": "protected",
+            "permission_ref": "permission:repository-policy",
+            "receipt_or_external_route_ref": "receipt-schema:repository-policy"
+          },
+          {
+            "area": "branch_policy",
+            "read_state": "ready",
+            "write_state": "protected",
+            "permission_ref": "permission:branch-policy",
+            "receipt_or_external_route_ref": "receipt-schema:branch-policy"
+          },
+          {
+            "area": "ci_environments",
+            "read_state": "ready",
+            "write_state": "permission_denied",
+            "permission_ref": "permission:ci-environments",
+            "receipt_or_external_route_ref": "route:external:ci-environments"
+          },
+          {
+            "area": "deployment_approvals",
+            "read_state": "ready",
+            "write_state": "protected",
+            "permission_ref": "permission:deployment-approval",
+            "receipt_or_external_route_ref": "receipt-schema:deployment-approval"
+          },
+          {
+            "area": "secrets",
+            "read_state": "ready",
+            "write_state": "permission_denied",
+            "permission_ref": "permission:protected-values",
+            "receipt_or_external_route_ref": "receipt-schema:write-only-value"
+          },
+          {
+            "area": "variables",
+            "read_state": "ready",
+            "write_state": "permission_denied",
+            "permission_ref": "permission:variables",
+            "receipt_or_external_route_ref": "receipt-schema:variable-write"
+          },
+          {
+            "area": "runners",
+            "read_state": "ready",
+            "write_state": "protected",
+            "permission_ref": "permission:runners",
+            "receipt_or_external_route_ref": "receipt-schema:runner-registration"
+          },
+          {
+            "area": "release_assets",
+            "read_state": "ready",
+            "write_state": "external_only",
+            "permission_ref": "permission:releases",
+            "receipt_or_external_route_ref": "route:external:releases"
+          }
+        ],
+        "secret_submission": {
+          "human_only_broker": true,
+          "readback_allowed": false,
+          "metadata_names_are_values": false
+        },
+        "runner_registration": {
+          "explicit_execution_host_target": true,
+          "explicit_consent": true,
+          "enabled_by_ci_connection_alone": false
+        },
+        "unsupported_action_fallback": "clearly_labeled_external_link",
+        "fake_success_allowed": false,
+        "runtime_support_claimed": false
+      }
     }
   ],
   "invalid": [
@@ -5595,35 +8332,45 @@
       "name": "bitbucket_data_center_cannot_inherit_cloud_pipelines",
       "definition": "provider_capability_matrix",
       "base_valid": "minimum_provider_capability_and_auth_matrix_is_explicit",
-      "patch": {"profiles.7.automation_service": "Bitbucket Pipelines"},
+      "patch": {
+        "profiles.7.automation_service": "Bitbucket Pipelines"
+      },
       "expected_error": "Data Center does not inherit Cloud Pipelines"
     },
     {
       "name": "origin_windows_path_cannot_be_claimed_native_from_wsl_docs",
       "definition": "provider_capability_matrix",
       "base_valid": "minimum_provider_capability_and_auth_matrix_is_explicit",
-      "patch": {"profiles.10.native_windows_origin_cli_support": "verified"},
+      "patch": {
+        "profiles.10.native_windows_origin_cli_support": "verified"
+      },
       "expected_error": "native Windows Origin installation remains unverified"
     },
     {
       "name": "origin_create_push_cannot_bypass_publication_preview",
       "definition": "origin_cli_operation_profile",
       "base_valid": "origin_cli_operations_are_explicit_and_mirror_safe",
-      "patch": {"create_push_requires_publication_preview": false},
+      "patch": {
+        "create_push_requires_publication_preview": false
+      },
       "expected_error": "create --push is gated by the same publication preview and approval"
     },
     {
       "name": "secret_metadata_never_allows_value_readback",
       "definition": "hosted_administration_surface",
       "base_valid": "hosted_admin_actions_are_independently_gated",
-      "patch": {"secret_submission.readback_allowed": true},
+      "patch": {
+        "secret_submission.readback_allowed": true
+      },
       "expected_error": "secret values remain human-brokered and non-readable"
     },
     {
       "name": "runner_enablement_cannot_register_execution_host",
       "definition": "hosted_administration_surface",
       "base_valid": "hosted_admin_actions_are_independently_gated",
-      "patch": {"runner_registration.enabled_by_ci_connection_alone": true},
+      "patch": {
+        "runner_registration.enabled_by_ci_connection_alone": true
+      },
       "expected_error": "runner registration requires an exact host and consent"
     },
     {
@@ -6763,12 +9510,805 @@
         }
       },
       "expected_error": "the apply fences the same scope entry the preview fenced; a mutation that cannot say which scope it applies to has the defect the preview repair removed"
+    },
+    {
+      "name": "command_request_forge_repository_delete_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_repository_delete",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every Forge command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_forge_pipeline_artifact_download_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_artifact_download",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every Forge command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_forge_pipeline_secret_set_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_secret_set",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every Forge command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_forge_pipeline_secret_remove_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_secret_remove",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every Forge command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_forge_pipeline_variable_set_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_variable_set",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every Forge command request requires a permission snapshot"
+    },
+    {
+      "name": "command_request_forge_pipeline_variable_remove_missing_permission_snapshot",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_variable_remove",
+      "remove": [
+        "permission.permission_snapshot_ref"
+      ],
+      "expected_error": "every Forge command request requires a permission snapshot"
+    },
+    {
+      "name": "repository_delete_rejects_stale_currentness",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_repository_delete",
+      "patch": {
+        "currentness.state": "stale"
+      },
+      "expected_error": "a destructive delete never dispatches on stale binding evidence; only current direct revalidation authorizes it"
+    },
+    {
+      "name": "repository_delete_requires_verified_create",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_repository_delete",
+      "remove": [
+        "target.verified_create_result_ref"
+      ],
+      "expected_error": "delete without a verified created remote is undispatched; recovery deletes a proven identity, never an inferred one"
+    },
+    {
+      "name": "repository_delete_rejects_agent_actor",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_repository_delete",
+      "patch": {
+        "permission.actor_kind": "agent"
+      },
+      "expected_error": "repository delete is a human destructive intent; an agent dispatch without human authority is rejected"
+    },
+    {
+      "name": "repository_delete_requires_fresh_confirmation",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_repository_delete",
+      "patch": {
+        "confirmation": null
+      },
+      "expected_error": "delete without fresh target-bound human confirmation is undispatched"
+    },
+    {
+      "name": "pipeline_artifact_download_rejects_release_asset_target",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_artifact_download",
+      "patch": {
+        "target.target_kind": "release_asset"
+      },
+      "expected_error": "a CI artifact download is never fenced as a release asset; the two targets are distinct kinds"
+    },
+    {
+      "name": "release_asset_download_rejects_pipeline_artifact_target",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_release_asset_download",
+      "patch": {
+        "target.target_kind": "pipeline_artifact"
+      },
+      "expected_error": "a release asset download is never fenced as a CI artifact; the two targets are distinct kinds"
+    },
+    {
+      "name": "pipeline_artifact_download_rejects_release_assets_capability",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_artifact_download",
+      "patch": {
+        "requested_capability": "release_assets"
+      },
+      "expected_error": "release capability never authorizes a CI artifact download; capability granularity is exact"
+    },
+    {
+      "name": "pipeline_artifact_download_rejects_stale_currentness",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_artifact_download",
+      "patch": {
+        "currentness.state": "stale"
+      },
+      "expected_error": "a CI artifact download never dispatches on stale binding evidence"
+    },
+    {
+      "name": "artifact_download_requires_destination",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_artifact_download",
+      "remove": [
+        "target.download_destination_ref"
+      ],
+      "expected_error": "download disposition without an exact FileSafe destination is undispatched"
+    },
+    {
+      "name": "artifact_import_requires_import_handoff",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_artifact_import",
+      "remove": [
+        "target.artifact_import_handoff_ref"
+      ],
+      "expected_error": "import disposition without an exact artifact-import handoff is undispatched"
+    },
+    {
+      "name": "artifact_import_rejects_filesafe_decision",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_artifact_import",
+      "patch": {
+        "file_safe_decision_ref": "filesafe-decision:forge:smuggled"
+      },
+      "expected_error": "import disposition carries no filesystem decision; the handoff owns the store write"
+    },
+    {
+      "name": "artifact_download_rejects_import_handoff",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_artifact_download",
+      "patch": {
+        "target.artifact_import_handoff_ref": "artifact-import:smuggled"
+      },
+      "expected_error": "download disposition carries no import handoff; one disposition means one destination"
+    },
+    {
+      "name": "secret_set_requires_broker_ref",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_secret_set",
+      "remove": [
+        "target.secret_broker_ref"
+      ],
+      "expected_error": "secret set without a one-use protected broker ref is undispatched"
+    },
+    {
+      "name": "secret_set_forbids_inline_value",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_secret_set",
+      "patch": {
+        "target.variable_value": "inline-secret-bytes"
+      },
+      "expected_error": "secret bytes never ride in the command payload; the value travels by broker ref only"
+    },
+    {
+      "name": "secret_set_rejects_secret_bytes_in_broker_ref",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_secret_set",
+      "patch": {
+        "target.secret_broker_ref": "access_token:live-value"
+      },
+      "expected_error": "a broker ref is an opaque non-secret reference; secret-like bytes in the ref are rejected"
+    },
+    {
+      "name": "secret_set_requires_human_actor",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_secret_set",
+      "patch": {
+        "permission.actor_kind": "agent"
+      },
+      "expected_error": "secret set is human-only; the broker it draws on answers to a human"
+    },
+    {
+      "name": "secret_remove_requires_human_actor",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_secret_remove",
+      "patch": {
+        "permission.actor_kind": "automation"
+      },
+      "expected_error": "secret remove is human-only; automation never retires hosted secrets alone"
+    },
+    {
+      "name": "secret_set_rejects_variable_target_kind",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_secret_set",
+      "patch": {
+        "target.target_kind": "hosted_variable"
+      },
+      "expected_error": "a secret set is never fenced as a variable; the two hosted kinds stay distinct"
+    },
+    {
+      "name": "variable_set_cannot_carry_secret_broker_ref",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_variable_set",
+      "patch": {
+        "target.secret_broker_ref": "broker:one-use:smuggled"
+      },
+      "expected_error": "a variable set carries its plain value, never a secret broker ref"
+    },
+    {
+      "name": "variable_remove_rejects_inline_value",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_variable_remove",
+      "patch": {
+        "target.variable_value": "stale-value"
+      },
+      "expected_error": "a variable remove names the setting, never a value"
+    },
+    {
+      "name": "open_in_browser_requires_destination_kind",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_open_in_browser",
+      "remove": [
+        "target.official_destination_kind"
+      ],
+      "expected_error": "the two selected official links share one command but never share an undifferentiated destination"
+    },
+    {
+      "name": "open_in_browser_artifacts_requires_run_identity",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_open_in_browser",
+      "patch": {
+        "target.pipeline_id": null
+      },
+      "expected_error": "the artifacts destination binds the exact automation run; a run-less artifacts link is undispatched"
+    },
+    {
+      "name": "open_in_browser_settings_rejects_run_identity",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_open_in_browser_service_settings",
+      "patch": {
+        "target.pipeline_id": "pipeline:smuggled"
+      },
+      "expected_error": "the settings destination is service-scoped; a smuggled run identity is rejected as external target substitution"
+    },
+    {
+      "name": "repository_delete_effect_unknown_cannot_carry_terminal_result",
+      "definition": "command_result",
+      "base_valid": "command_result_repository_delete_effect_unknown",
+      "patch": {
+        "terminal_provider_result_ref": "provider-result:smuggled"
+      },
+      "expected_error": "effect_unknown carries no terminal result; only reconciliation settles the effect"
+    },
+    {
+      "name": "open_in_browser_settings_requires_scope_ref",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_open_in_browser_service_settings",
+      "expected_error": "the settings destination binds an exact service settings scope; a missing scope ref is undispatched",
+      "remove": [
+        "target.hosted_setting_scope_ref"
+      ]
+    },
+    {
+      "name": "open_in_browser_settings_rejects_null_scope_ref",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_open_in_browser_service_settings",
+      "expected_error": "the settings destination binds an exact service settings scope; a null scope ref is undispatched",
+      "patch": {
+        "target.hosted_setting_scope_ref": null
+      }
+    },
+    {
+      "name": "artifact_download_requires_automation_run_id",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_artifact_download",
+      "expected_error": "a CI artifact download binds the exact immutable automation run; a missing run identity is undispatched",
+      "remove": [
+        "target.automation_run_id"
+      ]
+    },
+    {
+      "name": "artifact_import_requires_automation_run_id",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_artifact_import",
+      "expected_error": "a CI artifact import binds the exact immutable automation run; a missing run identity is undispatched",
+      "remove": [
+        "target.automation_run_id"
+      ]
+    },
+    {
+      "name": "open_in_browser_artifacts_requires_automation_run_id",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_open_in_browser",
+      "expected_error": "the artifacts destination binds the exact automation run; a null run identity is undispatched",
+      "patch": {
+        "target.automation_run_id": null
+      }
+    },
+    {
+      "name": "open_in_browser_settings_rejects_automation_run_id",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_open_in_browser_service_settings",
+      "expected_error": "the settings destination is service-scoped; a smuggled run identity is rejected as external target substitution",
+      "patch": {
+        "target.automation_run_id": "automation-run:gitlab:54"
+      }
+    },
+    {
+      "name": "open_in_browser_overview_rejects_run_identity",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_open_in_browser_service_overview",
+      "expected_error": "the overview destination carries no run identity; a smuggled run is rejected as external target substitution",
+      "patch": {
+        "target.automation_run_id": "automation-run:gitlab:55"
+      }
+    },
+    {
+      "name": "open_in_browser_overview_rejects_scope_identity",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_open_in_browser_service_overview",
+      "expected_error": "the overview destination carries no setting scope; a smuggled scope is rejected as external target substitution",
+      "patch": {
+        "target.hosted_setting_scope_ref": "setting-scope:gitlab:alpha:55"
+      }
+    },
+    {
+      "name": "open_in_browser_artifacts_rejects_scope_identity",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_open_in_browser",
+      "expected_error": "the artifacts destination binds a run, not a settings scope; a smuggled scope is rejected as external target substitution",
+      "patch": {
+        "target.hosted_setting_scope_ref": "setting-scope:gitlab:alpha:34"
+      }
+    },
+    {
+      "name": "hosted_ci_result_requires_automation_binding",
+      "definition": "command_result",
+      "base_valid": "command_result_forge_pipeline_artifact_download_succeeded",
+      "expected_error": "a hosted-CI success carries its automation binding on the result; a dropped ref is incomplete",
+      "patch": {
+        "automation_binding_ref": null
+      }
+    },
+    {
+      "name": "hosted_ci_result_requires_automation_binding_generation",
+      "definition": "command_result",
+      "base_valid": "command_result_forge_pipeline_artifact_download_succeeded",
+      "expected_error": "a hosted-CI success carries its automation binding generation on the result; a dropped generation is incomplete",
+      "patch": {
+        "expected_automation_binding_generation": null
+      }
+    },
+    {
+      "name": "hosted_ci_receipt_requires_automation_binding",
+      "definition": "command_receipt",
+      "base_valid": "command_receipt_forge_pipeline_artifact_download_succeeded",
+      "expected_error": "a hosted-CI success carries its automation binding on the receipt; a dropped ref is incomplete",
+      "patch": {
+        "automation_binding_ref": null
+      }
+    },
+    {
+      "name": "hosted_ci_receipt_requires_automation_binding_generation",
+      "definition": "command_receipt",
+      "base_valid": "command_receipt_forge_pipeline_artifact_download_succeeded",
+      "expected_error": "a hosted-CI success carries its automation binding generation on the receipt; a dropped generation is incomplete",
+      "patch": {
+        "expected_automation_binding_generation": null
+      }
+    },
+    {
+      "name": "admission_secrets_ceiling_is_not_write_authorization",
+      "definition": "hosted_ci_capability_admission",
+      "base_valid": "hosted_ci_admission_secret_set",
+      "expected_error": "the combined secrets_variables matrix entry is a ceiling; a denied area write with claimed availability is rejected",
+      "patch": {
+        "admin_write_state": "permission_denied"
+      }
+    },
+    {
+      "name": "admission_variables_readonly_cannot_be_available",
+      "definition": "hosted_ci_capability_admission",
+      "base_valid": "hosted_ci_admission_variable_set_readonly_blocked",
+      "expected_error": "a read-only variables area never admits an available mutation",
+      "patch": {
+        "availability_state": "available"
+      }
+    },
+    {
+      "name": "admission_artifact_bitbucket_dc_no_ci_cannot_be_available",
+      "definition": "hosted_ci_capability_admission",
+      "base_valid": "hosted_ci_admission_artifact_bitbucket_dc_unsupported",
+      "expected_error": "Bitbucket Data Center without configured CI never admits an available artifact download",
+      "patch": {
+        "availability_state": "available"
+      }
+    },
+    {
+      "name": "admission_secrets_degraded_matrix_cannot_be_available",
+      "definition": "hosted_ci_capability_admission",
+      "base_valid": "hosted_ci_admission_secret_set",
+      "expected_error": "a degraded secrets_variables matrix never admits an available secret mutation",
+      "patch": {
+        "matrix_state": "degraded"
+      }
+    },
+    {
+      "name": "admission_artifact_download_requires_filesafe_authority",
+      "definition": "hosted_ci_capability_admission",
+      "base_valid": "hosted_ci_admission_artifact_download",
+      "expected_error": "a download disposition without a FileSafe destination authority is rejected",
+      "patch": {
+        "download_authority": "none"
+      }
+    },
+    {
+      "name": "admission_denied_permission_cannot_be_available",
+      "definition": "hosted_ci_capability_admission",
+      "base_valid": "hosted_ci_admission_secret_set",
+      "expected_error": "a denied permission never admits an available mutation",
+      "patch": {
+        "permission_decision": "deny"
+      }
+    }
+  ],
+  "semantic_counterexamples": [
+    {
+      "name": "roundtrip_mismatched_automation_generation",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_automation_generation_mismatch"
+      ],
+      "note": "result generation 5 disagrees with the request/binding generation 4; every nested record stays structurally valid.",
+      "patch": {
+        "result.expected_automation_binding_generation": 5
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_receipt_provider",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_provider_mismatch"
+      ],
+      "note": "receipt provider github disagrees with the gitlab request/result/bindings; every nested record stays structurally valid.",
+      "patch": {
+        "receipt.provider": "github"
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_receipt_join",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_receipt_ref_mismatch"
+      ],
+      "note": "result receipt_ref names receipt:forge:999 while the receipt carries receipt:forge:48.",
+      "patch": {
+        "result.receipt_ref": "receipt:forge:999"
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_operation_join",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_operation_mismatch"
+      ],
+      "note": "receipt operation_id disagrees with the result operation_id.",
+      "patch": {
+        "receipt.operation_id": "operation:forge:999"
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_artifact_target",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_artifact_target_mismatch"
+      ],
+      "note": "result target_ref names remote-artifact:gitlab:999 while the request binds remote-artifact:gitlab:48.",
+      "patch": {
+        "result.target_ref": "remote-artifact:gitlab:999"
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_expected_digest",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_digest_mismatch"
+      ],
+      "note": "request digest disagrees with the SCS-016 RemoteArtifact record digest carried as cross-owner evidence.",
+      "patch": {
+        "request.target.expected_digest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    },
+    {
+      "name": "delete_verified_create_result_substitution",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_repository_delete",
+      "violated_rules": [
+        "forge_roundtrip_verified_create_result_mismatch"
+      ],
+      "note": "delete verified_create_result_ref names another remote's create result while the embedded create evidence stays structurally valid.",
+      "patch": {
+        "request.target.verified_create_result_ref": "provider-result:forge:create:999"
+      }
+    },
+    {
+      "name": "delete_verified_create_receipt_substitution",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_repository_delete",
+      "violated_rules": [
+        "forge_roundtrip_verified_create_receipt_mismatch"
+      ],
+      "note": "delete verified_create_receipt_ref names another remote's create receipt while the embedded create evidence stays structurally valid.",
+      "patch": {
+        "request.target.verified_create_receipt_ref": "receipt:forge:create:999"
+      }
+    },
+    {
+      "name": "secret_like_variable_value",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_variable_set",
+      "violated_rules": [
+        "forge_variable_value_secret_like"
+      ],
+      "note": "variable_value carries a synthetic provider token prefix; structurally a plain string, semantically secret bytes that belong in the broker flow. Trips the implemented forge_variable_value_secret_like tripwire.",
+      "patch": {
+        "target.variable_value": "ghp_fixture-not-a-real-token"
+      }
+    },
+    {
+      "name": "unsupported_native_fallback_widens_capability",
+      "definition": "command_availability",
+      "base_valid": "command_availability_pipeline_artifact_download_unsupported",
+      "violated_rules": [
+        "forge_availability_unsupported_native_fallback"
+      ],
+      "note": "unsupported availability offers the native download action instead of the official-service fallback only.",
+      "patch": {
+        "availability.allowed_action_ids": [
+          "cmd.forge.pipeline.artifact.download"
+        ]
+      }
+    },
+    {
+      "name": "handoff_route_substitution",
+      "definition": "command_request",
+      "base_valid": "command_request_forge_pipeline_open_in_browser",
+      "violated_rules": [
+        "forge_browser_handoff_route_mismatch"
+      ],
+      "note": "handoff route disagrees with the target route ref; cross-route substitution.",
+      "patch": {
+        "browser_handoff.official_page_route_ref": "official-route:forge:999"
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_setting_scope",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_secret_set",
+      "violated_rules": [
+        "forge_roundtrip_setting_scope_mismatch"
+      ],
+      "note": "result target_ref names another scope while the request binds setting-scope:github:repo:alpha.",
+      "patch": {
+        "result.target_ref": "setting-scope:github:repo:beta"
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_binding_generation",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_binding_generation_mismatch"
+      ],
+      "note": "result binding generation 8 disagrees with the request/binding generation 7.",
+      "patch": {
+        "result.expected_binding_generation": 8
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_command_instance",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_command_instance_mismatch"
+      ],
+      "note": "receipt command_instance_id names another command instance.",
+      "patch": {
+        "receipt.command_instance_id": "command:forge:999"
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_account",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_account_mismatch"
+      ],
+      "note": "automation binding account disagrees with the request account.",
+      "patch": {
+        "automation_binding.account_id": "account:gitlab:beta"
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_repo",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_repo_mismatch"
+      ],
+      "note": "repository binding repo disagrees with the request repo.",
+      "patch": {
+        "repository_binding.repo_id": "repo:beta"
+      }
+    },
+    {
+      "name": "roundtrip_run_identity_reuses_definition",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_run_identity_not_definition"
+      ],
+      "note": "automation_run_id reuses the pipeline/definition identity instead of the immutable run identity.",
+      "patch": {
+        "request.target.automation_run_id": "pipeline:48"
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_service_instance",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_service_instance_mismatch"
+      ],
+      "note": "repository binding host names another service instance while the request and automation binding name gitlab.com.",
+      "patch": {
+        "repository_binding.normalized_host": "gitlab-b.example.invalid"
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_command",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_command_mismatch"
+      ],
+      "note": "receipt command_id names another command while the roundtrip, request, and result name artifact download.",
+      "patch": {
+        "receipt.command_id": "cmd.forge.pipeline.secret.set"
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_repository_binding",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_repository_binding_mismatch"
+      ],
+      "note": "result repository_binding_ref names another binding while the request, receipt, and binding record agree.",
+      "patch": {
+        "result.repository_binding_ref": "forge-binding:gitlab:beta"
+      }
+    },
+    {
+      "name": "roundtrip_mismatched_automation_binding",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_automation_binding_mismatch"
+      ],
+      "note": "result automation_binding_ref names another binding while the request, receipt, and binding record agree.",
+      "patch": {
+        "result.automation_binding_ref": "automation-binding:gitlab:beta"
+      }
+    },
+    {
+      "name": "roundtrip_secret_value_leak",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "violated_rules": [
+        "forge_roundtrip_secret_value_leak"
+      ],
+      "note": "result operation_id carries a synthetic token prefix in an unpatterned field; structurally a plain string, semantically secret bytes.",
+      "patch": {
+        "result.operation_id": "ghp_leak-synthetic-operation"
+      }
+    },
+    {
+      "name": "roundtrip_foreign_run_instance",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "patch": {
+        "artifact_evidence.run_record.instance_id": "instance:foreign"
+      },
+      "violated_rules": [
+        "forge_roundtrip_run_binding_mismatch"
+      ],
+      "note": "Shape-valid source-record substitution must fail computed admission."
+    },
+    {
+      "name": "roundtrip_receipt_artifact_digest_substitution",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_artifact_download",
+      "patch": {
+        "receipt.artifact_identity.expected_digest": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
+      "violated_rules": [
+        "forge_roundtrip_digest_mismatch"
+      ],
+      "note": "Shape-valid source-record substitution must fail computed admission."
+    },
+    {
+      "name": "admission_stale_dimension_observation",
+      "definition": "hosted_ci_capability_admission",
+      "base_valid": "hosted_ci_admission_artifact_download",
+      "patch": {
+        "dimension_observation.currentness": "stale"
+      },
+      "violated_rules": [
+        "forge_admission_matrix_not_ready"
+      ],
+      "note": "Shape-valid source-record substitution must fail computed admission."
+    },
+    {
+      "name": "admission_matrix_profile_substitution",
+      "definition": "hosted_ci_capability_admission",
+      "base_valid": "hosted_ci_admission_artifact_download",
+      "patch": {
+        "dimension_observation.profile_id": "github_cloud"
+      },
+      "violated_rules": [
+        "forge_admission_profile_mismatch"
+      ],
+      "note": "Shape-valid source-record substitution must fail computed admission."
+    },
+    {
+      "name": "admission_permission_record_denies_claimed_allow",
+      "definition": "hosted_ci_capability_admission",
+      "base_valid": "hosted_ci_admission_secret_set",
+      "patch": {
+        "permission_record.decision": "deny"
+      },
+      "violated_rules": [
+        "forge_admission_permission_not_ready"
+      ],
+      "note": "Shape-valid source-record substitution must fail computed admission."
+    },
+    {
+      "name": "admission_admin_record_denies_claimed_ready",
+      "definition": "hosted_ci_capability_admission",
+      "base_valid": "hosted_ci_admission_secret_set",
+      "patch": {
+        "admin_surface.actions.4.write_state": "permission_denied"
+      },
+      "violated_rules": [
+        "forge_admission_admin_not_ready"
+      ],
+      "note": "Shape-valid source-record substitution must fail computed admission."
+    },
+    {
+      "name": "delete_foreign_verified_create_target",
+      "definition": "hosted_ci_command_roundtrip",
+      "base_valid": "hosted_ci_roundtrip_repository_delete",
+      "patch": {
+        "verified_create_result.target_ref": "create-target:github:foreign"
+      },
+      "violated_rules": [
+        "forge_roundtrip_verified_create_target_mismatch"
+      ],
+      "note": "Create result target must resolve to the exact repository selected for deletion."
     }
   ],
   "command_coverage": {
-    "canonical_command_count": 46,
-    "planned_central_common_route_count": 43,
-    "pending_central_catalog_and_wiring_count": 9,
+    "canonical_command_count": 52,
+    "planned_central_common_route_count": 49,
+    "pending_central_catalog_and_wiring_count": 15,
     "preexisting_provider_owned_command_ids": [
       "cmd.forge.review.create",
       "cmd.forge.review.merge"
@@ -6836,6 +10376,48 @@
         "handler_status": "handler_unavailable",
         "expected_event_types": [],
         "receipt_type": "MutationReceipt"
+      },
+      {
+        "command_id": "cmd.forge.repository.delete",
+        "sole_future_handler": "handlers::forge::repository_delete",
+        "handler_status": "handler_unavailable",
+        "expected_event_types": [],
+        "receipt_type": "DestructiveOperationReceipt"
+      },
+      {
+        "command_id": "cmd.forge.pipeline.artifact.download",
+        "sole_future_handler": "handlers::forge::pipeline_artifact_download",
+        "handler_status": "handler_unavailable",
+        "expected_event_types": [],
+        "receipt_type": "MutationReceipt"
+      },
+      {
+        "command_id": "cmd.forge.pipeline.secret.set",
+        "sole_future_handler": "handlers::forge::pipeline_secret_set",
+        "handler_status": "handler_unavailable",
+        "expected_event_types": [],
+        "receipt_type": "MutationReceipt"
+      },
+      {
+        "command_id": "cmd.forge.pipeline.secret.remove",
+        "sole_future_handler": "handlers::forge::pipeline_secret_remove",
+        "handler_status": "handler_unavailable",
+        "expected_event_types": [],
+        "receipt_type": "DestructiveOperationReceipt"
+      },
+      {
+        "command_id": "cmd.forge.pipeline.variable.set",
+        "sole_future_handler": "handlers::forge::pipeline_variable_set",
+        "handler_status": "handler_unavailable",
+        "expected_event_types": [],
+        "receipt_type": "MutationReceipt"
+      },
+      {
+        "command_id": "cmd.forge.pipeline.variable.remove",
+        "sole_future_handler": "handlers::forge::pipeline_variable_remove",
+        "handler_status": "handler_unavailable",
+        "expected_event_types": [],
+        "receipt_type": "DestructiveOperationReceipt"
       }
     ],
     "positive_request_command_ids": [
@@ -6884,7 +10466,13 @@
       "cmd.forge.runner.registration.apply",
       "cmd.forge.runner.remove",
       "cmd.forge.release.list",
-      "cmd.forge.release.asset.download"
+      "cmd.forge.release.asset.download",
+      "cmd.forge.repository.delete",
+      "cmd.forge.pipeline.artifact.download",
+      "cmd.forge.pipeline.secret.set",
+      "cmd.forge.pipeline.secret.remove",
+      "cmd.forge.pipeline.variable.set",
+      "cmd.forge.pipeline.variable.remove"
     ],
     "negative_request_command_ids": [
       "cmd.forge.repository.list",
@@ -6932,7 +10520,13 @@
       "cmd.forge.runner.registration.apply",
       "cmd.forge.runner.remove",
       "cmd.forge.release.list",
-      "cmd.forge.release.asset.download"
+      "cmd.forge.release.asset.download",
+      "cmd.forge.repository.delete",
+      "cmd.forge.pipeline.artifact.download",
+      "cmd.forge.pipeline.secret.set",
+      "cmd.forge.pipeline.secret.remove",
+      "cmd.forge.pipeline.variable.set",
+      "cmd.forge.pipeline.variable.remove"
     ],
     "provider_specific_primary_namespace_policy": "cmd.origin.*, cmd.gitlab.*, cmd.azure_devops.*, and cmd.bitbucket.* peer common command namespaces are rejected"
   }

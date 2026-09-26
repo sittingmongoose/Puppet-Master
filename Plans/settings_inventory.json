@@ -17613,6 +17613,58 @@
    ]
   },
   {
+   "id": "extensions.commands.keyboard-layout",
+   "label": "Keyboard Layout",
+   "desc": "How the app reads your physical keyboard. Auto-detect follows your system; pin US (QWERTY), UK, German (QWERTZ), or French (AZERTY) if keys land in the wrong place.",
+   "type": "select",
+   "options": [
+    "Auto-detect",
+    "US (QWERTY)",
+    "UK",
+    "German (QWERTZ)",
+    "French (AZERTY)"
+   ],
+   "default": "Auto-detect",
+   "scope": [
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "keyboard layout",
+    "qwerty",
+    "qwertz",
+    "azerty",
+    "auto-detect",
+    "dead keys"
+   ],
+   "related_features": [
+    "mcp",
+    "plugins"
+   ]
+  },
+  {
+   "id": "extensions.commands.command-palette-visibility",
+   "label": "Show Your Commands in the Command Palette",
+   "desc": "Lists your own commands in the command palette (Ctrl+K) alongside app actions. Off hides only your commands; they still run from chat.",
+   "type": "toggle",
+   "default": "on",
+   "scope": [
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "command palette",
+    "ctrl+k",
+    "palette visibility",
+    "show commands",
+    "hide commands"
+   ],
+   "related_features": [
+    "mcp",
+    "plugins"
+   ]
+  },
+  {
    "id": "extensions.commands.search-shortcuts",
    "label": "Search Shortcuts",
    "desc": "Find any shortcut by typing the action's name or the key combo itself — faster than scrolling the full list.",

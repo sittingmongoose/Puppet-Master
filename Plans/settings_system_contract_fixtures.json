@@ -742,7 +742,7 @@
       "replacement_command_ids": [],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "reason": "Rejected: User-command creation is the Commands-owned typed local file action commands.create under CS-081 (sole handler handlers::commands::apply_local_action), not a UICommand; this cmd.* spelling manufactures no primary and claims no handler.",
       "native_handler_claim": false
     },
     "cmd.commands.custom.update": {
@@ -750,7 +750,7 @@
       "replacement_command_ids": [],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "reason": "Rejected: User-command field mutation is the Commands-owned typed local file action commands.update under CS-081 (sole handler handlers::commands::apply_local_action), not a UICommand; this cmd.* spelling manufactures no primary and claims no handler.",
       "native_handler_claim": false
     },
     "cmd.commands.custom.delete": {
@@ -758,7 +758,7 @@
       "replacement_command_ids": [],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "reason": "Rejected: User-command deletion is the Commands-owned typed local file action commands.delete under CS-081 (sole handler handlers::commands::apply_local_action), not a UICommand; this cmd.* spelling manufactures no primary and claims no handler.",
       "native_handler_claim": false
     },
     "cmd.commands.custom.dry_run": {
@@ -766,7 +766,7 @@
       "replacement_command_ids": [],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "reason": "Rejected: dry-run render is the Commands-owned typed local action commands.preview under CS-081 (side-effect-free, no read/shell/ask/dispatch), not a UICommand; this cmd.* spelling manufactures no primary and claims no handler.",
       "native_handler_claim": false
     },
     "cmd.shortcuts.bind": {
@@ -774,7 +774,7 @@
       "replacement_command_ids": [],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "reason": "Rejected: shortcut binding writes the registered Project value extensions.commands.keyboard-shortcuts through the Settings-owned transaction preview/apply route (CS-081 S1), not through a shortcut-domain command; this cmd.* spelling manufactures no primary and claims no handler.",
       "native_handler_claim": false
     },
     "cmd.shortcuts.reset": {
@@ -782,7 +782,7 @@
       "replacement_command_ids": [],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "reason": "Rejected: shortcut reset restores the registered Project value extensions.commands.keyboard-shortcuts through the Settings-owned transaction preview/apply route (CS-081 S3), not through a shortcut-domain command; this cmd.* spelling manufactures no primary and claims no handler.",
       "native_handler_claim": false
     },
     "cmd.shortcuts.import": {
@@ -790,7 +790,7 @@
       "replacement_command_ids": [],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "reason": "Rejected: shortcut import merges through a plan into the registered Project value extensions.commands.keyboard-shortcuts via the Settings-owned transaction preview/apply route (CS-081 S4), not through a shortcut-domain command; this cmd.* spelling manufactures no primary and claims no handler.",
       "native_handler_claim": false
     },
     "cmd.shortcuts.export": {
@@ -798,7 +798,7 @@
       "replacement_command_ids": [],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "Rejected because command and shortcut mutation belongs to the Commands/Catalog owner and no exact canonical command is admitted.",
+      "reason": "Rejected: shortcut export collects a nonsecret backup of the registered Project value extensions.commands.keyboard-shortcuts (CS-081 S4) with no state mutation and no command; this cmd.* spelling manufactures no primary and claims no handler.",
       "native_handler_claim": false
     },
     "cmd.mcp.server.add": {
@@ -1112,7 +1112,9 @@
       "purpose": "User commands, command palette parity, shortcuts, conflicts, and reset routes.",
       "owner_refs": [
         "Plans/Commands_System.md",
-        "Plans/UI_Command_Catalog.md"
+        "Plans/UI_Command_Catalog.md",
+        "Plans/commands_shortcuts_contracts.schema.json",
+        "Plans/commands_shortcuts_contract_fixtures.json"
       ],
       "owner_disposition": "owner_route_aggregate",
       "route_ref": "route:settings/commands-shortcuts",
@@ -1124,11 +1126,21 @@
       ],
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
       "owner_action_ids": [],
+      "owner_local_action_refs": [
+        "commands.create",
+        "commands.update",
+        "commands.delete",
+        "commands.preview",
+        "commands.import_preview",
+        "commands.import_commit",
+        "commands.export",
+        "commands.reset_all"
+      ],
       "required_target_fields": [
         "project_id"
       ],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": "Commands_System §6.1/§6.2 own create/edit/delete/validation/preview semantics and §1 owns invocation/binding surfaces (§6.3 is heading-only per CS-036); typed native mutation routing for the manager's mutating controls is not yet census-routed, so no owner action IDs are named here. User Commands are file-backed presets, not UICommands."
+      "owner_gap_reason": "CS-081 eight-action census (see owner_local_action_refs) with machine companions; S1-S7 bind registered Project values extensions.commands.{keyboard-shortcuts, shortcut-hints, keyboard-layout, command-palette-visibility} via transaction preview/apply; rest view-only; sole handler handlers::commands::apply_local_action (native absent). No owner action IDs: commands.* is not cmd.*. Presets, not UICommands; scope selector never changes file roots."
     },
     "tools-integrations": {
       "title": "Tools and Integrations",
@@ -2915,6 +2927,45 @@
         "explicit_choices_preserved": true,
         "settings_applied": false
       }
+    },
+    {
+      "case_id": "valid-manager-descriptor-commands-shortcuts-local-refs",
+      "schema_ref": "#/$defs/settings_manager_descriptor",
+      "record": {
+        "title": "Commands and Shortcuts",
+        "purpose": "User commands, command palette parity, shortcuts, conflicts, and reset routes.",
+        "owner_refs": [
+          "Plans/Commands_System.md",
+          "Plans/UI_Command_Catalog.md",
+          "Plans/commands_shortcuts_contracts.schema.json",
+          "Plans/commands_shortcuts_contract_fixtures.json"
+        ],
+        "owner_disposition": "owner_route_aggregate",
+        "route_ref": "route:settings/commands-shortcuts",
+        "search_aliases": [
+          "commands",
+          "shortcuts",
+          "hotkeys",
+          "palette"
+        ],
+        "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+        "owner_action_ids": [],
+        "owner_local_action_refs": [
+          "commands.create",
+          "commands.update",
+          "commands.delete",
+          "commands.preview",
+          "commands.import_preview",
+          "commands.import_commit",
+          "commands.export",
+          "commands.reset_all"
+        ],
+        "required_target_fields": [
+          "project_id"
+        ],
+        "hydration_policy": "cached_bounded_summary_then_selected_details",
+        "owner_gap_reason": "CS-081 eight-action census (see owner_local_action_refs) with machine companions; S1-S7 bind registered Project values extensions.commands.{keyboard-shortcuts, shortcut-hints, keyboard-layout, command-palette-visibility} via transaction preview/apply; rest view-only; sole handler handlers::commands::apply_local_action (native absent). No owner action IDs: commands.* is not cmd.*. Presets, not UICommands; scope selector never changes file roots."
+      }
     }
   ],
   "negative_cases": [
@@ -3442,6 +3493,40 @@
         "settings_applied": false
       },
       "expected_keyword": "type"
+    },
+    {
+      "case_id": "invalid-manager-descriptor-local-ref-resurrects-cmd-alias",
+      "schema_ref": "#/$defs/settings_manager_descriptor",
+      "record": {
+        "title": "Commands and Shortcuts",
+        "purpose": "User commands, command palette parity, shortcuts, conflicts, and reset routes.",
+        "owner_refs": [
+          "Plans/Commands_System.md",
+          "Plans/UI_Command_Catalog.md",
+          "Plans/commands_shortcuts_contracts.schema.json",
+          "Plans/commands_shortcuts_contract_fixtures.json"
+        ],
+        "owner_disposition": "owner_route_aggregate",
+        "route_ref": "route:settings/commands-shortcuts",
+        "search_aliases": [
+          "commands",
+          "shortcuts",
+          "hotkeys",
+          "palette"
+        ],
+        "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
+        "owner_action_ids": [],
+        "owner_local_action_refs": [
+          "commands.create",
+          "cmd.shortcuts.bind"
+        ],
+        "required_target_fields": [
+          "project_id"
+        ],
+        "hydration_policy": "cached_bounded_summary_then_selected_details",
+        "owner_gap_reason": "Counterexample: the closed owner_local_action_refs enum admits only the eight CS-081 commands.* IDs, so the rejected cmd.shortcuts.bind alias is schema-rejected here."
+      },
+      "expected_keyword": "enum"
     }
   ]
 }

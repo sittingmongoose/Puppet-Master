@@ -3,7 +3,9 @@
 T46 keeps the winning K3 Settings geometry intact while replacing its
 placeholder Doctor with an owner-routed operational projection, correcting the
 Full Server Backup boundary, exposing packet-governed Browser/SCM/Origin/Named
-Plan/performance consumers, and adapting the surrounding PM7 shell when a
+Plan/performance consumers, projecting the Test Capture owner's Raw Test Capture
+and Demonstration Video artifact fixtures with View Source Capture and Inspect
+Provenance routing, and adapting the surrounding PM7 shell when a
 physical host is too narrow to show both Settings and the global Chat panel.
 
 Every operation remains an explicit browser-concept simulation unless a real
@@ -150,6 +152,13 @@ SYSTEMS_CSS = r'''
 .plugin-manifest-ref { min-width:0; color:var(--text-muted); font:10px/1.4 var(--mono-font); overflow-wrap:anywhere; }
 .plugin-compact-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
 .plugin-evidence-bound { color:var(--text-muted); font:10px/1.45 var(--mono-font); overflow-wrap:anywhere; }
+.capture-fixture-list { display:grid; gap:10px; margin-top:10px; }
+.capture-fixture { min-width:0; display:grid; gap:8px; padding:13px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface); }
+.capture-fixture-title-row { display:flex; flex-wrap:wrap; align-items:center; gap:7px; }
+.capture-fixture-kicker { color:var(--accent-primary); font-size:10px; font-weight:820; letter-spacing:.08em; text-transform:uppercase; }
+.capture-fixture-title { color:var(--text-primary); font-weight:760; }
+.capture-relation { min-width:0; color:var(--text-secondary); font:11px/1.5 var(--mono-font); overflow-wrap:anywhere; padding:8px 10px; border:1px solid var(--border-light); border-radius:var(--radius-sm); background:var(--surface-alt); }
+.capture-provenance-view { display:grid; gap:8px; margin-top:12px; }
 .pm7-settings-focus-host #chatPanel,
 .pm7-settings-focus-host #chatResizer,
 body.pm7-chat-global-owner.pm7-settings-focus-host #chatPanel.pm7-global-chat-panel,
@@ -165,7 +174,9 @@ html[data-theme^="retro"] .doctor-state,
 html[data-theme^="retro"] .systems-contract-card,
 html[data-theme^="retro"] .plugin-owner-banner,
 html[data-theme^="retro"] .plugin-fact-card,
-html[data-theme^="retro"] .plugin-manifest-row { border-radius:0; }
+html[data-theme^="retro"] .plugin-manifest-row,
+html[data-theme^="retro"] .capture-fixture,
+html[data-theme^="retro"] .capture-relation { border-radius:0; }
 @media (max-width:760px) {
   .doctor-summary-strip { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .doctor-item { grid-template-columns:minmax(0,1fr); }
@@ -199,7 +210,7 @@ html[data-theme^="retro"] .plugin-manifest-row { border-radius:0; }
   .doctor-scope { flex:1 1 calc(50% - 7px); }
 }
 @media (prefers-reduced-motion:reduce) {
-  .doctor-item, .doctor-scope, .systems-contract-card { animation:none!important; transition:none!important; }
+  .doctor-item, .doctor-scope, .systems-contract-card, .capture-fixture { animation:none!important; transition:none!important; }
 }
 </style>'''
 
@@ -650,13 +661,106 @@ BROWSER_SCM_RENDER = r'''  function renderBrowserScm(){
     return `<div class="manager-page page-enter">${pageHeader('browser','Browser, Capture & Source Integration','Owner projections share the K3 manager shell without duplicating browser, capture, source-control, forge, Named Plan, or runtime ownership.')} ${tabMarkup}<div class="manager-body"><div class="manager-scroll">${renderBrowserScmTab()}</div></div></div>`;
   }
   function renderBrowserScmTab(){
-    if(state.browserScmTab==='capture')return `<div class="systems-contract-grid"><section class="systems-contract-card"><h3>Test Capture</h3><p>Capture is explicit, bounded, redacted, and receipt-backed. AuthBrowserSession is never a capture source.</p><div class="info-grid">${infoRow('Screenshots','Explicit test or user action')}${infoRow('Video','Actual captured FPS disclosed')}${infoRow('Console and network','Bounded and redacted')}${infoRow('AuthBrowserSession','Never captured')}${infoRow('Retention','Evidence policy owned')}</div><div class="table-actions"><button class="btn primary" data-action="open-capture-policy" data-ui-action-id="ui.capture.policy.inspect" data-availability="available">Inspect capture policy</button></div></section><section class="systems-contract-card"><h3>Motion evidence</h3><p>Browser frame pacing remains provisional. Native Slint, compositor, and old-hardware certification require separate execution.</p><div class="info-grid">${infoRow('Target','16.7 ms at 60 FPS')}${infoRow('Report','P50, P95, P99 and delayed frames')}${infoRow('Master','Lossless frames and FFV1/MKV')}${infoRow('Review','Every frame at full resolution')}</div></section></div>`;
+    if(state.browserScmTab==='capture')return `${captureOwnerBanner()}<div class="capture-fixture-list" data-capture-artifact-projection="true" data-production-runtime-state="unavailable">${PM7_CAPTURE_FIXTURES.map(captureFixtureCard).join('')}</div><div class="systems-contract-grid" style="margin-top:10px"><section class="systems-contract-card"><h3>Test Capture</h3><p>Capture is explicit, bounded, redacted, and receipt-backed. AuthBrowserSession is never a capture source.</p><div class="info-grid">${infoRow('Screenshots','Explicit test or user action')}${infoRow('Video','Actual captured FPS disclosed')}${infoRow('Console and network','Bounded and redacted')}${infoRow('AuthBrowserSession','Never captured')}${infoRow('Retention','Evidence policy owned')}</div><div class="table-actions"><button class="btn primary" data-action="open-capture-policy" data-ui-action-id="ui.capture.policy.inspect" data-availability="available">Inspect capture policy</button></div></section><section class="systems-contract-card"><h3>Motion evidence</h3><p>Browser frame pacing remains provisional. Native Slint, compositor, and old-hardware certification require separate execution.</p><div class="info-grid">${infoRow('Target','16.7 ms at 60 FPS')}${infoRow('Report','P50, P95, P99 and delayed frames')}${infoRow('Master','Lossless frames and FFV1/MKV')}${infoRow('Review','Every frame at full resolution')}</div></section></div>`;
     if(state.browserScmTab==='scm')return `<div class="systems-contract-grid"><section class="systems-contract-card"><h3>Source Control</h3><p>Git and Jujutsu readiness is scoped to the exact Host and Environment. Requested and effective state remain distinct.</p><div class="info-grid">${infoRow('Git','Owner projection required')}${infoRow('Jujutsu','Owner projection required')}${infoRow('Repositories','Project System consumer')}${infoRow('Recovery','SCM owner route')}</div><div class="table-actions"><button class="btn primary" data-action="navigate" data-ui-action-id="ui.settings.route.open" data-availability="available" data-domain="source" data-workspace="source-manager">Open Source Control</button></div></section><section class="systems-contract-card"><h3>Online Git services</h3><p>GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo, and Gitea preserve separate service, server, account, scope, authentication, and availability projections.</p><div class="info-grid">${infoRow('Forgejo / Gitea','Distinct self-managed adapters')}${infoRow('Authentication','Human AuthBrowser handoff')}${infoRow('Secrets','References only')}${infoRow('SSH / private CA','Instance-scoped checks and receipts')}${infoRow('Automation','Actions & Pipelines remains separate from code access')}${infoRow('Disconnect','Does not rewrite local history')}</div></section></div>`;
     if(state.browserScmTab==='origin')return `<div class="systems-contract-grid"><section class="systems-contract-card"><h3>Cursor Origin Preview</h3><p>A brief preview inserts Origin into the existing SCM flow; it is not a separate onboarding subsystem and never makes Origin CLI mandatory.</p><div class="info-grid">${infoRow('Mode','Preview insertion')}${infoRow('Local source','Preserved')}${infoRow('Mirror','Explicit and reversible')}${infoRow('CLI helper','Optional')}</div><div class="table-actions"><button class="btn primary" data-action="preview-origin" data-ui-action-id="ui.origin.preview.open" data-availability="concept_preview_only">Preview Origin</button></div></section><section class="systems-contract-card"><h3>Origin safety</h3><p>Repository identity, remote URL, credentials, mirror state, and forge state are validated independently before any change.</p><div class="info-grid">${infoRow('AuthBrowser','Human-only')}${infoRow('Agent access','Unavailable')}${infoRow('Rollback','Required')}${infoRow('Receipt','Owner-issued')}</div></section></div>`;
     if(state.browserScmTab==='plans')return `<div class="systems-contract-grid"><section class="systems-contract-card"><h3>Named Plans</h3><p>Create, bind, inspect, and archive named plans through their canonical owner while Planning Wizard remains the guided plan-authoring route.</p><div class="info-grid">${infoRow('Owner','Named Plan System')}${infoRow('Project binding','Stable project ID')}${infoRow('Goal binding','Explicit')}${infoRow('History','Durable receipts')}</div><div class="table-actions"><button class="btn primary" data-action="open-named-plan" data-ui-action-id="ui.named_plan.inspect" data-availability="concept_preview_only">Inspect Named Plans</button></div></section><section class="systems-contract-card"><h3>Planning Wizard</h3><p>The Guided Tour ends at the live Planning Wizard. Onboarding never duplicates its interview or planning state.</p><div class="table-actions"><button class="btn" data-action="open-planning-wizard" data-ui-action-id="ui.planning_wizard.open" data-availability="available">Open Planning Wizard</button></div></section></div>`;
     if(state.browserScmTab==='performance')return `<div class="systems-contract-grid"><section class="systems-contract-card"><h3>Responsive work</h3><p>Controls acknowledge in the same frame; durable work continues through admission and ObservableWork instead of fake percentages.</p><div class="info-grid">${infoRow('Lifecycle','Accepted, queued, running, waiting, retrying')}${infoRow('Recovery','Reconnecting, degraded, stalled, rollback')}${infoRow('Terminal','Completed, failed, cancelled, recovery required')}${infoRow('Lists','Bounded and virtualized')}</div><div class="table-actions"><button class="btn primary" data-action="open-performance-evidence" data-ui-action-id="ui.performance.evidence.inspect" data-availability="available">Inspect evidence boundary</button></div></section><section class="systems-contract-card"><h3>Continuity</h3><p>Reconnect, restart, sleep, and external return preserve operation, session, stream, and upload identity; stale generations are rejected.</p><div class="info-grid">${infoRow('Hidden surfaces','Paint work stops; durable owner work continues')}${infoRow('Low-resource mode','Owner-governed')}${infoRow('Deduplication','Stable identities')}${infoRow('Browser proof','Never promoted to native certification')}</div></section></div>`;
     return `<div class="systems-contract-grid"><section class="systems-contract-card" data-browser-program-projection="true"><h3>PM-native Browser Program</h3><p>BrowserAction, Browser Program, and Expert Browser Program are contract terms projected into this ordinary browser concept. No Browser Program runtime is available or executed here.</p><div class="info-grid">${infoRow('Projection only','true')}${infoRow('Runtime state','runtime_unavailable')}${infoRow('Native CEF executed','false')}${infoRow('Surface','ordinary_browser_only')}${infoRow('Prerequisites','policy, capability, explicit user action')}${infoRow('Execution methods','0')}${infoRow('Raw protocol access','false')}${infoRow('Arbitrary page code','false')}</div><div class="table-actions"><button class="btn primary" data-action="navigate" data-ui-action-id="ui.settings.route.open" data-availability="available" data-domain="ai" data-workspace="web">Open Browser</button></div></section><section class="systems-contract-card"><h3>AuthBrowserSession</h3><p>AuthBrowserSession is excluded from this projection. The protected sign-in lane is human-only, non-recordable, non-inspectable, and unavailable to agents and adapters.</p><div class="info-grid">${infoRow('Projection','Excluded')}${infoRow('Persistence','Ephemeral')}${infoRow('Capture and replay','Unavailable')}${infoRow('Automation','Unavailable')}${infoRow('Export and restore','Unavailable')}</div></section></div>`;
   }
+  /* Test Capture owner projection: RawTestCapture and DerivedDemonstrationVideo are
+     distinct immutable identities (Plans/Test_Capture_and_Motion_Evidence.md #6). A session
+     that ended with no media is not an artifact: it is a distinct absence record with no
+     schema, artifact identity, or provenance claim. Fixtures are explicit browser-concept
+     evidence only: no recording, derivation, media render, byte download, or source
+     resolution happens here, and the TCME-008 owner routes stay handler_unavailable.
+     Card copy is human-readable; typed schema and record refs live in the machine
+     attributes and in provenance details only. */
+  const PM7_CAPTURE_FIXTURES=Object.freeze([
+    {id:'raw-login-complete',kind:'raw',schemaId:'pm.test_capture.raw_capture.v1',title:'Login flow regression',state:'complete',stateLabel:'Complete',sourceState:'not_applicable',
+     sourceLine:'Recorded in the built-in browser on an ordinary fixed page · 17 segments kept as immutable evidence',
+     relation:'RawTestCapture raw-capture:login-flow:g7 · immutable raw identity · no derived artifact may overwrite it',
+     rows:[['Requested / effective','60 fps requested · 58.4 fps delivered · 2 dropped frames recorded'],['Segments','17 recorded · 15 finalized · 2 recovered after restart'],['Audio / masking','Audio Off · no masking requested or applied'],['Health','Healthy · one degraded interval retained in the record']],
+     provRows:[['Record identity','RawTestCapture · pm.test_capture.raw_capture.v1 · raw-capture:login-flow:g7'],['Segment journal','17 hash-chained entries · fixture-sha256-ref:pm7:segs-login:g7 · prior-segment chain intact'],['Clocks','Wall and service monotonic calibrated · offset, drift, and uncertainty recorded'],['Requested / effective','H.264 High in Matroska · 60 fps requested · 58.4 fps effective · audio Off'],['Lineage','browser_page · fixed_page · Project and run refs recorded · AuthBrowserSession never a target'],['Immutability','Finalized segments are immutable and are never overwritten or trimmed in place']]},
+    {id:'raw-checkout-gaps',kind:'raw',schemaId:'pm.test_capture.raw_capture.v1',title:'Checkout regression',state:'partial_with_gaps',stateLabel:'Partial with gaps',sourceState:'not_applicable',
+     sourceLine:'Recorded in the built-in browser · ends with one gap and one quarantined segment that stay admitted',
+     relation:'RawTestCapture raw-capture:checkout-gaps:g3 · immutable raw identity with admitted gaps · never repaired by reenactment',
+     rows:[['Session terminal','partial_with_gaps · failures and residual risk preserved'],['Gaps','1 continuity gap recorded · 1 corrupt segment quarantined'],['Repair policy','Recovery never repairs a gap by reenactment or fabricated continuity'],['Health','Degraded · recovery does not erase the degraded interval']],
+     provRows:[['Record identity','RawTestCapture · pm.test_capture.raw_capture.v1 · raw-capture:checkout-gaps:g3'],['Segment journal','9 finalized · 1 quarantined_corrupt · 1 continuity_gap_recorded · recovery receipts retained'],['Clocks','Calibrated on finalized segments; gap spans carry no invented timestamps'],['Recovery terminals','finalized · recovered_finalized · quarantined_corrupt · continuity_gap_recorded'],['Immutability','Quarantine and gaps stay explicit; nothing is backfilled']]},
+    {id:'raw-perf-redacted',kind:'raw',schemaId:'pm.test_capture.raw_capture.v1',title:'Provider status page trace',state:'redacted',stateLabel:'Redacted',sourceState:'not_applicable',
+     sourceLine:'Recorded in the built-in browser on the provider status page (ordinary signed-out page) · sensitive spans redacted before saving',
+     relation:'RawTestCapture raw-capture:perf-redacted:g2 · immutable raw identity · browser_page target · provider status page · ordinary signed-out page · encoder-stage redaction applied before persistence',
+     rows:[['Page target','Provider status page · ordinary signed-out page · the protected sign-in lane is never a capture source'],['Masking requested / effective','encoder · applied before persistence · 2 affected spans'],['Review','Privacy review recorded · redaction spans listed in provenance'],['Boundary','display_only masking is never presented as source or encoder redaction'],['Health','Healthy']],
+     provRows:[['Record identity','RawTestCapture · pm.test_capture.raw_capture.v1 · raw-capture:perf-redacted:g2'],['Lineage','browser_page · provider status page · ordinary signed-out page · AuthBrowserSession never a target'],['Masking stage','encoder · policy fixture-ref:pm7:privacy:g1 · 2 affected spans · review disposition accepted'],['Unmasked intervals','None · no unmasked span is retained'],['Boundary contrast','A viewer-only (display_only) mask would be labeled insufficient for retained media'],['Segments','12 hash-chained entries · fixture-sha256-ref:pm7:segs-redacted:g2']]},
+    {id:'absence-payment-retry',kind:'absence',title:'Payment retry probe',state:'no_recording',stateLabel:'No recording',sourceState:'not_applicable',
+     sourceLine:'This session ended with no media. Nothing was kept, so there is no capture record to open.',
+     relation:'No Test Capture exists for this subject · session terminal failed_no_media · absence is explicit and never backfilled',
+     rows:[['Session terminal','failed_no_media · nothing retained'],['Truth','No Test Capture exists for this subject'],['Substitution','No newer artifact and no re-recording can silently stand in for this absence']]},
+    {id:'demo-onboarding-tour',kind:'derived',schemaId:'pm.test_capture.demonstration_video.v1',title:'Onboarding walkthrough',state:'manifest_verified',stateLabel:'Manifest verified',source:'raw-login-complete',sourceState:'recorded',
+     sourceLine:'Cut from the recorded Login flow regression capture · the edits are listed in its manifest',
+     relation:'DerivedDemonstrationVideo demo-video:onboarding-tour:g2 -[CaptureDerivationManifest pm.test_capture.derivation_manifest.v1]-> RawTestCapture raw-capture:login-flow:g7 · segments 04-11 · 00:07.2-00:31.8',
+     rows:[['Source capture','Raw Test Capture · Login flow regression · segments 04-11 · 00:07.2-00:31.8'],['Edits in manifest','2 cuts · 1 crossfade · captions added · no speed change · no crop'],['Privacy review','Reviewed · accepted · the source record lists no masking, so none is carried'],['Uncaptured state','None introduced · validation receipt on file']],
+     provRows:[['Record identity','DerivedDemonstrationVideo · pm.test_capture.demonstration_video.v1 · demo-video:onboarding-tour:g2'],['Source relation','Derived from recorded RawTestCapture raw-capture:login-flow:g7 · segments 04-11 · 00:07.2-00:31.8'],['Derivation manifest','pm.test_capture.derivation_manifest.v1 · cuts, transitions, captions, privacy review, tool identity, and output hash recorded'],['Masking carried','None · the recorded source raw-capture:login-flow:g7 lists no masking, so the manifest records none'],['uncaptured_state_introduced','false · validation receipt fixture-sha256-ref:pm7:demo-verify:g2'],['Output','fixture-sha256-ref:pm7:demo-output:g2 · never replaces or rewrites the raw source'],['Newest-artifact rule',"'latest' is allowed only after exact subject and continuity verification"]]},
+    {id:'demo-legacy-missing',kind:'derived',schemaId:'pm.test_capture.demonstration_video.v1',title:'Legacy tour clip',state:'source_missing',stateLabel:'Source missing',source:'raw-archived-deleted',sourceState:'missing',
+     subline:'Manifest cites a raw source that is now missing. The demonstration stays unverified; the missing original is admitted and never reenacted.',
+     sourceLine:'The manifest cites a raw capture that is now missing · nothing resolves it',
+     relation:'DerivedDemonstrationVideo demo-video:legacy-clip:g1 -[CaptureDerivationManifest pm.test_capture.derivation_manifest.v1]-> RawTestCapture raw-capture:legacy-clip:g1 · UNRESOLVED: source missing',
+     rows:[['Source capture','Raw Test Capture cited by the manifest is missing'],['Provenance','Unresolved: source missing · never silently resolved'],['Missing original','Explicitly admitted · not hidden by selecting the newest artifact'],['Reenactment guard','A new recording carries a new identity and can never fill this source']],
+     provRows:[['Record identity','DerivedDemonstrationVideo · pm.test_capture.demonstration_video.v1 · demo-video:legacy-clip:g1'],['Source relation','Cited source raw-capture:legacy-clip:g1 is missing · relation unresolved'],['Selection result','unresolved_source_missing · provenance stays open'],['Fabrication guard','No source resolution, byte download, or reenactment is fabricated'],['Verification','Against-source verification unavailable · the demonstration stays unverified']]}
+  ]);
+  function captureCardClass(fx){return fx.kind==='raw'?'RawTestCapture':fx.kind==='absence'?'CaptureAbsence':'DerivedDemonstrationVideo';}
+  function captureCardTone(fx){return fx.state==='complete'||fx.state==='manifest_verified'?'ready':fx.state==='no_recording'?'unavailable':'attention';}
+  function captureTypedAttrs(){
+    return 'data-production-handler-status="handler_unavailable" data-concept-simulation-only="true" data-native-binding="false" data-exact-return="initiating_route_focus_identity_currentness" data-event-record="not_emitted" data-runtime-receipt="not_issued" data-production-mutation-dispatched="false"';
+  }
+  function captureOwnerBanner(){
+    return `<section class="plugin-owner-banner" data-capture-owner-projection="true" data-production-runtime-state="unavailable"><div class="plugin-owner-banner-copy"><span class="plugin-owner-kicker">Test Capture owner projection</span><span class="plugin-owner-title">Runtime Artifacts · Raw and derived evidence</span><span class="plugin-owner-note">Raw Test Capture and Demonstration Video are distinct immutable identities. Controls below are concept navigation or handler-unavailable owner routes; no recording, derivation, media render, or byte download happens in this browser concept.</span></div><span class="doctor-state" data-state="attention">Handler unavailable</span></section>`;
+  }
+  function captureMetaAttrs(fx){
+    return `data-capture-fixture="${escAttr(fx.id)}" data-capture-class="${captureCardClass(fx)}"${fx.schemaId?` data-schema-id="${escAttr(fx.schemaId)}"`:''} data-capture-state="${escAttr(fx.state)}" data-source-state="${escAttr(fx.sourceState)}" data-production-runtime-state="unavailable" data-native-handler-status="handler_unavailable"`;
+  }
+  function captureProvenanceButton(fx,unavailableReason){
+    const disabled=Boolean(unavailableReason);
+    return `<button type="button" class="btn small" data-action="capture-inspect-provenance" data-ui-action-id="ui.capture.artifacts.inspect_provenance" data-owner-command-id="cmd.artifacts.inspect_capture_provenance" data-target-id="${escAttr(fx.id)}" data-availability="${disabled?'unavailable':'concept_local_controller_available'}" data-disabled-reason="${escAttr(unavailableReason||'none')}" ${captureTypedAttrs()} data-artifact-id="${escAttr(fx.id)}" data-pm-hover-label="Inspect Provenance" data-pm-hover-detail="Bounded fixture provenance; the native owner route stays handler_unavailable." ${disabled?'disabled aria-disabled="true"':''}>Inspect Provenance</button>`;
+  }
+  function captureViewSourceButton(fx){
+    const missing=fx.sourceState!=='recorded';
+    return `<button type="button" class="btn small" data-action="capture-view-source" data-ui-action-id="ui.capture.artifacts.view_source" data-target-id="${escAttr(fx.id)}" data-availability="${missing?'unavailable':'concept_local_controller_available'}" data-disabled-reason="${missing?'raw_source_missing':'none'}" ${captureTypedAttrs()} data-artifact-id="${escAttr(fx.id)}" data-source-id="${escAttr(fx.source||'')}" data-pm-hover-label="View Source Capture" data-pm-hover-detail="${missing?'The cited raw capture is missing; nothing is resolved or downloaded.':'Opens the recorded raw capture this demonstration was derived from.'}" ${missing?'disabled aria-disabled="true"':''}>View Source Capture</button>`;
+  }
+  function captureFixtureActions(fx){
+    if(fx.kind==='raw')return [captureProvenanceButton(fx,null),pm7ConsumerButton('command','cmd.artifacts.create_demonstration_video','Create Demonstration Video',{targetId:fx.id})];
+    if(fx.kind==='absence')return [captureProvenanceButton(fx,'no_retained_capture')];
+    return [captureViewSourceButton(fx),captureProvenanceButton(fx,null)];
+  }
+  function captureFixtureCard(fx){
+    const subline=fx.subline||(fx.kind==='raw'?'Immutable raw evidence. It is never overwritten, trimmed in place, or converted into a demonstration identity.':fx.kind==='absence'?'An explicit no-recording result. It is not an artifact and has no provenance record.':'Derived from a recorded Raw Test Capture. Never a reenactment, and never a replacement for the raw source.');
+    return `<article class="capture-fixture" ${captureMetaAttrs(fx)} data-capture-source-relation="${escAttr(fx.relation)}"><div class="capture-fixture-title-row"><span class="capture-fixture-kicker">${fx.kind==='raw'?'Raw Test Capture':fx.kind==='absence'?'Absence record':'Demonstration Video'}</span><span class="capture-fixture-title">${escapeHtml(fx.title)}</span><span class="doctor-state" data-state="${captureCardTone(fx)}">${escapeHtml(fx.stateLabel)}</span></div><div class="doctor-item-copy">${escapeHtml(subline)}</div><div class="info-grid">${fx.rows.map(row=>infoRow(row[0],row[1])).join('')}</div><div class="capture-relation">${escapeHtml(fx.sourceLine||fx.relation)}</div><div class="plugin-action-row">${captureFixtureActions(fx).join('')}</div></article>`;
+  }
+  function captureProvenanceRows(fx){
+    const head=[['Artifact',`${captureCardClass(fx)} · ${fx.stateLabel}`],['Record identity',fx.schemaId||'none · this row is not an artifact'],['Source resolution',captureSourceResolution(fx)],['Owner route','cmd.artifacts.inspect_capture_provenance · handler_unavailable · EventRecord not emitted · runtime receipt not issued'],['Media boundary','No media bytes are rendered, downloaded, or persisted by this concept']];
+    return head.concat(fx.provRows||[]);
+  }
+  /* Raw captures have no further source: their provenance says immutable recorded capture.
+     Only a derived artifact cites a source, and only a missing one is unresolved; an
+     absence record has no artifact identity at all. */
+  function captureSourceResolution(fx){
+    if(fx.kind==='raw')return 'immutable_recorded_capture';
+    if(fx.kind==='absence')return 'no_retained_capture';
+    return fx.sourceState==='recorded'?'recorded_source_present':'unresolved_source_missing';
+  }
+  function captureProvenanceLine(fx){
+    if(fx.kind==='raw')return 'This is an immutable recorded capture. It has no further source; only a derived artifact cites one.';
+    if(fx.kind==='absence')return 'No capture exists for this subject. There is no artifact identity and no provenance record to inspect.';
+    return fx.sourceState==='recorded'?'Derived from the recorded Raw Test Capture named below; the original stays immutable.':'The cited original is missing. Provenance stays unresolved; nothing resolves, downloads, or reenacts it.';
+  }
+  function captureProvenanceMarkup(fx){
+    return `<section class="capture-provenance-view" data-capture-provenance-view="${escAttr(fx.id)}" data-artifact-class="${captureCardClass(fx)}"${fx.schemaId?` data-schema-id="${escAttr(fx.schemaId)}"`:''} data-artifact-state="${escAttr(fx.state)}" data-source-resolution="${captureSourceResolution(fx)}" data-byte-download="not_performed" data-media-rendered="false" data-production-runtime-state="unavailable"><p class="doctor-item-copy">${escapeHtml(captureProvenanceLine(fx))}</p><div class="capture-relation">${escapeHtml(fx.sourceLine||fx.relation)}</div></section>`;
+  }
+  /* Narrow typed surface for other Settings consumers: the PM51 Testing History tab renders
+     these same retained cards through window.PM7_TEST_CAPTURE_EVIDENCE instead of holding a
+     second copy of the fixture authority. */
+  const PM7_CAPTURE_EVIDENCE_SURFACE=Object.freeze({schema_id:'pm.pmconcept7.test_capture_evidence_surface.v1',browser_projection_only:true,production_runtime_state:'unavailable',census:Object.freeze({raw:3,derived:2,absence:1}),fixtures:PM7_CAPTURE_FIXTURES,classOf:captureCardClass,toneOf:captureCardTone,cardOf:captureFixtureCard,provenanceRowsOf:captureProvenanceRows,provenanceMarkupOf:captureProvenanceMarkup,sourceResolutionOf:captureSourceResolution});
+  Object.defineProperty(window,'PM7_TEST_CAPTURE_EVIDENCE',{value:PM7_CAPTURE_EVIDENCE_SURFACE,writable:false,configurable:false,enumerable:true});
 '''
 
 
@@ -746,6 +850,21 @@ HANDLER_CASES = r'''      /* PM7 T46 owner-routed Doctor and integration consume
       case 'cancel-pairing': infoDrawer('Cancel pairing','Owner route only. Cancellation is the requesting Client\'s explicit terminal abort; closing this Settings view dispatches nothing.',[['Command','cmd.client.pair.cancel'],['Native handler','Unavailable'],['Close view','Not cancellation'],['Cleanup','Owner required'],['Receipt','No production receipt']]);return;
       case 'revoke-client': infoDrawer('Revoke Client trust','Owner route only. Whole-Client trust revocation must terminate every active session and reject stale commands; session-only revocation is not substituted.',[['Command','cmd.client.revoke'],['Native handler','Unavailable'],['Scope','Whole ClientTrustRecord'],['Sessions','All active sessions'],['Receipt','No production receipt']]);return;
       case 'open-capture-policy': infoDrawer('Test Capture policy','Capture is explicit, bounded, redacted, receipt-backed, and separate from AuthBrowserSession.',[['Screenshots','Explicit only'],['Video FPS','Measured and disclosed'],['Console and network','Bounded and redacted'],['AuthBrowserSession','Never captured'],['Native certification','Not established by browser evidence']]);return;
+      case 'capture-view-source': {
+        pm7TypedConsumerResult(el,'local','ui.capture.artifacts.view_source',false);
+        const artifact=PM7_CAPTURE_FIXTURES.find(row=>row.id===ds(el,'artifactId'));if(!artifact)return;
+        const source=artifact.sourceState==='recorded'?PM7_CAPTURE_FIXTURES.find(row=>row.id===artifact.source):null;
+        if(!source){showToast('View Source Capture unavailable','The cited raw capture is missing. The missing original stays explicitly admitted: no source resolution, no byte download, and no reenactment substitutes for it.','warning');return;}
+        infoDrawer(`View Source Capture · ${source.title}`,'Typed source relation: this Demonstration Video is derived from the recorded Raw Test Capture below. A reenactment is a different capture with a new identity and never fills the original. This browser concept renders no media bytes.',captureProvenanceRows(source),{extra:captureProvenanceMarkup(source)});
+        return;
+      }
+      case 'capture-inspect-provenance': {
+        pm7TypedConsumerResult(el,'local','ui.capture.artifacts.inspect_provenance',false);
+        const fixture=PM7_CAPTURE_FIXTURES.find(row=>row.id===ds(el,'artifactId'));if(!fixture)return;
+        if(fixture.kind==='absence'){showToast('Inspect Provenance unavailable','No Test Capture exists for this subject, so there is no artifact identity and no provenance record. The recorded absence is the truthful result.','info');return;}
+        infoDrawer(`Inspect Provenance · ${fixture.title}`,'Bounded concept-fixture provenance projection. The native owner route stays handler_unavailable: no owner resolution, byte download, receipt, or source mutation is fabricated here.',captureProvenanceRows(fixture),{extra:captureProvenanceMarkup(fixture)});
+        return;
+      }
       case 'preview-origin': infoDrawer('Cursor Origin Preview','A reversible SCM-flow insertion; no repository, remote, mirror, helper, or credential state changed.',[['Mode','Preview only'],['Origin CLI','Optional'],['Local history','Preserved'],['Mirror','Not created'],['Authentication','Human-only owner route'],['Receipt','No production receipt']]);return;
       case 'open-named-plan': infoDrawer('Named Plans','Concept projection only. Create, bind, inspect, and archive operations require the Named Plan owner.',[['Owner','Named Plan System'],['Project','Current project'],['Owner feed','Not attached'],['Mutation','Unavailable in concept']]);return;
       case 'open-planning-wizard': {const target=document.getElementById('tab-wizard')||document.querySelector('[data-page="wizard"]');if(target&&typeof target.click==='function')target.click();else showToast('Planning Wizard unavailable','The live owner route is not mounted.','warning');return;}
@@ -853,6 +972,8 @@ ALLOWED_EFFECT_DELTA = {
             "cmd.agent_plugin.scan",
             "cmd.agent_plugin.update",
             "cmd.agent_plugin.validate",
+            "cmd.artifacts.create_demonstration_video",
+            "cmd.artifacts.inspect_capture_provenance",
             "cmd.auth_profile.rename",
             "cmd.auth_profile.revoke",
             "cmd.auth_profile.transfer.apply",
@@ -1686,6 +1807,39 @@ def apply(doc, notes, need):
         BROWSER_SCM_RENDER.count('data-ui-action-id="ui.settings.route.open" data-availability="available" data-domain="ai" data-workspace="web"') == 1,
         "T46: Browser Program reverse-visible owner route missing",
     )
+    for capture_label in ("Raw Test Capture", "Demonstration Video", "View Source Capture", "Inspect Provenance"):
+        need(capture_label in BROWSER_SCM_RENDER, "T46: exact capture artifact human label missing: %s" % capture_label)
+    need(BROWSER_SCM_RENDER.count('data-capture-artifact-projection="true"') == 1, "T46: capture artifact projection identity mismatch")
+    need(BROWSER_SCM_RENDER.count("id:'raw-") == 3, "T46: Raw Test Capture card census mismatch")
+    need(BROWSER_SCM_RENDER.count("id:'demo-") == 2, "T46: Demonstration Video card census mismatch")
+    need(BROWSER_SCM_RENDER.count("id:'absence-") == 1 and BROWSER_SCM_RENDER.count("kind:'absence'") == 1, "T46: capture absence record census mismatch")
+    absence_fixture = BROWSER_SCM_RENDER.split("{id:'absence-payment-retry'", 1)[1].split("{id:'demo-", 1)[0]
+    need('schemaId' not in absence_fixture and 'provRows' not in absence_fixture and 'RawTestCapture' not in absence_fixture and 'raw-capture:' not in absence_fixture and 'pm.test_capture.' not in absence_fixture,
+         "T46: capture absence record claims a raw schema, artifact identity, or provenance")
+    need("Provider sign-in" not in BROWSER_SCM_RENDER and "Provider status page" in BROWSER_SCM_RENDER and "ordinary signed-out page" in BROWSER_SCM_RENDER,
+         "T46: captured sign-in trace not renamed to an ordinary nonprotected page flow with an explicit target")
+    need("masking carried through" not in BROWSER_SCM_RENDER
+         and "no masking requested or applied" in BROWSER_SCM_RENDER
+         and "the source record lists no masking, so none is carried" in BROWSER_SCM_RENDER,
+         "T46: demonstration/source masking consistency broken")
+    need("function captureSourceResolution" in BROWSER_SCM_RENDER
+         and all(token in BROWSER_SCM_RENDER for token in ("immutable_recorded_capture", "no_retained_capture", "recorded_source_present", "unresolved_source_missing")),
+         "T46: capture source-resolution mapping missing")
+    need("?'no_retained_capture':'unresolved_source_missing'" not in BROWSER_SCM_RENDER,
+         "T46: raw provenance still resolves to unresolved_source_missing")
+    need("window,'PM7_TEST_CAPTURE_EVIDENCE'" in BROWSER_SCM_RENDER and "census:Object.freeze({raw:3,derived:2,absence:1})" in BROWSER_SCM_RENDER,
+         "T46: shared capture evidence surface for the PM51 Testing History adapter missing")
+    need(BROWSER_SCM_RENDER.count('data-action="capture-view-source"') == 1 and BROWSER_SCM_RENDER.count('data-action="capture-inspect-provenance"') == 1, "T46: capture artifact action renderer mismatch")
+    need(all(token in BROWSER_SCM_RENDER for token in (
+        "partial_with_gaps", "no_recording", "redacted", "source_missing", "manifest_verified",
+        "quarantined_corrupt", "continuity_gap_recorded", "failed_no_media",
+        "uncaptured_state_introduced", "never silently resolved", "reenactment",
+        "pm.test_capture.raw_capture.v1", "pm.test_capture.demonstration_video.v1", "pm.test_capture.derivation_manifest.v1",
+        "cmd.artifacts.create_demonstration_video", "cmd.artifacts.inspect_capture_provenance",
+    )), "T46: capture truthfulness state, record identity, or TCME-008 owner route missing")
+    need(all(token in HANDLER_CASES for token in ("case 'capture-view-source'", "case 'capture-inspect-provenance'")), "T46: capture artifact navigation handler missing")
+    need("<video" not in BROWSER_SCM_RENDER and "<audio" not in BROWSER_SCM_RENDER and "<canvas" not in BROWSER_SCM_RENDER and "fetch(" not in BROWSER_SCM_RENDER and "XMLHttpRequest" not in BROWSER_SCM_RENDER, "T46: capture concept rendered or fetched media bytes")
+    need("saveState(" not in BROWSER_SCM_RENDER and "localStorage" not in BROWSER_SCM_RENDER, "T46: capture fixture projection mutated persisted state")
     need("PM7_SETTINGS_COMMANDS" in doc, "T46: Settings command bridge missing")
     need("function observeWidth(element,assign)" in GLOBAL_SCRIPT and "contentRect.width" in GLOBAL_SCRIPT and "focusChanged&&window.PM7_PAGE_TAB_INK" in GLOBAL_SCRIPT,
          "T46: cached responsive-host geometry or bounded ink resync missing")
@@ -1710,6 +1864,7 @@ def apply(doc, notes, need):
             "doctor_contract": "typed cached-summary entry, lazy details, bounded redacted logs, exact-currentness receipt projection, selected-scope recheck, truthful freshness/confidence/requested/effective state, focus-stable local evidence drawers, and owner-routed remediation only",
             "backup_contract": "Full Server scope with reconstructable indexes/caches/processes/live browser state excluded and portable secrets requiring a separate encrypted recovery envelope",
             "consumer_contract": ["PM-native Browser", "Test Capture", "SCM and forges", "Cursor Origin Preview", "Named Plans", "full-thread performance"],
+            "capture_artifact_contract": "three immutable Raw Test Capture cards (complete, partial-with-gaps, redacted), two Demonstration Video cards (manifest-verified, source-missing), and one distinct no-recording absence record with no schema, artifact identity, or provenance claim; cards render in the PM51 Testing History tab through the shared window.PM7_TEST_CAPTURE_EVIDENCE surface (the legacy browser-scm Capture tab no longer renders in the PM51 shell), with View Source Capture and Inspect Provenance routing, raw provenance stating immutable recorded capture, human card copy with typed refs in provenance details only, admitted missing originals and gaps, source-faithful masking (nothing carried that the source does not record), no captured sign-in trace (AuthBrowserSession structurally excluded), and TCME-008 owner routes handler_unavailable with no media render, byte download, source resolution, or export success",
             "plugin_contract": "compact K3 owner-fact projection with exact 12 centrally registered commands; every control is handler_unavailable, receipt-only without EventRecord, hover-described, bounded/redacted, and incapable of simulated production mutation",
             "responsive_host_contract": "when the projected Settings host with global Chat mounted is below 980 physical pixels, Settings temporarily suppresses global Chat paint without changing saved Chat layout state; ResizeObserver-owned width caches keep page switches free of synchronous geometry reads",
             "settings_command_bridge": ["cmd.settings.open", "cmd.settings.transaction.preview", "cmd.settings.transaction.apply", "cmd.settings.transaction.rollback", "cmd.settings.export"],

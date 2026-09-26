@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L817-L1082
+Source lines: L817-L1091
 
-Source SHA256: `8889e96ae81ceb783074dc6a6ea35c847dab8a4f24415cfb84ce485348e374e3`
+Source SHA256: `e68e02baadd359d68c064ce80967a6d4c2a83b921385d46e95d9e6dcbeff8df9`
 
 ---
 
@@ -115,7 +115,7 @@ Endpoint ownership remains with the Server and security owners. Shared runtime o
 
 ### Commands, events, wiring, and GUI/reverse coverage
 
-No new performance-only command family is introduced. Existing commands dispatch through their existing central IDs and consume the central CV-333 response. Actual durable owner operations return `CommandOutcomeRecord` plus an optional `ObservableWorkRecord` ref; a local-only route/open action or pre-dispatch refusal does not invent an operation or Full Thread identity. `cmd.environment.connect`, `cmd.environment.reconnect`, and `cmd.environment.disconnect` retain connection ownership; installation, authentication, Browser, test, Goal, and Plan controls retain their named owners. A GUI control has exactly one canonical command dispatch, one stable command instance, one same-frame acknowledgement path, one current generation selector, and one actual owner or local-disposition receipt path appropriate to its contract.
+No new performance-only command family is introduced. Existing commands dispatch through their existing central IDs and consume the central CV-333 response. Actual durable owner operations return `CommandOutcomeRecord` plus an optional `ObservableWorkRecord` ref; a local-only route/open action or pre-dispatch refusal does not invent an operation or Full Thread identity. `cmd.environment.connect`, `cmd.environment.reconnect`, and `cmd.environment.disconnect` retain connection ownership; installation, authentication, Browser, test, Goal, and Plan controls retain their named owners. A GUI control has exactly one canonical command dispatch, one stable command instance, one same-frame acknowledgement path, one current generation selector, and one actual owner or local-disposition receipt path appropriate to its contract. The packet's conditional `thread.branch` clause (`PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/02_FINAL_DECISION_REGISTER.md` §12, "copy-on-write branching where applicable") is deferred and unadmitted: `Plans/orchestrator-subagent-integration.md` (Durable orchestration and sustainable-capacity addendum, 2026-09-26 owner adjudication) owns the reason and the exact future admission gate, `cmd.chat.branch_from_restore` is a distinct Assistant Chat restore-point application, and no `cmd.thread.branch` row, alias, or handler exists or may be added without that gate plus central registration.
 
 These new records are receipt/projection values. They emit no new EventRecord while Event Authority is open. `event_effect_policy` remains `receipt_only_no_eventrecord_pending_event_authority`; existing admitted producer events remain governed by their existing owner registrations.
 
@@ -236,6 +236,15 @@ source_lineage:
 negative_constraints:
   - Do not report schema, static wiring, concept UI, or an unavailable platform lane as runtime or performance success.
 ```
+
+**Versioned packet-latency calibration-input register under SIR-017 (revision 1, 2026-09-26) — calibration input, not thresholds.** The 2026-08-08 packet's six provisional latency figures are preserved here as calibration starting input for the future full-thread benchmark matrix, with the packet's own framing preserved verbatim: "All targets are implementation gates to calibrate, not claims of existing performance."
+
+- Register identity: `packet-latency-calibration-inputs.v1`, revision 1 (2026-09-26); source `PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/07_PERFORMANCE_PLATFORM_STORAGE_BENCHMARKS.md`, "Core latency/behavior gates".
+- Input-to-visible acknowledgment: provisional P95 ≤50 ms modern, ≤75 ms legacy.
+- Pause/stop acknowledgment under saturation: provisional P95 ≤100 ms modern, ≤150 ms legacy.
+- Provider fragment receive-to-paint: provisional P95 ≤50 ms modern, ≤100 ms legacy.
+
+These six values are not SIR-017 acceptance thresholds, not pass/fail gates, not performance claims, and not measured results; no schema, fixture, static check, or release admission may treat them as evidence or as a bound, and the SIR-017 criteria above intentionally freeze no number. Any future hard gate may be produced only by the owner benchmark profile: a versioned scenario/profile/toolchain set with hardware and total-process-tree evidence per `Plans/Release_Supply_Chain.md` ("benchmark scenario/profile/toolchain hashes and raw P50/P95/P99/worst/failure/soak receipts; no static substitution"), measured across the SIR-017 workload matrix above — including 1/10/50/200 logical threads and the 24-hour soak — and reported per gate family as P50/P95/P99 plus worst-case and degraded/failure evidence. Calibration may move any figure in either direction from these inputs; measured evidence plus explicit owner approval of that measured evidence is what admits a threshold, never packet inheritance.
 
 ### SIR-018 - Platform-Specific Host Adapter Boundaries
 

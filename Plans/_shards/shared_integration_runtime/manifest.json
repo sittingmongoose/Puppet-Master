@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-09-17T05:20:18Z",
+  "generated_at_utc": "2026-09-26T22:56:32Z",
   "index_path": "Plans/_shards/shared_integration_runtime/00-index.md",
-  "index_sha256": "8c4db69900de2cdae2b7f5ecf3e7ea3e87188ce9c5b5f88d5c8764730cdd2a3a",
+  "index_sha256": "a8e904f2c6cae8cb38d33818211e646630e5ad082659919f275e51250d5e7e79",
   "manifest_path": "Plans/_shards/shared_integration_runtime/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/shared_integration_runtime/001-preamble.md",
-      "sha256": "52acd260af63ae1d763e6c61455ff512ea6a58845503854f9ba8a99e2714a51f",
+      "sha256": "f8668d93df0a24d456ef017bc312aa538eaf8c1066833814209e2565d3281098",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "1. Authority and scope",
       "path": "Plans/_shards/shared_integration_runtime/002-1.-authority-and-scope.md",
-      "sha256": "83815023499bf1aebc427c7b50b0f19d3249da12a34943e366d5b2eac54213ae",
+      "sha256": "e63a030abadbcca91de29ca78c069b4aaed15315300e6bd426912ea472cfc4e6",
       "shard_id": "002",
       "source_line_end": 32,
       "source_line_start": 5,
@@ -26,7 +26,7 @@
     {
       "heading": "2. Platform invariants",
       "path": "Plans/_shards/shared_integration_runtime/003-2.-platform-invariants.md",
-      "sha256": "b472a8baa23353755f49bf729297f16e14107740ac9ab98f20d5dd43ea95c438",
+      "sha256": "100119fbf6849aa4fd19d096c80c5d1068214cacfc296db41cab575af85c91a5",
       "shard_id": "003",
       "source_line_end": 47,
       "source_line_start": 34,
@@ -35,7 +35,7 @@
     {
       "heading": "3. Canonical shared identities",
       "path": "Plans/_shards/shared_integration_runtime/004-3.-canonical-shared-identities.md",
-      "sha256": "d5dfc1c71371b925318cff3e58805b50036e59b3d537f84aaa522a082c550976",
+      "sha256": "8dceb14a26391ddab8f43aa45065e4121157ab09ce533c855438abd47d683f68",
       "shard_id": "004",
       "source_line_end": 76,
       "source_line_start": 49,
@@ -44,7 +44,7 @@
     {
       "heading": "4. Installation and capability lifecycle",
       "path": "Plans/_shards/shared_integration_runtime/005-4.-installation-and-capability-lifecycle.md",
-      "sha256": "2df120a05abdecb6f77ed5652336e5e6f4216f1399b8b4906ea929e1c6a3bee1",
+      "sha256": "66bab751631f3ff7ca35c20f03f91c4236c18089d4af5e66b873535ac9d83368",
       "shard_id": "005",
       "source_line_end": 165,
       "source_line_start": 78,
@@ -53,7 +53,7 @@
     {
       "heading": "5. Durable environment connection and domain synchronization",
       "path": "Plans/_shards/shared_integration_runtime/006-5.-durable-environment-connection-and-domain-synchronization.md",
-      "sha256": "44812a5be702b9e7fef66f40d86276a3c78e8e86b9587f4d612147a4786df6fa",
+      "sha256": "bf6d8ea906b96c3fecce270a17a9ca1d188cfb2b286397709b7a05abe25a5d1b",
       "shard_id": "006",
       "source_line_end": 175,
       "source_line_start": 167,
@@ -62,7 +62,7 @@
     {
       "heading": "6. Durable command outbox",
       "path": "Plans/_shards/shared_integration_runtime/007-6.-durable-command-outbox.md",
-      "sha256": "5630ed50138af22c4008056ea02095b1799098bd1a6378d94edd7e067b835a03",
+      "sha256": "a9ce5982c396528ca3ce5ddc645764beb3edcbc62a764d87820e9a513aa50fba",
       "shard_id": "007",
       "source_line_end": 187,
       "source_line_start": 177,
@@ -71,7 +71,7 @@
     {
       "heading": "7. Cursor replay, snapshot, live buffering, and coalescing",
       "path": "Plans/_shards/shared_integration_runtime/008-7.-cursor-replay-snapshot-live-buffering-and-coalescing.md",
-      "sha256": "1fba92ea9416d9687300dc0bb5a94194713a1ca15b58282516f216bb13a843d4",
+      "sha256": "2f45e635abd6e96dafc8dd7baa9b0ecd574a029fc532aa2ed15560b425e2e407",
       "shard_id": "008",
       "source_line_end": 209,
       "source_line_start": 189,
@@ -80,7 +80,7 @@
     {
       "heading": "8. RuntimeResourceGovernor and ObservableWork",
       "path": "Plans/_shards/shared_integration_runtime/009-8.-runtimeresourcegovernor-and-observablework.md",
-      "sha256": "0943579940c09cd97fa7939ecc9884ec411dee483bcd8bab366db64ff5a404e1",
+      "sha256": "8bc7795989d83661140cc8a428062ea09d27d986d9608f3224cd589a74193e22",
       "shard_id": "009",
       "source_line_end": 229,
       "source_line_start": 211,
@@ -89,7 +89,7 @@
     {
       "heading": "9. Leases and operational awareness",
       "path": "Plans/_shards/shared_integration_runtime/010-9.-leases-and-operational-awareness.md",
-      "sha256": "d93030dc1e2c96dcf825fcad1fce78743f9654b54d6148dbd3fb613d1f142094",
+      "sha256": "3cbd4e2f417cd24dd5c028b91ecf78fe9b3242db6b2510505eb6f6335bcaec83",
       "shard_id": "010",
       "source_line_end": 249,
       "source_line_start": 231,
@@ -98,7 +98,7 @@
     {
       "heading": "10. DebugSession and EvalSession shared lifecycle",
       "path": "Plans/_shards/shared_integration_runtime/011-10.-debugsession-and-evalsession-shared-lifecycle.md",
-      "sha256": "cc80f8b86b1d63969227b1e085d49d2c45f3d4eec1291e981c0ebe1983837422",
+      "sha256": "3da5975e4d8e432044fd4ca415e48d0471df91e58b72467260659ee495f685ce",
       "shard_id": "011",
       "source_line_end": 271,
       "source_line_start": 251,
@@ -107,7 +107,7 @@
     {
       "heading": "11. Provider dispatch admission",
       "path": "Plans/_shards/shared_integration_runtime/012-11.-provider-dispatch-admission.md",
-      "sha256": "d2798fa3acb818cd302196e5b6243bf00dc1ce3a82c3dfac011f7d2721a9f556",
+      "sha256": "5cd72b419cc8106b3cbcf6a53a60a889baffe52236b4ad8e5c78ea2c95497fc7",
       "shard_id": "012",
       "source_line_end": 279,
       "source_line_start": 273,
@@ -116,7 +116,7 @@
     {
       "heading": "12. Time-Traveling conditional rules",
       "path": "Plans/_shards/shared_integration_runtime/013-12.-time-traveling-conditional-rules.md",
-      "sha256": "f8d35146251faf31b5f94ba8aac44a8bcbecd4f9a949a505843eaadbad29fe85",
+      "sha256": "ef530088c91b2db9277cec4d039dee4c7597de4faffc44725ea9774cf2894cde",
       "shard_id": "013",
       "source_line_end": 291,
       "source_line_start": 281,
@@ -125,7 +125,7 @@
     {
       "heading": "13. Back Seat Driver",
       "path": "Plans/_shards/shared_integration_runtime/014-13.-back-seat-driver.md",
-      "sha256": "5b0c4b8682594758ffb17725e05bd32ce3a699b38816d86cb3fe8c578694220c",
+      "sha256": "34a269351b83ed2ae35701a710d5ff112d6d719bc0d5508c7e9609ec79105ba8",
       "shard_id": "014",
       "source_line_end": 313,
       "source_line_start": 293,
@@ -134,7 +134,7 @@
     {
       "heading": "14. Persistence, recovery, and migration",
       "path": "Plans/_shards/shared_integration_runtime/015-14.-persistence-recovery-and-migration.md",
-      "sha256": "f884fe94c0383a19b50032a728ab7742900310edf049213d75584c9a8840699f",
+      "sha256": "26544a4607f759a4ce26d63e54d623c1b2883ad3b7c8f382fbc343dadfea44cc",
       "shard_id": "015",
       "source_line_end": 337,
       "source_line_start": 315,
@@ -143,7 +143,7 @@
     {
       "heading": "15. Commands, wiring, DRY, GUI, and Usage",
       "path": "Plans/_shards/shared_integration_runtime/016-15.-commands-wiring-dry-gui-and-usage.md",
-      "sha256": "9194a2a462844b76b7eeb4f0b0ccb330f9aadb94ba4aedfbffea87c9477a7d9b",
+      "sha256": "346c981518f94a071804f6dbf401a4c198caddd3163af2e87ed1ada66b493d65",
       "shard_id": "016",
       "source_line_end": 381,
       "source_line_start": 339,
@@ -152,7 +152,7 @@
     {
       "heading": "16. Verification contract",
       "path": "Plans/_shards/shared_integration_runtime/017-16.-verification-contract.md",
-      "sha256": "255f20f2c8451b2c1f430906a7402ce791d9af97ee8228811a1540f29eb4d3b7",
+      "sha256": "329c4208f259ef70df3a5d06257a33ce9eeefa939a82dc42267fca74f337a0fc",
       "shard_id": "017",
       "source_line_end": 405,
       "source_line_start": 383,
@@ -161,7 +161,7 @@
     {
       "heading": "17. Conflict dispositions",
       "path": "Plans/_shards/shared_integration_runtime/018-17.-conflict-dispositions.md",
-      "sha256": "55545a81f5af3d61c9d9086606b9d98182bf5cf74947b90c4fbba153b6e33519",
+      "sha256": "0334f8b42cbff945a313feab13a04f17b5105496f7358cffa01310df3a25678b",
       "shard_id": "018",
       "source_line_end": 419,
       "source_line_start": 407,
@@ -170,7 +170,7 @@
     {
       "heading": "18. Owner / consumer map",
       "path": "Plans/_shards/shared_integration_runtime/019-18.-owner-consumer-map.md",
-      "sha256": "208385addca99e9c7db2f776acba3258926b5b003f73209bd8fbf4a91b7dd9b9",
+      "sha256": "dfce3602b5f6b5a7343cec7f5e02eaf0caea1a8af6d2797cd908cafb96b4a0de",
       "shard_id": "019",
       "source_line_end": 435,
       "source_line_start": 421,
@@ -179,7 +179,7 @@
     {
       "heading": "19. PlanUnits",
       "path": "Plans/_shards/shared_integration_runtime/020-19.-planunits.md",
-      "sha256": "b0f2d296a5756cf6b51353aea3f7e296ab80630dc1ee0898aab84c540048fabe",
+      "sha256": "289f1249f3f1b2c084a56cc2dcda2209e9ddeabc3dd65c8e5cd51745b966f281",
       "shard_id": "020",
       "source_line_end": 795,
       "source_line_start": 437,
@@ -188,7 +188,7 @@
     {
       "heading": "20. Migration coverage",
       "path": "Plans/_shards/shared_integration_runtime/021-20.-migration-coverage.md",
-      "sha256": "a8cef25a93d5f9f8ce3a27d40c782baa75fd9ce09891ad0feac8f1a7747c9fe6",
+      "sha256": "0b2e33e677d5acc235fed29d2b255d6b7cbb134abad940c51008a596639ddba7",
       "shard_id": "021",
       "source_line_end": 815,
       "source_line_start": 797,
@@ -197,160 +197,160 @@
     {
       "heading": "Full-Thread Performance And Continuity Addendum - 2026-08-31",
       "path": "Plans/_shards/shared_integration_runtime/022-full-thread-performance-and-continuity-addendum-2026-08-31.md",
-      "sha256": "8a93e810ba6e15a19e349e7eeb13a813970cd225713ec048e93a6195e8b64df6",
+      "sha256": "5a15571534f7b8e7c695770ca224720d5567f4db8a619e1bc312ee417f074b7d",
       "shard_id": "022",
-      "source_line_end": 1082,
+      "source_line_end": 1091,
       "source_line_start": 817,
       "split_rule": "heading-##"
     },
     {
       "heading": "Command Contract Closure Addendum - Connection Profiles And Installation Selection",
       "path": "Plans/_shards/shared_integration_runtime/023-command-contract-closure-addendum-connection-profiles-and-instal.md",
-      "sha256": "1459659c89608890a1464a42bd4c8803eeeeaea0283c055ca04965236a58d9fe",
+      "sha256": "21d2ffb0727054f4ad49fcedb5ff4931d87cf9f7e8678fb8d52059a87426b048",
       "shard_id": "023",
-      "source_line_end": 1174,
-      "source_line_start": 1084,
+      "source_line_end": 1183,
+      "source_line_start": 1093,
       "split_rule": "heading-##"
     },
     {
       "heading": "Retained PKT-04 Candidate Inventory (Deferred, Non-Emitting, Non-Canonical)",
       "path": "Plans/_shards/shared_integration_runtime/024-retained-pkt-04-candidate-inventory-deferred-non-emitting-non-ca.md",
-      "sha256": "713873c44a958b1dd9635b95c53b134db195e774afce8404f299c7184cf43541",
+      "sha256": "22a167147b589dc86af543eb9d1043d220891fd50ae966f3a02d19bc6a36a34f",
       "shard_id": "024",
-      "source_line_end": 1287,
-      "source_line_start": 1176,
+      "source_line_end": 1296,
+      "source_line_start": 1185,
       "split_rule": "heading-##"
     },
     {
       "heading": "Server/WAN exact-command owner closure addendum",
       "path": "Plans/_shards/shared_integration_runtime/025-server-wan-exact-command-owner-closure-addendum.md",
-      "sha256": "c732da7c3fdc72f417bdd320e8530aa17502492fd33d66177b5a4b6eddad2d69",
+      "sha256": "6a18176488e22f340004e09c33fe81beb988ed27e8067818e80a60a865615c52",
       "shard_id": "025",
-      "source_line_end": 1548,
-      "source_line_start": 1289,
+      "source_line_end": 1557,
+      "source_line_start": 1298,
       "split_rule": "heading-##"
     },
     {
       "heading": "Shared Connection Central-Route Binding Addendum - 2026-09-01",
       "path": "Plans/_shards/shared_integration_runtime/026-shared-connection-central-route-binding-addendum-2026-09-01.md",
-      "sha256": "e6fc708f151a439b2b91905c83ed2202a4c19f397940b03aa330c356b80a8c17",
+      "sha256": "2d734e3300f5e66efbe50a2a77fc2c6754ee56dfa8e7a3c3d9a6fed4fb1777b4",
       "shard_id": "026",
-      "source_line_end": 1580,
-      "source_line_start": 1550,
+      "source_line_end": 1589,
+      "source_line_start": 1559,
       "split_rule": "heading-##"
     },
     {
       "heading": "Central Sole Future Handler Binding Addendum - 2026-09-01",
       "path": "Plans/_shards/shared_integration_runtime/027-central-sole-future-handler-binding-addendum-2026-09-01.md",
-      "sha256": "c80f3009ef3926238091c548000d1034dac5e113c7a0fcbd6a893fdda28b2eba",
+      "sha256": "77117996fe6f4b66f5de0f2fb3b7ac97992a55e20e820709a7a5b4f6335deac7",
       "shard_id": "027",
-      "source_line_end": 1643,
-      "source_line_start": 1582,
+      "source_line_end": 1652,
+      "source_line_start": 1591,
       "split_rule": "heading-##"
     },
     {
       "heading": "Expansion Compatibility Materialization Addendum - 2026-09-01",
       "path": "Plans/_shards/shared_integration_runtime/028-expansion-compatibility-materialization-addendum-2026-09-01.md",
-      "sha256": "26a04d298d023eb43c4c6d5fc27e99d70bb4ca52c24b04c65bf7eb6fef09343a",
+      "sha256": "f9a10de62acc916056e8d88aba5c9fdf02efc14686576804c200287fb423406b",
       "shard_id": "028",
-      "source_line_end": 1715,
-      "source_line_start": 1645,
+      "source_line_end": 1724,
+      "source_line_start": 1654,
       "split_rule": "heading-##"
     },
     {
       "heading": "Forge, Backup, Automation, And Embedded-Connector Consumer Addendum - 2026-09-01",
       "path": "Plans/_shards/shared_integration_runtime/029-forge-backup-automation-and-embedded-connector-consumer-addendum.md",
-      "sha256": "cb9c184bddb181a5fd2f8c68d83a6e72547c348dcad2b554ae49c82b6447eaf9",
+      "sha256": "563f3e56aa8cb6ffe64d6eee09dceb5d2928876bf22a6fffd8f41a07e609693a",
       "shard_id": "029",
-      "source_line_end": 1880,
-      "source_line_start": 1717,
+      "source_line_end": 1889,
+      "source_line_start": 1726,
       "split_rule": "heading-##"
     },
     {
       "heading": "ConnectionDraft Candidate Closure Addendum - 2026-09-02",
       "path": "Plans/_shards/shared_integration_runtime/030-connectiondraft-candidate-closure-addendum-2026-09-02.md",
-      "sha256": "e4ce0d7612cc4d4b4f95f0f68a83a39f3dd05c20563206b4586b305b477f9867",
+      "sha256": "351c2eb83b1c140342bed7234e48c0f21a62b097aa36052a16397c5cb3dc5b92",
       "shard_id": "030",
-      "source_line_end": 1943,
-      "source_line_start": 1882,
+      "source_line_end": 1952,
+      "source_line_start": 1891,
       "split_rule": "heading-##"
     },
     {
       "heading": "Additive Correction v4 \u2014 Provisioning Only After Start (2026-09-03)",
       "path": "Plans/_shards/shared_integration_runtime/031-additive-correction-v4-provisioning-only-after-start-2026-09-03.md",
-      "sha256": "e86d1bf349a2bedd456a163bb5bf628cbac6a20987c2574c92e7188e8fe38ecb",
+      "sha256": "cfb16a6d00e4162ec69ab7f8aaac8264c41fcf7eaf5b5d8ca1af7d76a5ce6d4d",
       "shard_id": "031",
-      "source_line_end": 1954,
-      "source_line_start": 1945,
+      "source_line_end": 1963,
+      "source_line_start": 1954,
       "split_rule": "heading-##"
     },
     {
       "heading": "Working Notebook Transition Runtime Addendum (2026-09-05)",
       "path": "Plans/_shards/shared_integration_runtime/032-working-notebook-transition-runtime-addendum-2026-09-05.md",
-      "sha256": "0818d31a27b4d210877b4a8ac3a87e3b4287ef4e5df98c38294439628d8da57c",
+      "sha256": "a4ee6153bf44d4d17ba2f0512e90c333292e9a2ed6e9ad3a16470bd7e846cb8f",
       "shard_id": "032",
-      "source_line_end": 2029,
-      "source_line_start": 1956,
+      "source_line_end": 2038,
+      "source_line_start": 1965,
       "split_rule": "heading-##"
     },
     {
       "heading": "Compaction completion replay binding (DL-040)",
       "path": "Plans/_shards/shared_integration_runtime/033-compaction-completion-replay-binding-dl-040.md",
-      "sha256": "0724fed88d25d2546b0369268f4e0548114d9bea79f80fb25fcc65b9a079b654",
+      "sha256": "968105afa83267fc2057ed21adcf8e2331ccd97a2bdace2850edb3fddd4641a0",
       "shard_id": "033",
-      "source_line_end": 2411,
-      "source_line_start": 2031,
+      "source_line_end": 2420,
+      "source_line_start": 2040,
       "split_rule": "heading-##"
     },
     {
       "heading": "Original delete-command delegated custody",
       "path": "Plans/_shards/shared_integration_runtime/034-original-delete-command-delegated-custody.md",
-      "sha256": "67f546bcc80f7bbc4d89f92046a58eb9371c067f54481c393177817b2431b09c",
+      "sha256": "fa47fd02b83da2e2a8ac263b61dde4ed08b1984d9d01969f9de31d58dffa800d",
       "shard_id": "034",
-      "source_line_end": 2480,
-      "source_line_start": 2414,
+      "source_line_end": 2489,
+      "source_line_start": 2423,
       "split_rule": "heading-##"
     },
     {
       "heading": "Original legal-hold command and pending outcome custody",
       "path": "Plans/_shards/shared_integration_runtime/035-original-legal-hold-command-and-pending-outcome-custody.md",
-      "sha256": "08b03e872666e247f0f45bf0074bc2e53d863391909aabf5e43ff2a1f169878e",
+      "sha256": "819f51d148bbf02070017c14ba11e8f62366d99326656d6eb77098d6b7880ea2",
       "shard_id": "035",
-      "source_line_end": 2577,
-      "source_line_start": 2482,
+      "source_line_end": 2586,
+      "source_line_start": 2491,
       "split_rule": "heading-##"
     },
     {
       "heading": "Original Goal start pending and terminal source custody",
       "path": "Plans/_shards/shared_integration_runtime/036-original-goal-start-pending-and-terminal-source-custody.md",
-      "sha256": "5319fcdde267a078166755856b33958e4e6f2a8eb585f5408e057a742c4331e9",
+      "sha256": "dd1bfdb9239518b854dfb8d4e411661b2ce83874362a3ffa67551ea744935d99",
       "shard_id": "036",
-      "source_line_end": 2593,
-      "source_line_start": 2579,
+      "source_line_end": 2602,
+      "source_line_start": 2588,
       "split_rule": "heading-##"
     },
     {
       "heading": "SIR-048 - Original Goal start pending and terminal source custody",
       "path": "Plans/_shards/shared_integration_runtime/037-sir-048-original-goal-start-pending-and-terminal-source-custody.md",
-      "sha256": "82bd48c04d83221990a9755a0a9aa9066137d4638abc3c8a67524a327f993d05",
+      "sha256": "09e334918041320ea82bfee02c880296cd0463585f2b1abc1c4bcf7339e5bc8f",
       "shard_id": "037",
-      "source_line_end": 2656,
-      "source_line_start": 2595,
+      "source_line_end": 2665,
+      "source_line_start": 2604,
       "split_rule": "heading-##"
     },
     {
       "heading": "Original Goal update source and terminal custody",
       "path": "Plans/_shards/shared_integration_runtime/038-original-goal-update-source-and-terminal-custody.md",
-      "sha256": "47f97988b4cc17819484caf13b22dd08619d8e479c9c02c0cc039349d1a57274",
+      "sha256": "b6e5a557a289b86fc96fc01d7b4551d867b25e85152af34a939a7cb0ede672d9",
       "shard_id": "038",
-      "source_line_end": 3055,
-      "source_line_start": 2657,
+      "source_line_end": 3064,
+      "source_line_start": 2666,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 3055,
+    "line_count": 3064,
     "path": "Plans/Shared_Integration_Runtime.md",
-    "sha256": "8889e96ae81ceb783074dc6a6ea35c847dab8a4f24415cfb84ce485348e374e3"
+    "sha256": "e68e02baadd359d68c064ce80967a6d4c2a83b921385d46e95d9e6dcbeff8df9"
   }
 }

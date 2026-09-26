@@ -1,10 +1,15 @@
 /* Chapter 3 (end) — Review [review_setup_plan], Creating [automatic_preparation] and Finish protecting your work.
    Review re-checks the draft read-only, shows every choice with Edit, and says exactly what the one click will do.
    Creating is the single reviewed commit: an idempotency key, truthful phases, one receipt per owner, and recovery that
-   never leaves a half-made Project (Try again resumes the failed phase with the same key). */
+   never leaves a half-made Project. Local journeys keep their fixture choreography (tagged as a concept fixture);
+   the exact GitHub remote-create chain (PJCT-007/PJCT-008, PWIZ-021) adopts only injected owner-shaped results:
+   original-key replay re-observes without new effect, a verified remote advances only through a fresh fenced
+   resume attempt, failure before any remote effect offers reviewed safe-new-attempt choices, and an unknown
+   outcome is reconciliation-only. Nothing is listed, selected, or bound before the terminal result. */
 (function () {
   'use strict';
   const O55 = window.O55, C = O55.c, U = O55.util, F = O55.flow, T = (k, v) => O55.t(k, v), def = (id, d) => O55.screens.define(id, d);
+  const PR = () => O55.projectRecovery;
   const md = (S) => S.sess.drafts.main;
   const P = () => O55.project;
   const forgeName = (d) => O55.safe.forgeName(d.forge, d.forge_provider_variant);
@@ -119,8 +124,18 @@
           if (!S.sess.commit || S.sess.commit.state === 'none' || S.sess.commit.state === 'later') S.sess.commit = { state: 'running', later: true, key: 'prepare:' + d.project_draft_ref, attempt: 1, revision: d.project_draft_revision };
           S.save(); return O55.ui.go('creating');
         }
-        /* one reviewed commit per draft: a second click (or a retry) reuses the same idempotency key */
-        if (!S.sess.commit || S.sess.commit.state === 'none') { O55.draft.set(d, { review_confirmed: true }); S.sess.commit = { state: 'running', key: 'commit:' + d.project_draft_ref, attempt: 1, revision: d.project_draft_revision }; S.save(); }
+        /* one reviewed commit per draft revision: a second click reuses the same idempotency key, while a
+           fresh review (new revision) starts a new original attempt. The destination stays a private
+           reservation until the terminal result publishes it. */
+        if (!S.sess.commit || S.sess.commit.state === 'none') {
+          O55.draft.set(d, { review_confirmed: true });
+          const cm = S.sess.commit = { state: 'running', key: 'commit:' + d.project_draft_ref + ':r' + d.project_draft_revision, attempt: 1, revision: d.project_draft_revision };
+          PR().resetRecovery(cm);
+          PR().beginOriginal(cm, d);
+          cm.pendingProjectId = PR().reserveDestinationId(d);
+          cm.fixtureProjectId = 'p-' + U.slug(d.project_name).slice(0, 24) + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+          S.save();
+        }
         O55.sound.play('commit');
         O55.ui.go('creating');
       }
@@ -148,43 +163,88 @@
   const CHILD = { history: 'cmd.source_control.backend.select', historyInstall: 'cmd.source_control.backend.select', online: 'cmd.source_control.repository.bind', settings: 'cmd.settings.transaction.apply', remote: null };
   function remoteCmd(d) { return d.remote_mode === 'tailscale' ? 'cmd.remote_access.tailscale.setup.start' : d.remote_mode === 'reverse_proxy' ? 'cmd.remote_access.proxy.generate' : 'cmd.remote_access.remote_link.setup'; }
 
-  /* Shell effects of the commit, each idempotent: the Project record (menu item, selection), the settings copy through
-     the real Settings owner, receipts. */
-  function ensureProject(S) {
-    const d = md(S), id = 'p-' + U.slug(d.project_name).slice(0, 40), cm = S.sess.commit;
-    cm.projectId = id;
-    const menu = document.getElementById('projectMenu');
-    if (menu && !menu.querySelector(`[data-project="${id}"]`)) {
-      const proto = menu.querySelector('[data-project]');
-      const item = proto ? proto.cloneNode(true) : document.createElement('button');
-      item.setAttribute('data-project', id); item.dataset.projectTitle = 'Active project: ' + d.project_name;
-      item.classList.remove('is-selected'); item.textContent = d.project_name;
-      (proto ? proto.parentNode : menu).insertBefore(item, proto || null);
+  /* Terminal publication is the single gate that lists, selects, or binds a Project: one menu row, the
+     selection, the staged Settings snapshot, the look, and the project-created event. It runs only for
+     the terminal listed/persisted result (owner-adopted on the GitHub chain, fixture-tagged locally). */
+  function publishProject(S, id, via) {
+    const d = md(S), cm = S.sess.commit;
+    const st = window.PM12_KIMI && window.PM12_KIMI.o55SettingsTransfer;
+    if (d.settings_transfer.mode === 'copy_from_project' && !cm.stagedSettings) {
+      cm.settingsPublishError = 'The required Settings preview is missing.'; return null;
     }
-    menu && menu.querySelectorAll('[data-project]').forEach((n) => n.classList.toggle('is-selected', n.getAttribute('data-project') === id));
-    window.PM_ACTIVE_PROJECT_ID = id;
-    cm.receipts = cm.receipts || {}; cm.receipts.project = cm.receipts.project || ('receipt:project:' + id);
+    const pub = PR().publishStagedSettings(st, cm, id, d);
+    if (!pub.ok) { cm.settingsPublishError = pub.reason; return null; }
+    cm.projectId = id; cm.publishedVia = via;
+    cm.receipts = cm.receipts || {};
+    cm.receipts.project = via === 'fixture' ? 'fixture:project:' + id : cm.recovery.settled_effects.registry_publication.receipt_ref;
+    if (O55.shell && O55.shell.selectProject) O55.shell.selectProject(id, d.project_name);
     /* the new Project starts with the look chosen here: Settings loads a new Project's own settings as it is selected
        (after this task), so the look is saved into it once that load has run */
     O55.motion.after(0, () => { if (O55.shell && O55.shell.commitLook) O55.shell.commitLook(S); });
+    window.dispatchEvent(new CustomEvent('o55:project-created', { detail: { id, name: d.project_name, receipts: cm.receipts, fixture: via === 'fixture' } }));
     return id;
   }
-  function applySettings(S) {
+  /* Settings are staged against the private destination reservation, never the selected Project: the
+     existing selected-destination helper cannot be called before publication. */
+  function stageSettings(S) {
     const d = md(S), cm = S.sess.commit, st = window.PM12_KIMI && window.PM12_KIMI.o55SettingsTransfer;
     if (!st) return 'settings_owner_missing';
-    if (cm.receipts && cm.receipts.settings) return null;
-    const cats = (S.sess.like && S.sess.like.categories) || st.categories();
-    const res = st.apply(d.settings_transfer.source_project_id, cats, { credentials: 'Keep existing destination credential ownership', conflicts: 'Preview every changed value', rollback: true });
-    cm.receipts = cm.receipts || {};
-    if (res && res.ok) { cm.receipts.settings = res.receiptId; cm.settingsCount = res.count; return null; }
-    if (res && /No canonical transferable values differ/i.test(res.reason || '')) { cm.receipts.settings = 'no-change'; cm.settingsCount = 0; return null; }
-    cm.settingsError = res ? res.reason : 'unknown';
+    if (cm.stagedSettings) return null;
+    const cats = (S.sess.like && S.sess.like.categories) || (st.categories ? st.categories() : []);
+    const res = PR().stagePendingSettings(st, cm, d, d.settings_transfer.source_project_id, cats, { credentials: 'Keep existing destination credential ownership', conflicts: 'Preview every changed value', rollback: true, excludedSettings: ['general.visual.theme', 'general.visual.theme-mode'] });
+    if (res.ok) { cm.receipts = cm.receipts || {}; cm.receipts.settings = cm.stagedSettings.receipt; cm.settingsCount = cm.stagedSettings.count; cm.settingsFixture = cm.stagedSettings.fixture; return null; }
+    if (/No canonical transferable values differ/i.test(res.reason || '')) { cm.receipts = cm.receipts || {}; cm.receipts.settings = 'no-change'; cm.settingsCount = 0; return null; }
+    cm.settingsError = res.reason || 'unknown';
     return 'settings_rejected';
   }
+  function discardStaged(S) {
+    const cm = S.sess.commit, st = window.PM12_KIMI && window.PM12_KIMI.o55SettingsTransfer;
+    PR().discardStagedSettings(st, cm);
+  }
+  /* GitHub-chain adoption: transport timers never confer a remote outcome; only an adopted owner-shaped
+     result does. Without a current result the concept fails closed (pending), never success. */
+  function adoptCreatePhase(S) {
+    const d = md(S), cm = S.sess.commit, OR = O55.ownerResults;
+    if (cm.recovery && cm.recovery.remote_effect_state === 'verified_created') { PR().replayOriginal(cm); return adoptResumePhase(S); }
+    if (cm.recovery && cm.recovery.remote_effect_state === 'failed_before_effect') { PR().replayOriginal(cm); S.save(); O55.ui.refresh(); return; }
+    PR().beginCreateRequest(OR, cm, d);
+    const v = PR().adoptCreateResult(OR, cm, d, OR.take(cm.or_create.id));
+    if (!v.ok) { cm.state = cm.recovery?.remote_effect_state === 'unknown' ? 'unknown' : 'pending'; cm.code = v.reason; S.save(); O55.ui.refresh(); return; }
+    if (cm.publishable) return publishAccepted(S);
+    cm.state = v.state === 'verified_created' ? 'recovery' : v.state === 'unknown' ? 'unknown' : 'failed';
+    cm.code = v.state === 'failed_before_effect' ? (cm.recovery.failure_reason || 'create_failed') : v.state;
+    if (v.state === 'verified_created') { O55.sound.play('error'); PR().armResumeRequest(OR, cm, d); }
+    else if (v.state === 'failed_before_effect') O55.sound.play('error');
+    S.save(); O55.ui.refresh();
+  }
+  function adoptResumePhase(S) {
+    const d = md(S), cm = S.sess.commit, OR = O55.ownerResults;
+    const arm = PR().armResumeRequest(OR, cm, d);
+    if (!arm.ok) { cm.code = arm.reason; S.save(); O55.ui.refresh(); return; }
+    const v = PR().adoptResumeResult(OR, cm, d, OR.take(cm.or_resume.id));
+    if (!v.ok) { cm.code = v.reason; S.save(); O55.ui.refresh(); return; }
+    if (cm.publishable) return publishAccepted(S);
+    cm.code = null; S.save(); O55.sound.play('success'); O55.ui.refresh();
+  }
+  function publishAccepted(S) {
+    const d = md(S), cm = S.sess.commit;
+    cm.receipts = cm.receipts || {};
+    cm.receipts.original_terminal = cm.recovery.original_terminal_result_ref;
+    cm.receipts.recovery = 'recovery:' + cm.recovery.recovery_id;
+    if (!publishProject(S, cm.publishable.project_id, 'owner')) { cm.state = 'recovery'; cm.code = 'settings_rejected'; S.save(); O55.ui.refresh(); return; }
+    cm.state = 'done'; cm.code = null; S.save();
+    O55.sound.play('commit');
+    O55.motion.after(650, () => { if (O55.art.celebrate && S.open) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true }); });
+    O55.ui.refresh();
+  }
+  function repoDisplay(S) {
+    const d = md(S), owner = d.repository_container || S.sess.forgeAccounts[d.forge] || '';
+    return (owner ? owner + '/' : '') + (d.repository_name || d.project_name);
+  }
   function runCommit(S) {
-    const d = md(S), cm = S.sess.commit; if (!cm || cm.state === 'done' || cm.state === 'failed') return;
-    const order = phasesFor(S);
+    const d = md(S), cm = S.sess.commit; if (!cm || cm.state === 'done') return;
     if (d.project_mode === 'later') {
+      const order = phasesFor(S);
       /* no Project record, folder, history or copy: only the new Server's access, then a check */
       F.op(S, cm.key, remoteCmd(d), order.map((k) => ({ key: k, ms: PH_MS[k] })), {
         payload: { idempotency_key: cm.key, draft: d.project_draft_ref },
@@ -193,28 +253,35 @@
       });
       return;
     }
+    if (PR().isGithubRemoteChain(d)) return runGithubCommit(S);
+    return runLocalCommit(S);
+  }
+  /* Local and non-GitHub journeys: fixture choreography, explicitly tagged, published only at the
+     terminal step. A retry resumes the failed phase with the same key; no remote effect is claimed. */
+  function runLocalCommit(S) {
+    const d = md(S), cm = S.sess.commit;
+    if (cm.state === 'failed') return;
+    const order = phasesFor(S);
     const phases = order.map((k) => ({ key: k, ms: PH_MS[k], fail: () => {
-      if (k === 'folder' || (k === 'device' && !cm.projectId) || (k === 'restore' && !cm.projectId) || (k === 'clone' && !cm.projectId)) ensureProject(S);
       if (CHILD[k]) O55.owners.dispatch(CHILD[k], Object.assign({ draft: d.project_draft_ref }, CHILD[k] === 'cmd.source_control.backend.select' ? { backend: d.history_backend, install: k === 'historyInstall' } : {}), S.ctx(), () => ({ ok: true }));
       if (k === 'remote') O55.owners.dispatch(remoteCmd(d), { draft: d.project_draft_ref }, S.ctx(), () => ({ ok: true }));
       if (k === 'online') {
         const f = S.env.failures.online_copy;
         if (f === 'name_taken' && !cm.renamed) return 'name_taken';
         if (f === 'network' && !cm.networkRetried) { cm.networkRetried = true; S.save(); return 'network'; }
-        cm.receipts = cm.receipts || {}; cm.receipts.online = 'receipt:online-copy:' + d.forge + ':' + d.repository_name;
+        cm.receipts = cm.receipts || {}; cm.receipts.online = 'fixture:online-copy:' + d.forge + ':' + d.repository_name;
       }
-      if (k === 'settings') return applySettings(S);
-      if (k === 'check') { ensureProject(S); if (d.storage_mode === 'network_location' || d.project_transport === 'ssh' || d.project_transport === 'puppet_master') cm.writeTest = 'ok'; }
+      if (k === 'settings') return stageSettings(S);
+      if (k === 'check' && (d.storage_mode === 'network_location' || d.project_transport === 'ssh' || d.project_transport === 'puppet_master')) cm.writeTest = 'ok';
       return null;
     } }));
-    if (!cm.projectId && order[0] !== 'folder') ensureProject(S);
     const cmd = d.project_mode === 'new' ? 'cmd.project.new_local' : 'cmd.project.add_existing';
     F.op(S, cm.key, cmd, phases, {
       payload: { idempotency_key: cm.key, draft: d.project_draft_ref, revision: d.project_draft_revision },
-      onFail: (S2, st) => { cm.state = 'failed'; cm.code = st.code; S.save(); },
+      onFail: (S2, st) => { cm.state = 'failed'; cm.code = st.code; discardStaged(S); S.save(); },
       onDone: () => {
+        if (!publishProject(S, cm.fixtureProjectId, 'fixture')) { cm.state = 'failed'; cm.code = 'settings_rejected'; S.save(); O55.ui.refresh(); return; }
         cm.state = 'done'; cm.code = null; S.save();
-        window.dispatchEvent(new CustomEvent('o55:project-created', { detail: { id: cm.projectId, name: d.project_name, receipts: cm.receipts } }));
         O55.sound.play('commit');
         /* the Project is made: the troupe celebrates (after the scene has taken its bow beat) */
         O55.motion.after(650, () => { if (O55.art.celebrate && S.open) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true }); });
@@ -222,17 +289,120 @@
       }
     });
   }
+  /* GitHub remote-create chain: transport phases are display only (no owner dispatch, no fabricated
+     outcome); the terminal truth arrives only through adoptCreatePhase. The command table registers the owner routes but refuses native dispatch because no handler is present.
+     This transport is explicitly a display-only fixture; it grants no dispatch authority. */
+  function runGithubCommit(S) {
+    const d = md(S), cm = S.sess.commit, OR = O55.ownerResults;
+    if (cm.state === 'failed' && !cm.resumeTransport) return;
+    cm.resumeTransport = false;
+    PR().beginCreateRequest(OR, cm, d);
+    if (cm.transportDone) return adoptCreatePhase(S);
+    if (cm.transportRunning) return;
+    cm.transportRunning = true;
+    const order = phasesFor(S);
+    const phases = order.map((k) => ({ key: k, ms: PH_MS[k], fail: () => {
+      if (k === 'settings') return stageSettings(S);
+      if (k === 'check' && (d.storage_mode === 'network_location' || d.project_transport === 'ssh' || d.project_transport === 'puppet_master')) cm.writeTest = 'ok';
+      return null;
+    } }));
+    /* an operation belongs to the run that started it: after Run Onboarding Again its late reports are dropped */
+    const epoch = S.epoch || 0;
+    S.sess.ops = S.sess.ops || {};
+    S.sess.ops[cm.key] = { state: 'running', phases: phases.map((p) => ({ key: p.key, status: 'waiting' })), code: null };
+    S.save(); O55.ui.refresh();
+    O55.owners.operation(cm.key, phases, (st) => {
+      if ((S.epoch || 0) !== epoch || S.sess.commit !== cm) return;
+      S.sess.ops[cm.key] = { state: st.state, phases: st.phases, code: st.code, failedAt: st.failedAt };
+      S.save();
+      if (st.state === 'done') { cm.transportRunning = false; cm.transportDone = true; S.save(); adoptCreatePhase(S); return; }
+      if (st.state === 'failed') { cm.transportRunning = false; cm.transportDone = true; cm.localFailure = st.code; S.save(); adoptCreatePhase(S); return; }
+      O55.ui.refresh();
+    });
+  }
+  /* A failed GitHub attempt never retries in place: a fresh review (new draft revision) starts a new
+     original attempt with a new idempotency key. */
+  function reviewFresh(S) {
+    discardStaged(S);
+    O55.draft.set(md(S), { review_confirmed: false });
+    S.sess.commit = { state: 'none' };
+    S.save(); O55.ui.go('review');
+  }
+  const REASON_COPY = { central_dispatch_unavailable: 'waitingHost', concurrent_resume_active: 'claimBusy', forge_owner_gated: 'deleteGated', no_verified_binding: 'noBinding', remote_unknown_reconcile_only: 'unknownOnly', no_verified_remote_identity: 'noRemote', no_verified_recovery: 'noRemote', stale_setup_binding: 'stale', stale_generation: 'stale', stale_nonce: 'mismatch', stale_composition: 'stale', recovery_mismatch: 'mismatch', pending_no_result: 'pending', resume_armed: 'armed', delete_adopted: 'deleted', delete_not_confirmed: 'confirmFirst', open_unavailable: 'openUnavailable', unknown_command: 'openUnavailable', needs_review_confirmation: 'openUnavailable' };
+  function reasonCopy(code) { return T('creating.recovery.reasons.' + (REASON_COPY[code] || 'other')); }
+  /* Plain recovery status; technical IDs live only in the details disclosure below it. */
+  function githubStatus(S) {
+    const d = md(S), cm = S.sess.commit, svc = forgeName(d), R = 'creating.recovery.';
+    const btn = (label, action, dis, reason) => O55.ui.btn({ label, do: action, cls: 'o55-small', disabled: !!dis, reason: reason || '' }, dis ? 'o55-ghost' : 'o55-secondary');
+    const note = cm.routeNote ? `<p class="o55-hint" data-key="routenote">${U.esc(reasonCopy(cm.routeNote))}</p>` : '';
+    const again = btn(T(R + 'checkAgain'), 'checkAgain');
+    if (cm.state === 'running' && !cm.transportDone && !cm.code) return '';
+    if (cm.state === 'pending' || (cm.state === 'running' && cm.transportDone)) {
+      const mismatch = cm.code && cm.code !== 'pending_no_result';
+      return `<div class="o55-banner o55-banner-info" data-key="pending">${C.small('cloud', 18)}<span>${U.esc(T(R + (mismatch ? 'mismatch' : 'pending'), { service: svc }))}</span></div>`
+        + `<div class="o55-actions" data-key="recheck">${again}</div>` + note;
+    }
+    if (cm.state === 'unknown') {
+      return `<div class="o55-banner o55-banner-info" data-key="unknown">${C.small('cloud', 18)}<span>${U.esc(T(R + 'unknown', { service: svc }))}</span></div>`
+        + `<p class="o55-hint" data-key="unknownonly">${U.esc(T(R + 'unknownOnly'))}</p>`
+        + `<div class="o55-actions" data-key="recheck">${again}</div>` + note;
+    }
+    if (cm.state === 'failed') {
+      if (!cm.recovery) {
+        const msg = cm.code === 'settings_rejected' ? (cm.settingsError || '') : T(R + 'mismatch');
+        return `<div class="o55-banner o55-banner-warn" data-key="fail">${C.small('cloud', 18)}<span>${U.esc(msg)}</span></div>`
+          + `<div class="o55-actions" data-key="recheck">${again}</div>` + note;
+      }
+      const msg = cm.code === 'name_taken' ? T('creating.taken', { service: svc, repo: d.repository_name }) : cm.code === 'network' ? T('creating.network', { service: svc }) : T(R + 'failedLead');
+      return `<div class="o55-banner o55-banner-warn" data-key="fail">${C.small('cloud', 18)}<span>${U.esc(msg)}</span></div>`
+        + `<p class="o55-hint" data-key="freshattempt">${U.esc(T(R + 'freshAttempt'))}</p>`
+        + `<div class="o55-actions" data-key="safechoices">${O55.ui.btn({ label: T(R + 'reviewAgain'), do: 'reviewAgain', cls: 'o55-small' }, 'o55-secondary')}</div>` + note;
+    }
+    if (cm.state === 'recovery') {
+      const r = cm.recovery, repo = repoDisplay(S);
+      const gC = PR().effectiveContinue(O55.ownerResults, cm, d), gO = PR().effectiveOpen(cm), gD = PR().effectiveDelete(cm);
+      let out = `<div class="o55-banner o55-banner-warn" data-key="recovery">${C.small('cloud', 18)}<span>${U.esc(T(R + 'notice', { repo, service: svc }))}</span></div>`;
+      if (cm.settingsPublishError) out += C.note('Your project result is kept. Settings must finish before the project can open. Check again retries only that final handoff; it does not create another repository or repeat completed work.', 'warn', 'stack');
+      out += `<div class="o55-actions" data-key="routes">${btn(T(R + 'continue'), 'continueSetup', !gC.available, reasonCopy(gC.reason))}`
+        + `${btn(T(R + 'open'), 'openRepo', !gO.available, reasonCopy(gO.reason))}${btn(T(R + 'delete'), 'deleteRepo', !gD.available, reasonCopy(gD.reason))}</div>`;
+      out += `<p class="o55-hint" data-key="routereasons">${U.esc(reasonCopy(gC.reason))} · ${U.esc(reasonCopy(gD.reason))}</p>`;
+      if (cm.deleteConfirm) {
+        out += `<div class="o55-confirm" data-key="deleteconfirm"><span>${U.esc(T(R + 'deleteConfirm', { repo, service: svc }))}</span>`
+          + `<span class="o55-hint">${U.esc(T(R + 'deleteWarn'))}</span> `
+          + `${O55.ui.btn({ label: T(R + 'deleteYes'), do: 'confirmDelete', cls: 'o55-small' }, 'o55-primary')} `
+          + `${O55.ui.btn({ label: T(R + 'deleteNo'), do: 'cancelDelete', cls: 'o55-small' }, 'o55-ghost')}</div>`;
+      }
+      if (cm.deleteReceipt) out += `<p class="o55-hint" data-key="deleted">${U.esc(T(R + 'reasons.deleted'))}</p>`;
+      out += `<div class="o55-actions" data-key="recheck">${again}</div>` + note;
+      const rows = [['original command', r.original_command_id], ['original instance', r.original_command_instance_id],
+        ['original key', r.original_idempotency_key], ['terminal result', r.original_terminal_result_ref],
+        ['terminal digest', r.original_terminal_result_sha256], ['recovery', r.recovery_id],
+        ['composition', r.composition_revision + ' · ' + r.composition_sha256],
+        ['settled', Object.keys(r.settled_effects).join(', ')], ['remaining', r.remaining_effects.join(', ')]];
+      if (r.active_resume_claim) rows.push(['resume claim', r.active_resume_claim.attempt_command_instance_id]);
+      if (cm.resumeAttempt) rows.push(['resume attempt', cm.resumeAttempt.instance + ' · seq ' + cm.resumeAttempt.sequence]);
+      if (cm.deleteReceipt) rows.push(['delete receipt', cm.deleteReceipt.receipt_ref]);
+      out += C.details(S, 'recovery', T('creating.receipts'), C.kv(rows));
+      return out;
+    }
+    return note;
+  }
   def('creating', {
     chapter: 'project', stage: 'automatic_preparation',
     scene: (S) => { const st = F.state(S, (S.sess.commit || {}).key); const done = st ? (st.phases || []).filter((p) => p.status === 'done').length : 0; return { id: 'creating', beat: S.sess.commit && S.sess.commit.state === 'done' ? 'done' : 'build', params: { step: done, total: phasesFor(S).length } }; },
     eyebrow: () => T('creating.eyebrow'),
     title: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later', nm = later ? P().serverName(S) : md(S).project_name; return cm.state === 'done' ? T(later ? 'creating.doneTitleLater' : 'creating.doneTitle', { name: nm }) : cm.state === 'failed' ? T('creating.failTitle') : T(later ? 'creating.titleLater' : 'creating.title', { name: nm }); },
-    lead: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later'; return cm.state === 'done' ? T(later ? 'creating.doneLeadLater' : 'creating.doneLead') : cm.state === 'failed' ? T('creating.failLead') : T('creating.lead'); },
+    lead: (S) => { const cm = S.sess.commit || {}, later = md(S).project_mode === 'later'; return cm.state === 'done' ? T(later ? 'creating.doneLeadLater' : 'creating.doneLead') : cm.state === 'failed' && PR().isGithubRemoteChain(md(S)) ? T('creating.recovery.failedLead') : cm.state === 'failed' ? T('creating.failLead') : T('creating.lead'); },
     body(S) {
-      const d = md(S), cm = S.sess.commit || {}, svc = forgeName(d);
+      const d = md(S), cm = S.sess.commit || {}, svc = forgeName(d), github = PR().isGithubRemoteChain(d);
       const labels = { folder: T('creating.phases.folder'), device: T('creating.phases.device', { device: (S.sess.nas && S.sess.nas.folderLabel) || P().serverName(S) }), clone: T('creating.phases.clone', { service: svc }), restore: T('creating.phases.restore'),
         history: T('creating.phases.history', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }), historyInstall: T('creating.phases.historyInstall', { kind: d.history_backend === 'jujutsu' ? 'Jujutsu' : 'Git' }), online: T('creating.phases.online', { service: svc }), settings: T('creating.phases.settings', { project: (S.sess.like && S.sess.like.name) || '' }), remote: T('creating.phases.remote'), check: T('creating.phases.check') };
       let out = F.phases(S, cm.key, phasesFor(S), labels, cm.settingsCount != null ? { settings: cm.settingsCount ? cm.settingsCount + ' settings' : '' } : null);
+      if (github) {
+        out += githubStatus(S);
+        if (cm.state === 'done') out += C.details(S, 'receipts', T('creating.receipts'), C.kv(Object.entries(cm.receipts || {}).map(([k, v]) => [k, v]).concat([['idempotency key', cm.key]])));
+        return out;
+      }
       if (cm.state === 'failed') {
         const msg = cm.code === 'name_taken' ? T('creating.taken', { service: svc, repo: d.repository_name }) : cm.code === 'network' ? T('creating.network', { service: svc }) : cm.code === 'settings_rejected' ? (cm.settingsError || '') : cm.code || '';
         out += `<div class="o55-banner o55-banner-warn" data-key="fail">${C.small('cloud', 18)}<span>${U.esc(msg)}</span></div>`;
@@ -241,20 +411,71 @@
         if (cm.code === 'name_taken' || cm.code === 'network') acts.push(cm.confirmSkip ? `<span class="o55-confirm">${U.esc(T('creating.skipConfirm'))} ${O55.ui.btn({ label: T('creating.skipOnline'), do: 'skipOnline', cls: 'o55-small' }, 'o55-primary')}</span>` : O55.ui.btn({ label: T('creating.skipOnline'), do: 'askSkip', cls: 'o55-small' }, 'o55-ghost'));
         out += `<div class="o55-actions" data-key="recover">${acts.join('')}</div>`;
       }
-      if (cm.state === 'done') out += C.details(S, 'receipts', T('creating.receipts'), C.kv(Object.entries(cm.receipts || {}).map(([k, v]) => [k, v]).concat([['idempotency key', cm.key]])));
+      if (cm.state === 'done') out += C.details(S, 'receipts', T('creating.receipts'), C.kv(Object.entries(cm.receipts || {}).map(([k, v]) => [k, v]).concat([['idempotency key', cm.key], ['concept fixture', 'this preview acts out the steps']])));
       return out;
     },
-    mounted(S) { runCommit(S); },
+    mounted(S) {
+      const cm = S.sess.commit;
+      // Re-rendering retained results must not trigger adoption and another render.
+      // Result polling belongs only to the explicit Check Again action.
+      if (cm && cm.state === 'running' && !cm.recovery && !cm.transportDone) runCommit(S);
+    },
     foot(S) {
       const cm = S.sess.commit || {};
       if (cm.state === 'done') return { back: false, primary: { label: T('creating.continue'), do: 'next' } };
-      return { back: false, primary: { label: T('creating.continue'), do: 'next', disabled: true, reason: cm.state === 'failed' ? T('creating.failTitle') : T('chrome.working') } };
+      const reason = cm.state === 'failed' ? T('creating.failTitle') : cm.state === 'running' ? T('chrome.working') : T('creating.recovery.waiting');
+      return { back: false, primary: { label: T('creating.continue'), do: 'next', disabled: true, reason } };
     },
     do: {
-      retry(S) { const cm = S.sess.commit; cm.state = 'running'; cm.attempt = (cm.attempt || 1) + 1; S.save(); O55.ui.refresh(); runCommit(S); },
-      rename(S) { S.sess.ui.returnTo = null; S.sess.commit.renaming = true; S.save(); O55.ui.go('online-details'); },
-      askSkip(S) { S.sess.commit.confirmSkip = true; S.save(); O55.ui.refresh(); },
-      skipOnline(S) { const cm = S.sess.commit; cm.skipOnline = true; cm.confirmSkip = false; cm.state = 'running'; O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.refresh(); runCommit(S); },
+      retry(S) {
+        const cm = S.sess.commit;
+        if (PR().isGithubRemoteChain(md(S))) {
+          if (cm.state === 'done') return;
+          cm.state = 'running'; cm.resumeTransport = !cm.transportDone; cm.attempt = (cm.attempt || 1) + 1; S.save(); O55.ui.refresh();
+          return runGithubCommit(S);
+        }
+        cm.state = 'running'; cm.attempt = (cm.attempt || 1) + 1; S.save(); O55.ui.refresh(); runCommit(S);
+      },
+      checkAgain(S) {
+        const cm = S.sess.commit; cm.routeNote = null;
+        if (cm.publishable) return publishAccepted(S);
+        if (cm.recovery && cm.recovery.remote_effect_state === 'verified_created') return adoptResumePhase(S);
+        if (cm.recovery && cm.recovery.remote_effect_state === 'failed_before_effect') { PR().replayOriginal(cm); S.save(); return O55.ui.refresh(); }
+        cm.state = 'running'; cm.resumeTransport = !cm.transportDone; S.save(); O55.ui.refresh(); return runGithubCommit(S);
+      },
+      reviewAgain(S) { reviewFresh(S); },
+      continueSetup(S) {
+        const cm = S.sess.commit, gate = PR().effectiveContinue(O55.ownerResults, cm, md(S));
+        if (!gate.available) { cm.routeNote = gate.reason; S.save(); O55.ui.refresh(); return; }
+        const arm = PR().armResumeRequest(O55.ownerResults, cm, md(S));
+        if (!arm.ok) { cm.routeNote = arm.reason; S.save(); O55.ui.refresh(); return; }
+        const g = PR().effectiveContinue(O55.ownerResults, cm, md(S));
+        cm.routeNote = g.available ? 'resume_armed' : g.reason;
+        S.save(); O55.ui.refresh();
+      },
+      openRepo(S) {
+        const cm = S.sess.commit, g = PR().effectiveOpen(cm);
+        cm.routeNote = g.reason; S.save(); O55.ui.refresh();
+      },
+      deleteRepo(S) {
+        const cm = S.sess.commit, g = PR().effectiveDelete(cm);
+        if (!g.available) { cm.routeNote = g.reason; S.save(); O55.ui.refresh(); return; }
+        cm.deleteConfirm = true; cm.routeNote = null; S.save(); O55.ui.refresh();
+      },
+      cancelDelete(S) { const cm = S.sess.commit; cm.deleteConfirm = false; S.save(); O55.ui.refresh(); },
+      confirmDelete(S) {
+        const d = md(S), cm = S.sess.commit, OR = O55.ownerResults, b = PR().beginDeleteRequest(OR, cm, d);
+        if (!b.ok) { cm.routeNote = b.reason; S.save(); O55.ui.refresh(); return; }
+        const v = PR().adoptDeleteResult(OR, cm, d, OR.take(cm.or_delete.id));
+        if (!v.ok) { cm.routeNote = v.reason; S.save(); O55.ui.refresh(); return; }
+        cm.deleteConfirm = false; cm.routeNote = 'delete_adopted'; S.save(); O55.sound.play('success'); O55.ui.refresh();
+      },
+      rename(S) {
+        if (PR().isGithubRemoteChain(md(S))) return reviewFresh(S);
+        S.sess.ui.returnTo = null; S.sess.commit.renaming = true; S.save(); O55.ui.go('online-details');
+      },
+      askSkip(S) { if (S.sess.commit.recovery) return; S.sess.commit.confirmSkip = true; S.save(); O55.ui.refresh(); },
+      skipOnline(S) { if (S.sess.commit.recovery) return; const cm = S.sess.commit; cm.skipOnline = true; cm.confirmSkip = false; cm.state = 'running'; O55.draft.set(md(S), { online_mode: 'none' }); S.save(); O55.ui.refresh(); runCommit(S); },
       next(S) { O55.ui.go(md(S).project_mode === 'later' ? 'ready' : S.sess.backup.dest ? 'protect' : 'ai'); }
     },
     onBack: () => false
@@ -264,7 +485,10 @@
   if (od) {
     const orig = od.do.next;
     od.do.next = function (S) {
-      if (S.sess.commit && S.sess.commit.renaming) { const cm = S.sess.commit; cm.renaming = false; cm.renamed = true; cm.state = 'running'; S.save(); return O55.ui.go('creating', { dir: 'back' }); }
+      if (S.sess.commit && S.sess.commit.renaming) {
+        if (PR().isGithubRemoteChain(md(S))) return reviewFresh(S);
+        const cm = S.sess.commit; cm.renaming = false; cm.renamed = true; cm.state = 'running'; S.save(); return O55.ui.go('creating', { dir: 'back' });
+      }
       return orig(S);
     };
   }
@@ -277,7 +501,51 @@
   const acc = (S) => (S.sess.backup.access = S.sess.backup.access || {});
   /* a working SSH connection to the backup NAS already exists (set up for it here, or earlier in this run) */
   const nasReady = (S) => { const n = S.sess.nas || {}, nas = O55.backup.nas(S); return !!(nas && n.device === nas.id && n.installed); };
-  const kitWords = (S) => { const w = ['river', 'candle', 'orbit', 'maple', 'quiet', 'lantern', 'harbor', 'cedar', 'violet', 'pebble', 'ember', 'falcon'], r = U.rng('kit:' + md(S).project_name); return [0, 1, 2, 3, 4, 5].map(() => w[Math.floor(r() * w.length)]); };
+  /* the kit's own words are the person's copy, outside this computer: the protected handoff shows them once and
+     nothing of the kit is rendered, stored, or copied here (BRS-012 / F3-528) */
+  const kitFile = (name) => 'Recovery Kit – ' + name + '.pdf';
+  /* Owner-gated kit/policy steps (BRS-012/BRS-017): transport never marks done; only an adopted owner result with
+     its separately evidenced postcondition does. Default host-unavailable stays pending with retry. */
+  const KIT_CMD = { kit: 'cmd.backup.recovery_key.export', kitTest: 'cmd.backup.recovery_key.test', policy: 'cmd.backup.policy.update' };
+  const kitGated = (next) => next === 'kit' || next === 'kitTest' || next === 'policy';
+  const kitProject = (S) => (S.sess.commit && S.sess.commit.projectId) || null;
+  const kitRequests = new WeakMap();
+  const kitRequested = (S, next) => !!(kitRequests.get(S) || {})[next];
+  function requestKitIdentity(S, next) {
+    const requests = kitRequests.get(S) || {}; requests[next] = true; kitRequests.set(S, requests);
+    // An ephemeral user request, never authentication or persisted step-up proof.
+    if (S.sess.backup.stepUp) delete S.sess.backup.stepUp;
+    O55.ui.refresh();
+  }
+  const kitNeedsStepUp = (next) => next === 'kit' || next === 'kitTest';
+  function kitAdopt(S, next) {
+    const b = S.sess.backup, OR = O55.ownerResults;
+    const req = b['or_' + next];
+    if (!req || !OR) { b['orErr_' + next] = 'host_unavailable'; S.save(); O55.ui.refresh(); return; }
+    const current = kitNeedsStepUp(next) ? OR.protectedContext(kitProject(S)) : { project: kitProject(S) };
+    if (!current || (kitNeedsStepUp(next) ? ['project', 'server', 'client', 'recovery_set_id', 'recovery_generation'] : ['project']).some(k => current[k] !== req[k])) {
+      b['orErr_' + next] = 'stale_protected_context'; S.save(); O55.ui.refresh(); return;
+    }
+    const res = OR.take(req.id);
+    const pc = (res && res.postcondition) || {};
+    const extra = next === 'kit' ? (pc.delivery === 'verified' && pc.savedAck === true)
+      : next === 'kitTest' ? (pc.unlock === 'verified' && pc.scratch === 'verified')
+      : (pc.policy === 'on');
+    if (res && !extra) { b['orErr_' + next] = 'postcondition_missing'; S.save(); O55.ui.refresh(); return; }
+    const v = OR.adopt(req, res, {});
+    if (!v.ok) {
+      b['orErr_' + next] = v.reason;
+      if (next === 'kitTest' && (v.reason === 'kit_mismatch' || v.reason === 'failed' || v.reason === 'refused')) b.kitBad = true;
+      S.save(); O55.ui.refresh(); return;
+    }
+    if (!extra) { b['orErr_' + next] = 'postcondition_missing'; if (next === 'kitTest') b.kitBad = true; S.save(); O55.ui.refresh(); return; }
+    b['orErr_' + next] = null; b.kitBad = false;
+    const done = b.done = b.done || [];
+    if (next === 'kitTest' && res.identity && res.identity.words) { /* words never touch DOM/storage; discarded */ }
+    if (!done.includes(next)) done.push(next);
+    b.state = done.length === STEPS.length ? 'done' : 'partial';
+    S.save(); O55.ui.refresh();
+  }
   def('protect', {
     chapter: 'project', stage: 'automatic_preparation',
     scene: (S) => ({ id: 'safe', beat: 'protect', params: { backup: true, online: md(S).online_mode !== 'none' } }),
@@ -301,9 +569,15 @@
       }
       if (next === 'signin' && ACCESSED(b.dest)) out += O55.backup.accessFields(S, b.dest, acc(S));
       if (next === 'kit') out += C.note(T('protect.kitWhy'), 'info', 'key');
+      if (kitGated(next) && kitNeedsStepUp(next) && !kitRequested(S, next)) out += C.note(T('protect.stepUpHint'), 'info', 'key');
       if (done.includes('kit') && !done.includes('kitTest')) {
-        out += `<div class="o55-kit" data-key="kit"><span class="o55-hint">${U.esc(T('protect.saved'))} · Recovery Kit – ${U.esc(md(S).project_name)}.pdf</span><span class="o55-kitwords">${kitWords(S).map((w, i) => `<span><i>${i + 1}</i>${U.esc(w)}</span>`).join('')}</span></div>`;
-        out += C.field({ bind: 'word', label: T('protect.checkLabel', { n: 4 }), value: '', error: b.wordBad ? T('protect.checkBad', { n: 4 }) : '', invalid: !!b.wordBad });
+        /* masked, secret-free saved-kit card: the handoff showed the kit once, for the person to keep */
+        out += `<div class="o55-kit" data-key="kit"><span class="o55-hint">${U.esc(T('protect.saved'))} · ${U.esc(kitFile(md(S).project_name))}</span><span class="o55-hint">${U.esc(T('protect.kitOnce'))}</span></div>`;
+      }
+      if (next === 'kitTest' && b.kitBad) out += C.note(T('protect.testFailed'), 'warn', 'key');
+      if (kitGated(next) && b['orErr_' + next]) {
+        const r = b['orErr_' + next];
+        out += C.note(r === 'host_unavailable' || r === 'pending_no_result' ? T('protect.pendingHost') : T('protect.ownerFail'), r === 'host_unavailable' || r === 'pending_no_result' ? 'info' : 'warn', 'key');
       }
       if (!next) out += C.note(T('protect.done'), 'ok', 'check');
       const st = next && F.state(S, 'backup:' + next);
@@ -313,6 +587,10 @@
     foot(S) {
       const b = S.sess.backup, done = b.done || [], next = STEPS.find((s) => !done.includes(s));
       if (!next) return { back: false, primary: { label: T('chrome.continue'), do: 'finish' } };
+      const st = F.state(S, 'backup:' + next);
+      if (st && st.state === 'running') return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label: T('chrome.working'), do: 'noop', disabled: true, reason: T('chrome.working') } };
+      if (kitGated(next) && kitNeedsStepUp(next) && !kitRequested(S, next)) return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label: T('protect.stepUp'), do: 'stepUp' } };
+      if (kitGated(next) && st && st.state === 'done' && b['orErr_' + next]) return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label: T('protect.retry'), do: 'retry' } };
       const label = { signin: b.dest === 'nas' || ACCESSED(b.dest) ? T('protect.connect') : T('online.signin.signIn'), test: T('protect.steps.test'), kit: T('protect.save'), kitTest: T('ai.verify'), policy: T('protect.steps.policy') }[next];
       const waiting = next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessReady(b.dest, acc(S));
       return { back: false, secondary: [{ label: T('protect.later'), do: 'later', cls: 'o55-ghost' }], primary: { label, do: 'step', disabled: waiting, reason: T('protect.accessMissing') } };
@@ -324,14 +602,43 @@
       if (next === 'signin' && b.dest === 'nas' && nasReady(S) && !F.state(S, 'backup:signin')) this.do.step(S);
     },
     do: {
+      noop() {},
+      stepUp(S) {
+        const b = S.sess.backup, done = b.done || [], next = STEPS.find((s) => !done.includes(s));
+        if (!kitGated(next) || !kitNeedsStepUp(next)) return;
+        requestKitIdentity(S, next);
+      },
+      retry(S) {
+        const b = S.sess.backup, done = b.done || [], next = STEPS.find((s) => !done.includes(s));
+        if (!kitGated(next)) return;
+        kitAdopt(S, next);
+      },
       step(S) {
         const b = S.sess.backup, done = b.done = b.done || [], next = STEPS.find((s) => !done.includes(s));
-        const cmd = { signin: 'cmd.backup.destination.add', test: 'cmd.backup.destination.test', kit: 'cmd.backup.recovery_key.export', kitTest: 'cmd.backup.recovery_key.test', policy: 'cmd.backup.policy.update' }[next];
-        if (next === 'kitTest') {
-          const i = S.root.querySelector('#o55f-word'), v = i ? i.value.trim().toLowerCase() : '';
-          if (v !== kitWords(S)[3]) { b.wordBad = true; S.save(); O55.sound.play('error'); O55.ui.refresh(); return O55.ui.shake('word'); }
-          b.wordBad = false;
+        if (!next) return;
+        if (kitGated(next)) {
+          /* protected handoff: current step-up first, then transport, then adoption — never timer success */
+          if (kitNeedsStepUp(next) && !kitRequested(S, next)) { requestKitIdentity(S, next); return; }
+          if (!b['or_' + next]) {
+            const subject = kitNeedsStepUp(next) ? O55.ownerResults.protectedContext(kitProject(S)) : (kitProject(S) ? { project: kitProject(S) } : null);
+            if (!subject) { b['orErr_' + next] = 'host_unavailable'; S.save(); O55.ui.refresh(); return; }
+            b['or_' + next] = O55.ownerResults.begin(KIT_CMD[next], subject);
+          }
+          b['orErr_' + next] = null;
+          if (next === 'kitTest') b.kitBad = false;
+          S.save();
+          const phases = next === 'kit' ? [{ key: 'handoff', ms: 900 }]
+            : next === 'kitTest' ? [{ key: 'handoff', ms: 600 }, { key: 'unlock', ms: 800 }, { key: 'scratch', ms: 600 }]
+            : [{ key: 'policy', ms: 700 }];
+          F.reset(S, 'backup:' + next);
+          F.op(S, 'backup:' + next, KIT_CMD[next], phases, {
+            payload: { project: kitProject(S), destination: b.dest },
+            onDone: () => { kitAdopt(S, next); }
+          });
+          return;
         }
+        const cmd = { signin: 'cmd.backup.destination.add', test: 'cmd.backup.destination.test' }[next];
+        const phases = [{ key: next, ms: next === 'test' ? 1200 : 1800 }];
         if (next === 'signin' && b.dest === 'nas' && !nasReady(S)) {
           /* the same SSH steps as files on a NAS: its identity before trust, a key, one sign-in; then back here */
           S.sess.nas = { purpose: 'dest', method: 'ssh', device: O55.backup.nas(S).id, trusted: false, installed: false, key: null };
@@ -339,13 +646,16 @@
         }
         if (next === 'signin' && ACCESSED(b.dest) && !O55.backup.accessTake(S, b.dest, acc(S))) { O55.sound.play('error'); O55.ui.refresh(); return; }
         if (next === 'signin' && (b.dest === 'gdrive' || b.dest === 'onedrive')) O55.official.open(S, { name: O55.backup.label(S, b.dest), url: O55.fixtures.OFFICIAL.backup[b.dest] || null });
-        F.op(S, 'backup:' + next, cmd, [{ key: next, ms: next === 'test' ? 1200 : next === 'signin' ? 1800 : 700 }], { payload: { destination: b.dest, transport: b.dest === 'nas' ? O55.nas.transport(S) : b.dest, path: b.dest === 'nas' ? NAS_PATH : null, credential_ref: ACCESSED(b.dest) ? 'credential:backup:' + b.dest : null }, onDone: () => { if (!done.includes(next)) done.push(next); b.state = done.length === STEPS.length ? 'done' : 'partial'; S.save(); O55.ui.refresh(); } });
+        F.op(S, 'backup:' + next, cmd, phases, {
+          payload: { destination: b.dest, transport: b.dest === 'nas' ? O55.nas.transport(S) : b.dest, path: b.dest === 'nas' ? NAS_PATH : null, credential_ref: ACCESSED(b.dest) ? 'credential:backup:' + b.dest : null },
+          onDone: () => { if (!done.includes(next)) done.push(next); b.state = done.length === STEPS.length ? 'done' : 'partial'; S.save(); O55.ui.refresh(); }
+        });
       },
       later(S) { S.sess.backup.state = 'later'; S.save(); O55.ui.go('ai'); },
       finish(S) { O55.ui.go('ai'); }
     },
-    /* the kit word is read on submit; the access fields keep what is not secret, and only whether a secret was typed */
-    bind: Object.assign(O55.backup.accessBinds((S) => [S.sess.backup.dest, acc(S)]), { word() {} }),
+    /* the access fields keep what is not secret, and only whether a secret was typed */
+    bind: O55.backup.accessBinds((S) => [S.sess.backup.dest, acc(S)]),
     onBack: () => false
   });
 

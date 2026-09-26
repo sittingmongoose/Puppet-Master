@@ -24,7 +24,7 @@ Commit promotion: unchanged and implicit-free. `O55.finish`/`commitLook` promote
 
 ## Publication status
 
-Authored sources and the sound probe are complete and independently reviewed. Generated pages will be rebuilt together after the other source lanes settle; the final browser/audio check is still pending. The old 24-case producer stub was superseded by the retained 30-case harness below.
+Authored sources and the sound probe are complete and independently reviewed. Generated pages were rebuilt together; the final browser check passed no-Project and current-Project sound binding paths. This does not certify physical audio output. The old 24-case producer stub was superseded by the retained 30-case harness below.
 
 Independent review found and root repaired stale consumption between a synchronous Project switch and the debounced observer. The sound entry, toggle and button renderer now refresh synchronously; `74-screens-ready.js` refreshes at Project selection before starting the Tour. Settings row click/change commits refresh mounted sound controls after their event settles. A write returning after reentrant Project removal is rejected as stale. These are concept bindings, not native subscriptions or runtime proof.
 
@@ -36,4 +36,4 @@ The original 24-case producer harness was strengthened with an owner stub that u
 
 - Evidence: `/mnt/Cursor/PuppetMaster-Evidence/scratch/packet-integration-completion-20260926/sound/checks.txt`, SHA-256 `4bb585e59c2c417c469c2d55f92b4cd34a66932868ba562aaebfb13ebdf40b45`.
 
-Focused independent rereview passes after the repairs (30/30 checks and JavaScript syntax checks). Missing or asynchronous snapshots mean a conservative off fallback, not a verified owner value. Final publication/browser validation remains pending.
+Focused independent rereview passes after the repairs (30/30 checks and JavaScript syntax checks). Missing or asynchronous snapshots mean a conservative off fallback, not a verified owner value. Final publication/browser validation passed the sound binding paths.

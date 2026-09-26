@@ -35006,6 +35006,8 @@ owner_boundary_notes:
 owner_hints: [Plans/FinalGUISpec.md, Plans/Settings_System.md, Plans/newtools.md]
 ```
 
+The recovery projection's `selected_route` records owner-route intent only. Project recovery-side eligibility never supplies effective Forge dispatch availability: Open Repository and Delete Repository remain disabled until the exact Forge currentness, permission, capability, central registration/wiring and handler gates resolve; missing owner proof stays unavailable. Opening an owner details/handoff view does not execute the operation.
+
 ### F3-520 - Simple Cinematic Product Onboarding Presentation
 
 ```yaml
@@ -35046,7 +35048,11 @@ canonical_text: >-
   Connected Server. Source sign-in uses the protected MACS-005 first-time variant
   when no verified account exists; it never invents a Project/account/repository identifier. Confirm and prepare validates
   the exact current draft/hash and PJCT-007 commit binding; Automatic Preparation observes the Project owner's one commit
-  chain and any Settings-owned post-commit rebind/apply results. Paid providers then use the actual committed Project,
+  chain and any Settings-owned post-commit rebind/apply results. When a remote repository was created and a later step
+  fails, Automatic Preparation keeps observing the same owner operation and shows the retained Project recovery with the
+  three owner-routed choices Continue Setup, Open Repository, and Delete Repository; each choice stays disabled with its
+  exact owner reason until its Project or Forge gates hold, an unknown remote effect offers reconciliation only, and no
+  setup commit binding or provider phase advances until the listed persisted Project exists. Paid providers then use the actual committed Project,
   followed by Free Models after paid readiness or explicit Skip. Each screen has
   one clear decision, one dominant primary action, short human copy, automatic detection, safe defaults, and calm
   progressive disclosure. The First Project decision is the deliberate exception to progressive hiding: its four equal
@@ -35096,6 +35102,8 @@ acceptance_criteria:
   - "A visible recognition checkbox is absent. Reachability, a device label, or possession of an address never grants trust; the selected Server identity proceeds through its owner-controlled approval, code, or QR pairing after Review confirmation."
   - "Optional branches use one calm layer of progressive disclosure; read-only owner preflight and necessary selected-source authentication may inform the draft before commit. Every other owner mutation waits for its current owner-bound confirmation; no branch label, availability projection, or preview can satisfy that fence."
   - "Automatic preparation shows one calm owner-projected progress statement; determinate progress appears only with an owner denominator, questions appear only when the current owner projection cannot choose safely, and timers never synthesize work or readiness."
+  - "After a verified remote create with a later local failure, Automatic Preparation presents Continue Setup, Open Repository, and Delete Repository as projections of the retained Project recovery: Continue Setup dispatches only `cmd.project.resume_creation` with a fresh attempt identity under the one-active claim, Open Repository dispatches only `cmd.forge.repository.open_in_browser` on the verified binding, and Delete Repository routes only to the Forge FGI-021 `cmd.forge.repository.delete` admission with target-bound confirmation, never automatically and never while the remote effect is unknown."
+  - "Each recovery choice shows its exact owner disabled reason while unavailable: Continue Setup stays disabled until owner eligibility, current draft, permission, recovery claim, central registration, wiring, and handler availability all hold; an unknown remote effect shows reconciliation only with no repeat create, delete, or inferred identity; and no setup commit binding, paid-provider, or Free Models phase advances before the listed persisted Project exists."
   - "Pending, measured-running, ready, failed, and same-operation retry states remain visually calm and preserve the owner operation/work/dedupe identity across modal interruption and resume."
   - "Server, Storage, Client, source location, local Safe History, online copy, and access choices remain independently editable; selecting an already-owned Server exposes the appropriate discovery and pairing presentation without silently forcing storage or Client placement."
   - "Paid-provider setup offers compact provider tiles and the selected provider's current owner-supported auth path; Free Models follows even after paid-provider Skip, groups underlying-provider setup through existing owners, and offers explicit Skip. Detection is an observation, not authorization or readiness. Close after commit preserves the existing Project, settled phases and exact continuation; resume never recreates it or replays settled setup."
@@ -35104,7 +35112,7 @@ acceptance_criteria:
   - "Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE; `shell`, internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary never appear as product copy."
   - "Help uses one anchored explainer surface at a time: activating a typed SVG `?` opens a plain-language explanation attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections. The visible shared explainer is the control's actual `aria-controls` target and its active `aria-describedby` target; obsolete hidden per-card copies are absent. Primary and secondary card actions have visibly button-shaped treatment, consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy, shape, iconography, and state rather than copy alone."
   - "All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm, and in-flow footer model; specialized fields may vary by route, but controls do not change alignment or interaction rules from one setup screen to the next."
-  - "One terminal owner result auto-returns and advances without a preview-return/Continue/Done confirmation; discovery, availability, capability, preview, refresh, and test-only results remain on the current choice and never masquerade as completed setup."
+  - "One terminal owner result auto-returns and advances without a preview-return/Continue/Done confirmation; discovery, availability, capability, preview, refresh, and test-only results remain on the current choice and never masquerade as completed setup. A recovery-required result is not auto-advanced: it presents the explicit Continue Setup, Open Repository, and Delete Repository owner choices instead."
   - "Same-stage Details, `?`, and progressive-disclosure updates preserve the settled cinematic scene instead of replaying its entrance; forward/back stage changes use a non-overlapping directional handoff so outgoing and incoming headings never ghost through one another."
   - "Ready summarizes only the selections actually made, marks skipped choices as not set up, and never claims that all important systems or production owner work are ready."
   - "Modal controls use the typed `ui.onboarding.*` local-action vocabulary and owner branches route only to already-canonical domain commands; no `cmd.onboarding.*` family or Final-GUI-owned mutation path is introduced."
@@ -35134,6 +35142,8 @@ implementation_surfaces:
 node_compile_hint: {mode: onboarding_cinematic_presentation_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/Planning_Wizard.md#PWIZ-021
+  - Plans/Project_System.md#PJCT-007
+  - Plans/Forge_Integrations.md#FGI-021
   - Plans/Planning_Wizard.md#PWIZ-022
   - Plans/Planning_Wizard.md#PWIZ-024
   - Plans/Planning_Wizard.md#PWIZ-029
@@ -35147,7 +35157,7 @@ source_lineage:
   - Concepts/pm7-tools/onboarding_cinematic_source.py
   - Concepts/pm7-tools/home_workspace_source.py
   - Concepts/pm7-tools/home_workspace_refresh_source.py
-preserved_exact_tokens: [welcome, simple_path, first_project, source_control_setup, server_storage_client, remote_access_setup, review_setup_plan, automatic_preparation, ready, connect_existing, Get Started, Begin setup, Confirm and prepare, Do this later, Run setup wizard, Reset Layout, ui.onboarding.start, home_menu, Start a new project, Open a folder here, Bring one from online, Restore a backup, Safe History, FileSafe, Local or VPN, You can connect through a VPN too, Reverse proxy, Puppet Master Remote Link, Cursor Origin, SSH/SFTP, 1.2-1.5 seconds, 420-560 ms, 60-80 ms, 120-220 ms, 700 ms, puppet_master, cmd.client.pair.start, source_access_authorization_refs, Source Location, Change the look, Sound on — click to mute, Sound off — click to turn on, general.visual.theme, general.visual.theme-mode, general.interaction.sound-effects]
+preserved_exact_tokens: [welcome, simple_path, first_project, source_control_setup, server_storage_client, remote_access_setup, review_setup_plan, automatic_preparation, ready, connect_existing, Get Started, Begin setup, Confirm and prepare, Continue Setup, Open Repository, Delete Repository, Do this later, Run setup wizard, Reset Layout, ui.onboarding.start, home_menu, Start a new project, Open a folder here, Bring one from online, Restore a backup, Safe History, FileSafe, Local or VPN, You can connect through a VPN too, Reverse proxy, Puppet Master Remote Link, Cursor Origin, SSH/SFTP, 1.2-1.5 seconds, 420-560 ms, 60-80 ms, 120-220 ms, 700 ms, puppet_master, cmd.client.pair.start, source_access_authorization_refs, Source Location, Change the look, Sound on — click to mute, Sound off — click to turn on, general.visual.theme, general.visual.theme-mode, general.interaction.sound-effects]
 negative_constraints:
   - "Do not render Product Onboarding as a full-page route or replacement application experience."
   - "Do not restore F3-411's four-screen/provider-first choreography."

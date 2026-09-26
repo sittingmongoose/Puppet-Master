@@ -24,15 +24,24 @@
     'cmd.auth_profile.open_official_page': { owner: 'Auth', phase: 'selected_source_auth' },
     'cmd.ssh_connection.key.install': { owner: 'SSH', phase: 'selected_source_auth', canonical: false },
     'cmd.storage.share.mount_check': { owner: 'Storage', phase: 'selected_source_auth', canonical: false },
-    /* Server preflow (own confirmation) */
+    /* Server preflow (own confirmation). Claim, durable bootstrap and pairing are separate owner results
+       (Server_System SRV-004/SRV-005 §4.2); a claim never confers trust by itself. */
     'cmd.server.claim': { owner: 'Server', phase: 'server_setup' },
+    'cmd.server.bootstrap.start': { owner: 'Server', phase: 'server_setup' },
     /* also consented selected-source pairing (PWIZ-029): the person's Pair click on a device that runs Puppet Master */
     'cmd.client.pair.start': { owner: 'Server', phase: 'server_setup', selectedSource: true },
+    'cmd.client.pair.approve': { owner: 'Server', phase: 'server_setup', selectedSource: true },
+    'cmd.client.pair.reject': { owner: 'Server', phase: 'server_setup', selectedSource: true },
     'cmd.client.pair.cancel': { owner: 'Server', phase: 'server_setup', selectedSource: true },
     'cmd.restore.preview': { owner: 'Backup', phase: 'read_only_preflight' },
     'cmd.restore.apply': { owner: 'Backup', phase: 'restore_preflow', canonical: false },
     /* the one reviewed commit and its child owners */
     'cmd.project.new_local': { owner: 'Project', phase: 'project_commit' },
+    // Contracted owner routes; this HTML has no native implementation.
+    'cmd.project.new_github_repo': { owner: 'Project', phase: 'project_commit', ownerResultOnly: true },
+    'cmd.project.resume_creation': { owner: 'Project', phase: 'project_commit', ownerResultOnly: true },
+    'cmd.forge.repository.open_in_browser': { owner: 'Forge', phase: 'project_commit', ownerResultOnly: true },
+    'cmd.forge.repository.delete': { owner: 'Forge', phase: 'project_commit', ownerResultOnly: true },
     'cmd.project.add_existing': { owner: 'Project', phase: 'project_commit' },
     'cmd.source_control.backend.select': { owner: 'SourceControl', phase: 'project_commit' },
     'cmd.source_control.repository.bind': { owner: 'Forge', phase: 'project_commit' },
@@ -79,6 +88,9 @@
     const entry = { t: Math.round(performance.now()), id, owner: row.owner, phase: row.phase, canonical: row.canonical !== false, ok: gate.ok, reason: gate.reason || null };
     log.push(entry); if (log.length > 500) log.shift();
     if (!gate.ok) { emit({ type: 'refused', entry }); return { ok: false, refused: true, reason: gate.reason }; }
+    // Never turn a fixture callback or default return into a contracted owner effect.
+    // Deliberately injected owner-result fixtures use the separate adoption seam below.
+    if (row.ownerResultOnly) { entry.ok = false; entry.reason = 'handler_unavailable'; emit({ type: 'refused', entry }); return { ok: false, refused: true, reason: entry.reason }; }
     emit({ type: 'dispatch', entry });
     const result = run ? await run(payload || {}) : { ok: true };
     entry.result = result && result.ok === false ? 'failed' : 'ok';
@@ -114,5 +126,114 @@
   function cancelOp(key) { const o = OPS[key]; if (o) { o.cancelled = true; delete OPS[key]; } }
   function resetOps() { Object.keys(OPS).forEach((k) => { OPS[k].cancelled = true; delete OPS[k]; }); }
 
+  /* Explicit owner-result adapter seam (Server/Kit, SRV-004/SRV-005 §4.2, BRS-012/BRS-017).
+     Default browser without a host cannot mint success: adopt() rejects unless a real host
+     is present or a deliberate test-only injected fixture matches. Timers/transport never
+     confer completion; only an adopted owner-shaped result does. Matching covers operation,
+     selected server/client/candidate/project, current generation, request nonce, owner outcome,
+     and a separately evidenced postcondition. Stale/wrong-target/duplicate/replayed results
+     are rejected. Reusable by Server and Kit surfaces (Settings reuses window.O55.ownerResults). */
+  const ownerResults = (() => {
+    const adoptedIds = {};
+    const fixtures = {};
+    let seq = 0;
+    function hostAvailable() {
+      try { if (typeof window !== 'undefined' && window.__O55_OWNER_HOST__) return true; } catch (_) {}
+      return false;
+    }
+    function begin(operation, sel) {
+      sel = sel || {};
+      seq += 1;
+      return { id: 'orq:' + Date.now().toString(36) + ':' + seq + ':' + Math.floor(Math.random() * 1e6),
+        operation: operation, server: sel.server != null ? sel.server : null,
+        client: sel.client != null ? sel.client : null, candidate: sel.candidate != null ? sel.candidate : null,
+        project: sel.project != null ? sel.project : null,
+        generation: sel.generation != null ? sel.generation : null, run_id: sel.run_id || null,
+        recovery_set_id: sel.recovery_set_id || null, recovery_generation: sel.recovery_generation != null ? sel.recovery_generation : null,
+        nonce: sel.nonce || ('n' + seq + '-' + Math.floor(Math.random() * 1e9)), at: Date.now() };
+    }
+    /* Test-only injection: stores an owner-shaped fixture for one request id. UI never calls this. */
+    function inject(res) {
+      if (!res || !res.requestId) return false;
+      res.fixture = true; res.injected = true;
+      fixtures[res.requestId] = res;
+      return true;
+    }
+    function take(requestId) { return (requestId && fixtures[requestId]) || null; }
+    function adopt(req, res, cur) {
+      cur = cur || {};
+      if (!req || !res) return { ok: false, reason: 'pending_no_result' };
+      if (res.fixture && !res.injected) return { ok: false, reason: 'fixture_not_injected' };
+      if (!hostAvailable() && !(res.fixture && res.injected)) return { ok: false, reason: 'host_unavailable' };
+      if (typeof res.id !== 'string' || !res.id.trim()) return { ok: false, reason: 'result_identity_missing' };
+      if (res.id && adoptedIds[res.id]) return { ok: false, reason: 'duplicate_replay' };
+      if (res.operation !== req.operation) return { ok: false, reason: 'wrong_operation' };
+      if (req.server != null && res.server !== req.server) return { ok: false, reason: 'wrong_target' };
+      if (req.client != null && res.client !== req.client) return { ok: false, reason: 'wrong_target' };
+      if (req.candidate != null && res.candidate !== req.candidate) return { ok: false, reason: 'wrong_target' };
+      if (req.project != null && res.project !== req.project) return { ok: false, reason: 'wrong_target' };
+      if (req.generation != null && res.generation !== req.generation) return { ok: false, reason: 'stale_generation' };
+      if (cur.generation != null && res.generation !== cur.generation) return { ok: false, reason: 'stale_generation' };
+      if (req.run_id != null && res.run_id !== req.run_id) return { ok: false, reason: 'wrong_pairing_run' };
+      if (res.nonce !== req.nonce || res.requestId !== req.id) return { ok: false, reason: 'stale_nonce' };
+      if (res.outcome !== 'ok' && res.outcome !== 'verified') return { ok: false, reason: String(res.outcome || 'not_ok') };
+      const pc = res.postcondition;
+      if (!pc || pc.ok !== true || !pc.evidence) return { ok: false, reason: 'postcondition_missing' };
+      if (res.id && pc.evidence === res.id) return { ok: false, reason: 'postcondition_not_separate' };
+      if (req.operation === 'cmd.client.pair.start') {
+        const run = res.pairing_run, words = res.identity && res.identity.words;
+        if (!run || typeof run.id !== 'string' || !run.id || run.state !== 'waiting' ||
+            run.server !== req.server || run.candidate !== req.candidate || run.generation !== req.generation ||
+            !(Number(run.expires_at) > Date.now()) || typeof words !== 'string' || !words.trim())
+          return { ok: false, reason: 'waiting_pairing_identity_missing' };
+      }
+      if (req.operation === 'cmd.client.pair.approve') {
+        const trust = res.trust;
+        if (!req.run_id || !trust || typeof trust.id !== 'string' || !trust.id.trim() ||
+            trust.server !== req.server || trust.client !== req.client || trust.candidate !== req.candidate ||
+            trust.run_id !== req.run_id) return { ok: false, reason: 'trust_record_missing' };
+      }
+      if (req.operation.startsWith('cmd.backup.recovery_key.')) {
+        const proof = res.stepup, now = Date.now();
+        if (!req.client || !req.server || !req.project || !req.recovery_set_id || req.recovery_generation == null ||
+            res.recovery_set_id !== req.recovery_set_id || res.recovery_generation !== req.recovery_generation || !proof || proof.outcome !== 'verified' ||
+            proof.request_id !== req.id || proof.nonce !== req.nonce || proof.client !== req.client ||
+            proof.server !== req.server || proof.project !== req.project ||
+            proof.recovery_set_id !== req.recovery_set_id || proof.recovery_generation !== req.recovery_generation || proof.audience !== 'initiating_human_client' ||
+            proof.one_time !== true || typeof proof.evidence_ref !== 'string' || !proof.evidence_ref ||
+            !Number.isFinite(proof.issued_at) || !Number.isFinite(proof.expires_at) ||
+            proof.issued_at > now || proof.issued_at < req.at || proof.expires_at <= now ||
+            proof.expires_at - proof.issued_at > 300000) return { ok: false, reason: 'current_stepup_required' };
+      }
+      if (res.id) adoptedIds[res.id] = true;
+      return { ok: true };
+    }
+    function reset() { Object.keys(adoptedIds).forEach((k) => { delete adoptedIds[k]; }); Object.keys(fixtures).forEach((k) => { delete fixtures[k]; }); seq = 0; }
+    function protectedContext(project) {
+      const c = window.__O55_OWNER_CONTEXT__;
+      if (!c || c.project !== project || !c.client || !c.server || !c.recovery_set_id || !Number.isInteger(c.recovery_generation)) return null;
+      return { project, client: c.client, server: c.server, recovery_set_id: c.recovery_set_id, recovery_generation: c.recovery_generation };
+    }
+    return { begin, inject, take, adopt, reset, hostAvailable, protectedContext };
+  })();
+
+  /* Ephemeral memory-only store for pairing invite codes and candidate identity words. Never persisted:
+     nothing here is written to the O55 session, localStorage, DOM storage, or logs. A reload loses the
+     code/words by design; the UI then asks for a new code/request instead of claiming durability. */
+  const ephemeral = (() => {
+    const invites = {}, words = {};
+    return {
+      setInvite: (gen, code) => { invites[String(gen)] = String(code || ''); },
+      getInvite: (gen) => (gen != null && invites[String(gen)]) || '',
+      clearInvite: (gen) => { delete invites[String(gen)]; },
+      setWords: (id, w) => { words[String(id)] = String(w || ''); },
+      getWords: (id) => words[String(id)] || '',
+      clearWords: (id) => { delete words[String(id)]; },
+      reset: () => { Object.keys(invites).forEach((k) => { delete invites[k]; }); Object.keys(words).forEach((k) => { delete words[k]; }); }
+    };
+  })();
+
   O55.owners = { TABLE, log, dispatch, operation, opState, cancelOp, resetOps, allowed, on(fn) { listeners.add(fn); return () => listeners.delete(fn); } };
+  O55.ownerResults = ownerResults;
+  O55.ephemeral = ephemeral;
 })();
