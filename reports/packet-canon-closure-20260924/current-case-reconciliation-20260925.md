@@ -1,5 +1,13 @@
 # Packet-to-current-owner reconciliation checkpoint
 
+## Latest additive checkpoint — 2026-09-26, after `b181c1b53`
+
+Reviewed dispositions cover **1,253 of 2,021 flagged identities**, with **768 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-141e43ff3a8c79ed19866823969732ef5dc1370597f17d0fbf6e2cb368b5b587.jsonl`, SHA-256 `141e43ff3a8c79ed19866823969732ef5dc1370597f17d0fbf6e2cb368b5b587`. Root verified both checkpoint hashes, all identities and historical fields, and exactly ten changed rows against the published 1,243-row checkpoint.
+
+The ten are PRV-001, THR-001, SET-015, STO-003, STO-006, UPD-001, UPD-004, UPD-009, UPD-013 and UPD-014. Current Settings copy exclusions, lazy physical Vault/derived-view handling, and three application-update policy passages now support bounded static wording credit. Provider startup probes, protected thread branching, exact image-redeployment ownership and the full update UI field inventory remain unresolved. The old independent per-Vault lock premise is not current authority: Storage preserves isolation under shared permits and explicitly retains the shared lock/root fence. Other facets of that composite remain partial.
+
+These are reviewed dispositions, not ten completed features. Source review and root current-owner checks do not prove native behavior, physical custody or GUI implementation. The separate full 11,395-row impact export is verified for routing only; its semantic carry-forward gate remains open. Search/index's twelve carry-forward claims have a separate bounded report awaiting independent review, with the existing typed operation gaps retained.
+
 ## Latest additive checkpoint — 2026-09-26, after `5a9ea02e7`
 
 Independently reviewed dispositions cover **1,243 of 2,021 flagged identities**, with **778 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-d10afe8e8de8d738ede2f0a07c6bd06a579e8f1f48e8b71dd34482ea5a5f198d.jsonl`, SHA-256 `d10afe8e8de8d738ede2f0a07c6bd06a579e8f1f48e8b71dd34482ea5a5f198d`. Root verified the hash, all 2,021 unique unchanged identities and historical fields, exactly 90 changed and 1,931 unchanged rows against the published 1,153-row checkpoint.
