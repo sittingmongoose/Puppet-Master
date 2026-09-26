@@ -142,3 +142,26 @@ Evidence under
 Each registry row pins its owner snapshot and review sources. Later owner
 changes and main reconciliation still require delta review. The gate remains
 open; this is a reviewed batch, not a whole-corpus completion claim.
+
+## Subsequent current-owner review checkpoint
+
+The separate nonflagged registry now records 104 reviewed identities, leaving
+11,291 not yet reviewed against current owners. This is not a closure percentage:
+the added 41 consist of eight bounded Server acceptance clauses and 33 machine
+requirements, of which 17 have bounded static support and 16 retain explicit
+unresolved claims. Native execution and GUI evidence remain separate.
+
+Root verified checkpoint
+`checkpoints/full-impact-reviewed-4e9a6588d41851ae4e925db1bf6ef37b860775d066f98cf9e0033d7a6768c2fe.jsonl`
+(SHA-256 `4e9a6588d41851ae4e925db1bf6ef37b860775d066f98cf9e0033d7a6768c2fe`)
+under the evidence directory above: 104 unique exact impact-export identities,
+all 63 prior records unchanged, and every historical assessment history, status
+and assessment hash preserved. Independent reviews are pinned by each row:
+Server eight `d4afde286b153519675b610ebc339e1b7a26fb9420895ddcdab8ca1cfbb5aa55`;
+machine 33 `0c2add9c760d45c33e21f69b00a33fb89298cb461e1effdf491c1ea94f667252`.
+
+A further 33 backup/update classifications have root approval for registry
+ingestion after independent review and exact membership verification: 15 static
+owner clauses, six unresolved whole claims and 12 process-only lines. They are
+not included in the 104 checkpoint above. Neither these batches nor static
+contract test passes establish that only GUI work remains.
