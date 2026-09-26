@@ -15,3 +15,5 @@ Aggregate verification and landing: in progress. The known onboarding storage-re
 The full prelanding contract run validated 32 pairs, 1,194 positives and 3,624 negatives. It exposed three groups of reused fixture request IDs after identity checking was corrected; those IDs were made unique and the four affected pairs were rechecked. The known base storage-digest drift remains a designated-governance concern. Final whole-repository judgment is the required landing check.
 
 Final affected-pair verification passed all 358 positives and rejected all 513 negatives across Project, Onboarding, Commands and Forge, including all computed joins and unique fixture identities. Its only finding was the previously known onboarding storage digest drift.
+
+The first full landing run found four phantom catalog command tokens in UCC-166 explanatory alias bans. The catalog now references the exact CS-081 prohibition instead of repeating those namespace prefixes; CS-081 and DR-042 retain the explicit bans. Independent review passed, and validate-wiring-matrix passes with zero findings. No validator exemption or command admission was added.
