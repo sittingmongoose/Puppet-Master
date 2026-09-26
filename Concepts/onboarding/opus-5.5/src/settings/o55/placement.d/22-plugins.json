@@ -1,0 +1,13 @@
+{
+  "_about": "Plugins: the list owns the package list, per-plugin on/off, Show, Add (catalog or folder) and Remove; the page draws 'New plugins and updates' itself; limits and safety are a placed group.",
+  "sections": {
+    "plugins-home": { "to": "plugins", "title": "Your plugins", "help": "The list, its Show menu, Add and each plugin's switch.", "order": 1, "composed": true },
+    "plugins-new": { "to": "plugins", "title": "New plugins and updates", "help": "Whether new plugins start switched on.", "order": 5, "composed": true },
+    "plugins-limits": { "to": "plugins", "title": "Limits and safety", "help": "How long a plugin may take, and whether it may change the app's own tools.", "order": 10 }
+  },
+  "overrides": [
+    { "section": "plugins-home", "ids": ["extensions.plugins.packages", "extensions.plugins.plugin-on-off", "extensions.plugins.registry-view", "extensions.plugins.add-from-catalog", "extensions.plugins.add-local", "extensions.plugins.remove"] },
+    { "section": "plugins-new", "ids": ["extensions.plugins.auto-enable-new"] },
+    { "section": "plugins-limits", "ids": ["extensions.plugins.hook-timeout", "extensions.plugins.tool-override"] }
+  ]
+}

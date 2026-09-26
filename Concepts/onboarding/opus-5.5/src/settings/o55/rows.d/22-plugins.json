@@ -1,0 +1,13 @@
+{
+  "rows": {
+    "extensions.plugins.packages": { "why": "Is the plugin list itself.", "noun": "plugin package", "label": "Plugin packages", "placeholder": "name@1.0 or a folder path" },
+    "extensions.plugins.plugin-on-off": { "why": "Per plugin: each plugin's switch writes this map.", "label": "Which plugins are on", "pair": ["Plugin", "On or off"], "valueChoices": ["on", "off"] },
+    "extensions.plugins.registry-view": { "why": "The list's Show menu.", "label": "Which plugins the list shows" },
+    "extensions.plugins.add-from-catalog": { "why": "The Add plugin button (From the catalog).", "actionLabel": "Add a plugin from the catalog", "pm51": "pm51-plugins-add" },
+    "extensions.plugins.add-local": { "why": "The Add plugin button (From a folder).", "actionLabel": "Add a plugin from a folder", "pm51": "pm51-plugins-add" },
+    "extensions.plugins.remove": { "why": "Per plugin: Remove plugin in its panel.", "actionLabel": "Remove a plugin", "route": { "domain": "code", "workspace": "plugins", "target": "[data-pm51-manager=\"plugins\"] .pm51-item" }, "routeToast": ["Open a plugin", "Remove plugin is at the bottom of its panel."] },
+    "extensions.plugins.auto-enable-new": { "label": "Turn new plugins on right away", "help": "Off means a new plugin arrives switched off, so new code never runs before you've looked at it." },
+    "extensions.plugins.hook-timeout": { "label": "Time limit for each plugin step", "help": "A plugin that takes longer is stopped. Raise it only for a plugin you trust.", "unit": "ms", "min": 100, "max": 30000, "step": 100 },
+    "extensions.plugins.tool-override": { "label": "Let plugins change the app's own tools", "help": "Off keeps built-in tools working the way they're described. A warning shows while it's on.", "risk": "Less predictable" }
+  }
+}

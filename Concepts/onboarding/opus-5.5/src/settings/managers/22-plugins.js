@@ -1,8 +1,14 @@
-/* Plugins — add-ons that give the assistant new tools and connections. */
+/* Plugins — add-ons that give the assistant new tools and connections.
+   O55: the list owns its rows (Show menu, Add, each plugin's switch, remove); each line says what the plugin adds
+   (tools and hooks), so the separate table that listed every plugin a second time is gone. Below the list: new
+   plugins and updates, then limits and safety. The hook time limit is the real setting everywhere (the page kept its
+   own "10 seconds" that disagreed with the setting's 5000 ms). */
 (function () {
   const ID = 'plugins';
   const KEY = 'tools-integrations';
-  const PREF_DEFAULTS = { hookTimeout: '10 seconds', allowOverride: false, updateReview: 'Always ask me' };
+  const PREF_DEFAULTS = { updateReview: 'Always ask me' };
+  const S = { list: 'extensions.plugins.packages', onoff: 'extensions.plugins.plugin-on-off', show: 'extensions.plugins.registry-view', catalog: 'extensions.plugins.add-from-catalog', local: 'extensions.plugins.add-local', remove: 'extensions.plugins.remove', autoNew: 'extensions.plugins.auto-enable-new', timeout: 'extensions.plugins.hook-timeout' };
+  const timeoutText = () => { const ms = Number(PM51.value(S.timeout)) || 5000; return ms >= 1000 ? `${+(ms / 1000).toFixed(1)} seconds` : `${ms} ms`; };
   const plugins = () => PM51.s().plugins;
   const prefs = () => { const s = PM51.s(); if (!s.pluginsPrefs) s.pluginsPrefs = clone(PREF_DEFAULTS); return s.pluginsPrefs; };
   const byId = id => plugins().find(x => x.id === id);
@@ -11,7 +17,9 @@
   const SOURCE_LABELS = { Bundled: 'Bundled with Puppet Master', Catalog: 'From the catalog', 'Local folder': 'From a folder on this computer' };
   const sourceLabel = s => SOURCE_LABELS[s] || s || 'Unknown';
   const installed = p => p.state !== 'Not installed';
-  const metaFor = p => p.version === 'Bundled' ? 'Bundled with Puppet Master' : installed(p) ? `Version ${p.version} · ${sourceLabel(p.source)}` : sourceLabel(p.source);
+  const adds = p => [p.tools ? `${p.tools} ${p.tools === 1 ? 'tool' : 'tools'}` : '', p.hooks ? `${p.hooks} ${p.hooks === 1 ? 'hook' : 'hooks'}` : ''].filter(Boolean).join(', ');
+  const metaFor = p => [p.version === 'Bundled' ? 'Bundled with Puppet Master' : installed(p) ? `Version ${p.version} · ${sourceLabel(p.source)}` : sourceLabel(p.source), adds(p) ? `Adds ${adds(p)}` : ''].filter(Boolean).join(' · ');
+  const shown = list => { const v = PM51.value(S.show) || 'Active only'; return list.filter(x => v === 'All' ? true : v === 'Hide disabled' ? (x.enabled || x.locked) : (x.enabled || x.locked || !installed(x) || x.problem)); };
   const stateFor = p => !installed(p) ? 'Not installed' : p.problem ? 'Needs attention' : p.enabled ? 'Ready' : 'Off';
   const actionRow = (...buttons) => `<div class="pm51-plugins-actions">${buttons.join('')}</div>`;
   const COMMANDS = [['scan', 'Scan'], ['install', 'Install'], ['update', 'Update'], ['enable', 'Enable'], ['disable', 'Disable'], ['reload', 'Reload'], ['remove', 'Remove'], ['validate', 'Validate'], ['review_changes', 'Review changes'], ['rollback', 'Roll back'], ['open_details', 'Details'], ['open_logs', 'Logs']];
@@ -33,45 +41,40 @@
   function render() {
     const list = plugins();
     const p = prefs();
-    const items = list.map(x => ({
+    const visible = shown(list);
+    const items = visible.map(x => ({
       title: x.name, meta: metaFor(x), note: x.problem || '', pill: PM51.pill(stateFor(x)), avatar: h(PM51.initials(x.name)),
-      end: x.locked ? PM51.chip('Always on') : !installed(x) ? PM51.btn({ label: 'Install', small: true, icon: 'download', disabled: true, reason: 'Installing happens only in the real app.' }) : PM51.toggle(!!x.enabled, { action: 'pm51-plugins-toggle', data: { id: x.id }, label: `${x.name} enabled` }),
+      end: x.locked ? PM51.chip('Always on') : !installed(x) ? PM51.btn({ label: 'Install', small: true, icon: 'download', disabled: true, reason: 'Installing happens only in the real app.' }) : PM51.toggle(!!x.enabled, { action: 'pm51-plugins-toggle', data: { id: x.id }, label: `${x.name} on or off` }),
       action: 'pm51-plugins-open', data: { id: x.id }
     }));
-    const table = `<div class="pm51-plugins-table-wrap"><table class="pm51-plugins-table"><thead><tr><th>Name</th><th>Version</th><th>Source</th><th>Status</th><th class="is-num">Hooks</th><th class="is-num">Tools</th></tr></thead><tbody>${list.map(x => `<tr><td>${h(x.name)}</td><td>${h(x.version === 'Bundled' ? 'With app' : installed(x) ? x.version : '—')}</td><td>${h(x.source)}</td><td>${PM51.pill(stateFor(x))}</td><td class="is-num">${x.hooks}</td><td class="is-num">${x.tools}</td></tr>`).join('')}</tbody></table></div>`;
+    const add = PM51.home(S.catalog, PM51.home(S.local, PM51.btn({ label: 'Add plugin', icon: 'plus', action: 'pm51-plugins-add' }), 'span'), 'span');
+    const toolbar = `<div class="o55-toolbar">${PM51.bound.select(S.show, { prefix: 'Show', width: 150 })}<span class="o55-toolbar-spacer"></span><span class="o55-quiet-line">${list.length - visible.length ? `${list.length - visible.length} hidden by Show` : `${list.length} ${list.length === 1 ? 'plugin' : 'plugins'}`}</span></div>`;
+    const listBody = items.length ? PM51.list(items) : list.length ? '<div class="o55-skills-none">Nothing to show. Try Show: All.</div>' : PM51.empty('No plugins yet', 'Add one from the catalog or a folder on this computer.', { label: 'Add plugin', action: 'pm51-plugins-add', icon: 'plus' });
     const body = [
-      PM51.section({
-        title: 'Plugins', help: 'Turn a plugin off to keep its tools away from the assistant. Open one to see what it adds.',
-        action: { label: 'Add plugin', icon: 'plus', action: 'pm51-plugins-add' },
-        body: items.length ? PM51.list(items) : PM51.empty('No plugins yet', 'Add one from the catalog or a folder on this computer.', { label: 'Add plugin', action: 'pm51-plugins-add', icon: 'plus' })
-      }),
-      PM51.advanced([
-        PM51.section({ title: 'Hooks and tools', help: 'Hooks run at key moments, such as before a file is saved. Tools are things the assistant can call.', body: table }),
-        PM51.rows([
-          /* Wave S: hook time limit and built-in tool override are the canonical extensions.plugins.hook-timeout
-             and tool-override rows, rendered inline above. */
-          { label: 'Before updating a plugin', help: 'Updates can ask for new permissions. Reviewing them keeps you in control.', control: PM51.select(p.updateReview, ['Always ask me', 'Ask only when permissions change', 'Update automatically'], { action: 'pm51-plugins-review', label: 'Before updating a plugin' }) }
-        ]),
-        PM51.section({ title: 'How plugins are checked', body: PM51.kv([['Signature', 'Checked before install and before every update'], ['Publisher', 'Shown in the plugin details before you install'], ['Known problems list', 'Checked before install and update'], ['Previous version', 'Kept so you can roll back']]) + actionRow(PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-plugins-diagnostics' })) })
-      ].join(''))
+      `<div class="pm51-skills-list">${PM51.section({ title: 'Your plugins', help: 'Turn a plugin off to keep its tools away from the assistant. Open one to see what it adds.', action: add, body: PM51.home(S.list, PM51.home(S.onoff, PM51.home(S.remove, toolbar + listBody))) })}</div>`,
+      PM51.section({ title: 'New plugins and updates', help: 'New plugins and updates can bring new tools, so you decide when they start.', body: PM51.bound.rows([S.autoNew]) + PM51.rows([
+        { label: 'Before updating a plugin', help: 'Updates can ask for new permissions. Reviewing them keeps you in control.', control: PM51.select(p.updateReview, ['Always ask me', 'Ask only when permissions change', 'Update automatically'], { action: 'pm51-plugins-review', label: 'Before updating a plugin' }) }
+      ]) }),
+      PM51.advanced(PM51.section({ title: 'How plugins are checked', body: PM51.kv([['Signature', 'Checked before install and before every update'], ['Publisher', 'Shown in the plugin details before you install'], ['Known problems list', 'Checked before install and update'], ['Previous version', 'Kept so you can roll back'], ['Time limit', `${timeoutText()} for each step, set under Limits and safety`]]) + actionRow(PM51.btn({ label: 'Check all plugins', small: true, icon: 'test', action: 'pm51-plugins-diagnostics' })) }), { label: 'More options' })
     ].join('');
-    return PM51.page({ id: ID, key: KEY, body, quiet: [{ label: 'Reset plugin settings', action: 'pm51-plugins-reset' }, { label: 'How plugins work', action: 'pm51-plugins-help' }] });
+    return PM51.page({ id: ID, key: KEY, body, quiet: [{ label: 'Reset the plugin list', action: 'pm51-plugins-reset' }, { label: 'How plugins work', action: 'pm51-plugins-help' }] });
   }
   PM51.manager('plugins', { render });
+  [S.show, S.timeout].forEach(id => PM51.watch(id, () => PM51.refresh(ID, { swap: false })));
 
   function openPlugin(id) {
     const p = byId(id); if (!p) return;
     const state = stateFor(p);
     const commands = `<div class="pm51-plugins-cmds">${COMMANDS.map(([cmd, label]) => pm7ConsumerButton('command', 'cmd.agent_plugin.' + cmd, label, { targetId: p.id })).join('')}</div>`;
     PM51.panel({
-      title: p.name, subtitle: metaFor(p), pill: PM51.pill(state),
+      title: p.name, eyebrow: 'Plugin', icon: 'brackets', subtitle: metaFor(p), status: state,
       body: (p.problem ? PM51.note(p.problem, 'attention') : '')
         + PM51.panelSection('What it adds', PM51.kv([['Tools', p.tools ? `${p.tools} ${p.tools === 1 ? 'tool' : 'tools'} the assistant can call` : 'No tools'], ['Hooks', p.hooks ? `${p.hooks} ${p.hooks === 1 ? 'hook that runs' : 'hooks that run'} at key moments` : 'No hooks']]))
-        + PM51.panelSection('Use it', PM51.rows([{ label: 'Enabled', help: p.locked ? 'Bundled with Puppet Master and always on.' : !installed(p) ? 'Install the plugin first.' : 'Off keeps it installed but out of the way.', control: p.locked ? PM51.chip('Always on') : !installed(p) ? PM51.pill('Not installed') : PM51.toggle(!!p.enabled, { action: 'pm51-plugins-toggle', data: { id: p.id }, label: `${p.name} enabled` }) }]))
+        + PM51.panelSection('Use it', PM51.rows([{ label: 'On', help: p.locked ? 'Bundled with Puppet Master and always on.' : !installed(p) ? 'Install the plugin first.' : 'Off keeps it installed but out of the way.', control: p.locked ? PM51.chip('Always on') : !installed(p) ? PM51.pill('Not installed') : PM51.toggle(!!p.enabled, { action: 'pm51-plugins-toggle', data: { id: p.id }, label: `${p.name} enabled` }) }]))
         + PM51.panelSection('Permissions', (p.permissions || []).length ? `<div class="pm51-chips">${p.permissions.map(x => PM51.chip(x)).join('')}</div>` : '<p class="pm51-ps-text">Asks for nothing extra.</p>', 'What the plugin may reach. Updates that ask for more are shown to you first.')
         + (p.problem ? PM51.panelSection('Fix it', PM51.rows([{ label: 'Plugin folder', help: p.problem, action: { label: 'Pick folder', icon: 'folder', action: 'pm51-plugins-pick-folder', data: { id: p.id } } }])) : '')
         + PM51.panelSection('Updates', PM51.rows([{ label: p.locked ? 'Updated together with Puppet Master' : installed(p) ? 'Up to date' : 'Not installed', help: p.locked ? 'Nothing to do here.' : installed(p) ? `You have version ${p.version}.` : '', action: p.locked || !installed(p) ? undefined : { label: 'Check for updates', icon: 'refresh', action: 'pm51-plugins-update', data: { id: p.id } } }]))
-        + PM51.panelSection('Remove', actionRow(PM51.btn({ label: 'Remove plugin', small: true, danger: true, icon: 'trash', action: 'pm51-plugins-remove', data: { id: p.id }, disabled: !!p.locked, reason: 'Plugins bundled with Puppet Master cannot be removed.' })))
+        + PM51.panelSection('Remove', actionRow(PM51.btn({ label: 'Remove plugin', small: true, danger: true, icon: 'trash', action: 'pm51-plugins-remove', data: { id: p.id }, disabled: !!p.locked, reason: 'Plugins bundled with Puppet Master cannot be removed. Turn it off instead.' })))
         + PM51.advanced(
           PM51.kv([['Manifest', p.source === 'Local folder' ? 'plugin.json in the plugin folder' : 'plugin.json from the package'], ['Identity', `${p.id} · ${p.version === 'Bundled' ? 'bundled build' : 'version ' + p.version}`], ['Containment', 'Runs in its own process with only the permissions above'], ['Evidence', 'Install receipt and last check kept in the plugin log']])
           + '<p class="pm51-ps-help" style="margin:10px 0 0">Plugin commands. They stay listed here but have no live handler in this preview.</p>' + commands,
@@ -97,8 +100,11 @@
   PM51.on('plugins-toggle', el => {
     const p = byId(ds(el, 'id')); if (!p || p.locked || !installed(p)) return;
     p.enabled = !p.enabled; p.state = stateFor(p);
+    const map = PM51.value(S.onoff); const next = Object.assign({}, map && typeof map === 'object' && !Array.isArray(map) ? map : {}, { [p.id]: p.enabled ? 'on' : 'off' });
+    commitSettingValue(S.onoff, next);
     if (el.classList.contains('pm51-toggle')) { el.classList.toggle('on', p.enabled); el.setAttribute('aria-checked', String(p.enabled)); }
-    saveState(); PM51.refresh(ID, { swap: false });
+    saveState(); PM51.toast(p.enabled ? `${p.name} is on` : `${p.name} is off`, p.enabled ? 'Its tools are available again.' : 'Its tools and hooks stop right away.', 'success');
+    if (!el.closest('.pm51-panel')) PM51.refresh(ID, { swap: false });
   });
   PM51.on('plugins-check', el => runCheck(ds(el, 'id')));
   PM51.on('plugins-add', () => openDialog({
@@ -110,7 +116,7 @@
       const ref = String(data.ref || '').trim(); if (!ref) { PM51.toast('Name needed', 'Type a plugin name or folder first.', 'info'); return false; }
       const name = ref.includes('/') ? (ref.split('/').filter(Boolean).pop() || ref).replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : ref;
       const id = uniqueId(slug(name));
-      plugins().push({ id, name, version: '', source: data.source === 'folder' ? 'Local folder' : 'Catalog', state: 'Not installed', enabled: false, hooks: 0, tools: 0, permissions: [] });
+      plugins().push({ id, name, version: '', source: data.source === 'folder' ? 'Local folder' : 'Catalog', state: 'Not installed', enabled: PM51.value(S.autoNew) === true, hooks: 0, tools: 0, permissions: [] });
       saveState(); PM51.refresh(ID, { swap: false });
       PM51.toast('Plugin added to your list', 'Example data only. Nothing was downloaded or installed in this preview.', 'info');
     }
@@ -138,18 +144,16 @@
   PM51.on('plugins-remove', el => {
     const p = byId(ds(el, 'id')); if (!p || p.locked) return;
     PM51.confirm(`Remove ${p.name}?`, 'Its tools and hooks stop being available. The previous version is kept for a while in case you change your mind.', 'Remove', () => {
-      PM51.s().plugins = plugins().filter(x => x.id !== p.id); saveState(); PM51.refresh(ID, { swap: false }); PM51.toast(`${p.name} removed`, 'It is no longer on your list.');
+      PM51.s().plugins = plugins().filter(x => x.id !== p.id); saveState(); closeOverlay(false); PM51.refresh(ID, { swap: false }); PM51.toast(`${p.name} removed`, 'It is no longer on your list.');
     }, true);
   });
-  PM51.onChange('plugins-timeout', el => { prefs().hookTimeout = el.value; saveState(); });
-  PM51.on('plugins-override', () => { prefs().allowOverride = !prefs().allowOverride; saveState(); PM51.refresh(ID, { swap: false }); });
   PM51.onChange('plugins-review', el => { prefs().updateReview = el.value; saveState(); });
-  PM51.on('plugins-diagnostics', () => PM51.check({ title: 'Plugin diagnostics', steps: [
+  PM51.on('plugins-diagnostics', () => PM51.check({ title: 'Check all plugins', steps: [
     { title: 'Plugin folders readable', desc: 'Every listed plugin has a folder or package' },
     { title: 'Manifests parsed', desc: `${plugins().length} manifests read without errors`, status: 'Example', tone: 'info' },
-    { title: 'Hooks within time limit', desc: `Every hook finished under ${prefs().hookTimeout}`, status: 'Example', tone: 'info' }
+    { title: 'Hooks within the time limit', desc: `Every hook finished within ${timeoutText()}`, status: 'Example', tone: 'info' }
   ] }));
-  PM51.on('plugins-reset', () => PM51.confirm('Reset plugin settings?', 'Your plugin list and the options under Advanced go back to their defaults.', 'Reset', () => {
+  PM51.on('plugins-reset', () => PM51.confirm('Reset the plugin list?', 'Your plugin list and the update choice go back to their defaults. Other choices keep their values; use About on a row to reset one.', 'Reset', () => {
     PM51.s().plugins = clone(DATA.plugins); PM51.s().pluginsPrefs = clone(PREF_DEFAULTS); saveState(); PM51.refresh(ID, { swap: false }); PM51.toast('Plugins reset', 'Defaults are back.');
   }));
   PM51.on('plugins-help', () => PM51.panel({

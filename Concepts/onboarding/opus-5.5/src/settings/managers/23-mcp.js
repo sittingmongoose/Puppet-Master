@@ -1,8 +1,15 @@
-/* MCP Servers — outside tools and services the assistant can call. */
+/* MCP Servers — outside tools and services the assistant can call.
+   O55: the server list owns every per-server setting (on/off, single tools, how it connects, where it applies, its
+   address or launch details, sign in again, sign out, logs), all in each server's panel; Import uses the real
+   'importing servers from other apps' choice (the page kept its own 'Ask me first' switch beside it), and the time
+   limit is the real setting (the page kept its own '30 seconds'). Connection defaults follow as a group. */
 (function () {
   const ID = 'mcp';
   const KEY = 'tools-integrations';
-  const PREF_DEFAULTS = { askFirst: true, timeout: '30 seconds', lazyTools: true };
+  const PREF_DEFAULTS = {};
+  const S = { list: 'system.mcp.server-list', onoff: 'system.mcp.server-enabled', tool: 'system.mcp.tool-toggle', health: 'system.mcp.health-status', signout: 'system.mcp.sign-out', transport: 'system.mcp.transport', scope: 'system.mcp.server-scope', launch: 'system.mcp.launch-config', url: 'system.mcp.remote-url', headers: 'system.mcp.remote-headers', refresh: 'system.mcp.oauth-refresh', importing: 'system.mcp.import-external', timeout: 'system.mcp.timeout', debug: 'system.mcp.debug-surface' };
+  const timeoutText = () => { const ms = Number(PM51.value(S.timeout)) || 30000; return ms >= 1000 ? `${+(ms / 1000).toFixed(1)} seconds` : `${ms} ms`; };
+  const askFirst = () => PM51.value(S.importing) !== 'Off until reviewed';
   const servers = () => PM51.s().mcps;
   const prefs = () => { const s = PM51.s(); if (!s.mcpPrefs) s.mcpPrefs = clone(PREF_DEFAULTS); return s.mcpPrefs; };
   const byId = id => servers().find(x => x.id === id);
@@ -29,36 +36,31 @@
 
   function render() {
     const list = servers();
-    const p = prefs();
     const items = list.map(m => ({
       title: m.name, pill: PM51.pill(stateFor(m)), meta: `${m.description} · ${scopeLabel(m.scope)}`, note: isOn(m) ? (m.remediation || '') : '',
-      avatar: icon(isWeb(m) ? 'network' : 'terminal'),
+      avatar: icon(isWeb(m) ? 'globe' : 'terminal'),
       end: PM51.btn({ label: primaryFor(m), small: true, icon: PRIMARY_ICONS[primaryFor(m)] || 'sliders', action: 'pm51-mcp-primary', data: { id: m.id } }),
       action: 'pm51-mcp-open', data: { id: m.id }
     }));
+    const homes = [S.list, S.onoff, S.tool, S.health, S.signout, S.transport, S.scope, S.launch, S.url, S.headers, S.refresh];
+    const wrap = html => homes.reduceRight((acc, id) => PM51.home(id, acc), html);
     const body = [
       PM51.section({
-        title: 'Servers', help: 'Each server gives the assistant a set of tools. Open one to choose which tools it may use.',
+        title: 'Your servers', help: 'Each server gives the assistant a set of tools. Open one to choose which tools it may use and how it connects.',
         action: { label: 'Add server', icon: 'plus', action: 'pm51-mcp-add' },
-        body: items.length ? PM51.list(items) : PM51.empty('No servers yet', 'Add one, or look for servers other apps already use.', { label: 'Add server', action: 'pm51-mcp-add', icon: 'plus' })
+        body: wrap(items.length ? PM51.list(items) : PM51.empty('No servers yet', 'Add one, or look for servers other apps already use.', { label: 'Add server', action: 'pm51-mcp-add', icon: 'plus' }))
       }),
       PM51.section({
-        title: 'Import', help: 'Claude Desktop, Cursor, and VS Code keep their own server lists. Puppet Master can reuse them.',
-        body: PM51.rows([
-          { label: 'Import from other apps', help: 'Looks for servers set up in Claude Desktop, Cursor, and VS Code.', action: { label: 'Look for servers', icon: 'search', action: 'pm51-mcp-import' } },
-          { label: 'Ask me first', help: 'Shows what was found before adding anything.', control: PM51.toggle(!!p.askFirst, { action: 'pm51-mcp-pref', data: { pref: 'askFirst' }, label: 'Ask me first' }) }
-        ])
+        title: 'Servers from other apps', help: 'Claude Desktop, Cursor and VS Code keep their own server lists. Puppet Master can reuse them.',
+        action: { label: 'Look for servers', icon: 'search', action: 'pm51-mcp-import' },
+        body: PM51.bound.rows([S.importing])
       }),
-      PM51.advanced([
-        PM51.section({ title: 'How each server starts', help: 'The program or address behind each server.', body: PM51.kv(list.map(m => [m.name, `${isWeb(m) ? 'Address' : 'Command'}: ${launchText(m)}`])) }),
-        /* Wave S: the connection time limit and lazy tool loading are the canonical system.mcp.timeout and
-           lazy-exposure rows in Connection defaults above. */
-        PM51.section({ title: 'Technical details', body: PM51.kv([['Sign-in for web servers', 'Handled in your browser when a server asks for it'], ['Secrets', 'Kept in the credential store, never in settings files'], ['Logs', 'Kept per server with secrets hidden']]) + actionRow(PM51.btn({ label: 'View logs', small: true, icon: 'terminal', action: 'pm51-mcp-logs' }), PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-mcp-diagnostics' })) })
-      ].join(''))
+      PM51.advanced(PM51.home(S.debug, PM51.section({ title: 'What each server ended up with', help: 'The program or address behind each server, after every setting is applied.', body: PM51.kv(list.map(m => [m.name, `${isWeb(m) ? 'Address' : 'Command'}: ${launchText(m)}`])) + actionRow(PM51.btn({ label: 'View all logs', small: true, icon: 'terminal', action: 'pm51-mcp-logs' }), PM51.btn({ label: 'Check all servers', small: true, icon: 'test', action: 'pm51-mcp-diagnostics' })) })), { label: 'More options' })
     ].join('');
-    return PM51.page({ id: ID, key: KEY, body, quiet: [{ label: 'Reset MCP settings', action: 'pm51-mcp-reset' }, { label: 'How MCP servers work', action: 'pm51-mcp-help' }] });
+    return PM51.page({ id: ID, key: KEY, body, quiet: [{ label: 'Reset the server list', action: 'pm51-mcp-reset' }, { label: 'How MCP servers work', action: 'pm51-mcp-help' }] });
   }
   PM51.manager('mcp', { render });
+  PM51.watch(S.timeout, () => {});
 
   function openServer(id) {
     const m = byId(id); if (!m) return;
@@ -66,25 +68,26 @@
     const off = new Set(m.disabledTools || []);
     const tools = m.toolList || [];
     PM51.panel({
-      title: m.name, subtitle: m.description, pill: PM51.pill(stateFor(m)),
+      title: m.name, eyebrow: isWeb(m) ? 'Web server' : 'Program on this computer', icon: isWeb(m) ? 'globe' : 'terminal', subtitle: m.description, status: stateFor(m),
       body: (isOn(m) && m.remediation ? PM51.note(m.remediation, 'attention') : '')
         + PM51.panelSection('How it connects', PM51.kv([
           ['Kind', isWeb(m) ? 'Connects to a web address' : 'Runs a program on this computer'],
           [isWeb(m) ? 'Address' : 'Command', launchText(m)],
           ['Where it applies', scopeLabel(m.scope)]
         ]))
-        + PM51.panelSection('Use it', PM51.rows([{ label: 'Enabled', help: 'Off keeps the server on your list but the assistant will not call it.', control: PM51.toggle(isOn(m), { action: 'pm51-mcp-toggle', data: { id: m.id }, label: `${m.name} enabled` }) }]))
+        + PM51.panelSection('Use it', PM51.rows([{ label: 'On', help: 'Off keeps the server on your list but the assistant will not call it.', control: PM51.toggle(isOn(m), { action: 'pm51-mcp-toggle', data: { id: m.id }, label: `${m.name} enabled` }) }]))
         + PM51.panelSection('Tools', tools.length
           ? PM51.rows(tools.map(t => ({ label: toolLabel(t), control: PM51.toggle(!off.has(t), { action: 'pm51-mcp-tool', data: { id: m.id, tool: t }, label: toolLabel(t) }) })))
           : `<p class="pm51-ps-text">${h(m.tools ? `${m.tools} tools. Connect the server to see the full list.` : 'No tools yet. They appear once the server connects.')}</p>`,
           tools.length ? `${m.tools} tools in total. Turn one off to keep the assistant from using it.` : '')
         + PM51.panelSection('Permissions', PM51.rows([{ label: 'What it may do', help: 'Ask for writes checks with you before anything changes.', control: PM51.select(PERMISSIONS.includes(m.permissions) ? m.permissions : 'Ask for writes', PERMISSIONS, { action: 'pm51-mcp-permissions', data: { id: m.id }, label: 'Permissions' }) }]))
+        + (isWeb(m) ? PM51.panelSection('Sign-in', PM51.rows([{ label: 'Signed in through your browser', help: 'Sign in again when the server says it needs it. Sign out forgets the saved sign-in but keeps the server.' }]) + actionRow(PM51.btn({ label: 'Sign in again', small: true, icon: 'refresh', action: 'pm51-mcp-signin', data: { id: m.id } }), PM51.btn({ label: 'Sign out', small: true, icon: 'lock', action: 'pm51-mcp-signout', data: { id: m.id } })), '', { icon: 'user' }) : '')
         + PM51.advanced(
           PM51.kv([
             [isWeb(m) ? 'Address' : 'Launch command', launchText(m)],
             [isWeb(m) ? 'Headers' : 'Environment', ((isWeb(m) ? e.headers : e.env) || []).length ? (isWeb(m) ? e.headers : e.env).join(' · ') : 'None'],
             ['Sign-in', isWeb(m) ? 'Browser sign-in when the service asks' : 'Not needed'],
-            ['Time limit', prefs().timeout]
+            ['Time limit', `${timeoutText()} (Connection defaults)`]
           ]) + actionRow(
             PM51.btn({ label: 'View logs', small: true, icon: 'terminal', action: 'pm51-mcp-logs', data: { id: m.id } }),
             PM51.btn({ label: 'Remove server', small: true, danger: true, icon: 'trash', action: 'pm51-mcp-remove', data: { id: m.id } })
@@ -151,7 +154,7 @@
   function removeServer(id) {
     const m = byId(id); if (!m) return;
     PM51.confirm(`Remove ${m.name}?`, 'The assistant loses its tools. Nothing is uninstalled from your computer.', 'Remove', () => {
-      PM51.s().mcps = servers().filter(x => x.id !== id); saveState(); PM51.refresh(ID, { swap: false }); PM51.toast(`${m.name} removed`, 'It is no longer on your list.');
+      PM51.s().mcps = servers().filter(x => x.id !== id); saveState(); closeOverlay(false); PM51.refresh(ID, { swap: false }); PM51.toast(`${m.name} removed`, 'It is no longer on your list.');
     }, true);
   }
   PM51.on('mcp-remove', el => removeServer(ds(el, 'id')));
@@ -177,17 +180,17 @@
       { title: 'Claude Desktop', desc: 'Settings file found · 2 servers', status: 'Found 2', tone: 'ready' },
       { title: 'Cursor', desc: 'No server list on this computer', status: 'None', tone: 'off' },
       { title: 'VS Code', desc: 'Settings file found · 1 server', status: 'Found 1', tone: 'ready' },
-      { title: 'Next step', desc: prefs().askFirst ? 'You would pick which ones to add' : 'They would be added to your list', status: 'Example', tone: 'info' }
+      { title: 'Next step', desc: askFirst() ? 'You would pick which ones to add' : 'They would be added switched off until you review them', status: 'Example', tone: 'info' }
     ]
   }));
-  PM51.on('mcp-pref', el => { const key = ds(el, 'pref'); if (!(key in PREF_DEFAULTS)) return; prefs()[key] = !prefs()[key]; saveState(); PM51.refresh(ID, { swap: false }); });
-  PM51.onChange('mcp-timeout', el => { prefs().timeout = el.value; saveState(); });
-  PM51.on('mcp-diagnostics', () => PM51.check({ title: 'MCP diagnostics', steps: [
+  PM51.on('mcp-signin', el => { const m = byId(ds(el, 'id')); if (!m) return; PM51.toast('Signing in again', `Example only: no browser opened for ${m.name}.`, 'info'); });
+  PM51.on('mcp-signout', el => { const m = byId(ds(el, 'id')); if (!m) return; PM51.confirm(`Sign out of ${m.name}?`, 'Its saved sign-in is forgotten. The server stays on your list and asks you to sign in next time.', 'Sign out', () => PM51.toast('Signed out', `${m.name} will ask you to sign in next time.`)); });
+  PM51.on('mcp-diagnostics', () => PM51.check({ title: 'Check all servers', steps: [
     { title: 'Server list readable', desc: `${servers().length} servers on your list` },
     { title: 'Programs on this computer', desc: 'Each local program is looked up', status: 'Example', tone: 'info' },
     { title: 'Web addresses reachable', desc: 'Each address is pinged', status: 'Example', tone: 'info' }
   ] }));
-  PM51.on('mcp-reset', () => PM51.confirm('Reset MCP settings?', 'Your server list and the options under Advanced go back to their defaults.', 'Reset', () => {
+  PM51.on('mcp-reset', () => PM51.confirm('Reset the server list?', 'Your server list goes back to its defaults. Other choices keep their values; use About on a row to reset one.', 'Reset', () => {
     PM51.s().mcps = clone(DATA.mcps); PM51.s().mcpPrefs = clone(PREF_DEFAULTS); saveState(); PM51.refresh(ID, { swap: false }); PM51.toast('MCP settings reset', 'Defaults are back.');
   }));
   PM51.on('mcp-help', () => PM51.panel({

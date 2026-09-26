@@ -127,3 +127,10 @@ html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[
 #panel-settings .o55-toolbar-spacer { flex: 1 1 auto; }
 #panel-settings :is(.o55-bound, .o55-home).is-flash { animation: o55Pointed 2.2s var(--k3-ease-out); border-radius: 10px; }
 #panel-settings .o55-bound-rows > .setting-row.o55-row:first-child { border-top: 0; }
+
+/* ---- specificity fixes against older blanket rules --------------------------------------------------------- */
+#panel-settings .setting-row.o55-row .setting-control .o55-num input.text-control { width: 92px; min-width: 0; max-width: 120px; }
+#panel-settings .setting-row.o55-row .setting-control .o55-path input.text-control { width: 220px; }
+#panel-settings .setting-list.o55-bound-rows, #panel-settings .settings-section.o55-group > .setting-list { border: 0; border-radius: 0; background: none; box-shadow: none; }
+#panel-settings .pm51-section-body > .setting-list.o55-bound-rows + .pm51-rows > .pm51-row:first-child { border-top: 1px solid var(--k3-line); }
+#panel-settings .pm51-section-body > .setting-list.o55-bound-rows > .setting-row.o55-row { padding-left: 0; }
