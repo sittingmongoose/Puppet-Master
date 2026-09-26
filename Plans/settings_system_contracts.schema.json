@@ -3610,6 +3610,28 @@
               "$ref": "#/$defs/non_empty_string"
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation_kind": {
+                "const": "import"
+              }
+            },
+            "required": [
+              "operation_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "import_mode": {
+                "$ref": "#/$defs/settings_import_mode"
+              }
+            },
+            "required": [
+              "import_mode"
+            ]
+          }
         }
       ],
       "unevaluatedProperties": false
@@ -3761,7 +3783,61 @@
           "$ref": "#/$defs/availability"
         }
       },
-      "additionalProperties": false
+      "unevaluatedProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation_kind": {
+                "const": "import"
+              }
+            },
+            "required": [
+              "operation_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "import_mode": {
+                "$ref": "#/$defs/settings_import_mode"
+              }
+            },
+            "required": [
+              "import_mode"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "import_mode": {
+                "const": "replace"
+              }
+            },
+            "required": [
+              "import_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "import_resets": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/settings_import_reset_entry"
+                },
+                "uniqueItems": true
+              },
+              "import_source_snapshot_sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            },
+            "required": [
+              "import_resets",
+              "import_source_snapshot_sha256"
+            ]
+          }
+        }
+      ]
     },
     "settings_search_result": {
       "type": "object",
@@ -3906,6 +3982,364 @@
       },
       "additionalProperties": false,
       "description": "Static value join only: supplied current lookup, context, continuation and cmd.settings.open availability observations are compared, not issued or executed. No runtime schema ID, receipt, physical persistence, search matcher, manager hydration or rendered focus/locator is proven. Rejected/cancelled returns carry no restored selection, focus, query or scroll; they do not select a fallback."
+    },
+    "settings_export_artifact_evidence": {
+      "description": "The detached export artifact embedded as typed witness evidence under the manifest's declared format pm-settings-export-json-v1.  Its bytes recompute the manifest's content_sha256/byte_length, and its values_by_setting_id is the source-value map the Replace preview's proposals must equal for every source-provided ID (the owner has not published an artifact content schema; the witness requires exactly this join evidence and nothing more).",
+      "type": "object",
+      "required": [
+        "record_type",
+        "format",
+        "project_id",
+        "source_revision",
+        "values_by_setting_id"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_export_artifact"
+        },
+        "format": {
+          "const": "pm-settings-export-json-v1"
+        },
+        "project_id": {
+          "$ref": "#/$defs/project_id"
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "values_by_setting_id": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "$ref": "#/$defs/setting_value"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_import_mode": {
+      "description": "The explicitly chosen import mode, recorded on both the import preview request and the bound preview before anything applies. Merge applies only the IDs the import source contains and acquires no reset semantics; Replace additionally resets the preview-fixed omitted eligible ordinary settings within the chosen import categories to their current registry defaults (the SSYS-009 Restore Defaults source) under Decision_Log DL-095 (card PCC-SETTINGS-REPLACE-001).",
+      "enum": [
+        "merge",
+        "replace"
+      ]
+    },
+    "settings_import_reset_entry": {
+      "description": "One explicit before/after disclosure entry for a single Replace-mode reset of an omitted eligible ordinary setting to its current registry default. value_after is the same default the SSYS-009 Restore Defaults transaction resolves; value_before is the destination snapshot value the reset replaces. The preview-fixed reset set is exactly the setting_id values of the bound preview's import_resets entries; it never expands during apply, and no reset may reach an excluded local or credential setting under SSYS-007 and SSYS-008.",
+      "type": "object",
+      "required": [
+        "setting_id",
+        "value_before",
+        "value_after"
+      ],
+      "properties": {
+        "setting_id": {
+          "$ref": "#/$defs/setting_id"
+        },
+        "value_before": {
+          "$ref": "#/$defs/setting_value"
+        },
+        "value_after": {
+          "$ref": "#/$defs/setting_value"
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_import_replace_resolution_witness": {
+      "description": "Separable static validation witness for one Replace-mode import preview under Decision_Log DL-095. It joins, as explicit owner-authoritative values only, the hash-bound preview record, the inventory registry binding (schema version plus content SHA-256 of the exact Plans/settings_inventory.json bytes), the chosen inventory categories, the authoritative import-source and destination project_settings_snapshot records, and the claimed reset set, so the reset set is provably every and only eligible ordinary setting the source omits inside the chosen categories, with each value_after the current registry default and each value_before the actual destination value. This witness validates fixture/proof consistency only; it runs no Project, registry service, clock, or transport, performs no mutation, claims no runtime handler or readiness, and does not choose the unresolved post-apply snapshot source-map token.",
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "schema_version",
+        "witness_id",
+        "static_validation_witness",
+        "inventory_schema_version",
+        "inventory_sha256",
+        "chosen_category_ids",
+        "source_kind",
+        "preview_id",
+        "preview_generation",
+        "preview_sha256",
+        "preview_record",
+        "destination_snapshot",
+        "destination_snapshot_sha256",
+        "projected_post_apply_snapshot",
+        "resolved_import_resets",
+        "created_at_utc"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_import_replace_resolution_witness"
+        },
+        "schema_id": {
+          "const": "pm.settings_import_replace_resolution_witness.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "witness_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "static_validation_witness": {
+          "const": true
+        },
+        "inventory_schema_version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "chosen_category_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "source_kind": {
+          "description": "The admitted import source kind, each with owner-issued presence, currentness, and bytes. project_settings_snapshot: the detached source Project snapshot (pm.project_settings_snapshot.v1, Settings_System section 3.1 and the DL-095 import paragraph). settings_export_v1: the section 3.3 bridge where import and migration share the transaction preview \u2014 the detached pm.settings_export_manifest.v1 (credential-free, format pm-settings-export-json-v1) bound by pm.settings_migration_preview.v1 (source_kind settings_export_v1, source_sha256, destination joins, transaction_preview_ref, invariants confirmation_required/auto_apply=false/legacy_source_authoritative=false) with the artifact bytes recompute-bound to manifest.content_sha256/byte_length. The three legacy source kinds stay unadmitted: no owner-issued bytes evidence exists for them and none is invented.",
+          "enum": [
+            "project_settings_snapshot",
+            "settings_export_v1"
+          ]
+        },
+        "preview_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "preview_generation": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "preview_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "preview_record": {
+          "$ref": "#/$defs/settings_transaction_preview"
+        },
+        "source_snapshot": {
+          "$ref": "#/$defs/project_settings_snapshot"
+        },
+        "export_manifest": {
+          "$ref": "#/$defs/settings_export_manifest"
+        },
+        "migration_preview": {
+          "$ref": "#/$defs/settings_migration_preview"
+        },
+        "export_artifact": {
+          "$ref": "#/$defs/settings_export_artifact_evidence"
+        },
+        "destination_snapshot": {
+          "$ref": "#/$defs/project_settings_snapshot"
+        },
+        "destination_snapshot_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "projected_post_apply_snapshot": {
+          "$ref": "#/$defs/project_settings_snapshot"
+        },
+        "resolved_import_resets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/settings_import_reset_entry"
+          },
+          "uniqueItems": true
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "project_root_bindings": {
+          "description": "Exactly one source and one destination typed owner read of the selected Project roots (project_root_binding_record), present whenever the Replace scope contains SSYS-007.A value-dependent rows; the witness refuses a scope value-dependent row without them, and both records must equal the independently selected owner read passed outside the witness.",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/project_root_binding_record"
+          }
+        },
+        "value_form_bindings": {
+          "description": "One typed owner-read result (import_value_form_binding_record) for every SSYS-007.A value-dependent row in the chosen Replace scope, each equal to the independently selected owner read's record for that row; a missing, unadmitted, stale, foreign, rehashed, or co-mutated binding fails closed and no caller Boolean, path prefix, safe-looking ref, copied hash, or self-declared exclusion substitutes for it.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/import_value_form_binding_record"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "source_kind": {
+                "const": "project_settings_snapshot"
+              }
+            },
+            "required": [
+              "source_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "source_snapshot"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_kind": {
+                "const": "settings_export_v1"
+              }
+            },
+            "required": [
+              "source_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "export_manifest",
+              "migration_preview",
+              "export_artifact"
+            ]
+          }
+        }
+      ]
+    },
+    "settings_portable_value_form": {
+      "description": "The owner-admitted portable value forms of SSYS-007.A, plus the environment_bound destination read.  project_root_relative: a Project-root-relative value bound to the actual source and destination Project roots.  project_root_placeholder: the owner-defined ${PROJECT_ROOT}-relative form.  symbolic_default: exactly the owner-defined portable symbolic registry default token.  portable_remote_reference: a separately owner-approved portable remote reference where the row admits one; its admission authority is the typed owner read record, not URL syntax.  environment_bound: the owner read the destination-current (or source) value as host-absolute, home-relative, drive-bound, or otherwise environment-specific, so the value stays excluded and destination-owned.",
+      "enum": [
+        "project_root_relative",
+        "project_root_placeholder",
+        "symbolic_default",
+        "portable_remote_reference",
+        "environment_bound"
+      ]
+    },
+    "project_root_binding_record": {
+      "description": "One typed owner read of a Project root for the Replace transaction (SSYS-018: the owner-read source/destination Project identities, revisions, and roots bound to the frozen preview).  The root identity is secret-free: an opaque ref plus the content hash of the owner read; the witness value-form records must reference exactly this hash.",
+      "type": "object",
+      "required": [
+        "record_type",
+        "role",
+        "project_id",
+        "revision",
+        "project_root_ref",
+        "project_root_sha256",
+        "owner_read_ref"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "project_root_binding"
+        },
+        "role": {
+          "enum": [
+            "source",
+            "destination"
+          ]
+        },
+        "project_id": {
+          "$ref": "#/$defs/project_id"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "project_root_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "project_root_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "owner_read_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        }
+      },
+      "additionalProperties": false
+    },
+    "import_value_form_binding_record": {
+      "description": "The typed owner-read result for one SSYS-007.A value-dependent row in the Replace scope: the admitted portable value form (value_form) for the source-provided value when the source carries one, the destination-current value form (destination_value_form, portable or environment_bound) whose read decides reset/destination-owned custody, bound to the exact source/destination Project root reads (project_root_sha256 joins), revisions, and the canonical digests of the exact source and destination-current values the read validated.  A schema-valid ref alone is not authority; the witness joins every field against the independently selected owner read.",
+      "type": "object",
+      "required": [
+        "record_type",
+        "setting_id",
+        "source_project_root_sha256",
+        "destination_project_root_sha256",
+        "source_revision",
+        "destination_revision",
+        "destination_value_form",
+        "destination_current_value_sha256"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "import_value_form_binding"
+        },
+        "setting_id": {
+          "$ref": "#/$defs/setting_id"
+        },
+        "value_form": {
+          "$ref": "#/$defs/settings_portable_value_form"
+        },
+        "destination_value_form": {
+          "$ref": "#/$defs/settings_portable_value_form"
+        },
+        "source_project_root_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "destination_project_root_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "destination_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_value_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "destination_current_value_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings_import_owner_read": {
+      "description": "The independently selected trusted owner read for one Replace transaction (SSYS-007.A/SSYS-018): the source and destination Project identity, revision, and root reads of record plus the per-row value-form/currentness reads.  It travels SEPARATELY from the submitted settings_import_replace_resolution_witness; the witness's project_root_bindings and value_form_bindings must equal it field-for-field, and a Replace scope containing value-dependent rows without it fails closed.  Its source/destination records use the project_root_binding_record shape and its value_forms_by_setting_id values use the import_value_form_binding_record shape.  In the static fixture harness the test double supplies this record; that is not native issuer authentication, and no runtime owner service is claimed.",
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_id",
+        "source",
+        "destination"
+      ],
+      "properties": {
+        "record_type": {
+          "const": "settings_import_owner_read"
+        },
+        "schema_id": {
+          "const": "pm.settings_import_owner_read.v1"
+        },
+        "source": {
+          "$ref": "#/$defs/project_root_binding_record"
+        },
+        "destination": {
+          "$ref": "#/$defs/project_root_binding_record"
+        },
+        "value_forms_by_setting_id": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/import_value_form_binding_record"
+          }
+        }
+      },
+      "additionalProperties": false
     }
   },
   "x-server-gap-alias-normalization": {

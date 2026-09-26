@@ -51,6 +51,7 @@ from pm_jujutsu_backup_semantics import jj_backup_pointer_failures, jj_backup_ve
 from pm_browser_program_semantics import browser_program_semantic_failures
 from pm_onboarding_semantics import onboarding_semantic_failures, settings_draft_semantic_failures
 from pm_settings_search_semantics import settings_search_semantic_failures
+from pm_settings_import_semantics import settings_import_semantic_failures
 from pm_evidence_command_semantics import evidence_command_semantic_failures
 from pm_doctor_export_semantics import doctor_export_semantic_failures
 from pm_goal_handoff_semantics import goal_handoff_semantic_failures
@@ -1333,7 +1334,7 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 def contract_semantic_failures(
     schema_rel: str, definition_name: str, value: Any,
-    *, owner_coverage_resolver=None,
+    *, owner_coverage_resolver=None, settings_owner_read=None,
 ) -> list[str]:
     if schema_rel == "Plans/forge_review_create_selected_contracts.schema.json":
         return review_create_selected_semantic_failures(definition_name, value)
@@ -1493,7 +1494,11 @@ def contract_semantic_failures(
         return onboarding_semantic_failures(definition_name, value)
     if schema_rel == "Plans/settings_system_contracts.schema.json":
         return sorted(set(settings_draft_semantic_failures(definition_name, value)
-                          + settings_search_semantic_failures(definition_name, value)))
+                          + settings_search_semantic_failures(definition_name, value)
+                          + settings_import_semantic_failures(
+                              definition_name, value,
+                              settings_inventory_path=ROOT / "Plans/settings_inventory.json",
+                              owner_read=settings_owner_read)))
     if schema_rel == "Plans/section15_browser_program_contracts.schema.json":
         # The explicit non-runtime validation input binds actual serialized result
         # bytes to a producing program/schema/context. A standalone result fails
@@ -1816,6 +1821,8 @@ def main() -> int:
                     schema_rel, definition_name, value,
                     owner_coverage_resolver=(tour_fixture_coverage_resolver(fixtures, case)
                                              if schema_rel == "Plans/guided_tour_contracts.schema.json" else None),
+                    settings_owner_read=(case.get("owner_read")
+                                         if schema_rel == "Plans/settings_system_contracts.schema.json" else None),
                 )
                 if schema_rel == "Plans/search_rebuild_index.schema.json":
                     semantic_failures.extend(search_rebuild_structural_failures(value))
@@ -1867,6 +1874,8 @@ def main() -> int:
                         schema_rel, definition_name, value,
                         owner_coverage_resolver=(tour_fixture_coverage_resolver(fixtures, case)
                                                  if schema_rel == "Plans/guided_tour_contracts.schema.json" else None),
+                        settings_owner_read=(case.get("owner_read")
+                                             if schema_rel == "Plans/settings_system_contracts.schema.json" else None),
                     )
                     if not accepted:
                         findings.append({"code": "semantic_negative_not_structurally_valid", "fixture": fixture_rel, "case": name, "definition": definition_name, "semantic_rule": semantic_rule})

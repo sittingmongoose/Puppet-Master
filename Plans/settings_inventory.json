@@ -353,7 +353,8 @@
     "liquid glass",
      "retro",
      "basic"
-    ]
+    ],
+   "management_kind": "ordinary"
    },
    {
     "id": "general.visual.theme-mode",
@@ -380,7 +381,8 @@
      "auto",
      "follow computer",
      "color scheme"
-    ]
+    ],
+    "management_kind": "ordinary"
    },
    {
     "id": "general.visual.basic-color-scheme",
@@ -404,7 +406,8 @@
     "light mode",
     "basic-dark",
     "basic-light"
-   ]
+   ],
+    "management_kind": "ordinary"
   },
   {
    "id": "general.visual.theme-preview",
@@ -420,7 +423,8 @@
     "live preview",
     "hover preview",
     "try theme"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.glass-background-mode",
@@ -446,7 +450,8 @@
     "backdrop",
     "parallax",
     "glass background"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.glass-transparency",
@@ -465,7 +470,8 @@
     "blur",
     "see-through",
     "frosted"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.retro-effects",
@@ -483,7 +489,8 @@
     "paper texture",
     "CRT",
     "hard shadows"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.ui-scale",
@@ -503,7 +510,8 @@
     "110%",
     "magnify",
     "display size"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.font-size",
@@ -521,7 +529,8 @@
     "font scale",
     "15px",
     "readability"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.interface-density",
@@ -545,7 +554,8 @@
     "cozy",
     "density",
     "auto"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.reduce-animations",
@@ -564,7 +574,8 @@
     "transitions",
     "reduce motion",
     "calm"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.chat-layout-mode",
@@ -589,7 +600,8 @@
     "overlay",
     "detached",
     "undock"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.high-contrast",
@@ -606,7 +618,8 @@
     "accessibility",
     "low vision",
     "contrast"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.app-font",
@@ -630,7 +643,8 @@
    ],
    "badges": [
     "restart"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.manage-custom-themes",
@@ -670,7 +684,8 @@
     "inheritance",
     "template",
     "tokens"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.pixel-grid-opacity",
@@ -687,7 +702,8 @@
     "texture",
     "retro",
     "opacity"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.scanline-opacity",
@@ -704,7 +720,8 @@
     "overlay",
     "retro",
     "opacity"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.border-width",
@@ -720,7 +737,8 @@
     "outline",
     "thickness",
     "theme token"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.border-radius",
@@ -736,7 +754,8 @@
     "border radius",
     "rounded corners",
     "sharp"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.line-height",
@@ -752,7 +771,8 @@
     "line height",
     "leading",
     "readability"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.scrollbar-width",
@@ -767,7 +787,8 @@
    "search": [
     "scroll",
     "theme token"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.padding-scale",
@@ -783,7 +804,8 @@
     "spacing",
     "density",
     "theme token"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.visual.focus-indicator",
@@ -804,7 +826,8 @@
     "accessibility",
     "keyboard navigation",
     "focus ring"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.mode",
@@ -834,7 +857,8 @@
    ],
    "badges": [
     "adjudication"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.chat-eli5",
@@ -851,7 +875,8 @@
     "per-chat",
     "jargon",
     "glossary"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.show-tooltips",
@@ -867,7 +892,8 @@
     "hints",
     "hover help",
     "discoverability"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.minimize-to-tray",
@@ -885,7 +911,8 @@
     "background",
     "quit",
     "menubar"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.notifications-enabled",
@@ -904,7 +931,8 @@
     "banner",
     "master enable",
     "do not disturb"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.notification-method",
@@ -925,7 +953,8 @@
     "notification style",
     "popup",
     "display method"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.tray-notifications",
@@ -943,7 +972,8 @@
     "run complete",
     "rate limit",
     "system notification"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.sound-effects",
@@ -967,7 +997,8 @@
    ],
    "badges": [
     "adjudication"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.sound-catalog",
@@ -1006,7 +1037,8 @@
     "submit",
     "composer",
     "shortcut"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.assistant-mode",
@@ -1030,7 +1062,8 @@
     "read-only",
     "planning",
     "chat mode"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.auto-follow",
@@ -1046,7 +1079,8 @@
     "auto scroll",
     "jump to latest",
     "stick to bottom"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.unread-marker",
@@ -1062,7 +1096,8 @@
     "unread",
     "new messages line",
     "scroll position"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.copy-code-button",
@@ -1078,7 +1113,8 @@
     "clipboard",
     "code snippet",
     "fenced block"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.edit-resend",
@@ -1094,7 +1130,8 @@
     "redo",
     "retry",
     "correct message"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.question-cards",
@@ -1110,7 +1147,8 @@
     "multi-question",
     "clarifying questions",
     "forms"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.question-drafts",
@@ -1126,7 +1164,8 @@
     "draft",
     "autosave",
     "dismiss"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.context-usage",
@@ -1142,7 +1181,8 @@
     "context window",
     "tokens",
     "memory indicator"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.activity-cards",
@@ -1159,7 +1199,8 @@
     "operation card",
     "tool use",
     "transparency"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.file-discovery-cards",
@@ -1175,7 +1216,8 @@
     "file discovery",
     "progress cards",
     "exploration"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.mermaid",
@@ -1191,7 +1233,8 @@
     "mermaid",
     "flowchart",
     "diagram rendering"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.inline-visualizers",
@@ -1208,7 +1251,8 @@
     "sandbox",
     "HTML widget",
     "SVG"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.natural-language-modes",
@@ -1224,7 +1268,8 @@
     "natural language invocation",
     "persona switch",
     "voice commands"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.subagent-disclosure",
@@ -1241,7 +1286,8 @@
     "disclosure",
     "transparency",
     "spawned agents"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.provider-disclosure",
@@ -1258,7 +1304,8 @@
     "effective model",
     "fallback",
     "ACD-424"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.composer-media-controls",
@@ -1275,7 +1322,8 @@
     "image generation",
     "attachments",
     "composer"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.browser-capture",
@@ -1292,7 +1340,8 @@
     "highlight",
     "chips",
     "web page"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.language-detection",
@@ -1308,7 +1357,8 @@
     "LSP",
     "tool presets",
     "language badges"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.hide-ignored-files",
@@ -1326,7 +1376,8 @@
     "file manager",
     "dimmed",
     "file tree"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.expand-current-file",
@@ -1342,7 +1393,8 @@
     "reveal in tree",
     "auto expand",
     "file manager"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.settings-search",
@@ -1378,7 +1430,8 @@
    ],
    "badges": [
     "new"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.dashboard-widgets",
@@ -1399,7 +1452,8 @@
     "grid",
     "reset layout",
     "widget_layout:v1"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.activity-bar-order",
@@ -1418,7 +1472,8 @@
     "activity bar",
     "reorder icons",
     "drag"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.panel-dock",
@@ -1439,7 +1494,8 @@
     "floating window",
     "detach",
     "layout"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.rediscoverability",
@@ -1455,7 +1511,8 @@
     "hide when unused",
     "progressive disclosure",
     "deep links"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.history-scope",
@@ -1475,7 +1532,8 @@
     "history filter",
     "project scoping",
     "runs list"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.history-approved-only",
@@ -1492,7 +1550,8 @@
     "approved filter",
     "all history",
     "drafts"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.history-archived",
@@ -1508,7 +1567,8 @@
    "search": [
     "archived runs",
     "archive filter"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.history-compare",
@@ -1545,7 +1605,8 @@
     "message queue",
     "interrupt",
     "FIFO"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.queue-size",
@@ -1561,7 +1622,8 @@
     "composer queue",
     "FIFO",
     "pending messages"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.notification-severity",
@@ -1594,7 +1656,8 @@
     "escalation ladder",
     "quiet",
     "interruptions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.notification-destinations",
@@ -1616,7 +1679,8 @@
     "Pushover",
     "Telegram",
     "test send"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.notification-mapping",
@@ -1632,7 +1696,8 @@
     "event mapping",
     "routing",
     "cmd.notifications.mapping"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.sound-management",
@@ -1665,7 +1730,8 @@
    "search": [
     "event sound",
     "cmd.sound.mapping"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.alert-quiet-window",
@@ -1681,7 +1747,8 @@
     "auto-quiet",
     "advisory",
     "snooze"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.dismissal-rationale",
@@ -1699,7 +1766,8 @@
     "audit",
     "resolve",
     "attention required"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.explain-disabled",
@@ -1714,7 +1782,8 @@
    "search": [
     "disabled state",
     "why is this grayed out"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.max-editor-tabs",
@@ -1731,7 +1800,8 @@
     "LRU",
     "buffers",
     "editor"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.row-cap",
@@ -1747,7 +1817,8 @@
     "row cap",
     "directory limit",
     "performance"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.drop-conflict",
@@ -1770,7 +1841,8 @@
     "drag and drop",
     "overwrite",
     "rename"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.drop-action",
@@ -1790,7 +1862,8 @@
     "drag drop",
     "shift modifier",
     "move files"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.persist-tree-state",
@@ -1806,7 +1879,8 @@
     "expand collapse",
     "tree state",
     "per-project"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.thread-archive-days",
@@ -1822,7 +1896,8 @@
     "thread archive",
     "inactivity",
     "cleanup"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.thread-retention-days",
@@ -1838,7 +1913,8 @@
     "tombstone",
     "retention",
     "undelete"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.thread-lineage",
@@ -1854,7 +1930,8 @@
     "dev_session_id",
     "terminal_session_id",
     "branch lineage"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.run-graph-mode",
@@ -1874,7 +1951,8 @@
     "focus mode",
     "run graph",
     "current vs historical"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.graph-density",
@@ -1898,7 +1976,8 @@
     "seam",
     "package",
     "overlay"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.progress-widget-layout",
@@ -1915,7 +1994,8 @@
     "orchestrator progress",
     "widget layout",
     "widget_layout:v1"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.interaction.history-export",
@@ -1996,7 +2076,8 @@
    ],
    "badges": [
     "adjudication"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.startup.restore-panel",
@@ -2019,7 +2100,8 @@
     "last active panel",
     "startup panel",
     "restore"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.startup.window-state",
@@ -2036,7 +2118,8 @@
     "maximized",
     "split ratios",
     "persistence"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.startup.crash-restore",
@@ -2053,7 +2136,8 @@
     "crash recovery",
     "auto restore",
     "session restore"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.startup.unsaved-capture",
@@ -2071,7 +2155,8 @@
     "snapshot",
     "crash",
     "recovery"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.startup.max-persisted-tabs",
@@ -2087,7 +2172,8 @@
     "persisted tabs",
     "restore tabs",
     "session"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "general.startup.refresh-investigation",
@@ -2104,7 +2190,8 @@
     "resume",
     "revalidate",
     "debug session"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.provider-connections",
@@ -2185,7 +2272,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.account-enabled",
@@ -2205,7 +2293,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.account-name",
@@ -2224,7 +2313,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.set-preferred-account",
@@ -2269,7 +2359,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.codex-auth-family",
@@ -2293,7 +2384,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.auth-mode",
@@ -2323,7 +2415,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.multi-account-switching",
@@ -2345,7 +2438,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.opencode-enable",
@@ -2364,7 +2458,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.opencode-add-server",
@@ -2406,7 +2501,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.anthropic-api-key",
@@ -2426,7 +2522,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "credential"
   },
   {
    "id": "ai.accounts.openai-api-key",
@@ -2445,7 +2542,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "credential"
   },
   {
    "id": "ai.accounts.gemini-api-key",
@@ -2465,7 +2563,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "credential"
   },
   {
    "id": "ai.accounts.cursor-api-key",
@@ -2484,7 +2583,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "credential"
   },
   {
    "id": "ai.accounts.minimax-api-key",
@@ -2503,7 +2603,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "credential"
   },
   {
    "id": "ai.accounts.github-token",
@@ -2525,7 +2626,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "credential"
   },
   {
    "id": "ai.accounts.github-host-policy",
@@ -2549,7 +2651,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.github-oauth-loopback",
@@ -2568,7 +2671,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "local_environment"
   },
   {
    "id": "ai.accounts.credential-storage",
@@ -2595,7 +2699,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.auth-surface",
@@ -2621,7 +2726,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.auth-family",
@@ -2646,7 +2752,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.account-binding",
@@ -2680,7 +2787,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.requested-account-id",
@@ -2698,7 +2806,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.account-priority",
@@ -2717,7 +2826,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.soft-switch",
@@ -2737,7 +2847,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.soft-warning-level",
@@ -2760,7 +2871,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.hard-switch-level",
@@ -2785,7 +2897,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.account-threshold-override",
@@ -2804,7 +2917,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.switch-mode-override",
@@ -2829,7 +2943,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.cooldown-policy",
@@ -2849,7 +2964,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.retry-budget",
@@ -2868,7 +2984,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.quota-profile",
@@ -2887,7 +3004,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.account-roles",
@@ -2915,7 +3033,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.gcp-project-id",
@@ -2936,7 +3055,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.billing-entity",
@@ -2962,7 +3082,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.switch-history",
@@ -3000,7 +3121,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "credential"
   },
   {
    "id": "ai.accounts.opencode-server-actions",
@@ -3044,7 +3166,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.accounts.opencode-cli-path",
@@ -3064,7 +3187,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "local_environment"
   },
   {
    "id": "ai.accounts.opencode-disable-cc-skills",
@@ -3083,7 +3207,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.default-model",
@@ -3116,7 +3241,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.default-provider",
@@ -3158,7 +3284,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.overseer-model",
@@ -3187,7 +3314,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.worker-model",
@@ -3214,7 +3342,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.gui-worker-model",
@@ -3242,7 +3371,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.high-effort-worker-model",
@@ -3268,7 +3398,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.auditor-model",
@@ -3299,7 +3430,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.default-variant",
@@ -3329,7 +3461,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.reasoning-effort",
@@ -3365,7 +3498,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.teach-model",
@@ -3392,7 +3526,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.provider-enabled",
@@ -3411,7 +3546,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.goal-worker-model",
@@ -3437,7 +3573,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.goal-verifier-model",
@@ -3465,7 +3602,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.lane-bindings",
@@ -3493,7 +3631,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.role-policy",
@@ -3516,7 +3655,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.subagent-model",
@@ -3541,7 +3681,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.subagent-effort",
@@ -3564,7 +3705,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.per-lane-platform",
@@ -3593,7 +3735,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.per-lane-model",
@@ -3612,7 +3755,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.execution-role",
@@ -3638,7 +3782,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.provider-priority",
@@ -3661,7 +3806,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.provider-fallback",
@@ -3681,7 +3827,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.resolution-policy",
@@ -3707,7 +3854,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.custom-variants",
@@ -3726,7 +3874,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.disable-builtin-variant",
@@ -3746,7 +3895,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.model-alias",
@@ -3765,7 +3915,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.temperature",
@@ -3797,7 +3948,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.top-p",
@@ -3822,7 +3974,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.max-output-tokens",
@@ -3845,7 +3998,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.capability-overrides",
@@ -3883,7 +4037,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.cache-strategy",
@@ -3912,7 +4067,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.cache-with-oauth",
@@ -3932,7 +4088,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.gemini-cache-ttl",
@@ -3950,7 +4107,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.max-payload-size",
@@ -3969,7 +4127,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.system-role-name",
@@ -3993,7 +4152,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.provider-options",
@@ -4015,7 +4175,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.requested-effective-inspector",
@@ -4056,7 +4217,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.switch-sanitization",
@@ -4076,7 +4238,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.models.synthetic-continue-attempts",
@@ -4095,7 +4258,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.provider-health",
@@ -4158,7 +4322,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.free-models-auto-apply",
@@ -4178,7 +4343,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.usage-windows",
@@ -4205,7 +4371,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.platform-filters",
@@ -4240,7 +4407,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.reset-countdown",
@@ -4258,7 +4426,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.cooldown-timers",
@@ -4277,7 +4446,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.pressure-visibility",
@@ -4296,7 +4466,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.chart-type",
@@ -4319,7 +4490,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.ledger-export",
@@ -4341,7 +4513,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.ledger-page-size",
@@ -4359,7 +4532,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.tool-usage-window",
@@ -4383,7 +4557,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.monthly-spend-limit",
@@ -4405,7 +4580,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.monthly-token-budget",
@@ -4424,7 +4600,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.run-spend-budget",
@@ -4445,7 +4622,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.budget-policy",
@@ -4475,7 +4653,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.budget-warning-threshold",
@@ -4501,7 +4680,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.pressure-sensitivity",
@@ -4525,7 +4705,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.quota-management",
@@ -4560,7 +4741,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.max-tool-rounds",
@@ -4580,7 +4762,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.max-wall-clock",
@@ -4603,7 +4786,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.max-goal-turns",
@@ -4624,7 +4808,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.node-timeout",
@@ -4643,7 +4828,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.pressure-history",
@@ -4687,7 +4873,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "ai.usage.pricing-version",
@@ -4712,7 +4899,8 @@
    ],
    "related_features": [
     "models"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.rules.permission-preset",
@@ -4752,7 +4940,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.rules.default-tool-permission",
@@ -4779,7 +4968,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.rules.chat-mode",
@@ -4806,7 +4996,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.rules.per-tool-permissions",
@@ -4852,7 +5043,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.rules.rule-editor",
@@ -4881,7 +5073,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.rules.scope-selector",
@@ -4914,7 +5107,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.rules.scoped-overrides",
@@ -4942,7 +5136,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.rules.layer-origin-badge",
@@ -4963,7 +5158,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.rules.capability-disclosure",
@@ -4984,7 +5180,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.rules.ui-mode",
@@ -5013,7 +5210,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.rules.storage-format",
@@ -5034,7 +5232,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.autonomy-mode",
@@ -5064,7 +5263,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.gate-seam",
@@ -5092,7 +5292,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.gate-package",
@@ -5118,7 +5319,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.gate-lane",
@@ -5144,7 +5346,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.checkpoint-types",
@@ -5182,7 +5385,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.require-plan-first",
@@ -5213,7 +5417,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.external-publish-ask",
@@ -5237,7 +5442,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.boundary-enforcement",
@@ -5262,7 +5468,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.alert-channel",
@@ -5289,7 +5496,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.pre-run-display",
@@ -5312,7 +5520,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.approval-ladder-default",
@@ -5343,7 +5552,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.recovery-actions",
@@ -5397,7 +5607,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.auto-continue",
@@ -5417,7 +5628,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.wake-scheduler",
@@ -5437,7 +5649,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.doom-loop-action",
@@ -5465,7 +5678,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.doom-loop-threshold",
@@ -5489,7 +5703,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.loop-detection-mode",
@@ -5520,7 +5735,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.max-shell-failures",
@@ -5542,7 +5758,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.max-write-thrash",
@@ -5564,7 +5781,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.max-retryable-errors",
@@ -5585,7 +5803,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.debug-max-browser-branches",
@@ -5605,7 +5824,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.debug-max-no-evidence-loops",
@@ -5625,7 +5845,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.debug-grant-scope",
@@ -5655,7 +5876,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.debug-profile-disclosure",
@@ -5704,7 +5926,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.lease-normalization",
@@ -5726,7 +5949,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.hitl-aware-defaults",
@@ -5746,7 +5970,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.history-visibility",
@@ -5767,7 +5992,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.denial-audit-log",
@@ -5788,7 +6014,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.preserve-skip-abort-history",
@@ -5809,7 +6036,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.approvals.boundary-default-strictness",
@@ -5835,7 +6063,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.bash-guard",
@@ -5860,7 +6089,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.security-filter",
@@ -5884,7 +6114,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.file-guard",
@@ -5906,7 +6137,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.web-tool-permissions",
@@ -5944,7 +6176,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.strict-mode",
@@ -5965,7 +6198,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.allow-destructive",
@@ -5991,7 +6225,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.approved-commands",
@@ -6011,7 +6246,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.custom-patterns-path",
@@ -6031,6 +6267,10 @@
    ],
    "related_features": [
     "permissions"
+   ],
+   "management_kind": "value_dependent",
+   "portable_value_forms": [
+    "project_root_relative"
    ]
   },
   {
@@ -6053,7 +6293,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.external-dir-action",
@@ -6078,7 +6319,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.interview-relax",
@@ -6102,7 +6344,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.qa-gate-override",
@@ -6122,7 +6365,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.security-audit-override",
@@ -6141,7 +6385,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.governance-unlock",
@@ -6161,7 +6406,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.write-conflict-detection",
@@ -6184,7 +6430,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.safe-point-restore",
@@ -6207,7 +6454,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.redaction-profile",
@@ -6236,7 +6484,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.screenshot-redaction",
@@ -6263,7 +6512,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "safety.protection.filesafe-integration",
@@ -6285,7 +6535,8 @@
    ],
    "related_features": [
     "permissions"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.theme",
@@ -6320,7 +6571,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.font-family",
@@ -6351,7 +6603,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.font-size",
@@ -6372,7 +6625,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.shell",
@@ -6402,7 +6656,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.cwd",
@@ -6428,6 +6683,10 @@
    "related_features": [
     "editor",
     "terminal"
+   ],
+   "management_kind": "value_dependent",
+   "portable_value_forms": [
+    "symbolic_default"
    ]
   },
   {
@@ -6453,7 +6712,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.right-click-paste",
@@ -6473,7 +6733,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.kill-confirm",
@@ -6503,7 +6764,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.explanations",
@@ -6524,7 +6786,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.readability-signals",
@@ -6545,7 +6808,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.search",
@@ -6565,7 +6829,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.layout-style",
@@ -6592,7 +6857,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.layout-restore",
@@ -6615,7 +6881,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.transcript-retention",
@@ -6648,7 +6915,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.scrollback-limit",
@@ -6668,7 +6936,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.copy-behavior",
@@ -6693,7 +6962,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.shortcuts",
@@ -6715,7 +6985,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.startup-command",
@@ -6737,7 +7008,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.allowed-profiles",
@@ -6765,7 +7037,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.rendering-mode",
@@ -6790,7 +7063,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.sticky-header",
@@ -6811,7 +7085,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.performance-mode",
@@ -6835,7 +7110,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.shell-integration",
@@ -6855,7 +7131,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.font-rendering",
@@ -6879,7 +7156,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.tab-role",
@@ -6905,7 +7183,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.auto-second-pane",
@@ -6925,7 +7204,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.terminal.diagnostics-logging",
@@ -6946,7 +7226,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.word-wrap",
@@ -6965,7 +7246,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.line-numbers",
@@ -6984,7 +7266,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.syntax-highlighting",
@@ -7003,7 +7286,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.lsp-enabled",
@@ -7027,7 +7311,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.diagnostics-visibility",
@@ -7059,7 +7344,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.formatters-enabled",
@@ -7081,7 +7367,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "owner_destination"
   },
   {
    "id": "code.editing.editor-strip-collapsed",
@@ -7101,7 +7388,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.goto-highlight-ms",
@@ -7120,7 +7408,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.large-file-threshold",
@@ -7140,7 +7429,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.max-file-size-mb",
@@ -7159,7 +7449,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.formatter-catalog",
@@ -7182,7 +7473,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "owner_destination"
   },
   {
    "id": "code.editing.formatter-custom",
@@ -7203,7 +7495,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "owner_destination"
   },
   {
    "id": "code.editing.lsp-server-catalog",
@@ -7227,7 +7520,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.lsp-custom-servers",
@@ -7269,6 +7563,10 @@
    "related_features": [
     "editor",
     "terminal"
+   ],
+   "management_kind": "value_dependent",
+   "portable_value_forms": [
+    "symbolic_default"
    ]
   },
   {
@@ -7289,7 +7587,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.lsp-auto-restart",
@@ -7308,7 +7607,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.lsp-restart",
@@ -7348,7 +7648,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.lsp-hover-timeout",
@@ -7367,7 +7668,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.lsp-completion-timeout",
@@ -7385,7 +7687,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.lsp-symbol-timeout",
@@ -7404,7 +7707,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.lsp-change-debounce",
@@ -7424,7 +7728,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.lsp-max-memory",
@@ -7443,7 +7748,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.lsp-max-cpu",
@@ -7462,7 +7768,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.editing.lsp-subagent-bias",
@@ -7483,7 +7790,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.run-mode",
@@ -7516,7 +7824,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.push-policy",
@@ -7541,7 +7850,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.docker-manager-visibility",
@@ -7565,7 +7875,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.dockerhub-auth-method",
@@ -7590,7 +7901,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.dockerhub-token",
@@ -7610,7 +7922,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "credential"
   },
   {
    "id": "code.execution.dockerhub-signin",
@@ -7655,7 +7968,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.dockerhub-repository",
@@ -7679,7 +7993,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.create-repository",
@@ -7720,7 +8035,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.default-registry",
@@ -7746,7 +8062,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.execution-strategy",
@@ -7775,7 +8092,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.strategy-override",
@@ -7799,7 +8117,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.mode-overlay",
@@ -7825,7 +8144,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.container-runtime",
@@ -7848,7 +8168,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.docker-binary-path",
@@ -7867,7 +8188,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "local_environment"
   },
   {
    "id": "code.execution.docker-display-context",
@@ -7890,7 +8212,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.registry-credentials",
@@ -7934,7 +8257,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.tag-templates",
@@ -7956,7 +8280,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.publish-history-chain",
@@ -7975,7 +8300,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.follow-latest-publish",
@@ -7993,7 +8319,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.compose-file",
@@ -8012,6 +8339,10 @@
    "related_features": [
     "editor",
     "terminal"
+   ],
+   "management_kind": "value_dependent",
+   "portable_value_forms": [
+    "project_root_relative"
    ]
   },
   {
@@ -8034,7 +8365,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.build-context",
@@ -8052,6 +8384,10 @@
    "related_features": [
     "editor",
     "terminal"
+   ],
+   "management_kind": "value_dependent",
+   "portable_value_forms": [
+    "project_root_relative"
    ]
   },
   {
@@ -8070,6 +8406,10 @@
    "related_features": [
     "editor",
     "terminal"
+   ],
+   "management_kind": "value_dependent",
+   "portable_value_forms": [
+    "project_root_relative"
    ]
   },
   {
@@ -8089,7 +8429,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.build-platforms",
@@ -8117,7 +8458,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.show-build-advanced",
@@ -8136,7 +8478,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.preferred-browser",
@@ -8161,7 +8504,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.port-preference-order",
@@ -8186,7 +8530,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.container-shell-command",
@@ -8206,7 +8551,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.port-forward-auto-open",
@@ -8230,7 +8576,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.stream-follow-default",
@@ -8254,7 +8601,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.drift-sensitivity",
@@ -8278,7 +8626,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.drift-ignore-rules",
@@ -8297,7 +8646,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.drift-comparison-target",
@@ -8320,7 +8670,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.receipt-verbosity",
@@ -8343,7 +8694,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.receipt-retention",
@@ -8366,7 +8718,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.cleanup-aggressiveness",
@@ -8392,7 +8745,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.cleanup-scan-cadence",
@@ -8415,7 +8769,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.disk-threshold",
@@ -8434,7 +8789,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.hide-ephemeral-cleanup-warnings",
@@ -8452,7 +8808,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.protected-assets",
@@ -8471,7 +8828,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.k8s-context",
@@ -8498,7 +8856,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.k8s-namespace",
@@ -8521,7 +8880,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.k8s-cluster-wide",
@@ -8539,7 +8899,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.k8s-auto-refresh",
@@ -8558,7 +8919,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.k8s-log-defaults",
@@ -8576,7 +8938,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.helm-visibility",
@@ -8595,7 +8958,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.k8s-host-policy",
@@ -8615,7 +8979,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.ssh-remotes",
@@ -8637,7 +9002,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.debug-configurations",
@@ -8660,7 +9026,8 @@
     "editor",
     "terminal",
     "run_debug"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.unraid-generate-xml",
@@ -8680,7 +9047,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.unraid-manage-repo",
@@ -8699,7 +9067,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.unraid-repo-setup",
@@ -8759,6 +9128,11 @@
    "related_features": [
     "editor",
     "terminal"
+   ],
+   "management_kind": "value_dependent",
+   "portable_value_forms": [
+    "project_root_relative",
+    "portable_remote_reference"
    ]
   },
   {
@@ -8777,7 +9151,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.unraid-repo-name",
@@ -8795,7 +9170,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.unraid-maintainer-folder",
@@ -8814,7 +9190,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.unraid-auto-push",
@@ -8833,7 +9210,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.maintainer-name",
@@ -8853,7 +9231,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.maintainer-about",
@@ -8873,7 +9252,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.maintainer-support-url",
@@ -8892,7 +9272,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.maintainer-icon",
@@ -8917,7 +9298,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.maintainer-profile-scope",
@@ -8940,7 +9322,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.maintainer-slug",
@@ -8960,7 +9343,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.edit-publisher-xml",
@@ -9001,7 +9385,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.app-template-name",
@@ -9020,7 +9405,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.app-template-webui",
@@ -9038,7 +9424,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.app-template-overview",
@@ -9058,7 +9445,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.app-template-categories",
@@ -9076,7 +9464,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "code.execution.app-template-config-items",
@@ -9095,7 +9484,8 @@
    "related_features": [
     "editor",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.app-rules",
@@ -9115,7 +9505,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.project-rules",
@@ -9134,7 +9525,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.instruction-visibility",
@@ -9162,7 +9554,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.rule-pack-display",
@@ -9186,7 +9579,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.dry-method-guard",
@@ -9208,7 +9602,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "owner_destination"
   },
   {
    "id": "memory.assembly.instruction-budget-mode",
@@ -9234,7 +9629,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.memory-capsule-budget",
@@ -9255,7 +9651,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.max-injected-memories",
@@ -9276,7 +9673,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.injected-context-breakdown",
@@ -9296,7 +9694,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.compiled-prompt-preview",
@@ -9317,7 +9716,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.integrity-tracking",
@@ -9340,7 +9740,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.import-cycle-detection",
@@ -9363,7 +9764,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.history-admission-gate",
@@ -9387,7 +9789,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.volatile-quarantine",
@@ -9410,7 +9813,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.cache-lineage",
@@ -9433,7 +9837,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.context-dedup",
@@ -9455,7 +9860,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.assembly.epoch-baseline",
@@ -9477,7 +9883,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.enabled",
@@ -9499,7 +9906,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.history-retention",
@@ -9525,7 +9933,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.retrieval-strategy",
@@ -9553,7 +9962,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.retrieval-mode",
@@ -9578,7 +9988,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.rehydration",
@@ -9604,7 +10015,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.retrieval-balance",
@@ -9628,7 +10040,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.half-life-by-kind",
@@ -9653,7 +10066,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.done-decay-multiplier",
@@ -9672,7 +10086,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.auto-save-unverified",
@@ -9692,7 +10107,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.verify-without-evidence",
@@ -9713,7 +10129,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.pinned-unverified-injection",
@@ -9734,7 +10151,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.gist-review-filter",
@@ -9758,7 +10176,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.subagent-access",
@@ -9779,7 +10198,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.retention.maintenance",
@@ -9831,7 +10251,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.goal-token-budget",
@@ -9853,7 +10274,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.max-context-ktokens",
@@ -9875,7 +10297,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.memory-context-window",
@@ -9901,7 +10324,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.auto-compress",
@@ -9923,7 +10347,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.compaction-mode",
@@ -9948,7 +10373,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.manual-compact",
@@ -9986,7 +10412,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.pressure-start-threshold",
@@ -10005,7 +10432,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.pressure-aggressive-threshold",
@@ -10024,7 +10452,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.low-context-warning",
@@ -10042,7 +10471,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.large-block-threshold",
@@ -10060,7 +10490,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.compaction-immune-pct",
@@ -10079,7 +10510,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.budget-buckets",
@@ -10104,7 +10536,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.tool-result-policy",
@@ -10128,7 +10561,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "memory.limits.local-llm-caps",
@@ -10152,7 +10586,8 @@
    ],
    "related_features": [
     "assistant_memory"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.workflow-style",
@@ -10180,7 +10615,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.output-format",
@@ -10209,7 +10645,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.prompting-style",
@@ -10233,7 +10670,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.recommend-wizard",
@@ -10254,7 +10692,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.wizard-first-run",
@@ -10274,7 +10713,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.provider-setup-skip",
@@ -10294,7 +10734,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.auto-open-deep-plan",
@@ -10315,7 +10756,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.plan-panel-sticky",
@@ -10334,7 +10776,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.wizard-intent",
@@ -10360,7 +10803,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.wizard-project-path",
@@ -10379,7 +10823,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "run_scoped"
   },
   {
    "id": "planning.interview.requirements-max-files",
@@ -10399,7 +10844,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.requirements-max-file-size",
@@ -10419,7 +10865,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.requirements-upload-order",
@@ -10464,7 +10911,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.web-research-mode",
@@ -10491,7 +10939,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.todo-auto-use",
@@ -10510,7 +10959,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.builder-topics",
@@ -10542,7 +10992,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.builder-preferences",
@@ -10563,7 +11014,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.prefer-gemini-gui",
@@ -10585,7 +11037,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.scope-probe-questions",
@@ -10605,7 +11058,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.topic-depth",
@@ -10628,7 +11082,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.max-questions-per-topic",
@@ -10654,7 +11109,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.min-questions-per-topic",
@@ -10672,7 +11128,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.run-all-topics",
@@ -10691,7 +11148,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.topic-checklist",
@@ -10720,7 +11178,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.require-arch-confirmation",
@@ -10739,7 +11198,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.vision-provider",
@@ -10765,7 +11225,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.builder-persona-mode",
@@ -10789,7 +11250,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.builder-intake-persona",
@@ -10815,7 +11277,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.builder-drafting-persona",
@@ -10842,7 +11305,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.interview.builder-review-personas",
@@ -10862,7 +11326,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.capability-policy",
@@ -10895,7 +11360,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.test-visibility",
@@ -10926,7 +11392,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-built-in-browser",
@@ -10953,7 +11420,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-visible-browser",
@@ -10980,7 +11448,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-screenshot-compare",
@@ -11007,7 +11476,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-online-research",
@@ -11037,7 +11507,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-auto-install",
@@ -11064,7 +11535,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-headed-browser",
@@ -11091,7 +11563,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-hot-reload",
@@ -11118,7 +11591,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-live-preview",
@@ -11145,7 +11619,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-desktop-gui",
@@ -11172,7 +11647,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-simulator",
@@ -11199,7 +11675,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-physical-device",
@@ -11226,7 +11703,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-accessibility",
@@ -11253,7 +11731,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-api-contract",
@@ -11280,7 +11759,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-database",
@@ -11307,7 +11787,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-console-network",
@@ -11334,7 +11815,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-performance",
@@ -11361,7 +11843,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.cap-security",
@@ -11388,7 +11871,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.testing.session-actions",
@@ -11431,7 +11915,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.validation-pass",
@@ -11454,7 +11939,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.report-visibility",
@@ -11484,7 +11970,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.quality-preference",
@@ -11510,7 +11997,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.blocker-detail",
@@ -11531,7 +12019,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.goal-template",
@@ -11562,7 +12051,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.heartbeat-interval",
@@ -11584,7 +12074,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.stall-detection",
@@ -11606,7 +12097,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.cloud-local-display",
@@ -11627,7 +12119,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.strictness",
@@ -11651,7 +12144,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.independent-review",
@@ -11671,7 +12165,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.auditor-loop",
@@ -11697,7 +12192,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.repair-loop",
@@ -11722,7 +12218,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.repair-strategies",
@@ -11763,7 +12260,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.repair-budget-exhaustion",
@@ -11789,7 +12287,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.degraded-mode",
@@ -11817,7 +12316,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.certification-level",
@@ -11847,7 +12347,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.completion-receipts",
@@ -11866,7 +12367,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.receipt-type",
@@ -11892,7 +12394,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.evidence-span",
@@ -11916,7 +12419,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.source-evidence-layers",
@@ -11940,7 +12444,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.gate-enforcement",
@@ -11962,7 +12467,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.parallel-stage-enforcement",
@@ -11985,7 +12491,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.validators-by-node",
@@ -12004,7 +12511,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.invisible-goal-authority",
@@ -12027,7 +12535,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.lsp-gate",
@@ -12047,7 +12556,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.lsp-gate-scope",
@@ -12072,7 +12582,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.lsp-gate-severity",
@@ -12096,7 +12607,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.lsp-gate-boundaries",
@@ -12124,7 +12636,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.lsp-gate-timeout",
@@ -12143,7 +12656,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.lsp-gate-unavailable",
@@ -12167,7 +12681,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.goal-auto-resume",
@@ -12187,7 +12702,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.goal-checkpoint-cadence",
@@ -12212,7 +12728,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.goal-replan-behavior",
@@ -12238,7 +12755,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.goal-replan-events",
@@ -12264,7 +12782,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.goal-interruption",
@@ -12289,7 +12808,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.interrupt-settlement",
@@ -12311,7 +12831,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.true-blocker-escalation",
@@ -12331,7 +12852,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.goal-write-mode",
@@ -12363,7 +12885,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.worknode-activation",
@@ -12392,7 +12915,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.receipt-evidence-policy",
@@ -12417,7 +12941,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.evidence-retention-days",
@@ -12436,7 +12961,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.evidence-retain-runs",
@@ -12454,7 +12980,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.prune-on-cleanup",
@@ -12473,7 +13000,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.evidence-detail",
@@ -12497,7 +13025,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.evidence-redaction",
@@ -12516,7 +13045,8 @@
    "related_features": [
     "planning_wizard",
     "prd_builder"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "planning.verification.back-seat-driver-mode",
@@ -12551,7 +13081,8 @@
     "goals",
     "orchestrator",
     "testing"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.enable-git",
@@ -12574,7 +13105,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.default-branch",
@@ -12598,7 +13130,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.pre-merge-tests",
@@ -12621,7 +13154,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.auto-pr",
@@ -12642,7 +13176,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.worktree-cleanup",
@@ -12668,7 +13203,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.clean-untracked-before-run",
@@ -12690,7 +13226,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.clear-agent-output",
@@ -12711,7 +13248,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.clean-workspace-now",
@@ -12757,7 +13295,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.source-control-sections",
@@ -12787,7 +13326,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.github-pinned-workflows",
@@ -12808,7 +13348,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.create-github-repo",
@@ -12829,7 +13370,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.new-repo-details",
@@ -12854,7 +13396,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.upstream-repo",
@@ -12875,7 +13418,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.create-fork",
@@ -12895,7 +13439,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.fork-location",
@@ -12914,7 +13459,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.feature-branch-name",
@@ -12934,7 +13480,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.merge-strategy",
@@ -12969,7 +13516,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.push-behavior",
@@ -13001,7 +13549,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.force-push-policy",
@@ -13032,7 +13581,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.git-policy-preset",
@@ -13064,7 +13614,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.branch-strategy",
@@ -13092,7 +13643,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.branch-naming-pattern",
@@ -13112,7 +13664,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.worktree-base-dir",
@@ -13133,7 +13686,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "local_environment"
   },
   {
    "id": "branching.worktrees.auto-worktree-new-threads",
@@ -13155,7 +13709,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.assistant-worktree-base",
@@ -13175,7 +13730,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.thread-worktree-binding",
@@ -13217,7 +13773,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.pre-merge-test-command",
@@ -13238,7 +13795,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.pre-merge-test-timeout",
@@ -13257,7 +13815,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.pre-merge-test-target",
@@ -13282,7 +13841,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.worktree-count-warning",
@@ -13303,7 +13863,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.worktree-creation-timeout",
@@ -13323,7 +13884,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.recovery-tools",
@@ -13364,7 +13926,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.clean-ignored-files",
@@ -13386,7 +13949,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.remove-build-artifacts",
@@ -13408,7 +13972,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.clean-all-worktrees",
@@ -13453,7 +14018,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.worktrees.evidence-retain-last-runs",
@@ -13474,7 +14040,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.crew.crew-enabled",
@@ -13501,7 +14068,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.crew.crew-members",
@@ -13524,7 +14092,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.crew.max-crews-per-platform",
@@ -13545,7 +14114,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.crew.max-agents-per-crew",
@@ -13567,7 +14137,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.enable-subagents",
@@ -13589,7 +14160,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.parallel-subagents",
@@ -13611,7 +14183,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.max-parallel",
@@ -13635,7 +14208,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.fanout-threshold",
@@ -13656,7 +14230,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.input-token-limit",
@@ -13676,7 +14251,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.retry-policy",
@@ -13702,7 +14278,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.subagents-mandatory",
@@ -13722,7 +14299,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.single-writer-lease",
@@ -13743,7 +14321,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.write-isolation-mode",
@@ -13771,7 +14350,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.per-node-overrides",
@@ -13794,7 +14374,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.required-subagents",
@@ -13813,7 +14394,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.disabled-subagents",
@@ -13833,7 +14415,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.provider-concurrency-cap",
@@ -13855,7 +14438,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.max-total-active-agents",
@@ -13876,7 +14460,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.max-nesting-depth",
@@ -13899,7 +14484,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.max-total-spawned",
@@ -13922,7 +14508,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.delegation-depth",
@@ -13943,7 +14530,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.agent-control-envelope",
@@ -14009,7 +14597,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "branching.subagents.external-agent-provenance",
@@ -14033,7 +14622,8 @@
    "related_features": [
     "worktrees",
     "source_control"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.image.provider",
@@ -14074,7 +14664,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.image.model",
@@ -14097,7 +14688,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.image.model-aliases",
@@ -14119,7 +14711,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.io.media-input",
@@ -14140,7 +14733,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.io.media-output",
@@ -14160,7 +14754,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.io.voice-input",
@@ -14181,7 +14776,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.io.vision-bridge",
@@ -14201,7 +14797,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.io.screenshot-source",
@@ -14226,7 +14823,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.io.image-source-order",
@@ -14251,7 +14849,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.io.vision-fallback-model",
@@ -14276,7 +14875,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.io.redaction-policy",
@@ -14303,7 +14903,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.io.artifact-retention",
@@ -14329,7 +14930,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.io.artifacts-location",
@@ -14348,6 +14950,10 @@
    ],
    "related_features": [
     "media_generation"
+   ],
+   "management_kind": "value_dependent",
+   "portable_value_forms": [
+    "project_root_placeholder"
    ]
   },
   {
@@ -14370,7 +14976,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.enabled-types",
@@ -14405,7 +15012,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.video",
@@ -14424,7 +15032,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.tts",
@@ -14444,7 +15053,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.music",
@@ -14464,7 +15074,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.aspect-ratio",
@@ -14494,7 +15105,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.image-size",
@@ -14522,7 +15134,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.image-quality",
@@ -14546,7 +15159,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.image-count",
@@ -14572,7 +15186,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.video-duration",
@@ -14593,7 +15208,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.video-resolution",
@@ -14619,7 +15235,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.tts-voice",
@@ -14646,7 +15263,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.image-format",
@@ -14669,7 +15287,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.response-format",
@@ -14695,7 +15314,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.seed",
@@ -14715,7 +15335,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.prompt-optimizer",
@@ -14735,7 +15356,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.music-bpm",
@@ -14756,7 +15378,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "media.capabilities.provider-params",
@@ -14775,7 +15398,8 @@
    ],
    "related_features": [
     "media_generation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.web-search-enable",
@@ -14798,7 +15422,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.provider-order",
@@ -14838,7 +15463,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.provider-status",
@@ -14875,7 +15501,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.health-disclosure",
@@ -14894,7 +15521,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.duckduckgo-enable",
@@ -14915,7 +15543,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.firecrawl-enable",
@@ -14936,7 +15565,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.firecrawl-api-key",
@@ -14957,7 +15587,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "credential"
   },
   {
    "id": "web.providers.firecrawl-url",
@@ -14978,7 +15609,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.exa-enable",
@@ -15001,7 +15633,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.tavily-enable",
@@ -15022,7 +15655,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.tavily-fetch-mode",
@@ -15048,7 +15682,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.brave-enable",
@@ -15069,7 +15704,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.jina-enable",
@@ -15091,7 +15727,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.model-native-enable",
@@ -15112,7 +15749,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.capability-matrix",
@@ -15148,7 +15786,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.providers.web-api-keys",
@@ -15193,7 +15832,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.search-max-results",
@@ -15212,7 +15852,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.research-max-sources",
@@ -15230,7 +15871,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.research-auto-read-pages",
@@ -15249,7 +15891,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.crawl-max-pages",
@@ -15270,7 +15913,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.crawl-max-depth",
@@ -15288,7 +15932,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.map-max-pages",
@@ -15307,7 +15952,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.map-max-depth",
@@ -15324,7 +15970,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.request-timeout",
@@ -15346,7 +15993,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.cost-warning-threshold",
@@ -15368,7 +16016,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.cost-hard-cap",
@@ -15389,7 +16038,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.provider-cache",
@@ -15408,7 +16058,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.cache-size",
@@ -15427,7 +16078,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.cache-ttl-search",
@@ -15446,7 +16098,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.cache-ttl-fetch",
@@ -15465,7 +16118,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.cache-ttl-crawl",
@@ -15484,7 +16138,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.firecrawl-proxy-mode",
@@ -15511,7 +16166,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.browser-session-profile",
@@ -15539,7 +16195,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.browser-save-session",
@@ -15562,7 +16219,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.redirect-policy",
@@ -15593,7 +16251,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.egress-timeout",
@@ -15615,7 +16274,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.proxy-mode",
@@ -15642,7 +16302,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.proxy-http-url",
@@ -15660,7 +16321,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.proxy-https-url",
@@ -15678,7 +16340,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.no-proxy-domains",
@@ -15699,7 +16362,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.proxy-credentials",
@@ -15719,7 +16383,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "credential"
   },
   {
    "id": "web.fetch.ca-bundle",
@@ -15739,7 +16404,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "local_environment"
   },
   {
    "id": "web.fetch.per-host-ca",
@@ -15757,7 +16423,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.fetch.air-gap-mode",
@@ -15781,7 +16448,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.index.enable",
@@ -15805,7 +16473,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.index.rebuild",
@@ -15869,7 +16538,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.index.exclusion-patterns",
@@ -15899,7 +16569,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.index.follow-symlinks",
@@ -15921,7 +16592,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.index.remote-cache-mode",
@@ -15950,7 +16622,8 @@
    ],
    "related_features": [
     "web_operations"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "web.index.evict-cache",
@@ -16003,7 +16676,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.library.persona-manager",
@@ -16059,7 +16733,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.library.selection-mode",
@@ -16087,7 +16762,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.library.ask-by-name",
@@ -16107,7 +16783,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.library.core-personas",
@@ -16138,7 +16815,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.library.lock-persona",
@@ -16158,7 +16836,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.library.disabled-bundled",
@@ -16181,7 +16860,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.library.custom-scope",
@@ -16207,7 +16887,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.library.persona-name",
@@ -16225,7 +16906,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.library.persona-description",
@@ -16244,7 +16926,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.library.persona-id",
@@ -16265,7 +16948,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.library.persona-tags",
@@ -16299,7 +16983,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.library.persona-aliases",
@@ -16319,7 +17004,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tuning.default-model",
@@ -16344,7 +17030,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tuning.response-style",
@@ -16373,7 +17060,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tuning.talkativeness",
@@ -16408,7 +17096,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tuning.verbosity",
@@ -16439,7 +17128,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tuning.output-format",
@@ -16470,7 +17160,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tuning.default-mode",
@@ -16500,7 +17191,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tuning.default-platform",
@@ -16525,7 +17217,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tuning.default-variant",
@@ -16550,7 +17243,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tuning.temperature",
@@ -16570,7 +17264,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tuning.top-p",
@@ -16589,7 +17284,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tuning.reasoning-effort",
@@ -16617,7 +17313,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tuning.cost-budget",
@@ -16638,7 +17335,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tools.tool-posture",
@@ -16668,7 +17366,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tools.preferred-tools",
@@ -16692,7 +17391,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tools.discouraged-tools",
@@ -16715,7 +17415,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tools.tool-guidance",
@@ -16734,7 +17435,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tools.system-prompt",
@@ -16755,7 +17457,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tools.default-skills",
@@ -16778,7 +17481,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tools.permission-profile",
@@ -16804,7 +17508,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tools.disabled-plugins",
@@ -16828,7 +17533,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tools.support-badges",
@@ -16853,7 +17559,8 @@
    ],
    "related_features": [
     "personas"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "personas.tools.skipped-controls-audit",
@@ -16905,7 +17612,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.skill-on-off",
@@ -16931,7 +17639,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.skills-panel",
@@ -16952,7 +17661,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.discovery",
@@ -16976,7 +17686,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.rescan",
@@ -17034,7 +17745,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.registry-view",
@@ -17067,7 +17779,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.sort",
@@ -17091,7 +17804,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.search",
@@ -17112,7 +17826,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.preview",
@@ -17159,7 +17874,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.pattern-permissions",
@@ -17202,7 +17918,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.auto-enable-new",
@@ -17226,7 +17943,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.validate",
@@ -17275,7 +17993,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.projection-method",
@@ -17301,7 +18020,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.context-budget-percent",
@@ -17327,7 +18047,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.skills.context-budget-chars",
@@ -17352,7 +18073,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.plugins.plugin-on-off",
@@ -17376,7 +18098,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.plugins.add-from-catalog",
@@ -17473,7 +18196,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.plugins.auto-enable-new",
@@ -17497,7 +18221,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.plugins.packages",
@@ -17520,7 +18245,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.plugins.hook-timeout",
@@ -17542,7 +18268,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.plugins.tool-override",
@@ -17564,7 +18291,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.keyboard-shortcuts",
@@ -17589,7 +18317,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.shortcut-hints",
@@ -17610,7 +18339,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.search-shortcuts",
@@ -17630,7 +18360,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.custom-commands",
@@ -17654,7 +18385,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.conflict-handling",
@@ -17682,7 +18414,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.text-editing-keys",
@@ -17720,7 +18453,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.reset-shortcuts",
@@ -17791,7 +18525,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.command-scope",
@@ -17816,7 +18551,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.command-mode",
@@ -17848,7 +18584,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.command-model",
@@ -17872,7 +18609,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.command-persona",
@@ -17897,7 +18635,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.command-permissions",
@@ -17922,7 +18661,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.override-builtin",
@@ -17944,7 +18684,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "extensions.commands.git-routing",
@@ -17967,7 +18708,8 @@
    "related_features": [
     "mcp",
     "plugins"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.health.run-doctor",
@@ -18025,7 +18767,8 @@
     "mcp",
     "skills",
     "terminal"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.health.doctor-summary",
@@ -18049,7 +18792,8 @@
     "readiness",
     "blocked",
     "onboarding"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.health.auto-run",
@@ -18067,7 +18811,8 @@
     "doctor startup",
     "health auto check",
     "background checks"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.health.check-frequency",
@@ -18093,7 +18838,8 @@
     "hourly",
     "weekly",
     "on demand"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.health.check-scope",
@@ -18132,7 +18878,8 @@
     "auth",
     "dependencies",
     "scope"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.health.readiness-badges",
@@ -18149,7 +18896,8 @@
     "badges",
     "status display",
     "needs setup"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.health.degraded-visibility",
@@ -18169,7 +18917,8 @@
     "FileSafe",
     "fail-closed",
     "visibility"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.health.remediation-links",
@@ -18186,7 +18935,8 @@
     "fix links",
     "repair",
     "guided fix"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.health.telemetry",
@@ -18205,7 +18955,8 @@
     "crash reports",
     "privacy",
     "usage data"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.health.platform-diagnostics",
@@ -18245,7 +18996,8 @@
     "remove server",
     "Context7",
     "web search provider"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.server-enabled",
@@ -18264,7 +19016,8 @@
     "disable server",
     "per-server",
     "connection state"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.tool-toggle",
@@ -18284,7 +19037,8 @@
     "per-tool",
     "tool exposure",
     "allowlist"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.import-external",
@@ -18310,7 +19064,8 @@
     "Codex",
     "Warp",
     "first-run review"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.health-status",
@@ -18372,7 +19127,8 @@
     "http",
     "remote",
     "local"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.launch-config",
@@ -18392,7 +19148,8 @@
     "env",
     "registration",
     "server_slug"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.remote-url",
@@ -18410,7 +19167,8 @@
     "endpoint",
     "server address",
     "credentials invalidate"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.remote-headers",
@@ -18428,7 +19186,8 @@
     "API key",
     "oauth false",
     "authentication"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.oauth-autodetect",
@@ -18447,7 +19206,8 @@
     "auto-detection",
     "dynamic client registration",
     "auth"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.oauth-refresh",
@@ -18489,7 +19249,8 @@
     "project",
     "profile",
     "external"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.timeout",
@@ -18511,7 +19272,8 @@
     "heartbeat",
     "5000",
     "settlement receipt"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.lazy-exposure",
@@ -18531,7 +19293,8 @@
     "schema",
     "context budget",
     "prompt bloat"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.catalog-cache-ttl",
@@ -18549,7 +19312,8 @@
     "catalog",
     "refresh",
     "tool discovery"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.header-secret-hooks",
@@ -18567,7 +19331,8 @@
     "redaction",
     "receipts",
     "permission recheck"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.show-availability",
@@ -18583,7 +19348,8 @@
     "availability",
     "status indicator",
     "MCP status"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.mcp.debug-surface",
@@ -18619,7 +19385,8 @@
     "updates",
     "new version",
     "upgrade"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.catalog-updates",
@@ -18637,7 +19404,8 @@
     "install",
     "update",
     "remove"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.update-frequency",
@@ -18660,7 +19428,8 @@
     "update frequency",
     "schedule",
     "check for updates"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.release-channel",
@@ -18684,7 +19453,8 @@
     "nightly",
     "beta",
     "provenance"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.reset-defaults",
@@ -18762,7 +19532,8 @@
     "logging",
     "telemetry logging",
     "hazardous toggles"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.log-verbosity",
@@ -18788,7 +19559,8 @@
     "log level",
     "PUPPET_MASTER_DEBUG",
     "trace"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.receipts-verbosity",
@@ -18809,7 +19581,8 @@
     "audit",
     "history",
     "operation log"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.runtime-artifacts",
@@ -18826,7 +19599,8 @@
     "inspection",
     "internal files",
     "logging"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.cli-path-cursor",
@@ -18847,7 +19621,8 @@
     "Cursor Agent",
     "probe order",
     "file picker"
-   ]
+   ],
+   "management_kind": "local_environment"
   },
   {
    "id": "system.advanced.cli-path-claude",
@@ -18867,7 +19642,8 @@
     "override",
     "Claude Code",
     "manual path"
-   ]
+   ],
+   "management_kind": "local_environment"
   },
   {
    "id": "system.advanced.binary-rescan",
@@ -18903,7 +19679,8 @@
     "compatibility",
     "schema",
     "startup check"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.renderer",
@@ -18934,7 +19711,8 @@
    "badges": [
     "restart",
     "adjudication"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.viewer-mode",
@@ -18952,7 +19730,8 @@
     "lock",
     "durable store",
     "crash recovery"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.config-format",
@@ -18975,7 +19754,8 @@
     "yaml",
     "json",
     "schema validation"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.legacy-config-names",
@@ -18998,7 +19778,8 @@
     "ProjectConfig",
     "retired names",
     "JSONC"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.cache-linter",
@@ -19017,7 +19798,8 @@
     "prefix hash",
     "cache hit",
     "cost"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.chat-history-retention",
@@ -19059,7 +19841,8 @@
     "ER-RUNTIME-365D",
     "owner minimum",
     "reject below minimum"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.diagnostic-history-days",
@@ -19082,7 +19865,8 @@
     "security history fixed",
     "migration recovery history fixed",
     "reject below minimum"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.released-safe-point-days",
@@ -19104,7 +19888,8 @@
     "RP-SAFEPOINT-90D-AFTER-RELEASE",
     "hold release",
     "reject below minimum"
-   ]
+   ],
+   "management_kind": "ordinary"
   },
   {
    "id": "system.advanced.preserved-terminal-runs",
@@ -19197,7 +19982,8 @@
    "style",
    "working",
    "working-activity-style"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "ai.models.thread-title-model",
@@ -19225,7 +20011,8 @@
    "model",
    "thread",
    "title"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "general.interaction.eli5-default",
@@ -19249,7 +20036,8 @@
    "everywhere",
    "explain",
    "terms"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.interview.plan-default-depth",
@@ -19279,7 +20067,8 @@
    "depth",
    "plan",
    "strategy"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.interview.deep-plan-default-depth",
@@ -19310,7 +20099,8 @@
    "depth",
    "plan",
    "strategy"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.interview.deep-plan-grill-me",
@@ -19336,7 +20126,8 @@
    "grill",
    "me",
    "plan"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.interview.plan-default-export",
@@ -19364,7 +20155,8 @@
    "export",
    "format",
    "plan"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "general.interaction.composer-persist-unsent",
@@ -19389,7 +20181,8 @@
    "messages",
    "persist",
    "unsent"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.crew-participant-count",
@@ -19415,7 +20208,8 @@
    "multi",
    "participant",
    "size"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.crew-coordinator",
@@ -19439,7 +20233,8 @@
    "coordinator",
    "crew",
    "multi"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.crew-assignment-strategy",
@@ -19464,7 +20259,8 @@
    "crew",
    "multi",
    "strategy"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.crew-parallelism",
@@ -19488,7 +20284,8 @@
    "crew",
    "multi",
    "parallelism"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.crew-auto-enabled",
@@ -19512,7 +20309,8 @@
    "crew",
    "enabled",
    "multi"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.crew-auto-complexity",
@@ -19538,7 +20336,8 @@
    "crew",
    "multi",
    "threshold"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.crew-auto-max-members",
@@ -19566,7 +20365,8 @@
    "members",
    "multi",
    "size"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.brainstorm-core-participants",
@@ -19591,7 +20391,8 @@
    "core",
    "multi",
    "participants"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.brainstorm-question-limit",
@@ -19616,7 +20417,8 @@
    "limit",
    "multi",
    "question"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.grill-me-question-extension",
@@ -19644,7 +20446,8 @@
    "multi",
    "question",
    "questions"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.plan.quick-question-limit",
@@ -19667,7 +20470,8 @@
    "plan",
    "question",
    "quick"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.plan.standard-question-limit",
@@ -19690,7 +20494,8 @@
    "plan",
    "question",
    "standard"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.plan.thorough-question-limit",
@@ -19713,7 +20518,8 @@
    "plan",
    "question",
    "thorough"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.deep-plan.thorough-question-limit",
@@ -19737,7 +20543,8 @@
    "plan",
    "question",
    "thorough"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.deep-plan.exhaustive-question-limit",
@@ -19761,7 +20568,8 @@
    "limit",
    "plan",
    "question"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.brainstorm-external-research",
@@ -19787,7 +20595,8 @@
    "external",
    "multi",
    "research"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.brainstorm-independent-proposals",
@@ -19813,7 +20622,8 @@
    "independent",
    "multi",
    "proposals"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.brainstorm-debate-rounds",
@@ -19838,7 +20648,8 @@
    "debate",
    "multi",
    "rounds"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.brainstorm-voting",
@@ -19862,7 +20673,8 @@
    "brainstorm",
    "multi",
    "voting"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.brainstorm-preserve-dissent",
@@ -19888,7 +20700,8 @@
    "keep",
    "multi",
    "preserve"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.verification.review-strategy",
@@ -19912,7 +20725,8 @@
    "multi",
    "review",
    "strategy"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.verification.review-reviewer-count",
@@ -19938,7 +20752,8 @@
    "review",
    "reviewer",
    "reviewers"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.verification.review-blind-initial-pass",
@@ -19965,7 +20780,8 @@
    "multi",
    "pass",
    "review"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.verification.review-peer-corroboration",
@@ -19992,7 +20808,8 @@
    "multi",
    "peer",
    "review"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.verification.review-preserve-dissent",
@@ -20018,7 +20835,8 @@
    "multi",
    "preserve",
    "review"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.verification.review-auto-repair",
@@ -20044,7 +20862,8 @@
    "repair",
    "review",
    "things"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.chat-room-participant-count",
@@ -20071,7 +20890,8 @@
    "participant",
    "room",
    "size"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.chat-room-turn-policy",
@@ -20098,7 +20918,8 @@
    "room",
    "turn",
    "turns"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "branching.crew.chat-room-max-rounds",
@@ -20124,7 +20945,8 @@
    "multi",
    "room",
    "rounds"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.bsd-mode",
@@ -20154,7 +20976,8 @@
    "driver",
    "mode",
    "seat"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.bsd-model",
@@ -20177,7 +21000,8 @@
    "assistant.bsd.model",
    "bsd",
    "model"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.bsd-persona",
@@ -20200,7 +21024,8 @@
    "assistant.bsd.persona",
    "bsd",
    "persona"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.bsd-trigger-sensitivity",
@@ -20229,7 +21054,8 @@
    "Conservative",
    "Balanced",
    "Frequent"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.bsd-catch-up-seconds",
@@ -20260,7 +21086,8 @@
    "catch",
    "seconds",
    "up"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.bsd-cooldown-turns",
@@ -20284,7 +21111,8 @@
    "bsd",
    "cooldown",
    "turns"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.bsd-retain-transcript",
@@ -20309,7 +21137,8 @@
    "keep",
    "retain",
    "transcript"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.bsd-self-compact-threshold",
@@ -20336,7 +21165,8 @@
    "point",
    "self",
    "threshold"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.schedule-wind-down-minutes",
@@ -20361,7 +21191,8 @@
    "scheduling",
    "time",
    "wind"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.schedule-missed-policy",
@@ -20389,7 +21220,8 @@
    "policy",
    "schedule",
    "scheduling"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.schedule-grace-minutes",
@@ -20415,7 +21247,8 @@
    "period",
    "schedule",
    "scheduling"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.schedule-resume-next-window",
@@ -20439,7 +21272,8 @@
    "resume",
    "scheduling",
    "window"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "ai.usage.auto-resume-default",
@@ -20463,7 +21297,8 @@
    "resume",
    "usage",
    "when"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "safety.approvals.schedule-dst-policy",
@@ -20488,7 +21323,8 @@
    "policy",
    "saving",
    "scheduling"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.testing.browser-capture-full-default",
@@ -20514,7 +21350,8 @@
    "full",
    "scope",
    "screenshot"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.testing.browser-component-action",
@@ -20541,7 +21378,8 @@
    "chat",
    "component",
    "picking"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.testing.browser-component-crop",
@@ -20567,7 +21405,8 @@
    "crop",
    "image",
    "include"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
  {
   "id": "planning.testing.browser-devtools-policy",
@@ -20591,7 +21430,8 @@
    "browser.agent.devtools_policy",
    "devtools",
    "policy"
-  ]
+  ],
+  "management_kind": "ordinary"
  },
 {
   "id": "memory.notebook.auto-capture",
@@ -20612,7 +21452,8 @@
   "related_features": [
    "working-notebook",
    "assistant-chat"
-  ]
+  ],
+  "management_kind": "ordinary"
   },
 {
   "id": "memory.notebook.resume-capsule",
@@ -20633,7 +21474,8 @@
   "related_features": [
    "working-notebook",
    "assistant-chat"
-  ]
+  ],
+  "management_kind": "ordinary"
   },
 {
   "id": "memory.notebook.capsule-budget-tokens",
@@ -20652,7 +21494,8 @@
   ],
   "related_features": [
    "working-notebook"
-  ]
+  ],
+  "management_kind": "ordinary"
   },
 {
   "id": "memory.notebook.injection-budget-tokens",
@@ -20671,7 +21514,8 @@
   ],
   "related_features": [
    "working-notebook"
-  ]
+  ],
+  "management_kind": "ordinary"
   }
 ]
 }
