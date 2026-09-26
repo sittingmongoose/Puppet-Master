@@ -1,0 +1,33 @@
+/* O55 · restraint (owner direction, 2026-09-26): no capsules and no coloured side or top stripes anywhere in Settings.
+   - A status is a dot and a word; a tag is a plain word; an engine badge is a word with a dot for its tone.
+   - Choices you pick several of are squared tiles with a checkbox, not rounded chips.
+   - Related links in Details are text links. Toggle switches and progress bars keep their own shape.
+   Manager CSS that drew capsules (transfer categories, web service chains) was changed at its source. */
+
+/* engine badges: a word, with a dot when it carries a tone */
+#panel-settings .badge { min-height: 0; padding: 0; border: 0; border-radius: 0; background: none; gap: 5px; font-size: 11px; }
+#panel-settings .badge.green, #panel-settings .badge.amber, #panel-settings .badge.red, #panel-settings .badge.purple { border: 0; background: none; }
+#panel-settings .badge.green::before, #panel-settings .badge.amber::before, #panel-settings .badge.red::before, #panel-settings .badge.purple::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: 0 0 auto; }
+#panel-settings .badge.changed-chip, #panel-settings .setting-row .changed-chip { border: 0; background: none; padding: 0; }
+
+/* pick-several tiles: a squared tile with a checkbox in front */
+#panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle) {
+  display: inline-flex; align-items: center; gap: 7px; border-radius: 7px; padding: 0 11px 0 9px;
+}
+#panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle) > :is(svg, .icon) { display: none; }
+#panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle)::before {
+  content: ''; width: 12px; height: 12px; flex: 0 0 auto; box-sizing: border-box; border-radius: 3px;
+  border: 1.5px solid color-mix(in srgb, var(--k3-text-3) 70%, transparent); background: transparent center / 10px 10px no-repeat;
+  transition: background-color var(--k3-dur-fast, 140ms), border-color var(--k3-dur-fast, 140ms);
+}
+#panel-settings :is(.chip-select button.active, .pm51-transfer-chip.is-on, .pm51-chip-toggle.is-on)::before {
+  border-color: var(--k3-accent); background-color: var(--k3-accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.4 6.3l2.4 2.3 4.8-5.1' fill='none' stroke='white' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+html[data-theme^="retro"] #panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle) { border-radius: 2px; }
+html[data-theme^="retro"] #panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle)::before { border-radius: 1px; }
+@media (prefers-reduced-motion: reduce) { #panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle)::before { transition: none; } }
+html[data-o55-still] #panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle)::before { transition: none; }
+
+/* the example box in Details: a quiet box, no accent stripe on its edge */
+#panel-settings .detail-example { padding: 10px 12px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-2); }

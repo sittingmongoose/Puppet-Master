@@ -51,7 +51,7 @@
   PM51.style(`
     #panel-settings .pm51-web-order .pm51-row-control .icon-btn { width: 28px; height: 28px; }
     #panel-settings .o55-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-    #panel-settings .o55-chain-step { display: inline-flex; align-items: center; gap: 6px; min-height: 26px; padding: 0 9px; border: 1px solid var(--k3-line); border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--k3-text-1); background: var(--k3-bg-1); }
+    #panel-settings .o55-chain-step { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--k3-text-1); }
     #panel-settings .o55-chain-step i { width: 7px; height: 7px; border-radius: 50%; background: var(--k3-text-3); }
     #panel-settings .o55-chain-step.tone-ready i { background: var(--k3-green); }
     #panel-settings .o55-chain-step.tone-attention i { background: var(--k3-amber); }

@@ -14,8 +14,8 @@
 #panel-settings .pm51-mgr .o55-toolbar.o55-providers-tools { padding: 0; border: 0; gap: 8px; }
 
 /* ---- "all ready" strip --------------------------------------------------------------------------------------- */
-#panel-settings .o55-ready-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 14px 0 12px; }
-#panel-settings .o55-ready-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 10px 0 8px; border: 1px solid color-mix(in srgb, var(--k3-green) 26%, var(--k3-line)); border-radius: 999px; background: var(--k3-green-soft); font-size: 12px; font-weight: 600; color: var(--k3-text-1); }
+#panel-settings .o55-ready-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; padding: 14px 0 12px; }
+#panel-settings .o55-ready-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--k3-text-2); }
 #panel-settings .o55-ready-chip svg { width: 13px; height: 13px; color: var(--k3-green); }
 #panel-settings .o55-ready-end { margin-left: auto; display: inline-flex; align-items: center; gap: 10px; }
 #panel-settings .o55-ready-when { font-size: 11.5px; color: var(--k3-text-3); }

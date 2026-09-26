@@ -36,7 +36,7 @@
 #panel-settings .o55-row .o55-seg button { white-space: nowrap; }
 #panel-settings .o55-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
 #panel-settings .o55-row.is-wide .o55-chips { justify-content: flex-start; }
-#panel-settings .o55-chips button { display: inline-flex; align-items: center; gap: 5px; min-height: 28px; padding: 0 11px; border-radius: 999px; border: 1px solid var(--k3-line); background: var(--k3-bg-2); color: var(--k3-text-2); font: inherit; font-size: 12px; font-weight: 560; cursor: pointer; transition: background-color var(--k3-dur-fast, 140ms), border-color var(--k3-dur-fast, 140ms), color var(--k3-dur-fast, 140ms); }
+#panel-settings .o55-chips button { display: inline-flex; align-items: center; gap: 5px; min-height: 28px; padding: 0 11px; border-radius: 7px; border: 1px solid var(--k3-line); background: var(--k3-bg-2); color: var(--k3-text-2); font: inherit; font-size: 12px; font-weight: 560; cursor: pointer; transition: background-color var(--k3-dur-fast, 140ms), border-color var(--k3-dur-fast, 140ms), color var(--k3-dur-fast, 140ms); }
 #panel-settings .o55-chips button:hover { border-color: var(--k3-line-strong); color: var(--k3-text-1); }
 #panel-settings .o55-chips button.active { background: var(--k3-accent-soft); border-color: color-mix(in srgb, var(--k3-accent) 45%, transparent); color: var(--k3-accent); }
 #panel-settings .o55-chips button svg { width: 12px; height: 12px; }

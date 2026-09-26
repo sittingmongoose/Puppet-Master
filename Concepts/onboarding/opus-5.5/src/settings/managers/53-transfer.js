@@ -22,7 +22,7 @@
 #panel-settings .pm51-transfer-flow .pm51-steps + .pm51-transfer-chips { padding: 2px 0 12px 38px; }
 #panel-settings .pm51-transfer-flow .pm51-transfer-chips + .pm51-steps .pm51-step:first-child { border-top: 1px solid var(--k3-line); }
 #panel-settings .pm51-transfer-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-#panel-settings .pm51-transfer-chip { display: inline-flex; align-items: center; gap: 5px; min-height: 26px; padding: 0 10px; border: 1px solid var(--k3-line); border-radius: 99px; background: var(--k3-bg-2); color: var(--k3-text-2); font: inherit; font-size: 11.5px; cursor: pointer; }
+#panel-settings .pm51-transfer-chip { display: inline-flex; align-items: center; gap: 7px; min-height: 28px; padding: 0 11px 0 9px; border: 1px solid var(--k3-line); border-radius: 7px; background: var(--k3-bg-2); color: var(--k3-text-2); font: inherit; font-size: 11.5px; cursor: pointer; }
 #panel-settings .pm51-transfer-chip svg { width: 12px; height: 12px; }
 #panel-settings .pm51-transfer-chip:hover { color: var(--k3-text-1); border-color: var(--k3-line-strong); }
 #panel-settings .pm51-transfer-chip.is-on { color: var(--k3-accent); border-color: rgba(var(--accent-primary-rgb), .45); background: var(--k3-accent-soft); }

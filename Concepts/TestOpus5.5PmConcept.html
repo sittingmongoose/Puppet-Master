@@ -23767,7 +23767,7 @@ html[data-theme^="glass"] #panel-settings .pm51-mgr .pm51-settings-inline .setti
 #panel-settings .o55-row .o55-seg button { white-space: nowrap; }
 #panel-settings .o55-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
 #panel-settings .o55-row.is-wide .o55-chips { justify-content: flex-start; }
-#panel-settings .o55-chips button { display: inline-flex; align-items: center; gap: 5px; min-height: 28px; padding: 0 11px; border-radius: 999px; border: 1px solid var(--k3-line); background: var(--k3-bg-2); color: var(--k3-text-2); font: inherit; font-size: 12px; font-weight: 560; cursor: pointer; transition: background-color var(--k3-dur-fast, 140ms), border-color var(--k3-dur-fast, 140ms), color var(--k3-dur-fast, 140ms); }
+#panel-settings .o55-chips button { display: inline-flex; align-items: center; gap: 5px; min-height: 28px; padding: 0 11px; border-radius: 7px; border: 1px solid var(--k3-line); background: var(--k3-bg-2); color: var(--k3-text-2); font: inherit; font-size: 12px; font-weight: 560; cursor: pointer; transition: background-color var(--k3-dur-fast, 140ms), border-color var(--k3-dur-fast, 140ms), color var(--k3-dur-fast, 140ms); }
 #panel-settings .o55-chips button:hover { border-color: var(--k3-line-strong); color: var(--k3-text-1); }
 #panel-settings .o55-chips button.active { background: var(--k3-accent-soft); border-color: color-mix(in srgb, var(--k3-accent) 45%, transparent); color: var(--k3-accent); }
 #panel-settings .o55-chips button svg { width: 12px; height: 12px; }
@@ -23993,8 +23993,8 @@ html[data-theme^="retro"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tran
 #panel-settings .pm51-mgr .o55-toolbar.o55-providers-tools { padding: 0; border: 0; gap: 8px; }
 
 /* ---- "all ready" strip --------------------------------------------------------------------------------------- */
-#panel-settings .o55-ready-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 14px 0 12px; }
-#panel-settings .o55-ready-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 10px 0 8px; border: 1px solid color-mix(in srgb, var(--k3-green) 26%, var(--k3-line)); border-radius: 999px; background: var(--k3-green-soft); font-size: 12px; font-weight: 600; color: var(--k3-text-1); }
+#panel-settings .o55-ready-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; padding: 14px 0 12px; }
+#panel-settings .o55-ready-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--k3-text-2); }
 #panel-settings .o55-ready-chip svg { width: 13px; height: 13px; color: var(--k3-green); }
 #panel-settings .o55-ready-end { margin-left: auto; display: inline-flex; align-items: center; gap: 10px; }
 #panel-settings .o55-ready-when { font-size: 11.5px; color: var(--k3-text-3); }
@@ -24113,12 +24113,13 @@ html[data-theme^="retro"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tran
 #panel-settings .o55-insp-mark svg { width: 12px; height: 12px; stroke-width: 2.6; }
 #panel-settings .o55-insp-choice-copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 #panel-settings .o55-insp-choice-label { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 620; }
-#panel-settings .o55-insp-choice-label em { font-style: normal; font-size: 10.5px; font-weight: 650; padding: 1px 6px; border-radius: 5px; background: var(--k3-bg-2); border: 1px solid var(--k3-line); color: var(--k3-text-3); }
+#panel-settings .o55-insp-choice-label em { font-style: normal; font-size: 11px; font-weight: 600; color: var(--k3-text-3); }
+#panel-settings .o55-insp-choice-label em::before { content: '·'; margin-right: 6px; }
 #panel-settings .o55-insp-choice-hint { font-size: 11.5px; color: var(--k3-text-3); line-height: 1.4; }
 
-#panel-settings .o55-insp-near { display: flex; flex-wrap: wrap; gap: 6px; }
-#panel-settings .o55-insp-near button { min-height: 28px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--k3-line); background: var(--k3-bg-1); color: var(--k3-text-2); font: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer; }
-#panel-settings .o55-insp-near button:hover { border-color: color-mix(in srgb, var(--k3-accent) 45%, transparent); color: var(--k3-accent); }
+#panel-settings .o55-insp-near { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+#panel-settings .o55-insp-near button { min-height: 0; padding: 2px 0; border: 0; border-radius: 0; background: none; color: var(--k3-accent); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 30%, transparent); text-underline-offset: 3px; }
+#panel-settings .o55-insp-near button:hover { text-decoration-color: currentColor; }
 
 #panel-settings .o55-insp-tech { border-top: 1px solid var(--k3-line); padding-top: 10px; }
 #panel-settings .o55-insp-tech > summary { display: inline-flex; align-items: center; gap: 6px; list-style: none; cursor: pointer; font-size: 11.5px; font-weight: 650; color: var(--k3-text-3); }
@@ -24143,7 +24144,7 @@ html[data-theme^="retro"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tran
 #panel-settings .pm51-hero .pm51-panel-sub { font-size: 12.5px; margin-top: 4px; }
 #panel-settings .pm51-hero-eyebrow { letter-spacing: .04em; text-transform: none; font-size: 11.5px; font-weight: 650; }
 #panel-settings .pm51-hero-status { margin-top: 14px; }
-#panel-settings .pm51-hero-status .pm51-status { font-size: 12.5px; padding: 5px 10px 5px 9px; border-radius: 999px; background: var(--k3-bg-1); border: 1px solid var(--k3-line); }
+#panel-settings .pm51-hero-status .pm51-status { font-size: 12.5px; padding: 0; border-radius: 0; background: none; border: 0; }
 #panel-settings .pm51-hero-summary { font-size: 13px; line-height: 1.6; margin-top: 12px; }
 #panel-settings .pm51-hero-facts { gap: 0; margin-top: 14px; padding: 0; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md, 10px); background: var(--k3-bg-1); overflow: hidden; }
 #panel-settings .pm51-hero-facts > div { padding: 9px 12px 10px; box-shadow: inset 1px 0 0 var(--k3-line); }
@@ -24186,7 +24187,42 @@ html[data-theme^="retro"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tran
 #panel-settings .pm51-panel-foot .btn { min-height: 36px; padding: 0 16px; border-radius: 9px; font-size: 12.5px; font-weight: 650; }
 #panel-settings .pm51-panel-foot > .btn[data-action="close-overlay"] { background: none; border-color: transparent; color: var(--k3-text-2); }
 #panel-settings .pm51-panel-foot > .btn[data-action="close-overlay"]:hover { background: var(--k3-bg-2); color: var(--k3-text-1); }
-html[data-theme^="glass"] #panel-settings .pm51-hero-facts, html[data-theme^="glass"] #panel-settings .pm51-hero-status .pm51-status { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .6)); }
+html[data-theme^="glass"] #panel-settings .pm51-hero-facts { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .6)); }
+
+/* ---- styles.d/90-restraint.css ---- */
+/* O55 · restraint (owner direction, 2026-09-26): no capsules and no coloured side or top stripes anywhere in Settings.
+   - A status is a dot and a word; a tag is a plain word; an engine badge is a word with a dot for its tone.
+   - Choices you pick several of are squared tiles with a checkbox, not rounded chips.
+   - Related links in Details are text links. Toggle switches and progress bars keep their own shape.
+   Manager CSS that drew capsules (transfer categories, web service chains) was changed at its source. */
+
+/* engine badges: a word, with a dot when it carries a tone */
+#panel-settings .badge { min-height: 0; padding: 0; border: 0; border-radius: 0; background: none; gap: 5px; font-size: 11px; }
+#panel-settings .badge.green, #panel-settings .badge.amber, #panel-settings .badge.red, #panel-settings .badge.purple { border: 0; background: none; }
+#panel-settings .badge.green::before, #panel-settings .badge.amber::before, #panel-settings .badge.red::before, #panel-settings .badge.purple::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: 0 0 auto; }
+#panel-settings .badge.changed-chip, #panel-settings .setting-row .changed-chip { border: 0; background: none; padding: 0; }
+
+/* pick-several tiles: a squared tile with a checkbox in front */
+#panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle) {
+  display: inline-flex; align-items: center; gap: 7px; border-radius: 7px; padding: 0 11px 0 9px;
+}
+#panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle) > :is(svg, .icon) { display: none; }
+#panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle)::before {
+  content: ''; width: 12px; height: 12px; flex: 0 0 auto; box-sizing: border-box; border-radius: 3px;
+  border: 1.5px solid color-mix(in srgb, var(--k3-text-3) 70%, transparent); background: transparent center / 10px 10px no-repeat;
+  transition: background-color var(--k3-dur-fast, 140ms), border-color var(--k3-dur-fast, 140ms);
+}
+#panel-settings :is(.chip-select button.active, .pm51-transfer-chip.is-on, .pm51-chip-toggle.is-on)::before {
+  border-color: var(--k3-accent); background-color: var(--k3-accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.4 6.3l2.4 2.3 4.8-5.1' fill='none' stroke='white' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+html[data-theme^="retro"] #panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle) { border-radius: 2px; }
+html[data-theme^="retro"] #panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle)::before { border-radius: 1px; }
+@media (prefers-reduced-motion: reduce) { #panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle)::before { transition: none; } }
+html[data-o55-still] #panel-settings :is(.chip-select button, .pm51-transfer-chip, .pm51-chip-toggle)::before { transition: none; }
+
+/* the example box in Details: a quiet box, no accent stripe on its edge */
+#panel-settings .detail-example { padding: 10px 12px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-2); }
 
 </style>
 <!-- O55:CSS:START -->
@@ -51044,7 +51080,7 @@ buildSearchIndex = function () {
   PM51.style(`
     #panel-settings .pm51-web-order .pm51-row-control .icon-btn { width: 28px; height: 28px; }
     #panel-settings .o55-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-    #panel-settings .o55-chain-step { display: inline-flex; align-items: center; gap: 6px; min-height: 26px; padding: 0 9px; border: 1px solid var(--k3-line); border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--k3-text-1); background: var(--k3-bg-1); }
+    #panel-settings .o55-chain-step { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--k3-text-1); }
     #panel-settings .o55-chain-step i { width: 7px; height: 7px; border-radius: 50%; background: var(--k3-text-3); }
     #panel-settings .o55-chain-step.tone-ready i { background: var(--k3-green); }
     #panel-settings .o55-chain-step.tone-attention i { background: var(--k3-amber); }
@@ -56725,7 +56761,7 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
 #panel-settings .pm51-transfer-flow .pm51-steps + .pm51-transfer-chips { padding: 2px 0 12px 38px; }
 #panel-settings .pm51-transfer-flow .pm51-transfer-chips + .pm51-steps .pm51-step:first-child { border-top: 1px solid var(--k3-line); }
 #panel-settings .pm51-transfer-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-#panel-settings .pm51-transfer-chip { display: inline-flex; align-items: center; gap: 5px; min-height: 26px; padding: 0 10px; border: 1px solid var(--k3-line); border-radius: 99px; background: var(--k3-bg-2); color: var(--k3-text-2); font: inherit; font-size: 11.5px; cursor: pointer; }
+#panel-settings .pm51-transfer-chip { display: inline-flex; align-items: center; gap: 7px; min-height: 28px; padding: 0 11px 0 9px; border: 1px solid var(--k3-line); border-radius: 7px; background: var(--k3-bg-2); color: var(--k3-text-2); font: inherit; font-size: 11.5px; cursor: pointer; }
 #panel-settings .pm51-transfer-chip svg { width: 12px; height: 12px; }
 #panel-settings .pm51-transfer-chip:hover { color: var(--k3-text-1); border-color: var(--k3-line-strong); }
 #panel-settings .pm51-transfer-chip.is-on { color: var(--k3-accent); border-color: rgba(var(--accent-primary-rgb), .45); background: var(--k3-accent-soft); }
