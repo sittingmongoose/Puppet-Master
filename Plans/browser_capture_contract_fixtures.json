@@ -1,0 +1,4084 @@
+{
+  "schema_id": "pm.browser_capture.contract_fixtures.v1",
+  "contract_schema_id": "pm.browser_capture.contracts.v1",
+  "owner_schema": "Plans/browser_capture_contracts.schema.json",
+  "evidence_level": "schema_fixture_only",
+  "valid": [
+    {
+      "name": "full_viewport_default_submitted",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.capture.full_to_chat",
+        "request": {
+          "record_kind": "BrowserCaptureFullRequest",
+          "schema_id": "pm.browser_capture.BrowserCaptureFullRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "request_id": "req/browser/capture/001",
+          "capture_scope": "viewport",
+          "explicit_full_page_selected": false,
+          "subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "origin_security_class": "ordinary",
+          "composer_destination_ref": "composer/thread:main",
+          "permission_snapshot_ref": "perm/snapshot/001",
+          "capture_permitted": true
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": "frame:main:001",
+          "locator_match_count": null,
+          "matched_tag": null,
+          "matched_role": null,
+          "matched_component_id": null,
+          "matched_source": null,
+          "matched_fingerprint": null,
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 3,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": false,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "BrowserCaptureResult",
+          "schema_id": "pm.browser_capture.BrowserCaptureResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "outcome": "submitted_isolated",
+          "artifact_ref": "artifact/browser/capture/001",
+          "capture_scope_echo": "viewport",
+          "subject_echo": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "composer_destination_ref": "composer/thread:main",
+          "unrelated_composer_bytes_unchanged": true,
+          "whole_buffer_sent": false,
+          "error": null,
+          "details": {
+            "summary": "Viewport capture submitted as isolated payload.",
+            "original_session_ref": "sess/ordinary/001",
+            "original_page_ref": "page/preview/001",
+            "original_generation": 7,
+            "capture_time": "2026-09-25T12:00:00Z",
+            "identity_hints": "viewport 1440x900",
+            "reason": "explicit user capture action"
+          },
+          "receipt_ref": "receipt/browser/capture/001"
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/001",
+          "request_ref": "req/browser/capture/001",
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "command_instance_id": "cmdinst/browser/001",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/capture/001",
+          "operation_id": "op/browser/001",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/001",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/001",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/001",
+          "owner_result_ref": "ownresult/browser/001",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/BrowserCaptureResult",
+            "schema_id": "pm.browser_capture.BrowserCaptureResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/001",
+          "request_id": "req/browser/capture/001",
+          "surface": "browser_selection_bar",
+          "permission_snapshot_ref": "perm/snapshot/001"
+        },
+        "original": null,
+        "buffer_originals": null,
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/001",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/001",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "payload_sha256": "7d8ad916db31965bfe26b90dc3cd6caf667765853d6095a982f2d94a3173b0f5",
+          "owner_result_ref": "ownresult/browser/001",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/BrowserCaptureResult",
+            "schema_id": "pm.browser_capture.BrowserCaptureResult.v1"
+          },
+          "owner_result_sha256": "6f3d66040d9e23842d7f03db21765a066cabc8ab6f0c1a9e1e441af1c385e4af",
+          "idempotency_key": "idem/browser/001",
+          "target_generation": 0,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame/dispatch/001",
+          "acknowledgement_frame_id": "frame/ack/001",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack/browser/001",
+          "result_receipt_ref": "receipt/browser/capture/001",
+          "error_ref": null,
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/001",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/001",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "command_instance_id": "cmdinst/browser/001",
+          "operation_id": "op/browser/001",
+          "dispatch_id": "dispatch/browser/001",
+          "idempotency_key": "idem/browser/001",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserCaptureFullRequest",
+            "schema_id": "pm.browser_capture.BrowserCaptureFullRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.capture.full_to_chat",
+            "request_id": "req/browser/capture/001",
+            "capture_scope": "viewport",
+            "explicit_full_page_selected": false,
+            "subject": {
+              "browser_session_id": "sess:ordinary:001",
+              "browser_workspace_id": "ws:project:001",
+              "browser_page_id": "page:preview:001",
+              "page_generation": 7,
+              "session_security_class": "ordinary"
+            },
+            "origin_security_class": "ordinary",
+            "composer_destination_ref": "composer/thread:main",
+            "permission_snapshot_ref": "perm/snapshot/001",
+            "capture_permitted": true
+          },
+          "permission_snapshot_ref": "perm/snapshot/001"
+        }
+      }
+    },
+    {
+      "name": "full_page_explicit_submitted",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.capture.full_to_chat",
+        "request": {
+          "record_kind": "BrowserCaptureFullRequest",
+          "schema_id": "pm.browser_capture.BrowserCaptureFullRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "request_id": "req/browser/capture/002",
+          "capture_scope": "full_page",
+          "explicit_full_page_selected": true,
+          "subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "origin_security_class": "ordinary",
+          "composer_destination_ref": "composer/thread:main",
+          "permission_snapshot_ref": "perm/snapshot/002",
+          "capture_permitted": true
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": "frame:main:001",
+          "locator_match_count": null,
+          "matched_tag": null,
+          "matched_role": null,
+          "matched_component_id": null,
+          "matched_source": null,
+          "matched_fingerprint": null,
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 3,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": false,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "BrowserCaptureResult",
+          "schema_id": "pm.browser_capture.BrowserCaptureResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "outcome": "submitted_isolated",
+          "artifact_ref": "artifact/browser/capture/002",
+          "capture_scope_echo": "full_page",
+          "subject_echo": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "composer_destination_ref": "composer/thread:main",
+          "unrelated_composer_bytes_unchanged": true,
+          "whole_buffer_sent": false,
+          "error": null,
+          "details": {
+            "summary": "Explicit full-page capture submitted as isolated payload.",
+            "original_session_ref": "sess/ordinary/001",
+            "original_page_ref": "page/preview/001",
+            "original_generation": 7,
+            "capture_time": "2026-09-25T12:00:00Z",
+            "identity_hints": "full page stitched",
+            "reason": "explicit user full-page selection"
+          },
+          "receipt_ref": "receipt/browser/capture/002"
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/002",
+          "request_ref": "req/browser/capture/002",
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "command_instance_id": "cmdinst/browser/002",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/capture/002",
+          "operation_id": "op/browser/002",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/002",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/002",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/002",
+          "owner_result_ref": "ownresult/browser/002",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/BrowserCaptureResult",
+            "schema_id": "pm.browser_capture.BrowserCaptureResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/002",
+          "request_id": "req/browser/capture/002",
+          "surface": "browser_toolbar",
+          "permission_snapshot_ref": "perm/snapshot/002"
+        },
+        "original": null,
+        "buffer_originals": null,
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/002",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/002",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "payload_sha256": "daf1b243f7c6270948ef51576b7ee290272e3532e6ec0e5ecce19405b70efb2f",
+          "owner_result_ref": "ownresult/browser/002",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/BrowserCaptureResult",
+            "schema_id": "pm.browser_capture.BrowserCaptureResult.v1"
+          },
+          "owner_result_sha256": "86256589546e0e4b601fce6c8bce6a49edc92efc3f4ccee9bbf6787f34741701",
+          "idempotency_key": "idem/browser/002",
+          "target_generation": 0,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame/dispatch/002",
+          "acknowledgement_frame_id": "frame/ack/002",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack/browser/002",
+          "result_receipt_ref": "receipt/browser/capture/002",
+          "error_ref": null,
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/002",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/002",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "command_instance_id": "cmdinst/browser/002",
+          "operation_id": "op/browser/002",
+          "dispatch_id": "dispatch/browser/002",
+          "idempotency_key": "idem/browser/002",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserCaptureFullRequest",
+            "schema_id": "pm.browser_capture.BrowserCaptureFullRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.capture.full_to_chat",
+            "request_id": "req/browser/capture/002",
+            "capture_scope": "full_page",
+            "explicit_full_page_selected": true,
+            "subject": {
+              "browser_session_id": "sess:ordinary:001",
+              "browser_workspace_id": "ws:project:001",
+              "browser_page_id": "page:preview:001",
+              "page_generation": 7,
+              "session_security_class": "ordinary"
+            },
+            "origin_security_class": "ordinary",
+            "composer_destination_ref": "composer/thread:main",
+            "permission_snapshot_ref": "perm/snapshot/002",
+            "capture_permitted": true
+          },
+          "permission_snapshot_ref": "perm/snapshot/002"
+        }
+      }
+    },
+    {
+      "name": "region_selected_submitted",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.capture.region_to_chat",
+        "request": {
+          "record_kind": "BrowserCaptureRegionRequest",
+          "schema_id": "pm.browser_capture.BrowserCaptureRegionRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.capture.region_to_chat",
+          "request_id": "req/browser/capture/003",
+          "region": {
+            "x": 120,
+            "y": 80,
+            "width": 640,
+            "height": 480
+          },
+          "subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "origin_security_class": "ordinary",
+          "composer_destination_ref": "composer/thread:main",
+          "permission_snapshot_ref": "perm/snapshot/003",
+          "capture_permitted": true
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": "frame:main:001",
+          "locator_match_count": null,
+          "matched_tag": null,
+          "matched_role": null,
+          "matched_component_id": null,
+          "matched_source": null,
+          "matched_fingerprint": null,
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 3,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": false,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "BrowserCaptureResult",
+          "schema_id": "pm.browser_capture.BrowserCaptureResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.capture.region_to_chat",
+          "outcome": "submitted_isolated",
+          "artifact_ref": "artifact/browser/capture/003",
+          "capture_scope_echo": "region",
+          "subject_echo": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "composer_destination_ref": "composer/thread:main",
+          "unrelated_composer_bytes_unchanged": true,
+          "whole_buffer_sent": false,
+          "error": null,
+          "details": {
+            "summary": "Region capture submitted as isolated payload.",
+            "original_session_ref": "sess/ordinary/001",
+            "original_page_ref": "page/preview/001",
+            "original_generation": 7,
+            "capture_time": "2026-09-25T12:00:00Z",
+            "identity_hints": "region 640x480 at 120,80",
+            "reason": "explicit user region selection"
+          },
+          "receipt_ref": "receipt/browser/capture/003"
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/003",
+          "request_ref": "req/browser/capture/003",
+          "command_id": "cmd.browser.capture.region_to_chat",
+          "command_instance_id": "cmdinst/browser/003",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/capture/003",
+          "operation_id": "op/browser/003",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/003",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/003",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/003",
+          "owner_result_ref": "ownresult/browser/003",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/BrowserCaptureResult",
+            "schema_id": "pm.browser_capture.BrowserCaptureResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/003",
+          "request_id": "req/browser/capture/003",
+          "surface": "browser_selection_bar",
+          "permission_snapshot_ref": "perm/snapshot/003"
+        },
+        "original": null,
+        "buffer_originals": null,
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/003",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/003",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.capture.region_to_chat",
+          "payload_sha256": "c16b3e00e40ae22be99e0570d3bb934a8fb72591cafcce150dc2e221f22bc421",
+          "owner_result_ref": "ownresult/browser/003",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/BrowserCaptureResult",
+            "schema_id": "pm.browser_capture.BrowserCaptureResult.v1"
+          },
+          "owner_result_sha256": "2a184e30126564f95aa0e9c2c7ea4e7c3b912ff7e18731f98e97d171202af7d8",
+          "idempotency_key": "idem/browser/003",
+          "target_generation": 0,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame/dispatch/003",
+          "acknowledgement_frame_id": "frame/ack/003",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack/browser/003",
+          "result_receipt_ref": "receipt/browser/capture/003",
+          "error_ref": null,
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/003",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/003",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.capture.region_to_chat",
+          "command_instance_id": "cmdinst/browser/003",
+          "operation_id": "op/browser/003",
+          "dispatch_id": "dispatch/browser/003",
+          "idempotency_key": "idem/browser/003",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserCaptureRegionRequest",
+            "schema_id": "pm.browser_capture.BrowserCaptureRegionRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.capture.region_to_chat",
+            "request_id": "req/browser/capture/003",
+            "region": {
+              "x": 120,
+              "y": 80,
+              "width": 640,
+              "height": 480
+            },
+            "subject": {
+              "browser_session_id": "sess:ordinary:001",
+              "browser_workspace_id": "ws:project:001",
+              "browser_page_id": "page:preview:001",
+              "page_generation": 7,
+              "session_security_class": "ordinary"
+            },
+            "origin_security_class": "ordinary",
+            "composer_destination_ref": "composer/thread:main",
+            "permission_snapshot_ref": "perm/snapshot/003",
+            "capture_permitted": true
+          },
+          "permission_snapshot_ref": "perm/snapshot/003"
+        }
+      }
+    },
+    {
+      "name": "component_pick_selected",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.component.pick",
+        "request": {
+          "record_kind": "BrowserComponentPickRequest",
+          "schema_id": "pm.browser_capture.BrowserComponentPickRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.pick",
+          "request_id": "req/browser/pick/001",
+          "subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "frame_id": "frame:main:001",
+          "origin_security_class": "ordinary",
+          "component_resolution_available": true
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": "frame:main:001",
+          "locator_match_count": 1,
+          "matched_tag": "button",
+          "matched_role": "submit",
+          "matched_component_id": "comp:submit:001",
+          "matched_source": {
+            "source_ref": "source/app/components/SubmitButton.tsx",
+            "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+          },
+          "matched_fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 4,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": false,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "BrowserComponentPickResult",
+          "schema_id": "pm.browser_capture.BrowserComponentPickResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.pick",
+          "outcome": "selected",
+          "selection": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "error": null,
+          "details": {
+            "summary": "Component selected under pointer.",
+            "original_session_ref": "sess/ordinary/001",
+            "original_page_ref": "page/preview/001",
+            "original_generation": 7,
+            "capture_time": "2026-09-25T12:00:00Z",
+            "identity_hints": "button/submit",
+            "reason": "user pick"
+          },
+          "receipt_ref": "receipt/browser/pick/001"
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/004",
+          "request_ref": "req/browser/pick/001",
+          "command_id": "cmd.browser.component.pick",
+          "command_instance_id": "cmdinst/browser/004",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/pick/001",
+          "operation_id": "op/browser/004",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/004",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/004",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/004",
+          "owner_result_ref": "ownresult/browser/004",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/BrowserComponentPickResult",
+            "schema_id": "pm.browser_capture.BrowserComponentPickResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/004",
+          "request_id": "req/browser/pick/001",
+          "surface": "browser_toolbar",
+          "permission_snapshot_ref": "perm/snapshot/not-applicable"
+        },
+        "original": null,
+        "buffer_originals": null,
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/004",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/004",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.pick",
+          "payload_sha256": "87edbfefec6da1412f81731c19adc718a75b00d410f2a19d1c36fc8339409f42",
+          "owner_result_ref": "ownresult/browser/004",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/BrowserComponentPickResult",
+            "schema_id": "pm.browser_capture.BrowserComponentPickResult.v1"
+          },
+          "owner_result_sha256": "8168537bac8c9d4e2aedc2655eeddd7f7a5e1ae40453dc6cf5798cfe0d619116",
+          "idempotency_key": "idem/browser/004",
+          "target_generation": 0,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame/dispatch/004",
+          "acknowledgement_frame_id": "frame/ack/004",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack/browser/004",
+          "result_receipt_ref": "receipt/browser/pick/001",
+          "error_ref": null,
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/004",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/004",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.pick",
+          "command_instance_id": "cmdinst/browser/004",
+          "operation_id": "op/browser/004",
+          "dispatch_id": "dispatch/browser/004",
+          "idempotency_key": "idem/browser/004",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserComponentPickRequest",
+            "schema_id": "pm.browser_capture.BrowserComponentPickRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.component.pick",
+            "request_id": "req/browser/pick/001",
+            "subject": {
+              "browser_session_id": "sess:ordinary:001",
+              "browser_workspace_id": "ws:project:001",
+              "browser_page_id": "page:preview:001",
+              "page_generation": 7,
+              "session_security_class": "ordinary"
+            },
+            "frame_id": "frame:main:001",
+            "origin_security_class": "ordinary",
+            "component_resolution_available": true
+          },
+          "permission_snapshot_ref": "perm/snapshot/not-applicable"
+        }
+      }
+    },
+    {
+      "name": "send_now_fresh_admitted",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.component.send_now",
+        "request": {
+          "record_kind": "BrowserComponentSendRequest",
+          "schema_id": "pm.browser_capture.BrowserComponentSendRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.send_now",
+          "request_id": "req/browser/send/001",
+          "captured": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "composer_destination_ref": "composer/thread:main",
+          "composer_revision_expected": 11,
+          "selection_epoch_expected": 4,
+          "permission_snapshot_ref": "perm/snapshot/004"
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": "frame:main:001",
+          "locator_match_count": 1,
+          "matched_tag": "button",
+          "matched_role": "submit",
+          "matched_component_id": "comp:submit:001",
+          "matched_source": {
+            "source_ref": "source/app/components/SubmitButton.tsx",
+            "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+          },
+          "matched_fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 4,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": true,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "MessageAdmissionResult",
+          "schema_id": "pm.browser_capture.MessageAdmissionResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.send_now",
+          "outcome": "admitted_isolated",
+          "revalidation": {
+            "attachment_id": "attach/browser/component/001",
+            "captured_generation": 7,
+            "current_generation": 7,
+            "locator_result_count": 1,
+            "identity_match": true,
+            "source_match": true,
+            "destroyed": false,
+            "result": "fresh_single_compatible",
+            "recapture_action": null
+          },
+          "message_ref": "msg/thread:main/001",
+          "composer_destination_ref": "composer/thread:main",
+          "unrelated_composer_bytes_unchanged": true,
+          "whole_buffer_sent": false,
+          "error": null,
+          "details": {
+            "summary": "Single compatible match admitted as isolated payload.",
+            "original_session_ref": "sess/ordinary/001",
+            "original_page_ref": "page/preview/001",
+            "original_generation": 7,
+            "capture_time": "2026-09-25T12:00:00Z",
+            "identity_hints": "button/submit comp:submit:001",
+            "reason": "fresh single compatible match"
+          },
+          "receipt_ref": "receipt/browser/send/001"
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/005",
+          "request_ref": "req/browser/send/001",
+          "command_id": "cmd.browser.component.send_now",
+          "command_instance_id": "cmdinst/browser/005",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/send/001",
+          "operation_id": "op/browser/005",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/005",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/005",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/005",
+          "owner_result_ref": "ownresult/browser/005",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/MessageAdmissionResult",
+            "schema_id": "pm.browser_capture.MessageAdmissionResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/005",
+          "request_id": "req/browser/send/001",
+          "surface": "browser_selection_bar",
+          "permission_snapshot_ref": "perm/snapshot/004"
+        },
+        "original": {
+          "selection": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "issuer_receipt_ref": "receipt/browser/pick/001",
+          "permission_snapshot_ref": "perm/snapshot/004"
+        },
+        "buffer_originals": null,
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/005",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/005",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.send_now",
+          "payload_sha256": "4f6d96ebeeb546cca66f16bc19c9be641f2d04a9c2308acea8aa800a925fabc6",
+          "owner_result_ref": "ownresult/browser/005",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/MessageAdmissionResult",
+            "schema_id": "pm.browser_capture.MessageAdmissionResult.v1"
+          },
+          "owner_result_sha256": "aeb2d6d098f56ab73ff856eef1105362a3e3d5c5667683ae634a7c0499096b25",
+          "idempotency_key": "idem/browser/005",
+          "target_generation": 0,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame/dispatch/005",
+          "acknowledgement_frame_id": "frame/ack/005",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack/browser/005",
+          "result_receipt_ref": "receipt/browser/send/001",
+          "error_ref": null,
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/005",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/005",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.send_now",
+          "command_instance_id": "cmdinst/browser/005",
+          "operation_id": "op/browser/005",
+          "dispatch_id": "dispatch/browser/005",
+          "idempotency_key": "idem/browser/005",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserComponentSendRequest",
+            "schema_id": "pm.browser_capture.BrowserComponentSendRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.component.send_now",
+            "request_id": "req/browser/send/001",
+            "captured": {
+              "original_session_id": "sess:ordinary:001",
+              "original_page_id": "page:preview:001",
+              "original_frame_id": "frame:main:001",
+              "original_generation": 7,
+              "locator": {
+                "locator_ref": "locator/css/submit-button",
+                "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "component_id": "comp:submit:001",
+              "tag": "button",
+              "role": "submit",
+              "source": {
+                "source_ref": "source/app/components/SubmitButton.tsx",
+                "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+              },
+              "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "captured_at": "2026-09-25T12:00:00Z",
+              "selection_epoch": 4
+            },
+            "composer_destination_ref": "composer/thread:main",
+            "composer_revision_expected": 11,
+            "selection_epoch_expected": 4,
+            "permission_snapshot_ref": "perm/snapshot/004"
+          },
+          "permission_snapshot_ref": "perm/snapshot/004"
+        }
+      }
+    },
+    {
+      "name": "send_now_stale_zero_blocked",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.component.send_now",
+        "request": {
+          "record_kind": "BrowserComponentSendRequest",
+          "schema_id": "pm.browser_capture.BrowserComponentSendRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.send_now",
+          "request_id": "req/browser/send/002",
+          "captured": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "composer_destination_ref": "composer/thread:main",
+          "composer_revision_expected": 11,
+          "selection_epoch_expected": 4,
+          "permission_snapshot_ref": "perm/snapshot/005"
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 8,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": "frame:main:001",
+          "locator_match_count": 0,
+          "matched_tag": null,
+          "matched_role": null,
+          "matched_component_id": null,
+          "matched_source": null,
+          "matched_fingerprint": null,
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 4,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": true,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "MessageAdmissionResult",
+          "schema_id": "pm.browser_capture.MessageAdmissionResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.send_now",
+          "outcome": "stale_capture",
+          "revalidation": {
+            "attachment_id": "attach/browser/component/002",
+            "captured_generation": 7,
+            "current_generation": 8,
+            "locator_result_count": 0,
+            "identity_match": false,
+            "source_match": false,
+            "destroyed": false,
+            "result": "stale_capture",
+            "recapture_action": {
+              "command_id": "cmd.browser.component.pick"
+            }
+          },
+          "message_ref": null,
+          "composer_destination_ref": "composer/thread:main",
+          "unrelated_composer_bytes_unchanged": true,
+          "whole_buffer_sent": false,
+          "error": {
+            "code": "stale_capture",
+            "reason": "Locator resolved zero matches at generation 8; recapture through the picker.",
+            "offending_field": "locator",
+            "recapture_action": {
+              "command_id": "cmd.browser.component.pick"
+            }
+          },
+          "details": {
+            "summary": "Zero locator matches; no message admitted.",
+            "original_session_ref": "sess/ordinary/001",
+            "original_page_ref": "page/preview/001",
+            "original_generation": 7,
+            "capture_time": "2026-09-25T12:00:00Z",
+            "identity_hints": "button/submit",
+            "reason": "zero matches"
+          },
+          "receipt_ref": "receipt/browser/send/002"
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/006",
+          "request_ref": "req/browser/send/002",
+          "command_id": "cmd.browser.component.send_now",
+          "command_instance_id": "cmdinst/browser/006",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "failed",
+          "error": {
+            "code": "stale_projection",
+            "reason": "Locator resolved zero matches at generation 8; recapture through the picker.",
+            "offending_field": "locator"
+          },
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/send/002",
+          "operation_id": "op/browser/006",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/006",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/006",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/006",
+          "owner_result_ref": "ownresult/browser/006",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/MessageAdmissionResult",
+            "schema_id": "pm.browser_capture.MessageAdmissionResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/006",
+          "request_id": "req/browser/send/002",
+          "surface": "browser_toolbar",
+          "permission_snapshot_ref": "perm/snapshot/005"
+        },
+        "original": {
+          "selection": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "issuer_receipt_ref": "receipt/browser/pick/001",
+          "permission_snapshot_ref": "perm/snapshot/005"
+        },
+        "buffer_originals": null,
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/006",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/006",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.send_now",
+          "payload_sha256": "08581101c232abd99c16da363a749cde5f1ee92d98adbb8eaefc1d41c17cf756",
+          "owner_result_ref": "ownresult/browser/006",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/MessageAdmissionResult",
+            "schema_id": "pm.browser_capture.MessageAdmissionResult.v1"
+          },
+          "owner_result_sha256": "292131f3da56923acccd935d5d3aa59f478865c30353bdfcbc0704cbc38843f9",
+          "idempotency_key": "idem/browser/006",
+          "target_generation": 0,
+          "outcome": "failed",
+          "dispatch_frame_id": "frame/dispatch/006",
+          "acknowledgement_frame_id": null,
+          "acknowledgement_frame_offset": null,
+          "same_frame_acknowledged": false,
+          "acknowledgement_receipt_ref": null,
+          "result_receipt_ref": "receipt/browser/send/002",
+          "error_ref": "err/browser/006",
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/006",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/006",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.send_now",
+          "command_instance_id": "cmdinst/browser/006",
+          "operation_id": "op/browser/006",
+          "dispatch_id": "dispatch/browser/006",
+          "idempotency_key": "idem/browser/006",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserComponentSendRequest",
+            "schema_id": "pm.browser_capture.BrowserComponentSendRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.component.send_now",
+            "request_id": "req/browser/send/002",
+            "captured": {
+              "original_session_id": "sess:ordinary:001",
+              "original_page_id": "page:preview:001",
+              "original_frame_id": "frame:main:001",
+              "original_generation": 7,
+              "locator": {
+                "locator_ref": "locator/css/submit-button",
+                "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "component_id": "comp:submit:001",
+              "tag": "button",
+              "role": "submit",
+              "source": {
+                "source_ref": "source/app/components/SubmitButton.tsx",
+                "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+              },
+              "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "captured_at": "2026-09-25T12:00:00Z",
+              "selection_epoch": 4
+            },
+            "composer_destination_ref": "composer/thread:main",
+            "composer_revision_expected": 11,
+            "selection_epoch_expected": 4,
+            "permission_snapshot_ref": "perm/snapshot/005"
+          },
+          "permission_snapshot_ref": "perm/snapshot/005"
+        }
+      }
+    },
+    {
+      "name": "add_to_composer_appended",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.component.add_to_composer",
+        "request": {
+          "record_kind": "BrowserComponentComposerRequest",
+          "schema_id": "pm.browser_capture.BrowserComponentComposerRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.add_to_composer",
+          "disposition": "numbered_list",
+          "request_id": "req/browser/composer/001",
+          "captured": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "composer_revision_expected": 11,
+          "selection_epoch_expected": 4,
+          "caret": null,
+          "permission_snapshot_ref": "perm/snapshot/006"
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": "frame:main:001",
+          "locator_match_count": 1,
+          "matched_tag": "button",
+          "matched_role": "submit",
+          "matched_component_id": "comp:submit:001",
+          "matched_source": {
+            "source_ref": "source/app/components/SubmitButton.tsx",
+            "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+          },
+          "matched_fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 4,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": true,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "ComposerBufferResult",
+          "schema_id": "pm.browser_capture.ComposerBufferResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.add_to_composer",
+          "outcome": "appended",
+          "list_entries": [
+            {
+              "index": 1,
+              "hidden_ref": "compref/composer/item/001",
+              "status": "valid",
+              "captured_generation": 7,
+              "current_generation": 7,
+              "component_id": "comp:cancel:002"
+            },
+            {
+              "index": 2,
+              "hidden_ref": "compref/composer/item/002",
+              "status": "valid",
+              "captured_generation": 7,
+              "current_generation": 7,
+              "component_id": "comp:submit:001"
+            }
+          ],
+          "chip": null,
+          "composer_revision_before": 11,
+          "composer_revision_after": 12,
+          "selection_epoch_echo": 4,
+          "partial_send_without_explicit_action": false,
+          "explicit_user_action": false,
+          "error": null,
+          "details": {
+            "summary": "Component appended to numbered composer list.",
+            "original_session_ref": "sess/ordinary/001",
+            "original_page_ref": "page/preview/001",
+            "original_generation": 7,
+            "capture_time": "2026-09-25T12:00:00Z",
+            "identity_hints": "button/submit",
+            "reason": "append"
+          },
+          "receipt_ref": "receipt/browser/composer/001"
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/007",
+          "request_ref": "req/browser/composer/001",
+          "command_id": "cmd.browser.component.add_to_composer",
+          "command_instance_id": "cmdinst/browser/007",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/composer/001",
+          "operation_id": "op/browser/007",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/007",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/007",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/007",
+          "owner_result_ref": "ownresult/browser/007",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/ComposerBufferResult",
+            "schema_id": "pm.browser_capture.ComposerBufferResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/007",
+          "request_id": "req/browser/composer/001",
+          "surface": "browser_selection_bar",
+          "permission_snapshot_ref": "perm/snapshot/006"
+        },
+        "original": {
+          "selection": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "issuer_receipt_ref": "receipt/browser/pick/001",
+          "permission_snapshot_ref": "perm/snapshot/006"
+        },
+        "buffer_originals": [
+          {
+            "hidden_ref": "compref/composer/item/001",
+            "captured": {
+              "original_session_id": "sess:ordinary:001",
+              "original_page_id": "page:preview:001",
+              "original_frame_id": "frame:main:001",
+              "original_generation": 7,
+              "locator": {
+                "locator_ref": "locator/css/cancel-button",
+                "locator_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "component_id": "comp:cancel:002",
+              "tag": "button",
+              "role": "button",
+              "source": {
+                "source_ref": "source/app/components/CancelButton.tsx",
+                "source_identity_hash": "ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc1",
+                "source_map_ref": "sourcemap/app/components/CancelButton.map"
+              },
+              "fingerprint": "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd2",
+              "captured_at": "2026-09-25T11:58:00Z",
+              "selection_epoch": 2
+            },
+            "current_generation": 7,
+            "current_valid": true
+          },
+          {
+            "hidden_ref": "compref/composer/item/002",
+            "captured": {
+              "original_session_id": "sess:ordinary:001",
+              "original_page_id": "page:preview:001",
+              "original_frame_id": "frame:main:001",
+              "original_generation": 7,
+              "locator": {
+                "locator_ref": "locator/css/submit-button",
+                "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "component_id": "comp:submit:001",
+              "tag": "button",
+              "role": "submit",
+              "source": {
+                "source_ref": "source/app/components/SubmitButton.tsx",
+                "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+              },
+              "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "captured_at": "2026-09-25T12:00:00Z",
+              "selection_epoch": 4
+            },
+            "current_generation": 7,
+            "current_valid": true
+          }
+        ],
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/007",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/007",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.add_to_composer",
+          "payload_sha256": "1e95917fd80f8e185576458060538e362c34bc7fe98068768a1a7d36dfb9a4ef",
+          "owner_result_ref": "ownresult/browser/007",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/ComposerBufferResult",
+            "schema_id": "pm.browser_capture.ComposerBufferResult.v1"
+          },
+          "owner_result_sha256": "df7a340511ce12b5020612f6bf98926d5741664c9162fc7588f8208f5f2adc60",
+          "idempotency_key": "idem/browser/007",
+          "target_generation": 0,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame/dispatch/007",
+          "acknowledgement_frame_id": "frame/ack/007",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack/browser/007",
+          "result_receipt_ref": "receipt/browser/composer/001",
+          "error_ref": null,
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/007",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/007",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.add_to_composer",
+          "command_instance_id": "cmdinst/browser/007",
+          "operation_id": "op/browser/007",
+          "dispatch_id": "dispatch/browser/007",
+          "idempotency_key": "idem/browser/007",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserComponentComposerRequest",
+            "schema_id": "pm.browser_capture.BrowserComponentComposerRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.component.add_to_composer",
+            "disposition": "numbered_list",
+            "request_id": "req/browser/composer/001",
+            "captured": {
+              "original_session_id": "sess:ordinary:001",
+              "original_page_id": "page:preview:001",
+              "original_frame_id": "frame:main:001",
+              "original_generation": 7,
+              "locator": {
+                "locator_ref": "locator/css/submit-button",
+                "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "component_id": "comp:submit:001",
+              "tag": "button",
+              "role": "submit",
+              "source": {
+                "source_ref": "source/app/components/SubmitButton.tsx",
+                "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+              },
+              "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "captured_at": "2026-09-25T12:00:00Z",
+              "selection_epoch": 4
+            },
+            "composer_revision_expected": 11,
+            "selection_epoch_expected": 4,
+            "caret": null,
+            "permission_snapshot_ref": "perm/snapshot/006"
+          },
+          "permission_snapshot_ref": "perm/snapshot/006"
+        }
+      }
+    },
+    {
+      "name": "mixed_list_one_stale_appended",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.component.add_to_composer",
+        "request": {
+          "record_kind": "BrowserComponentComposerRequest",
+          "schema_id": "pm.browser_capture.BrowserComponentComposerRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.add_to_composer",
+          "disposition": "numbered_list",
+          "request_id": "req/browser/composer/002",
+          "captured": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "composer_revision_expected": 12,
+          "selection_epoch_expected": 4,
+          "caret": null,
+          "permission_snapshot_ref": "perm/snapshot/007"
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": "frame:main:001",
+          "locator_match_count": 1,
+          "matched_tag": "button",
+          "matched_role": "submit",
+          "matched_component_id": "comp:submit:001",
+          "matched_source": {
+            "source_ref": "source/app/components/SubmitButton.tsx",
+            "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+          },
+          "matched_fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 4,
+          "current_composer_revision": 12,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": true,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "ComposerBufferResult",
+          "schema_id": "pm.browser_capture.ComposerBufferResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.add_to_composer",
+          "outcome": "appended",
+          "list_entries": [
+            {
+              "index": 1,
+              "hidden_ref": "compref/composer/item/001",
+              "status": "valid",
+              "captured_generation": 7,
+              "current_generation": 7,
+              "component_id": "comp:cancel:002"
+            },
+            {
+              "index": 2,
+              "hidden_ref": "compref/composer/item/002",
+              "status": "stale_blocked",
+              "captured_generation": 5,
+              "current_generation": 7,
+              "component_id": "comp:submit:001"
+            }
+          ],
+          "chip": null,
+          "composer_revision_before": 12,
+          "composer_revision_after": 13,
+          "selection_epoch_echo": 4,
+          "partial_send_without_explicit_action": false,
+          "explicit_user_action": false,
+          "error": null,
+          "details": {
+            "summary": "One stale item marked; valid items untouched; nothing sent.",
+            "original_session_ref": "sess/ordinary/001",
+            "original_page_ref": "page/preview/001",
+            "original_generation": 7,
+            "capture_time": "2026-09-25T12:00:00Z",
+            "identity_hints": "button/submit",
+            "reason": "independent per-item revalidation"
+          },
+          "receipt_ref": "receipt/browser/composer/002"
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/008",
+          "request_ref": "req/browser/composer/002",
+          "command_id": "cmd.browser.component.add_to_composer",
+          "command_instance_id": "cmdinst/browser/008",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/composer/002",
+          "operation_id": "op/browser/008",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/008",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/008",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/008",
+          "owner_result_ref": "ownresult/browser/008",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/ComposerBufferResult",
+            "schema_id": "pm.browser_capture.ComposerBufferResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/008",
+          "request_id": "req/browser/composer/002",
+          "surface": "browser_toolbar",
+          "permission_snapshot_ref": "perm/snapshot/007"
+        },
+        "original": {
+          "selection": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "issuer_receipt_ref": "receipt/browser/pick/001",
+          "permission_snapshot_ref": "perm/snapshot/007"
+        },
+        "buffer_originals": [
+          {
+            "hidden_ref": "compref/composer/item/001",
+            "captured": {
+              "original_session_id": "sess:ordinary:001",
+              "original_page_id": "page:preview:001",
+              "original_frame_id": "frame:main:001",
+              "original_generation": 7,
+              "locator": {
+                "locator_ref": "locator/css/cancel-button",
+                "locator_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "component_id": "comp:cancel:002",
+              "tag": "button",
+              "role": "button",
+              "source": {
+                "source_ref": "source/app/components/CancelButton.tsx",
+                "source_identity_hash": "ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc1",
+                "source_map_ref": "sourcemap/app/components/CancelButton.map"
+              },
+              "fingerprint": "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd2",
+              "captured_at": "2026-09-25T11:58:00Z",
+              "selection_epoch": 2
+            },
+            "current_generation": 7,
+            "current_valid": true
+          },
+          {
+            "hidden_ref": "compref/composer/item/002",
+            "captured": {
+              "original_session_id": "sess:ordinary:001",
+              "original_page_id": "page:preview:001",
+              "original_frame_id": "frame:main:001",
+              "original_generation": 5,
+              "locator": {
+                "locator_ref": "locator/css/submit-button",
+                "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "component_id": "comp:submit:001",
+              "tag": "button",
+              "role": "submit",
+              "source": {
+                "source_ref": "source/app/components/SubmitButton.tsx",
+                "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+              },
+              "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "captured_at": "2026-09-25T12:00:00Z",
+              "selection_epoch": 4
+            },
+            "current_generation": 7,
+            "current_valid": false
+          }
+        ],
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/008",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/008",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.add_to_composer",
+          "payload_sha256": "e7f5e44014484f738b0d0f152daa694a81df31693517c7511af582abd55f97d3",
+          "owner_result_ref": "ownresult/browser/008",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/ComposerBufferResult",
+            "schema_id": "pm.browser_capture.ComposerBufferResult.v1"
+          },
+          "owner_result_sha256": "04afbf88a93f8f329b2c4867ecac7331709dbb80e32ec87d8a683d89c583895c",
+          "idempotency_key": "idem/browser/008",
+          "target_generation": 0,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame/dispatch/008",
+          "acknowledgement_frame_id": "frame/ack/008",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack/browser/008",
+          "result_receipt_ref": "receipt/browser/composer/002",
+          "error_ref": null,
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/008",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/008",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.add_to_composer",
+          "command_instance_id": "cmdinst/browser/008",
+          "operation_id": "op/browser/008",
+          "dispatch_id": "dispatch/browser/008",
+          "idempotency_key": "idem/browser/008",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserComponentComposerRequest",
+            "schema_id": "pm.browser_capture.BrowserComponentComposerRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.component.add_to_composer",
+            "disposition": "numbered_list",
+            "request_id": "req/browser/composer/002",
+            "captured": {
+              "original_session_id": "sess:ordinary:001",
+              "original_page_id": "page:preview:001",
+              "original_frame_id": "frame:main:001",
+              "original_generation": 7,
+              "locator": {
+                "locator_ref": "locator/css/submit-button",
+                "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "component_id": "comp:submit:001",
+              "tag": "button",
+              "role": "submit",
+              "source": {
+                "source_ref": "source/app/components/SubmitButton.tsx",
+                "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+              },
+              "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "captured_at": "2026-09-25T12:00:00Z",
+              "selection_epoch": 4
+            },
+            "composer_revision_expected": 12,
+            "selection_epoch_expected": 4,
+            "caret": null,
+            "permission_snapshot_ref": "perm/snapshot/007"
+          },
+          "permission_snapshot_ref": "perm/snapshot/007"
+        }
+      }
+    },
+    {
+      "name": "insert_chip_inserted",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.component.insert_at_cursor",
+        "request": {
+          "record_kind": "BrowserComponentComposerRequest",
+          "schema_id": "pm.browser_capture.BrowserComponentComposerRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.insert_at_cursor",
+          "disposition": "cursor_chip",
+          "request_id": "req/browser/composer/003",
+          "captured": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "composer_revision_expected": 11,
+          "selection_epoch_expected": 4,
+          "caret": {
+            "offset": 42
+          },
+          "permission_snapshot_ref": "perm/snapshot/008"
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": "frame:main:001",
+          "locator_match_count": 1,
+          "matched_tag": "button",
+          "matched_role": "submit",
+          "matched_component_id": "comp:submit:001",
+          "matched_source": {
+            "source_ref": "source/app/components/SubmitButton.tsx",
+            "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+          },
+          "matched_fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 4,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": true,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": true,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "ComposerBufferResult",
+          "schema_id": "pm.browser_capture.ComposerBufferResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.insert_at_cursor",
+          "outcome": "inserted",
+          "list_entries": [],
+          "chip": {
+            "visible_label": "<Component>",
+            "flattened": false,
+            "caret_offset": 42,
+            "hidden_identity_ref": "compref/composer/chip/001",
+            "hidden_component_id": "comp:submit:001",
+            "status": "valid"
+          },
+          "composer_revision_before": 11,
+          "composer_revision_after": 12,
+          "selection_epoch_echo": 4,
+          "partial_send_without_explicit_action": false,
+          "explicit_user_action": false,
+          "error": null,
+          "details": {
+            "summary": "Structured chip inserted at exact caret.",
+            "original_session_ref": "sess/ordinary/001",
+            "original_page_ref": "page/preview/001",
+            "original_generation": 7,
+            "capture_time": "2026-09-25T12:00:00Z",
+            "identity_hints": "button/submit",
+            "reason": "insert at caret 42"
+          },
+          "receipt_ref": "receipt/browser/composer/003"
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/009",
+          "request_ref": "req/browser/composer/003",
+          "command_id": "cmd.browser.component.insert_at_cursor",
+          "command_instance_id": "cmdinst/browser/009",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/composer/003",
+          "operation_id": "op/browser/009",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/009",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/009",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/009",
+          "owner_result_ref": "ownresult/browser/009",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/ComposerBufferResult",
+            "schema_id": "pm.browser_capture.ComposerBufferResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/009",
+          "request_id": "req/browser/composer/003",
+          "surface": "browser_selection_bar",
+          "permission_snapshot_ref": "perm/snapshot/008"
+        },
+        "original": {
+          "selection": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "issuer_receipt_ref": "receipt/browser/pick/001",
+          "permission_snapshot_ref": "perm/snapshot/008"
+        },
+        "buffer_originals": null,
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/009",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/009",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.insert_at_cursor",
+          "payload_sha256": "70f720c8b38ee75fcf07172674270b3507b03d9f6d5c6401c4fab8f617aeec00",
+          "owner_result_ref": "ownresult/browser/009",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/ComposerBufferResult",
+            "schema_id": "pm.browser_capture.ComposerBufferResult.v1"
+          },
+          "owner_result_sha256": "eaf54f2eaed23dfcbce25644ea85d229d623b8d93f3fcec44a791408bb75b87d",
+          "idempotency_key": "idem/browser/009",
+          "target_generation": 0,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame/dispatch/009",
+          "acknowledgement_frame_id": "frame/ack/009",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack/browser/009",
+          "result_receipt_ref": "receipt/browser/composer/003",
+          "error_ref": null,
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/009",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/009",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.insert_at_cursor",
+          "command_instance_id": "cmdinst/browser/009",
+          "operation_id": "op/browser/009",
+          "dispatch_id": "dispatch/browser/009",
+          "idempotency_key": "idem/browser/009",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserComponentComposerRequest",
+            "schema_id": "pm.browser_capture.BrowserComponentComposerRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.component.insert_at_cursor",
+            "disposition": "cursor_chip",
+            "request_id": "req/browser/composer/003",
+            "captured": {
+              "original_session_id": "sess:ordinary:001",
+              "original_page_id": "page:preview:001",
+              "original_frame_id": "frame:main:001",
+              "original_generation": 7,
+              "locator": {
+                "locator_ref": "locator/css/submit-button",
+                "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "component_id": "comp:submit:001",
+              "tag": "button",
+              "role": "submit",
+              "source": {
+                "source_ref": "source/app/components/SubmitButton.tsx",
+                "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+              },
+              "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "captured_at": "2026-09-25T12:00:00Z",
+              "selection_epoch": 4
+            },
+            "composer_revision_expected": 11,
+            "selection_epoch_expected": 4,
+            "caret": {
+              "offset": 42
+            },
+            "permission_snapshot_ref": "perm/snapshot/008"
+          },
+          "permission_snapshot_ref": "perm/snapshot/008"
+        }
+      }
+    },
+    {
+      "name": "mode_default_applied",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.component.mode.set_default",
+        "request": {
+          "record_kind": "BrowserComponentModeRequest",
+          "schema_id": "pm.browser_capture.BrowserComponentModeRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.mode.set_default",
+          "request_id": "req/browser/mode/001",
+          "initial_mode": "send_now",
+          "setting_id_ref": "planning.testing.browser-component-action",
+          "project_id": "proj:main:001",
+          "expected_project_revision": 9
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": null,
+          "locator_match_count": null,
+          "matched_tag": null,
+          "matched_role": null,
+          "matched_component_id": null,
+          "matched_source": null,
+          "matched_fingerprint": null,
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 4,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": 9,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": false,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "SettingsTransactionResult",
+          "schema_id": "pm.browser_capture.SettingsTransactionResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.mode.set_default",
+          "outcome": "applied",
+          "previous_revision": 9,
+          "current_revision": 10,
+          "changed_setting_ids": [
+            "planning.testing.browser-component-action"
+          ],
+          "persisted_initial_mode": "send_now",
+          "receipt_ref": "receipt/browser/mode/001",
+          "disabled_reasons": [],
+          "replayed": false,
+          "settled_at": "2026-09-25T12:01:00Z",
+          "error": null
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/010",
+          "request_ref": "req/browser/mode/001",
+          "command_id": "cmd.browser.component.mode.set_default",
+          "command_instance_id": "cmdinst/browser/010",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/mode/001",
+          "operation_id": "op/browser/010",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/010",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/010",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/010",
+          "owner_result_ref": "ownresult/browser/010",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/SettingsTransactionResult",
+            "schema_id": "pm.browser_capture.SettingsTransactionResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/010",
+          "request_id": "req/browser/mode/001",
+          "surface": "browser_toolbar",
+          "permission_snapshot_ref": "perm/snapshot/not-applicable"
+        },
+        "original": null,
+        "buffer_originals": null,
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/010",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/010",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.mode.set_default",
+          "payload_sha256": "863fec92e5f5aec3f5647c7578bd3db908fae842d47242c37d0d26beea3728bb",
+          "owner_result_ref": "ownresult/browser/010",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/SettingsTransactionResult",
+            "schema_id": "pm.browser_capture.SettingsTransactionResult.v1"
+          },
+          "owner_result_sha256": "35236e2ea877865f54d7314657d66abe2a1fd54c45581f72c70b1347e2b074e8",
+          "idempotency_key": "idem/browser/010",
+          "target_generation": 0,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame/dispatch/010",
+          "acknowledgement_frame_id": "frame/ack/010",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack/browser/010",
+          "result_receipt_ref": "receipt/browser/mode/001",
+          "error_ref": null,
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/010",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/010",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.mode.set_default",
+          "command_instance_id": "cmdinst/browser/010",
+          "operation_id": "op/browser/010",
+          "dispatch_id": "dispatch/browser/010",
+          "idempotency_key": "idem/browser/010",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserComponentModeRequest",
+            "schema_id": "pm.browser_capture.BrowserComponentModeRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.component.mode.set_default",
+            "request_id": "req/browser/mode/001",
+            "initial_mode": "send_now",
+            "setting_id_ref": "planning.testing.browser-component-action",
+            "project_id": "proj:main:001",
+            "expected_project_revision": 9
+          },
+          "permission_snapshot_ref": "perm/snapshot/not-applicable"
+        }
+      }
+    },
+    {
+      "name": "devtools_navigated",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.devtools.open",
+        "request": {
+          "record_kind": "BrowserDevToolsOpenRequest",
+          "schema_id": "pm.browser_capture.BrowserDevToolsOpenRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.devtools.open",
+          "request_id": "req/browser/devtools/001",
+          "subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "origin_security_class": "ordinary",
+          "devtools_policy_allows": true
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": null,
+          "locator_match_count": null,
+          "matched_tag": null,
+          "matched_role": null,
+          "matched_component_id": null,
+          "matched_source": null,
+          "matched_fingerprint": null,
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 4,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": false,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "RouteResult",
+          "schema_id": "pm.browser_capture.RouteResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.devtools.open",
+          "outcome": "navigated",
+          "route_target_ref": "route/browser/devtools/session-001",
+          "raw_protocol_authority_granted": false,
+          "program_evaluate_authority_granted": false,
+          "error": null,
+          "receipt_ref": "receipt/browser/devtools/001"
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/011",
+          "request_ref": "req/browser/devtools/001",
+          "command_id": "cmd.browser.devtools.open",
+          "command_instance_id": "cmdinst/browser/011",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/devtools/001",
+          "operation_id": "op/browser/011",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/011",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/011",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/011",
+          "owner_result_ref": "ownresult/browser/011",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/RouteResult",
+            "schema_id": "pm.browser_capture.RouteResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/011",
+          "request_id": "req/browser/devtools/001",
+          "surface": "browser_selection_bar",
+          "permission_snapshot_ref": "perm/snapshot/not-applicable"
+        },
+        "original": null,
+        "buffer_originals": null,
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/011",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/011",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.devtools.open",
+          "payload_sha256": "63a7962f6da2643e6fd9810d8b67f7254361ce60fe67b12b340471d25c309517",
+          "owner_result_ref": "ownresult/browser/011",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/RouteResult",
+            "schema_id": "pm.browser_capture.RouteResult.v1"
+          },
+          "owner_result_sha256": "1a016d0d5b7f219de4f1c5f2bb2e6e61931cefdc29c768fa900964f66caecb7e",
+          "idempotency_key": "idem/browser/011",
+          "target_generation": 0,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame/dispatch/011",
+          "acknowledgement_frame_id": "frame/ack/011",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack/browser/011",
+          "result_receipt_ref": "receipt/browser/devtools/001",
+          "error_ref": null,
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/011",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/011",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.devtools.open",
+          "command_instance_id": "cmdinst/browser/011",
+          "operation_id": "op/browser/011",
+          "dispatch_id": "dispatch/browser/011",
+          "idempotency_key": "idem/browser/011",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserDevToolsOpenRequest",
+            "schema_id": "pm.browser_capture.BrowserDevToolsOpenRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.devtools.open",
+            "request_id": "req/browser/devtools/001",
+            "subject": {
+              "browser_session_id": "sess:ordinary:001",
+              "browser_workspace_id": "ws:project:001",
+              "browser_page_id": "page:preview:001",
+              "page_generation": 7,
+              "session_security_class": "ordinary"
+            },
+            "origin_security_class": "ordinary",
+            "devtools_policy_allows": true
+          },
+          "permission_snapshot_ref": "perm/snapshot/not-applicable"
+        }
+      }
+    },
+    {
+      "name": "devtools_protected_blocked",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.devtools.open",
+        "request": {
+          "record_kind": "BrowserDevToolsOpenRequest",
+          "schema_id": "pm.browser_capture.BrowserDevToolsOpenRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.devtools.open",
+          "request_id": "req/browser/devtools/002",
+          "subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "origin_security_class": "protected_auth",
+          "devtools_policy_allows": true
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": null,
+          "locator_match_count": null,
+          "matched_tag": null,
+          "matched_role": null,
+          "matched_component_id": null,
+          "matched_source": null,
+          "matched_fingerprint": null,
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 4,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": false,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "RouteResult",
+          "schema_id": "pm.browser_capture.RouteResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.devtools.open",
+          "outcome": "blocked",
+          "route_target_ref": null,
+          "raw_protocol_authority_granted": false,
+          "program_evaluate_authority_granted": false,
+          "error": {
+            "code": "protected_denied",
+            "reason": "DevTools is excluded for the protected authentication browser.",
+            "offending_field": "origin_security_class",
+            "recapture_action": null
+          },
+          "receipt_ref": null
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/012",
+          "request_ref": "req/browser/devtools/002",
+          "command_id": "cmd.browser.devtools.open",
+          "command_instance_id": "cmdinst/browser/012",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "failed",
+          "error": {
+            "code": "permission_denied",
+            "reason": "DevTools is excluded for the protected authentication browser.",
+            "offending_field": "origin_security_class"
+          },
+          "event_refs": [],
+          "receipt_ref": null,
+          "operation_id": "op/browser/012",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/012",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/012",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/012",
+          "owner_result_ref": "ownresult/browser/012",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/RouteResult",
+            "schema_id": "pm.browser_capture.RouteResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/012",
+          "request_id": "req/browser/devtools/002",
+          "surface": "browser_toolbar",
+          "permission_snapshot_ref": "perm/snapshot/not-applicable"
+        },
+        "original": null,
+        "buffer_originals": null,
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/012",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/012",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.devtools.open",
+          "payload_sha256": "c13255bc854a4760bc517683937c2907e99bdcbef6b39cf84f34123051678041",
+          "owner_result_ref": "ownresult/browser/012",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/RouteResult",
+            "schema_id": "pm.browser_capture.RouteResult.v1"
+          },
+          "owner_result_sha256": "9d56918bda2aae23399349bb4b6eece2718af5d135d7bd362023a8e6b82e82de",
+          "idempotency_key": "idem/browser/012",
+          "target_generation": 0,
+          "outcome": "failed",
+          "dispatch_frame_id": "frame/dispatch/012",
+          "acknowledgement_frame_id": null,
+          "acknowledgement_frame_offset": null,
+          "same_frame_acknowledged": false,
+          "acknowledgement_receipt_ref": null,
+          "result_receipt_ref": null,
+          "error_ref": "err/browser/012",
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/012",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/012",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.devtools.open",
+          "command_instance_id": "cmdinst/browser/012",
+          "operation_id": "op/browser/012",
+          "dispatch_id": "dispatch/browser/012",
+          "idempotency_key": "idem/browser/012",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserDevToolsOpenRequest",
+            "schema_id": "pm.browser_capture.BrowserDevToolsOpenRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.devtools.open",
+            "request_id": "req/browser/devtools/002",
+            "subject": {
+              "browser_session_id": "sess:ordinary:001",
+              "browser_workspace_id": "ws:project:001",
+              "browser_page_id": "page:preview:001",
+              "page_generation": 7,
+              "session_security_class": "ordinary"
+            },
+            "origin_security_class": "protected_auth",
+            "devtools_policy_allows": true
+          },
+          "permission_snapshot_ref": "perm/snapshot/not-applicable"
+        }
+      }
+    },
+    {
+      "name": "scheduled_frozen_snapshot_admitted",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.component.send_now",
+        "request": {
+          "record_kind": "BrowserComponentSendRequest",
+          "schema_id": "pm.browser_capture.BrowserComponentSendRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.send_now",
+          "request_id": "req/browser/send/003",
+          "captured": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "composer_destination_ref": "composer/thread:main",
+          "composer_revision_expected": 11,
+          "selection_epoch_expected": 4,
+          "permission_snapshot_ref": "perm/snapshot/009"
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": "frame:main:001",
+          "locator_match_count": 1,
+          "matched_tag": "button",
+          "matched_role": "submit",
+          "matched_component_id": "comp:submit:001",
+          "matched_source": {
+            "source_ref": "source/app/components/SubmitButton.tsx",
+            "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+          },
+          "matched_fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 4,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": true,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "MessageAdmissionResult",
+          "schema_id": "pm.browser_capture.MessageAdmissionResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.component.send_now",
+          "outcome": "admitted_isolated",
+          "revalidation": {
+            "attachment_id": "attach/browser/component/003",
+            "captured_generation": 7,
+            "current_generation": 7,
+            "locator_result_count": 1,
+            "identity_match": true,
+            "source_match": true,
+            "destroyed": false,
+            "result": "fresh_single_compatible",
+            "recapture_action": null
+          },
+          "message_ref": "msg/thread:main/003",
+          "composer_destination_ref": "composer/thread:main",
+          "unrelated_composer_bytes_unchanged": true,
+          "whole_buffer_sent": false,
+          "error": null,
+          "details": {
+            "summary": "Frozen snapshot admitted for scheduled send.",
+            "original_session_ref": "sess/ordinary/001",
+            "original_page_ref": "page/preview/001",
+            "original_generation": 7,
+            "capture_time": "2026-09-25T12:00:00Z",
+            "identity_hints": "button/submit",
+            "reason": "frozen artifact identity bound"
+          },
+          "receipt_ref": "receipt/browser/send/003"
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/013",
+          "request_ref": "req/browser/send/003",
+          "command_id": "cmd.browser.component.send_now",
+          "command_instance_id": "cmdinst/browser/013",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/send/003",
+          "operation_id": "op/browser/013",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/013",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/013",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/013",
+          "owner_result_ref": "ownresult/browser/013",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/MessageAdmissionResult",
+            "schema_id": "pm.browser_capture.MessageAdmissionResult.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": {
+          "wants_schedule": true,
+          "frozen_snapshot": {
+            "artifact_ref": "artifact/browser/frozen/003",
+            "artifact_version": "v3",
+            "content_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          }
+        },
+        "caller": {
+          "command_instance_id": "cmdinst/browser/013",
+          "request_id": "req/browser/send/003",
+          "surface": "browser_selection_bar",
+          "permission_snapshot_ref": "perm/snapshot/009"
+        },
+        "original": {
+          "selection": {
+            "original_session_id": "sess:ordinary:001",
+            "original_page_id": "page:preview:001",
+            "original_frame_id": "frame:main:001",
+            "original_generation": 7,
+            "locator": {
+              "locator_ref": "locator/css/submit-button",
+              "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "component_id": "comp:submit:001",
+            "tag": "button",
+            "role": "submit",
+            "source": {
+              "source_ref": "source/app/components/SubmitButton.tsx",
+              "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+            },
+            "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "captured_at": "2026-09-25T12:00:00Z",
+            "selection_epoch": 4
+          },
+          "issuer_receipt_ref": "receipt/browser/pick/001",
+          "permission_snapshot_ref": "perm/snapshot/009"
+        },
+        "buffer_originals": null,
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/013",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/013",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.send_now",
+          "payload_sha256": "a9349d656a03f3b81bf7d70138f6be0f02a8428dc77413f3f0a75d790aba384a",
+          "owner_result_ref": "ownresult/browser/013",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/MessageAdmissionResult",
+            "schema_id": "pm.browser_capture.MessageAdmissionResult.v1"
+          },
+          "owner_result_sha256": "1d4d9e395191ec967aa285e3ea12e8f7fb5e8c260d5fc1f98bf1182e82f1433b",
+          "idempotency_key": "idem/browser/013",
+          "target_generation": 0,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame/dispatch/013",
+          "acknowledgement_frame_id": "frame/ack/013",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack/browser/013",
+          "result_receipt_ref": "receipt/browser/send/003",
+          "error_ref": null,
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/013",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/013",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.component.send_now",
+          "command_instance_id": "cmdinst/browser/013",
+          "operation_id": "op/browser/013",
+          "dispatch_id": "dispatch/browser/013",
+          "idempotency_key": "idem/browser/013",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserComponentSendRequest",
+            "schema_id": "pm.browser_capture.BrowserComponentSendRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.component.send_now",
+            "request_id": "req/browser/send/003",
+            "captured": {
+              "original_session_id": "sess:ordinary:001",
+              "original_page_id": "page:preview:001",
+              "original_frame_id": "frame:main:001",
+              "original_generation": 7,
+              "locator": {
+                "locator_ref": "locator/css/submit-button",
+                "locator_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "component_id": "comp:submit:001",
+              "tag": "button",
+              "role": "submit",
+              "source": {
+                "source_ref": "source/app/components/SubmitButton.tsx",
+                "source_identity_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "source_map_ref": "sourcemap/app/components/SubmitButton.map"
+              },
+              "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "captured_at": "2026-09-25T12:00:00Z",
+              "selection_epoch": 4
+            },
+            "composer_destination_ref": "composer/thread:main",
+            "composer_revision_expected": 11,
+            "selection_epoch_expected": 4,
+            "permission_snapshot_ref": "perm/snapshot/009"
+          },
+          "permission_snapshot_ref": "perm/snapshot/009"
+        }
+      }
+    },
+    {
+      "name": "full_viewport_replayed_accepted",
+      "definition": "browser_capture_response_case",
+      "value": {
+        "record_kind": "browser_capture_response_case",
+        "schema_id": "pm.browser_capture.response_case.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.browser.capture.full_to_chat",
+        "request": {
+          "record_kind": "BrowserCaptureFullRequest",
+          "schema_id": "pm.browser_capture.BrowserCaptureFullRequest.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "request_id": "req/browser/capture/014",
+          "capture_scope": "viewport",
+          "explicit_full_page_selected": false,
+          "subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "origin_security_class": "ordinary",
+          "composer_destination_ref": "composer/thread:main",
+          "permission_snapshot_ref": "perm/snapshot/001",
+          "capture_permitted": true
+        },
+        "current": {
+          "current_subject": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "current_frame_id": "frame:main:001",
+          "locator_match_count": null,
+          "matched_tag": null,
+          "matched_role": null,
+          "matched_component_id": null,
+          "matched_source": null,
+          "matched_fingerprint": null,
+          "frame_destroyed": false,
+          "page_destroyed": false,
+          "current_selection_epoch": 3,
+          "current_composer_revision": 11,
+          "composer_text_before": "unrelated draft text",
+          "composer_text_after": "unrelated draft text",
+          "settings_current_revision": null,
+          "preconditions": {
+            "browser_runtime_available": true,
+            "capture_permitted": true,
+            "component_resolution_available": true,
+            "component_selected": false,
+            "composer_available": true,
+            "composer_destination_resolvable": true,
+            "caret_position_known": false,
+            "settings_writable": true,
+            "devtools_policy_allows": true
+          }
+        },
+        "result": {
+          "record_kind": "BrowserCaptureResult",
+          "schema_id": "pm.browser_capture.BrowserCaptureResult.v1",
+          "schema_version": "1.0.0",
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "outcome": "submitted_isolated",
+          "artifact_ref": "artifact/browser/capture/001",
+          "capture_scope_echo": "viewport",
+          "subject_echo": {
+            "browser_session_id": "sess:ordinary:001",
+            "browser_workspace_id": "ws:project:001",
+            "browser_page_id": "page:preview:001",
+            "page_generation": 7,
+            "session_security_class": "ordinary"
+          },
+          "composer_destination_ref": "composer/thread:main",
+          "unrelated_composer_bytes_unchanged": true,
+          "whole_buffer_sent": false,
+          "error": null,
+          "details": {
+            "summary": "Viewport capture submitted as isolated payload.",
+            "original_session_ref": "sess/ordinary/001",
+            "original_page_ref": "page/preview/001",
+            "original_generation": 7,
+            "capture_time": "2026-09-25T12:00:00Z",
+            "identity_hints": "viewport 1440x900",
+            "reason": "explicit user capture action"
+          },
+          "receipt_ref": "receipt/browser/capture/001"
+        },
+        "central": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch/browser/014",
+          "request_ref": "req/browser/capture/001",
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "command_instance_id": "cmdinst/browser/014",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [],
+          "receipt_ref": "receipt/browser/capture/001",
+          "operation_id": "op/browser/014",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/014",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/014",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_outcome_ref": "cmdoutcome/browser/014",
+          "owner_result_ref": "ownresult/browser/014",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/BrowserCaptureResult",
+            "schema_id": "pm.browser_capture.BrowserCaptureResult.v1"
+          },
+          "replayed": true,
+          "original_dispatch_id": "dispatch/browser/001",
+          "ts": "2026-09-25T12:02:00Z"
+        },
+        "schedule_attempt": null,
+        "caller": {
+          "command_instance_id": "cmdinst/browser/014",
+          "request_id": "req/browser/capture/014",
+          "surface": "browser_selection_bar",
+          "permission_snapshot_ref": "perm/snapshot/001"
+        },
+        "original": null,
+        "buffer_originals": null,
+        "outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/014",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/014",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "payload_sha256": "7d8ad916db31965bfe26b90dc3cd6caf667765853d6095a982f2d94a3173b0f5",
+          "owner_result_ref": "ownresult/browser/014",
+          "owner_result_schema_ref": {
+            "path": "Plans/browser_capture_contracts.schema.json",
+            "json_pointer": "#/$defs/BrowserCaptureResult",
+            "schema_id": "pm.browser_capture.BrowserCaptureResult.v1"
+          },
+          "owner_result_sha256": "6f3d66040d9e23842d7f03db21765a066cabc8ab6f0c1a9e1e441af1c385e4af",
+          "idempotency_key": "idem/browser/014",
+          "target_generation": 0,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame/dispatch/014",
+          "acknowledgement_frame_id": "frame/ack/014",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "ack/browser/014",
+          "result_receipt_ref": "receipt/browser/capture/001",
+          "error_ref": null,
+          "observed_at": "2026-09-25T12:02:00Z"
+        },
+        "dispatch": {
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "op/browser/014",
+            "operation_generation": 0,
+            "command_instance_id": "cmdinst/browser/014",
+            "server_id": "srv/home/001",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host/local/001",
+            "execution_environment_id": "env/native/001",
+            "topology_generation": 1
+          },
+          "command_id": "cmd.browser.capture.full_to_chat",
+          "command_instance_id": "cmdinst/browser/014",
+          "operation_id": "op/browser/014",
+          "dispatch_id": "dispatch/browser/014",
+          "idempotency_key": "idem/browser/014",
+          "target_generation": 0,
+          "accepted_at": "2026-09-25T11:59:00Z",
+          "arguments": {
+            "record_kind": "BrowserCaptureFullRequest",
+            "schema_id": "pm.browser_capture.BrowserCaptureFullRequest.v1",
+            "schema_version": "1.0.0",
+            "command_id": "cmd.browser.capture.full_to_chat",
+            "request_id": "req/browser/capture/014",
+            "capture_scope": "viewport",
+            "explicit_full_page_selected": false,
+            "subject": {
+              "browser_session_id": "sess:ordinary:001",
+              "browser_workspace_id": "ws:project:001",
+              "browser_page_id": "page:preview:001",
+              "page_generation": 7,
+              "session_security_class": "ordinary"
+            },
+            "origin_security_class": "ordinary",
+            "composer_destination_ref": "composer/thread:main",
+            "permission_snapshot_ref": "perm/snapshot/001",
+            "capture_permitted": true
+          },
+          "permission_snapshot_ref": "perm/snapshot/001"
+        }
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "scope_default_violated",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "request.capture_scope": "full_page"
+      },
+      "semantic_rule": "J_SCOPE_DEFAULT"
+    },
+    {
+      "name": "scope_echo_mismatch",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "result.capture_scope_echo": "full_page"
+      },
+      "semantic_rule": "J_SCOPE_DEFAULT"
+    },
+    {
+      "name": "whole_buffer_sent",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "result.whole_buffer_sent": true
+      },
+      "semantic_rule": "J_ISOLATION"
+    },
+    {
+      "name": "composer_bytes_consumed",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "current.composer_text_after": "unrelated draft text + CAPTURE BYTES"
+      },
+      "semantic_rule": "J_ISOLATION"
+    },
+    {
+      "name": "protected_full_submitted",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "request.origin_security_class": "protected_auth"
+      },
+      "semantic_rule": "J_PROTECTED"
+    },
+    {
+      "name": "permission_denied_success",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "request.capture_permitted": false
+      },
+      "semantic_rule": "J_PERMISSION"
+    },
+    {
+      "name": "precondition_runtime_down",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "current.preconditions.browser_runtime_available": false
+      },
+      "semantic_rule": "J_PERMISSION"
+    },
+    {
+      "name": "region_subject_swapped",
+      "definition": "browser_capture_response_case",
+      "base_valid": "region_selected_submitted",
+      "patch": {
+        "result.subject_echo.browser_page_id": "page:preview:999"
+      },
+      "semantic_rule": "J_SUBJECT_EXACT"
+    },
+    {
+      "name": "destination_substituted",
+      "definition": "browser_capture_response_case",
+      "base_valid": "region_selected_submitted",
+      "patch": {
+        "result.composer_destination_ref": "composer/thread:other"
+      },
+      "semantic_rule": "J_DESTINATION_EXACT"
+    },
+    {
+      "name": "pick_frame_mismatch",
+      "definition": "browser_capture_response_case",
+      "base_valid": "component_pick_selected",
+      "patch": {
+        "result.selection.original_frame_id": "frame:main:999"
+      },
+      "semantic_rule": "J_PICK_EXACT"
+    },
+    {
+      "name": "pick_protected_selected",
+      "definition": "browser_capture_response_case",
+      "base_valid": "component_pick_selected",
+      "patch": {
+        "request.origin_security_class": "protected_auth"
+      },
+      "semantic_rule": "J_PROTECTED"
+    },
+    {
+      "name": "send_zero_matches_admitted",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "current.locator_match_count": 0
+      },
+      "semantic_rule": "J_REVALIDATE"
+    },
+    {
+      "name": "send_multi_matches_admitted",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "current.locator_match_count": 3
+      },
+      "semantic_rule": "J_REVALIDATE"
+    },
+    {
+      "name": "send_frame_destroyed_admitted",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "current.frame_destroyed": true
+      },
+      "semantic_rule": "J_REVALIDATE"
+    },
+    {
+      "name": "send_identity_mismatch_admitted",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "current.matched_component_id": "comp:other:999"
+      },
+      "semantic_rule": "J_REVALIDATE"
+    },
+    {
+      "name": "send_source_changed_admitted",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "current.matched_source.source_identity_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      },
+      "semantic_rule": "J_SOURCE"
+    },
+    {
+      "name": "send_fingerprint_changed_admitted",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "current.matched_fingerprint": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
+      "semantic_rule": "J_REVALIDATE"
+    },
+    {
+      "name": "send_foreign_session_admitted",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "current.current_subject.browser_session_id": "sess:ordinary:999"
+      },
+      "semantic_rule": "J_REVALIDATE"
+    },
+    {
+      "name": "send_generation_moved_admitted",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "current.current_subject.page_generation": 8
+      },
+      "semantic_rule": "J_REVALIDATE"
+    },
+    {
+      "name": "send_stale_outcome_with_message",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "current.locator_match_count": 0,
+        "current.matched_tag": null,
+        "current.matched_role": null,
+        "current.matched_component_id": null,
+        "current.matched_source": null,
+        "current.matched_fingerprint": null,
+        "result.outcome": "stale_capture",
+        "result.revalidation.result": "stale_capture",
+        "result.revalidation.locator_result_count": 0,
+        "result.revalidation.identity_match": false,
+        "result.revalidation.source_match": false,
+        "result.revalidation.recapture_action": {
+          "command_id": "cmd.browser.component.pick"
+        },
+        "result.error": {
+          "code": "stale_capture",
+          "reason": "zero matches",
+          "offending_field": "locator",
+          "recapture_action": {
+            "command_id": "cmd.browser.component.pick"
+          }
+        },
+        "central.result_status": "failed",
+        "central.error": {
+          "code": "stale_projection",
+          "reason": "zero matches",
+          "offending_field": "locator"
+        },
+        "outcome.outcome": "failed",
+        "outcome.error_ref": "err/browser/005",
+        "outcome.acknowledgement_frame_id": null,
+        "outcome.acknowledgement_frame_offset": null,
+        "outcome.same_frame_acknowledged": false,
+        "outcome.acknowledgement_receipt_ref": null
+      },
+      "semantic_rule": "J_STALE_NO_MESSAGE"
+    },
+    {
+      "name": "late_callback_epoch_moved",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "current.current_selection_epoch": 5
+      },
+      "semantic_rule": "J_FENCE"
+    },
+    {
+      "name": "late_callback_revision_moved",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "current.current_composer_revision": 12
+      },
+      "semantic_rule": "J_FENCE"
+    },
+    {
+      "name": "list_stale_unmarked",
+      "definition": "browser_capture_response_case",
+      "base_valid": "mixed_list_one_stale_appended",
+      "patch": {
+        "result.list_entries.1.status": "valid"
+      },
+      "semantic_rule": "J_BUFFER_BIND"
+    },
+    {
+      "name": "list_partial_implicit_send",
+      "definition": "browser_capture_response_case",
+      "base_valid": "mixed_list_one_stale_appended",
+      "patch": {
+        "result.partial_send_without_explicit_action": true
+      },
+      "semantic_rule": "J_PARTIAL"
+    },
+    {
+      "name": "chip_flattened",
+      "definition": "browser_capture_response_case",
+      "base_valid": "insert_chip_inserted",
+      "patch": {
+        "result.chip.flattened": true
+      },
+      "semantic_rule": "J_CHIP"
+    },
+    {
+      "name": "chip_identity_swapped",
+      "definition": "browser_capture_response_case",
+      "base_valid": "insert_chip_inserted",
+      "patch": {
+        "result.chip.hidden_component_id": "comp:other:999"
+      },
+      "semantic_rule": "J_CHIP"
+    },
+    {
+      "name": "settings_revision_mismatch_applied",
+      "definition": "browser_capture_response_case",
+      "base_valid": "mode_default_applied",
+      "patch": {
+        "request.expected_project_revision": 8
+      },
+      "semantic_rule": "J_SETTINGS"
+    },
+    {
+      "name": "settings_persisted_mismatch",
+      "definition": "browser_capture_response_case",
+      "base_valid": "mode_default_applied",
+      "patch": {
+        "result.persisted_initial_mode": "insert_at_cursor"
+      },
+      "semantic_rule": "J_SETTINGS"
+    },
+    {
+      "name": "devtools_protected_navigated",
+      "definition": "browser_capture_response_case",
+      "base_valid": "devtools_navigated",
+      "patch": {
+        "request.origin_security_class": "protected_auth"
+      },
+      "semantic_rule": "J_PROTECTED"
+    },
+    {
+      "name": "devtools_policy_denied_navigated",
+      "definition": "browser_capture_response_case",
+      "base_valid": "devtools_navigated",
+      "patch": {
+        "request.devtools_policy_allows": false
+      },
+      "semantic_rule": "J_DEVTOOLS"
+    },
+    {
+      "name": "devtools_raw_authority",
+      "definition": "browser_capture_response_case",
+      "base_valid": "devtools_navigated",
+      "patch": {
+        "result.raw_protocol_authority_granted": true
+      },
+      "semantic_rule": "J_DEVTOOLS"
+    },
+    {
+      "name": "devtools_program_authority",
+      "definition": "browser_capture_response_case",
+      "base_valid": "devtools_navigated",
+      "patch": {
+        "result.program_evaluate_authority_granted": true
+      },
+      "semantic_rule": "J_DEVTOOLS"
+    },
+    {
+      "name": "live_selector_scheduled",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "schedule_attempt": {
+          "wants_schedule": true,
+          "frozen_snapshot": null
+        }
+      },
+      "semantic_rule": "J_SCHEDULE"
+    },
+    {
+      "name": "central_fake_success",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_stale_zero_blocked",
+      "patch": {
+        "central.result_status": "succeeded",
+        "central.error": null
+      },
+      "semantic_rule": "J_CENTRAL"
+    },
+    {
+      "name": "details_secret_leak",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "result.details.reason": "captured; session cookie abc123"
+      },
+      "semantic_rule": "J_DETAILS"
+    },
+    {
+      "name": "send_recapture_invented_command_rejected",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_stale_zero_blocked",
+      "patch": {
+        "result.revalidation.recapture_action": {
+          "command_id": "cmd.browser.component.recapture"
+        }
+      }
+    },
+    {
+      "name": "settings_extra_setting_ids_rejected",
+      "definition": "browser_capture_response_case",
+      "base_valid": "mode_default_applied",
+      "patch": {
+        "result.changed_setting_ids": [
+          "setting/browser/component-initial-mode",
+          "setting/browser/other"
+        ]
+      }
+    },
+    {
+      "name": "bad_command_shape_rejected",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "command_id": "cmd.browser.capture.screenshot"
+      }
+    },
+    {
+      "name": "protected_subject_shape_rejected",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "request.subject.session_security_class": "protected_auth"
+      }
+    },
+    {
+      "name": "chip_label_shape_rejected",
+      "definition": "browser_capture_response_case",
+      "base_valid": "insert_chip_inserted",
+      "patch": {
+        "result.chip.visible_label": "Component"
+      }
+    },
+    {
+      "name": "capture_artifact_type_rejected",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "result.artifact_ref": 123
+      }
+    },
+    {
+      "name": "repro1_foreign_original_and_current",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "request.captured.original_session_id": "sess:foreign:999",
+        "current.current_subject.browser_session_id": "sess:foreign:999"
+      },
+      "semantic_rule": "J_ORIGINAL_BIND"
+    },
+    {
+      "name": "repro2_forged_admission_refs",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "result.message_ref": "msg:forged:999",
+        "result.receipt_ref": "receipt:forged:999"
+      },
+      "semantic_rule": "J_OUTCOME_BIND"
+    },
+    {
+      "name": "repro3_foreign_setting",
+      "definition": "browser_capture_response_case",
+      "base_valid": "mode_default_applied",
+      "patch": {
+        "request.setting_id_ref": "setting/foreign/unrelated",
+        "result.changed_setting_ids": [
+          "setting/foreign/unrelated"
+        ]
+      },
+      "semantic_rule": "J_SETTINGS_KEY"
+    },
+    {
+      "name": "repro4_foreign_list_item",
+      "definition": "browser_capture_response_case",
+      "base_valid": "add_to_composer_appended",
+      "patch": {
+        "result.list_entries.0.hidden_ref": "compref/foreign/other"
+      },
+      "semantic_rule": "J_BUFFER_BIND"
+    },
+    {
+      "name": "swap_outcome_receipt",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "outcome.result_receipt_ref": "receipt:forged:999"
+      },
+      "semantic_rule": "J_OUTCOME_BIND"
+    },
+    {
+      "name": "swap_command_instance",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "outcome.identity.command_instance_id": "cmdinst/forged/999"
+      },
+      "semantic_rule": "J_OUTCOME_BIND"
+    },
+    {
+      "name": "swap_owner_result_pointer",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "outcome.owner_result_schema_ref.json_pointer": "#/$defs/RouteResult"
+      },
+      "semantic_rule": "J_OUTCOME_BIND"
+    },
+    {
+      "name": "swap_list_hidden_refs",
+      "definition": "browser_capture_response_case",
+      "base_valid": "add_to_composer_appended",
+      "patch": {
+        "result.list_entries.0.hidden_ref": "compref/composer/item/002",
+        "result.list_entries.1.hidden_ref": "compref/composer/item/001"
+      },
+      "semantic_rule": "J_BUFFER_BIND"
+    },
+    {
+      "name": "setting_changed_mismatch",
+      "definition": "browser_capture_response_case",
+      "base_valid": "mode_default_applied",
+      "patch": {
+        "result.changed_setting_ids": [
+          "setting/browser/other-setting"
+        ]
+      },
+      "semantic_rule": "J_SETTINGS_KEY"
+    },
+    {
+      "name": "caller_request_id_mismatch",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "caller.request_id": "req/forged/999"
+      },
+      "semantic_rule": "J_CALLER_BIND"
+    },
+    {
+      "name": "missing_original_send",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "original": null
+      },
+      "semantic_rule": "J_ORIGINAL_BIND"
+    },
+    {
+      "name": "central_event_emission",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "central.event_refs": [
+          "ev/browser/001"
+        ]
+      },
+      "semantic_rule": "J_CENTRAL"
+    },
+    {
+      "name": "digest_result_flip",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "outcome.owner_result_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "semantic_rule": "J_RESULT_DIGEST"
+    },
+    {
+      "name": "digest_payload_flip",
+      "definition": "browser_capture_response_case",
+      "base_valid": "send_now_fresh_admitted",
+      "patch": {
+        "outcome.payload_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "semantic_rule": "J_PAYLOAD_DIGEST"
+    },
+    {
+      "name": "dispatch_args_tamper",
+      "definition": "browser_capture_response_case",
+      "base_valid": "region_selected_submitted",
+      "patch": {
+        "dispatch.arguments.region.width": 100
+      },
+      "semantic_rule": "J_DISPATCH_BIND"
+    },
+    {
+      "name": "operation_id_swap",
+      "definition": "browser_capture_response_case",
+      "base_valid": "full_viewport_default_submitted",
+      "patch": {
+        "central.operation_id": "op/browser/999"
+      },
+      "semantic_rule": "J_CENTRAL"
+    }
+  ]
+}

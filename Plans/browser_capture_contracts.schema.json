@@ -1,0 +1,668 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.browser_capture_contracts.schema.v1",
+  "x-schema-id": "pm.browser_capture.contracts.v1",
+  "title": "Puppet Master Browser Capture Typed Companion",
+  "description": "V2 static typed contracts for the eight existing Browser capture/DevTools routes declared in Plans/Commands_System.md:5979-5986. V2 supersedes the unlanded v1 companion with independently resolved caller/original/buffer/current inputs, an authentic CommandOutcomeRecord, and a drift-checked central envelope; owner prose, command pairs, handlers, handler_unavailable and event non-admission are unchanged. Routes: cmd.browser.capture.full_to_chat, cmd.browser.capture.region_to_chat, cmd.browser.component.pick, cmd.browser.component.send_now, cmd.browser.component.add_to_composer, cmd.browser.component.insert_at_cursor, cmd.browser.component.mode.set_default, cmd.browser.devtools.open. Behavior is owned by Plans/Section15_MVP_Promoted_Features_Spec.md Additive Correction v4 (BSTALE-001..012), Plans/UI_Command_Catalog.md Browser capture and DevTools table, Plans/Scheduling_and_Quota_Resume.md SMSG-007..011 (frozen snapshots), Plans/assistant-chat-design.md (ComposerBuffer/composer destination), Plans/Settings_System.md (Settings transaction) and Plans/Contracts_V0.md#CV-333 (central UICommandResponse). All rows stay handler_unavailable; expected_event_types boundaries are unchanged; no EventRecord, storage writer, native dispatcher, or runtime proof is claimed. Each payload carries its unique record-addressable schema_id.",
+  "x-owner-refs": {
+    "commands": "Plans/Commands_System.md:5979-5986",
+    "catalog": "Plans/UI_Command_Catalog.md:12640-12656",
+    "full_thread": "Plans/full_thread_runtime_contracts.schema.json#/$defs/CommandOutcomeRecord",
+    "settings_inventory": "Plans/settings_inventory.json#planning.testing.browser-component-action",
+    "section15": "Plans/Section15_MVP_Promoted_Features_Spec.md#BSTALE-001..012",
+    "scheduling": "Plans/Scheduling_and_Quota_Resume.md#SMSG-007..011",
+    "settings": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_result",
+    "program": "Plans/section15_browser_program_contracts.schema.json",
+    "protected_auth": "Plans/protected_auth_browser_contracts.schema.json",
+    "central_response": "Plans/ui_command_response.schema.json"
+  },
+  "oneOf": [
+    {"$ref": "#/$defs/BrowserCaptureFullRequest"},
+    {"$ref": "#/$defs/BrowserCaptureRegionRequest"},
+    {"$ref": "#/$defs/BrowserCaptureResult"},
+    {"$ref": "#/$defs/BrowserComponentPickRequest"},
+    {"$ref": "#/$defs/BrowserComponentPickResult"},
+    {"$ref": "#/$defs/BrowserComponentSendRequest"},
+    {"$ref": "#/$defs/MessageAdmissionResult"},
+    {"$ref": "#/$defs/BrowserComponentComposerRequest"},
+    {"$ref": "#/$defs/ComposerBufferResult"},
+    {"$ref": "#/$defs/BrowserComponentModeRequest"},
+    {"$ref": "#/$defs/SettingsTransactionResult"},
+    {"$ref": "#/$defs/BrowserDevToolsOpenRequest"},
+    {"$ref": "#/$defs/RouteResult"},
+    {"$ref": "#/$defs/browser_capture_response_case"}
+  ],
+  "$defs": {
+    "BrowserCaptureFullRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "request_id", "capture_scope", "explicit_full_page_selected", "subject", "origin_security_class", "composer_destination_ref", "permission_snapshot_ref", "capture_permitted"],
+      "properties": {
+        "record_kind": {"const": "BrowserCaptureFullRequest"},
+        "schema_id": {"const": "pm.browser_capture.BrowserCaptureFullRequest.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"const": "cmd.browser.capture.full_to_chat"},
+        "request_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "capture_scope": {"enum": ["viewport", "full_page"], "description": "Viewport is the default; full_page requires explicit user selection (semantic J_SCOPE_DEFAULT)."},
+        "explicit_full_page_selected": {"type": "boolean"},
+        "subject": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"},
+        "origin_security_class": {"enum": ["ordinary", "protected_auth"], "description": "Protected-auth origin must be denied (semantic J_PROTECTED); the subject itself stays ordinary-shaped."},
+        "composer_destination_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "permission_snapshot_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "capture_permitted": {"type": "boolean"}
+      }
+    },
+    "BrowserCaptureRegionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "request_id", "region", "subject", "origin_security_class", "composer_destination_ref", "permission_snapshot_ref", "capture_permitted"],
+      "properties": {
+        "record_kind": {"const": "BrowserCaptureRegionRequest"},
+        "schema_id": {"const": "pm.browser_capture.BrowserCaptureRegionRequest.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"const": "cmd.browser.capture.region_to_chat"},
+        "request_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "region": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["x", "y", "width", "height"],
+          "properties": {
+            "x": {"type": "integer", "minimum": 0},
+            "y": {"type": "integer", "minimum": 0},
+            "width": {"type": "integer", "minimum": 1},
+            "height": {"type": "integer", "minimum": 1}
+          }
+        },
+        "subject": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"},
+        "origin_security_class": {"enum": ["ordinary", "protected_auth"]},
+        "composer_destination_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "permission_snapshot_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "capture_permitted": {"type": "boolean"}
+      }
+    },
+    "BrowserCaptureResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "outcome", "artifact_ref", "capture_scope_echo", "subject_echo", "composer_destination_ref", "unrelated_composer_bytes_unchanged", "whole_buffer_sent", "error", "details", "receipt_ref"],
+      "properties": {
+        "record_kind": {"const": "BrowserCaptureResult"},
+        "schema_id": {"const": "pm.browser_capture.BrowserCaptureResult.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"enum": ["cmd.browser.capture.full_to_chat", "cmd.browser.capture.region_to_chat"]},
+        "outcome": {"enum": ["submitted_isolated", "blocked", "failed"]},
+        "artifact_ref": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "capture_scope_echo": {"enum": ["viewport", "full_page", "region"]},
+        "subject_echo": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"},
+        "composer_destination_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "unrelated_composer_bytes_unchanged": {"type": "boolean"},
+        "whole_buffer_sent": {"type": "boolean"},
+        "error": {"anyOf": [{"$ref": "#/$defs/browser_command_error"}, {"type": "null"}]},
+        "details": {"$ref": "#/$defs/capture_details"},
+        "receipt_ref": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, {"type": "null"}]}
+      }
+    },
+    "capture_details": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "identity_hints", "reason"],
+      "properties": {
+        "summary": {"type": "string", "minLength": 1, "maxLength": 280},
+        "original_session_ref": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "original_page_ref": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "original_generation": {"anyOf": [{"type": "integer", "minimum": 0}, {"type": "null"}]},
+        "capture_time": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/timestamp"}, {"type": "null"}]},
+        "identity_hints": {"type": "string", "maxLength": 280},
+        "reason": {"type": "string", "maxLength": 280}
+      },
+      "description": "BSTALE-009: bounded Details exposing original page/session/generation, capture time, identity hints and reason. Semantic J_DETAILS rejects secrets, cookies, credentials, tokens and absolute paths."
+    },
+    "browser_command_error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "reason", "offending_field"],
+      "properties": {
+        "code": {
+          "enum": ["stale_capture", "protected_denied", "permission_denied", "stale_revision", "stale_currentness", "target_not_found", "precondition_failed", "invalid_request", "owner_unavailable", "handler_unavailable", "command_not_registered", "schedule_refused_live_selector", "source_changed", "cancelled"],
+          "description": "Commands_System CS-078 vocabulary plus browser-typed stale_capture, protected_denied, schedule_refused_live_selector and source_changed. handler_unavailable is preserved as a truthful state."
+        },
+        "reason": {"type": "string", "minLength": 1, "maxLength": 512},
+        "offending_field": {"anyOf": [{"type": "string", "maxLength": 160}, {"type": "null"}]},
+        "recapture_action": {
+          "anyOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["command_id"],
+              "properties": {"command_id": {"const": "cmd.browser.component.pick", "description": "BSTALE-004: recapture reuses the picker; cmd.browser.component.recapture is never minted."}}
+            }
+          ]
+        }
+      }
+    },
+    "stable_locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["locator_ref", "locator_hash"],
+      "properties": {
+        "locator_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "locator_hash": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"}
+      },
+      "description": "Opaque stable locator identity. No locator-strategy taxonomy is invented; revalidation compares ref and hash exactly."
+    },
+    "source_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_ref", "source_identity_hash", "source_map_ref"],
+      "properties": {
+        "source_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "source_identity_hash": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"},
+        "source_map_ref": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, {"type": "null"}]}
+      },
+      "description": "BSTALE-011: source-map/source-file identity disclosed even when the DOM locator still resolves."
+    },
+    "component_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["original_session_id", "original_page_id", "original_frame_id", "original_generation", "locator", "component_id", "tag", "role", "source", "fingerprint", "captured_at", "selection_epoch"],
+      "properties": {
+        "original_session_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"},
+        "original_page_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"},
+        "original_frame_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"},
+        "original_generation": {"type": "integer", "minimum": 0},
+        "locator": {"$ref": "#/$defs/stable_locator"},
+        "component_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"},
+        "tag": {"type": "string", "minLength": 1, "maxLength": 128},
+        "role": {"type": "string", "minLength": 1, "maxLength": 128},
+        "source": {"$ref": "#/$defs/source_identity"},
+        "fingerprint": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"},
+        "captured_at": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/timestamp"},
+        "selection_epoch": {"type": "integer", "minimum": 0}
+      },
+      "description": "Exact captured component identity. BSTALE-010: captured_at is provenance only; currentness is generation/identity based, never timestamp based."
+    },
+    "BrowserComponentPickRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "request_id", "subject", "frame_id", "origin_security_class", "component_resolution_available"],
+      "properties": {
+        "record_kind": {"const": "BrowserComponentPickRequest"},
+        "schema_id": {"const": "pm.browser_capture.BrowserComponentPickRequest.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"const": "cmd.browser.component.pick"},
+        "request_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "subject": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"},
+        "frame_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"},
+        "origin_security_class": {"enum": ["ordinary", "protected_auth"]},
+        "component_resolution_available": {"type": "boolean"}
+      }
+    },
+    "BrowserComponentPickResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "outcome", "selection", "error", "details", "receipt_ref"],
+      "properties": {
+        "record_kind": {"const": "BrowserComponentPickResult"},
+        "schema_id": {"const": "pm.browser_capture.BrowserComponentPickResult.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"const": "cmd.browser.component.pick"},
+        "outcome": {"enum": ["selected", "blocked", "failed"]},
+        "selection": {"anyOf": [{"$ref": "#/$defs/component_selection"}, {"type": "null"}]},
+        "error": {"anyOf": [{"$ref": "#/$defs/browser_command_error"}, {"type": "null"}]},
+        "details": {"anyOf": [{"$ref": "#/$defs/capture_details"}, {"type": "null"}]},
+        "receipt_ref": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, {"type": "null"}]}
+      }
+    },
+    "BrowserComponentSendRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "request_id", "captured", "composer_destination_ref", "composer_revision_expected", "selection_epoch_expected", "permission_snapshot_ref"],
+      "properties": {
+        "record_kind": {"const": "BrowserComponentSendRequest"},
+        "schema_id": {"const": "pm.browser_capture.BrowserComponentSendRequest.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"const": "cmd.browser.component.send_now"},
+        "request_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "captured": {"$ref": "#/$defs/component_selection"},
+        "composer_destination_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "composer_revision_expected": {"type": "integer", "minimum": 0},
+        "selection_epoch_expected": {"type": "integer", "minimum": 0},
+        "permission_snapshot_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}
+      },
+      "description": "BSTALE-001: revalidated immediately before dispatch against live session/page/frame/generation/locator/tag/role/component/source/fingerprint."
+    },
+    "component_revalidation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attachment_id", "captured_generation", "current_generation", "locator_result_count", "identity_match", "source_match", "destroyed", "result", "recapture_action"],
+      "properties": {
+        "attachment_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "captured_generation": {"type": "integer", "minimum": 0},
+        "current_generation": {"type": "integer", "minimum": 0},
+        "locator_result_count": {"type": "integer", "minimum": 0},
+        "identity_match": {"type": "boolean"},
+        "source_match": {"type": "boolean"},
+        "destroyed": {"type": "boolean", "description": "True when the frame or page was destroyed."},
+        "result": {"enum": ["fresh_single_compatible", "stale_capture"]},
+        "recapture_action": {
+          "anyOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["command_id"],
+              "properties": {"command_id": {"const": "cmd.browser.component.pick"}}
+            }
+          ]
+        }
+      },
+      "description": "Field names follow BSTALE-001 pm.browser.component_revalidation_result.v1 (attachment_id, captured_generation, current_generation, locator_result_count, identity_match, result, recapture_action) plus source_match and destroyed for BSTALE-003/011."
+    },
+    "MessageAdmissionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "outcome", "revalidation", "message_ref", "composer_destination_ref", "unrelated_composer_bytes_unchanged", "whole_buffer_sent", "error", "details", "receipt_ref"],
+      "properties": {
+        "record_kind": {"const": "MessageAdmissionResult"},
+        "schema_id": {"const": "pm.browser_capture.MessageAdmissionResult.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"const": "cmd.browser.component.send_now"},
+        "outcome": {"enum": ["admitted_isolated", "stale_capture", "blocked", "failed"]},
+        "revalidation": {"$ref": "#/$defs/component_revalidation"},
+        "message_ref": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "composer_destination_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "unrelated_composer_bytes_unchanged": {"type": "boolean"},
+        "whole_buffer_sent": {"type": "boolean"},
+        "error": {"anyOf": [{"$ref": "#/$defs/browser_command_error"}, {"type": "null"}]},
+        "details": {"$ref": "#/$defs/capture_details"},
+        "receipt_ref": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, {"type": "null"}]}
+      },
+      "description": "TECHNICAL GAP (explicit): no staged MessageAdmission owner schema establishes a message-admission record shape; this join carries only the browser-owned admission verdict (outcome/message_ref/revalidation/isolation) and the exact composer destination. Native MessageAdmission stays unproved."
+    },
+    "BrowserComponentComposerRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "disposition", "request_id", "captured", "composer_revision_expected", "selection_epoch_expected", "caret", "permission_snapshot_ref"],
+      "properties": {
+        "record_kind": {"const": "BrowserComponentComposerRequest"},
+        "schema_id": {"const": "pm.browser_capture.BrowserComponentComposerRequest.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"enum": ["cmd.browser.component.add_to_composer", "cmd.browser.component.insert_at_cursor"]},
+        "disposition": {"enum": ["numbered_list", "cursor_chip"]},
+        "request_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "captured": {"$ref": "#/$defs/component_selection"},
+        "composer_revision_expected": {"type": "integer", "minimum": 0},
+        "selection_epoch_expected": {"type": "integer", "minimum": 0},
+        "caret": {
+          "anyOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["offset"],
+              "properties": {"offset": {"type": "integer", "minimum": 0}}
+            }
+          ]
+        },
+        "permission_snapshot_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}
+      },
+      "allOf": [
+        {"if": {"properties": {"command_id": {"const": "cmd.browser.component.add_to_composer"}}}, "then": {"properties": {"disposition": {"const": "numbered_list"}}}},
+        {"if": {"properties": {"command_id": {"const": "cmd.browser.component.insert_at_cursor"}}}, "then": {"properties": {"disposition": {"const": "cursor_chip"}, "caret": {"type": "object"}}}}
+      ]
+    },
+    "composer_list_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["index", "hidden_ref", "component_id", "status", "captured_generation", "current_generation"],
+      "properties": {
+        "index": {"type": "integer", "minimum": 1},
+        "hidden_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "component_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"},
+        "status": {"enum": ["valid", "stale_blocked"]},
+        "captured_generation": {"type": "integer", "minimum": 0},
+        "current_generation": {"type": "integer", "minimum": 0}
+      },
+      "description": "BSTALE-005: numbered structured list entry with hidden per-item ref; each item revalidated independently."
+    },
+    "composer_chip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["visible_label", "flattened", "caret_offset", "hidden_identity_ref", "hidden_component_id", "status"],
+      "properties": {
+        "visible_label": {"const": "<Component>"},
+        "flattened": {"type": "boolean", "description": "Must be false: the chip is never flattened into plain text (semantic J_CHIP)."},
+        "caret_offset": {"type": "integer", "minimum": 0},
+        "hidden_identity_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "hidden_component_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"},
+        "status": {"enum": ["valid", "stale_blocked"]}
+      }
+    },
+    "ComposerBufferResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "outcome", "list_entries", "chip", "composer_revision_before", "composer_revision_after", "selection_epoch_echo", "partial_send_without_explicit_action", "explicit_user_action", "error", "details", "receipt_ref"],
+      "properties": {
+        "record_kind": {"const": "ComposerBufferResult"},
+        "schema_id": {"const": "pm.browser_capture.ComposerBufferResult.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"enum": ["cmd.browser.component.add_to_composer", "cmd.browser.component.insert_at_cursor"]},
+        "outcome": {"enum": ["appended", "inserted", "blocked", "failed"]},
+        "list_entries": {"type": "array", "items": {"$ref": "#/$defs/composer_list_entry"}},
+        "chip": {"anyOf": [{"$ref": "#/$defs/composer_chip"}, {"type": "null"}]},
+        "composer_revision_before": {"type": "integer", "minimum": 0},
+        "composer_revision_after": {"type": "integer", "minimum": 0},
+        "selection_epoch_echo": {"type": "integer", "minimum": 0},
+        "partial_send_without_explicit_action": {"type": "boolean", "description": "Must always be false: a partial list is never sent without explicit action (semantic J_PARTIAL)."},
+        "explicit_user_action": {"type": "boolean"},
+        "error": {"anyOf": [{"$ref": "#/$defs/browser_command_error"}, {"type": "null"}]},
+        "details": {"$ref": "#/$defs/capture_details"},
+        "receipt_ref": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, {"type": "null"}]}
+      },
+      "description": "TECHNICAL GAP (explicit): no staged ComposerBuffer owner schema establishes buffer/entry record shapes; this join carries only the browser-owned structured list/chip verdict with hidden refs and revision/epoch fences. Native ComposerBuffer stays unproved. This result has no message/send field by construction."
+    },
+    "BrowserComponentModeRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "request_id", "initial_mode", "setting_id_ref", "project_id", "expected_project_revision"],
+      "properties": {
+        "record_kind": {"const": "BrowserComponentModeRequest"},
+        "schema_id": {"const": "pm.browser_capture.BrowserComponentModeRequest.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"const": "cmd.browser.component.mode.set_default"},
+        "request_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "initial_mode": {"enum": ["send_now", "add_to_composer", "insert_at_cursor"], "description": "Companion-local encoding of the three owner-described dispositions (send straight away / numbered composer list / insert at cursor) of Plans/settings_inventory.json#planning.testing.browser-component-action. The inventory registers the key, label, default and prose but no option-value vocabulary; these spellings are NOT claimed as owner-registered (see prerequisite proposal)."},
+        "setting_id_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref", "description": "Must equal the registered Plans/settings_inventory.json key planning.testing.browser-component-action; enforced causally by the validator against the live inventory (J_SETTINGS_KEY), never by shape const."},
+        "project_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"},
+        "expected_project_revision": {"type": "integer", "minimum": 0}
+      }
+    },
+    "SettingsTransactionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "outcome", "previous_revision", "current_revision", "changed_setting_ids", "persisted_initial_mode", "receipt_ref", "disabled_reasons", "replayed", "settled_at", "error"],
+      "properties": {
+        "record_kind": {"const": "SettingsTransactionResult"},
+        "schema_id": {"const": "pm.browser_capture.SettingsTransactionResult.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"const": "cmd.browser.component.mode.set_default"},
+        "outcome": {"enum": ["applied", "no_change", "blocked", "failed"], "description": "Subset of the Settings owner outcomes (settings_transaction_result); no new outcome is introduced."},
+        "previous_revision": {"type": "integer", "minimum": 0},
+        "current_revision": {"type": "integer", "minimum": 0},
+        "changed_setting_ids": {"type": "array", "maxItems": 1, "items": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, "description": "At most the one persisted mode setting; no new state or policy (semantic J_SETTINGS)."},
+        "persisted_initial_mode": {"anyOf": [{"enum": ["send_now", "add_to_composer", "insert_at_cursor"]}, {"type": "null"}]},
+        "receipt_ref": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "disabled_reasons": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 128}, "description": "Shape mirrors the Settings owner disabled_reasons; the closed reason vocabulary stays with the Settings owner."},
+        "replayed": {"type": "boolean"},
+        "settled_at": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/timestamp"},
+        "error": {"anyOf": [{"$ref": "#/$defs/browser_command_error"}, {"type": "null"}]}
+      },
+      "description": "Browser join through the existing Settings owner transaction/version/currentness path. The staged settings_transaction_result closes command_id to cmd.settings.transaction.apply/rollback, so this join reuses its revision/outcome/receipt shape with the browser command identity instead of copying the owner record."
+    },
+    "BrowserDevToolsOpenRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "request_id", "subject", "origin_security_class", "devtools_policy_allows"],
+      "properties": {
+        "record_kind": {"const": "BrowserDevToolsOpenRequest"},
+        "schema_id": {"const": "pm.browser_capture.BrowserDevToolsOpenRequest.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"const": "cmd.browser.devtools.open"},
+        "request_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "subject": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"},
+        "origin_security_class": {"enum": ["ordinary", "protected_auth"]},
+        "devtools_policy_allows": {"type": "boolean"}
+      }
+    },
+    "RouteResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "outcome", "route_target_ref", "raw_protocol_authority_granted", "program_evaluate_authority_granted", "error", "receipt_ref"],
+      "properties": {
+        "record_kind": {"const": "RouteResult"},
+        "schema_id": {"const": "pm.browser_capture.RouteResult.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"const": "cmd.browser.devtools.open"},
+        "outcome": {"enum": ["navigated", "blocked", "failed"]},
+        "route_target_ref": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, {"type": "null"}]},
+        "raw_protocol_authority_granted": {"type": "boolean", "description": "Must always be false: no raw CDP authority (semantic J_DEVTOOLS)."},
+        "program_evaluate_authority_granted": {"type": "boolean", "description": "Must always be false: no program/evaluate authority (semantic J_DEVTOOLS)."},
+        "error": {"anyOf": [{"$ref": "#/$defs/browser_command_error"}, {"type": "null"}]},
+        "receipt_ref": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}, {"type": "null"}]}
+      },
+      "description": "Ordinary internal DevTools navigation only. No runtime admission, raw protocol, or page-evaluate capability is carried."
+    },
+    "precondition_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["browser_runtime_available", "capture_permitted", "component_resolution_available", "component_selected", "composer_available", "composer_destination_resolvable", "caret_position_known", "settings_writable", "devtools_policy_allows"],
+      "properties": {
+        "browser_runtime_available": {"type": "boolean"},
+        "capture_permitted": {"type": "boolean"},
+        "component_resolution_available": {"type": "boolean"},
+        "component_selected": {"type": "boolean"},
+        "composer_available": {"type": "boolean"},
+        "composer_destination_resolvable": {"type": "boolean"},
+        "caret_position_known": {"type": "boolean"},
+        "settings_writable": {"type": "boolean"},
+        "devtools_policy_allows": {"type": "boolean"}
+      },
+      "description": "Exact UI_Command_Catalog preconditions per route; every named surface reads the same owner availability."
+    },
+    "live_browser_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current_subject", "current_frame_id", "locator_match_count", "matched_tag", "matched_role", "matched_component_id", "matched_source", "matched_fingerprint", "frame_destroyed", "page_destroyed", "current_selection_epoch", "current_composer_revision", "composer_text_before", "composer_text_after", "settings_current_revision", "preconditions"],
+      "properties": {
+        "current_subject": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/ordinary_browser_subject"},
+        "current_frame_id": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"}, {"type": "null"}]},
+        "locator_match_count": {"anyOf": [{"type": "integer", "minimum": 0}, {"type": "null"}]},
+        "matched_tag": {"anyOf": [{"type": "string", "maxLength": 128}, {"type": "null"}]},
+        "matched_role": {"anyOf": [{"type": "string", "maxLength": 128}, {"type": "null"}]},
+        "matched_component_id": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/id"}, {"type": "null"}]},
+        "matched_source": {"anyOf": [{"$ref": "#/$defs/source_identity"}, {"type": "null"}]},
+        "matched_fingerprint": {"anyOf": [{"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"}, {"type": "null"}]},
+        "frame_destroyed": {"type": "boolean"},
+        "page_destroyed": {"type": "boolean"},
+        "current_selection_epoch": {"type": "integer", "minimum": 0},
+        "current_composer_revision": {"type": "integer", "minimum": 0},
+        "composer_text_before": {"type": "string", "maxLength": 4096},
+        "composer_text_after": {"type": "string", "maxLength": 4096},
+        "settings_current_revision": {"anyOf": [{"type": "integer", "minimum": 0}, {"type": "null"}]},
+        "preconditions": {"$ref": "#/$defs/precondition_snapshot"}
+      },
+      "description": "Live browser/composer/settings state at dispatch, supplied by the native owners at runtime. Static fixtures bind request, current and result so revalidation, fencing and isolation joins are causal."
+    },
+    "central_error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "reason", "offending_field"],
+      "properties": {
+        "code": {"enum": ["invalid_route", "unknown_command", "invalid_args", "permission_denied", "blocked_state_required", "stale_projection", "handler_unavailable", "internal_error"]},
+        "reason": {"type": "string", "minLength": 1, "maxLength": 512},
+        "offending_field": {"anyOf": [{"type": "string", "maxLength": 160}, {"type": "null"}]}
+      },
+      "description": "Verbatim mirror of Plans/ui_command_response.schema.json#/$defs/UICommandError. Drift-checked against the live owner schema by the validator."
+    },
+    "central_response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "dispatch_id", "request_ref", "command_id", "command_instance_id", "response_kind", "ack_status", "result_status", "error", "event_refs", "receipt_ref", "operation_id", "owner_identity", "command_outcome_ref", "owner_result_ref", "owner_result_schema_ref", "replayed", "original_dispatch_id", "ts"],
+      "properties": {
+        "schema_id": {"const": "pm.ui_command_response.v2"},
+        "schema_version": {"const": "2.0.0"},
+        "dispatch_id": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"},
+        "request_ref": {"$ref": "#/$defs/central_opaque_ref"},
+        "command_id": {"anyOf": [{"type": "string", "pattern": "^cmd\\.[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$", "maxLength": 160}, {"type": "null"}]},
+        "command_instance_id": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"},
+        "response_kind": {"enum": ["owner_operation", "local_projection", "pre_dispatch_rejection"]},
+        "ack_status": {"enum": ["accepted", "rejected"]},
+        "result_status": {"type": ["string", "null"], "enum": [null, "pending", "succeeded", "failed", "cancelled", "no_op", "recovery_required"]},
+        "error": {"anyOf": [{"$ref": "#/$defs/central_error"}, {"type": "null"}]},
+        "event_refs": {"type": "array", "maxItems": 64, "uniqueItems": true, "items": {"$ref": "#/$defs/central_opaque_ref"}},
+        "receipt_ref": {"anyOf": [{"$ref": "#/$defs/central_opaque_ref"}, {"type": "null"}]},
+        "operation_id": {"anyOf": [{"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"}, {"type": "null"}]},
+        "owner_identity": {"anyOf": [{"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"}, {"type": "null"}]},
+        "command_outcome_ref": {"anyOf": [{"$ref": "#/$defs/central_opaque_ref"}, {"type": "null"}]},
+        "owner_result_ref": {"anyOf": [{"$ref": "#/$defs/central_opaque_ref"}, {"type": "null"}]},
+        "owner_result_schema_ref": {"anyOf": [{"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef"}, {"type": "null"}]},
+        "replayed": {"type": "boolean"},
+        "original_dispatch_id": {"anyOf": [{"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"}, {"type": "null"}]},
+        "ts": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/UtcTimestamp"}
+      },
+      "allOf": [
+        {"if": {"properties": {"command_id": {"type": "null"}}}, "then": {"properties": {"response_kind": {"const": "pre_dispatch_rejection"}, "error": {"type": "object", "properties": {"code": {"const": "unknown_command"}}}}}},
+        {"if": {"properties": {"error": {"type": "object", "properties": {"code": {"const": "unknown_command"}}}}}, "then": {"properties": {"command_id": {"type": "null"}, "response_kind": {"const": "pre_dispatch_rejection"}}}},
+        {"if": {"properties": {"response_kind": {"const": "owner_operation"}}}, "then": {"properties": {"command_id": {"$ref": "#/$defs/central_command_id"}, "operation_id": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"}, "owner_identity": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"}, "command_outcome_ref": {"$ref": "#/$defs/central_opaque_ref"}}}},
+        {"if": {"properties": {"response_kind": {"enum": ["local_projection", "pre_dispatch_rejection"]}}}, "then": {"properties": {"operation_id": {"type": "null"}, "owner_identity": {"type": "null"}, "command_outcome_ref": {"type": "null"}, "owner_result_ref": {"type": "null"}, "owner_result_schema_ref": {"type": "null"}, "event_refs": {"maxItems": 0}}}},
+        {"if": {"properties": {"response_kind": {"const": "local_projection"}}}, "then": {"properties": {"command_id": {"$ref": "#/$defs/central_command_id"}, "ack_status": {"const": "accepted"}, "result_status": {"enum": ["pending", "succeeded", "failed", "cancelled", "no_op"]}}}},
+        {"if": {"properties": {"response_kind": {"const": "pre_dispatch_rejection"}}}, "then": {"properties": {"ack_status": {"const": "rejected"}, "result_status": {"type": "null"}, "error": {"$ref": "#/$defs/central_error"}}}},
+        {"if": {"properties": {"ack_status": {"const": "rejected"}}}, "then": {"properties": {"result_status": {"type": "null"}, "error": {"$ref": "#/$defs/central_error"}, "event_refs": {"maxItems": 0}}}},
+        {"if": {"properties": {"ack_status": {"const": "accepted"}}}, "then": {"properties": {"command_id": {"$ref": "#/$defs/central_command_id"}, "result_status": {"type": "string"}}}},
+        {"if": {"properties": {"result_status": {"enum": ["failed", "recovery_required"]}}}, "then": {"properties": {"error": {"$ref": "#/$defs/central_error"}}}},
+        {"if": {"properties": {"result_status": {"enum": ["pending", "succeeded", "cancelled", "no_op"]}}}, "then": {"properties": {"error": {"type": "null"}}}},
+        {"if": {"properties": {"result_status": {"enum": ["succeeded", "cancelled", "no_op"]}}}, "then": {"properties": {"receipt_ref": {"$ref": "#/$defs/central_opaque_ref"}}}},
+        {"if": {"properties": {"response_kind": {"const": "owner_operation"}, "result_status": {"enum": ["succeeded", "failed", "cancelled", "no_op", "recovery_required"]}}}, "then": {"properties": {"owner_result_ref": {"$ref": "#/$defs/central_opaque_ref"}, "owner_result_schema_ref": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef"}}}},
+        {"if": {"properties": {"owner_result_ref": {"type": "string"}}}, "then": {"properties": {"owner_result_schema_ref": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/OwnerResultSchemaRef"}}}, "else": {"properties": {"owner_result_schema_ref": {"type": "null"}}}},
+        {"if": {"properties": {"replayed": {"const": true}}}, "then": {"properties": {"original_dispatch_id": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"}}}, "else": {"properties": {"original_dispatch_id": {"type": "null"}}}}
+      ],
+      "description": "Verbatim structural mirror of the Plans/ui_command_response.schema.json v2 envelope (required fields, enums, consts, coherence rules). Owner $refs that resolve in this companion's registry (full-thread Id/IdentityEnvelope/OwnerResultSchemaRef/UtcTimestamp) are referenced directly; NonSecretRef-typed leaves use central_opaque_ref because that owner file is not staged in this detached job and its exact pattern was not verified. Drift-checked against the live owner schema by the validator; any owner change fails the check rather than silently diverging."
+    },
+    "central_opaque_ref": {
+      "type": "string", "minLength": 1,
+      "description": "Opaque owner reference leaf (stands in for the unstaged NonSecretRef owner type; no upper bound or pattern is claimed)."
+    },
+    "central_command_id": {
+      "type": "string", "pattern": "^cmd\\.[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$", "maxLength": 160,
+      "description": "Verbatim mirror of the owner CommandId pattern."
+    },
+    "caller_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command_instance_id", "request_id", "surface", "permission_snapshot_ref"],
+      "properties": {
+        "command_instance_id": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"},
+        "request_id": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "surface": {"enum": ["browser_selection_bar", "browser_toolbar"], "description": "Exact UI_Command_Catalog source surfaces for this family."},
+        "permission_snapshot_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}
+      },
+      "description": "Independently resolved caller record: the dispatch instance, request, raising surface and permission snapshot the outcome/central records must agree with. Never equated across unlike owner identity kinds."
+    },
+    "original_capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selection", "issuer_receipt_ref", "permission_snapshot_ref"],
+      "properties": {
+        "selection": {"$ref": "#/$defs/component_selection"},
+        "issuer_receipt_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref", "description": "Receipt of the cmd.browser.component.pick result that originally issued this capture."},
+        "permission_snapshot_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}
+      },
+      "description": "Independently resolved original: the picker-issued capture the caller's request copy must match and live state is revalidated against. Required for send_now/add_to_composer/insert_at_cursor; null otherwise."
+    },
+    "buffer_original": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hidden_ref", "captured", "current_generation", "current_valid"],
+      "properties": {
+        "hidden_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+        "captured": {"$ref": "#/$defs/component_selection"},
+        "current_generation": {"type": "integer", "minimum": 0},
+        "current_valid": {"type": "boolean"}
+      },
+      "description": "Independently resolved per-item ComposerBuffer original: hidden ref bound to the exact originally captured component plus independent current generation/validity. BSTALE-005/006 structured identity."
+    },
+    "dispatch_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity", "command_id", "command_instance_id", "operation_id", "dispatch_id", "idempotency_key", "target_generation", "accepted_at", "arguments", "permission_snapshot_ref"],
+      "properties": {
+        "identity": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"},
+        "command_id": {"$ref": "#/$defs/central_command_id"},
+        "command_instance_id": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"},
+        "operation_id": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"},
+        "dispatch_id": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"},
+        "idempotency_key": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/Id"},
+        "target_generation": {"type": "integer", "minimum": 0},
+        "accepted_at": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/UtcTimestamp"},
+        "arguments": {
+          "anyOf": [
+            {"$ref": "#/$defs/BrowserCaptureFullRequest"},
+            {"$ref": "#/$defs/BrowserCaptureRegionRequest"},
+            {"$ref": "#/$defs/BrowserComponentPickRequest"},
+            {"$ref": "#/$defs/BrowserComponentSendRequest"},
+            {"$ref": "#/$defs/BrowserComponentComposerRequest"},
+            {"$ref": "#/$defs/BrowserComponentModeRequest"},
+            {"$ref": "#/$defs/BrowserDevToolsOpenRequest"}
+          ]
+        },
+        "permission_snapshot_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"}
+      },
+      "description": "Minimal technical resolver contract for the dispatcher-selected original (SIR original-custody rule, Shared_Integration_Runtime.md around line 2705): full IdentityEnvelope, command/instance/operation, dispatch ID, idempotency, target generation, accepted time, exact selected arguments and permission snapshot. The payload digest is computed over the arguments object alone; the companion request copy is never the digest source. Native dispatcher authentication remains unproved."
+    },
+    "schedule_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["wants_schedule", "frozen_snapshot"],
+      "properties": {
+        "wants_schedule": {"type": "boolean"},
+        "frozen_snapshot": {
+          "anyOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["artifact_ref", "artifact_version", "content_hash"],
+              "properties": {
+                "artifact_ref": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/non_secret_ref"},
+                "artifact_version": {"type": "string", "minLength": 1, "maxLength": 64},
+                "content_hash": {"$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/sha256"}
+              }
+            }
+          ]
+        }
+      },
+      "description": "BSTALE-007/SMSG-009: a scheduled send needs a frozen snapshot with immutable artifact identity, else scheduling is refused."
+    },
+    "browser_capture_response_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "schema_id", "schema_version", "command_id", "request", "caller", "original", "buffer_originals", "dispatch", "current", "result", "outcome", "central", "schedule_attempt"],
+      "properties": {
+        "record_kind": {"const": "browser_capture_response_case"},
+        "schema_id": {"const": "pm.browser_capture.response_case.v1"},
+        "schema_version": {"const": "1.0.0"},
+        "command_id": {"enum": ["cmd.browser.capture.full_to_chat", "cmd.browser.capture.region_to_chat", "cmd.browser.component.pick", "cmd.browser.component.send_now", "cmd.browser.component.add_to_composer", "cmd.browser.component.insert_at_cursor", "cmd.browser.component.mode.set_default", "cmd.browser.devtools.open"]},
+        "request": {
+          "anyOf": [
+            {"$ref": "#/$defs/BrowserCaptureFullRequest"},
+            {"$ref": "#/$defs/BrowserCaptureRegionRequest"},
+            {"$ref": "#/$defs/BrowserComponentPickRequest"},
+            {"$ref": "#/$defs/BrowserComponentSendRequest"},
+            {"$ref": "#/$defs/BrowserComponentComposerRequest"},
+            {"$ref": "#/$defs/BrowserComponentModeRequest"},
+            {"$ref": "#/$defs/BrowserDevToolsOpenRequest"}
+          ]
+        },
+        "current": {"$ref": "#/$defs/live_browser_state"},
+        "result": {
+          "anyOf": [
+            {"$ref": "#/$defs/BrowserCaptureResult"},
+            {"$ref": "#/$defs/BrowserComponentPickResult"},
+            {"$ref": "#/$defs/MessageAdmissionResult"},
+            {"$ref": "#/$defs/ComposerBufferResult"},
+            {"$ref": "#/$defs/SettingsTransactionResult"},
+            {"$ref": "#/$defs/RouteResult"}
+          ]
+        },
+        "caller": {"$ref": "#/$defs/caller_context"},
+        "original": {"anyOf": [{"$ref": "#/$defs/original_capture"}, {"type": "null"}]},
+        "buffer_originals": {"anyOf": [{"type": "array", "items": {"$ref": "#/$defs/buffer_original"}}, {"type": "null"}]},
+        "dispatch": {"$ref": "#/$defs/dispatch_source"},
+        "outcome": {"$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"},
+        "central": {"$ref": "#/$defs/central_response"},
+        "schedule_attempt": {"anyOf": [{"$ref": "#/$defs/schedule_gate"}, {"type": "null"}]}
+      },
+      "description": "Complete eight-route validation record binding the exact request, independently resolved caller/original/buffer/current records, typed result, authentic CommandOutcomeRecord, drift-checked central envelope and schedule gate. Owner $refs resolve through the aggregate offline registry at root. This record carries no event refs, storage writes, or native proof by construction."
+    }
+  }
+}

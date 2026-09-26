@@ -2344,17 +2344,17 @@
       ],
       "owner_plan": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit": "SMPFS-089",
-      "dry_contract_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
-      "payload_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
-      "result_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
-      "error_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
-      "availability_rule": "BrowserCaptureFullRequest -> BrowserCaptureResult; exact viewport/full-page choice and destination, isolated immediate-send payload. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "dry_contract_ref": "Plans/browser_capture_contracts.schema.json#/$defs/browser_capture_response_case",
+      "payload_schema_ref": "Plans/browser_capture_contracts.schema.json#/$defs/BrowserCaptureFullRequest",
+      "result_schema_ref": "Plans/browser_capture_contracts.schema.json#/$defs/BrowserCaptureResult",
+      "error_schema_ref": "Plans/browser_capture_contracts.schema.json#/$defs/browser_command_error",
+      "availability_rule": "BrowserCaptureFullRequest -> BrowserCaptureResult; exact viewport/full-page choice and destination, isolated immediate-send payload. The typed static companion is materialized, but resolve the exact current owner projection before dispatch and keep the native handler unavailable until authenticated implementation evidence exists.",
       "permission_gate": "Capture policy and exact non-protected Browser identity; never include unrelated composer input.",
-      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. No EventRecord is admitted for this route; never emit an unregistered event or report optimistic success.",
       "handler_owner": "handlers::browser_runtime::capture_full_to_chat is the sole future UICommand target for cmd.browser.capture.full_to_chat; its native implementation and authenticated result bridge are unproved.",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "production_or_simulation": "Static owner declarations, typed request/result/error companion, focused causal fixtures and existing production-intent placements only. Native dispatch, authenticated result/effect and reverse-surface proof remain absent; this row stays partial.",
       "gui_triggers": [
         "Puppet Master Assistant > browser.full_capture",
         "Intended catalog family surfaces (command-specific placement remains owner-selected): browser_selection_bar, browser_toolbar."
@@ -2396,11 +2396,13 @@
       "test_refs": [
         "scripts/pm-assistant-contract-check.py",
         "scripts/pm-touch-closure-verify.py",
+        "scripts/pm_browser_capture_semantics.py",
+        "tests/test_pm_browser_capture.py",
         "tests/test_pm_touch_closure_source.py",
         "Plans/Wiring_Matrix.production.json"
       ],
       "evidence_refs": [
-        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+        "static_owner_typed_schema_fixture_and_production_intent_only; no native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
       ]
     },
     {
@@ -2413,17 +2415,17 @@
       ],
       "owner_plan": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit": "SMPFS-089",
-      "dry_contract_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
-      "payload_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
-      "result_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
-      "error_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
-      "availability_rule": "BrowserCaptureRegionRequest -> BrowserCaptureResult; exact selected region and destination, isolated immediate-send payload. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "dry_contract_ref": "Plans/browser_capture_contracts.schema.json#/$defs/browser_capture_response_case",
+      "payload_schema_ref": "Plans/browser_capture_contracts.schema.json#/$defs/BrowserCaptureRegionRequest",
+      "result_schema_ref": "Plans/browser_capture_contracts.schema.json#/$defs/BrowserCaptureResult",
+      "error_schema_ref": "Plans/browser_capture_contracts.schema.json#/$defs/browser_command_error",
+      "availability_rule": "BrowserCaptureRegionRequest -> BrowserCaptureResult; exact selected region and destination, isolated immediate-send payload. The typed static companion is materialized, but resolve the exact current owner projection before dispatch and keep the native handler unavailable until authenticated implementation evidence exists.",
       "permission_gate": "Capture policy and exact non-protected Browser identity; never include unrelated composer input.",
-      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. No EventRecord is admitted for this route; never emit an unregistered event or report optimistic success.",
       "handler_owner": "handlers::browser_runtime::capture_region_to_chat is the sole future UICommand target for cmd.browser.capture.region_to_chat; its native implementation and authenticated result bridge are unproved.",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "production_or_simulation": "Static owner declarations, typed request/result/error companion, focused causal fixtures and existing production-intent placements only. Native dispatch, authenticated result/effect and reverse-surface proof remain absent; this row stays partial.",
       "gui_triggers": [
         "Puppet Master Assistant > browser.region_capture",
         "Intended catalog family surfaces (command-specific placement remains owner-selected): browser_selection_bar, browser_toolbar."
@@ -2465,11 +2467,13 @@
       "test_refs": [
         "scripts/pm-assistant-contract-check.py",
         "scripts/pm-touch-closure-verify.py",
+        "scripts/pm_browser_capture_semantics.py",
+        "tests/test_pm_browser_capture.py",
         "tests/test_pm_touch_closure_source.py",
         "Plans/Wiring_Matrix.production.json"
       ],
       "evidence_refs": [
-        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+        "static_owner_typed_schema_fixture_and_production_intent_only; no native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
       ]
     },
     {
@@ -2482,17 +2486,17 @@
       ],
       "owner_plan": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit": "SMPFS-090",
-      "dry_contract_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
-      "payload_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
-      "result_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
-      "error_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
-      "availability_rule": "BrowserComponentSendRequest -> MessageAdmissionResult; revalidate session/page/frame/generation/locator/captured identity; stale_capture admits no message. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "dry_contract_ref": "Plans/browser_capture_contracts.schema.json#/$defs/browser_capture_response_case",
+      "payload_schema_ref": "Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentSendRequest",
+      "result_schema_ref": "Plans/browser_capture_contracts.schema.json#/$defs/MessageAdmissionResult",
+      "error_schema_ref": "Plans/browser_capture_contracts.schema.json#/$defs/browser_command_error",
+      "availability_rule": "BrowserComponentSendRequest -> MessageAdmissionResult; revalidate session/page/frame/generation/locator/captured identity; stale_capture admits no message. The typed static companion is materialized, but resolve the exact current owner projection before dispatch and keep the native handler unavailable until authenticated implementation evidence exists.",
       "permission_gate": "Exact non-protected Browser target and destination; zero/multiple/destroyed/mismatched targets require recapture, not guessed content.",
-      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. No EventRecord is admitted for this route; never emit an unregistered event or report optimistic success.",
       "handler_owner": "handlers::browser_runtime::component_send_now is the sole future UICommand target for cmd.browser.component.send_now; its native implementation and authenticated result bridge are unproved.",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "production_or_simulation": "Static owner declarations, typed request/result/error companion, focused causal fixtures and existing production-intent placements only. Native dispatch, authenticated result/effect and reverse-surface proof remain absent; this row stays partial.",
       "gui_triggers": [
         "Puppet Master Assistant > browser.component_send",
         "Intended catalog family surfaces (command-specific placement remains owner-selected): browser_selection_bar, browser_toolbar."
@@ -2533,11 +2537,13 @@
       "test_refs": [
         "scripts/pm-assistant-contract-check.py",
         "scripts/pm-touch-closure-verify.py",
+        "scripts/pm_browser_capture_semantics.py",
+        "tests/test_pm_browser_capture.py",
         "tests/test_pm_touch_closure_source.py",
         "Plans/Wiring_Matrix.production.json"
       ],
       "evidence_refs": [
-        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+        "static_owner_typed_schema_fixture_and_production_intent_only; no native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
       ]
     },
     {
@@ -2550,17 +2556,17 @@
       ],
       "owner_plan": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit": "SMPFS-090",
-      "dry_contract_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
-      "payload_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
-      "result_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
-      "error_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
-      "availability_rule": "BrowserComponentComposerRequest -> ComposerBufferResult; append one hidden-reference-backed numbered component entry without sending unrelated text. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "dry_contract_ref": "Plans/browser_capture_contracts.schema.json#/$defs/browser_capture_response_case",
+      "payload_schema_ref": "Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentComposerRequest",
+      "result_schema_ref": "Plans/browser_capture_contracts.schema.json#/$defs/ComposerBufferResult",
+      "error_schema_ref": "Plans/browser_capture_contracts.schema.json#/$defs/browser_command_error",
+      "availability_rule": "BrowserComponentComposerRequest -> ComposerBufferResult; append one hidden-reference-backed numbered component entry without sending unrelated text. The typed static companion is materialized, but resolve the exact current owner projection before dispatch and keep the native handler unavailable until authenticated implementation evidence exists.",
       "permission_gate": "Exact non-protected Browser target and originating thread/composer identity; preserve source lineage.",
-      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. No EventRecord is admitted for this route; never emit an unregistered event or report optimistic success.",
       "handler_owner": "handlers::browser_runtime::component_add_to_composer is the sole future UICommand target for cmd.browser.component.add_to_composer; its native implementation and authenticated result bridge are unproved.",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "production_or_simulation": "Static owner declarations, typed request/result/error companion, focused causal fixtures and existing production-intent placements only. Native dispatch, authenticated result/effect and reverse-surface proof remain absent; this row stays partial.",
       "gui_triggers": [
         "Puppet Master Assistant > browser.component_queue",
         "Intended catalog family surfaces (command-specific placement remains owner-selected): browser_selection_bar, browser_toolbar."
@@ -2602,11 +2608,13 @@
       "test_refs": [
         "scripts/pm-assistant-contract-check.py",
         "scripts/pm-touch-closure-verify.py",
+        "scripts/pm_browser_capture_semantics.py",
+        "tests/test_pm_browser_capture.py",
         "tests/test_pm_touch_closure_source.py",
         "Plans/Wiring_Matrix.production.json"
       ],
       "evidence_refs": [
-        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+        "static_owner_typed_schema_fixture_and_production_intent_only; no native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
       ]
     },
     {
@@ -9066,7 +9074,7 @@
       "command",
       "cmd.browser.capture.full_to_chat",
       "partial",
-      "BrowserCaptureFullRequest -> BrowserCaptureResult; exact viewport/full-page choice and destination, isolated immediate-send payload. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+      "BrowserCaptureFullRequest -> BrowserCaptureResult; exact viewport/full-page choice and destination, isolated immediate-send payload. Owner placement, typed static request/result/error schema and focused fixtures, and intended wiring are recorded. Native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
     ],
     [
       "TOUCH-GAP-035",
@@ -9074,7 +9082,7 @@
       "command",
       "cmd.browser.capture.region_to_chat",
       "partial",
-      "BrowserCaptureRegionRequest -> BrowserCaptureResult; exact selected region and destination, isolated immediate-send payload. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+      "BrowserCaptureRegionRequest -> BrowserCaptureResult; exact selected region and destination, isolated immediate-send payload. Owner placement, typed static request/result/error schema and focused fixtures, and intended wiring are recorded. Native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
     ],
     [
       "TOUCH-GAP-036",
@@ -9082,7 +9090,7 @@
       "command",
       "cmd.browser.component.send_now",
       "partial",
-      "BrowserComponentSendRequest -> MessageAdmissionResult; revalidate session/page/frame/generation/locator/captured identity; stale_capture admits no message. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+      "BrowserComponentSendRequest -> MessageAdmissionResult; revalidate session/page/frame/generation/locator/captured identity; stale_capture admits no message. Owner placement, typed static request/result/error schema and focused fixtures, and intended wiring are recorded. Native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
     ],
     [
       "TOUCH-GAP-037",
@@ -9090,7 +9098,7 @@
       "command",
       "cmd.browser.component.add_to_composer",
       "partial",
-      "BrowserComponentComposerRequest -> ComposerBufferResult; append one hidden-reference-backed numbered component entry without sending unrelated text. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+      "BrowserComponentComposerRequest -> ComposerBufferResult; append one hidden-reference-backed numbered component entry without sending unrelated text. Owner placement, typed static request/result/error schema and focused fixtures, and intended wiring are recorded. Native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
     ],
     [
       "TOUCH-GAP-038",
