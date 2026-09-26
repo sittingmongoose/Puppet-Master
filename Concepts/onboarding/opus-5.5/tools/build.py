@@ -2,12 +2,15 @@
 """Build Concepts/TestOpus5.5PmConcept.html from the pinned TestPMConcept.html plus ./src.
 
 Usage:
-  python3 Concepts/onboarding/opus-5.5/tools/build.py          # build
-  python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # verify the built file is current and every guard holds
+  python3 Concepts/onboarding/opus-5.5/tools/build.py          # build TestOpus only
+  python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # build, then publish the exact bytes as Concepts/PMConcept7.html
+  python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # verify the built file is current, every guard holds, and PMConcept7.html is byte-identical
 
 The base file is read-only. The legacy Product Onboarding and Guided Tour blocks are removed, the O55 modules are
 spliced between <!-- O55:*:START/END --> markers, and a short list of guarded, exactly-once patches re-point the shell's
 few remaining references (hover-tag overlay ids, labels, Doctor quiet actions, Teacher persona, owner exposures).
+Concepts/PMConcept7.html is published only from here (2026-09-26 user direction): --publish-pm7 writes the same built
+bytes to both outputs, and --check fails while PMConcept7.html is missing or differs by even one byte.
 """
 from __future__ import annotations
 
@@ -22,6 +25,7 @@ PKG = TOOLS.parent
 CONCEPTS = PKG.parents[1]
 SOURCE = CONCEPTS / 'TestPMConcept.html'
 TARGET = CONCEPTS / 'TestOpus5.5PmConcept.html'
+PM7_TARGET = CONCEPTS / 'PMConcept7.html'
 SRC = PKG / 'src'
 BASE_SHA256 = 'f1bc81aee79593c24fbc8163aabc00459a5a1d6a7a42f4dbae43dcf04101fcca'
 
@@ -258,8 +262,15 @@ def check(built: str) -> list[str]:
     for marker in ['<!-- O55:CSS:START -->', '<!-- O55:CSS:END -->', '<!-- O55:BODY:START -->', '<!-- O55:BODY:END -->']:
         if built.count(marker) != 1:
             problems.append(f'marker {marker} appears {built.count(marker)} times')
-    if TARGET.exists() and TARGET.read_text(encoding='utf-8') != built:
+    expected = built.encode('utf-8')
+    if not TARGET.exists():
+        problems.append('Concepts/TestOpus5.5PmConcept.html is missing; run build.py')
+    elif TARGET.read_bytes() != expected:
         problems.append('Concepts/TestOpus5.5PmConcept.html is stale; run build.py')
+    if not PM7_TARGET.exists():
+        problems.append('Concepts/PMConcept7.html is missing; run build.py --publish-pm7')
+    elif PM7_TARGET.read_bytes() != expected:
+        problems.append('Concepts/PMConcept7.html differs from a fresh build; run build.py --publish-pm7')
     return problems
 
 
@@ -282,9 +293,15 @@ def main() -> int:
         return 1
     TARGET.write_text(built, encoding='utf-8')
     data = built.encode('utf-8')
-    print(json.dumps({'output': str(TARGET.relative_to(CONCEPTS.parent)), 'bytes': len(data),
-                      'sha256': hashlib.sha256(data).hexdigest()[:16],
-                      'base_sha256': BASE_SHA256[:16]}))
+    summary = {'output': str(TARGET.relative_to(CONCEPTS.parent)), 'bytes': len(data),
+               'sha256': hashlib.sha256(data).hexdigest()[:16],
+               'base_sha256': BASE_SHA256[:16]}
+    if '--publish-pm7' in sys.argv:
+        PM7_TARGET.write_text(built, encoding='utf-8')
+        summary['pm7_output'] = str(PM7_TARGET.relative_to(CONCEPTS.parent))
+        summary['pm7_bytes'] = len(data)
+        summary['pm7_sha256'] = hashlib.sha256(data).hexdigest()
+    print(json.dumps(summary))
     return 0
 
 

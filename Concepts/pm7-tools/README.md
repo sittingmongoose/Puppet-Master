@@ -34,6 +34,29 @@ sources unchanged. T44 through T48, including T46F, are authored transforms, not
 the generated artifact.
 Read the next section before changing anything here.
 
+## PM7 publication — 2026-09-26 (current)
+
+The checked-in `Concepts/PMConcept7.html` is published byte-identical from
+`Concepts/TestOpus5.5PmConcept.html` — the current leading GUI/interaction
+reference — through its authored generator:
+
+    python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7
+    python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # includes PM7 byte parity
+
+Source chain: pinned TestPM settings checkpoint →
+`build_testpm_settings_refresh.py` → `TestPMConcept.html` → opus-5.5
+`build.py` → `TestOpus5.5PmConcept.html` → `PMConcept7.html` (same bytes).
+
+The T33+ pipeline in this directory, including the old T44 Settings tome,
+T45 onboarding/tour, and T50 Settings refresh stages, is retained for
+explicit historical output only. A `build_pm7.py` run whose `--out` resolves
+to `Concepts/PMConcept7.html` aborts (exit 2) unless
+`--allow-legacy-pm7-promotion` is passed; scratch `--outdir` builds are
+unaffected. The promotion recipe under "Build and verification" below is
+superseded for `Concepts/PMConcept7.html` except with that explicit flag.
+Authority: user direction, then current canonical Plans; packet material is
+historical source lineage, never operating instructions.
+
 ## Guided Tour reload guard — 2026-09-08 (unpublished)
 
 The authored tour now rejects resume/restart when a saved concept marker exists
@@ -607,9 +630,12 @@ Run from the repository root:
         --out scratchpad/pm7-build/PMConcept7.html \
         --report
 
-The build writes the HTML plus `<outdir>/build_report.json`. A checked-in
-artifact is promoted through the same command by setting
-`--out Concepts/PMConcept7.html`; never copy or patch an intermediate by hand.
+The build writes the HTML plus `<outdir>/build_report.json`. The old
+promotion of a checked-in artifact through the same command with
+`--out Concepts/PMConcept7.html` is superseded (2026-09-26): that path now
+aborts unless `--allow-legacy-pm7-promotion` is passed explicitly; publish
+`Concepts/PMConcept7.html` from TestOpus instead (see "PM7 publication"
+above). Never copy or patch an intermediate by hand.
 
 During an integration wave, first build to a fresh scratch directory. Promote
 only after its report and browser evidence are frozen and adjudicated:
@@ -876,9 +902,11 @@ CURRENT AUTHORED PIPELINE 2026-09-02: T33 through T48 are registered, with
 separate T45 Product Onboarding and live-shell Guided Tour transforms and a
 T46F forge/backup post-integration transform plus a T46P full-thread
 performance transform; `T48_home_workspace_source_refresh`
-is the current tail. `Concepts/PMConcept7.html` remains a generated artifact
-and must be promoted only from `build_pm7.py` after the current working tail
-stabilizes.
+is the current tail. `Concepts/PMConcept7.html` remains a generated artifact;
+since 2026-09-26 it is published byte-identical from
+`Concepts/TestOpus5.5PmConcept.html` (see "PM7 publication" above), and the
+older rule promoting it only from `build_pm7.py` is superseded — this
+pipeline's tail is retained for explicit historical output only.
 
 No final T48 promotion identity, Home workspace acceptance, all-theme visual
 acceptance, consolidated film disposition, native Slint 1.17.1 implementation,
