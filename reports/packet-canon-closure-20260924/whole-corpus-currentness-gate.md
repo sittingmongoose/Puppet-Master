@@ -110,3 +110,35 @@ The gate remains open. Later owner changes, including the Doctor journal
 selection contract at `5cd357ea0`, and eventual current-main reconciliation
 require a separate delta review. No native implementation, GUI completion,
 readiness, governance reseal or main landing is established by this export.
+
+## First independently reviewed carry-forward batch
+
+Separate reviewed registry: 63 of 11,395 historical nonflagged identities;
+11,332 remain unreviewed. This does not alter the 2,021 flagged-case denominator
+or reinstate blanket historical covered status. Root verified all 63 unique
+identities against the full impact export, disjointness from the flagged matrix,
+and unchanged source hashes and complete assessment histories.
+
+The batch contains exactly 51 Server/Backup/Restore command-census identities
+and 12 Search/index facets. The former preserve command identity and sole
+planned-owner routing only; the latter preserve the bounded owner, identity,
+policy and textual adoption claims in `search-index-carry-forward-review.md`.
+Both have independent review. Existing selected-operation, typed settlement,
+permission, native effects, physical custody and GUI obligations are not waived.
+The initial Server-connect hold was superseded: Server owns the sole command
+and Commands specifies its sole target; duplicate handler prose in Server is
+not required to establish that existing composition.
+
+Evidence under
+`/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/case-reconciliation/`:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `checkpoints/full-impact-reviewed-aba3b9f982da834cc5e102b9a27e0d71e42988c0ceb5be5cc14a5ac4b90dc309.jsonl` | `aba3b9f982da834cc5e102b9a27e0d71e42988c0ceb5be5cc14a5ac4b90dc309` |
+| `FULL-IMPACT-REVIEWED-63-CHECKPOINT.md` | `80d2c30500fc3b372570e53d1e3e9718493559531c63213f94deadf2e4ea8b4d` |
+| `SERVER-BACKUP-COMMAND51-DIFFERENT-SOL-REVIEW.md` | `19d351cdea63647b197c33cd55f89ae4391fa5e9b1236d8ddf48d5dde1108773` |
+| `SEARCH12-INDEPENDENT-REVIEW.md` | `defdbb0b45b4cf6a935552a27770153f14713236388431a4361e529ee532cb14` |
+
+Each registry row pins its owner snapshot and review sources. Later owner
+changes and main reconciliation still require delta review. The gate remains
+open; this is a reviewed batch, not a whole-corpus completion claim.
