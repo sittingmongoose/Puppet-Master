@@ -4538,6 +4538,130 @@
       }
     },
     {
+      "name": "server_gap_b.create_with_inspect_class_is_rejected",
+      "definition": "source_control_permission_decision",
+      "value": {
+        "schema_id": "pm.source_control.permission_decision.v1",
+        "scope": {
+          "command_id": "cmd.source_control.checkpoint.create",
+          "lineage": {
+            "project_id": "project:checkpoint",
+            "project_home_server_id": "server:checkpoint",
+            "execution_host_id": "host:checkpoint",
+            "execution_environment_id": "environment:checkpoint",
+            "source_location_id": "source:checkpoint",
+            "topology_generation": 9
+          },
+          "repository_context_ref": "repository-context:checkpoint",
+          "repo_id": "repo:checkpoint",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:checkpoint",
+          "expected_revision": {
+            "kind": "git",
+            "object_format": "sha1",
+            "commit_oid": "3333333333333333333333333333333333333333",
+            "ref_name": "refs/heads/main",
+            "branch_name": "main",
+            "index_generation": 7
+          },
+          "currentness_generation": 9,
+          "writer_lease_ref": "writer-lease:checkpoint",
+          "checkpoint_id": "checkpoint:reserved:1",
+          "checkpoint_purpose": "handoff",
+          "expected_checkpoint_generation": 0
+        },
+        "permission_snapshot_ref": "permission:scm-checkpoint:1",
+        "file_safe_decision_ref": "filesafe:scm-checkpoint:1",
+        "permission_class": "source_control.checkpoint.inspect",
+        "decision": "allow",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": null
+      }
+    },
+    {
+      "name": "server_gap_b.inspect_with_mutate_class_is_rejected",
+      "definition": "source_control_permission_decision",
+      "value": {
+        "schema_id": "pm.source_control.permission_decision.v1",
+        "scope": {
+          "command_id": "cmd.source_control.checkpoint.inspect",
+          "lineage": {
+            "project_id": "project:checkpoint",
+            "project_home_server_id": "server:checkpoint",
+            "execution_host_id": "host:checkpoint",
+            "execution_environment_id": "environment:checkpoint",
+            "source_location_id": "source:checkpoint",
+            "topology_generation": 9
+          },
+          "repository_context_ref": "repository-context:checkpoint",
+          "repo_id": "repo:checkpoint",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:checkpoint",
+          "expected_revision": {
+            "kind": "git",
+            "object_format": "sha1",
+            "commit_oid": "3333333333333333333333333333333333333333",
+            "ref_name": "refs/heads/main",
+            "branch_name": "main",
+            "index_generation": 7
+          },
+          "currentness_generation": 9,
+          "checkpoint_ref": "checkpoint:source-control:1",
+          "expected_checkpoint_generation": 1
+        },
+        "permission_snapshot_ref": "permission:scm-checkpoint:2",
+        "file_safe_decision_ref": "filesafe:scm-checkpoint:2",
+        "permission_class": "source_control.checkpoint.mutate",
+        "decision": "allow",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": null
+      }
+    },
+    {
+      "name": "server_gap_b.restore_with_inspect_class_is_rejected",
+      "definition": "source_control_permission_decision",
+      "value": {
+        "schema_id": "pm.source_control.permission_decision.v1",
+        "scope": {
+          "command_id": "cmd.source_control.checkpoint.restore",
+          "lineage": {
+            "project_id": "project:checkpoint",
+            "project_home_server_id": "server:checkpoint",
+            "execution_host_id": "host:checkpoint",
+            "execution_environment_id": "environment:checkpoint",
+            "source_location_id": "source:checkpoint",
+            "topology_generation": 9
+          },
+          "repository_context_ref": "repository-context:checkpoint",
+          "repo_id": "repo:checkpoint",
+          "scm_backend": "git",
+          "workspace_id": "git-worktree:checkpoint",
+          "expected_revision": {
+            "kind": "git",
+            "object_format": "sha1",
+            "commit_oid": "3333333333333333333333333333333333333333",
+            "ref_name": "refs/heads/main",
+            "branch_name": "main",
+            "index_generation": 7
+          },
+          "currentness_generation": 9,
+          "writer_lease_ref": "writer-lease:checkpoint",
+          "checkpoint_ref": "checkpoint:source-control:1",
+          "expected_checkpoint_generation": 1,
+          "restore_confirmation": true
+        },
+        "permission_snapshot_ref": "permission:scm-checkpoint:3",
+        "file_safe_decision_ref": "filesafe:scm-checkpoint:3",
+        "permission_class": "source_control.checkpoint.inspect",
+        "decision": "allow",
+        "authority_widening": false,
+        "secret_material_exposed": false,
+        "reason_code": null
+      }
+    },
+    {
       "name": "review_checkout_preview_rejects_autostash",
       "definition": "review_checkout_preview",
       "base_valid": "review_checkout_preview_separate_target_lease",

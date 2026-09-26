@@ -4146,6 +4146,84 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.source_control.checkpoint.create"
+                  }
+                },
+                "required": [
+                  "command_id"
+                ]
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "permission_class": {
+                "const": "source_control.checkpoint.mutate"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.source_control.checkpoint.inspect"
+                  }
+                },
+                "required": [
+                  "command_id"
+                ]
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "permission_class": {
+                "const": "source_control.checkpoint.inspect"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.source_control.checkpoint.restore"
+                  }
+                },
+                "required": [
+                  "command_id"
+                ]
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "permission_class": {
+                "const": "source_control.checkpoint.mutate"
+              }
+            }
+          }
         }
       ]
     },
