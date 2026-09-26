@@ -478,7 +478,6 @@ html[data-theme^="glass"] #panel-settings :is(.pm51-stat, .pm51-advanced, .pm51-
   #panel-settings .pm51-mgr .pm51-settings-inline .setting-copy { grid-column: 1; grid-row: 1; }
   #panel-settings .pm51-mgr .pm51-settings-inline .details-btn { grid-column: 2; grid-row: 1; align-self: start; justify-self: end; }
   #panel-settings .pm51-mgr .pm51-settings-inline .setting-control { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; }
-  #panel-settings .pm51-mgr .pm51-settings-inline .setting-row:has(.setting-control:empty) { grid-template-rows: auto; }
   #panel-settings .pm51-mgr .pm51-settings-inline .section-heading-row { flex-direction: column; }
 }
 html[data-theme^="retro"] #panel-settings .pm51-mgr .pm51-settings-inline .settings-section { border-radius: 0 !important; box-shadow: 2px 2px 0 var(--border); }

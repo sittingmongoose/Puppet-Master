@@ -56,6 +56,32 @@ def _load_data() -> dict:
     return data
 
 
+def o55_data() -> dict:
+    """src/settings/o55/*.json, one key per file stem (labels.json -> O55S.labels)."""
+    return {p.stem: json.loads(p.read_text(encoding='utf-8')) for p in sorted((FORK / 'o55').glob('*.json'))}
+
+
+def module_source() -> str:
+    """The T50 module layout (PM51_DATA, PM51_PLACEMENT, kit, managers) plus the Opus 5.5 additions: O55S (the o55
+    data files) before the kit, and kit.d/*.js right after it, so every manager renders through the reworked kit."""
+    kit = (FORK / 'kit.js').read_text(encoding='utf-8')
+    extra = [f'/* ---- kit.d/{p.name} ---- */\n' + p.read_text(encoding='utf-8') for p in sorted((FORK / 'kit.d').glob('*.js'))]
+    managers = [f'/* ---- {p.name} ---- */\n' + p.read_text(encoding='utf-8') for p in sorted((FORK / 'managers').glob('*.js'))]
+    data = _load_data()
+    placement = json.loads((FORK / 'placement.json').read_text(encoding='utf-8'))
+    body = ('const PM51_DATA = ' + json.dumps(data['extras'], ensure_ascii=False) + ';\n'
+            + 'const PM51_PLACEMENT = ' + json.dumps(placement, ensure_ascii=False) + ';\n'
+            + 'const O55S = ' + json.dumps(o55_data(), ensure_ascii=False) + ';\n'
+            + kit + '\n' + '\n'.join(extra) + '\n' + '\n'.join(managers))
+    return "(function pm51SettingsRefresh(){\n'use strict';\n" + body + "\n})();\n"
+
+
+def styles() -> str:
+    parts = [(FORK / 'styles.css').read_text(encoding='utf-8')]
+    parts += [f'/* ---- styles.d/{p.name} ---- */\n' + p.read_text(encoding='utf-8') for p in sorted((FORK / 'styles.d').glob('*.css'))]
+    return '\n'.join(parts)
+
+
 def _band(text: str, start: str, end: str, replacement: str, need, label: str) -> str:
     need(text.count(start) == 1, f'O55 settings: band start {label!r} found {text.count(start)} times')
     i = text.index(start)
@@ -68,7 +94,7 @@ def apply(doc: str, need) -> tuple[str, dict]:
     t50 = _t50()
     data = _load_data()
     placement = t50.load_placement()
-    css = (FORK / 'styles.css').read_text(encoding='utf-8')
+    css = styles()
     for bad in ['backdrop-filter', 'url(#']:
         need(bad not in css, 'O55 settings: unsupported paint primitive in CSS: ' + bad)
 
@@ -81,7 +107,7 @@ def apply(doc: str, need) -> tuple[str, dict]:
     engine = js[:js.index(MARKER)] + js[end:]  # the engine as T50 saw it, without any appended module
 
     census = t50.validate_placement(placement, engine, need)
-    js = js[:start] + t50.module_source() + '\n' + js[end:]
+    js = js[:start] + module_source() + '\n' + js[end:]
 
     band_js = lambda value: json.dumps(value, ensure_ascii=False, indent=2)
     js = _band(js, '  const providers = [', '  const freeRoutes = [',

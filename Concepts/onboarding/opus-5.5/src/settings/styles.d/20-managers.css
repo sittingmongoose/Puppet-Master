@@ -1,0 +1,92 @@
+/* O55 · manager frame. One level of cards, not three: the manager is an open page (no card of its own), its sections
+   are the cards, and anything inside a card is a titled group with dividers. The tab strip is a pill track that
+   stays at the top of the manager while you scroll it, with a thumb that slides to the chosen tab. */
+
+/* ---- open frame --------------------------------------------------------------------------------------------- */
+#panel-settings .workspace-block .manager-page.pm51-mgr { border: 0; border-radius: 0; background: none; box-shadow: none; overflow: visible; }
+#panel-settings .workspace-block .pm51-mgr .pm51-scroll { padding: 14px 0 6px; }
+#panel-settings .workspace-block .pm51-mgr > .manager-body { overflow: visible; }
+#panel-settings .pm51-mgr .pm51-scroll > * + * { margin-top: 16px; }
+
+/* ---- tabs: pill track with a sliding thumb ---------------------------------------------------------------------- */
+#panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs {
+  position: sticky; top: 0; z-index: 6; display: inline-flex; align-self: flex-start; max-width: 100%;
+  gap: 2px; min-height: 0; margin: 2px 0 0; padding: 4px; border: 1px solid var(--k3-line); border-radius: 12px;
+  background: color-mix(in srgb, var(--k3-bg-1) 92%, transparent); box-shadow: 0 10px 24px -18px rgba(0, 0, 0, .55);
+  overflow-x: auto; scrollbar-width: none; isolation: isolate;
+}
+#panel-settings .pm51-mgr > .pm51-tabs .manager-tab { height: 34px; padding: 0 14px; border-radius: 9px; font-size: 12.5px; font-weight: 620; color: var(--k3-text-3); background: none; z-index: 1; }
+#panel-settings .pm51-mgr > .pm51-tabs .manager-tab:hover { color: var(--k3-text-1); background: none; }
+#panel-settings .pm51-mgr > .pm51-tabs .manager-tab.active { color: var(--k3-text-1); background: none; box-shadow: none; }
+#panel-settings .pm51-mgr > .pm51-tabs .manager-tab:focus-visible { outline: 2px solid color-mix(in srgb, var(--k3-accent) 70%, transparent); outline-offset: -2px; }
+#panel-settings .pm51-mgr > .pm51-tabs .tab-ink {
+  top: 4px; bottom: 4px; height: auto; z-index: 0; border-radius: 9px;
+  background: var(--k3-surface-2, var(--k3-surface-1)); border: 1px solid color-mix(in srgb, var(--k3-accent) 28%, var(--k3-line));
+  box-shadow: 0 1px 0 color-mix(in srgb, #fff 6%, transparent) inset, 0 6px 16px -8px color-mix(in srgb, var(--k3-accent) 55%, transparent);
+  transition: left 420ms var(--k3-ease-spring), width 420ms var(--k3-ease-spring), opacity 160ms ease;
+}
+#panel-settings .pm51-mgr > .pm51-tabs .tab-ink::after { content: ''; position: absolute; left: 22%; right: 22%; bottom: -1px; height: 2px; border-radius: 2px; background: var(--k3-accent); opacity: .9; }
+html[data-theme^="retro"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { transition-timing-function: steps(4, end), steps(4, end), linear; }
+
+/* ---- summary strip (was four tall tiles) ---------------------------------------------------------------------- */
+#panel-settings .pm51-mgr .pm51-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md, 10px); background: var(--k3-surface-1); overflow: hidden; }
+#panel-settings .pm51-mgr .pm51-stat { min-height: 0; padding: 12px 16px 13px; border: 0; border-radius: 0; background: none; box-shadow: inset 1px 0 0 var(--k3-line); }
+#panel-settings .pm51-mgr .pm51-stat:first-child { box-shadow: none; }
+#panel-settings .pm51-mgr .pm51-stat-label { font-size: 11.5px; font-weight: 620; color: var(--k3-text-3); }
+#panel-settings .pm51-mgr .pm51-stat-value { margin-top: 2px; font-size: 20px; font-weight: 740; letter-spacing: -.02em; line-height: 1.2; }
+#panel-settings .pm51-mgr .pm51-stat-help { margin-top: 2px; font-size: 11.5px; color: var(--k3-text-3); line-height: 1.35; }
+
+/* ---- section cards ------------------------------------------------------------------------------------------ */
+#panel-settings .pm51-mgr .pm51-section.panel-card { border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md, 10px); background: var(--k3-surface-1); box-shadow: none; }
+#panel-settings .pm51-mgr .pm51-section-head { padding: 15px 18px 12px; align-items: center; }
+#panel-settings .pm51-mgr .pm51-section-title { font-size: 14px; }
+#panel-settings .pm51-mgr .pm51-section-help { font-size: 12px; }
+#panel-settings .pm51-mgr .pm51-section-body { padding: 4px 18px 14px; }
+#panel-settings .pm51-mgr .pm51-section-head + .pm51-section-body { border-top: 0; }
+
+/* inside a card, a section is a titled group: a divider and a heading, no second border */
+#panel-settings .pm51-mgr :is(.pm51-section-body, .pm51-detail-content, .pm51-advanced-body, .pm51-acc-inner) .pm51-section.panel-card { border: 0; border-top: 1px solid var(--k3-line); border-radius: 0; background: none; margin-top: 0; }
+#panel-settings .pm51-mgr :is(.pm51-section-body, .pm51-detail-content, .pm51-advanced-body, .pm51-acc-inner) .pm51-section.panel-card:first-child { border-top: 0; }
+#panel-settings .pm51-mgr :is(.pm51-detail-content, .pm51-advanced-body, .pm51-acc-inner) .pm51-section .pm51-section-head { padding: 14px 0 6px; }
+#panel-settings .pm51-mgr :is(.pm51-detail-content, .pm51-advanced-body, .pm51-acc-inner) .pm51-section .pm51-section-body { padding: 0 0 12px; }
+#panel-settings .pm51-mgr .pm51-detail-content > * + * { margin-top: 0; }
+#panel-settings .pm51-mgr .pm51-detail-content .settings-section.o55-group { border: 0; border-top: 1px solid var(--k3-line); border-radius: 0; background: none; }
+#panel-settings .pm51-mgr .pm51-detail-content .o55-group-head { padding: 14px 0 2px; }
+#panel-settings .pm51-mgr .pm51-detail-content .o55-group > .setting-list { padding: 0 0 8px; }
+
+/* ---- list + detail: one card, calm list ---------------------------------------------------------------------- */
+#panel-settings .pm51-mgr .split-manager.pm51-split { border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md, 10px); background: var(--k3-surface-1); box-shadow: none; overflow: clip; grid-template-columns: 264px minmax(0, 1fr); }
+#panel-settings .pm51-mgr .pm51-roster { border-right: 1px solid var(--k3-line); background: color-mix(in srgb, var(--k3-bg-1) 60%, transparent); }
+#panel-settings .pm51-mgr .pm51-roster .roster-head { padding: 12px 12px 8px 16px; border-bottom: 0; min-height: 0; }
+#panel-settings .pm51-mgr .pm51-roster .roster-title { font-size: 11px; letter-spacing: .06em; color: var(--k3-text-3); }
+#panel-settings .pm51-mgr .pm51-roster .roster-search { padding: 0 12px 8px; }
+#panel-settings .pm51-mgr .pm51-roster .roster-search input { width: 100%; height: 32px; border-radius: 8px; }
+#panel-settings .pm51-mgr .pm51-roster .roster-list { padding: 2px 8px 10px; display: flex; flex-direction: column; gap: 2px; }
+#panel-settings .pm51-mgr .pm51-roster .resource-row { min-height: 50px; margin: 0; padding: 8px 10px; border: 1px solid transparent; border-radius: 9px; background: none; gap: 10px; transition: background-color 160ms var(--k3-ease-out), border-color 160ms var(--k3-ease-out); }
+#panel-settings .pm51-mgr .pm51-roster .resource-row:hover { background: color-mix(in srgb, var(--k3-accent) 6%, transparent); }
+#panel-settings .pm51-mgr .pm51-roster .resource-row.active { background: var(--k3-accent-soft); border-color: color-mix(in srgb, var(--k3-accent) 35%, transparent); box-shadow: none; }
+#panel-settings .pm51-mgr .pm51-roster .resource-avatar { width: 32px; height: 32px; border-radius: 9px; font-size: 11px; }
+#panel-settings .pm51-mgr .pm51-detail-head { padding: 16px 20px 12px; border-bottom: 1px solid var(--k3-line); background: none; }
+#panel-settings .pm51-mgr .pm51-detail-title { font-size: 17px; }
+#panel-settings .workspace-block .pm51-mgr .pm51-detail-content { padding: 4px 20px 18px; }
+
+/* ---- More options -------------------------------------------------------------------------------------------- */
+#panel-settings .pm51-mgr .pm51-advanced { border: 1px dashed var(--k3-line-strong, var(--k3-line)); border-radius: var(--k3-radius-md, 10px); background: none; }
+#panel-settings .pm51-mgr .pm51-advanced[open] { border-style: solid; background: color-mix(in srgb, var(--k3-bg-1) 50%, transparent); }
+#panel-settings .pm51-mgr .pm51-advanced > summary { min-height: 46px; padding: 0 16px; font-size: 12.5px; color: var(--k3-text-2); gap: 10px; }
+#panel-settings .pm51-mgr .pm51-advanced > summary svg { transition: transform 260ms var(--k3-ease-spring); }
+#panel-settings .pm51-mgr .pm51-advanced-body { padding: 4px 16px 16px; border-top: 1px solid var(--k3-line); }
+#panel-settings .pm51-mgr .pm51-advanced-body .settings-section.o55-group, #panel-settings .pm51-mgr .pm51-advanced-body .panel-card { background: var(--k3-surface-1); }
+
+/* ---- the leaving layer of a morph never takes clicks or focus ------------------------------------------------- */
+#panel-settings .o55-leaving { pointer-events: none !important; }
+
+/* ---- narrow hosts ------------------------------------------------------------------------------------------------ */
+@container settings-host (max-width: 760px) {
+  #panel-settings .pm51-mgr .split-manager.pm51-split { grid-template-columns: minmax(0, 1fr); }
+  #panel-settings .pm51-mgr .pm51-roster { border-right: 0; border-bottom: 1px solid var(--k3-line); }
+  #panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs { display: flex; }
+  #panel-settings .pm51-mgr .pm51-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #panel-settings .pm51-mgr .pm51-stat:nth-child(3) { box-shadow: inset 0 1px 0 var(--k3-line); }
+  #panel-settings .pm51-mgr .pm51-stat:nth-child(4) { box-shadow: inset 1px 0 0 var(--k3-line), inset 0 1px 0 var(--k3-line); }
+}

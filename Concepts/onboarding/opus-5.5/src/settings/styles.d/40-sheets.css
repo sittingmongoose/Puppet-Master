@@ -1,0 +1,55 @@
+/* O55 · side panels (hero sheets). The spring in and out, the backdrop and the reveal choreography are unchanged; the
+   content reads more calmly: a bigger title with its status beside it, facts as one strip, cards with real headings
+   (sentence case, an icon disc), steps drawn as a connected timeline, and a steady footer. */
+
+#panel-settings .drawer.pm51-panel { display: flex; flex-direction: column; }
+#panel-settings .pm51-panel-head.pm51-hero { padding: 20px 22px 18px; border-bottom: 1px solid var(--k3-line); }
+#panel-settings .pm51-hero-top { align-items: center; }
+#panel-settings .pm51-hero .pm51-panel-title { font-size: 18px; font-weight: 750; letter-spacing: -.015em; }
+#panel-settings .pm51-hero .pm51-panel-sub { font-size: 12.5px; margin-top: 4px; }
+#panel-settings .pm51-hero-eyebrow { letter-spacing: .04em; text-transform: none; font-size: 11.5px; font-weight: 650; }
+#panel-settings .pm51-hero-status { margin-top: 14px; }
+#panel-settings .pm51-hero-status .pm51-status { font-size: 12.5px; padding: 5px 10px 5px 9px; border-radius: 999px; background: var(--k3-bg-1); border: 1px solid var(--k3-line); }
+#panel-settings .pm51-hero-summary { font-size: 13px; line-height: 1.6; margin-top: 12px; }
+#panel-settings .pm51-hero-facts { gap: 0; margin-top: 14px; padding: 0; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md, 10px); background: var(--k3-bg-1); overflow: hidden; }
+#panel-settings .pm51-hero-facts > div { padding: 9px 12px 10px; box-shadow: inset 1px 0 0 var(--k3-line); }
+#panel-settings .pm51-hero-facts > div:first-child { box-shadow: none; }
+#panel-settings .pm51-hero-facts dt { font-size: 11px; }
+#panel-settings .pm51-hero-facts dd { font-size: 13px; }
+
+#panel-settings .pm51-panel-body { padding: 18px 22px 26px; }
+#panel-settings .pm51-panel-body > * + * { margin-top: 12px; }
+#panel-settings .pm51-panel-card { padding: 14px 16px 15px; border-radius: var(--k3-radius-md, 12px); background: var(--k3-bg-1); box-shadow: none; }
+#panel-settings .pm51-pc-head { gap: 10px; }
+#panel-settings .pm51-pc-icon { width: 26px; height: 26px; border-radius: 50%; background: var(--k3-accent-soft); color: var(--k3-accent); }
+#panel-settings .pm51-pc-icon svg { width: 13px; height: 13px; }
+#panel-settings .pm51-panel-card .pm51-ps-title { font-size: 13px; font-weight: 720; letter-spacing: -.005em; text-transform: none; color: var(--k3-text-1); margin-bottom: 0; }
+#panel-settings .pm51-panel-card .pm51-ps-help { margin-top: 6px; font-size: 12px; }
+#panel-settings .pm51-panel-card .pm51-pc-body { margin-top: 12px; }
+#panel-settings .pm51-panel-card .pm51-kv-row { padding: 8px 0; font-size: 12.5px; }
+#panel-settings .pm51-panel-card .pm51-kv-row > span:last-child { color: var(--k3-text-1); font-weight: 560; }
+
+/* steps as a connected timeline */
+#panel-settings .pm51-panel-body .pm51-steps { position: relative; }
+#panel-settings .pm51-panel-body .pm51-steps .pm51-step { position: relative; border-top: 0; align-items: flex-start; padding: 8px 0 10px; min-height: 0; }
+#panel-settings .pm51-panel-body .pm51-steps .pm51-step + .pm51-step::before { content: ''; position: absolute; left: 12px; top: -12px; width: 2px; height: 20px; background: var(--k3-line); border-radius: 2px; }
+#panel-settings .pm51-panel-body .pm51-steps .pm51-step.is-done + .pm51-step::before, #panel-settings .pm51-panel-body .pm51-steps .pm51-step.tone-ready + .pm51-step::before { background: color-mix(in srgb, var(--k3-green) 60%, transparent); }
+#panel-settings .pm51-panel-body .pm51-step-n { background: var(--k3-surface-1); }
+#panel-settings .pm51-panel-body .pm51-step-title { font-size: 13px; }
+#panel-settings .pm51-panel-body .pm51-step-desc { font-size: 12px; line-height: 1.45; }
+
+/* notes are soft callouts */
+#panel-settings .pm51-panel-body .pm51-note { padding: 11px 13px; border-radius: 10px; font-size: 12px; background: color-mix(in srgb, var(--k3-blue, var(--k3-accent)) 7%, transparent); border-color: color-mix(in srgb, var(--k3-blue, var(--k3-accent)) 22%, transparent); }
+#panel-settings .pm51-panel-body .pm51-note.tone-attention { background: var(--k3-amber-soft); border-color: color-mix(in srgb, var(--k3-amber) 35%, transparent); }
+
+/* fields inside sheets: full width, generous */
+#panel-settings .pm51-panel-body .pm51-field-label { font-size: 12.5px; color: var(--k3-text-1); }
+#panel-settings .pm51-panel-body .pm51-field .text-control { min-height: 36px; }
+#panel-settings .pm51-panel-body .pm51-field-help { font-size: 11.5px; line-height: 1.45; }
+
+/* footer: steady, primary on the right */
+#panel-settings .pm51-panel-foot { padding: 14px 22px; background: color-mix(in srgb, var(--k3-surface-1) 94%, transparent); }
+#panel-settings .pm51-panel-foot .btn { min-height: 36px; padding: 0 16px; border-radius: 9px; font-size: 12.5px; font-weight: 650; }
+#panel-settings .pm51-panel-foot > .btn[data-action="close-overlay"] { background: none; border-color: transparent; color: var(--k3-text-2); }
+#panel-settings .pm51-panel-foot > .btn[data-action="close-overlay"]:hover { background: var(--k3-bg-2); color: var(--k3-text-1); }
+html[data-theme^="glass"] #panel-settings .pm51-hero-facts, html[data-theme^="glass"] #panel-settings .pm51-hero-status .pm51-status { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * .6)); }

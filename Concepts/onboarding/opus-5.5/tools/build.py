@@ -93,6 +93,12 @@ def lint_sources() -> list[str]:
         if EMOJI.search(text):
             problems.append(f'emoji glyph in {p.relative_to(PKG)}')
         if p.suffix == '.css':
+            # A :has() whose subject is html/body/:root makes every DOM insertion restyle the whole ~17k-node document
+            # (measured ~90 ms each); that is what made Settings lag. Settings styles use no :has() at all.
+            for m in re.finditer(r'(?:^|[\s,}])(?:html|body|:root)\b[^{},]*:has\(', text):
+                problems.append(f'page-wide :has() in {p.relative_to(PKG)}: {m.group(0).strip()[:80]}')
+            if 'settings' in p.relative_to(SRC).parts and ':has(' in text:
+                problems.append(f':has() in Settings styles {p.relative_to(PKG)}')
             for m in re.finditer(r'border-(?:left|inline-start)\s*:\s*([^;]+);', text):
                 width = re.search(r'(\d+(?:\.\d+)?)px', m.group(1))
                 if width and float(width.group(1)) >= 2:

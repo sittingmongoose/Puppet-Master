@@ -37,8 +37,8 @@
 .o55t-zl-hot { display: none; }
 body.pm-home-dragging .o55t-zone.o55t-on { animation: none; filter: brightness(1.15); box-shadow: inset 3px 0 0 var(--o55t-accent), 0 0 44px color-mix(in srgb, var(--o55t-accent) 70%, transparent); }
 body.pm-home-dragging .o55t-zonelabel { transform: translateY(-50%) scale(1.06); }
-/* .o55t-drop-hot mirrors the left dock's pm-home-drop-active (set by the dock step's observer); a body:has() rule here
-   made every DOM insertion restyle the whole document */
+/* .o55t-drop-hot mirrors the left dock's pm-home-drop-active (set by the dock step's observer); the page-wide :has
+   rule it replaces made every DOM insertion restyle the whole document */
 .o55t-zone.o55t-on.o55t-drop-hot { background: color-mix(in srgb, var(--o55t-accent) 78%, transparent); }
 .o55t-zone.o55t-drop-hot .o55t-zl-idle { display: none; }
 .o55t-zone.o55t-drop-hot .o55t-zl-hot { display: inline; }
