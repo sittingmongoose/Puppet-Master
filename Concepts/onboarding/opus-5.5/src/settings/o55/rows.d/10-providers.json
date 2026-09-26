@@ -136,10 +136,11 @@
     "target": "[data-setting-id=\"ai.accounts.anthropic-api-key\"]"
    },
    "routeLabel": "Open Anthropic API",
-   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings."
+   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings.",
+   "help": "Added and replaced in Anthropic API, under Providers & Accounts."
   },
   "ai.accounts.openai-api-key": {
-   "label": "ChatGPT / Codex key",
+   "label": "OpenAI API key",
    "control": "credential",
    "route": {
     "domain": "ai",
@@ -149,7 +150,8 @@
     "target": "[data-setting-id=\"ai.accounts.openai-api-key\"]"
    },
    "routeLabel": "Open ChatGPT / Codex",
-   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings."
+   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings.",
+   "help": "Added and replaced in ChatGPT / Codex, under Providers & Accounts."
   },
   "ai.accounts.gemini-api-key": {
    "label": "Gemini API key",
@@ -162,10 +164,11 @@
     "target": "[data-setting-id=\"ai.accounts.gemini-api-key\"]"
    },
    "routeLabel": "Open Gemini API",
-   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings."
+   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings.",
+   "help": "Added and replaced in Gemini API, under Providers & Accounts."
   },
   "ai.accounts.cursor-api-key": {
-   "label": "Cursor key",
+   "label": "Cursor API key",
    "control": "credential",
    "route": {
     "domain": "ai",
@@ -175,10 +178,11 @@
     "target": "[data-setting-id=\"ai.accounts.cursor-api-key\"]"
    },
    "routeLabel": "Open Cursor",
-   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings."
+   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings.",
+   "help": "Added and replaced in Cursor, under Providers & Accounts."
   },
   "ai.accounts.minimax-api-key": {
-   "label": "MiniMax Coding Plan key",
+   "label": "MiniMax API key",
    "control": "credential",
    "route": {
     "domain": "ai",
@@ -188,7 +192,8 @@
     "target": "[data-setting-id=\"ai.accounts.minimax-api-key\"]"
    },
    "routeLabel": "Open MiniMax Coding Plan",
-   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings."
+   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings.",
+   "help": "Added and replaced in MiniMax Coding Plan, under Providers & Accounts."
   },
   "ai.accounts.provider-connections": {
    "label": "Your AI services",

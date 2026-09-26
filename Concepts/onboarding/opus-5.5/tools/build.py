@@ -191,6 +191,14 @@ PATCHES = [
     (".pm7u-card:has(.pm7u-setup-cta) .pm7u-setup-cta > * {",
      ".pm7u-card .pm7u-setup-cta.pm7u-setup-cta > * {",
      'usage card cta :has restyle'),
+    # Hover tags label newly mounted controls. Preparing every new node happened in one frame before the 4 ms batches
+    # started (69 ms when a far Settings manager mounted); now each node is prepared inside the time-sliced batch.
+    ("for(var i=0;i<nodes.length;i++){var prepared=this.prepare(nodes[i]);if(prepared||attr(nodes[i],'data-pm-hover-bound')==='true')queue.push({el:nodes[i],prepared:prepared});}",
+     "for(var i=0;i<nodes.length;i++)queue.push({el:nodes[i],prepared:undefined});",
+     'hover tags prepare lazily'),
+    ("while(this.liveCursor<limit&&performance.now()-started<4){var row=this.liveQueue[this.liveCursor++];if(",
+     "while(this.liveCursor<limit&&performance.now()-started<4){var row=this.liveQueue[this.liveCursor++];if(row.prepared===undefined){row.prepared=row.el.isConnected?this.prepare(row.el):null;if(!row.prepared&&attr(row.el,'data-pm-hover-bound')!=='true')continue;}if(",
+     'hover tags prepare inside batches'),
     # The Settings rail and Home count the real AI services (the list grew from 13 to 22 and each one's state is
     # live), not a fixed "7 ready · 2 need attention". Providers & Accounts defines window.O55ProviderSummary.
     ("<strong>AI Providers</strong><small>7 ready · 2 need attention</small>",
