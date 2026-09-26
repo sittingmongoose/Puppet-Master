@@ -54,7 +54,9 @@ handleInputAction = function (action, el) {
   if (action === 'o55-scaled-input' && el && el.dataset && el.dataset.setting) {
     const id = el.dataset.setting, n = Number.parseFloat(el.value), scale = Number(el.dataset.scale) || 1;
     if (!Number.isFinite(n)) return;
-    if (commitSettingValue(id, Math.round(n * scale))) { saveState(); o55MarkChanged(id); clearTimeout(o55InputTimer); o55InputTimer = window.setTimeout(() => o55Notify(id, Math.round(n * scale)), 120); }
+    /* a fraction shown as a percentage (scale below 1) keeps its decimals; a larger stored unit is whole */
+    const v = scale >= 1 ? Math.round(n * scale) : +(n * scale).toFixed(6);
+    if (commitSettingValue(id, v)) { saveState(); o55MarkChanged(id); clearTimeout(o55InputTimer); o55InputTimer = window.setTimeout(() => o55Notify(id, v), 120); }
     return;
   }
   if (action === 'o55-path-input' && el && el.dataset && el.dataset.setting) {

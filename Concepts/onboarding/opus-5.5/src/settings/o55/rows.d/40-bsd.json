@@ -1,0 +1,114 @@
+{
+ "_about": "Back Seat Driver rows (settings audit, 2026-09-26): one spelling (advisor), pickers for model and persona, the compaction point as a percentage.",
+ "rows": {
+  "safety.approvals.bsd-mode": {
+   "label": "Advisor",
+   "help": "Auto checks in at key moments. Always watching checks in all the time.",
+   "options": {
+    "Off": "Off",
+    "Auto": "Auto",
+    "On": "Always watching"
+   }
+  },
+  "safety.approvals.bsd-model": {
+   "label": "Model it uses",
+   "help": "Its usage is shown separately from your main work.",
+   "control": "select",
+   "choices": [
+    "Default"
+   ],
+   "options": {
+    "Default": "Automatic"
+   },
+   "hints": {
+    "Default": "Puppet Master picks a signed-in model"
+   },
+   "when": {
+    "id": "safety.approvals.bsd-mode",
+    "not": "Off"
+   }
+  },
+  "safety.approvals.bsd-persona": {
+   "label": "How it talks",
+   "help": "Critical Advisor is blunt about risk. Add your own under Personas.",
+   "control": "select",
+   "choices": [
+    "Critical Advisor"
+   ],
+   "hints": {
+    "Critical Advisor": "Blunt about risk (made for this)"
+   },
+   "when": {
+    "id": "safety.approvals.bsd-mode",
+    "not": "Off"
+   }
+  },
+  "safety.approvals.bsd-trigger-sensitivity": {
+   "label": "How readily it speaks up",
+   "options": {
+    "Conservative": "Only serious problems",
+    "Balanced": "Concerns and serious problems",
+    "Frequent": "Small things too"
+   },
+   "when": {
+    "id": "safety.approvals.bsd-mode",
+    "not": "Off"
+   }
+  },
+  "safety.approvals.bsd-catch-up-seconds": {
+   "label": "Time to catch up on missed work",
+   "help": "After this it skips ahead to what is happening now.",
+   "options": {
+    "Off": "Don't catch up"
+   },
+   "when": {
+    "id": "safety.approvals.bsd-mode",
+    "not": "Off"
+   }
+  },
+  "safety.approvals.bsd-cooldown-turns": {
+   "label": "Quiet turns after advice",
+   "help": "So it does not repeat itself.",
+   "unit": "turns",
+   "min": 0,
+   "max": 20,
+   "step": 1,
+   "when": {
+    "id": "safety.approvals.bsd-mode",
+    "not": "Off"
+   }
+  },
+  "safety.approvals.bsd-retain-transcript": {
+   "label": "Keep the advisor's conversation",
+   "help": "Lets you open it and see why it said something.",
+   "when": {
+    "id": "safety.approvals.bsd-mode",
+    "not": "Off"
+   }
+  },
+  "safety.approvals.bsd-self-compact-threshold": {
+   "label": "Tidy its own notes when this full",
+   "help": "50 to 95%. It never touches your conversation.",
+   "unit": "%",
+   "scale": 0.01,
+   "min": 50,
+   "max": 95,
+   "step": 1,
+   "when": {
+    "id": "safety.approvals.bsd-mode",
+    "not": "Off"
+   }
+  },
+  "safety.approvals.bsd-stage-bindings": {
+   "label": "Stages it watches",
+   "noun": "stage"
+  },
+  "planning.verification.back-seat-driver-mode": {
+   "label": "Back Seat Driver (planning copy)",
+   "help": "The same switch as the advisor's mode, kept for older plans. It follows the Advisor setting.",
+   "options": {
+    "On": "Always watching"
+   }
+  }
+ }
+}

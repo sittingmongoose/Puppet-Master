@@ -334,7 +334,8 @@ function o55NumberDialog(found) {
     primaryLabel: 'Use this number', onPrimary: w => {
       const v = Number(w.querySelector('.o55-numinput').value);
       if (w.querySelector('.o55-numinput').value === '' || !Number.isFinite(v) || (Number.isFinite(min) && v < min) || (Number.isFinite(max) && v > max)) { showToast('Enter a number', Number.isFinite(min) && Number.isFinite(max) ? `Between ${min} and ${max}.` : 'A whole number or a decimal.', 'info'); return false; }
-      if (!commitSettingValue(s.id, v)) return false; saveState(); refreshSettingRow(s.id); o55Changed(s, v);
+      const scale = Number(row.scale) || 1, stored = scale === 1 ? v : scale > 1 ? Math.round(v * scale) : +(v * scale).toFixed(6);
+      if (!commitSettingValue(s.id, stored)) return false; saveState(); refreshSettingRow(s.id); o55Changed(s, stored);
     }
   });
   return true;

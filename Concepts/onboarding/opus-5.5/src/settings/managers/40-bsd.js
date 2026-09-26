@@ -2,7 +2,13 @@
    Composed over the nine canonical safety.approvals.bsd-* settings: Overview renders the engine's own
    rows through PM51.settingRows (Details buttons, engine change handlers, T49 pickers), Stages owns
    bsd-stage-bindings, Findings shows held / delivered / cleared advice exactly as
-   Plans/Back_Seat_Driver.md §8 allows: a held finding is never surfaced as current advice. */
+   Plans/Back_Seat_Driver.md §8 allows: a held finding is never surfaced as current advice.
+   - Overview is one group: whether it watches, how readily it speaks, how long it stays quiet, how it talks, its
+     model and whether it keeps its conversation. The model and persona are pickers (signed-in models, your
+     personas), not text boxes. Catch-up and compaction are expert pacing under More options.
+   - Stages stores what Plans/Back_Seat_Driver.md §23 says a binding is: each of the ten stages as
+     inherit | off | auto | on ("code:auto"), not the older five-name list, so the list and the store agree.
+   - planning.verification.back-seat-driver-mode is the same switch as the advisor's mode; it follows it. */
 (function () {
   const ID = 'bsd';
   const KEY = 'back-seat-driver';
@@ -14,10 +20,13 @@
   const value = k => { const f = found(k); return f ? settingValue(f.setting) : undefined; };
   const OVERRIDES = { [SID('mode')]: { control: 'segmented' } };
   const STAGE_MODES = ['Inherit', 'Off', 'Auto', 'On'];
-  const STAGE_OPTIONS = [{ value: 'Inherit', label: 'Inherit', meta: 'Follows Overview' }, 'Off', 'Auto', 'On'];
+  const MODE_LABEL = { Off: 'Off', Auto: 'Auto', On: 'Always watching' };
+  const stageOptions = mode => [{ value: 'Inherit', label: 'Same as Overview', meta: `Now ${MODE_LABEL[mode] || mode}` }, { value: 'Off', label: 'Off' }, { value: 'Auto', label: 'Auto', meta: 'At key moments' }, { value: 'On', label: 'Always watching' }];
+  const TWIN = 'planning.verification.back-seat-driver-mode';
   const DEFAULT_AUTO = ['code', 'verify', 'gate', 'audit', 'certify'];
-  const BOUNDARIES = ['Use included plans only', 'Allow metered usage', 'Ask each time'];
-  const MODE_HELP = { Off: 'Not watching', Auto: 'Checks in at key moments', On: 'Watches continuously' };
+  const BOUNDARIES = [['Use included plans only', 'Only what my plans include'], ['Allow metered usage', 'May use pay-as-you-go'], ['Ask each time', 'Ask me each time']];
+  const FIXTURE_BSD = () => (typeof D !== 'undefined' && D.bsd) || {};
+  const MODE_HELP = { Off: 'Not watching', Auto: 'Checks in at key moments', On: 'Watches all the time' };
   const SEVERITY = {
     critical: { label: 'Critical', icon: 'alert' },
     concern: { label: 'Concern', icon: 'info' },
@@ -66,12 +75,30 @@
   /* ---------- derived facts ---------------------------------------------- */
   const modeValue = () => { const m = String(value('mode') || 'Auto'); return MODE_HELP[m] ? m : 'Auto'; };
   const stageLabel = key => { const st = data().stages.find(s => s.key === key); return st ? st.label : humanize(key || ''); };
-  const stagesOn = b => b.stages.filter(s => s.mode === 'Auto' || s.mode === 'On').length;
-  const boundKeys = b => b.stages.filter(s => s.mode === 'Auto' || s.mode === 'On').map(s => s.key);
+  /* a stage watches when its own choice, or Overview's for "Same as Overview", is not Off */
+  const effective = s => s.mode === 'Inherit' ? modeValue() : s.mode;
+  /* Off on Overview turns the whole advisor off ("Off disables it"); stage choices apply again when it is back on */
+  const stagesOn = b => modeValue() === 'Off' ? 0 : b.stages.filter(s => effective(s) !== 'Off').length;
+  const bindingList = b => b.stages.map(s => `${s.key}:${s.mode.toLowerCase()}`);
+  function readBindings() {
+    const v = value('stage-bindings'); if (!Array.isArray(v)) return null;
+    const map = {}; v.forEach(x => { const m = /^([a-z]+):(inherit|off|auto|on)$/.exec(String(x)); if (m) map[m[1]] = m[2][0].toUpperCase() + m[2].slice(1); });
+    return Object.keys(map).length ? map : null;
+  }
+  /* the store is the truth once it holds stage bindings; an older five-name list is replaced once by the stages shown */
+  function syncBindings() {
+    if (!found('stage-bindings')) return;
+    const b = data(); const map = readBindings();
+    if (map) { b.stages.forEach(s => { if (map[s.key]) s.mode = map[s.key]; }); return; }
+    if (commitSettingValue(SID('stage-bindings'), bindingList(b))) saveState();
+  }
   const modelLabel = () => { const v = value('model'); return typeof assistantRouteLabel === 'function' ? assistantRouteLabel(v) : (v && v !== 'Default' ? String(v) : 'Default model'); };
   const personaLabel = () => String(value('persona') || 'Critical Advisor');
+  PM51.moreChoices(SID('model'), () => (PM51.readyModels ? PM51.readyModels() : []));
+  PM51.moreChoices(SID('persona'), () => (state.personas || []).map(p => ({ value: p.name, label: p.name, meta: p.tone || '' })));
+  PM51.moreChoices(SID('stage-bindings'), () => data().stages.flatMap(s => ['inherit', 'off', 'auto', 'on'].map(m => ({ value: `${s.key}:${m}`, label: `${s.label}: ${m === 'inherit' ? 'same as Overview' : m === 'on' ? 'always watching' : m}` }))));
   const findingsIn = (b, filter) => { const states = FILTER_STATES[filter] || null; return b.findings.filter(f => !states || states.includes(f.state)); };
-  function commitBindings(b) { if (found('stage-bindings')) commitSettingValue(SID('stage-bindings'), boundKeys(b)); }
+  function commitBindings(b) { if (found('stage-bindings') && commitSettingValue(SID('stage-bindings'), bindingList(b))) o55Notify(SID('stage-bindings'), bindingList(b)); }
   function refresh() {
     const host = root.querySelector(`[data-continuous-workspace-body="${ID}"]`);
     const open = host ? [...host.querySelectorAll('details.pm51-advanced')].map(d => d.open) : [];
@@ -98,10 +125,9 @@
     const delivered = b.findings.filter(f => f.state === 'emitted').length;
     const on = stagesOn(b), inherit = b.stages.filter(s => s.mode === 'Inherit').length;
     return PM51.stats([
-      { label: 'Mode', value: mode, help: MODE_HELP[mode] },
-      { label: 'Status', value: off ? 'Off' : `${b.status} · checked ${b.lastCheck}`, tone: off ? 'off' : 'ready', help: off ? 'Not watching' : `${modelLabel()} · ${personaLabel()}` },
+      { label: 'Status', value: off ? 'Off' : `${b.status} · checked ${b.lastCheck}`, tone: off ? 'off' : 'ready', help: off ? 'Not watching' : `${MODE_HELP[mode]} · ${personaLabel()}` },
       { label: 'Findings', value: `${held} held · ${delivered} delivered`, help: held ? 'Held waits for a fresh check' : 'Nothing waiting' },
-      { label: 'Stages on', value: `${on} of ${b.stages.length}`, help: inherit ? `${inherit} follow Overview` : 'Set per stage' }
+      { label: 'Stages watched', value: `${on} of ${b.stages.length}`, help: off ? 'The advisor is off' : inherit ? `${inherit} follow Overview` : 'Each set on its own' }
     ]);
   }
   function syncStats() { const host = root.querySelector(`[data-pm51-manager="${ID}"] .pm51-bsd-stats`); if (host) host.innerHTML = statsHtml(); }
@@ -127,6 +153,7 @@
   /* ---------- Overview ---------------------------------------------------- */
   function fallbackOptions() {
     const b = state.bsd || {};
+    /* the same signed-in models the advisor's own model picker offers */
     const opts = (state.providers || []).filter(p => p.installed && p.signedIn && p.id !== 'free-models')
       .flatMap(p => (p.models || []).filter(m => m.enabled).map(m => ({ value: `${p.id}::${m.id || m.name}`, label: m.name, group: p.name, icon: 'brain' })));
     let current = opts.find(o => o.label === b.fallbackModel && (!b.fallbackProvider || o.group === b.fallbackProvider)) || opts.find(o => o.label === b.fallbackModel);
@@ -137,33 +164,15 @@
   function renderOverview() {
     const b = state.bsd || {};
     const fb = fallbackOptions();
+    const own = orow => `<div class="setting-row o55-row o55-scoped"><div class="setting-copy"><div class="setting-label">${h(orow.label)}</div><div class="setting-description">${h(orow.help)}</div></div><div class="setting-control">${orow.control}</div><span></span></div>`;
+    const boundary = BOUNDARIES.some(x => x[0] === b.usageBoundary) ? b.usageBoundary : BOUNDARIES[0][0];
     return [
-      PM51.settingRows([SID('mode'), SID('model'), SID('persona')], {
-        title: 'Advisor', help: 'It only advises. It never blocks your work. Changing the model or persona starts a fresh advisor session.', overrides: OVERRIDES
-      }),
-      PM51.settingRows([SID('trigger-sensitivity'), SID('catch-up-seconds'), SID('cooldown-turns')], {
-        title: 'Timing', help: 'How readily it speaks up, how long it may catch up on recent work, and how long it stays quiet after advice.'
-      }),
-      PM51.settingRows([SID('retain-transcript'), SID('self-compact-threshold')], {
-        title: 'Memory', help: 'What the advisor keeps of its own conversation. It never touches yours.'
-      }),
-      PM51.advanced([
-        PM51.rows([
-          { label: 'Usage boundary', help: 'How far the advisor may spend before it asks you.', control: PM51.dropdown(b.usageBoundary || BOUNDARIES[0], BOUNDARIES, { action: 'pm51-bsd-boundary', label: 'Usage boundary' }) },
-          { label: 'Fallback model', help: 'Used only when the chosen advisor model is not available.', control: PM51.dropdown(fb.value, fb.options, { action: 'pm51-bsd-fallback-model', label: 'Fallback model', search: fb.options.length > 12, width: 240 }) }
-        ]),
-        PM51.section({
-          title: 'Technical details',
-          body: PM51.kv([
-            ['Setting keys', 'safety.approvals.bsd-mode · bsd-model · bsd-persona · bsd-trigger-sensitivity · bsd-catch-up-seconds · bsd-cooldown-turns · bsd-retain-transcript · bsd-self-compact-threshold · bsd-stage-bindings'],
-            ['Advisor session', 'A new session epoch starts when the model, account, or persona changes. Held findings are re-presented to the new session, never carried over as current advice.'],
-            ['Severity scale', 'nit · concern · critical'],
-            ['Finding states', 'held · emitted · cleared · closed'],
-            ['Registered command', 'cmd.bsd.set'],
-            ['Not yet registered', 'cmd.bsd.configure · cmd.bsd.finding.open · cmd.bsd.open_transcript']
-          ]) + `<div class="pm51-bsd-actions">${PM51.btn({ label: 'Run diagnostics', small: true, icon: 'test', action: 'pm51-bsd-diagnostics' })}</div>`
-        })
-      ].join(''))
+      /* the older planning copy of the same switch follows the mode row, so search for it lands here */
+      PM51.home(TWIN, PM51.settingRows([SID('mode'), SID('trigger-sensitivity'), SID('cooldown-turns'), SID('persona'), SID('model'), SID('retain-transcript')], {
+        title: 'Advisor', help: 'It only advises. It never blocks or changes your work. A new model or way of talking starts a fresh advisor conversation.', overrides: OVERRIDES
+      })),
+      PM51.advanced(PM51.settingRows([SID('catch-up-seconds'), SID('self-compact-threshold')])
+        + `<div class="setting-list o55-bound-rows">${own({ label: 'Spending', help: 'How far the advisor may spend before it asks you.', control: PM51.dropdown(boundary, BOUNDARIES, { action: 'pm51-bsd-boundary', label: 'Spending' }) })}${own({ label: 'If its model is not available', help: 'Used only while the advisor\'s own model is down.', control: PM51.dropdown(fb.value, fb.options, { action: 'pm51-bsd-fallback-model', label: 'If its model is not available', search: fb.options.length > 12, width: 240 }) })}</div>`)
     ].join('');
   }
 
@@ -172,17 +181,13 @@
     const b = data(); const mode = modeValue();
     const rows = b.stages.map(st => ({
       label: st.label, help: st.desc, data: { stage: st.key },
-      control: PM51.dropdown(st.mode, STAGE_OPTIONS, { action: 'pm51-bsd-stage', data: { key: st.key }, label: `${st.label} advisor mode` })
+      control: PM51.dropdown(st.mode, stageOptions(mode), { action: 'pm51-bsd-stage', data: { key: st.key }, label: `${st.label}: advisor` })
     }));
-    const bound = boundKeys(b);
-    return [
-      PM51.section({ title: 'Where the advisor watches', help: 'Inherit follows the mode on Overview. Off, Auto, and On override it for that stage.', body: PM51.rows(rows) }),
-      PM51.advanced(PM51.section({
-        title: 'Stage bindings', help: 'What is stored under safety.approvals.bsd-stage-bindings. Inherit shows the mode it currently follows.',
-        body: PM51.kv(b.stages.map(st => [st.label, st.mode === 'Inherit' ? `Inherit (${mode})` : st.mode]).concat([['Bound stages', bound.length ? bound.join(' · ') : 'None']]))
-          + `<div class="pm51-bsd-actions">${PM51.btn({ label: 'Reset stages to default', small: true, icon: 'restore', action: 'pm51-bsd-stages-reset' })}</div>`
-      }))
-    ].join('');
+    return PM51.section({
+      title: 'Where the advisor watches', help: `Each stage follows Overview (now ${MODE_LABEL[mode] || mode}) unless you choose something else for it.`,
+      action: PM51.btn({ label: 'Reset stages', small: true, icon: 'restore', action: 'pm51-bsd-stages-reset' }),
+      body: (mode === 'Off' ? PM51.note('The advisor is off on Overview, so no stage is watched. These choices apply again when you turn it back on.', 'info') : '') + PM51.home(SID('stage-bindings'), PM51.rows(rows))
+    });
   }
 
   /* ---------- Findings ---------------------------------------------------- */
@@ -254,8 +259,9 @@
   /* ---------- page -------------------------------------------------------- */
   function render() {
     const tab = PM51.tab(ID, 'overview');
+    syncBindings(); syncTwin();
     const body = `<div class="pm51-bsd-stats">${statsHtml()}</div>` + (tab === 'stages' ? renderStages() : tab === 'findings' ? renderFindings() : renderOverview());
-    const quiet = [tab === 'overview' ? { label: 'Reset Back Seat Driver defaults', action: 'pm51-bsd-reset' } : null, { label: 'How Back Seat Driver works', action: 'pm51-bsd-help' }];
+    const quiet = [{ label: 'How Back Seat Driver works', action: 'pm51-bsd-help' }, { label: 'Check the advisor', action: 'pm51-bsd-diagnostics' }, tab === 'overview' ? { label: 'Reset Back Seat Driver defaults', action: 'pm51-bsd-reset' } : null];
     /* data-pm51-placed="manual": this page composes its canonical rows itself, so the automatic
        inline-placement pass must not add them a second time. */
     return PM51.page({ id: ID, key: KEY, tabs: TABS, active: tab, body, quiet, cls: 'pm51-bsd pm51-placed-manual' })
@@ -264,7 +270,12 @@
   PM51.manager('bsd', { render });
 
   /* ---------- actions ----------------------------------------------------- */
-  PM51.onChange('bsd-boundary', el => { state.bsd.usageBoundary = BOUNDARIES.includes(el.value) ? el.value : BOUNDARIES[0]; saveState(); });
+  PM51.onChange('bsd-boundary', el => { state.bsd.usageBoundary = BOUNDARIES.some(x => x[0] === el.value) ? el.value : BOUNDARIES[0][0]; saveState(); PM51.toast('Saved', `Spending: ${BOUNDARIES.find(x => x[0] === state.bsd.usageBoundary)[1]}.`, 'success'); });
+  /* one switch: the planning copy follows the advisor's mode (and the other way round when it is changed from Details) */
+  function syncTwin() { const m = value('mode'); if (PM51.setting(TWIN) && PM51.value(TWIN) !== m && commitSettingValue(TWIN, m)) saveState(); }
+  PM51.watch(SID('mode'), () => { syncTwin(); refresh(); });
+  PM51.watch(TWIN, v => { if (MODE_HELP[v] && value('mode') !== v && commitSettingValue(SID('mode'), v)) { saveState(); refresh(); } });
+  PM51.watch(SID('stage-bindings'), () => { syncBindings(); refresh(); });
   PM51.onChange('bsd-fallback-model', el => {
     const [pid, mid] = String(el.value || '').split('::');
     const p = (state.providers || []).find(x => x.id === pid); const m = p && (p.models || []).find(x => (x.id || x.name) === mid);
@@ -282,21 +293,24 @@
   });
   PM51.on('bsd-findings-filter', el => { const f = ds(el, 'value'); PM51.s().bsdFilter = FILTER_STATES[f] !== undefined ? f : 'all'; refresh(); });
   PM51.on('bsd-finding', el => openFinding(ds(el, 'id')));
-  PM51.on('bsd-diagnostics', () => PM51.check({ title: 'Back Seat Driver diagnostics', steps: [
+  PM51.on('bsd-diagnostics', () => PM51.check({ title: 'Back Seat Driver check', steps: [
     { title: 'Settings readable', desc: 'All nine advisor settings resolved for this project' },
+    { title: 'Stages', desc: `${stagesOn(data())} of ${data().stages.length} watched · stored as ${bindingList(data()).slice(0, 3).join(', ')}…` },
     { title: 'Advisor model reachable', desc: 'Checked through Providers & Accounts', status: 'Example', tone: 'info' },
     { title: 'Session epoch', desc: 'A fresh session starts when model, account, or persona changes', status: 'Example', tone: 'info' },
-    { title: 'Held findings kept outside the transcript', desc: 'They survive advisor compaction and restart', status: 'Example', tone: 'info' }
+    { title: 'Held findings kept outside the transcript', desc: 'They survive advisor compaction and restart', status: 'Example', tone: 'info' },
+    { title: 'Commands', desc: 'cmd.bsd.set is registered; opening a finding in chat and the advisor transcript are not yet', status: 'Example', tone: 'info' }
   ] }));
-  PM51.on('bsd-reset', () => PM51.confirm('Reset Back Seat Driver defaults?', 'Mode returns to Auto, the advisor to the default model and the Critical Advisor persona, and the stages to their defaults. Findings are kept.', 'Reset', () => {
+  PM51.on('bsd-reset', () => PM51.confirm('Reset Back Seat Driver defaults?', 'Mode returns to Auto, the advisor to the automatic model and the Critical Advisor persona, spending and its backup model to the example, and the stages to their defaults. Findings are kept.', 'Reset', () => {
     KEYS.forEach(k => { const f = found(k); if (f) restoreSettingDefault(f.setting.id); });
+    const fx = FIXTURE_BSD(); ['usageBoundary', 'fallbackModel', 'fallbackProvider'].forEach(k => { if (fx[k] !== undefined) state.bsd[k] = fx[k]; });
     const b = data(); b.stages.forEach(s => { s.mode = DEFAULT_AUTO.includes(s.key) ? 'Auto' : 'Inherit'; });
     commitBindings(b); saveState(); refresh(); PM51.toast('Back Seat Driver reset', 'Defaults are back.');
   }));
   PM51.on('bsd-help', () => PM51.panel({
     title: 'How Back Seat Driver works', icon: 'eye', eyebrow: 'Back Seat Driver',
     summary: 'A second AI watches your work and speaks up when something looks off. It never edits, approves, or blocks anything by itself.',
-    body: PM51.panelSection('Modes', PM51.kv([['Off', 'Never watches.'], ['Auto', 'Checks in at key moments, such as before risky steps or when work looks done.'], ['On', 'Checks in more often. It still cannot do anything on its own.']]), '', { icon: 'sliders' })
+    body: PM51.panelSection('Modes', PM51.kv([['Off', 'Never watches.'], ['Auto', 'Checks in at key moments, such as before risky steps or when work looks done.'], ['Always watching', 'Checks in all the time. It still cannot do anything on its own.']]), '', { icon: 'sliders' })
       + PM51.panelSection('Held, delivered, cleared', PM51.kv([['Held', 'Raised about work that may already have moved on. It waits for the advisor to check it against newer work.'], ['Delivered', 'Confirmed against current work and sent to chat as a short note marked nit, concern, or critical.'], ['Cleared', 'The advisor looked again and stayed silent, so you were never shown it.']]), 'A stale warning is never shown as current advice.', { icon: 'clock' })
       + PM51.panelSection('What you decide', '<p class="pm51-ps-text">Findings are suggestions. You choose what to do with them, and you can dismiss any of them.</p>', '', { icon: 'user' })
   }));

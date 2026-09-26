@@ -585,6 +585,7 @@
   const MODEL_PICKERS = ['ai.models.default-model', 'ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.goal-worker-model', 'ai.models.goal-verifier-model', 'ai.models.subagent-model', 'ai.models.teach-model', 'ai.models.thread-title-model'];
   const readyModels = () => all().filter(p => p.status === 'active').flatMap(p => enabledModels(p).map(m => ({ value: `${p.id}/${m.id}`, label: `${m.name} · ${p.name}`, meta: p.id === 'free-models' ? 'A free route' : `On your ${p.name} ${p.bill === 'use' ? 'account' : 'plan'}` })));
   MODEL_PICKERS.forEach(id => PM51.moreChoices(id, readyModels));
+  PM51.readyModels = readyModels;
   PM51.perValues('ai.models.provider-enabled', () => all().filter(p => p.status !== 'setup' && p.status !== 'not-installed').map(p => ({ name: p.name, value: p.status !== 'disabled' })));
   PM51.perValues('ai.accounts.auth-mode', () => all().filter(p => authModes(p).length > 2).map(p => ({ name: p.name, value: PM51.scopedValue(p, 'ai.accounts.auth-mode') })));
 
