@@ -233,9 +233,69 @@ class CreationCompositionTests(unittest.TestCase):
             "git", "show", "1e5d9b097b46aa58e7af488a9c38a87efb780d5f:Plans/storage_value_registry.json",
         ], cwd=ROOT, text=True))
         expected_families = materialized_v3_registry(reviewed_main, bundle)["families"]
+        # Capability Ensure later upgraded exactly these two existing families
+        # to v2 current writers with v1 lookup-only readers (0679ce672). Keep
+        # the Forge/onboarding baseline for every other family rather than
+        # comparing the entire registry to a pre-upgrade historical snapshot.
+        approved_custody = json.loads(subprocess.check_output([
+            "git", "show", "0679ce672a6496e7dfefe29db639a152393b5be8:Plans/storage_value_registry.json",
+        ], cwd=ROOT, text=True))
+        approved_families = materialized_v3_registry(approved_custody, bundle)["families"]
+        approved_ids = {
+            "installation_lifecycle_record", "capability_provisioning_operation",
+        }
+        expected_by_id = {r["family_id"]: r for r in expected_families}
+        approved_by_id = {r["family_id"]: r for r in approved_families}
+        current_by_id = {r["family_id"]: r for r in storage["families"]}
+        self.assertEqual(294, len(expected_families))
+        self.assertEqual(294, len(approved_families))
         self.assertEqual(294, len(storage["families"]))
         self.assertEqual(27, len(storage["retention_policies"]))
-        self.assertEqual(expected_families, storage["families"])
+        self.assertEqual(
+            [r["family_id"] for r in expected_families],
+            [r["family_id"] for r in storage["families"]],
+        )
+        self.assertEqual(
+            [r["family_id"] for r in approved_families],
+            [r["family_id"] for r in storage["families"]],
+        )
+        self.assertEqual(
+            approved_ids,
+            {family_id for family_id in expected_by_id
+             if expected_by_id[family_id] != approved_by_id[family_id]},
+        )
+        for family_id in approved_ids:
+            current = current_by_id[family_id]
+            self.assertEqual("1.0.0", expected_by_id[family_id]["schema_version"])
+            self.assertEqual("2.0.0", current["schema_version"])
+            self.assertEqual(
+                f"{family_id}.v2:{{host_id}}:{{environment_id}}:{{operation_id}}",
+                current["key_shape"],
+            )
+            legacy_key = f"{family_id}.v1:{{host_id}}:{{environment_id}}:{{operation_id}}"
+            self.assertEqual([legacy_key], current["compatibility_key_shapes"])
+            self.assertEqual(
+                [{"disposition": "lookup_only", "key_shape": legacy_key}],
+                current["migration_disposition"]["alias_dispositions"],
+            )
+            self.assertEqual("store_coordinator", current["migration_disposition"]["mode"])
+            self.assertTrue(current["migration_disposition"]["compatibility_keys_read_only"])
+            self.assertEqual("fail_closed", current["migration_disposition"]["ambiguity_policy"])
+            self.assertEqual(
+                f"Plans/capability_ensure_custody_contracts.schema.json#/$defs/{family_id}_current_write",
+                current["value_schema_ref"],
+            )
+            self.assertEqual(approved_by_id[family_id], current)
+        self.assertTrue({"permission_authority_kind", "capability_admission",
+                         "capability_permission_decision", "capability_admission_value"}
+                        <= set(current_by_id["installation_lifecycle_record"]["required_fields"]))
+        self.assertTrue({"operation_ref", "operation_generation", "server_id",
+                         "topology_generation", "origins", "work_identity"}
+                        <= set(current_by_id["capability_provisioning_operation"]["required_fields"]))
+        self.assertEqual(
+            [r for r in expected_families if r["family_id"] not in approved_ids],
+            [r for r in storage["families"] if r["family_id"] not in approved_ids],
+        )
         self.assertEqual([r["family_id"] for r in previous["families"]],
                          [r["family_id"] for r in storage["families"]])
         self.assertEqual(reviewed_main["retention_policies"], storage["retention_policies"])
