@@ -9,9 +9,11 @@ from __future__ import annotations
 
 import copy
 import importlib.util
+import io
 import json
 import re
 import sys
+import unittest
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from functools import lru_cache
@@ -97,6 +99,12 @@ from pm_client_trust_local_settlement import client_trust_local_settlement_seman
 from pm_permissions_rule_command_contracts import permissions_rule_command_semantic_failures
 from pm_permissions_rule_command_owner_file_double import witness_for as permissions_rule_owner_original_witness
 from pm_permissions_rule_owner_episode_double import witness_for as permissions_rule_owner_episode_witness
+from pm_search_rebuild_typed import (
+    binding_failures as search_rebuild_binding_failures,
+    bundle_semantic_failures as search_rebuild_semantic_failures,
+    structural_failures as search_rebuild_structural_failures,
+    validate as validate_search_rebuild,
+)
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -187,9 +195,10 @@ CONTRACT_PAIRS = (
     ("Plans/credential_transfer_remove_contracts.schema.json", "Plans/credential_transfer_remove_fixtures.json"),
     ("Plans/client_trust_local_settlement.schema.json", "Plans/client_trust_local_settlement_fixtures.json"),
     ("Plans/browser_capture_contracts.schema.json", "Plans/browser_capture_contract_fixtures.json"),
+    ("Plans/search_rebuild_index.schema.json", "Plans/search_rebuild_index_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 86
+EXPECTED_CONTRACT_PAIR_COUNT = 87
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1764,6 +1773,20 @@ def main() -> int:
                 positives = authored_positive_cases(fixtures, request_mode=authored_config["request_mode"])
                 invalids = authored_invalid_cases(fixtures)
                 findings.extend(validate_authored_command_coverage(schema_rel, fixture_rel, schema, fixtures, positives, invalids))
+            elif schema_rel == "Plans/search_rebuild_index.schema.json":
+                bundles = fixtures.get("valid")
+                selected_refs = fixtures.get("selected_outcome_refs")
+                if not isinstance(bundles, list) or not bundles or not isinstance(selected_refs, dict):
+                    raise ValueError("search_rebuild_fixture_envelope_invalid")
+                positives = []
+                for bundle in bundles:
+                    if not isinstance(bundle, dict) or not isinstance(bundle.get("case_id"), str):
+                        raise ValueError("search_rebuild_bundle_case_id_invalid")
+                    positives.append({"case_id": bundle["case_id"], "definition": "search_rebuild_bundle", "value": bundle})
+                ensure_unique_case_names(positives, label="search_rebuild_positive")
+                if set(selected_refs) != {case["case_id"] for case in positives}:
+                    raise ValueError("search_rebuild_selected_ref_case_set_mismatch")
+                invalids = []
             else:
                 positives = legacy_positive_cases(fixtures)
                 invalids = []
@@ -1794,6 +1817,10 @@ def main() -> int:
                     owner_coverage_resolver=(tour_fixture_coverage_resolver(fixtures, case)
                                              if schema_rel == "Plans/guided_tour_contracts.schema.json" else None),
                 )
+                if schema_rel == "Plans/search_rebuild_index.schema.json":
+                    semantic_failures.extend(search_rebuild_structural_failures(value))
+                    semantic_failures.extend(search_rebuild_semantic_failures(value))
+                    semantic_failures.extend(search_rebuild_binding_failures(value, fixtures["selected_outcome_refs"][name]))
                 if semantic_failures:
                     findings.append({"code": "positive_semantic_invariant_failure", "fixture": fixture_rel, "case": name, "definition": definition_name, "semantic_failures": semantic_failures})
                     continue
@@ -1885,6 +1912,22 @@ def main() -> int:
         if len(paths) > 1:
             findings.append({"code": "duplicate_full_schema_id", "schema_id": schema_uri, "schemas": paths})
     findings.extend(duplicate_runtime_id_findings(runtime_id_locations))
+
+    # The fixture pack contains positives only. Keep the causal negative suite
+    # enrolled as a real test run rather than treating a green positive CLI as
+    # proof of the independently held original/currentness joins.
+    search_report = validate_search_rebuild()
+    counts["search_rebuild_pairwise_checked"] = search_report["pairwise_checked"]
+    if search_report["status"] != "pass" or search_report["failures"]:
+        findings.append({"code": "search_rebuild_companion_validation_failure", "failures": search_report["failures"]})
+    test_stream = io.StringIO()
+    test_suite = unittest.defaultTestLoader.discover(
+        start_dir=str(ROOT / "tests"), pattern="test_pm_search_rebuild_typed.py"
+    )
+    test_result = unittest.TextTestRunner(stream=test_stream, verbosity=0).run(test_suite)
+    counts["search_rebuild_causal_tests"] = test_result.testsRun
+    if test_result.testsRun < 78 or not test_result.wasSuccessful():
+        findings.append({"code": "search_rebuild_causal_suite_failure", "detail": test_stream.getvalue()[-4000:]})
 
     report = {
         "check": "validate-new-contracts",

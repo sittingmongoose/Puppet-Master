@@ -4,6 +4,7 @@ Schema/fixture consistency only: no browser, dispatcher, handler, permission,
 storage, or runtime authority runs here. Every route stays handler_unavailable.
 """
 import copy
+import ast
 import hashlib
 import json
 import re
@@ -217,7 +218,18 @@ class BrowserCaptureCompanion(unittest.TestCase):
         gate = (ROOT / "scripts/pm-new-contracts-verify.py").read_text()
         self.assertIn('("Plans/browser_capture_contracts.schema.json", '
                       '"Plans/browser_capture_contract_fixtures.json")', gate)
-        self.assertIn("EXPECTED_CONTRACT_PAIR_COUNT = 86", gate)
+        tree = ast.parse(gate)
+        assignments = {
+            target.id: ast.literal_eval(node.value)
+            for node in tree.body if isinstance(node, ast.Assign)
+            for target in node.targets if isinstance(target, ast.Name)
+            if target.id in {"CONTRACT_PAIRS", "EXPECTED_CONTRACT_PAIR_COUNT"}
+        }
+        self.assertEqual(assignments["EXPECTED_CONTRACT_PAIR_COUNT"], len(assignments["CONTRACT_PAIRS"]))
+        self.assertIn(
+            ("Plans/browser_capture_contracts.schema.json", "Plans/browser_capture_contract_fixtures.json"),
+            assignments["CONTRACT_PAIRS"],
+        )
         self.assertIn("browser_capture_semantic_failures(definition_name, value)", gate)
 
     def test_live_central_vocab(self):

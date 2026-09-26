@@ -1,7 +1,7 @@
-# Search rebuild companion — integration in progress
+# Search rebuild companion — static integration verified
 
-Status: candidate installed and locally checked; central gate enrollment and
-independent carry review remain pending. No native Search or GUI proof.
+Status: installed, independently carry-reviewed and enrolled in the central
+contract gate. No native Search or GUI proof.
 
 Source directory:
 `/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/jobs/search-rebuild-typed-01/`.
@@ -35,6 +35,27 @@ Root checks on 2026-09-26:
 - `python3 scripts/pm_search_rebuild_typed.py`: PASS; six positive cases,
   15 pairwise checks, no failures, `native_acts_proven=0`.
 
-The central gate is not yet changed, and these results do not claim full
-aggregate, handler availability, genuine build/publication, receipt issuance,
-physical custody, runtime currentness or whole-packet closure.
+The additive gate carry preserves the exact ordered 86 prior contract pairs
+and all existing hooks, adding Search as pair 87. It runs Search's six positives,
+15 pairwise combinations and the complete causal unittest suite (minimum 78).
+Browser's test now derives the authored pair count from the manifest AST while
+retaining exact Browser enrollment/hook assertions; it no longer hardcodes 86.
+The combined installed Search and Browser suite passes all 95 tests.
+
+Carry review:
+`/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/case-reconciliation/search-v4f-gate-carry-01/CARRY-REVIEW.md`,
+SHA-256 `63c419c5c369c41a15d3cbcbaec4633c4e4a9907f53b6abb5c110ca2e5f9cd51`.
+Installed gate SHA-256 `b6e8cb82b2d5c99ec60383054f3e5c4ef318352bf8652da542345d99d36207cc`;
+Browser test SHA-256 `9af287c1a506254e1e572dcfcca8d1ff30f1cbd7ca05b342d627841ded14d66d`.
+
+Root ran `python3 scripts/pm-plans-verify.py validate-new-contracts
+--subcheck-timeout-seconds 900 --report <external-report>`: PASS, 87 pairs,
+1,672 positive cases, 4,960 rejected negatives, 12 internal self-tests,
+78 Search causal tests and 15 Search pairwise checks, with empty failures and
+findings. Full report:
+`/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/case-reconciliation/search-v4f-gate-carry-01/ROOT-87-CONTRACTS.json`,
+SHA-256 `9db846e12bb1c0128dee17441184bebfbeea93a4c36fb5e3eed568bb9bc587d6`.
+
+This is the full contract subcheck, not a full repository aggregate or landing
+check. It does not prove handler availability, genuine build/publication,
+receipt issuance, physical custody, runtime currentness or whole-packet closure.
