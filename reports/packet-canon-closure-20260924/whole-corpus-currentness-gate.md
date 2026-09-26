@@ -31,3 +31,29 @@ GUI proof, governance reseal and landing remain separate claims.
 
 This records the completion-proof gap; no historical assessment, canonical
 owner, governance binding or baseline is rewritten or declared complete here.
+
+## First tool delivery — held after independent review
+
+The initial audit tool produced 5,406 of the required 11,395 rows before its
+native turn ended. This partial export is not credited as currentness or
+semantic closure. Its 31 synthetic tests passed, but independent review found
+four missing safeguards: full earlier assessment objects were not preserved;
+list-form source references were joined by the wrong key; some explicitly
+protected newer domains were missed; and unsupported absolute evidence paths
+could be normalized into repository paths. The last issue concerns provenance
+classification even when the canonical blob hash matches, not acceptance of
+arbitrary content.
+
+One versioned correction is authorized on the same native Goal, preserving the
+frozen delivery. It must add causal tests and losslessly reduce repeated output
+before another independent review and full run. No full-run completion or
+native Goal completion is claimed.
+
+Evidence directory:
+`/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/jobs/packet-covered-carry-forward-01/`.
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `COORDINATOR-INCOMPLETE-FREEZE.md` | `c4aa90c1d4cee0010f97909b6e6a3a3b76fa18ed2f5823960881906a05f17b3f` |
+| `freeze-incomplete-01/CASE-IMPACT.partial-5406.jsonl` | `c602a10cbc8cc104b1a13592c51056976210549bb3025f38903196a545530a60` |
+| `REVIEW-DIFFERENT-SOL.md` | `140af3ce96ad0e95197d0056eaddc8faeff3401b8bd9370a33ed9b7185fdd19d` |
