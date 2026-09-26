@@ -1,5 +1,13 @@
 # Packet-to-current-owner reconciliation checkpoint
 
+## Latest additive checkpoint — 2026-09-26, after `b7b64e2cd`
+
+Independently reviewed dispositions cover **753 of 2,021 identities**, with **1,268 unreviewed**. Immutable checkpoint: `case-reconciliation/checkpoints/matrix-5744dc376cb56c5afdd821f4ac3071c1a74bec914571eb103227510307550eba.jsonl`, SHA-256 `5744dc376cb56c5afdd821f4ac3071c1a74bec914571eb103227510307550eba`, beneath the evidence directory below. Root verified the hash, unique identities, unchanged historical fields, exactly 107 newly reviewed rows and 1,914 unchanged rows against the previous checkpoint.
+
+The 107 added auth/Goal/dependency/plugin review dimensions comprise 33 existing-specification/native-pending findings, 59 technical specification gaps, 14 unresolved owner checks and one Event Authority wait. These are dimensions, not 59 distinct new features. Independent review rejected the raw author's blanket 92-covered count: missing selected operands, command-specific types, receipt/outcome joins and local-refusal contracts are specification work, not merely absent native execution. The pinned corrected overlay is SHA-256 `f4f69c1acc51bdf81fe79cfe2504539e3239fddb4694461f306b588ae3c80b0c`; independent review is `e7eadc19769a1d0bb2060ffe6f948515852829252cee15005feb8617119609c4`.
+
+Separately, Server bootstrap handler adoption (`f2c86aa27`) and two Notifications/Sounds companions (`b7b64e2cd`) passed root integration checks. Neither closes native runtime obligations or automatically earns additional matrix credit. The previous checkpoints below remain historical milestones. Overall packet closure and main landing remain open.
+
 ## Latest additive checkpoint — 2026-09-25, after `7285bed42`
 
 Independently reviewed dispositions now cover **646 of 2,021 identities**, with **1,375 unreviewed**. This is review coverage, not completion. The new immutable external checkpoint is `case-reconciliation/checkpoints/matrix-3e625ff93797816b5889f501068526b0e4f322ff668edbb9d2de98067f539a8d.jsonl`, SHA-256 `3e625ff93797816b5889f501068526b0e4f322ff668edbb9d2de98067f539a8d`, beneath the evidence directory below.
