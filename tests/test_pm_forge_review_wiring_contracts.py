@@ -12,6 +12,7 @@ SCHEMA = "Plans/forge_integration_contracts.schema.json"
 REQUEST = SCHEMA + "#/$defs/command_request"
 RESULT = SCHEMA + "#/$defs/command_result"
 RECEIPT = SCHEMA + "#/$defs/command_receipt"
+CREATE_SCHEMA = "Plans/forge_review_create_selected_contracts.schema.json"
 ACTIONS = ("create", "merge")
 
 
@@ -36,8 +37,10 @@ class ForgeReviewWiringContractsTests(unittest.TestCase):
         for action in ACTIONS:
             with self.subTest(action=action):
                 row = self.row(action)
-                self.assertEqual(REQUEST, row.get("request_schema_ref"))
-                self.assertEqual(RESULT, row.get("result_schema_ref"))
+                expected_request = CREATE_SCHEMA + "#/$defs/request" if action == "create" else REQUEST
+                expected_result = CREATE_SCHEMA + "#/$defs/result" if action == "create" else RESULT
+                self.assertEqual(expected_request, row.get("request_schema_ref"))
+                self.assertEqual(expected_result, row.get("result_schema_ref"))
                 self.assertEqual("cmd.forge.review." + action, row["ui_command_id"])
                 self.assertEqual("handlers::forge::review_" + action, row["handler_location"])
                 self.assertIn("handler_unavailable", " ".join(row["acceptance_checks"]))
@@ -48,7 +51,10 @@ class ForgeReviewWiringContractsTests(unittest.TestCase):
                 row = self.row(action)
                 effect = row["effect_contract"]
                 self.assertEqual("receipt", effect["effect_kind"])
-                self.assertEqual([RESULT, RECEIPT], effect["receipt_or_event_refs"])
+                expected_receipts = ([CREATE_SCHEMA + "#/$defs/result",
+                                      CREATE_SCHEMA + "#/$defs/observation", RECEIPT]
+                                     if action == "create" else [RESULT, RECEIPT])
+                self.assertEqual(expected_receipts, effect["receipt_or_event_refs"])
                 self.assertIn("terminal provider result", effect["description"])
                 self.assertIn("accepted", effect["description"])
                 self.assertNotIn("or explicit route/open", json.dumps(row))

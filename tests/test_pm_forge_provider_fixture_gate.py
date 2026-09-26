@@ -104,10 +104,11 @@ class ForgeProviderFixtureGateTests(unittest.TestCase):
         for fixture in PROVIDER_PACKS:
             with self.subTest(fixture=fixture):
                 self.assertEqual(GATE.CONTRACT_PAIRS.count((FORGE_SCHEMA, fixture)), 1)
-        self.assertEqual(len(GATE.CONTRACT_PAIRS), 78)
-        self.assertEqual(len(set(GATE.CONTRACT_PAIRS)), 78)
-        self.assertEqual(GATE.EXPECTED_CONTRACT_PAIR_COUNT, 78)
-        self.assertEqual(len({schema for schema, _ in GATE.CONTRACT_PAIRS}), 74)
+        # Other owners may enroll reviewed companions without changing the
+        # five exact Forge packs checked below. Keep the closed manifest's
+        # declared cardinality and uniqueness checks, not its old global size.
+        self.assertEqual(len(GATE.CONTRACT_PAIRS), GATE.EXPECTED_CONTRACT_PAIR_COUNT)
+        self.assertEqual(len(set(GATE.CONTRACT_PAIRS)), GATE.EXPECTED_CONTRACT_PAIR_COUNT)
         self.assertEqual(
             {fixture for schema, fixture in GATE.CONTRACT_PAIRS if schema == FORGE_SCHEMA},
             set(PROVIDER_PACKS) | {"Plans/forge_integration_contract_fixtures.json"},
