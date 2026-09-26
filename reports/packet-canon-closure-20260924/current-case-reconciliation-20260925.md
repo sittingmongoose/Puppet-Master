@@ -1,5 +1,13 @@
 # Packet-to-current-owner reconciliation checkpoint
 
+## Latest additive checkpoint — 2026-09-26, after `e07be7f24`
+
+Independently reviewed dispositions cover **1,106 of 2,021 flagged identities**, with **915 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-d65e3be2b758c603d5fa378dadd5803dab5ef29def28e3f1d7bb4fe2995d644f.jsonl`, SHA-256 `d65e3be2b758c603d5fa378dadd5803dab5ef29def28e3f1d7bb4fe2995d644f`. Root verified its hash, all 2,021 unique unchanged identities and historical fields, exactly 71 changed and 1,950 unchanged rows against the published 1,035-row checkpoint.
+
+The additions comprise 35 Doctor Touch facets, 19 Doctor onboarding facets, four held Artifacts intents, six Settings owner dimensions, and seven Settings local consumer-proof dimensions. Reviewed is not closed: Doctor typed source/refusal gaps remain; the Artifacts command intent is held rather than invented; Settings source/value and manager/runtime obligations remain; and the seven consumer dimensions explicitly await exact callback, target and return-context proof. Missing literal identifiers alone were not treated as proof that behavior is absent. Physical and native implementation remain unproved.
+
+The separate whole-corpus currentness audit produced only a partial export and remains under independent correctness and performance review. It earns no verified carry-forward coverage yet. The five-command Permissions companion is being authored separately. No governance refresh or main landing is claimed.
+
 ## Latest additive checkpoint — 2026-09-26, after `8fb7ddd88`
 
 Independently reviewed dispositions cover **1,035 of 2,021 flagged identities**, with **986 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-176a99aafd2484ed243c857272ab40af84fab51545cb5d236a54190fc26a6415.jsonl`, SHA-256 `176a99aafd2484ed243c857272ab40af84fab51545cb5d236a54190fc26a6415`. Root verified its hash, all 2,021 unique unchanged identities and historical fields, exactly 32 changed and 1,989 unchanged rows against the published 1,003-row checkpoint.
