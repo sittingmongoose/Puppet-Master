@@ -3,9 +3,10 @@ ALIAS_REFS={'TCP-GITHUB-PR': {'payload_schema_ref': 'Plans/forge_review_create_s
 import json,subprocess,unittest
 from pathlib import Path
 from pm_historical_storage_expectations import with_recorded_usage_id_correction
+from pm_reviewed_nonforge_expectations import with_reviewed_nonforge_successors
 ROOT=Path(__file__).resolve().parents[1];BASE='270f7a74293e3566464648bbfda83739fb255d1f';S='Plans/forge_retry_selected_contracts.schema.json';CMD='cmd.forge.pipeline.retry'
 def load(p):return json.loads((ROOT/p).read_text())
-def prior(p):return json.loads(subprocess.check_output(['git','show',BASE+':'+p],cwd=ROOT,text=True))
+def prior(p):return with_reviewed_nonforge_successors(p,json.loads(subprocess.check_output(['git','show',BASE+':'+p],cwd=ROOT,text=True)))
 class Bindings(unittest.TestCase):
  def test_only_retry_public_route(self):
   p='Plans/Wiring_Matrix.production.json';a=prior(p)['entries'];b=load(p)['entries'];self.assertEqual({'catalog.forge_pipeline_retry','catalog.forge_pipeline_run','catalog.git_push','catalog.git_fetch','catalog.forge_review_create','catalog.forge_review_checkout','catalog.jujutsu_operation_restore','catalog.jujutsu_operation_undo','catalog.source_control_backend_select','catalog.source_control_diff_open','catalog.source_control_history_open','catalog.source_control_remote_fetch','catalog.source_control_remote_publish','catalog.source_control_stash_apply','catalog.source_control_workspace_remove','catalog.usage_export','catalog.usage_refresh'},{k for k in a if a[k]!=b[k]})

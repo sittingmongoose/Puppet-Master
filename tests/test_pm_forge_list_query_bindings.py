@@ -5,13 +5,14 @@ from pathlib import Path
 from referencing import Resource
 from jsonschema import Draft202012Validator
 from pm_historical_storage_expectations import with_recorded_usage_id_correction
+from pm_reviewed_nonforge_expectations import with_reviewed_nonforge_successors
 ROOT=Path(__file__).resolve().parents[1]
 BASE='64a63133a2266ee38d894f2494208027e364cfb9'
 SCHEMA='Plans/forge_list_query_contracts.schema.json'
 OLD='Plans/forge_integration_contracts.schema.json'
 CMDS={'cmd.forge.repository.list','cmd.forge.pipeline.list'}
 def load(p):return json.loads((ROOT/p).read_text())
-def baseline(p):return json.loads(subprocess.check_output(['git','show',BASE+':'+p],cwd=ROOT,text=True))
+def baseline(p):return with_reviewed_nonforge_successors(p,json.loads(subprocess.check_output(['git','show',BASE+':'+p],cwd=ROOT,text=True)))
 class Bindings(unittest.TestCase):
  def test_only_exact_routes_handlers_and_receipts(self):
   p='Plans/Wiring_Matrix.production.json';now=load(p)['entries'];old=baseline(p)['entries'];keys={'catalog.forge_repository_list','catalog.forge_pipeline_list'}

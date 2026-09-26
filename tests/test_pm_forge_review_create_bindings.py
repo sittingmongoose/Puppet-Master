@@ -4,10 +4,11 @@ from pathlib import Path
 from referencing import Resource
 from jsonschema import Draft202012Validator
 from pm_historical_storage_expectations import with_recorded_usage_id_correction
+from pm_reviewed_nonforge_expectations import with_reviewed_nonforge_successors
 ROOT=Path(__file__).resolve().parents[1];BASE='753d6ec40d19b495e672f3e148064ec66ef19c2e'
 S='Plans/forge_review_create_selected_contracts.schema.json';OLD='Plans/forge_integration_contracts.schema.json';CMD='cmd.forge.review.create'
 def load(p):return json.loads((ROOT/p).read_text())
-def prior(p):return json.loads(subprocess.check_output(['git','show',BASE+':'+p],cwd=ROOT,text=True))
+def prior(p):return with_reviewed_nonforge_successors(p,json.loads(subprocess.check_output(['git','show',BASE+':'+p],cwd=ROOT,text=True)))
 class Bindings(unittest.TestCase):
  def test_exact_provider_route_only(self):
   p='Plans/Wiring_Matrix.production.json';a=prior(p)['entries'];b=load(p)['entries'];self.assertEqual(set(a),set(b));self.assertEqual(['catalog.forge_review_checkout','catalog.forge_review_create','catalog.git_fetch','catalog.git_push','catalog.jujutsu_operation_restore','catalog.jujutsu_operation_undo','catalog.source_control_backend_select','catalog.source_control_diff_open','catalog.source_control_history_open','catalog.source_control_remote_fetch','catalog.source_control_remote_publish','catalog.source_control_stash_apply','catalog.source_control_workspace_remove','catalog.usage_export','catalog.usage_refresh'],[k for k in a if a[k]!=b[k]])
