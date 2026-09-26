@@ -13,9 +13,11 @@
   and portability checks; Client local details now represents a missing current
   projection as refusal. Both repairs passed independent review and are branch-pushed;
   see `credential-transfer-remove-integration.md` and
-  `client-details-local-settlement-integration.md`. LSP restart still must bind
-  exact retained original arguments. These are technical
-  specification/companion gaps, not evidence of failed native implementation.
+  `client-details-local-settlement-integration.md`. LSP's reviewed retained-original
+  binding is now integrated in `2321a21bc`; eight focused and eight independent
+  causal probes pass, with the dedicated aggregate validator passing. See
+  `lsp-selected-companion-integration.md`. Static companion closure does not
+  prove native implementation or authentic runtime custody.
   Client's trusted-input co-mutation objection was withdrawn, not repaired.
 - Permissions follow-up is integrated in `d12f004da`: non-writable unmet
   precondition projection, nonauthoritative validate-only hashes, and existing
@@ -35,6 +37,12 @@
   claims. `whole-corpus-currentness-gate.md` records pinned checkpoints; no
   passing companion test or historical covered label proves whole-packet
   closure. Newer protected owners remain authoritative over older packets.
+  An omission from current canon is not itself evidence of supersession: the
+  withdrawn Settings Source33 draft misclassified fixed packet decisions as
+  unadopted. Those source rows remain unreviewed, and an exact targeted audit
+  of similar reviewed dispositions is underway. Settings Touch129 separately
+  preserves GUI-local controls and the approved disabled guard policy; it
+  establishes no additional non-GUI specification gap.
 - Six neutral Source Control routes are integrated and independently reviewed:
   `scm-six-neutral-integration.md`. Public Git fetch/push is now integrated after
   the approved narrow safeguard-to-selected-remote repair, different-Sol review
