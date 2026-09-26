@@ -1,0 +1,1060 @@
+{
+ "$defs": {
+  "non_empty_string": {
+   "minLength": 1,
+   "type": "string"
+  },
+  "non_secret_ref": {
+   "type": "string",
+   "minLength": 1,
+   "maxLength": 512,
+   "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$",
+   "x-verbatim-from": "Plans/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"
+  },
+  "owner_schema_ref": {
+   "additionalProperties": false,
+   "properties": {
+    "json_pointer": {
+     "type": "string"
+    },
+    "path": {
+     "type": "string"
+    },
+    "schema_id": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "json_pointer",
+    "path",
+    "schema_id"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_bundle": {
+   "additionalProperties": false,
+   "description": "Causal join for one cmd.search.rebuild_index original: original, current source, publication, receipt, outcome, owner result, response, optional work, replay lineage, trusted boundary.",
+   "properties": {
+    "case_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "current_source": {
+     "$ref": "#/$defs/search_rebuild_current_source"
+    },
+    "original": {
+     "$ref": "#/$defs/search_rebuild_original"
+    },
+    "outcome": {
+     "$ref": "#/$defs/search_rebuild_outcome"
+    },
+    "owner_result": {
+     "$ref": "#/$defs/search_rebuild_owner_result"
+    },
+    "publication": {
+     "$ref": "#/$defs/search_rebuild_publication"
+    },
+    "receipt": {
+     "$ref": "#/$defs/search_rebuild_dispatch_receipt"
+    },
+    "replay_of": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/search_rebuild_replay_lineage"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "response": {
+     "$ref": "#/$defs/search_rebuild_response"
+    },
+    "schema_id": {
+     "const": "pm.search.rebuild_index.bundle.v1"
+    },
+    "schema_version": {
+     "const": "1.0.0"
+    },
+    "work": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/search_rebuild_observable_work"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "trusted": {
+     "$ref": "#/$defs/search_rebuild_trusted_boundary"
+    }
+   },
+   "required": [
+    "case_id",
+    "current_source",
+    "original",
+    "outcome",
+    "owner_result",
+    "publication",
+    "receipt",
+    "replay_of",
+    "response",
+    "schema_id",
+    "schema_version",
+    "work",
+    "trusted"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_current_source": {
+   "additionalProperties": false,
+   "description": "Independently selected current Project source and published generation at effect time. Static shape only; native selection stays with the Search/storage owners.",
+   "properties": {
+    "anchor_sha": {
+     "description": "Current Git HEAD/SHA anchor; null for non-Git projects. Never taken from an opaque ref or request field.",
+     "maxLength": 128,
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "build_generation_fence": {
+     "description": "Dirty-layer build_generation recorded at build start (SP-018 fence).",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "build_timestamp_utc": {
+     "description": "Non-Git build metadata only; never source authority.",
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "project_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "published_generation": {
+     "description": "Current published index generation observed at effect time.",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "source_kind": {
+     "enum": [
+      "git",
+      "non_git"
+     ]
+    }
+   },
+   "required": [
+    "anchor_sha",
+    "build_generation_fence",
+    "build_timestamp_utc",
+    "project_id",
+    "published_generation",
+    "source_kind"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_dispatch_receipt": {
+   "additionalProperties": false,
+   "description": "Dispatch/attempt accounting only; never index-content success.",
+   "properties": {
+    "command_instance_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "dispatch_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "effect": {
+     "const": "dispatch_admission"
+    },
+    "operation_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "project_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "receipt_ref": {
+     "$ref": "#/$defs/non_secret_ref"
+    }
+   },
+   "required": [
+    "command_instance_id",
+    "dispatch_id",
+    "effect",
+    "operation_id",
+    "project_id",
+    "receipt_ref"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_observable_work": {
+   "additionalProperties": false,
+   "description": "Optional SIR ObservableWork correlation for the same original operation. Closed work_state reuses the SIR vocabulary verbatim.",
+   "properties": {
+    "operation_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "owner_result_receipt_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/non_secret_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "work_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "work_state": {
+     "enum": [
+      "accepted",
+      "backgrounded",
+      "cancelled",
+      "committing",
+      "completed",
+      "degraded",
+      "failed",
+      "migrating-route",
+      "queued",
+      "reconnecting",
+      "recovery-required",
+      "retrying",
+      "rolling-back",
+      "running",
+      "stalled",
+      "starting",
+      "testing-route",
+      "verifying",
+      "waiting"
+     ]
+    }
+   },
+   "required": [
+    "operation_id",
+    "owner_result_receipt_ref",
+    "work_id",
+    "work_state"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_original": {
+   "additionalProperties": false,
+   "description": "Authenticated cmd.search.rebuild_index { project_id } dispatch. No generation, anchor, ref, or caller field is added to the request args.",
+   "properties": {
+    "actor_ref": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "args": {
+     "additionalProperties": false,
+     "properties": {
+      "project_id": {
+       "$ref": "#/$defs/non_empty_string"
+      }
+     },
+     "required": [
+      "project_id"
+     ],
+     "type": "object"
+    },
+    "command_id": {
+     "const": "cmd.search.rebuild_index"
+    },
+    "command_instance_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "dispatch_frame_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "idempotency": {
+     "$ref": "#/$defs/sir_idempotency"
+    },
+    "operation_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "payload_sha256": {
+     "description": "Authentic original argument-only digest as independently selected opaque value (SIR); the outcome payload digest must equal it. No serializer is invented; never recomputed here.",
+     "$ref": "#/$defs/sha256"
+    },
+    "permission_snapshot_ref": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "project_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "return_route_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/non_secret_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "topology_generation": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "actor_ref",
+    "args",
+    "command_id",
+    "command_instance_id",
+    "dispatch_frame_id",
+    "idempotency",
+    "operation_id",
+    "payload_sha256",
+    "permission_snapshot_ref",
+    "project_id",
+    "return_route_ref",
+    "topology_generation"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_identity_envelope": {
+   "additionalProperties": false,
+   "description": "Operation identity envelope mirroring the genuine IdentityEnvelope required shape for project scope; the staged owner schema stays authoritative and the helper enforces it.",
+   "required": [
+    "scope_kind",
+    "operation_id",
+    "operation_generation",
+    "server_id",
+    "project_id",
+    "project_home_server_id",
+    "named_plan_id",
+    "execution_host_id",
+    "execution_environment_id",
+    "topology_generation"
+   ],
+   "properties": {
+    "scope_kind": {
+     "const": "project"
+    },
+    "operation_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "operation_generation": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "attempt_id": {
+     "type": "null"
+    },
+    "command_instance_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "server_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "project_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "project_home_server_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "named_plan_id": {
+     "type": "null"
+    },
+    "thread_id": {
+     "type": "null"
+    },
+    "goal_id": {
+     "type": "null"
+    },
+    "execution_host_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "execution_environment_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "source_location_id": {
+     "type": "null"
+    },
+    "topology_generation": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "search_rebuild_outcome": {
+   "additionalProperties": false,
+   "description": "Full central SIR CommandOutcomeRecord for the rebuild operation. Shape and conditions follow the staged owner $defs/CommandOutcomeRecord, enforced by the helper before any joins; acceptance never proves work or completion.",
+   "properties": {
+    "schema_id": {
+     "const": "pm.full_thread_runtime.contracts.v1"
+    },
+    "record_kind": {
+     "const": "command_outcome"
+    },
+    "identity": {
+     "$ref": "#/$defs/search_rebuild_identity_envelope"
+    },
+    "acknowledgement_receipt_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/non_secret_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "command_id": {
+     "const": "cmd.search.rebuild_index"
+    },
+    "dispatch_frame_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "acknowledgement_frame_id": {
+     "maxLength": 256,
+     "minLength": 1,
+     "type": ["string", "null"]
+    },
+    "acknowledgement_frame_offset": {
+     "minimum": 0,
+     "type": ["integer", "null"]
+    },
+    "same_frame_acknowledged": {
+     "type": "boolean"
+    },
+    "error_ref": {
+     "description": "Terminal error/reconciliation evidence ref; required for failed/rejected/terminal_unknown per the genuine CommandOutcomeRecord allOf.",
+     "type": [
+      "string",
+      "null"
+     ],
+     "minLength": 1,
+     "maxLength": 256
+    },
+    "idempotency_key": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "observed_at": {
+     "type": "string"
+    },
+    "outcome": {
+     "enum": [
+      "accepted",
+      "acknowledged",
+      "cancelled",
+      "executing",
+      "failed",
+      "rejected",
+      "succeeded",
+      "terminal_unknown"
+     ]
+    },
+    "owner_result_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/non_secret_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "owner_result_schema_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/owner_schema_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "owner_result_sha256": {
+     "description": "RFC 8785 canonical-JSON SHA-256 of the actual typed owner result/error; opaque selected value, never recomputed here (SIR line 913).",
+     "oneOf": [
+      {
+       "$ref": "#/$defs/sha256"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "payload_sha256": {
+     "$ref": "#/$defs/sha256"
+    },
+    "result_receipt_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/non_secret_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "target_generation": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "schema_id",
+    "record_kind",
+    "identity",
+    "command_id",
+    "payload_sha256",
+    "idempotency_key",
+    "target_generation",
+    "outcome",
+    "dispatch_frame_id",
+    "acknowledgement_frame_id",
+    "acknowledgement_frame_offset",
+    "same_frame_acknowledged",
+    "acknowledgement_receipt_ref",
+    "result_receipt_ref",
+    "error_ref",
+    "owner_result_ref",
+    "owner_result_schema_ref",
+    "owner_result_sha256",
+    "observed_at"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_owner_error": {
+   "additionalProperties": false,
+   "description": "Search-owner typed error. Category reuses the SIR command_error category vocabulary verbatim; code is the closed rebuild reason.",
+   "properties": {
+    "category": {
+     "enum": [
+      "capability",
+      "external_dependency",
+      "internal_fail_closed",
+      "permission",
+      "policy",
+      "recovery",
+      "resource",
+      "stale_state",
+      "topology",
+      "validation"
+     ]
+    },
+    "code": {
+     "enum": [
+      "blocked_state",
+      "build_failed",
+      "cancelled",
+      "checksum_failed",
+      "handler_unavailable",
+      "project_unknown",
+      "publication_failed",
+      "recovery_required",
+      "stale_selection",
+      "validation_failed"
+     ]
+    },
+    "detail_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/non_secret_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "safe_message": {
+     "maxLength": 512,
+     "minLength": 1,
+     "type": "string"
+    }
+   },
+   "required": [
+    "category",
+    "code",
+    "detail_ref",
+    "safe_message"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_owner_result": {
+   "additionalProperties": false,
+   "description": "Terminal Search-owner typed result bound to the independently observed actual effect and generation state. Status reuses the CV-333 result_status vocabulary verbatim (no new output enum).",
+   "properties": {
+    "actor_ref": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "built_generation": {
+     "description": "New generation built for this operation; null when no build was performed (pending/blocked/replay).",
+     "minimum": 0,
+     "type": [
+      "integer",
+      "null"
+     ]
+    },
+    "command_instance_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "effective_generation": {
+     "description": "Actual current generation after this result: built gen on/after publication, else retained prior gen.",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "error": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/search_rebuild_owner_error"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "fallback_available": {
+     "type": "boolean"
+    },
+    "operation_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "project_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "replayed": {
+     "type": "boolean"
+    },
+    "result_receipt_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/non_secret_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "status": {
+     "enum": [
+      "cancelled",
+      "failed",
+      "no_op",
+      "pending",
+      "recovery_required",
+      "succeeded"
+     ]
+    },
+    "work_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/non_secret_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    }
+   },
+   "required": [
+    "actor_ref",
+    "built_generation",
+    "command_instance_id",
+    "effective_generation",
+    "error",
+    "fallback_available",
+    "operation_id",
+    "project_id",
+    "replayed",
+    "result_receipt_ref",
+    "status",
+    "work_ref"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_publication": {
+   "additionalProperties": false,
+   "description": "Owner build result and Storage-owned durable publication state, by reference to SP-016/018/019. Static shape only.",
+   "properties": {
+    "anchor_sha": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "build_generation": {
+     "description": "Dirty-layer build_generation recorded at build start; must equal the current-source fence.",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "built_generation": {
+     "minimum": 0,
+     "type": [
+      "integer",
+      "null"
+     ]
+    },
+    "checksum_valid": {
+     "type": "boolean"
+    },
+    "claims_new_build": {
+     "description": "True only when this operation performed a fresh build_full. Replay never rebuilds.",
+     "type": "boolean"
+    },
+    "cleared_through": {
+     "description": "Dirty-layer clearing watermark: only generation <= build_generation may clear.",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "files": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "operation_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "prior_generation": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "project_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "surviving_generations": {
+     "items": {
+      "minimum": 0,
+      "type": "integer"
+     },
+     "type": "array"
+    },
+    "swapped": {
+     "description": "True only after the single atomic ArcSwap publication.",
+     "type": "boolean"
+    },
+    "synced": {
+     "description": "File::sync_all() on every new generation file before publication.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "anchor_sha",
+    "build_generation",
+    "built_generation",
+    "checksum_valid",
+    "claims_new_build",
+    "cleared_through",
+    "files",
+    "operation_id",
+    "prior_generation",
+    "project_id",
+    "surviving_generations",
+    "swapped",
+    "synced"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_replay_lineage": {
+   "additionalProperties": false,
+   "description": "Preserved original identities for a replayed dispatch. Replay preserves with zero repeated builds.",
+   "properties": {
+    "original_dispatch_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "original_operation_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "original_owner_result_ref": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "original_receipt_ref": {
+     "$ref": "#/$defs/non_secret_ref"
+    }
+   },
+   "required": [
+    "original_dispatch_id",
+    "original_operation_id",
+    "original_owner_result_ref",
+    "original_receipt_ref"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_response": {
+   "additionalProperties": false,
+   "description": "CV-333 UICommandResponse projection for this rebuild owner operation. Field names, kinds, statuses, and error codes reuse CV-333 verbatim.",
+   "properties": {
+    "ack_status": {
+     "enum": [
+      "accepted",
+      "rejected"
+     ]
+    },
+    "command_id": {
+     "const": "cmd.search.rebuild_index"
+    },
+    "command_instance_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "command_outcome_ref": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "dispatch_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "error": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/ui_command_error"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "event_refs": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "operation_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "original_dispatch_id": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "owner_identity": {
+     "$ref": "#/$defs/search_rebuild_response_identity"
+    },
+    "owner_result_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/non_secret_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "owner_result_schema_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/owner_schema_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "receipt_ref": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/non_secret_ref"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "replayed": {
+     "type": "boolean"
+    },
+    "request_ref": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "response_kind": {
+     "const": "owner_operation"
+    },
+    "result_status": {
+     "enum": [
+      "cancelled",
+      "failed",
+      "no_op",
+      "pending",
+      "recovery_required",
+      "succeeded"
+     ]
+    },
+    "ts": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "ack_status",
+    "command_id",
+    "command_instance_id",
+    "command_outcome_ref",
+    "dispatch_id",
+    "error",
+    "event_refs",
+    "operation_id",
+    "original_dispatch_id",
+    "owner_identity",
+    "owner_result_ref",
+    "owner_result_schema_ref",
+    "receipt_ref",
+    "replayed",
+    "request_ref",
+    "response_kind",
+    "result_status",
+    "ts"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_response_identity": {
+   "additionalProperties": false,
+   "description": "Owner operation identity projection (Full Thread identity shape, project scope for rebuild).",
+   "properties": {
+    "command_instance_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "operation_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "project_id": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "scope_kind": {
+     "const": "project"
+    },
+    "topology_generation": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "command_instance_id",
+    "operation_id",
+    "project_id",
+    "scope_kind",
+    "topology_generation"
+   ],
+   "type": "object"
+  },
+  "sha256": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$",
+   "x-verbatim-from": "Plans/shared_runtime_command_contracts.schema.json#/$defs/sha256"
+  },
+  "sir_idempotency": {
+   "additionalProperties": false,
+   "description": "Idempotency shape reusing the SIR command_idempotency vocabulary verbatim.",
+   "properties": {
+    "binding_sha256": {
+     "$ref": "#/$defs/sha256"
+    },
+    "conflict_behavior": {
+     "const": "reject_same_key_different_binding"
+    },
+    "idempotency_key": {
+     "$ref": "#/$defs/non_empty_string"
+    },
+    "replay_policy": {
+     "enum": [
+      "join_inflight_same_binding",
+      "reject_after_terminal",
+      "return_original_result"
+     ]
+    },
+    "scope_ref": {
+     "$ref": "#/$defs/non_secret_ref"
+    }
+   },
+   "required": [
+    "binding_sha256",
+    "conflict_behavior",
+    "idempotency_key",
+    "replay_policy",
+    "scope_ref"
+   ],
+   "type": "object"
+  },
+  "ui_command_error": {
+   "additionalProperties": false,
+   "description": "Central error grammar reusing the CV-333 UICommandError code vocabulary verbatim.",
+   "properties": {
+    "code": {
+     "enum": [
+      "blocked_state_required",
+      "handler_unavailable",
+      "internal_error",
+      "invalid_args",
+      "invalid_route",
+      "permission_denied",
+      "stale_projection",
+      "unknown_command"
+     ]
+    },
+    "offending_field": {
+     "maxLength": 160,
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "reason": {
+     "maxLength": 512,
+     "minLength": 1,
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "offending_field",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "search_rebuild_trusted_boundary": {
+   "type": "object",
+   "description": "Independently selected trusted owner-original/current-source/publication inputs received as the static validation boundary. Fixture inputs model but never prove a native issuer, builder, storage publication, or handler.",
+   "additionalProperties": false,
+   "required": [
+    "original",
+    "current_source",
+    "publication",
+    "owner_result_sha256"
+   ],
+   "properties": {
+    "original": {
+     "$ref": "#/$defs/search_rebuild_original"
+    },
+    "current_source": {
+     "$ref": "#/$defs/search_rebuild_current_source"
+    },
+    "publication": {
+     "$ref": "#/$defs/search_rebuild_publication"
+    },
+    "owner_result_sha256": {
+     "description": "Independently selected opaque RFC 8785 owner-result digest; the outcome digest must equal it.",
+     "oneOf": [
+      {
+       "$ref": "#/$defs/sha256"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "$id": "https://puppetmaster.local/schemas/search_rebuild_index/1.0.0/search_rebuild_index.schema.json",
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "description": "WM-029 typed companion: closed request/result/error/receipt/work/response join for the existing cmd.search.rebuild_index. Static definition only; proves no native builder, storage, receipt, work, dispatcher, permission, or completion act.",
+ "title": "Search rebuild_index typed companion (WM-029)",
+ "type": "object",
+ "x-claim-boundary": "Static schema/fixture/validator only. Matching labels, refs, hashes, or trusted boundary inputs never prove a genuine owner original, current source, publication, receipt, or completion. Native proof needs source-hashed owner evidence outside this job.",
+ "x-owner-refs": [
+  "Plans/Wiring_Matrix.md#WM-029",
+  "Plans/UI_Command_Catalog.md#UCC-087",
+  "Plans/Contracts_V0.md#CV-333",
+  "Plans/Shared_Integration_Runtime.md#SIR-042",
+  "Plans/storage-plan.md#SP-016",
+  "Plans/storage-plan.md#SP-018",
+  "Plans/storage-plan.md#SP-019",
+  "Plans/Settings_System.md#SSYS-023"
+ ],
+ "x-production-row": "catalog.search_rebuild_index"
+}

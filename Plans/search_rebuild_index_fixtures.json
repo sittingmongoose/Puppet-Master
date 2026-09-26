@@ -1,0 +1,1255 @@
+{
+ "claim_boundary": "Static fixtures only. Trusted boundary inputs model but never prove a native issuer, current source, publication, receipt, or completion.",
+ "owner_refs": [
+  "Plans/Wiring_Matrix.md#WM-029",
+  "Plans/UI_Command_Catalog.md#UCC-087",
+  "Plans/Contracts_V0.md#CV-333",
+  "Plans/Shared_Integration_Runtime.md#SIR-042",
+  "Plans/storage-plan.md#SP-016",
+  "Plans/storage-plan.md#SP-018",
+  "Plans/storage-plan.md#SP-019",
+  "Plans/Settings_System.md#SSYS-023"
+ ],
+ "schema_id": "pm.search.rebuild_index.fixtures.v1",
+ "selected_outcome_refs": {
+  "git_success_with_work": "outcome:rebuild:git:1",
+  "nongit_success_no_work": "outcome:rebuild:nongit:1",
+  "pending_admission": "outcome:rebuild:pending:1",
+  "blocked_unavailable": "outcome:rebuild:blocked:1",
+  "replay_preserves_original": "outcome:rebuild:replay:1",
+  "post_swap_unknown_settlement": "outcome:rebuild:unknown:1"
+ },
+ "valid": [
+  {
+   "case_id": "git_success_with_work",
+   "current_source": {
+    "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+    "build_generation_fence": 41,
+    "build_timestamp_utc": null,
+    "project_id": "project:rebuild:alpha",
+    "published_generation": 6,
+    "source_kind": "git"
+   },
+   "original": {
+    "actor_ref": "actor:user:rebuild:1",
+    "args": {
+     "project_id": "project:rebuild:alpha"
+    },
+    "command_id": "cmd.search.rebuild_index",
+    "command_instance_id": "command-instance:rebuild:git:1",
+    "dispatch_frame_id": "frame:rebuild:git:1",
+    "idempotency": {
+     "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "conflict_behavior": "reject_same_key_different_binding",
+     "idempotency_key": "idem:rebuild:git:1",
+     "replay_policy": "return_original_result",
+     "scope_ref": "project:rebuild:alpha"
+    },
+    "operation_id": "operation:rebuild:git:1",
+    "permission_snapshot_ref": "permission:snapshot:rebuild:1",
+    "project_id": "project:rebuild:alpha",
+    "return_route_ref": "route:settings:project-search-index",
+    "topology_generation": 8,
+    "payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+   },
+   "outcome": {
+    "schema_id": "pm.full_thread_runtime.contracts.v1",
+    "record_kind": "command_outcome",
+    "identity": {
+     "scope_kind": "project",
+     "operation_id": "operation:rebuild:git:1",
+     "operation_generation": 1,
+     "attempt_id": null,
+     "command_instance_id": "command-instance:rebuild:git:1",
+     "server_id": "srv:rebuild:home:1",
+     "project_id": "project:rebuild:alpha",
+     "project_home_server_id": "srv:rebuild:home:1",
+     "named_plan_id": null,
+     "thread_id": null,
+     "goal_id": null,
+     "execution_host_id": "host:rebuild:1",
+     "execution_environment_id": "env:rebuild:1",
+     "source_location_id": null,
+     "topology_generation": 8
+    },
+    "command_id": "cmd.search.rebuild_index",
+    "payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "idempotency_key": "idem:rebuild:git:1",
+    "target_generation": 8,
+    "outcome": "succeeded",
+    "dispatch_frame_id": "frame:rebuild:git:1",
+    "acknowledgement_frame_id": "frame:rebuild:git:1",
+    "acknowledgement_frame_offset": 0,
+    "same_frame_acknowledged": true,
+    "acknowledgement_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1",
+    "result_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1",
+    "error_ref": null,
+    "owner_result_ref": "owner-result:rebuild:git:1",
+    "owner_result_schema_ref": {
+     "path": "Plans/search_rebuild_index.schema.json",
+     "json_pointer": "#/$defs/search_rebuild_owner_result",
+     "schema_id": "pm.search.rebuild_index.bundle.v1"
+    },
+    "owner_result_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+    "observed_at": "2026-09-25T12:00:00Z"
+   },
+   "owner_result": {
+    "actor_ref": "actor:user:rebuild:1",
+    "built_generation": 7,
+    "command_instance_id": "command-instance:rebuild:git:1",
+    "effective_generation": 7,
+    "error": null,
+    "fallback_available": true,
+    "operation_id": "operation:rebuild:git:1",
+    "project_id": "project:rebuild:alpha",
+    "replayed": false,
+    "result_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1",
+    "status": "succeeded",
+    "work_ref": "work:rebuild:git:1"
+   },
+   "publication": {
+    "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+    "build_generation": 41,
+    "built_generation": 7,
+    "checksum_valid": true,
+    "claims_new_build": true,
+    "cleared_through": 41,
+    "files": [
+     "postings.bin",
+     "lookup.bin",
+     "file_map.bin",
+     "index_meta.json"
+    ],
+    "operation_id": "operation:rebuild:git:1",
+    "prior_generation": 6,
+    "project_id": "project:rebuild:alpha",
+    "surviving_generations": [
+     42,
+     43
+    ],
+    "swapped": true,
+    "synced": true
+   },
+   "receipt": {
+    "command_instance_id": "command-instance:rebuild:git:1",
+    "dispatch_id": "dispatch:rebuild:git:1",
+    "effect": "dispatch_admission",
+    "operation_id": "operation:rebuild:git:1",
+    "project_id": "project:rebuild:alpha",
+    "receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1"
+   },
+   "replay_of": null,
+   "response": {
+    "ack_status": "accepted",
+    "command_id": "cmd.search.rebuild_index",
+    "command_instance_id": "command-instance:rebuild:git:1",
+    "command_outcome_ref": "outcome:rebuild:git:1",
+    "dispatch_id": "dispatch:rebuild:git:1",
+    "error": null,
+    "event_refs": [],
+    "operation_id": "operation:rebuild:git:1",
+    "original_dispatch_id": null,
+    "owner_identity": {
+     "command_instance_id": "command-instance:rebuild:git:1",
+     "operation_id": "operation:rebuild:git:1",
+     "project_id": "project:rebuild:alpha",
+     "scope_kind": "project",
+     "topology_generation": 8
+    },
+    "owner_result_ref": "owner-result:rebuild:git:1",
+    "owner_result_schema_ref": {
+     "path": "Plans/search_rebuild_index.schema.json",
+     "json_pointer": "#/$defs/search_rebuild_owner_result",
+     "schema_id": "pm.search.rebuild_index.bundle.v1"
+    },
+    "receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1",
+    "replayed": false,
+    "request_ref": "request:rebuild:git:1",
+    "response_kind": "owner_operation",
+    "result_status": "succeeded",
+    "ts": "2026-09-25T12:05:00Z"
+   },
+   "schema_id": "pm.search.rebuild_index.bundle.v1",
+   "schema_version": "1.0.0",
+   "trusted": {
+    "current_source": {
+     "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+     "build_generation_fence": 41,
+     "build_timestamp_utc": null,
+     "project_id": "project:rebuild:alpha",
+     "published_generation": 6,
+     "source_kind": "git"
+    },
+    "original": {
+     "actor_ref": "actor:user:rebuild:1",
+     "args": {
+      "project_id": "project:rebuild:alpha"
+     },
+     "command_id": "cmd.search.rebuild_index",
+     "command_instance_id": "command-instance:rebuild:git:1",
+     "dispatch_frame_id": "frame:rebuild:git:1",
+     "idempotency": {
+      "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "conflict_behavior": "reject_same_key_different_binding",
+      "idempotency_key": "idem:rebuild:git:1",
+      "replay_policy": "return_original_result",
+      "scope_ref": "project:rebuild:alpha"
+     },
+     "operation_id": "operation:rebuild:git:1",
+     "permission_snapshot_ref": "permission:snapshot:rebuild:1",
+     "project_id": "project:rebuild:alpha",
+     "return_route_ref": "route:settings:project-search-index",
+     "topology_generation": 8,
+     "payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "publication": {
+     "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+     "build_generation": 41,
+     "built_generation": 7,
+     "checksum_valid": true,
+     "claims_new_build": true,
+     "cleared_through": 41,
+     "files": [
+      "postings.bin",
+      "lookup.bin",
+      "file_map.bin",
+      "index_meta.json"
+     ],
+     "operation_id": "operation:rebuild:git:1",
+     "prior_generation": 6,
+     "project_id": "project:rebuild:alpha",
+     "surviving_generations": [
+      42,
+      43
+     ],
+     "swapped": true,
+     "synced": true
+    },
+    "owner_result_sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+   },
+   "work": {
+    "operation_id": "operation:rebuild:git:1",
+    "owner_result_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1",
+    "work_id": "work:rebuild:git:1",
+    "work_state": "completed"
+   }
+  },
+  {
+   "case_id": "nongit_success_no_work",
+   "current_source": {
+    "anchor_sha": null,
+    "build_generation_fence": 12,
+    "build_timestamp_utc": "2026-09-25T11:58:00Z",
+    "project_id": "project:rebuild:beta",
+    "published_generation": 3,
+    "source_kind": "non_git"
+   },
+   "original": {
+    "actor_ref": "actor:user:rebuild:1",
+    "args": {
+     "project_id": "project:rebuild:beta"
+    },
+    "command_id": "cmd.search.rebuild_index",
+    "command_instance_id": "command-instance:rebuild:nongit:1",
+    "dispatch_frame_id": "frame:rebuild:nongit:1",
+    "idempotency": {
+     "binding_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+     "conflict_behavior": "reject_same_key_different_binding",
+     "idempotency_key": "idem:rebuild:nongit:1",
+     "replay_policy": "return_original_result",
+     "scope_ref": "project:rebuild:beta"
+    },
+    "operation_id": "operation:rebuild:nongit:1",
+    "permission_snapshot_ref": "permission:snapshot:rebuild:1",
+    "project_id": "project:rebuild:beta",
+    "return_route_ref": "route:settings:project-search-index",
+    "topology_generation": 3,
+    "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+   },
+   "outcome": {
+    "schema_id": "pm.full_thread_runtime.contracts.v1",
+    "record_kind": "command_outcome",
+    "identity": {
+     "scope_kind": "project",
+     "operation_id": "operation:rebuild:nongit:1",
+     "operation_generation": 1,
+     "attempt_id": null,
+     "command_instance_id": "command-instance:rebuild:nongit:1",
+     "server_id": "srv:rebuild:home:1",
+     "project_id": "project:rebuild:beta",
+     "project_home_server_id": "srv:rebuild:home:1",
+     "named_plan_id": null,
+     "thread_id": null,
+     "goal_id": null,
+     "execution_host_id": "host:rebuild:1",
+     "execution_environment_id": "env:rebuild:1",
+     "source_location_id": null,
+     "topology_generation": 3
+    },
+    "command_id": "cmd.search.rebuild_index",
+    "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "idempotency_key": "idem:rebuild:nongit:1",
+    "target_generation": 3,
+    "outcome": "succeeded",
+    "dispatch_frame_id": "frame:rebuild:nongit:1",
+    "acknowledgement_frame_id": "frame:rebuild:nongit:1",
+    "acknowledgement_frame_offset": 0,
+    "same_frame_acknowledged": true,
+    "acknowledgement_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:nongit:1",
+    "result_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:nongit:1",
+    "error_ref": null,
+    "owner_result_ref": "owner-result:rebuild:nongit:1",
+    "owner_result_schema_ref": {
+     "path": "Plans/search_rebuild_index.schema.json",
+     "json_pointer": "#/$defs/search_rebuild_owner_result",
+     "schema_id": "pm.search.rebuild_index.bundle.v1"
+    },
+    "owner_result_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+    "observed_at": "2026-09-25T12:00:00Z"
+   },
+   "owner_result": {
+    "actor_ref": "actor:user:rebuild:1",
+    "built_generation": 4,
+    "command_instance_id": "command-instance:rebuild:nongit:1",
+    "effective_generation": 4,
+    "error": null,
+    "fallback_available": true,
+    "operation_id": "operation:rebuild:nongit:1",
+    "project_id": "project:rebuild:beta",
+    "replayed": false,
+    "result_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:nongit:1",
+    "status": "succeeded",
+    "work_ref": null
+   },
+   "publication": {
+    "anchor_sha": null,
+    "build_generation": 12,
+    "built_generation": 4,
+    "checksum_valid": true,
+    "claims_new_build": true,
+    "cleared_through": 11,
+    "files": [
+     "postings.bin",
+     "lookup.bin",
+     "file_map.bin",
+     "index_meta.json"
+    ],
+    "operation_id": "operation:rebuild:nongit:1",
+    "prior_generation": 3,
+    "project_id": "project:rebuild:beta",
+    "surviving_generations": [
+     13
+    ],
+    "swapped": true,
+    "synced": true
+   },
+   "receipt": {
+    "command_instance_id": "command-instance:rebuild:nongit:1",
+    "dispatch_id": "dispatch:rebuild:nongit:1",
+    "effect": "dispatch_admission",
+    "operation_id": "operation:rebuild:nongit:1",
+    "project_id": "project:rebuild:beta",
+    "receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:nongit:1"
+   },
+   "replay_of": null,
+   "response": {
+    "ack_status": "accepted",
+    "command_id": "cmd.search.rebuild_index",
+    "command_instance_id": "command-instance:rebuild:nongit:1",
+    "command_outcome_ref": "outcome:rebuild:nongit:1",
+    "dispatch_id": "dispatch:rebuild:nongit:1",
+    "error": null,
+    "event_refs": [],
+    "operation_id": "operation:rebuild:nongit:1",
+    "original_dispatch_id": null,
+    "owner_identity": {
+     "command_instance_id": "command-instance:rebuild:nongit:1",
+     "operation_id": "operation:rebuild:nongit:1",
+     "project_id": "project:rebuild:beta",
+     "scope_kind": "project",
+     "topology_generation": 3
+    },
+    "owner_result_ref": "owner-result:rebuild:nongit:1",
+    "owner_result_schema_ref": {
+     "path": "Plans/search_rebuild_index.schema.json",
+     "json_pointer": "#/$defs/search_rebuild_owner_result",
+     "schema_id": "pm.search.rebuild_index.bundle.v1"
+    },
+    "receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:nongit:1",
+    "replayed": false,
+    "request_ref": "request:rebuild:nongit:1",
+    "response_kind": "owner_operation",
+    "result_status": "succeeded",
+    "ts": "2026-09-25T12:05:00Z"
+   },
+   "schema_id": "pm.search.rebuild_index.bundle.v1",
+   "schema_version": "1.0.0",
+   "trusted": {
+    "current_source": {
+     "anchor_sha": null,
+     "build_generation_fence": 12,
+     "build_timestamp_utc": "2026-09-25T11:58:00Z",
+     "project_id": "project:rebuild:beta",
+     "published_generation": 3,
+     "source_kind": "non_git"
+    },
+    "original": {
+     "actor_ref": "actor:user:rebuild:1",
+     "args": {
+      "project_id": "project:rebuild:beta"
+     },
+     "command_id": "cmd.search.rebuild_index",
+     "command_instance_id": "command-instance:rebuild:nongit:1",
+     "dispatch_frame_id": "frame:rebuild:nongit:1",
+     "idempotency": {
+      "binding_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "conflict_behavior": "reject_same_key_different_binding",
+      "idempotency_key": "idem:rebuild:nongit:1",
+      "replay_policy": "return_original_result",
+      "scope_ref": "project:rebuild:beta"
+     },
+     "operation_id": "operation:rebuild:nongit:1",
+     "permission_snapshot_ref": "permission:snapshot:rebuild:1",
+     "project_id": "project:rebuild:beta",
+     "return_route_ref": "route:settings:project-search-index",
+     "topology_generation": 3,
+     "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    "publication": {
+     "anchor_sha": null,
+     "build_generation": 12,
+     "built_generation": 4,
+     "checksum_valid": true,
+     "claims_new_build": true,
+     "cleared_through": 11,
+     "files": [
+      "postings.bin",
+      "lookup.bin",
+      "file_map.bin",
+      "index_meta.json"
+     ],
+     "operation_id": "operation:rebuild:nongit:1",
+     "prior_generation": 3,
+     "project_id": "project:rebuild:beta",
+     "surviving_generations": [
+      13
+     ],
+     "swapped": true,
+     "synced": true
+    },
+    "owner_result_sha256": "6666666666666666666666666666666666666666666666666666666666666666"
+   },
+   "work": null
+  },
+  {
+   "case_id": "pending_admission",
+   "current_source": {
+    "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+    "build_generation_fence": 50,
+    "build_timestamp_utc": null,
+    "project_id": "project:rebuild:alpha",
+    "published_generation": 8,
+    "source_kind": "git"
+   },
+   "original": {
+    "actor_ref": "actor:user:rebuild:1",
+    "args": {
+     "project_id": "project:rebuild:alpha"
+    },
+    "command_id": "cmd.search.rebuild_index",
+    "command_instance_id": "command-instance:rebuild:pending:1",
+    "dispatch_frame_id": "frame:rebuild:pending:1",
+    "idempotency": {
+     "binding_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+     "conflict_behavior": "reject_same_key_different_binding",
+     "idempotency_key": "idem:rebuild:pending:1",
+     "replay_policy": "return_original_result",
+     "scope_ref": "project:rebuild:alpha"
+    },
+    "operation_id": "operation:rebuild:pending:1",
+    "permission_snapshot_ref": "permission:snapshot:rebuild:1",
+    "project_id": "project:rebuild:alpha",
+    "return_route_ref": "route:settings:project-search-index",
+    "topology_generation": 8,
+    "payload_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+   },
+   "outcome": {
+    "schema_id": "pm.full_thread_runtime.contracts.v1",
+    "record_kind": "command_outcome",
+    "identity": {
+     "scope_kind": "project",
+     "operation_id": "operation:rebuild:pending:1",
+     "operation_generation": 1,
+     "attempt_id": null,
+     "command_instance_id": "command-instance:rebuild:pending:1",
+     "server_id": "srv:rebuild:home:1",
+     "project_id": "project:rebuild:alpha",
+     "project_home_server_id": "srv:rebuild:home:1",
+     "named_plan_id": null,
+     "thread_id": null,
+     "goal_id": null,
+     "execution_host_id": "host:rebuild:1",
+     "execution_environment_id": "env:rebuild:1",
+     "source_location_id": null,
+     "topology_generation": 8
+    },
+    "command_id": "cmd.search.rebuild_index",
+    "payload_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "idempotency_key": "idem:rebuild:pending:1",
+    "target_generation": 8,
+    "outcome": "accepted",
+    "dispatch_frame_id": "frame:rebuild:pending:1",
+    "acknowledgement_frame_id": null,
+    "acknowledgement_frame_offset": null,
+    "same_frame_acknowledged": false,
+    "acknowledgement_receipt_ref": null,
+    "result_receipt_ref": null,
+    "error_ref": null,
+    "owner_result_ref": null,
+    "owner_result_schema_ref": null,
+    "owner_result_sha256": null,
+    "observed_at": "2026-09-25T12:00:00Z"
+   },
+   "owner_result": {
+    "actor_ref": "actor:user:rebuild:1",
+    "built_generation": null,
+    "command_instance_id": "command-instance:rebuild:pending:1",
+    "effective_generation": 8,
+    "error": null,
+    "fallback_available": true,
+    "operation_id": "operation:rebuild:pending:1",
+    "project_id": "project:rebuild:alpha",
+    "replayed": false,
+    "result_receipt_ref": null,
+    "status": "pending",
+    "work_ref": null
+   },
+   "publication": {
+    "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+    "build_generation": 50,
+    "built_generation": null,
+    "checksum_valid": false,
+    "claims_new_build": false,
+    "cleared_through": 50,
+    "files": [],
+    "operation_id": "operation:rebuild:pending:1",
+    "prior_generation": 8,
+    "project_id": "project:rebuild:alpha",
+    "surviving_generations": [],
+    "swapped": false,
+    "synced": false
+   },
+   "receipt": {
+    "command_instance_id": "command-instance:rebuild:pending:1",
+    "dispatch_id": "dispatch:rebuild:pending:1",
+    "effect": "dispatch_admission",
+    "operation_id": "operation:rebuild:pending:1",
+    "project_id": "project:rebuild:alpha",
+    "receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:pending:1"
+   },
+   "replay_of": null,
+   "response": {
+    "ack_status": "accepted",
+    "command_id": "cmd.search.rebuild_index",
+    "command_instance_id": "command-instance:rebuild:pending:1",
+    "command_outcome_ref": "outcome:rebuild:pending:1",
+    "dispatch_id": "dispatch:rebuild:pending:1",
+    "error": null,
+    "event_refs": [],
+    "operation_id": "operation:rebuild:pending:1",
+    "original_dispatch_id": null,
+    "owner_identity": {
+     "command_instance_id": "command-instance:rebuild:pending:1",
+     "operation_id": "operation:rebuild:pending:1",
+     "project_id": "project:rebuild:alpha",
+     "scope_kind": "project",
+     "topology_generation": 8
+    },
+    "owner_result_ref": null,
+    "owner_result_schema_ref": null,
+    "receipt_ref": null,
+    "replayed": false,
+    "request_ref": "request:rebuild:pending:1",
+    "response_kind": "owner_operation",
+    "result_status": "pending",
+    "ts": "2026-09-25T12:05:00Z"
+   },
+   "schema_id": "pm.search.rebuild_index.bundle.v1",
+   "schema_version": "1.0.0",
+   "trusted": {
+    "current_source": {
+     "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+     "build_generation_fence": 50,
+     "build_timestamp_utc": null,
+     "project_id": "project:rebuild:alpha",
+     "published_generation": 8,
+     "source_kind": "git"
+    },
+    "original": {
+     "actor_ref": "actor:user:rebuild:1",
+     "args": {
+      "project_id": "project:rebuild:alpha"
+     },
+     "command_id": "cmd.search.rebuild_index",
+     "command_instance_id": "command-instance:rebuild:pending:1",
+     "dispatch_frame_id": "frame:rebuild:pending:1",
+     "idempotency": {
+      "binding_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "conflict_behavior": "reject_same_key_different_binding",
+      "idempotency_key": "idem:rebuild:pending:1",
+      "replay_policy": "return_original_result",
+      "scope_ref": "project:rebuild:alpha"
+     },
+     "operation_id": "operation:rebuild:pending:1",
+     "permission_snapshot_ref": "permission:snapshot:rebuild:1",
+     "project_id": "project:rebuild:alpha",
+     "return_route_ref": "route:settings:project-search-index",
+     "topology_generation": 8,
+     "payload_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    },
+    "publication": {
+     "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+     "build_generation": 50,
+     "built_generation": null,
+     "checksum_valid": false,
+     "claims_new_build": false,
+     "cleared_through": 50,
+     "files": [],
+     "operation_id": "operation:rebuild:pending:1",
+     "prior_generation": 8,
+     "project_id": "project:rebuild:alpha",
+     "surviving_generations": [],
+     "swapped": false,
+     "synced": false
+    },
+    "owner_result_sha256": null
+   },
+   "work": {
+    "operation_id": "operation:rebuild:pending:1",
+    "owner_result_receipt_ref": null,
+    "work_id": "work:rebuild:pending:1",
+    "work_state": "running"
+   }
+  },
+  {
+   "case_id": "blocked_unavailable",
+   "current_source": {
+    "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+    "build_generation_fence": 55,
+    "build_timestamp_utc": null,
+    "project_id": "project:rebuild:alpha",
+    "published_generation": 8,
+    "source_kind": "git"
+   },
+   "original": {
+    "actor_ref": "actor:user:rebuild:1",
+    "args": {
+     "project_id": "project:rebuild:alpha"
+    },
+    "command_id": "cmd.search.rebuild_index",
+    "command_instance_id": "command-instance:rebuild:blocked:1",
+    "dispatch_frame_id": "frame:rebuild:blocked:1",
+    "idempotency": {
+     "binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+     "conflict_behavior": "reject_same_key_different_binding",
+     "idempotency_key": "idem:rebuild:blocked:1",
+     "replay_policy": "return_original_result",
+     "scope_ref": "project:rebuild:alpha"
+    },
+    "operation_id": "operation:rebuild:blocked:1",
+    "permission_snapshot_ref": "permission:snapshot:rebuild:1",
+    "project_id": "project:rebuild:alpha",
+    "return_route_ref": "route:settings:project-search-index",
+    "topology_generation": 8,
+    "payload_sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+   },
+   "outcome": {
+    "schema_id": "pm.full_thread_runtime.contracts.v1",
+    "record_kind": "command_outcome",
+    "identity": {
+     "scope_kind": "project",
+     "operation_id": "operation:rebuild:blocked:1",
+     "operation_generation": 1,
+     "attempt_id": null,
+     "command_instance_id": "command-instance:rebuild:blocked:1",
+     "server_id": "srv:rebuild:home:1",
+     "project_id": "project:rebuild:alpha",
+     "project_home_server_id": "srv:rebuild:home:1",
+     "named_plan_id": null,
+     "thread_id": null,
+     "goal_id": null,
+     "execution_host_id": "host:rebuild:1",
+     "execution_environment_id": "env:rebuild:1",
+     "source_location_id": null,
+     "topology_generation": 8
+    },
+    "command_id": "cmd.search.rebuild_index",
+    "payload_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "idempotency_key": "idem:rebuild:blocked:1",
+    "target_generation": 8,
+    "outcome": "failed",
+    "dispatch_frame_id": "frame:rebuild:blocked:1",
+    "acknowledgement_frame_id": "frame:rebuild:blocked:1",
+    "acknowledgement_frame_offset": 0,
+    "same_frame_acknowledged": true,
+    "acknowledgement_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:blocked:1",
+    "result_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:blocked:1",
+    "error_ref": "error:rebuild:blocked:1",
+    "owner_result_ref": "owner-result:rebuild:blocked:1",
+    "owner_result_schema_ref": {
+     "path": "Plans/search_rebuild_index.schema.json",
+     "json_pointer": "#/$defs/search_rebuild_owner_result",
+     "schema_id": "pm.search.rebuild_index.bundle.v1"
+    },
+    "owner_result_sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+    "observed_at": "2026-09-25T12:00:00Z"
+   },
+   "owner_result": {
+    "actor_ref": "actor:user:rebuild:1",
+    "built_generation": null,
+    "command_instance_id": "command-instance:rebuild:blocked:1",
+    "effective_generation": 8,
+    "error": {
+     "category": "policy",
+     "code": "blocked_state",
+     "detail_ref": null,
+     "safe_message": "Rebuild unavailable: conflicting index operation holds the target mutation lock."
+    },
+    "fallback_available": true,
+    "operation_id": "operation:rebuild:blocked:1",
+    "project_id": "project:rebuild:alpha",
+    "replayed": false,
+    "result_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:blocked:1",
+    "status": "failed",
+    "work_ref": null
+   },
+   "publication": {
+    "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+    "build_generation": 55,
+    "built_generation": null,
+    "checksum_valid": false,
+    "claims_new_build": false,
+    "cleared_through": 55,
+    "files": [],
+    "operation_id": "operation:rebuild:blocked:1",
+    "prior_generation": 8,
+    "project_id": "project:rebuild:alpha",
+    "surviving_generations": [
+     56
+    ],
+    "swapped": false,
+    "synced": false
+   },
+   "receipt": {
+    "command_instance_id": "command-instance:rebuild:blocked:1",
+    "dispatch_id": "dispatch:rebuild:blocked:1",
+    "effect": "dispatch_admission",
+    "operation_id": "operation:rebuild:blocked:1",
+    "project_id": "project:rebuild:alpha",
+    "receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:blocked:1"
+   },
+   "replay_of": null,
+   "response": {
+    "ack_status": "accepted",
+    "command_id": "cmd.search.rebuild_index",
+    "command_instance_id": "command-instance:rebuild:blocked:1",
+    "command_outcome_ref": "outcome:rebuild:blocked:1",
+    "dispatch_id": "dispatch:rebuild:blocked:1",
+    "error": {
+     "code": "blocked_state_required",
+     "offending_field": null,
+     "reason": "Rebuild blocked by conflicting index operation; no publication attempted."
+    },
+    "event_refs": [],
+    "operation_id": "operation:rebuild:blocked:1",
+    "original_dispatch_id": null,
+    "owner_identity": {
+     "command_instance_id": "command-instance:rebuild:blocked:1",
+     "operation_id": "operation:rebuild:blocked:1",
+     "project_id": "project:rebuild:alpha",
+     "scope_kind": "project",
+     "topology_generation": 8
+    },
+    "owner_result_ref": "owner-result:rebuild:blocked:1",
+    "owner_result_schema_ref": {
+     "path": "Plans/search_rebuild_index.schema.json",
+     "json_pointer": "#/$defs/search_rebuild_owner_result",
+     "schema_id": "pm.search.rebuild_index.bundle.v1"
+    },
+    "receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:blocked:1",
+    "replayed": false,
+    "request_ref": "request:rebuild:blocked:1",
+    "response_kind": "owner_operation",
+    "result_status": "failed",
+    "ts": "2026-09-25T12:05:00Z"
+   },
+   "schema_id": "pm.search.rebuild_index.bundle.v1",
+   "schema_version": "1.0.0",
+   "trusted": {
+    "current_source": {
+     "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+     "build_generation_fence": 55,
+     "build_timestamp_utc": null,
+     "project_id": "project:rebuild:alpha",
+     "published_generation": 8,
+     "source_kind": "git"
+    },
+    "original": {
+     "actor_ref": "actor:user:rebuild:1",
+     "args": {
+      "project_id": "project:rebuild:alpha"
+     },
+     "command_id": "cmd.search.rebuild_index",
+     "command_instance_id": "command-instance:rebuild:blocked:1",
+     "dispatch_frame_id": "frame:rebuild:blocked:1",
+     "idempotency": {
+      "binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "conflict_behavior": "reject_same_key_different_binding",
+      "idempotency_key": "idem:rebuild:blocked:1",
+      "replay_policy": "return_original_result",
+      "scope_ref": "project:rebuild:alpha"
+     },
+     "operation_id": "operation:rebuild:blocked:1",
+     "permission_snapshot_ref": "permission:snapshot:rebuild:1",
+     "project_id": "project:rebuild:alpha",
+     "return_route_ref": "route:settings:project-search-index",
+     "topology_generation": 8,
+     "payload_sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    "publication": {
+     "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+     "build_generation": 55,
+     "built_generation": null,
+     "checksum_valid": false,
+     "claims_new_build": false,
+     "cleared_through": 55,
+     "files": [],
+     "operation_id": "operation:rebuild:blocked:1",
+     "prior_generation": 8,
+     "project_id": "project:rebuild:alpha",
+     "surviving_generations": [
+      56
+     ],
+     "swapped": false,
+     "synced": false
+    },
+    "owner_result_sha256": "7777777777777777777777777777777777777777777777777777777777777777"
+   },
+   "work": null
+  },
+  {
+   "case_id": "replay_preserves_original",
+   "current_source": {
+    "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+    "build_generation_fence": 41,
+    "build_timestamp_utc": null,
+    "project_id": "project:rebuild:alpha",
+    "published_generation": 7,
+    "source_kind": "git"
+   },
+   "original": {
+    "actor_ref": "actor:user:rebuild:1",
+    "args": {
+     "project_id": "project:rebuild:alpha"
+    },
+    "command_id": "cmd.search.rebuild_index",
+    "command_instance_id": "command-instance:rebuild:git:1",
+    "dispatch_frame_id": "frame:rebuild:replay:1",
+    "idempotency": {
+     "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+     "conflict_behavior": "reject_same_key_different_binding",
+     "idempotency_key": "idem:rebuild:git:1",
+     "replay_policy": "return_original_result",
+     "scope_ref": "project:rebuild:alpha"
+    },
+    "operation_id": "operation:rebuild:git:1",
+    "permission_snapshot_ref": "permission:snapshot:rebuild:1",
+    "project_id": "project:rebuild:alpha",
+    "return_route_ref": "route:settings:project-search-index",
+    "topology_generation": 8,
+    "payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+   },
+   "outcome": {
+    "schema_id": "pm.full_thread_runtime.contracts.v1",
+    "record_kind": "command_outcome",
+    "identity": {
+     "scope_kind": "project",
+     "operation_id": "operation:rebuild:git:1",
+     "operation_generation": 1,
+     "attempt_id": null,
+     "command_instance_id": "command-instance:rebuild:git:1",
+     "server_id": "srv:rebuild:home:1",
+     "project_id": "project:rebuild:alpha",
+     "project_home_server_id": "srv:rebuild:home:1",
+     "named_plan_id": null,
+     "thread_id": null,
+     "goal_id": null,
+     "execution_host_id": "host:rebuild:1",
+     "execution_environment_id": "env:rebuild:1",
+     "source_location_id": null,
+     "topology_generation": 8
+    },
+    "command_id": "cmd.search.rebuild_index",
+    "payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "idempotency_key": "idem:rebuild:git:1",
+    "target_generation": 8,
+    "outcome": "succeeded",
+    "dispatch_frame_id": "frame:rebuild:replay:1",
+    "acknowledgement_frame_id": "frame:rebuild:git:1",
+    "acknowledgement_frame_offset": 1,
+    "same_frame_acknowledged": false,
+    "acknowledgement_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1",
+    "result_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1",
+    "error_ref": null,
+    "owner_result_ref": "owner-result:rebuild:git:1",
+    "owner_result_schema_ref": {
+     "path": "Plans/search_rebuild_index.schema.json",
+     "json_pointer": "#/$defs/search_rebuild_owner_result",
+     "schema_id": "pm.search.rebuild_index.bundle.v1"
+    },
+    "owner_result_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+    "observed_at": "2026-09-25T12:00:00Z"
+   },
+   "owner_result": {
+    "actor_ref": "actor:user:rebuild:1",
+    "built_generation": null,
+    "command_instance_id": "command-instance:rebuild:git:1",
+    "effective_generation": 7,
+    "error": null,
+    "fallback_available": true,
+    "operation_id": "operation:rebuild:git:1",
+    "project_id": "project:rebuild:alpha",
+    "replayed": true,
+    "result_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1",
+    "status": "succeeded",
+    "work_ref": "work:rebuild:git:1"
+   },
+   "publication": {
+    "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+    "build_generation": 41,
+    "built_generation": null,
+    "checksum_valid": false,
+    "claims_new_build": false,
+    "cleared_through": 41,
+    "files": [],
+    "operation_id": "operation:rebuild:git:1",
+    "prior_generation": 7,
+    "project_id": "project:rebuild:alpha",
+    "surviving_generations": [],
+    "swapped": false,
+    "synced": false
+   },
+   "receipt": {
+    "command_instance_id": "command-instance:rebuild:git:1",
+    "dispatch_id": "dispatch:rebuild:replay:1",
+    "effect": "dispatch_admission",
+    "operation_id": "operation:rebuild:git:1",
+    "project_id": "project:rebuild:alpha",
+    "receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1"
+   },
+   "replay_of": {
+    "original_dispatch_id": "dispatch:rebuild:git:1",
+    "original_operation_id": "operation:rebuild:git:1",
+    "original_owner_result_ref": "owner-result:rebuild:git:1",
+    "original_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1"
+   },
+   "response": {
+    "ack_status": "accepted",
+    "command_id": "cmd.search.rebuild_index",
+    "command_instance_id": "command-instance:rebuild:git:1",
+    "command_outcome_ref": "outcome:rebuild:replay:1",
+    "dispatch_id": "dispatch:rebuild:replay:1",
+    "error": null,
+    "event_refs": [],
+    "operation_id": "operation:rebuild:git:1",
+    "original_dispatch_id": "dispatch:rebuild:git:1",
+    "owner_identity": {
+     "command_instance_id": "command-instance:rebuild:git:1",
+     "operation_id": "operation:rebuild:git:1",
+     "project_id": "project:rebuild:alpha",
+     "scope_kind": "project",
+     "topology_generation": 8
+    },
+    "owner_result_ref": "owner-result:rebuild:git:1",
+    "owner_result_schema_ref": {
+     "path": "Plans/search_rebuild_index.schema.json",
+     "json_pointer": "#/$defs/search_rebuild_owner_result",
+     "schema_id": "pm.search.rebuild_index.bundle.v1"
+    },
+    "receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1",
+    "replayed": true,
+    "request_ref": "request:rebuild:replay:1",
+    "response_kind": "owner_operation",
+    "result_status": "succeeded",
+    "ts": "2026-09-25T12:05:00Z"
+   },
+   "schema_id": "pm.search.rebuild_index.bundle.v1",
+   "schema_version": "1.0.0",
+   "trusted": {
+    "current_source": {
+     "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+     "build_generation_fence": 41,
+     "build_timestamp_utc": null,
+     "project_id": "project:rebuild:alpha",
+     "published_generation": 7,
+     "source_kind": "git"
+    },
+    "original": {
+     "actor_ref": "actor:user:rebuild:1",
+     "args": {
+      "project_id": "project:rebuild:alpha"
+     },
+     "command_id": "cmd.search.rebuild_index",
+     "command_instance_id": "command-instance:rebuild:git:1",
+     "dispatch_frame_id": "frame:rebuild:replay:1",
+     "idempotency": {
+      "binding_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "conflict_behavior": "reject_same_key_different_binding",
+      "idempotency_key": "idem:rebuild:git:1",
+      "replay_policy": "return_original_result",
+      "scope_ref": "project:rebuild:alpha"
+     },
+     "operation_id": "operation:rebuild:git:1",
+     "permission_snapshot_ref": "permission:snapshot:rebuild:1",
+     "project_id": "project:rebuild:alpha",
+     "return_route_ref": "route:settings:project-search-index",
+     "topology_generation": 8,
+     "payload_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "publication": {
+     "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+     "build_generation": 41,
+     "built_generation": null,
+     "checksum_valid": false,
+     "claims_new_build": false,
+     "cleared_through": 41,
+     "files": [],
+     "operation_id": "operation:rebuild:git:1",
+     "prior_generation": 7,
+     "project_id": "project:rebuild:alpha",
+     "surviving_generations": [],
+     "swapped": false,
+     "synced": false
+    },
+    "owner_result_sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+   },
+   "work": {
+    "operation_id": "operation:rebuild:git:1",
+    "owner_result_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:git:1",
+    "work_id": "work:rebuild:git:1",
+    "work_state": "completed"
+   }
+  },
+  {
+   "case_id": "post_swap_unknown_settlement",
+   "current_source": {
+    "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+    "build_generation_fence": 60,
+    "build_timestamp_utc": null,
+    "project_id": "project:rebuild:alpha",
+    "published_generation": 7,
+    "source_kind": "git"
+   },
+   "original": {
+    "actor_ref": "actor:user:rebuild:1",
+    "args": {
+     "project_id": "project:rebuild:alpha"
+    },
+    "command_id": "cmd.search.rebuild_index",
+    "command_instance_id": "command-instance:rebuild:unknown:1",
+    "dispatch_frame_id": "frame:rebuild:unknown:1",
+    "idempotency": {
+     "binding_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+     "conflict_behavior": "reject_same_key_different_binding",
+     "idempotency_key": "idem:rebuild:unknown:1",
+     "replay_policy": "return_original_result",
+     "scope_ref": "project:rebuild:alpha"
+    },
+    "operation_id": "operation:rebuild:unknown:1",
+    "permission_snapshot_ref": "permission:snapshot:rebuild:1",
+    "project_id": "project:rebuild:alpha",
+    "return_route_ref": "route:settings:project-search-index",
+    "topology_generation": 8,
+    "payload_sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+   },
+   "outcome": {
+    "schema_id": "pm.full_thread_runtime.contracts.v1",
+    "record_kind": "command_outcome",
+    "identity": {
+     "scope_kind": "project",
+     "operation_id": "operation:rebuild:unknown:1",
+     "operation_generation": 1,
+     "attempt_id": null,
+     "command_instance_id": "command-instance:rebuild:unknown:1",
+     "server_id": "srv:rebuild:home:1",
+     "project_id": "project:rebuild:alpha",
+     "project_home_server_id": "srv:rebuild:home:1",
+     "named_plan_id": null,
+     "thread_id": null,
+     "goal_id": null,
+     "execution_host_id": "host:rebuild:1",
+     "execution_environment_id": "env:rebuild:1",
+     "source_location_id": null,
+     "topology_generation": 8
+    },
+    "command_id": "cmd.search.rebuild_index",
+    "payload_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+    "idempotency_key": "idem:rebuild:unknown:1",
+    "target_generation": 8,
+    "outcome": "terminal_unknown",
+    "dispatch_frame_id": "frame:rebuild:unknown:1",
+    "acknowledgement_frame_id": "frame:rebuild:unknown:1",
+    "acknowledgement_frame_offset": 0,
+    "same_frame_acknowledged": true,
+    "acknowledgement_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:unknown:1",
+    "result_receipt_ref": null,
+    "error_ref": "error:rebuild:unknown:1",
+    "owner_result_ref": "owner-result:rebuild:unknown:1",
+    "owner_result_schema_ref": {
+     "path": "Plans/search_rebuild_index.schema.json",
+     "json_pointer": "#/$defs/search_rebuild_owner_result",
+     "schema_id": "pm.search.rebuild_index.bundle.v1"
+    },
+    "owner_result_sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+    "observed_at": "2026-09-25T12:00:00Z"
+   },
+   "owner_result": {
+    "actor_ref": "actor:user:rebuild:1",
+    "built_generation": 8,
+    "command_instance_id": "command-instance:rebuild:unknown:1",
+    "effective_generation": 8,
+    "error": null,
+    "fallback_available": true,
+    "operation_id": "operation:rebuild:unknown:1",
+    "project_id": "project:rebuild:alpha",
+    "replayed": false,
+    "result_receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:unknown:1",
+    "status": "succeeded",
+    "work_ref": null
+   },
+   "publication": {
+    "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+    "build_generation": 60,
+    "built_generation": 8,
+    "checksum_valid": true,
+    "claims_new_build": true,
+    "cleared_through": 60,
+    "files": [
+     "postings.bin",
+     "lookup.bin",
+     "file_map.bin",
+     "index_meta.json"
+    ],
+    "operation_id": "operation:rebuild:unknown:1",
+    "prior_generation": 7,
+    "project_id": "project:rebuild:alpha",
+    "surviving_generations": [
+     61
+    ],
+    "swapped": true,
+    "synced": true
+   },
+   "receipt": {
+    "command_instance_id": "command-instance:rebuild:unknown:1",
+    "dispatch_id": "dispatch:rebuild:unknown:1",
+    "effect": "dispatch_admission",
+    "operation_id": "operation:rebuild:unknown:1",
+    "project_id": "project:rebuild:alpha",
+    "receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:unknown:1"
+   },
+   "replay_of": null,
+   "response": {
+    "ack_status": "accepted",
+    "command_id": "cmd.search.rebuild_index",
+    "command_instance_id": "command-instance:rebuild:unknown:1",
+    "command_outcome_ref": "outcome:rebuild:unknown:1",
+    "dispatch_id": "dispatch:rebuild:unknown:1",
+    "error": {
+     "code": "internal_error",
+     "offending_field": null,
+     "reason": "Settlement unknown after publication; generation 8 is current, operator follow-up required."
+    },
+    "event_refs": [],
+    "operation_id": "operation:rebuild:unknown:1",
+    "original_dispatch_id": null,
+    "owner_identity": {
+     "command_instance_id": "command-instance:rebuild:unknown:1",
+     "operation_id": "operation:rebuild:unknown:1",
+     "project_id": "project:rebuild:alpha",
+     "scope_kind": "project",
+     "topology_generation": 8
+    },
+    "owner_result_ref": "owner-result:rebuild:unknown:1",
+    "owner_result_schema_ref": {
+     "path": "Plans/search_rebuild_index.schema.json",
+     "json_pointer": "#/$defs/search_rebuild_owner_result",
+     "schema_id": "pm.search.rebuild_index.bundle.v1"
+    },
+    "receipt_ref": "cmd.search.rebuild_index.dispatch_receipt:rebuild:unknown:1",
+    "replayed": false,
+    "request_ref": "request:rebuild:unknown:1",
+    "response_kind": "owner_operation",
+    "result_status": "recovery_required",
+    "ts": "2026-09-25T12:05:00Z"
+   },
+   "schema_id": "pm.search.rebuild_index.bundle.v1",
+   "schema_version": "1.0.0",
+   "trusted": {
+    "current_source": {
+     "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+     "build_generation_fence": 60,
+     "build_timestamp_utc": null,
+     "project_id": "project:rebuild:alpha",
+     "published_generation": 7,
+     "source_kind": "git"
+    },
+    "original": {
+     "actor_ref": "actor:user:rebuild:1",
+     "args": {
+      "project_id": "project:rebuild:alpha"
+     },
+     "command_id": "cmd.search.rebuild_index",
+     "command_instance_id": "command-instance:rebuild:unknown:1",
+     "dispatch_frame_id": "frame:rebuild:unknown:1",
+     "idempotency": {
+      "binding_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "conflict_behavior": "reject_same_key_different_binding",
+      "idempotency_key": "idem:rebuild:unknown:1",
+      "replay_policy": "return_original_result",
+      "scope_ref": "project:rebuild:alpha"
+     },
+     "operation_id": "operation:rebuild:unknown:1",
+     "permission_snapshot_ref": "permission:snapshot:rebuild:1",
+     "project_id": "project:rebuild:alpha",
+     "return_route_ref": "route:settings:project-search-index",
+     "topology_generation": 8,
+     "payload_sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+    },
+    "publication": {
+     "anchor_sha": "0123456789abcdef0123456789abcdef01234567",
+     "build_generation": 60,
+     "built_generation": 8,
+     "checksum_valid": true,
+     "claims_new_build": true,
+     "cleared_through": 60,
+     "files": [
+      "postings.bin",
+      "lookup.bin",
+      "file_map.bin",
+      "index_meta.json"
+     ],
+     "operation_id": "operation:rebuild:unknown:1",
+     "prior_generation": 7,
+     "project_id": "project:rebuild:alpha",
+     "surviving_generations": [
+      61
+     ],
+     "swapped": true,
+     "synced": true
+    },
+    "owner_result_sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+   },
+   "work": null
+  }
+ ]
+}
