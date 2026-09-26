@@ -25,6 +25,8 @@ was changed, and no shard regeneration was required.
 Current-root verification on 2026-09-26:
 
 - Eight focused tests pass.
+- Root replay of the independent fixed-original probe rejects all eight
+  request-reason/recovery and outcome-payload/frame mutations as expected.
 - `validate-lsp-restart-selected` passes with no failures.
 - `validate-wiring-matrix` passes.
 - Shard check passes: 99 documents, 2,766 shards.
