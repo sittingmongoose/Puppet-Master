@@ -7,10 +7,25 @@ classified as GUI-only or native-only obligations.
 
 The candidate fixes the four earlier sampled defects and passes 13 positive /
 53 negative fixtures and 13 focused tests. Independent review nevertheless
-reproduced five schema-valid, join-valid counterexamples from the admitted
+reproduced five schema-valid, join-valid mutations from the admitted
 send-now positive: a foreign admitted message reference, foreign picker issuer
 receipt, substituted owner-result digest, substituted payload digest, and a
 coordinated substitution of request/original/current Browser session identity.
+
+Later trust-boundary adjudication withdraws two as causal counterexamples:
+changing the trusted picker original itself, or changing all trusted original
+and current inputs together, cannot by itself prove a pure validator defect.
+The two isolated result/payload digest substitutions remain actual internal
+join defects. The admitted-message mismatch requires current Chat owner-interface
+mapping, not an invented Browser-owned admission mirror or restoration of an
+older ComposerBuffer architecture. Current Assistant Chat owns browser pending
+chips and the unified prep tray; missing old type names do not prove missing
+product behavior. Keep one authentic input boundary and native proof separate;
+do not demand an endless chain of additional witnesses.
+
+Corrective adjudication:
+`/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/jobs/browser-capture-companion-01/BROWSER-V2-TRUST-BOUNDARY-ADJUDICATION.md`,
+SHA-256 `0166c247172b54f88b57f78053fa2701451f4cc89b30488ce5f418522a69f858`.
 
 Current BSTALE and SIR owner requirements already require actual original,
 current, admission, buffer and result-source relationships. Mutually agreeing
