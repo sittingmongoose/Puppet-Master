@@ -1,0 +1,729 @@
+{
+  "schema_id": "pm.sir.notifications_sound.dispatch_fixtures.v1",
+  "schema_version": "1.0.0",
+  "claim_boundary": "Static authentic-original/dispatcher binding fixtures for exactly cmd.notifications.destination.test and cmd.sound.preview. A record here is a logical original/dispatcher value, never issuer, permission, receipt or native dispatch authentication.",
+  "valid": [
+    {
+      "name": "dispatch_binding_destination_test_live",
+      "definition": "dispatch_case",
+      "value": {
+        "schema_id": "pm.sir.notifications_sound_dispatch_binding.v1",
+        "record_kind": "sir_notifications_sound_dispatch_binding",
+        "action_id": "cmd.notifications.destination.test",
+        "request_ref": "request:destination-test:live",
+        "command_instance_id": "command-instance:destination-test:live",
+        "dispatch_id": "dispatch:destination-test:live",
+        "dispatch_frame_id": "dispatch-frame:destination-test:live",
+        "operation_id": "operation:destination-test:live",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:destination-test:live",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:destination-test:live",
+          "server_id": "server-1",
+          "project_id": "project-1",
+          "project_home_server_id": "server-1",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 9
+        },
+        "idempotency_key": "idempotency:destination-test:live",
+        "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "arguments_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "target": {
+          "kind": "notification_destination",
+          "destination_ref": "notification-destination:global:slack-alerts",
+          "provider_kind": "slack",
+          "destination_generation": 4
+        },
+        "target_generation": 7,
+        "actor_ref": "caller:human:operator-1",
+        "permission_snapshot": {
+          "explicit_action": true,
+          "destination_enabled": true,
+          "live_send_authority": true,
+          "rate_limit_admitted": true,
+          "rate_limit_profile_ref": "rate-limit-profile:notification-test-send",
+          "credential_ref": "credential:os:slack-alerts-webhook"
+        },
+        "caller_return_context": "caller-return-context:settings:notifications",
+        "admitted_at": "2026-09-25T20:00:01Z"
+      }
+    },
+    {
+      "name": "dispatch_binding_sound_preview",
+      "definition": "dispatch_case",
+      "value": {
+        "schema_id": "pm.sir.notifications_sound_dispatch_binding.v1",
+        "record_kind": "sir_notifications_sound_dispatch_binding",
+        "action_id": "cmd.sound.preview",
+        "request_ref": "request:sound-preview:default",
+        "command_instance_id": "command-instance:sound-preview:default",
+        "dispatch_id": "dispatch:sound-preview:default",
+        "dispatch_frame_id": "dispatch-frame:sound-preview:default",
+        "operation_id": "operation:sound-preview:default",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:sound-preview:default",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:sound-preview:default",
+          "server_id": "server-1",
+          "project_id": "project-1",
+          "project_home_server_id": "server-1",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 9
+        },
+        "idempotency_key": "idempotency:sound-preview:default",
+        "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "arguments_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "target": {
+          "kind": "sound_asset",
+          "asset_ref": "sound-asset:builtin:notification-default",
+          "source_kind": "built_in",
+          "asset_generation": 3
+        },
+        "target_generation": 5,
+        "actor_ref": "caller:human:operator-1",
+        "permission_snapshot": {
+          "explicit_gesture": true,
+          "read_admission": true,
+          "asset_available": true,
+          "asset_hidden": false
+        },
+        "caller_return_context": "caller-return-context:settings:sound-library",
+        "admitted_at": "2026-09-25T20:00:01Z"
+      }
+    },
+    {
+      "name": "dispatcher_binding_destination_test_live",
+      "definition": "dispatcher_case",
+      "value": {
+        "schema_id": "pm.sir.notifications_sound_dispatcher_binding.v1",
+        "record_kind": "notifications_sound_dispatcher_binding",
+        "action_id": "cmd.notifications.destination.test",
+        "handler_id": "handlers::notifications::destination_test",
+        "handler_status": "specified",
+        "wiring_status": "specified",
+        "request_ref": "request:destination-test:live",
+        "command_instance_id": "command-instance:destination-test:live",
+        "dispatch_id": "dispatch:destination-test:live",
+        "dispatch_frame_id": "dispatch-frame:destination-test:live",
+        "idempotency_key": "idempotency:destination-test:live",
+        "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "availability_selector": "state.commands.notifications_destination_test.availability",
+        "disabled_reason_selector": "state.commands.notifications_destination_test.disabled_reason",
+        "availability": "available",
+        "disabled_reason": null,
+        "current_caller_ref": "caller-return-context:settings:notifications",
+        "current_permission_snapshot": {
+          "explicit_action": true,
+          "destination_enabled": true,
+          "live_send_authority": true,
+          "rate_limit_admitted": true,
+          "rate_limit_profile_ref": "rate-limit-profile:notification-test-send",
+          "credential_ref": "credential:os:slack-alerts-webhook"
+        },
+        "current_target_generation": 7,
+        "evaluated_at": "2026-09-25T20:00:01Z"
+      }
+    },
+    {
+      "name": "dispatcher_binding_sound_preview",
+      "definition": "dispatcher_case",
+      "value": {
+        "schema_id": "pm.sir.notifications_sound_dispatcher_binding.v1",
+        "record_kind": "notifications_sound_dispatcher_binding",
+        "action_id": "cmd.sound.preview",
+        "handler_id": "handlers::sound::preview",
+        "handler_status": "specified",
+        "wiring_status": "specified",
+        "request_ref": "request:sound-preview:default",
+        "command_instance_id": "command-instance:sound-preview:default",
+        "dispatch_id": "dispatch:sound-preview:default",
+        "dispatch_frame_id": "dispatch-frame:sound-preview:default",
+        "idempotency_key": "idempotency:sound-preview:default",
+        "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "availability_selector": "state.commands.sound_preview.availability",
+        "disabled_reason_selector": "state.commands.sound_preview.disabled_reason",
+        "availability": "available",
+        "disabled_reason": null,
+        "current_caller_ref": "caller-return-context:settings:sound-library",
+        "current_permission_snapshot": {
+          "explicit_gesture": true,
+          "read_admission": true,
+          "asset_available": true,
+          "asset_hidden": false
+        },
+        "current_target_generation": 5,
+        "evaluated_at": "2026-09-25T20:00:01Z"
+      }
+    },
+    {
+      "name": "owner_original_destination_test",
+      "definition": "destination_test_original",
+      "value": {
+        "schema_id": "pm.notifications_sound.destination_test_original.v1",
+        "record_kind": "notification_destination_test_original",
+        "command_id": "cmd.notifications.destination.test",
+        "request_ref": "request:destination-test:live",
+        "command_instance_id": "command-instance:destination-test:live",
+        "dispatch_id": "dispatch:destination-test:live",
+        "caller_ref": "caller:human:operator-1",
+        "scope": {
+          "kind": "global"
+        },
+        "destination_ref": "notification-destination:global:slack-alerts",
+        "destination_record_ref": "notification-destination-record:global:slack-alerts:live",
+        "provider_kind": "slack",
+        "destination_generation": 4,
+        "target_generation": 7,
+        "test_send_mode": "live",
+        "permission_basis": {
+          "explicit_action": true,
+          "destination_enabled": true,
+          "live_send_authority": true,
+          "rate_limit_admitted": true,
+          "rate_limit_profile_ref": "rate-limit-profile:notification-test-send",
+          "credential_ref": "credential:os:slack-alerts-webhook"
+        },
+        "source_event_ref": "source-event:test-send:1",
+        "attention_key": "attention:notifications:test-send",
+        "event_family": "test_send",
+        "event_category": "test_send",
+        "idempotency_key": "idempotency:destination-test:live",
+        "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "arguments_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "redaction_profile_ref": "redaction-profile:notification-delivery",
+        "admitted_at": "2026-09-25T20:00:00Z"
+      }
+    },
+    {
+      "name": "owner_destination_record",
+      "definition": "destination_record",
+      "value": {
+        "schema_id": "pm.notifications_sound.destination_record.v1",
+        "record_kind": "notification_destination",
+        "scope": {
+          "kind": "global"
+        },
+        "destination_ref": "notification-destination:global:slack-alerts",
+        "provider_kind": "slack",
+        "enabled": true,
+        "event_category_allowlist": [
+          "test_send",
+          "run_failed",
+          "security_attention"
+        ],
+        "quiet_or_focus_policy_ref": "quiet-focus-policy:global",
+        "rate_limit_profile_ref": "rate-limit-profile:notification-test-send",
+        "idempotency_profile_ref": "idempotency-profile:notification-delivery",
+        "last_test_receipt_ref": "notification-delivery-receipt:test-send:1",
+        "generation": 4
+      }
+    },
+    {
+      "name": "owner_original_sound_preview",
+      "definition": "sound_preview_original",
+      "value": {
+        "schema_id": "pm.notifications_sound.preview_original.v1",
+        "record_kind": "sound_preview_original",
+        "command_id": "cmd.sound.preview",
+        "request_ref": "request:sound-preview:default",
+        "command_instance_id": "command-instance:sound-preview:default",
+        "dispatch_id": "dispatch:sound-preview:default",
+        "caller_ref": "caller:human:operator-1",
+        "asset_ref": "sound-asset:builtin:notification-default",
+        "source_kind": "built_in",
+        "asset_generation": 3,
+        "target_generation": 5,
+        "permission_basis": {
+          "explicit_gesture": true,
+          "read_admission": true,
+          "asset_available": true,
+          "asset_hidden": false
+        },
+        "selection_gesture_ref": "user-gesture:preview:notification-default:1",
+        "idempotency_key": "idempotency:sound-preview:default",
+        "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "arguments_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "admitted_at": "2026-09-25T20:00:00Z"
+      }
+    },
+    {
+      "name": "destination_test_request_record",
+      "definition": "request",
+      "value": {
+        "schema_id": "pm.notifications_sound.destination_test_request.v1",
+        "command_id": "cmd.notifications.destination.test",
+        "handler_id": "handlers::notifications::destination_test",
+        "original_request_ref": "request:destination-test:live",
+        "command_instance_id": "command-instance:destination-test:live",
+        "dispatch_id": "dispatch:destination-test:live",
+        "caller_ref": "caller:human:operator-1",
+        "sir_dispatch_ref": "sir-dispatch:destination-test:live",
+        "dispatcher_ref": "dispatcher:destination-test:live",
+        "scope": {
+          "kind": "global"
+        },
+        "destination_ref": "notification-destination:global:slack-alerts",
+        "provider_kind": "slack",
+        "destination_generation": 4,
+        "expected_target_generation": 7,
+        "explicit_action": true,
+        "test_send_mode": "live",
+        "credential_ref": "credential:os:slack-alerts-webhook",
+        "redaction_profile_ref": "redaction-profile:notification-delivery",
+        "source_event_ref": "source-event:test-send:1",
+        "attention_key": "attention:notifications:test-send",
+        "event_family": "test_send",
+        "event_category": "test_send",
+        "rate_limit_admission_ref": "rate-limit-admission:test-send:live",
+        "permission_admission_ref": "permission-admission:test-send:live",
+        "idempotency_key": "idempotency:destination-test:live",
+        "secret_refs_only": true
+      }
+    },
+    {
+      "name": "sound_preview_request_record",
+      "definition": "request",
+      "value": {
+        "schema_id": "pm.notifications_sound.preview_request.v1",
+        "command_id": "cmd.sound.preview",
+        "handler_id": "handlers::sound::preview",
+        "original_request_ref": "request:sound-preview:default",
+        "command_instance_id": "command-instance:sound-preview:default",
+        "dispatch_id": "dispatch:sound-preview:default",
+        "caller_ref": "caller:human:operator-1",
+        "sir_dispatch_ref": "sir-dispatch:sound-preview:default",
+        "dispatcher_ref": "dispatcher:sound-preview:default",
+        "asset_ref": "sound-asset:builtin:notification-default",
+        "source_kind": "built_in",
+        "asset_generation": 3,
+        "expected_target_generation": 5,
+        "selection_gesture_ref": "user-gesture:preview:notification-default:1",
+        "volume_source_ref": "notification_settings.v1:global",
+        "requested_route": "local_audio_playback",
+        "local_playback": true,
+        "external_send": false,
+        "asset_mutation": false,
+        "idempotency_key": "idempotency:sound-preview:default"
+      }
+    },
+    {
+      "name": "destination_test_result_record",
+      "definition": "result",
+      "value": {
+        "schema_id": "pm.notifications_sound.destination_test_result.v1",
+        "record_kind": "notification_destination_test_result",
+        "command_id": "cmd.notifications.destination.test",
+        "command_instance_id": "command-instance:destination-test:live",
+        "dispatch_id": "dispatch:destination-test:live",
+        "original_request_ref": "request:destination-test:live",
+        "sir_dispatch_ref": "sir-dispatch:destination-test:live",
+        "dispatcher_ref": "dispatcher:destination-test:live",
+        "delivery_attempt_id": "delivery-attempt:test-send:idempotency:destination-test:live",
+        "destination_ref": "notification-destination:global:slack-alerts",
+        "provider_kind": "slack",
+        "destination_generation": 4,
+        "target_generation": 7,
+        "source_event_ref": "source-event:test-send:1",
+        "event_category": "test_send",
+        "test_send_mode": "live",
+        "outcome": "delivered",
+        "status_class": "success",
+        "http_status": 200,
+        "provider_message_id": "provider-message:slack:1",
+        "retry_count": 0,
+        "next_retry_time": null,
+        "redaction_profile_ref": "redaction-profile:notification-delivery",
+        "request_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "response_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "credential_refs": [
+          "credential:os:slack-alerts-webhook"
+        ],
+        "receipt_ref": "notification-delivery-receipt:test-send:1",
+        "persisted_event_refs": [],
+        "alert_state_mutated": false,
+        "secret_refs_only": true,
+        "observed_at": "2026-09-25T20:00:04Z"
+      }
+    },
+    {
+      "name": "sound_preview_result_record",
+      "definition": "result",
+      "value": {
+        "schema_id": "pm.notifications_sound.preview_result.v1",
+        "record_kind": "sound_preview_result",
+        "command_id": "cmd.sound.preview",
+        "command_instance_id": "command-instance:sound-preview:default",
+        "dispatch_id": "dispatch:sound-preview:default",
+        "original_request_ref": "request:sound-preview:default",
+        "sir_dispatch_ref": "sir-dispatch:sound-preview:default",
+        "dispatcher_ref": "dispatcher:sound-preview:default",
+        "asset_ref": "sound-asset:builtin:notification-default",
+        "source_kind": "built_in",
+        "asset_generation": 3,
+        "target_generation": 5,
+        "outcome": "playback_started",
+        "playback_state": "playing",
+        "playing_indicator_source": "actual_playback",
+        "local_only": true,
+        "external_send": false,
+        "external_delivery_ref": null,
+        "asset_mutated": false,
+        "substituted_asset_ref": null,
+        "receipt_ref": "sound-preview-receipt:idempotency:sound-preview:default",
+        "persisted_event_refs": [],
+        "observed_at": "2026-09-25T20:00:04Z"
+      }
+    },
+    {
+      "name": "destination_test_error_record",
+      "definition": "error",
+      "value": {
+        "schema_id": "pm.notifications_sound.action_error.v1",
+        "action_id": "cmd.notifications.destination.test",
+        "phase": "pre_dispatch",
+        "code": "blocked_state_required",
+        "reason": "rate limit not admitted",
+        "offending_field": null,
+        "availability_reason": "rate_limited"
+      }
+    },
+    {
+      "name": "destination_test_availability_record",
+      "definition": "availability",
+      "value": {
+        "schema_id": "pm.notifications_sound.availability.v1",
+        "action_id": "cmd.notifications.destination.test",
+        "availability_selector": "state.commands.notifications_destination_test.availability",
+        "disabled_reason_selector": "state.commands.notifications_destination_test.disabled_reason",
+        "availability": "disabled",
+        "disabled_reason": "rate_limited",
+        "currentness": {
+          "target_generation": 7,
+          "observed_generation": 7,
+          "stale": false
+        },
+        "evaluated_at": "2026-09-25T20:00:02Z"
+      }
+    },
+    {
+      "name": "destination_test_receipt_projection_record",
+      "definition": "projection",
+      "value": {
+        "schema_id": "pm.notifications_sound.receipt_projection.v1",
+        "action_id": "cmd.notifications.destination.test",
+        "receipt_ref": "notification-delivery-receipt:test-send:1",
+        "source_event_ref": "source-event:test-send:1",
+        "delivery_attempt_id": "delivery-attempt:test-send:idempotency:destination-test:live",
+        "mock_or_live": "live",
+        "redaction_profile_ref": "redaction-profile:notification-delivery",
+        "redacted_fields": [
+          "webhook_url",
+          "bot_token",
+          "private_path"
+        ],
+        "routes": {
+          "inspect": "runtime_artifacts.inspect",
+          "show_in_ledger": "runtime_artifacts.show_in_ledger",
+          "show_source_event": "runtime_artifacts.show_source_event",
+          "export": "runtime_artifacts.export"
+        },
+        "secret_material_present": false,
+        "authority": "projection_only_no_delivery_storage_permission_or_alert_state_authority"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "copied_payload_as_arguments_digest",
+      "definition": "dispatch_case",
+      "semantic_rule": "notification_sound_arguments_digest",
+      "value": {
+        "schema_id": "pm.sir.notifications_sound_dispatch_binding.v1",
+        "record_kind": "sir_notifications_sound_dispatch_binding",
+        "action_id": "cmd.notifications.destination.test",
+        "request_ref": "request:destination-test:live",
+        "command_instance_id": "command-instance:destination-test:live",
+        "dispatch_id": "dispatch:destination-test:live",
+        "dispatch_frame_id": "dispatch-frame:destination-test:live",
+        "operation_id": "operation:destination-test:live",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:destination-test:live",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:destination-test:live",
+          "server_id": "server-1",
+          "project_id": "project-1",
+          "project_home_server_id": "server-1",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 9
+        },
+        "idempotency_key": "idempotency:destination-test:live",
+        "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "arguments_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "target": {
+          "kind": "notification_destination",
+          "destination_ref": "notification-destination:global:slack-alerts",
+          "provider_kind": "slack",
+          "destination_generation": 4
+        },
+        "target_generation": 7,
+        "actor_ref": "caller:human:operator-1",
+        "permission_snapshot": {
+          "explicit_action": true,
+          "destination_enabled": true,
+          "live_send_authority": true,
+          "rate_limit_admitted": true,
+          "rate_limit_profile_ref": "rate-limit-profile:notification-test-send",
+          "credential_ref": "credential:os:slack-alerts-webhook"
+        },
+        "caller_return_context": "caller-return-context:settings:notifications",
+        "admitted_at": "2026-09-25T20:00:01Z"
+      }
+    },
+    {
+      "name": "identity_without_command_instance",
+      "definition": "dispatch_case",
+      "semantic_rule": "notification_sound_identity_envelope",
+      "value": {
+        "schema_id": "pm.sir.notifications_sound_dispatch_binding.v1",
+        "record_kind": "sir_notifications_sound_dispatch_binding",
+        "action_id": "cmd.notifications.destination.test",
+        "request_ref": "request:destination-test:live",
+        "command_instance_id": "command-instance:destination-test:live",
+        "dispatch_id": "dispatch:destination-test:live",
+        "dispatch_frame_id": "dispatch-frame:destination-test:live",
+        "operation_id": "operation:destination-test:live",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:destination-test:live",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": null,
+          "server_id": "server-1",
+          "project_id": "project-1",
+          "project_home_server_id": "server-1",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 9
+        },
+        "idempotency_key": "idempotency:destination-test:live",
+        "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "arguments_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "target": {
+          "kind": "notification_destination",
+          "destination_ref": "notification-destination:global:slack-alerts",
+          "provider_kind": "slack",
+          "destination_generation": 4
+        },
+        "target_generation": 7,
+        "actor_ref": "caller:human:operator-1",
+        "permission_snapshot": {
+          "explicit_action": true,
+          "destination_enabled": true,
+          "live_send_authority": true,
+          "rate_limit_admitted": true,
+          "rate_limit_profile_ref": "rate-limit-profile:notification-test-send",
+          "credential_ref": "credential:os:slack-alerts-webhook"
+        },
+        "caller_return_context": "caller-return-context:settings:notifications",
+        "admitted_at": "2026-09-25T20:00:01Z"
+      }
+    },
+    {
+      "name": "dispatcher_reason_without_disabled_state",
+      "definition": "dispatcher_case",
+      "semantic_rule": "notification_sound_disabled_reason_projection",
+      "value": {
+        "schema_id": "pm.sir.notifications_sound_dispatcher_binding.v1",
+        "record_kind": "notifications_sound_dispatcher_binding",
+        "action_id": "cmd.notifications.destination.test",
+        "handler_id": "handlers::notifications::destination_test",
+        "handler_status": "specified",
+        "wiring_status": "specified",
+        "request_ref": "request:destination-test:live",
+        "command_instance_id": "command-instance:destination-test:live",
+        "dispatch_id": "dispatch:destination-test:live",
+        "dispatch_frame_id": "dispatch-frame:destination-test:live",
+        "idempotency_key": "idempotency:destination-test:live",
+        "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "availability_selector": "state.commands.notifications_destination_test.availability",
+        "disabled_reason_selector": "state.commands.notifications_destination_test.disabled_reason",
+        "availability": "available",
+        "disabled_reason": "rate_limited",
+        "current_caller_ref": "caller-return-context:settings:notifications",
+        "current_permission_snapshot": {
+          "explicit_action": true,
+          "destination_enabled": true,
+          "live_send_authority": true,
+          "rate_limit_admitted": true,
+          "rate_limit_profile_ref": "rate-limit-profile:notification-test-send",
+          "credential_ref": "credential:os:slack-alerts-webhook"
+        },
+        "current_target_generation": 7,
+        "evaluated_at": "2026-09-25T20:00:01Z"
+      }
+    },
+    {
+      "name": "dispatcher_implemented_claim",
+      "definition": "dispatcher_case",
+      "semantic_rule": "notification_sound_handler_status",
+      "value": {
+        "schema_id": "pm.sir.notifications_sound_dispatcher_binding.v1",
+        "record_kind": "notifications_sound_dispatcher_binding",
+        "action_id": "cmd.notifications.destination.test",
+        "handler_id": "handlers::notifications::destination_test",
+        "handler_status": "verified",
+        "wiring_status": "specified",
+        "request_ref": "request:destination-test:live",
+        "command_instance_id": "command-instance:destination-test:live",
+        "dispatch_id": "dispatch:destination-test:live",
+        "dispatch_frame_id": "dispatch-frame:destination-test:live",
+        "idempotency_key": "idempotency:destination-test:live",
+        "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "availability_selector": "state.commands.notifications_destination_test.availability",
+        "disabled_reason_selector": "state.commands.notifications_destination_test.disabled_reason",
+        "availability": "available",
+        "disabled_reason": null,
+        "current_caller_ref": "caller-return-context:settings:notifications",
+        "current_permission_snapshot": {
+          "explicit_action": true,
+          "destination_enabled": true,
+          "live_send_authority": true,
+          "rate_limit_admitted": true,
+          "rate_limit_profile_ref": "rate-limit-profile:notification-test-send",
+          "credential_ref": "credential:os:slack-alerts-webhook"
+        },
+        "current_target_generation": 7,
+        "evaluated_at": "2026-09-25T20:00:01Z"
+      }
+    },
+    {
+      "name": "preview_original_with_destination_target",
+      "definition": "dispatch_case",
+      "shape_failure": true,
+      "value": {
+        "schema_id": "pm.sir.notifications_sound_dispatch_binding.v1",
+        "record_kind": "sir_notifications_sound_dispatch_binding",
+        "action_id": "cmd.sound.preview",
+        "request_ref": "request:sound-preview:default",
+        "command_instance_id": "command-instance:sound-preview:default",
+        "dispatch_id": "dispatch:sound-preview:default",
+        "dispatch_frame_id": "dispatch-frame:sound-preview:default",
+        "operation_id": "operation:sound-preview:default",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:sound-preview:default",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:sound-preview:default",
+          "server_id": "server-1",
+          "project_id": "project-1",
+          "project_home_server_id": "server-1",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 9
+        },
+        "idempotency_key": "idempotency:sound-preview:default",
+        "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "arguments_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "target": {
+          "kind": "notification_destination",
+          "destination_ref": "notification-destination:global:slack-alerts",
+          "provider_kind": "slack",
+          "destination_generation": 4
+        },
+        "target_generation": 5,
+        "actor_ref": "caller:human:operator-1",
+        "permission_snapshot": {
+          "explicit_gesture": true,
+          "read_admission": true,
+          "asset_available": true,
+          "asset_hidden": false
+        },
+        "caller_return_context": "caller-return-context:settings:sound-library",
+        "admitted_at": "2026-09-25T20:00:01Z"
+      }
+    },
+    {
+      "name": "boolean_caller_context",
+      "definition": "dispatch_case",
+      "shape_failure": true,
+      "value": {
+        "schema_id": "pm.sir.notifications_sound_dispatch_binding.v1",
+        "record_kind": "sir_notifications_sound_dispatch_binding",
+        "action_id": "cmd.notifications.destination.test",
+        "request_ref": "request:destination-test:live",
+        "command_instance_id": "command-instance:destination-test:live",
+        "dispatch_id": "dispatch:destination-test:live",
+        "dispatch_frame_id": "dispatch-frame:destination-test:live",
+        "operation_id": "operation:destination-test:live",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:destination-test:live",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:destination-test:live",
+          "server_id": "server-1",
+          "project_id": "project-1",
+          "project_home_server_id": "server-1",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 9
+        },
+        "idempotency_key": "idempotency:destination-test:live",
+        "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "arguments_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "target": {
+          "kind": "notification_destination",
+          "destination_ref": "notification-destination:global:slack-alerts",
+          "provider_kind": "slack",
+          "destination_generation": 4
+        },
+        "target_generation": 7,
+        "actor_ref": "caller:human:operator-1",
+        "permission_snapshot": {
+          "explicit_action": true,
+          "destination_enabled": true,
+          "live_send_authority": true,
+          "rate_limit_admitted": true,
+          "rate_limit_profile_ref": "rate-limit-profile:notification-test-send",
+          "credential_ref": "credential:os:slack-alerts-webhook"
+        },
+        "caller_return_context": true,
+        "admitted_at": "2026-09-25T20:00:01Z"
+      }
+    }
+  ]
+}

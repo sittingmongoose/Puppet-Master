@@ -568,6 +568,7 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "validate_testing_session_event_admission": "validate-testing-session-event-admission",
     "validate_github_project_integration": "validate-github-project-integration",
     "validate_ui_command_response": "validate-ui-command-response",
+    "validate_notification_sound_contracts": "validate-notification-sound-contracts",
     "validate_working_notebook_contracts": "validate-working-notebook-contracts",
     "validate_server_command_gap": "validate-server-command-gap",
     "validate_touch_closure": "validate-touch-closure",
@@ -603,6 +604,7 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "testing_session_event_admission": "validate-testing-session-event-admission",
     "github_project_integration": "validate-github-project-integration",
     "ui_command_response": "validate-ui-command-response",
+    "notification_sound_contracts": "validate-notification-sound-contracts",
     "working_notebook_contracts": "validate-working-notebook-contracts",
     "touch_closure": "validate-touch-closure",
     "filesafe_security_policy": "validate-filesafe-security-policy",
@@ -633,6 +635,8 @@ _AGGREGATE_NAMES_WITH_TIMEOUT_ARG = {
     "testing_session_event_admission",
     "validate_ui_command_response",
     "ui_command_response",
+    "validate_notification_sound_contracts",
+    "notification_sound_contracts",
     "validate_working_notebook_contracts",
     "working_notebook_contracts",
     "validate_touch_closure",
@@ -6736,6 +6740,23 @@ def cmd_validate_ui_command_response(args: argparse.Namespace) -> dict[str, Any]
     )
 
 
+def cmd_validate_notification_sound_contracts(args: argparse.Namespace) -> dict[str, Any]:
+    """Validate the typed Notifications/Sounds action companion for its two routes."""
+    validator = ROOT / "scripts" / "pm_notification_sound_contracts.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-notification-sound-contracts", [sys.executable, str(validator), "validate"],
+        timeout_seconds=timeout_seconds, extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-notification-sound-contracts",
+        proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
 def cmd_validate_working_notebook_contracts(args: argparse.Namespace) -> dict[str, Any]:
     """Validate Working Notebook contract schemas and static fixtures."""
     validator = ROOT / "scripts" / "pm-working-notebook-contracts.py"
@@ -7091,6 +7112,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_testing_session_event_admission", cmd_validate_testing_session_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_github_project_integration", cmd_validate_github_project_integration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_ui_command_response", cmd_validate_ui_command_response, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_notification_sound_contracts", cmd_validate_notification_sound_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_working_notebook_contracts", cmd_validate_working_notebook_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_server_command_gap", cmd_validate_server_command_gap, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
@@ -7148,6 +7170,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("testing_session_event_admission", cmd_validate_testing_session_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("github_project_integration", cmd_validate_github_project_integration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("ui_command_response", cmd_validate_ui_command_response, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("notification_sound_contracts", cmd_validate_notification_sound_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("working_notebook_contracts", cmd_validate_working_notebook_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
         ("implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
@@ -7207,6 +7230,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         testing_session_event_admission=compact_gate_report(check_map["testing_session_event_admission"]),
         github_project_integration=compact_gate_report(check_map["github_project_integration"]),
         ui_command_response=compact_gate_report(check_map["ui_command_response"]),
+        notification_sound_contracts=compact_gate_report(check_map["notification_sound_contracts"]),
         working_notebook_contracts=compact_gate_report(check_map["working_notebook_contracts"]),
         touch_closure=compact_gate_report(check_map["touch_closure"]),
         audit_closure=compact_gate_report(check_map["audit_closure"]),
@@ -7234,6 +7258,7 @@ COMMANDS = {
     "validate-testing-session-event-admission": cmd_validate_testing_session_event_admission,
     "validate-github-project-integration": cmd_validate_github_project_integration,
     "validate-ui-command-response": cmd_validate_ui_command_response,
+    "validate-notification-sound-contracts": cmd_validate_notification_sound_contracts,
     "validate-working-notebook-contracts": cmd_validate_working_notebook_contracts,
     "validate-server-command-gap": cmd_validate_server_command_gap,
     "validate-touch-closure": cmd_validate_touch_closure,
@@ -7274,6 +7299,7 @@ def main() -> int:
         "validate-testing-session-event-admission",
         "validate-github-project-integration",
         "validate-ui-command-response",
+        "validate-notification-sound-contracts",
         "validate-working-notebook-contracts",
         "validate-server-command-gap",
         "validate-touch-closure",

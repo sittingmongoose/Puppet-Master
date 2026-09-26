@@ -5515,9 +5515,9 @@
       "owner_plan": "Plans/UI_Command_Catalog.md",
       "plan_unit": "UCC-103",
       "dry_contract_ref": "Plans/UI_Command_Catalog.md#UCC-103",
-      "payload_schema_ref": "typed destination or sound asset request with secret references only",
-      "result_schema_ref": "typed local preview, asset, export, or destination-test result",
-      "error_schema_ref": "invalid, unavailable, rate-limited, permission, or handler reason",
+      "payload_schema_ref": "cmd.notifications.destination.test -> Plans/notifications_sound_action_contracts.schema.json#/$defs/destination_test_request; cmd.sound.preview -> Plans/notifications_sound_action_contracts.schema.json#/$defs/sound_preview_request; cmd.sound.upload/cmd.sound.pack.import/cmd.sound.asset.delete/cmd.sound.asset.export -> unmaterialized",
+      "result_schema_ref": "cmd.notifications.destination.test -> Plans/notifications_sound_action_contracts.schema.json#/$defs/destination_test_result; cmd.sound.preview -> Plans/notifications_sound_action_contracts.schema.json#/$defs/sound_preview_result; cmd.sound.upload/cmd.sound.pack.import/cmd.sound.asset.delete/cmd.sound.asset.export -> unmaterialized",
+      "error_schema_ref": "cmd.notifications.destination.test -> Plans/notifications_sound_action_contracts.schema.json#/$defs/action_error; cmd.sound.preview -> Plans/notifications_sound_action_contracts.schema.json#/$defs/action_error; cmd.sound.upload/cmd.sound.pack.import/cmd.sound.asset.delete/cmd.sound.asset.export -> unmaterialized",
       "availability_rule": "Exact destination/asset identity and owner availability are required; destination test is explicit and rate-limited.",
       "permission_gate": "Notification and sound owners retain delivery, asset, filesystem, credential and persistence authority.",
       "disabled_reason_rule": "Expose unavailable destination/asset, rate, policy, permission, or handler reason; local preview never sends externally.",
@@ -5552,7 +5552,10 @@
       ],
       "test_refs": [
         "Plans/settings_system_contract_fixtures.json",
-        "Plans/UI_Command_Catalog.md#UCC-103"
+        "Plans/UI_Command_Catalog.md#UCC-103",
+        "Plans/notifications_sound_action_fixtures.json",
+        "Plans/sir_notifications_sound_dispatch_fixtures.json",
+        "scripts/pm_notification_sound_contracts.py"
       ],
       "evidence_refs": [
         "static_catalog_and_wiring_only"
@@ -12131,7 +12134,7 @@
       "command",
       "cmd.notifications.destination.test",
       "partial",
-      "Canonical destination-test catalog and production-intent row exist; native rate-limited delivery, masking, receipt, and runtime evidence are absent. Typed action request/result/error/permission/currentness and causal companion fixtures remain specification work; corrected wiring prose alone is not their completion. RAP-039 receipt/export projection composition also remains to be proven."
+      "Canonical destination-test catalog, production-intent row and the action-qualified static typed request/result/error/availability/currentness companion with causal fixtures now exist (Plans/notifications_sound_action_contracts.schema.json, Plans/sir_notifications_sound_dispatch.schema.json, joined through scripts/pm_notification_sound_response.py). Native rate-limited delivery, dispatcher registration, real delivery-attempt receipt/observable-work evidence and GUI acceptance remain implementation and verification work; static shape is not delivery proof and RAP-039 receipt/export projection composition is still unproven at runtime."
     ],
     [
       "TOUCH-PERM-001",
@@ -12187,7 +12190,7 @@
       "command",
       "cmd.sound.preview",
       "partial",
-      "Canonical local sound-preview catalog and production-intent row exist; native asset decode/playback and accessibility evidence are absent. Typed action request/result/error/permission/currentness and causal companion fixtures remain specification work; corrected wiring prose alone is not their completion."
+      "Canonical local sound-preview catalog, production-intent row and the action-qualified static typed request/result/error/availability/currentness companion with causal fixtures now exist (Plans/notifications_sound_action_contracts.schema.json, joined through scripts/pm_notification_sound_response.py). Native asset decode/playback, dispatcher registration, playback/accessibility evidence and GUI acceptance remain implementation and verification work; static shape is not playback proof and no external send is admitted."
     ],
     [
       "TOUCH-SOUND-002",
