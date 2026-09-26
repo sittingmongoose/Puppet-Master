@@ -47,3 +47,27 @@ The corrected full `python3 scripts/pm-new-contracts-verify.py` run passes:
 85 contract pairs, 1,652/1,652 positives, 4,903/4,903 negatives rejected and
 12/12 self-tests, with no failures or findings. No governance reseal or main
 landing is included in this result.
+
+## Held parser predicate is not an additional packet specification gap
+
+Root re-read Permissions §3.1/§3.3 and its UI error-state list, and the exact
+directory-picker catalog row. The owner defines `*`, `?`, trailing ` *` matching
+and the `external_directory_invalid_glob` error carrier. These passages do not
+define another malformed-pattern predicate or an invalid example. A reserved
+error code alone does not authorize new bans on literal path characters or
+require a new product decision merely to exercise that code in a static test.
+
+Keep the helper's held-predicate marker and the existing error carrier honest;
+no malformed-pattern rejection or native parser proof is claimed. This is
+remaining parser/implementation evidence, not an additional demonstrated
+non-GUI packet specification gap. The directory picker is also distinct from
+the five rule commands reviewed here. Any later concrete malformed-input
+requirement must be adjudicated on its own source evidence.
+
+Read-only source snapshot at branch `8e597cbe2`:
+`Plans/Permissions_System.md` SHA-256
+`48815a17511c29d076f3213a11db4ecae2a6b6832bb1ba88afccc81c9b1ef42d`;
+`Plans/UI_Command_Catalog.md` SHA-256
+`5d646f1f86c182f6c43a2f9e99ecbe0234cd1ac5a79cdd0669b15c90872efd8b`.
+No schema, predicate, fixture, owner prose or governance binding changed in
+this scope clarification.

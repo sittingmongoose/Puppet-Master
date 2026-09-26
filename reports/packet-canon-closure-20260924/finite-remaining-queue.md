@@ -21,8 +21,10 @@
   precondition projection, nonauthoritative validate-only hashes, and existing
   permission action/scope to current runtime episode have bounded static joins.
   Literal brackets/braces/backslashes are not newly prohibited path characters.
-  The malformed-glob rejection predicate remains held; this is not full glob
-  semantics or native episode-selection proof. See `permissions-four-owner-joins.md`.
+  The malformed-glob rejection predicate remains held as parser/proof work,
+  not an additional demonstrated packet specification gap; no new literal-path
+  restriction or native episode-selection proof is inferred.
+  See `permissions-four-owner-joins.md`.
   Section 6 already owns `deny`, `approve_once`, `approve_for_session`,
   `approve_always`, `open_permissions`; no new action IDs are needed. Earlier independent
   addendum SHA-256 `4720b76eb3939ac187c61febdd47459c23afde395c8ba5ac7bf96d2e500d8e13`
