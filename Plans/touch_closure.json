@@ -7573,8 +7573,8 @@
     {
       "availability_rule": "The exact typed local action is available only from a current owner projection and mounted local controller; it dispatches no domain command.",
       "disabled_reason_rule": "Expose the exact owner disabled reason, including handler_unavailable or stale projection, and never simulate success.",
-      "dry_contract_ref": "Plans/release_update_contracts.schema.json",
-      "error_schema_ref": "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateLocalActionResult",
+      "dry_contract_ref": "Plans/application_update_local_result.schema.json",
+      "error_schema_ref": "Plans/application_update_local_result.schema.json#/$defs/ApplicationUpdateLocalRefusal",
       "event_refs": [
         "none_pending_event_authority"
       ],
@@ -7610,7 +7610,7 @@
       "requirement_refs": [
         "Plans/Release_Supply_Chain.md#RSC-014"
       ],
-      "result_schema_ref": "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateLocalActionResult",
+      "result_schema_ref": "Plans/application_update_local_result.schema.json#/$defs/ApplicationUpdateLocalSettlement",
       "return_route": "Settle the exact initiating route, surface, focus, invocation, continuation, and currentness context.",
       "reverse_consumers": [
         "Doctor",
@@ -7619,6 +7619,7 @@
         "bottom Update Available item"
       ],
       "test_refs": [
+        "Plans/application_update_local_result_fixtures.json",
         "Plans/release_update_contract_fixtures.json"
       ],
       "wiring_status": "specified"

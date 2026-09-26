@@ -89,6 +89,7 @@ from pm_git_stash_apply_selected import stash_apply_semantic_failures
 from pm_git_stash_apply_response import stash_apply_dispatch_semantic_failures
 from pm_forge_review_decisions import review_decision_semantic_failures
 from pm_forge_review_response import forge_dispatch_semantic_failures
+from pm_application_update_local_result import local_settlement_semantic_failures
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -173,9 +174,10 @@ CONTRACT_PAIRS = (
     ("Plans/sir_git_remote_dispatch.schema.json", "Plans/sir_git_remote_dispatch_fixtures.json"),
     ("Plans/git_stash_apply_selected.schema.json", "Plans/git_stash_apply_selected_fixtures.json"),
     ("Plans/sir_git_stash_apply_dispatch.schema.json", "Plans/sir_git_stash_apply_dispatch_fixtures.json"),
+    ("Plans/application_update_local_result.schema.json", "Plans/application_update_local_result_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 80
+EXPECTED_CONTRACT_PAIR_COUNT = 81
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1424,6 +1426,8 @@ def contract_semantic_failures(
         return backup_compare_semantic_failures(definition_name, value)
     if schema_rel == "Plans/application_update_check_contracts.schema.json":
         return application_update_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/application_update_local_result.schema.json":
+        return local_settlement_semantic_failures(definition_name, value)
     if schema_rel == "Plans/forge_integration_contracts.schema.json":
         return forge_creation_semantic_failures(definition_name, value)
     if schema_rel == "Plans/named_plan_system_contracts.schema.json":

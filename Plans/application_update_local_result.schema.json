@@ -1,0 +1,365 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/application_update_local_result.schema.json",
+  "title": "Application update owner-local action result, refusal, and exact-return settlement",
+  "description": "Owner-local typed companion for exactly the three redacted, lazy, non-mutating local actions ui.update.app.open_details, ui.update.app.open_logs, and ui.update.app.open_release_notes. The existing owner request (Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateLocalActionRequest) binds projection ref, expected projection generation, and return context; the existing owner result (#/$defs/ApplicationUpdateLocalActionResult) is success-shaped and requires a projection, an actual generation, and an accessible focus. This companion settles that exact request against the owner's current projection admission and the caller's exact return context, and admits the genuine refused, stale, and unavailable outcomes without fabricating a success projection or focus. It adds no command identity, no semantic-domain handler, no EventRecord, no durable state, no permission, and no UI policy; every reason token and every const below is already owned by Plans/release_update_contracts.schema.json, Plans/Release_Supply_Chain.md (RSC-014), or the TCP-APP-UPDATE-LOCAL closure profile.",
+  "x-schema-id": "pm.release_update.local_result_contracts.v1",
+  "x-owner-doc": "Plans/Release_Supply_Chain.md",
+  "x-owner-plan-unit": "RSC-014",
+  "x-touch-profile": "TCP-APP-UPDATE-LOCAL",
+  "x-local-action-ids": [
+    "ui.update.app.open_details",
+    "ui.update.app.open_logs",
+    "ui.update.app.open_release_notes"
+  ],
+  "x-owner-request-ref": "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateLocalActionRequest",
+  "x-owner-result-ref": "Plans/release_update_contracts.schema.json#/$defs/ApplicationUpdateLocalActionResult",
+  "x-refusal-reason-vocabulary": [
+    "invalid_request",
+    "handler_unavailable",
+    "permission_denied",
+    "identity_mismatch",
+    "stale_projection",
+    "caller_unavailable"
+  ],
+  "x-excluded-owner-reason-codes": {
+    "filesafe_denied": "A presentation-only local action creates and consumes no FileSafe read or write authority; admitting this token here would claim a filesystem gate the owner does not define for these three identities.",
+    "stale_generation": "The command family's generation guards are command-operation guards; the owner names the same currentness failure for a local projection as stale_projection.",
+    "operation_conflict": "No durable domain operation exists for a redacted lazy local action, so no operation can conflict.",
+    "duplicate_conflict": "No durable operation or idempotency record exists for a redacted lazy local action, so no duplicate can conflict.",
+    "plan_or_checkpoint_mismatch": "No plan, checkpoint, or durable journal is consumed by these local actions.",
+    "recovery_required": "No durable state is written, so no recovery boundary exists to require.",
+    "internal_fail_closed": "Reserved for the command family's fail-closed internal dispatch; a local action has no dispatch to fail.",
+    "central_registration_missing": "A local action has no central command registration; its unavailability is the mounted-controller state reported as handler_unavailable.",
+    "schema_binding_missing": "A local action has no command-schema binding to miss; the typed companion is the binding.",
+    "permission_route_missing": "A local action dispatches no permission route; the presentation/currentness/accessibility gate is not a permission route.",
+    "production_wiring_missing": "A local action has no production UICommand wiring row by design, so its absence is never the local refusal cause.",
+    "receipt_or_event_disposition_missing": "A local action produces no receipt and no event, so no receipt-or-event disposition can be missing.",
+    "operation_in_progress": "In-flight operation conflict belongs to the application-update command family; a presentation action holds no operation."
+  },
+  "x-claim-boundary": "static source contract only; no domain command dispatch, semantic-domain handler, domain EventRecord, durable state, permission decision, mounted local controller, production UICommand row, GUI surface, or native/runtime result is proven",
+  "x-reuse-boundary": "reuses the existing owner request, owner result, owner non-secret ref bound, owner return context, owner timestamp, and the owner disabled/error reason tokens; adds no vocabulary, policy, command, event, or storage value",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ApplicationUpdateLocalSettlement"
+    }
+  ],
+  "$defs": {
+    "ApplicationUpdateLocalRefusalReason": {
+      "description": "Closed to reason tokens the owner already uses for this family. Each value names the owner-admitted cause of a genuine refusal; no new reason vocabulary is introduced.",
+      "type": "string",
+      "enum": [
+        "invalid_request",
+        "handler_unavailable",
+        "permission_denied",
+        "identity_mismatch",
+        "stale_projection",
+        "caller_unavailable"
+      ]
+    },
+    "ApplicationUpdateLocalSettlementOutcome": {
+      "description": "presented is the ordinary outcome whose exact success fields are the owner ApplicationUpdateLocalActionResult. Every other value is a genuine refusal cause drawn from the same owner reason vocabulary.",
+      "oneOf": [
+        {
+          "const": "presented"
+        },
+        {
+          "$ref": "#/$defs/ApplicationUpdateLocalRefusalReason"
+        }
+      ]
+    },
+    "ApplicationUpdateLocalCurrentness": {
+      "description": "The existing owner currentness vocabulary (ApplicationUpdateCommandOutput.currentness). stale is the projection-currentness failure the owner names as stale_projection; current states only that the settled projection ref and generation are the ones the owner admitted.",
+      "type": "string",
+      "enum": [
+        "current",
+        "stale",
+        "conflicted",
+        "unknown"
+      ]
+    },
+    "ApplicationUpdateLocalOwnerCurrentProjection": {
+      "description": "The owner's current projection admission for this local action at settlement time: the exact projection identity, its actual generation, and the mounted owner-local presentation controller. A missing projection identity, a copied projection ref, or an unmounted controller never substitutes for this record.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projection_ref",
+        "projection_generation",
+        "mounted_local_controller_ref"
+      ],
+      "properties": {
+        "projection_ref": {
+          "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mounted_local_controller_ref": {
+          "description": "Null exactly when no owner-local presentation controller is mounted for this identity; that state is reported as the owner disabled reason handler_unavailable and never as success.",
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ApplicationUpdateLocalRefusal": {
+      "description": "The refusal detail a local controller can present. reason_code restates the settlement outcome so a refusal is self-contained; the two must agree. safe_message is derived presentation text, never a field of the owner fact, and never carries secret material.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reason_code",
+        "safe_message",
+        "blocking_refs"
+      ],
+      "properties": {
+        "reason_code": {
+          "$ref": "#/$defs/ApplicationUpdateLocalRefusalReason"
+        },
+        "safe_message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "blocking_refs": {
+          "description": "Non-secret owner refs naming what blocked the presentation, such as the owner's current projection ref, the missing local controller, or the caller return target. A command identity is never a blocking ref for a local action.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateNonSecretRef"
+          }
+        }
+      }
+    },
+    "ApplicationUpdateLocalReturnSettlement": {
+      "description": "The exact return settlement of the initiating context. Every identity field must equal the corresponding field of the request return context. focus_target is the focus the caller is returned to, which is the authentic initiating focus target; it is never the opened content target. The opened target stays in the owner result's accessible_focus_target and is deliberately allowed to differ. RSC-014: the exact initiating surface/route/focus/generation is restored or caller_unavailable is reported.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface_ref",
+        "route_ref",
+        "focus_target",
+        "invocation_token",
+        "return_generation",
+        "restoration"
+      ],
+      "properties": {
+        "surface_ref": {
+          "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "route_ref": {
+          "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "focus_target": {
+          "description": "When restored, the authentic initiating focus target from the request return context, whatever the presented outcome opened. Null only when the caller context itself is unavailable.",
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateNonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "invocation_token": {
+          "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "return_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "restoration": {
+          "enum": [
+            "restored",
+            "caller_unavailable"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "restoration": {
+                "const": "restored"
+              }
+            },
+            "required": [
+              "restoration"
+            ]
+          },
+          "then": {
+            "properties": {
+              "focus_target": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "restoration": {
+                "const": "caller_unavailable"
+              }
+            },
+            "required": [
+              "restoration"
+            ]
+          },
+          "then": {
+            "properties": {
+              "focus_target": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ApplicationUpdateLocalSettlement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "settlement_id",
+        "request",
+        "owner_current_projection",
+        "currentness",
+        "outcome",
+        "owner_result",
+        "refusal",
+        "return_settlement",
+        "mutated_domain_state",
+        "domain_handler_invoked",
+        "domain_event_emitted",
+        "domain_command_id",
+        "secret_material_exposed",
+        "protected_auth_content_exposed",
+        "settled_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.release_update.local_action_settlement.v1"
+        },
+        "record_kind": {
+          "const": "ApplicationUpdateLocalSettlement"
+        },
+        "settlement_id": {
+          "description": "Identity of this settlement record. It is not a durable value, a receipt, or an operation identity; it correlates one request, one owner projection admission, and one return settlement.",
+          "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateNonSecretRef"
+        },
+        "request": {
+          "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateLocalActionRequest"
+        },
+        "owner_current_projection": {
+          "$ref": "#/$defs/ApplicationUpdateLocalOwnerCurrentProjection"
+        },
+        "currentness": {
+          "$ref": "#/$defs/ApplicationUpdateLocalCurrentness"
+        },
+        "outcome": {
+          "$ref": "#/$defs/ApplicationUpdateLocalSettlementOutcome"
+        },
+        "owner_result": {
+          "description": "The exact owner success result, present only for the presented outcome. A refused, stale, or unavailable settlement sets this to null and never fabricates a projection, a generation, or an accessible focus.",
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateLocalActionResult"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "refusal": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ApplicationUpdateLocalRefusal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_settlement": {
+          "$ref": "#/$defs/ApplicationUpdateLocalReturnSettlement"
+        },
+        "mutated_domain_state": {
+          "const": false
+        },
+        "domain_handler_invoked": {
+          "const": false
+        },
+        "domain_event_emitted": {
+          "const": false
+        },
+        "domain_command_id": {
+          "description": "Always null. These three identities are not commands, have no semantic-domain handler, and must never be restated as the retired cmd.update.app.* spellings or sent to the central UICommand response path, which admits only cmd. identity.",
+          "const": null
+        },
+        "secret_material_exposed": {
+          "const": false
+        },
+        "protected_auth_content_exposed": {
+          "const": false
+        },
+        "settled_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/release_update.schema.json#/$defs/ApplicationUpdateTimestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "presented"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "owner_result": {
+                "type": "object"
+              },
+              "refusal": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "$ref": "#/$defs/ApplicationUpdateLocalRefusalReason"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "owner_result": {
+                "type": "null"
+              },
+              "refusal": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
