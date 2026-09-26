@@ -448,3 +448,27 @@ Its omission-as-retirement reasoning was withdrawn because original fixed
 packet decisions require actual supersession evidence. A targeted review of
 earlier similarly worded dispositions remains open; these counts do not certify
 that every recorded disposition has passed that additional fidelity check.
+
+## Browser flagged checkpoint and retirement-credit screen
+
+Root verified flagged checkpoint
+`checkpoints/matrix-4a75dc96026d10e0ab05ec97761d5cd862e9f21fa738936edd84e504da21a0b6.jsonl`,
+SHA-256 `4a75dc96026d10e0ab05ec97761d5cd862e9f21fa738936edd84e504da21a0b6`:
+1,761 reviewed, 260 pending. Exactly 98 rows changed from `ff6791ac`; all 2,021
+identities and historical/source fields are preserved. Different-Sol review
+`different-sol-browser99-01/DIFFERENT-SOL-REVIEW.md` has SHA-256
+`8f3e88d73ca85b13d66c20686459923eb34a6704db9a4baf139f191270409e96`.
+The missing historical Usage Concepts consumer remains held. Six query facets
+identify one command/query contract gap, while four capture facets overlap the
+separately integrated companion. No native or whole-Browser closure is implied.
+
+The expanded retirement-credit screen covers all 316 flagged dispositions using
+retirement/protection language and all 2,463 currently reviewed full-impact rows.
+Report `ACCEPTED-SOURCE-RETIREMENT-ALL-REVIEWED-REPORT.md` has SHA-256
+`44f65d29190ea3c6553484c28f1389f8a33769d24e2a5c0c1f506569f9cac969`;
+its 2,779-row evidence has SHA-256
+`65b2b18aa4f98de4d35c1c8c302348f9cd5849a4e94ac18a79595cf3f9b5d0b5`.
+Root read its scope and findings: no further accepted-source retirement by
+omission is established, but protected/uncertain labels remain non-restoration
+boundaries, not completed-source claims. This is not complete semantic
+recertification; the 8,932 unreviewed full-impact rows remain outside the screen.

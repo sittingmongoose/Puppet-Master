@@ -30,8 +30,11 @@ A dropped trailing blank line during installation was restored so the semantic
 helper matches its frozen SHA-256 exactly. All 17 focused tests now pass, and
 the helper checks 14 valid plus 57 invalid fixtures with zero errors. Touch
 validation reports only the separately known Settings disposition hash drift.
-The full 86-pair run passed with no failures or findings;
-`ROOT-86-CONTRACTS.json` is under the carry directory. This is static contract
+The full 86-pair run passed: 1,666 valid positive cases, 4,960 rejected negative
+cases and 12 self-tests, with no failures or findings. `ROOT-86-CONTRACTS.json`
+under the carry directory has SHA-256
+`f9ce43d17913d8d194939c0cc37aae740d8e79c9536522b00ba3fffb0fd097a4`.
+This is static contract
 verification, not a passing repository-wide governance or landing check.
 
 The static digest oracle is deliberately bounded. Shape validation must precede
