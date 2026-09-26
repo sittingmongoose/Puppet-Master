@@ -1,5 +1,13 @@
 # Packet-to-current-owner reconciliation checkpoint
 
+## Latest additive checkpoint — 2026-09-26, after `2e9361a61`
+
+Independently reviewed dispositions cover **787 of 2,021 identities**, with **1,234 unreviewed**. Immutable checkpoint beneath the external evidence directory below: `checkpoints/matrix-4cdd68ec1011eeebde3333c88471efd2d15879d80c37090c20b42d9bcc05331c.jsonl`, SHA-256 `4cdd68ec1011eeebde3333c88471efd2d15879d80c37090c20b42d9bcc05331c`. Root verified its hash, 2,021 unique identities, unchanged historical fields, exactly 14 changed rows and 2,007 unchanged rows against the 773-row checkpoint.
+
+Eight Settings-family dimensions preserve newer Run Modes, Back Seat Driver and Home owner requirements; six carry the explicit disposition `branch_static_repair_not_landed` for the branch's spelling and Settings notice repairs. These six are not shared-main or native implementation credit. Accepted sparse overlays: `settings278-native-01/SPARSE-ACCEPTED-8.jsonl`, SHA-256 `b91752a4906d3c6f71ae9be2debd7759bfd05e9c24d7c385ca38e29d1287e0fd`; `settings278-native-01/BRANCH-REPAIR-CONDITIONAL-6.jsonl`, SHA-256 `5640973dee63775ffb921f092b2f76351704917665534660fe734928defcf2a7`. The other 264 raw Settings findings remain uncredited, including fifteen reverse-consumer findings whose generic command rationale did not match their actual actions.
+
+This is review coverage, not completion percentage. Pending author patches and reviews do not alter these counts; overall packet closure, remaining specification repairs, native/GUI obligations and main landing remain distinct.
+
 ## Latest additive checkpoint — 2026-09-26, after `8a79f180e`
 
 Independently reviewed dispositions cover **773 of 2,021 identities**, with **1,248 unreviewed**. Immutable checkpoint: `case-reconciliation/checkpoints/matrix-5b11af4d868f9de18bd4aa19777a79a33a3690e22d42a32f547a2c4ca06e9b92.jsonl`, SHA-256 `5b11af4d868f9de18bd4aa19777a79a33a3690e22d42a32f547a2c4ca06e9b92`. Root verified 20 added Browser dispositions, 2,001 unchanged identities, all historical fields and the checkpoint hash.
