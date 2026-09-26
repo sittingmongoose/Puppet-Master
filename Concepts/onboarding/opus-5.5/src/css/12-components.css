@@ -165,10 +165,10 @@
 .o55-demoacts button { flex: 1; height: 30px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text-primary); font: inherit; cursor: pointer; }
 /* at phone width the pill would sit on the window's Back button, so it becomes a slim tab on the left edge, inside the
    window's side padding, and its menu opens to the right of it */
-html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demo { left: 0; bottom: auto; top: 50%; transform: translateY(-50%); }
-html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demopill { width: 20px; height: 44px; padding: 0; justify-content: center; border-radius: 0 10px 10px 0; border-left: 0; }
-html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demopill > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demomenu { left: 26px; bottom: auto; top: 50%; transform: translateY(-50%); width: min(300px, calc(100vw - 40px)); }
+html[data-o55-ob-layout="narrow"] .o55-demo { left: 0; bottom: auto; top: 50%; transform: translateY(-50%); }
+html[data-o55-ob-layout="narrow"] .o55-demopill { width: 20px; height: 44px; padding: 0; justify-content: center; border-radius: 0 10px 10px 0; border-left: 0; }
+html[data-o55-ob-layout="narrow"] .o55-demopill > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+html[data-o55-ob-layout="narrow"] .o55-demomenu { left: 26px; bottom: auto; top: 50%; transform: translateY(-50%); width: min(300px, calc(100vw - 40px)); }
 
 /* the look menu beside the sound button (onboarding header; the tour bar opens it upward) */
 .o55-lookslot, .o55t-lookslot { position: relative; display: inline-flex; }

@@ -1,0 +1,45 @@
+{
+  "extras": {
+    "commands": {
+      "custom": [
+        {
+          "id": "x-release-notes",
+          "name": "/x-release-notes",
+          "description": "Draft release notes for the current branch",
+          "template": "Draft release notes for $ARGUMENTS.\n\nUse these commits as the source of truth:\n!`git log --oneline main..HEAD`\n\nGroup the changes under Added, Changed and Fixed. Keep each bullet to one line and mention the ticket number when a commit has one.",
+          "argumentsHint": "<version or branch name>",
+          "scope": "Project",
+          "overrides": { "persona": "Documentation", "mode": "plan", "model": null, "permissionsProfile": null },
+          "enabled": true,
+          "source": "user"
+        },
+        {
+          "id": "x-quick-audit",
+          "name": "/x-quick-audit",
+          "description": "Run a quick audit of changed files",
+          "template": "Audit the changes in $1 before I open a pull request.\n\nCompare them with the latest entries in the changelog:\n@CHANGELOG.md\n\nReport anything risky, anything missing a test, and anything the changelog does not mention. Do not change any files.",
+          "argumentsHint": "<path or branch>",
+          "scope": "Global",
+          "overrides": { "persona": "Repository Auditor", "mode": null, "model": null, "permissionsProfile": null },
+          "enabled": true,
+          "source": "user"
+        }
+      ],
+      "shortcuts": [
+        { "id": "goal-new", "name": "Create Goal", "keys": "Ctrl+Shift+G" },
+        { "id": "context-compact", "name": "Compact context", "keys": "Ctrl+Alt+C", "conflict": "Copy as context" },
+        { "id": "copy-context", "name": "Copy as context", "keys": "Ctrl+Alt+C", "conflict": "Compact context" },
+        { "id": "test-current", "name": "Test current file", "keys": "Ctrl+Alt+T" },
+        { "id": "search", "name": "Search settings", "keys": "Ctrl+K" },
+        { "id": "toggle-chat", "name": "Show or hide chat", "keys": "Ctrl+J" },
+        { "id": "new-thread", "name": "New chat thread", "keys": "Ctrl+N" },
+        { "id": "toggle-eli5", "name": "Explain terms (ELI5)", "keys": "Ctrl+Shift+E" },
+        { "id": "run-tests", "name": "Run tests", "keys": "Ctrl+Shift+T" },
+        { "id": "open-doctor", "name": "Open Readiness & Doctor", "keys": "Ctrl+Shift+D" },
+        { "id": "go-home", "name": "Go to Home", "keys": "Ctrl+1" },
+        { "id": "go-settings", "name": "Go to Settings", "keys": "Ctrl+," },
+        { "id": "cmd:x-quick-audit", "name": "/x-quick-audit", "keys": "Ctrl+Alt+A", "command": "x-quick-audit" }
+      ]
+    }
+  }
+}

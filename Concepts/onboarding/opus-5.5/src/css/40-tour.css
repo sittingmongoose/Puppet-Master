@@ -37,10 +37,12 @@
 .o55t-zl-hot { display: none; }
 body.pm-home-dragging .o55t-zone.o55t-on { animation: none; filter: brightness(1.15); box-shadow: inset 3px 0 0 var(--o55t-accent), 0 0 44px color-mix(in srgb, var(--o55t-accent) 70%, transparent); }
 body.pm-home-dragging .o55t-zonelabel { transform: translateY(-50%) scale(1.06); }
-body:has([data-pm-home-host="dock_left"].pm-home-drop-active) .o55t-zone.o55t-on { background: color-mix(in srgb, var(--o55t-accent) 78%, transparent); }
-body:has([data-pm-home-host="dock_left"].pm-home-drop-active) .o55t-zl-idle { display: none; }
-body:has([data-pm-home-host="dock_left"].pm-home-drop-active) .o55t-zl-hot { display: inline; }
-body:has([data-pm-home-host="dock_left"].pm-home-drop-active) .o55t-zonelabel svg { animation: none; }
+/* .o55t-drop-hot mirrors the left dock's pm-home-drop-active (set by the dock step's observer); a body:has() rule here
+   made every DOM insertion restyle the whole document */
+.o55t-zone.o55t-on.o55t-drop-hot { background: color-mix(in srgb, var(--o55t-accent) 78%, transparent); }
+.o55t-zone.o55t-drop-hot .o55t-zl-idle { display: none; }
+.o55t-zone.o55t-drop-hot .o55t-zl-hot { display: inline; }
+.o55t-zone.o55t-drop-hot .o55t-zonelabel svg { animation: none; }
 /* Basic: a drafting callout with a dimension-line edge */
 .o55t-root[data-family="basic"] .o55t-zone { border-radius: 3px; background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--o55t-accent) 34%, transparent) 0 4px, transparent 4px 10px); box-shadow: inset 2px 0 0 var(--o55t-accent), inset -1px 0 0 color-mix(in srgb, var(--o55t-accent) 50%, transparent); }
 .o55t-root[data-family="basic"] .o55t-zonelabel { border-radius: 4px; background: var(--surface); color: var(--o55t-accent); border: 1.5px solid var(--o55t-accent); font: 700 11.5px/1 var(--body-font); letter-spacing: 0.09em; text-transform: uppercase; }

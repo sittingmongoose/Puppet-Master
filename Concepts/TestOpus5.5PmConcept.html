@@ -24229,10 +24229,10 @@ html[data-motion="reduced"] .o55-railstring { animation: none !important; }
 .o55-demoacts button { flex: 1; height: 30px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text-primary); font: inherit; cursor: pointer; }
 /* at phone width the pill would sit on the window's Back button, so it becomes a slim tab on the left edge, inside the
    window's side padding, and its menu opens to the right of it */
-html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demo { left: 0; bottom: auto; top: 50%; transform: translateY(-50%); }
-html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demopill { width: 20px; height: 44px; padding: 0; justify-content: center; border-radius: 0 10px 10px 0; border-left: 0; }
-html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demopill > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-html:has(#pm-o55-onboarding[data-o55-layout="narrow"]) .o55-demomenu { left: 26px; bottom: auto; top: 50%; transform: translateY(-50%); width: min(300px, calc(100vw - 40px)); }
+html[data-o55-ob-layout="narrow"] .o55-demo { left: 0; bottom: auto; top: 50%; transform: translateY(-50%); }
+html[data-o55-ob-layout="narrow"] .o55-demopill { width: 20px; height: 44px; padding: 0; justify-content: center; border-radius: 0 10px 10px 0; border-left: 0; }
+html[data-o55-ob-layout="narrow"] .o55-demopill > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+html[data-o55-ob-layout="narrow"] .o55-demomenu { left: 26px; bottom: auto; top: 50%; transform: translateY(-50%); width: min(300px, calc(100vw - 40px)); }
 
 /* the look menu beside the sound button (onboarding header; the tour bar opens it upward) */
 .o55-lookslot, .o55t-lookslot { position: relative; display: inline-flex; }
@@ -24580,10 +24580,12 @@ html[data-motion="reduced"] .o55-cur-all { display: none; }
 .o55t-zl-hot { display: none; }
 body.pm-home-dragging .o55t-zone.o55t-on { animation: none; filter: brightness(1.15); box-shadow: inset 3px 0 0 var(--o55t-accent), 0 0 44px color-mix(in srgb, var(--o55t-accent) 70%, transparent); }
 body.pm-home-dragging .o55t-zonelabel { transform: translateY(-50%) scale(1.06); }
-body:has([data-pm-home-host="dock_left"].pm-home-drop-active) .o55t-zone.o55t-on { background: color-mix(in srgb, var(--o55t-accent) 78%, transparent); }
-body:has([data-pm-home-host="dock_left"].pm-home-drop-active) .o55t-zl-idle { display: none; }
-body:has([data-pm-home-host="dock_left"].pm-home-drop-active) .o55t-zl-hot { display: inline; }
-body:has([data-pm-home-host="dock_left"].pm-home-drop-active) .o55t-zonelabel svg { animation: none; }
+/* .o55t-drop-hot mirrors the left dock's pm-home-drop-active (set by the dock step's observer); a body:has() rule here
+   made every DOM insertion restyle the whole document */
+.o55t-zone.o55t-on.o55t-drop-hot { background: color-mix(in srgb, var(--o55t-accent) 78%, transparent); }
+.o55t-zone.o55t-drop-hot .o55t-zl-idle { display: none; }
+.o55t-zone.o55t-drop-hot .o55t-zl-hot { display: inline; }
+.o55t-zone.o55t-drop-hot .o55t-zonelabel svg { animation: none; }
 /* Basic: a drafting callout with a dimension-line edge */
 .o55t-root[data-family="basic"] .o55t-zone { border-radius: 3px; background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--o55t-accent) 34%, transparent) 0 4px, transparent 4px 10px); box-shadow: inset 2px 0 0 var(--o55t-accent), inset -1px 0 0 color-mix(in srgb, var(--o55t-accent) 50%, transparent); }
 .o55t-root[data-family="basic"] .o55t-zonelabel { border-radius: 4px; background: var(--surface); color: var(--o55t-accent); border: 1.5px solid var(--o55t-accent); font: 700 11.5px/1 var(--body-font); letter-spacing: 0.09em; text-transform: uppercase; }
@@ -29304,7 +29306,7 @@ html.pm7-dash-moving * { cursor: grabbing !important; user-select: none !importa
   box-sizing: border-box !important;
   flex-wrap: wrap !important;
 }
-.pm7u-card:has(.pm7u-setup-cta) .pm7u-setup-cta > * {
+.pm7u-card .pm7u-setup-cta.pm7u-setup-cta > * {
   min-width: 0;
   overflow-wrap: anywhere;
 }
@@ -84078,7 +84080,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   function layoutClass() {
     const w = S.root.querySelector('.o55-win'); if (!w) return;
     const r = w.getBoundingClientRect();
-    S.root.setAttribute('data-o55-layout', r.width < 760 ? 'narrow' : r.height < 520 ? 'short' : 'wide');
+    const layout = r.width < 760 ? 'narrow' : r.height < 520 ? 'short' : 'wide';
+    S.root.setAttribute('data-o55-layout', layout);
+    /* mirrored on <html> for the demo pill: an html:has(#pm-o55-onboarding[…]) rule made every DOM insertion in the
+       app restyle the whole document (~90 ms each), which is what made Settings scrolling and navigation lag */
+    document.documentElement.setAttribute('data-o55-ob-layout', layout);
   }
 
   /* ---------------------------------------------------------------- theme */
@@ -88639,10 +88645,20 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* the left dock's entry band: 28 px inside the workspace's left edge (the engine's frozen dock latch) */
   function leftBand() { const ws = document.getElementById('pm-home-workspace'); if (!ws) return null; const r = ws.getBoundingClientRect(); return { x: r.left, y: r.top, w: 28, h: r.height }; }
   TR.dockBand = () => { const b = leftBand(); return b ? Object.assign({ stacked: stacked(), drop: { x: b.x + 12, y: b.y + b.h * 0.45 } }, b) : null; };
+  /* the zone lights up while the left dock reports a drop; watched only while the zone shows */
+  let dropWatch = null;
+  function watchDrop(on) {
+    const z = document.querySelector('#pm-o55-tour .o55t-zone'), ws = document.getElementById('pm-home-workspace');
+    const sync = () => { if (z) z.classList.toggle('o55t-drop-hot', !!(ws && ws.querySelector('[data-pm-home-host="dock_left"].pm-home-drop-active'))); };
+    if (!on || !z || !ws || typeof MutationObserver !== 'function') { if (dropWatch) { dropWatch.disconnect(); dropWatch = null; } if (z) z.classList.remove('o55t-drop-hot'); return; }
+    if (!dropWatch) { dropWatch = new MutationObserver(sync); dropWatch.observe(ws, { subtree: true, attributes: true, attributeFilter: ['class'] }); }
+    sync();
+  }
   function showZone(on) {
     const z = document.querySelector('#pm-o55-tour .o55t-zone'); if (!z) return;
-    const b = leftBand(); if (!on || !b) { z.classList.remove('o55t-on'); return; }
+    const b = leftBand(); if (!on || !b) { z.classList.remove('o55t-on'); watchDrop(false); return; }
     z.style.transform = `translate(${b.x}px, ${b.y}px)`; z.style.width = b.w + 'px'; z.style.height = b.h + 'px'; z.classList.add('o55t-on');
+    watchDrop(true);
   }
   const dockDone = () => TR.st.sess.done.includes('move_or_dock_chat');
   S({ id: 'move_or_dock_chat', chapter: 'workspace', kind: 'action', after: true,

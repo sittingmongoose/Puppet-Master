@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Concepts/TestOpus5.5PmConcept.html from the pinned TestPMConcept.html plus ./src.
+"""Build Concepts/TestOpus5.5PmConcept.html from the pinned TestPMConcept.html plus ./src (onboarding, tour, Settings).
 
 Usage:
   python3 Concepts/onboarding/opus-5.5/tools/build.py          # build
@@ -16,6 +16,8 @@ import json
 import re
 import sys
 from pathlib import Path
+
+import settings_layer
 
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
@@ -177,6 +179,12 @@ PATCHES = [
     ("      { label: 'Replay setup', action: 'replay-onboarding', data: { 'ui-action-id': 'settings.onboarding.run_again', 'source-surface': 'settings_rerun' } },\n"
      "      { label: 'Guided Tour', action: 'start-guided-tour', data: { 'ui-action-id': 'settings.guided_tour.replay' } },\n",
      '', 'doctor quiet actions'),
+    # Settings lag: with this rule's universal subject, every DOM insertion anywhere restyled the whole document
+    # (~90 ms each; the hover-tag layer inserts one description per control it binds, so scrolling and index jumps in
+    # Settings ran at 2-6 fps). The :has() is implied by the descendant part; the doubled class keeps (0,3,0).
+    (".pm7u-card:has(.pm7u-setup-cta) .pm7u-setup-cta > * {",
+     ".pm7u-card .pm7u-setup-cta.pm7u-setup-cta > * {",
+     'usage card cta :has restyle'),
     # Teacher is a real persona in the Assistant Chat guide picker.
     ("var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer'];",
      "var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher'];",
@@ -206,11 +214,17 @@ LAYOUT_EXPOSE = ('    o55RestoreSnapshot: function (snapshot) { var problem = va
                  'return { ok: result !== false, result: result }; },\n')
 
 
+SETTINGS_NOTES: dict = {}
+
+
 def build_text() -> str:
     original = SOURCE.read_bytes()
     need(hashlib.sha256(original).hexdigest() == BASE_SHA256,
          'TestPMConcept.html changed since the pin; review the strip boundaries and patches, then re-pin BASE_SHA256.')
     text = original.decode('utf-8')
+
+    # 0. Settings: swap the base's T50 managers layer for the Opus 5.5 fork in src/settings.
+    text, SETTINGS_NOTES['layer'] = settings_layer.apply(text, need)
 
     # 1. Strip the legacy Product Onboarding + Guided Tour.
     text = remove_block(text, 'style', 'pm7-onboarding-css')

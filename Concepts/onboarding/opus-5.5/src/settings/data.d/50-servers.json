@@ -1,0 +1,22 @@
+{
+  "extras": {
+    "serverProject": {
+      "remoteAccess": {
+        "order": "recommended",
+        "actual": "lan",
+        "routes": [
+          { "id": "lan", "name": "Local network", "kind": "lan", "status": "active", "enabled": true, "locked": true, "priority": 1, "private": true, "recommended": false, "description": "Your devices reach the server directly at home.", "lastCheck": "Just now", "setupLabel": "" },
+          { "id": "tailscale", "name": "Tailscale", "kind": "tailscale", "status": "not-set-up", "enabled": false, "locked": false, "priority": 2, "private": true, "recommended": true, "description": "Built into Puppet Master. A private network between your devices.", "lastCheck": "Never", "setupLabel": "Set Up" },
+          { "id": "vpn", "name": "Existing VPN", "kind": "vpn", "status": "not-set-up", "enabled": false, "locked": false, "priority": 3, "private": true, "recommended": false, "description": "A VPN you already run. Puppet Master only uses it.", "lastCheck": "Never", "setupLabel": "Connect" },
+          { "id": "domain", "name": "Custom domain", "kind": "domain", "status": "not-set-up", "enabled": false, "locked": false, "priority": 4, "private": false, "recommended": false, "description": "Your own address through NGINX or Traefik.", "lastCheck": "Never", "setupLabel": "Configure" },
+          { "id": "remote-link", "name": "Puppet Master Remote Link", "kind": "remote-link", "status": "not-set-up", "enabled": false, "locked": false, "priority": 5, "private": true, "recommended": false, "description": "No account or domain needed. Direct when possible, relayed otherwise.", "lastCheck": "Never", "setupLabel": "Set Up" }
+        ],
+        "funnel": { "enabled": false },
+        "headscale": null,
+        "domain": null,
+        "vpn": null,
+        "remoteLink": null
+      }
+    }
+  }
+}

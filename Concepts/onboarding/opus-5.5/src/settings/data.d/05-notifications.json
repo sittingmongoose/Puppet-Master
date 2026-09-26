@@ -1,0 +1,12 @@
+{
+  "extras": {
+    "notifications": {
+      "priorities": [
+        { "value": "Low", "label": "Low", "meta": "Waits for quiet hours to end" },
+        { "value": "Normal", "label": "Normal", "meta": "Arrives right away" },
+        { "value": "Urgent", "label": "Urgent", "meta": "Gets through quiet hours" }
+      ],
+      "soundGroups": { "none": "No sound", "builtIn": "Built-in", "uploaded": "Uploaded" }
+    }
+  }
+}
