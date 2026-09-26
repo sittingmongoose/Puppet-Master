@@ -372,6 +372,9 @@
     if (!o.back) st.entries[st.step.id] = entrySnap();
     save();
     O55.sound.setContext({ chapter: 'tour', step: st.step.index });
+    /* the shared chrome controls rebind to the current Project at every step, so a Project switched mid-tour
+       (or a resume onto a different Project) can never leave them showing a previous Project's value */
+    if (O55.sound.refresh) O55.sound.refresh('tour');
     if (st.step.enter) { try { await st.step.enter(st, o); } catch (err) { console.warn('O55 tour: enter failed', st.step.id, err); } }
     if (my !== st.seq) return;
     await stillTarget(); /* a page that slides in, a card that grows: place against where things come to rest */

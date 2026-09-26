@@ -65,6 +65,9 @@
 
   function start() {
     O55.motion.watchLongTasks();
+    /* the shell has mounted: rebind the shared chrome sound control to the current Project before any window
+       or tour bar renders its control from it */
+    if (O55.sound && O55.sound.refresh) { try { O55.sound.refresh('boot'); } catch (_) {} }
     if (sw === 'off') return;
     if (sw === 'fresh') { O55.store.clear('onboarding'); O55.store.clear('tour'); return O55.ui.open({ fresh: true }); }
     if (sw.startsWith('screen=')) return O55.ui.open({ screen: sw.slice(7) });

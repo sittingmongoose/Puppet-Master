@@ -1,13 +1,73 @@
 /* O55.sound — synthesised UI sound, one kit per theme family (dark and light share a kit). No audio files.
    Browser concept only: production maps these events onto Notifications & Sounds (rodio). Sound never carries
-   information alone; every event pairs with a visual. Mute is always one click away and persists.
-   Test hooks: O55.sound.log (trace), O55.sound.tap (AnalyserNode), O55.sound.renderWav(family, event). */
+   information alone; every event pairs with a visual. Mute is always one click away; with a current Project it
+   persists through Settings (general.interaction.sound-effects, off by default), and without one it is a
+   session-only preview that never persists.
+   Test hooks: O55.sound.log (trace), O55.sound.tap (AnalyserNode), O55.sound.renderWav(family, event),
+   O55.sound.binding() / O55.sound.refresh(source) (Project binding). */
 (function () {
   'use strict';
   const O55 = window.O55;
-  const S = O55.sound = { log: [], muted: false, ctx: null, master: null, tap: null };
-  const KEY = 'pm.o55.sound';
-  try { S.muted = localStorage.getItem(KEY) === 'off'; } catch (_) {}
+  /* the control starts at the canonical default: the Settings row is off unless a Project turns it on */
+  const S = O55.sound = { log: [], muted: true, ctx: null, master: null, tap: null };
+
+  /* ---- Project-owned binding: the control mirrors the current Project's Settings row
+     general.interaction.sound-effects (owned by Settings; the inventory's canonical row, default off).
+     With a verified current Project the control reads that Project's value through the Settings owner's
+     project snapshot and routes writes through the owner's dispatch result; a rejected or otherwise
+     unavailable write leaves the control at its last owner-verified state (fail closed), never a local guess.
+     Without a Project (onboarding preview) the control is session-only: it writes nothing, stores nothing, and
+     is discarded when a Project binds — the Project's own value always wins, at commit and at every rebind. ---- */
+  const SETTING_ID = 'general.interaction.sound-effects';
+  let bound = null; /* { project_id, enabled } from the owner snapshot or conservative off fallback, or null while unbound */
+  const tome = () => (window.PM7_SETTINGS_TOME && typeof window.PM7_SETTINGS_TOME.project === 'function') ? window.PM7_SETTINGS_TOME : null;
+  function currentProject() {
+    const t = tome();
+    if (!t) return null;
+    try { const p = t.project(); return p && p.id ? p : null; } catch (_) { return null; }
+  }
+  function projectEnabled(p) {
+    const t = tome();
+    if (!t || typeof t.projectSnapshot !== 'function') return false;
+    try {
+      const snap = t.projectSnapshot(p.id);
+      if (!snap || typeof snap.then === 'function') return false; /* async/unavailable read: the default (off) */
+      return !!(snap.settings && snap.settings[SETTING_ID] === true);
+    } catch (_) { return false; }
+  }
+  /* the wave paths of buttonHtml's icon, so an in-place rebind renders exactly what buttonHtml would */
+  const WAVE = { on: ['M15.5 8.5a5 5 0 0 1 0 7', 'M18.4 5.6a9 9 0 0 1 0 12.8'], off: ['M16 9l5 6', 'M21 9l-5 6'] };
+  function syncButtons() {
+    document.querySelectorAll('button.o55-sound').forEach((b) => {
+      const on = !S.muted, label = on ? O55.t('chrome.soundOn') : O55.t('chrome.soundOff');
+      b.setAttribute('aria-pressed', String(on));
+      b.setAttribute('aria-label', label); b.setAttribute('title', label);
+      const paths = b.querySelectorAll('svg path');
+      for (let i = 0; i < 2 && i + 1 < paths.length; i++) paths[i + 1].setAttribute('d', WAVE[on ? 'on' : 'off'][i]);
+    });
+  }
+  function announce(detail) {
+    document.documentElement.toggleAttribute('data-o55-muted', S.muted);
+    syncButtons();
+    window.dispatchEvent(new CustomEvent('o55:sound', detail));
+  }
+  /* re-read the current Project's value (or the unbound default) and reflect it; plays nothing, writes nothing */
+  S.refresh = function refresh(source) {
+    const p = currentProject();
+    if (!p) {
+      const had = !!bound; bound = null;
+      /* a binding fell away (Project closed): back to the canonical default — never the previous Project's value.
+         Staying unbound keeps a preview the person chose earlier in this session. */
+      if (had && S.muted !== true) { S.muted = true; announce({ detail: { muted: true, source: source || 'bind', binding: null } }); }
+      return S.binding();
+    }
+    const enabled = projectEnabled(p);
+    const changed = !bound || bound.project_id !== p.id || bound.enabled !== enabled;
+    bound = { project_id: p.id, enabled };
+    if (changed && S.muted !== !enabled) { S.muted = !enabled; announce({ detail: { muted: S.muted, source: source || 'bind', binding: S.binding() } }); }
+    return S.binding();
+  };
+  S.binding = function binding() { return bound ? Object.assign({}, bound) : null; };
 
   /* ---- synth primitives (work on any BaseAudioContext, so offline renders use the same code) ---- */
   const note = (n) => 440 * Math.pow(2, (n - 69) / 12); // MIDI -> Hz
@@ -244,6 +304,7 @@
   ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, () => { if (document.documentElement.hasAttribute('data-o55-open') || document.documentElement.hasAttribute('data-o55-tour')) ensureContext(); }, true));
 
   S.play = function play(event, opts) {
+    S.refresh('play'); /* Project/Settings changes must gate this sound synchronously. */
     const family = (opts && opts.family) || O55.theme().family;
     const entry = { t: Math.round(performance.now()), event, family, muted: S.muted };
     S.log.push(entry); if (S.log.length > 400) S.log.shift();
@@ -262,15 +323,43 @@
   };
 
   S.setMuted = function setMuted(muted, source) {
-    S.muted = !!muted;
-    try { localStorage.setItem(KEY, S.muted ? 'off' : 'on'); } catch (_) {}
-    try { window.PM12_KIMI && window.PM12_KIMI.setSettingFromHost && window.PM12_KIMI.setSettingFromHost('general.interaction.sound-effects', !S.muted, false, false); } catch (_) {}
-    document.documentElement.toggleAttribute('data-o55-muted', S.muted);
-    window.dispatchEvent(new CustomEvent('o55:sound', { detail: { muted: S.muted, source: source || 'ui' } }));
+    S.refresh('write');
+    const want = !muted; /* the Settings value the control is asking for */
+    const src = source || 'ui';
+    const p = currentProject();
+    if (p) {
+      const kimi = window.PM12_KIMI, write = kimi && typeof kimi.setSettingFromHost === 'function';
+      if (!write) {
+        /* the Project binding exists but the Settings dispatch is not reachable: refuse and stay at the
+           owner-verified value — a bound Project's row is never changed by a local guess */
+        S.play('error');
+        announce({ detail: { muted: S.muted, source: src, binding: S.binding(), outcome: 'unavailable' } });
+        return false;
+      }
+      const at = p.id;
+      let ok = false;
+      try { ok = kimi.setSettingFromHost(SETTING_ID, want, false, false) === true; } catch (_) { ok = false; }
+      /* the Project changed reentrantly during the synchronous owner write: the result belongs to the previous Project —
+         discard it and rebind to the current one */
+      const now = currentProject();
+      if (!now || now.id !== at) { S.refresh('project-switched'); return false; }
+      if (!ok) {
+        /* fail closed: an owner rejection, or an async receipt the owner contract refuses, changes nothing */
+        S.play('error');
+        announce({ detail: { muted: S.muted, source: src, binding: S.binding(), outcome: 'rejected' } });
+        return false;
+      }
+      bound = { project_id: at, enabled: want };
+    }
+    /* unbound (or freshly accepted): apply. Unbound is a session-only preview — memory for this page only. */
+    S.muted = !want;
+    announce({ detail: { muted: S.muted, source: src, binding: S.binding(), outcome: p ? 'accepted' : 'preview' } });
     if (!S.muted) S.play('toggleOn');
+    return true;
   };
-  S.toggle = function toggle(source) { S.setMuted(!S.muted, source); };
+  S.toggle = function toggle(source) { S.refresh('toggle'); return S.setMuted(!S.muted, source); };
   S.buttonHtml = function buttonHtml(cls) {
+    S.refresh('render');
     const on = !S.muted;
     const label = on ? O55.t('chrome.soundOn') : O55.t('chrome.soundOff');
     const wave = on ? '<path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.4 5.6a9 9 0 0 1 0 12.8"/>' : '<path d="M16 9l5 6"/><path d="M21 9l-5 6"/>';
@@ -296,4 +385,27 @@
     let bin = ''; const u8 = new Uint8Array(bytes.buffer); for (let i = 0; i < u8.length; i += 0x8000) bin += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
     return { base64: btoa(bin), peak: +peak.toFixed(4), seconds: dur };
   };
+
+  /* ---- boot binding: read once at load, again when the shell finishes mounting, then follow Project switches
+     on the same surfaces the Settings owner watches for its own reload (label text, menu selection) ---- */
+  let watchTimer = 0;
+  /* Settings row handlers settle in the same event turn; refresh after their commit.
+     Playback/render/toggle also re-read, covering programmatic owner changes. */
+  ['click', 'change'].forEach((type) => document.addEventListener(type, (event) => {
+    if (event.target && event.target.closest && event.target.closest('#pm-settings-root')) {
+      Promise.resolve().then(() => S.refresh('settings'));
+    }
+  }));
+  function installBindingWatch() {
+    const queue = () => { if (watchTimer) return; watchTimer = setTimeout(() => { watchTimer = 0; try { S.refresh('project'); } catch (_) {} }, 40); };
+    const label = document.getElementById('projectMenuLabel'), menu = document.getElementById('projectMenu');
+    if (label) new MutationObserver(queue).observe(label, { childList: true, characterData: true, subtree: true });
+    if (menu) new MutationObserver(queue).observe(menu, { attributes: true, subtree: true, attributeFilter: ['class'] });
+  }
+  (function bootBinding() {
+    try { S.refresh('load'); } catch (_) {}
+    const late = () => { try { S.refresh('dom'); } catch (_) {} try { installBindingWatch(); } catch (_) {} };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', late, { once: true });
+    else late();
+  })();
 })();

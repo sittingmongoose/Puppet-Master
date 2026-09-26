@@ -1,5 +1,7 @@
 /* O55.store — durable, secret-free session state. Keys: pm.o55.onboarding.v1 (setup draft(s), screen, completed owner
-   work refs), pm.o55.tour.v1 (safe-step checkpoint: ids + completed predicates only), pm.o55.sound (on/off).
+   work refs), pm.o55.tour.v1 (safe-step checkpoint: ids + completed predicates only). Sound is deliberately not
+   stored here: the sound control mirrors the current Project's Settings row general.interaction.sound-effects
+   (default off), and with no Project it is a session-only preview that persists nothing.
    Passwords, tokens, device codes and key material never enter these records. */
 (function () {
   'use strict';

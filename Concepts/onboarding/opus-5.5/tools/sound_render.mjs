@@ -28,9 +28,10 @@ try {
     }
   }
   /* live: a real click unlocks audio, events are traced with the active family, the analyser sees signal, mute
-     stops playback but keeps the trace, and the mute survives a reload */
-  await page.evaluate(() => { localStorage.removeItem('pm.o55.sound'); window.O55.ui.open({ fresh: true }); });
+     stops playback but keeps the trace, and reload reads the active Project value (no-Project preview is discarded) */
+  await page.evaluate(() => { window.O55.ui.open({ fresh: true }); });
   await sleep(1400);
+  if (await page.evaluate(() => window.O55.sound.muted)) await page.click('#pm-o55-onboarding .o55-sound');
   await page.click('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-primary');
   await sleep(120);
   report.live.afterClick = await page.evaluate(async () => {
@@ -43,10 +44,10 @@ try {
   await sleep(200);
   await page.click('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-tile[data-arg="retro"]');
   await sleep(300);
-  report.live.afterMute = await page.evaluate(() => ({ muted: window.O55.sound.muted, stored: localStorage.getItem('pm.o55.sound'), pressed: document.querySelector('#pm-o55-onboarding .o55-sound').getAttribute('aria-pressed'), last: window.O55.sound.log.slice(-2), setting: (() => { try { return window.PM12_KIMI.getSettingValue ? window.PM12_KIMI.getSettingValue('general.interaction.sound-effects') : 'n/a'; } catch (e) { return 'err'; } })() }));
+  report.live.afterMute = await page.evaluate(() => ({ muted: window.O55.sound.muted, stored: localStorage.getItem('pm.o55.sound'), pressed: document.querySelector('#pm-o55-onboarding .o55-sound').getAttribute('aria-pressed'), last: window.O55.sound.log.slice(-2), setting: (() => { try { return window.O55.sound.binding(); } catch (e) { return 'err'; } })() }));
   await page.goto(pathToFileURL(pageFile).href + '?o55=off');
   await sleep(1000);
-  report.live.afterReload = await page.evaluate(() => ({ muted: window.O55.sound.muted }));
+  report.live.afterReload = await page.evaluate(() => ({ muted: window.O55.sound.muted, binding: window.O55.sound.binding(), legacyStored: localStorage.getItem('pm.o55.sound') }));
   report.errors = page.errors;
 } finally { await close(); }
 writeFileSync(join(out, 'sound.json'), JSON.stringify(report, null, 2));
