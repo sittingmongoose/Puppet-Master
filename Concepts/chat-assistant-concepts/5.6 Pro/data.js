@@ -2318,8 +2318,26 @@
       'Mute and Focus apply immediately as selection toggles; Subcompact needs an explicit Apply because it writes a local summary artifact.',
       ' The cap is 25 messages per operation, not per thread, so operations accumulate.'],
       followUp:{ type:'context-focus', title:'Context Lens · Focus', detail:'Included the current renderer, the current tests, and the final reference.' } }),
-    reply({ id:'sr-default', match:[], chunks:[
-      'Added as an ordinary conversational turn so the reading rhythm, message actions, wide response layout, and the persistent More Details surface can all be evaluated on real text rather than on a placeholder.'] })
+    /* Chat WOW: two replies with structure, so lists, headings and code can be
+       seen arriving mid-stream (turn-stream.js renders a small markdown subset). */
+    reply({ id:'sr-steps', match:['steps','walk me','checklist','how would','how should'], delayMs:700, chunkMs:360, chunks:[
+      '## The rollout, in order\n\n',
+      '1. Split **0043** out of the migration wrapper and mark it no-transaction.\n',
+      '2. Build the index concurrently: `CREATE INDEX CONCURRENTLY idx_events_tenant_created`.\n',
+      '3. Batch the two N+1 call sites behind one tenant-first query.\n',
+      '4. Re-run the benchmark against the 128,400-row fixture and record both directions.\n\n',
+      'The check that has to pass before anything ships:\n\n',
+      '```\npm bench analytics_query --rows 128400 --assert p95<100ms\npm bench analytics_query --rollback --assert rows=128400\n```\n\n',
+      'If the second command fails, the rollback is not rehearsed yet and the rollout waits.'] }),
+    reply({ id:'sr-summary', match:['summar','recap','tl;dr','where are we'], delayMs:640, chunkMs:320, chunks:[
+      'Where things stand:\n\n',
+      '- **Read path:** p95 482 ms to 71 ms on the corrected fixture.\n',
+      '- **Write cost:** +4.8% on inserts, measured over 50,000 rows.\n',
+      '- **Rollback:** rehearsed in both directions, table readable throughout.\n\n',
+      'Still open: whether the payload bound applies to existing rows. That is your call, not mine.'] }),
+    reply({ id:'sr-default', match:[], delayMs:620, chunkMs:300, chunks:[
+      'Added as an ordinary conversational turn, so the reading rhythm, the message actions and the wide response layout can be judged on real text.',
+      ' Try asking me to **walk through the steps**, to **summarize** where things stand, or to explain the **benchmark** — each reply streams in the way a live model would, with its own pace, pauses at sentence ends, and structure arriving as it is written.'] })
   ];
 
   /* =====================================================================
@@ -2991,7 +3009,9 @@
     'Wide Prose','Assistant Cards','Speaker Grid','Journal Stream',
     'Editorial Reading','Layered Technical','Terminal Dense','Stage Layout',
     'Aligned Bubbles','Zebra Rows','Sticky Rail','Timeline Gutter',
-    'Notebook Cells','Focus Reader','Print Sheet','Threaded Turns'
+    'Notebook Cells','Focus Reader','Print Sheet','Threaded Turns',
+    /* 16 -- Chat WOW default (turn-stage.css): presence mark, turn spine, item families. */
+    'Turn Stage'
   ];
 
 

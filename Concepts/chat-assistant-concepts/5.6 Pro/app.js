@@ -81,7 +81,8 @@
   }
 
   const DEFAULT = {
-    theme:'basic-dark', recipe:-1, variants:[7,5,1,0,1,0,8], selectedThread:'query',
+    /* variants[5]=16: the Turn Stage transcript (Chat WOW) is the default take. */
+    theme:'basic-dark', recipe:-1, variants:[7,5,1,0,1,16,8], selectedThread:'query',
     threads:clone(D.threads), editorTabs:['plan-query'], activeEditor:'plan-query',
     historyMode:'pinned', historySearch:'', historyWidth:224, editorWidth:54, activityWidth:280,
     historySections:{pinned:true, recent:true, archived:false},
@@ -212,7 +213,10 @@
     'transcriptMessage','composerTray','composerRibbon','composerBelow','wandRows','submenu','modeRows',
     /* Append points inside context.js's own replace-slot output, so BSD adds a row and a
        section without re-registering (and therefore duplicating) the whole Context menu. */
-    'contextBsdRow','contextBsdSection','editorTabLabel','editorDocument','workRecord'];
+    'contextBsdRow','contextBsdSection','editorTabLabel','editorDocument','workRecord',
+    /* Chat WOW: FIRST-non-empty (not concatenated) -- a module names the family
+       of a message type it renders: prose|user|work|deliverable|needs|people|time|ledger. */
+    'transcriptFamily'];
 
   function ensureExt(){
     /* Keep in sync with EXT_SHIM in build.py: whichever of the two runs first
@@ -262,7 +266,10 @@
       /* mutators -- each triggers the render the change actually needs */
       renderApp, renderGoals: renderGoalSurfaces, renderOverlays, toast, addReceipt, openEditor, closeEditor,
       switchThread, mutateThread, appendMessage, openMenu, closeMenu, setSubmenu,
-      openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation
+      openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation,
+      /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
+      turnBusy, registerTurnOwner, maybeFlushQueue, startWorkingRec, onWorkComplete, releaseNextRun,
+      followIfSticky, stickToBottom, isSticky:()=>tStick, patchScope, runningRecs, armWorkTimer, workRecFor, workInstancesFor, makeWorkCtx
     }, extra);
   }
   function extEach(name, extra, each){
@@ -278,6 +285,13 @@
   }
   /* Append: the built-in markup stays, the slot adds to it. */
   function extRender(name, extra){ return extEach(name, extra) || ''; }
+  /* First answer wins: for slots that name one thing rather than add markup. */
+  function extFirst(name, extra){
+    const fns=EXT._slots[name]; if(!fns||!fns.length) return '';
+    const ctx=extCtx(extra);
+    for(const fn of fns){ try{ const v=fn(ctx); if(v) return v; }catch(err){ console.error(`PM56_EXT slot "${name}" threw`, err); } }
+    return '';
+  }
   /* Replace: the slot substitutes the built-in markup, but only if a module
      registered one -- so the concept still renders with no modules loaded. */
   function extReplace(name, extra, fallback){
@@ -685,12 +699,103 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return esc(body).split(/\n{2,}/).map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
   }
 
+  /* ---- transcript item identity (Chat WOW M1) ------------------------
+     Every item's root tag is stamped with a stable key and with what it IS:
+       data-k        msg:<id>, unless the item already keys itself
+       data-role     user | assistant | system
+       data-msg-type the message type (the generic event card had no hook)
+       data-family   prose | user | work | deliverable | needs | people | time | ledger
+       data-turn     turn ordinal (a user turn opens one)
+       data-turn-pos first | mid | last | only (assistant side), user (user side)
+     Keys make an insert or a reveal animate the RIGHT item: unkeyed items
+     matched by position, so a mid-list reveal rewrote every later article and
+     played the entrance on the last one. Families let one stylesheet give each
+     kind of item its own silhouette without touching the modules that render
+     them. The list stays flat -- no wrappers -- so direct-child selectors and
+     every harness that walks .transcript-inner keep working. */
+  const FAMILY_BY_TYPE={
+    'eli5-example-answer':'prose','bc-capture':'user',
+    working:'work','order-export-work':'work','b16-work':'work','b17-work':'work',
+    'plan-card':'deliverable','plan-card-v2':'deliverable',artifact:'deliverable','af-eli5-preview':'deliverable',
+    'b18-result':'deliverable','agent-work':'deliverable','revert-turn':'deliverable','debug-investigation':'deliverable',
+    'af-investigation':'deliverable','b14-discovery':'deliverable','b13-wonderer':'deliverable',
+    permission:'needs','question-receipt':'needs','bsd-advice':'needs','bsd-advice-v3':'needs','tool-error':'needs',
+    'model-unavailable':'needs',blocked:'needs',waiting:'needs',
+    'collab-run':'people','live-agents':'people',crew:'people',
+    'sched-message':'time'
+  };
+  function familyOf(m){
+    const ext=extFirst('transcriptFamily',{m});
+    if(ext) return ext;
+    if(m.type==='text') return m.role==='user'?'user':'prose';
+    return FAMILY_BY_TYPE[m.type]||'ledger';
+  }
+  const STAMP_HEAD=/^(\s*(?:<!--[\s\S]*?-->\s*)*)<([a-zA-Z][\w-]*)((?:\s[^>]*)?)>/;
+  function stampItem(html,attrs){
+    const mt=STAMP_HEAD.exec(html);
+    if(!mt) return html;
+    const at=mt[3]||'';
+    let add='';
+    for(const [k,v] of attrs){
+      if(v==null) continue;
+      if(new RegExp('\\s'+k+'\\s*=').test(at)) continue;   // the item's own value wins
+      add+=` ${k}="${esc(String(v))}"`;
+    }
+    return mt[1]+'<'+mt[2]+add+at+'>'+html.slice(mt[0].length);
+  }
+  function renderTranscriptItems(t){
+    const items=[];
+    let turn=0;
+    for(const m of t.messages){
+      if(!messageVisible(m)) continue;
+      const html=renderMessage(m,t);
+      if(!html||!String(html).trim()) continue;
+      const fam=familyOf(m);
+      if(fam==='user') turn++;
+      items.push({m,html,fam,turn,side:fam==='user'?'user':'assistant'});
+    }
+    const byTurn={};
+    for(const it of items) if(it.side==='assistant') (byTurn[it.turn]=byTurn[it.turn]||[]).push(it);
+    for(const k in byTurn){ const list=byTurn[k]; list.forEach((it,i)=>{ it.pos=list.length===1?'only':i===0?'first':i===list.length-1?'last':'mid'; }); }
+    return items.map(it=>stampItem(it.html,[
+      ['data-k',it.m.id?'msg:'+it.m.id:null],
+      ['data-role',it.m.role||'system'],
+      ['data-msg-type',it.m.type||'text'],
+      ['data-family',it.fam],
+      ['data-turn',it.turn],
+      ['data-turn-pos',it.side==='user'?'user':it.pos],
+      ['data-flight',window.PM56_STREAM&&window.PM56_STREAM.flightPending(it.m.id)?'1':null]
+    ])).join('');
+  }
+  /* A thread switch (and boot) mounts every item at once; their entrances are
+     finished so the thread arrives as one piece instead of thirty cards fading
+     in together. Only items that arrive afterwards animate in. */
+  function finishEntrances(root){
+    root=root||document.querySelector('.transcript-inner');
+    if(!root||!root.getAnimations) return;
+    for(const a of root.getAnimations({subtree:true})){
+      if(typeof CSSAnimation!=='undefined' && !(a instanceof CSSAnimation)) continue;
+      const tm=a.effect&&a.effect.getTiming&&a.effect.getTiming();
+      if(!tm||tm.iterations===Infinity) continue;
+      try{ a.finish(); }catch(e){}
+    }
+  }
+
+  /* Chat WOW theme voices: one choreography, four personalities (basic, friendly,
+     glass, retro). Light and dark share a voice. Demo Studio can pin a voice to
+     judge it on any theme. */
+  function motionVoice(){
+    const v=state.motionVoice;
+    if(v&&v!=='auto') return v;
+    const fam=String(state.theme||'basic').split('-')[0];
+    return ['basic','friendly','glass','retro'].includes(fam)?fam:'basic';
+  }
   function renderChat(){
     const t=activeThread();
     return `<section class="chat-stage" data-shell="${state.variants[0]}">
       ${renderChatHeader(t)}
       <div class="lens-dock" data-k="context-lens-dock">${renderInlineLens()}</div>
-      <div class="transcript" data-variant="${state.variants[5]}" data-scroll-key="transcript"><div class="transcript-inner">${t.messages.filter(messageVisible).map(m=>renderMessage(m,t)).join('')}</div></div>
+      <div class="transcript" data-variant="${state.variants[5]}" data-voice="${motionVoice()}" data-scroll-key="transcript"><div class="tx-spine-layer" data-k="tx-spine" data-pm-keep aria-hidden="true"></div><div class="transcript-inner">${renderTranscriptItems(t)}</div></div>
       ${renderDecisionHost()}
       ${renderChatFloat()}
       ${renderComposer()}
@@ -776,7 +881,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
 
   function renderTextMessage(m){
     const expanded=!!state.messageExpanded[m.id], details=!!state.messageDetails[m.id];
-    const isLong=m.long || String(m.body).length>460;
+    /* Chat WOW: a reply still being written is never clamped -- the clamp would
+       snap shut mid-stream -- and a streamed reply that ended long ends open. */
+    const isLong=!m.streaming && !m.streamedLong && (m.long || String(m.body).length>460);
     const expandTip=expanded?'Collapse the response':'Expand the full response';
     const copied=state.copyFlashId===m.id;
     const copyBtn=`<button class="text-button icon-only${copied?' is-copied':''}" data-action="copy-message" data-id="${esc(m.id)}"${hoverAttrs('msg-copy-'+m.id,copied?'Copied':'Copy this message without changing the thread')}>${icon(copied?'check':'copy',13)}<span>Copy</span></button>`;
@@ -788,7 +895,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const overflowOpen=window.PM56_MSG_OVERFLOW&&window.PM56_MSG_OVERFLOW.isOpen(m.id);
     const chromeCls=`message-chrome${m.role==='user'?' message-chrome-user':''}${overflowOpen?' is-overflow-open':''}`;
     const chrome=`<div class="${chromeCls}">${extRender('messageMeta',{message:m})}${actions}${overflowPanel}</div>`;
-    return `<article class="message message-${m.role}" data-message-id="${esc(m.id)}" data-speaker="${m.role==='user'?'You':'Assistant'}" data-index="${msgIndex(m.id)}" data-time="${esc(msgClock(m))}" style="--msg-index:${msgIndex(m.id)}">${extRender('messageAffordance',{message:m})}<div class="message-surface">${m.role==='assistant'?`<div class="message-role">${icon('sparkles',12)} Assistant</div>`:''}<div class="message-body ${isLong&&!expanded?'long-fade':''}">${formatText(m.body)}</div>${isLong?`<button class="text-button" data-action="toggle-message" data-id="${esc(m.id)}"${hoverAttrs('msg-expand-'+m.id,expandTip)}>${icon(expanded?'collapse':'expand',12)} ${expanded?'Collapse':'Expand response'}</button>`:''}${details?renderMessageDetails(m):''}</div>${chrome}</article>`;
+    /* Chat WOW: while streaming, the body is a JS-owned island (data-pm-keep) that
+       turn-stream.js writes word by word; the surface and the island are keyed so
+       an affordance inserted before the surface can never be patched onto them. */
+    const bodyHtml=m.streaming
+      ? `<div class="message-body tx-stream" data-pm-keep data-k="tx-island:${esc(m.id)}"></div>`
+      : `<div class="message-body ${isLong&&!expanded?'long-fade':''}">${m.rich&&window.PM56_RICH?window.PM56_RICH.html(m.body):formatText(m.body)}</div>`;
+    const terminalHtml=(!m.streaming&&(m.terminal==='stopped'||m.terminal==='error'))
+      ? `<div class="tx-terminal tx-terminal-${esc(m.terminal)}" data-k="tx-term:${esc(m.id)}">${icon(m.terminal==='error'?'warning':'stop',11)}<span>${m.terminal==='error'?esc(m.terminalNote||'Stopped by an error'):'Stopped'}</span></div>` : '';
+    const streamAttr=m.streaming?` data-streaming="${esc(m.streamPhase||'pending')}"`:'';
+    return `<article class="message message-${m.role}" data-message-id="${esc(m.id)}" data-speaker="${m.role==='user'?'You':'Assistant'}" data-index="${msgIndex(m.id)}" data-time="${esc(msgClock(m))}" style="--msg-index:${msgIndex(m.id)}"${streamAttr}>${extRender('messageAffordance',{message:m})}<div class="message-surface"${m.streaming?` data-k="tx-surface:${esc(m.id)}"`:''}>${m.role==='assistant'?`<div class="message-role">${icon('sparkles',12)} Assistant</div>`:''}${bodyHtml}${terminalHtml}${isLong?`<button class="text-button" data-action="toggle-message" data-id="${esc(m.id)}"${hoverAttrs('msg-expand-'+m.id,expandTip)}>${icon(expanded?'collapse':'expand',12)} ${expanded?'Collapse':'Expand response'}</button>`:''}${details?renderMessageDetails(m):''}</div>${chrome}</article>`;
   }
 
   function renderMessageDetails(m){
@@ -1553,7 +1669,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="activity-wrap" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}"><i class="state-mark ${d.state}"></i>${icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`;}).join('')}</div></div>`;
   }
   function renderJumpBottom(){
-    const working=runningRecs().length>0;
+    const working=turnBusy();
     const tip=working?'Scroll to latest':'Scroll to bottom';
     const cls=`jump-bottom${jumpBottomVisible?' is-visible':''}${working?' is-working':''}`;
     return `<button type="button" class="${cls}" data-k="jump-bottom" data-action="scroll-to-bottom"${hoverAttrs('jump-bottom',tip)} aria-label="${esc(tip)}">${icon('down',12)}</button>`;
@@ -1702,7 +1818,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="send-queue" data-k="send-queue">${q.map(e=>`<div class="send-queue-row" data-k="q:${esc(e.id)}"><span class="send-queue-text"${hoverAttrs('q-text-'+e.id,e.text)}>${esc(e.text)}</span><button class="icon-button" data-action="queue-edit" data-id="${esc(e.id)}"${hoverAttrs('q-edit-'+e.id,'Edit')}>${icon('edit',13)}</button><button class="icon-button" data-action="queue-send-now" data-id="${esc(e.id)}"${hoverAttrs('q-send-'+e.id,'Send now')}>${icon('send',13)}</button></div>`).join('')}</div>`;
   }
   function sendButtonHtml(){
-    const liveGoal=window.PM56_GOAL?.get(activeThread().id),livePlan=window.PM56_PLANS?.current(activeThread().id);const busy=runningRecs().length>0||!!(liveGoal?.status==='active'&&liveGoal.workRef&&(liveGoal.workRef.kind==='order_export'||livePlan?.workRef))||!!(livePlan?.workRef&&livePlan.status==='building'&&!livePlan.attention);
+    const liveGoal=window.PM56_GOAL?.get(activeThread().id),livePlan=window.PM56_PLANS?.current(activeThread().id);const busy=turnBusy()||!!(liveGoal?.status==='active'&&liveGoal.workRef&&(liveGoal.workRef.kind==='order_export'||livePlan?.workRef))||!!(livePlan?.workRef&&livePlan.status==='building'&&!livePlan.attention);
     const qlen=(state.sendQueue[state.selectedThread]||[]).length;
     const queueFull=busy&&qlen>=2;
     if(busy && !state.composer.trim()){
@@ -1989,15 +2105,45 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     document.documentElement.style.setProperty('--activity-w',`${state.activityWidth}px`);
     pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel(false):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
     document.getElementById('pmRoot').setAttribute('aria-busy','false');
-    flipHeights(flipTargets, flipBefore);
+    const post=snapScroll();
+    const flips=flipHeights(flipTargets, flipBefore);
     flipMoves(moveTargets, moveBefore);
     rollDigits(rollBefore);
-    restoreScroll(positions,{workH});
+    restoreScroll(positions,{workH, post, workGrow:workFlipGrowth(flips)});
     renderOverlays();
     retainHoverAfterRender();
     armComposerObserver();
     armJumpBottomListener();
+    armFollowObserver();
     syncJumpBottom();
+  }
+
+  /* patchScope (Chat WOW M1): re-render ONE keyed live node with the same
+     before/after steps renderApp runs around a full patch -- height FLIPs,
+     move FLIPs, rolling digits, scroll custody, hover retention -- so a caller
+     that knows only one surface changed (the work tick, a streaming turn) does
+     not pay for rebuilding the whole shell. Returns false when there is
+     nothing to patch, so callers can fall back to renderApp(). */
+  function patchScope(live, html){
+    if(!live||!live.isConnected||!html) return false;
+    const tpl=document.createElement('template'); tpl.innerHTML=String(html).trim();
+    const src=tpl.content.firstElementChild; if(!src) return false;
+    if(src.getAttribute('data-k')!==live.getAttribute('data-k')) return false;
+    const positions=captureScroll();
+    const flipTargets=[...live.querySelectorAll('[data-flip]')]; if(live.hasAttribute('data-flip')) flipTargets.unshift(live);
+    const flipBefore=new Map(flipTargets.map(el=>[el, el.getBoundingClientRect().height]));
+    const rollBefore=new Map([...live.querySelectorAll('.pm-roll')].map(el=>[el, el.textContent]));
+    const moveTargets=[...live.querySelectorAll('[data-flip-move]')];
+    const moveBefore=new Map(moveTargets.map(el=>{const r=el.getBoundingClientRect();return [el,{x:r.left,y:r.top}];}));
+    const workH=live.classList.contains('working-card')?live.getBoundingClientRect().height:null;
+    pmPatchNode(live,src);
+    const post=snapScroll();
+    const flips=flipHeights(flipTargets, flipBefore);
+    flipMoves(moveTargets, moveBefore);
+    rollDigits(rollBefore);
+    restoreScroll(positions,{workH, post, workGrow:workFlipGrowth(flips)});
+    retainHoverAfterRender();
+    return true;
   }
 
   /* G2: goal mutations project into a handful of in-tree islands. Patch those
@@ -2128,7 +2274,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      and it degrades to the motion Orbit already does well, since the panel
      track grows smoothly on its own. */
   function flipHeights(targets, before){
-    if(window.PM56_MOTION && window.PM56_MOTION.reduced()) return;
+    const done=[];
+    if(window.PM56_MOTION && window.PM56_MOTION.reduced()) return done;
     for(const el of targets){
       if(!el.isConnected) continue;
       const h0=before.get(el); if(h0==null) continue;
@@ -2157,7 +2304,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
          hold, which is still clipping. Only an honest finish releases here. */
       a.finished.then(release, ()=>{});
       guardFlip(el, a, h0, release, layoutTransitionPending(el));
+      done.push({el,h0,h1});
     }
+    return done;
   }
 
   /* Properties whose transition, anywhere in this subtree, could change this
@@ -2288,6 +2437,72 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   for(const ev of ['wheel','touchstart'])
     document.addEventListener(ev,()=>scrollIntents.clear(),{passive:true,capture:true});
   function scrollKeyEl(key){ return document.querySelector(`[data-scroll-key="${key}"]`); }
+
+  /* ---- stick-to-bottom follow (Chat WOW M1) ---------------------------
+     The transcript follows its bottom edge while the reader is AT the bottom
+     (tStick) and never otherwise. Growth -- a streaming reply, a working card
+     opening, a card landing -- is observed on .transcript-inner and closed with
+     a critically damped glide written as INSTANT scrolls (the element carries
+     scroll-behavior:smooth, which would otherwise animate every write and fight
+     the next one). Only real input unsticks it: wheel-up, touch, a scrollbar
+     drag, or a scrolling key outside a text field. Scroll events we cause are
+     not input, so anchoring and clamping never flip the state. */
+  let tStick=true, tUserInputAt=0, tDragging=false, tExpectTop=null, tLastTop=null;
+  let glideRAF=0, glideTs=0, tRO=null, tROTarget=null;
+  const GLIDE_TAU=70;
+  function tEl(){ return scrollKeyEl('transcript'); }
+  function tAtBottom(el){ el=el||tEl(); if(!el) return true; return el.scrollHeight-el.clientHeight-el.scrollTop<=24; }
+  function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; }
+  function cancelGlide(){ if(glideRAF){ cancelAnimationFrame(glideRAF); glideRAF=0; } glideTs=0; }
+  function glideStep(ts){
+    glideRAF=0;
+    const el=tEl(); if(!el||!tStick){ glideTs=0; return; }
+    const max=el.scrollHeight-el.clientHeight, cur=el.scrollTop, d=max-cur;
+    if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
+    const dt=glideTs?Math.min(50,Math.max(1,ts-glideTs)):16.7; glideTs=ts;
+    let next;
+    if(window.PM56_MOTION&&window.PM56_MOTION.reduced()) next=max;
+    else if(d>el.clientHeight*1.25) next=max-el.clientHeight*0.6;   /* far off: close most of it in one frame */
+    else next=cur+d*(1-Math.exp(-dt/GLIDE_TAU));
+    if(max-next<0.75) next=max;
+    writeScrollInstant(el,next);
+    glideRAF=requestAnimationFrame(glideStep);
+  }
+  function kickFollow(){ if(tStick&&!glideRAF){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }
+  function followIfSticky(){ kickFollow(); }
+  function stickToBottom(instant){
+    tStick=true;
+    const el=tEl();
+    if(instant&&el){ cancelGlide(); writeScrollInstant(el,el.scrollHeight); requestAnimationFrame(()=>{ const e2=tEl(); if(e2&&tStick) writeScrollInstant(e2,e2.scrollHeight); syncJumpBottom(); }); return; }
+    kickFollow();
+  }
+  function armFollowObserver(){
+    const el=tEl(), inner=el&&el.querySelector('.transcript-inner');
+    if(inner===tROTarget) return;
+    if(tRO){ tRO.disconnect(); tRO=null; }
+    tROTarget=inner;
+    if(inner){ tRO=new ResizeObserver(()=>kickFollow()); tRO.observe(inner); tRO.observe(el); }
+  }
+  function inTranscript(t){ return !!(t&&t.closest&&t.closest('[data-scroll-key="transcript"]')); }
+  const T_SCROLL_KEYS=new Set(['PageUp','PageDown','ArrowUp','ArrowDown','Home','End',' ']);
+  const T_UP_KEYS=new Set(['PageUp','ArrowUp','Home']);
+  document.addEventListener('wheel',e=>{ if(!inTranscript(e.target)) return; tUserInputAt=performance.now(); if(e.deltaY<0){ tStick=false; cancelGlide(); } },{passive:true,capture:true});
+  document.addEventListener('touchstart',e=>{ if(!inTranscript(e.target)) return; tUserInputAt=performance.now(); tStick=false; cancelGlide(); },{passive:true,capture:true});
+  document.addEventListener('keydown',e=>{
+    const a=document.activeElement;
+    if(a&&(a.tagName==='TEXTAREA'||a.tagName==='INPUT'||a.tagName==='SELECT'||a.isContentEditable)) return;
+    if(!T_SCROLL_KEYS.has(e.key)) return;
+    tUserInputAt=performance.now();
+    if(T_UP_KEYS.has(e.key)){ tStick=false; cancelGlide(); }
+  },{capture:true});
+  document.addEventListener('pointerdown',e=>{
+    const el=tEl(); if(!el||e.target!==el) return;
+    const r=el.getBoundingClientRect();
+    if(e.clientX>r.left+el.clientWidth){ tDragging=true; tUserInputAt=performance.now(); tStick=false; cancelGlide(); }
+  },{capture:true});
+  document.addEventListener('pointerup',()=>{ if(tDragging){ tDragging=false; tUserInputAt=performance.now(); const el=tEl(); if(el) tStick=tAtBottom(el); } },{capture:true});
+  function snapScroll(){ const out={}; document.querySelectorAll('[data-scroll-key]').forEach(el=>{ out[el.dataset.scrollKey]=el.scrollTop; }); return out; }
+  function workFlipGrowth(flips){ let g=0; for(const f of flips||[]) if(f.el.closest&&f.el.closest('.working-card')) g+=f.h1-f.h0; return g; }
   function transcriptAwayFromBottom(){
     const el=scrollKeyEl('transcript');
     if(!el) return false;
@@ -2302,6 +2517,21 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(btn) btn.classList.toggle('is-visible', on);
   }
   function onTranscriptScroll(){
+    /* Stickiness: our own glide writes never change it. Arriving at the bottom
+       re-engages it. Leaving the bottom disengages it when it follows real input
+       or when something else moved the view UP -- a jump to a search result, a
+       scrollIntoView -- which is a reader going somewhere. Anchoring moves the
+       view DOWN when content above grows, so it never unsticks. */
+    const el=tEl();
+    if(el){
+      const top=el.scrollTop, prev=tLastTop; tLastTop=top;
+      const ours=tExpectTop!=null&&Math.abs(top-tExpectTop)<=1;
+      if(!ours){
+        tExpectTop=null;
+        if(tAtBottom(el)) tStick=true;
+        else if(tDragging||performance.now()-tUserInputAt<700||(prev!=null&&top<prev-8)){ tStick=false; cancelGlide(); }
+      }
+    }
     syncJumpBottom();
     requestAnimationFrame(syncJumpBottom);
   }
@@ -2318,6 +2548,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     }
   }
   function scrollToEnd(key,instant=false){
+    if(key==='transcript'){ stickToBottom(instant); syncJumpBottom(); return; }
     scrollIntents.set(key,{to:'end',at:performance.now()});
     requestAnimationFrame(()=>{
       const el=scrollKeyEl(key);
@@ -2346,7 +2577,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const out={};
     document.querySelectorAll('[data-scroll-key]').forEach(el=>{
       const k=el.dataset.scrollKey, intent=scrollIntents.get(k);
-      out[k]=intent?intent.to:el.scrollTop;
+      out[k]=(k==='transcript'&&tStick)?'follow':intent?intent.to:el.scrollTop;
     });
     return out;
   }
@@ -2355,6 +2586,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       document.querySelectorAll('[data-scroll-key]').forEach(el=>{
         const v=pos?pos[el.dataset.scrollKey]:null;
         if(v==null) return;
+        if(v==='follow'){ kickFollow(); return; }
+        /* The reader moved between the patch and this frame: their position
+           wins over the one captured before the patch. */
+        const post=opts&&opts.post;
+        if(typeof v==='number'&&post&&post[el.dataset.scrollKey]!=null&&Math.abs(el.scrollTop-post[el.dataset.scrollKey])>0.5) return;
         if(v==='end'){
           /* A commanded scroll owns this scroller. Re-aim it at the bottom --
              the patch may have grown the content out from under the animation --
@@ -2377,10 +2613,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
          Clock-only ticks (|Δh| < 1px) must NOT start a new 420ms follower —
          that fights the user's wheel for nearly the entire 500ms tick period. */
       const startH=opts&&opts.workH;
-      if(startH!=null){
+      /* P1: the working body's FLIP is holding it at its OLD height when this
+         runs, so the live card height alone never showed the change and the
+         follower never started; the FLIP's own target delta does. A reader
+         who is stuck to the bottom is served by the follow glide instead. */
+      if(startH!=null&&!tStick){
         const card=(document.querySelector('.working-card:not(.is-done)')||document.querySelector('.working-card'));
         const hNow=card?card.getBoundingClientRect().height:startH;
-        if(Math.abs(hNow-startH)>=1) followWorkCardHeight(startH);
+        if(Math.abs(hNow-startH)>=1||Math.abs((opts&&opts.workGrow)||0)>=1) followWorkCardHeight(startH);
       }
       syncJumpBottom();
     });
@@ -2399,6 +2639,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     document.addEventListener('wheel',cancel,{once:true,passive:true,capture:true});
     document.addEventListener('touchstart',cancel,{once:true,passive:true,capture:true});
     const t0=performance.now();
+    let lastH=startH, still=0;
     const tick=()=>{
       if(cancelled||scrollIntents.has('transcript')||!tr.isConnected){
         tr.style.overflowAnchor=prevAnchor; return;
@@ -2416,7 +2657,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
           tr.style.scrollBehavior=prev;
         }
       }
-      if(performance.now()-t0<420) requestAnimationFrame(tick);
+      /* Follow until the card has been still for six frames (the FLIP and its
+         guard can run to ~640ms), with a hard stop at 1100ms. */
+      if(Math.abs(h-lastH)>0.25){ lastH=h; still=0; } else still++;
+      const el=performance.now()-t0;
+      if(el<1100 && (el<360 || still<6)) requestAnimationFrame(tick);
       else tr.style.overflowAnchor=prevAnchor;
     };
     requestAnimationFrame(tick);
@@ -2930,6 +3175,9 @@ recommended path                  migration 0043 + rollback</div></div></section
   function switchThread(id){
     const t=state.threads.find(x=>x.id===id);if(!t)return;
     const prev=activeThread(); if(prev) state.drafts[prev.id]=state.composer;
+    /* A turn still being written in the thread we leave finishes in the
+       background: owners land their end state now, so returning shows it done. */
+    if(prev&&prev.id!==id) notifyTurnOwners('cancel',prev.id);
     state.selectedThread=id;t.unread=0;state.composer=state.drafts[id]||'';state.menu=null;state.hover=null;state.decision=null;decisionExit=null;
     /* Leaving the thread abandons its work sequence; abandoning it without
        stopping the clock is the leak described above. state.work.running is
@@ -2937,7 +3185,12 @@ recommended path                  migration 0043 + rollback</div></div></section
        with no timer behind it is the next bug report. */
     stopWorkTimer(true); state.work.running=false;
     for(const k in state.works) state.works[k].running=false;
-    renderApp(false);scrollTranscriptToEnd();
+    renderApp(false);scrollTranscriptToEnd(true);finishEntrances();
+    /* The thread arrives as one piece: a short crossfade of the whole list
+       rather than each item's own entrance. */
+    { const inner=document.querySelector('.transcript-inner');
+      if(inner&&inner.animate&&!(window.PM56_MOTION&&window.PM56_MOTION.reduced()))
+        inner.animate([{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:200,easing:'cubic-bezier(.17,.84,.29,.99)'}); }
     /* The Multi Orbit demo thread plays its turn on entry: the first scripted
        run spawns just after the switch settles, and the chain does the rest. */
     if(id==='orbit-run'&&!state.works.orbitA){ setTimeout(()=>{ if(state.selectedThread==='orbit-run'&&!state.works.orbitA) startWorkingRec('orbitA'); },350); }
@@ -2960,11 +3213,33 @@ recommended path                  migration 0043 + rollback</div></div></section
      so a sent message landed 2787px below the fold and stayed there --
      inView:false for 3s and elementFromPoint over its box returning null. */
   function scrollTranscriptToEnd(instant=false){ scrollToEnd('transcript',instant); }
+  /* Chat WOW M1: an append follows the reader only when they are already at the
+     bottom. A reader who scrolled up to read is never dragged back down by a
+     receipt landing; the jump-to-latest control tells them something arrived. */
   function appendMessage(msg,thread=activeThread()){
     const TX=window.PM56_TX;
-    if(TX?.isActive()){TX.append(thread,'messages',msg);TX.set(thread,'updated','now');TX.defer(()=>{renderApp();scrollTranscriptToEnd();});return msg;}
-    thread.messages.push(msg);thread.updated='now';renderApp();scrollTranscriptToEnd();return msg;
+    if(TX?.isActive()){TX.append(thread,'messages',msg);TX.set(thread,'updated','now');TX.defer(()=>{renderApp();followIfSticky();});return msg;}
+    thread.messages.push(msg);thread.updated='now';renderApp();followIfSticky();return msg;
   }
+
+  /* ---- turn owners (Chat WOW M1) -------------------------------------
+     "Busy" used to mean runningRecs() alone, so anything else that holds the
+     assistant's turn -- a streaming reply, a scripted live turn -- could not
+     make a send queue, show Stop, or hold the queue flush. Owners register
+     {busy(tid), stop(tid), cancel(tid), reset()} and every busy test goes
+     through turnBusy(). */
+  const turnOwners=[];
+  function registerTurnOwner(o){ if(o&&!turnOwners.includes(o)) turnOwners.push(o); return o; }
+  function ownersBusy(tid){ for(const o of turnOwners){ try{ if(o.busy&&o.busy(tid)) return true; }catch(e){ console.error('PM56 turn owner busy() threw',e); } } return false; }
+  function turnBusy(tid=state.selectedThread){ return runningRecs().length>0 || ownersBusy(tid); }
+  function notifyTurnOwners(kind,tid){ for(const o of turnOwners){ try{ if(o[kind]) o[kind](tid); }catch(e){ console.error(`PM56 turn owner ${kind}() threw`,e); } } }
+  /* Work-complete hooks may HOLD a chain's next run (return true) until they
+     call releaseNextRun(recId) -- a revealed reply streaming under a finished
+     card must finish before the next card mounts beneath it. */
+  const workCompleteHooks=[];
+  const heldNextRuns={};
+  function onWorkComplete(fn){ workCompleteHooks.push(fn); }
+  function releaseNextRun(recId){ const go=heldNextRuns[recId]; if(go){ delete heldNextRuns[recId]; go(); } }
 
   function startWorking(reset=false,rec=state.work){
     if(reset||rec.completed){
@@ -2988,11 +3263,13 @@ recommended path                  migration 0043 + rollback</div></div></section
      time because renderers gate them on the half-second clock. */
   function armWorkTimer(){
     clearInterval(workTimer);
-    workTimer=setInterval(workTick,500);
+    /* 500ms of MOTION time: a film tool that slows the clock slows the tick too. */
+    workTimer=setInterval(workTick,window.PM56_CLOCK?window.PM56_CLOCK.ms(500):500);
   }
   function workTick(){
     const live=runningRecs();
     if(!live.length){ stopWorkTimer(); return; }
+    let transition=false;
     for(const rec of live){
       const list=workInstancesFor(rec);
       rec.clock=workClock(rec)+0.5;
@@ -3002,12 +3279,41 @@ recommended path                  migration 0043 + rollback</div></div></section
         rec.clock=workRunEnd(list); rec.step=list.length-1;
         rec.completed=true; rec.running=false;
         onRecComplete(rec);
+        transition=true;
       }
     }
-    renderApp();
+    /* Chat WOW M1: a tick that only advanced clocks re-renders just the live
+       cards (and the status bar's elapsed time). Completion, reveals and anything
+       the light path cannot find fall back to the full render. */
+    if(transition||!lightTick(live)) renderApp();
     if(!runningRecs().length){ stopWorkTimer(); maybeFlushQueue(); }
   }
-  function stopWorkTimer(killSequence){ clearInterval(workTimer); workTimer=null; if(killSequence){ clearTimeout(seqTimer); seqTimer=null; } }
+  const STAMP_KEEP=['data-role','data-msg-type','data-family','data-turn','data-turn-pos'];
+  function lightTick(live){
+    const t=activeThread(), inner=document.querySelector('.transcript-inner');
+    if(!t||!inner) return false;
+    const recs=new Set(live), covered=new Set();
+    for(const m of t.messages){
+      if(m.type!=='working'||!messageVisible(m)) continue;
+      const rec=workRecFor(m); if(!rec||!recs.has(rec)) continue;
+      const raw=renderMessage(m,t); if(!raw) return false;
+      let html=stampItem(raw,[['data-k',m.id?'msg:'+m.id:null]]);
+      const key=(STAMP_HEAD.exec(html)||[])[3]; const km=key&&/\sdata-k="([^"]+)"/.exec(key);
+      if(!km) return false;
+      const node=inner.querySelector(`:scope > [data-k="${CSS.escape(km[1])}"]`);
+      if(!node) return false;
+      html=stampItem(html,STAMP_KEEP.map(a=>[a,node.getAttribute(a)]));
+      if(!patchScope(node,html)) return false;
+      covered.add(rec);
+    }
+    for(const r of live) if(!covered.has(r)) return false;
+    const sb=document.querySelector('.status-bar');
+    if(sb){ const tpl=document.createElement('template'); tpl.innerHTML=renderStatusBar(); if(tpl.content.firstElementChild) pmPatchNode(sb,tpl.content.firstElementChild); }
+    renderOverlays();
+    syncJumpBottom();
+    return true;
+  }
+  function stopWorkTimer(killSequence){ clearInterval(workTimer); workTimer=null; if(killSequence){ clearTimeout(seqTimer); seqTimer=null; for(const k in heldNextRuns) delete heldNextRuns[k]; } }
   /* Sequencer. A finished scripted run reveals its gated messages (the
      renderChat filter reads `completed`), then either spawns the next run in
      the chain -- compacting this card via supersededBy -- or, as the turn's
@@ -3015,24 +3321,31 @@ recommended path                  migration 0043 + rollback</div></div></section
      stopping (stopWorkTimer() without the kill flag keeps it); only
      switchThread/reset/globalReset kill the chain. */
   function onRecComplete(rec){
+    let hold=false;
+    for(const fn of workCompleteHooks){ try{ if(fn(rec)===true) hold=true; }catch(e){ console.error('PM56 workComplete hook threw',e); } }
     const def=rec.runId&&D.workRuns&&D.workRuns[rec.runId];
     if(!def) return;                 // a PRIMARY record completing must not scroll the reader
-    scrollTranscriptToEnd();
+    followIfSticky();
     clearTimeout(seqTimer);
-    /* A finished card NEVER compacts itself: the LAST work activity in a
-       turn stays expanded indefinitely, and an earlier one collapses only
-       when its successor actually enters the thread — startWorkingRec sets
-       supersededBy at spawn time, which drives the collapse choreography. */
+    /* A finished card compacts when its successor enters the thread (startWorkingRec
+       sets supersededBy at spawn time) or when the turn's answer starts streaming
+       (turn-stream.js). */
     if(def.next&&D.workRuns[def.next.run]){
-      const nid=def.next.run, pid=rec.runId;
-      seqTimer=setTimeout(()=>{ startWorkingRec(nid,pid); },def.next.delayMs||1200);
+      const nid=def.next.run, pid=rec.id||rec.runId, delay=def.next.delayMs||1200;
+      const go=()=>{ clearTimeout(seqTimer); seqTimer=setTimeout(()=>{ seqTimer=null; startWorkingRec(nid,pid); },delay); };
+      if(hold) heldNextRuns[pid]=go; else go();
     }
   }
-  function startWorkingRec(runId,prevId){
+  /* recId separates the RECORD from the fixture RUN it plays, so a scripted
+     live turn can replay a run without colliding with the fixture thread's
+     record of the same run. Fixture chains keep recId === runId. */
+  function startWorkingRec(runId,prevId,opts){
     if(!(D.workRuns&&D.workRuns[runId])) return;
-    state.works[runId]={step:0,running:true,expanded:false,started:true,completed:false,elapsed:0,openPhase:null,clock:0,runId};
-    if(prevId&&state.works[prevId]){ state.works[prevId].supersededBy=runId; state.works[prevId].expanded=false; }
-    armWorkTimer(); renderApp(); scrollTranscriptToEnd();
+    const recId=(opts&&opts.recId)||runId;
+    state.works[recId]={step:0,running:true,expanded:false,started:true,completed:false,elapsed:0,openPhase:null,clock:0,runId,id:recId};
+    if(prevId&&state.works[prevId]){ state.works[prevId].supersededBy=recId; state.works[prevId].expanded=false; }
+    armWorkTimer(); renderApp(); followIfSticky();
+    return state.works[recId];
   }
   function chainRootOf(runId){
     let cur=runId, guard=0;
@@ -3069,9 +3382,11 @@ recommended path                  migration 0043 + rollback</div></div></section
   function pauseWorking(rec=state.work){ rec.running=false; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
   function stepWorking(rec=state.work){ rec.running=false; rec.started=true; scrubTo(rec,rec.step+1); if(!rec.runId) rec.elapsed+=3; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
   function completeWorking(rec=state.work){ rec.running=false; rec.started=true; scrubTo(rec,1e9); if(!rec.runId) rec.elapsed=Math.max(rec.elapsed,134); rec.expanded=false; rec.openPhase=null; if(!runningRecs().length) stopWorkTimer(); renderApp(); if(!runningRecs().length) maybeFlushQueue(); }
-  function resetWorking(rec=state.work){ if(rec.runId){ resetChain(rec.runId); return; } state.work=clone(DEFAULT.work); state.workTerminal={}; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
+  function restartRec(rec){ rec.step=0; rec.clock=0; rec.elapsed=0; rec.completed=false; rec.running=true; rec.started=true; rec.openPhase=null; delete rec.supersededBy; state.workTerminal={}; armWorkTimer(); renderApp(); }
+  function resetWorking(rec=state.work){ if(rec.runId){ if(rec.id&&rec.id!==rec.runId){ restartRec(rec); return; } resetChain(rec.runId); return; } state.work=clone(DEFAULT.work); state.workTerminal={}; if(!runningRecs().length) stopWorkTimer(); renderApp(); }
 
   function globalReset(){
+    notifyTurnOwners('reset');
     stopWorkTimer(true);if(window.PM56_CTX&&window.PM56_CTX.reset)window.PM56_CTX.reset();safeStorage.del('pm56-prefs');D.models=clone(FIXTURE0.models);D.artifacts=clone(FIXTURE0.artifacts);state=clone(DEFAULT);state.threads=clone(D.threads);state.questions=clone(D.questions);renderApp(false);toast('Concept reset','All recipes, components, panels, threads, answers, artifacts, and working states returned to stock.');setTimeout(()=>{if(state.demoAutoStart)startWorking(true);},900);
   }
 
@@ -3085,7 +3400,7 @@ recommended path                  migration 0043 + rollback</div></div></section
   }
   function handleSend(){
     const raw=state.composer.trim();if(!raw)return;
-    if(runningRecs().length){
+    if(turnBusy()){
       const q=queueOf();
       if(q.length>=2){ toast('Queue full','Send, edit, or cancel a queued message before adding another.'); return; }
       q.push({id:uid('q'), text:raw});
@@ -3097,7 +3412,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     deliverSend(raw);
   }
   function maybeFlushQueue(){
-    if(runningRecs().length || seqTimer) return;
+    if(turnBusy() || seqTimer) return;
     const q=queueOf();
     if(!q.length) return;
     const next=q.shift();
@@ -3110,6 +3425,7 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(outcome && outcome.admitted!==true && outcome.restoreQueue===true){ q.unshift(next); renderApp(); }
   }
   function stopCurrentWork(){
+    notifyTurnOwners('stop',state.selectedThread);
     stopWorkTimer(true);
     if(state.work.running) state.work.running=false;
     for(const k in state.works) if(state.works[k].running) state.works[k].running=false;
@@ -3182,6 +3498,8 @@ recommended path                  migration 0043 + rollback</div></div></section
     const admittedMessage={id:uid('user'),role:'user',type:'text',body:raw,time:new Date().toISOString()};
     if(explanationPreference?.ok)admittedMessage.explanationPreference=clone(explanationPreference);
     t.messages.push(admittedMessage);
+    /* Chat WOW: the composer text flies into this bubble (turn-stream.js). */
+    window.PM56_STREAM?.sent(admittedMessage,t);
     const low=raw.toLowerCase();
     if(RTc && RTc.destination && (RTc.destination.kind==='plan-revision'||window.PM56_ROOM?.owns(RTc.destination.refId))){
       /* Plan revisions are normally claimed atomically by their pre-send owner. */
@@ -3196,12 +3514,16 @@ recommended path                  migration 0043 + rollback</div></div></section
     else if(low.startsWith('/web')){const wid=uid('run');t.messages.push({id:uid('work'),role:'system',type:'working',title:'Web research',workId:wid});state.works[wid]={step:3,running:false,expanded:false,started:true,completed:false,elapsed:6,openPhase:null};}
     else{
       const example=window.PM56_ELI5_DEMOS?.reply(t,raw,explanationPreference,admittedMessage.id);
-      t.messages.push(example||{id:uid('assistant'),role:'assistant',type:'text',body:explanationPreference?.effective
+      /* Chat WOW: an ordinary reply streams in (turn-stream.js) unless a recorded
+         example answers it, or a harness asked for instant replies. */
+      const streamed=!example&&state.replyMode!=='instant'&&window.PM56_STREAM?.reply(extCtx(),t,raw,{explanationPreference,sourceId:admittedMessage.id});
+      if(!streamed) t.messages.push(example||{id:uid('assistant'),role:'assistant',type:'text',body:explanationPreference?.effective
         ?'This example adds a reply to the conversation. You can try the message buttons and panels without changing your files.'
         :'I added this as a normal conversational turn so you can evaluate the reading rhythm, message actions, wide response layout, and persistent More Details surface.',time:new Date().toISOString(),explanationPreference:clone(explanationPreference||null)});
     }
     const finalMessage=t.messages[t.messages.length-1];
-    if(finalMessage?.role==='assistant') window.PM56_AUTO_MEMORY?.boundary(t,finalMessage);
+    /* A streaming placeholder is empty: the boundary is recorded when it finishes. */
+    if(finalMessage?.role==='assistant'&&!finalMessage.streaming) window.PM56_AUTO_MEMORY?.boundary(t,finalMessage);
     RTc?.commitAccepted?.(extCtx(),t,admittedMessage);
     renderApp();
     scrollTranscriptToEnd();
@@ -3462,6 +3784,9 @@ recommended path                  migration 0043 + rollback</div></div></section
     if(a==='queue-send-now'){
       const q=queueOf(); const i=q.findIndex(x=>x.id===btn.dataset.id); if(i<0)return;
       const [entry]=q.splice(i,1);
+      /* Send now interrupts a reply that is still being written, rather than
+         starting a second one alongside it. */
+      if(ownersBusy(state.selectedThread)) notifyTurnOwners('stop',state.selectedThread);
       const outcome=deliverSend(entry.text);
       /* B20-R3-F3: a veto or validator exception keeps the queue entry in its
          slot unless the held input is already visible again (restored to the
@@ -3688,6 +4013,12 @@ recommended path                  migration 0043 + rollback</div></div></section
     openPlan:()=>{decisionExit=null;state.decision={type:'plan',mode:'review'};renderApp();},
     openPermission:()=>{decisionExit=null;state.decision={type:'permission'};renderApp();},
     startWorking:()=>startWorking(true),pauseWorking,stepWorking,completeWorking,resetWorking,
+    /* Test hooks (Chat WOW): advance every running record by one tick now, and
+       choose how new assistant replies arrive ('stream' default, 'instant' for
+       harnesses that send twice in quick succession). */
+    tickOnce:()=>workTick(),
+    setVoice:(v)=>{ state.motionVoice=['basic','friendly','glass','retro'].includes(v)?v:'auto'; renderApp(); },
+    setReplyMode:(mode)=>{ state.replyMode=mode==='instant'?'instant':'stream'; },
     setWorkStep:(i)=>{state.work.started=true;state.work.running=false;scrubTo(state.work,Number(i));if(!runningRecs().length)stopWorkTimer();renderApp();},
     trigger:runDemoTrigger,
     listTriggers:allDemoTriggers,
@@ -3698,6 +4029,7 @@ recommended path                  migration 0043 + rollback</div></div></section
   // Initial full render and a real, one-shot working sequence so the first open is not static.
   renderApp(false);
   scrollTranscriptToEnd(true);
+  finishEntrances();
   setTimeout(()=>{if(state.demoAutoStart&&!state.work.started&&state.selectedThread==='query')startWorking(true);},250);
 })();
 

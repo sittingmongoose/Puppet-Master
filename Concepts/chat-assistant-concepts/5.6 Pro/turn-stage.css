@@ -1,0 +1,279 @@
+/* turn-stage.css -- Chat WOW (2026-09-26). OWNER: turn-stage.js.
+ *
+ * 1. Role tokens for all eight themes: the accent budget. Surfaces stay neutral,
+ *    the user bubble is a raised neutral, the accent is spent only on live work
+ *    and on items that need the reader, and three quiet family hues mark what a
+ *    card IS (deliverable / people / time) on its eyebrow tile and spine tick.
+ * 2. Item families, keyed on the data-family stamp app.js writes on every
+ *    transcript item. Each family has its own silhouette, so a plan, a crew run,
+ *    a scheduled message and a receipt no longer read as the same card. These
+ *    rules are :where()-light so any lab take's own rules still win.
+ * 3. The Stage take (transcript data-variant 16, the default): turn anatomy --
+ *    a presence mark opens each assistant turn, a hairline spine runs through
+ *    the turn's items and ends in a dot, items hang off it with a family tick,
+ *    ledger receipts sit ON the spine, and turns are separated by rhythm, not
+ *    by boxes.
+ */
+
+/* ---------------------------------------------------------------- 1 tokens */
+body[data-theme] {
+  --tx-gutter: 26px;
+  --tx-gap: 14px;
+  --tx-turn-gap: 34px;
+  --tx-spine: color-mix(in srgb, var(--text) 12%, transparent);
+  --tx-spine-strong: color-mix(in srgb, var(--text) 32%, transparent);
+  --tx-mark: color-mix(in srgb, var(--text) 62%, transparent);
+  --tx-user-bg: color-mix(in srgb, var(--text) 8%, var(--surface));
+  --tx-user-edge: color-mix(in srgb, var(--text) 9%, transparent);
+  --tx-sheet: color-mix(in srgb, var(--text) 5%, var(--surface-2));
+  --tx-sheet-edge: color-mix(in srgb, var(--text) 10%, transparent);
+  --tx-sunken: color-mix(in srgb, #000 24%, var(--surface));
+  --tx-sunken-edge: color-mix(in srgb, var(--text) 8%, transparent);
+  --tx-live: var(--accent);
+  --tx-needs: var(--accent);
+  --tx-shadow: 0 1px 0 color-mix(in srgb, #fff 5%, transparent) inset, 0 16px 34px -22px rgb(0 0 0 / .8);
+  --fam-deliverable: #4cc6b2;
+  --fam-people: #f3957c;
+  --fam-time: #e9b353;
+}
+body[data-theme$="-light"] {
+  --tx-sunken: color-mix(in srgb, var(--text) 4%, var(--surface-2));
+  --tx-mark: color-mix(in srgb, var(--text) 55%, transparent);
+  --tx-shadow: 0 1px 2px rgb(20 20 30 / .05), 0 14px 30px -20px rgb(20 20 40 / .32);
+  --fam-deliverable: #11806f;
+  --fam-people: #c0553a;
+  --fam-time: #a26a0c;
+}
+body[data-theme="friendly-dark"] { --fam-deliverable: #7fd6c4; --fam-people: #ffab8f; --fam-time: #ffd07a; }
+body[data-theme^="glass"] { --tx-sheet: color-mix(in srgb, #fff 6%, var(--surface-2)); --tx-user-bg: color-mix(in srgb, #fff 10%, var(--surface)); }
+body[data-theme="glass-dark"] { --tx-sunken: color-mix(in srgb, #000 30%, var(--surface)); --fam-deliverable: #7fe0d0; --fam-people: #ffb3a6; --fam-time: #ffd98a; }
+body[data-theme="glass-light"] { --tx-sheet: color-mix(in srgb, #fff 55%, var(--surface-2)); --tx-user-bg: color-mix(in srgb, #fff 40%, var(--surface-3)); }
+body[data-theme^="retro"] { --tx-shadow: none; --tx-mark: var(--accent); }
+body[data-theme="retro-dark"] { --fam-deliverable: #59d6ff; --fam-people: #ffb454; --fam-time: #f2d35e; }
+body[data-theme="retro-light"] { --fam-deliverable: #166d83; --fam-people: #9a4b12; --fam-time: #86600d; }
+
+/* ------------------------------------------------------- 3 the Stage take */
+.transcript[data-variant="16"] .transcript-inner { gap: var(--tx-gap); max-width: 940px; }
+/* assistant-side items hang in the gutter; the user side does not */
+.transcript[data-variant="16"] .transcript-inner > [data-turn-pos]:not([data-turn-pos="user"]) {
+  position: relative; margin-left: var(--tx-gutter); width: auto; max-width: calc(100% - var(--tx-gutter));
+}
+/* turn rhythm: a user turn opens with air above it */
+.transcript[data-variant="16"] .transcript-inner > [data-turn-pos="user"]:not(:first-child) { margin-top: calc(var(--tx-turn-gap) - var(--tx-gap)); }
+/* prose: the only full-contrast reading text; the mark replaces the role label */
+.transcript[data-variant="16"] .message-assistant .message-role { display: none; }
+.transcript[data-variant="16"] .message-assistant .message-body { font-size: 14px; line-height: 1.66; color: var(--text); }
+.transcript[data-variant="16"] .message-assistant .message-surface { padding: 0; }
+/* the user turn: a raised neutral, no accent tint, no border colour */
+.transcript[data-variant="16"] .message-user .message-surface {
+  width: auto; max-width: min(80%, 700px);
+  background: var(--tx-user-bg); border: 1px solid var(--tx-user-edge);
+  border-radius: 18px 18px 6px 18px; padding: 10px 14px;
+}
+.transcript[data-variant="16"] .message-user .message-body { font-size: 13.5px; line-height: 1.6; }
+/* ledger receipts sit on the spine: the icon rides the line */
+.transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] > .event-icon {
+  position: absolute; left: calc(-1 * var(--tx-gutter) + 1px); top: 4px; z-index: 1;
+  width: 17px; height: 17px; border-radius: 50%;
+  background: var(--surface); box-shadow: 0 0 0 3px var(--surface);
+}
+.transcript[data-variant="16"] .transcript-inner > [data-family="ledger"] { padding-left: 0; }
+
+/* the spine layer (turn-stage.js draws it): marks, hairlines, ticks, end dots,
+   and the comet that runs to whatever is live. It sits behind the items. */
+.transcript { position: relative; isolation: isolate; }
+.tx-spine-layer { position: absolute; left: 0; top: 0; width: 100%; height: 0; pointer-events: none; z-index: -1; }
+.tx-spine-layer .sp-svg { position: absolute; left: 0; top: 0; overflow: visible; }
+.sp-line { fill: none; stroke: var(--tx-spine); stroke-width: 1; }
+.sp-end { fill: var(--tx-spine-strong); }
+.sp-tick { fill: var(--tx-spine-strong); stroke: var(--surface); stroke-width: 3; paint-order: stroke; }
+.sp-tick[data-f="deliverable"] { fill: var(--fam-deliverable); }
+.sp-tick[data-f="needs"] { fill: var(--tx-needs); }
+.sp-tick[data-f="people"] { fill: var(--fam-people); }
+.sp-tick[data-f="time"] { fill: var(--fam-time); }
+.sp-mark .sp-ring { fill: none; stroke: var(--tx-mark); stroke-width: 1.7; }
+.sp-mark .sp-sat { fill: var(--tx-mark); }
+.sp-mark .sp-orbit { transform-box: fill-box; transform-origin: center; }
+.sp-mark .sp-hub { fill: none; stroke: none; }
+.sp-mark[data-state="pending"] .sp-ring { stroke: var(--tx-live); animation: sp-breathe 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.sp-mark[data-state="pending"] .sp-sat { fill: var(--tx-live); }
+.sp-mark[data-state="pending"] .sp-orbit { animation: sp-orbit 1.15s linear infinite; }
+.sp-mark[data-state="live"] .sp-ring { stroke: var(--tx-live); }
+.sp-mark[data-state="live"] .sp-sat { fill: var(--tx-live); filter: drop-shadow(0 0 3px var(--tx-live)); }
+.sp-mark[data-state="live"] .sp-orbit { animation: sp-orbit 3.2s linear infinite; }
+@keyframes sp-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes sp-breathe { 0%, 100% { transform: scale(.92); opacity: .75; } 50% { transform: scale(1.08); opacity: 1; } }
+.sp-comet {
+  fill: none; stroke: var(--tx-live); stroke-width: 2; stroke-linecap: round;
+  stroke-dasharray: 12 100; stroke-dashoffset: 112;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--tx-live) 80%, transparent));
+  animation: sp-comet 1.7s cubic-bezier(.45, 0, .55, 1) infinite;
+}
+@keyframes sp-comet { from { stroke-dashoffset: 112; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } to { stroke-dashoffset: 0; opacity: 0; } }
+body[data-theme$="-light"] .sp-comet { filter: none; }
+/* voices */
+.transcript[data-voice="friendly"] .sp-line { stroke-dasharray: 1 5; stroke-linecap: round; stroke-width: 2; stroke: var(--tx-spine-strong); }
+.transcript[data-voice="friendly"] .sp-comet { stroke-width: 3; stroke-dasharray: 1 7 1 7 1 100; }
+.transcript[data-voice="glass"] .sp-line { stroke-width: 2; stroke: color-mix(in srgb, var(--text) 9%, transparent); }
+.transcript[data-voice="glass"] .sp-comet { stroke-width: 4; stroke-dasharray: 6 100; filter: drop-shadow(0 0 7px var(--tx-live)); }
+.transcript[data-voice="retro"] .sp-line { stroke-dasharray: 2 3; stroke-linecap: square; stroke: var(--tx-spine-strong); }
+.transcript[data-voice="retro"] .sp-comet { stroke-linecap: square; stroke-width: 3; stroke-dasharray: 3 100; animation-timing-function: steps(14, end); filter: none; }
+.transcript[data-voice="retro"] .sp-mark .sp-orbit { animation-timing-function: steps(8, end); }
+.transcript[data-voice="retro"] .sp-mark .sp-ring { stroke-width: 2; }
+@media (prefers-reduced-motion: reduce) { .sp-comet { display: none; } .sp-mark .sp-orbit, .sp-mark .sp-ring { animation: none !important; } }
+
+/* ------------------------------------------------------- 2 item families */
+/* WORK -- a sunken instrument. The accent belongs to it only while it is live. */
+.transcript-inner > .working-card {
+  background: var(--tx-sunken);
+  border: 1px solid var(--tx-sunken-edge);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #000 22%, transparent), inset 0 0 0 1px color-mix(in srgb, #fff 2%, transparent);
+  border-radius: 16px;
+}
+.transcript-inner > .working-card:not(.is-done) {
+  border-color: color-mix(in srgb, var(--tx-live) 30%, var(--tx-sunken-edge));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #000 22%, transparent), 0 0 0 4px color-mix(in srgb, var(--tx-live) 6%, transparent), 0 18px 40px -26px color-mix(in srgb, var(--tx-live) 55%, transparent);
+}
+.transcript-inner > .working-card .working-head { border-bottom-color: var(--tx-sunken-edge); }
+/* accent rule: the model chip in the hover row is information, not decoration */
+.transcript-inner .message-meta .meta-model { background: color-mix(in srgb, var(--text) 6%, transparent); color: color-mix(in srgb, var(--text) 78%, transparent); border-color: transparent; }
+.transcript-inner .message-meta .meta-model svg { color: var(--muted); }
+.transcript-inner > .working-card.is-done .work-phase-icon {
+  background: color-mix(in srgb, var(--text) 7%, transparent); color: var(--muted); box-shadow: none;
+}
+
+/* DELIVERABLE -- a raised sheet: lighter surface, paper shadow, eyebrow tile */
+.transcript-inner > [data-family="deliverable"]:is(.system-card, .work-output, .plan-doc, article) {
+  background: var(--tx-sheet);
+  border: 1px solid var(--tx-sheet-edge);
+  border-radius: 16px;
+  box-shadow: var(--tx-shadow);
+}
+.transcript-inner > [data-family="deliverable"] .system-card-head { border-bottom-color: var(--tx-sheet-edge); padding: 11px 14px; }
+.transcript-inner > [data-family="deliverable"] .system-card-head .title { font-size: 14px; letter-spacing: -.005em; }
+.transcript-inner > [data-family="deliverable"] :is(.system-card-head > .event-icon, .work-output-icon) {
+  background: color-mix(in srgb, var(--fam-deliverable) 15%, transparent); color: var(--fam-deliverable); border-radius: 9px;
+}
+.transcript-inner > [data-family="deliverable"] .plan-preview-kicker svg { color: var(--fam-deliverable); }
+.transcript-inner > [data-family="deliverable"] .system-card-body { padding: 12px 14px 14px; }
+.transcript-inner > [data-family="deliverable"] .artifact-preview {
+  border-radius: 12px; border-color: var(--tx-sheet-edge);
+  background: color-mix(in srgb, #000 18%, var(--code));
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / .35);
+}
+body[data-theme$="-light"] .transcript-inner > [data-family="deliverable"] .artifact-preview { background: var(--code); box-shadow: inset 0 1px 2px rgb(0 0 0 / .06); }
+.transcript-inner > [data-family="deliverable"] .mini-graph i {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fam-deliverable) 85%, #fff), color-mix(in srgb, var(--fam-deliverable) 55%, transparent));
+}
+
+/* NEEDS YOU -- the only family that spends the accent */
+.transcript-inner > [data-family="needs"].event-card {
+  --needs: var(--tx-needs);
+  background: color-mix(in srgb, var(--needs) 9%, var(--surface-2));
+  border: 1px solid color-mix(in srgb, var(--needs) 40%, transparent);
+  border-radius: 16px; padding: 13px 15px; gap: 12px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--needs) 6%, transparent);
+}
+.transcript-inner > [data-family="needs"].event-card.danger { --needs: var(--danger); }
+.transcript-inner > [data-family="needs"] > .event-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: color-mix(in srgb, var(--needs) 20%, transparent); color: var(--needs);
+}
+.transcript-inner > [data-family="needs"] .event-kind { color: var(--needs); }
+.transcript-inner > [data-family="needs"] .event-copy strong { font-size: 13.5px; }
+.transcript-inner > [data-family="needs"] .plan-actions > .soft-button:first-child {
+  background: var(--needs); color: var(--on-accent); border-color: transparent; font-weight: 650;
+}
+
+/* PEOPLE -- a roster: warm band, avatar stack, participant tone rings */
+.transcript-inner > [data-family="people"]:is(.event-card, .system-card, .work-output) {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fam-people) 8%, var(--tx-sheet)), var(--tx-sheet) 70%);
+  border: 1px solid color-mix(in srgb, var(--fam-people) 22%, var(--tx-sheet-edge));
+  border-radius: 16px;
+}
+.transcript-inner > [data-family="people"] :is(.collab-kind-badge, .system-card-head > .event-icon, > .event-icon, .work-output-icon) {
+  color: var(--fam-people); background: color-mix(in srgb, var(--fam-people) 14%, transparent);
+}
+.transcript-inner > [data-family="people"] .system-card-head { border-bottom-color: color-mix(in srgb, var(--fam-people) 16%, var(--tx-sheet-edge)); }
+.tx-avatars { display: inline-flex; align-items: center; padding-left: 6px; flex: 0 0 auto; }
+.tx-avatars > i {
+  width: 22px; height: 22px; margin-left: -6px; border-radius: 50%;
+  display: grid; place-items: center; font: 700 8.5px/1 var(--font-ui); font-style: normal; letter-spacing: .02em;
+  color: var(--text); background: color-mix(in srgb, var(--fam-people) 26%, var(--surface-3));
+  box-shadow: 0 0 0 2px var(--tx-sheet);
+}
+.tx-avatars > i[data-tone="run"] { box-shadow: 0 0 0 2px var(--tx-sheet), 0 0 0 3.5px color-mix(in srgb, var(--tx-live) 70%, transparent); }
+.tx-avatars > i[data-tone="bad"] { box-shadow: 0 0 0 2px var(--tx-sheet), 0 0 0 3.5px color-mix(in srgb, var(--danger) 70%, transparent); }
+.tx-avatars > i.more { background: var(--surface-3); color: var(--muted); }
+
+/* TIME -- a ticket: stub with the time, perforated edge, punched notches */
+.transcript-inner > [data-family="time"].sched-card {
+  --stub: 84px;
+  display: grid; grid-template-columns: var(--stub) minmax(0, 1fr); align-items: start;
+  padding: 0; border-radius: 14px;
+  background: var(--tx-sheet); border: 1px solid color-mix(in srgb, var(--fam-time) 26%, var(--tx-sheet-edge));
+  -webkit-mask: radial-gradient(circle 7px at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle 7px at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
+  mask: radial-gradient(circle 7px at var(--stub) 0, #0000 97%, #000) top / 100% 51% no-repeat, radial-gradient(circle 7px at var(--stub) 100%, #0000 97%, #000) bottom / 100% 51% no-repeat;
+}
+.transcript-inner > [data-family="time"].sched-card > :not(.sched-stub) { grid-column: 2; padding-left: 15px; padding-right: 14px; }
+.transcript-inner > [data-family="time"].sched-card > .sched-card-head { padding-top: 12px; }
+.transcript-inner > [data-family="time"].sched-card > :last-child { padding-bottom: 11px; }
+.sched-stub {
+  grid-column: 1; grid-row: 1 / span 12; align-self: stretch;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  padding: 12px 6px; text-align: center; color: var(--fam-time);
+  border-right: 1.5px dashed color-mix(in srgb, var(--fam-time) 42%, transparent);
+  background: color-mix(in srgb, var(--fam-time) 7%, transparent);
+}
+.sched-stub b { font-size: 15px; font-weight: 750; letter-spacing: -.01em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.sched-stub span { font-size: 11px; color: color-mix(in srgb, var(--fam-time) 80%, var(--text)); }
+.sched-stub small { font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.transcript-inner > [data-family="time"].sched-card:is(.sched-card-sent, .sched-card-canceled, .sched-card-expired) .sched-stub { color: var(--muted); background: color-mix(in srgb, var(--text) 3%, transparent); border-right-color: var(--tx-sheet-edge); }
+
+/* LEDGER -- not a card: one quiet line (icon, title, first line of detail) */
+.transcript-inner > [data-family="ledger"].event-card {
+  background: transparent; border: 0; border-radius: 0; box-shadow: none;
+  padding: 3px 0; gap: 8px; align-items: center; min-height: 26px;
+}
+.transcript-inner > [data-family="ledger"] > .event-icon {
+  width: 18px; height: 18px; border-radius: 6px; background: transparent; color: var(--muted);
+}
+.transcript-inner > [data-family="ledger"] > .event-icon svg { width: 12px; height: 12px; }
+.transcript-inner > [data-family="ledger"].warning > .event-icon { color: var(--warning); }
+.transcript-inner > [data-family="ledger"].danger > .event-icon { color: var(--danger); }
+.transcript-inner > [data-family="ledger"].positive > .event-icon { color: var(--positive); }
+.transcript-inner > [data-family="ledger"] .event-copy { display: flex; align-items: baseline; gap: 7px; min-width: 0; flex: 1 1 auto; }
+.transcript-inner > [data-family="ledger"] .event-kind { display: none; }
+.transcript-inner > [data-family="ledger"] .event-copy strong { flex: 0 0 auto; font-size: 12px; font-weight: 620; color: color-mix(in srgb, var(--text) 84%, transparent); white-space: nowrap; }
+.transcript-inner > [data-family="ledger"] .event-copy p { margin: 0; font-size: 12px; color: var(--subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.transcript-inner > [data-family="ledger"] .event-copy p:empty { display: none; }
+.transcript-inner > [data-family="ledger"] .event-copy p:not(:empty) ~ p:not(:empty) { display: none; }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy { flex-wrap: wrap; row-gap: 2px; }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy p { white-space: normal; flex-basis: 100%; }
+.transcript-inner > [data-family="ledger"]:is(:hover, :focus-within) .event-copy p:not(:empty) ~ p:not(:empty) { display: block; }
+.transcript-inner > [data-family="ledger"] .plan-actions { margin: 0; flex: 0 0 auto; }
+.transcript-inner > [data-family="ledger"] .plan-actions > .soft-button {
+  min-height: 24px; padding: 0 8px; font-size: 11px; background: transparent; border-color: var(--tx-sheet-edge); color: var(--muted);
+}
+.transcript-inner > [data-family="ledger"] .pm-tops-card { font-size: 12px; }
+
+/* the accent leaves decoration: event icons outside Needs-you are neutral */
+.transcript-inner > :not([data-family="needs"]) .event-icon:not(.work-output-icon) { background: color-mix(in srgb, var(--text) 7%, transparent); color: var(--muted); }
+.transcript-inner > [data-family="deliverable"] .system-card-head > .event-icon,
+.transcript-inner > [data-family="people"] .system-card-head > .event-icon,
+.transcript-inner > [data-family="people"] > .event-icon { background: color-mix(in srgb, var(--tx-fam, var(--fam-people)) 14%, transparent); }
+
+/* needs-you: the action sits at the far edge, the copy takes the room */
+.transcript-inner > [data-family="needs"].event-card { align-items: center; }
+.transcript-inner > [data-family="needs"] .event-copy { flex: 1 1 auto; }
+.transcript-inner > [data-family="needs"] > .plan-actions { margin: 0 0 0 auto; flex: 0 0 auto; }
+/* people: live agent rows read as a roster, left-aligned, warm avatars */
+.transcript-inner > [data-family="people"] .live-agent-row { text-align: left; background: color-mix(in srgb, var(--text) 4%, transparent); border-color: var(--tx-sheet-edge); }
+.transcript-inner > [data-family="people"] .agent-avatar { background: color-mix(in srgb, var(--fam-people) 30%, var(--surface-3)); color: var(--text); box-shadow: none; }
+.transcript-inner > [data-family="people"] .live-agent-row > span:nth-child(2) { display: grid; gap: 1px; justify-items: start; }
+
+/* The gutter holds the spine, so the transcript's own left padding can give that
+   room back: the reading column stays as wide as it was before the spine, and
+   the hover row keeps its provider and model chips at the same widths. */
+.transcript[data-variant="16"] { padding-left: clamp(4px, 1vw, 10px); padding-right: clamp(12px, 2vw, 22px); }
+body[data-theme] { --tx-gutter: 24px; }

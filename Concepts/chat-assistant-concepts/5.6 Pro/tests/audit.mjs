@@ -617,7 +617,7 @@ for(const vw of [1920,1440,1280,1100]){
 await page.setViewportSize({width:1440,height:900});
 await cleanup('editor split sweep');
 
-await safe('Global reset restores stock state',async()=>{await page.evaluate(()=>{PM56_DEMO.setTheme('friendly-light');PM56_DEMO.setVariant(2,7);PM56_DEMO.selectThread('plain');PM56_DEMO.reset();});await page.waitForTimeout(100);const s=await page.evaluate(()=>PM56_DEMO.snapshot());const expected=[7,5,1,0,1,0,8];if(s.theme!=='basic-dark'||s.thread!=='query'||s.variants.some((x,i)=>x!==expected[i]))throw new Error(JSON.stringify(s));});
+await safe('Global reset restores stock state',async()=>{await page.evaluate(()=>{PM56_DEMO.setTheme('friendly-light');PM56_DEMO.setVariant(2,7);PM56_DEMO.selectThread('plain');PM56_DEMO.reset();});await page.waitForTimeout(100);const s=await page.evaluate(()=>PM56_DEMO.snapshot());const expected=[7,5,1,0,1,16,8];if(s.theme!=='basic-dark'||s.thread!=='query'||s.variants.some((x,i)=>x!==expected[i]))throw new Error(JSON.stringify(s));});
 
 /* ------------------------------------------------- matcher-hygiene summary */
 check(matchers.length>0,'Matcher hygiene: text assertions were actually exercised',`${matchers.length} matchers`);

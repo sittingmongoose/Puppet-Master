@@ -51,8 +51,9 @@ Build with `python3 build.py` then `--check`.
 - **Working Animation** starts on **#2 Orbit** (`variants[2]=1`). The dedicated
   Working activity picker matches that (Orbit · Default).
 - **Activity Detail** starts on **#2 Status Board** (`variants[4]=1`).
+- **Transcript** starts on **#17 Turn Stage** (`variants[5]=16`).
 - **Question & decision** starts on **#9 Ask Card** (`variants[6]=8`).
-- Full default vector is `variants:[7,5,1,0,1,0,8]`. Recipe starts as
+- Full default vector is `variants:[7,5,1,0,1,16,8]`. Recipe starts as
   **Custom mix** (`recipe: -1`) so those family picks are not mislabeled as
   PM7 Refined. **Reset all** restores this mix.
 
@@ -119,6 +120,93 @@ Build with `python3 build.py` then `--check`.
   overflow **panel is a sibling** of the toolbar (not nested inside it), so
   layout is three rows: meta, then Copy / Details / More, then the panel.
 
+## Transcript turns and item families (Turn Stage, the default take)
+
+- The default transcript take is **Turn Stage** (transcript take 16). The other
+  takes remain Demo Studio lab options.
+- **Turn anatomy.** Each assistant turn opens with a small **orbit mark** in a
+  24px gutter (it replaces the repeated "Assistant" label). A hairline **spine**
+  runs from the mark through every item of the turn and ends in a dot. Cards
+  meet the spine with a **family-colored tick**; prose carries no tick; ledger
+  receipts sit **on** the spine (their icon rides the line). A user turn opens
+  with extra air above it. The spine is one layer drawn behind the whole
+  transcript, so cards never clip it.
+- **Live.** While the assistant is thinking the mark's satellite **orbits**;
+  while a reply is written or work runs, the mark lights and a short **comet of
+  light** runs down the spine to the live item. Light, not color floods, says
+  live. Reduced motion drops both.
+- **Families.** Every transcript item is one of eight families, each with its
+  own silhouette:
+  - **Prose** (assistant text): no container, 14px reading type, the only
+    full-contrast text.
+  - **User**: a raised neutral bubble, no accent tint or colored border.
+  - **Work** (working activity): a sunken instrument surface; the accent glows
+    around it only while it is live.
+  - **Deliverable** (plans, artifacts, file-change records): a raised sheet
+    with a paper shadow and a teal eyebrow tile.
+  - **Needs you** (permission, questionnaire, advisor, tool error, model
+    unavailable, blocked, waiting): an accent-tinted surface, a round icon
+    medallion, and one filled primary action at the far edge (danger-toned for
+    tool errors).
+  - **People** (crew / review / brainstorm / chat room runs, live subagents,
+    delegation records): a roster with a warm band and an avatar stack whose
+    rings show each participant's state.
+  - **Time** (scheduled messages): a ticket with a stub showing the time, a
+    perforated edge, and punched notches.
+  - **Ledger** (goal, context, thread-op, teach and memory receipts, route
+    changes, reconnects, attachment events): not a card, one quiet line (icon,
+    title, first line of detail); hover or focus expands the rest.
+- **Accent rule.** Surfaces are neutral (Basic Dark and Light are graphite, not
+  navy). The accent is spent only on live work, on Needs-you items, on the one
+  primary action of a card, and on Send/Stop. Event icons outside Needs-you,
+  the model chip and chart bars are neutral or family-toned.
+- **Item identity.** Every item carries `data-family`, `data-msg-type`, a
+  stable key and its turn position, so an item revealed mid-list animates in
+  place and a thread switch arrives as one short crossfade instead of every
+  card fading in.
+
+## Live replies (streaming)
+
+- An ordinary reply **streams**. On send the reply's placeholder appears after
+  the bubble lands: the model's name and a shimmering "is thinking" (elapsed
+  seconds after 4s). The first word emerges where the caret starts; words
+  release at a natural, rate-smoothed pace (faster when text is waiting, a
+  breath at sentence ends, never a dump), behind a soft caret. The reply's
+  height follows its text through a spring, so a new line opens rather than
+  jumps, and follow-along glides with it.
+- Structure arrives with character: headings settle, list items slide in,
+  code frames open then grow, inline code and bold stream as themselves.
+- When the reply ends, the caret dissolves, the hover row shows for ~1.5s so
+  people learn it is there, and the reply renders exactly as streamed (no
+  reflow). A stopped reply keeps what was written with a **Stopped** marker;
+  an error keeps it with the error's note.
+- While a reply is being written the composer shows **Stop** and a send joins
+  the follow-up queue. **Send now** on a queued message stops the reply first.
+  Leaving the thread lets the reply finish (it is complete when you return).
+- Messages revealed after a work burst (the Multi Orbit demo's interim and
+  summary text) stream in the same way, and the next burst waits until the
+  interim text has finished.
+- Recorded example answers (ELI5) stay instant. Replies come from the concept's
+  scripted reply set (`data.js` `scriptedReplies`), including two with
+  structure: ask to "walk through the steps" or to "summarize".
+
+## Sending
+
+- The text you send **leaves the composer and becomes the bubble**: the typed
+  glyphs lift off the field, scale to the bubble's size and travel to its slot
+  while the bubble forms around them (one text layer; two only when the line
+  breaks differ). The field's placeholder returns once the text has left it.
+- **Theme voices.** One choreography, four personalities (dark and light share
+  a voice); timing and order never differ, only path, easing and texture:
+  - **Basic**: the text lifts; the bubble grows out of the text's own bounds.
+  - **Friendly**: the bubble pops out of the Send button, catches the text
+    mid-flight and carries it in; words hop into replies.
+  - **Glass**: the text floats up; the bubble condenses out of blur; words
+    surface from depth.
+  - **Retro**: the text blinks out; the bubble prints in line by line; replies
+    type in with a block cursor and phosphor bloom.
+  PMConcept7 adopts voices by theme family (same eight theme ids).
+
 ## Scroll to bottom
 
 - When the transcript is **not** at the bottom (more than ~24px of remaining
@@ -130,9 +218,14 @@ Build with `python3 build.py` then `--check`.
   treatment as activity-bar domain icons. Hidden at the bottom and when the
   thread does not overflow; the button stays in the DOM and only toggles
   visibility, so a scroll does not re-render the app.
-- Clicking it uses the existing scroll-to-end intent, so a click while work is
-  running **resumes follow-along** until the reader wheels again. The control
-  does not steal scroll just by being visible.
+- Clicking it re-engages **follow-along**: the transcript sticks to its bottom
+  edge while a reply streams or a card grows, gliding after the growth (a
+  critically damped approach, not a jump). Follow-along holds only while the
+  reader is at the bottom; wheel-up, touch, a scrollbar drag, a scrolling key
+  outside a text field, or anything that moves the view **up** (a jump to a
+  search result) releases it, and scrolling back to the bottom re-engages it.
+  Growth never moves a reader who has scrolled away; a receipt landing never
+  drags them back down. The control does not steal scroll just by being visible.
 - While any work record is running the tile is **working**: accent color,
   slightly heavier stroke, `ab-breathe` plus a small chevron bounce, hover card
   **Scroll to latest**. Idle hover card is **Scroll to bottom**. Reduced motion
@@ -583,6 +676,10 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   working card binds to its own work record; a scripted demo turn reveals its later
   messages only after the run they wait on completes (the "Multi Orbit demo" thread:
   user → burst A → interim assistant text → burst B → summary).
+- The half-second **work tick re-renders only the live working cards** (and the
+  status bar's elapsed time); completions, reveals, new cards and queue flushes
+  run a full render. Its period is 500ms of motion time (`PM56_CLOCK`), so a film
+  tool that slows the clock slows the tick with it.
 - **Clock-only work ticks** (card height unchanged, `|Δh| < 1px`) do **not** FLIP the
   working body or rewrite transcript `scrollTop`. User scroll during a live Orbit or
   Step Rail run is not stolen. Height-changing expand/collapse still FLIPs and
