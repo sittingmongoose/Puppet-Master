@@ -21,12 +21,17 @@ Directory:
 
 - `sound-upload-import-correction-01/companion.patch`: SHA-256 `3146244390ed50f12e023c2c7dcea3722a281911c1fe8befb42c9832f2f5239c`.
 - `sound-upload-import-correction-01/CORRECTION-DELTA.patch`: SHA-256 `ed94a61bfa2d1cb6960ccfadd660eaa549d23150200e3baf7e3e87b1d983a9c3`.
-- `sound-upload-import-correction-01/REPORT.md`: SHA-256 `6b65ae17c852851d7481c9e79be66d8e49909c4a4c69803307b3fc668645aae0`.
+- `SOUND-A-CORRECTION-REPORT-SNAPSHOT-20260926.md`: SHA-256 `008adf208614801c8569b3f23236a100dc1410001a0b0310593eff3b87b81908`.
+- `SOUND-A-CORRECTION-REPORT-SNAPSHOT-ADDENDUM-20260926.md`: SHA-256 `4ddf74edde1e5e7dab3432b6488559c5a8faae092937e1199a2e509f0c06b706`.
 - `SOUND-A-CORRECTION-INDEPENDENT-REVIEW-20260926.md`: SHA-256 `87d711f1deaeb2d144f084829815bb71f2f5a102269932b6b99a68cfef9304ba`.
 
 The new correction used its own native OMP Goal because the original author's
 Goal had completed. The correction Goal was active at its artifact freeze;
 delivery is not a claim of native Goal completion or application execution.
+The live author report continued changing after review. The separate immutable
+snapshot and independent narrative-only addendum above supersede this report's
+earlier reference to the mutable author's report path; the reviewed complete
+patch and correction-delta hashes did not change.
 
 ## Root integration delta
 

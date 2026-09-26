@@ -1,5 +1,13 @@
 # Packet-to-current-owner reconciliation checkpoint
 
+## Latest additive checkpoint — 2026-09-26, after `9c4cea1be`
+
+Independently reviewed dispositions cover **1,003 of 2,021 flagged identities**, with **1,018 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-df631d0370e9e49052356d729363e00e21ed322b3c2501a34265a44a64c4cc6b.jsonl`, SHA-256 `df631d0370e9e49052356d729363e00e21ed322b3c2501a34265a44a64c4cc6b`. Root verified the hash, 2,021 unique unchanged identities and historical fields, exactly 23 changed and 1,998 unchanged rows against the published 980-row checkpoint.
+
+The additions are eight bounded Forge alias result/consumer/test dimensions, four Backup destination dimensions, four Backup verification/drill dimensions, and seven existing Doctor group-taxonomy findings. Existing typed companions supersede some historical gaps without establishing runtime proof. Two generic Touch payload dimensions in each Backup family remain withheld. The Doctor taxonomy is not proof of all owner-source exchanges. Exact overlays, independent reviews and current evidence are pinned in the immutable checkpoint.
+
+Separately, TCP-PERF existing-reference selection is integrated in `f069512cb`, and Sound upload/import static companions in `9c4cea1be`; their exact scopes and test results have separate reports. Pending LSP and Browser candidates receive no completion credit. The full 13,416-case corpus also requires the impact-based evidence check recorded in `whole-corpus-currentness-gate.md`: this flagged-subset percentage is neither whole-corpus currentness nor product completion. No main landing or governance refresh is claimed.
+
 ## Latest additive checkpoint — 2026-09-26, after `0d642c563`
 
 Independently reviewed dispositions cover **980 of 2,021 identities**, with **1,041 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-9d24ac792bd05339bc5097eae868444262c61f8222f2ca7672baeb303bd1bb0b.jsonl`, SHA-256 `9d24ac792bd05339bc5097eae868444262c61f8222f2ca7672baeb303bd1bb0b`. Root verified the hash, 2,021 unique unchanged identities, all historical fields preserved, and exactly 122 changed rows / 1,899 unchanged rows against the published 858-row checkpoint. Reviewed includes partial and unresolved owner findings; it is not completed repair or runtime coverage.
