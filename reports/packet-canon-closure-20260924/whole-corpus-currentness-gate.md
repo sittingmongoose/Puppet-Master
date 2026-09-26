@@ -2,6 +2,24 @@
 
 Status: required final verification, not yet satisfied.
 
+Latest nonflagged checkpoint: **2,697 / 11,395 reviewed; 8,698 pending**.
+The Server batch adds 234 bounded static owner-law reviews, not native or
+whole-profile closure. Immutable external checkpoint:
+`/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/case-reconciliation/checkpoints/full-impact-reviewed-7ff8c6649df07304e78eca00eed20e8915e0b62516289767c61a743cc136dcb6.jsonl`,
+SHA-256 `7ff8c6649df07304e78eca00eed20e8915e0b62516289767c61a743cc136dcb6`.
+Root verified its hash, all 2,463 prior records unchanged, and exactly 234
+additional unique records. The 52 corrected event-residual descriptions do not
+invent admission requirements for routes whose `expected_event_types=[]`.
+Root also compared the reviewed Server/Settings owner documents, Server schema
+and Wiring bytes against current branch `6e09b7365`: identical; the selected
+Server Touch profile and 26 rows are unchanged despite unrelated Browser edits.
+The stale 32-versus-36 owner-total prose remains a separate repair, not a changed
+primary inventory. Detailed ingestion report:
+`/home/sittingmongoose/PM-Experiments/packet-parallel-20260925-WF6UrR/case-reconciliation/SERVER234-FULL-IMPACT-INGESTION.md`,
+SHA-256 `f0a6d33875f5d467e0504bd121e0b757eb1eec779fdf6b4955d3bbd3295abd1c`.
+Earlier checkpoints and the retirement screen below retain their original
+historical scope; this addition does not silently extend that screen.
+
 The current reconciliation matrix covers 2,021 historical gap/conflict/unresolved
 identities. Its reviewed percentage is not whole-corpus coverage. The frozen
 inventory contains 13,416 assessed identities: the other 11,395 comprise
