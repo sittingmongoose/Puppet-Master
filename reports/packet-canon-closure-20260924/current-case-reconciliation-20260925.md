@@ -1,5 +1,13 @@
 # Packet-to-current-owner reconciliation checkpoint
 
+## Latest additive checkpoint — 2026-09-26, after `5a9ea02e7`
+
+Independently reviewed dispositions cover **1,243 of 2,021 flagged identities**, with **778 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-d10afe8e8de8d738ede2f0a07c6bd06a579e8f1f48e8b71dd34482ea5a5f198d.jsonl`, SHA-256 `d10afe8e8de8d738ede2f0a07c6bd06a579e8f1f48e8b71dd34482ea5a5f198d`. Root verified the hash, all 2,021 unique unchanged identities and historical fields, exactly 90 changed and 1,931 unchanged rows against the published 1,153-row checkpoint.
+
+The additions are sixteen Server/WAN/acceptance/bootstrap facets, thirty credential/execution-topology facets, thirty-two selected-operand Source Control/Git/JJ/Forge cases, and twelve protected Tour/Assistant Chat facets. Only the precisely reviewed static repairs receive that credit. Twenty-eight credential/topology facets retain typed operand/join gaps; WAN placements remain GUI-spec residuals; selected operands do not establish native admission. The twelve protected facets remain reviewed-unresolved, including a current dangling ELI5 machine-contract reference. None authorizes replacement of newer Assistant Chat behavior with an older packet.
+
+The complete Forge regression suite now passes 453 tests after independently reviewed test-only reconciliation; see `forge-registry-test-reconciliation.md`. Whole-corpus currentness validation, remaining specification repairs, current-main reconciliation and landing are still open. No governance reseal or runtime completion is claimed.
+
 ## Latest additive checkpoint — 2026-09-26, after `b0ce58ef4`
 
 Independently reviewed dispositions cover **1,153 of 2,021 flagged identities**, with **868 unreviewed**. Immutable external checkpoint: `checkpoints/matrix-a187db1ee449317e3b3ca6e141b3723befbaabfb00d45824055e8f275f60eab7.jsonl`, SHA-256 `a187db1ee449317e3b3ca6e141b3723befbaabfb00d45824055e8f275f60eab7`. Root verified its hash, all 2,021 unique unchanged identities and historical fields, exactly 63 changed and 1,958 unchanged rows against the published 1,106-row checkpoint: 47 newly reviewed identities and 16 reclassified existing reviews.
