@@ -1,280 +1,865 @@
 {
-  "_about": "Plain labels for stored option values. The stored value never changes; only what a person reads. `global` applies everywhere a value appears; `bySetting` wins for one setting where a word means something specific there. `hints` is a short line shown under a choice in dropdowns and in the Details panel's list of choices.",
-  "global": {
-    "auto": "Automatic",
-    "automatic": "Automatic",
-    "off": "Off",
-    "on": "On",
-    "none": "None",
-    "inherit": "Same as the project",
-    "default": "Default",
-    "custom": "Custom",
-    "manual": "Manual",
-    "hybrid": "A mix of both",
-    "ask": "Ask me first",
-    "allow": "Allow",
-    "deny": "Block",
-    "never": "Never",
-    "always": "Always",
-    "low": "Low",
-    "medium": "Medium",
-    "high": "High",
-    "standard": "Standard",
-    "strict": "Strict",
-    "lenient": "Relaxed",
-    "balanced": "Balanced",
-    "fast": "Fast",
-    "thorough": "Thorough",
-    "full": "Everything",
-    "summary": "A summary",
-    "hidden": "Hidden",
-    "global": "Everywhere",
-    "project": "This project",
-    "markdown": "Formatted text (Markdown)",
-    "json": "JSON",
-    "yaml": "YAML",
-    "jsonc": "JSON with comments",
-    "plaintext": "Plain text",
-    "plain_text": "Plain text",
-    "structured": "Structured",
-    "regular": "Regular",
-    "plan": "Plan only",
-    "yolo": "No pauses",
-    "read_only": "Read only",
-    "lightweight": "Light",
-    "strong": "Strong",
-    "bounded": "A limited number",
-    "unlimited": "No limit",
-    "block": "Stop the work",
-    "keep": "Keep it",
-    "remove": "Remove it",
-    "merge": "Merge",
-    "squash": "Squash into one commit",
-    "rebase": "Rebase",
-    "copy": "Make a copy",
-    "symlink": "Link to the original",
-    "persistent": "Keep a profile for this project",
-    "isolated": "A fresh, clean profile each time",
-    "png": "PNG",
-    "jpg": "JPG",
-    "webp": "WebP",
-    "url": "A link",
-    "base64": "Embedded in the reply",
-    "bar": "Bars",
-    "line": "Line",
-    "area": "Filled area",
-    "semantic": "By meaning",
-    "recency": "Most recent first",
-    "eager": "Right away",
-    "lazy": "Only when needed",
-    "short": "Short",
-    "extended": "Extended",
-    "disabled": "Off",
-    "concise": "Short and to the point",
-    "detailed": "Detailed",
-    "terse": "Very short",
-    "normal": "Normal",
-    "verbose": "Long, with full explanations",
-    "draft": "Draft",
-    "stdio": "A program on the server (stdio)",
-    "sse": "A web address (SSE)",
-    "http": "A web address (HTTP)",
-    "personal": "Me (personal)",
-    "org": "My organization",
-    "team": "My team",
-    "email": "Email sign-in",
-    "sso": "Company sign-in (SSO)",
-    "warn": "Warn me",
-    "hide": "Hide the newer one",
-    "override": "Let the newer one take over",
-    "system": "Use this computer's settings",
-    "errors": "Errors only",
-    "errors_and_warnings": "Errors and warnings",
-    "skip": "Skip",
-    "fail": "Fail",
-    "continue": "Keep going",
-    "pause": "Pause",
-    "cancel": "Cancel",
-    "prompt": "Ask me which",
-    "assistant": "Assistant",
-    "general-purpose": "General purpose",
-    "explorer": "Explorer",
-    "bash": "Terminal helper",
-    "researcher": "Researcher",
-    "deep-researcher": "Deep researcher",
-    "teacher": "Teacher",
-    "overseer": "Overseer",
-    "collaborator": "Collaborator",
-    "product-manager": "Product manager",
-    "architect-reviewer": "Architecture reviewer",
-    "worker": "Worker",
-    "gui-worker": "Design and layout",
-    "high-effort-worker": "Heavy lifting",
-    "auditor": "Auditor",
-    "orchestrator": "Orchestrator",
-    "interview": "Planning interview",
-    "anthropic": "Claude (Anthropic)",
-    "openai": "OpenAI",
-    "codex": "Codex",
-    "gemini": "Gemini",
-    "gemini-direct": "Gemini API",
-    "antigravity-cli": "Google Antigravity",
-    "claude": "Claude",
-    "cursor": "Cursor",
-    "github-copilot": "GitHub Copilot",
-    "opencode": "OpenCode",
-    "alibaba": "Qwen (Alibaba)",
-    "minimax": "MiniMax",
-    "zai": "Z.AI",
-    "seam": "Each seam",
-    "package": "Each package",
-    "lane": "Each lane",
-    "node": "Each step",
-    "all": "All of them",
-    "section": "Its section",
-    "point": "Just the point",
-    "open": "Open files",
-    "changed_files": "Changed files only",
-    "zsh": "zsh",
-    "fish": "fish",
-    "5h and 7d": "5 hours and 7 days",
-    "5h": "5 hours",
-    "7d": "7 days",
-    "24h": "24 hours",
-    "30d": "30 days",
-    "90d": "90 days",
-    "180d": "180 days",
-    "1y": "1 year"
+ "_about": "Plain labels for stored option values. The stored value never changes; only what a person reads. `global` applies everywhere a value appears; `bySetting` wins for one setting where a word means something specific there. `hints` is a short line shown under a choice in dropdowns and in the Details panel's list of choices.",
+ "global": {
+  "auto": "Automatic",
+  "automatic": "Automatic",
+  "off": "Off",
+  "on": "On",
+  "none": "None",
+  "inherit": "Same as the project",
+  "default": "Default",
+  "custom": "Custom",
+  "manual": "Manual",
+  "hybrid": "A mix of both",
+  "ask": "Ask me first",
+  "allow": "Allow",
+  "deny": "Block",
+  "never": "Never",
+  "always": "Always",
+  "low": "Low",
+  "medium": "Medium",
+  "high": "High",
+  "standard": "Standard",
+  "strict": "Strict",
+  "lenient": "Relaxed",
+  "balanced": "Balanced",
+  "fast": "Fast",
+  "thorough": "Thorough",
+  "full": "Everything",
+  "summary": "A summary",
+  "hidden": "Hidden",
+  "global": "Everywhere",
+  "project": "This project",
+  "markdown": "Formatted text (Markdown)",
+  "json": "JSON",
+  "yaml": "YAML",
+  "jsonc": "JSON with comments",
+  "plaintext": "Plain text",
+  "plain_text": "Plain text",
+  "structured": "Structured",
+  "regular": "Regular",
+  "plan": "Plan only",
+  "yolo": "No pauses",
+  "read_only": "Read only",
+  "lightweight": "Light",
+  "strong": "Strong",
+  "bounded": "A limited number",
+  "unlimited": "No limit",
+  "block": "Stop the work",
+  "keep": "Keep it",
+  "remove": "Remove it",
+  "merge": "Merge",
+  "squash": "Squash into one commit",
+  "rebase": "Rebase",
+  "copy": "Make a copy",
+  "symlink": "Link to the original",
+  "persistent": "Keep a profile for this project",
+  "isolated": "A fresh, clean profile each time",
+  "png": "PNG",
+  "jpg": "JPG",
+  "webp": "WebP",
+  "url": "A link",
+  "base64": "Embedded in the reply",
+  "bar": "Bars",
+  "line": "Line",
+  "area": "Filled area",
+  "semantic": "By meaning",
+  "recency": "Most recent first",
+  "eager": "Right away",
+  "lazy": "Only when needed",
+  "short": "Short",
+  "extended": "Extended",
+  "disabled": "Off",
+  "concise": "Short and to the point",
+  "detailed": "Detailed",
+  "terse": "Very short",
+  "normal": "Normal",
+  "verbose": "Long, with full explanations",
+  "draft": "Draft",
+  "stdio": "A program on the server (stdio)",
+  "sse": "A web address (SSE)",
+  "http": "A web address (HTTP)",
+  "personal": "Me (personal)",
+  "org": "My organization",
+  "team": "My team",
+  "email": "Email sign-in",
+  "sso": "Company sign-in (SSO)",
+  "warn": "Warn me",
+  "hide": "Hide the newer one",
+  "override": "Let the newer one take over",
+  "system": "Use this computer's settings",
+  "errors": "Errors only",
+  "errors_and_warnings": "Errors and warnings",
+  "skip": "Skip",
+  "fail": "Fail",
+  "continue": "Keep going",
+  "pause": "Pause",
+  "cancel": "Cancel",
+  "prompt": "Ask me which",
+  "assistant": "Assistant",
+  "general-purpose": "General purpose",
+  "explorer": "Explorer",
+  "bash": "Terminal helper",
+  "researcher": "Researcher",
+  "deep-researcher": "Deep researcher",
+  "teacher": "Teacher",
+  "overseer": "Overseer",
+  "collaborator": "Collaborator",
+  "product-manager": "Product manager",
+  "architect-reviewer": "Architecture reviewer",
+  "worker": "Worker",
+  "gui-worker": "Design and layout",
+  "high-effort-worker": "Heavy lifting",
+  "auditor": "Auditor",
+  "orchestrator": "Orchestrator",
+  "interview": "Planning interview",
+  "anthropic": "Claude (Anthropic)",
+  "openai": "OpenAI",
+  "codex": "Codex",
+  "gemini": "Gemini",
+  "gemini-direct": "Gemini API",
+  "antigravity-cli": "Google Antigravity",
+  "claude": "Claude",
+  "cursor": "Cursor",
+  "github-copilot": "GitHub Copilot",
+  "opencode": "OpenCode",
+  "alibaba": "Qwen (Alibaba)",
+  "minimax": "MiniMax",
+  "zai": "Z.AI",
+  "seam": "Each seam",
+  "package": "Each package",
+  "lane": "Each lane",
+  "node": "Each step",
+  "all": "All of them",
+  "section": "Its section",
+  "point": "Just the point",
+  "open": "Open files",
+  "changed_files": "Changed files only",
+  "zsh": "zsh",
+  "fish": "fish",
+  "5h and 7d": "5 hours and 7 days",
+  "5h": "5 hours",
+  "7d": "7 days",
+  "24h": "24 hours",
+  "30d": "30 days",
+  "90d": "90 days",
+  "180d": "180 days",
+  "1y": "1 year",
+  "anthropic/claude-sonnet-4": "Claude Sonnet 4",
+  "anthropic/claude-opus-4": "Claude Opus 4",
+  "anthropic/claude-haiku-4": "Claude Haiku 4",
+  "openai/gpt-5": "GPT-5",
+  "gemini/gemini-2.5-pro": "Gemini 2.5 Pro",
+  "gemini/gemini-2.5-flash": "Gemini 2.5 Flash"
+ },
+ "bySetting": {
+  "general.visual.custom-theme-base": {
+   "basic-dark": "Basic Dark",
+   "basic-light": "Basic Light"
   },
-  "bySetting": {
-    "general.visual.custom-theme-base": { "basic-dark": "Basic Dark", "basic-light": "Basic Light" },
-    "general.interaction.notification-severity": { "info": "Information", "watch": "Worth watching", "attention_required": "Needs my attention", "blocked": "Something is stuck", "escalated": "Escalated to me" },
-    "ai.accounts.claude-login-method": { "claudeai": "Claude subscription", "console": "Claude Console (API)", "email": "Email link", "sso": "Company sign-in (SSO)" },
-    "ai.accounts.codex-auth-family": { "chatgpt": "ChatGPT plan", "api_key": "OpenAI API key" },
-    "ai.accounts.auth-mode": { "provider-default": "The service's usual way", "api-key": "API key", "oauth": "Browser sign-in", "session": "Existing sign-in on the server" },
-    "ai.accounts.github-host-policy": { "github.com_only": "github.com only", "enterprise_allowed": "Also company GitHub servers" },
-    "ai.accounts.credential-storage": { "os_keychain": "The server's secure keychain (safest)", "env": "An environment variable", "file": "A file on the server", "cli": "The service's own program keeps it" },
-    "ai.accounts.auth-surface": { "header_bearer": "Standard (Authorization header)", "header_api_key": "An API-key header", "query_param": "In the address (not recommended)", "cli_managed": "The service's program handles it", "oauth_token": "A browser sign-in token" },
-    "ai.accounts.auth-family": { "oauth": "Browser sign-in", "api_key": "API key", "subscription": "Subscription", "cli_managed": "Managed by the service's program" },
-    "ai.accounts.account-binding": { "none": "Let Puppet Master choose", "preferred": "Prefer the chosen account", "required": "Only the chosen account" },
-    "ai.accounts.switch-mode-override": { "sticky": "Stay on one account", "fallback": "Move only when forced", "round-robin": "Take turns" },
-    "ai.accounts.account-roles": { "overseer": "Overseeing", "worker": "Everyday work", "gui-worker": "Design and layout", "high-effort-worker": "Heavy lifting", "auditor": "Checking work", "assistant": "Assistant chat" },
-    "ai.accounts.billing-entity": { "personal": "Me (personal)", "org": "My organization", "team": "My team" },
-    "ai.models.default-variant": { "default": "The model's usual setting", "fast": "Faster and cheaper", "powerful": "Slower and smarter", "custom": "My own preset" },
-    "ai.models.reasoning-effort": { "auto": "Let the model decide", "off": "No extra thinking" },
-    "ai.models.lane-bindings": { "unconfigured": "Not set", "low_cost_executor": "Low-cost worker", "standard_reviewer": "Reviewer", "high_reasoning_orchestrator": "Planner and coordinator", "verifier": "Checker", "adjudicator": "Tie-breaker", "certifier": "Final sign-off" },
-    "ai.models.subagent-effort": { "standard": "Medium" },
-    "ai.models.execution-role": { "assistant": "Assistant chat", "interview": "Planning interview", "orchestrator": "Orchestrator", "worker": "Worker", "auditor": "Auditor" },
-    "ai.models.resolution-policy": { "conservative": "Careful (never guesses)", "standard": "Balanced", "aggressive": "Bold (chases cheapest or fastest)" },
-    "ai.models.capability-overrides": { "streaming": "Show answers as they're written", "tool-use": "Use tools", "thinking-blocks": "Show thinking", "parallel-tool-calls": "Use several tools at once", "assistant-prefill": "Start answers with a prefix", "image-input": "Read images" },
-    "ai.models.cache-strategy": { "off": "Off", "prompt-caching": "Cache repeated context", "ttl": "Cache for a set time", "automatic": "Automatic", "unsupported": "Not supported" },
-    "ai.models.system-role-name": { "system": "System (most models)", "developer": "Developer (some OpenAI models)" },
-    "ai.usage.usage-windows": { "custom": "Custom" },
-    "ai.usage.budget-policy": { "block_at_limit": "Stop at the limit", "warn_only": "Warn me and keep going", "allow_overage": "Allow going over" },
-    "ai.usage.usage-retention": { "unlimited": "Keep forever" },
-    "safety.rules.permission-preset": { "read_only": "Read only", "plan": "Plan only", "regular": "Regular", "full": "Full freedom", "custom": "Custom" },
-    "safety.rules.default-tool-permission": { "allow": "Allow it", "ask": "Ask me first", "deny": "Block it" },
-    "safety.rules.scope-selector": { "global": "Everywhere", "project": "This project", "package": "A package", "seam": "A seam", "lane": "A lane" },
-    "safety.approvals.autonomy-mode": { "hands-off": "Hands-off (only critical issues)", "ask-me-first": "Ask me at each checkpoint" },
-    "safety.approvals.checkpoint-types": { "credentials": "Passwords and keys", "billing": "Spending money", "destructive": "Deleting things", "external_sideeffect": "Changes outside the project", "security": "Security changes" },
-    "safety.approvals.require-plan-first": { "all": "Everything", "seam": "Each seam", "package": "Each package", "lane": "Each lane", "node": "Each step" },
-    "safety.approvals.alert-channel": { "dashboard": "The dashboard", "tray": "The system tray", "assistant_chat": "Assistant chat", "all": "Everywhere" },
-    "safety.approvals.approval-ladder-default": { "deny": "Don't approve", "once": "Just this once", "for_session": "For this session", "always": "Always" },
-    "safety.approvals.timeout-mode": { "off": "Wait until I answer", "ask": "Ask me again", "long_wait": "Mark it as waiting" },
-    "safety.approvals.doom-loop-action": { "allow": "Let it continue", "ask": "Stop and ask me", "deny": "Block it" },
-    "safety.approvals.loop-detection-mode": { "strict": "Stop quickly", "bounded": "Allow a few repeats", "adaptive": "Learn each pattern" },
-    "safety.approvals.debug-grant-scope": { "evidence_reads": "Read logs and evidence", "low_risk_investigation": "Low-risk checks", "temporary_instrumentation": "Add temporary logging" },
-    "safety.approvals.boundary-default-strictness": { "permissive": "Broad", "restrictive": "Moderate", "strict": "Narrow" },
-    "safety.protection.external-dir-action": { "allow": "Allow", "ask": "Ask me first", "deny": "Block" },
-    "safety.protection.redaction-profile": { "none": "Nothing hidden", "standard": "Standard", "aggressive": "Hide more", "custom": "Custom" },
-    "safety.protection.screenshot-redaction": { "inherit": "Same as text output", "standard": "Standard", "aggressive": "Hide more", "custom": "Custom" },
-    "code.terminal.shell": { "zsh": "zsh", "bash": "bash", "fish": "fish" },
-    "code.terminal.allowed-profiles": { "zsh": "zsh", "bash": "bash", "fish": "fish" },
-    "code.execution.dockerhub-namespace": { "custom…": "Other…" },
-    "code.execution.dockerhub-repository": { "custom…": "Other…" },
-    "code.execution.k8s-context": { "docker-desktop": "Docker Desktop", "unraid-k8s": "Unraid cluster", "staging": "Staging" },
-    "code.execution.k8s-namespace": { "default": "default", "puppet-master": "puppet-master", "ci": "ci" },
-    "memory.assembly.instruction-visibility": { "hidden": "Don't show", "summary": "A summary", "full": "Everything" },
-    "memory.assembly.rule-pack-display": { "active": "Active only", "all": "All", "disabled-hidden": "All except turned-off" },
-    "memory.assembly.instruction-budget-mode": { "full": "Whole files", "bounded": "Trimmed to a size limit", "excerpt": "Short excerpts" },
-    "memory.retention.history-retention": { "none": "None", "recent": "Recent only", "full": "Everything", "custom": "Custom" },
-    "memory.retention.retrieval-strategy": { "hybrid": "Meaning and recency" },
-    "memory.retention.retrieval-mode": { "automatic": "Automatically", "manual": "When I ask", "hybrid": "Both" },
-    "memory.retention.rehydration": { "eager": "Right away", "lazy": "Only when needed", "manual": "When I ask", "off": "Never" },
-    "memory.limits.memory-context-window": { "short": "Recent only", "standard": "Standard", "extended": "Further back" },
-    "memory.limits.compaction-mode": { "automatic": "Automatically", "manual": "When I ask", "disabled": "Never" },
-    "memory.limits.tool-result-policy": { "full": "Whole", "summarize": "Summarized", "meta_only": "Just the headline", "exclude": "Left out" },
-    "planning.interview.workflow-style": { "guided": "Guided steps", "freeform": "Free conversation", "hybrid": "Adapts as it goes" },
-    "planning.interview.prompting-style": { "structured": "Checklists", "conversational": "Conversation", "minimal": "As few words as possible" },
-    "planning.interview.web-research-mode": { "off": "Never", "ask": "Ask me first", "auto": "When it helps" },
-    "planning.interview.builder-topics": { "requirements": "Requirements", "design": "Design", "implementation": "Building it", "testing": "Testing", "deployment": "Deployment" },
-    "planning.interview.topic-depth": { "full": "Every question", "short": "Two questions at most", "skip": "Skip the topic" },
-    "planning.interview.topic-checklist": { "scope_goals": "Scope and goals", "architecture_technology": "Architecture and technology", "product_ux": "Product and experience", "data_persistence": "Data and storage", "security_secrets": "Security and secrets", "deployment_environments": "Deployment", "performance_reliability": "Speed and reliability", "testing_verification": "Testing" },
-    "planning.interview.vision-provider": { "auto": "Automatic (best connected service)" },
-    "planning.interview.builder-persona-mode": { "manual": "I choose", "auto": "Puppet Master chooses", "hybrid": "A mix" },
-    "planning.verification.goal-template": { "bug_fix": "Fix a bug", "feature_build": "Build a feature", "test_until_pass": "Test until it passes", "doc_update": "Update documentation", "repo_research": "Research the code", "refactor": "Tidy up code", "migration": "Move to something new", "audit_and_repair": "Audit and repair", "ledger_to_plan_transfer": "Turn a ledger into a plan", "governance_seal": "Governance sign-off" },
-    "planning.verification.strictness": { "lenient": "Relaxed", "standard": "Standard", "strict": "Strict", "certification": "Certification-grade" },
-    "planning.verification.repair-loop": { "no repair": "Don't retry", "bounded": "A limited number of times", "unlimited": "Keep trying" },
-    "planning.verification.repair-strategies": { "patch": "Patch the problem", "replan": "Rethink the plan", "split_node": "Split the step", "merge_node": "Combine steps", "widen_context": "Look at more of the code", "rollback": "Undo and retry", "escalate_capability": "Use a stronger model", "assign_specialists": "Bring in specialists", "manual": "Hand it to me", "authority_blocked": "Stop when permission is missing" },
-    "planning.verification.repair-budget-exhaustion": { "block": "Stop the work", "degraded": "Finish, marked as not fully checked" },
-    "planning.verification.degraded-mode": { "fail": "Fail the work", "continue": "Keep going", "human_review": "Pause for my review" },
-    "planning.verification.certification-level": { "lightweight": "Light", "standard": "Standard", "strong": "Strong" },
-    "planning.verification.evidence-span": { "point": "Just the point", "section": "Its section", "full": "The whole document", "custom": "Custom" },
-    "planning.verification.lsp-gate-scope": { "changed_files": "Changed files only", "open": "Open files", "project": "The whole project" },
-    "planning.verification.lsp-gate-boundaries": { "seam": "Seams", "package": "Packages", "node": "Steps" },
-    "planning.verification.lsp-gate-unavailable": { "skip": "Skip quietly", "fail": "Fail so I know" },
-    "planning.verification.goal-checkpoint-cadence": { "never": "Never", "on_milestone": "At each milestone", "frequent": "Often", "continuous": "All the time" },
-    "planning.verification.goal-replan-behavior": { "never": "Never", "on_failure": "After a failure", "on_divergence": "When work drifts", "always": "After every step" },
-    "planning.verification.goal-replan-events": { "pause_and_replan": "Pause and rethink", "immediate_hard_constraint": "Apply it right away", "notify_only": "Just note it" },
-    "planning.verification.goal-interruption": { "pause": "Pause the work", "cancel": "Cancel it", "prompt": "Ask me which" },
-    "planning.verification.goal-write-mode": { "read_only": "Read only", "proposal_only": "Suggest changes only", "patch_only": "Prepare patches", "isolated_worktree": "Its own private copy", "leased_writer": "Write when it holds the pen", "parent_writer": "Write like the main assistant" },
-    "planning.verification.worknode-activation": { "atomic": "Only when everything is ready", "incremental": "Piece by piece", "deferred": "Later, all together" },
-    "planning.verification.receipt-evidence-policy": { "full": "Keep whole logs", "redacted": "Hide sensitive parts", "capped": "Keep a limited size" },
-    "planning.verification.evidence-detail": { "minimal": "Minimal notes", "standard": "Standard", "full": "Full detail", "indefinite": "Full detail, kept forever" },
-    "branching.worktrees.worktree-cleanup": { "ask": "Ask me each time", "keep": "Keep it", "remove": "Remove it" },
-    "branching.worktrees.merge-strategy": { "auto": "Follow the project's habit", "merge": "Merge (keeps history)", "squash": "Squash (one tidy commit)", "rebase": "Rebase (replays commits)" },
-    "branching.worktrees.push-behavior": { "manual": "When I choose", "auto": "After each merge", "never": "Never (keep it local)" },
-    "branching.worktrees.force-push-policy": { "never": "Never", "force-with-lease": "Only if nobody else pushed", "always": "Always (risky)" },
-    "branching.worktrees.git-policy-preset": { "strict": "Careful", "standard": "Standard", "lenient": "Relaxed", "custom": "Custom" },
-    "branching.worktrees.pre-merge-test-target": { "merged_result": "The combined result", "branch_only": "Just my branch" },
-    "branching.subagents.write-isolation-mode": { "none": "No extra protection", "parent-only writer": "Only the lead writes", "patch-only subagents": "Helpers suggest patches", "isolated worktree per subagent": "Each helper gets its own copy" },
-    "media.io.screenshot-source": { "clipboard": "The clipboard", "recent-os": "Recent screenshots", "manual-picker": "Ask me to pick" },
-    "media.io.vision-fallback-model": { "auto": "Automatic (best available)", "choose a specific model": "A model I choose" },
-    "media.capabilities.enabled-types": { "image": "Images", "screenshot": "Screenshots", "diagram": "Diagrams", "recording": "Recordings", "video": "Video" },
-    "media.capabilities.aspect-ratio": { "1:1": "Square (1:1)", "16:9": "Wide (16:9)", "9:16": "Tall (9:16)", "custom": "Custom" },
-    "media.capabilities.image-quality": { "draft": "Draft (fast)", "standard": "Standard", "high": "High (slower)" },
-    "media.capabilities.tts-voice": { "alloy": "Alloy", "echo": "Echo", "fable": "Fable", "onyx": "Onyx", "nova": "Nova", "shimmer": "Shimmer" },
-    "web.providers.tavily-fetch-mode": { "basic": "Basic", "fast": "Fast", "advanced": "Thorough (costs more)" },
-    "web.fetch.pdf-mode": { "fast": "Fast", "auto": "Automatic", "ocr": "Read scanned pages (slower)" },
-    "web.fetch.firecrawl-proxy-mode": { "basic": "Basic", "auto": "Automatic", "enhanced": "Stronger (costs more)" },
-    "web.fetch.redirect-policy": { "deny": "Don't follow", "allow_same_host": "Only on the same server", "allow_registrable_domain": "Only on the same website" },
-    "web.fetch.proxy-mode": { "system": "Use this computer's settings", "manual": "A proxy I enter", "off": "No proxy" },
-    "web.index.remote-cache-mode": { "off": "Off", "shallow": "A light copy", "partial": "A bigger copy" },
-    "personas.library.selection-mode": { "auto": "Puppet Master picks", "manual": "I pick", "hybrid": "Puppet Master picks unless I choose" },
-    "personas.library.custom-scope": { "project": "This project", "global": "Every project" },
-    "personas.tuning.talkativeness": { "talk_a_lot_more": "Much chattier", "talk_more": "Chattier", "talk_a_little_more": "A little chattier", "model_default": "Normal", "talk_a_little_less": "A little quieter", "talk_less": "Quieter" },
-    "personas.tuning.verbosity": { "terse": "Very short", "normal": "Normal", "verbose": "Long, with full explanations" },
-    "personas.tuning.default-mode": { "inherit": "Same as the project", "ask": "Ask before acting", "plan": "Plan first", "regular": "Work normally", "yolo": "No pauses" },
-    "personas.tuning.default-variant": { "fast": "Faster edition", "powerful": "Smarter edition" },
-    "personas.tuning.reasoning-effort": { "minimal": "Minimal" },
-    "personas.tools.tool-posture": { "never": "Never", "auto": "When clearly useful", "always": "Whenever possible" },
-    "extensions.skills.projection-method": { "copy": "Make a copy", "symlink": "Link to the original" },
-    "extensions.commands.conflict-handling": { "warn": "Warn me", "hide": "Hide the newer one", "override": "Let the newer one take over" },
-    "extensions.commands.command-mode": { "inherit": "Same as the project", "ask": "Ask before acting", "plan": "Plan only", "regular": "Work normally", "yolo": "No pauses" },
-    "system.advanced.config-format": { "yaml": "YAML", "json": "JSON", "jsonc": "JSON with comments" }
+  "general.interaction.notification-severity": {
+   "info": "Information",
+   "watch": "Worth watching",
+   "attention_required": "Needs my attention",
+   "blocked": "Something is stuck",
+   "escalated": "Escalated to me"
   },
-  "hints": {
-    "ai.accounts.credential-storage": { "os_keychain": "Recommended. Only Puppet Master on your server can read it.", "env": "For servers that already provide keys this way.", "file": "Only if your setup requires it.", "cli": "The service's own program signs in and keeps the secret." },
-    "ai.accounts.auth-surface": { "header_bearer": "What almost every service expects.", "query_param": "The key ends up in logs. Avoid unless required." },
-    "ai.accounts.switch-mode-override": { "sticky": "Keeps one account until it runs out.", "fallback": "Moves only when an account can't continue.", "round-robin": "Spreads work evenly across accounts." },
-    "ai.accounts.account-binding": { "none": "Uses the order you set.", "preferred": "Falls back to another account if needed.", "required": "Stops rather than use another account." },
-    "ai.usage.budget-policy": { "block_at_limit": "Safest for your wallet." },
-    "safety.approvals.approval-ladder-default": { "always": "Creates a lasting rule." },
-    "branching.worktrees.merge-strategy": { "merge": "Safest. Keeps every commit." },
-    "branching.worktrees.force-push-policy": { "never": "Safest.", "always": "Can overwrite other people's work." },
-    "planning.verification.goal-write-mode": { "read_only": "Can look, can't change anything.", "isolated_worktree": "Changes happen in a private copy you merge later." },
-    "memory.retention.retrieval-strategy": { "hybrid": "Works best for most people." },
-    "web.fetch.redirect-policy": { "deny": "Safest." },
-    "ai.models.system-role-name": { "developer": "Some OpenAI reasoning models require this." }
+  "ai.accounts.claude-login-method": {
+   "claudeai": "Claude subscription",
+   "console": "Claude Console (API)",
+   "email": "Email link",
+   "sso": "Company sign-in (SSO)"
+  },
+  "ai.accounts.codex-auth-family": {
+   "chatgpt": "ChatGPT plan",
+   "api_key": "OpenAI API key"
+  },
+  "ai.accounts.auth-mode": {
+   "provider-default": "The service's usual way",
+   "api-key": "API key",
+   "oauth": "Browser sign-in",
+   "session": "Existing sign-in on the server"
+  },
+  "ai.accounts.github-host-policy": {
+   "github.com_only": "github.com only",
+   "enterprise_allowed": "Also company GitHub servers"
+  },
+  "ai.accounts.credential-storage": {
+   "os_keychain": "The server's secure keychain (safest)",
+   "env": "An environment variable",
+   "file": "A file on the server",
+   "cli": "The service's own program keeps it"
+  },
+  "ai.accounts.auth-surface": {
+   "header_bearer": "Standard (Authorization header)",
+   "header_api_key": "An API-key header",
+   "query_param": "In the address (not recommended)",
+   "cli_managed": "The service's program handles it",
+   "oauth_token": "A browser sign-in token"
+  },
+  "ai.accounts.auth-family": {
+   "oauth": "Browser sign-in",
+   "api_key": "API key",
+   "subscription": "Subscription",
+   "cli_managed": "Managed by the service's program"
+  },
+  "ai.accounts.account-binding": {
+   "none": "Let Puppet Master choose",
+   "preferred": "Prefer the chosen account",
+   "required": "Only the chosen account"
+  },
+  "ai.accounts.switch-mode-override": {
+   "sticky": "Stay on one account",
+   "fallback": "Move only when forced",
+   "round-robin": "Take turns"
+  },
+  "ai.accounts.account-roles": {
+   "overseer": "Overseeing",
+   "worker": "Everyday work",
+   "gui-worker": "Design and layout",
+   "high-effort-worker": "Heavy lifting",
+   "auditor": "Checking work",
+   "assistant": "Assistant chat"
+  },
+  "ai.accounts.billing-entity": {
+   "personal": "Me (personal)",
+   "org": "My organization",
+   "team": "My team"
+  },
+  "ai.models.default-variant": {
+   "default": "The model's usual setting",
+   "fast": "Faster and cheaper",
+   "powerful": "Slower and smarter",
+   "custom": "My own preset"
+  },
+  "ai.models.reasoning-effort": {
+   "auto": "Let the model decide",
+   "off": "No extra thinking"
+  },
+  "ai.models.lane-bindings": {
+   "unconfigured": "Not set",
+   "low_cost_executor": "Low-cost worker",
+   "standard_reviewer": "Reviewer",
+   "high_reasoning_orchestrator": "Planner and coordinator",
+   "verifier": "Checker",
+   "adjudicator": "Tie-breaker",
+   "certifier": "Final sign-off"
+  },
+  "ai.models.subagent-effort": {
+   "standard": "Medium"
+  },
+  "ai.models.execution-role": {
+   "assistant": "Assistant chat",
+   "interview": "Planning interview",
+   "orchestrator": "Orchestrator",
+   "worker": "Worker",
+   "auditor": "Auditor"
+  },
+  "ai.models.resolution-policy": {
+   "conservative": "Careful (never guesses)",
+   "standard": "Balanced",
+   "aggressive": "Bold (chases cheapest or fastest)"
+  },
+  "ai.models.capability-overrides": {
+   "streaming": "Show answers as they're written",
+   "tool-use": "Use tools",
+   "thinking-blocks": "Show thinking",
+   "parallel-tool-calls": "Use several tools at once",
+   "assistant-prefill": "Start answers with a prefix",
+   "image-input": "Read images"
+  },
+  "ai.models.cache-strategy": {
+   "off": "Off",
+   "prompt-caching": "Cache repeated context",
+   "ttl": "Cache for a set time",
+   "automatic": "Automatic",
+   "unsupported": "Not supported"
+  },
+  "ai.models.system-role-name": {
+   "system": "System (most models)",
+   "developer": "Developer (some OpenAI models)"
+  },
+  "ai.usage.usage-windows": {
+   "custom": "Custom"
+  },
+  "ai.usage.budget-policy": {
+   "block_at_limit": "Stop at the limit",
+   "warn_only": "Warn me and keep going",
+   "allow_overage": "Allow going over"
+  },
+  "ai.usage.usage-retention": {
+   "unlimited": "Keep forever"
+  },
+  "safety.rules.permission-preset": {
+   "read_only": "Read only",
+   "plan": "Plan only",
+   "regular": "Regular",
+   "full": "Full freedom",
+   "custom": "Custom"
+  },
+  "safety.rules.default-tool-permission": {
+   "allow": "Allow it",
+   "ask": "Ask me first",
+   "deny": "Block it"
+  },
+  "safety.rules.scope-selector": {
+   "global": "Everywhere",
+   "project": "This project",
+   "package": "A package",
+   "seam": "A seam",
+   "lane": "A lane"
+  },
+  "safety.approvals.autonomy-mode": {
+   "hands-off": "Hands-off (only critical issues)",
+   "ask-me-first": "Ask me at each checkpoint"
+  },
+  "safety.approvals.checkpoint-types": {
+   "credentials": "Passwords and keys",
+   "billing": "Spending money",
+   "destructive": "Deleting things",
+   "external_sideeffect": "Changes outside the project",
+   "security": "Security changes"
+  },
+  "safety.approvals.require-plan-first": {
+   "all": "Everything",
+   "seam": "Each seam",
+   "package": "Each package",
+   "lane": "Each lane",
+   "node": "Each step"
+  },
+  "safety.approvals.alert-channel": {
+   "dashboard": "The dashboard",
+   "tray": "The system tray",
+   "assistant_chat": "Assistant chat",
+   "all": "Everywhere"
+  },
+  "safety.approvals.approval-ladder-default": {
+   "deny": "Don't approve",
+   "once": "Just this once",
+   "for_session": "For this session",
+   "always": "Always"
+  },
+  "safety.approvals.timeout-mode": {
+   "off": "Wait until I answer",
+   "ask": "Ask me again",
+   "long_wait": "Mark it as waiting"
+  },
+  "safety.approvals.doom-loop-action": {
+   "allow": "Let it continue",
+   "ask": "Stop and ask me",
+   "deny": "Block it"
+  },
+  "safety.approvals.loop-detection-mode": {
+   "strict": "Stop quickly",
+   "bounded": "Allow a few repeats",
+   "adaptive": "Learn each pattern"
+  },
+  "safety.approvals.debug-grant-scope": {
+   "evidence_reads": "Read logs and evidence",
+   "low_risk_investigation": "Low-risk checks",
+   "temporary_instrumentation": "Add temporary logging"
+  },
+  "safety.approvals.boundary-default-strictness": {
+   "permissive": "Broad",
+   "restrictive": "Moderate",
+   "strict": "Narrow"
+  },
+  "safety.protection.external-dir-action": {
+   "allow": "Allow",
+   "ask": "Ask me first",
+   "deny": "Block"
+  },
+  "safety.protection.redaction-profile": {
+   "none": "Nothing hidden",
+   "standard": "Standard",
+   "aggressive": "Hide more",
+   "custom": "Custom"
+  },
+  "safety.protection.screenshot-redaction": {
+   "inherit": "Same as text output",
+   "standard": "Standard",
+   "aggressive": "Hide more",
+   "custom": "Custom"
+  },
+  "code.terminal.shell": {
+   "zsh": "zsh",
+   "bash": "bash",
+   "fish": "fish"
+  },
+  "code.terminal.allowed-profiles": {
+   "zsh": "zsh",
+   "bash": "bash",
+   "fish": "fish"
+  },
+  "code.execution.dockerhub-namespace": {
+   "custom…": "Other…"
+  },
+  "code.execution.dockerhub-repository": {
+   "custom…": "Other…"
+  },
+  "code.execution.k8s-context": {
+   "docker-desktop": "Docker Desktop",
+   "unraid-k8s": "Unraid cluster",
+   "staging": "Staging"
+  },
+  "code.execution.k8s-namespace": {
+   "default": "default",
+   "puppet-master": "puppet-master",
+   "ci": "ci"
+  },
+  "memory.assembly.instruction-visibility": {
+   "hidden": "Don't show",
+   "summary": "A summary",
+   "full": "Everything"
+  },
+  "memory.assembly.rule-pack-display": {
+   "active": "Active only",
+   "all": "All",
+   "disabled-hidden": "All except turned-off"
+  },
+  "memory.assembly.instruction-budget-mode": {
+   "full": "Whole files",
+   "bounded": "Trimmed to a size limit",
+   "excerpt": "Short excerpts"
+  },
+  "memory.retention.history-retention": {
+   "none": "None",
+   "recent": "Recent only",
+   "full": "Everything",
+   "custom": "Custom"
+  },
+  "memory.retention.retrieval-strategy": {
+   "hybrid": "Meaning and recency"
+  },
+  "memory.retention.retrieval-mode": {
+   "automatic": "Automatically",
+   "manual": "When I ask",
+   "hybrid": "Both"
+  },
+  "memory.retention.rehydration": {
+   "eager": "Right away",
+   "lazy": "Only when needed",
+   "manual": "When I ask",
+   "off": "Never"
+  },
+  "memory.limits.memory-context-window": {
+   "short": "Recent only",
+   "standard": "Standard",
+   "extended": "Further back"
+  },
+  "memory.limits.compaction-mode": {
+   "automatic": "Automatically",
+   "manual": "When I ask",
+   "disabled": "Never"
+  },
+  "memory.limits.tool-result-policy": {
+   "full": "Whole",
+   "summarize": "Summarized",
+   "meta_only": "Just the headline",
+   "exclude": "Left out"
+  },
+  "planning.interview.workflow-style": {
+   "guided": "Guided steps",
+   "freeform": "Free conversation",
+   "hybrid": "Adapts as it goes"
+  },
+  "planning.interview.prompting-style": {
+   "structured": "Checklists",
+   "conversational": "Conversation",
+   "minimal": "As few words as possible"
+  },
+  "planning.interview.web-research-mode": {
+   "off": "Never",
+   "ask": "Ask me first",
+   "auto": "When it helps"
+  },
+  "planning.interview.builder-topics": {
+   "requirements": "Requirements",
+   "design": "Design",
+   "implementation": "Building it",
+   "testing": "Testing",
+   "deployment": "Deployment"
+  },
+  "planning.interview.topic-depth": {
+   "full": "Every question",
+   "short": "Two questions at most",
+   "skip": "Skip the topic"
+  },
+  "planning.interview.topic-checklist": {
+   "scope_goals": "Scope and goals",
+   "architecture_technology": "Architecture and technology",
+   "product_ux": "Product and experience",
+   "data_persistence": "Data and storage",
+   "security_secrets": "Security and secrets",
+   "deployment_environments": "Deployment",
+   "performance_reliability": "Speed and reliability",
+   "testing_verification": "Testing"
+  },
+  "planning.interview.vision-provider": {
+   "auto": "Automatic (best connected service)"
+  },
+  "planning.interview.builder-persona-mode": {
+   "manual": "I choose",
+   "auto": "Puppet Master chooses",
+   "hybrid": "A mix"
+  },
+  "planning.verification.goal-template": {
+   "bug_fix": "Fix a bug",
+   "feature_build": "Build a feature",
+   "test_until_pass": "Test until it passes",
+   "doc_update": "Update documentation",
+   "repo_research": "Research the code",
+   "refactor": "Tidy up code",
+   "migration": "Move to something new",
+   "audit_and_repair": "Audit and repair",
+   "ledger_to_plan_transfer": "Turn a ledger into a plan",
+   "governance_seal": "Governance sign-off"
+  },
+  "planning.verification.strictness": {
+   "lenient": "Relaxed",
+   "standard": "Standard",
+   "strict": "Strict",
+   "certification": "Certification-grade"
+  },
+  "planning.verification.repair-loop": {
+   "no repair": "Don't retry",
+   "bounded": "A limited number of times",
+   "unlimited": "Keep trying"
+  },
+  "planning.verification.repair-strategies": {
+   "patch": "Patch the problem",
+   "replan": "Rethink the plan",
+   "split_node": "Split the step",
+   "merge_node": "Combine steps",
+   "widen_context": "Look at more of the code",
+   "rollback": "Undo and retry",
+   "escalate_capability": "Use a stronger model",
+   "assign_specialists": "Bring in specialists",
+   "manual": "Hand it to me",
+   "authority_blocked": "Stop when permission is missing"
+  },
+  "planning.verification.repair-budget-exhaustion": {
+   "block": "Stop the work",
+   "degraded": "Finish, marked as not fully checked"
+  },
+  "planning.verification.degraded-mode": {
+   "fail": "Fail the work",
+   "continue": "Keep going",
+   "human_review": "Pause for my review"
+  },
+  "planning.verification.certification-level": {
+   "lightweight": "Light",
+   "standard": "Standard",
+   "strong": "Strong"
+  },
+  "planning.verification.evidence-span": {
+   "point": "Just the point",
+   "section": "Its section",
+   "full": "The whole document",
+   "custom": "Custom"
+  },
+  "planning.verification.lsp-gate-scope": {
+   "changed_files": "Changed files only",
+   "open": "Open files",
+   "project": "The whole project"
+  },
+  "planning.verification.lsp-gate-boundaries": {
+   "seam": "Seams",
+   "package": "Packages",
+   "node": "Steps"
+  },
+  "planning.verification.lsp-gate-unavailable": {
+   "skip": "Skip quietly",
+   "fail": "Fail so I know"
+  },
+  "planning.verification.goal-checkpoint-cadence": {
+   "never": "Never",
+   "on_milestone": "At each milestone",
+   "frequent": "Often",
+   "continuous": "All the time"
+  },
+  "planning.verification.goal-replan-behavior": {
+   "never": "Never",
+   "on_failure": "After a failure",
+   "on_divergence": "When work drifts",
+   "always": "After every step"
+  },
+  "planning.verification.goal-replan-events": {
+   "pause_and_replan": "Pause and rethink",
+   "immediate_hard_constraint": "Apply it right away",
+   "notify_only": "Just note it"
+  },
+  "planning.verification.goal-interruption": {
+   "pause": "Pause the work",
+   "cancel": "Cancel it",
+   "prompt": "Ask me which"
+  },
+  "planning.verification.goal-write-mode": {
+   "read_only": "Read only",
+   "proposal_only": "Suggest changes only",
+   "patch_only": "Prepare patches",
+   "isolated_worktree": "Its own private copy",
+   "leased_writer": "Write when it holds the pen",
+   "parent_writer": "Write like the main assistant"
+  },
+  "planning.verification.worknode-activation": {
+   "atomic": "Only when everything is ready",
+   "incremental": "Piece by piece",
+   "deferred": "Later, all together"
+  },
+  "planning.verification.receipt-evidence-policy": {
+   "full": "Keep whole logs",
+   "redacted": "Hide sensitive parts",
+   "capped": "Keep a limited size"
+  },
+  "planning.verification.evidence-detail": {
+   "minimal": "Minimal notes",
+   "standard": "Standard",
+   "full": "Full detail",
+   "indefinite": "Full detail, kept forever"
+  },
+  "branching.worktrees.worktree-cleanup": {
+   "ask": "Ask me each time",
+   "keep": "Keep it",
+   "remove": "Remove it"
+  },
+  "branching.worktrees.merge-strategy": {
+   "auto": "Follow the project's habit",
+   "merge": "Merge (keeps history)",
+   "squash": "Squash (one tidy commit)",
+   "rebase": "Rebase (replays commits)"
+  },
+  "branching.worktrees.push-behavior": {
+   "manual": "When I choose",
+   "auto": "After each merge",
+   "never": "Never (keep it local)"
+  },
+  "branching.worktrees.force-push-policy": {
+   "never": "Never",
+   "force-with-lease": "Only if nobody else pushed",
+   "always": "Always (risky)"
+  },
+  "branching.worktrees.git-policy-preset": {
+   "strict": "Careful",
+   "standard": "Standard",
+   "lenient": "Relaxed",
+   "custom": "Custom"
+  },
+  "branching.worktrees.pre-merge-test-target": {
+   "merged_result": "The combined result",
+   "branch_only": "Just my branch"
+  },
+  "branching.subagents.write-isolation-mode": {
+   "none": "No extra protection",
+   "parent-only writer": "Only the lead writes",
+   "patch-only subagents": "Helpers suggest patches",
+   "isolated worktree per subagent": "Each helper gets its own copy"
+  },
+  "media.io.screenshot-source": {
+   "clipboard": "The clipboard",
+   "recent-os": "Recent screenshots",
+   "manual-picker": "Ask me to pick"
+  },
+  "media.io.vision-fallback-model": {
+   "auto": "Automatic (best available)",
+   "choose a specific model": "A model I choose"
+  },
+  "media.capabilities.enabled-types": {
+   "image": "Images",
+   "screenshot": "Screenshots",
+   "diagram": "Diagrams",
+   "recording": "Recordings",
+   "video": "Video"
+  },
+  "media.capabilities.aspect-ratio": {
+   "1:1": "Square (1:1)",
+   "16:9": "Wide (16:9)",
+   "9:16": "Tall (9:16)",
+   "custom": "Custom"
+  },
+  "media.capabilities.image-quality": {
+   "draft": "Draft (fast)",
+   "standard": "Standard",
+   "high": "High (slower)"
+  },
+  "media.capabilities.tts-voice": {
+   "alloy": "Alloy",
+   "echo": "Echo",
+   "fable": "Fable",
+   "onyx": "Onyx",
+   "nova": "Nova",
+   "shimmer": "Shimmer"
+  },
+  "web.providers.tavily-fetch-mode": {
+   "basic": "Basic",
+   "fast": "Fast",
+   "advanced": "Thorough (costs more)"
+  },
+  "web.fetch.pdf-mode": {
+   "fast": "Fast",
+   "auto": "Automatic",
+   "ocr": "Read scanned pages (slower)"
+  },
+  "web.fetch.firecrawl-proxy-mode": {
+   "basic": "Basic",
+   "auto": "Automatic",
+   "enhanced": "Stronger (costs more)"
+  },
+  "web.fetch.redirect-policy": {
+   "deny": "Don't follow",
+   "allow_same_host": "Only on the same server",
+   "allow_registrable_domain": "Only on the same website"
+  },
+  "web.fetch.proxy-mode": {
+   "system": "Use this computer's settings",
+   "manual": "A proxy I enter",
+   "off": "No proxy"
+  },
+  "web.index.remote-cache-mode": {
+   "off": "Off",
+   "shallow": "A light copy",
+   "partial": "A bigger copy"
+  },
+  "personas.library.selection-mode": {
+   "auto": "Puppet Master picks",
+   "manual": "I pick",
+   "hybrid": "Puppet Master picks unless I choose"
+  },
+  "personas.library.custom-scope": {
+   "project": "This project",
+   "global": "Every project"
+  },
+  "personas.tuning.talkativeness": {
+   "talk_a_lot_more": "Much chattier",
+   "talk_more": "Chattier",
+   "talk_a_little_more": "A little chattier",
+   "model_default": "Normal",
+   "talk_a_little_less": "A little quieter",
+   "talk_less": "Quieter"
+  },
+  "personas.tuning.verbosity": {
+   "terse": "Very short",
+   "normal": "Normal",
+   "verbose": "Long, with full explanations"
+  },
+  "personas.tuning.default-mode": {
+   "inherit": "Same as the project",
+   "ask": "Ask before acting",
+   "plan": "Plan first",
+   "regular": "Work normally",
+   "yolo": "No pauses"
+  },
+  "personas.tuning.default-variant": {
+   "fast": "Faster edition",
+   "powerful": "Smarter edition"
+  },
+  "personas.tuning.reasoning-effort": {
+   "minimal": "Minimal"
+  },
+  "personas.tools.tool-posture": {
+   "never": "Never",
+   "auto": "When clearly useful",
+   "always": "Whenever possible"
+  },
+  "extensions.skills.projection-method": {
+   "copy": "Make a copy",
+   "symlink": "Link to the original"
+  },
+  "extensions.commands.conflict-handling": {
+   "warn": "Warn me",
+   "hide": "Hide the newer one",
+   "override": "Let the newer one take over"
+  },
+  "extensions.commands.command-mode": {
+   "inherit": "Same as the project",
+   "ask": "Ask before acting",
+   "plan": "Plan only",
+   "regular": "Work normally",
+   "yolo": "No pauses"
+  },
+  "system.advanced.config-format": {
+   "yaml": "YAML",
+   "json": "JSON",
+   "jsonc": "JSON with comments"
+  },
+  "ai.models.overseer-model": {
+   "(Default)": "Same as the everyday model"
+  },
+  "ai.models.worker-model": {
+   "(Default)": "Same as the everyday model"
+  },
+  "ai.models.gui-worker-model": {
+   "(Default)": "Same as the everyday model"
+  },
+  "ai.models.high-effort-worker-model": {
+   "(Default)": "Same as the everyday model"
+  },
+  "ai.models.auditor-model": {
+   "(Default)": "Same as the everyday model"
+  },
+  "ai.models.goal-worker-model": {
+   "(Default)": "Same as the everyday model"
+  },
+  "ai.models.goal-verifier-model": {
+   "(Default)": "Same as the everyday model"
+  },
+  "ai.models.teach-model": {
+   "(Default)": "Same as the everyday model"
+  },
+  "ai.models.subagent-model": {
+   "(Inherit)": "Same as the agent that started it"
+  },
+  "ai.models.thread-title-model": {
+   "Default": "A quick, low-cost model",
+   "None": "Don't name chats"
   }
+ },
+ "hints": {
+  "ai.accounts.credential-storage": {
+   "os_keychain": "Recommended. Only Puppet Master on your server can read it.",
+   "env": "For servers that already provide keys this way.",
+   "file": "Only if your setup requires it.",
+   "cli": "The service's own program signs in and keeps the secret."
+  },
+  "ai.accounts.auth-surface": {
+   "header_bearer": "What almost every service expects.",
+   "query_param": "The key ends up in logs. Avoid unless required."
+  },
+  "ai.accounts.switch-mode-override": {
+   "sticky": "Keeps one account until it runs out.",
+   "fallback": "Moves only when an account can't continue.",
+   "round-robin": "Spreads work evenly across accounts."
+  },
+  "ai.accounts.account-binding": {
+   "none": "Uses the order you set.",
+   "preferred": "Falls back to another account if needed.",
+   "required": "Stops rather than use another account."
+  },
+  "ai.usage.budget-policy": {
+   "block_at_limit": "Safest for your wallet."
+  },
+  "safety.approvals.approval-ladder-default": {
+   "always": "Creates a lasting rule."
+  },
+  "branching.worktrees.merge-strategy": {
+   "merge": "Safest. Keeps every commit."
+  },
+  "branching.worktrees.force-push-policy": {
+   "never": "Safest.",
+   "always": "Can overwrite other people's work."
+  },
+  "planning.verification.goal-write-mode": {
+   "read_only": "Can look, can't change anything.",
+   "isolated_worktree": "Changes happen in a private copy you merge later."
+  },
+  "memory.retention.retrieval-strategy": {
+   "hybrid": "Works best for most people."
+  },
+  "web.fetch.redirect-policy": {
+   "deny": "Safest."
+  },
+  "ai.models.system-role-name": {
+   "developer": "Some OpenAI reasoning models require this."
+  }
+ }
 }

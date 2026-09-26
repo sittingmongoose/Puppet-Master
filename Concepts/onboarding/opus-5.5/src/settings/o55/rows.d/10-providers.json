@@ -1,0 +1,675 @@
+{
+ "_about": "Providers & Accounts rows. `per` rows are drawn inside each account or service; their Details panel lists what each one has. Key rows live with their own service and route there.",
+ "rows": {
+  "ai.accounts.account-name": {
+   "label": "Account nickname",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
+   "why": "Tell two accounts of the same service apart, like Work and Personal."
+  },
+  "ai.accounts.account-enabled": {
+   "label": "Use this account",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
+   "why": "Keep an account signed in but out of the way, for example while its plan is paused."
+  },
+  "ai.accounts.account-roles": {
+   "label": "Jobs an account may do",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
+   "why": "Keep an expensive account for the hardest jobs, or a small one for everyday work. None picked means any job.",
+   "emptyList": "Any job"
+  },
+  "ai.accounts.billing-entity": {
+   "label": "Who is billed for an account",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
+   "why": "The Usage page groups costs by it, so a team account and a personal one stay apart."
+  },
+  "ai.accounts.claude-login-method": {
+   "label": "How a Claude account signs in",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
+   "why": "Your company uses single sign-on, or you sign in with an email link instead of the Claude website."
+  },
+  "ai.accounts.codex-auth-family": {
+   "label": "ChatGPT plan or OpenAI API key",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
+   "note": "Each account is one or the other, set when it is added. They are billed separately, so add each one you use as its own account."
+  },
+  "ai.accounts.gcp-project-id": {
+   "label": "Google Cloud project",
+   "per": "account",
+   "perWhere": "Open a Gemini API or Vertex AI account under Providers & Accounts › Services.",
+   "placeholder": "e.g. my-project-123",
+   "why": "Vertex AI always needs one. The Gemini API needs one only on paid tiers."
+  },
+  "ai.accounts.account-priority": {
+   "label": "Account order",
+   "per": "account",
+   "perWhere": "Change the order with the arrows next to each account under Services.",
+   "why": "The first account in use is tried first; the next takes over when it runs out."
+  },
+  "ai.accounts.account-threshold-override": {
+   "label": "An account's own switch point",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
+   "unit": "%",
+   "min": 0,
+   "max": 100,
+   "placeholder": "Shared",
+   "why": "A small trial account should hand over earlier than your main one."
+  },
+  "ai.accounts.switch-mode-override": {
+   "label": "How an account shares work",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services."
+  },
+  "ai.accounts.cooldown-policy": {
+   "label": "Rest after a rate limit",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
+   "placeholder": "Service default"
+  },
+  "ai.accounts.retry-budget": {
+   "label": "Retries before an account rests",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
+   "min": 0,
+   "max": 20
+  },
+  "ai.accounts.quota-profile": {
+   "label": "Quota profile",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
+   "placeholder": "From the service"
+  },
+  "ai.accounts.auth-family": {
+   "label": "Account type",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services."
+  },
+  "ai.accounts.credential-storage": {
+   "label": "Where an account's key is kept",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services."
+  },
+  "ai.accounts.auth-surface": {
+   "label": "How an account's key is sent",
+   "per": "account",
+   "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services."
+  },
+  "ai.accounts.set-preferred-account": {
+   "label": "Use an account for the next run",
+   "actionLabel": "Use an account for the next run",
+   "route": {
+    "domain": "ai",
+    "workspace": "providers",
+    "tab": "services",
+    "target": "[data-setting-id=\"ai.accounts.set-preferred-account\"]"
+   },
+   "routeToast": [
+    "Open an account",
+    "Use for the next run is at the bottom of each account."
+   ]
+  },
+  "ai.models.provider-enabled": {
+   "label": "Use a service",
+   "per": "service",
+   "perWhere": "Open a service under AI & Providers › Providers & Accounts › Services.",
+   "perEmpty": "No service is set up yet"
+  },
+  "ai.accounts.auth-mode": {
+   "label": "Preferred way to sign in",
+   "per": "service",
+   "perWhere": "In a service's More options, for services with more than one way to sign in."
+  },
+  "ai.accounts.anthropic-api-key": {
+   "label": "Anthropic API key",
+   "control": "credential",
+   "route": {
+    "domain": "ai",
+    "workspace": "providers",
+    "tab": "services",
+    "select": "anthropic-api",
+    "target": "[data-setting-id=\"ai.accounts.anthropic-api-key\"]"
+   },
+   "routeLabel": "Open Anthropic API",
+   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings."
+  },
+  "ai.accounts.openai-api-key": {
+   "label": "ChatGPT / Codex key",
+   "control": "credential",
+   "route": {
+    "domain": "ai",
+    "workspace": "providers",
+    "tab": "services",
+    "select": "openai-codex",
+    "target": "[data-setting-id=\"ai.accounts.openai-api-key\"]"
+   },
+   "routeLabel": "Open ChatGPT / Codex",
+   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings."
+  },
+  "ai.accounts.gemini-api-key": {
+   "label": "Gemini API key",
+   "control": "credential",
+   "route": {
+    "domain": "ai",
+    "workspace": "providers",
+    "tab": "services",
+    "select": "gemini-direct",
+    "target": "[data-setting-id=\"ai.accounts.gemini-api-key\"]"
+   },
+   "routeLabel": "Open Gemini API",
+   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings."
+  },
+  "ai.accounts.cursor-api-key": {
+   "label": "Cursor key",
+   "control": "credential",
+   "route": {
+    "domain": "ai",
+    "workspace": "providers",
+    "tab": "services",
+    "select": "cursor-cli",
+    "target": "[data-setting-id=\"ai.accounts.cursor-api-key\"]"
+   },
+   "routeLabel": "Open Cursor",
+   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings."
+  },
+  "ai.accounts.minimax-api-key": {
+   "label": "MiniMax Coding Plan key",
+   "control": "credential",
+   "route": {
+    "domain": "ai",
+    "workspace": "providers",
+    "tab": "services",
+    "select": "minimax-coding",
+    "target": "[data-setting-id=\"ai.accounts.minimax-api-key\"]"
+   },
+   "routeLabel": "Open MiniMax Coding Plan",
+   "note": "Keys are typed only in the service's own key dialog. They are kept in your server's keychain and never shown, exported or copied into settings."
+  },
+  "ai.accounts.provider-connections": {
+   "label": "Your AI services",
+   "actionLabel": "Open the list",
+   "route": {
+    "domain": "ai",
+    "workspace": "providers",
+    "tab": "services",
+    "target": "#provider-roster"
+   },
+   "why": "Connect, re-check or disconnect a service from its own page in the list."
+  },
+  "ai.usage.provider-health": {
+   "label": "Check every service",
+   "actionLabel": "Check every service",
+   "pm51": "pm51-providers-diagnostics"
+  },
+  "ai.usage.refresh-models": {
+   "label": "Refresh model lists",
+   "actionLabel": "Refresh model lists",
+   "pm51": "pm51-providers-refresh-all"
+  },
+  "system.advanced.binary-rescan": {
+   "label": "Find installed apps again",
+   "actionLabel": "Find installed apps again",
+   "pm51": "pm51-providers-rescan"
+  },
+  "system.advanced.cli-path-claude": {
+   "label": "Claude Code app location",
+   "placeholder": "Found automatically"
+  },
+  "system.advanced.cli-path-cursor": {
+   "label": "Cursor app location",
+   "placeholder": "Found automatically",
+   "help": "Only if you also use the Cursor app on your server."
+  },
+  "ai.accounts.opencode-enable": {
+   "label": "Use OpenCode"
+  },
+  "ai.accounts.opencode-add-server": {
+   "label": "Add an OpenCode server",
+   "actionLabel": "Add a server",
+   "pm51": "pm51-providers-opencode-add"
+  },
+  "ai.accounts.opencode-endpoint": {
+   "label": "Server address",
+   "placeholder": "http://127.0.0.1:4096"
+  },
+  "ai.accounts.opencode-server-auth": {
+   "label": "Server password",
+   "control": "credential",
+   "keyLabel": "Server password",
+   "help": "Only if the server asks for one. Separate from any model keys inside OpenCode."
+  },
+  "ai.accounts.opencode-server-actions": {
+   "label": "Server controls",
+   "route": {
+    "domain": "ai",
+    "workspace": "providers",
+    "tab": "services",
+    "select": "opencode",
+    "target": "[data-setting-id=\"ai.accounts.opencode-server-actions\"]"
+   },
+   "actionLabel": "Open the server"
+  },
+  "ai.accounts.opencode-discovery-ttl": {
+   "label": "Trust the model list for",
+   "unit": "s",
+   "min": 0
+  },
+  "ai.accounts.opencode-cli-path": {
+   "label": "OpenCode program location",
+   "help": "Only used when the server cannot be reached directly.",
+   "placeholder": "Found automatically"
+  },
+  "ai.accounts.opencode-disable-cc-skills": {
+   "label": "Skip Claude Code skills in OpenCode"
+  },
+  "ai.usage.free-models-auto-apply": {
+   "label": "Add newly free models by themselves"
+  },
+  "ai.models.default-provider": {
+   "label": "Service tried first",
+   "choices": [
+    "anthropic",
+    "codex",
+    "openai",
+    "antigravity-cli",
+    "grok",
+    "muse",
+    "github-copilot",
+    "alibaba",
+    "zai",
+    "kimi",
+    "minimax",
+    "opencode-go",
+    "anthropic-api",
+    "gemini-direct",
+    "vertex",
+    "xai-api",
+    "meta-api",
+    "cursor",
+    "qwen-token",
+    "opencode-zen",
+    "free-models",
+    "opencode",
+    "local-endpoint"
+   ],
+   "options": {
+    "anthropic": "Claude",
+    "codex": "ChatGPT / Codex",
+    "openai": "OpenAI API key",
+    "antigravity-cli": "Google Antigravity",
+    "grok": "Grok Build",
+    "muse": "Muse Code",
+    "github-copilot": "GitHub Copilot",
+    "alibaba": "Qwen Coding Plan",
+    "zai": "Z.AI Coding Plan",
+    "kimi": "Kimi Code",
+    "minimax": "MiniMax Coding Plan",
+    "opencode-go": "OpenCode Go",
+    "anthropic-api": "Anthropic API",
+    "gemini-direct": "Gemini API",
+    "vertex": "Vertex AI",
+    "xai-api": "xAI API",
+    "meta-api": "Meta Model API",
+    "cursor": "Cursor",
+    "qwen-token": "Qwen Token Plan",
+    "opencode-zen": "OpenCode Zen",
+    "free-models": "Free Models",
+    "opencode": "OpenCode on your computer",
+    "local-endpoint": "Local model server"
+   },
+   "why": "You pay for one service and want it used before the others.",
+   "help": "Used first when more than one service could do a job."
+  },
+  "ai.models.default-model": {
+   "label": "Everyday model",
+   "help": "For chat, planning and research when nothing more specific is chosen."
+  },
+  "ai.models.default-variant": {
+   "label": "Speed or power",
+   "help": "Faster and cheaper, or slower and smarter, without changing the model."
+  },
+  "ai.models.reasoning-effort": {
+   "label": "Thinking depth",
+   "help": "Deeper is smarter but slower and costs more."
+  },
+  "general.interaction.provider-disclosure": {
+   "label": "Say when a different model answered",
+   "help": "Nothing swaps without you seeing it."
+  },
+  "ai.usage.auto-refresh-discovery": {
+   "label": "Check for new models at startup",
+   "help": "New and retired models show up without a manual refresh."
+  },
+  "ai.models.overseer-model": {
+   "label": "Planning and supervising",
+   "help": "Turns plans into work and supervises runs."
+  },
+  "ai.models.worker-model": {
+   "label": "Everyday building",
+   "help": "The day-to-day building. A mid-range model keeps costs down."
+  },
+  "ai.models.gui-worker-model": {
+   "label": "Design and layout",
+   "help": "Screens, layout and look. Pick one with good taste."
+  },
+  "ai.models.high-effort-worker-model": {
+   "label": "The hardest jobs",
+   "help": "Big changes across the project and risky reasoning."
+  },
+  "ai.models.auditor-model": {
+   "label": "Checking finished work",
+   "help": "Checks finished work until it passes or is truly stuck."
+  },
+  "ai.models.goal-worker-model": {
+   "label": "Goals: doing the work",
+   "help": "Runs autonomous Goals."
+  },
+  "ai.models.goal-verifier-model": {
+   "label": "Goals: checking the work",
+   "help": "Checks Goal results. Kept apart from the worker."
+  },
+  "ai.models.subagent-model": {
+   "label": "Helper agents",
+   "help": "Never bigger than the agent that started it."
+  },
+  "ai.models.subagent-effort": {
+   "label": "Helper agents' thinking depth",
+   "help": "How hard each helper thinks."
+  },
+  "ai.models.teach-model": {
+   "label": "Explaining things to you",
+   "help": "Answers \"explain this to me\". A cheaper model is fine."
+  },
+  "ai.models.thread-title-model": {
+   "label": "Naming chats",
+   "help": "Renaming a chat yourself keeps your name.",
+   "choices": [
+    "Default",
+    "None"
+   ]
+  },
+  "ai.models.custom-variants": {
+   "label": "Your own presets",
+   "noun": "preset",
+   "help": "Each has a name, a model, and an optional note."
+  },
+  "ai.models.disable-builtin-variant": {
+   "label": "Hide the built-in presets",
+   "help": "Only your own presets show in pickers."
+  },
+  "ai.models.model-alias": {
+   "label": "Model nicknames",
+   "placeholder": "e.g. fast = Claude Haiku",
+   "help": "Pickers find a model by its nickname first."
+  },
+  "ai.models.temperature": {
+   "label": "Randomness"
+  },
+  "ai.models.top-p": {
+   "label": "Word-choice focus"
+  },
+  "ai.models.max-output-tokens": {
+   "label": "Longest answer"
+  },
+  "ai.models.interleaved-thinking": {
+   "label": "Think between tool steps"
+  },
+  "ai.models.synthetic-continue-attempts": {
+   "label": "Nudges to finish a cut-off answer"
+  },
+  "ai.models.switch-sanitization": {
+   "label": "Tidy up when the model changes"
+  },
+  "ai.models.capability-overrides": {
+   "label": "Features to use"
+  },
+  "ai.models.cache-strategy": {
+   "label": "Prompt caching"
+  },
+  "ai.models.cache-with-oauth": {
+   "label": "Caching for browser sign-ins"
+  },
+  "ai.models.gemini-cache-ttl": {
+   "label": "Gemini cache lifetime"
+  },
+  "ai.models.max-payload-size": {
+   "label": "Largest request"
+  },
+  "ai.models.system-role-name": {
+   "label": "Instruction role name"
+  },
+  "ai.models.provider-options": {
+   "label": "Extra options for a service"
+  },
+  "ai.models.lane-bindings": {
+   "label": "Work lanes"
+  },
+  "ai.models.role-policy": {
+   "label": "Role rules"
+  },
+  "ai.models.per-lane-platform": {
+   "label": "Service for each lane",
+   "options": {
+    "Claude Code": "Claude",
+    "Cursor": "Cursor",
+    "Gemini Direct": "Gemini API",
+    "Antigravity CLI": "Google Antigravity",
+    "OpenCode": "OpenCode on your computer"
+   }
+  },
+  "ai.models.per-lane-model": {
+   "label": "Model for each lane"
+  },
+  "ai.models.execution-role": {
+   "label": "Role for one run"
+  },
+  "ai.models.requested-effective-inspector": {
+   "label": "What actually ran",
+   "actionLabel": "See what actually ran"
+  },
+  "ai.accounts.multi-account-switching": {
+   "label": "Switch accounts by themselves",
+   "help": "When one account hits its limit, the next one carries on."
+  },
+  "ai.accounts.soft-switch": {
+   "label": "Switch at a natural break",
+   "help": "Moves between tasks when quota runs low, not in the middle of one."
+  },
+  "ai.accounts.soft-warning-level": {
+   "label": "Warn when this much is left",
+   "help": "A heads-up before an account runs low."
+  },
+  "ai.accounts.hard-switch-level": {
+   "label": "Switch when this much is left",
+   "help": "Below this, work moves to the next account."
+  },
+  "ai.accounts.default-account": {
+   "label": "Which account goes first",
+   "options": {
+    "Auto (highest priority)": "The top of each list",
+    "Pick per provider": "The one I pick for each service"
+   },
+   "help": "Each service's account list is in its page under Services."
+  },
+  "ai.accounts.account-binding": {
+   "label": "Stick to a chosen account",
+   "help": "Whether work may use a different account than the one you chose."
+  },
+  "ai.accounts.requested-account-id": {
+   "label": "Account for one run"
+  },
+  "ai.accounts.switch-history": {
+   "label": "Switch history",
+   "actionLabel": "Open the switch history"
+  },
+  "ai.models.provider-fallback": {
+   "label": "Move to another service when one is down",
+   "help": "Otherwise the run stops when its service is down."
+  },
+  "ai.models.provider-priority": {
+   "label": "Service try order",
+   "noun": "service",
+   "valueChoices": [
+    "anthropic",
+    "codex",
+    "openai",
+    "antigravity-cli",
+    "grok",
+    "muse",
+    "github-copilot",
+    "alibaba",
+    "zai",
+    "kimi",
+    "minimax",
+    "opencode-go",
+    "anthropic-api",
+    "gemini-direct",
+    "vertex",
+    "xai-api",
+    "meta-api",
+    "cursor",
+    "qwen-token",
+    "opencode-zen",
+    "free-models",
+    "opencode",
+    "local-endpoint"
+   ],
+   "options": {
+    "anthropic": "Claude",
+    "codex": "ChatGPT / Codex",
+    "openai": "OpenAI API key",
+    "antigravity-cli": "Google Antigravity",
+    "grok": "Grok Build",
+    "muse": "Muse Code",
+    "github-copilot": "GitHub Copilot",
+    "alibaba": "Qwen Coding Plan",
+    "zai": "Z.AI Coding Plan",
+    "kimi": "Kimi Code",
+    "minimax": "MiniMax Coding Plan",
+    "opencode-go": "OpenCode Go",
+    "anthropic-api": "Anthropic API",
+    "gemini-direct": "Gemini API",
+    "vertex": "Vertex AI",
+    "xai-api": "xAI API",
+    "meta-api": "Meta Model API",
+    "cursor": "Cursor",
+    "qwen-token": "Qwen Token Plan",
+    "opencode-zen": "OpenCode Zen",
+    "free-models": "Free Models",
+    "opencode": "OpenCode on your computer",
+    "local-endpoint": "Local model server"
+   },
+   "help": "Used when several services could do a job."
+  },
+  "ai.models.resolution-policy": {
+   "label": "How boldly to pick models",
+   "help": "Careful never guesses; bold chases the cheapest or fastest."
+  },
+  "ai.usage.auto-resume-default": {
+   "label": "Pick up paused work when usage resets",
+   "help": "Work you paused yourself always stays paused."
+  },
+  "ai.usage.monthly-spend-limit": {
+   "label": "Monthly spending limit",
+   "unit": "USD",
+   "min": 0,
+   "help": "What happens at the limit is set below."
+  },
+  "ai.usage.monthly-token-budget": {
+   "label": "Monthly token budget",
+   "unit": "tokens",
+   "min": 0,
+   "help": "Feeds the warnings and run limits."
+  },
+  "ai.usage.budget-policy": {
+   "label": "At the limit",
+   "help": "Stopping is safest for your wallet."
+  },
+  "ai.usage.budget-warning-threshold": {
+   "label": "Warn at",
+   "help": "Share of a limit used before you are warned."
+  },
+  "ai.usage.pressure-visibility": {
+   "label": "Warn before limits",
+   "help": "Small warnings when accounts get close to a limit."
+  },
+  "ai.usage.pressure-sensitivity": {
+   "label": "How early to warn",
+   "help": "High warns early and often."
+  },
+  "ai.usage.reset-countdown": {
+   "label": "Show when limits reset",
+   "help": "Like \"Resets in 2h 15m\"."
+  },
+  "ai.usage.cooldown-timers": {
+   "label": "Show resting accounts",
+   "help": "In pickers and on the Usage page."
+  },
+  "ai.usage.usage-windows": {
+   "label": "Time windows shown",
+   "help": "The 5-hour and 7-day windows match most plans."
+  },
+  "ai.usage.platform-filters": {
+   "label": "Services on the Usage page",
+   "choices": [
+    "Claude",
+    "Codex",
+    "Copilot",
+    "Cursor",
+    "Gemini Direct",
+    "Antigravity",
+    "OpenCode",
+    "Grok Build",
+    "Muse Code",
+    "Qwen",
+    "Z.AI",
+    "Kimi Code",
+    "MiniMax",
+    "OpenCode Go"
+   ],
+   "options": {
+    "Codex": "ChatGPT / Codex",
+    "Gemini Direct": "Gemini API",
+    "Antigravity": "Google Antigravity",
+    "OpenCode": "OpenCode on your computer"
+   },
+   "layout": "wide",
+   "help": "Hiding one does not stop tracking it."
+  },
+  "ai.usage.chart-type": {
+   "label": "Chart style",
+   "help": "Only changes the look."
+  },
+  "ai.usage.tool-usage-window": {
+   "label": "Tool statistics window",
+   "help": "For the tool statistics on the Usage page."
+  },
+  "ai.usage.ledger-page-size": {
+   "label": "Cost rows per page",
+   "help": "On the spending list."
+  },
+  "ai.usage.ledger-export": {
+   "label": "Export format",
+   "help": "CSV opens in spreadsheets; JSON suits other tools."
+  },
+  "ai.usage.usage-retention": {
+   "label": "Keep usage history for"
+  },
+  "ai.usage.pricing-version": {
+   "label": "Price list"
+  },
+  "ai.usage.quota-management": {
+   "label": "Quota and budget console",
+   "actionLabel": "Open the console"
+  },
+  "ai.usage.pressure-history": {
+   "label": "Pressure history",
+   "actionLabel": "Open the history"
+  }
+ }
+}

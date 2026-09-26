@@ -134,3 +134,5 @@ html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[
 #panel-settings .setting-list.o55-bound-rows, #panel-settings .settings-section.o55-group > .setting-list { border: 0; border-radius: 0; background: none; box-shadow: none; }
 #panel-settings .pm51-section-body > .setting-list.o55-bound-rows + .pm51-rows > .pm51-row:first-child { border-top: 1px solid var(--k3-line); }
 #panel-settings .pm51-section-body > .setting-list.o55-bound-rows > .setting-row.o55-row { padding-left: 0; }
+/* A wide row's chips use the row's width (the engine caps chip groups at 300 px for the narrow control column). */
+#panel-settings .o55-row.is-wide .o55-chips { max-width: none; }

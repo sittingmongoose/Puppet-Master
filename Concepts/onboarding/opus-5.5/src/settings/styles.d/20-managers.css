@@ -91,3 +91,8 @@ html[data-theme^="retro"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tran
   #panel-settings .pm51-mgr .pm51-stat:nth-child(4) { box-shadow: inset 1px 0 0 var(--k3-line), inset 0 1px 0 var(--k3-line); }
 }
 #panel-settings .o55-quiet-line { margin: 0; padding: 4px 0 6px; font-size: 12px; color: var(--k3-text-3); line-height: 1.5; }
+
+/* A list that stays in view while the details scroll sits below the manager's sticky tab strip, not under it. */
+@container settings-host (min-width: 721px) {
+  #panel-settings .workspace-block .pm51-mgr.has-manager-tabs .pm51-split[data-roster-scroll] .pm51-roster { top: 58px; max-height: calc(var(--pm51-doc-h, 100vh) - 70px); }
+}

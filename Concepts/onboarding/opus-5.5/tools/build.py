@@ -191,6 +191,14 @@ PATCHES = [
     (".pm7u-card:has(.pm7u-setup-cta) .pm7u-setup-cta > * {",
      ".pm7u-card .pm7u-setup-cta.pm7u-setup-cta > * {",
      'usage card cta :has restyle'),
+    # The Settings rail and Home count the real AI services (the list grew from 13 to 22 and each one's state is
+    # live), not a fixed "7 ready · 2 need attention". Providers & Accounts defines window.O55ProviderSummary.
+    ("<strong>AI Providers</strong><small>7 ready · 2 need attention</small>",
+     "<strong>AI Providers</strong><small>${window.O55ProviderSummary ? window.O55ProviderSummary() : ''}</small>",
+     'settings rail provider count'),
+    ('<span class="setup-meta">7 ready · 2 need attention · install, sign in, choose models</span>',
+     '<span class="setup-meta">${window.O55ProviderSummary ? window.O55ProviderSummary() + \' · \' : \'\'}install, sign in, choose models</span>',
+     'settings home provider count'),
     # Teacher is a real persona in the Assistant Chat guide picker.
     ("var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer'];",
      "var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher'];",

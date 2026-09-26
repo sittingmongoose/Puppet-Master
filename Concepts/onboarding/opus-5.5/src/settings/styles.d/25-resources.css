@@ -1,0 +1,90 @@
+/* O55 · pieces for managers that hold things (services, accounts, servers): grouped lists, a one-line "all ready"
+   strip, the billing-sibling line, titled groups inside an open account, compact two-up fields, and the Details
+   panel's "each account has its own" list. Tokens only, so all eight themes and reduced motion follow. */
+
+/* ---- grouped roster ------------------------------------------------------------------------------------------ */
+#panel-settings .pm51-roster .roster-list.o55-grouped { gap: 1px; }
+#panel-settings .o55-roster-group { display: flex; flex-direction: column; gap: 1px; padding: 14px 10px 6px; }
+#panel-settings .o55-roster-group:first-child { padding-top: 4px; }
+#panel-settings .o55-roster-group > span { font-size: 10.5px; font-weight: 720; letter-spacing: .07em; text-transform: uppercase; color: var(--k3-text-2); }
+#panel-settings .o55-roster-group > small { font-size: 11px; color: var(--k3-text-3); line-height: 1.3; }
+#panel-settings .o55-roster-group[hidden] { display: none; }
+
+/* ---- list-wide actions under a summary ------------------------------------------------------------------------ */
+#panel-settings .pm51-mgr .o55-toolbar.o55-providers-tools { padding: 0; border: 0; gap: 8px; }
+
+/* ---- "all ready" strip --------------------------------------------------------------------------------------- */
+#panel-settings .o55-ready-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 14px 0 12px; }
+#panel-settings .o55-ready-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 10px 0 8px; border: 1px solid color-mix(in srgb, var(--k3-green) 26%, var(--k3-line)); border-radius: 999px; background: var(--k3-green-soft); font-size: 12px; font-weight: 600; color: var(--k3-text-1); }
+#panel-settings .o55-ready-chip svg { width: 13px; height: 13px; color: var(--k3-green); }
+#panel-settings .o55-ready-end { margin-left: auto; display: inline-flex; align-items: center; gap: 10px; }
+#panel-settings .o55-ready-when { font-size: 11.5px; color: var(--k3-text-3); }
+
+/* ---- billing sibling ------------------------------------------------------------------------------------------ */
+#panel-settings .o55-pair { text-align: left; justify-content: flex-start; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 2px 0 6px; padding: 10px 12px; border: 1px solid var(--k3-line); border-radius: 10px; background: color-mix(in srgb, var(--k3-bg-1) 55%, transparent); font-size: 12.5px; color: var(--k3-text-2); line-height: 1.45; }
+#panel-settings .o55-pair > .icon { width: 14px; height: 14px; color: var(--k3-text-3); }
+#panel-settings .o55-pair > .o55-pair-text { flex: 1 1 220px; min-width: 0; }
+#panel-settings .o55-pair .o55-textbtn { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+#panel-settings .o55-pair .o55-textbtn svg { width: 13px; height: 13px; }
+
+/* ---- inside an open account: titled groups --------------------------------------------------------------------- */
+#panel-settings .o55-acc-group + .o55-acc-group { margin-top: 6px; }
+#panel-settings .o55-acc-group-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; padding: 12px 0 4px; }
+#panel-settings .o55-acc-group-head h4 { margin: 0; font-size: 11px; font-weight: 720; letter-spacing: .06em; text-transform: uppercase; color: var(--k3-text-2); }
+#panel-settings .o55-acc-group-head p { margin: 0; font-size: 11.5px; color: var(--k3-text-3); }
+#panel-settings .o55-acc-group .pm51-rows { margin: 0; }
+#panel-settings .o55-acc-wait { padding: 6px 0 4px; }
+#panel-settings .o55-keyrow .o55-key { gap: 12px; }
+
+/* ---- compact fields, two to a line ------------------------------------------------------------------------------ */
+#panel-settings .o55-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px 14px; padding: 6px 0 8px; }
+#panel-settings .o55-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding: 10px 12px; border: 1px solid var(--k3-line); border-radius: 10px; background: color-mix(in srgb, var(--k3-bg-1) 40%, transparent); transition: border-color 160ms var(--k3-ease-out); }
+#panel-settings .o55-field.is-changed { border-color: color-mix(in srgb, var(--k3-accent) 40%, var(--k3-line)); }
+#panel-settings .o55-field-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+#panel-settings .o55-field-label { font-size: 12px; font-weight: 640; color: var(--k3-text-1); }
+#panel-settings .o55-field .o55-about.icon-btn { width: 22px; height: 22px; min-width: 22px; opacity: .5; }
+#panel-settings .o55-field:hover .o55-about.icon-btn { opacity: 1; color: var(--k3-accent); }
+#panel-settings .o55-field .pm51-dd-trigger, #panel-settings .o55-field .text-control { width: 100%; min-width: 0; max-width: none; }
+#panel-settings .o55-field .o55-num { display: flex; width: 100%; }
+#panel-settings .o55-field .o55-num .text-control { flex: 1 1 auto; width: auto; min-width: 0; border: 0; background: none; box-shadow: none; text-align: left; font-variant-numeric: tabular-nums; }
+
+/* ---- empty accounts: where the key goes ------------------------------------------------------------------------ */
+#panel-settings .o55-empty-key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 10px; padding: 10px 12px; border: 1px dashed var(--k3-line-strong, var(--k3-line)); border-radius: 10px; font-size: 12px; color: var(--k3-text-3); }
+#panel-settings .o55-empty-key > .o55-empty-key-text { flex: 1 1 240px; }
+
+/* ---- a line of small buttons ----------------------------------------------------------------------------------- */
+#panel-settings .o55-inline-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+#panel-settings .pm51-section-body .o55-inline-actions { margin-top: 10px; }
+#panel-settings .o55-home-inline { display: block; }
+
+/* ---- list editor: picked names ----------------------------------------------------------------------------------- */
+#panel-settings .o55-le-name { min-width: 0; padding: 0 4px; font-size: 13px; font-weight: 600; color: var(--k3-text-1); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#panel-settings .o55-le-add .pm51-dd-trigger { flex: 1 1 auto; min-width: 0; }
+
+/* ---- Details: set per account / per service ---------------------------------------------------------------------- */
+#panel-settings .o55-insp-now.is-per { border-style: dashed; }
+#panel-settings .o55-insp-per { list-style: none; margin: 6px 0 2px; padding: 0; display: flex; flex-direction: column; gap: 4px; max-height: 220px; overflow: auto; }
+#panel-settings .o55-insp-per li { display: flex; justify-content: space-between; gap: 12px; font-size: 12.5px; line-height: 1.4; }
+#panel-settings .o55-insp-per li span:first-child { flex: 0 1 48%; color: var(--k3-text-2); min-width: 0; }
+#panel-settings .o55-insp-per li span:last-child { color: var(--k3-text-1); font-weight: 600; text-align: right; }
+#panel-settings .o55-insp-choice.is-static { cursor: default; }
+#panel-settings .o55-insp-choice.is-static:hover { background: none; border-color: var(--k3-line); }
+
+/* ---- narrow views ------------------------------------------------------------------------------------------------
+   The settings host can be wide while a manager's own view is not (page index, open sidebars), so the list/detail
+   and the rows inside a detail follow their own width: a slimmer list first, then rows that put the control under
+   the label. */
+#panel-settings .pm51-mgr .pm51-scroll { container: pm51-view / inline-size; }
+#panel-settings .pm51-mgr .pm51-detail { container: pm51-detail / inline-size; }
+@container pm51-view (max-width: 760px) {
+  #panel-settings .pm51-mgr .split-manager.pm51-split { grid-template-columns: 208px minmax(0, 1fr); }
+  #panel-settings .pm51-mgr .pm51-roster .resource-avatar { display: none; }
+  #panel-settings .pm51-mgr .o55-roster-group > small { display: none; }
+}
+@container pm51-detail (max-width: 540px) {
+  #panel-settings .pm51-detail .setting-row.o55-row { grid-template-columns: minmax(0, 1fr) 30px; }
+  #panel-settings .pm51-detail .setting-row.o55-row .setting-control { grid-column: 1 / 2; grid-row: 2; justify-content: flex-start; max-width: none; }
+  #panel-settings .pm51-detail .setting-row.o55-row .o55-about { grid-column: 2; grid-row: 1; }
+  #panel-settings .pm51-detail .o55-ready-end { margin-left: 0; }
+  #panel-settings .pm51-detail .pm51-section-head { flex-wrap: wrap; row-gap: 8px; }
+}

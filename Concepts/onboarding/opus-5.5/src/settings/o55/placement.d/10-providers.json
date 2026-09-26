@@ -1,0 +1,325 @@
+{
+ "_about": "Providers & Accounts: four tabs. Services draws every service, account and key itself (one composed section); the old flat Accounts & sign-in and API keys lists are gone because every row in them describes one account or one service. Models, Limits & switching and Usage & budgets hold the project-wide rows in groups of four to seven.",
+ "managers": {
+  "providers": {
+   "tabs": {
+    "services": "Services",
+    "models": "Models",
+    "limits": "Limits & switching",
+    "usage": "Usage & budgets"
+   },
+   "defaultTab": "services"
+  }
+ },
+ "sections": {
+  "providers-accounts": null,
+  "providers-api-keys": null,
+  "providers-switching": null,
+  "providers-opencode": null,
+  "providers-models": null,
+  "providers-roles": null,
+  "providers-generation": null,
+  "providers-health": null,
+  "providers-usage": null,
+  "providers-apps": null,
+  "providers-account-tools": null,
+  "providers-model-tools": null,
+  "providers-health-tools": null,
+  "providers-home": {
+   "to": "providers",
+   "tab": "services",
+   "title": "Your AI services",
+   "help": "Each service, its accounts, and its own choices.",
+   "order": 1,
+   "composed": true
+  },
+  "providers-everyday": {
+   "to": "providers",
+   "tab": "models",
+   "title": "Everyday model",
+   "help": "What answers when nothing more specific is chosen.",
+   "order": 10
+  },
+  "providers-jobs": {
+   "to": "providers",
+   "tab": "models",
+   "title": "A model for each job",
+   "help": "Leave one on the default and it follows the everyday model.",
+   "order": 20
+  },
+  "providers-jobs-more": {
+   "to": "providers",
+   "tab": "models",
+   "title": "Goals, helpers and small jobs",
+   "help": "Goal runs, helper agents, explanations and chat names.",
+   "order": 30
+  },
+  "providers-presets": {
+   "to": "providers",
+   "tab": "models",
+   "title": "Presets and nicknames",
+   "help": "Your own speed-or-power presets and names for models.",
+   "order": 40
+  },
+  "providers-answers": {
+   "to": "providers",
+   "tab": "models",
+   "title": "How models answer",
+   "help": "Fine controls. The defaults suit most work.",
+   "order": 50,
+   "advanced": true
+  },
+  "providers-features": {
+   "to": "providers",
+   "tab": "models",
+   "title": "Service features and caching",
+   "help": "Only change these if a service's documentation tells you to.",
+   "order": 60,
+   "advanced": true
+  },
+  "providers-lanes": {
+   "to": "providers",
+   "tab": "models",
+   "title": "Work lanes and what ran",
+   "help": "Pin work lanes to a service and model, and compare what you asked for with what ran.",
+   "order": 70,
+   "advanced": true
+  },
+  "providers-switch-accounts": {
+   "to": "providers",
+   "tab": "limits",
+   "title": "Moving between accounts",
+   "help": "When a service has more than one account.",
+   "order": 10
+  },
+  "providers-switch-services": {
+   "to": "providers",
+   "tab": "limits",
+   "title": "Moving between services",
+   "help": "When a whole service is down or used up.",
+   "order": 20
+  },
+  "providers-limits-more": {
+   "to": "providers",
+   "tab": "limits",
+   "title": "One run, and the switch log",
+   "help": "Name the account for a single run, and see every switch and why it happened.",
+   "order": 30,
+   "advanced": true
+  },
+  "providers-budgets": {
+   "to": "providers",
+   "tab": "usage",
+   "title": "Spending limits",
+   "help": "0 means no limit.",
+   "order": 10
+  },
+  "providers-warnings": {
+   "to": "providers",
+   "tab": "usage",
+   "title": "Warnings",
+   "help": "Heads-up before anything stops.",
+   "order": 20
+  },
+  "providers-board": {
+   "to": "providers",
+   "tab": "usage",
+   "title": "The Usage page",
+   "help": "What it shows and how.",
+   "order": 30
+  },
+  "providers-records": {
+   "to": "providers",
+   "tab": "usage",
+   "title": "Records and prices",
+   "help": "How long usage is kept, which price list estimates use, and the detailed consoles.",
+   "order": 40,
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "providers-home",
+   "ids": [
+    "ai.accounts.provider-connections",
+    "ai.usage.provider-health",
+    "ai.usage.refresh-models",
+    "system.advanced.binary-rescan",
+    "ai.models.provider-enabled",
+    "ai.accounts.auth-mode",
+    "ai.accounts.account-name",
+    "ai.accounts.account-enabled",
+    "ai.accounts.account-roles",
+    "ai.accounts.billing-entity",
+    "ai.accounts.claude-login-method",
+    "ai.accounts.codex-auth-family",
+    "ai.accounts.gcp-project-id",
+    "ai.accounts.account-priority",
+    "ai.accounts.account-threshold-override",
+    "ai.accounts.switch-mode-override",
+    "ai.accounts.cooldown-policy",
+    "ai.accounts.retry-budget",
+    "ai.accounts.quota-profile",
+    "ai.accounts.auth-family",
+    "ai.accounts.credential-storage",
+    "ai.accounts.auth-surface",
+    "ai.accounts.set-preferred-account",
+    "ai.accounts.anthropic-api-key",
+    "ai.accounts.openai-api-key",
+    "ai.accounts.gemini-api-key",
+    "ai.accounts.cursor-api-key",
+    "ai.accounts.minimax-api-key",
+    "system.advanced.cli-path-claude",
+    "system.advanced.cli-path-cursor",
+    "ai.accounts.opencode-enable",
+    "ai.accounts.opencode-add-server",
+    "ai.accounts.opencode-endpoint",
+    "ai.accounts.opencode-server-auth",
+    "ai.accounts.opencode-server-actions",
+    "ai.accounts.opencode-discovery-ttl",
+    "ai.accounts.opencode-cli-path",
+    "ai.accounts.opencode-disable-cc-skills",
+    "ai.usage.free-models-auto-apply"
+   ]
+  },
+  {
+   "section": "providers-everyday",
+   "ids": [
+    "ai.models.default-provider",
+    "ai.models.default-model",
+    "ai.models.default-variant",
+    "ai.models.reasoning-effort",
+    "general.interaction.provider-disclosure",
+    "ai.usage.auto-refresh-discovery"
+   ]
+  },
+  {
+   "section": "providers-jobs",
+   "ids": [
+    "ai.models.overseer-model",
+    "ai.models.worker-model",
+    "ai.models.gui-worker-model",
+    "ai.models.high-effort-worker-model",
+    "ai.models.auditor-model"
+   ]
+  },
+  {
+   "section": "providers-jobs-more",
+   "ids": [
+    "ai.models.goal-worker-model",
+    "ai.models.goal-verifier-model",
+    "ai.models.subagent-model",
+    "ai.models.subagent-effort",
+    "ai.models.teach-model",
+    "ai.models.thread-title-model"
+   ]
+  },
+  {
+   "section": "providers-presets",
+   "ids": [
+    "ai.models.custom-variants",
+    "ai.models.disable-builtin-variant",
+    "ai.models.model-alias"
+   ]
+  },
+  {
+   "section": "providers-answers",
+   "ids": [
+    "ai.models.temperature",
+    "ai.models.top-p",
+    "ai.models.max-output-tokens",
+    "ai.models.interleaved-thinking",
+    "ai.models.synthetic-continue-attempts",
+    "ai.models.switch-sanitization"
+   ]
+  },
+  {
+   "section": "providers-features",
+   "ids": [
+    "ai.models.capability-overrides",
+    "ai.models.cache-strategy",
+    "ai.models.cache-with-oauth",
+    "ai.models.gemini-cache-ttl",
+    "ai.models.max-payload-size",
+    "ai.models.system-role-name",
+    "ai.models.provider-options"
+   ]
+  },
+  {
+   "section": "providers-lanes",
+   "ids": [
+    "ai.models.lane-bindings",
+    "ai.models.role-policy",
+    "ai.models.per-lane-platform",
+    "ai.models.per-lane-model",
+    "ai.models.execution-role",
+    "ai.models.requested-effective-inspector"
+   ]
+  },
+  {
+   "section": "providers-switch-accounts",
+   "ids": [
+    "ai.accounts.multi-account-switching",
+    "ai.accounts.soft-switch",
+    "ai.accounts.soft-warning-level",
+    "ai.accounts.hard-switch-level",
+    "ai.accounts.default-account",
+    "ai.accounts.account-binding"
+   ]
+  },
+  {
+   "section": "providers-switch-services",
+   "ids": [
+    "ai.models.provider-fallback",
+    "ai.models.provider-priority",
+    "ai.models.resolution-policy",
+    "ai.usage.auto-resume-default"
+   ]
+  },
+  {
+   "section": "providers-limits-more",
+   "ids": [
+    "ai.accounts.requested-account-id",
+    "ai.accounts.switch-history"
+   ]
+  },
+  {
+   "section": "providers-budgets",
+   "ids": [
+    "ai.usage.monthly-spend-limit",
+    "ai.usage.monthly-token-budget",
+    "ai.usage.budget-policy",
+    "ai.usage.budget-warning-threshold"
+   ]
+  },
+  {
+   "section": "providers-warnings",
+   "ids": [
+    "ai.usage.pressure-visibility",
+    "ai.usage.pressure-sensitivity",
+    "ai.usage.reset-countdown",
+    "ai.usage.cooldown-timers"
+   ]
+  },
+  {
+   "section": "providers-board",
+   "ids": [
+    "ai.usage.usage-windows",
+    "ai.usage.platform-filters",
+    "ai.usage.chart-type",
+    "ai.usage.tool-usage-window",
+    "ai.usage.ledger-page-size",
+    "ai.usage.ledger-export"
+   ]
+  },
+  {
+   "section": "providers-records",
+   "ids": [
+    "ai.usage.usage-retention",
+    "ai.usage.pricing-version",
+    "ai.usage.quota-management",
+    "ai.usage.pressure-history"
+   ]
+  }
+ ]
+}

@@ -46,17 +46,18 @@ PM51.valueLabel = (id, raw) => {
   const per = O55L.bySetting[id];
   if (o55Has(per, k)) return per[k];
   if (o55Has(O55L.global, k)) return O55L.global[k];
+  if (o55Has(o55MoreLabels, k)) return o55MoreLabels[k];
   if (k === '') return 'Not set';
   return o55Humanize(k);
 };
-PM51.valueHint = (id, raw) => { const row = O55R[id], k = String(raw); return (row && row.hints && row.hints[k]) || ((O55L.hints[id] || {})[k]) || ''; };
+PM51.valueHint = (id, raw) => { const row = O55R[id], k = String(raw); return (row && row.hints && row.hints[k]) || ((O55L.hints[id] || {})[k]) || o55MoreHints[id + '|' + k] || ''; };
 const o55Unit = setting => { const u = (O55R[setting.id] || {}).unit || setting.unit || ''; return u === 'ms' ? 'ms' : u; };
 /* The value as a sentence fragment: On, Off, "Ask me first", "3 items: Claude, Codex, Copilot", "500 MB". */
 PM51.valueText = (setting, v) => {
   if (v === true) return 'On';
   if (v === false) return 'Off';
   if (v == null || v === '') return (O55R[setting.id] || {}).empty || 'Not set';
-  if (Array.isArray(v)) return v.length ? v.map(x => (x && typeof x === 'object') ? o55ObjectLine(x) : PM51.valueLabel(setting.id, x)).join(', ') : 'None';
+  if (Array.isArray(v)) return v.length ? v.map(x => (x && typeof x === 'object') ? o55ObjectLine(x) : PM51.valueLabel(setting.id, x)).join(', ') : ((O55R[setting.id] || {}).emptyList || 'None');
   if (typeof v === 'object') { const e = Object.entries(v); return e.length ? e.slice(0, 4).map(([k, x]) => `${o55Humanize(k)}: ${(x && typeof x === 'object') ? '…' : PM51.valueLabel(setting.id, x)}`).join(', ') + (e.length > 4 ? ` and ${e.length - 4} more` : '') : 'None'; }
   const unit = o55Unit(setting);
   if (typeof v === 'number' || /^-?\d+(\.\d+)?$/.test(String(v))) return unit ? `${v} ${unit}` : String(v);
@@ -65,7 +66,22 @@ PM51.valueText = (setting, v) => {
 function o55ObjectLine(o) { const name = o.name || o.label || o.title || o.id; if (name) return String(name); const e = Object.entries(o); return e.slice(0, 2).map(([k, x]) => `${o55Humanize(k)} ${typeof x === 'object' ? '…' : x}`).join(', '); }
 
 /* ---------- controls ------------------------------------------------------------------------------------------ */
-const o55Options = setting => { const row = O55R[setting.id] || {}; return (row.choices || setting.options || []).map(o => (o && typeof o === 'object' && !Array.isArray(o)) ? o.value : (Array.isArray(o) ? o[0] : o)); };
+/* Choices that come from what is connected (the models on your signed-in accounts, say) are added by the manager
+   that knows them: PM51.moreChoices(id, () => [{ value, label, meta }]). The inventory's own choices stay first. */
+const o55More = {}, o55MoreLabels = {}, o55MoreHints = {};
+PM51.moreChoices = (id, fn) => { o55More[id] = fn; };
+function o55Extra(id) {
+  if (!o55More[id]) return [];
+  let list = []; try { list = o55More[id]() || []; } catch (e) { list = []; }
+  list.forEach(x => { o55MoreLabels[x.value] = x.label; if (x.meta) o55MoreHints[id + '|' + x.value] = x.meta; });
+  return list.map(x => x.value);
+}
+const o55Options = setting => {
+  const row = O55R[setting.id] || {};
+  const base = (row.choices || setting.options || []).map(o => (o && typeof o === 'object' && !Array.isArray(o)) ? o.value : (Array.isArray(o) ? o[0] : o));
+  const seen = new Set(base.map(String));
+  return base.concat(o55Extra(setting.id).filter(v => !seen.has(String(v))));
+};
 const o55SegmentFits = (setting, opts) => opts.length <= 4 && opts.reduce((n, o) => n + PM51.valueLabel(setting.id, o).length, 0) <= 34;
 function o55Select(setting, value, opts) {
   const list = opts.slice();
@@ -211,9 +227,16 @@ function o55ListEditor(found) {
   let items = (Array.isArray(value) ? value : []).map(x => String(x));
   const noun = row.noun || 'item';
   const ordered = row.ordered !== false;
+  /* a list of known things (services, say) is picked from, not typed: items read as names, Add offers what is left */
+  const pick = Array.isArray(row.valueChoices) && row.valueChoices.length ? row.valueChoices.map(String) : null;
   const draw = wrap => {
     const list = wrap.querySelector('.o55-le-list');
-    list.innerHTML = items.length ? items.map((x, i) => `<div class="o55-le-row${ordered ? '' : ' is-plain'}" data-i="${i}">${ordered ? `<span class="o55-le-n">${i + 1}</span>` : ''}<input class="text-control" value="${a(x)}" aria-label="${a(`${cap(noun)} ${i + 1}`)}" data-i="${i}"/>${ordered ? `<button type="button" class="icon-btn" data-o55-le="up" data-i="${i}" aria-label="Move up"${i === 0 ? ' aria-disabled="true"' : ''}>${icon('up')}</button><button type="button" class="icon-btn" data-o55-le="down" data-i="${i}" aria-label="Move down"${i === items.length - 1 ? ' aria-disabled="true"' : ''}>${icon('down')}</button>` : ''}<button type="button" class="icon-btn" data-o55-le="remove" data-i="${i}" aria-label="${a('Remove ' + noun)}">${icon('trash')}</button></div>`).join('')
+    if (pick) {
+      const left = pick.filter(c => !items.includes(c));
+      const add = wrap.querySelector('.o55-le-add');
+      if (add) add.innerHTML = left.length ? `${PM51.dropdown(left[0], left.map(c => ({ value: c, label: PM51.valueLabel(s.id, c) })), { label: 'New ' + noun, cls: 'o55-le-pick' }).replace('<select ', '<select data-o55-le-new ')}<button type="button" class="btn small" data-o55-le="add">${icon('plus')}<span>Add</span></button>` : `<span class="o55-le-help">Every ${h(noun)} is in the list.</span>`;
+    }
+    list.innerHTML = items.length ? items.map((x, i) => `<div class="o55-le-row${ordered ? '' : ' is-plain'}" data-i="${i}">${ordered ? `<span class="o55-le-n">${i + 1}</span>` : ''}${pick ? `<span class="o55-le-name">${h(PM51.valueLabel(s.id, x))}</span>` : `<input class="text-control" value="${a(x)}" aria-label="${a(`${cap(noun)} ${i + 1}`)}" data-i="${i}"/>`}${ordered ? `<button type="button" class="icon-btn" data-o55-le="up" data-i="${i}" aria-label="Move up"${i === 0 ? ' aria-disabled="true"' : ''}>${icon('up')}</button><button type="button" class="icon-btn" data-o55-le="down" data-i="${i}" aria-label="Move down"${i === items.length - 1 ? ' aria-disabled="true"' : ''}>${icon('down')}</button>` : ''}<button type="button" class="icon-btn" data-o55-le="remove" data-i="${i}" aria-label="${a('Remove ' + noun)}">${icon('trash')}</button></div>`).join('')
       : `<div class="o55-le-empty">${h(row.empty || `No ${noun}s yet.`)}</div>`;
   };
   const body = `<div class="o55-le">${row.editorHelp ? `<p class="o55-le-help">${h(row.editorHelp)}</p>` : ''}<div class="o55-le-list"></div>
@@ -222,7 +245,7 @@ function o55ListEditor(found) {
     title: PM51.rowLabel(s), eyebrow: found.workspace ? found.workspace.label : '', icon: row.icon || 'list', summary: PM51.rowHelp(s), body,
     primaryLabel: 'Save', onPrimary: w => {
       w.querySelectorAll('.o55-le-row input').forEach(inp => { items[Number(inp.dataset.i)] = inp.value.trim(); });
-      const pending = w.querySelector('[data-o55-le-new]'); if (pending && pending.value.trim()) items.push(pending.value.trim());
+      const pending = pick ? null : w.querySelector('[data-o55-le-new]'); if (pending && pending.value.trim()) items.push(pending.value.trim());
       const next = items.filter(Boolean);
       if (!commitSettingValue(s.id, next)) return false;
       saveState(); refreshSettingRow(s.id); o55Notify(s.id, next); showToast('Saved', `${PM51.rowLabel(s)}: ${next.length} ${next.length === 1 ? noun : noun + 's'}.`, 'success', 2200);
