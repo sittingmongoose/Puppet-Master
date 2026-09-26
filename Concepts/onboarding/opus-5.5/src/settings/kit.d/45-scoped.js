@@ -196,3 +196,19 @@ function o55GroupHeads(el) {
 }
 const o55ApplyFiltersKit = PM51.applyFilters;
 PM51.applyFilters = scope => { o55ApplyFiltersKit(scope); (scope || root).querySelectorAll('input[data-action="pm51-filter"]').forEach(o55GroupHeads); };
+
+/* ---------- outside the thing it describes ------------------------------------------------------------------- */
+/* In All Project Settings (and anywhere else the plain row renderer draws it) a per-account or per-service row is a
+   way to the accounts or services, not one global control that would seem to change them all. */
+const o55ScopedRowKit = renderSettingRow;
+renderSettingRow = function (setting) {
+  const html = o55ScopedRowKit.apply(this, arguments);
+  const row = setting ? O55R[setting.id] || {} : {};
+  if (!row.per) return html;
+  const tpl = document.createElement('template'); tpl.innerHTML = html;
+  const ctl = tpl.content.querySelector('.setting-control');
+  if (ctl) ctl.innerHTML = `<button type="button" class="btn small o55-routebtn" data-action="o55-reveal" data-setting="${a(setting.id)}"><span>${h(row.per === 'account' ? 'Set in each account' : row.per === 'service' ? 'Set in each service' : 'Set in each one')}</span>${icon('arrowRight')}</button>`;
+  tpl.content.querySelector('.setting-row')?.classList.remove('is-changed');
+  tpl.content.querySelector('.o55-changed')?.remove();
+  return tpl.innerHTML;
+};

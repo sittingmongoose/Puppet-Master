@@ -1,0 +1,282 @@
+{
+ "_about": "Web & Research rows (audit A, 2026-09-26).",
+ "rows": {
+  "web.providers.web-search-enable": {
+   "label": "Search the web",
+   "help": "Off stops every web search, in chat and in /web."
+  },
+  "web.providers.provider-order": {
+   "label": "Order services are tried",
+   "help": "Used when an ability has no order of its own.",
+   "noun": "service",
+   "valueChoices": [
+    "Site Reader",
+    "Exa",
+    "Tavily",
+    "Firecrawl",
+    "Brave",
+    "Jina",
+    "DuckDuckGo",
+    "model-native"
+   ],
+   "options": {
+    "model-native": "Your AI model's own web search",
+    "Brave": "Brave Search",
+    "Jina": "Jina Reader"
+   }
+  },
+  "web.providers.provider-status": {
+   "label": "Service status",
+   "help": "Connected, needs a key, or failed recently. Read only.",
+   "options": {
+    "connected": "Connected",
+    "needs_auth": "Needs a key",
+    "failed": "Failed recently",
+    "model-native": "Your AI model's own web search"
+   }
+  },
+  "web.providers.health-disclosure": {
+   "label": "Show error details",
+   "help": "Adds each service's last failure message to the list."
+  },
+  "web.providers.duckduckgo-enable": {
+   "label": "DuckDuckGo (free backup)",
+   "help": "Basic, free search used when other services can't answer."
+  },
+  "web.providers.firecrawl-enable": {
+   "label": "Firecrawl",
+   "help": "Reads difficult sites. Needs a key or your own server."
+  },
+  "web.providers.firecrawl-api-key": {
+   "label": "Firecrawl key",
+   "help": "From firecrawl.dev. Kept in your server's keychain.",
+   "control": "credential",
+   "keyLabel": "Firecrawl key"
+  },
+  "web.providers.firecrawl-url": {
+   "label": "Firecrawl address",
+   "help": "Use your own Firecrawl server instead of the cloud one."
+  },
+  "web.providers.exa-enable": {
+   "label": "Exa",
+   "help": "Strong at search and deep research. Needs a key."
+  },
+  "web.providers.tavily-enable": {
+   "label": "Tavily",
+   "help": "Searches, reads and extracts pages. Needs a key."
+  },
+  "web.providers.tavily-fetch-mode": {
+   "label": "How deeply Tavily reads",
+   "help": "Deeper reading costs more per page.",
+   "options": {
+    "basic": "Basic",
+    "fast": "Fast",
+    "advanced": "Deeper (costs more)"
+   }
+  },
+  "web.providers.brave-enable": {
+   "label": "Brave Search",
+   "help": "An independent search index. Needs a key."
+  },
+  "web.providers.jina-enable": {
+   "label": "Jina Reader",
+   "help": "Reads pages other services can't. Needs a key."
+  },
+  "web.providers.model-native-enable": {
+   "label": "Your AI model's own web search",
+   "help": "Uses your model account, no extra key. Tried last."
+  },
+  "web.providers.capability-matrix": {
+   "label": "Which service does each job",
+   "help": "The first choice and the backups for each ability.",
+   "options": {
+    "model-native": "Your AI model's own web search"
+   }
+  },
+  "web.providers.web-api-keys": {
+   "label": "Service keys",
+   "help": "Add, replace or remove a web service's key.",
+   "actionLabel": "Service keys",
+   "pm51": "pm51-web-keys"
+  },
+  "web.fetch.pdf-mode": {
+   "label": "How PDFs are read",
+   "help": "Scanned PDFs need the slower reader.",
+   "options": {
+    "fast": "Fast",
+    "auto": "Automatic",
+    "ocr": "Read scanned pages (slower)"
+   }
+  },
+  "web.fetch.search-max-results": {
+   "label": "Results per search",
+   "help": "More results give broader answers but cost more.",
+   "min": 1,
+   "max": 50
+  },
+  "web.fetch.research-max-sources": {
+   "label": "Most websites per research task",
+   "min": 1,
+   "max": 50
+  },
+  "web.fetch.research-auto-read-pages": {
+   "label": "Pages read before asking you",
+   "help": "Research asks before opening more than this.",
+   "min": 1,
+   "max": 50
+  },
+  "web.fetch.crawl-max-pages": {
+   "label": "Most pages per crawl",
+   "min": 1,
+   "max": 1000
+  },
+  "web.fetch.crawl-max-depth": {
+   "label": "How many links deep a crawl goes",
+   "min": 1,
+   "max": 10
+  },
+  "web.fetch.map-max-pages": {
+   "label": "Most pages in a site outline",
+   "min": 1,
+   "max": 5000
+  },
+  "web.fetch.map-max-depth": {
+   "label": "How many links deep an outline goes",
+   "min": 1,
+   "max": 10
+  },
+  "web.fetch.request-timeout": {
+   "label": "Time limit per page",
+   "help": "Seconds to wait for one page before giving up.",
+   "scale": 1000,
+   "unit": "s",
+   "min": 1,
+   "max": 600
+  },
+  "web.fetch.cost-warning-threshold": {
+   "label": "Ask before spending more than",
+   "help": "In credits. Bigger web jobs wait for your OK.",
+   "unit": "credits",
+   "min": 0
+  },
+  "web.fetch.cost-hard-cap": {
+   "label": "Never spend more than",
+   "help": "In credits. Bigger jobs stop unless you approve that one.",
+   "unit": "credits",
+   "min": 0
+  },
+  "web.fetch.firecrawl-proxy-mode": {
+   "label": "Get past site blocking",
+   "options": {
+    "enhanced": "Stronger (+4 credits a page)",
+    "basic": "Basic (cheapest)",
+    "auto": "Automatic"
+   }
+  },
+  "web.fetch.provider-cache": {
+   "label": "Let Firecrawl reuse its saved copies",
+   "help": "Off keeps pages freshest."
+  },
+  "web.fetch.cache-size": {
+   "label": "Space for saved web pages",
+   "help": "The oldest pages are dropped when it's full.",
+   "unit": "MB",
+   "min": 0
+  },
+  "web.fetch.cache-ttl-search": {
+   "label": "Keep search results for",
+   "help": "After this they are fetched again.",
+   "scale": 3600,
+   "unit": "hours",
+   "min": 0
+  },
+  "web.fetch.cache-ttl-fetch": {
+   "label": "Keep pages for",
+   "scale": 3600,
+   "unit": "hours",
+   "min": 0
+  },
+  "web.fetch.cache-ttl-crawl": {
+   "label": "Keep crawls and outlines for",
+   "scale": 3600,
+   "unit": "hours",
+   "min": 0
+  },
+  "web.fetch.redirect-policy": {
+   "label": "Let your own servers redirect",
+   "help": "Where a self-hosted service may pass a request on to.",
+   "options": {
+    "deny": "Never",
+    "allow_same_host": "Only to the same address",
+    "allow_registrable_domain": "Only within the same site"
+   }
+  },
+  "web.fetch.egress-timeout": {
+   "label": "Time limit for your own servers",
+   "help": "Seconds before a slow self-hosted service is cut off.",
+   "unit": "s",
+   "min": 1
+  },
+  "web.fetch.proxy-mode": {
+   "label": "Proxy",
+   "help": "Most people use this computer's settings.",
+   "options": {
+    "system": "This computer's settings",
+    "manual": "A proxy I enter",
+    "off": "No proxy"
+   }
+  },
+  "web.fetch.proxy-http-url": {
+   "label": "Proxy address (http)",
+   "when": {
+    "id": "web.fetch.proxy-mode",
+    "in": [
+     "manual"
+    ]
+   }
+  },
+  "web.fetch.proxy-https-url": {
+   "label": "Proxy address (https)",
+   "when": {
+    "id": "web.fetch.proxy-mode",
+    "in": [
+     "manual"
+    ]
+   }
+  },
+  "web.fetch.no-proxy-domains": {
+   "label": "Sites that skip the proxy",
+   "help": "Usually internal company addresses.",
+   "when": {
+    "id": "web.fetch.proxy-mode",
+    "not": "off"
+   },
+   "noun": "site"
+  },
+  "web.fetch.proxy-credentials": {
+   "label": "Proxy sign-in",
+   "help": "Only if your proxy asks for a name and password.",
+   "control": "credential",
+   "keyLabel": "Proxy password",
+   "when": {
+    "id": "web.fetch.proxy-mode",
+    "in": [
+     "manual"
+    ]
+   }
+  },
+  "web.fetch.ca-bundle": {
+   "label": "Company certificate file",
+   "help": "For networks that inspect secure traffic."
+  },
+  "web.fetch.per-host-ca": {
+   "label": "Certificates for specific sites",
+   "help": "Use a certificate only for the sites you list.",
+   "noun": "site"
+  },
+  "web.fetch.air-gap-mode": {
+   "label": "Work offline",
+   "help": "Blocks all internet use. Saved pages still work."
+  }
+ }
+}

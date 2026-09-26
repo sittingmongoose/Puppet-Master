@@ -51,6 +51,12 @@ PM51.home = (id, html, tag = 'div', cls = '') => `<${tag} class="o55-home${cls ?
 const o55BoundInput = handleInputAction;
 let o55InputTimer = 0;
 handleInputAction = function (action, el) {
+  if (action === 'o55-scaled-input' && el && el.dataset && el.dataset.setting) {
+    const id = el.dataset.setting, n = Number.parseFloat(el.value), scale = Number(el.dataset.scale) || 1;
+    if (!Number.isFinite(n)) return;
+    if (commitSettingValue(id, Math.round(n * scale))) { saveState(); o55MarkChanged(id); clearTimeout(o55InputTimer); o55InputTimer = window.setTimeout(() => o55Notify(id, Math.round(n * scale)), 120); }
+    return;
+  }
   const r = o55BoundInput.apply(this, arguments);
   if (action === 'input-setting' && el && el.dataset && el.dataset.setting) {
     const id = el.dataset.setting; clearTimeout(o55InputTimer);

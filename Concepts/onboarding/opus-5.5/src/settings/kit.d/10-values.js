@@ -60,7 +60,8 @@ PM51.valueText = (setting, v) => {
   if (Array.isArray(v)) return v.length ? v.map(x => (x && typeof x === 'object') ? o55ObjectLine(x) : PM51.valueLabel(setting.id, x)).join(', ') : ((O55R[setting.id] || {}).emptyList || 'None');
   if (typeof v === 'object') { const e = Object.entries(v); return e.length ? e.slice(0, 4).map(([k, x]) => `${o55Humanize(k)}: ${(x && typeof x === 'object') ? '…' : PM51.valueLabel(setting.id, x)}`).join(', ') + (e.length > 4 ? ` and ${e.length - 4} more` : '') : 'None'; }
   const unit = o55Unit(setting);
-  if (typeof v === 'number' || /^-?\d+(\.\d+)?$/.test(String(v))) return unit ? `${v} ${unit}` : String(v);
+  const scale = Number((O55R[setting.id] || {}).scale) || 1;
+  if (typeof v === 'number' || /^-?\d+(\.\d+)?$/.test(String(v))) { const n = scale === 1 ? v : +(Number(v) / scale).toFixed(2); return unit ? `${n} ${unit}` : String(n); }
   return PM51.valueLabel(setting.id, v);
 };
 function o55ObjectLine(o) { const name = o.name || o.label || o.title || o.id; if (name) return String(name); const e = Object.entries(o); return e.slice(0, 2).map(([k, x]) => `${o55Humanize(k)} ${typeof x === 'object' ? '…' : x}`).join(', '); }
@@ -101,7 +102,11 @@ function o55Number(setting, value) {
   const unit = o55Unit(setting) || suffix;
   const row = O55R[setting.id] || {};
   const bounds = `${Number.isFinite(row.min ?? setting.min) ? ` min="${row.min ?? setting.min}"` : ''}${Number.isFinite(row.max ?? setting.max) ? ` max="${row.max ?? setting.max}"` : ''}`;
-  return `<label class="o55-num"><input class="text-control" type="number" inputmode="decimal" step="${a(row.step || 'any')}"${bounds} value="${a(Number.isFinite(n) ? n : '')}" placeholder="${a(row.placeholder || '')}" data-action="input-setting" data-setting="${a(setting.id)}" data-value-suffix="${a(suffix)}" aria-label="${a(setting.label)}">${unit ? `<span class="o55-unit">${h(unit)}</span>` : ''}</label>`;
+  /* a stored unit people do not think in (milliseconds, seconds of cache life) is shown in one they do: rows.d
+     `scale` divides for display and multiplies back when saving */
+  const scale = Number(row.scale) || 1;
+  const shown = Number.isFinite(n) ? (scale === 1 ? n : +(n / scale).toFixed(2)) : '';
+  return `<label class="o55-num"><input class="text-control" type="number" inputmode="decimal" step="${a(row.step || 'any')}"${bounds} value="${a(shown)}" placeholder="${a(row.placeholder || '')}" data-action="${scale === 1 ? 'input-setting' : 'o55-scaled-input'}" data-setting="${a(setting.id)}" data-scale="${scale}" data-value-suffix="${a(suffix)}" aria-label="${a(setting.label)}">${unit ? `<span class="o55-unit">${h(unit)}</span>` : ''}</label>`;
 }
 function o55Inherited(setting, value) {
   const n = Number(value);
