@@ -138,7 +138,15 @@
 
   /* reply(): called by deliverSend's generic branch. Pushes the placeholder and
      starts it; returns true so the fixed reply is skipped. */
+  function liveTurnFor(c, raw) {
+    var list = D.liveTurns || [], low = String(raw || '').toLowerCase();
+    if (String(c.state.mode || '').toLowerCase() !== 'agent') return null;
+    for (var i = 0; i < list.length; i++) if (list[i].match.some(function (k) { return low.indexOf(k) >= 0; })) return list[i];
+    return null;
+  }
   function reply(c, t, raw, opts) {
+    var lt = liveTurnFor(c, raw);
+    if (lt) return agentTurn(c, t, lt);
     var spec = pickReply(raw, opts && opts.explanationPreference);
     var m = {
       id: c.uid('assistant'), role: 'assistant', type: 'text', body: '', rich: true,
@@ -164,6 +172,7 @@
       minPending: opts && opts.minPending != null ? opts.minPending : 420, settleAt: 0
     };
     if (opts && opts.instantArrival) { st.chunkAt = st.chunkAt.map(function () { return 0; }); }
+    if (opts && opts.hold) st.hold = true;                 /* a thinking placeholder a director replaces */
     streams.set(m.id, st);
     m.streaming = true; m.streamPhase = 'pending';
     kick();
@@ -276,6 +285,7 @@
   function frame(ts) {
     loop = 0;
     var t = now(), any = false;
+    if (directors.size) { stepDirectors(t); any = true; }
     streams.forEach(function (st) {
       any = true;
       if (!ensureIsland(st)) return;            // not on screen (another thread); keeps its clock
@@ -284,7 +294,7 @@
         var pe = st.flow.querySelector('.tx-pending-t');
         var waited = (t - st.t0) / 1000;
         if (pe) pe.textContent = waited >= 4 ? ' · ' + Math.floor(waited) + 's' : '';
-        if (arrived > 0 && t - st.t0 >= st.minPending) {
+        if (!st.hold && arrived > 0 && t - st.t0 >= st.minPending) {
           pendingLabel(st, false);
           setPhase(st, 'live');
           sound('first');
@@ -310,7 +320,7 @@
         if ((still && t - st.settleAt > 170) || reduced() || t - st.settleAt > 900) finalize(st, st.spec.terminal || 'complete');
       }
     });
-    if (any && streams.size) loop = requestAnimationFrame(frame);
+    if (any && (streams.size || directors.size)) loop = requestAnimationFrame(frame);
   }
 
   /* Height follows the flow through a critically damped spring (omega ~ 26/s),
@@ -390,11 +400,129 @@
      written; leaving the thread lets the reply finish in the background (it
      lands complete); a global reset forgets every stream. */
   var owner = {
-    busy: function (tid) { var b = false; streams.forEach(function (st) { if (st.tid === tid) b = true; }); return b; },
-    stop: function (tid) { streams.forEach(function (st) { if (st.tid === tid) finalize(st, st.phase === 'pending' ? 'stopped' : 'stopped'); }); },
-    cancel: function (tid) { streams.forEach(function (st) { if (st.tid === tid) { st.cursor = st.ops.length; finalize(st, st.spec.terminal || 'complete'); } }); },
-    reset: function () { streams.clear(); flights.clear(); }
+    busy: function (tid) { var b = false; streams.forEach(function (st) { if (st.tid === tid) b = true; }); directors.forEach(function (d) { if (d.tid === tid) b = true; }); return b; },
+    stop: function (tid) { directors.forEach(function (d, k) { if (d.tid === tid) directors.delete(k); }); streams.forEach(function (st) { if (st.tid === tid) finalize(st, 'stopped'); }); },
+    cancel: function (tid) {
+      /* leaving the thread: the turn finishes in the background -- it is
+         complete, answer and all, when the reader comes back */
+      directors.forEach(function (d) { if (d.tid === tid) finishDirector(d); });
+      streams.forEach(function (st) { if (st.tid === tid) { st.cursor = st.ops.length; finalize(st, st.spec.terminal || 'complete'); } });
+    },
+    reset: function () { streams.clear(); flights.clear(); directors.clear(); }
   };
+
+  /* ================================================================ 6 directors
+     A live agent turn: the reply's thinking placeholder, then (once the first
+     tool call "arrives") the placeholder gives way to the working card at the
+     same place under the same turn mark, then the answer streams in as the
+     card folds. A subject with waitFor:'permission' pauses the run and asks
+     the reader in the transcript; approving resumes it. */
+  var directors = new Map();                 // record id -> director
+  function agentTurn(c, t, lt) {
+    var recId = c.uid('turn');
+    var ph = {
+      id: c.uid('assistant'), role: 'assistant', type: 'text', body: '', rich: true,
+      streaming: true, streamPhase: 'pending', time: new Date().toISOString(), liveTurnOf: recId
+    };
+    ph.runtime = runtimeFor(c, ph);
+    t.messages.push(ph);
+    begin(ph, t.id, { chunks: [], terminal: 'complete' }, { rich: true, hold: true });
+    directors.set(recId, { recId: recId, tid: t.id, lt: lt, phId: ph.id, workAt: now() + 1100, phase: 'thinking', waited: {} });
+    kick();
+    return true;
+  }
+  function stepDirectors(t) {
+    directors.forEach(function (d) {
+      var c = C();
+      var th = (c.state.threads || []).filter(function (x) { return x.id === d.tid; })[0];
+      if (!th) { directors.delete(d.recId); return; }
+      if (d.phase === 'thinking' && t >= d.workAt) {
+        var i = th.messages.findIndex(function (m) { return m.id === d.phId; });
+        var st = streams.get(d.phId);
+        if (st) streams.delete(d.phId);
+        var work = { id: c.uid('work'), role: 'system', type: 'working', title: d.lt.title, workId: d.recId, liveTurn: true };
+        var answer = {
+          id: d.phId, role: 'assistant', type: 'text', body: d.lt.answer.join(''), rich: true, revealAfter: d.recId,
+          streamChunks: d.lt.answer.slice(), time: new Date().toISOString(), liveTurnOf: d.recId
+        };
+        answer.runtime = runtimeFor(c, answer);
+        /* the placeholder's id carries on as the answer, so its identity and its
+           place in the turn survive; the card enters where it stood */
+        if (i >= 0) th.messages.splice(i, 1, work, answer); else th.messages.push(work, answer);
+        d.phase = 'working'; d.workId = work.id;
+        c.startWorkingRec(d.lt.run, null, { recId: d.recId });
+        sound('work');
+        return;
+      }
+      if (d.phase === 'working') {
+        var rec = c.state.works[d.recId];
+        if (!rec) { directors.delete(d.recId); return; }
+        if (rec.completed) { directors.delete(d.recId); return; }
+        var list = c.workInstancesFor(rec), clock = rec.clock || 0;
+        list.forEach(function (inst) {
+          if (inst.waitFor !== 'permission' || d.waited[inst.uid]) return;
+          if (clock < inst.startAt + (inst.statusAt || 0) - 1e-6) return;
+          d.waited[inst.uid] = true;
+          rec.running = false;
+          var ask = { id: c.uid('approve'), role: 'system', type: 'waiting', title: 'Approval needed: ' + (inst.verb || 'continue'),
+            detail: (inst.detail || '') + ' The run is paused on this step.', liveApprove: d.recId, liveApproveUid: inst.uid, time: new Date().toISOString() };
+          th.messages.push(ask);
+          c.renderApp(); c.followIfSticky();
+          sound('needs');
+        });
+      }
+    });
+  }
+  function finishDirector(d) {
+    var c = C();
+    var th = (c.state.threads || []).filter(function (x) { return x.id === d.tid; })[0];
+    directors.delete(d.recId);
+    if (!th) return;
+    if (d.phase === 'thinking') {
+      var i = th.messages.findIndex(function (m) { return m.id === d.phId; });
+      streams.delete(d.phId);
+      var work = { id: c.uid('work'), role: 'system', type: 'working', title: d.lt.title, workId: d.recId, liveTurn: true };
+      var answer = { id: d.phId, role: 'assistant', type: 'text', body: d.lt.answer.join(''), rich: true, revealAfter: d.recId, time: new Date().toISOString(), liveTurnOf: d.recId };
+      answer.runtime = runtimeFor(c, answer); answer.runtime.completedAt = new Date().toISOString(); answer.runtime.terminal = 'complete';
+      if (i >= 0) th.messages.splice(i, 1, work, answer); else th.messages.push(work, answer);
+    }
+    var list = D.workRuns[d.lt.run] ? c.workInstancesFor({ runId: d.lt.run }) : [];
+    var end = 0; list.forEach(function (s) { end = Math.max(end, s.startAt + (s.dur != null ? s.dur : 2)); });
+    var rec = c.state.works[d.recId] || (c.state.works[d.recId] = { step: 0, expanded: false, openPhase: null, runId: d.lt.run, id: d.recId });
+    rec.clock = end; rec.elapsed = Math.floor(end); rec.step = Math.max(0, list.length - 1);
+    rec.completed = true; rec.running = false; rec.started = true; rec.cleared = rec.cleared || {};
+    list.forEach(function (s) { if (s.waitFor) rec.cleared[s.uid] = true; });
+    revealedRecs.add(rec);
+  }
+  EXT.slot('systemCardActions', function (ctx) {
+    var m = ctx.message;
+    if (!m || !m.liveApprove) return '';
+    if (m.approved) return '';
+    return '<button class="soft-button" data-action="live-approve" data-id="' + esc(m.id) + '">' + ctx.icon('check', 12) + ' Approve once</button>'
+      + '<button class="text-button" data-action="live-deny" data-id="' + esc(m.id) + '">Deny</button>';
+  });
+  function findMsg(c, id) {
+    var out = null;
+    (c.state.threads || []).forEach(function (t) { t.messages.forEach(function (m) { if (m.id === id) out = { t: t, m: m }; }); });
+    return out;
+  }
+  EXT.action('live-approve', function (c, btn) {
+    var f = findMsg(c, btn.dataset.id); if (!f) return true;
+    var m = f.m, rec = c.state.works[m.liveApprove];
+    m.approved = true; m.type = 'live-approved'; m.title = 'Approved once: ' + m.title.replace(/^Approval needed: /, ''); m.detail = 'The run resumed on your approval.';
+    if (rec) { rec.cleared = rec.cleared || {}; rec.cleared[m.liveApproveUid] = true; rec.running = true; rec.started = true; c.armWorkTimer(); }
+    c.renderApp();
+    return true;
+  });
+  EXT.action('live-deny', function (c, btn) {
+    var f = findMsg(c, btn.dataset.id); if (!f) return true;
+    var m = f.m, rec = c.state.works[m.liveApprove];
+    m.approved = true; m.type = 'live-denied'; m.title = 'Denied: ' + m.title.replace(/^Approval needed: /, ''); m.detail = 'The run stopped before this step. Nothing was applied.';
+    if (rec) rec.running = false;
+    directors.delete(m.liveApprove);
+    c.renderApp();
+    return true;
+  });
 
   /* ================================================================ 4 reveals */
   function onComplete(rec) {
@@ -406,14 +534,31 @@
     t.messages.forEach(function (m) {
       if (m.revealAfter !== id || m.role !== 'assistant' || m.type !== 'text' || m.streaming) return;
       if (c.state.replyMode === 'instant' || reduced()) return;
-      var words = String(m.body || '').split(/(\s+)/);
-      /* A revealed fixture message streams from its own text in two-to-four chunks. */
-      var chunks = [], per = Math.ceil(words.length / 3);
-      for (var i = 0; i < words.length; i += per) chunks.push(words.slice(i, i + per).join(''));
-      begin(m, t.id, { chunks: chunks, delayMs: 380, chunkMs: 320, terminal: 'complete' }, { rich: false, revealRec: id, minPending: 300 });
+      var chunks = m.streamChunks;
+      if (!chunks) {
+        /* A revealed fixture message streams from its own text in three chunks. */
+        var words = String(m.body || '').split(/(\s+)/), per = Math.ceil(words.length / 3);
+        chunks = [];
+        for (var i = 0; i < words.length; i += per) chunks.push(words.slice(i, i + per).join(''));
+      }
+      begin(m, t.id, { chunks: chunks, delayMs: 420, chunkMs: 300, terminal: 'complete' }, { rich: !!m.rich, revealRec: id, minPending: 300 });
       held = true;
     });
-    if (held) revealedRecs.add(rec);
+    if (held) {
+      revealedRecs.add(rec);
+      /* the turn's answer is starting: if this was the turn's last burst, its
+         card folds into its strip and the answer rises into the room */
+      var def = rec.runId && D.workRuns && D.workRuns[rec.runId];
+      if (!(def && def.next)) {
+        t.messages.forEach(function (w) {
+          if (w.type === 'working' && w.workId === id) {
+            if (window.PM56_ORBIT) window.PM56_ORBIT.compact(w.id);
+            if (window.PM56_RAIL8 && window.PM56_RAIL8.compact) window.PM56_RAIL8.compact(w.id);
+          }
+        });
+        sound('answer');
+      }
+    }
     return held;
   }
 
