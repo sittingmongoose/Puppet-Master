@@ -132,18 +132,16 @@
     const fam = O55.theme().family;
     const items = pr.chapters.map((ch, i) => {
       const state = i < pr.index ? 'done' : i === pr.index ? 'current' : 'next';
-      const charms = S.sess.charms.filter((c) => c.chapter === ch).slice(-3);
       return `<li class="o55-railitem" data-state="${state}" data-chapter="${ch}" data-key="rail-${ch}">`
         + `<span class="o55-railstring" aria-hidden="true"></span><span class="o55-railnode" aria-hidden="true"></span>`
-        + `<span class="o55-raillabel">${U.esc(T('chapters.' + ch))}</span>`
-        + `<span class="o55-charms" aria-hidden="true">${charms.map((c) => `<span class="o55-charm" title="${U.esc(c.label)}">${charmGlyph(c.glyph)}</span>`).join('')}</span></li>`;
+        + `<span class="o55-raillabel">${U.esc(T('chapters.' + ch))}</span></li>`;
     }).join('');
     U.morph(nav, `<div class="o55-railbar o55-railbar-${fam}" aria-hidden="true"></div><ol class="o55-raillist" aria-label="${U.esc(pr.announce)}">${items}</ol>`);
     nav.setAttribute('data-count', pr.chapters.length);
   }
-  const charmGlyph = (g) => `<svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">${O55.art.glyph(g || 'spark', 'currentColor', 2.4)}</svg>`;
-
-  /* Choices become charms: the token flies from the card to the rail's current chapter node and hangs there. */
+  /* A choice made: a helper in the scene cheers for it and the rail's marker for this chapter gives a small bump. The
+     choice is still recorded per chapter. (Choices used to fly up and hang on the rail as small icons; people read
+     them as meaningless symbols, so the rail shows only the chapters - Jared, 2026-09-27.) */
   function charm(fromEl, label, glyph) {
     /* a choice made: a helper in the scene cheers for it */
     if (O55.art.react) O55.motion.after(120, () => O55.art.react(S.root.querySelector('.o55-stage')));
@@ -153,19 +151,10 @@
     const entry = { chapter: ch, label, glyph, slot: def.charmSlot || def.id };
     if (existing >= 0) S.sess.charms[existing] = entry; else S.sess.charms.push(entry);
     S.save();
-    const node = S.root.querySelector(`.o55-railitem[data-chapter="${ch}"] .o55-railnode`);
-    if (!fromEl || !node || O55.motion.reduced()) { renderRail(); return; }
-    const a = fromEl.getBoundingClientRect(), b = node.getBoundingClientRect();
-    const fly = document.createElement('div');
-    fly.className = 'o55-flycharm'; fly.innerHTML = charmGlyph(glyph) + `<span>${U.esc(label)}</span>`;
-    S.root.appendChild(fly);
-    const sx = a.left + Math.min(40, a.width / 2), sy = a.top + Math.min(28, a.height / 2), ex = b.left + b.width / 2, ey = b.top + b.height / 2;
-    const mx = (sx + ex) / 2, my = Math.min(sy, ey) - 80;
-    const frames = [];
-    for (let i = 0; i <= 12; i++) { const t = i / 12, x = (1 - t) * (1 - t) * sx + 2 * (1 - t) * t * mx + t * t * ex, y = (1 - t) * (1 - t) * sy + 2 * (1 - t) * t * my + t * t * ey; frames.push({ transform: `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${1 - 0.55 * t})`, opacity: i === 12 ? 0.2 : 1 }); }
-    const retro = O55.theme().family === 'retro';
-    const anim = fly.animate(frames, { duration: O55.motion.T.charm, easing: retro ? 'steps(8, end)' : 'cubic-bezier(0.45, 0, 0.2, 1)', fill: 'forwards' });
-    anim.onfinish = () => { fly.remove(); renderRail(); const n = S.root.querySelector(`.o55-railitem[data-chapter="${ch}"] .o55-railnode`); if (n) O55.motion.play(n, [{ transform: 'scale(1.5)' }, { transform: 'scale(1)' }], { duration: 320, easing: 'cubic-bezier(0.34,1.56,0.64,1)' }); };
+    renderRail();
+    const n = S.root.querySelector(`.o55-railitem[data-chapter="${ch}"] .o55-railnode`);
+    if (n && !O55.motion.reduced()) O55.motion.play(n, O55.theme().family === 'retro' ? [{ opacity: 0.2 }, { opacity: 1 }] : [{ transform: 'scale(1.5)' }, { transform: 'scale(1)' }],
+      { duration: 320, easing: O55.theme().family === 'retro' ? 'steps(2, end)' : 'cubic-bezier(0.34,1.56,0.64,1)' });
   }
 
   /* ---------------------------------------------------------------- render */

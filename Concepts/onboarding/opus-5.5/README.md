@@ -175,7 +175,7 @@ becomes in Slint:
 | `box-shadow` (window, callout, cards) | `drop-shadow-*` on `Rectangle` (one per rectangle; a second shadow is a second rectangle); inset shadows `inner-shadow-*` (Skia renderer) |
 | `text-shadow` on the Glass primary label | a second, offset `Text` beneath |
 | `color-mix()` | `.mix()`, `.transparentize()`, `.brighter()`, `.darker()` |
-| Confetti and charm flights (Web Animations) | per-particle properties computed from `animation-tick()` since the spawn time |
+| Confetti (Web Animations) | per-particle properties computed from `animation-tick()` since the spawn time |
 | Synthesised sound (Web Audio) | not a Slint feature: played from Rust; nothing visual depends on it |
 
 ## Status
