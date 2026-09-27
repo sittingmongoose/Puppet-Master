@@ -1,0 +1,1773 @@
+{
+ "summary": {
+  "observations": 80,
+  "observations_without_citation": 0,
+  "sources": 81,
+  "unknown_handles": [],
+  "bundle_lines": 3311,
+  "quotes": 79,
+  "quote_status": {
+   "not_found_in_cited_sources": 72,
+   "exact_at_cited_lines": 7
+  }
+ },
+ "checks": [
+  {
+   "observation": "O-001",
+   "quote": "The current released version of this specification is 0.5. Migration scripts will be provided between numbered versions. Data written with these latest changes (an \u201ceditor\u2019s draft\u201d) will not necessarily be supported.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-002",
+   "quote": "OME-Zarr is implemented using the Zarr format as defined by the version 3 of the Zarr specification. All features of the Zarr format including codecs, chunk grids, chunk key encodings, data types and storage transformers may be used with OME-Zarr unless explicitly disallowed in this specification.",
+   "status": "exact_at_cited_lines",
+   "where": [
+    "S003",
+    67,
+    72
+   ]
+  },
+  {
+   "observation": "O-003",
+   "quote": "The OME-Zarr Metadata is stored in the various zarr.json files throughout the above array hierarchy. In this file, the metadata is stored under the namespaced key ome in attributes. The version of the OME-Zarr Metadata is denoted as a string in the version attribute within the ome namespace. The OME-Zarr Metadata version MUST be consistent within a hierarchy.",
+   "status": "exact_at_cited_lines",
+   "where": [
+    "S003",
+    152,
+    156
+   ]
+  },
+  {
+   "observation": "O-004",
+   "quote": "MUST contain the field \\\"name\\\" that gives the name for this dimension. The values MUST be unique across all \\\"name\\\" fields. ... SHOULD contain the field \\\"type\\\". It SHOULD be one of \\\"space\\\", \\\"time\\\" or \\\"channel\\\", but MAY take other string values for custom axis types ... SHOULD contain the field \\\"unit\\\" ... The length of \\\"axes\\\" MUST be equal to the number of dimensions of the arrays that contain the image data. The \\\"dimension_names\\\" attribute MUST be included in the zarr.json of the Zarr array of a multiscale level and MUST match the names in the \\\"axes\\\" metadata.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-005",
+   "quote": "The \\\"axes\\\" MUST contain 2 or 3 entries of \\\"type:space\\\" and MAY contain one additional entry of \\\"type:time\\\" and MAY contain one additional entry of \\\"type:channel\\\" or a null / custom type. The order of the entries MUST correspond to the order of dimensions of the zarr arrays. In addition, the entries MUST be ordered by \\\"type\\\" where the \\\"time\\\" axis must come first (if present), followed by the \\\"channel\\\" or custom axis (if present) and the axes of type \\\"space\\\". ... If there are three spatial axes ... the spatial axes SHOULD be ordered as \\\"zyx\\\".",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-006",
+   "quote": "Each dictionary in \\\"datasets\\\" MUST contain the field \\\"path\\\" ... The \\\"path\\\"s MUST be ordered from largest (i.e. highest resolution) to smallest. ... MUST contain the field \\\"coordinateTransformations\\\" ... The transformation MUST only be of type translation or scale. They MUST contain exactly one scale transformation that specifies the pixel size ... If scaling information is not available or applicable for one of the axes, the value MUST express the scaling factor between the current resolution and the first resolution for the given axis, defaulting to 1.0 ... It MAY contain exactly one translation ... If translation is given it MUST be listed after scale ... The length of the scale and translation array MUST be the same as the length of \\\"axes\\\".",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-007",
+   "quote": "Each \\\"multiscales\\\" dictionary MAY contain the field \\\"coordinateTransformations\\\", describing transformations that are applied to all resolution levels in the same manner. The transformations MUST follow the same rules about allowed types, order, etc. as in \\\"datasets:coordinateTransformations\\\" and are applied after them.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-008",
+   "quote": "\\\"multiscales\\\" contains a list of dictionaries where each entry describes a multiscale image. ... Each \\\"multiscales\\\" dictionary SHOULD contain the field \\\"name\\\". ... If only one multiscale is provided, use it. Otherwise, the user can choose by name, using the first multiscale as a fallback: ... # Use the first by default. Or perhaps choose based on chunk size.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-009",
+   "quote": "Transitional information specific to the channels of an image and how to render it can be found under the \\\"omero\\\" key in the group-level metadata ... \\\"rdefs\\\": { \\\"defaultT\\\": 0, ... \\\"defaultZ\\\": 118, ... \\\"model\\\": \\\"color\\\" # \\\"color\\\" or \\\"greyscale\\\" } ... The \\\"omero\\\" metadata is optional, but if present it MUST contain the field \\\"channels\\\", which is an array of dictionaries describing the channels of the image. Each dictionary in \\\"channels\\\" MUST contain the field \\\"color\\\", which is a string of 6 hexadecimal digits ... Each dictionary in \\\"channels\\\" MUST contain the field \\\"window\\\" ... MUST contain the fields \\\"min\\\" and \\\"max\\\" ... MUST also contain the fields \\\"start\\\" and \\\"end\\",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-010",
+   "quote": "The pixels of the label images MUST be integer data types, i.e. one of [uint8, int8, uint16, int16, uint32, int32, uint64, int64]. Intermediate groups between \\\"labels\\\" and the images within it are allowed, but these MUST NOT contain metadata. ... The OME-Zarr Metadata in the zarr.json file associated with the \\\"labels\\\" group MUST contain a JSON object with the key labels, whose value is a JSON array of paths to the labeled multiscale image(s). ... The zarr.json file for the label image MUST implement the multiscales specification. Within the multiscales object, the JSON array associated with the datasets key MUST have the same number of entries (scale levels) as the original unlabeled image.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-011",
+   "quote": "the OME-Zarr Metadata in this image-level zarr.json file SHOULD contain another key, image-label, ... That image-label object SHOULD contain the following keys: first, a colors key, whose value MUST be a JSON array describing color information for the unique label values. ... the objects in this array MAY contain an rgba key whose value MUST be an array of four integers between 0 and 255, inclusive. ... The value of the source key MUST be a JSON object ... This object MAY include a key image, whose value MUST be a string specifying the relative path to a Zarr image group. The default value is ../../",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-012",
+   "quote": "Transitional \\\"bioformats2raw.layout\\\" metadata identifies a group which implicitly describes a series of images. ... Conforming readers: SHOULD make users aware of the presence of more than one image (i.e. SHOULD NOT default to only opening the first image); MAY use the \\\"series\\\" attribute in the \\\"OME\\\" group to determine a list of valid groups to display; ... MAY ignore other groups or arrays under the root of the hierarchy.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-013",
+   "quote": "Three groups MUST be defined above the images: ... A well row group SHOULD NOT be present if there are no images in the well row. A well group SHOULD NOT be present if there are no images in the well. ... The plate dictionary MUST contain a version key ... The plate dictionary MUST contain a wells key ... Each well object MUST contain a path key ... The path MUST NOT contain additional leading or trailing directories.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-014",
+   "quote": "Some of the JSON examples in this document include comments. However, these are only for clarity purposes and comments MUST NOT be included in JSON objects.",
+   "status": "exact_at_cited_lines",
+   "where": [
+    "S003",
+    65,
+    66
+   ]
+  },
+  {
+   "observation": "O-015",
+   "quote": "Multi-word keys in this specification should use the camelCase style. NB: some parts of the specification don\u2019t obey this convention as they were added before this was adopted, but they should be updated in due course.",
+   "status": "exact_at_cited_lines",
+   "where": [
+    "S003",
+    809,
+    812
+   ]
+  },
+  {
+   "observation": "O-016",
+   "quote": "\\\"required\\\": [ \\\"multiscales\\\", \\\"version\\\" ] ... \\\"$defs\\\": { \\\"multiscales\\\": { ... \\\"minItems\\\": 1, \\\"uniqueItems\\\": true",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-017",
+   "quote": "\\\"version\\\": \\\"0.5\\\", ... \\\"axes\\\": [ { \\\"name\\\": \\\"c\\\", \\\"type\\\": \\\"channel\\\" }, { \\\"name\\\": \\\"z\\\", \\\"type\\\": \\\"space\\\", \\\"unit\\\": \\\"micrometer\\\" }, ... ] ... \\\"omero\\\": { ... \\\"rdefs\\\": { \\\"defaultT\\\": 0, \\\"defaultZ\\\": 118, \\\"model\\\": \\\"color\\\" } }",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-018",
+   "quote": "\\\"chunk_grid\\\": { \\\"configuration\\\": { \\\"chunk_shape\\\": [1, 10, 512, 512] }, \\\"name\\\": \\\"regular\\\" }, ... \\\"codecs\\\": [ { ... \\\"name\\\": \\\"sharding_indexed\\\" } ], \\\"data_type\\\": \\\"uint16\\\", \\\"dimension_names\\\": [ \\\"c\\\", \\\"z\\\", \\\"y\\\", \\\"x\\\" ], ... \\\"shape\\\": [2, 236, 275, 271]",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-019",
+   "quote": "\\\"_creator\\\": { \\\"name\\\": \\\"ome2024-ngff-challenge\\\", \\\"version\\\": \\\"1.0.0\\\", \\\"notes\\\": null }, ... \\\"plate\\\": { \\\"columns\\\": [...11...], \\\"field_count\\\": 32, \\\"name\\\": \\\"190129\\\", \\\"rows\\\": [...6...], \\\"wells\\\": [ ...50 sparse wells... ] }",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-020",
+   "quote": "Binary source retained; this CLI cannot extract application/octet-stream",
+   "status": "exact_at_cited_lines",
+   "where": [
+    "S068",
+    1,
+    1
+   ]
+  },
+  {
+   "observation": "O-021",
+   "quote": "Search output is a discovery aid, not primary evidence. Fetch source URLs before relying on claims.",
+   "status": "exact_at_cited_lines",
+   "where": [
+    "S001",
+    1,
+    23
+   ]
+  },
+  {
+   "observation": "O-022",
+   "quote": "ValueError: Clone exceeded 256 MiB or 120 second cap; partial clone retained, not admitted\" / \"HTTPError: HTTP Error 403: Forbidden\" / \"HTTPError: HTTP Error 404: Not Found\" / \"HTTPError: HTTP Error 422: Unprocessable Entity\" / \"ValueError: Incomplete clone is not a source\" / \"ValueError: Git metadata is not a document source\" / \"No literal matches. This does not establish semantic absence.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-023",
+   "quote": "renderlib/VolumeDimensions.cpp:288:  if (this->dtype == \\\"int32\\\") { ... 291: } else if (this->dtype == \\\"uint16\\\") { ... 294: } else if (this->dtype == \\\"uint8\\\") { ... 297: } else if (this->dtype == \\\"float32\\\") {",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-024",
+   "quote": "renderlib/io/FileReaderZarr.cpp:161:FileReaderZarr::getOmero(nlohmann::json attrs) ... 175: omero = ome[\\\"omero\\\"]; ... 177: omero = attrs[\\\"omero\\\"];",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-025",
+   "quote": "class FormatV05(FormatV04): ... \\\"\\\"\\\" Changelog: added FormatV05 (May 2025): writing not supported yet \\\"\\\"\\\" ... @property def zarr_format(self) -> int: return 3 ... CurrentFormat = FormatV05",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-026",
+   "quote": "def detect_format(metadata: dict, default: \\\"Format\\\") -> \\\"Format\\\": ... if fmt.matches(metadata): return fmt ... def _get_metadata_version(self, metadata: dict) -> str | None: ... multiscales = metadata.get(\\\"multiscales\\\", []) if multiscales: dataset = multiscales[0] return dataset.get(\\\"version\\\", None) for name in [\\\"plate\\\", \\\"well\\\", \\\"image-label\\\"]: obj = metadata.get(name) if obj: return obj.get(\\\"version\\\", None)",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-027",
+   "quote": "scale = [full / level for full, level in zip(data_shape, shape)] trans = [s / 2 - s0 / 2 for s, s0 in zip(scale, scale0)] coordinate_transformations.append([ {\\\"type\\\": \\\"scale\\\", \\\"scale\\\": scale}, {\\\"type\\\": \\\"translation\\\", \\\"translation\\\": trans} ])",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-028",
+   "quote": "if sum(t == \\\"scale\\\" for t in types) != 1: raise ValueError(\\\"Must supply 1 'scale' item in coordinate_transformations\\\") ... if types[0] != \\\"scale\\\": raise ValueError(\\\"First coordinate_transformations must be 'scale'\\\") ... if len(scale) != ndim: raise ValueError(...)",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-029",
+   "quote": "multiscales = self.lookup(\\\"multiscales\\\", []) version = multiscales[0].get(\\\"version\\\", \\\"0.1\\\") # should this be matched with Format.version? datasets = multiscales[0][\\\"datasets\\\"] axes = multiscales[0].get(\\\"axes\\\") ... node.metadata[\\\"name\\\"] = multiscales[0].get(\\\"name\\\")",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-030",
+   "quote": "model = rdefs.get(\\\"model\\\", \\\"unset\\\") ... if model == \\\"greyscale\\\": rgb = [1, 1, 1] ... visible = ch.get(\\\"active\\\", None) if visible is not None: visibles[idx] = visible and node.visible ... if start is None or end is None: # Disable contrast limits settings if one is missing contrast_limits = None ... except Exception: LOGGER.exception(\\\"Failed to parse metadata\\\")",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-031",
+   "quote": "# Construct a 2D almost-square grid field_count = len(image_paths) column_count = math.ceil(math.sqrt(field_count)) ... if data is None: data = da.zeros(self.img_pyramid_shapes[level], dtype=self.numpy_type)",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-032",
+   "quote": "@staticmethod def get_attrs(group: Group) -> dict: if \\\"ome\\\" in group.attrs: return group.attrs[\\\"ome\\\"] return group.attrs ... if \\\"coordinateSystems\\\" in attrs[\\\"multiscales\\\"][0]: axes = attrs[\\\"multiscales\\\"][0][\\\"coordinateSystems\\\"][0][\\\"axes\\\"] ... # napari treats a None entry as its default (pixel); keeping the spatial units means label and split-image layers stay unit-consistent, so the scale bar still renders (napari warns \\\"Inconsistent units across layers\\\" and hides units when one layer lacks them).",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-033",
+   "quote": "paths = [ds[\\\"path\\\"] for ds in attrs[\\\"multiscales\\\"][0][\\\"datasets\\\"]] ... if \\\"channel\\\" in atypes and self._splits_channels(): channel_axis = atypes.index(\\\"channel\\\") ... def _splits_channels(self) -> bool: # A label is loaded as a single layer keeping all axes ... return False ... \\\"visible\\\": False, # labels not visible initially ... layer_type = \\\"labels\\\" ... if \\\"channel_axis\\\" in metadata: ... node_data[level] = da.squeeze(darray, axis=ch_axis)",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-034",
+   "quote": "class Bioformats2raw(Spec): @staticmethod def matches(group: Group) -> bool: attrs = Spec.get_attrs(group) # Don't consider \\\"plate\\\" as a Bioformats2raw layout return \\\"bioformats2raw.layout\\\" in attrs and \\\"plate\\\" not in attrs ... for child in root: ... if child.tag.endswith(\\\"Image\\\") and node_id.startswith(\\\"Image:\\\"): image_path = node_id.replace(\\\"Image:\\\", \\\"\\\")",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-035",
+   "quote": "if Labels.matches(root_group): # Try starting at parent Image parent_path = root_group.store.root.parent ... elif Label.matches(root_group): # Try starting at parent Image - up 2 dirs ... elif Bioformats2raw.matches(root_group): ... elif Multiscales.matches(root_group): ... elif Plate.matches(root_group): ... elif Scene.matches(root_group): ... else: print(\\\"No matching spec\\\", root_group)",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-036",
+   "quote": "detected = detect_format(self.__metadata, loader) ... if detected != fmt: LOGGER.warning(\\\"version mismatch: detected: %s, requested: %s\\\", detected, fmt) self.__fmt = detected ... if \\\"ome\\\" in self.zgroup: self.zgroup = self.zgroup[\\\"ome\\\"] ... If mode is 'r', and the path does not exist returns None. If there is an error opening the path, also returns None.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-037",
+   "quote": "docs/source/advanced/sharding.ipynb ... docs/source/advanced/transforms/reading_scenes.ipynb ... ome_zarr/classes/scene.py ... ome_zarr/reader.py ... ome_zarr/writer.py",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-038",
+   "quote": "This PR proposes to adopt the version 3 of the Zarr format for OME-Zarr. Main changes: Only Zarr v3 is allowed for upcoming versions of OME-Zarr. Zarr v3 stores its metadata in zarr.json files. ... The chunk_key_encoding of the Zarr arrays are respected instead of mandating the / dimension separator. Basically all Zarr features are available in OME-Zarr as they get approved through the ZEP process. Add a ome namespace within the zarr.json attributes. Move version fields from multiscale, plate, well etc. up into the ome object. Move the registration of labels from the labels group into the multiscale group. ... Closing this in favor of #227.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-039",
+   "quote": "napari: 0.6.6 napari-ome-zarr: 0.6.1 bioio-ome-zarr: 3.2.0 zarr: 3.1.5 (upgraded from 2.18.7) ome-zarr: 0.10.3 ... napari-ome-zarr depends on ome-zarr, which is pinned to zarr<3. When loading OME-Zarr files in napari, I now get: RuntimeError: Failed to import command at 'napari_ome_zarr._reader:napari_get_reader': cannot import name 'FSStore' from 'zarr.storage' ... The default napari reader (without napari-ome-zarr plugin) does not correctly read OME-Zarr coordinate transformations/scale metadata, resulting in incorrect anisotropic volume rendering. The voxel scales from coordinateTransformations in the multiscales metadata are not applied.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-040",
+   "quote": "Viewing a 3-channel image (unit16). No well definitions. Using group 0 in bioformats2raw Zarr layout. Vizarr works as expected for the image in OME-ZARR v0.4 format (written by NGFF-Converter): Vizarr renders chunks repetitively for image data converted into OME-ZARR v0.5 format, using the resave command of https://github.com/ome/ome2024-ngff-challenge",
+   "status": "exact_at_cited_lines",
+   "where": [
+    "S014",
+    136,
+    143
+   ]
+  },
+  {
+   "observation": "O-041",
+   "quote": "This updates ome-zarr-py to use zarr-python v3 but doesn't include support for writing Zarr v3 (OME-Zarr v0.5). However, it does add support for reading OME-Zarr v0.5 (e.g. for use by napari-ome-zarr). ... NB: if the image is bioformats2raw layout, you'll need to add /0 to the zarr url. If in doubt, open in Validator first. Most of the IDR samples there are plates.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-042",
+   "quote": "Merged joshmoore merged 91 commits ... Aug 7, 2025 ... This PR adds support for writing OME-Zarr v0.5, which becomes the default CurrentFormat(). ... Known issues: compressor option fails when writing dask arrays ... ValueError: compressor cannot be used for arrays with zarr_format 3. Use bytes-to-bytes codecs instead. ... Reading via napari-ome-zarr... images and plates, v0.1, 0.3, 0.4, 0.5...",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-043",
+   "quote": "$ ome_zarr finder path/to/my_data_folder/ This command will traverse your local filesystem, looking for zarr images (only .zattrs for now - can add zarr v3 support as a follow-up) and collect them into a CSV. This CSV is then served by the localhost python server and opened in BioFile Finder, allowing you to browse your local zarr images...",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-044",
+   "quote": "Summary Table ... library [Metadata/Validation/Arrays/Graph/CLI] ome-zarr-py Yes Yes Yes Yes ... But only downsamples in 2D (x and y) ... Not easy to write pixel sizes. Scale starts at [1, 1, 1, 1, 1]. Axes created automatically: 'type' inferred by name. No units. ... OME-Zarr output v0.4 isn't valid due to axis order cxyz and dimension separator .. ... https://forum.image.sc/t/downsampling-data-in-z-axis-for-ome-zarr-creation/104143 (ome-zarr-py doesn't support Z downsampling)",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-045",
+   "quote": "ome-zarr-py does not appear to work correctly with auto-sharding. ... zarr.create_array(store=store, shape=arr_np.shape, chunks=(1, 100, 100), shards=\\\"auto\\\", ...) ... ValueError: Could not interpret 'a' as a byte unit",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-046",
+   "quote": "0.5 76-45.ome.zarr 520 1 2 1 XYZCT 384 1 ... 0.5 190129.zarr 2048 2044 31 5 XYZC 49 32 ... 0.5 ExpD_chicken_embryo_MIP.ome.zarr 6510 8978 XY ... 0.5 ExpA_VIP_ASLM_on.zarr 2048 2048 1937 XYZ ... 0.5 BR00109990_C2.zarr 2080 1552 5 XYC bioformats2raw.layout (9 images)",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-047",
+   "quote": "Data generated within the challenge will have: - all v2 arrays converted to v3, optionally sharding the data - all .zattrs metadata migrated to `zarr.json[\\\"attributes\\\"][\\\"ome\\\"]` - a top-level `ro-crate-metadata.json` file with minimal metadata (specimen and imaging modality) ... $ mc ls -r uk1anon ... 24MiB STANDARD 0/c/0/0/0/0 ... 1.2KiB STANDARD ro-crate-metadata.json ... The input data will **not be modified** in any way and a full copy of the data will be created",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-048",
+   "quote": "By default, the resolutions will be set so that the smallest resolution is no greater than 256x256. A scaling factor of 2 is used between consecutive resolutions. ... | v3/0.5            | yes                 | yes   | yes  | no   | yes  | ... #### --ngff-version ... Current supported values are 0.4 and 0.5. ... Versions 0.5.0 and later write [OMERO rendering metadata] by default. This includes calculating the minimum and maximum pixel values for the entire image. ... can be omitted by using the `--no-minmax` option. ... A consequence of this change is that all data is now written as little-endian.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-049",
+   "quote": "Version 0.3.0 and later uses the `TCZYX` order by default ... The `--dimension-order` option is considered deprecated ... as it results in invalid OME-NGFF data. ... Supports grouping multiple .nd2 files into a single HCS plate. Each file is assumed to represent one well, which may contain multiple fields.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-050",
+   "quote": "Vizarr expects the same number of Z-sections for each pyramid resolution\" ... \"napari: notes: \\\"Image appears to load and display OK, but very quickly crashes on zooming etc.\\\"\" ... \"Can the viewer handle pyramids when the scale factor between levels is not equal to 2? ... vizarr: supported: no\" ... \"napari: supported: yes notes: \\\"Plate appears to load and display OK, but crashes on zooming in.\\\"\" ... \"multiple 'multiscales' ... avivator: supported: no opens: yes ... napari: supported: no opens: yes ... BigDataViewer: supported: no opens: no notes: \\\"Fails with: java.lang.RuntimeException: java.lang.ArrayIndexOutOfBoundsException: 3\\",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-051",
+   "quote": "Does the viewer use the 'omero' metadata to set channel colors, names and rendering levels? ... WEBKNOSSOS: supported: yes ... notes: \\\"rdefs are not supported\\\" ... Vol-E: supported: no opens: yes notes: \\\"The channel labels are read from 'omero' metadata, but the colors are ignored\\\"\" ... \"Does the viewer read the 'scale' transformation for each item in `multiscales` list? ... napari: supported: no opens: yes issue_url: .../issues/73",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-052",
+   "quote": "napari 0.5.6 with plugin napari-ome-zarr 0.6.1 and ome-zarr 0.10.3 ... vizarr using current viewer April 2025 ... webKnossos version 24.11.0 ... OMERO with BioFormats ZarrReader 0.2.0",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-053",
+   "quote": "RFC-5: Coordinate Systems and Transformations ... RFC-5: Response 2 (2025-11-18 version) ... RFC-6: Flattening the multiscales array ... RFC-7: Channel provenance ... RFC-8: Collections and Extensibility ... v1 \u2013 RFC-8: Collections and Extensibility ... RFC-9: Zipped OME-Zarr ... RFC-3: more dimensions for thee ... RFC-4: Axis Orientation",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-054",
+   "quote": "Investigating a lighter-weight alternative to ome-zarr-py. Uses zarrv3. ... The PR handles bioformats2raw, channels metadata, labels, plates and plates with labels. ... # Nine images in bioformats2raw layout, translated into a 3 x 3 grid ... # v0.5 plate (see screenshot) ... https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0090/190129.zarr ... TODO: - [x] handle labels colors - [x] coordinateTransformations - [x] pre v0.4 (missing/minimal axes etc)",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-055",
+   "quote": "\\\"tag_name\\\": \\\"0.8.0\\\" ... \\\"published_at\\\": \\\"2026-05-20T10:38:09Z\\\" ... * drop ome-zarr dependency by @will-moore in .../pull/123 ... * Handles `bioformats2raw.layout` specification: All images in the series are opened. ... * Fixes Plate labels",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-056",
+   "quote": "* Introduce image class v06 by @jo-mueller ... * Ready for 06 ... * Ome zarr scene ... * find_multiscales() handles scenes ... * Be more permissive with version 0.5, allowing support for spatial-data ome zarrs ... * support plain-string codec attributes in zarr >= 3.3 ... * Spatialdata and zipstores",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-057",
+   "quote": "# 0.11.0 (April 2025) - Browse collection of local OME-Zarr in BioFile Finder (#436) ... # 0.10.2 (November 2024) ... * pin zarr at < 3",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-058",
+   "quote": "**Vizarr** is a minimal, purely client-side program for viewing zarr-based images. ... Currently, Viv supports `int8`, `int16`, `int32`, `uint8`, `uint16`, `uint32`, `float32`, `float64` arrays ... **Vizarr** supports viewing 2D slices of n-Dimensional Zarr arrays, allowing users to choose a single channel or blended composites of multiple channels",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-059",
+   "quote": "Volume Explorer (Vol-E) is a browser based volume viewer built with React and WebGL (Three.js). ... a url to a OME-ZARR image ... AGAVE's core viewing engine uses a \\\"progressive path tracer\\\". ... GPU memory dictates the maximum size of the files AGAVE can load.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-060",
+   "quote": "AGAVE is a desktop application for viewing multichannel volume data. Several formats are supported, including OME-ZARR 0.4 and 0.5, OME-TIFF and Zeiss .czi files. ... OME-Zarr data is not stored as single files - instead it is a directory. AGAVE can load OME-Zarr data either from a local directory or from a public cloud URL using https, s3, or gc protocols. ... The OME-Zarr format supports precomputed multiresolution data and will let you select the resolution level. The highest resolution is the default, so beware if you have a large dataset, you risk running out of memory. ... For OME-Zarr data, you may select a sub-region in X, Y, and Z. ... first load a very low resolution level and then select a sub-region of interest to then load at a higher resolution.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-061",
+   "quote": "**HH:MM:SS**: the current time is converted to seconds ... **Time Units**: the current time is shown using the physical time units ... When you change the current time in the `Time Panel`, the transfer function is updated to keep your settings meaningful against the new timepoint's ... histogram ... This keeps the rendered image visually stable across timepoints.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-062",
+   "quote": "The viewer currently only supports .tif or .czi files containing z-stack data. Currently only 16-bit unsigned pixels are supported. ... Up to four channels can be displayed at a time.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-063",
+   "quote": "Once a url (http(s)) is provided, then Agave will attempt to load ome-zarr metadata. If such metadata is found, a dialog will pop up showing the multiresolution levels discovered. Users will be provided a memory estimate of the selected level. Users may also select a sub-region of interest in x,y,z. ... a VERY small number of pixel formats and dimension configurations are currently supported for zarr. Currently it's been tested with data from AIND and AICS that has TCZYX dimensions.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-064",
+   "quote": "load data asynchronously and incrementally ... Data loading currently blocks the whole application and is not easy to cancel. This is most obvious during a time series render ... preload and cache whole time series ... see if cache hits can be faster ... make sure we are not double caching on disk thru tensorstore ... gpu memory leak when loading new image",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-065",
+   "quote": "load channels from separate files into same session ... allow channel masking ... improve opacity for overlapping structures ... Add tooltips over labels - esp colorMap ... Would be very useful for biologists if channels could also be given a Look-Up Table (LUT) instead of a solid color ... Feature/color lut ... interpolation on/off ... Add option to interpolate volume sampling ... Feature/timestamp overlay",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-066",
+   "quote": "downsample data at load time ... [volumecache 01/12] Add in-memory volume cache manager ... [volumecache 02/12] Route volume loads through memory cache ... Feature/unbold memory estimate ... loading settings unbold \\\"Memory Estimate\\",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-067",
+   "quote": "The big assumption I am making is that OME-NGFF 0.4 is always zarrv2 and if we find a zarrv3 zarr.json file, then I am assuming a OME-NGFF 0.5 json file. ... Anything outside this assumption will error out in some way. ... The zarr doesn't automatically load in agave, but it can be loaded by manually pasting the zarr url in the \\\"open from url\\\" dialog. ... seems fixed on BFF side.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-068",
+   "quote": "WEBKNOSSOS works great with OME-Zarr datasets, sometimes called next-generation file format (NGFF). ... Zarr Folder Structure (v0.4) ... Zarr Folder Structure (v0.5) ... This example will create a sharded Zarr v3 dataset with a voxel size of (11.24, 11.24, 25) nm3 and a chunk size of (64,64,64) voxel.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-069",
+   "quote": "BioFile Finder is an application produced by the Allen Institute for Cell Science designed to simplify access and exploration of data ... it allows the application to be distributed both as a desktop application ... and as a web application ... Some features need to be developed across this codebase and the `file-explorer-service`.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-070",
+   "quote": "Zarr3 C++ Read Subset Issue ... auto file = tensorstore::Open({{\\\"driver\\\", \\\"zarr3\\\"}, {\\\"kvstore\\\", {{\\\"driver\\\", \\\"file\\\"}, {\\\"path\\\", file_path}}}, {\\\"metadata\\\", ... {\\\"codecs\\\", {{{\\\"name\\\", \\\"blosc\\\"}, ...",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-071",
+   "quote": "ome-zarr-py` does not work with auto-sharding ... What to do with consolidated metadata? ... download failing for RFC-5 CoordinateSystems group ... Improve error message of ome_zarr finder on read-only locations ... Could be useful if `io.parse_url` raises an Exception instead of returning `None` ... Using parse_url to create a store reads arrays with all zeros ... reader() is not idempotent ... Labels not loaded from cloud buckets ... Progress indication",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-072",
+   "quote": "Z downsampling ... Mixing channels ... Rendering issues for images in OME-ZARR v0.5 format ... Problem in reading contrast metadata ... Adding a dynamic scale bar ... 3D translation causes images to disappear ... Labels not loaded if \\\"omero\\\" block is missing ... Error changing z-plane ... Allow setting z/t plane",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-073",
+   "quote": "RFC-5 document needs updates for OME-Zarr 0.6rc0 ... 0.6rc0 schemas not served from homepage ... Do not allow `Identity` transformations in multiscale transformations ... [Issue]: semantics of a \\\"pixel\\\" ... explicitly define the original coordinate system of an array ... Label multiscales' reference to the `source.image` is broken; should label a coordinate system instead ... OMERO schema is inconsistent with description ... expand and constrain axis `unit` values (UDUNITS-2 controlled vocabulary, MUST) ... EPIC: rendering settings ... EPIC: `image-label` spec ... Should axes restrictions inside multsicales also apply to scene coordinate systems?",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-074",
+   "quote": "Zarr3 chunking issues ... Zarr3 rectilinear chunk grid ... zarr3 shard user block / offset ... Zarr3: transpose codec followed by sharding codec error during writing ... C++ Zarr3 Resize() 3d dataset not working",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-075",
+   "quote": "AGAVE Desktop application for viewing multichannel volume data powered by your GPU ... Kiln A WebGPU-native out-of-core rendering system for virtualized volumetric data ... Odon A spatial proteomics OME-Zarr viewer built in Rust. ... syGlass A VR desktop application ... with OME-Zarr streaming support. ... NGFF-Converter A desktop application for conversion of bioimage formats into OME-Zarr or OME-TIFF.",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-076",
+   "quote": "\\\"tag_name\\\": \\\"v1.10.0\\\" ... agave-1.10.0-macos-arm64.dmg ... agave-1.10.0-win.exe",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-077",
+   "quote": "{ \\\"total_count\\\": 0, \\\"incomplete_results\\\": false, \\\"items\\\": [] ... }",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-079",
+   "quote": "\\\"name\\\": \\\"ome-zarr\\\" ... \\\"release_url\\\": \\\"https://pypi.org/project/ome-zarr/0.19.2/\\\" ... \\\"zarr>=3.0.0\\\" ... \\\"ome-zarr-models>=1.8.1\\\" ... \\\"requires_python\\\": \\\">=3.12\\\" ... \\\"version\\\": \\\"0.19.2\\",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  },
+  {
+   "observation": "O-080",
+   "quote": "+  // if it's a directory, and contains the string zarr anywhere, we assume it's a zarr ... else if (std::filesystem::is_directory(filepath)) { if (filepath.find(\\\"zarr\\\") != std::string::npos) { return new FileReaderZarr(filepath); ... FileReaderZarr::FileReaderZarr(const std::string& filepath) : m_zarrVersion(0) ... tryReadJson(const std::string& zarrurl, const std::string& jsonfile)",
+   "status": "not_found_in_cited_sources",
+   "where": null
+  }
+ ],
+ "citations": [
+  {
+   "id": "O-001",
+   "cites": [
+    [
+     "S003",
+     25,
+     27
+    ]
+   ],
+   "quotes": [
+    "The current released version of this specification is 0.5. Migration scripts will be provided between numbered versions. Data written with these latest changes (an \u201ceditor\u2019s draft\u201d) will not necessarily be supported."
+   ]
+  },
+  {
+   "id": "O-002",
+   "cites": [
+    [
+     "S003",
+     67,
+     72
+    ]
+   ],
+   "quotes": [
+    "OME-Zarr is implemented using the Zarr format as defined by the version 3 of the Zarr specification. All features of the Zarr format including codecs, chunk grids, chunk key encodings, data types and storage transformers may be used with OME-Zarr unless explicitly disallowed in this specification."
+   ]
+  },
+  {
+   "id": "O-003",
+   "cites": [
+    [
+     "S003",
+     152,
+     156
+    ]
+   ],
+   "quotes": [
+    "The OME-Zarr Metadata is stored in the various zarr.json files throughout the above array hierarchy. In this file, the metadata is stored under the namespaced key ome in attributes. The version of the OME-Zarr Metadata is denoted as a string in the version attribute within the ome namespace. The OME-Zarr Metadata version MUST be consistent within a hierarchy."
+   ]
+  },
+  {
+   "id": "O-004",
+   "cites": [
+    [
+     "S003",
+     166,
+     174
+    ],
+    [
+     "S003",
+     825,
+     827
+    ]
+   ],
+   "quotes": [
+    "MUST contain the field \\\"name\\\" that gives the name for this dimension. The values MUST be unique across all \\\"name\\\" fields. ... SHOULD contain the field \\\"type\\\". It SHOULD be one of \\\"space\\\", \\\"time\\\" or \\\"channel\\\", but MAY take other string values for custom axis types ... SHOULD contain the field \\\"unit\\\" ... The length of \\\"axes\\\" MUST be equal to the number of dimensions of the arrays that contain the image data. The \\\"dimension_names\\\" attribute MUST be included in the zarr.json of the Zarr array of a multiscale level and MUST match the names in the \\\"axes\\\" metadata."
+   ]
+  },
+  {
+   "id": "O-005",
+   "cites": [
+    [
+     "S003",
+     299,
+     319
+    ]
+   ],
+   "quotes": [
+    "The \\\"axes\\\" MUST contain 2 or 3 entries of \\\"type:space\\\" and MAY contain one additional entry of \\\"type:time\\\" and MAY contain one additional entry of \\\"type:channel\\\" or a null / custom type. The order of the entries MUST correspond to the order of dimensions of the zarr arrays. In addition, the entries MUST be ordered by \\\"type\\\" where the \\\"time\\\" axis must come first (if present), followed by the \\\"channel\\\" or custom axis (if present) and the axes of type \\\"space\\\". ... If there are three spatial axes ... the spatial axes SHOULD be ordered as \\\"zyx\\\"."
+   ]
+  },
+  {
+   "id": "O-006",
+   "cites": [
+    [
+     "S003",
+     304,
+     312
+    ]
+   ],
+   "quotes": [
+    "Each dictionary in \\\"datasets\\\" MUST contain the field \\\"path\\\" ... The \\\"path\\\"s MUST be ordered from largest (i.e. highest resolution) to smallest. ... MUST contain the field \\\"coordinateTransformations\\\" ... The transformation MUST only be of type translation or scale. They MUST contain exactly one scale transformation that specifies the pixel size ... If scaling information is not available or applicable for one of the axes, the value MUST express the scaling factor between the current resolution and the first resolution for the given axis, defaulting to 1.0 ... It MAY contain exactly one translation ... If translation is given it MUST be listed after scale ... The length of the scale and translation array MUST be the same as the length of \\\"axes\\\"."
+   ]
+  },
+  {
+   "id": "O-007",
+   "cites": [
+    [
+     "S003",
+     314,
+     316
+    ]
+   ],
+   "quotes": [
+    "Each \\\"multiscales\\\" dictionary MAY contain the field \\\"coordinateTransformations\\\", describing transformations that are applied to all resolution levels in the same manner. The transformations MUST follow the same rules about allowed types, order, etc. as in \\\"datasets:coordinateTransformations\\\" and are applied after them."
+   ]
+  },
+  {
+   "id": "O-008",
+   "cites": [
+    [
+     "S003",
+     298,
+     298
+    ]
+   ],
+   "quotes": [
+    "\\\"multiscales\\\" contains a list of dictionaries where each entry describes a multiscale image. ... Each \\\"multiscales\\\" dictionary SHOULD contain the field \\\"name\\\". ... If only one multiscale is provided, use it. Otherwise, the user can choose by name, using the first multiscale as a fallback: ... # Use the first by default. Or perhaps choose based on chunk size."
+   ]
+  },
+  {
+   "id": "O-009",
+   "cites": [
+    [
+     "S003",
+     398,
+     430
+    ]
+   ],
+   "quotes": [
+    "Transitional information specific to the channels of an image and how to render it can be found under the \\\"omero\\\" key in the group-level metadata ... \\\"rdefs\\\": { \\\"defaultT\\\": 0, ... \\\"defaultZ\\\": 118, ... \\\"model\\\": \\\"color\\\" # \\\"color\\\" or \\\"greyscale\\\" } ... The \\\"omero\\\" metadata is optional, but if present it MUST contain the field \\\"channels\\\", which is an array of dictionaries describing the channels of the image. Each dictionary in \\\"channels\\\" MUST contain the field \\\"color\\\", which is a string of 6 hexadecimal digits ... Each dictionary in \\\"channels\\\" MUST contain the field \\\"window\\\" ... MUST contain the fields \\\"min\\\" and \\\"max\\\" ... MUST also contain the fields \\\"start\\\" and \\\"end\\"
+   ]
+  },
+  {
+   "id": "O-010",
+   "cites": [
+    [
+     "S003",
+     431,
+     474
+    ]
+   ],
+   "quotes": [
+    "The pixels of the label images MUST be integer data types, i.e. one of [uint8, int8, uint16, int16, uint32, int32, uint64, int64]. Intermediate groups between \\\"labels\\\" and the images within it are allowed, but these MUST NOT contain metadata. ... The OME-Zarr Metadata in the zarr.json file associated with the \\\"labels\\\" group MUST contain a JSON object with the key labels, whose value is a JSON array of paths to the labeled multiscale image(s). ... The zarr.json file for the label image MUST implement the multiscales specification. Within the multiscales object, the JSON array associated with the datasets key MUST have the same number of entries (scale levels) as the original unlabeled image."
+   ]
+  },
+  {
+   "id": "O-011",
+   "cites": [
+    [
+     "S003",
+     454,
+     474
+    ]
+   ],
+   "quotes": [
+    "the OME-Zarr Metadata in this image-level zarr.json file SHOULD contain another key, image-label, ... That image-label object SHOULD contain the following keys: first, a colors key, whose value MUST be a JSON array describing color information for the unique label values. ... the objects in this array MAY contain an rgba key whose value MUST be an array of four integers between 0 and 255, inclusive. ... The value of the source key MUST be a JSON object ... This object MAY include a key image, whose value MUST be a string specifying the relative path to a Zarr image group. The default value is ../../"
+   ]
+  },
+  {
+   "id": "O-012",
+   "cites": [
+    [
+     "S003",
+     175,
+     206
+    ]
+   ],
+   "quotes": [
+    "Transitional \\\"bioformats2raw.layout\\\" metadata identifies a group which implicitly describes a series of images. ... Conforming readers: SHOULD make users aware of the presence of more than one image (i.e. SHOULD NOT default to only opening the first image); MAY use the \\\"series\\\" attribute in the \\\"OME\\\" group to determine a list of valid groups to display; ... MAY ignore other groups or arrays under the root of the hierarchy."
+   ]
+  },
+  {
+   "id": "O-013",
+   "cites": [
+    [
+     "S003",
+     515,
+     560
+    ],
+    [
+     "S003",
+     118,
+     129
+    ]
+   ],
+   "quotes": [
+    "Three groups MUST be defined above the images: ... A well row group SHOULD NOT be present if there are no images in the well row. A well group SHOULD NOT be present if there are no images in the well. ... The plate dictionary MUST contain a version key ... The plate dictionary MUST contain a wells key ... Each well object MUST contain a path key ... The path MUST NOT contain additional leading or trailing directories."
+   ]
+  },
+  {
+   "id": "O-014",
+   "cites": [
+    [
+     "S003",
+     65,
+     66
+    ]
+   ],
+   "quotes": [
+    "Some of the JSON examples in this document include comments. However, these are only for clarity purposes and comments MUST NOT be included in JSON objects."
+   ]
+  },
+  {
+   "id": "O-015",
+   "cites": [
+    [
+     "S003",
+     809,
+     812
+    ]
+   ],
+   "quotes": [
+    "Multi-word keys in this specification should use the camelCase style. NB: some parts of the specification don\u2019t obey this convention as they were added before this was adopted, but they should be updated in due course."
+   ]
+  },
+  {
+   "id": "O-016",
+   "cites": [
+    [
+     "S053",
+     22,
+     30
+    ]
+   ],
+   "quotes": [
+    "\\\"required\\\": [ \\\"multiscales\\\", \\\"version\\\" ] ... \\\"$defs\\\": { \\\"multiscales\\\": { ... \\\"minItems\\\": 1, \\\"uniqueItems\\\": true"
+   ]
+  },
+  {
+   "id": "O-017",
+   "cites": [
+    [
+     "S054",
+     1,
+     119
+    ],
+    [
+     "S054",
+     33,
+     44
+    ]
+   ],
+   "quotes": [
+    "\\\"version\\\": \\\"0.5\\\", ... \\\"axes\\\": [ { \\\"name\\\": \\\"c\\\", \\\"type\\\": \\\"channel\\\" }, { \\\"name\\\": \\\"z\\\", \\\"type\\\": \\\"space\\\", \\\"unit\\\": \\\"micrometer\\\" }, ... ] ... \\\"omero\\\": { ... \\\"rdefs\\\": { \\\"defaultT\\\": 0, \\\"defaultZ\\\": 118, \\\"model\\\": \\\"color\\\" } }"
+   ]
+  },
+  {
+   "id": "O-018",
+   "cites": [
+    [
+     "S055",
+     1,
+     74
+    ]
+   ],
+   "quotes": [
+    "\\\"chunk_grid\\\": { \\\"configuration\\\": { \\\"chunk_shape\\\": [1, 10, 512, 512] }, \\\"name\\\": \\\"regular\\\" }, ... \\\"codecs\\\": [ { ... \\\"name\\\": \\\"sharding_indexed\\\" } ], \\\"data_type\\\": \\\"uint16\\\", \\\"dimension_names\\\": [ \\\"c\\\", \\\"z\\\", \\\"y\\\", \\\"x\\\" ], ... \\\"shape\\\": [2, 236, 275, 271]"
+   ]
+  },
+  {
+   "id": "O-019",
+   "cites": [
+    [
+     "S056",
+     1,
+     320
+    ],
+    [
+     "S003",
+     550,
+     550
+    ]
+   ],
+   "quotes": [
+    "\\\"_creator\\\": { \\\"name\\\": \\\"ome2024-ngff-challenge\\\", \\\"version\\\": \\\"1.0.0\\\", \\\"notes\\\": null }, ... \\\"plate\\\": { \\\"columns\\\": [...11...], \\\"field_count\\\": 32, \\\"name\\\": \\\"190129\\\", \\\"rows\\\": [...6...], \\\"wells\\\": [ ...50 sparse wells... ] }"
+   ]
+  },
+  {
+   "id": "O-020",
+   "cites": [
+    [
+     "S068",
+     1,
+     1
+    ]
+   ],
+   "quotes": [
+    "Binary source retained; this CLI cannot extract application/octet-stream"
+   ]
+  },
+  {
+   "id": "O-021",
+   "cites": [
+    [
+     "S001",
+     1,
+     23
+    ],
+    [
+     "S012",
+     1,
+     24
+    ],
+    [
+     "S021",
+     1,
+     25
+    ],
+    [
+     "S032",
+     1,
+     23
+    ],
+    [
+     "S036",
+     1,
+     24
+    ],
+    [
+     "S049",
+     1,
+     25
+    ],
+    [
+     "S060",
+     1,
+     29
+    ],
+    [
+     "S069",
+     1,
+     23
+    ],
+    [
+     "S071",
+     1,
+     23
+    ]
+   ],
+   "quotes": [
+    "Search output is a discovery aid, not primary evidence. Fetch source URLs before relying on claims."
+   ]
+  },
+  {
+   "id": "O-022",
+   "cites": [
+    [
+     "S005",
+     1,
+     1
+    ],
+    [
+     "S007",
+     1,
+     1
+    ],
+    [
+     "S030",
+     1,
+     1
+    ],
+    [
+     "S042",
+     1,
+     1
+    ],
+    [
+     "S045",
+     1,
+     1
+    ],
+    [
+     "S046",
+     1,
+     1
+    ],
+    [
+     "S077",
+     1,
+     1
+    ],
+    [
+     "S095",
+     1,
+     1
+    ],
+    [
+     "S096",
+     1,
+     1
+    ],
+    [
+     "S121",
+     1,
+     1
+    ]
+   ],
+   "quotes": [
+    "ValueError: Clone exceeded 256 MiB or 120 second cap; partial clone retained, not admitted\" / \"HTTPError: HTTP Error 403: Forbidden\" / \"HTTPError: HTTP Error 404: Not Found\" / \"HTTPError: HTTP Error 422: Unprocessable Entity\" / \"ValueError: Incomplete clone is not a source\" / \"ValueError: Git metadata is not a document source\" / \"No literal matches. This does not establish semantic absence."
+   ]
+  },
+  {
+   "id": "O-023",
+   "cites": [
+    [
+     "S120",
+     25,
+     28
+    ]
+   ],
+   "quotes": [
+    "renderlib/VolumeDimensions.cpp:288:  if (this->dtype == \\\"int32\\\") { ... 291: } else if (this->dtype == \\\"uint16\\\") { ... 294: } else if (this->dtype == \\\"uint8\\\") { ... 297: } else if (this->dtype == \\\"float32\\\") {"
+   ]
+  },
+  {
+   "id": "O-024",
+   "cites": [
+    [
+     "S121",
+     1,
+     9
+    ]
+   ],
+   "quotes": [
+    "renderlib/io/FileReaderZarr.cpp:161:FileReaderZarr::getOmero(nlohmann::json attrs) ... 175: omero = ome[\\\"omero\\\"]; ... 177: omero = attrs[\\\"omero\\\"];"
+   ]
+  },
+  {
+   "id": "O-025",
+   "cites": [
+    [
+     "S016",
+     368,
+     387
+    ]
+   ],
+   "quotes": [
+    "class FormatV05(FormatV04): ... \\\"\\\"\\\" Changelog: added FormatV05 (May 2025): writing not supported yet \\\"\\\"\\\" ... @property def zarr_format(self) -> int: return 3 ... CurrentFormat = FormatV05"
+   ]
+  },
+  {
+   "id": "O-026",
+   "cites": [
+    [
+     "S016",
+     35,
+     46
+    ],
+    [
+     "S019",
+     87,
+     90
+    ]
+   ],
+   "quotes": [
+    "def detect_format(metadata: dict, default: \\\"Format\\\") -> \\\"Format\\\": ... if fmt.matches(metadata): return fmt ... def _get_metadata_version(self, metadata: dict) -> str | None: ... multiscales = metadata.get(\\\"multiscales\\\", []) if multiscales: dataset = multiscales[0] return dataset.get(\\\"version\\\", None) for name in [\\\"plate\\\", \\\"well\\\", \\\"image-label\\\"]: obj = metadata.get(name) if obj: return obj.get(\\\"version\\\", None)"
+   ]
+  },
+  {
+   "id": "O-027",
+   "cites": [
+    [
+     "S016",
+     276,
+     294
+    ]
+   ],
+   "quotes": [
+    "scale = [full / level for full, level in zip(data_shape, shape)] trans = [s / 2 - s0 / 2 for s, s0 in zip(scale, scale0)] coordinate_transformations.append([ {\\\"type\\\": \\\"scale\\\", \\\"scale\\\": scale}, {\\\"type\\\": \\\"translation\\\", \\\"translation\\\": trans} ])"
+   ]
+  },
+  {
+   "id": "O-028",
+   "cites": [
+    [
+     "S016",
+     296,
+     365
+    ]
+   ],
+   "quotes": [
+    "if sum(t == \\\"scale\\\" for t in types) != 1: raise ValueError(\\\"Must supply 1 'scale' item in coordinate_transformations\\\") ... if types[0] != \\\"scale\\\": raise ValueError(\\\"First coordinate_transformations must be 'scale'\\\") ... if len(scale) != ndim: raise ValueError(...)"
+   ]
+  },
+  {
+   "id": "O-029",
+   "cites": [
+    [
+     "S018",
+     276,
+     318
+    ]
+   ],
+   "quotes": [
+    "multiscales = self.lookup(\\\"multiscales\\\", []) version = multiscales[0].get(\\\"version\\\", \\\"0.1\\\") # should this be matched with Format.version? datasets = multiscales[0][\\\"datasets\\\"] axes = multiscales[0].get(\\\"axes\\\") ... node.metadata[\\\"name\\\"] = multiscales[0].get(\\\"name\\\")"
+   ]
+  },
+  {
+   "id": "O-030",
+   "cites": [
+    [
+     "S018",
+     325,
+     391
+    ]
+   ],
+   "quotes": [
+    "model = rdefs.get(\\\"model\\\", \\\"unset\\\") ... if model == \\\"greyscale\\\": rgb = [1, 1, 1] ... visible = ch.get(\\\"active\\\", None) if visible is not None: visibles[idx] = visible and node.visible ... if start is None or end is None: # Disable contrast limits settings if one is missing contrast_limits = None ... except Exception: LOGGER.exception(\\\"Failed to parse metadata\\\")"
+   ]
+  },
+  {
+   "id": "O-031",
+   "cites": [
+    [
+     "S018",
+     394,
+     464
+    ],
+    [
+     "S003",
+     273,
+     274
+    ]
+   ],
+   "quotes": [
+    "# Construct a 2D almost-square grid field_count = len(image_paths) column_count = math.ceil(math.sqrt(field_count)) ... if data is None: data = da.zeros(self.img_pyramid_shapes[level], dtype=self.numpy_type)"
+   ]
+  },
+  {
+   "id": "O-032",
+   "cites": [
+    [
+     "S048",
+     166,
+     170
+    ]
+   ],
+   "quotes": [
+    "@staticmethod def get_attrs(group: Group) -> dict: if \\\"ome\\\" in group.attrs: return group.attrs[\\\"ome\\\"] return group.attrs ... if \\\"coordinateSystems\\\" in attrs[\\\"multiscales\\\"][0]: axes = attrs[\\\"multiscales\\\"][0][\\\"coordinateSystems\\\"][0][\\\"axes\\\"] ... # napari treats a None entry as its default (pixel); keeping the spatial units means label and split-image layers stay unit-consistent, so the scale bar still renders (napari warns \\\"Inconsistent units across layers\\\" and hides units when one layer lacks them)."
+   ]
+  },
+  {
+   "id": "O-033",
+   "cites": [
+    [
+     "S048",
+     199,
+     213
+    ]
+   ],
+   "quotes": [
+    "paths = [ds[\\\"path\\\"] for ds in attrs[\\\"multiscales\\\"][0][\\\"datasets\\\"]] ... if \\\"channel\\\" in atypes and self._splits_channels(): channel_axis = atypes.index(\\\"channel\\\") ... def _splits_channels(self) -> bool: # A label is loaded as a single layer keeping all axes ... return False ... \\\"visible\\\": False, # labels not visible initially ... layer_type = \\\"labels\\\" ... if \\\"channel_axis\\\" in metadata: ... node_data[level] = da.squeeze(darray, axis=ch_axis)"
+   ]
+  },
+  {
+   "id": "O-034",
+   "cites": [
+    [
+     "S048",
+     341,
+     368
+    ],
+    [
+     "S003",
+     261,
+     270
+    ]
+   ],
+   "quotes": [
+    "class Bioformats2raw(Spec): @staticmethod def matches(group: Group) -> bool: attrs = Spec.get_attrs(group) # Don't consider \\\"plate\\\" as a Bioformats2raw layout return \\\"bioformats2raw.layout\\\" in attrs and \\\"plate\\\" not in attrs ... for child in root: ... if child.tag.endswith(\\\"Image\\\") and node_id.startswith(\\\"Image:\\\"): image_path = node_id.replace(\\\"Image:\\\", \\\"\\\")"
+   ]
+  },
+  {
+   "id": "O-035",
+   "cites": [
+    [
+     "S048",
+     664,
+     699
+    ]
+   ],
+   "quotes": [
+    "if Labels.matches(root_group): # Try starting at parent Image parent_path = root_group.store.root.parent ... elif Label.matches(root_group): # Try starting at parent Image - up 2 dirs ... elif Bioformats2raw.matches(root_group): ... elif Multiscales.matches(root_group): ... elif Plate.matches(root_group): ... elif Scene.matches(root_group): ... else: print(\\\"No matching spec\\\", root_group)"
+   ]
+  },
+  {
+   "id": "O-036",
+   "cites": [
+    [
+     "S019",
+     52,
+     66
+    ]
+   ],
+   "quotes": [
+    "detected = detect_format(self.__metadata, loader) ... if detected != fmt: LOGGER.warning(\\\"version mismatch: detected: %s, requested: %s\\\", detected, fmt) self.__fmt = detected ... if \\\"ome\\\" in self.zgroup: self.zgroup = self.zgroup[\\\"ome\\\"] ... If mode is 'r', and the path does not exist returns None. If there is an error opening the path, also returns None."
+   ]
+  },
+  {
+   "id": "O-037",
+   "cites": [
+    [
+     "S009",
+     21,
+     31
+    ],
+    [
+     "S048",
+     402,
+     495
+    ]
+   ],
+   "quotes": [
+    "docs/source/advanced/sharding.ipynb ... docs/source/advanced/transforms/reading_scenes.ipynb ... ome_zarr/classes/scene.py ... ome_zarr/reader.py ... ome_zarr/writer.py"
+   ]
+  },
+  {
+   "id": "O-038",
+   "cites": [
+    [
+     "S004",
+     149,
+     158
+    ],
+    [
+     "S003",
+     441,
+     441
+    ],
+    [
+     "S003",
+     309,
+     309
+    ]
+   ],
+   "quotes": [
+    "This PR proposes to adopt the version 3 of the Zarr format for OME-Zarr. Main changes: Only Zarr v3 is allowed for upcoming versions of OME-Zarr. Zarr v3 stores its metadata in zarr.json files. ... The chunk_key_encoding of the Zarr arrays are respected instead of mandating the / dimension separator. Basically all Zarr features are available in OME-Zarr as they get approved through the ZEP process. Add a ome namespace within the zarr.json attributes. Move version fields from multiscale, plate, well etc. up into the ome object. Move the registration of labels from the labels group into the multiscale group. ... Closing this in favor of #227."
+   ]
+  },
+  {
+   "id": "O-039",
+   "cites": [
+    [
+     "S011",
+     141,
+     177
+    ]
+   ],
+   "quotes": [
+    "napari: 0.6.6 napari-ome-zarr: 0.6.1 bioio-ome-zarr: 3.2.0 zarr: 3.1.5 (upgraded from 2.18.7) ome-zarr: 0.10.3 ... napari-ome-zarr depends on ome-zarr, which is pinned to zarr<3. When loading OME-Zarr files in napari, I now get: RuntimeError: Failed to import command at 'napari_ome_zarr._reader:napari_get_reader': cannot import name 'FSStore' from 'zarr.storage' ... The default napari reader (without napari-ome-zarr plugin) does not correctly read OME-Zarr coordinate transformations/scale metadata, resulting in incorrect anisotropic volume rendering. The voxel scales from coordinateTransformations in the multiscales metadata are not applied."
+   ]
+  },
+  {
+   "id": "O-040",
+   "cites": [
+    [
+     "S014",
+     136,
+     143
+    ]
+   ],
+   "quotes": [
+    "Viewing a 3-channel image (unit16). No well definitions. Using group 0 in bioformats2raw Zarr layout. Vizarr works as expected for the image in OME-ZARR v0.4 format (written by NGFF-Converter): Vizarr renders chunks repetitively for image data converted into OME-ZARR v0.5 format, using the resave command of https://github.com/ome/ome2024-ngff-challenge"
+   ]
+  },
+  {
+   "id": "O-041",
+   "cites": [
+    [
+     "S008",
+     149,
+     163
+    ]
+   ],
+   "quotes": [
+    "This updates ome-zarr-py to use zarr-python v3 but doesn't include support for writing Zarr v3 (OME-Zarr v0.5). However, it does add support for reading OME-Zarr v0.5 (e.g. for use by napari-ome-zarr). ... NB: if the image is bioformats2raw layout, you'll need to add /0 to the zarr url. If in doubt, open in Validator first. Most of the IDR samples there are plates."
+   ]
+  },
+  {
+   "id": "O-042",
+   "cites": [
+    [
+     "S013",
+     126,
+     131
+    ]
+   ],
+   "quotes": [
+    "Merged joshmoore merged 91 commits ... Aug 7, 2025 ... This PR adds support for writing OME-Zarr v0.5, which becomes the default CurrentFormat(). ... Known issues: compressor option fails when writing dask arrays ... ValueError: compressor cannot be used for arrays with zarr_format 3. Use bytes-to-bytes codecs instead. ... Reading via napari-ome-zarr... images and plates, v0.1, 0.3, 0.4, 0.5..."
+   ]
+  },
+  {
+   "id": "O-043",
+   "cites": [
+    [
+     "S023",
+     150,
+     157
+    ]
+   ],
+   "quotes": [
+    "$ ome_zarr finder path/to/my_data_folder/ This command will traverse your local filesystem, looking for zarr images (only .zattrs for now - can add zarr v3 support as a follow-up) and collect them into a CSV. This CSV is then served by the localhost python server and opened in BioFile Finder, allowing you to browse your local zarr images..."
+   ]
+  },
+  {
+   "id": "O-044",
+   "cites": [
+    [
+     "S029",
+     141,
+     206
+    ]
+   ],
+   "quotes": [
+    "Summary Table ... library [Metadata/Validation/Arrays/Graph/CLI] ome-zarr-py Yes Yes Yes Yes ... But only downsamples in 2D (x and y) ... Not easy to write pixel sizes. Scale starts at [1, 1, 1, 1, 1]. Axes created automatically: 'type' inferred by name. No units. ... OME-Zarr output v0.4 isn't valid due to axis order cxyz and dimension separator .. ... https://forum.image.sc/t/downsampling-data-in-z-axis-for-ome-zarr-creation/104143 (ome-zarr-py doesn't support Z downsampling)"
+   ]
+  },
+  {
+   "id": "O-045",
+   "cites": [
+    [
+     "S044",
+     126,
+     146
+    ]
+   ],
+   "quotes": [
+    "ome-zarr-py does not appear to work correctly with auto-sharding. ... zarr.create_array(store=store, shape=arr_np.shape, chunks=(1, 100, 100), shards=\\\"auto\\\", ...) ... ValueError: Could not interpret 'a' as a byte unit"
+   ]
+  },
+  {
+   "id": "O-046",
+   "cites": [
+    [
+     "S010",
+     1026,
+     1143
+    ],
+    [
+     "S034",
+     70,
+     70
+    ]
+   ],
+   "quotes": [
+    "0.5 76-45.ome.zarr 520 1 2 1 XYZCT 384 1 ... 0.5 190129.zarr 2048 2044 31 5 XYZC 49 32 ... 0.5 ExpD_chicken_embryo_MIP.ome.zarr 6510 8978 XY ... 0.5 ExpA_VIP_ASLM_on.zarr 2048 2048 1937 XYZ ... 0.5 BR00109990_C2.zarr 2080 1552 5 XYC bioformats2raw.layout (9 images)"
+   ]
+  },
+  {
+   "id": "O-047",
+   "cites": [
+    [
+     "S034",
+     40,
+     46
+    ]
+   ],
+   "quotes": [
+    "Data generated within the challenge will have: - all v2 arrays converted to v3, optionally sharding the data - all .zattrs metadata migrated to `zarr.json[\\\"attributes\\\"][\\\"ome\\\"]` - a top-level `ro-crate-metadata.json` file with minimal metadata (specimen and imaging modality) ... $ mc ls -r uk1anon ... 24MiB STANDARD 0/c/0/0/0/0 ... 1.2KiB STANDARD ro-crate-metadata.json ... The input data will **not be modified** in any way and a full copy of the data will be created"
+   ]
+  },
+  {
+   "id": "O-048",
+   "cites": [
+    [
+     "S033",
+     107,
+     119
+    ]
+   ],
+   "quotes": [
+    "By default, the resolutions will be set so that the smallest resolution is no greater than 256x256. A scaling factor of 2 is used between consecutive resolutions. ... | v3/0.5            | yes                 | yes   | yes  | no   | yes  | ... #### --ngff-version ... Current supported values are 0.4 and 0.5. ... Versions 0.5.0 and later write [OMERO rendering metadata] by default. This includes calculating the minimum and maximum pixel values for the entire image. ... can be omitted by using the `--no-minmax` option. ... A consequence of this change is that all data is now written as little-endian."
+   ]
+  },
+  {
+   "id": "O-049",
+   "cites": [
+    [
+     "S033",
+     335,
+     337
+    ]
+   ],
+   "quotes": [
+    "Version 0.3.0 and later uses the `TCZYX` order by default ... The `--dimension-order` option is considered deprecated ... as it results in invalid OME-NGFF data. ... Supports grouping multiple .nd2 files into a single HCS plate. Each file is assumed to represent one well, which may contain multiple fields."
+   ]
+  },
+  {
+   "id": "O-050",
+   "cites": [
+    [
+     "S043",
+     1,
+     36
+    ],
+    [
+     "S041",
+     2,
+     20
+    ]
+   ],
+   "quotes": [
+    "Vizarr expects the same number of Z-sections for each pyramid resolution\" ... \"napari: notes: \\\"Image appears to load and display OK, but very quickly crashes on zooming etc.\\\"\" ... \"Can the viewer handle pyramids when the scale factor between levels is not equal to 2? ... vizarr: supported: no\" ... \"napari: supported: yes notes: \\\"Plate appears to load and display OK, but crashes on zooming in.\\\"\" ... \"multiple 'multiscales' ... avivator: supported: no opens: yes ... napari: supported: no opens: yes ... BigDataViewer: supported: no opens: no notes: \\\"Fails with: java.lang.RuntimeException: java.lang.ArrayIndexOutOfBoundsException: 3\\"
+   ]
+  },
+  {
+   "id": "O-051",
+   "cites": [
+    [
+     "S043",
+     38,
+     78
+    ],
+    [
+     "S003",
+     5,
+     5
+    ]
+   ],
+   "quotes": [
+    "Does the viewer use the 'omero' metadata to set channel colors, names and rendering levels? ... WEBKNOSSOS: supported: yes ... notes: \\\"rdefs are not supported\\\" ... Vol-E: supported: no opens: yes notes: \\\"The channel labels are read from 'omero' metadata, but the colors are ignored\\\"\" ... \"Does the viewer read the 'scale' transformation for each item in `multiscales` list? ... napari: supported: no opens: yes issue_url: .../issues/73"
+   ]
+  },
+  {
+   "id": "O-052",
+   "cites": [
+    [
+     "S041",
+     2,
+     20
+    ],
+    [
+     "S041",
+     11,
+     14
+    ]
+   ],
+   "quotes": [
+    "napari 0.5.6 with plugin napari-ome-zarr 0.6.1 and ome-zarr 0.10.3 ... vizarr using current viewer April 2025 ... webKnossos version 24.11.0 ... OMERO with BioFormats ZarrReader 0.2.0"
+   ]
+  },
+  {
+   "id": "O-053",
+   "cites": [
+    [
+     "S051",
+     87,
+     121
+    ]
+   ],
+   "quotes": [
+    "RFC-5: Coordinate Systems and Transformations ... RFC-5: Response 2 (2025-11-18 version) ... RFC-6: Flattening the multiscales array ... RFC-7: Channel provenance ... RFC-8: Collections and Extensibility ... v1 \u2013 RFC-8: Collections and Extensibility ... RFC-9: Zipped OME-Zarr ... RFC-3: more dimensions for thee ... RFC-4: Axis Orientation"
+   ]
+  },
+  {
+   "id": "O-054",
+   "cites": [
+    [
+     "S024",
+     17,
+     17
+    ]
+   ],
+   "quotes": [
+    "Investigating a lighter-weight alternative to ome-zarr-py. Uses zarrv3. ... The PR handles bioformats2raw, channels metadata, labels, plates and plates with labels. ... # Nine images in bioformats2raw layout, translated into a 3 x 3 grid ... # v0.5 plate (see screenshot) ... https://livingobjects.ebi.ac.uk/idr/zarr/v0.5/idr0090/190129.zarr ... TODO: - [x] handle labels colors - [x] coordinateTransformations - [x] pre v0.4 (missing/minimal axes etc)"
+   ]
+  },
+  {
+   "id": "O-055",
+   "cites": [
+    [
+     "S065",
+     29,
+     41
+    ]
+   ],
+   "quotes": [
+    "\\\"tag_name\\\": \\\"0.8.0\\\" ... \\\"published_at\\\": \\\"2026-05-20T10:38:09Z\\\" ... * drop ome-zarr dependency by @will-moore in .../pull/123 ... * Handles `bioformats2raw.layout` specification: All images in the series are opened. ... * Fixes Plate labels"
+   ]
+  },
+  {
+   "id": "O-056",
+   "cites": [
+    [
+     "S052",
+     116,
+     128
+    ],
+    [
+     "S052",
+     416,
+     429
+    ]
+   ],
+   "quotes": [
+    "* Introduce image class v06 by @jo-mueller ... * Ready for 06 ... * Ome zarr scene ... * find_multiscales() handles scenes ... * Be more permissive with version 0.5, allowing support for spatial-data ome zarrs ... * support plain-string codec attributes in zarr >= 3.3 ... * Spatialdata and zipstores"
+   ]
+  },
+  {
+   "id": "O-057",
+   "cites": [
+    [
+     "S017",
+     2,
+     13
+    ]
+   ],
+   "quotes": [
+    "# 0.11.0 (April 2025) - Browse collection of local OME-Zarr in BioFile Finder (#436) ... # 0.10.2 (November 2024) ... * pin zarr at < 3"
+   ]
+  },
+  {
+   "id": "O-058",
+   "cites": [
+    [
+     "S025",
+     19,
+     27
+    ]
+   ],
+   "quotes": [
+    "**Vizarr** is a minimal, purely client-side program for viewing zarr-based images. ... Currently, Viv supports `int8`, `int16`, `int32`, `uint8`, `uint16`, `uint32`, `float32`, `float64` arrays ... **Vizarr** supports viewing 2D slices of n-Dimensional Zarr arrays, allowing users to choose a single channel or blended composites of multiple channels"
+   ]
+  },
+  {
+   "id": "O-059",
+   "cites": [
+    [
+     "S062",
+     7,
+     15
+    ],
+    [
+     "S115",
+     12,
+     14
+    ]
+   ],
+   "quotes": [
+    "Volume Explorer (Vol-E) is a browser based volume viewer built with React and WebGL (Three.js). ... a url to a OME-ZARR image ... AGAVE's core viewing engine uses a \\\"progressive path tracer\\\". ... GPU memory dictates the maximum size of the files AGAVE can load."
+   ]
+  },
+  {
+   "id": "O-060",
+   "cites": [
+    [
+     "S072",
+     1,
+     3
+    ],
+    [
+     "S117",
+     26,
+     47
+    ]
+   ],
+   "quotes": [
+    "AGAVE is a desktop application for viewing multichannel volume data. Several formats are supported, including OME-ZARR 0.4 and 0.5, OME-TIFF and Zeiss .czi files. ... OME-Zarr data is not stored as single files - instead it is a directory. AGAVE can load OME-Zarr data either from a local directory or from a public cloud URL using https, s3, or gc protocols. ... The OME-Zarr format supports precomputed multiresolution data and will let you select the resolution level. The highest resolution is the default, so beware if you have a large dataset, you risk running out of memory. ... For OME-Zarr data, you may select a sub-region in X, Y, and Z. ... first load a very low resolution level and then select a sub-region of interest to then load at a higher resolution."
+   ]
+  },
+  {
+   "id": "O-061",
+   "cites": [
+    [
+     "S117",
+     302,
+     316
+    ]
+   ],
+   "quotes": [
+    "**HH:MM:SS**: the current time is converted to seconds ... **Time Units**: the current time is shown using the physical time units ... When you change the current time in the `Time Panel`, the transfer function is updated to keep your settings meaningful against the new timepoint's ... histogram ... This keeps the rendered image visually stable across timepoints."
+   ]
+  },
+  {
+   "id": "O-062",
+   "cites": [
+    [
+     "S108",
+     10,
+     17
+    ]
+   ],
+   "quotes": [
+    "The viewer currently only supports .tif or .czi files containing z-stack data. Currently only 16-bit unsigned pixels are supported. ... Up to four channels can be displayed at a time."
+   ]
+  },
+  {
+   "id": "O-063",
+   "cites": [
+    [
+     "S125",
+     55,
+     55
+    ]
+   ],
+   "quotes": [
+    "Once a url (http(s)) is provided, then Agave will attempt to load ome-zarr metadata. If such metadata is found, a dialog will pop up showing the multiresolution levels discovered. Users will be provided a memory estimate of the selected level. Users may also select a sub-region of interest in x,y,z. ... a VERY small number of pixel formats and dimension configurations are currently supported for zarr. Currently it's been tested with data from AIND and AICS that has TCZYX dimensions."
+   ]
+  },
+  {
+   "id": "O-064",
+   "cites": [
+    [
+     "S103",
+     11,
+     11
+    ],
+    [
+     "S104",
+     11,
+     11
+    ],
+    [
+     "S105",
+     11,
+     11
+    ],
+    [
+     "S119",
+     11,
+     11
+    ]
+   ],
+   "quotes": [
+    "load data asynchronously and incrementally ... Data loading currently blocks the whole application and is not easy to cancel. This is most obvious during a time series render ... preload and cache whole time series ... see if cache hits can be faster ... make sure we are not double caching on disk thru tensorstore ... gpu memory leak when loading new image"
+   ]
+  },
+  {
+   "id": "O-065",
+   "cites": [
+    [
+     "S112",
+     15,
+     15
+    ]
+   ],
+   "quotes": [
+    "load channels from separate files into same session ... allow channel masking ... improve opacity for overlapping structures ... Add tooltips over labels - esp colorMap ... Would be very useful for biologists if channels could also be given a Look-Up Table (LUT) instead of a solid color ... Feature/color lut ... interpolation on/off ... Add option to interpolate volume sampling ... Feature/timestamp overlay"
+   ]
+  },
+  {
+   "id": "O-066",
+   "cites": [
+    [
+     "S114",
+     15,
+     15
+    ]
+   ],
+   "quotes": [
+    "downsample data at load time ... [volumecache 01/12] Add in-memory volume cache manager ... [volumecache 02/12] Route volume loads through memory cache ... Feature/unbold memory estimate ... loading settings unbold \\\"Memory Estimate\\"
+   ]
+  },
+  {
+   "id": "O-067",
+   "cites": [
+    [
+     "S082",
+     55,
+     55
+    ],
+    [
+     "S081",
+     58,
+     58
+    ],
+    [
+     "S083",
+     31,
+     31
+    ]
+   ],
+   "quotes": [
+    "The big assumption I am making is that OME-NGFF 0.4 is always zarrv2 and if we find a zarrv3 zarr.json file, then I am assuming a OME-NGFF 0.5 json file. ... Anything outside this assumption will error out in some way. ... The zarr doesn't automatically load in agave, but it can be loaded by manually pasting the zarr url in the \\\"open from url\\\" dialog. ... seems fixed on BFF side."
+   ]
+  },
+  {
+   "id": "O-068",
+   "cites": [
+    [
+     "S058",
+     255,
+     264
+    ]
+   ],
+   "quotes": [
+    "WEBKNOSSOS works great with OME-Zarr datasets, sometimes called next-generation file format (NGFF). ... Zarr Folder Structure (v0.4) ... Zarr Folder Structure (v0.5) ... This example will create a sharded Zarr v3 dataset with a voxel size of (11.24, 11.24, 25) nm3 and a chunk size of (64,64,64) voxel."
+   ]
+  },
+  {
+   "id": "O-069",
+   "cites": [
+    [
+     "S022",
+     1,
+     19
+    ],
+    [
+     "S066",
+     24,
+     26
+    ],
+    [
+     "S067",
+     4,
+     15
+    ]
+   ],
+   "quotes": [
+    "BioFile Finder is an application produced by the Allen Institute for Cell Science designed to simplify access and exploration of data ... it allows the application to be distributed both as a desktop application ... and as a web application ... Some features need to be developed across this codebase and the `file-explorer-service`."
+   ]
+  },
+  {
+   "id": "O-070",
+   "cites": [
+    [
+     "S111",
+     11,
+     11
+    ],
+    [
+     "S113",
+     31,
+     31
+    ],
+    [
+     "S120",
+     9,
+     9
+    ]
+   ],
+   "quotes": [
+    "Zarr3 C++ Read Subset Issue ... auto file = tensorstore::Open({{\\\"driver\\\", \\\"zarr3\\\"}, {\\\"kvstore\\\", {{\\\"driver\\\", \\\"file\\\"}, {\\\"path\\\", file_path}}}, {\\\"metadata\\\", ... {\\\"codecs\\\", {{{\\\"name\\\", \\\"blosc\\\"}, ..."
+   ]
+  },
+  {
+   "id": "O-071",
+   "cites": [
+    [
+     "S028",
+     12,
+     4596
+    ]
+   ],
+   "quotes": [
+    "ome-zarr-py` does not work with auto-sharding ... What to do with consolidated metadata? ... download failing for RFC-5 CoordinateSystems group ... Improve error message of ome_zarr finder on read-only locations ... Could be useful if `io.parse_url` raises an Exception instead of returning `None` ... Using parse_url to create a store reads arrays with all zeros ... reader() is not idempotent ... Labels not loaded from cloud buckets ... Progress indication"
+   ]
+  },
+  {
+   "id": "O-072",
+   "cites": [
+    [
+     "S050",
+     1832,
+     1832
+    ]
+   ],
+   "quotes": [
+    "Z downsampling ... Mixing channels ... Rendering issues for images in OME-ZARR v0.5 format ... Problem in reading contrast metadata ... Adding a dynamic scale bar ... 3D translation causes images to disappear ... Labels not loaded if \\\"omero\\\" block is missing ... Error changing z-plane ... Allow setting z/t plane"
+   ]
+  },
+  {
+   "id": "O-073",
+   "cites": [
+    [
+     "S035",
+     356,
+     356
+    ]
+   ],
+   "quotes": [
+    "RFC-5 document needs updates for OME-Zarr 0.6rc0 ... 0.6rc0 schemas not served from homepage ... Do not allow `Identity` transformations in multiscale transformations ... [Issue]: semantics of a \\\"pixel\\\" ... explicitly define the original coordinate system of an array ... Label multiscales' reference to the `source.image` is broken; should label a coordinate system instead ... OMERO schema is inconsistent with description ... expand and constrain axis `unit` values (UDUNITS-2 controlled vocabulary, MUST) ... EPIC: rendering settings ... EPIC: `image-label` spec ... Should axes restrictions inside multsicales also apply to scene coordinate systems?"
+   ]
+  },
+  {
+   "id": "O-074",
+   "cites": [
+    [
+     "S109",
+     15,
+     15
+    ]
+   ],
+   "quotes": [
+    "Zarr3 chunking issues ... Zarr3 rectilinear chunk grid ... zarr3 shard user block / offset ... Zarr3: transpose codec followed by sharding codec error during writing ... C++ Zarr3 Resize() 3d dataset not working"
+   ]
+  },
+  {
+   "id": "O-075",
+   "cites": [
+    [
+     "S070",
+     60,
+     101
+    ]
+   ],
+   "quotes": [
+    "AGAVE Desktop application for viewing multichannel volume data powered by your GPU ... Kiln A WebGPU-native out-of-core rendering system for virtualized volumetric data ... Odon A spatial proteomics OME-Zarr viewer built in Rust. ... syGlass A VR desktop application ... with OME-Zarr streaming support. ... NGFF-Converter A desktop application for conversion of bioimage formats into OME-Zarr or OME-TIFF."
+   ]
+  },
+  {
+   "id": "O-076",
+   "cites": [
+    [
+     "S091",
+     30,
+     44
+    ]
+   ],
+   "quotes": [
+    "\\\"tag_name\\\": \\\"v1.10.0\\\" ... agave-1.10.0-macos-arm64.dmg ... agave-1.10.0-win.exe"
+   ]
+  },
+  {
+   "id": "O-077",
+   "cites": [
+    [
+     "S102",
+     1,
+     6
+    ]
+   ],
+   "quotes": [
+    "{ \\\"total_count\\\": 0, \\\"incomplete_results\\\": false, \\\"items\\\": [] ... }"
+   ]
+  },
+  {
+   "id": "O-078",
+   "cites": [
+    [
+     "S057",
+     1,
+     1
+    ]
+   ],
+   "quotes": []
+  },
+  {
+   "id": "O-079",
+   "cites": [
+    [
+     "S015",
+     36,
+     63
+    ]
+   ],
+   "quotes": [
+    "\\\"name\\\": \\\"ome-zarr\\\" ... \\\"release_url\\\": \\\"https://pypi.org/project/ome-zarr/0.19.2/\\\" ... \\\"zarr>=3.0.0\\\" ... \\\"ome-zarr-models>=1.8.1\\\" ... \\\"requires_python\\\": \\\">=3.12\\\" ... \\\"version\\\": \\\"0.19.2\\"
+   ]
+  },
+  {
+   "id": "O-080",
+   "cites": [
+    [
+     "S098",
+     72,
+     77
+    ]
+   ],
+   "quotes": [
+    "+  // if it's a directory, and contains the string zarr anywhere, we assume it's a zarr ... else if (std::filesystem::is_directory(filepath)) { if (filepath.find(\\\"zarr\\\") != std::string::npos) { return new FileReaderZarr(filepath); ... FileReaderZarr::FileReaderZarr(const std::string& filepath) : m_zarrVersion(0) ... tryReadJson(const std::string& zarrurl, const std::string& jsonfile)"
+   ]
+  }
+ ]
+}

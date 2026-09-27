@@ -1,0 +1,29 @@
+{"z_candidate_v1_process_exited_utc": "2026-09-26T22:14:53Z"}
+{"slot": "M-candidate", "resume_stage2_dispatch_utc": "2026-09-26T22:14:53Z"}
+{"t": "2026-09-26T22:14:54.425924+00:00", "goal_status": "active", "responses": 0}
+{"t": "2026-09-26T22:27:56.540718+00:00", "goal_status": "complete", "responses": 28}
+{"t": "2026-09-26T22:28:02.542825+00:00", "turn_completed": "completed", "reason": null, "responses": 29}
+{"t": "2026-09-26T22:28:02.709889+00:00", "done": "goal_complete", "error": null, "responses": 29, "elapsed": 788.4}
+{"slot": "M-candidate", "arm_active_span_seconds": 1096.8, "arm_native_responses": 62, "designated_final": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/M-candidate/frozen/stage2/delivered.md"}
+{"slot": "Z-candidate", "resume_stage2_dispatch_utc": "2026-09-26T22:28:02Z"}
+{"t": "2026-09-26T22:28:07.713995+00:00", "goal_status": "active"}
+{"t": "2026-09-26T22:28:13.131709+00:00", "goal_status": "active", "run_state": "running", "responses": 0}
+{"t": "2026-09-26T22:49:41.568436+00:00", "goal_status": "active", "run_state": "idle", "responses": 38}
+{"t": "2026-09-26T22:50:20.069901+00:00", "goal_status": "complete", "run_state": "idle", "responses": 39}
+{"t": "2026-09-26T22:50:20.494321+00:00", "done": "goal_complete", "error": null, "responses": 39, "elapsed": 1333.6}
+{"slot": "Z-candidate", "arm_active_span_seconds": 3122.1, "arm_native_responses": 95, "designated_final": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/Z-candidate/frozen/stage2/delivered.md"}
+{"slot": "Z-control", "dispatch_utc": "2026-09-26T22:50:20Z"}
+{"t": "2026-09-26T22:50:25.754665+00:00", "goal_status": "active"}
+{"t": "2026-09-26T22:50:31.384699+00:00", "goal_status": "active", "run_state": "running", "responses": 0}
+{"t": "2026-09-26T23:14:03.012856+00:00", "goal_status": "active", "run_state": "idle", "responses": 49}
+{"t": "2026-09-26T23:14:36.293512+00:00", "goal_status": "complete", "run_state": "idle", "responses": 50}
+{"t": "2026-09-26T23:14:36.718490+00:00", "done": "goal_complete", "error": null, "responses": 50, "elapsed": 1451.8}
+{"t": "2026-09-26T23:14:41.656197+00:00", "goal_status": "active"}
+{"t": "2026-09-26T23:14:47.098430+00:00", "goal_status": "active", "run_state": "running", "responses": 0}
+{"t": "2026-09-26T23:35:33.563449+00:00", "goal_status": "active", "run_state": "idle", "responses": 46}
+{"t": "2026-09-26T23:36:23.416755+00:00", "goal_status": "active", "run_state": "running", "responses": 47}
+{"t": "2026-09-26T23:37:36.328868+00:00", "goal_status": "active", "run_state": "idle", "responses": 52}
+{"t": "2026-09-26T23:37:53.375252+00:00", "goal_status": "complete", "run_state": "idle", "responses": 53}
+{"t": "2026-09-26T23:37:53.898314+00:00", "done": "goal_complete", "error": null, "responses": 53, "elapsed": 1392.9}
+{"slot": "Z-control", "arm_span_seconds": 2853.2, "arm_native_responses": 103, "designated_final": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/Z-control/frozen/stage2/delivered.md"}
+{"r1_schedule_done_utc": "2026-09-26T23:37:53Z"}

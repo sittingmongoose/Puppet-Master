@@ -1,0 +1,84 @@
+{
+ "schema": "er6.goal_receipt.v1",
+ "label": "smoke-zcode-2",
+ "app": "zcode",
+ "native_goal_entry": "/goal via app-server session/goal set",
+ "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/dev/smoke/ws-zcode2",
+ "prompt_file": "dev/smoke/smoke-goal.txt",
+ "prompt_bytes": 274,
+ "prompt_sha256": "892de6c25c9863c8f03085d8f68cbc5cc83f587766a67528d74fff8e4f1f8897",
+ "objective_sha256": "bcfb49a846ca46dc17c010b7eacf22d01a6ce97eb48f267a8098842e51b9fd68",
+ "caps": {
+  "seconds": 300.0,
+  "responses": 10
+ },
+ "start_utc": "2026-09-26T21:18:57.400206+00:00",
+ "fresh_session": true,
+ "session_id": "sess_69684583-d2ca-43b2-927d-7e29246b27b7",
+ "provider_id": "builtin:zai-coding-plan",
+ "model_id": "GLM-5.3-Flash",
+ "effort_effective": "max",
+ "tool_allowlist": [
+  "Read",
+  "Write",
+  "Edit",
+  "Grep",
+  "Glob"
+ ],
+ "goal_submitted_utc": "2026-09-26T21:19:00.768605+00:00",
+ "goal_target_id": "target_muiw6wfx_312228b3-e138-482a-a123-6284845b013b",
+ "goal_started_turn": true,
+ "stop_reason": "goal_complete",
+ "goal_status_final": "complete",
+ "end_utc": "2026-09-26T21:20:44.452967+00:00",
+ "elapsed_seconds": 103.7,
+ "native_responses": 5,
+ "request_status_counts": {
+  "model_request_completed": 5
+ },
+ "usage_totals": {
+  "inputTokens": 25250,
+  "outputTokens": 2416,
+  "reasoningTokens": 0,
+  "cacheReadTokens": 17408,
+  "cacheWriteTokens": 0,
+  "totalTokens": 27666
+ },
+ "usage_requests_with_delta": 4,
+ "turn_terminals": [
+  {
+   "version": 1,
+   "eventId": "9b41c04f-b753-44d2-9b12-12207b79723a",
+   "eventSeq": 3,
+   "occurredAt": 1790457541138,
+   "sessionId": "sess_69684583-d2ca-43b2-927d-7e29246b27b7",
+   "turnId": "turn_006f263b-c19d-4712-9692-df389767ac24",
+   "kind": "turn.terminal",
+   "status": "success",
+   "resultType": "success",
+   "durationMs": 0,
+   "tokenCount": 0,
+   "toolCallCount": 0
+  },
+  {
+   "version": 1,
+   "eventId": "7f401d7b-8267-43b5-938b-00b1f06fa396",
+   "eventSeq": 2361,
+   "occurredAt": 1790457627634,
+   "sessionId": "sess_69684583-d2ca-43b2-927d-7e29246b27b7",
+   "turnId": "turn_d0de904a-d154-4ace-bf52-9b1eae9835e4",
+   "kind": "turn.terminal",
+   "status": "success",
+   "resultType": "success",
+   "durationMs": 86342,
+   "tokenCount": 27666,
+   "toolCallCount": 3
+  }
+ ],
+ "tool_starts": {
+  "Write": 1,
+  "Grep": 1,
+  "Read": 1
+ },
+ "receipt_written_utc": "2026-09-26T21:20:44.822566+00:00"
+}

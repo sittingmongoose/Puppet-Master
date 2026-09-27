@@ -1,0 +1,54 @@
+{"slot": "M-control", "dispatch_utc": "2026-09-26T21:24:17Z"}
+{"t": "2026-09-26T21:24:18.408770+00:00", "goal_status": "active", "responses": 0}
+{"t": "2026-09-26T21:31:34.477556+00:00", "goal_status": "complete", "responses": 32}
+{"t": "2026-09-26T21:31:38.479192+00:00", "turn_completed": "completed", "reason": null, "responses": 33}
+{"t": "2026-09-26T21:31:38.595384+00:00", "done": "goal_complete", "error": null, "responses": 33, "elapsed": 440.3}
+{"t": "2026-09-26T21:31:39.827186+00:00", "goal_status": "active", "responses": 0}
+{"t": "2026-09-26T21:39:53.912675+00:00", "goal_status": "complete", "responses": 37}
+{"t": "2026-09-26T21:39:59.915605+00:00", "turn_completed": "completed", "reason": null, "responses": 38}
+{"t": "2026-09-26T21:40:00.081876+00:00", "done": "goal_complete", "error": null, "responses": 38, "elapsed": 500.3}
+{"slot": "M-control", "arm_span_seconds": 942.9, "arm_native_responses": 71, "designated_final": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/M-control/frozen/stage2/delivered.md"}
+{"slot": "M-candidate", "dispatch_utc": "2026-09-26T21:40:00Z"}
+{"t": "2026-09-26T21:40:01.374382+00:00", "goal_status": "active", "responses": 0}
+{"t": "2026-09-26T21:45:01.431072+00:00", "goal_status": "complete", "responses": 32}
+{"t": "2026-09-26T21:45:07.433170+00:00", "turn_completed": "completed", "reason": null, "responses": 33}
+{"t": "2026-09-26T21:45:07.600178+00:00", "done": "goal_complete", "error": null, "responses": 33, "elapsed": 306.2}
+Traceback (most recent call last):
+  File "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/run_arm.py", line 165, in <module>
+    main()
+    ~~~~^^
+  File "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/run_arm.py", line 141, in main
+    ws2 = workspace(arm / "ws2", stage1_frozen=frozen1, bundle_dir=bundle_dir)
+  File "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/run_arm.py", line 61, in workspace
+    shutil.copy2(bundle_dir / f, dest / "stage1" / f)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/shutil.py", line 468, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/shutil.py", line 262, in copyfile
+    with open(dst, 'wb') as fdst:
+         ~~~~^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/M-candidate/ws2/stage1/evidence-bundle.md'
+{"slot": "Z-candidate", "dispatch_utc": "2026-09-26T21:45:07Z"}
+{"t": "2026-09-26T21:45:12.937457+00:00", "goal_status": "active"}
+{"t": "2026-09-26T21:45:18.532074+00:00", "goal_status": "active", "run_state": "running", "responses": 0}
+{"t": "2026-09-26T22:14:19.068540+00:00", "goal_status": "active", "run_state": "idle", "responses": 55}
+{"t": "2026-09-26T22:14:52.241678+00:00", "goal_status": "complete", "run_state": "idle", "responses": 56}
+{"t": "2026-09-26T22:14:52.614983+00:00", "done": "goal_complete", "error": null, "responses": 56, "elapsed": 1780.5}
+Traceback (most recent call last):
+  File "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/run_arm.py", line 165, in <module>
+    (arm / "arm-receipt.json").write_text(json.dumps(rec, indent=1) + "\n")
+    ^^^^^^
+  File "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/run_arm.py", line 141, in main
+    s2_responses = min(ASSIGN_RESPONSES, ARM_RESPONSES - resp_used)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/tools/run_arm.py", line 61, in workspace
+    if (bundle_dir / f).exists():
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/shutil.py", line 468, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/shutil.py", line 262, in copyfile
+    with open(dst, 'wb') as fdst:
+         ~~~~^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/Z-candidate/ws2/stage1/evidence-bundle.md'

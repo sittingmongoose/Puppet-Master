@@ -1,0 +1,79 @@
+{
+ "schema": "er6.goal_receipt.v1",
+ "label": "smoke-zcode",
+ "app": "zcode",
+ "native_goal_entry": "/goal via app-server session/goal set",
+ "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/dev/smoke/ws-zcode",
+ "prompt_file": "dev/smoke/smoke-goal.txt",
+ "prompt_bytes": 274,
+ "prompt_sha256": "892de6c25c9863c8f03085d8f68cbc5cc83f587766a67528d74fff8e4f1f8897",
+ "objective_sha256": "bcfb49a846ca46dc17c010b7eacf22d01a6ce97eb48f267a8098842e51b9fd68",
+ "caps": {
+  "seconds": 300.0,
+  "responses": 10
+ },
+ "start_utc": "2026-09-26T21:17:44.181114+00:00",
+ "fresh_session": true,
+ "session_id": "sess_69f4a9b6-6797-4aa8-a55e-fd91a122518b",
+ "provider_id": "builtin:zai-coding-plan",
+ "model_id": "GLM-5.3-Flash",
+ "effort_effective": "max",
+ "tool_allowlist": [
+  "Read",
+  "Write",
+  "Edit",
+  "Grep",
+  "Glob"
+ ],
+ "goal_submitted_utc": "2026-09-26T21:17:47.753537+00:00",
+ "goal_target_id": "target_muiw5c3y_1bba4942-44c3-4683-bf81-e9b44a24177a",
+ "goal_started_turn": true,
+ "native_responses": 0,
+ "request_status_counts": {
+  "model_request_started": 1
+ },
+ "usage_totals": {
+  "inputTokens": 0,
+  "outputTokens": 0,
+  "reasoningTokens": 0,
+  "cacheReadTokens": 0,
+  "cacheWriteTokens": 0,
+  "totalTokens": 0
+ },
+ "usage_requests_with_delta": 0,
+ "turn_terminals": [
+  {
+   "version": 1,
+   "eventId": "7ff20ebb-859b-4fce-af99-07287ae23d18",
+   "eventSeq": 3,
+   "occurredAt": 1790457468134,
+   "sessionId": "sess_69f4a9b6-6797-4aa8-a55e-fd91a122518b",
+   "turnId": "turn_e6e40e5f-eceb-4b1f-b6e3-8449806371f2",
+   "kind": "turn.terminal",
+   "status": "success",
+   "resultType": "success",
+   "durationMs": 0,
+   "tokenCount": 0,
+   "toolCallCount": 0
+  },
+  {
+   "version": 1,
+   "eventId": "7a432355-524f-43bc-9563-a9fbfab2ce08",
+   "eventSeq": 13,
+   "occurredAt": 1790457474360,
+   "sessionId": "sess_69f4a9b6-6797-4aa8-a55e-fd91a122518b",
+   "turnId": "turn_e207c647-9010-4e5f-a334-a71795651f5c",
+   "kind": "turn.terminal",
+   "status": "interrupted",
+   "resultType": "cancelled",
+   "durationMs": 6062,
+   "tokenCount": 0,
+   "toolCallCount": 0,
+   "errorCode": "USER_INTERRUPT",
+   "errorMessage": "User stopped generation"
+  }
+ ],
+ "tool_starts": {},
+ "driver_error": "RuntimeError: session/goal: {'code': -32010, 'message': 'Cannot manage goals while a prompt is running'}",
+ "receipt_written_utc": "2026-09-26T21:17:55.200483+00:00"
+}

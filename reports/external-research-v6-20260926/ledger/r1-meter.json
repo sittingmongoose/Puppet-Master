@@ -1,0 +1,901 @@
+{
+ "M-candidate": {
+  "arm": {
+   "arm_start_utc": "2026-09-26T21:40:00.330641+00:00",
+   "arm_end_utc": "2026-09-26T22:28:02.758090+00:00",
+   "arm_span_seconds": null,
+   "arm_active_span_seconds": 1096.8,
+   "arm_span_seconds_including_fault_wait": 2882.4,
+   "fault_wait_seconds": 1785.6,
+   "runner_version": "v2-resume-stage2",
+   "arm_native_responses": 62,
+   "designated_final": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/M-candidate/frozen/stage2/delivered.md",
+   "designated_final_sha256": "3cde70e05444acb6a5644714c355c6138f06508a43d0bd27565935bee431f08f",
+   "assignments_dispatched": 2,
+   "host_bundle": {
+    "reused_from_v1": true,
+    "check": {
+     "observations": 40,
+     "observations_without_citation": 0,
+     "sources": 30,
+     "unknown_handles": [],
+     "bundle_lines": 1737,
+     "quotes": 40,
+     "quote_status": {
+      "not_found_in_cited_sources": 13,
+      "exact_at_cited_lines": 27
+     }
+    }
+   }
+  },
+  "stages": {
+   "s1": {
+    "label": "M-candidate/stage1",
+    "session_id": "01a0dfa9-2b33-7002-92cd-d22d91cd9d4e",
+    "model_id": "muse-spark-1.3-contributor",
+    "provider_id": "meta",
+    "effort_effective": "max",
+    "goal_submitted_utc": "2026-09-26T21:40:01.212558+00:00",
+    "end_utc": "2026-09-26T21:45:07.433589+00:00",
+    "elapsed_seconds": 306.2,
+    "native_responses": 33,
+    "stop_reason": "goal_complete",
+    "goal_status_final": "complete",
+    "driver_error": null,
+    "prompt_sha256": "c40da6453a73a292f85aa4583b7db7d525d6029c561d881d0aea875cad109cd0",
+    "tokens": {
+     "prompt_tokens": 3974467,
+     "inputTokens": 3974467,
+     "outputTokens": 25283,
+     "reasoningTokens": 3844,
+     "cacheReadTokens": 3772960,
+     "cacheWriteTokens": 0,
+     "cachedTokens": 3772960
+    },
+    "usage_window_after": {
+     "usage": {
+      "observedAtMs": 1790459105065,
+      "tier": "<redacted-subscription-tier-id>",
+      "weekly": {
+       "resetsAtMs": 1790553600000,
+       "usedPercent": 11
+      },
+      "window": {
+       "resetsAtMs": 1790472023000,
+       "usedPercent": 6,
+       "windowDurationMins": 300
+      }
+     }
+    },
+    "tracing": {
+     "trace_logs": [
+      "/home/sittingmongoose/.local/share/muse/local-tracing/bootstrap/cli-60d446b9-3402-4f75-94cb-ed14440ce838.log"
+     ],
+     "reminder_child_sessions": 26,
+     "parent_run_ids": 1,
+     "attempts_terminal_parent": 33,
+     "attempts_terminal_children": 26,
+     "attempts_terminal_other": 0,
+     "terminal_outcomes": {
+      "tool_calls": 58,
+      "completed": 1
+     },
+     "child_models": {
+      "muse-spark-1.3-contributor": 26
+     }
+    },
+    "audit": {
+     "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/M-candidate/s1/muse-session.jsonl",
+     "tool_calls": 92,
+     "tool_call_names": {
+      "write_todos": 3,
+      "read_file": 69,
+      "write_file": 2,
+      "search": 15,
+      "report_progress": 2,
+      "edit_file": 1
+     },
+     "responses_seen_in_log": 32,
+     "source_read_calls": 59,
+     "unique_sources_read": 51,
+     "repeat_source_reads": 8,
+     "reads_per_source": {
+      "S001": 1,
+      "S003": 2,
+      "S004": 1,
+      "S005": 1,
+      "S006": 1,
+      "S007": 1,
+      "S008": 1,
+      "S009": 1,
+      "S010": 1,
+      "S011": 2,
+      "S012": 1,
+      "S013": 1,
+      "S014": 2,
+      "S016": 1,
+      "S017": 1,
+      "S018": 2,
+      "S019": 1,
+      "S020": 1,
+      "S021": 1,
+      "S023": 1,
+      "S025": 1,
+      "S027": 1,
+      "S029": 1,
+      "S030": 1,
+      "S031": 1,
+      "S032": 1,
+      "S033": 1,
+      "S034": 2,
+      "S036": 1,
+      "S041": 1,
+      "S042": 1,
+      "S043": 2,
+      "S044": 1,
+      "S045": 1,
+      "S046": 1,
+      "S048": 2,
+      "S049": 1,
+      "S053": 2,
+      "S054": 1,
+      "S055": 1,
+      "S056": 1,
+      "S058": 1,
+      "S059": 1,
+      "S060": 1,
+      "S062": 1,
+      "S068": 1,
+      "S069": 1,
+      "S070": 1,
+      "S071": 1,
+      "S072": 1,
+      "S117": 1
+     },
+     "web_tool_calls": [],
+     "shell_calls": [],
+     "paths_outside_workspace": []
+    }
+   },
+   "s2": {
+    "label": "M-candidate/stage2",
+    "session_id": "01a0dfc9-1a96-7683-9955-bddccb22b996",
+    "model_id": "muse-spark-1.3-contributor",
+    "provider_id": "meta",
+    "effort_effective": "max",
+    "goal_submitted_utc": "2026-09-26T22:14:54.188272+00:00",
+    "end_utc": "2026-09-26T22:28:02.543246+00:00",
+    "elapsed_seconds": 788.4,
+    "native_responses": 29,
+    "stop_reason": "goal_complete",
+    "goal_status_final": "complete",
+    "driver_error": null,
+    "prompt_sha256": "8e16960ac8821abed53747a7cf46ccc6713b518486a06b88982b56984e17150d",
+    "tokens": {
+     "prompt_tokens": 3457455,
+     "inputTokens": 3457455,
+     "outputTokens": 41617,
+     "reasoningTokens": 20887,
+     "cacheReadTokens": 3279452,
+     "cacheWriteTokens": 0,
+     "cachedTokens": 3279452
+    },
+    "usage_window_after": {
+     "usage": {
+      "observedAtMs": 1790461681849,
+      "tier": "<redacted-subscription-tier-id>",
+      "weekly": {
+       "resetsAtMs": 1790553600000,
+       "usedPercent": 14
+      },
+      "window": {
+       "resetsAtMs": 1790472023000,
+       "usedPercent": 15,
+       "windowDurationMins": 300
+      }
+     }
+    },
+    "tracing": {
+     "trace_logs": [
+      "/home/sittingmongoose/.local/share/muse/local-tracing/bootstrap/cli-f1cc7224-f5a8-4462-80d5-c82b98a3fe31.log"
+     ],
+     "reminder_child_sessions": 26,
+     "parent_run_ids": 1,
+     "attempts_terminal_parent": 29,
+     "attempts_terminal_children": 26,
+     "attempts_terminal_other": 0,
+     "terminal_outcomes": {
+      "tool_calls": 54,
+      "completed": 1
+     },
+     "child_models": {
+      "muse-spark-1.3-contributor": 26
+     }
+    },
+    "audit": {
+     "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/M-candidate/s2/muse-session.jsonl",
+     "tool_calls": 58,
+     "tool_call_names": {
+      "search": 7,
+      "read_file": 44,
+      "report_progress": 2,
+      "write_file": 2,
+      "edit_file": 3
+     },
+     "responses_seen_in_log": 28,
+     "source_read_calls": 32,
+     "unique_sources_read": 21,
+     "repeat_source_reads": 11,
+     "reads_per_source": {
+      "S001": 1,
+      "S003": 7,
+      "S006": 1,
+      "S007": 1,
+      "S010": 1,
+      "S016": 1,
+      "S019": 1,
+      "S026": 2,
+      "S030": 1,
+      "S033": 1,
+      "S034": 2,
+      "S042": 1,
+      "S043": 2,
+      "S045": 1,
+      "S046": 1,
+      "S048": 2,
+      "S051": 2,
+      "S053": 1,
+      "S055": 1,
+      "S059": 1,
+      "S068": 1
+     },
+     "web_tool_calls": [],
+     "shell_calls": [],
+     "paths_outside_workspace": []
+    }
+   }
+  }
+ },
+ "M-control": {
+  "arm": {
+   "arm_start_utc": "2026-09-26T21:24:17.276097+00:00",
+   "arm_end_utc": "2026-09-26T21:40:00.127192+00:00",
+   "arm_span_seconds": 942.9,
+   "arm_active_span_seconds": null,
+   "arm_span_seconds_including_fault_wait": null,
+   "fault_wait_seconds": null,
+   "runner_version": null,
+   "arm_native_responses": 71,
+   "designated_final": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/M-control/frozen/stage2/delivered.md",
+   "designated_final_sha256": "d564241b3d4e6ab34cc60b8641467f37cae99331234fcb79910dede6ec6b8a52",
+   "assignments_dispatched": 2,
+   "host_bundle": null
+  },
+  "stages": {
+   "s1": {
+    "label": "M-control/stage1",
+    "session_id": "01a0df9a-c749-7bd0-b188-26d6756556aa",
+    "model_id": "muse-spark-1.3-contributor",
+    "provider_id": "meta",
+    "effort_effective": "max",
+    "goal_submitted_utc": "2026-09-26T21:24:18.183387+00:00",
+    "end_utc": "2026-09-26T21:31:38.479511+00:00",
+    "elapsed_seconds": 440.3,
+    "native_responses": 33,
+    "stop_reason": "goal_complete",
+    "goal_status_final": "complete",
+    "driver_error": null,
+    "prompt_sha256": "c40da6453a73a292f85aa4583b7db7d525d6029c561d881d0aea875cad109cd0",
+    "tokens": {
+     "prompt_tokens": 5133521,
+     "inputTokens": 5133521,
+     "outputTokens": 34143,
+     "reasoningTokens": 6354,
+     "cacheReadTokens": 4849312,
+     "cacheWriteTokens": 0,
+     "cachedTokens": 4849312
+    },
+    "usage_window_after": {
+     "usage": {
+      "observedAtMs": 1790458297624,
+      "tier": "<redacted-subscription-tier-id>",
+      "weekly": {
+       "resetsAtMs": 1790553600000,
+       "usedPercent": 11
+      },
+      "window": {
+       "resetsAtMs": 1790472023000,
+       "usedPercent": 5,
+       "windowDurationMins": 300
+      }
+     }
+    },
+    "tracing": {
+     "trace_logs": [
+      "/home/sittingmongoose/.local/share/muse/local-tracing/bootstrap/cli-d0bb9f29-a76c-48aa-9cef-d2e592058e84.log"
+     ],
+     "reminder_child_sessions": 24,
+     "parent_run_ids": 1,
+     "attempts_terminal_parent": 33,
+     "attempts_terminal_children": 24,
+     "attempts_terminal_other": 0,
+     "terminal_outcomes": {
+      "tool_calls": 56,
+      "completed": 1
+     },
+     "child_models": {
+      "muse-spark-1.3-contributor": 24
+     }
+    },
+    "audit": {
+     "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/M-control/s1/muse-session.jsonl",
+     "tool_calls": 97,
+     "tool_call_names": {
+      "read_file": 73,
+      "write_file": 2,
+      "edit_file": 5,
+      "report_progress": 1,
+      "search": 15,
+      "update_goal": 1
+     },
+     "responses_seen_in_log": 32,
+     "source_read_calls": 63,
+     "unique_sources_read": 56,
+     "repeat_source_reads": 7,
+     "reads_per_source": {
+      "S001": 1,
+      "S003": 2,
+      "S004": 1,
+      "S005": 1,
+      "S006": 1,
+      "S007": 1,
+      "S008": 1,
+      "S009": 1,
+      "S010": 1,
+      "S011": 1,
+      "S012": 1,
+      "S014": 1,
+      "S016": 1,
+      "S017": 1,
+      "S018": 2,
+      "S019": 1,
+      "S020": 1,
+      "S021": 1,
+      "S023": 1,
+      "S025": 1,
+      "S030": 1,
+      "S031": 1,
+      "S032": 1,
+      "S033": 2,
+      "S034": 1,
+      "S036": 1,
+      "S037": 1,
+      "S039": 1,
+      "S041": 1,
+      "S042": 1,
+      "S043": 2,
+      "S044": 1,
+      "S045": 1,
+      "S046": 1,
+      "S048": 3,
+      "S049": 1,
+      "S053": 1,
+      "S054": 1,
+      "S055": 1,
+      "S056": 1,
+      "S058": 2,
+      "S060": 1,
+      "S062": 1,
+      "S066": 1,
+      "S067": 1,
+      "S068": 1,
+      "S069": 1,
+      "S070": 1,
+      "S071": 1,
+      "S072": 1,
+      "S074": 1,
+      "S077": 1,
+      "S095": 1,
+      "S096": 1,
+      "S099": 1,
+      "S108": 1
+     },
+     "web_tool_calls": [],
+     "shell_calls": [],
+     "paths_outside_workspace": []
+    }
+   },
+   "s2": {
+    "label": "M-control/stage2",
+    "session_id": "01a0dfa1-839b-7ae2-8263-f1bb277f8faa",
+    "model_id": "muse-spark-1.3-contributor",
+    "provider_id": "meta",
+    "effort_effective": "max",
+    "goal_submitted_utc": "2026-09-26T21:31:39.617780+00:00",
+    "end_utc": "2026-09-26T21:39:59.915929+00:00",
+    "elapsed_seconds": 500.3,
+    "native_responses": 38,
+    "stop_reason": "goal_complete",
+    "goal_status_final": "complete",
+    "driver_error": null,
+    "prompt_sha256": "22448976c7ee6a743c4a4f68efa35e27979e40fd6337476008af3ee7773ca909",
+    "tokens": {
+     "prompt_tokens": 3680682,
+     "inputTokens": 3680682,
+     "outputTokens": 30827,
+     "reasoningTokens": 13076,
+     "cacheReadTokens": 3528021,
+     "cacheWriteTokens": 0,
+     "cachedTokens": 3528021
+    },
+    "usage_window_after": {
+     "usage": {
+      "observedAtMs": 1790458799117,
+      "tier": "<redacted-subscription-tier-id>",
+      "weekly": {
+       "resetsAtMs": 1790553600000,
+       "usedPercent": 11
+      },
+      "window": {
+       "resetsAtMs": 1790472023000,
+       "usedPercent": 5,
+       "windowDurationMins": 300
+      }
+     }
+    },
+    "tracing": {
+     "trace_logs": [
+      "/home/sittingmongoose/.local/share/muse/local-tracing/bootstrap/cli-3575d865-3019-453c-ac43-9e98b4441a35.log"
+     ],
+     "reminder_child_sessions": 27,
+     "parent_run_ids": 1,
+     "attempts_terminal_parent": 38,
+     "attempts_terminal_children": 27,
+     "attempts_terminal_other": 0,
+     "terminal_outcomes": {
+      "tool_calls": 64,
+      "completed": 1
+     },
+     "child_models": {
+      "muse-spark-1.3-contributor": 27
+     }
+    },
+    "audit": {
+     "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/M-control/s2/muse-session.jsonl",
+     "tool_calls": 83,
+     "tool_call_names": {
+      "write_todos": 4,
+      "read_file": 67,
+      "report_progress": 3,
+      "search": 7,
+      "write_file": 2
+     },
+     "responses_seen_in_log": 37,
+     "source_read_calls": 59,
+     "unique_sources_read": 34,
+     "repeat_source_reads": 25,
+     "reads_per_source": {
+      "S003": 4,
+      "S004": 1,
+      "S008": 1,
+      "S011": 1,
+      "S013": 1,
+      "S014": 1,
+      "S016": 1,
+      "S018": 3,
+      "S019": 1,
+      "S023": 1,
+      "S025": 1,
+      "S027": 2,
+      "S031": 1,
+      "S033": 5,
+      "S034": 1,
+      "S038": 1,
+      "S043": 3,
+      "S044": 2,
+      "S048": 9,
+      "S052": 2,
+      "S053": 2,
+      "S054": 1,
+      "S055": 1,
+      "S056": 1,
+      "S058": 2,
+      "S059": 1,
+      "S061": 1,
+      "S062": 1,
+      "S070": 1,
+      "S072": 1,
+      "S096": 1,
+      "S098": 1,
+      "S108": 1,
+      "S117": 2
+     },
+     "web_tool_calls": [],
+     "shell_calls": [],
+     "paths_outside_workspace": []
+    }
+   }
+  }
+ },
+ "Z-candidate": {
+  "arm": {
+   "arm_start_utc": "2026-09-26T21:45:08.189681+00:00",
+   "arm_end_utc": "2026-09-26T22:50:20.586601+00:00",
+   "arm_span_seconds": null,
+   "arm_active_span_seconds": 3122.1,
+   "arm_span_seconds_including_fault_wait": 3912.4,
+   "fault_wait_seconds": 790.2,
+   "runner_version": "v2-resume-stage2",
+   "arm_native_responses": 95,
+   "designated_final": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/Z-candidate/frozen/stage2/delivered.md",
+   "designated_final_sha256": "5f73d3d255572c7032336feaae416e127b0a12263f2255798f88ac81ef7993d0",
+   "assignments_dispatched": 2,
+   "host_bundle": {
+    "reused_from_v1": true,
+    "check": {
+     "observations": 80,
+     "observations_without_citation": 0,
+     "sources": 81,
+     "unknown_handles": [],
+     "bundle_lines": 3311,
+     "quotes": 79,
+     "quote_status": {
+      "not_found_in_cited_sources": 72,
+      "exact_at_cited_lines": 7
+     }
+    }
+   }
+  },
+  "stages": {
+   "s1": {
+    "label": "Z-candidate/stage1",
+    "session_id": "sess_b7abd700-ab7d-4555-acba-4a56880f53d3",
+    "model_id": "GLM-5.3-Flash",
+    "provider_id": "builtin:zai-coding-plan",
+    "effort_effective": "max",
+    "goal_submitted_utc": "2026-09-26T21:45:11.733212+00:00",
+    "end_utc": "2026-09-26T22:14:52.242151+00:00",
+    "elapsed_seconds": 1780.5,
+    "native_responses": 56,
+    "stop_reason": "goal_complete",
+    "goal_status_final": "complete",
+    "driver_error": null,
+    "prompt_sha256": "c40da6453a73a292f85aa4583b7db7d525d6029c561d881d0aea875cad109cd0",
+    "tokens": {
+     "inputTokens": 8660958,
+     "outputTokens": 65878,
+     "reasoningTokens": 0,
+     "cacheReadTokens": 8416384,
+     "cacheWriteTokens": 0,
+     "totalTokens": 8726836
+    },
+    "request_status_counts": {
+     "model_request_completed": 56
+    },
+    "audit": {
+     "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/Z-candidate/s1/zcode-model-io.jsonl",
+     "tool_calls": 55,
+     "tool_call_names": {
+      "Read": 21,
+      "Grep": 30,
+      "Edit": 3,
+      "Write": 1
+     },
+     "responses_seen_in_log": 25,
+     "source_read_calls": 21,
+     "unique_sources_read": 20,
+     "repeat_source_reads": 1,
+     "reads_per_source": {
+      "S017": 1,
+      "S022": 1,
+      "S037": 1,
+      "S039": 1,
+      "S052": 2,
+      "S058": 1,
+      "S063": 1,
+      "S064": 1,
+      "S065": 1,
+      "S066": 1,
+      "S067": 1,
+      "S070": 1,
+      "S072": 1,
+      "S081": 1,
+      "S082": 1,
+      "S083": 1,
+      "S099": 1,
+      "S102": 1,
+      "S108": 1,
+      "S115": 1
+     },
+     "web_tool_calls": [],
+     "shell_calls": [],
+     "paths_outside_workspace": []
+    }
+   },
+   "s2": {
+    "label": "Z-candidate/stage2",
+    "session_id": "sess_bbc0bc65-718a-4ffd-8712-294998a70d95",
+    "model_id": "GLM-5.3-Flash",
+    "provider_id": "builtin:zai-coding-plan",
+    "effort_effective": "max",
+    "goal_submitted_utc": "2026-09-26T22:28:06.519143+00:00",
+    "end_utc": "2026-09-26T22:50:20.070435+00:00",
+    "elapsed_seconds": 1333.6,
+    "native_responses": 39,
+    "stop_reason": "goal_complete",
+    "goal_status_final": "complete",
+    "driver_error": null,
+    "prompt_sha256": "8e16960ac8821abed53747a7cf46ccc6713b518486a06b88982b56984e17150d",
+    "tokens": {
+     "inputTokens": 5288429,
+     "outputTokens": 51585,
+     "reasoningTokens": 0,
+     "cacheReadTokens": 5066112,
+     "cacheWriteTokens": 0,
+     "totalTokens": 5340014
+    },
+    "request_status_counts": {
+     "model_request_completed": 39
+    },
+    "audit": {
+     "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/Z-candidate/s2/zcode-model-io.jsonl",
+     "tool_calls": 66,
+     "tool_call_names": {
+      "Glob": 2,
+      "Read": 30,
+      "Grep": 29,
+      "Write": 2,
+      "Edit": 3
+     },
+     "responses_seen_in_log": 39,
+     "source_read_calls": 11,
+     "unique_sources_read": 8,
+     "repeat_source_reads": 3,
+     "reads_per_source": {
+      "S003": 2,
+      "S016": 1,
+      "S033": 2,
+      "S043": 2,
+      "S059": 1,
+      "S096": 1,
+      "S108": 1,
+      "S117": 1
+     },
+     "web_tool_calls": [],
+     "shell_calls": [],
+     "paths_outside_workspace": []
+    }
+   }
+  }
+ },
+ "Z-control": {
+  "arm": {
+   "arm_start_utc": "2026-09-26T22:50:20.771751+00:00",
+   "arm_end_utc": "2026-09-26T23:37:53.952958+00:00",
+   "arm_span_seconds": 2853.2,
+   "arm_active_span_seconds": null,
+   "arm_span_seconds_including_fault_wait": null,
+   "fault_wait_seconds": null,
+   "runner_version": null,
+   "arm_native_responses": 103,
+   "designated_final": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/Z-control/frozen/stage2/delivered.md",
+   "designated_final_sha256": "40eb2d893909c8d10de3c840a7abd6d6c41b845686b9016f689aa2050f96bff3",
+   "assignments_dispatched": 2,
+   "host_bundle": null
+  },
+  "stages": {
+   "s1": {
+    "label": "Z-control/stage1",
+    "session_id": "sess_47cf90ad-cd0d-44aa-a50c-d68e251f9ecb",
+    "model_id": "GLM-5.3-Flash",
+    "provider_id": "builtin:zai-coding-plan",
+    "effort_effective": "max",
+    "goal_submitted_utc": "2026-09-26T22:50:24.460951+00:00",
+    "end_utc": "2026-09-26T23:14:36.294003+00:00",
+    "elapsed_seconds": 1451.8,
+    "native_responses": 50,
+    "stop_reason": "goal_complete",
+    "goal_status_final": "complete",
+    "driver_error": null,
+    "prompt_sha256": "c40da6453a73a292f85aa4583b7db7d525d6029c561d881d0aea875cad109cd0",
+    "tokens": {
+     "inputTokens": 8119794,
+     "outputTokens": 72179,
+     "reasoningTokens": 0,
+     "cacheReadTokens": 7864640,
+     "cacheWriteTokens": 0,
+     "totalTokens": 8191973
+    },
+    "request_status_counts": {
+     "model_request_completed": 50
+    },
+    "audit": {
+     "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/Z-control/s1/zcode-model-io.jsonl",
+     "tool_calls": 117,
+     "tool_call_names": {
+      "Read": 64,
+      "Glob": 1,
+      "Write": 2,
+      "Edit": 12,
+      "Grep": 38
+     },
+     "responses_seen_in_log": 50,
+     "source_read_calls": 57,
+     "unique_sources_read": 57,
+     "repeat_source_reads": 0,
+     "reads_per_source": {
+      "S001": 1,
+      "S003": 1,
+      "S004": 1,
+      "S005": 1,
+      "S006": 1,
+      "S007": 1,
+      "S008": 1,
+      "S009": 1,
+      "S010": 1,
+      "S011": 1,
+      "S012": 1,
+      "S014": 1,
+      "S016": 1,
+      "S017": 1,
+      "S018": 1,
+      "S019": 1,
+      "S021": 1,
+      "S022": 1,
+      "S025": 1,
+      "S029": 1,
+      "S030": 1,
+      "S031": 1,
+      "S032": 1,
+      "S033": 1,
+      "S034": 1,
+      "S036": 1,
+      "S037": 1,
+      "S038": 1,
+      "S039": 1,
+      "S041": 1,
+      "S042": 1,
+      "S043": 1,
+      "S045": 1,
+      "S046": 1,
+      "S048": 1,
+      "S049": 1,
+      "S053": 1,
+      "S054": 1,
+      "S055": 1,
+      "S056": 1,
+      "S060": 1,
+      "S062": 1,
+      "S066": 1,
+      "S067": 1,
+      "S068": 1,
+      "S069": 1,
+      "S071": 1,
+      "S072": 1,
+      "S077": 1,
+      "S088": 1,
+      "S095": 1,
+      "S096": 1,
+      "S099": 1,
+      "S108": 1,
+      "S115": 1,
+      "S120": 1,
+      "S121": 1
+     },
+     "web_tool_calls": [],
+     "shell_calls": [],
+     "paths_outside_workspace": []
+    }
+   },
+   "s2": {
+    "label": "Z-control/stage2",
+    "session_id": "sess_59efc855-65fe-44f1-bb51-f8e06e91c573",
+    "model_id": "GLM-5.3-Flash",
+    "provider_id": "builtin:zai-coding-plan",
+    "effort_effective": "max",
+    "goal_submitted_utc": "2026-09-26T23:14:40.473789+00:00",
+    "end_utc": "2026-09-26T23:37:53.375617+00:00",
+    "elapsed_seconds": 1392.9,
+    "native_responses": 53,
+    "stop_reason": "goal_complete",
+    "goal_status_final": "complete",
+    "driver_error": null,
+    "prompt_sha256": "22448976c7ee6a743c4a4f68efa35e27979e40fd6337476008af3ee7773ca909",
+    "tokens": {
+     "inputTokens": 8721169,
+     "outputTokens": 68731,
+     "reasoningTokens": 0,
+     "cacheReadTokens": 8456512,
+     "cacheWriteTokens": 0,
+     "totalTokens": 8789900
+    },
+    "request_status_counts": {
+     "model_request_completed": 53
+    },
+    "audit": {
+     "log": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/Z-control/s2/zcode-model-io.jsonl",
+     "tool_calls": 109,
+     "tool_call_names": {
+      "Glob": 2,
+      "Read": 90,
+      "Grep": 8,
+      "Write": 2,
+      "Edit": 7
+     },
+     "responses_seen_in_log": 53,
+     "source_read_calls": 82,
+     "unique_sources_read": 63,
+     "repeat_source_reads": 19,
+     "reads_per_source": {
+      "S003": 1,
+      "S004": 2,
+      "S005": 1,
+      "S007": 1,
+      "S008": 2,
+      "S009": 1,
+      "S010": 1,
+      "S011": 1,
+      "S013": 1,
+      "S014": 1,
+      "S016": 1,
+      "S017": 1,
+      "S018": 1,
+      "S019": 1,
+      "S022": 1,
+      "S023": 2,
+      "S025": 1,
+      "S027": 3,
+      "S028": 3,
+      "S030": 1,
+      "S031": 1,
+      "S033": 2,
+      "S034": 2,
+      "S035": 4,
+      "S038": 1,
+      "S041": 1,
+      "S042": 2,
+      "S043": 1,
+      "S044": 2,
+      "S045": 1,
+      "S046": 1,
+      "S048": 1,
+      "S049": 1,
+      "S051": 1,
+      "S052": 1,
+      "S053": 1,
+      "S054": 1,
+      "S055": 1,
+      "S056": 1,
+      "S057": 1,
+      "S058": 2,
+      "S059": 3,
+      "S061": 1,
+      "S064": 1,
+      "S065": 1,
+      "S067": 1,
+      "S068": 1,
+      "S070": 1,
+      "S077": 1,
+      "S094": 1,
+      "S095": 1,
+      "S096": 1,
+      "S103": 1,
+      "S104": 1,
+      "S105": 1,
+      "S108": 1,
+      "S115": 1,
+      "S117": 3,
+      "S119": 1,
+      "S121": 1,
+      "S122": 1,
+      "S123": 1,
+      "S125": 1
+     },
+     "web_tool_calls": [],
+     "shell_calls": [],
+     "paths_outside_workspace": []
+    }
+   }
+  }
+ }
+}

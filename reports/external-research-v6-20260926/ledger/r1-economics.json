@@ -1,0 +1,130 @@
+{
+ "M-control": {
+  "s1": {
+   "span": 440.3,
+   "resp": 33,
+   "child": 24,
+   "in": 5133521,
+   "cache": 4849312,
+   "uncached": 284209,
+   "out": 34143,
+   "reason": 6354,
+   "reads": 63,
+   "uniq": 56,
+   "rep": 7,
+   "tools": 97
+  },
+  "s2": {
+   "span": 500.3,
+   "resp": 38,
+   "child": 27,
+   "in": 3680682,
+   "cache": 3528021,
+   "uncached": 152661,
+   "out": 30827,
+   "reason": 13076,
+   "reads": 59,
+   "uniq": 34,
+   "rep": 25,
+   "tools": 83
+  },
+  "arm_active": 942.9,
+  "fault_wait": 0
+ },
+ "M-candidate": {
+  "s1": {
+   "span": 306.2,
+   "resp": 33,
+   "child": 26,
+   "in": 3974467,
+   "cache": 3772960,
+   "uncached": 201507,
+   "out": 25283,
+   "reason": 3844,
+   "reads": 59,
+   "uniq": 51,
+   "rep": 8,
+   "tools": 92
+  },
+  "s2": {
+   "span": 788.4,
+   "resp": 29,
+   "child": 26,
+   "in": 3457455,
+   "cache": 3279452,
+   "uncached": 178003,
+   "out": 41617,
+   "reason": 20887,
+   "reads": 32,
+   "uniq": 21,
+   "rep": 11,
+   "tools": 58
+  },
+  "arm_active": 1096.8,
+  "fault_wait": 1785.6
+ },
+ "Z-candidate": {
+  "s1": {
+   "span": 1780.5,
+   "resp": 56,
+   "child": null,
+   "in": 8660958,
+   "cache": 8416384,
+   "uncached": 244574,
+   "out": 65878,
+   "reason": 0,
+   "reads": 21,
+   "uniq": 20,
+   "rep": 1,
+   "tools": 55
+  },
+  "s2": {
+   "span": 1333.6,
+   "resp": 39,
+   "child": null,
+   "in": 5288429,
+   "cache": 5066112,
+   "uncached": 222317,
+   "out": 51585,
+   "reason": 0,
+   "reads": 11,
+   "uniq": 8,
+   "rep": 3,
+   "tools": 66
+  },
+  "arm_active": 3122.1,
+  "fault_wait": 790.2
+ },
+ "Z-control": {
+  "s1": {
+   "span": 1451.8,
+   "resp": 50,
+   "child": null,
+   "in": 8119794,
+   "cache": 7864640,
+   "uncached": 255154,
+   "out": 72179,
+   "reason": 0,
+   "reads": 57,
+   "uniq": 57,
+   "rep": 0,
+   "tools": 117
+  },
+  "s2": {
+   "span": 1392.9,
+   "resp": 53,
+   "child": null,
+   "in": 8721169,
+   "cache": 8456512,
+   "uncached": 264657,
+   "out": 68731,
+   "reason": 0,
+   "reads": 82,
+   "uniq": 63,
+   "rep": 19,
+   "tools": 109
+  },
+  "arm_active": 2853.2,
+  "fault_wait": 0
+ }
+}

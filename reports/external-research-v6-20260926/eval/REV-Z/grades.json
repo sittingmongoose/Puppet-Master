@@ -1,0 +1,639 @@
+{
+ "schema": "rev-z.grades.v1",
+ "case_id": "ome-zarr-thin",
+ "marking": "TEST_ONLY_NEVER_PROMOTE",
+ "evaluator": "Opus 5.5, extra-high effort, independent evaluator. Configuration labels withheld and not guessed.",
+ "scored_artifacts": {"X1": "results/X1/delivered.md", "X2": "results/X2/delivered.md"},
+ "rules_applied": "key/SCORING.md (Jujutsu, Phase 1A/1B and economics parts ignored). One status per reference. No fractional or net score. Upstream-only material does not earn credit.",
+ "step_log": {
+  "step1_reference_eligibility": "done before either result was graded",
+  "step2_reference_grading": "done; each delivered.md graded on its own",
+  "step3_reverse_direction_checks": "done",
+  "step4_novel_and_non_findings": "done",
+  "step5_handoff_coherence_burden": "done after steps 2-4 were saved; upstream draft.md, observations.md and checks.md read for both results",
+  "step6_coverage": "done; see results.*.coverage and coverage_accounting"
+ },
+ "tooling_limitations": [
+  "No shell was available, so SHA-256 values below are the catalog-recorded view_sha256 values. They were not recomputed, and excerpt hashes were not computed. Hash recomputation is PENDING_HIGH_END_VERIFICATION.",
+  "Line numbers refer to the admitted view files case/sources/Sxxx.txt as read with the file viewer.",
+  "This file was checked for JSON syntax by manual review only (two independent reads; no parser available). Machine parsing is PENDING_HIGH_END_VERIFICATION."
+ ],
+ "source_index": {
+  "S003": {"uri": "https://ngff.openmicroscopy.org/0.5/ (edition 8 Sep 2026)", "sha256": "5d8b240877ed2cf9596566187bcb3779ea011d5319807134c65e2e7dc2ae82de"},
+  "S004": {"uri": "https://github.com/ome/ngff/issues/206 (captured page is PR #206; links #207 Single-scale images, Open)", "sha256": "f4badac6a11f3a0896bdaf8e129569c940c7d096a466fa9163b9c8680af8f2e3"},
+  "S008": {"uri": "https://github.com/ome/ome-zarr-py/pull/404", "sha256": "f8d9f5a3d16702c96404f698b4cb448d36f0e602c708f1ebc4fd19ead6bd4e9d"},
+  "S010": {"uri": "https://idr.github.io/ome-ngff-samples/", "sha256": "67dc5810f65964bed8e6add6159f15af83326d42761e8fccd001340185592c8c"},
+  "S013": {"uri": "https://github.com/ome/ome-zarr-py/pull/413", "sha256": "03e533d7aa5315578854bce98c6540bc92b17472655116ca4adc2de16c23f828"},
+  "S014": {"uri": "https://github.com/hms-dbmi/vizarr/issues/307", "sha256": "86030bb33b6eab5ebdaeeacebbdafd21cbd30307ffad538cdbc3d756965df558"},
+  "S015": {"uri": "https://pypi.org/pypi/ome-zarr/json", "sha256": "574815f099ea9c2e011acd1cdc02125e0a490d1e0b110015d1f6b558f01646aa"},
+  "S016": {"uri": "ome/ome-zarr-py:ome_zarr/format.py @94eaf20", "sha256": "82b61d30f62d6eddd81ff63b43146fd4f7be93be767ae5561b74a99951c24eca"},
+  "S018": {"uri": "ome/ome-zarr-py:ome_zarr/reader.py @94eaf20", "sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4"},
+  "S019": {"uri": "ome/ome-zarr-py:ome_zarr/io.py @94eaf20", "sha256": "1634671130537678bf72da5d8aab1ad2e32b540e53ee25b0ab7b3320c97cec22"},
+  "S020": {"uri": "ome/ome-zarr-py repo extract @94eaf20", "sha256": "c632bdb0cca95f199227b8a4edf5a664f6cc52407cb45e48a2dbaa0b723efdb9"},
+  "S024": {"uri": "https://api.github.com/repos/ome/napari-ome-zarr/pulls/123", "sha256": "8c5ded9ec9825afc05a34ef89149efd921bbf84b1d28df5941b401270273ba02"},
+  "S025": {"uri": "vizarr README", "sha256": "e2b6135a8d325b7db4eb76dd2d3ca4e92d2d25d215045a6351d8264c8110cb03"},
+  "S028": {"uri": "ome-zarr-py open issues (API dump)", "sha256": "bed3a1b8f1d815a475eaa7ab6510ce4b514c7de011ac8723ba4424367d5e9d05"},
+  "S031": {"uri": "ome-ngff-validator README", "sha256": "679c3eb93df2133dd0646ba9ed847017b0876ba9fccb5aadf9474783fcf6142b"},
+  "S033": {"uri": "bioformats2raw README", "sha256": "2371379e32804870b1b997e6af1c6300c0081a686789f16a401a2f29b7575860"},
+  "S034": {"uri": "ome2024-ngff-challenge README", "sha256": "7cf44106bd5fc3e952a9c8634bf77272eb14325b9bf2a093f721996bdf328d30"},
+  "S035": {"uri": "ome/ngff open issues (API dump)", "sha256": "43e9d75699750f3a02f4b5507feb77c16b5330cdc2d144268ee585d7062becbb"},
+  "S041": {"uri": "ome-ngff-tools docs/index.md", "sha256": "bb4956ac5db4ccfaabdc7f4d8ee7319f325f7e20247344c9b2f9227ea5126cc5"},
+  "S042": {"uri": "local-capture (failed; 36 bytes)", "sha256": "67b2712690dc191547e92397e1550e8ff77d4b88c778e4bb346e9dd5e6caac3c"},
+  "S043": {"uri": "ome-ngff-tools docs/_data/features.yml (viewer matrix)", "sha256": "a6e9d6c43f5dac0897356c9c1d64e7c7641434863e6bedd91c876920bd9172bb"},
+  "S044": {"uri": "https://github.com/ome/ome-zarr-py/issues/640", "sha256": "1e4a499575f6b30ef26e919d2d8d2d171c8a550f9e4f294dd11df1cfb9a11e8f"},
+  "S045": {"uri": "local-capture (failed; 207 bytes)", "sha256": "45d258a041b81631d93b1bede761f0a0b2d72e6b4bde1fc5b5ef12825f0688d2"},
+  "S048": {"uri": "napari-ome-zarr main: napari_ome_zarr/ome_zarr_reader.py", "sha256": "255ca2c58e4f52ca4ce2bafd9bdfc0db56a0827d86c592c9c786f430a57ea98e"},
+  "S050": {"uri": "vizarr open issues (API dump)", "sha256": "a789bed10a3debdfaca899521f96abf1e211f87fa650349ffff9541526ff4317"},
+  "S052": {"uri": "ome-zarr-py releases (API)", "sha256": "6717e5b839042f50b59576bdc292afbfb0dbd0ecdf522e6fdfa975dd13c370ec"},
+  "S053": {"uri": "ngff v0.5 schemas/image.schema", "sha256": "479bfa22f2c16b8b86150fbfdb7d8d3db9ca8a48b7db22b3ce14b4ffcac732d2"},
+  "S054": {"uri": "IDR v0.5 6001240_labels.zarr/zarr.json", "sha256": "81d8ea2315993c34c79d56fcd7fc9e7ed4e27e28b0e4b9142bd013982f3fa458"},
+  "S055": {"uri": "IDR v0.5 6001240_labels.zarr/0/zarr.json", "sha256": "5a239bbb158475d732704c78a2296c1d676c7eada12e67071327816a243de23c"},
+  "S056": {"uri": "ome2024-ngff-challenge idr0090/190129.zarr/zarr.json", "sha256": "41a5ef983107421d9fc8c6a529200e6db39ecbc6d7d9a0545f89721bc364c1bc"},
+  "S058": {"uri": "https://docs.webknossos.org/webknossos/data/zarr.html", "sha256": "d2f7ba77c06db7561ee34f5baf1f514b54192946537186465a9a7928fde703a5"},
+  "S059": {"uri": "https://ngff.openmicroscopy.org/0.4/", "sha256": "7db71adef912e0b009a18b36cd00016ab088f56c2d5a9a82e9b70adca2998e6e"},
+  "S064": {"uri": "napari-ome-zarr release v0.7.0", "sha256": "d320aa61ab5bcd6b0f562356b5b10df575ab69bcee9d617bdcd9b7b298aac195"},
+  "S065": {"uri": "napari-ome-zarr release 0.8.0", "sha256": "43b7ae6cae8f67f3a0a077debdbc58130942002207e6fd09c559a225fe84ae4c"},
+  "S082": {"uri": "https://api.github.com/repos/AllenCell/agave/issues/220 (PR #220)", "sha256": "168caca243963cacb30d947f875ac58e4ef39921f32b46275a0a03d67836f194"},
+  "S091": {"uri": "AGAVE releases (API)", "sha256": "b9c11f3cae670d64382d764e57eefa5be64c08117473e749395ff98a3a6131c3"},
+  "S096": {"uri": "allen-cell-animated/agave grep extract (tensorstore pin, dtype whitelist)", "sha256": "439d163ac8e65dc5c84b224d1e68736406d2d11da91c6fd74bc25ad02a543953"},
+  "S103": {"uri": "https://api.github.com/repos/AllenCell/agave/issues/84", "sha256": "a2eccf854d1569c0f62e0ed7f493b238017b461fcd7bd781fa7626f619bda60e"},
+  "S108": {"uri": "allen-cell-animated/agave:HELP.txt", "sha256": "e42b8943c9e5c7a98012afb15a8164630b7d81a9ea3ca991b55c3744ee2d455d"},
+  "S109": {"uri": "tensorstore issues search zarr3", "sha256": "c8564b26a2b4d478367e9f05b2b363ac6abe9a057c6cc78888c5270bed2443b8"},
+  "S112": {"uri": "AGAVE issues search label OR segmentation", "sha256": "fc1c037aba16e3014a588df1064b6d3b80ed2907165521fefed4c3cbcd751628"},
+  "S114": {"uri": "AGAVE issues search memory OR downsample", "sha256": "6b6e4ae402cc42aac4f3d252baea1cc61bc2cf4c6540ab9e6a2dcb8659507f0b"},
+  "S117": {"uri": "allen-cell-animated/agave:docs/agave.rst", "sha256": "2de334e2b1fac51d43cf99d29c4784ed070895ea466e30bc6a553fea29fc1d30"},
+  "S120": {"uri": "allen-cell-animated/agave grep (no literal matches)", "sha256": "768efaf59113be06cc73518a5d45ca77f5fe35b18e1ef523cd64804165751f43"},
+  "S121": {"uri": "allen-cell-animated/agave grep extract (getOmero)", "sha256": "3871bd46f82d2bb7f3028c239aa46d2a391b7f2fa413d8dfdb5c9116ef4e92fd"},
+  "S122": {"uri": "https://api.github.com/repos/google/tensorstore/issues/288", "sha256": "215f774d69484308057f268796cb2d86cc17e500da021e518b142895abda754d"},
+  "S123": {"uri": "https://api.github.com/repos/google/tensorstore/issues/280", "sha256": "fac5ee15f6fdfc53f202b1d2b3816d46e1490bc249167fdc46564729edfe34b7"},
+  "S125": {"uri": "https://api.github.com/repos/AllenCell/agave/issues/73", "sha256": "1ecacda1555532c967f004f4d20ddf7c823404a575c8bbce8c57df01bbce8c81"}
+ },
+
+ "reference_eligibility": [
+  {
+   "id": "OME05-C01",
+   "title": "Versioned metadata admission",
+   "facets": [
+    {"id": "C01.a", "text": "0.5 is stored as Zarr v3 with OME metadata under attributes.ome (namespace), unlike the Zarr v2 .zattrs legacy layout", "evidence": [["S003", "67-69"], ["S003", "152-155"], ["S059", "129-134"]], "eligible": true},
+    {"id": "C01.b", "text": "ome.version is a string. It MUST be consistent within a hierarchy, and legacy versions carry version inside multiscales", "evidence": [["S003", "155-156"], ["S059", "347"]], "eligible": true},
+    {"id": "C01.c", "text": "Admission requires explicit compatibility validation or a truthful unsupported result. There is no implicit legacy reinterpretation and no silent mixing of versions", "evidence": [["S003", "25-27"], ["S082", "55 (AGAVE assumes zarr.json => 0.5; 'anything outside this assumption will error out in some way')"], ["S018", "280-287 (reference reader defaults a missing multiscales version to '0.1')"]], "eligible": true},
+    {"id": "C01.d", "text": "Distinguishing validation: a legacy layout next to an equivalent-looking 0.5 container, plus a hierarchy whose declared versions are inconsistent", "evidence": [["S010", "1017-1134 (mixed 0.4/0.5 samples)"]], "eligible": true}
+   ],
+   "eligibility": "eligible",
+   "reference_adjudication": "consistent with the snapshot; no correction needed"
+  },
+  {
+   "id": "OME05-C02",
+   "title": "Axis-to-array identity",
+   "facets": [
+    {"id": "C02.a", "text": "axes length equals array rank, and axes order equals array dimension order", "evidence": [["S003", "173"], ["S003", "300-302"], ["S003", "307"]], "eligible": true},
+    {"id": "C02.b", "text": "Axis names are unique, and dimension_names in each level's zarr.json MUST match the axes names", "evidence": [["S003", "168"], ["S003", "174"], ["S003", "825-827"], ["S055", "59-64"]], "eligible": true},
+    {"id": "C02.c", "text": "There are 2 to 5 dimensions, with optional time and channel axes and arbitrary names. Semantics come from type, not from name or position", "evidence": [["S003", "81"], ["S003", "296"], ["S003", "301"]], "eligible": true},
+    {"id": "C02.d", "text": "Navigation and slicing are tied to validated axis identity. An absent dimension is not the same as a length-one dimension, so no sliders or coordinates are invented", "evidence": [["S003", "296-302"], ["S048", "222-223 (napari assumes 5D t,c,z,y,x when axes are missing)"]], "eligible": true},
+    {"id": "C02.e", "text": "Rank or dimension_names mismatches are rejected rather than guessed", "evidence": [["S003", "173-174"]], "eligible": true}
+   ],
+   "eligibility": "eligible",
+   "reference_adjudication": "consistent"
+  },
+  {
+   "id": "OME05-C03",
+   "title": "Declared pyramid selection",
+   "facets": [
+    {"id": "C03.a", "text": "datasets[].path is group-relative with arbitrary names, and the declared list order (highest resolution first) is authoritative", "evidence": [["S003", "93-94"], ["S003", "305-306"]], "eligible": true},
+    {"id": "C03.b", "text": "Each level has its own coordinateTransformations, so geometry is level-specific", "evidence": [["S003", "308-310"], ["S016", "276-294 (writer emits a per-level centred translation)"]], "eligible": true},
+    {"id": "C03.c", "text": "No folder or numeric ordering is assumed, and no fixed factor of 2. Non-2 and anisotropic or Z-downsampled pyramids exist and break peers", "evidence": [["S043", "1-35"], ["S043", "80-108"], ["S033", "426-427"]], "eligible": true},
+    {"id": "C03.d", "text": "A declared level that is missing is handled explicitly", "evidence": [["S003", "305-306 (paths MUST resolve)"]], "eligible": true},
+    {"id": "C03.e", "text": "The selection UI and performance policy are a product choice", "evidence": [["S117", "105-109"], ["S125", "55"]], "eligible": true}
+   ],
+   "eligibility": "eligible",
+   "reference_adjudication": "consistent"
+  },
+  {
+   "id": "OME05-C04",
+   "title": "Composed coordinate calibration",
+   "facets": [
+    {"id": "C04.a", "text": "Dataset-level transforms are applied in order, and translation MUST follow scale", "evidence": [["S003", "293"], ["S003", "311"]], "eligible": true},
+    {"id": "C04.b", "text": "Multiscales (group-level) transforms are applied after the dataset-level ones", "evidence": [["S003", "314-315"]], "eligible": true},
+    {"id": "C04.c", "text": "Units are SHOULD metadata. When a unit is absent, calibration is shown as unknown and never invented", "evidence": [["S003", "170"]], "eligible": true},
+    {"id": "C04.d", "text": "A concrete composed check would expose reversed composition or omitted offsets (the reference probe gives (196,465))", "evidence": [["S003", "293,311,314-315"], ["S043", "318-471 (viewers fail on translation and multiscale-level transforms)"], ["S048", "266-283 (napari main keeps only ds_transforms[0] and the first group-level transform)"], ["S018", "293-295 (ome-zarr-py records only dataset-level transforms)"]], "eligible": true}
+   ],
+   "eligibility": "eligible",
+   "reference_adjudication": "consistent (probe arithmetic checked: (7*2+10)*4+100=196, (11*3+20)*5+200=465)"
+  },
+  {
+   "id": "OME05-C05",
+   "title": "Associated label discovery and registration",
+   "facets": [
+    {"id": "C05.a", "text": "Label images are discovered through the parent image's labels group 'labels' path list. Intermediate groups are allowed", "evidence": [["S003", "102-117"], ["S003", "437-442"]], "eligible": true},
+    {"id": "C05.b", "text": "A label image implements multiscales with the same number of levels as the source image", "evidence": [["S003", "454-455"]], "eligible": true},
+    {"id": "C05.c", "text": "Source association comes from image-label.source.image as a relative path (default ../../)", "evidence": [["S003", "472-474"], ["S018", "216-227"]], "eligible": true},
+    {"id": "C05.d", "text": "The level and coordinate relationship is resolved before overlaying. Labels are never attached by basename or equal shape, and unsupported geometry stays explicit", "evidence": [["S035", "2770 (equal level count does not imply the same downscaling or origin)"], ["S003", "433 (usually, not always, the same transforms)"]], "eligible": true}
+   ],
+   "eligibility": "eligible",
+   "reference_adjudication": "consistent. S035 L2770 reinforces facet C05.d"
+  },
+  {
+   "id": "OME05-C06",
+   "title": "Categorical label identity",
+   "facets": [
+    {"id": "C06.a", "text": "Label pixels are integer dtypes, including uint64 and int64", "evidence": [["S003", "438-439"]], "eligible": true},
+    {"id": "C06.b", "text": "colors and properties entries are keyed by label-value, not by list position", "evidence": [["S003", "461-471"], ["S018", "230-254"], ["S048", "609-650"]], "eligible": true},
+    {"id": "C06.c", "text": "Categorical identity is preserved through lookup and resampling: nearest-neighbour sampling, no interpolated new IDs", "evidence": [["S020", "192 (nearest for categorical labels)"], ["S112", "1052,1125 (linear interpolation artefacts on segmentations)"], ["S052", "429 (#489 write_labels uses nearest)"]], "eligible": true},
+    {"id": "C06.d", "text": "Precision: exact 64-bit integers, or a declared supported range with refusal", "evidence": [["S003", "439 (uint64/int64 allowed)"]], "eligible": "partial: dtype allowance is in the corpus, but binary64 or JS-number precision loss is derived rather than stated by any admitted source"},
+    {"id": "C06.e", "text": "Palette is a reader SHOULD, not a format mandate", "evidence": [["S003", "461"], ["S035", "5186"]], "eligible": true}
+   ],
+   "eligibility": "eligible (C06.d partially)",
+   "reference_adjudication": "consistent"
+  },
+  {
+   "id": "OME05-C07",
+   "title": "Metadata-driven chunk decoding",
+   "facets": [
+    {"id": "C07.a", "text": "Decode the codec chain each array declares (including sharding_indexed with inner codecs and index codecs such as crc32c)", "evidence": [["S055", "16-57"], ["S003", "70-72"]], "eligible": true},
+    {"id": "C07.b", "text": "Decoding runs the chain in reverse order", "evidence": [], "eligible": false, "limitation": "The normative Zarr v3 core decoding-procedure text is absent from the admitted corpus (no zarr-specs capture in case/catalog.json)"},
+    {"id": "C07.c", "text": "The bytes codec carries endianness, so little-endian cannot be assumed", "evidence": [["S055", "27-30,46"], ["S013", "325"], ["S033", "356-359"], ["S043", "99 (>u1 dtype parse failure)"]], "eligible": true},
+    {"id": "C07.d", "text": "The transpose codec changes the encoded layout", "evidence": [["S109", "553,600 (tensorstore transpose+sharding bug and semantics, issue text only)"]], "eligible": "partial: issue text only, no normative spec"},
+    {"id": "C07.e", "text": "There is an explicit support boundary, and unsupported codec or dtype combinations are refused rather than displayed as pixels", "evidence": [["S003", "70-72"], ["S096", "25-28"], ["S025", "84-85"], ["S123", "58"], ["case/brief.md", "3 (clearly explain data it cannot display)"]], "eligible": true}
+   ],
+   "eligibility": "partially eligible: source-availability limitation on C07.b (normative) and C07.d (normative)",
+   "reference_adjudication": "not mistaken; decisive normative Zarr v3 codec text is unavailable in this corpus, so C07.b is unassessable_missing_input at facet level"
+  },
+  {
+   "id": "OME05-C08",
+   "title": "Absent data versus failed reads",
+   "facets": [
+    {"id": "C08.a", "text": "fill_value defines uninitialized or absent chunks, so an absent chunk is valid fill data", "evidence": [["S055", "65 (field present, semantics not stated)"]], "eligible": false, "limitation": "Normative fill_value and store-interface semantics (zarr-specs core and stores) are absent from the admitted corpus"},
+    {"id": "C08.b", "text": "Read, decode or cancellation failures are distinguished from absent or fill data, and failures are never zero-filled", "evidence": [["S018", "435-438,547,552-557 (reference reader zero-fills on ValueError)"], ["S028", "3840,3887 (a parse_url store reads arrays as all zeros)"], ["S019", "223-231 (parse_url collapses error and absence to None)"]], "eligible": true},
+    {"id": "C08.c", "text": "Readable and writable are distinct capabilities. Reader-side writes must be prevented, and source data is never repaired", "evidence": [["S008", "418-431 (mode='w' wipes the store; fixed)"], ["S052", "515 (#474 read_only if mode 'r')"], ["S013", "555"], ["S019", "91-98"], ["case/plan/Viewer.md", "9"]], "eligible": true},
+    {"id": "C08.d", "text": "The actual state is shown", "evidence": [["case/plan/Viewer.md", "7,11"]], "eligible": true}
+   ],
+   "eligibility": "partially eligible: source-availability limitation on C08.a",
+   "reference_adjudication": "not mistaken; normative fill_value semantics unavailable in this corpus, so C08.a is unassessable_missing_input at facet level"
+  }
+ ],
+
+ "results": {
+  "X1": {
+   "reference_statuses": [
+    {
+     "id": "OME05-C01",
+     "status": "narrowed",
+     "facets_retained": ["C01.a (0.4 vs 0.5 differ by .zattrs vs namespace)", "C01.c (the version decision must never silently misparse; refuse with a version-naming message or read deliberately; 0.6-draft gets warn+degrade)", "C01.d (partly: fixture using a 0.4 IDR sample and a 0.6-draft fileset)"],
+     "facets_missing": ["C01.b: the MUST that the version be consistent within a hierarchy, and a mixed-version probe", "Zarr v3 storage as an admission check. The v2/v3 array-format difference is understated as 'cheap: metadata identical modulo .zattrs/namespace'"],
+     "delivered_location": "delivered.md F7 (L109-124), section 3 item 1 (L200-202), section 2 (L172)",
+     "sources_checked": [["S003", "25-27,67-69,152-156"], ["S059", "129-134,347"], ["S016", "13-46,81-96"], ["S019", "87-89"], ["S010", "1017-1134"], ["S082", "55"]],
+     "plan_fit": "X1 classifies the version decision as a product choice under Plan L5/L7, with the no-misparse rule kept unconditional. That is compatible with the reference.",
+     "reasoning": "Links version identification to admission, requires a truthful refusal or deliberate support, and gives a legacy fixture. The hierarchy-consistency requirement and mixed-version case are absent, and legacy reading is described as cheap."
+    },
+    {
+     "id": "OME05-C02",
+     "status": "lost",
+     "facets_retained": [],
+     "facets_missing": ["C02.a", "C02.b", "C02.c", "C02.d", "C02.e"],
+     "delivered_location": "Only named: section 2 L166-167 ('Format obligations (P1-P3, P5, P6): verified verbatim in S003 (L60-77, L120-174 ...)') with no axis proposition",
+     "sources_checked": [["S003", "81,166-174,296-307"], ["S055", "59-64"]],
+     "reasoning": "The delivery has no statement about axes and rank, dimension_names, type-driven semantics, or absent versus length-one dimensions. It refers only to draft proposition IDs. This is an unvisited proposition in the delivery, not a checked false dismissal."
+    },
+    {
+     "id": "OME05-C03",
+     "status": "narrowed",
+     "facets_retained": ["C03.c (non-2x and Z-downsample pyramids break peers; named as verified counterexamples)", "C03.b (weakly: 'per-level shapes' named as a normatively anchored correction)", "C03.e (level-picker UX is an optional product choice)"],
+     "facets_missing": ["C03.a: declared list order and arbitrary group-relative paths; no folder ordering", "C03.b explicitly: level-specific transforms drive geometry", "C03.d: missing-level handling"],
+     "delivered_location": "section 2 L180-184; section 3 item 7 L214-215; F1 L34-35 (÷3 unverified)",
+     "sources_checked": [["S003", "93-94,305-310"], ["S043", "1-35,80-108"]],
+     "reasoning": "Only the failure evidence and a thin 'per-level shapes' mention survive, as items in a verified-claims list. The declared-order and path semantics and the consequence for the chooser are absent. Near the lost boundary."
+    },
+    {
+     "id": "OME05-C04",
+     "status": "narrowed",
+     "facets_retained": ["C04.b (group-level transforms applied after dataset-level; the draft's row-F composition correction is endorsed as mandatory, with spec-legality cited)", "C04.a (partly: prose requires translation after scale, S003 L311. F4 then calls a translation-first file 'conforming'; see X1-U3)", "The reference reader ignores group-level transforms (S018 L293-295), used as counterexample"],
+     "facets_missing": ["C04.c: absent unit means unknown calibration, never invented", "C04.d: a concrete composed-coordinate check that exposes reversed order or omitted offsets (F4's translation-first fixture tests order tolerance, not composition)"],
+     "delivered_location": "section 2 L170, L184; F9 L140-145; F4 L68-83",
+     "sources_checked": [["S003", "170,282-293,311-315"], ["S053", "196-266"], ["S016", "296-330"], ["S018", "293-295"], ["S048", "260-283"], ["S054", "8-75"]],
+     "reasoning": "The composition order is kept as a correction, but unit handling and a discriminating numeric check are missing. The scale-before-translation facet is weakened by an internal contradiction in F4."
+    },
+    {
+     "id": "OME05-C05",
+     "status": "narrowed",
+     "facets_retained": ["C05.a (in 0.5 only the parent's labels list identifies label images)", "C05.c (named only: the draft's row E covers image-label.source.image resolution)", "Entry at labels/ or a label-image group navigates to the parent image (S048)"],
+     "facets_missing": ["C05.b: label multiscales must match the source level count", "C05.d: resolve level and coordinate registration before overlay; never attach by basename or shape; keep unsupported geometry explicit"],
+     "delivered_location": "F5 L85-95; F9 L147-149; section 3 item 9 L218-219",
+     "sources_checked": [["S003", "437-474"], ["S035", "5043,5100,2770"], ["S048", "178-197,664-699"], ["S018", "187-227"]],
+     "reasoning": "Discovery survives and association is named. Registration and level-count validation, the load-bearing overlay condition, are absent."
+    },
+    {
+     "id": "OME05-C06",
+     "status": "narrowed",
+     "facets_retained": ["C06.a (labels must be integer)", "C06.e (fallback for colour-less labels is a product choice; the colours constraint is itself under debate)"],
+     "facets_missing": ["C06.b: label-value keyed lookup, not position", "C06.c: categorical identity through resampling (nearest, no interpolation)", "C06.d: 64-bit precision or declared range"],
+     "delivered_location": "section 3 items 4-5 L208-211",
+     "sources_checked": [["S003", "438-471"], ["S048", "609-661"], ["S035", "5186"]],
+     "reasoning": "Only peripheral facets survive. The categorical-identity proposition itself is absent. Near the lost boundary."
+    },
+    {
+     "id": "OME05-C07",
+     "status": "narrowed",
+     "facets_retained": ["C07.e (dtype support matrix: spec allows all Zarr dtypes, peers restrict, so decide, document and message)", "Reader-library choice with evidence of codec-merge gaps (S123) and a rectilinear-grid issue (S122)", "The sharded codec stack of the IDR sample was checked (named only)"],
+     "facets_missing": ["C07.a: stated requirement to decode the declared chain (sharding, inner codecs, index codecs, crc32c)", "C07.c: endianness is carried per array", "C07.d: transpose layout", "Unsupported codec combinations must not be displayed as pixels"],
+     "facet_limitations": ["C07.b unassessable_missing_input (no zarr-specs in corpus)"],
+     "delivered_location": "section 3 items 3-4 L205-209; section 2 L167, L180; F9 L146",
+     "sources_checked": [["S003", "70-72"], ["S096", "25-28"], ["S025", "84-85"], ["S055", "16-65"], ["S122", "11,34"], ["S123", "58"]],
+     "reasoning": "The support boundary survives for dtypes only. The codec pipeline and endianness requirements are not stated."
+    },
+    {
+     "id": "OME05-C08",
+     "status": "narrowed",
+     "facets_retained": ["C08.c (reader-side write hazard: ome-zarr-py write-mode wipe and its fix, plus the v0.12.1 read-only fix, named as verified counterexamples)"],
+     "facets_missing": ["C08.b: distinguishing absent or fill data from read, decode or cancel failures, and the zero-fill anti-pattern", "C08.d: showing the actual state", "The Plan connection for the write hazard (no explicit read-only open obligation stated)"],
+     "facet_limitations": ["C08.a unassessable_missing_input (no normative fill_value text in corpus)"],
+     "delivered_location": "section 2 L174, L181-182",
+     "sources_checked": [["S008", "418-431"], ["S052", "515"], ["S018", "435-438,547-557"], ["S028", "3887"]],
+     "reasoning": "Only one facet survives, and only as a terse verified counterexample. Near the lost boundary."
+    }
+   ],
+   "reference_status_summary": {"retained": [], "narrowed": ["C01", "C03", "C04", "C05", "C06", "C07", "C08"], "lost": ["C02"], "contradicted": [], "inapplicable": [], "unassessable_missing_input": []},
+
+   "unsupported_claims": [
+    {
+     "id": "X1-U1",
+     "type": "unsupported source fact (false negative) / false 'unsupported' dismissal",
+     "severity": "moderate-low",
+     "claim": "F1 (L25-35): 'no corpus source states 21.6 GB' for 9822152.zarr. The draft figure is called a 'fake datum' and replaced by '≈12.5 GiB at uint8 from the dims'. Section 6 L255-257 repeats that F1 is one of only two figures that could not be reproduced.",
+     "counterevidence": [["S034", "69-70: '9822152.zarr ... Shape 1,1,1,93184,144384, Size 21.57 GB, from idr0083'"]],
+     "consequence": "It removes a correct, sourced large-dataset anchor (Plan L11 'A large dataset must not freeze interaction') and substitutes an evaluator-invented derivation. It also overstates the verifier's precision claim."
+    },
+    {
+     "id": "X1-U2",
+     "type": "unsupported source fact (corpus integrity)",
+     "severity": "low",
+     "claim": "F9 L153-155, section 4 item 8, section 6(d): 'S042/S045 file contents appear swapped relative to catalog byte counts (S042=36 B catalog vs ~207-char message read and vice versa)'.",
+     "counterevidence": [["S042", "1: 'HTTPError: HTTP Error 404: Not Found' (36 bytes; catalog original_bytes 36)"], ["S045", "1: ~207-byte FileNotFoundError (catalog original_bytes 207)"]],
+     "consequence": "None for the product. It records a false corpus anomaly as a carried unresolved item."
+    },
+    {
+     "id": "X1-U3",
+     "type": "overstated / lost qualifier / internal contradiction",
+     "severity": "low-moderate",
+     "claim": "F4 (L71-81): a 'schema-valid translation-first fileset is rejected by the reference library', so 'hard validation would refuse a conforming file'.",
+     "counterevidence": [["S003", "311: 'If translation is given it MUST be listed after scale'"], ["S016", "296-330 (validate_coordinate_transformations, which the S018 reader does not call; writer-side only)"]],
+     "consequence": "A translation-first file is schema-valid (S053) but non-conforming under the prose MUST, and F4 cites S003 L311 itself. Calling it 'conforming' blurs the scale-before-translation rule that C04 depends on and could push Slide Scout to render out-of-spec order silently."
+    },
+    {
+     "id": "X1-U4",
+     "type": "overstated source fact",
+     "severity": "low",
+     "claim": "Section 3 item 1 (L200): 'read 0.4 (cheap: metadata identical modulo .zattrs/namespace, S059/S016)'.",
+     "counterevidence": [["S059", "129-134 (0.4 arrays are Zarr v2)"], ["S016", "147-149,216-218 (v2 chunk-key encodings differ)"], ["S033", "159-162 (codec support differs between v2/0.4 and v3/0.5)"], ["S059", "347 (version inside multiscales)"]],
+     "consequence": "It understates the storage-layer cost and risk of legacy support. The same bullet's 'never silently misparse' limits the harm."
+    },
+    {
+     "id": "X1-U5",
+     "type": "lost qualifier",
+     "severity": "low",
+     "claim": "F9 L140-141: 'path-referenced transforms: verified spec-legal (S003 L282-289, L314-315)'.",
+     "counterevidence": [["S053", "218-264 (0.5 schema requires inline scale and translation arrays)"], ["S003", "312 (length of the scale and translation array)"]],
+     "consequence": "The conflict between §2.3 prose and the schema is not acknowledged. Impact is minimal because the capability is deferred."
+    }
+   ],
+   "false_dismissals": [
+    {"id": "X1-FD1", "ref": "X1-U1", "kind": "false 'unsupported' correction of a correct draft figure (21.6 GB)", "decisive_source": ["S034", "69-70"]}
+   ],
+   "borderline_classifications": [
+    {"id": "X1-B1", "claim": "F7: refusing a 0.4 fileset with a version-naming message is 'covered by the Plan as written' (Plan L7).", "assessment": "Partly right. Plan L7 covers explaining failures, not the version and layout detection needed to name the version. X1 keeps 'never silently misparse' as unconditional, so this is not scored as a false covered dismissal."}
+   ],
+   "internal_contradictions": [
+    {"id": "X1-IC1", "text": "The bottom line (L10-14) says all 13 propositions, all 18 plan-fit rows and all counterexamples 'check out'. F1 (row H figure), F2 (P4 count) and F7 (row A disposition) then report defects in those same items. This is editorial."},
+    {"id": "X1-IC2", "text": "F4 cites the S003 L311 MUST and in the same paragraph calls a translation-first file 'conforming' (see X1-U3)."}
+   ],
+   "bounded_unknowns_not_defects": [
+    "Group-level or path-referenced transforms in real 0.5 data (three captured filesets have none; large dumps not grepped): honestly left unresolved",
+    "Per-level sharding identity and the inner hierarchy of 6001240_labels.zarr",
+    "Currency of the 2025 viewer matrix (S041)",
+    "Whether zarr-python sharding slowness still applies (titles only, S049)",
+    "Pinned-commit provenance of ome-zarr-py"
+   ],
+   "novel_findings": [
+    {"id": "NF-HCS", "text": "HCS plates need an explicit product decision: full navigation or detect-and-list. Peers crash or degrade on plates, and canonical 0.5 plates exist as fixtures.", "location": "section 3 item 2 L203-204", "sources": [["S043", "207-238"], ["S010", "1027-1051"], ["S056", "1-10"]], "plan_applicability": "Plan L5 image discovery and listing; brief 'find images within a fileset'", "verified": true},
+    {"id": "NF-MULTIMS", "text": "A chooser for multiple multiscales entries is an optional or deferred capability, since no peer opens beyond the first entry.", "location": "section 2 L186; section 3 item 10 L220", "sources": [["S043", "277-316"], ["S018", "279-284"]], "plan_applicability": "Plan L5 image list", "verified": true, "note": "Thinner than X2's version: no spec choose-by-name rule"},
+    {"id": "NF-OMERO", "text": "omero metadata is optional. The reference reader degrades gracefully when it is partial, so channel controls need defaults.", "location": "section 2 L171, L184", "sources": [["S003", "426"], ["S018", "330-391"]], "plan_applicability": "Plan L5 channel visibility controls", "verified": true},
+    {"id": "NF-RDEFS", "text": "Honouring rdefs.defaultT/defaultZ is an optional differentiator. WEBKNOSSOS ignores them, and a real sample has defaultZ 118.", "location": "section 3 item 6 L212-213", "sources": [["S003", "419-423"], ["S043", "67-70"], ["S054", "109-113"]], "plan_applicability": "Plan L5 time-point and plane selection (optional)", "verified": true},
+    {"id": "NF-SINGLESCALE", "text": "Groups that hold only a single array (no multiscales) need a defined behaviour: render with default scale or give an explicit message. ngff#207 is open and ome-zarr-py renders raw arrays.", "location": "section 3 item 8 L216-217", "sources": [["S004", "371-373"], ["S018", "593-596"]], "plan_applicability": "Plan L7 and L11 feedback for unsupported input", "verified": true},
+    {"id": "NF-LABELMARK", "text": "In 0.5 a label image cannot be told apart from an image except through the parent labels list, so the image list must not present label images as standalone images.", "location": "section 3 item 9 L218-219; F9 L148-149", "sources": [["S035", "5043,5100"]], "plan_applicability": "Plan L5 'lists the images it finds'", "verified": true},
+    {"id": "NF-ENTRYPOINT", "text": "Opening at a labels/ subfolder or a label-image group should navigate to the parent image. An unknown root should give a defined message rather than a silent no-op.", "location": "F5 L85-95", "sources": [["S048", "664-699"], ["S018", "598-600"]], "plan_applicability": "Plan L5 discovery and L7 feedback", "verified": true},
+    {"id": "NF-VALIDATOR", "text": "Pair malformed fixtures with ome-ngff-validator runs, using its schemas query parameter.", "location": "F6 L97-107", "sources": [["S031", "8-15"]], "plan_applicability": "Plan L11 acceptance fixtures (optional)", "verified": true, "note": "minor"}
+   ],
+   "correct_non_findings": [
+    {"text": "Zipped OME-Zarr (.ozx, RFC-9) and zip stores are deferred because RFC-9 is unreleased. The citation is corrected to S035 L4500 and S052 #619.", "location": "F8 L126-137", "sources": [["S035", "4500"], ["S052", "128"]]},
+    {"text": "The '12-viewer' matrix is actually 11 viewers, and the substantive claim (no viewer opens beyond the first multiscales entry) stands.", "location": "F2 L37-48", "sources": [["S043", "2-35,277-316"]]},
+    {"text": "'9846318 (÷3 factors)' is unverified: S043 says only 'not equal to 2'.", "location": "F1 L34-35", "sources": [["S043", "80-83"]]},
+    {"text": "Optional capabilities (rdefs defaults, memory-estimate picker, time-unit display, multi-multiscales chooser, resource lifecycle) are correctly not presented as requirements.", "location": "section 2 L183-187", "sources": [["S117", "95-134"], ["S125", "55"]]},
+    {"text": "AGAVE desktop-analog prior art supports the Plan's existing background-read and cancel obligation (covered): the blocking-load issue is still open (S103), and session-local settings contrast with AGAVE's absolute-path settings JSON (S108 L27).", "location": "section 2 L188-193", "sources": [["S103", "11,34,58"], ["S108", "27"], ["S117", "27,95-134"]]},
+    {"text": "Real 0.5 filesets (S054, S055, S056) carry no group-level transforms, and the frequency question is kept open rather than dismissed.", "location": "F9 L140-145", "sources": [["S054", "8-75"], ["S056", "1-10"]]},
+    {"text": "Ecosystem dates checked: ome-zarr-py v0.12.0 2025-08-18; napari-ome-zarr v0.7.0 2026-03-16 and 0.8.0 2026-05-20; AGAVE PR #220 merged 2025-03-22; AGAVE v1.8.0 2025-05-22 and v1.10.0 2026-07-13; vizarr #307 opened Oct 8, 2025.", "location": "section 2 L173-178", "sources": [["S052", "546-554"], ["S064", "29-37"], ["S065", "29-41"], ["S082", "53-55"], ["S091", "30-38,780-788"], ["S014", "137"]]}
+   ],
+   "handoff_loss": {
+    "summary": "Severe. The delivery is a verifier report that refers to the draft's P1-P13 and rows A-R by ID and says it 'stands alone', but it does not restate them. The draft and checks.md acquired, interpreted, Plan-connected and verified (checks C02, C03, C06, C25-C27, C33, C37) most of what C01-C05 and C08 need. Almost none of that survives in delivered.md.",
+    "per_reference": [
+     {"ref": "C01", "first_acquisition": "O-002 (hierarchy-consistency MUST), O-014, O-061, O-064", "upstream_plan_connection": "draft P2, P9 and row A (never silently misparse)", "verified_upstream": "checks C02, C09, C22", "final_preservation": "version policy kept (F7, section 3 item 1); the hierarchy-consistency MUST in P2 was dropped", "loss": "narrowing"},
+     {"ref": "C02", "first_acquisition": "O-003 (dimension_names), O-004, O-028, O-047, O-022", "upstream_plan_connection": "draft P2/P3 and row D ('derive t/z roles from axes types, never position; hide controls when axes absent')", "verified_upstream": "checks C02, C03, C25", "final_preservation": "none: named only as 'P1-P3 verified'", "loss": "full loss of an upstream-supported proposition"},
+     {"ref": "C03", "first_acquisition": "O-005 (ordered paths), O-042, O-043", "upstream_plan_connection": "draft row G ('read each level's own zarr.json; never extrapolate from level 0')", "verified_upstream": "checks C03, C28", "final_preservation": "failure evidence named, plus 'per-level shapes'", "loss": "narrowing"},
+     {"ref": "C04", "first_acquisition": "O-005, O-016, O-044", "upstream_plan_connection": "draft row F: compose dataset then group; 'fall back to pixels with an explicit no-units state'; validation with 13457539 vs 13457537 composed offset", "verified_upstream": "checks C27", "final_preservation": "composition order kept; unit-absent state and the discriminating fixture dropped", "loss": "narrowing (C04.c and C04.d were present upstream)"},
+     {"ref": "C05", "first_acquisition": "O-009, O-018, O-069", "upstream_plan_connection": "draft P6, row E (resolve source.image; overlay unavailable when missing; level-for-level alignment; defined behaviour for a depth-mismatched label pyramid) and row P ('alignment must be asserted, not assumed')", "verified_upstream": "checks C06, C26, C37", "final_preservation": "discovery and entry point only", "loss": "narrowing (C05.b and C05.d were present upstream)"},
+     {"ref": "C06", "first_acquisition": "O-009, O-023 ('colormap keyed by label value')", "upstream_plan_connection": "draft P6 (integer) and S3 (dtype); label-value keying never reached the draft", "final_preservation": "integer and colour-less fallback", "loss": "minor. Resampling and precision were never acquired upstream"},
+     {"ref": "C07", "first_acquisition": "O-001, O-028, O-037, O-043 ('endianness must be handled or clearly reported'), O-071", "upstream_plan_connection": "draft P1 (sharded pipeline), row G (pixel-content assertion), row J (messages naming codec), S3, S7", "final_preservation": "dtype matrix and library choice only", "loss": "narrowing (endianness and codec-refusal messaging were upstream)"},
+     {"ref": "C08", "first_acquisition": "O-051 ('enforced by opening stores read-only ... assert byte-identical')", "upstream_plan_connection": "draft row L (enforce read-only stores; byte-hash test). Row R treats a missing chunk file as an error, which is in tension with Zarr fill_value semantics; normative text is not in corpus, so this is bounded", "verified_upstream": "checks C33, C39", "final_preservation": "'write-mode wipe + fix' named only", "loss": "narrowing (the C08.c obligation and test were upstream)"}
+    ],
+    "distortions": [
+     {"id": "X1-H1", "text": "The draft row H figure '21.6 GB' was correct but miscited (O-034/S010; the real source is S034 L70). checks C29 and delivered F1 turned the citation slip into 'exists nowhere in the corpus'. Distortion introduced at verification (see X1-U1)."},
+     {"id": "X1-H2", "text": "O-032 attributes the '404 Not Found' text to S045 (it is S042). checks C63 and delivered F9/section 4 item 8 recast this as 'S042/S045 contents swapped relative to catalog', a false corpus anomaly (X1-U2)."},
+     {"id": "X1-H3", "text": "O-020 correctly calls the ome-zarr-py scale-first check writer-side. checks C57 restates it as 'rejected by the reference reader', and delivered F4 adds that the file is 'conforming' (X1-U3)."},
+     {"id": "X1-H4", "text": "The 'cheap 0.4 ... essentially identical' overstatement (O-061/P9) was inherited, not introduced, by delivery (X1-U4)."}
+    ],
+    "recoveries": ["F4, F5 and F6 recovered O-020, O-026 and O-040, which the draft had omitted", "F2 fixed the viewer count", "F8 fixed the zip-store citation and added S052 #619"]
+   },
+   "coherence": {
+    "rating": "internally readable but not standalone",
+    "issues": [
+     "It claims to stand alone but depends on draft IDs (P1-P13, rows A-R, S1-S9, O-xxx) for every substantive proposition.",
+     "The bottom line says all items 'check out' while F1, F2 and F7 report defects in those items (X1-IC1).",
+     "F4 cites S003 L311 and calls translation-first 'conforming' (X1-IC2).",
+     "Two of its eight findings (F1 and part of F9) are false corrections."
+    ],
+    "strengths": ["Every finding has a disposition, evidence, consequence and validation idea", "The product decisions are grouped, evidence-cited and marked open", "Unresolved items are kept separate from defects"]
+   },
+   "decision_burden": {
+    "blocking_decisions": [
+     {"item": "Storage library (zarr-python >=3 vs tensorstore)", "loc": "section 3 item 3", "canonical_default": "none"},
+     {"item": "Dtype support matrix", "loc": "section 3 item 4", "canonical_default": "none; spec allows all dtypes"},
+     {"item": "HCS plates: full navigation vs detect-and-list", "loc": "section 3 item 2", "canonical_default": "none; blocks discovery acceptance"}
+    ],
+    "nonblocking_choices": [
+     {"item": "Version scope: read 0.4 vs refuse", "loc": "section 3 item 1", "note": "Plan L5 (0.5) already sets refuse-with-message as the default; reading 0.4 is additive under the L9 review gate"},
+     {"item": "Fallback for colour-less labels", "loc": "section 3 item 5"},
+     {"item": "Honour rdefs defaultT/defaultZ", "loc": "section 3 item 6", "note": "optional"},
+     {"item": "Pyramid-level UX: automatic vs picker", "loc": "section 3 item 7", "note": "Plan L5 already chooses automatic; the picker is additive and labelled optional"},
+     {"item": "Single-scale groups", "loc": "section 3 item 8"},
+     {"item": "Marking labels vs images in the image list", "loc": "section 3 item 9"},
+     {"item": "Tolerance of translation-first transforms", "loc": "F4", "note": "optional capability; framing defective (X1-U3)"},
+     {"item": "Opening at a labels subfolder", "loc": "F5"},
+     {"item": "Validator cross-check", "loc": "F6"}
+    ],
+    "concurrence_not_asks": ["section 3 item 10: five deferrals (multi-multiscales chooser, plate UI depth, .ozx/zip, consolidated metadata, transform-by-path)"],
+    "clarification_questions": 0,
+    "redundant_questions": 0,
+    "counts": {"blocking": 3, "nonblocking": 9, "clarification": 0, "redundant": 0},
+    "note": "No alternatives are silently approved. Version scope and level UX already have a canonical Plan default, and X1 acknowledges this for version scope (F7) and marks level UX optional."
+   },
+   "coverage": {
+    "assessed": ["All 266 lines of delivered.md", "Every reference facet against delivered.md", "Every decisive source claim listed in unsupported_claims, novel_findings and correct_non_findings (verified in case/sources)", "checks.md, upstream/draft.md and upstream/observations.md in full for step 5"],
+    "not_assessed_PENDING_HIGH_END_VERIFICATION": ["Delivered claims resting on sources this evaluator did not open: S017 (CHANGELOG head 0.11.1), S049 titles, S051 L112 (RFC-9), S061 (QuPath), S066/S067 (BioFile Finder), S099, S104, S105, S115, S119", "SHA-256 recomputation and excerpt hashes (no shell)"],
+    "note": "All five F3 draft-bookkeeping items were confirmed against upstream/draft.md L5 and L170-182 and against upstream/observations.md (O-059 is followed directly by O-061). That makes F3 a correct non-finding about the draft, though it concerns the draft rather than the product."
+   }
+  },
+
+  "X2": {
+   "reference_statuses": [
+    {
+     "id": "OME05-C01",
+     "status": "narrowed",
+     "facets_retained": ["C01.c (partly): an explicit version-handling policy with informative refusal on an unknown ome.version", "C01.b (partly): the 0.4 convention of putting version inside multiscales is named as verified", "Fixture provenance: record the captured version per fixture (F-8)"],
+     "facets_missing": ["C01.a: 0.5 means Zarr v3 plus the attributes.ome namespace as an admission check", "C01.b: consistency of the version within a hierarchy", "C01.c: no implicit legacy reinterpretation. The 'permissive' option cites AGAVE's layout sniffing as precedent without flagging it as a hazard", "C01.d: legacy versus 0.5 and mixed-version fixtures"],
+     "delivered_location": "F-11 item 3 L75; F-8 L54-58; section 2 L84",
+     "sources_checked": [["S003", "25-27,152-156"], ["S052", "122,128"], ["S082", "55"], ["S059", "347"], ["S010", "1125-1134"], ["S024", "39"]],
+     "plan_fit": "Treated as a product choice (strict 0.5 or permissive) with a refusal obligation. Compatible, but weaker than X1.",
+     "reasoning": "It connects version to admission only for unknown versions. The legacy-layout distinction and hierarchy consistency are missing."
+    },
+    {
+     "id": "OME05-C02",
+     "status": "narrowed",
+     "facets_retained": ["C02.c: real 0.5 data spans XY-only to XYZCT; axes are identified by type, not name; the channel axis may be absent, so controls appear only where relevant (a covered Plan decision)"],
+     "facets_missing": ["C02.a: rank and order validation", "C02.b: dimension_names must match axes", "C02.d: absent versus length-one dimensions; no invented sliders", "C02.e: reject mismatches"],
+     "delivered_location": "F-10 L67",
+     "sources_checked": [["S003", "296-307"], ["S010", "1017-1134"]],
+     "reasoning": "Matches the reference's half level: variable dimensionality and type-driven semantics are recognized, but mapping and validation are left unspecified."
+    },
+    {
+     "id": "OME05-C03",
+     "status": "narrowed",
+     "facets_retained": ["C03.b and C03.c: whatever the selection policy, level geometry must handle Z-downsampled pyramids, non-2 factors and per-level centred translations", "C03.e: automatic versus a manual picker is a product choice (Plan L5 already picks automatic)"],
+     "facets_missing": ["C03.a: the declared list order and arbitrary paths are authoritative; no folder ordering", "C03.d: missing-level handling"],
+     "delivered_location": "F-11 item 5 L77",
+     "sources_checked": [["S043", "1-108"], ["S016", "276-294"], ["S003", "305-310"]],
+     "reasoning": "The geometry obligation is kept separate from the UI choice, as the reference's basis requires. Ordering and path semantics and the missing-level case are lost."
+    },
+    {
+     "id": "OME05-C04",
+     "status": "narrowed",
+     "facets_retained": ["Per-level translations must be applied (in the level-geometry obligation)", "Named only: napari fails to apply group-level scale, a verified viewer-matrix failure class"],
+     "facets_missing": ["C04.a: scale-then-translation order", "C04.b: composition of dataset-level then group-level transforms", "C04.c: unit and unknown-calibration handling", "C04.d: a composed numeric check"],
+     "delivered_location": "F-11 item 5 L77; section 2 L84",
+     "sources_checked": [["S003", "170,293,311,314-315"], ["S043", "318-471"], ["S016", "276-294"]],
+     "reasoning": "Matches the half level: translation and offsets are acknowledged, but composition is not stated. Near the lost boundary."
+    },
+    {
+     "id": "OME05-C05",
+     "status": "lost",
+     "facets_retained": [],
+     "facets_missing": ["C05.a", "C05.b (raised only as a deferred unresolved question: 'whether real label images satisfy the equal-level-count MUST')", "C05.c", "C05.d"],
+     "delivered_location": "Section 3 item 10 L99 (deferred question). F-11 item 6 L78 covers initial visibility only, which is not C05. F-10 L68 has the vizarr omero coupling.",
+     "sources_checked": [["S003", "437-474"], ["S035", "2770"], ["S048", "178-197,654"]],
+     "reasoning": "Label discovery, source association and registration are absent. The single related proposition appears only as an uninvestigated question, which the rules score as lost. This is unvisited scope, not a checked false dismissal."
+    },
+    {
+     "id": "OME05-C06",
+     "status": "lost",
+     "facets_retained": [],
+     "facets_missing": ["C06.a", "C06.b", "C06.c", "C06.d", "C06.e"],
+     "delivered_location": "Absent. F-9 L61 lists 'interpolation toggles' as optional AGAVE user demand with no connection to label identity.",
+     "sources_checked": [["S003", "438-471"], ["S112", "1005-1125"]],
+     "reasoning": "No categorical label proposition appears in the delivery."
+    },
+    {
+     "id": "OME05-C07",
+     "status": "narrowed",
+     "facets_retained": ["C07.a: the real v3 pipeline (sharding_indexed with inner bytes+blosc/zstd, index bytes+crc32c, chunk larger than array extent) is a compatibility floor any chosen library must cover", "The codec set is bytes plus blosc, gzip, zstd or null", "C07.c (partly): little-endian is the producer default. This is not presented as a universal assumption"],
+     "facets_missing": ["C07.e: an explicit support boundary; unsupported combinations refused, not displayed as pixels (there is no dtype-matrix decision, although the AGAVE and vizarr dtype limits are cited)", "C07.c: endianness read per array from the bytes codec", "C07.d: transpose layout"],
+     "facet_limitations": ["C07.b unassessable_missing_input"],
+     "delivered_location": "F-10 L70; F-11 item 2 L74; F-1 L12; section 2 L84 (vizarr has 8 dtypes)",
+     "sources_checked": [["S055", "1-74"], ["S033", "152-162,356-359"], ["S044", "126-154"], ["S058", "360-388"], ["S096", "8-9,25-28"]],
+     "reasoning": "It checks the actual v3 pipeline, which X1 does not, but it has no refusal or support boundary."
+    },
+    {
+     "id": "OME05-C08",
+     "status": "narrowed",
+     "facets_retained": ["C08.b (partly): library errors collapse to None, so Slide Scout needs its own error taxonomy", "C08.b and C08.d (partly): stitching produces zero-filled tiles, which must be disclosed as synthetic zeros"],
+     "facets_missing": ["C08.b: stating that the zero-fill hides load failures (S018 L555-557 ValueError), not only empty wells", "C08.c: read-only is asserted as covered without considering reader-side writes (S008 wipe)", "Cancellation state"],
+     "facet_limitations": ["C08.a unassessable_missing_input"],
+     "delivered_location": "F-10 L65, L69; F-11 item 4 L76",
+     "sources_checked": [["S018", "435-438,547-557"], ["S019", "223-231"], ["S028", "2776,3887"], ["S008", "418-431"]],
+     "reasoning": "Matches the half level: it covers error distinction and synthetic-zero disclosure, but asserts read-only without considering reader-side writes."
+    }
+   ],
+   "reference_status_summary": {"retained": [], "narrowed": ["C01", "C02", "C03", "C04", "C07", "C08"], "lost": ["C05", "C06"], "contradicted": [], "inapplicable": [], "unassessable_missing_input": []},
+
+   "unsupported_claims": [
+    {
+     "id": "X2-U1",
+     "type": "unsupported source fact (false negative) / false 'unsupported' dismissal",
+     "severity": "moderate",
+     "claim": "F-4 (L30-34): 'no terabyte size exists anywhere in the corpus ... the largest evidenced sizes are 21.57 GB ... and 66.04 GB'. It corrects the draft's '1 TB plates ... are real 0.5 data' and advises keeping 21.6 GB and 66 GB as the large-data anchors.",
+     "counterevidence": [["S034", "77-83: 190129.zarr 'Size 1.0 TB', 190206.zarr '485 GB', 190211.zarr '704 GB' (idr0090 challenge plates)"], ["S056", "3-10 (190129.zarr is ome.version 0.5 with a plate)"]],
+     "consequence": "It reverses a correct draft claim and shrinks the evidenced large-data acceptance anchor about 15-fold (Plan L11). The same source that X2 cites for 21.57 GB (S034 L69-72) contains the TB figures eight lines later."
+    },
+    {
+     "id": "X2-U2",
+     "type": "lost qualifier",
+     "severity": "low",
+     "claim": "F-11 item 3 (L75) cites 'AGAVE format-sniffing, S082 L55' as a precedent for a permissive version policy.",
+     "counterevidence": [["S082", "55: 'The big assumption I am making is that OME-NGFF 0.4 is always zarrv2 and if we find a zarrv3 zarr.json file, then I am assuming a OME-NGFF 0.5 json file ... Anything outside this assumption will error out in some way.'"]],
+     "consequence": "It presents an unvalidated layout-to-version inference, the C01 anti-pattern, as a policy precedent. It is partly offset by 'informative refusal on unknown ome.version'."
+    },
+    {
+     "id": "X2-U3",
+     "type": "mislabel",
+     "severity": "low",
+     "claim": "F-8 (L55): napari PR #123 'exercises it [BR00109990_C2] at a /zarr/v0.5/ URL as a v0.5 plate'.",
+     "counterevidence": [["S024", "39: 'Nine images in bioformats2raw layout, translated into a 3 x 3 grid' (the v0.5 plate in that PR is 190129.zarr)"], ["S010", "1130 (bioformats2raw.layout (9 images))"]],
+     "consequence": "Minor; the version conflict itself is correct."
+    },
+    {
+     "id": "X2-U4",
+     "type": "citation slip",
+     "severity": "negligible",
+     "claim": "S052 L122 cited for the SpatialData/#594 precedent.",
+     "counterevidence": [["S052", "122 is created_at; the text is at L128 and L171"]],
+     "consequence": "none"
+    }
+   ],
+   "false_dismissals": [
+    {"id": "X2-FD1", "ref": "X2-U1", "kind": "false 'unsupported' correction of a correct draft figure (1 TB 0.5 plates)", "decisive_source": ["S034", "77-79"]}
+   ],
+   "internal_contradictions": [
+    {"id": "X2-IC1", "text": "The header (L5) says 'nine unresolved items (eight carried by the draft, one new)', but section 3 lists 10 items. Editorial."},
+    {"id": "X2-IC2", "text": "F-8 calls BR00109990_C2 a '9-image b2r collection' and then 'a v0.5 plate' in the same sentence (X2-U3)."}
+   ],
+   "bounded_unknowns_not_defects": [
+    "BR00109990_C2's true current version (S010 says 0.4; S024 uses a /v0.5/ URL)",
+    "Reader-side auto-shard support (issue titles only)",
+    "Whether real label images meet the equal-level-count MUST (no labels-group capture)",
+    "Currency of the April-2025 viewer matrix"
+   ],
+   "novel_findings": [
+    {"id": "NF-MULTIMS", "text": "Multiple multiscales entries: the spec lets the user choose by name with the first entry as fallback, while the ecosystem opens only the first entry and some viewers crash. Listing entries is spec-correct, but it must not inherit first-entry geometry. Real v0.4 fixture: 4995115.zarr.", "location": "F-11 item 1 L73; F-5 L36-40", "sources": [["S003", "298,317,388-397"], ["S018", "279-284"], ["S048", "199-202"], ["S043", "277-316"]], "plan_applicability": "Plan L5 image list", "verified": true},
+    {"id": "NF-HCS", "text": "Plate presentation is a product decision: well-by-well navigation or stitching. If stitching, the synthetic zero tiles must be disclosed.", "location": "F-11 item 4 L76", "sources": [["S018", "438,547,557"]], "plan_applicability": "Plan L5 discovery and listing", "verified": true},
+    {"id": "NF-OMERO", "text": "omero is optional, so fallback defaults are a required path: bioformats2raw --no-minmax, ome-zarr-py degrades gracefully, and vizarr fails to load labels when omero is missing (counterexample).", "location": "F-10 L68", "sources": [["S033", "351-354"], ["S018", "335-391"], ["S050", "2436"]], "plan_applicability": "Plan L5 channel controls and label overlays", "verified": true},
+    {"id": "NF-NONIMAGE", "text": "Filesets contain non-image payloads (ro-crate metadata, OME-XML), and discovery must skip them.", "location": "F-10 L66", "sources": [["S034", "45-46"], ["S003", "184-191"]], "plan_applicability": "Plan L5 discovery", "verified": true},
+    {"id": "NF-LABELVIS", "text": "Initial label-overlay visibility is a deliberate choice (napari hides labels initially) and needs an obvious toggle.", "location": "F-11 item 6 L78", "sources": [["S048", "654"]], "plan_applicability": "Plan L5 optional overlays", "verified": true, "note": "minor"},
+    {"id": "NF-PROVENANCE", "text": "Fixture version provenance: sample catalogs and PR URLs disagree (BR00109990_C2), so record the producer and captured version per fixture.", "location": "F-8 L54-58", "sources": [["S010", "1125-1134"], ["S024", "39"]], "plan_applicability": "Plan L11 representative filesets", "verified": true, "note": "minor"}
+   ],
+   "correct_non_findings": [
+    {"text": "Handles scrambled: the AGAVE dtype whitelist is at S096 L25-28, S120 is a no-match placeholder, and S121 holds the getOmero extract.", "location": "F-1 L11-16", "sources": [["S096", "8-9,25-28"], ["S120", "1"], ["S121", "1-9"]]},
+    {"text": "'most-upvoted issue' is unsupported (reactions total 0).", "location": "F-2 L18-22", "sources": [["S103", "60-62"]]},
+    {"text": "The in-memory volume cache is a stack of open draft PRs, not shipped. The memory-estimate dialog is shipped.", "location": "F-3 L24-28", "sources": [["S114", "91-207,235-279"], ["S117", "102"]]},
+    {"text": "The multi-entry-multiscales gap is scoped to 0.5, since a real v0.4 sample exists.", "location": "F-5 L36-40", "sources": [["S043", "277-316"]]},
+    {"text": "The 190129 plate has 49 wells, not 50, and lacks plate.version and acquisitions.", "location": "F-6 L42-46", "sources": [["S056", "49 rowIndex entries; version only at L4 and L7"], ["S010", "1046"]]},
+    {"text": "The 'single-shard-per-Z' layout for 4496763 is unsupported.", "location": "F-7 L48-52", "sources": [["S034", "52-68"]]},
+    {"text": "AGAVE extras are optional under the Plan L9 review gate.", "location": "F-9 L60-62", "sources": [["S117", "95-134,299-317"], ["S125", "55"]]},
+    {"text": "Covered: read-only and session-local settings (S108 L27 contrast), exclusion of remote-only failures, channel/time/plane only where relevant, sharding as the compatibility floor.", "location": "F-10 L64-70", "sources": [["S108", "27"], ["S028", "3080,4368"], ["S010", "1017-1134"], ["S055", "1-74"]]}
+   ],
+   "handoff_loss": {
+    "summary": "Severe. The X2 draft was close to the full level on C04 and C05, and strong on C01, C02 and C06. The delivered verifier report keeps the defects and decisions but reduces the obligations to 'the full section 1 obligation list ... verified' (section 2 L84) with no content.",
+    "per_reference": [
+     {"ref": "C01", "first_acquisition": "O-001 (fail gracefully on unknown ome.version), O-003 ('can flag inconsistency'), O-026, O-067 ('read ome.version and treat zarr-format sniffing as fallback')", "upstream_plan_connection": "draft section 1.2 (hierarchy MUST, legacy placement); section 2 'Version-sniffing shortcuts ... counterexamples to avoid, not patterns to copy'; L7 error taxonomy ('version mismatch, inconsistent hierarchy')", "verified_upstream": "checks C-02, C-16", "final_preservation": "F-11 item 3 only", "loss": "narrowing plus a lost qualifier: AGAVE sniffing turns from 'counterexample to avoid' into a permissive 'precedent' (X2-U2)"},
+     {"ref": "C02", "first_acquisition": "O-004 (dimension_names cross-check), O-005, O-046", "upstream_plan_connection": "draft section 1.3 ('arrays MUST carry dimension_names matching axes ... UI must key off axis type')", "verified_upstream": "checks C-03", "final_preservation": "type-driven, where-relevant controls (F-10)", "loss": "narrowing (dimension_names dropped)"},
+     {"ref": "C03", "first_acquisition": "O-006 ('must not assume paths are 0..n'), O-027, O-050", "upstream_plan_connection": "draft section 1.4 and the L5 pyramid row", "verified_upstream": "checks C-04, C-22", "final_preservation": "level-geometry obligation (F-11 item 5)", "loss": "narrowing (arbitrary ordered paths dropped)"},
+     {"ref": "C04", "first_acquisition": "O-006, O-007, O-027", "upstream_plan_connection": "draft L5 details: composed dataset and group transforms; translation after scale; an explicit 'unspecified' unit state; never derive units from names; a composed cursor readout; a synthetic group-level time-scale fixture that must 'degrade to pixel when a unit is absent'", "verified_upstream": "checks C-04, C-21", "final_preservation": "per-level translation only, plus the napari failure named", "loss": "major. Close to the full level upstream, narrowed to its thinnest form in delivery"},
+     {"ref": "C05", "first_acquisition": "O-010 ('verify level counts/sizes at runtime'), O-011 (relative source path), O-073", "upstream_plan_connection": "draft section 1.6 ('use the labels-group listing as the source of truth and verify level geometry at runtime') and the L5 overlays row ('alignment requires the same transform composition as the base image'; fixtures for level-count mismatch and registration at two zoom levels)", "verified_upstream": "checks C-06, C-20", "final_preservation": "none; only a deferred question (section 3 item 10)", "loss": "major. Close to the full level upstream, lost in delivery"},
+     {"ref": "C06", "first_acquisition": "O-010 (integer; non-integer is a violation to report), O-011 (fallback LUT)", "upstream_plan_connection": "draft section 1.6 (integer) and the L7 fixture 'float label image'", "final_preservation": "none", "loss": "loss of the integer-dtype facet and the float-label fixture. Resampling and precision were never acquired"},
+     {"ref": "C07", "first_acquisition": "O-002, O-018, O-048", "upstream_plan_connection": "draft section 1.10 floor; L7 taxonomy 'unsupported codec/shard/dtype/transform'; L9 'codec matrix ... pixel-compared against known-good decode'", "final_preservation": "floor kept (F-10, F-11 item 2)", "loss": "narrowing (the support-boundary messaging and pixel-compare check were upstream)"},
+     {"ref": "C08", "first_acquisition": "O-031 (disclose zero-filled substitutions), O-036 (None-collapse), O-071 (includes S028 'all zeros' title, confirmed in checks C-13)", "upstream_plan_connection": "draft L7 taxonomy ('missing metadata, unreadable array ...'); L9 read-only asserted from reader modes without the S008 wipe", "final_preservation": "None-collapse and zero disclosure kept", "loss": "minor. The all-zeros read hazard (checks C-13) did not reach delivery; the read-only gap is upstream too"}
+    ],
+    "distortions": [
+     {"id": "X2-H1", "text": "The draft's '1 TB plates ... (O-046)' was true (S034 L77-79) but O-046 cites only S034 L70 (21.6 GB). checks C-30 and delivered F-4 turned the citation gap into 'no terabyte size exists anywhere' (X2-U1)."},
+     {"id": "X2-H2", "text": "The draft's own qualifier on AGAVE sniffing ('counterexamples to avoid') was dropped. Delivery keeps only the 'precedent' framing (X2-U2)."},
+     {"id": "X2-H3", "text": "checks C-36's 'shows it as a v0.5 plate' was carried into F-8 (X2-U3)."}
+    ],
+    "recoveries": ["F-1 fixed the S096/S120/S121 handle scramble inherited from O-022, O-023 and O-070", "F-2, F-3, F-5, F-6 and F-7 corrected overstated draft specifics", "F-8 added a new unresolved provenance item", "C-37 recovered O-024 (in checks only; delivery mentions it only inside F-1)"]
+   },
+   "coherence": {
+    "rating": "internally readable and more self-contained than X1; not standalone for the obligations",
+    "issues": [
+     "Established obligations are referenced but not stated (section 2 L84).",
+     "The header count of unresolved items (nine) disagrees with the list (ten) (X2-IC1).",
+     "F-8 calls the same fileset a b2r collection and then a plate (X2-IC2).",
+     "F-4 is a false correction that removes the evidenced TB-scale anchor."
+    ],
+    "strengths": ["F-10 and F-11 state Plan-scoped propositions with sources", "Product choices are separated from the obligations attached to them ('either way ...')", "Five of its six corrections are accurate and useful"]
+   },
+   "decision_burden": {
+    "blocking_decisions": [
+     {"item": "Zarr v3 storage strategy (tensorstore, zarr-python >=3 or direct-zarr)", "loc": "F-11 item 2", "canonical_default": "none"},
+     {"item": "Plate presentation: well-by-well vs stitched with disclosed zeros", "loc": "F-11 item 4", "canonical_default": "none; blocks discovery acceptance"}
+    ],
+    "nonblocking_choices": [
+     {"item": "Listing multiple multiscales entries", "loc": "F-11 item 1", "note": "the spec gives a canonical default (first-entry fallback)"},
+     {"item": "Version-handling policy: strict vs permissive", "loc": "F-11 item 3", "note": "Plan L5 (0.5) is the canonical default; the permissive framing is defective (X2-U2)"},
+     {"item": "Pyramid level choice: automatic vs picker, plus a recommended manual override", "loc": "F-11 item 5", "note": "Plan L5 already chooses automatic; the override is additive and needs the L9 review"},
+     {"item": "Initial visibility of label overlays", "loc": "F-11 item 6"}
+    ],
+    "optional_capability_groups_not_asks": ["F-9 AGAVE extras under the L9 review gate"],
+    "clarification_questions": 0,
+    "redundant_questions": 0,
+    "counts": {"blocking": 2, "nonblocking": 4, "clarification": 0, "redundant": 0},
+    "note": "X2 has one fewer blocking decision than X1 because it omits the dtype support matrix, a real open decision (S003 L70-72 vs S096 L25-28 and S025 L84-85). The lower burden reflects an omission, not a quality gain."
+   },
+   "coverage": {
+    "assessed": ["All 111 lines of delivered.md", "Every reference facet against delivered.md", "Every decisive source claim in unsupported_claims, novel_findings and correct_non_findings", "checks.md and upstream/draft.md in full; upstream/observations.md for O-001-O-012, O-026-O-036, O-046/O-047, O-067, plus all O-headers and sources by grep"],
+    "not_assessed_PENDING_HIGH_END_VERIFICATION": ["Delivered claims resting on sources this evaluator did not open: S011, S027 (duplicate note), S029 L294-295/L334, S070 ('multi-TB' positioning), S102, S111, S113, S051 L79-129 (RFC titles)", "Upstream observation bodies O-013-O-025, O-037-O-045, O-048-O-066 and O-068-O-080 (headers only), for handoff tracing of non-reference findings", "stage1/evidence-bundle.md (referenced by X2 but absent from the workspace)", "SHA-256 recomputation and excerpt hashes (no shell)"]
+   }
+  }
+ },
+
+ "comparison_X1_vs_X2": {
+  "reference_status_matrix": {
+   "OME05-C01": {"X1": "narrowed", "X2": "narrowed", "note": "X1 has more facets (no-misparse rule, legacy fixture); X2 adds refusal on unknown version. Neither has hierarchy consistency"},
+   "OME05-C02": {"X1": "lost", "X2": "narrowed", "note": "X2 gains the type-driven, where-relevant controls facet"},
+   "OME05-C03": {"X1": "narrowed", "X2": "narrowed", "note": "X2 states level geometry as an obligation; X1 only names the failures"},
+   "OME05-C04": {"X1": "narrowed", "X2": "narrowed", "note": "X1 keeps composition order; X2 keeps only per-level translation"},
+   "OME05-C05": {"X1": "narrowed", "X2": "lost", "note": "X1 keeps discovery and the entry point"},
+   "OME05-C06": {"X1": "narrowed", "X2": "lost", "note": "X1 keeps integer dtype and palette-not-mandate"},
+   "OME05-C07": {"X1": "narrowed", "X2": "narrowed", "note": "complementary facets: X1 has the dtype support boundary, X2 the codec pipeline floor"},
+   "OME05-C08": {"X1": "narrowed", "X2": "narrowed", "note": "X1 has the reader-write hazard; X2 has error taxonomy and zero disclosure"}
+  },
+  "reference_counts": {"X1": {"narrowed": 7, "lost": 1, "retained": 0, "contradicted": 0}, "X2": {"narrowed": 6, "lost": 2, "retained": 0, "contradicted": 0}},
+  "in_X1_only": ["C01 no-silent-misparse rule and legacy fixture", "C04 dataset-then-group composition as a correction; ome-zarr-py ignores group-level transforms", "C05 discovery via the parent labels list; labels-subfolder entry point", "C06 integer labels; colour fallback is a product choice", "C07 dtype support boundary with messaging", "C08 reader-side write hazard (named)", "NF-RDEFS", "NF-SINGLESCALE", "NF-LABELMARK", "NF-ENTRYPOINT", "NF-VALIDATOR", "non-finding: .ozx deferral, 11-viewer count, ÷3 unverified"],
+  "in_X2_only": ["C01 informative refusal on unknown ome.version; fixture version provenance", "C02 type-driven axes, variable dims, controls where relevant", "C03 level geometry obligation independent of selection UI; centred per-level translations", "C07 codec pipeline floor (sharding, inner codecs, crc32c index) for any library", "C08 own error taxonomy (None-collapse); disclosure of synthetic zeros", "NF-NONIMAGE", "NF-LABELVIS", "NF-PROVENANCE", "richer NF-MULTIMS (spec choose-by-name) and NF-OMERO (vizarr label coupling)", "non-findings: handle scramble, most-upvoted, volume-cache draft status, 49 wells, 4496763 layout, multi-multiscales scope, remote exclusions"],
+  "in_both": ["C01 version policy as a product choice with truthful refusal", "C03 non-2 and Z-downsample failures; picker UX is a product choice", "C04 napari group-level transform gap", "C07 storage-library decision", "NF-HCS", "NF-MULTIMS", "NF-OMERO", "AGAVE optional extras and session-local settings (covered)", "one false 'unsupported' dismissal of a correct S034 size figure each (X1: 21.6 GB; X2: 1 TB)"],
+  "in_neither": ["C01 hierarchy-consistent version and mixed-version probe; the '0.1' default in ome-zarr-py (S018 L280-287)", "C02 dimension_names/rank validation; absent vs length-one dimensions", "C03 declared order and arbitrary paths; missing-level handling", "C04 unit-absent state; composed numeric probe; napari dropping translations (S048 L266-283)", "C05 level and coordinate registration before overlay; S035 L2770", "C06 label-value keyed lookup; nearest resampling; 64-bit precision", "C07 per-array endianness; transpose; refusal of unsupported codecs", "C08 fill vs failure distinction; zero-fill of failed loads (S018 L552-557); parse_url all-zeros reads (S028 L3887)"],
+  "defects": {"X1_only": ["X1-U1 false 21.6 GB dismissal", "X1-U2 false S042/S045 swap", "X1-U3 'conforming' translation-first", "X1-U4 cheap 0.4", "X1-U5 path transforms spec-legal"], "X2_only": ["X2-U1 false 1 TB dismissal (moderate)", "X2-U2 AGAVE sniff as precedent", "X2-U3 b2r called plate", "X2-U4 citation slip"]},
+  "verdict": "Neither result retains any reference, and both lose most of what their own upstream stages had acquired. X1 keeps more reference facets (C05 and C06 survive, C04 composition order survives) and more distinct novel findings. X2 keeps C02 and more usable C03, C07 and C08 facets, and its corrections are more accurate on the whole. Each has exactly one false 'unsupported' dismissal of a correct S034 figure. X2's error is more consequential (it removes the TB-scale anchor), while X1 has more low-severity false or overstated claims (five vs four, one of them negligible). By finding identity this is not a dominance relation: each has facets the other lacks, and no net score is computed (SCORING)."
+ },
+
+ "coverage_accounting": {
+  "assessed": [
+   "Step 1: all eight references revalidated against S003 and supporting sources before grading; eligibility decided per facet",
+   "Step 2: every reference graded for both results against delivered.md only",
+   "Step 3: every material delivered claim with a source citation, or a claim of corpus absence, was checked or listed as pending. Every false-negative corpus claim (X1-U1, X1-U2, X2-U1) was checked directly",
+   "Step 4: novel findings and non-findings verified at source lines",
+   "Step 5: upstream draft, observations and checks read after steps 2-4 were saved"
+  ],
+  "limitations": [
+   "C07.b (reverse decode order) and C08.a (fill_value semantics) are unassessable_missing_input at facet level: no zarr-specs capture exists in the admitted corpus",
+   "C06.d (binary64 precision) is partially eligible: derived, not stated by any admitted source",
+   "Hashes are catalog-recorded; recomputation is PENDING_HIGH_END_VERIFICATION (no shell)",
+   "Large API dumps (S028, S035, S050, S073-S080, S087, S089, S090, S097, S100, S101, S109, S112, S114) were read at cited lines or titles only. Contrary evidence elsewhere in them is not excluded: PENDING_HIGH_END_VERIFICATION",
+   "Native runtime behaviour: none claimed and none assessed"
+  ],
+  "sources_not_opened_by_evaluator": "S001, S002, S005-S007, S009, S011, S012, S017, S021-S023, S026, S027, S029, S030, S032, S036-S040, S046, S047, S049, S051 (grep only), S057, S060-S062, S066-S081, S083-S095, S097-S102, S104-S107, S110, S111, S113, S115, S116, S118, S119, S124. Delivered claims resting on these are listed in each result's coverage as PENDING_HIGH_END_VERIFICATION, never passed."
+ },
+
+ "neither_result": [
+  {"ref": "C01", "text": "The reference reader defaults a missing multiscales version to '0.1', so 0.5 axes are parsed under 0.1 format rules: an implicit legacy reinterpretation in ome-zarr-py.", "sources": [["S018", "280-287"], ["S016", "81-96"]]},
+  {"ref": "C02", "text": "dimension_names MUST match axes (a 0.5.2 clarification), and napari assumes 5D when axes are absent.", "sources": [["S003", "174,825-827"], ["S048", "222-223"]]},
+  {"ref": "C04", "text": "napari-ome-zarr main keeps only datasets[0].coordinateTransformations[0] and only the first group-level transform, so dataset-level and group-level translations are dropped.", "sources": [["S048", "266-283"]]},
+  {"ref": "C05", "text": "Equal label and image level counts do not guarantee the same downscaling or origin (ngff issue).", "sources": [["S035", "2770"]]},
+  {"ref": "C06", "text": "Label values are keyed by label-value, and nearest-neighbour resampling is needed for categorical data.", "sources": [["S003", "461-471"], ["S020", "192"], ["S112", "1052,1125"]]},
+  {"ref": "C07", "text": "tensorstore has a transpose+sharding bug.", "sources": [["S109", "553,600"]]},
+  {"ref": "C08", "text": "A parse_url store silently reads arrays as all zeros, and the reference reader zero-fills tiles on load ValueError.", "sources": [["S028", "3840,3887"], ["S018", "552-557"]]}
+ ]
+}

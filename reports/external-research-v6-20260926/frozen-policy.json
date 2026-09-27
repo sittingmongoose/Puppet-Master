@@ -1,0 +1,101 @@
+{
+ "schema": "er6.frozen_policy.v1",
+ "frozen_utc": "2026-09-26T21:24:09Z",
+ "authority": "RUN_POLICY.json starter ceilings intersected with existing subscriptions; no new billing/overage/account; TEST_ONLY_NEVER_PROMOTE",
+ "packet_zip_sha256": "0c51871bd5c4b6c0a51dd7cfea9661689d51d20015a8b710f01cb4620f81abca",
+ "shapes_evidence_pin": "21ec74bbca315bfb178eb4e463e63dd16f76ac65 (research/shapes-screen-20260921; head unchanged at check)",
+ "implementation_pin": {
+  "dev/frozen-code-prompts.sha256": "af8f36dbe6bdc2706a5f2971e49a1cd2da80c49e6013a233e54687076a56babc",
+  "tools/run_arm.py": "9418e7dc2873ed50f56d53535f329dcd35962bf00e9c4d96c47ba0270f929190",
+  "tools/run_r1.py": "24b9cbd6d329ce9f11dfab3d402a7a0c9c3a9dc3a67d9b06038a6ea4c6ba0a79"
+ },
+ "input_pin": {
+  "baseline_case_json_sha256": "cde07a949a49232ceab84f9fa78c955345433369874097640a4dabf3b8f4d502",
+  "baseline_catalog_sha256": "32950592cd2483ebfb08e3da1aa768621a46c62b985250bb50fa431dd2e93b22",
+  "case_bundle_manifest_sha256": "01e8109f6fa2cc387c05b2116e0d8339ae83e797b1db36d50443c52743b20218",
+  "origin": "/home/sittingmongoose/PM-Experiments/shapes-screen-20260921/baseline/cases/ome-zarr-thin (133 required files + 152 catalog blobs hash-verified)"
+ },
+ "runtimes": {
+  "M": {
+   "application": "Muse Code 1.4.0 (1.4.0-R4161.1) via muse serve MSP",
+   "binary_sha256": "1b68bd4518d53a2aaff063915df4d141b0a205e6d79038299d04e3a14e85a5b9",
+   "model": "muse-spark-1.3-contributor",
+   "effort": "max",
+   "goal_entry": "goal/set (native /goal)",
+   "approval_mode": "allowAll",
+   "tools": "Muse default set; shell sandbox default (network proxy-only); web tools present but prohibited by prompt and audited"
+  },
+  "Z": {
+   "application": "zcode official CLI 0.16.5 app-server (desktop 3.11.2.6792 bundle; 0.16.9 lacks provider-registry method)",
+   "cli_sha256": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+   "node": "v22.22.2",
+   "provider": "builtin:zai-coding-plan",
+   "model": "GLM-5.3-Flash",
+   "effort": "max",
+   "goal_entry": "session/goal set (native /goal)",
+   "tools": [
+    "Read",
+    "Write",
+    "Edit",
+    "Grep",
+    "Glob"
+   ],
+   "runtime_prefs": {
+    "nativeSearchEnhancementsEnabled": false,
+    "memoryEnabled": false
+   }
+  },
+  "opus_lanes": "Claude Code 2.1.283; orchestrator claude-opus-5-5 xhigh (this thread); reviewers: separate claude -p --model claude-opus-5-5 --effort xhigh processes"
+ },
+ "case": {
+  "id": "ome-zarr-thin",
+  "kind": "fixed-source (125 unique external sources + frozen thin Plan); familiar development/regression case, not a holdout",
+  "plan_visibility": "plan-aware investigator (existing shapes B flow)"
+ },
+ "topology": [
+  "stage1 investigator Goal (fresh session, fresh workspace)",
+  "freeze",
+  "candidate only: host evidence bundle (code)",
+  "stage2 independent same-model verifier Goal (fresh session, fresh workspace, read-only stage1 copy)",
+  "freeze"
+ ],
+ "single_variable": "Host-built source-centered evidence bundle of stage-1 cited line windows (+/-8 lines, mechanical quote-match) handed to the stage-2 verifier as its first view of cited evidence, replacing whole-source re-reads. Stage-1 prompt identical; stage-2 prompts differ only in the evidence-access paragraph.",
+ "observed_bottleneck": "shapes phase1 traces: 425 source reads covered 123 unique contents; fullest run 272 reads of 64 contents (1.86 MB presented vs 0.72 MB unique), 51 contents re-read across stages; B-shape run 94 reads of 37 contents, 24 re-read by the verifier",
+ "normalization_fixes_both_arms": [
+  "content-dedup handles S001..S125 with all 152 catalog aliases kept",
+  "61 single-line JSON captures given pretty-printed line views (originals hash-pinned in baseline)",
+  "local capture paths replaced by 'local-capture (origin URL not recorded)'"
+ ],
+ "schedule": [
+  "M-control",
+  "M-candidate",
+  "Z-candidate",
+  "Z-control"
+ ],
+ "order_rationale": "handoff example counterbalancing; serial; no concurrency",
+ "limits": {
+  "assignment_seconds": 1800,
+  "assignment_responses": 160,
+  "arm_seconds": 3600,
+  "arm_responses": 480,
+  "arm_assignments": 8,
+  "r1_sum_arm_seconds": 14400,
+  "r1_responses": 1920,
+  "retries": 0,
+  "evaluator_assignments": 2,
+  "evaluator_assignment_seconds": 2700,
+  "evaluator_sum_seconds": 5400,
+  "helpers": 4,
+  "active_phase_seconds": 28800
+ },
+ "r0_revision_before_dispatch": "neutral smoke Goals: 3 instead of 2. zcode smoke 1 launched natively but my wrapper polled session/goal show, which CLI 0.16.5 refuses while a prompt runs (-32010), and stopped it (1 request started, 0 completed). Fixed to poll session/read; smoke 2 passed.",
+ "acceptance": "designated final = runs/<slot>/frozen/stage2/delivered.md produced by the stage-2 session; missing final => slot INCOMPLETE_RUNTIME; upstream stage-1 files are neutral evidence, not delivered credit",
+ "cache_regime": "fresh native session and fresh workspace byte-copy per assignment; no cross-arm semantic reuse; provider-side prompt caching left at app default (identical case bytes across arms may yield provider cache hits; recorded, not claimed cold)",
+ "account_scope": "shapes unknown_usage_hold is scoped to the Codex/Astra campaign phase1-20260921 account; Muse (Meta) and zcode (Z.ai Coding Plan) are separate accounts and unaffected; the hold is preserved, not cleared. Muse window 4%/weekly 11% at 2026-09-26T21:17Z. Another thread is concurrently running two Muse sessions on the same account (recorded contention). zcode exposes no quota readout; typed request failures are recorded.",
+ "isolation": "app-native restrictions + read-only case copy + post-hoc audit of every tool call path/web use; no Landlock/OS boundary applied (limitation)",
+ "evaluator_only": {
+  "fixed_reference": "/mnt/Cursor/PuppetMaster-Evidence/tests/research-shapes-20260920/phase1-20260921/evaluation/reference/fixed-reference.json sha256 54fdca6a4aa9a6356da545a0c195c835557c2a8b1fe16feb9356d0d09a83fbde",
+  "scoring_guide": "SCORING.md sha256 aa1e2c7aab9128bd1b9e4b2f5c62f7325cc3ff39b6fcdd5d68818742169806bd",
+  "never_in_candidate_workspace": true
+ }
+}

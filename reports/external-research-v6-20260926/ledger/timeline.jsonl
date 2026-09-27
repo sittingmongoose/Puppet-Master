@@ -1,0 +1,17 @@
+{"t":"2026-09-26T21:04:59Z","lane":"development","event":"R0 start (packet unzip)"}
+{"t":"2026-09-26T21:17:13Z","lane":"candidate-smoke","event":"Muse smoke Goal 16.2s, 6 parent responses, complete"}
+{"t":"2026-09-26T21:17:44Z","lane":"candidate-smoke","event":"zcode smoke 1 launched; wrapper poll defect stopped it (1 request started, 0 completed)"}
+{"t":"2026-09-26T21:18:57Z","lane":"candidate-smoke","event":"zcode smoke 2 103.7s, 5 responses, complete"}
+{"t":"2026-09-26T21:24:09Z","lane":"development","event":"frozen-policy.json frozen; R0 end (19m10s)"}
+{"t":"2026-09-26T21:24:17Z","lane":"candidate","event":"R1 dispatch M-control"}
+{"t":"2026-09-26T21:51:20Z","lane":"development","event":"INFRA_FAULT run_arm v1: stage-2 workspace build failed (copytree kept read-only mode of frozen stage1; bundle copy PermissionError) for M-candidate after its stage 1 froze; stage 2 never dispatched. Scheduler parent (run_r1 pid 88523) stopped so Z-control is not launched ahead of Z-candidate; Z-candidate run_arm (pid 120981) keeps running and will hit the same fault after stage 1."}
+{"t":"2026-09-26T21:40:09Z","lane":"candidate","event":"M-control frozen: arm 942.9s, 71 parent responses, delivered.md present"}
+{"t":"2026-09-26T21:45:07Z","lane":"candidate","event":"M-candidate stage1 goal complete 306.2s, 33 responses; host bundle built; v1 fault before stage 2"}
+{"t":"2026-09-26T22:14:52Z","lane":"candidate","event":"Z-candidate stage1 goal complete 1780.5s, 56 responses; host bundle built; same v1 fault before stage 2"}
+{"t":"2026-09-26T22:14:53Z","lane":"candidate","event":"v2 continuation: M-candidate stage 2 dispatched (fault wait ~29.8 min, no model call lost)"}
+{"t":"2026-09-26T23:37:53Z","lane":"candidate","event":"All four R1 slots frozen (Z-control arm 2853.2s, 103 responses)"}
+{"t":"2026-09-26T23:38:14Z","lane":"evaluation","event":"reviewer workspaces built (blinded X1/X2 per pair)"}
+{"t":"2026-09-26T23:38:18Z","lane":"evaluation","event":"REV-M dispatched"}
+{"t":"2026-09-26T23:59:37Z","lane":"evaluation","event":"REV-M complete 1264.9s; REV-Z dispatched"}
+{"t":"2026-09-27T00:20:19Z","lane":"evaluation","event":"REV-Z complete"}
+{"t":"2026-09-27T00:22:33Z","lane":"development","event":"SUMMARY.md written; slice closed"}

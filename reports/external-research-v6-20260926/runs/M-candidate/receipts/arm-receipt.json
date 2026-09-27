@@ -1,0 +1,79 @@
+{
+ "schema": "er6.arm_receipt.v1",
+ "slot": "M-candidate",
+ "app": "muse",
+ "variant": "candidate",
+ "runner_version": "v2-resume-stage2",
+ "arm_start_utc": "2026-09-26T21:40:00.330641+00:00",
+ "arm_end_utc": "2026-09-26T22:28:02.758090+00:00",
+ "infra_fault": "v1 run_arm could not build the stage-2 workspace (read-only copy); stage 2 dispatched later by v2 with the same frozen inputs",
+ "fault_wait_seconds": 1785.6,
+ "caps": {
+  "arm_seconds": 3600,
+  "arm_responses": 480
+ },
+ "stages": [
+  {
+   "stage": "stage1_investigator",
+   "span_seconds": 307.3,
+   "native_responses": 33,
+   "stop_reason": "goal_complete",
+   "frozen_manifest": {
+    "draft.md": {
+     "sha256": "557e0810f9db3c44612e8092d396c4b90c37e611e067bfe956b6d804045fc1ee",
+     "bytes": 18795
+    },
+    "observations.md": {
+     "sha256": "1275afeb741f6abb27019e9d31fa5cd9b5269837e544ea6239e0ba234de197d7",
+     "bytes": 30663
+    }
+   }
+  },
+  {
+   "stage": "stage2_verifier",
+   "dispatched": true,
+   "dispatch_utc": "2026-09-26T22:14:53.199543+00:00",
+   "rc": 0,
+   "span_seconds": 789.5,
+   "caps": {
+    "seconds": 1800,
+    "responses": 160
+   },
+   "native_responses": 29,
+   "stop_reason": "goal_complete",
+   "driver_error": null,
+   "frozen_manifest": {
+    "checks.md": {
+     "sha256": "ac9413d1a3b283aba816f2fba1683966451306949273ea629a802267b8213f52",
+     "bytes": 32130
+    },
+    "delivered.md": {
+     "sha256": "3cde70e05444acb6a5644714c355c6138f06508a43d0bd27565935bee431f08f",
+     "bytes": 24283
+    }
+   },
+   "frozen_utc": "2026-09-26T22:28:02.760568+00:00"
+  }
+ ],
+ "host_bundle": {
+  "reused_from_v1": true,
+  "check": {
+   "observations": 40,
+   "observations_without_citation": 0,
+   "sources": 30,
+   "unknown_handles": [],
+   "bundle_lines": 1737,
+   "quotes": 40,
+   "quote_status": {
+    "not_found_in_cited_sources": 13,
+    "exact_at_cited_lines": 27
+   }
+  }
+ },
+ "arm_active_span_seconds": 1096.8,
+ "arm_span_seconds_including_fault_wait": 2882.4,
+ "arm_native_responses": 62,
+ "designated_final": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/runs/M-candidate/frozen/stage2/delivered.md",
+ "designated_final_sha256": "3cde70e05444acb6a5644714c355c6138f06508a43d0bd27565935bee431f08f",
+ "assignments_dispatched": 2
+}

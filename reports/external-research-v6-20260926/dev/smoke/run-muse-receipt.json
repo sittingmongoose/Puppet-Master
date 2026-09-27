@@ -1,0 +1,79 @@
+{
+ "schema": "er6.goal_receipt.v1",
+ "label": "smoke-muse",
+ "app": "muse",
+ "native_goal_entry": "/goal via MSP goal/set",
+ "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/dev/smoke/ws-muse",
+ "prompt_file": "dev/smoke/smoke-goal.txt",
+ "prompt_bytes": 274,
+ "prompt_sha256": "892de6c25c9863c8f03085d8f68cbc5cc83f587766a67528d74fff8e4f1f8897",
+ "objective_sha256": "bcfb49a846ca46dc17c010b7eacf22d01a6ce97eb48f267a8098842e51b9fd68",
+ "caps": {
+  "seconds": 300.0,
+  "responses": 10
+ },
+ "start_utc": "2026-09-26T21:17:13.186704+00:00",
+ "fresh_session": true,
+ "usage_read_before": {},
+ "session_id": "01a0df94-4f3b-7e21-a96c-d324d25f1fff",
+ "session_log": "/home/sittingmongoose/.local/share/muse/sessions/2026/09/26/01a0df94-4f3b-7e21-a96c-d324d25f1fff/session.jsonl",
+ "model_id": "muse-spark-1.3-contributor",
+ "provider_id": "meta",
+ "catalog_variants": [
+  "minimal",
+  "low",
+  "medium",
+  "high",
+  "xhigh",
+  "max"
+ ],
+ "effort_ack": "accepted",
+ "effort_effective": "max",
+ "goal_submitted_utc": "2026-09-26T21:17:14.284139+00:00",
+ "goal_ack": {
+  "commandId": "01a0df94-50ac-77ea-8d15-1189fb658a94",
+  "status": "accepted",
+  "turnId": "01a0df94-50ac-77ea-8d15-1189fb658a94"
+ },
+ "stop_reason": "goal_complete",
+ "goal_status_final": "complete",
+ "end_utc": "2026-09-26T21:17:30.478373+00:00",
+ "elapsed_seconds": 16.2,
+ "usage_read_after": {
+  "usage": {
+   "observedAtMs": 1790457450443,
+   "tier": "<redacted-subscription-tier-id>",
+   "weekly": {
+    "resetsAtMs": 1790553600000,
+    "usedPercent": 11
+   },
+   "window": {
+    "resetsAtMs": 1790472023000,
+    "usedPercent": 4,
+    "windowDurationMins": 300
+   }
+  }
+ },
+ "native_responses": 6,
+ "counters": {
+  "token_usage_events": 6,
+  "prompt_tokens": 122919,
+  "output_tokens": 0,
+  "last_cumulative": {
+   "outputTokens": 658,
+   "promptTokens": 122919,
+   "totalTokens": 123577
+  },
+  "turns_started": 1,
+  "turns_completed": [
+   {
+    "turnId": "01a0df94-50ac-77ea-8d15-1189fb658a94",
+    "terminal": "completed",
+    "reason": null,
+    "durationMs": 16124,
+    "usage": null
+   }
+  ]
+ },
+ "receipt_written_utc": "2026-09-26T21:17:30.593748+00:00"
+}
