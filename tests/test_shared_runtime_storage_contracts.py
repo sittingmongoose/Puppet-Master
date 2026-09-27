@@ -1,4 +1,5 @@
 import copy
+import importlib.util
 import json
 import subprocess
 import sys
@@ -224,6 +225,16 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
                 }
             ),
         )
+
+    def test_live_registry_satisfies_readiness_census_and_value_contracts(self) -> None:
+        spec = importlib.util.spec_from_file_location(
+            "storage_readiness_census", ROOT / "scripts/pm-implementation-readiness.py"
+        )
+        readiness = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(readiness)
+        self.assertEqual(readiness.storage_value_registry_data_failures(
+            self.registry, path_label="Plans/storage_value_registry.json"
+        ), [])
 
     def test_closed_shared_runtime_families_are_materialized_exactly_once(self) -> None:
         for family_id in MATERIALIZED_FAMILY_IDS:
