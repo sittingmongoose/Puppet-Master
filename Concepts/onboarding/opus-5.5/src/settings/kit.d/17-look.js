@@ -103,6 +103,9 @@ function o55ApplyLook() {
   const attr = (name, val) => { if (val == null) html.removeAttribute(name); else if (html.getAttribute(name) !== val) html.setAttribute(name, val); };
   const light = /-light$/.test(html.getAttribute('data-theme') || '');
   /* Accent color */
+  /* the theme's own accent, read with no override in place, for the first swatch */
+  if (st.getPropertyValue('--accent-primary')) { st.removeProperty('--accent-primary'); st.removeProperty('--accent-primary-rgb'); }
+  set('--o55-theme-accent', getComputedStyle(html).getPropertyValue('--accent-primary').trim() || null);
   const acc = O55_ACCENTS[V('accent')];
   const pick = acc ? acc[light ? 'light' : 'dark'] : null;
   set('--accent-primary', pick && pick[0]); set('--accent-primary-rgb', pick && pick[1]);
@@ -176,5 +179,42 @@ restoreSettingDefault = function (id) {
 const o55LookRender = renderApp;
 renderApp = function () { const r = o55LookRender.apply(this, arguments); o55ApplyLook(); return r; };
 window.addEventListener('resize', () => { if ((PM51.value('general.visual.interface-density') || 'Auto') === 'Auto') o55ApplyLook(); });
-new MutationObserver(() => o55ApplyLook()).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+/* A theme change repaints the look and redraws the rows that show the theme's own value. */
+new MutationObserver(() => {
+  o55ApplyLook();
+  window.requestAnimationFrame(() => Object.keys(O55R).filter(id => O55R[id] && O55R[id].themeOwn).forEach(id => { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); }));
+}).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 window.setTimeout(o55ApplyLook, 0);
+
+/* ---------- Preview a theme before switching ------------------------------------------------------------------------- */
+/* With the switch on, picking a theme shows it at once with a small bar: Keep it, or Go back; left alone it goes back
+   after 15 seconds, like a display-settings change. With it off, the pick simply sticks. */
+let o55Preview = null;
+function o55PreviewEnd(keep) {
+  const pv = o55Preview; if (!pv) return; o55Preview = null;
+  window.clearInterval(pv.timer); if (pv.bar) pv.bar.remove();
+  if (keep) { showToast('Theme kept', PM51.valueLabel('general.visual.theme', PM51.value('general.visual.theme')), 'success', 2200); return; }
+  Object.entries(pv.before).forEach(([id, v]) => { if (v === undefined) restoreSettingDefault(id); else commitSettingValue(id, v); });
+  saveState(); ['general.visual.theme', 'general.visual.theme-mode'].forEach(id => { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); });
+  showToast('Back to your theme', PM51.valueLabel('general.visual.theme', PM51.value('general.visual.theme')), 'info', 2200);
+}
+const o55PreviewChange = handleChangeAction;
+handleChangeAction = function (action, el) {
+  const id = el && el.dataset ? el.dataset.setting : '';
+  const watch = action === 'change-setting' && (id === 'general.visual.theme' || id === 'general.visual.theme-mode') && o55On(PM51.value('general.visual.theme-preview'));
+  const before = watch && !o55Preview ? { 'general.visual.theme': state.settings['general.visual.theme'], 'general.visual.theme-mode': state.settings['general.visual.theme-mode'] } : null;
+  const r = o55PreviewChange.apply(this, arguments);
+  if (!watch) return r;
+  if (o55Preview) { o55Preview.left = 15; return r; }
+  const bar = document.createElement('div');
+  bar.className = 'o55-preview-bar'; bar.setAttribute('role', 'status');
+  bar.innerHTML = `<span class="o55-preview-text">Previewing ${h(PM51.valueLabel('general.visual.theme', PM51.value('general.visual.theme')))}. <span class="o55-preview-left">Going back in 15 s.</span></span><button type="button" data-o55-preview="keep">Keep it</button><button type="button" data-o55-preview="back">Go back</button>`;
+  document.body.appendChild(bar);
+  o55Preview = { before, bar, left: 15, timer: window.setInterval(() => {
+    const pv = o55Preview; if (!pv) return; pv.left -= 1;
+    const t = pv.bar.querySelector('.o55-preview-text'); if (t) t.innerHTML = `Previewing ${h(PM51.valueLabel('general.visual.theme', PM51.value('general.visual.theme')))}. <span class="o55-preview-left">Going back in ${pv.left} s.</span>`;
+    if (pv.left <= 0) o55PreviewEnd(false);
+  }, 1000) };
+  return r;
+};
+document.addEventListener('click', e => { const b = e.target && e.target.closest ? e.target.closest('[data-o55-preview]') : null; if (b) o55PreviewEnd(b.dataset.o55Preview === 'keep'); });

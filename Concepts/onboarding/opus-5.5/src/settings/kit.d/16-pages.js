@@ -88,6 +88,14 @@ PM51.on('o55-home-reset', () => {
   if (state && state.settings && !Array.isArray(state.settings['custom-words'])) delete state.settings['custom-words'];
 })();
 
+/* ---------- Accent color keeps the theme's own until you pick one ------------------------------------------------ */
+/* The hand row defaulted to Violet, drawn as chosen, while each theme paints its own accent (Basic Dark is blue). */
+(function o55AccentThemeFirst() {
+  const e = findSettingGlobal('accent'); if (!e || !e.setting || !Array.isArray(e.setting.options)) return;
+  if (!e.setting.options.includes('Theme')) e.setting.options = ['Theme'].concat(e.setting.options);
+  e.setting.value = 'Theme';
+})();
+
 /* ---------- choices that come from somewhere else ------------------------------------------------------------------- */
 const o55PersonaChoices = () => (Array.isArray(state.personas) ? state.personas : []).map(p => ({ value: p.id, label: p.name, meta: p.locked ? 'Core' : p.group === 'Bundled' ? 'Bundled' : 'Yours' }));
 ['planning.interview.builder-intake-persona', 'planning.interview.builder-drafting-persona'].forEach(id => PM51.moreChoices(id, o55PersonaChoices));

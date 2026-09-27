@@ -14,7 +14,10 @@
   },
   "accent": {
    "label": "Accent color",
-   "help": "The color of selections, focus outlines and progress."
+   "help": "The color of selections, focus outlines and progress; the first keeps the theme's own.",
+   "options": {
+    "Theme": "The theme's own"
+   }
   },
   "general.visual.basic-color-scheme": {
    "label": "Light or dark for Basic (older setting)",
@@ -74,10 +77,10 @@
   },
   "general.visual.app-font": {
    "label": "App font",
-   "help": "Changing it restarts the app.",
+   "help": "Retro themes use display fonts; pick your computer's to use its everyday fonts.",
    "options": {
     "System Fonts": "My computer's fonts",
-    "Orbitron + Rajdhani (Retro)": "Retro display fonts"
+    "Orbitron + Rajdhani (Retro)": "The theme's own fonts"
    }
   },
   "general.visual.ui-scale": {
@@ -253,19 +256,28 @@
    "label": "Border width",
    "unit": "px",
    "min": 0,
-   "max": 4
+   "max": 4,
+   "themeOwn": true,
+   "themeToken": "--border-width",
+   "help": "Thickness of panel and control borders."
   },
   "general.visual.border-radius": {
    "label": "Corner roundness",
    "unit": "px",
    "min": 0,
-   "max": 16
+   "max": 16,
+   "themeOwn": true,
+   "themeToken": "--radius-md",
+   "help": "How rounded corners are."
   },
   "general.visual.scrollbar-width": {
    "label": "Scrollbar width",
    "unit": "px",
    "min": 4,
-   "max": 20
+   "max": 20,
+   "themeOwn": true,
+   "themeToken": "--pm6-sb-size",
+   "help": "How wide scrollbars are."
   },
   "general.interaction.submit-key": {
    "label": "Key that sends a message",

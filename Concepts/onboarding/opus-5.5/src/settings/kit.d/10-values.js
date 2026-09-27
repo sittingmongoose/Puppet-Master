@@ -125,6 +125,26 @@ function o55Inherited(setting, value) {
   const shown = value == null || value === '' ? 'Automatic' : PM51.valueLabel(setting.id, value);
   return `<span class="o55-inherit"><span class="o55-auto">${icon('spark')}<span>${h(/default/i.test(shown) ? cap(shown) : shown)}</span></span><button type="button" class="o55-textbtn" data-action="set-slider-override" data-setting="${a(setting.id)}">Set a number</button></span>`;
 }
+/* A fine-tuning number the theme decides (Border width, Corner roundness, Scrollbar width; rows.d `themeOwn`) reads
+   as the theme's own value until a number is set, and "Use the theme's" hands it back. The inventory default is
+   the Retro value, which was shown as if it were in use on every theme. */
+function o55ThemeOwn(setting, value) {
+  const row = O55R[setting.id] || {};
+  const chosen = typeof o55LookChosen === 'function' ? o55LookChosen(setting.id) : value;
+  if (chosen == null) {
+    let now = ''; try { now = row.themeToken ? getComputedStyle(document.documentElement).getPropertyValue(row.themeToken).trim() : ''; } catch (e) { now = ''; }
+    return `<span class="o55-inherit"><span class="o55-auto">${icon('spark')}<span>${h("The theme's own")}${now ? ` · ${h(now)}` : ''}</span></span><button type="button" class="o55-textbtn" data-action="set-slider-override" data-setting="${a(setting.id)}">Set a number</button></span>`;
+  }
+  return `<span class="o55-inherit">${o55Number(setting, chosen)}<button type="button" class="o55-textbtn" data-action="o55-auto-number" data-setting="${a(setting.id)}">Use the theme's</button></span>`;
+}
+/* Swatches with names people can hear and a first choice that keeps the theme's own accent. */
+const O55_SWATCH = { Violet: '#8b5cf6', Cyan: '#39bfe6', Rose: '#e96a9d', Amber: '#e9aa52', Emerald: '#43c78b' };
+function o55Swatches(setting, value) {
+  return `<div class="swatches o55-swatches" role="radiogroup" aria-label="${a(PM51.rowLabel(setting))}">${(setting.options || []).map(o => {
+    const on = String(o) === String(value), label = PM51.valueLabel(setting.id, o), theme = o === 'Theme';
+    return `<button type="button" class="swatch${on ? ' active' : ''}${theme ? ' is-theme' : ''}" role="radio" aria-checked="${on}" aria-label="${a(label)}" title="${a(label)}" style="background:${theme ? 'var(--o55-theme-accent, var(--accent-primary))' : (O55_SWATCH[o] || '#888')}" data-action="set-setting" data-setting="${a(setting.id)}" data-value="${a(o)}"></button>`;
+  }).join('')}</div>`;
+}
 function o55Structured(setting, value) {
   const list = setting.control === 'list';
   const count = Array.isArray(value) ? value.length : (value && typeof value === 'object' ? Object.keys(value).length : 0);
@@ -175,8 +195,10 @@ renderControl = function (setting, value) {
   if (!setting) return o55KitControl(setting, value);
   const row = O55R[setting.id] || {};
   const control = row.control || setting.control;
+  if (row.themeOwn) return o55ThemeOwn(setting, value);
   const opts = o55Options(setting);
   switch (control) {
+    case 'swatches': return o55Swatches(setting, value);
     case 'select': return opts.length ? o55Select(setting, value, opts) : o55Text(setting, value);
     case 'segmented': return opts.length && o55SegmentFits(setting, opts) && opts.map(String).includes(String(value)) ? o55Segmented(setting, value, opts) : o55Select(setting, value, opts);
     case 'multiselect': return opts.length ? o55Multi(setting, value, opts) : o55Structured(Object.assign({}, setting, { control: 'list' }), value);
@@ -467,7 +489,7 @@ dispatchAction = function (action, el, event) {
       if (found && found.setting.id === 'system.advanced.reset-defaults') { confirmDialog('Reset settings to defaults', 'Every setting in this project goes back to its default. Accounts, keys and history are kept, and a restore point is made first so you can undo it.', 'Reset', () => restoreAllProjectDefaults(), true); return; }
       if (found && found.setting.id !== 'restore-defaults') { o55RunAction(found); return; } break;
     case 'o55-go-owner': if (id) { o55GoOwner(id); return; } break;
-    case 'o55-auto-number': if (found) { if (restoreSettingDefault(id)) { saveState(); refreshSettingRow(id); showToast('Back to automatic', PM51.rowLabel(found.setting), 'success', 2200); } return; } break;
+    case 'o55-auto-number': if (found) { if (restoreSettingDefault(id)) { saveState(); refreshSettingRow(id); showToast((O55R[id] || {}).themeOwn ? "Back to the theme's own" : 'Back to automatic', PM51.rowLabel(found.setting), 'success', 2200); } return; } break;
     case 'set-setting': {
       if (found) { const v = el.dataset.value; if (!commitSettingValue(id, v)) return; refreshSettingRow(id); o55Changed(found.setting, v); return; }
       break;

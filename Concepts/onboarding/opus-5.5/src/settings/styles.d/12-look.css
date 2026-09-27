@@ -34,3 +34,16 @@ html[data-o55-scan="on"][data-theme^="retro"]:not([data-retro-fx="off"]) .pixel-
 html[data-density="compact"] #panel-settings .setting-row.o55-row { min-height: 44px; padding-top: 6px; padding-bottom: 6px; }
 html[data-density="compact"] #panel-settings .o55-group-head { padding-top: 10px; }
 html[data-density="compact"] #panel-settings .settings-section.o55-group + .settings-section.o55-group { margin-top: 10px; }
+
+/* Accent swatches: the first keeps the theme's own accent and carries an inner ring so it reads as "the default". */
+#panel-settings .o55-swatches .swatch.is-theme { box-shadow: inset 0 0 0 3px var(--k3-surface-1); }
+
+/* Theme preview bar: centred at the bottom, above everything, in the current theme's surface colours. */
+.o55-preview-bar { position: fixed; left: 50%; bottom: 44px; transform: translateX(-50%); z-index: 10050; display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 32px); padding: 10px 12px 10px 16px; border: 1px solid var(--k3-line, var(--border)); border-radius: 12px; background: var(--k3-surface-2, var(--surface-elevated)); color: var(--k3-text-1, var(--text-primary)); box-shadow: 0 14px 40px rgba(0,0,0,.28); font-size: 13px; }
+.o55-preview-bar .o55-preview-text { margin-right: 6px; }
+.o55-preview-bar .o55-preview-left { color: var(--k3-text-3, var(--text-muted)); }
+@media (prefers-reduced-motion: no-preference) { html:not([data-motion="reduced"]) .o55-preview-bar { animation: o55PreviewIn .22s cubic-bezier(.22,.8,.24,1); } }
+@keyframes o55PreviewIn { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+.o55-preview-bar button { display: inline-flex; align-items: center; min-height: 30px; padding: 0 12px; border: 1px solid var(--k3-line, var(--border)); border-radius: 8px; background: transparent; color: inherit; font: inherit; font-weight: 600; cursor: pointer; box-shadow: none; }
+.o55-preview-bar button[data-o55-preview="keep"] { border-color: transparent; background: var(--accent-primary); color: var(--k3-on-accent, #fff); }
+.o55-preview-bar button:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
