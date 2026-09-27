@@ -1,34 +1,34 @@
 # Shard Index: Plans/Personas.md
 
-Generated: 2026-09-10T02:47:39Z
+Generated: 2026-09-27T16:24:19Z
 
-Source SHA256: `bc6e85b1db32bbc0f521ad44ad09a2264a72be000d1e29aadd18e90f43ed1dd0`
+Source SHA256: `f1286dac3dea331f4cbbbf762fc066e7d41ac7d9652dffe6a9a5bc1a8e0713e7`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `1b30dd2d68b9f572317ca18e1d00aac19772be2583e9e28b430b24190eff6cc1`
-- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L27 `8d2fad4a3a0346a3d39d82e5ce4bdf6225ddc598fbf0126c415b7057e62a6c02`
-- [003 - 1. Definitions](003-1.-definitions.md) L29-L76 `160d454c21a87b78240a123d802bacff79e462db7d472b8e7c192dd8b47cbbcd`
-- [004 - 2. Storage layout](004-2.-storage-layout.md) L78-L123 `e2d046f3c88a079c99f2af4e32aae8669f97ad8480218177e482f3509b7042fc`
-- [005 - 3. Persona format (schema)](005-3.-persona-format-schema.md) L125-L211 `aeb19ec67fc2a81afc3c3ff83c0d6ccca5e8006029aef5cbf1e54d835c360201`
-- [006 - 4. GUI requirements](006-4.-gui-requirements.md) L213-L261 `b6f722727429f67a2428ad0e99ca263220ba76493cc9af119727a0d3ad6d076f`
-- [007 - 5. Integration: Persona application to a run](007-5.-integration-persona-application-to-a-run.md) L263-L329 `71928404fe96eeebe35b79a5c53217e957750c81cd328f09c50fe50ebd07ce2f`
-- [008 - 6. Reserved Personas](008-6.-reserved-personas.md) L331-L355 `61d040bd2e28403af8ba9a819f97c33875fc4ab1605d16831a0b5c4bb97d8356`
-- [009 - 7. Relationship to the Persona registry and delegated-subagent registry](009-7.-relationship-to-the-persona-registry-and-delegated-subagent-r.md) L356-L377 `9a86986d682e738d81dbda5a334ce7616a92a9070d66f7021fbda71961da32d0`
-- [010 - 8. OpenCode baseline and Puppet Master deltas](010-8.-opencode-baseline-and-puppet-master-deltas.md) L378-L398 `3a6e20acb0e2b6002010f33c5e0e851d430a26e6e97cb746005cbbaad2652502`
-- [011 - 9. Acceptance criteria](011-9.-acceptance-criteria.md) L400-L427 `233c0d3919541f99f3f2472ed80f0da232d67b8148ddd0bd02dda7616499625b`
-- [012 - 10. Persona Runtime Contract Expansion (2026-03-06)](012-10.-persona-runtime-contract-expansion-2026-03-06.md) L428-L471 `17f4e57d7368aecfedc35a5ff053f1b0cfcc91db5fd1332ece12af572da2ab9d`
-- [013 - 11. Core Persona catalog](013-11.-core-persona-catalog.md) L472-L617 `e9aa23a60ceeab8349c22a4e763fc4b76d28121e2b7c5df1eecf601d8e7c9e69`
-- [014 - 12. Specialty Persona catalog and curation](014-12.-specialty-persona-catalog-and-curation.md) L618-L684 `d0aabac3c01054f7f33aed5e79f8e6d8cc495fc1a0c5c129f3812de2e91d954c`
-- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L686-L690 `1ad567ed40c4569335c7f3e74a5f8e3c169db4c51c5cc1cff0e7cd65bd062e55`
-- [016 - PlanUnits](016-planunits.md) L692-L3179 `b8c6a63d3f92bc2ad96cffbdaf0bf2229f6f21f4d5501ca8d0d02928a07cfd50`
-- [017 - Migration Coverage](017-migration-coverage.md) L3181-L3191 `f1f7751600444ac01b954faef22556b54bfdfd97d7950e3e7d1ff16702a0a008`
-- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L3193-L3240 `3848f808120e4d448bf3459c6e3dea9b1cdbd6fb1328a50954c802c8783dc260`
-- [019 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3243-L3311 `634164e7ec0de34f51e8986d653a24371388e50e80ddf82814ca39cea5a76303`
-- [020 - Ledger Compile Addendum - pldg-20260626-001-feature-name](020-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3314-L3448 `a100943d583424332a579b284adc66a26dc262a75c3fe1b896cd221f2e64b591`
-- [021 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L3450-L3458 `9953f0f24a589cef1f800ec1e9b08fd0e0181ee05421b51139abf503a1cdd559`
-- [022 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](022-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L3459-L3465 `6c431fdcbc6f74c7668fa659c774d961f2f19accd71b9c937626d2c48fa4e679`
-- [023 - `run.started` Persona owner join](023-run.started-persona-owner-join.md) L3468-L3498 `df551c9565f5ba1522af07871e80dda368fe22b04a2b174fff2d8b3f6f092e52`
-- [024 - Additive Correction v4 — Wonderer Convergence Boundary (2026-09-03)](024-additive-correction-v4-wonderer-convergence-boundary-2026-09-03.md) L3500-L3535 `64026b0acb23efe9c8859cc93426c47bb18fd4a360873cb69d308400b2cc3e1b`
+- [001 - Preamble](001-preamble.md) L1-L4 `951f6b539331e9e4a30b059c78e81fddc77eb7f1a6049e410eaf13ab85d3d7e0`
+- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L27 `a646bbd77af05ec890f08170dd7fa923b610bf652dcb6239a77dc1e52badff4a`
+- [003 - 1. Definitions](003-1.-definitions.md) L29-L76 `4a726d1b5030e139ecfdd68bf79758f0a7067699ed0d0fa61af206598eff0ad1`
+- [004 - 2. Storage layout](004-2.-storage-layout.md) L78-L123 `b2039044f596150a3f3bfdd60ed19128c7fce406e61308ca1559ef68aa6bfa21`
+- [005 - 3. Persona format (schema)](005-3.-persona-format-schema.md) L125-L211 `f26141ca6371d5bf9eeba5eca590d4ac284db91a4eaff80e4e3c0a78ed9b95ba`
+- [006 - 4. GUI requirements](006-4.-gui-requirements.md) L213-L261 `affc3b43e326a3188d95bc38b5d938e40513dd81d2015f9a08272c5a3174e089`
+- [007 - 5. Integration: Persona application to a run](007-5.-integration-persona-application-to-a-run.md) L263-L329 `870e21e6139f7b7412e587d70b88294a6acbc46eebfda59b59a1385e1cf5ae48`
+- [008 - 6. Reserved Personas](008-6.-reserved-personas.md) L331-L355 `34e30277d236fad3f7a6991a264a645325de3fd76c214b39139f980153dd6531`
+- [009 - 7. Relationship to the Persona registry and delegated-subagent registry](009-7.-relationship-to-the-persona-registry-and-delegated-subagent-r.md) L356-L377 `01022abded23a461dd0cf851c8fc540ceee37cf6a012c63d25c588e6dc8ec23a`
+- [010 - 8. OpenCode baseline and Puppet Master deltas](010-8.-opencode-baseline-and-puppet-master-deltas.md) L378-L398 `e30fdce20cb2a066fd94de462982b9f2b2a2fd67d1dac9bac8a839d8e18faefa`
+- [011 - 9. Acceptance criteria](011-9.-acceptance-criteria.md) L400-L427 `00882582f0cbd6a82eab6fc2ae51b6a0adf81d3d3abc841eebcc60e9fd2be3b5`
+- [012 - 10. Persona Runtime Contract Expansion (2026-03-06)](012-10.-persona-runtime-contract-expansion-2026-03-06.md) L428-L471 `ea088918fcc74ddc1b1c54a63592b3b1104653d2ad6ce806a7568fbc3c6c100a`
+- [013 - 11. Core Persona catalog](013-11.-core-persona-catalog.md) L472-L617 `ea43c08ab3753ffe47affa24b447da19b7e4f8671334e8bcdd168e271c10fe98`
+- [014 - 12. Specialty Persona catalog and curation](014-12.-specialty-persona-catalog-and-curation.md) L618-L684 `0878c6030df29cad5ae823ba4672a6a6f702a72c5dbb8f835230c0b147d5b9e5`
+- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L686-L690 `17ec92c67e595e9537ca53d3349475914a3b7aca5a46fec88dc9f1cec33a9f7c`
+- [016 - PlanUnits](016-planunits.md) L692-L3179 `683551d3b4f1c88f03885fd998b1ce4036dc9099831a54679202a5cb92c272dd`
+- [017 - Migration Coverage](017-migration-coverage.md) L3181-L3191 `c14cc04529911bc0342cf279484c5009affcd264bbacd7787166818f66ab2fa6`
+- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L3193-L3240 `87851c23a4cfb1f3a918b11792b4d80c7ede611e3db338b20af4dc26466608c7`
+- [019 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3243-L3311 `ec1e851789f792b207086cb1b966360bd2e9ac1d4d6ed9915e29f32e9ccc1413`
+- [020 - Ledger Compile Addendum - pldg-20260626-001-feature-name](020-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3314-L3448 `d35e7c453e3d0821c41369cde36728623240f241b0f77b46bda2828adc450554`
+- [021 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L3450-L3458 `0797327af0a5e378532bd66f2251d4c22e5c6e4dce01b246892b9586c55f4f4c`
+- [022 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](022-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L3459-L3465 `8bd340bdf10f5f33f4b8a01dfdeaf3d1c641b969d7b3f5ca2d1943e48e6dd61f`
+- [023 - `run.started` Persona owner join](023-run.started-persona-owner-join.md) L3468-L3498 `08b58579670dbe630b583a8e1574ced908d22a6540068752280de2cda01c72f4`
+- [024 - Additive Correction v4 — Wonderer Convergence Boundary (2026-09-03)](024-additive-correction-v4-wonderer-convergence-boundary-2026-09-03.md) L3500-L3535 `1f03ef24e69040e4b594eaee0868ee9b274faadd2d8cb89c0755a51a580d84d2`

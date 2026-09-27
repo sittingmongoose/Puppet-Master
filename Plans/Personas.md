@@ -214,7 +214,7 @@ The Markdown body following the frontmatter contains the Persona's system instru
 
 <a id="GUI-PERSONAS"></a>
 
-The primary Persona management surface is **Agent Config > Personas**. Settings remains a routing/help surface for policy-bearing controls and may link into Agent Config, but Settings is not the main Persona prompt browser or editor.
+The primary Persona management surface is **Agent Config > Personas**. From 2026-09-27 Agent Config is realized inside Settings (`Plans/FinalGUISpec.md` §7.4.7), so Agent Config > Personas is Settings › Personas & Crews: it is the Persona library, prompt browser and editor, and other Settings pages link to it rather than repeating persona controls.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
 

@@ -382,6 +382,33 @@
      "color scheme"
     ]
    },
+  {
+   "id": "general.visual.accent-color",
+   "label": "Accent Color",
+   "desc": "The color of selections, focus outlines, progress and primary buttons. Theme keeps the active theme's own accent; the other choices replace it with a shade tuned for the light or dark look.",
+   "type": "select",
+   "options": [
+    "Theme",
+    "Violet",
+    "Cyan",
+    "Rose",
+    "Amber",
+    "Emerald"
+   ],
+   "default": "Theme",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "recommended": "Theme",
+   "search": [
+    "accent",
+    "highlight color",
+    "brand color",
+    "focus color",
+    "selection color"
+   ]
+  },
    {
     "id": "general.visual.basic-color-scheme",
     "label": "Light Or Dark (Basic Theme)",
@@ -567,6 +594,27 @@
    ]
   },
   {
+   "id": "general.visual.animation-speed",
+   "label": "Animation Speed",
+   "desc": "How quickly panels, pages and menus move. Fast suits repetitive work; Cinematic slows transitions down. Reduce Animations still wins when it is on.",
+   "type": "select",
+   "options": [
+    "Fast",
+    "Measured",
+    "Cinematic"
+   ],
+   "default": "Measured",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "animation speed",
+    "transition speed",
+    "motion speed"
+   ]
+  },
+  {
    "id": "general.visual.chat-layout-mode",
    "label": "Chat Layout",
    "desc": "Where the assistant chat lives: Docked to the right edge of the window, Overlay sliding above your work, or Detached as its own floating window. Applies instantly.",
@@ -709,9 +757,9 @@
   {
    "id": "general.visual.border-width",
    "label": "Border Width",
-   "desc": "Thickness of panel and control borders. Retro uses chunky 2px lines; Basic uses thin 1px ones.",
+   "desc": "Thickness of panel and control borders. Left at theme, each theme uses its own (Retro draws chunky lines, Basic thin ones); a number applies on every theme until you hand it back to the theme.",
    "type": "slider",
-   "default": "2px",
+   "default": "theme",
    "scope": [
     "global"
    ],
@@ -725,9 +773,9 @@
   {
    "id": "general.visual.border-radius",
    "label": "Corner Roundness",
-   "desc": "How rounded corners are. Retro is sharp (0px); Basic softens to 4px. Changing theme families restarts the app.",
+   "desc": "How rounded corners are. Left at theme, each theme uses its own corners (Retro is sharp, Basic softens them); a number applies on every theme until you hand it back to the theme.",
    "type": "slider",
-   "default": "0px",
+   "default": "theme",
    "scope": [
     "global"
    ],
@@ -757,9 +805,9 @@
   {
    "id": "general.visual.scrollbar-width",
    "label": "Scrollbar Width",
-   "desc": "How wide scrollbars are. Retro uses styled 12px bars; Basic uses slimmer system-like 8px bars.",
+   "desc": "How wide scrollbars are. Left at theme, each theme uses its own width; a number applies on every theme until you hand it back to the theme.",
    "type": "slider",
-   "default": "12px",
+   "default": "theme",
    "scope": [
     "global"
    ],
@@ -1421,6 +1469,82 @@
    ]
   },
   {
+   "id": "general.interaction.activity-bar-labels",
+   "label": "Show Names Next to the Icons on the Left",
+   "desc": "Shows each destination's name beside its icon in the activity bar. It mirrors the bar's own expand and collapse control in both directions.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "sidebar labels",
+    "activity bar names",
+    "expand sidebar",
+    "icon labels"
+   ]
+  },
+  {
+   "id": "general.interaction.spellcheck",
+   "label": "Check Spelling",
+   "desc": "Marks misspelled words in chat and notes. Code is never marked.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "spellcheck",
+    "spelling",
+    "typos"
+   ]
+  },
+  {
+   "id": "general.interaction.spellcheck-languages",
+   "label": "Languages to Check",
+   "desc": "Every language you write in; words valid in any of them are accepted.",
+   "type": "multiselect",
+   "options": [
+    "English (US)",
+    "English (UK)",
+    "French",
+    "German",
+    "Spanish",
+    "Japanese"
+   ],
+   "default": [
+    "English (US)"
+   ],
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "dictionary",
+    "spellcheck language",
+    "language"
+   ]
+  },
+  {
+   "id": "general.interaction.spellcheck-words",
+   "label": "Words to Always Accept",
+   "desc": "Names and terms the spell checker should never flag, such as product or project names.",
+   "type": "list",
+   "default": [],
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "custom dictionary",
+    "custom words",
+    "ignore word"
+   ]
+  },
+  {
    "id": "general.interaction.panel-dock",
    "label": "Panel Position",
    "desc": "Whether side panels like Chat and File Manager sit docked to an edge or float as separate windows, per project.",
@@ -1996,6 +2120,29 @@
    ],
    "badges": [
     "adjudication"
+   ]
+  },
+  {
+   "id": "general.startup.first-screen",
+   "label": "First Screen When Puppet Master Opens",
+   "desc": "The page you land on after launch. The side panel that opens with a project is chosen separately.",
+   "type": "select",
+   "options": [
+    "Restore last workspace",
+    "Settings Home",
+    "Project picker",
+    "Assistant Chat"
+   ],
+   "default": "Restore last workspace",
+   "scope": [
+    "project"
+   ],
+   "tier": "simple",
+   "search": [
+    "startup page",
+    "landing page",
+    "open on launch",
+    "start screen"
    ]
   },
   {
@@ -6476,6 +6623,26 @@
    ]
   },
   {
+   "id": "code.terminal.paste-protection",
+   "label": "Check Before Pasting Several Lines",
+   "desc": "Shows pasted commands first when they contain several lines or shell control operators, so nothing runs by surprise.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "recommended": true,
+   "search": [
+    "paste protection",
+    "multi-line paste",
+    "bracketed paste"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
    "id": "code.terminal.kill-confirm",
    "label": "Before Closing a Busy Terminal",
    "desc": "What happens when you close a terminal that is still running something. Asking first prevents accidentally stopping builds or servers.",
@@ -7483,6 +7650,57 @@
    "related_features": [
     "editor",
     "terminal"
+   ]
+  },
+  {
+   "id": "code.editing.autosave",
+   "label": "Save Files Automatically",
+   "desc": "Saves edited files a moment after you stop typing, or when you switch away. Off saves only when you ask.",
+   "type": "select",
+   "options": [
+    "Off",
+    "After 500 ms",
+    "After 1 second",
+    "On focus change"
+   ],
+   "default": "After 1 second",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "auto save",
+    "autosave",
+    "save on focus"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.default-encoding",
+   "label": "Text Encoding for New Files",
+   "desc": "The encoding used for new files and for files that do not say which encoding they use.",
+   "type": "select",
+   "options": [
+    "UTF-8",
+    "UTF-8 with BOM",
+    "UTF-16 LE",
+    "Windows-1252"
+   ],
+   "default": "UTF-8",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "encoding",
+    "utf-8",
+    "charset",
+    "bom"
+   ],
+   "related_features": [
+    "editor"
    ]
   },
   {
@@ -15802,6 +16020,31 @@
     "full-text index",
     "indexing enable",
     "CancellationToken"
+   ],
+   "related_features": [
+    "web_operations"
+   ]
+  },
+  {
+   "id": "web.index.mode",
+   "label": "How Much to Index",
+   "desc": "Balances search freshness against CPU and disk use: Light indexes less and refreshes gently, Deep extracts more symbols. Applies only while the search index is on.",
+   "type": "select",
+   "options": [
+    "Light",
+    "Balanced",
+    "Deep"
+   ],
+   "default": "Balanced",
+   "scope": [
+    "project",
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "index mode",
+    "indexing depth",
+    "index performance"
    ],
    "related_features": [
     "web_operations"

@@ -6453,6 +6453,7 @@ envelope, restore point, and result stay Settings-owned.
 | S5 | `Show shortcut hints` | `extensions.commands.shortcut-hints` | Preview + apply the toggle. |
 | S6 | `Keyboard layout` | `extensions.commands.keyboard-layout` | Preview + apply the Project-scoped layout select; `Auto-detect` is a stored choice whose effective layout follows the system. The browser fixture applies it locally. |
 | S7 | `Show your commands in the command palette` | `extensions.commands.command-palette-visibility` | Preview + apply the Project-scoped toggle (`true` ↔ `on`, `false` ↔ `off`); it scopes user commands in the palette only, not UICommand registration or execution permission. |
+| S8 | `When two actions share keys` (Warn me / Keep the older one / The newer one wins; added 2026-09-27) | `extensions.commands.conflict-handling` | Preview + apply the Project-scoped choice; `warn` is the default. |
 
 Per-binding-ID semantics stay with each action's owner: this census routes the manager control,
 not the bound actions. Command bindings (`cmd:<command-id>`) are Commands-owned; every other
@@ -6461,14 +6462,18 @@ command is absent, so a deleted command's binding dangles harmlessly until the m
 its delta key (the selected delete interaction issues `commands.delete` first, then clears the
 `cmd:<id>` delta key through S1/S2; file unlink never waits on the settings commit).
 Conflict display (`Conflicts with …` pills, the shortcuts attention note, clash toasts) is a
-projection of the delta, pinned to the `warn` policy of `extensions.commands.conflict-handling`:
-both bindings persist and the clash is surfaced, never silently resolved. The selected manager
-exposes no control for the `hide`/`override` policies.
+projection of the delta under `extensions.commands.conflict-handling`, `warn` by default: both
+bindings persist and the clash is surfaced, never silently resolved. From 2026-09-27 (user decision)
+the manager exposes the policy as `When two actions share keys` (S8): `hide` (Keep the older one)
+leaves the older binding active and flags the newer one, `override` (The newer one wins) does the
+reverse; neither deletes a binding, and the clash stays listed until it is resolved.
 
 ### View-only selected controls (no dispatch)
 
-These stay presentation-only in the CS-079 `LOCAL_PRESENTATION` sense: `New command` (dialog
-opener; only its `Create command` commit dispatches), command-row opens, the `Scope selector`
+These stay presentation-only in the CS-079 `LOCAL_PRESENTATION` sense: `New command` (opens the
+four-step New command helper, Start, Write, How it runs and Try it, decided 2026-09-27; only its
+finishing `Create command` dispatches; `Add shortcut` likewise opens a short helper that picks the
+action, then captures the keys), command-row opens, the `Scope selector`
 display, the resolved command list, built-in command rows, `Where command files live`,
 `Reserved shortcuts`, `Open cheat sheet` and the cheat sheet itself, `How commands work`,
 `Search shortcuts` (run-scoped, `extensions.commands.search-shortcuts`), dry-run `Sample input`,
@@ -6691,7 +6696,8 @@ canonical_text: >-
   commands.import_preview/commands.import_commit (bound-plan import sharing the file-mutation
   contract), commands.export (bounded nonsecret manifest collection), and commands.reset_all
   (count-confirmed file + settings composite reset with rollback). Shortcut add/change/remove/
-  reset, shortcuts backup, the hints toggle, the keyboard layout select
+  reset, shortcuts backup, the hints toggle, the clash-handling choice
+  (extensions.commands.conflict-handling), the keyboard layout select
   (extensions.commands.keyboard-layout), and the palette toggle
   (extensions.commands.command-palette-visibility) reuse the Settings-owned settings.transaction
   route against registered Project-scoped inventory rows; remaining
@@ -6713,7 +6719,7 @@ acceptance_criteria:
   - Every create, update, and import entry validates reserved name collision, invalid name format, missing description, invalid mode value, invalid model format, and override_builtin misuse, blocks on any failure, and writes nothing.
   - Preview substitutes sample arguments only, renders @file and !shell as inert placeholders with no bash/read ask-flow, no file read, no execution, and no agent submission, and renders identically in viewer and writer modes.
   - Mutations require storage writer mode, resolve targets under FileSafe containment with symlink guard, write atomically with durable readback and rollback, advance generation only after durable write plus re-list, and identify files by root-bound non-secret refs without raw paths.
-  - Shortcut, backup, hints, layout, and palette controls reuse the Settings-owned transaction route against Project-scoped values, with the layout select bound to extensions.commands.keyboard-layout and the palette toggle to extensions.commands.command-palette-visibility; per-binding-ID semantics stay with each action owner and conflicts pin the warn policy.
+  - Shortcut, backup, hints, clash-handling, layout, and palette controls reuse the Settings-owned transaction route against Project-scoped values, with the layout select bound to extensions.commands.keyboard-layout and the palette toggle to extensions.commands.command-palette-visibility; per-binding-ID semantics stay with each action owner and conflicts pin the warn policy.
   - Per-name cmd.user_command.* and per-binding cmd.keybinding.* aliases, the eight rejected packet tokens, the five retired draft spellings, and catalog lifecycle gain no route.
   - The sole native owner handler for commands.* file actions is handlers::commands::apply_local_action; settings bindings execute only through the Settings-owned transaction handlers.
   - Machine companions Plans/commands_shortcuts_contracts.schema.json and Plans/commands_shortcuts_contract_fixtures.json match this prose exactly, including cross-record semantic cases.

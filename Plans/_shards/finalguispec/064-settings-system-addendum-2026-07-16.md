@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30565-L31404
+Source lines: L30573-L31422
 
-Source SHA256: `946d3f385d9d69f212a5f5dec413ec655f90042abe85376781c5824f55d3ea14`
+Source SHA256: `80d9e08375e325354ec1414fa09f0d288afdb0daec472debf24835eb349a24fb`
 
 ---
 
@@ -666,6 +666,16 @@ owner_hints:
 - "Plans/settings_inventory.json"
 - "Plans/settings_inventory.schema.json"
 ```
+
+Amended 2026-09-27 (user-approved inventory wave, `Plans/Settings_System.md#SSYS-039` section 9): the registry
+admits eleven rows that the Settings surface drew by hand without inventory ids, bringing it to 900 rows:
+`general.visual.accent-color`, `general.visual.animation-speed`, `general.interaction.activity-bar-labels`,
+`general.startup.first-screen`, `general.interaction.spellcheck`, `general.interaction.spellcheck-languages`,
+`general.interaction.spellcheck-words`, `code.editing.autosave`, `code.editing.default-encoding`,
+`code.terminal.paste-protection` and `web.index.mode`. The same wave changes the defaults of
+`general.visual.border-radius`, `general.visual.border-width` and `general.visual.scrollbar-width` from the Retro
+theme's literal values to `theme`: an unchanged row uses the active theme's own token, a number overrides it on every
+theme, and resetting hands it back to the theme.
 
 ### F3-442 - Project Settings Modal Reconciliation
 

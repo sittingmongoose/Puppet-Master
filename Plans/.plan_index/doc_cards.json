@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6019,
+      "line_count": 6020,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "ee36851ea9957cc64e1ab4881753d6a1cd33a28cccdb2f43834349ec5f0fd70e",
+      "sha256": "5f053eeb354849486f4cf4dcd83c2317628d7d2b0a59ea8fa14b43f2eb23b04e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -3611,7 +3611,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 6909,
+      "line_count": 6915,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 83,
       "plan_unit_ids": [
@@ -3789,7 +3789,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "4b45342038c44b9626981296c4a8cde97044918c3462994647b4a999b4e2bf70",
+      "sha256": "c5c812683f658eec484b76028c4ddb5fa147fb802a4d315e02c4c51dff597227",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 83
@@ -7240,7 +7240,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 38258,
+      "line_count": 38276,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 561,
       "plan_unit_ids": [
@@ -7904,7 +7904,7 @@
         "visualizer_script_policy_drift",
         "wand_overflow_or_demo_command_pollution"
       ],
-      "sha256": "946d3f385d9d69f212a5f5dec413ec655f90042abe85376781c5824f55d3ea14",
+      "sha256": "80d9e08375e325354ec1414fa09f0d288afdb0daec472debf24835eb349a24fb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 560,
@@ -13182,7 +13182,7 @@
         "teacher_persona_doc_guessing_drift",
         "teacher_persona_scope_drift"
       ],
-      "sha256": "bc6e85b1db32bbc0f521ad44ad09a2264a72be000d1e29aadd18e90f43ed1dd0",
+      "sha256": "f1286dac3dea331f4cbbbf762fc066e7d41ac7d9652dffe6a9a5bc1a8e0713e7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 55,
@@ -16628,7 +16628,7 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 2593,
+      "line_count": 2609,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 40,
       "plan_unit_ids": [
@@ -16720,7 +16720,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "a3b7b9be4aded44da4b2b1e4ab3871845a20b2fb62ce1c030c573a1ed3e91e79",
+      "sha256": "35762a297fb289d2cc00af2a50a94a4ce211d528b3ffa0a7e0ba99430539062a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 40
@@ -17196,7 +17196,7 @@
         "Plans/Skills_System.md",
         "Plans/Tools.md"
       ],
-      "line_count": 2686,
+      "line_count": 2688,
       "path": "Plans/Skills_System.md",
       "plan_unit_count": 36,
       "plan_unit_ids": [
@@ -17248,7 +17248,7 @@
         "skills_acceptance_drift",
         "skills_system_drift"
       ],
-      "sha256": "c556120cfe2b34b0692622237915e06e188c430a48073ebcd559d74ec2cd83b3",
+      "sha256": "1e0850e11d06906d3292c4aa514eea249ecda3b85766af436d18a4119acae139",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 35,
@@ -20172,7 +20172,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-27T06:54:22Z",
+  "generated_at_utc": "2026-09-27T16:24:39Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -307,6 +307,8 @@ Skill management lives in `Agent Config > Skills`.
 
 Agent Config owns Personas and Skills. Settings does not re-own skill management.
 
+Decided 2026-09-27 (user, `Plans/FinalGUISpec.md` §7.4.7): Agent Config is realized inside Settings, so Agent Config > Skills is the Settings › Code & Tools › Skills manager and Agent Config > Personas is Settings › Personas & Crews. The ownership split below still holds between those managers and the rest of Settings; a legacy `Settings > Skills` redirect is in-place navigation to that manager.
+
 Agent Config > Skills is the page-level GUI management surface for agent-management skills. It is not a `settings-only` tab. Legacy `Settings > Skills` copy is a redirect/focus entry into Agent Config > Skills, while Settings remains owner for Authentication, Models/Permissions, permission profiles, rules/commands, runtime controls, and health. Agent Config may cross-link to Settings when a persona or skill depends on those system resources; for example, a blocked provider/account capability may deep-link to Authentication, Health, or `/Models/Permissions` without moving that dependency into Agent Config. Source tokens `/catalog/runtime`, `/discoverability`, and `management-surface` normalize here: Agent Config > Skills is the Skills `/catalog/runtime` and `/discoverability` management-surface for Skill IDs, while runtime readiness remains owned by `skill_runtime_readiness`.
 Agent Config > Personas covers create/edit/manage personas, persona metadata, persona-scoped runtime preferences, and skill refs; detailed persona schema remains owned by `Plans/Personas.md`.
 

@@ -2389,6 +2389,14 @@ Operational-identity payloads use the bounded `operational-identity` shape `{ ki
 
 #### 7.4.7 Agent-Config panel specification
 
+Decided 2026-09-27 (user): Agent Config is not a separate panel. It is realized inside Settings by three managers:
+providers, models, accounts and instructions in Settings › AI & Providers › AI Providers; the Persona library, editor
+(including the instructions/prompt), per-persona runtime preferences and skill refs in Settings › Memory & Automation ›
+Personas & Crews; and the Skills tab in Settings › Code & Tools › Skills. Every reference to Agent Config or
+Agent-Config in the Plans (for example `Agent Config > Personas`, `Agent Config > Skills`, the Agent-Config section
+order, instruction projections and provider-entry diagnostics) resolves to those managers, and the requirements it
+carries apply there unchanged; legacy redirects from Settings to Agent Config become in-place navigation to the manager.
+
 Agent Config owns the visible provider/model/account/instruction management surface and mirrors Skills owner vocabulary for Skills, Personas, bundled, protected_core, catalog_installed, manual_import, project_local, global_local, pm_enhanced, disabled, and ready_with_warnings rows. Agent Config rows expose source/readiness and recovery context, while Settings remains the durable preference surface.
 
 The Agent Config Personas tab has three visible content categories: persona library and editing (create, edit, delete, disable, restore default, reorder where ordering is meaningful), runtime preferences (per-persona response style, verbosity, default model, tool posture, and output format defaults applied automatically while that persona is active), and skill refs (skills associated with or activated for the persona). Persona rows show scope, chat-selectable eligibility, child/subagent eligibility, protected/core or bundled-specialty status, prompt preview, requested/effective runtime summary, and provider compatibility disclosure. Protected core built-ins are read-only and not deletable, disableable, or shadowable; bundled specialty Personas are editable, disableable, and restorable to default. Persona rows cross-link to provider settings and to the Skills tab for the referenced skill registry entries.
@@ -31220,6 +31228,16 @@ owner_hints:
 - "Plans/settings_inventory.json"
 - "Plans/settings_inventory.schema.json"
 ```
+
+Amended 2026-09-27 (user-approved inventory wave, `Plans/Settings_System.md#SSYS-039` section 9): the registry
+admits eleven rows that the Settings surface drew by hand without inventory ids, bringing it to 900 rows:
+`general.visual.accent-color`, `general.visual.animation-speed`, `general.interaction.activity-bar-labels`,
+`general.startup.first-screen`, `general.interaction.spellcheck`, `general.interaction.spellcheck-languages`,
+`general.interaction.spellcheck-words`, `code.editing.autosave`, `code.editing.default-encoding`,
+`code.terminal.paste-protection` and `web.index.mode`. The same wave changes the defaults of
+`general.visual.border-radius`, `general.visual.border-width` and `general.visual.scrollbar-width` from the Retro
+theme's literal values to `theme`: an unchanged row uses the active theme's own token, a number overrides it on every
+theme, and resetting hands it back to the theme.
 
 ### F3-442 - Project Settings Modal Reconciliation
 

@@ -2,14 +2,15 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L10-L97
+Source lines: L10-L98
 
-Source SHA256: `ee36851ea9957cc64e1ab4881753d6a1cd33a28cccdb2f43834349ec5f0fd70e`
+Source SHA256: `5f053eeb354849486f4cf4dcd83c2317628d7d2b0a59ea8fa14b43f2eb23b04e`
 
 ---
 
 ## Change Summary
 
+- 2026-09-27: User decisions on the Settings rework: family-specific appearance rows (Glass, Retro, Basic) show only while their theme family is active (`Plans/Settings_System.md#SSYS-010`); Commands & Shortcuts uses guided New command and Add shortcut helpers and exposes the clash-handling choice (`Plans/Commands_System.md#CS-081`, S8); one-time registry and Unraid setup flows may run in Settings while container operations stay with Docker Manager (`Plans/Settings_System.md#SSYS-013`); Agent Config is realized inside Settings by the AI Providers, Personas & Crews and Skills managers (`Plans/FinalGUISpec.md` §7.4.7); eleven hand-drawn rows are admitted to `Plans/settings_inventory.json` and Corner roundness, Border width and Scrollbar width default to the theme's own (`Plans/FinalGUISpec.md#F3-441`).
 - 2026-09-27: Recorded the Settings rework demonstrated in `Concepts/onboarding/opus-5.5/src/settings`. `Plans/Settings_System.md` gains SSYS-039 (every view draws short everyday groups and one More options disclosure; the plain pages App & Input, Editor & Terminal, Containers, Planning & Interviews and Advanced Settings with their groups; manager tab groups; 44 canonical-id moves between pages; retired hand-written duplicate rows and manager-owned copies; plain-language labels with a sentence-case fallback and worded options, units and bounds; dependent-row visibility; owner routes and form/check/confirm/list/order flows instead of the generic action panel; structured editors; per-account and per-service rows) and SSYS-040 (appearance rows apply as overrides over the per-variant token contract, write nothing while unchanged, and reset removes only what they wrote), with §4.4 and §22 amended. `Plans/FinalGUISpec.md` §25, the Home reset-layout note and the theme-token addendum, `Plans/UI_Wiring_Rules.md` §16 and the Home checklist in `Plans/GUI_Rebuild_Requirements_Checklist.md` consume them. Manager keys, routes, command ids and inventory ids are unchanged; no command, handler, wiring row, inventory row or governance seal is added, and the concept remains fixture-only evidence.
   ContractRef: ContractName:Plans/Settings_System.md#SSYS-039, ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/FinalGUISpec.md#F3-551, ContractName:Plans/UI_Wiring_Rules.md#UIW-020
 
