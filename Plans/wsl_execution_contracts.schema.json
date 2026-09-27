@@ -1,0 +1,502 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/wsl_execution/1.0.0/wsl_execution_contracts.schema.json",
+  "title": "WSL execution acquisition and probe static contracts",
+  "description": "Closed record shapes for EPOL-F01 WSL acquisition and per-distro probes owned by Plans/Containers_Registry_and_Unraid.md CRAU-101: host-level WSL platform state with WSL Off healthy, the two acquisition modes (attach user-owned compatible WSL2 distribution vs install PM-managed signed/versioned .wsl distribution), bounded per-distro capability probes with explicit available/unavailable/unknown outcomes, ownership-specific action admission, and explicit Windows/WSL checkout mappings. Image trust is a Release supply-chain proof ref and lifecycle state/projection flow through existing Shared Integration Runtime records; this schema mints no parallel lifecycle, installation, update, or health truth. Static schema and fixture consistency only; no WSL install, probe execution, update, repair, removal, or readiness claim.",
+  "oneOf": [
+    {"$ref": "#/$defs/wsl_host_state_record"},
+    {"$ref": "#/$defs/wsl_acquisition_record"},
+    {"$ref": "#/$defs/wsl_distro_probe_record"},
+    {"$ref": "#/$defs/wsl_ownership_action_policy"},
+    {"$ref": "#/$defs/wsl_source_mapping_record"}
+  ],
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nullable_non_empty_string": {
+      "oneOf": [
+        {"$ref": "#/$defs/non_empty_string"},
+        {"type": "null"}
+      ]
+    },
+    "sha256_hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "utc_timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "schema_version_1_0_0": {
+      "const": "1.0.0"
+    },
+    "probe_status": {
+      "description": "Closed probe outcome. There is no assumed or defaulted value: a probe that did not run or could not determine its fact reports unknown, and a missing capability reports unavailable.",
+      "enum": ["available", "unavailable", "unknown"]
+    },
+    "probe_detail": {
+      "description": "Human-readable probe finding. Null only when status is unknown and nothing was observed.",
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "probe_evidence_ref": {
+      "description": "Ref to the observation behind this probe (command output hash, supervisor receipt, or capability snapshot row). Never a bare exit-zero claim.",
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "probe_detail_rule": {
+      "description": "A decided probe (available or unavailable) must say what it found; only an unknown probe may carry a null detail.",
+      "if": {
+        "properties": {"status": {"const": "unknown"}},
+        "required": ["status"]
+      },
+      "then": true,
+      "else": {
+        "properties": {"detail": {"$ref": "#/$defs/non_empty_string"}},
+        "required": ["detail"]
+      }
+    },
+    "probe_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "detail"],
+      "properties": {
+        "status": {"$ref": "#/$defs/probe_status"},
+        "detail": {"$ref": "#/$defs/probe_detail"},
+        "evidence_ref": {"$ref": "#/$defs/probe_evidence_ref"}
+      },
+      "allOf": [
+        {"$ref": "#/$defs/probe_detail_rule"}
+      ]
+    },
+    "wsl_host_state_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "host_id", "observed_at", "shared_runtime_projection_ref", "wsl_state", "health"],
+      "properties": {
+        "schema_id": {"const": "pm.wsl.host_state.v1"},
+        "schema_version": {"$ref": "#/$defs/schema_version_1_0_0"},
+        "host_id": {"$ref": "#/$defs/non_empty_string"},
+        "observed_at": {"$ref": "#/$defs/utc_timestamp"},
+        "shared_runtime_projection_ref": {"description": "The existing Shared Integration Runtime projection supplying this observed host state; this record is not an independent lifecycle authority.", "$ref": "#/$defs/non_empty_string"},
+        "wsl_state": {
+          "description": "Host-level WSL platform lifecycle state. off and platform_unavailable are explicit supported states, not defects.",
+          "enum": ["off", "platform_unavailable", "platform_install_required", "restart_required", "no_distribution", "selecting_distribution", "installing_pm_distribution", "waiting_for_oobe", "preparing", "ready", "stopped", "starting", "needs_update", "needs_repair", "blocked", "removing"]
+        },
+        "wsl_version": {
+          "description": "Observed WSL version string, or null when WSL is off or unavailable.",
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "health": {
+          "description": "Host WSL health projection. healthy for off: WSL Off is healthy and must not warn or degrade.",
+          "enum": ["healthy", "attention_required", "unknown"]
+        },
+        "health_reason": {"$ref": "#/$defs/nullable_non_empty_string"}
+      },
+      "allOf": [
+        {
+          "description": "WSL Off is healthy: the off state can only project healthy, never attention_required or unknown.",
+          "if": {
+            "properties": {"wsl_state": {"const": "off"}},
+            "required": ["wsl_state"]
+          },
+          "then": {
+            "properties": {"health": {"const": "healthy"}},
+            "required": ["health"]
+          }
+        },
+        {
+          "description": "An unavailable platform cannot claim healthy; it stays explicit.",
+          "if": {
+            "properties": {"wsl_state": {"const": "platform_unavailable"}},
+            "required": ["wsl_state"]
+          },
+          "then": {
+            "properties": {"health": {"enum": ["attention_required", "unknown"]}},
+            "required": ["health"]
+          }
+        }
+      ]
+    },
+    "wsl_image_proof_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["image_id", "image_version", "package_sha256", "signature_algorithm", "key_id", "trust_root_ref", "provenance_ref", "release_admission_receipt_ref"],
+      "properties": {
+        "image_id": {"$ref": "#/$defs/non_empty_string"},
+        "image_version": {"$ref": "#/$defs/non_empty_string"},
+        "package_sha256": {"$ref": "#/$defs/sha256_hex"},
+        "signature_algorithm": {"$ref": "#/$defs/non_empty_string"},
+        "key_id": {"$ref": "#/$defs/non_empty_string"},
+        "trust_root_ref": {
+          "description": "Release-owned trust root that verified this image. Containers consumes the ref and never re-verifies signatures.",
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "provenance_ref": {
+          "description": "Release-owned provenance/SBOM ref for the signed .wsl bundle.",
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "release_admission_receipt_ref": {
+          "description": "Release Supply Chain's completed, current admission receipt for this exact signed/versioned image; supplied metadata alone is never admission.",
+          "$ref": "#/$defs/non_empty_string"
+        }
+      }
+    },
+    "wsl_acquisition_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "host_id", "distro_name", "distro_id", "acquisition_mode", "ownership", "compatibility_probe_ref", "image_proof", "lifecycle_ref", "decided_at"],
+      "properties": {
+        "schema_id": {"const": "pm.wsl.acquisition.v1"},
+        "schema_version": {"$ref": "#/$defs/schema_version_1_0_0"},
+        "host_id": {"$ref": "#/$defs/non_empty_string"},
+        "distro_name": {"$ref": "#/$defs/non_empty_string"},
+        "distro_id": {
+          "description": "Exact Execution Environment identity for this distribution. Never shared with Windows-native or a sibling distro.",
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "acquisition_mode": {
+          "description": "Exactly two modes: attach an existing user-owned compatible WSL2 distribution, or install a PM-managed signed/versioned .wsl distribution.",
+          "enum": ["attach_user_owned", "install_pm_managed"]
+        },
+        "ownership": {
+          "enum": ["user_owned", "pm_managed"]
+        },
+        "compatibility_probe_ref": {
+          "description": "Ref to the passing compatibility probe for attach mode; null for managed install, where admission comes from image proof instead.",
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "image_proof": {
+          "description": "Release supply-chain proof for a managed install; null for attach, where PM takes no image ownership.",
+          "oneOf": [
+            {"$ref": "#/$defs/wsl_image_proof_ref"},
+            {"type": "null"}
+          ]
+        },
+        "lifecycle_ref": {
+          "description": "Existing Shared Integration Runtime InstallationLifecycleManager operation/generation ref (attach-external for attach, acquire/verify/activate for managed install). No parallel lifecycle is minted here.",
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "decided_at": {"$ref": "#/$defs/utc_timestamp"}
+      },
+      "allOf": [
+        {
+          "description": "Attach mode binds user_owned ownership, a compatibility probe pass, and no image proof.",
+          "if": {
+            "properties": {"acquisition_mode": {"const": "attach_user_owned"}},
+            "required": ["acquisition_mode"]
+          },
+          "then": {
+            "properties": {
+              "ownership": {"const": "user_owned"},
+              "compatibility_probe_ref": {"$ref": "#/$defs/non_empty_string"},
+              "image_proof": {"type": "null"}
+            },
+            "required": ["ownership", "compatibility_probe_ref", "image_proof"]
+          }
+        },
+        {
+          "description": "Managed-install mode binds pm_managed ownership and a full signed/versioned image proof, with no compat-probe substitution.",
+          "if": {
+            "properties": {"acquisition_mode": {"const": "install_pm_managed"}},
+            "required": ["acquisition_mode"]
+          },
+          "then": {
+            "properties": {
+              "ownership": {"const": "pm_managed"},
+              "compatibility_probe_ref": {"type": "null"},
+              "image_proof": {"$ref": "#/$defs/wsl_image_proof_ref"}
+            },
+            "required": ["ownership", "compatibility_probe_ref", "image_proof"]
+          }
+        }
+      ]
+    },
+    "wsl_network_probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "detail", "localhost_reachability"],
+      "properties": {
+        "status": {"$ref": "#/$defs/probe_status"},
+        "detail": {"$ref": "#/$defs/probe_detail"},
+        "evidence_ref": {"$ref": "#/$defs/probe_evidence_ref"},
+        "localhost_reachability": {
+          "description": "Windows-localhost reachability from inside the distro. Unknown until probed, never assumed from the network mode.",
+          "enum": ["reachable", "unreachable", "unknown"]
+        }
+      },
+      "allOf": [
+        {"$ref": "#/$defs/probe_detail_rule"}
+      ]
+    },
+    "wsl_mounts_probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "detail", "filesystem_semantics", "performance_class"],
+      "properties": {
+        "status": {"$ref": "#/$defs/probe_status"},
+        "detail": {"$ref": "#/$defs/probe_detail"},
+        "evidence_ref": {"$ref": "#/$defs/probe_evidence_ref"},
+        "filesystem_semantics": {
+          "description": "Observed mount semantics (DrvFs flags, fstab entries, case sensitivity, permission mapping), or null when unknown.",
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "performance_class": {
+          "description": "Observed source-root performance class. A DrvFs/Windows path is never linux_native: /mnt/c is not an equivalent high-performance Linux source root.",
+          "enum": ["linux_native", "drvfs", "network_mount", "unknown"]
+        }
+      },
+      "allOf": [
+        {"$ref": "#/$defs/probe_detail_rule"}
+      ]
+    },
+    "wsl_limits_probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "detail", "wslconfig_observed"],
+      "properties": {
+        "status": {"$ref": "#/$defs/probe_status"},
+        "detail": {"$ref": "#/$defs/probe_detail"},
+        "evidence_ref": {"$ref": "#/$defs/probe_evidence_ref"},
+        "wslconfig_observed": {
+          "description": "True when the global .wslconfig was read as an observation. Observation is read-only; PM never rewrites global config silently.",
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {"$ref": "#/$defs/probe_detail_rule"}
+      ]
+    },
+    "wsl_dependencies_probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "detail", "missing_packages"],
+      "properties": {
+        "status": {"$ref": "#/$defs/probe_status"},
+        "detail": {"$ref": "#/$defs/probe_detail"},
+        "evidence_ref": {"$ref": "#/$defs/probe_evidence_ref"},
+        "missing_packages": {
+          "description": "Bounded list of missing dependency packages or capability modules observed by the probe.",
+          "type": "array",
+          "maxItems": 64,
+          "items": {"$ref": "#/$defs/non_empty_string"}
+        }
+      },
+      "allOf": [
+        {"$ref": "#/$defs/probe_detail_rule"}
+      ]
+    },
+    "wsl_distro_probe_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "host_id", "distro_id", "observed_at", "topology_generation", "probes"],
+      "properties": {
+        "schema_id": {"const": "pm.wsl.distro_probes.v1"},
+        "schema_version": {"$ref": "#/$defs/schema_version_1_0_0"},
+        "host_id": {"$ref": "#/$defs/non_empty_string"},
+        "distro_id": {"$ref": "#/$defs/non_empty_string"},
+        "observed_at": {"$ref": "#/$defs/utc_timestamp"},
+        "topology_generation": {
+          "description": "Shared-runtime TopologyGeneration this probe set is bound to. A stale generation never projects Ready.",
+          "type": "integer", "minimum": 0
+        },
+        "probes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["distro_version_arch", "systemd", "wslg", "gpu", "network", "mounts", "interop", "limits", "idle_shutdown", "nested_virtualization", "dependencies"],
+          "properties": {
+            "distro_version_arch": {"$ref": "#/$defs/probe_result"},
+            "systemd": {"$ref": "#/$defs/probe_result"},
+            "wslg": {"$ref": "#/$defs/probe_result"},
+            "gpu": {"$ref": "#/$defs/probe_result"},
+            "network": {"$ref": "#/$defs/wsl_network_probe"},
+            "mounts": {"$ref": "#/$defs/wsl_mounts_probe"},
+            "interop": {"$ref": "#/$defs/probe_result"},
+            "limits": {"$ref": "#/$defs/wsl_limits_probe"},
+            "idle_shutdown": {"$ref": "#/$defs/probe_result"},
+            "nested_virtualization": {"$ref": "#/$defs/probe_result"},
+            "dependencies": {"$ref": "#/$defs/wsl_dependencies_probe"}
+          }
+        }
+      }
+    },
+    "wsl_ownership_action_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "ownership", "action", "admission"],
+      "properties": {
+        "schema_id": {"const": "pm.wsl.ownership_action.v1"},
+        "schema_version": {"$ref": "#/$defs/schema_version_1_0_0"},
+        "ownership": {
+          "enum": ["user_owned", "pm_managed"]
+        },
+        "action": {
+          "description": "WSL action under admission. Global actions (change_default_distro, rewrite_global_wslconfig, global_shutdown) affect the host or every distribution regardless of ownership.",
+          "enum": ["probe", "attach", "install_dependencies", "system_update", "repair", "rollback", "reset", "delete", "convert_wsl1", "change_default_distro", "rewrite_global_wslconfig", "global_shutdown"]
+        },
+        "admission": {
+          "description": "Closed admission outcome. There is no silent variant: anything beyond plain allowed names its confirmation or scope burden.",
+          "enum": ["allowed", "allowed_with_explicit_scope", "requires_preview_and_approval", "requires_destructive_confirmation", "requires_impact_confirmation", "refused"]
+        },
+        "reason": {"$ref": "#/$defs/nullable_non_empty_string"}
+      },
+      "allOf": [
+        {
+          "description": "user_owned destructive and system-mutating actions are refused: repair cannot reset/delete/convert, and PM takes no update or rollback ownership by default.",
+          "if": {
+            "properties": {
+              "ownership": {"const": "user_owned"},
+              "action": {"enum": ["reset", "delete", "convert_wsl1", "rollback"]}
+            },
+            "required": ["ownership", "action"]
+          },
+          "then": {
+            "properties": {"admission": {"const": "refused"}},
+            "required": ["admission"]
+          }
+        },
+        {
+          "description": "user_owned dependency installs, system updates, and bounded repair need explicit scope (updates only under explicit delegation).",
+          "if": {
+            "properties": {
+              "ownership": {"const": "user_owned"},
+              "action": {"enum": ["install_dependencies", "system_update", "repair"]}
+            },
+            "required": ["ownership", "action"]
+          },
+          "then": {
+            "properties": {"admission": {"const": "allowed_with_explicit_scope"}},
+            "required": ["admission"]
+          }
+        },
+        {
+          "description": "user_owned probe and attach are the ordinary PM operations and need no extra confirmation.",
+          "if": {
+            "properties": {
+              "ownership": {"const": "user_owned"},
+              "action": {"enum": ["probe", "attach"]}
+            },
+            "required": ["ownership", "action"]
+          },
+          "then": {
+            "properties": {"admission": {"const": "allowed"}},
+            "required": ["admission"]
+          }
+        },
+        {
+          "description": "pm_managed reset and delete require explicit destructive confirmation.",
+          "if": {
+            "properties": {
+              "ownership": {"const": "pm_managed"},
+              "action": {"enum": ["reset", "delete"]}
+            },
+            "required": ["ownership", "action"]
+          },
+          "then": {
+            "properties": {"admission": {"const": "requires_destructive_confirmation"}},
+            "required": ["admission"]
+          }
+        },
+        {
+          "description": "pm_managed ordinary lifecycle actions are PM-owned and allowed.",
+          "if": {
+            "properties": {
+              "ownership": {"const": "pm_managed"},
+              "action": {"enum": ["probe", "attach", "install_dependencies", "system_update", "repair", "rollback"]}
+            },
+            "required": ["ownership", "action"]
+          },
+          "then": {
+            "properties": {"admission": {"const": "allowed"}},
+            "required": ["admission"]
+          }
+        },
+        {
+          "description": "pm_managed WSL1 conversion is never silent: it needs preview and explicit approval.",
+          "if": {
+            "properties": {
+              "ownership": {"const": "pm_managed"},
+              "action": {"const": "convert_wsl1"}
+            },
+            "required": ["ownership", "action"]
+          },
+          "then": {
+            "properties": {"admission": {"const": "requires_preview_and_approval"}},
+            "required": ["admission"]
+          }
+        },
+        {
+          "description": "Host-global WSL mutations need preview and explicit approval under either ownership.",
+          "if": {
+            "properties": {"action": {"enum": ["change_default_distro", "rewrite_global_wslconfig"]}},
+            "required": ["action"]
+          },
+          "then": {
+            "properties": {"admission": {"const": "requires_preview_and_approval"}},
+            "required": ["admission"]
+          }
+        },
+        {
+          "description": "Global shutdown warns that every distribution is affected and needs impact confirmation; bounded per-distro actions are preferred.",
+          "if": {
+            "properties": {"action": {"const": "global_shutdown"}},
+            "required": ["action"]
+          },
+          "then": {
+            "properties": {"admission": {"const": "requires_impact_confirmation"}},
+            "required": ["admission"]
+          }
+        }
+      ]
+    },
+    "wsl_source_mapping_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "schema_version", "host_id", "distro_id", "windows_path", "wsl_path", "mapping_kind", "filesystem_semantics", "performance_class", "explicit", "origin"],
+      "properties": {
+        "schema_id": {"const": "pm.wsl.source_mapping.v1"},
+        "schema_version": {"$ref": "#/$defs/schema_version_1_0_0"},
+        "host_id": {"$ref": "#/$defs/non_empty_string"},
+        "distro_id": {"$ref": "#/$defs/non_empty_string"},
+        "windows_path": {"$ref": "#/$defs/non_empty_string"},
+        "wsl_path": {"$ref": "#/$defs/non_empty_string"},
+        "mapping_kind": {
+          "enum": ["linux_native_checkout", "drvfs_mirror", "network_mount"]
+        },
+        "filesystem_semantics": {
+          "description": "Recorded semantics for this mapping (case sensitivity, permission mapping, currentness).",
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "performance_class": {
+          "description": "Recorded performance class. A drvfs_mirror mapping is never high: PM may recommend a Linux-native checkout instead.",
+          "enum": ["high", "reduced", "unknown"]
+        },
+        "explicit": {
+          "description": "Always true: a mapping exists only as an explicit record. There is no silent source move, duplication, or relocation.",
+          "const": true
+        },
+        "origin": {
+          "description": "Who established the mapping. PM may recommend, but the mapping is explicit either way.",
+          "enum": ["user_authored", "pm_recommended_accepted"]
+        }
+      },
+      "allOf": [
+        {
+          "description": "A Linux-native checkout claims high performance; anything else stays reduced or unknown.",
+          "if": {
+            "properties": {"mapping_kind": {"const": "linux_native_checkout"}},
+            "required": ["mapping_kind"]
+          },
+          "then": {
+            "properties": {"performance_class": {"const": "high"}},
+            "required": ["performance_class"]
+          },
+          "else": {
+            "properties": {"performance_class": {"enum": ["reduced", "unknown"]}},
+            "required": ["performance_class"]
+          }
+        }
+      ]
+    }
+  }
+}

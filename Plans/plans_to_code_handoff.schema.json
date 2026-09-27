@@ -1423,6 +1423,49 @@
         }
       }
     },
+    "platform_assurance_mode": {
+      "enum": ["native_authoritative", "virtualized_authoritative", "compatibility", "cross_target", "simulated_or_mocked", "unavailable"]
+    },
+    "platform_proof_kind": {
+      "enum": ["general", "genuine_safari", "macos_ui_system", "apple_native_signing", "xcode_simulator"]
+    },
+    "test_assurance_requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requirement_id", "target_platform", "proof_kind", "accepted_actual_modes", "target_capability_ref"],
+      "properties": {
+        "requirement_id": {"$ref": "#/$defs/ref"},
+        "target_platform": {"type": "string", "minLength": 1},
+        "proof_kind": {"$ref": "#/$defs/platform_proof_kind"},
+        "accepted_actual_modes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/platform_assurance_mode"}},
+        "target_capability_ref": {"$ref": "#/$defs/ref"}
+      },
+      "allOf": [{"if": {"properties": {"proof_kind": {"enum": ["genuine_safari", "macos_ui_system", "apple_native_signing", "xcode_simulator"]}}, "required": ["proof_kind"]}, "then": {"properties": {"target_platform": {"const": "macos"}, "accepted_actual_modes": {"const": ["native_authoritative"]}}}}]
+    },
+    "test_assurance_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requirement_ref", "actual_mode", "actual_platform", "proof_kind", "execution_host_id", "execution_environment_id", "capability_receipt_ref", "requirement_met", "browser_runtime"],
+      "properties": {
+        "requirement_ref": {"$ref": "#/$defs/ref"},
+        "actual_mode": {"$ref": "#/$defs/platform_assurance_mode"},
+        "actual_platform": {"type": "string", "minLength": 1},
+        "proof_kind": {"$ref": "#/$defs/platform_proof_kind"},
+        "execution_host_id": {"$ref": "#/$defs/ref"},
+        "execution_environment_id": {"$ref": "#/$defs/ref"},
+        "capability_receipt_ref": {"$ref": "#/$defs/ref"},
+        "requirement_met": {"type": "boolean"},
+        "browser_runtime": {"enum": ["safari", "pm_builtin_browser", "other", "not_applicable"]},
+        "suitable_mac_proof_ref": {"$ref": "#/$defs/ref"}
+      },
+      "allOf": [{"if": {"properties": {"proof_kind": {"enum": ["genuine_safari", "macos_ui_system", "apple_native_signing", "xcode_simulator"]}, "requirement_met": {"const": true}}, "required": ["proof_kind", "requirement_met"]}, "then": {"required": ["suitable_mac_proof_ref"], "properties": {"actual_platform": {"const": "macos"}, "actual_mode": {"const": "native_authoritative"}}}}, {"if": {"properties": {"proof_kind": {"const": "genuine_safari"}, "requirement_met": {"const": true}}, "required": ["proof_kind", "requirement_met"]}, "then": {"properties": {"browser_runtime": {"const": "safari"}}}}]
+    },
+    "test_target_proof_capability": {
+      "type": "object", "additionalProperties": false,
+      "required": ["proof_kind", "suitable_mac_host", "available", "capability_receipt_ref"],
+      "properties": {"proof_kind": {"$ref": "#/$defs/platform_proof_kind"}, "suitable_mac_host": {"type": "boolean"}, "available": {"type": "boolean"}, "capability_receipt_ref": {"$ref": "#/$defs/ref"}, "browser_runtime": {"enum": ["safari", "pm_builtin_browser", "other", "not_applicable"]}},
+      "allOf": [{"if": {"properties": {"proof_kind": {"enum": ["genuine_safari", "macos_ui_system", "apple_native_signing", "xcode_simulator"]}, "available": {"const": true}}, "required": ["proof_kind", "available"]}, "then": {"properties": {"suitable_mac_host": {"const": true}}}}, {"if": {"properties": {"proof_kind": {"const": "genuine_safari"}, "available": {"const": true}}, "required": ["proof_kind", "available"]}, "then": {"required": ["browser_runtime"], "properties": {"browser_runtime": {"const": "safari"}}}}]
+    },
     "test_capability_report": {
       "type": "object",
       "additionalProperties": false,
@@ -1448,7 +1491,8 @@
         "requires_screenshot",
         "verification_command",
         "expected_artifacts",
-        "flake_policy"
+        "flake_policy",
+        "target_proof_capabilities"
       ],
       "properties": {
         "project_platform": {
@@ -1528,6 +1572,9 @@
         },
         "flake_policy": {
           "$ref": "#/$defs/flake_policy"
+        },
+        "target_proof_capabilities": {
+          "type": "array", "items": {"$ref": "#/$defs/test_target_proof_capability"}
         }
       }
     },
@@ -1550,7 +1597,8 @@
         "test_strategy_ref",
         "test_case_refs",
         "generated_test_ids",
-        "reused_test_ids"
+        "reused_test_ids",
+        "platform_dependent"
       ],
       "properties": {
         "test_level": {
@@ -1605,8 +1653,15 @@
         },
         "reused_test_ids": {
           "$ref": "#/$defs/ref_list"
+        },
+        "actual_assurance": {
+          "$ref": "#/$defs/test_assurance_result"
+        },
+        "platform_dependent": {
+          "type": "boolean"
         }
-      }
+      },
+      "allOf": [{"if": {"properties": {"platform_dependent": {"const": true}}, "required": ["platform_dependent"]}, "then": {"required": ["actual_assurance"]}}, {"if": {"properties": {"result": {"const": "pass"}}, "required": ["result"]}, "then": {"properties": {"actual_assurance": {"properties": {"requirement_met": {"const": true}}}}}}]
     },
     "source_control_receipt": {
       "type": "object",
@@ -2357,7 +2412,8 @@
         "browser_session_required",
         "visual_evidence_required",
         "oracles",
-        "reused_test_ids"
+        "reused_test_ids",
+        "platform_dependent"
       ],
       "properties": {
         "strategy_id": {
@@ -2401,8 +2457,15 @@
         },
         "reused_test_ids": {
           "$ref": "#/$defs/ref_list"
+        },
+        "required_assurance": {
+          "$ref": "#/$defs/test_assurance_requirement"
+        },
+        "platform_dependent": {
+          "type": "boolean"
         }
-      }
+      },
+      "allOf": [{"if": {"properties": {"platform_dependent": {"const": true}}, "required": ["platform_dependent"]}, "then": {"required": ["required_assurance"]}}]
     },
     "test_case": {
       "type": "object",

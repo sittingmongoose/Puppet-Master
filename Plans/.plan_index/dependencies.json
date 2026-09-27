@@ -5784,6 +5784,7 @@
     "OSI-199",
     "OSI-373",
     "OSI-192",
+    "ATS-059",
     "CRAU-102",
     "ATS-026",
     "RAP-042",
@@ -6388,6 +6389,7 @@
     "WS-020",
     "RSC-017",
     "RSC-018",
+    "RSC-019",
     "MA-051",
     "ATS-041",
     "SIR-032",
@@ -6401,6 +6403,7 @@
     "MA-052",
     "RTIM-010",
     "RSC-015",
+    "RSC-020",
     "GAAAF-015",
     "APR-015",
     "ATS-036",
@@ -12867,6 +12870,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ATS-059",
+      "to": "ATS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-059",
+      "to": "ATS-048"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-059",
+      "to": "CRAU-101"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "BBI-001",
       "to": "FGI-001"
     },
@@ -16078,7 +16096,17 @@
     {
       "edge_type": "depends_on",
       "from": "CRAU-101",
+      "to": "RSC-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-101",
       "to": "SIR-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-101",
+      "to": "SIR-003"
     },
     {
       "edge_type": "depends_on",
@@ -54884,6 +54912,26 @@
       "edge_type": "depends_on",
       "from": "RSC-018",
       "to": "RSC-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-019",
+      "to": "RSC-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-020",
+      "to": "CRAU-101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-020",
+      "to": "RSC-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-020",
+      "to": "SIR-032"
     },
     {
       "edge_type": "depends_on",
@@ -99256,7 +99304,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-26T23:56:07Z",
+  "generated_at_utc": "2026-09-27T02:33:25Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -112298,6 +112346,23 @@
       "unit_type": "validation_criterion"
     },
     {
+      "context_scope": "platform_assurance_apple_native_testing",
+      "gui_related": true,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-059",
+      "reasoning_tier": "high",
+      "risk_class": "weak_platform_evidence_promoted_to_authoritative",
+      "source_location": {
+        "heading": "Platform assurance and Apple-native proof — 2026-09-27",
+        "heading_level": 2,
+        "heading_line": 5321,
+        "line": 5327,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -117135,8 +117200,8 @@
       "source_location": {
         "heading": "CRAU-102 - Host-Local Governor And Old-Hardware Capability Profiles",
         "heading_level": 3,
-        "heading_line": 6557,
-        "line": 6559,
+        "heading_line": 6595,
+        "line": 6597,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -117152,8 +117217,8 @@
       "source_location": {
         "heading": "CRAU-103 - Proof-Based Platform Readiness And Shared Runtime Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 6625,
-        "line": 6627,
+        "heading_line": 6663,
+        "line": 6665,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -190651,6 +190716,40 @@
       "unit_type": "owner_boundary"
     },
     {
+      "context_scope": "application_update_internal_check_policy",
+      "gui_related": true,
+      "owner_doc": "Plans/Release_Supply_Chain.md",
+      "plan_unit_id": "RSC-019",
+      "reasoning_tier": "high",
+      "risk_class": "app_update_retry_storm_or_false_successful_check",
+      "source_location": {
+        "heading": "Application check scheduling and managed WSL image admission — 2026-09-27",
+        "heading_level": 2,
+        "heading_line": 1468,
+        "line": 1474,
+        "path": "Plans/Release_Supply_Chain.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "managed_wsl_distribution_release_admission",
+      "gui_related": false,
+      "owner_doc": "Plans/Release_Supply_Chain.md",
+      "plan_unit_id": "RSC-020",
+      "reasoning_tier": "high",
+      "risk_class": "untrusted_wsl_image_or_cross_owner_repair",
+      "source_location": {
+        "heading": "Application check scheduling and managed WSL image admission — 2026-09-27",
+        "heading_level": 2,
+        "heading_line": 1468,
+        "line": 1510,
+        "path": "Plans/Release_Supply_Chain.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "rewrite_tie_in_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/rewrite-tie-in-memo.md",
@@ -214083,10 +214182,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15798,
+    "depends_on_edge_count": 15807,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18499,
-    "node_count": 6754,
+    "edge_count": 18508,
+    "node_count": 6757,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2701,
     "unresolved_reference_count": 0

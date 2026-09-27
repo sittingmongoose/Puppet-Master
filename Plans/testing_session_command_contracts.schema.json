@@ -33,8 +33,9 @@
       "allOf":[{"if":{"properties":{"run_id":{"type":"null"}},"required":["run_id"]},"then":{"properties":{"attempt_id":{"type":"null"}}},"else":{"properties":{"attempt_id":{"$ref":"#/$defs/id"}}}}]
     },
     "EvidenceSelection": {
-      "type":"object","additionalProperties":false,"required":["artifact_id","artifact_version","content_sha256","security_class"],
-      "properties":{"artifact_id":{"$ref":"#/$defs/id"},"artifact_version":{"type":"integer","minimum":1},"content_sha256":{"$ref":"#/$defs/sha256"},"security_class":{"const":"ordinary"}}
+      "type":"object","additionalProperties":false,"required":["artifact_id","artifact_version","content_sha256","security_class","actual_assurance_mode","assurance_requirement_ref","assurance_result_ref","assurance_requirement_met"],
+      "properties":{"artifact_id":{"$ref":"#/$defs/id"},"artifact_version":{"type":"integer","minimum":1},"content_sha256":{"$ref":"#/$defs/sha256"},"security_class":{"const":"ordinary"},"actual_assurance_mode":{"enum":["native_authoritative","virtualized_authoritative","compatibility","cross_target","simulated_or_mocked","unavailable","not_applicable"]},"assurance_requirement_ref":{"$ref":"#/$defs/nullable_ref"},"assurance_result_ref":{"$ref":"#/$defs/nullable_ref"},"assurance_requirement_met":{"type":["boolean","null"]}},
+      "allOf":[{"if":{"properties":{"actual_assurance_mode":{"const":"not_applicable"}},"required":["actual_assurance_mode"]},"then":{"properties":{"assurance_requirement_ref":{"type":"null"},"assurance_result_ref":{"type":"null"},"assurance_requirement_met":{"type":"null"}}},"else":{"properties":{"assurance_requirement_ref":{"$ref":"#/$defs/ref"},"assurance_result_ref":{"$ref":"#/$defs/ref"},"assurance_requirement_met":{"type":"boolean"}}}}]
     },
     "selection_list":{"type":"array","minItems":1,"maxItems":256,"uniqueItems":true,"items":{"$ref":"#/$defs/EvidenceSelection"}},
     "session_subject":{
