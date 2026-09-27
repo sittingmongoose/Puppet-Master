@@ -53635,29 +53635,36 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
       }
     });
   });
+  /* Add a shortcut: any app action that has none yet, or one of your commands; then press the keys. */
+  const APP_ACTIONS = [
+    ['open-palette', 'Open the command palette', 'Run anything by name'], ['toggle-terminal', 'Show or hide the terminal', ''], ['focus-chat', 'Jump to the message box', ''],
+    ['switch-project', 'Switch project', ''], ['stop-reply', 'Stop the reply', 'Stops the assistant mid-answer'], ['run-last', 'Run the last command again', ''],
+    ['open-history', 'Open history', ''], ['toggle-files', 'Show or hide files', ''], ['new-goal-selection', 'New Goal from selected text', ''], ['open-usage', 'Open Usage', '']
+  ];
   PM51.on('commands-add-shortcut', () => {
-    if (!custom().length) { PM51.toast('Make a command first', 'Shortcuts for your own commands appear here once you have one. Use New command on the Commands tab.', 'info'); return; }
-    const free = custom().filter(c => !keysFor(c));
-    if (!free.length) { PM51.toast('Every command has a shortcut', 'Click a shortcut to change it, or remove one to free it up.', 'info'); return; }
-    openDialog({
-      title: 'Add shortcut', subtitle: 'Press keys to run one of your commands.',
-      body: `<div class="form-field full"><span class="form-label">Command</span>${PM51.dropdown(free[0].id, free.map(c => ({ value: c.id, label: c.name, meta: c.description })), { name: 'command', label: 'Command' })}${helpBlock('Only commands without keys are listed.', 'command')}</div>`
-        + captureField('', 'Hold Ctrl, Alt, or Shift with a key.'),
-      saveLabel: 'Add shortcut',
-      onOpen: bindCapture,
-      onSave: (form, formEl) => {
-        const cmd = commandById(String(form.command || ''));
-        const keys = String(form.keys || '').trim();
-        if (!cmd) return fail(formEl, 'command', 'Pick one of your commands.');
-        if (!keys) return fail(formEl, 'keys', 'Press the keys you want to use.');
-        let s = shortcutForCommand(cmd.id);
-        if (!s) { s = { id: 'cmd:' + cmd.id, name: cmd.name, keys: '', command: cmd.id }; shortcuts().push(s); }
-        s.keys = keys;
-        saveState(); PM51.refresh(ID, { swap: false });
-        reportKeys(s);
+    const taken = new Set(shortcuts().map(s => s.id));
+    const actionsFree = APP_ACTIONS.filter(([id]) => !taken.has(id));
+    const cmdsFree = custom().filter(c => !keysFor(c));
+    PM51.wizard({
+      title: 'Add a shortcut', subtitle: 'Keys for an app action or one of your commands.', eyebrow: 'Shortcut', icon: 'key', size: 'default', finishLabel: 'Add shortcut',
+      draft: { target: null, keys: '' },
+      steps: [
+        { label: 'What', title: 'What should the keys do?', render: d => PM51.panelSection('App actions', actionsFree.length ? PM51.tiles(actionsFree.map(([id, name, what]) => ({ title: name, text: what, icon: 'bolt', selected: d.target === id, data: { target: id } })), { action: 'pm51-commands-sc-pick' }) : PM51.note('Every app action already has keys.', 'info'))
+            + PM51.panelSection('Your commands', cmdsFree.length ? PM51.tiles(cmdsFree.map(c => ({ title: c.name, text: c.description, icon: 'terminal', selected: d.target === 'cmd:' + c.id, data: { target: 'cmd:' + c.id } })), { action: 'pm51-commands-sc-pick' }) : PM51.note(custom().length ? 'Every command of yours already has keys.' : 'Make a command on the Commands tab to give it keys.', 'info')),
+          check: d => d.target ? '' : 'Pick what the keys should do.' },
+        { label: 'Keys', title: 'Press the keys you want to use.', render: d => captureField(d.keys, 'Hold Ctrl, Alt, or Shift with a key. Backspace clears it.') + '<p class="o55-wiz-lead o55-sc-clash" aria-live="polite"></p>',
+          onShow: (wrap, d) => { bindCapture(wrap); const i = wrap.querySelector('.pm51-commands-capture'), out = wrap.querySelector('.o55-sc-clash'); const upd = () => { const c = i.value ? clashesFor(d.target, 'app', i.value) : []; out.textContent = c.length ? `${i.value} is already used by ${c.join(', ')}.` : i.value ? `${i.value} is free.` : ''; }; if (i) { i.addEventListener('keydown', () => requestAnimationFrame(upd)); upd(); } },
+          collect: (wrap, d) => { const i = wrap.querySelector('.pm51-commands-capture'); if (i) d.keys = i.value.trim(); },
+          check: d => { if (!d.keys) return 'Press the keys you want to use.'; const c = clashesFor(d.target, 'app', d.keys); return c.length ? `${d.keys} is already used by ${c.join(', ')}. Press other keys.` : ''; } }
+      ],
+      onFinish: d => {
+        if (d.target.startsWith('cmd:')) { const cmd = commandById(d.target.slice(4)); if (!cmd) return; shortcuts().push({ id: d.target, name: cmd.name, keys: d.keys, command: cmd.id }); }
+        else { const a2 = APP_ACTIONS.find(x => x[0] === d.target); shortcuts().push({ id: a2[0], name: a2[1], keys: d.keys }); }
+        saveState(); PM51.refresh(ID, { swap: false }); PM51.toast('Shortcut added', `${d.keys} now works everywhere.`);
       }
     });
   });
+  PM51.on('commands-sc-pick', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.target = ds(el, 'target'); w.next(); });
   PM51.on('commands-shortcut-remove', el => {
     const s = shortcutById(ds(el, 'id')); if (!s) return;
     data().shortcuts = shortcuts().filter(x => x.id !== s.id); saveState(); PM51.refresh(ID, { swap: false });
@@ -53739,46 +53746,61 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
     const pick = (id, none) => { const v = PM51.value(id); return v == null || v === none ? '' : String(v); };
     return { scope: PM51.value(SID.scope) === 'Project' ? 'Project' : 'Global', mode: pick(SID.mode, 'inherit'), model: pick(SID.model, 'Inherit'), persona: pick(SID.persona, 'Inherit'), permissionsProfile: pick(SID.perms, 'Inherit') };
   };
-  PM51.on('commands-new', () => { const nd = newDefaults(); return openDialog({
-    title: 'New command', subtitle: 'A piece of text you send often, ready to run by typing its name.', wide: true,
-    body: `<div class="pm51-commands-form form-grid">`
-      + `<label class="form-field"><span class="form-label">Name</span><span class="pm51-commands-name"><span class="pm51-commands-adorn" aria-hidden="true">/x-</span><input class="form-input" name="name" placeholder="tidy-docs" data-autofocus autocomplete="off" spellcheck="false" aria-label="Command name after /x-"/></span>${helpBlock('Lowercase letters, numbers, - and _. Built-in names such as help are taken.', 'name')}</label>`
-      + `<label class="form-field"><span class="form-label">Description</span><input class="form-input" name="description" placeholder="One line that says what it does" autocomplete="off"/>${helpBlock('Shown next to the name in chat and in the command palette.', 'description')}</label>`
-      + `<label class="form-field full"><span class="form-label">What it sends</span><textarea class="form-textarea pm51-commands-template" name="template" rows="5" spellcheck="false" placeholder="${a(TEMPLATE_PLACEHOLDER)}"></textarea><div class="form-help pm51-commands-ph" data-placeholders>${placeholderLine('')}</div>${helpBlock('$ARGUMENTS is everything typed after the name. $1 $2 are single words. @path pastes a file. !`command` pastes what a command prints. Leave it empty to send the description as written.', 'template')}</label>`
-      + `<label class="form-field"><span class="form-label">Arguments hint</span><input class="form-input" name="argumentsHint" placeholder="For example: <branch name>" autocomplete="off"/>${helpBlock('Shown while you type the command, so you remember what to pass.', 'argumentsHint')}</label>`
-      + `<div class="form-field"><span class="form-label">Where it is available</span>${PM51.dropdown(nd.scope, [{ value: 'Project', label: 'This project', meta: '.puppet-master/commands/' }, { value: 'Global', label: 'Every project', meta: 'Your user folder' }], { name: 'scope', label: 'Where it is available' })}${helpBlock('This project: .puppet-master/commands/. Every project: your user folder. The project one wins when both have the same name.', 'scope')}</div>`
-      + `<details class="pm51-dialog-group"${nd.mode || nd.model || nd.persona || nd.permissionsProfile ? ' open' : ''}><summary>${icon('chevron')}<span>Overrides</span><small>(optional)</small></summary><div class="pm51-dialog-group-body"><p class="form-help">Leave these on Inherit and the command runs exactly like a message you typed yourself. They start from your defaults for new commands.</p>`
-      + overrideField('persona', nd.persona) + overrideField('mode', nd.mode) + overrideField('model', nd.model) + overrideField('permissionsProfile', nd.permissionsProfile)
-      + `</div></details></div>`,
-    saveLabel: 'Create command',
-    onOpen: overlay => {
-      focusFirst(overlay);
-      const ta = overlay.querySelector('textarea[name="template"]'); const line = overlay.querySelector('[data-placeholders]');
-      if (ta && line) ta.addEventListener('input', () => { line.innerHTML = placeholderLine(ta.value); });
-      overlay.querySelectorAll('input[name], textarea[name]').forEach(el => el.addEventListener('input', () => clearError(el)));
-    },
-    onSave: (form, formEl) => {
-      let raw = String(form.name || '').trim();
-      raw = raw.replace(/^\//, '').replace(/^x-/, '');
-      const description = String(form.description || '').trim();
-      const builtInWords = builtIn().map(c => String(c.command || '').replace(/^\//, '').split(/\s+/)[0]).filter(Boolean);
-      if (!raw) return fail(formEl, 'name', 'Give it a name after /x-.');
-      if (RESERVED_NAMES.includes(raw) || builtInWords.includes(raw)) return fail(formEl, 'name', `/${raw} is a built-in command. Pick another name.`);
-      if (!NAME_RE.test(raw)) return fail(formEl, 'name', 'Use lowercase letters, numbers, - or _. Start with a letter and end with a letter or number.');
-      if (commandById('x-' + raw)) return fail(formEl, 'name', `You already have /x-${raw}.`);
-      if (!description) return fail(formEl, 'description', 'Say what it does in one line.');
-      const template = String(form.template || '').replace(/\r\n/g, '\n');
-      const c = {
-        id: 'x-' + raw, name: '/x-' + raw, description, template: template.trim() ? template : description,
-        argumentsHint: String(form.argumentsHint || '').trim(), scope: form.scope === 'Global' ? 'Global' : 'Project',
-        overrides: { persona: form.persona || null, mode: form.mode || null, model: form.model || null, permissionsProfile: form.permissionsProfile || null },
-        enabled: true, source: 'user'
-      };
-      custom().push(c); PM51.setTab(ID, 'commands');
-      saveState(); PM51.refresh(ID, { swap: false });
-      PM51.toast('Command created', `Type ${c.name} in chat to run it. It lives in ${pathFor(c)}.`);
-    }
-  }); });
+  /* ---------- New command: start from an example, write it, choose how it runs, try it ---------- */
+  const EXAMPLES = [
+    { id: 'review', title: 'Review my changes', icon: 'branch', name: 'review-changes', description: 'Review what changed on this branch and list anything risky', template: 'Review the changes on this branch compared with main.\n!`git diff --stat main...HEAD`\n\nList anything risky first, then anything that could be simpler.', argumentsHint: '' },
+    { id: 'tests', title: 'Write tests for a file', icon: 'test', name: 'write-tests', description: 'Add tests for one file', template: 'Write tests for @$1.\nCover the normal case, the edge cases and one failure.\nSay what each test checks.', argumentsHint: '<file>' },
+    { id: 'explain', title: 'Explain a file', icon: 'file', name: 'explain', description: 'Explain a file in plain words', template: 'Explain @$1 in plain words: what it does, how it fits in, and anything surprising.', argumentsHint: '<file>' },
+    { id: 'standup', title: 'Standup summary', icon: 'clock', name: 'standup', description: 'What changed since yesterday', template: 'Summarize what changed since yesterday, for a standup.\n!`git log --since=yesterday --oneline`', argumentsHint: '' },
+    { id: 'lint', title: 'Fix lint errors', icon: 'check', name: 'fix-lint', description: 'Run the linter and fix what it finds', template: 'Run the linter and fix what it reports.\n!`npm run lint --silent`\nKeep each fix small, and say what you could not fix.', argumentsHint: '' },
+    { id: 'blank', title: 'Start from scratch', icon: 'edit', name: '', description: '', template: '', argumentsHint: '' }
+  ];
+  function nameProblem(raw) {
+    const builtInWords = builtIn().map(c => String(c.command || '').replace(/^\//, '').split(/\s+/)[0]).filter(Boolean);
+    if (!raw) return 'Give it a name after /x-.';
+    if (RESERVED_NAMES.includes(raw) || builtInWords.includes(raw)) return `/${raw} is a built-in command. Pick another name.`;
+    if (!NAME_RE.test(raw)) return 'Use lowercase letters, numbers, - or _. Start with a letter and end with a letter or number.';
+    if (commandById('x-' + raw)) return `You already have /x-${raw}.`;
+    return '';
+  }
+  const wizOverride = (key, value) => { const f = OVERRIDE_FIELDS.find(x => x.key === key); return PM51.field(f.label, PM51.dropdown(value || '', f.options(value || ''), { label: f.label, cls: 'o55-cmd-ov', data: { key } }), f.help); };
+  PM51.on('commands-new', () => {
+    const nd = newDefaults();
+    PM51.wizard({
+      title: 'New command', subtitle: 'A piece of text you send often, ready to run by typing its name.', eyebrow: 'Your command', icon: 'terminal', finishLabel: 'Create command',
+      draft: { example: null, name: '', description: '', template: '', argumentsHint: '', scope: nd.scope, overrides: { persona: nd.persona, mode: nd.mode, model: nd.model, permissionsProfile: nd.permissionsProfile }, keys: '', sample: 'example' },
+      steps: [
+        { label: 'Start', title: 'Start from an example, or from scratch.', render: d => PM51.tiles(EXAMPLES.map(x => ({ title: x.title, text: x.description || 'An empty command you write yourself.', meta: x.name ? `/x-${x.name}` : '', icon: x.icon, selected: d.example === x.id, data: { example: x.id } })), { action: 'pm51-commands-example' }), check: d => d.example ? '' : 'Pick one to go on.' },
+        { label: 'Write', title: 'What it sends. Placeholders fill in when you run it.', render: d => `<div class="o55-setup-fields">`
+            + PM51.field('Name', `<span class="pm51-commands-name"><span class="pm51-commands-adorn" aria-hidden="true">/x-</span><input class="text-control o55-cmd-name" value="${a(d.name)}" placeholder="tidy-docs" autocomplete="off" spellcheck="false" data-autofocus aria-label="Command name after /x-"/></span>`, 'Your commands start with /x- so they never clash with built-in ones.')
+            + PM51.field('Description', `<input class="text-control o55-cmd-desc" value="${a(d.description)}" placeholder="One line that says what it does" autocomplete="off"/>`, 'Shown next to the name in chat and in the command palette.')
+            + PM51.field('What it sends', `<textarea class="form-textarea pm51-commands-template o55-cmd-text" rows="7" spellcheck="false" placeholder="${a(TEMPLATE_PLACEHOLDER)}">${h(d.template)}</textarea><span class="pm51-field-help pm51-commands-ph" data-placeholders>${placeholderLine(d.template)}</span>`, '$ARGUMENTS is everything typed after the name. $1 $2 are single words. @path pastes a file. !`command` pastes what a command prints.')
+            + PM51.field('Arguments hint', `<input class="text-control o55-cmd-args" value="${a(d.argumentsHint)}" placeholder="For example: <branch name>" autocomplete="off"/>`, 'Shown while you type the command.')
+            + `</div>`,
+          onShow: wrap => { const ta = wrap.querySelector('.o55-cmd-text'), line = wrap.querySelector('[data-placeholders]'); if (ta && line) ta.addEventListener('input', () => { line.innerHTML = placeholderLine(ta.value); }); },
+          collect: (wrap, d) => { const v = s => (wrap.querySelector(s) || {}).value || ''; d.name = v('.o55-cmd-name').trim().replace(/^\//, '').replace(/^x-/, ''); d.description = v('.o55-cmd-desc').trim(); d.template = v('.o55-cmd-text').replace(/\r\n/g, '\n'); d.argumentsHint = v('.o55-cmd-args').trim(); },
+          check: d => nameProblem(d.name) || (!d.description ? 'Say what it does in one line.' : '') },
+        { label: 'How it runs', title: 'Where it is available, what it may ask for, and a shortcut if you want one.', render: d => `<div class="o55-setup-fields">`
+            + PM51.field('Available in', PM51.dropdown(d.scope, [{ value: 'Project', label: 'This project', meta: '.puppet-master/commands/' }, { value: 'Global', label: 'Every project', meta: 'Your user folder' }], { cls: 'o55-cmd-scope', label: 'Available in' }), 'A project command wins when both have the same name.')
+            + wizOverride('persona', d.overrides.persona) + wizOverride('mode', d.overrides.mode) + wizOverride('model', d.overrides.model) + wizOverride('permissionsProfile', d.overrides.permissionsProfile)
+            + captureField(d.keys, 'Optional. Hold Ctrl, Alt, or Shift with a key. Backspace clears it.')
+            + `</div>`,
+          onShow: wrap => bindCapture(wrap),
+          collect: (wrap, d) => { const sc = wrap.querySelector('.o55-cmd-scope'); if (sc) d.scope = sc.value === 'Global' ? 'Global' : 'Project'; wrap.querySelectorAll('.o55-cmd-ov').forEach(s => { d.overrides[s.dataset.key] = s.value || ''; }); const k = wrap.querySelector('.pm51-commands-capture'); if (k) d.keys = k.value.trim(); },
+          check: d => { const c = d.keys ? clashesFor('cmd:x-' + d.name, 'app', d.keys) : []; return c.length ? `${d.keys} is already used by ${c.join(', ')}. Pick other keys or clear the box.` : ''; } },
+        { label: 'Try it', title: 'What the chat would receive. Nothing runs.', render: d => PM51.field('What you type after the name', `<input class="text-control o55-cmd-sample" value="${a(d.sample)}" autocomplete="off"/>`) + `<pre class="pm51-code" data-resolved>${resolveTemplate(d.template || d.description, d.sample)}</pre><div class="pm51-commands-legend"><span><i></i>Filled from your input</span><span><i class="is-perm"></i>Needs permission when it runs</span></div>`
+            + PM51.kv([['Name', '/x-' + d.name], ['Available in', scopeLabel(d.scope)], ['Shortcut', d.keys || 'None']]),
+          onShow: (wrap, d) => { const i = wrap.querySelector('.o55-cmd-sample'), pre = wrap.querySelector('[data-resolved]'); if (i && pre) i.addEventListener('input', () => { d.sample = i.value; pre.innerHTML = resolveTemplate(d.template || d.description, i.value); }); } }
+      ],
+      onFinish: d => {
+        const c = { id: 'x-' + d.name, name: '/x-' + d.name, description: d.description, template: d.template.trim() ? d.template : d.description, argumentsHint: d.argumentsHint, scope: d.scope, overrides: { persona: d.overrides.persona || null, mode: d.overrides.mode || null, model: d.overrides.model || null, permissionsProfile: d.overrides.permissionsProfile || null }, enabled: true, source: 'user' };
+        custom().push(c); if (d.keys) shortcuts().push({ id: 'cmd:' + c.id, name: c.name, keys: d.keys, command: c.id });
+        PM51.setTab(ID, 'commands'); saveState(); PM51.refresh(ID, { swap: false });
+        PM51.toast('Command created', `Type ${c.name} in chat to run it${d.keys ? `, or press ${d.keys}` : ''}. It lives in ${pathFor(c)}.`);
+      }
+    });
+  });
+  PM51.on('commands-example', el => { const w = PM51.wizardOf(el); const x = EXAMPLES.find(e => e.id === ds(el, 'example')); if (!w || !x) return; Object.assign(w.draft, { example: x.id, name: x.name, description: x.description, template: x.template, argumentsHint: x.argumentsHint }); w.next(); });
 
   /* ---------- command hero sheet ------------------------------------------- */
   let sheet = null;
