@@ -68,7 +68,7 @@
     observed = inner; nodes.clear();
     var layer = tr.querySelector('.tx-spine-layer'); if (layer) layer.textContent = '';
     ro = new ResizeObserver(schedule); ro.observe(inner);
-    mo = new MutationObserver(schedule);
+    mo = new MutationObserver(function (list) { schedule(); births(list); });
     mo.observe(inner, { childList: true, attributes: true, subtree: true, attributeFilter: ['data-streaming', 'data-turn-pos', 'data-flight', 'data-turn'] });
     schedule();
   }
@@ -143,6 +143,46 @@
       }
     });
     nodes.forEach(function (n, key) { if (!n.__seen) { if (n.parentNode) n.parentNode.removeChild(n); nodes.delete(key); } });
+  }
+
+  /* ---- birth: a live turn's working card unfolds out of the turn mark ---
+     A card whose record has just started (a live turn, the Multi Orbit run's
+     next burst) opens as a circle growing from the mark in the gutter to the
+     whole card. Cards mounted by a thread switch or history load are old
+     records and simply appear. Voices: basic grows, friendly overshoots, glass
+     clears from blur, retro steps. */
+  function births(list) {
+    var c; try { c = EXT.ctx(); } catch (e) { return; }
+    list.forEach(function (mu) {
+      mu.addedNodes && mu.addedNodes.forEach && mu.addedNodes.forEach(function (n) {
+        if (!n || n.nodeType !== 1) return;
+        var card = n.classList && n.classList.contains('working-card') ? n : (n.querySelector && n.querySelector(':scope > .working-card'));
+        if (!card || card.__born) return;
+        var rec = c.state.works && c.state.works[card.getAttribute('data-card')];
+        if (!rec || !rec.running || (rec.clock || 0) > 1.2) return;
+        card.__born = true;
+        birth(card);
+      });
+    });
+  }
+  function birth(card) {
+    var M = window.PM56_MOTION;
+    if (M && M.reduced && M.reduced()) return;
+    var tr = document.querySelector('.transcript');
+    var voice = tr ? tr.getAttribute('data-voice') : 'basic';
+    var gutter = parseFloat(getComputedStyle(card.parentElement).getPropertyValue('--tx-gutter')) || 24;
+    var ox = -(gutter - 9), oy = 10;                       /* the mark, in card coordinates */
+    var r = card.getBoundingClientRect();
+    var far = Math.hypot(r.width - ox, r.height) + 20;
+    var ms = window.PM56_CLOCK ? window.PM56_CLOCK.ms(560) : 560;
+    var from = 'circle(6px at ' + ox + 'px ' + oy + 'px)', to = 'circle(' + far.toFixed(0) + 'px at ' + ox + 'px ' + oy + 'px)';
+    var kf = [{ clipPath: from, opacity: 0.6 }, { clipPath: to, opacity: 1 }];
+    var ease = 'cubic-bezier(.2,.8,.2,1)';
+    if (voice === 'friendly') { kf = [{ clipPath: from, transform: 'scale(.97)' }, { clipPath: to, transform: 'scale(1.01)', offset: 0.75 }, { clipPath: to, transform: 'none' }]; ease = 'cubic-bezier(.34,1.3,.64,1)'; }
+    else if (voice === 'glass') { kf = [{ clipPath: from, filter: 'blur(8px)', opacity: 0.4 }, { clipPath: to, filter: 'blur(0px)', opacity: 1 }]; ease = 'cubic-bezier(.05,.7,.1,1)'; }
+    else if (voice === 'retro') { ease = 'steps(7,end)'; }
+    card.animate(kf, { duration: ms, easing: ease });
+    try { if (window.PM56_SOUND) window.PM56_SOUND.play('work'); } catch (e) { }
   }
 
   /* app.js re-renders the transcript; re-arm whenever its inner list is a new

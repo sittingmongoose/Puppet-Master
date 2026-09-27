@@ -112,6 +112,13 @@ if (!fs.existsSync(FILE)) { console.error('orbit-verify: no such file ' + FILE);
 const browser = await chromium.launch();
 const consoleNoise = [];
 
+/* Chat WOW: the lab controls (play/pause, step, complete, reset, history) sit
+   behind ONE drawer button in the working head; open it, then press. */
+async function demoClick(p, card, action) {
+  const c = typeof card === 'string' ? p.locator(card).first() : card;
+  if (!(await c.locator(`[data-action="${action}"]`).count())) await c.locator('[data-action="work-demo-menu"]').click();
+  await c.locator(`[data-action="${action}"]`).click();
+}
 async function newPage(opts = {}) {
   const p = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, ...opts });
   p.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') consoleNoise.push(m.type() + ': ' + m.text()); });
@@ -693,7 +700,7 @@ await safe('Multi-orbit turn: A runs, compacts under B; strips reopen in two bea
     interim: document.querySelector('.transcript-inner').textContent.includes('Scope is confirmed')
   }));
   check('turn playback: one live card, the later turn is hidden', t1.cards === 1 && !t1.interim, t1);
-  await p9.click('.transcript-inner .working-card [data-action="complete-working"]');
+  await demoClick(p9, '.transcript-inner .working-card', 'complete-working');
   /* A no longer compacts at completion. Chat WOW: the interim reply now STREAMS
      in when A completes and holds B until it has finished (turn-stream.js), then
      B spawns at +1400ms and A's collapse choreography (430+240ms) lands after
@@ -711,7 +718,7 @@ await safe('Multi-orbit turn: A runs, compacts under B; strips reopen in two bea
   });
   check('A done: the interim text reveals, B spawns live, A compacts to its subject strip',
     t2.n === 2 && t2.interim && t2.aStrip === 3 && t2.bLive, t2);
-  await p9.locator('.transcript-inner .working-card').nth(1).locator('[data-action="complete-working"]').click();
+  await demoClick(p9, p9.locator('.transcript-inner .working-card').nth(1), 'complete-working');
   /* the summary streams in; wait until it has been written out */
   await p9.waitForFunction(() => document.querySelector('.transcript-inner').textContent.includes('Either work summary reopens its orbit on any subject.') && !document.querySelector('.transcript-inner [data-streaming]'), null, { timeout: 12000 }).catch(() => {});
   await p9.waitForTimeout(900);
@@ -725,8 +732,10 @@ await safe('Multi-orbit turn: A runs, compacts under B; strips reopen in two bea
       chev: !!(cards[0] && cards[0].querySelector('.orbit-strip-chev')),
       title: (cards[0] && cards[0].querySelector('.orbit-strip-item') || {}).dataset?.hoverTip || '' };
   });
-  check('B done: the summary reveals, the LAST activity stays expanded, A is a 3-disc strip',
-    t3.summary && t3.aStrip === 3 && t3.bOpen === '1' && t3.bStrip === 0, t3);
+  /* Chat WOW product decision (2026-09-26): the turn's last activity folds into
+     its strip when the answer starts streaming, so the answer rises into view. */
+  check('B done: the summary reveals and B folds into its strip as it streams, A is a 3-disc strip',
+    t3.summary && t3.aStrip === 3 && t3.bOpen === 'gone' && t3.bStrip > 0, t3);
   check('the compact strip carries an expand chevron', t3.chev, t3);
   check('strip discs carry the per-subject stat in their hover text', /·/.test(t3.title), t3.title);
   const chips = await p9.evaluate(() => [...document.querySelectorAll('.transcript-inner .working-card >> .receipt-chip'.replace(' >> ',' ')).values()].map(x => x.textContent));
@@ -801,7 +810,7 @@ await safe('Multi-orbit turn: rows stream in over ticks and freeze on pause', as
   check('a stream row renders as cascading words through M.words()', words,
     { maxWords: Math.max(...seen.map(s => s.words)) });
   /* Pausing freezes the clock, so the row set must freeze with it. */
-  await p10.click('.transcript-inner .working-card [data-action="pause-working"]');
+  await demoClick(p10, '.transcript-inner .working-card', 'pause-working');
   await p10.waitForTimeout(200);
   const c1 = await p10.evaluate(() => ({ uid: (document.querySelector('.transcript-inner .orbit-panel-in') || {}).getAttribute?.('data-k'), n: document.querySelectorAll('.transcript-inner .orbit-rows .wa-row').length }));
   await p10.waitForTimeout(1600);
@@ -886,11 +895,11 @@ await safe('Shell rows open an inline terminal box; Step Rail chevron stays on t
     window.PM56_DEMO.setVariant(2, 8);
   });
   await p11.waitForTimeout(400);
-  await p11.click('.transcript-inner .working-card [data-action="complete-working"]');
+  await demoClick(p11, '.transcript-inner .working-card', 'complete-working');
   await p11.waitForFunction(() => document.querySelectorAll('.transcript-inner .working-card').length >= 2, null, { timeout: 12000 }).catch(() => {});
   await p11.waitForTimeout(300);
-  const second = p11.locator('.transcript-inner .working-card').nth(1).locator('[data-action="complete-working"]');
-  if (await second.count()) await second.click();
+  const second = p11.locator('.transcript-inner .working-card').nth(1);
+  if (await second.count()) await demoClick(p11, second, 'complete-working');
   await p11.waitForTimeout(500);
   const many = await p11.evaluate(() => {
     const cards = [...document.querySelectorAll('.transcript-inner .working-card.working-variant-8')];
@@ -1062,12 +1071,12 @@ await safe('Clickable work rows open the editor; bash MCP is not a Shell', async
     window.PM56_DEMO.selectThread('orbit-run');
   });
   await p12.waitForTimeout(500);
-  await p12.click('.transcript-inner .working-card [data-action="complete-working"]');
+  await demoClick(p12, '.transcript-inner .working-card', 'complete-working');
   /* B spawns once the interim reply has streamed in (Chat WOW) */
   await p12.waitForFunction(() => document.querySelectorAll('.transcript-inner .working-card').length >= 2, null, { timeout: 12000 }).catch(() => {});
   await p12.waitForTimeout(300);
-  const second = p12.locator('.transcript-inner .working-card').nth(1).locator('[data-action="complete-working"]');
-  if (await second.count()) await second.click();
+  const second = p12.locator('.transcript-inner .working-card').nth(1);
+  if (await second.count()) await demoClick(p12, second, 'complete-working');
   await p12.waitForTimeout(500);
   const orbitB = await p12.evaluate(() => {
     const cards = [...document.querySelectorAll('.transcript-inner .working-card')];

@@ -451,7 +451,6 @@
         if (i >= 0) th.messages.splice(i, 1, work, answer); else th.messages.push(work, answer);
         d.phase = 'working'; d.workId = work.id;
         c.startWorkingRec(d.lt.run, null, { recId: d.recId });
-        sound('work');
         return;
       }
       if (d.phase === 'working') {
@@ -466,7 +465,10 @@
           rec.running = false;
           var ask = { id: c.uid('approve'), role: 'system', type: 'waiting', title: 'Approval needed: ' + (inst.verb || 'continue'),
             detail: (inst.detail || '') + ' The run is paused on this step.', liveApprove: d.recId, liveApproveUid: inst.uid, time: new Date().toISOString() };
-          th.messages.push(ask);
+          /* the ask belongs to the work: it sits right under the working card,
+             before the (still hidden) answer */
+          var wi = th.messages.findIndex(function (m) { return m.id === d.workId; });
+          if (wi >= 0) th.messages.splice(wi + 1, 0, ask); else th.messages.push(ask);
           c.renderApp(); c.followIfSticky();
           sound('needs');
         });

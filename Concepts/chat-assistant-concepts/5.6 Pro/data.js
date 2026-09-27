@@ -166,6 +166,7 @@
         }
       };
       if (extra.long) m.long = true;
+      if (extra.rich) m.rich = true;   /* Chat WOW: rendered with the streaming reply's markdown subset */
       /* `revealAfter` gates a message behind a work run: app.js hides it until
          state.works[revealAfter] reports completed. Whitelisted here like
          `long`, because this builder copies nothing it does not know. */
@@ -506,13 +507,13 @@
         : ref === 'bash' ? { at:.3, text:'Ran cargo test ' + f.replace('.rs',''), cmd:'cargo test ' + f.replace('.rs',''), output:['test result: ok'], exitCode:0, tag:'ok' }
         : ref === 'validate' ? { at:.2, text:'Checked ' + f.replace('.rs','') + ' against the fixture', tag:'ok' }
         : { at:.2, stream:true, text:'Next: ' + f.replace('.rs','') + ' — same tenant-first pattern, same checks.' };
-      steps.push({ ref, startAt:+t.toFixed(2), dur:Math.max(.3, gap * .95), stat:ref === 'files' ? f : ref, rows:[row] });
-      t += gap;
+      steps.push({ ref, startAt:+t.toFixed(2), dur:Math.max(.25, gap * .5), stat:ref === 'files' ? f : ref, rows:[row] });
+      t += gap * .52;
     }
     workRuns.liveC = {
       title: 'Applying the pattern across the module',
       receipt: ['140 tools','10 files','62 reads','18 edits'],
-      narration: [ { at:40.2, text:'Half the module is done. The same tenant-first pattern applies to the rest.' } ],
+      narration: [ { at:21.3, text:'Half the module is done. The same tenant-first pattern applies to the rest.' } ],
       steps
     };
   })();
@@ -2565,6 +2566,17 @@
 
   /* The long-history thread: 26 turns, no tools, no cards, no artifacts.
      Its ids are `plain-NN` and belong to it alone. */
+  /* Chat WOW: the stage for live turns. Demo Studio's Live turns triggers type
+     and send here; anything sent in Agent mode that matches a live turn plays
+     one (see liveTurns). */
+  thread({ id:'live-turn', title:'Live turns', status:'idle', pinned:true, updated:'now',
+    model:'Claude Sonnet 4.6', worktree:'feature/query-index',
+    summary:'Send a message and watch the turn arrive live.',
+    messages:turns('live-turn', { route:'sonnet', startMin:600, mode:'agent', persona:'Product Manager', contextStart:3200 }, [
+      ['u','How do live turns look here?'],
+      ['a','Send something below and watch it arrive. Ask me to **add the composite index**, to **fix the rollback path**, or to **apply the pattern across the module** for a turn that works before it answers; ask to **walk through the steps** or to **summarize** for a written reply.',{ rich:true }]
+    ]) });
+
   thread({ id:'plain', title:'Product Design Discussion', status:'idle', pinned:true, updated:'12m',
     model:'Claude Sonnet 4.6',
     summary:'A long ordinary conversation with no tools, cards, or artifacts.',
