@@ -1,0 +1,74 @@
+{
+ "_about": "Notifications & Sounds rows (settings audit, 2026-09-26).",
+ "rows": {
+  "general.interaction.notifications-enabled": {
+   "label": "Notifications",
+   "help": "Off means nothing alerts you. You check the app yourself."
+  },
+  "general.interaction.notification-method": {
+   "label": "Pop-up style",
+   "help": "How alerts appear inside this app.",
+   "options": {
+    "Toast": "Small pop-up",
+    "Banner": "Banner across the top",
+    "System Tray": "Use the system tray instead"
+   }
+  },
+  "general.interaction.tray-notifications": {
+   "label": "Only important events",
+   "help": "Approvals, finished runs, failures and rate limits."
+  },
+  "general.interaction.notification-severity": {
+   "label": "Alert me about",
+   "help": "Fewer levels means fewer interruptions.",
+   "options": {
+    "info": "Information",
+    "watch": "Worth watching",
+    "attention_required": "Needs my attention",
+    "blocked": "Blocked work",
+    "escalated": "Escalated"
+   }
+  },
+  "general.interaction.dismissal-rationale": {
+   "label": "Ask for a reason when I dismiss an alert",
+   "help": "Leaves a note you can look back on."
+  },
+  "general.interaction.notification-destinations": {
+   "label": "Destinations",
+   "help": "Kept in step with the Destinations list.",
+   "noun": "destination"
+  },
+  "general.interaction.notification-mapping": {
+   "label": "Where each event goes",
+   "help": "Kept in step with each event's destinations."
+  },
+  "general.interaction.sound-effects": {
+   "label": "Play sounds",
+   "help": "Short sounds for approvals, completions and errors."
+  },
+  "general.interaction.sound-catalog": {
+   "label": "Sound library",
+   "help": "Listen to the built-in sounds and your own.",
+   "pm51": "pm51-notifications-browse",
+   "actionLabel": "Open the library"
+  },
+  "general.interaction.sound-management": {
+   "label": "Add a sound",
+   "help": "Upload a file or import a pack.",
+   "pm51": "pm51-notifications-add-sound",
+   "actionLabel": "Add sound"
+  },
+  "general.interaction.sound-mapping": {
+   "label": "Sound for each event",
+   "help": "Kept in step with the Event sounds list."
+  },
+  "general.interaction.alert-quiet-window": {
+   "label": "Stop repeating a warning after",
+   "help": "Minutes of calm. Urgent and blocked alerts always repeat.",
+   "unit": "min",
+   "min": 1,
+   "max": 240,
+   "step": 1
+  }
+ }
+}

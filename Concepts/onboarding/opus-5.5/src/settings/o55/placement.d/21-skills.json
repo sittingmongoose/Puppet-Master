@@ -1,0 +1,17 @@
+{
+  "_about": "Skills: the list owns its search, Show, Sort, Rescan, Check all, per-skill switches, preview and per-skill run permissions (drawn by managers/21-skills.js, bound to these ids). Below it, three short groups; the size limits and badge choice are More options.",
+  "sections": {
+    "skills-home": { "to": "skills", "title": "Your skills", "help": "The list, its toolbar, and each skill's own choices.", "order": 1, "composed": true },
+    "skills-use": { "to": "skills", "title": "How skills are used", "help": "Whether skills can start on their own, and where you reach them.", "order": 10 },
+    "skills-new": { "to": "skills", "title": "New skills", "help": "How new skills are found and whether they arrive switched on.", "order": 20 },
+    "skills-share": { "to": "skills", "title": "Share with other AI tools", "help": "Use the same skills in other AI coding tools on this computer.", "order": 30 },
+    "skills-more": { "to": "skills", "title": "Size and display", "help": "How much room the skill list takes in each request, and what the list shows.", "order": 40, "advanced": true }
+  },
+  "overrides": [
+    { "section": "skills-home", "ids": ["extensions.skills.your-skills", "extensions.skills.skill-on-off", "extensions.skills.search", "extensions.skills.registry-view", "extensions.skills.sort", "extensions.skills.rescan", "extensions.skills.validate", "extensions.skills.preview", "extensions.skills.permissions", "extensions.skills.pattern-permissions"] },
+    { "section": "skills-use", "ids": ["extensions.skills.auto-invocation", "extensions.skills.skills-panel"] },
+    { "section": "skills-new", "ids": ["extensions.skills.discovery", "extensions.skills.auto-enable-new"] },
+    { "section": "skills-share", "ids": ["extensions.skills.projection", "extensions.skills.projection-method"] },
+    { "section": "skills-more", "ids": ["extensions.skills.context-budget-percent", "extensions.skills.context-budget-chars", "extensions.skills.info-badges"] }
+  ]
+}

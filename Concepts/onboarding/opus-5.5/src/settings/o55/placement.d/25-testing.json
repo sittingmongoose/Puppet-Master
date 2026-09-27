@@ -1,0 +1,212 @@
+{
+ "_about": "Testing & Debug: capability policy first on When to test; the capability rows in three groups on What it can test; debug permissions and limits; keeping proof. Browser capture rows move to Browser & SCM, Goal receipt evidence to Goals.",
+ "managers": {
+  "testing": {
+   "tabs": {
+    "profiles": "Profiles",
+    "when": "When to test",
+    "browser-native": "What it can test",
+    "debug": "Debug",
+    "history": "History"
+   },
+   "defaultTab": "profiles"
+  }
+ },
+ "sections": {
+  "testing-capture": null,
+  "testing-session": {
+   "to": "testing",
+   "tab": "profiles",
+   "title": "Running sessions",
+   "help": "Watch or detach a test run while it is running.",
+   "order": 10,
+   "advanced": false,
+   "composed": true
+  },
+  "testing-policy": {
+   "to": "testing",
+   "tab": "when",
+   "title": "Automated testing",
+   "help": "Whether the assistant may, must, or may not test its work.",
+   "order": 15,
+   "composed": true
+  },
+  "testing-premerge": {
+   "to": "testing",
+   "tab": "when",
+   "title": "Before merging",
+   "help": "Tests that must pass before finished work is merged.",
+   "order": 20
+  },
+  "testing-capabilities": {
+   "to": "testing",
+   "tab": "browser-native",
+   "title": "Browser testing",
+   "help": "Checks that click through anything with a screen.",
+   "order": 30,
+   "composed": true
+  },
+  "testing-cap-apps": {
+   "to": "testing",
+   "tab": "browser-native",
+   "title": "Desktop and mobile apps",
+   "help": "Checks for app windows, simulators and real devices.",
+   "order": 31,
+   "composed": true
+  },
+  "testing-cap-backend": {
+   "to": "testing",
+   "tab": "browser-native",
+   "title": "Behind the scenes",
+   "help": "Checks for APIs, data, speed and security.",
+   "order": 32
+  },
+  "testing-cap-tools": {
+   "to": "testing",
+   "tab": "browser-native",
+   "title": "Test tools and windows",
+   "help": "Finding and installing tools, and how browser windows open.",
+   "order": 33,
+   "advanced": true
+  },
+  "testing-debug-setups": {
+   "to": "testing",
+   "tab": "debug",
+   "title": "Debug profiles",
+   "help": "Which program to start and which debugger to use.",
+   "order": 50,
+   "composed": true
+  },
+  "testing-debug-permissions": {
+   "to": "testing",
+   "tab": "debug",
+   "title": "What debugging may do on its own",
+   "help": "Risky changes are still asked one by one.",
+   "order": 51
+  },
+  "testing-debug-limits": {
+   "to": "testing",
+   "tab": "debug",
+   "title": "Debug loop limits",
+   "help": "How wide the automatic debug loop searches, and when it stops.",
+   "order": 52,
+   "advanced": true
+  },
+  "testing-evidence": {
+   "to": "testing",
+   "tab": "history",
+   "title": "Keeping proof",
+   "help": "What is hidden, and how long test logs and Goal proof are kept.",
+   "order": 60
+  },
+  "goals-evidence": {
+   "to": "goals",
+   "tab": "verification",
+   "title": "Goal evidence",
+   "help": "What proof a Goal keeps in its receipts.",
+   "order": 55
+  }
+ },
+ "overrides": [
+  {
+   "section": "testing-session",
+   "ids": [
+    "planning.testing.session-actions"
+   ]
+  },
+  {
+   "section": "testing-policy",
+   "ids": [
+    "planning.testing.capability-policy"
+   ]
+  },
+  {
+   "section": "testing-capabilities",
+   "ids": [
+    "planning.testing.test-visibility",
+    "planning.testing.cap-built-in-browser",
+    "planning.testing.cap-screenshot-compare",
+    "planning.testing.cap-console-network",
+    "planning.testing.cap-accessibility"
+   ]
+  },
+  {
+   "section": "testing-cap-apps",
+   "ids": [
+    "planning.testing.cap-desktop-gui",
+    "planning.testing.cap-live-preview",
+    "planning.testing.cap-hot-reload",
+    "planning.testing.cap-simulator",
+    "planning.testing.cap-physical-device"
+   ]
+  },
+  {
+   "section": "testing-cap-backend",
+   "ids": [
+    "planning.testing.cap-api-contract",
+    "planning.testing.cap-database",
+    "planning.testing.cap-performance",
+    "planning.testing.cap-security"
+   ]
+  },
+  {
+   "section": "testing-cap-tools",
+   "ids": [
+    "planning.testing.cap-online-research",
+    "planning.testing.cap-auto-install",
+    "planning.testing.cap-visible-browser",
+    "planning.testing.cap-headed-browser"
+   ]
+  },
+  {
+   "section": "testing-debug-setups",
+   "ids": [
+    "code.execution.debug-configurations"
+   ]
+  },
+  {
+   "section": "testing-debug-permissions",
+   "ids": [
+    "safety.approvals.debug-grant-scope",
+    "safety.approvals.debug-profile-disclosure",
+    "general.startup.refresh-investigation"
+   ]
+  },
+  {
+   "section": "testing-debug-limits",
+   "ids": [
+    "safety.approvals.debug-max-browser-branches",
+    "safety.approvals.debug-max-no-evidence-loops"
+   ]
+  },
+  {
+   "section": "testing-evidence",
+   "ids": [
+    "planning.verification.evidence-redaction",
+    "branching.worktrees.evidence-retention-days",
+    "branching.worktrees.evidence-retain-last-runs",
+    "planning.verification.evidence-retention-days",
+    "planning.verification.evidence-retain-runs",
+    "planning.verification.prune-on-cleanup"
+   ]
+  },
+  {
+   "section": "goals-evidence",
+   "ids": [
+    "planning.verification.evidence-span",
+    "planning.verification.source-evidence-layers",
+    "planning.verification.receipt-evidence-policy",
+    "planning.verification.evidence-detail"
+   ]
+  },
+  {
+   "section": "browser-capture-tools",
+   "ids": [
+    "planning.testing.browser-capture-full-default",
+    "planning.testing.browser-component-action",
+    "planning.testing.browser-component-crop",
+    "planning.testing.browser-devtools-policy"
+   ]
+  }
+ ]
+}

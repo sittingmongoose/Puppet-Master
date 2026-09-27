@@ -1,0 +1,74 @@
+{
+ "_about": "doctor rows (settings audit).",
+ "rows": {
+  "system.health.doctor-summary": {
+   "label": "Last checkup",
+   "help": "A snapshot of the last check, not a live promise.",
+   "control": "status",
+   "why": "Shown in the summary at the top of Doctor."
+  },
+  "system.health.run-doctor": {
+   "label": "Check everything",
+   "help": "Checks every group once; nothing is changed or installed.",
+   "pm51": "pm51-doctor-check-all",
+   "actionLabel": "Check everything"
+  },
+  "system.health.auto-run": {
+   "label": "Check the setup automatically",
+   "help": "Catches problems before they interrupt your work."
+  },
+  "system.health.check-frequency": {
+   "label": "How often",
+   "help": "You can always check by hand.",
+   "when": {
+    "id": "system.health.auto-run",
+    "truthy": true
+   },
+   "hints": {
+    "Only when I ask": "The same as turning automatic checks off.",
+    "Never": "Also skips the check at startup."
+   }
+  },
+  "system.health.check-scope": {
+   "label": "What is checked",
+   "help": "Leaving areas out is faster but can hide problems.",
+   "options": {
+    "AI providers": "AI services",
+    "Storage": "Storage and backups",
+    "Sign-ins": "Accounts and sign-ins",
+    "Performance": "Speed",
+    "Dependencies": "Tools and code"
+   }
+  },
+  "system.health.readiness-badges": {
+   "label": "Show status labels around the app",
+   "help": "Ready, Needs setup or Needs attention at a glance."
+  },
+  "system.health.degraded-visibility": {
+   "label": "Warn about half-working connections",
+   "help": "Instead of hiding them until they fail."
+  },
+  "system.health.remediation-links": {
+   "label": "Show fix-it links",
+   "help": "Jump from a problem to the setting that solves it."
+  },
+  "system.health.platform-diagnostics": {
+   "label": "Collect support details",
+   "help": "Computer and install details, with secrets removed.",
+   "pm51": "pm51-doctor-copy",
+   "actionLabel": "Collect support details"
+  },
+  "general.startup.onboarding": {
+   "label": "Show first-run tips",
+   "help": "Short tips the first time you use each part of the app."
+  },
+  "planning.interview.wizard-first-run": {
+   "label": "Open the Planning Wizard after first setup",
+   "help": "Right after you connect your first AI service."
+  },
+  "planning.interview.provider-setup-skip": {
+   "label": "Allow skipping AI service setup",
+   "help": "Setup offers Skip for now; you can connect them later in AI Providers."
+  }
+ }
+}

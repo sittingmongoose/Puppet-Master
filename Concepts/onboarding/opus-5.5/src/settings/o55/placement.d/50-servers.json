@@ -1,0 +1,35 @@
+{
+ "_about": "servers: sections from the settings audit (2026-09-26).",
+ "sections": {
+  "servers-execution": null,
+  "servers-ssh": {
+   "to": "servers",
+   "title": "SSH computers",
+   "help": "Other computers you reach over SSH, for files or for running work.",
+   "order": 101,
+   "tab": "servers",
+   "composed": true
+  },
+  "servers-provisioning": {
+   "to": "servers",
+   "title": "Setting up tools on servers",
+   "help": "Whether Puppet Master may install the tools work needs on a server.",
+   "order": 102,
+   "tab": "servers"
+  }
+ },
+ "overrides": [
+  {
+   "section": "servers-ssh",
+   "ids": [
+    "code.execution.ssh-remotes"
+   ]
+  },
+  {
+   "section": "servers-provisioning",
+   "ids": [
+    "system.health.capability-provisioning"
+   ]
+  }
+ ]
+}

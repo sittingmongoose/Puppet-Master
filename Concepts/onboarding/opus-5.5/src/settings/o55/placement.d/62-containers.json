@@ -1,0 +1,181 @@
+{
+ "_about": "code-reference: sections from the plain-pages audit (2026-09-27). The two Docker groups stay in 20-toolchain.json (with the Docker Manager owner line); then building and publishing, running containers, changed containers, disk cleanup, Kubernetes and three Unraid groups; Docker panel views, action records and the template repository's details under More options. The page is named Containers: the workflow overlay moved to Permissions, next to the run mode it narrows.",
+ "pages": {
+  "code-reference": {
+   "label": "Containers",
+   "intro": "Docker on this computer, publishing images, Kubernetes and Unraid templates.",
+   "more": "Docker panel views, action records and template repository details."
+  }
+ },
+ "sections": {
+  "exec-build": {
+   "to": "code-reference",
+   "title": "Building & publishing images",
+   "help": "How images are built and when they are published.",
+   "order": 10
+  },
+  "exec-running": {
+   "to": "code-reference",
+   "title": "Running containers",
+   "help": "Opening a container's web page, its shell and its logs.",
+   "order": 20
+  },
+  "exec-drift": {
+   "to": "code-reference",
+   "title": "Changed containers",
+   "help": "Warnings when running containers no longer match their files.",
+   "order": 30
+  },
+  "exec-cleanup": {
+   "to": "code-reference",
+   "title": "Disk cleanup",
+   "help": "Finding old images and containers, and what is never removed.",
+   "order": 35
+  },
+  "exec-k8s": {
+   "to": "code-reference",
+   "title": "Kubernetes",
+   "help": "Which cluster this project uses and what agents may do there.",
+   "order": 40
+  },
+  "exec-unraid": {
+   "to": "code-reference",
+   "title": "Unraid templates",
+   "help": "Keep your Unraid app template up to date after each publish.",
+   "order": 50
+  },
+  "exec-unraid-listing": {
+   "to": "code-reference",
+   "title": "Your app's store listing",
+   "help": "What people see in Unraid Community Apps.",
+   "order": 55
+  },
+  "exec-unraid-publisher": {
+   "to": "code-reference",
+   "title": "Your publisher profile",
+   "help": "Who you are on the Unraid store.",
+   "order": 60
+  },
+  "exec-views-more": {
+   "to": "code-reference",
+   "title": "Docker panel views & records",
+   "help": "What the Docker panel shows and how long action records stay.",
+   "order": 100,
+   "advanced": true
+  },
+  "exec-unraid-more": {
+   "to": "code-reference",
+   "title": "Template repository details",
+   "help": "Where the template repository lives, and raw profile editing.",
+   "order": 110,
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "exec-build",
+   "ids": [
+    "code.execution.push-policy",
+    "code.execution.tag-templates",
+    "code.execution.build-platforms",
+    "code.execution.dockerfile-path",
+    "code.execution.build-context",
+    "code.execution.build-target-stage",
+    "code.execution.compose-file",
+    "code.execution.compose-project-name"
+   ]
+  },
+  {
+   "section": "exec-running",
+   "ids": [
+    "code.execution.preferred-browser",
+    "code.execution.port-forward-auto-open",
+    "code.execution.port-preference-order",
+    "code.execution.container-shell-command",
+    "code.execution.stream-follow-default"
+   ]
+  },
+  {
+   "section": "exec-drift",
+   "ids": [
+    "code.execution.drift-sensitivity",
+    "code.execution.drift-comparison-target",
+    "code.execution.drift-ignore-rules"
+   ]
+  },
+  {
+   "section": "exec-cleanup",
+   "ids": [
+    "code.execution.cleanup-scan-cadence",
+    "code.execution.cleanup-aggressiveness",
+    "code.execution.disk-threshold",
+    "code.execution.protected-assets",
+    "code.execution.hide-ephemeral-cleanup-warnings"
+   ]
+  },
+  {
+   "section": "exec-k8s",
+   "ids": [
+    "code.execution.k8s-context",
+    "code.execution.k8s-namespace",
+    "code.execution.k8s-cluster-wide",
+    "code.execution.k8s-auto-refresh",
+    "code.execution.helm-visibility",
+    "code.execution.k8s-host-policy"
+   ]
+  },
+  {
+   "section": "exec-unraid",
+   "ids": [
+    "code.execution.unraid-generate-xml",
+    "code.execution.unraid-repo-setup",
+    "code.execution.unraid-manage-repo",
+    "code.execution.unraid-auto-push",
+    "code.execution.unraid-review-state"
+   ]
+  },
+  {
+   "section": "exec-unraid-listing",
+   "ids": [
+    "code.execution.app-template-name",
+    "code.execution.app-template-overview",
+    "code.execution.app-template-webui",
+    "code.execution.app-template-categories",
+    "code.execution.app-template-config-items"
+   ]
+  },
+  {
+   "section": "exec-unraid-publisher",
+   "ids": [
+    "code.execution.maintainer-profile-scope",
+    "code.execution.maintainer-name",
+    "code.execution.maintainer-about",
+    "code.execution.maintainer-support-url",
+    "code.execution.maintainer-icon",
+    "code.execution.maintainer-slug"
+   ]
+  },
+  {
+   "section": "exec-views-more",
+   "ids": [
+    "code.execution.show-build-advanced",
+    "code.execution.follow-latest-publish",
+    "code.execution.publish-history-chain",
+    "code.execution.k8s-log-defaults",
+    "code.execution.receipt-verbosity",
+    "code.execution.receipt-retention"
+   ]
+  },
+  {
+   "section": "exec-unraid-more",
+   "ids": [
+    "code.execution.unraid-repo-path",
+    "code.execution.unraid-repo-branch",
+    "code.execution.unraid-repo-name",
+    "code.execution.unraid-maintainer-folder",
+    "code.execution.edit-publisher-xml",
+    "code.execution.preserve-unknown-xml"
+   ]
+  }
+ ]
+}

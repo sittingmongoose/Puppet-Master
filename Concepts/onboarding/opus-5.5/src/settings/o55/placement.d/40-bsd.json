@@ -1,0 +1,59 @@
+{
+ "_about": "Back Seat Driver: Overview is one Advisor group (plus expert pacing under More options); Stages stores each stage's inherit/off/auto/on; the planning copy of the mode switch follows the advisor's mode.",
+ "sections": {
+  "bsd-timing": null,
+  "bsd-advisor": {
+   "to": "bsd",
+   "tab": "overview",
+   "title": "Advisor",
+   "help": "It only advises. It never blocks or changes your work.",
+   "order": 10,
+   "composed": true
+  },
+  "bsd-memory": {
+   "to": "bsd",
+   "tab": "overview",
+   "title": "Expert options",
+   "help": "Catch-up time and when the advisor tidies its own notes.",
+   "order": 30,
+   "advanced": true,
+   "composed": true
+  },
+  "bsd-stages": {
+   "to": "bsd",
+   "tab": "stages",
+   "title": "Where the advisor watches",
+   "help": "Same as Overview, or its own setting for each stage.",
+   "order": 40,
+   "advanced": false,
+   "composed": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "bsd-advisor",
+   "ids": [
+    "safety.approvals.bsd-mode",
+    "safety.approvals.bsd-trigger-sensitivity",
+    "safety.approvals.bsd-cooldown-turns",
+    "safety.approvals.bsd-persona",
+    "safety.approvals.bsd-model",
+    "safety.approvals.bsd-retain-transcript",
+    "planning.verification.back-seat-driver-mode"
+   ]
+  },
+  {
+   "section": "bsd-memory",
+   "ids": [
+    "safety.approvals.bsd-catch-up-seconds",
+    "safety.approvals.bsd-self-compact-threshold"
+   ]
+  },
+  {
+   "section": "bsd-stages",
+   "ids": [
+    "safety.approvals.bsd-stage-bindings"
+   ]
+  }
+ ]
+}

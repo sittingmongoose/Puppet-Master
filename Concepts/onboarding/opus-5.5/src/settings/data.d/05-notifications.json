@@ -1,0 +1,814 @@
+{
+ "extras": {
+  "notifications": {
+   "priorities": [
+    {
+     "value": "Low",
+     "label": "Low",
+     "meta": "Waits for quiet hours to end"
+    },
+    {
+     "value": "Normal",
+     "label": "Normal",
+     "meta": "Arrives right away"
+    },
+    {
+     "value": "Urgent",
+     "label": "Urgent",
+     "meta": "Gets through quiet hours"
+    }
+   ],
+   "soundGroups": {
+    "none": "No sound",
+    "builtIn": "Built-in",
+    "uploaded": "Uploaded"
+   },
+   "soundStyles": [
+    "Chimes",
+    "Pings",
+    "Alerts",
+    "Soft",
+    "Playful",
+    "Retro"
+   ],
+   "builtinStyles": {
+    "attention": "Chimes",
+    "soft-warning": "Soft",
+    "task-done": "Chimes",
+    "failure": "Alerts",
+    "approval": "Pings",
+    "blocked": "Alerts"
+   },
+   "builtinSounds": [
+    {
+     "id": "glass-bell",
+     "name": "Glass bell",
+     "source": "Built-in · demo tone",
+     "style": "Chimes",
+     "duration": "0:01.6",
+     "format": "Generated",
+     "volume": 70,
+     "tones": [
+      [
+       1046.5,
+       0,
+       0.9,
+       "sine",
+       0,
+       0.36
+      ],
+      [
+       2637,
+       0,
+       0.45,
+       "sine",
+       0,
+       0.07
+      ],
+      [
+       1567.98,
+       0.02,
+       0.7,
+       "sine",
+       0,
+       0.12
+      ]
+     ]
+    },
+    {
+     "id": "harp-rise",
+     "name": "Harp rise",
+     "source": "Built-in · demo tone",
+     "style": "Chimes",
+     "duration": "0:01.4",
+     "format": "Generated",
+     "volume": 70,
+     "tones": [
+      [
+       261.63,
+       0,
+       0.5,
+       "triangle",
+       0,
+       0.3
+      ],
+      [
+       329.63,
+       0.12,
+       0.5,
+       "triangle",
+       0,
+       0.3
+      ],
+      [
+       392,
+       0.24,
+       0.5,
+       "triangle",
+       0,
+       0.3
+      ],
+      [
+       523.25,
+       0.36,
+       0.5,
+       "triangle",
+       0,
+       0.3
+      ],
+      [
+       659.25,
+       0.48,
+       0.5,
+       "triangle",
+       0,
+       0.3
+      ]
+     ]
+    },
+    {
+     "id": "radar",
+     "name": "Radar ping",
+     "source": "Built-in · demo tone",
+     "style": "Pings",
+     "duration": "0:01.4",
+     "format": "Generated",
+     "volume": 70,
+     "tones": [
+      [
+       1318.5,
+       0,
+       0.12,
+       "sine",
+       0,
+       0.4
+      ],
+      [
+       1318.5,
+       0.5,
+       0.12,
+       "sine",
+       0,
+       0.2
+      ],
+      [
+       1318.5,
+       0.8,
+       0.12,
+       "sine",
+       0,
+       0.09
+      ]
+     ]
+    },
+    {
+     "id": "digital",
+     "name": "Digital blip",
+     "source": "Built-in · demo tone",
+     "style": "Pings",
+     "duration": "0:00.5",
+     "format": "Generated",
+     "volume": 60,
+     "tones": [
+      [
+       1760,
+       0,
+       0.3,
+       "square",
+       0,
+       0.12
+      ],
+      [
+       2349.3,
+       0.35,
+       0.5,
+       "square",
+       0,
+       0.12
+      ]
+     ]
+    },
+    {
+     "id": "two-tone",
+     "name": "Two-tone alert",
+     "source": "Built-in · demo tone",
+     "style": "Alerts",
+     "duration": "0:01.2",
+     "format": "Generated",
+     "volume": 70,
+     "tones": [
+      [
+       880,
+       0,
+       0.22,
+       "square",
+       0,
+       0.16
+      ],
+      [
+       660,
+       0.25,
+       0.22,
+       "square",
+       0,
+       0.16
+      ],
+      [
+       880,
+       0.5,
+       0.22,
+       "square",
+       0,
+       0.16
+      ],
+      [
+       660,
+       0.75,
+       0.22,
+       "square",
+       0,
+       0.16
+      ]
+     ]
+    },
+    {
+     "id": "urgent-beeps",
+     "name": "Urgent beeps",
+     "source": "Built-in · demo tone",
+     "style": "Alerts",
+     "duration": "0:01.2",
+     "format": "Generated",
+     "volume": 65,
+     "tones": [
+      [
+       1000,
+       0,
+       0.1,
+       "square",
+       0,
+       0.18
+      ],
+      [
+       1000,
+       0.18,
+       0.1,
+       "square",
+       0,
+       0.18
+      ],
+      [
+       1000,
+       0.36,
+       0.1,
+       "square",
+       0,
+       0.18
+      ],
+      [
+       1000,
+       0.6,
+       0.1,
+       "square",
+       0,
+       0.18
+      ],
+      [
+       1000,
+       0.78,
+       0.1,
+       "square",
+       0,
+       0.18
+      ]
+     ]
+    },
+    {
+     "id": "rising-sweep",
+     "name": "Rising sweep",
+     "source": "Built-in · demo tone",
+     "style": "Alerts",
+     "duration": "0:01.0",
+     "format": "Generated",
+     "volume": 60,
+     "tones": [
+      [
+       300,
+       0,
+       0.9,
+       "sawtooth",
+       1200,
+       0.12
+      ]
+     ]
+    },
+    {
+     "id": "water-drop",
+     "name": "Water drop",
+     "source": "Built-in · demo tone",
+     "style": "Soft",
+     "duration": "0:00.6",
+     "format": "Generated",
+     "volume": 70,
+     "tones": [
+      [
+       1200,
+       0,
+       0.5,
+       "sine",
+       500,
+       0.35
+      ]
+     ]
+    },
+    {
+     "id": "gentle-hum",
+     "name": "Gentle hum",
+     "source": "Built-in · demo tone",
+     "style": "Soft",
+     "duration": "0:01.8",
+     "format": "Generated",
+     "volume": 60,
+     "tones": [
+      [
+       220,
+       0,
+       0.95,
+       "sine",
+       0,
+       0.25
+      ],
+      [
+       330,
+       0.05,
+       0.9,
+       "sine",
+       0,
+       0.1
+      ]
+     ]
+    },
+    {
+     "id": "knock",
+     "name": "Knock knock",
+     "source": "Built-in · demo tone",
+     "style": "Soft",
+     "duration": "0:00.7",
+     "format": "Generated",
+     "volume": 70,
+     "tones": [
+      [
+       180,
+       0,
+       0.18,
+       "triangle",
+       120,
+       0.5
+      ],
+      [
+       180,
+       0.35,
+       0.18,
+       "triangle",
+       120,
+       0.5
+      ]
+     ]
+    },
+    {
+     "id": "whoosh",
+     "name": "Whoosh",
+     "source": "Built-in · demo tone",
+     "style": "Soft",
+     "duration": "0:00.6",
+     "format": "Generated",
+     "volume": 60,
+     "tones": [
+      [
+       900,
+       0,
+       0.9,
+       "sawtooth",
+       150,
+       0.08
+      ]
+     ]
+    },
+    {
+     "id": "heartbeat",
+     "name": "Heartbeat",
+     "source": "Built-in · demo tone",
+     "style": "Soft",
+     "duration": "0:01.2",
+     "format": "Generated",
+     "volume": 70,
+     "tones": [
+      [
+       110,
+       0,
+       0.12,
+       "sine",
+       80,
+       0.7
+      ],
+      [
+       110,
+       0.18,
+       0.14,
+       "sine",
+       80,
+       0.55
+      ]
+     ]
+    },
+    {
+     "id": "marimba",
+     "name": "Marimba",
+     "source": "Built-in · demo tone",
+     "style": "Playful",
+     "duration": "0:00.9",
+     "format": "Generated",
+     "volume": 70,
+     "tones": [
+      [
+       523.25,
+       0,
+       0.18,
+       "sine",
+       0,
+       0.5
+      ],
+      [
+       783.99,
+       0.2,
+       0.18,
+       "sine",
+       0,
+       0.45
+      ],
+      [
+       659.25,
+       0.4,
+       0.18,
+       "sine",
+       0,
+       0.45
+      ],
+      [
+       1046.5,
+       0.6,
+       0.35,
+       "sine",
+       0,
+       0.4
+      ]
+     ]
+    },
+    {
+     "id": "bubble-up",
+     "name": "Bubble up",
+     "source": "Built-in · demo tone",
+     "style": "Playful",
+     "duration": "0:00.7",
+     "format": "Generated",
+     "volume": 70,
+     "tones": [
+      [
+       400,
+       0,
+       0.45,
+       "sine",
+       900,
+       0.4
+      ],
+      [
+       600,
+       0.5,
+       0.45,
+       "sine",
+       1300,
+       0.3
+      ]
+     ]
+    },
+    {
+     "id": "celebration",
+     "name": "Celebration",
+     "source": "Built-in · demo tone",
+     "style": "Playful",
+     "duration": "0:01.5",
+     "format": "Generated",
+     "volume": 70,
+     "tones": [
+      [
+       523.25,
+       0,
+       0.12,
+       "triangle",
+       0,
+       0.35
+      ],
+      [
+       659.25,
+       0.1,
+       0.12,
+       "triangle",
+       0,
+       0.35
+      ],
+      [
+       783.99,
+       0.2,
+       0.12,
+       "triangle",
+       0,
+       0.35
+      ],
+      [
+       1046.5,
+       0.3,
+       0.12,
+       "triangle",
+       0,
+       0.35
+      ],
+      [
+       783.99,
+       0.45,
+       0.12,
+       "triangle",
+       0,
+       0.3
+      ],
+      [
+       1046.5,
+       0.55,
+       0.45,
+       "triangle",
+       0,
+       0.4
+      ]
+     ]
+    },
+    {
+     "id": "coin",
+     "name": "Coin",
+     "source": "Built-in · demo tone",
+     "style": "Retro",
+     "duration": "0:00.5",
+     "format": "Generated",
+     "volume": 60,
+     "tones": [
+      [
+       987.77,
+       0,
+       0.18,
+       "square",
+       0,
+       0.16
+      ],
+      [
+       1318.5,
+       0.18,
+       0.75,
+       "square",
+       0,
+       0.16
+      ]
+     ]
+    },
+    {
+     "id": "power-up",
+     "name": "Power up",
+     "source": "Built-in · demo tone",
+     "style": "Retro",
+     "duration": "0:00.8",
+     "format": "Generated",
+     "volume": 60,
+     "tones": [
+      [
+       261.63,
+       0,
+       0.2,
+       "square",
+       0,
+       0.13
+      ],
+      [
+       392,
+       0.2,
+       0.2,
+       "square",
+       0,
+       0.13
+      ],
+      [
+       523.25,
+       0.4,
+       0.2,
+       "square",
+       0,
+       0.13
+      ],
+      [
+       783.99,
+       0.6,
+       0.35,
+       "square",
+       0,
+       0.13
+      ]
+     ]
+    },
+    {
+     "id": "typewriter",
+     "name": "Typewriter ding",
+     "source": "Built-in · demo tone",
+     "style": "Retro",
+     "duration": "0:00.9",
+     "format": "Generated",
+     "volume": 70,
+     "tones": [
+      [
+       2000,
+       0,
+       0.04,
+       "square",
+       0,
+       0.09
+      ],
+      [
+       2000,
+       0.1,
+       0.04,
+       "square",
+       0,
+       0.09
+      ],
+      [
+       2000,
+       0.2,
+       0.04,
+       "square",
+       0,
+       0.09
+      ],
+      [
+       1567.98,
+       0.35,
+       0.6,
+       "sine",
+       0,
+       0.35
+      ]
+     ]
+    }
+   ],
+   "eventCatalog": [
+    {
+     "id": "question-asked",
+     "name": "Question for you",
+     "group": "While you work",
+     "description": "The assistant needs an answer before it can carry on.",
+     "priority": "Urgent",
+     "sound": "Approval ping"
+    },
+    {
+     "id": "long-task-done",
+     "name": "Long task finished",
+     "group": "While you work",
+     "description": "Something that ran for more than a few minutes is done.",
+     "priority": "Normal",
+     "sound": "Marimba"
+    },
+    {
+     "id": "bsd-advice",
+     "name": "Back Seat Driver advice",
+     "group": "While you work",
+     "description": "The advisor confirmed a concern about the current work.",
+     "priority": "Normal",
+     "sound": "Radar ping"
+    },
+    {
+     "id": "context-full",
+     "name": "Conversation nearly full",
+     "group": "While you work",
+     "description": "The chat is close to its memory limit and will be tidied soon.",
+     "priority": "Low",
+     "sound": "Water drop"
+    },
+    {
+     "id": "goal-failed",
+     "name": "Goal failed",
+     "group": "Goals",
+     "description": "A Goal stopped and could not finish.",
+     "priority": "Urgent",
+     "sound": "Failure pulse"
+    },
+    {
+     "id": "goal-started",
+     "name": "Goal started",
+     "group": "Goals",
+     "description": "A Goal began its first step.",
+     "priority": "Low",
+     "sound": "Bubble up"
+    },
+    {
+     "id": "goal-step-done",
+     "name": "Goal step finished",
+     "group": "Goals",
+     "description": "One step of a Goal passed its checks.",
+     "priority": "Low",
+     "sound": "Digital blip"
+    },
+    {
+     "id": "tests-failed",
+     "name": "Tests failed",
+     "group": "Code and tests",
+     "description": "A test run finished with failures.",
+     "priority": "Normal",
+     "sound": "Two-tone alert"
+    },
+    {
+     "id": "tests-passed",
+     "name": "Tests passed",
+     "group": "Code and tests",
+     "description": "A test run finished with every test passing.",
+     "priority": "Low",
+     "sound": "Coin"
+    },
+    {
+     "id": "merge-conflict",
+     "name": "Merge conflict",
+     "group": "Code and tests",
+     "description": "Two changes touch the same lines and need a decision.",
+     "priority": "Normal",
+     "sound": "Knock knock"
+    },
+    {
+     "id": "review-requested",
+     "name": "Review requested",
+     "group": "Code and tests",
+     "description": "A pull request is waiting for your review.",
+     "priority": "Normal",
+     "sound": "Glass bell"
+    },
+    {
+     "id": "deploy-finished",
+     "name": "Deploy finished",
+     "group": "Code and tests",
+     "description": "A deploy you started has finished.",
+     "priority": "Normal",
+     "sound": "Celebration"
+    },
+    {
+     "id": "rate-limited",
+     "name": "Rate limited",
+     "group": "Accounts and spending",
+     "description": "An AI service asked Puppet Master to slow down for a while.",
+     "priority": "Normal",
+     "sound": "Soft warning"
+    },
+    {
+     "id": "budget-warning",
+     "name": "Budget almost used",
+     "group": "Accounts and spending",
+     "description": "Spending reached the warning level you set.",
+     "priority": "Normal",
+     "sound": "Rising sweep"
+    },
+    {
+     "id": "sign-in-expired",
+     "name": "Sign-in expired",
+     "group": "Accounts and spending",
+     "description": "An account needs you to sign in again.",
+     "priority": "Urgent",
+     "sound": "Urgent beeps"
+    },
+    {
+     "id": "server-offline",
+     "name": "Server offline",
+     "group": "Your server",
+     "description": "Your Puppet Master server stopped answering.",
+     "priority": "Urgent",
+     "sound": "Urgent beeps"
+    },
+    {
+     "id": "backup-finished",
+     "name": "Backup finished",
+     "group": "Your server",
+     "description": "A scheduled backup completed.",
+     "priority": "Low",
+     "sound": "Gentle hum"
+    },
+    {
+     "id": "update-installed",
+     "name": "Update installed",
+     "group": "Your server",
+     "description": "Puppet Master installed an update and restarted.",
+     "priority": "Low",
+     "sound": "Power up"
+    }
+   ]
+  }
+ }
+}

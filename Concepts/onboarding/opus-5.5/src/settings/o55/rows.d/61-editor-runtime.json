@@ -1,0 +1,356 @@
+{
+ "_about": "editor-runtime (Editor & Terminal): wording, conditions, units and bounds from the plain-pages audit (2026-09-27). Hand rows autosave, file-encoding, paste-protect and index-mode are worded here too. The index actions keep the flows they had in 90-flows.json.",
+ "rows": {
+  "autosave": {
+   "label": "Save files automatically",
+   "help": "Saves a moment after you stop typing."
+  },
+  "file-encoding": {
+   "label": "Text encoding for new files",
+   "help": "Used when a file does not say which encoding it uses."
+  },
+  "general.interaction.max-editor-tabs": {
+   "label": "Most tabs open at once",
+   "help": "The tab you used least long ago closes first.",
+   "unit": "tabs",
+   "min": 1,
+   "max": 100
+  },
+  "general.startup.max-persisted-tabs": {
+   "label": "Tabs reopened next time",
+   "help": "Can't be more than the tabs allowed open at once.",
+   "unit": "tabs",
+   "min": 1,
+   "max": 100,
+   "maxFrom": "general.interaction.max-editor-tabs"
+  },
+  "general.interaction.hide-ignored-files": {
+   "label": "Hide ignored files",
+   "help": "Hides build output and other ignored files; off dims them."
+  },
+  "general.interaction.expand-current-file": {
+   "label": "Show the open file in the file tree"
+  },
+  "general.interaction.persist-tree-state": {
+   "label": "Remember open folders"
+  },
+  "general.interaction.drop-action": {
+   "label": "Dragging files",
+   "help": "Hold Shift while dragging to do the other.",
+   "options": {
+    "Copy": "Copies them",
+    "Move": "Moves them"
+   }
+  },
+  "general.interaction.drop-conflict": {
+   "label": "If a dropped file has the same name",
+   "options": {
+    "Ask": "Ask me",
+    "Keep both": "Keep both (rename the new one)"
+   }
+  },
+  "general.interaction.row-cap": {
+   "label": "Most files listed per folder",
+   "help": "Stops giant folders from freezing the app.",
+   "unit": "files",
+   "min": 100,
+   "max": 100000
+  },
+  "code.editing.word-wrap": {
+   "label": "Wrap long lines"
+  },
+  "code.editing.line-numbers": {
+   "label": "Line numbers"
+  },
+  "code.editing.syntax-highlighting": {
+   "label": "Color code by meaning"
+  },
+  "code.editing.diagnostics-visibility": {
+   "label": "Problems to highlight",
+   "help": "Which code problems are marked in the editor."
+  },
+  "code.editing.goto-highlight-ms": {
+   "label": "How long a jumped-to line stays lit",
+   "unit": "ms",
+   "min": 500,
+   "max": 10000,
+   "step": 500
+  },
+  "code.editing.editor-strip-collapsed": {
+   "label": "Start with the editor panel folded away"
+  },
+  "code.editing.large-file-threshold": {
+   "label": "Preview files longer than",
+   "help": "Longer files open as a preview with a Load all button.",
+   "unit": "lines",
+   "min": 1000,
+   "max": 1000000
+  },
+  "code.editing.max-file-size-mb": {
+   "label": "Never open files larger than",
+   "help": "Bigger files show a notice instead of freezing the app.",
+   "unit": "MB",
+   "min": 1,
+   "max": 500
+  },
+  "code.terminal.shell": {
+   "label": "Shell",
+   "help": "The command-line program in new terminals.",
+   "options": {
+    "System Default": "My computer's default"
+   }
+  },
+  "code.terminal.cwd": {
+   "label": "Start new terminals in",
+   "help": "Leave empty for the project folder.",
+   "placeholder": "Project folder"
+  },
+  "code.terminal.startup-command": {
+   "label": "Command to run in every new terminal",
+   "placeholder": "Nothing"
+  },
+  "code.terminal.layout-style": {
+   "label": "How terminals are arranged"
+  },
+  "code.terminal.layout-restore": {
+   "label": "Terminals when a project reopens",
+   "options": {
+    "Restore Last Layout": "Bring them back as I left them",
+    "Start Fresh": "Start fresh"
+   }
+  },
+  "code.terminal.kill-confirm": {
+   "label": "Closing a terminal that is still running",
+   "options": {
+    "Ask First": "Ask me first (recommended)"
+   },
+   "hints": {
+    "Ask First": "You choose each time whether to stop what is running."
+   }
+  },
+  "code.terminal.theme": {
+   "label": "Terminal colors",
+   "options": {
+    "Match App Theme": "Same as the app"
+   },
+   "custom": {
+    "option": "Custom",
+    "label": "Color scheme file",
+    "placeholder": "For example: dracula.json"
+   }
+  },
+  "code.terminal.font-family": {
+   "label": "Terminal font",
+   "custom": {
+    "option": "Custom…",
+    "label": "Font name",
+    "placeholder": "For example: Cascadia Code"
+   }
+  },
+  "code.terminal.font-size": {
+   "label": "Terminal text size",
+   "unit": "px",
+   "min": 8,
+   "max": 32
+  },
+  "code.terminal.rendering-mode": {
+   "label": "Terminal style",
+   "options": {
+    "Interactive Rich": "Rich"
+   }
+  },
+  "code.terminal.explanations": {
+   "label": "Explain commands in plain words"
+  },
+  "code.terminal.search": {
+   "label": "Search in terminal output"
+  },
+  "code.terminal.sticky-header": {
+   "label": "Keep each command's title in view"
+  },
+  "code.terminal.readability-signals": {
+   "label": "Easier-to-read output",
+   "help": "Line numbers, highlights and markers in long output."
+  },
+  "code.terminal.transcript-retention": {
+   "label": "Keep terminal output for",
+   "help": "Longer helps when debugging but uses more disk."
+  },
+  "code.terminal.scrollback-limit": {
+   "label": "Lines kept per terminal",
+   "unit": "lines",
+   "min": 1000,
+   "max": 100000
+  },
+  "code.terminal.copy-on-select": {
+   "label": "Copy when I highlight text"
+  },
+  "code.terminal.right-click-paste": {
+   "label": "Right-click pastes"
+  },
+  "code.terminal.copy-behavior": {
+   "label": "When copying",
+   "options": {
+    "Preserve Whitespace": "Keep spacing exactly",
+    "Trim Whitespace": "Trim extra spaces"
+   }
+  },
+  "paste-protect": {
+   "label": "Check before pasting several lines",
+   "help": "Shows pasted commands first when they could run more than one thing."
+  },
+  "code.terminal.allowed-profiles": {
+   "label": "Shells this project may use",
+   "help": "The Shell above must be one of these."
+  },
+  "code.terminal.auto-second-pane": {
+   "label": "Open a second pane automatically"
+  },
+  "code.terminal.tab-role": {
+   "label": "Purpose of new terminal tabs",
+   "help": "Only a label; it never changes what runs. Each tab's menu can change it."
+  },
+  "code.terminal.font-rendering": {
+   "label": "Text drawing",
+   "help": "Try Crisp if terminal text looks blurry."
+  },
+  "code.terminal.performance-mode": {
+   "label": "Speed over looks",
+   "help": "Less polish so heavy output stays fast."
+  },
+  "code.terminal.shell-integration": {
+   "label": "Smart shell features",
+   "help": "Whether command blocks and folder tracking are active.",
+   "control": "status",
+   "readout": {
+    "true": "Active in this project's shell",
+    "false": "Not active: the shell does not report commands"
+   }
+  },
+  "code.terminal.diagnostics-logging": {
+   "label": "Record terminal debug details",
+   "help": "Leave off unless support asks for it."
+  },
+  "web.index.enable": {
+   "label": "Keep a search index of this project",
+   "help": "Off stops indexing and clears what was built."
+  },
+  "index-mode": {
+   "label": "How much to index",
+   "help": "Deep finds more but uses more of your computer.",
+   "when": {
+    "id": "web.index.enable",
+    "truthy": true
+   }
+  },
+  "web.index.exclusion-patterns": {
+   "label": "Leave out of search",
+   "help": "Folders and files to skip, on top of the built-in list.",
+   "noun": "pattern",
+   "nouns": "patterns",
+   "when": {
+    "id": "web.index.enable",
+    "truthy": true
+   }
+  },
+  "web.index.large-file-threshold": {
+   "label": "Skip files larger than",
+   "unit": "MB",
+   "min": 1,
+   "max": 500,
+   "when": {
+    "id": "web.index.enable",
+    "truthy": true
+   }
+  },
+  "web.index.follow-symlinks": {
+   "label": "Follow linked folders",
+   "help": "Linked folders must still be inside the project.",
+   "when": {
+    "id": "web.index.enable",
+    "truthy": true
+   }
+  },
+  "web.index.remote-cache-mode": {
+   "label": "Copy kept on this computer",
+   "help": "Remote projects only: index a lighter copy locally first.",
+   "when": {
+    "id": "web.index.enable",
+    "truthy": true
+   }
+  },
+  "web.index.rebuild": {
+   "actionLabel": "Rebuild the search index",
+   "flow": {
+    "kind": "check",
+    "icon": "refresh",
+    "primary": "Rebuild it",
+    "steps": [
+     {
+      "title": "Throw away the old index",
+      "desc": "412 MB",
+      "result": "Done"
+     },
+     {
+      "title": "Read the project again",
+      "desc": "3,904 files",
+      "result": "Read"
+     },
+     {
+      "title": "Build the new index",
+      "desc": "Words, symbols and file names",
+      "result": "Built"
+     }
+    ],
+    "outcome": "index rebuilt"
+   },
+   "label": "Rebuild the index",
+   "help": "Use it when search results look stale or wrong.",
+   "when": {
+    "id": "web.index.enable",
+    "truthy": true
+   }
+  },
+  "web.index.disk-usage": {
+   "actionLabel": "See index size",
+   "flow": {
+    "kind": "list",
+    "icon": "database",
+    "listTitle": "Space used",
+    "items": [
+     {
+      "label": "On this computer",
+      "help": "Search index for tastebook",
+      "value": "412 MB"
+     },
+     {
+      "label": "On your server",
+      "help": "Copy used by remote projects",
+      "value": "1.1 GB"
+     },
+     {
+      "label": "Free space left",
+      "help": "On the index disk",
+      "value": "38 GB"
+     }
+    ]
+   },
+   "label": "Space used by the index"
+  },
+  "web.index.evict-cache": {
+   "actionLabel": "Clear the index cache",
+   "flow": {
+    "kind": "confirm",
+    "primary": "Clear 412 MB",
+    "message": "Frees 412 MB on this computer. Search builds the index again the next time it needs it, which can take a few minutes.",
+    "done": [
+     "Index cache cleared",
+     "412 MB freed."
+    ],
+    "danger": true
+   },
+   "label": "Clear the index",
+   "help": "Frees the space; search rebuilds it when needed."
+  }
+ }
+}

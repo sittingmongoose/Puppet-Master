@@ -1,0 +1,104 @@
+{
+  "extras": {
+    "bsd": {
+      "status": "Idle",
+      "lastCheck": "18 s ago",
+      "stages": [
+        { "key": "prd", "label": "PRD Builder", "mode": "Inherit", "desc": "Shaping the product brief before any plan exists." },
+        { "key": "wizard", "label": "Planning Wizard", "mode": "Inherit", "desc": "The guided interview that turns the brief into goals." },
+        { "key": "drafting", "label": "Plan Drafting", "mode": "Inherit", "desc": "Writing and revising the plan document." },
+        { "key": "compile", "label": "PlanUnit Compilation", "mode": "Inherit", "desc": "Breaking the plan into units of work." },
+        { "key": "worknodes", "label": "WorkNode Generation", "mode": "Inherit", "desc": "Turning units into concrete steps agents can run." },
+        { "key": "code", "label": "Code Generation", "mode": "Auto", "desc": "Agents writing and changing files." },
+        { "key": "verify", "label": "Verification Run", "mode": "Auto", "desc": "Tests and checks that prove a step worked." },
+        { "key": "gate", "label": "Gate Evaluation", "mode": "Auto", "desc": "Deciding whether work may move on to the next step." },
+        { "key": "audit", "label": "Audit Review", "mode": "Auto", "desc": "A second look at finished work for gaps." },
+        { "key": "certify", "label": "Certification", "mode": "Auto", "desc": "Final sign-off that the work is complete." }
+      ],
+      "findings": [
+        {
+          "id": "bsdf-0412",
+          "severity": "critical",
+          "state": "held",
+          "stage": "gate",
+          "title": "Gate passed without a test result",
+          "claim": "The gate for PlanUnit F3-441 recorded a pass, but the pre-merge test job never reported a result. The pass may rest on a run that did not happen.",
+          "raised": "23 min ago",
+          "generation": 41,
+          "reconfirmations": 0,
+          "evidence": [
+            "gate/F3-441/decision.json · result: pass",
+            "verify/pre-merge/run-2026-09-09T18:41 · no result recorded",
+            "PlanUnit F3-441 · Verification clause"
+          ]
+        },
+        {
+          "id": "bsdf-0409",
+          "severity": "concern",
+          "state": "emitted",
+          "stage": "code",
+          "title": "Retry loop ignores the provider's wait time",
+          "claim": "The new request helper retries straight away after a rate-limit reply instead of waiting the time the provider asked for. Under load this gets the account throttled for longer.",
+          "raised": "1 h ago",
+          "delivered": "52 min ago",
+          "generation": 37,
+          "reconfirmations": 1,
+          "evidence": [
+            "src/net/retry.rs:44-71",
+            "provider reply 429 · retry-after: 12 s",
+            "Providers_and_Models · Backoff rule"
+          ]
+        },
+        {
+          "id": "bsdf-0405",
+          "severity": "concern",
+          "state": "emitted",
+          "stage": "verify",
+          "title": "Verification ran against a cached build",
+          "claim": "The verification step reused yesterday's build output, so the tests did not cover the six files changed this morning.",
+          "raised": "2 h ago",
+          "delivered": "2 h ago",
+          "generation": 33,
+          "reconfirmations": 0,
+          "frozen": true,
+          "evidence": [
+            "verify/run-2026-09-09T16:02/build.log · cache hit",
+            "changed since build: 6 files"
+          ]
+        },
+        {
+          "id": "bsdf-0398",
+          "severity": "nit",
+          "state": "emitted",
+          "stage": "audit",
+          "title": "Two helpers differ only by capital letters",
+          "claim": "parseConfig and ParseConfig both exist in the settings module. One is probably a leftover, and the pair is easy to mix up.",
+          "raised": "3 h ago",
+          "delivered": "3 h ago",
+          "generation": 29,
+          "reconfirmations": 0,
+          "evidence": [
+            "src/settings/load.rs:12",
+            "src/settings/load.rs:88"
+          ]
+        },
+        {
+          "id": "bsdf-0391",
+          "severity": "concern",
+          "state": "cleared",
+          "stage": "worknodes",
+          "title": "WorkNode 7 repeated the migration step",
+          "claim": "Two WorkNodes both ran the database migration, which would have applied it twice.",
+          "raised": "Yesterday",
+          "cleared": "Yesterday",
+          "generation": 18,
+          "reconfirmations": 0,
+          "evidence": [
+            "worknodes/WN-7/steps.json",
+            "worknodes/WN-9/steps.json"
+          ]
+        }
+      ]
+    }
+  }
+}

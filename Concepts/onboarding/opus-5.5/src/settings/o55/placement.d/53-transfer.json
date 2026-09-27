@@ -1,0 +1,35 @@
+{
+ "_about": "settings-transfer: sections from the settings audit (2026-09-26).",
+ "sections": {
+  "transfer-files": {
+   "to": "settings-transfer",
+   "title": "Save or load a file",
+   "help": "A settings file never contains passwords, keys or sign-ins.",
+   "order": 1,
+   "composed": true
+  },
+  "transfer-files-more": {
+   "to": "settings-transfer",
+   "title": "File format and older versions",
+   "help": "How settings files are written, and which old file names still load.",
+   "order": 2,
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "transfer-files",
+   "ids": [
+    "system.advanced.export-settings",
+    "system.advanced.import-settings"
+   ]
+  },
+  {
+   "section": "transfer-files-more",
+   "ids": [
+    "system.advanced.config-format",
+    "system.advanced.legacy-config-names"
+   ]
+  }
+ ]
+}

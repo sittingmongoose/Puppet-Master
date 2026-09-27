@@ -1,0 +1,125 @@
+{
+  "rows": {
+    "system.mcp.server-list": {
+      "why": "Is the server list itself.",
+      "noun": "server",
+      "label": "Your servers"
+    },
+    "system.mcp.server-enabled": {
+      "why": "Per server: On in its panel.",
+      "label": "Server on or off"
+    },
+    "system.mcp.tool-toggle": {
+      "why": "Per tool: the switches under Tools in a server's panel.",
+      "label": "Single tools on or off"
+    },
+    "system.mcp.health-status": {
+      "why": "View logs in each server's panel, and View all logs.",
+      "actionLabel": "View server logs",
+      "pm51": "pm51-mcp-logs"
+    },
+    "system.mcp.sign-out": {
+      "why": "Per web server: Sign out in its panel.",
+      "actionLabel": "Sign out of a server",
+      "route": {
+        "domain": "code",
+        "workspace": "mcp",
+        "target": "[data-pm51-manager=\"mcp\"] .pm51-item"
+      },
+      "routeToast": [
+        "Open a web server",
+        "Sign out is under Sign-in in its panel."
+      ]
+    },
+    "system.mcp.transport": {
+      "why": "Per server, set when it is added: How it connects in its panel.",
+      "label": "How a server connects",
+      "options": {
+        "stdio": "A program on this computer",
+        "sse": "A web address (SSE)",
+        "http": "A web address (HTTP)"
+      }
+    },
+    "system.mcp.server-scope": {
+      "why": "Per server: Where it applies in its panel.",
+      "label": "Where a server can be used"
+    },
+    "system.mcp.launch-config": {
+      "why": "Per program server: its command and environment, in its panel.",
+      "label": "How a program server starts",
+      "pair": [
+        "Name",
+        "Value"
+      ]
+    },
+    "system.mcp.remote-url": {
+      "why": "Per web server: its address, in its panel.",
+      "label": "A web server's address",
+      "placeholder": "https://…"
+    },
+    "system.mcp.remote-headers": {
+      "why": "Per web server: headers are secrets and stay in its panel.",
+      "label": "Extra headers for a web server"
+    },
+    "system.mcp.oauth-refresh": {
+      "why": "Per web server: Sign in again in its panel.",
+      "actionLabel": "Sign in to a server again",
+      "route": {
+        "domain": "code",
+        "workspace": "mcp",
+        "target": "[data-pm51-manager=\"mcp\"] .pm51-item"
+      },
+      "routeToast": [
+        "Open a web server",
+        "Sign in again is under Sign-in in its panel."
+      ]
+    },
+    "system.mcp.import-external": {
+      "label": "When other apps have servers",
+      "help": "Ask me first shows what was found before anything is added. Otherwise they're added switched off until you review them.",
+      "options": {
+        "Ask me first": "Ask me first",
+        "Off until reviewed": "Add them switched off"
+      }
+    },
+    "system.mcp.oauth-autodetect": {
+      "label": "Work out sign-in automatically",
+      "help": "Turn off only for servers that use a plain key instead of signing in."
+    },
+    "system.mcp.timeout": {
+      "label": "Wait for a server this long",
+      "help": "How long to wait for a server to start or answer before giving up.",
+      "unit": "ms",
+      "min": 1000,
+      "max": 300000,
+      "step": 1000
+    },
+    "system.mcp.lazy-exposure": {
+      "label": "Describe tools only when they're used",
+      "help": "Keeps each request small, so answers are faster and cheaper."
+    },
+    "system.mcp.show-availability": {
+      "label": "Show server status around the app",
+      "help": "A small connected or disconnected mark wherever server tools appear."
+    },
+    "system.mcp.catalog-cache-ttl": {
+      "label": "Refresh each server's tool list every",
+      "help": "It also refreshes when you change a server or ask for it.",
+      "unit": "seconds",
+      "min": 60
+    },
+    "system.mcp.header-secret-hooks": {
+      "label": "Add secrets only when a request is sent",
+      "help": "Approved secrets are attached at the last moment, hidden in logs, and can never widen access."
+    },
+    "system.mcp.debug-surface": {
+      "why": "The More options summary of every server's final settings.",
+      "actionLabel": "See every server's final settings",
+      "route": {
+        "domain": "code",
+        "workspace": "mcp",
+        "target": "[data-setting-id=\"system.mcp.debug-surface\"]"
+      }
+    }
+  }
+}

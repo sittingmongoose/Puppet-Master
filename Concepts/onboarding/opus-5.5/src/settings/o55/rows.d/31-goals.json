@@ -1,0 +1,345 @@
+{
+ "_about": "Goals rows (settings audit, 2026-09-27).",
+ "rows": {
+  "planning.verification.goal-template": {
+   "label": "Kind of job",
+   "options": {
+    "bug_fix": "Fix a bug",
+    "feature_build": "Build a feature",
+    "test_until_pass": "Test until it passes",
+    "doc_update": "Update docs",
+    "repo_research": "Research the code",
+    "refactor": "Tidy up code",
+    "migration": "Migrate",
+    "audit_and_repair": "Audit and fix",
+    "ledger_to_plan_transfer": "Turn a ledger into a plan",
+    "governance_seal": "Seal records"
+   }
+  },
+  "planning.verification.goal-write-mode": {
+   "label": "What new Goals may change",
+   "options": {
+    "read_only": "Nothing (read only)",
+    "proposal_only": "Suggest changes only",
+    "patch_only": "Prepare patches",
+    "isolated_worktree": "Work in their own copy",
+    "leased_writer": "Edit files, one writer at a time",
+    "parent_writer": "Hand edits to the main assistant"
+   },
+   "help": "From read only up to editing files. Each step down gives a Goal more room."
+  },
+  "planning.verification.worknode-activation": {
+   "label": "Start a step only when",
+   "options": {
+    "atomic": "Everything it needs is approved",
+    "incremental": "Each part is approved",
+    "deferred": "It is needed"
+   }
+  },
+  "planning.verification.heartbeat-interval": {
+   "label": "Helpers check in every",
+   "help": "Shorter spots stalls sooner.",
+   "unit": "seconds",
+   "min": 5,
+   "max": 600,
+   "step": 5
+  },
+  "planning.verification.stall-detection": {
+   "label": "Spot helpers that stopped making progress",
+   "help": "Flags a helper that has stopped making progress, without stopping it."
+  },
+  "planning.verification.cloud-local-display": {
+   "label": "Explain cloud and local handoffs"
+  },
+  "general.interaction.run-graph-mode": {
+   "label": "Graph shows",
+   "options": {
+    "Live": "Live",
+    "Historical": "A past run"
+   }
+  },
+  "general.interaction.graph-density": {
+   "label": "Graph detail",
+   "options": {
+    "Full": "Everything",
+    "Simplified": "Simplified",
+    "Package swimlanes": "Grouped by package",
+    "Seam boundaries": "Grouped by seam"
+   }
+  },
+  "general.interaction.progress-widget-layout": {
+   "label": "Progress view layout",
+   "help": "Pick which panels the progress view shows.",
+   "empty": "The standard layout",
+   "pair": [
+    "Panel",
+    "Where"
+   ],
+   "actionLabel": "Arrange"
+  },
+  "planning.verification.goal-checkpoint-cadence": {
+   "label": "Save progress",
+   "options": {
+    "never": "Never",
+    "on_milestone": "At each milestone",
+    "frequent": "Often",
+    "continuous": "All the time"
+   }
+  },
+  "planning.verification.goal-replan-behavior": {
+   "label": "Rethink the plan",
+   "options": {
+    "never": "Never",
+    "on_failure": "After a failure",
+    "on_divergence": "When work drifts off course",
+    "always": "After every step"
+   }
+  },
+  "planning.verification.goal-replan-events": {
+   "label": "If I change my mind mid-Goal",
+   "options": {
+    "pause_and_replan": "Pause and replan",
+    "immediate_hard_constraint": "Apply it as a firm rule now",
+    "notify_only": "Just note it"
+   }
+  },
+  "planning.verification.goal-interruption": {
+   "label": "If I step in",
+   "options": {
+    "pause": "Pause",
+    "cancel": "Cancel",
+    "prompt": "Ask me which"
+   }
+  },
+  "planning.verification.interrupt-settlement": {
+   "label": "Stop cleanly"
+  },
+  "planning.verification.review-strategy": {
+   "label": "Reviewers",
+   "options": {
+    "Single": "One reviewer",
+    "Multi-pass": "Several independent reviewers"
+   },
+   "choices": [
+    "Single",
+    "Multi-pass"
+   ]
+  },
+  "planning.verification.review-reviewer-count": {
+   "label": "How many reviewers",
+   "help": "From 1 to 8. The same model may repeat.",
+   "min": 1,
+   "max": 8,
+   "step": 1,
+   "unit": "reviewers",
+   "when": {
+    "id": "planning.verification.review-strategy",
+    "in": [
+     "Multi-pass"
+    ]
+   }
+  },
+  "planning.verification.review-roster": {
+   "label": "Reviewers to use",
+   "help": "Personas that review, in order. Empty lets Puppet Master pick.",
+   "noun": "reviewer",
+   "empty": "Puppet Master picks"
+  },
+  "planning.verification.review-auto-repair": {
+   "label": "Review can fix things",
+   "help": "Always off: review reports, fixing is a separate step.",
+   "control": "status",
+   "tone": "neutral"
+  },
+  "planning.verification.quality-preference": {
+   "label": "Speed or thoroughness",
+   "options": {
+    "fast": "Faster",
+    "balanced": "Balanced",
+    "thorough": "More thorough"
+   }
+  },
+  "planning.verification.strictness": {
+   "label": "Final review strictness",
+   "options": {
+    "lenient": "Relaxed",
+    "standard": "Standard",
+    "strict": "Strict",
+    "certification": "Certification-grade"
+   }
+  },
+  "planning.verification.certification-level": {
+   "label": "Proof needed",
+   "options": {
+    "lightweight": "Light",
+    "standard": "Standard",
+    "strong": "Strong"
+   }
+  },
+  "planning.verification.receipt-type": {
+   "label": "Receipt earned",
+   "help": "Set by the checks a Goal passed; not a choice.",
+   "options": {
+    "lightweight": "Light",
+    "standard": "Standard",
+    "strong": "Strong",
+    "degraded": "Finished, not fully checked",
+    "blocked": "Blocked"
+   }
+  },
+  "planning.verification.repair-loop": {
+   "label": "Fix attempts",
+   "options": {
+    "no repair": "Don't try",
+    "bounded": "A few tries",
+    "unlimited": "Keep trying"
+   }
+  },
+  "planning.verification.repair-strategies": {
+   "label": "Ways to fix, in order",
+   "options": {
+    "patch": "Patch it",
+    "replan": "Replan",
+    "split_node": "Split the step",
+    "merge_node": "Merge steps",
+    "widen_context": "Give it more context",
+    "rollback": "Roll back",
+    "escalate_capability": "Use a stronger model",
+    "assign_specialists": "Bring in specialists",
+    "manual": "Hand it to me",
+    "authority_blocked": "Stop: needs permission"
+   }
+  },
+  "planning.verification.repair-budget-exhaustion": {
+   "label": "When fix attempts run out",
+   "options": {
+    "block": "Stop the work",
+    "degraded": "Finish, marked not fully checked"
+   }
+  },
+  "planning.verification.degraded-mode": {
+   "label": "If the checks can't run",
+   "options": {
+    "fail": "Fail the work",
+    "continue": "Carry on",
+    "human_review": "Pause for my review"
+   }
+  },
+  "planning.verification.report-visibility": {
+   "help": "Show check reports always, only on failure, or never.",
+   "label": "Show check reports",
+   "options": {
+    "Always": "Always",
+    "On failure": "Only when something fails",
+    "Hidden": "Never"
+   }
+  },
+  "planning.verification.validators-by-node": {
+   "label": "Checks for each kind of step",
+   "placeholder": "Policy defaults",
+   "empty": "Policy defaults",
+   "pair": [
+    "Kind of step",
+    "Check"
+   ]
+  },
+  "planning.verification.invisible-goal-authority": {
+   "label": "Limits for background Goals",
+   "empty": "Same as a visible Goal",
+   "pair": [
+    "What",
+    "Allowed"
+   ]
+  },
+  "planning.verification.gate-enforcement": {
+   "label": "Block work until checks pass"
+  },
+  "planning.verification.parallel-stage-enforcement": {
+   "label": "Require every parallel review stage"
+  },
+  "safety.approvals.schedule-grace-minutes": {
+   "label": "Still run if late by up to",
+   "help": "A late run still starts if it is no later than this.",
+   "unit": "minutes",
+   "min": 1,
+   "step": 5,
+   "when": {
+    "id": "safety.approvals.schedule-missed-policy",
+    "in": [
+     "Cancel after grace"
+    ]
+   }
+  },
+  "safety.approvals.schedule-wind-down-minutes": {
+   "label": "Stop starting big work before a window closes",
+   "help": "No new big step starts this close to the end, so the current one can finish.",
+   "unit": "minutes",
+   "min": 0,
+   "step": 5
+  },
+  "safety.approvals.schedule-resume-next-window": {
+   "label": "Resume paused work in the next window"
+  },
+  "safety.approvals.schedule-dst-policy": {
+   "label": "Daylight saving",
+   "help": "Runs keep local clock time; read only.",
+   "control": "status",
+   "tone": "neutral",
+   "options": {
+    "Preserve local wall clock": "Keeps local clock time"
+   }
+  },
+  "safety.approvals.schedule-missed-policy": {
+   "label": "If a scheduled run is missed",
+   "options": {
+    "Hold": "Wait for me",
+    "Next available": "Run at the next chance",
+    "Cancel after grace": "Skip it if it is too late"
+   }
+  },
+  "planning.verification.review-blind-initial-pass": {
+   "when": {
+    "id": "planning.verification.review-strategy",
+    "in": [
+     "Multi-pass"
+    ]
+   }
+  },
+  "planning.verification.review-peer-corroboration": {
+   "when": {
+    "id": "planning.verification.review-strategy",
+    "in": [
+     "Multi-pass"
+    ]
+   }
+  },
+  "planning.verification.validation-pass": {
+   "label": "Double-check finished work",
+   "help": "A second pass looks over the result before it is handed back."
+  },
+  "planning.verification.independent-review": {
+   "label": "Never let the builder grade its own work",
+   "help": "The review is done by someone other than whoever did the work."
+  },
+  "planning.verification.completion-receipts": {
+   "label": "Write a receipt when a Goal finishes",
+   "help": "What was checked, how, and what is left."
+  },
+  "planning.verification.auditor-loop": {
+   "label": "Audit the work after each fix",
+   "help": "A fresh look after every repair, until it passes or the attempts run out."
+  },
+  "planning.verification.true-blocker-escalation": {
+   "label": "Tell me quickly about real roadblocks",
+   "help": "Something only you can unblock is flagged at once."
+  },
+  "planning.verification.blocker-detail": {
+   "label": "Explain roadblocks fully",
+   "help": "What is stuck, why, and what would unblock it."
+  },
+  "planning.verification.goal-auto-resume": {
+   "label": "Pick up where it left off",
+   "help": "After a restart or a lost connection, from the last saved point."
+  }
+ }
+}

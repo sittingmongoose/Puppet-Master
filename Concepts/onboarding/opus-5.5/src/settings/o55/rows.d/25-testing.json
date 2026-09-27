@@ -1,0 +1,423 @@
+{
+ "_about": "Testing & Debug rows (settings audit, 2026-09-26).",
+ "rows": {
+  "planning.testing.session-actions": {
+   "label": "Watch running session",
+   "help": "Open, detach or background a test run in progress.",
+   "pm51": "pm51-testing-session",
+   "actionLabel": "Watch running session"
+  },
+  "planning.testing.capability-policy": {
+   "label": "Let the assistant test its work",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always test",
+    "Off": "Never test"
+   },
+   "hints": {
+    "Auto": "Tests when the work calls for it"
+   },
+   "help": "Automatic tests when the work calls for it. Always requires tests. Never forbids them, and nothing is reported as tested."
+  },
+  "planning.testing.test-visibility": {
+   "label": "Show tests while they run",
+   "options": {
+    "Show when possible": "When it can",
+    "Always show": "Always",
+    "Run hidden": "Never (run hidden)"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   }
+  },
+  "planning.testing.cap-built-in-browser": {
+   "label": "Click through web pages",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   },
+   "help": "Uses Puppet Master's own browser."
+  },
+  "planning.testing.cap-screenshot-compare": {
+   "label": "Compare screenshots",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   },
+   "help": "Catches visual changes against earlier runs."
+  },
+  "planning.testing.cap-console-network": {
+   "label": "Watch console and network errors",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   }
+  },
+  "planning.testing.cap-accessibility": {
+   "label": "Accessibility checks",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   },
+   "help": "Contrast, labels and keyboard use."
+  },
+  "planning.testing.cap-desktop-gui": {
+   "label": "Desktop app windows",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   },
+   "help": "Builds and opens the app to check it starts and closes cleanly."
+  },
+  "planning.testing.cap-live-preview": {
+   "label": "Live preview windows",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   }
+  },
+  "planning.testing.cap-hot-reload": {
+   "label": "Reload the app as code changes",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   }
+  },
+  "planning.testing.cap-simulator": {
+   "label": "Phone simulators",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   }
+  },
+  "planning.testing.cap-physical-device": {
+   "label": "Real phones and tablets",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   },
+   "help": "Needs a device plugged in."
+  },
+  "planning.testing.cap-api-contract": {
+   "label": "API checks",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   }
+  },
+  "planning.testing.cap-database": {
+   "label": "Database checks",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   }
+  },
+  "planning.testing.cap-performance": {
+   "label": "Speed and load",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   }
+  },
+  "planning.testing.cap-security": {
+   "label": "Security scans",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   }
+  },
+  "planning.testing.cap-online-research": {
+   "label": "Look up testing tools online",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   }
+  },
+  "planning.testing.cap-auto-install": {
+   "label": "Install test tools when needed",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.capability-policy",
+    "not": "Off"
+   },
+   "help": "Only within the permissions you have granted."
+  },
+  "planning.testing.cap-visible-browser": {
+   "label": "Show each browser step on screen",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.test-visibility",
+    "not": "Run hidden"
+   },
+   "help": "Highlights what is clicked, for watching a run."
+  },
+  "planning.testing.cap-headed-browser": {
+   "label": "Use a real browser window",
+   "options": {
+    "Auto": "Automatic",
+    "On": "Always",
+    "Off": "Never"
+   },
+   "when": {
+    "id": "planning.testing.test-visibility",
+    "not": "Run hidden"
+   },
+   "help": "Instead of an invisible one. Slower, closer to what people see."
+  },
+  "branching.worktrees.pre-merge-tests": {
+   "label": "Test before merging",
+   "help": "A failing test blocks the merge."
+  },
+  "branching.worktrees.pre-merge-test-target": {
+   "label": "What gets tested",
+   "options": {
+    "merged_result": "The result after merging",
+    "branch_only": "The branch on its own"
+   },
+   "when": {
+    "id": "branching.worktrees.pre-merge-tests",
+    "truthy": true
+   }
+  },
+  "branching.worktrees.pre-merge-test-command": {
+   "label": "Test command",
+   "help": "Leave empty to find it automatically.",
+   "placeholder": "Found automatically",
+   "when": {
+    "id": "branching.worktrees.pre-merge-tests",
+    "truthy": true
+   }
+  },
+  "branching.worktrees.pre-merge-test-timeout": {
+   "label": "Time limit",
+   "help": "30 to 1800 seconds.",
+   "unit": "s",
+   "min": 30,
+   "max": 1800,
+   "when": {
+    "id": "branching.worktrees.pre-merge-tests",
+    "truthy": true
+   }
+  },
+  "code.execution.debug-configurations": {
+   "label": "Debug profiles",
+   "help": "Saved ways to start your program under a debugger. Kept in step with the Debug list.",
+   "noun": "profile"
+  },
+  "safety.approvals.debug-grant-scope": {
+   "label": "Debugging may, without asking",
+   "options": {
+    "evidence_reads": "Read logs and traces",
+    "low_risk_investigation": "Look around safely",
+    "temporary_instrumentation": "Add temporary logging"
+   }
+  },
+  "safety.approvals.debug-max-browser-branches": {
+   "label": "Browser checks at the same time",
+   "unit": "at once",
+   "min": 1,
+   "max": 10,
+   "step": 1
+  },
+  "safety.approvals.debug-max-no-evidence-loops": {
+   "label": "Stop after rounds with nothing new",
+   "unit": "rounds",
+   "min": 1,
+   "max": 5,
+   "step": 1
+  },
+  "planning.verification.evidence-redaction": {
+   "label": "Hide secrets and personal data in proof",
+   "help": "Before any log or screenshot is kept."
+  },
+  "branching.worktrees.evidence-retention-days": {
+   "label": "Keep test run logs for",
+   "help": "Blank keeps them until you delete them.",
+   "unit": "days",
+   "placeholder": "Until I delete them",
+   "empty": "Until I delete them"
+  },
+  "branching.worktrees.evidence-retain-last-runs": {
+   "label": "Keep only the last runs' logs",
+   "help": "Blank means no limit.",
+   "unit": "runs",
+   "placeholder": "No limit",
+   "empty": "No limit"
+  },
+  "planning.verification.evidence-retention-days": {
+   "label": "Keep Goal proof for",
+   "help": "Blank keeps it until you delete it.",
+   "unit": "days",
+   "placeholder": "Until I delete it",
+   "empty": "Until I delete it"
+  },
+  "planning.verification.evidence-retain-runs": {
+   "label": "Always keep proof from the last runs",
+   "help": "Protected however old it is.",
+   "unit": "runs",
+   "placeholder": "None protected",
+   "empty": "No limit"
+  },
+  "planning.verification.prune-on-cleanup": {
+   "label": "Delete old proof during cleanup"
+  },
+  "planning.testing.browser-capture-full-default": {
+   "label": "Screenshot button captures",
+   "control": "select",
+   "choices": [
+    "Visible viewport",
+    "Full page"
+   ],
+   "options": {
+    "Visible viewport": "The visible part",
+    "Full page": "The whole page"
+   }
+  },
+  "planning.testing.browser-component-action": {
+   "label": "After picking a page element",
+   "control": "select",
+   "choices": [
+    "Last used, starting with Send now",
+    "Send now",
+    "Add to the message box",
+    "Insert at the cursor"
+   ],
+   "options": {
+    "Last used, starting with Send now": "What I did last time"
+   }
+  },
+  "planning.testing.browser-component-crop": {
+   "label": "Attach a picture of the element"
+  },
+  "planning.testing.browser-devtools-policy": {
+   "label": "Let the assistant open DevTools",
+   "control": "select",
+   "choices": [
+    "Off",
+    "On with permission",
+    "On"
+   ],
+   "options": {
+    "Off": "Never",
+    "On with permission": "Ask me first",
+    "On": "Yes, without asking"
+   }
+  },
+  "planning.verification.evidence-span": {
+   "label": "How much proof a Goal keeps",
+   "options": {
+    "point": "Only the moment it passed",
+    "section": "The section of work",
+    "full": "The whole Goal",
+    "custom": "Custom (set per Goal)"
+   }
+  },
+  "planning.verification.source-evidence-layers": {
+   "label": "Show where each claim came from",
+   "help": "Receipts link each claim to its source."
+  },
+  "planning.verification.receipt-evidence-policy": {
+   "label": "Logs inside Goal receipts",
+   "options": {
+    "full": "Everything",
+    "redacted": "With secrets hidden",
+    "capped": "The most useful parts"
+   }
+  },
+  "planning.verification.evidence-detail": {
+   "label": "How much detail Goal mode saves",
+   "options": {
+    "minimal": "The minimum",
+    "standard": "Standard",
+    "full": "Full detail",
+    "indefinite": "Full detail, kept forever"
+   },
+   "hints": {
+    "indefinite": "Overrides the day limit"
+   }
+  },
+  "general.startup.refresh-investigation": {
+   "label": "Re-check the debug setup when a debugging chat resumes",
+   "help": "Catches a changed program or debugger before it runs again."
+  }
+ }
+}

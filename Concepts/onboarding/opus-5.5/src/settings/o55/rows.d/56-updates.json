@@ -1,0 +1,33 @@
+{
+ "_about": "updates rows (settings audit).",
+ "rows": {
+  "system.advanced.auto-update": {
+   "label": "Look for updates automatically",
+   "help": "You can still check at any time."
+  },
+  "system.advanced.catalog-updates": {
+   "label": "Keep content up to date",
+   "help": "Templates, personas and presets from the catalog."
+  },
+  "system.advanced.update-frequency": {
+   "label": "How often to look",
+   "help": "Only matters while automatic checks are on.",
+   "when": {
+    "id": "system.advanced.auto-update",
+    "truthy": true
+   },
+   "hints": {
+    "Never": "The same as turning automatic checks off."
+   }
+  },
+  "system.advanced.release-channel": {
+   "label": "Release channel",
+   "help": "Stable is well tested; the others get features sooner.",
+   "hints": {
+    "Stable": "Well tested.",
+    "Canary": "Newer, may break.",
+    "Nightly": "Built every night, breaks most."
+   }
+  }
+ }
+}

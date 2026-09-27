@@ -1,0 +1,378 @@
+{
+ "_about": "Source Control rows (settings audit, 2026-09-27).",
+ "rows": {
+  "ai.accounts.github-connect": {
+   "label": "GitHub account",
+   "actionLabel": "Connect or disconnect GitHub",
+   "route": {
+    "domain": "source",
+    "workspace": "source-manager"
+   },
+   "routeToast": [
+    "GitHub is set up in Source Control",
+    "Connect or disconnect it with the other code services."
+   ],
+   "pm51": "pm51-source-gh-connect",
+   "icon": "link"
+  },
+  "ai.accounts.github-token": {
+   "label": "Access token",
+   "help": "Kept in the system keychain; used for extra GitHub features.",
+   "control": "credential"
+  },
+  "ai.accounts.github-host-policy": {
+   "label": "GitHub servers allowed",
+   "options": {
+    "github.com_only": "github.com only",
+    "enterprise_allowed": "github.com and company servers"
+   }
+  },
+  "ai.accounts.github-oauth-loopback": {
+   "label": "Sign-in return address",
+   "help": "Must be this computer, such as 127.0.0.1.",
+   "placeholder": "127.0.0.1"
+  },
+  "branching.worktrees.create-github-repo": {
+   "label": "Create an online repository for new projects"
+  },
+  "branching.worktrees.new-repo-details": {
+   "label": "New repository details",
+   "help": "Visibility, license, .gitignore and starting branch.",
+   "pair": [
+    "Detail",
+    "Value"
+   ],
+   "keys": {
+    "visibility": "Visibility",
+    "default_branch": "Starting branch",
+    "license": "License",
+    "gitignore": ".gitignore template"
+   }
+  },
+  "branching.worktrees.upstream-repo": {
+   "label": "Original project",
+   "help": "Address or owner/name of the project you contribute to."
+  },
+  "branching.worktrees.create-fork": {
+   "label": "Make my own copy (fork)"
+  },
+  "branching.worktrees.fork-location": {
+   "label": "My copy",
+   "help": "Filled in once the copy exists."
+  },
+  "branching.worktrees.feature-branch-name": {
+   "label": "Branch for my changes"
+  },
+  "branching.worktrees.enable-git": {
+   "label": "Let runs use version history",
+   "help": "Off keeps runs away from branches and commits."
+  },
+  "branching.worktrees.default-branch": {
+   "label": "Main branch name",
+   "help": "Used for new repositories, workspaces and runs."
+  },
+  "branching.worktrees.branch-strategy": {
+   "label": "Branch naming style",
+   "when": {
+    "id": "branching.worktrees.enable-git",
+    "truthy": true
+   },
+   "options": {
+    "Feature": "One branch per piece of work",
+    "Hotfix": "Hotfix branches",
+    "Release": "Release branches",
+    "Trunk": "Straight onto main",
+    "Custom": "My own pattern"
+   }
+  },
+  "branching.worktrees.branch-naming-pattern": {
+   "label": "Custom branch pattern",
+   "help": "Use {node} and {id}, e.g. work/{node}-{id}.",
+   "when": {
+    "id": "branching.worktrees.branch-strategy",
+    "in": [
+     "Custom"
+    ]
+   },
+   "placeholder": "work/{node}-{id}"
+  },
+  "branching.worktrees.merge-strategy": {
+   "label": "How finished work is merged",
+   "options": {
+    "auto": "Follow the project",
+    "merge": "Keep every commit",
+    "squash": "One tidy commit",
+    "rebase": "Replay commits on top"
+   },
+   "when": {
+    "id": "branching.worktrees.enable-git",
+    "truthy": true
+   }
+  },
+  "branching.worktrees.push-behavior": {
+   "label": "Send commits online",
+   "options": {
+    "manual": "When I say",
+    "auto": "After each merge",
+    "never": "Never"
+   },
+   "when": {
+    "id": "branching.worktrees.enable-git",
+    "truthy": true
+   }
+  },
+  "branching.worktrees.auto-pr": {
+   "label": "Open a review request automatically",
+   "when": {
+    "id": "branching.worktrees.enable-git",
+    "truthy": true
+   }
+  },
+  "branching.worktrees.git-policy-preset": {
+   "label": "Safety level",
+   "options": {
+    "strict": "Strict",
+    "standard": "Standard",
+    "lenient": "Relaxed",
+    "custom": "Custom (choose below)"
+   },
+   "hints": {
+    "strict": "Main protected, force push refused, backup first",
+    "standard": "Main protected, backup first",
+    "lenient": "Few guard rails; for solo experiments",
+    "custom": "Pick each switch yourself"
+   },
+   "help": "One dial for how carefully branches and recovery are handled."
+  },
+  "branching.worktrees.force-push-policy": {
+   "label": "Overwrite history online (force push)",
+   "options": {
+    "never": "Never",
+    "force-with-lease": "Only if nobody else pushed",
+    "always": "Always (risky)"
+   }
+  },
+  "branching.worktrees.recovery-tools": {
+   "actionLabel": "Open recovery tools",
+   "flow": {
+    "kind": "list",
+    "icon": "restore",
+    "listTitle": "What went wrong?",
+    "intro": "Pick what matches. Each one undoes safely instead of asking you to type git commands.",
+    "items": [
+     {
+      "label": "A merge stopped halfway",
+      "help": "Puts the branch back where it was before the merge",
+      "action": "Undo the merge",
+      "doneText": "The branch is back where it was."
+     },
+     {
+      "label": "A workspace has no branch any more",
+      "help": "Finds workspaces whose branch was deleted",
+      "value": "2 found",
+      "action": "Tidy them up",
+      "doneText": "2 orphaned workspaces removed."
+     },
+     {
+      "label": "I committed to the wrong branch",
+      "help": "Moves your last commit to a new branch",
+      "action": "Move my last commit",
+      "doneText": "Moved to a new branch: rescue/last-commit."
+     },
+     {
+      "label": "Something is locked",
+      "help": "Clears a stale git lock left by a crash",
+      "action": "Clear the lock",
+      "doneText": "The lock is cleared."
+     }
+    ]
+   },
+   "label": "Fix a stuck branch or workspace"
+  },
+  "branching.worktrees.source-control-sections": {
+   "label": "Sections kept open",
+   "options": {
+    "Branches/Stash": "Branches and stash"
+   }
+  },
+  "branching.worktrees.worktree-filter": {
+   "label": "Workspaces listed",
+   "options": {
+    "Threads": "From chats",
+    "Orchestrator": "From Goals",
+    "Manual": "Made by me"
+   }
+  },
+  "branching.worktrees.auto-worktree-new-threads": {
+   "label": "Give each new chat its own workspace"
+  },
+  "branching.worktrees.assistant-worktree-base": {
+   "label": "Chat workspaces start from",
+   "when": {
+    "id": "branching.worktrees.auto-worktree-new-threads",
+    "truthy": true
+   },
+   "placeholder": "Same as the main branch",
+   "wordsDefault": true
+  },
+  "branching.worktrees.file-manager-follows": {
+   "label": "File browser follows the open chat",
+   "when": {
+    "id": "branching.worktrees.auto-worktree-new-threads",
+    "truthy": true
+   }
+  },
+  "branching.worktrees.worktree-cleanup": {
+   "label": "When a chat is deleted, its workspace",
+   "options": {
+    "ask": "Ask me",
+    "keep": "Is kept",
+    "remove": "Is removed"
+   },
+   "when": {
+    "id": "branching.worktrees.auto-worktree-new-threads",
+    "truthy": true
+   }
+  },
+  "branching.worktrees.thread-worktree-binding": {
+   "actionLabel": "Set up this chat's workspace",
+   "flow": {
+    "kind": "form",
+    "icon": "branch",
+    "primary": "Save",
+    "summary": "Where this chat's changes are made. Status: clean, 2 commits ahead of main.",
+    "fields": [
+     {
+      "key": "where",
+      "label": "This chat works in",
+      "type": "select",
+      "options": [
+       [
+        "own",
+        "Its own workspace (chat-8812)"
+       ],
+       [
+        "main",
+        "The main checkout"
+       ],
+       [
+        "other",
+        "Another workspace"
+       ]
+      ]
+     },
+     {
+      "key": "branch",
+      "label": "Branch name",
+      "value": "chat/8812-recipe-scaling",
+      "mono": true
+     },
+     {
+      "key": "cleanup",
+      "label": "Remove the workspace when the chat is archived",
+      "type": "toggle",
+      "value": true
+     },
+     {
+      "key": "pr",
+      "label": "Open a pull request when the work is done",
+      "type": "toggle",
+      "value": false
+     }
+    ]
+   },
+   "label": "This chat's workspace",
+   "help": "Opens from a chat.",
+   "when": {
+    "id": "branching.worktrees.auto-worktree-new-threads",
+    "truthy": true
+   }
+  },
+  "branching.worktrees.clean-untracked-before-run": {
+   "label": "Start each run with a clean workspace"
+  },
+  "branching.worktrees.clear-agent-output": {
+   "label": "Empty the output folder before each run"
+  },
+  "branching.worktrees.clean-ignored-files": {
+   "label": "Also remove ignored files when cleaning"
+  },
+  "branching.worktrees.remove-build-artifacts": {
+   "label": "Delete build output after runs"
+  },
+  "branching.worktrees.clean-workspace-now": {
+   "actionLabel": "Clean this workspace",
+   "flow": {
+    "kind": "check",
+    "icon": "trash",
+    "primary": "Clean it",
+    "summary": "Removes files that are not tracked and not ignored on purpose. Tracked changes are kept.",
+    "steps": [
+     {
+      "title": "Find stray files",
+      "desc": "target/, .cache/ and 38 other files",
+      "result": "Found 40"
+     },
+     {
+      "title": "Keep anything you marked to keep",
+      "desc": ".env.local is kept",
+      "result": "Kept 1"
+     },
+     {
+      "title": "Remove the rest",
+      "desc": "Moved to the trash first, so you can undo",
+      "result": "Removed 39"
+     }
+    ],
+    "outcome": "39 stray files removed"
+   },
+   "label": "Clean the workspace now"
+  },
+  "branching.worktrees.worktree-base-dir": {
+   "label": "Workspace folder",
+   "placeholder": "Inside the project folder",
+   "wordsDefault": true
+  },
+  "branching.worktrees.worktree-count-warning": {
+   "label": "Warn me at this many workspaces",
+   "help": "0 turns the warning off.",
+   "unit": "workspaces",
+   "min": 0,
+   "step": 1
+  },
+  "branching.worktrees.worktree-creation-timeout": {
+   "label": "Give up creating a workspace after",
+   "help": "In seconds, 5 to 300.",
+   "unit": "seconds",
+   "min": 5,
+   "max": 300,
+   "step": 5
+  },
+  "branching.worktrees.clean-all-worktrees": {
+   "actionLabel": "Remove all workspaces",
+   "danger": true,
+   "flow": {
+    "kind": "confirm",
+    "danger": true,
+    "primary": "Remove all 4",
+    "message": "Removes every AI workspace in this project: feature/recipe-scaling, fix/pagination, try/new-parser and chat-8812. Work that was never merged is lost. Your own branches and the main checkout are not touched.",
+    "done": [
+     "Workspaces removed",
+     "4 workspaces are gone."
+    ]
+   },
+   "label": "Remove every workspace",
+   "help": "Unmerged work in them is lost."
+  },
+  "branching.worktrees.github-pinned-workflows": {
+   "label": "Pinned workflows"
+  },
+  "branching.worktrees.github-actions-auto-refresh": {
+   "label": "Keep check results up to date"
+  },
+  "planning.testing.github-actions-template": {
+   "label": "Add a starter test workflow",
+   "help": "Writes a ready-made test workflow file to the repository."
+  }
+ }
+}

@@ -1,0 +1,263 @@
+/* O55 · guided setup (kit.d/60-wizard.js), drawn like the onboarding window: one bounded window over the dimmed
+   page, a step rail in the header, the progress picture and "So far" on the left, one question at a time on the
+   right, Back and Continue in the footer. Tokens and family materials follow src/css/10-window.css (Basic hairline,
+   Friendly chunky paper, Glass layered light, Retro hard pixel); every colour comes from the live theme. Chosen cards
+   take the accent border and a filled round check, never a coloured stripe or a capsule badge. */
+#panel-settings .drawer-wrap.pm51-drawer-wrap.o55g-wrap {
+  --g-accent: var(--accent-blue); --g-on-accent: #fff; --g-r: 14px; --g-card-r: 11px; --g-btn-r: 9px;
+  --g-win-bg: var(--surface); --g-card-bg: color-mix(in srgb, var(--surface) 88%, var(--text-primary) 3%); --g-line: var(--border);
+  --g-field-bg: color-mix(in srgb, var(--background) 60%, var(--surface));
+  --g-ease: cubic-bezier(0.2, 0, 0, 1); --g-step: 500ms; --g-stagger: 70ms; --g-delay: 110ms;
+  display: grid; place-items: center; container-type: size; container-name: o55g;
+  background: color-mix(in srgb, var(--background) 74%, transparent);
+}
+html[data-theme^="basic"][data-theme$="dark"] #panel-settings .o55g-wrap { --g-on-accent: #0b1a2b; --g-win-bg: color-mix(in srgb, var(--surface) 94%, #0c2238 6%); }
+html[data-theme^="friendly"] #panel-settings .o55g-wrap { --g-r: 24px; --g-card-r: 16px; --g-btn-r: 14px; --g-accent: var(--accent-orange); --g-ink: color-mix(in srgb, var(--text-primary) 78%, var(--background)); --g-ease: cubic-bezier(0.34, 1.56, 0.64, 1); --g-step: 560ms; }
+html[data-theme^="friendly"][data-theme$="dark"] #panel-settings .o55g-wrap { --g-on-accent: #1c1624; }
+html[data-theme^="glass"] #panel-settings .o55g-wrap { --g-r: 20px; --g-card-r: 15px; --g-btn-r: 12px; --g-win-bg: linear-gradient(var(--surface), var(--surface)), var(--background); --g-line: rgba(255, 255, 255, 0.16); --g-card-bg: color-mix(in srgb, #fff 6%, transparent); --g-ease: cubic-bezier(0.05, 0.7, 0.1, 1); --g-step: 560ms; }
+html[data-theme^="glass"][data-theme$="dark"] #panel-settings .o55g-wrap { --g-on-accent: #1d1430; }
+html[data-theme^="glass"][data-theme$="light"] #panel-settings .o55g-wrap { --g-line: rgba(70, 60, 120, 0.16); --g-card-bg: rgba(255, 255, 255, 0.55); --g-win-bg: linear-gradient(165deg, rgba(255, 255, 255, 0.92), rgba(243, 238, 252, 0.88) 55%, rgba(233, 241, 248, 0.9)), var(--background); }
+html[data-theme^="retro"] #panel-settings .o55g-wrap { --g-r: 0px; --g-card-r: 0px; --g-btn-r: 0px; --g-ease: steps(4, end); --g-step: 420ms; --g-stagger: 60ms; --g-delay: 40ms; }
+html[data-theme^="retro"][data-theme$="dark"] #panel-settings .o55g-wrap { --g-accent: var(--accent-lime); --g-on-accent: #0a0c08; }
+
+/* ---- window ---------------------------------------------------------------------------------------------------- */
+#panel-settings .o55g-wrap .drawer.o55g-win {
+  position: relative; top: auto; right: auto; width: min(1000px, calc(100% - 48px)); max-width: none; height: min(660px, calc(100% - 40px));
+  display: grid; grid-template-rows: auto minmax(0, 1fr) auto; border: 1px solid var(--g-line); border-radius: var(--g-r); background: var(--g-win-bg);
+  box-shadow: 0 40px 90px -24px rgba(0, 0, 0, 0.55); overflow: hidden; isolation: isolate; color: var(--text-primary); font-family: var(--body-font, inherit);
+  transform: translateY(18px) scale(0.965); opacity: 0; transition: transform 460ms var(--g-ease), opacity 220ms ease;
+}
+#panel-settings .o55g-wrap.is-open .drawer.o55g-win { transform: none; opacity: 1; }
+#panel-settings .o55g-wrap.is-closing .drawer.o55g-win { transform: translateY(10px) scale(0.98); opacity: 0; transition: transform 240ms cubic-bezier(0.4, 0, 1, 1), opacity 200ms ease; }
+html[data-theme^="friendly"] #panel-settings .o55g-wrap .drawer.o55g-win { border: 2px solid var(--g-ink); box-shadow: 9px 11px 0 color-mix(in srgb, var(--text-primary) 16%, transparent), 0 40px 80px -30px rgba(0, 0, 0, 0.45); }
+html[data-theme^="retro"] #panel-settings .o55g-wrap .drawer.o55g-win { border: 3px solid var(--text-primary); box-shadow: 10px 10px 0 color-mix(in srgb, var(--text-primary) 38%, transparent); transform: none; transition: opacity 240ms steps(4, end); }
+html[data-theme^="retro"] #panel-settings .o55g-wrap.is-closing .drawer.o55g-win { transform: none; }
+
+/* ---- header: name, rail, close ------------------------------------------------------------------------------- */
+#panel-settings .o55g-head { display: grid; grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto; align-items: center; gap: 16px; height: 56px; padding: 0 10px 0 18px;
+  border-bottom: 1px solid var(--g-line); background: color-mix(in srgb, var(--surface) 94%, var(--text-primary) 2%); position: relative; z-index: 3; }
+html[data-theme^="glass"] #panel-settings .o55g-head { background: color-mix(in srgb, #fff 5%, transparent); }
+#panel-settings .o55g-brand { display: flex; align-items: center; gap: 9px; min-width: 0; font: 700 14px/1.2 var(--display-font, var(--body-font)); letter-spacing: 0.01em; }
+#panel-settings .o55g-brandname { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#panel-settings .o55g-brandicon { display: grid; place-items: center; color: var(--g-accent); }
+#panel-settings .o55g-brandicon svg { width: 19px; height: 19px; }
+html[data-theme^="retro"] #panel-settings .o55g-brand { font-family: var(--display-font); text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; }
+#panel-settings .o55g-railwrap { justify-self: center; min-width: 0; max-width: 100%; }
+#panel-settings .o55g-rail { display: flex; align-items: center; list-style: none; margin: 0; padding: 0; }
+#panel-settings .o55g-railitem { position: relative; display: flex; align-items: center; gap: 7px; padding: 0 12px; height: 30px; font-size: 12.5px; color: var(--text-muted); white-space: nowrap; transition: color 240ms ease; }
+#panel-settings .o55g-railitem + .o55g-railitem::before { content: ''; position: absolute; left: -12px; width: 24px; top: 50%; height: 1.5px; background: var(--g-line); transition: background 320ms ease; }
+#panel-settings .o55g-railitem[data-state="done"] + .o55g-railitem::before { background: var(--g-accent); }
+#panel-settings .o55g-railnode { width: 10px; height: 10px; border-radius: 50%; border: 1.6px solid currentColor; flex: none; box-sizing: border-box; transition: background 240ms ease, border-color 240ms ease, box-shadow 320ms ease; }
+#panel-settings .o55g-railitem[data-state="done"] { color: var(--text-secondary); }
+#panel-settings .o55g-railitem[data-state="done"] .o55g-railnode { background: var(--g-accent); border-color: var(--g-accent); }
+#panel-settings .o55g-railitem[data-state="current"] { color: var(--text-primary); font-weight: 650; }
+#panel-settings .o55g-railitem[data-state="current"] .o55g-railnode { border-color: var(--g-accent); background: var(--surface); box-shadow: 0 0 0 4px color-mix(in srgb, var(--g-accent) 24%, transparent); }
+html[data-theme^="basic"] #panel-settings .o55g-railnode { border-radius: 2px; width: 9px; height: 9px; }
+html[data-theme^="friendly"] #panel-settings .o55g-railnode { width: 13px; height: 12px; border-radius: 2px 2px 7px 7px; clip-path: polygon(0 0, 100% 0, 50% 100%); border: 0; background: color-mix(in srgb, currentColor 45%, transparent); }
+html[data-theme^="friendly"] #panel-settings .o55g-railitem[data-state="done"] .o55g-railnode { background: var(--accent-lime); }
+html[data-theme^="friendly"] #panel-settings .o55g-railitem[data-state="current"] .o55g-railnode { background: var(--g-accent); box-shadow: none; }
+html[data-theme^="friendly"] #panel-settings .o55g-railitem + .o55g-railitem::before { height: 7px; top: calc(50% - 6px); background: none; border-bottom: 1.5px solid color-mix(in srgb, var(--text-primary) 35%, transparent); border-radius: 0 0 50% 50%; }
+html[data-theme^="glass"] #panel-settings .o55g-railitem + .o55g-railitem::before { background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--g-accent) 70%, transparent), transparent); }
+html[data-theme^="glass"] #panel-settings :is(.o55g-railitem[data-state="current"], .o55g-railitem[data-state="done"]) .o55g-railnode { box-shadow: 0 0 10px 2px color-mix(in srgb, var(--g-accent) 60%, transparent); }
+html[data-theme^="retro"] #panel-settings .o55g-railnode { border-radius: 0; border-width: 2px; }
+html[data-theme^="retro"] #panel-settings .o55g-railitem { font-family: var(--display-font); text-transform: uppercase; font-size: 11px; letter-spacing: 0.06em; }
+html[data-theme^="retro"] #panel-settings .o55g-railitem + .o55g-railitem::before { height: 2px; background: repeating-linear-gradient(90deg, var(--text-muted) 0 3px, transparent 3px 6px); }
+html[data-theme^="retro"] #panel-settings .o55g-railitem[data-state="current"] .o55g-railnode { box-shadow: none; background: var(--g-accent); animation: o55g-pixblink 1s steps(1) infinite; }
+@keyframes o55g-pixblink { 50% { background: transparent; } }
+#panel-settings .o55g-close { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px; border-radius: var(--g-btn-r); border: 1px solid transparent; background: transparent; color: var(--text-secondary); cursor: pointer; font: 600 13px/1 var(--body-font); }
+#panel-settings .o55g-close svg { width: 16px; height: 16px; }
+#panel-settings .o55g-close:hover { background: color-mix(in srgb, var(--text-primary) 8%, transparent); color: var(--text-primary); }
+
+/* ---- body: the picture, and the pane --------------------------------------------------------------------------- */
+#panel-settings .o55g-body { display: grid; grid-template-columns: minmax(250px, 36%) minmax(0, 1fr); min-height: 0; }
+#panel-settings .o55g-stage { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 26px 24px; overflow: hidden; border-right: 1px solid var(--g-line); background: var(--background); }
+html[data-theme^="glass"] #panel-settings .o55g-stage { background: color-mix(in srgb, var(--background) 55%, transparent); }
+html[data-theme^="basic"] #panel-settings .o55g-stage { background-image: linear-gradient(color-mix(in srgb, var(--g-line) 45%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--g-line) 45%, transparent) 1px, transparent 1px); background-size: 22px 22px; background-position: center; }
+#panel-settings .o55g-art { position: relative; width: min(230px, 100%); aspect-ratio: 1; flex: none; }
+#panel-settings .o55g-orbits { display: block; width: 100%; height: 100%; overflow: visible; }
+#panel-settings .o55g-ring { fill: none; stroke: color-mix(in srgb, var(--text-primary) 16%, transparent); stroke-width: 1.2; }
+#panel-settings .o55g-ring-a { stroke-dasharray: 1.5 6; transform-box: fill-box; transform-origin: center; animation: o55g-spin 80s linear infinite; }
+#panel-settings .o55g-ring-b { stroke: color-mix(in srgb, var(--g-accent) 22%, transparent); }
+#panel-settings .o55g-ring-c { fill: color-mix(in srgb, var(--g-accent) 7%, transparent); stroke: color-mix(in srgb, var(--g-accent) 30%, transparent); }
+#panel-settings .o55g-progress { fill: none; stroke: var(--g-accent); stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 0 100; transition: stroke-dasharray 640ms var(--g-ease); }
+#panel-settings .o55g-node circle { fill: var(--background); stroke: color-mix(in srgb, var(--text-primary) 30%, transparent); stroke-width: 1.6; transition: fill 260ms ease, stroke 260ms ease; }
+#panel-settings .o55g-node[data-state="done"] circle { fill: var(--g-accent); stroke: var(--g-accent); }
+#panel-settings .o55g-node[data-state="current"] circle { fill: var(--background); stroke: var(--g-accent); stroke-width: 2.6; animation: o55g-pulse 2.4s ease-in-out infinite; }
+@keyframes o55g-spin { to { transform: rotate(360deg); } }
+@keyframes o55g-pulse { 50% { stroke-width: 5.5; stroke-opacity: 0.55; } }
+#panel-settings .o55g-emblem { position: absolute; left: 50%; top: 50%; width: 74px; height: 74px; margin: -37px 0 0 -37px; display: grid; place-items: center; border-radius: calc(var(--g-card-r) * 1.4);
+  background: color-mix(in srgb, var(--g-accent) 14%, var(--surface)); color: var(--g-accent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--g-accent) 38%, transparent), 0 16px 32px -18px color-mix(in srgb, var(--g-accent) 90%, transparent); }
+#panel-settings .o55g-emblem svg { width: 32px; height: 32px; }
+html[data-theme^="friendly"] #panel-settings .o55g-emblem { border-radius: 50%; border: 2px solid var(--g-ink); color: var(--g-ink); background: color-mix(in srgb, var(--g-accent) 30%, var(--surface)); box-shadow: 4px 5px 0 color-mix(in srgb, var(--text-primary) 16%, transparent); }
+html[data-theme^="friendly"] #panel-settings .o55g-ring { stroke-width: 2; stroke: color-mix(in srgb, var(--text-primary) 22%, transparent); }
+html[data-theme^="friendly"] #panel-settings .o55g-node circle { stroke-width: 2.2; }
+html[data-theme^="friendly"] #panel-settings .o55g-node[data-state="done"] circle { fill: var(--accent-lime); stroke: var(--g-ink); }
+html[data-theme^="glass"] #panel-settings .o55g-emblem { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--g-accent) 45%, transparent), 0 0 34px -4px color-mix(in srgb, var(--g-accent) 55%, transparent); }
+html[data-theme^="glass"] #panel-settings .o55g-progress { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--g-accent) 70%, transparent)); }
+html[data-theme^="retro"] #panel-settings .o55g-emblem { border-radius: 0; border: 2px solid var(--text-primary); box-shadow: 5px 5px 0 color-mix(in srgb, var(--text-primary) 38%, transparent); }
+html[data-theme^="retro"] #panel-settings .o55g-ring-a { animation-timing-function: steps(48, end); }
+html[data-theme^="retro"] #panel-settings .o55g-progress { stroke-linecap: butt; stroke-width: 4; }
+html[data-theme^="retro"] #panel-settings .o55g-node circle { r: 5.5; }
+html[data-theme^="retro"] #panel-settings .o55g-node[data-state="current"] circle { animation: o55g-pixpulse 1s steps(1) infinite; }
+@keyframes o55g-pixpulse { 50% { fill: var(--g-accent); } }
+#panel-settings .o55g-recap { width: 100%; max-width: 270px; }
+#panel-settings .o55g-about { margin: 0 auto; max-width: 30ch; text-align: center; font-size: 13px; line-height: 1.5; color: var(--text-secondary); text-wrap: pretty; }
+#panel-settings .o55g-recap-title { margin: 0 0 8px; font: 700 10.5px/1.2 var(--body-font); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+#panel-settings .o55g-recap-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+#panel-settings .o55g-recap-list li { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: 10px; padding: 7px 10px; border: 1px solid var(--g-line); border-radius: calc(var(--g-card-r) * 0.7); background: var(--g-card-bg); font-size: 12.5px; }
+#panel-settings .o55g-recap-list li span { color: var(--text-muted); }
+#panel-settings .o55g-recap-list li strong { overflow: hidden; text-align: right; text-overflow: ellipsis; white-space: nowrap; font-weight: 650; color: var(--text-primary); }
+html[data-theme^="friendly"] #panel-settings .o55g-recap-list li { border-width: 2px; border-color: color-mix(in srgb, var(--g-ink) 35%, transparent); }
+html[data-theme^="retro"] #panel-settings .o55g-recap-list li { border: 2px solid color-mix(in srgb, var(--text-primary) 60%, transparent); font-family: var(--display-font); text-transform: uppercase; font-size: 11px; letter-spacing: 0.04em; }
+
+#panel-settings .o55g-pane { position: relative; overflow: hidden; min-height: 0; }
+#panel-settings .o55g-layer { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 0; }
+#panel-settings .o55g-layer.o55g-out { pointer-events: none; z-index: 0; }
+#panel-settings .o55g-content { margin-block: auto; padding: 30px 40px 26px; max-width: 620px; width: 100%; box-sizing: border-box; }
+#panel-settings .o55g-eyebrow { margin: 0 0 10px; font: 700 11.5px/1.2 var(--body-font); letter-spacing: 0.13em; text-transform: uppercase; color: var(--g-accent); }
+#panel-settings .o55g-eyebrow-step { color: var(--text-muted); }
+#panel-settings .o55g-title { margin: 0 0 10px; font: 750 clamp(22px, 2.1vw, 28px)/1.18 var(--display-font, var(--body-font)); letter-spacing: -0.012em; color: var(--text-primary); outline: none; text-wrap: balance; }
+#panel-settings .o55g-lead { margin: 0 0 22px; font: 400 15px/1.55 var(--body-font); color: var(--text-secondary); max-width: 54ch; text-wrap: pretty; }
+#panel-settings .o55g-title + .o55g-main { margin-top: 14px; }
+html[data-theme^="retro"] #panel-settings .o55g-title { text-transform: uppercase; letter-spacing: 0.02em; font-size: clamp(19px, 1.9vw, 24px); }
+html[data-theme^="retro"] #panel-settings .o55g-title::after { content: '_'; margin-left: 2px; color: var(--g-accent); animation: o55g-caret 1s steps(1) infinite; }
+html[data-theme^="retro"] #panel-settings .o55g-eyebrow::before { content: '> '; }
+@keyframes o55g-caret { 50% { opacity: 0; } }
+#panel-settings .o55g-main { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+#panel-settings .o55g-error { margin: 14px 0 0; font-size: 13px; font-weight: 600; color: var(--accent-orange, var(--k3-amber)); }
+
+/* ---- choice cards ---------------------------------------------------------------------------------------------- */
+#panel-settings .o55g-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+#panel-settings .o55g-cards.is-many { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 9px; }
+#panel-settings .o55g-card { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; width: 100%; padding: 13px 15px; text-align: left; border-radius: var(--g-card-r); cursor: pointer;
+  border: 1px solid var(--g-line); background: var(--g-card-bg); color: var(--text-primary); font: inherit; transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 200ms ease; }
+#panel-settings .o55g-card:hover { border-color: color-mix(in srgb, var(--g-accent) 55%, var(--g-line)); transform: translateY(-1px); }
+#panel-settings .o55g-card:active { transform: translateY(0) scale(0.99); }
+#panel-settings .o55g-card:focus-visible, #panel-settings .o55g-win :is(.o55g-close, .o55g-foot .btn):focus-visible { outline: 2px solid var(--g-accent); outline-offset: 2px; }
+#panel-settings .o55g-card.is-on { border-color: var(--g-accent); background: color-mix(in srgb, var(--g-accent) 11%, var(--g-card-bg)); box-shadow: inset 0 0 0 1px var(--g-accent); }
+#panel-settings .o55g-card.is-done { opacity: 0.55; cursor: default; transform: none; }
+#panel-settings .o55g-cards.is-many .o55g-card { gap: 11px; padding: 10px 12px; }
+#panel-settings .o55g-glyph { display: grid; place-items: center; width: 40px; height: 40px; border-radius: calc(var(--g-card-r) * 0.8); color: var(--g-accent); background: color-mix(in srgb, var(--g-accent) 13%, transparent); flex: none; }
+#panel-settings .o55g-glyph svg { width: 20px; height: 20px; }
+#panel-settings .o55g-cards.is-many .o55g-glyph { width: 32px; height: 32px; }
+#panel-settings .o55g-cards.is-many .o55g-glyph svg { width: 17px; height: 17px; }
+#panel-settings .o55g-cardtext { display: grid; gap: 3px; min-width: 0; }
+#panel-settings .o55g-cardtitle { font: 650 14.5px/1.3 var(--body-font); }
+#panel-settings .o55g-cardsub { font: 400 13px/1.45 var(--body-font); color: var(--text-secondary); }
+#panel-settings .o55g-cardmeta { font: 600 11.5px/1.3 var(--body-font); color: var(--text-muted); }
+#panel-settings .o55g-cards.is-many .o55g-cardtitle { font-size: 13.5px; }
+#panel-settings .o55g-cards.is-many .o55g-cardsub { font-size: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+#panel-settings .o55g-check { width: 18px; height: 18px; border-radius: 50%; border: 1.6px solid color-mix(in srgb, var(--text-primary) 28%, transparent); box-sizing: border-box; transition: all 200ms ease; flex: none; }
+#panel-settings .o55g-card.is-on > .o55g-check { border-color: var(--g-accent); background: var(--g-accent); box-shadow: inset 0 0 0 4px var(--surface); }
+#panel-settings .o55g-card[role="checkbox"] > .o55g-check { border-radius: 5px; }
+#panel-settings .o55g-card[role="checkbox"].is-on > .o55g-check { box-shadow: none; background: var(--g-accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 12px no-repeat; }
+#panel-settings .o55g-card[hidden] { display: none; }
+html[data-theme^="friendly"] #panel-settings .o55g-card { border: 2px solid color-mix(in srgb, var(--g-ink) 55%, transparent); box-shadow: 3px 4px 0 color-mix(in srgb, var(--text-primary) 12%, transparent); }
+html[data-theme^="friendly"] #panel-settings .o55g-card.is-on { border-color: var(--g-ink); box-shadow: 4px 5px 0 color-mix(in srgb, var(--g-accent) 70%, transparent); }
+html[data-theme^="friendly"] #panel-settings .o55g-glyph { border-radius: 50%; background: color-mix(in srgb, var(--g-accent) 22%, transparent); color: var(--g-ink); }
+html[data-theme^="glass"] #panel-settings .o55g-card.is-on { background: color-mix(in srgb, var(--g-accent) 20%, transparent); box-shadow: inset 0 0 0 1px var(--g-accent), 0 10px 30px -12px color-mix(in srgb, var(--g-accent) 80%, transparent); }
+html[data-theme^="retro"] #panel-settings .o55g-card { border: 2px solid color-mix(in srgb, var(--text-primary) 70%, transparent); }
+html[data-theme^="retro"] #panel-settings .o55g-card:hover { transform: none; border-color: var(--text-primary); }
+html[data-theme^="retro"] #panel-settings .o55g-card.is-on { background: var(--g-accent); color: var(--g-on-accent); box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 40%, transparent); }
+html[data-theme^="retro"] #panel-settings .o55g-card.is-on :is(.o55g-cardsub, .o55g-cardmeta, .o55g-glyph) { color: var(--g-on-accent); }
+html[data-theme^="retro"] #panel-settings :is(.o55g-check, .o55g-glyph) { border-radius: 0; }
+html[data-theme^="retro"] #panel-settings .o55g-cardtitle { font-family: var(--display-font); text-transform: uppercase; font-size: 13px; letter-spacing: 0.03em; }
+#panel-settings .o55g-fly { position: absolute; left: 0; top: 0; z-index: 20; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--g-accent); color: var(--g-on-accent); pointer-events: none; box-shadow: 0 8px 18px -6px color-mix(in srgb, var(--g-accent) 80%, transparent); }
+#panel-settings .o55g-fly svg { width: 15px; height: 15px; }
+html[data-theme^="retro"] #panel-settings .o55g-fly { border-radius: 0; }
+
+/* ---- fields, groups and rows inside a step ---------------------------------------------------------------------- */
+#panel-settings .o55g-win .pm51-field { display: grid; gap: 6px; }
+#panel-settings .o55g-win .pm51-field-label { font: 650 13px/1.3 var(--body-font); color: var(--text-secondary); }
+#panel-settings .o55g-win .pm51-field-help { font-size: 12.5px; line-height: 1.45; color: var(--text-muted); }
+#panel-settings .o55g-win .o55g-layer :is(.pm51-field, .o55-setup-fields, .o55-plg-search) :is(input.text-control, textarea, .form-textarea, .pm51-dd-trigger, .pm51-dd) { width: 100%; max-width: none; }
+#panel-settings .o55g-win .o55g-layer :is(input.text-control, textarea, .form-textarea, .pm51-dd-trigger) { box-sizing: border-box; min-height: 42px; padding: 10px 12px; border-radius: calc(var(--g-card-r) * 0.8); border: 1px solid var(--g-line); background: var(--g-field-bg); color: var(--text-primary); font: 400 14px/1.4 var(--body-font); }
+#panel-settings .o55g-win .o55g-layer :is(input.text-control, textarea, .form-textarea):focus, #panel-settings .o55g-win .o55g-layer .pm51-dd-trigger:focus-visible { border-color: var(--g-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--g-accent) 22%, transparent); outline: none; }
+#panel-settings .o55g-win .o55g-layer :is(.o55-setup-mono, .o55-setup-mono.text-control) { font-family: var(--k3-mono, ui-monospace, monospace); font-size: 13px; }
+#panel-settings .o55g-win .pm51-panel-card { padding: 14px 16px; border: 1px solid var(--g-line); border-radius: var(--g-card-r); background: var(--g-card-bg); box-shadow: none; }
+#panel-settings .o55g-win .pm51-ps-title { font: 650 13.5px/1.3 var(--body-font); color: var(--text-primary); }
+#panel-settings .o55g-win .pm51-pc-icon { color: var(--g-accent); }
+html[data-theme^="friendly"] #panel-settings .o55g-win .pm51-panel-card { border: 2px solid color-mix(in srgb, var(--g-ink) 35%, transparent); }
+html[data-theme^="retro"] #panel-settings .o55g-win .pm51-panel-card { border: 2px solid color-mix(in srgb, var(--text-primary) 55%, transparent); }
+#panel-settings .o55g-win .o55g-layer .setting-list { border-radius: var(--g-card-r); }
+
+/* ---- footer ---------------------------------------------------------------------------------------------------- */
+#panel-settings .o55g-foot { position: relative; display: flex; align-items: center; gap: 10px; padding: 14px 22px 16px; border-top: 1px solid var(--g-line); background: color-mix(in srgb, var(--surface) 96%, var(--text-primary) 2%); }
+html[data-theme^="glass"] #panel-settings .o55g-foot { background: color-mix(in srgb, #fff 4%, transparent); }
+#panel-settings .o55g-grow { flex: 1; }
+#panel-settings .o55g-footnote { font-size: 12.5px; color: var(--text-muted); }
+#panel-settings .o55g-foot .btn.o55g-back, #panel-settings .o55g-foot .btn.o55g-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; height: auto; padding: 0 18px; border-radius: var(--g-btn-r); font: 650 14px/1 var(--body-font); transition: transform 140ms ease, filter 160ms ease, background 160ms ease; }
+#panel-settings .o55g-foot .btn.o55g-back { padding-left: 12px; color: var(--text-secondary); border: 1px solid transparent; background: transparent; box-shadow: none; }
+#panel-settings .o55g-foot .btn.o55g-back:hover { color: var(--text-primary); background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
+#panel-settings .o55g-foot .btn.o55g-primary { border: 1px solid transparent; background: var(--g-accent); color: var(--g-on-accent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 8px 18px -8px color-mix(in srgb, var(--g-accent) 80%, transparent); }
+#panel-settings .o55g-foot .btn.o55g-primary svg { width: 15px; height: 15px; }
+#panel-settings .o55g-foot .btn.o55g-primary:hover { filter: brightness(1.07); }
+#panel-settings .o55g-foot .btn:active { transform: translateY(1px) scale(0.985); }
+html[data-theme^="friendly"] #panel-settings .o55g-foot .btn.o55g-primary { border: 2px solid var(--g-ink); box-shadow: 3px 4px 0 color-mix(in srgb, var(--text-primary) 22%, transparent); }
+html[data-theme^="retro"] #panel-settings .o55g-foot .btn.o55g-primary { border: 2px solid var(--text-primary); box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 40%, transparent); font-family: var(--display-font); text-transform: uppercase; letter-spacing: 0.05em; font-size: 12.5px; }
+html[data-theme^="retro"] #panel-settings .o55g-foot .btn:active { transform: translate(2px, 2px); box-shadow: none; }
+#panel-settings .o55g-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---- step motion: the new step staggers in while the old one leaves as an inert copy --------------------------- */
+#panel-settings .o55g-pane.o55g-entering .o55g-st { animation: o55g-st var(--g-step) var(--g-ease) calc(var(--g-delay) + var(--i, 0) * var(--g-stagger)) both; }
+#panel-settings .o55g-pane.o55g-entering.o55g-in-back .o55g-st { animation-name: o55g-st-back; }
+#panel-settings .o55g-pane.o55g-entering .o55g-main.o55g-st { animation-name: o55g-fade; }
+#panel-settings .o55g-pane.o55g-entering .o55g-card { animation: o55g-card var(--g-step) var(--g-ease) calc(var(--g-delay) + 3 * var(--g-stagger) + var(--ci, 0) * 40ms) both; }
+@keyframes o55g-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes o55g-st { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
+@keyframes o55g-st-back { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
+@keyframes o55g-card { from { opacity: 0; transform: translateX(22px); } to { opacity: 1; transform: none; } }
+html[data-theme^="friendly"] #panel-settings .o55g-pane.o55g-entering .o55g-st { animation-name: o55g-st-friendly; }
+html[data-theme^="friendly"] #panel-settings .o55g-pane.o55g-entering.o55g-in-back .o55g-st { animation-name: o55g-st-friendly-back; }
+html[data-theme^="friendly"] #panel-settings .o55g-pane.o55g-entering .o55g-card { animation-name: o55g-card-friendly; }
+@keyframes o55g-st-friendly { from { opacity: 0; transform: translateY(20px) scale(0.97); } 40% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes o55g-st-friendly-back { from { opacity: 0; transform: translateY(-16px) scale(0.97); } 40% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes o55g-card-friendly { from { opacity: 0; transform: translateY(26px) rotate(-1.2deg) scale(0.96); } 45% { opacity: 1; } to { opacity: 1; transform: none; } }
+html[data-theme^="glass"] #panel-settings .o55g-pane.o55g-entering .o55g-st { animation-name: o55g-st-glass; }
+html[data-theme^="glass"] #panel-settings .o55g-pane.o55g-entering.o55g-in-back .o55g-st { animation-name: o55g-st-glass-back; }
+html[data-theme^="glass"] #panel-settings .o55g-pane.o55g-entering .o55g-card { animation-name: o55g-card-glass; }
+@keyframes o55g-st-glass { from { opacity: 0; transform: translateY(10px) scale(1.035); } to { opacity: 1; transform: none; } }
+@keyframes o55g-st-glass-back { from { opacity: 0; transform: translateY(-8px) scale(0.975); } to { opacity: 1; transform: none; } }
+@keyframes o55g-card-glass { from { opacity: 0; transform: translateY(14px) scale(1.05); } to { opacity: 1; transform: none; } }
+html[data-theme^="retro"] #panel-settings .o55g-pane.o55g-entering .o55g-st { animation-name: o55g-st-retro; }
+html[data-theme^="retro"] #panel-settings .o55g-pane.o55g-entering.o55g-in-back .o55g-st { animation-name: o55g-st-retro-back; }
+html[data-theme^="retro"] #panel-settings .o55g-pane.o55g-entering .o55g-title.o55g-st { animation: o55g-type 480ms steps(12, end) calc(var(--g-delay) + var(--g-stagger)) both; }
+html[data-theme^="retro"] #panel-settings .o55g-pane.o55g-entering .o55g-card { animation-name: o55g-card-retro; }
+@keyframes o55g-st-retro { from { opacity: 0; transform: translateX(16px); } 25% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes o55g-st-retro-back { from { opacity: 0; transform: translateX(-16px); } 25% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes o55g-card-retro { from { opacity: 0; transform: translateX(24px); } 34% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes o55g-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+/* ---- smaller windows: the picture steps aside, the rail keeps only the current name ----------------------------- */
+@container o55g (max-width: 860px) {
+  #panel-settings .o55g-body { grid-template-columns: minmax(0, 1fr); }
+  #panel-settings .o55g-stage { display: none; }
+  #panel-settings .o55g-content { padding: 24px 26px 22px; }
+}
+@container o55g (max-width: 700px) {
+  #panel-settings .o55g-wrap .drawer.o55g-win { width: calc(100% - 20px); height: calc(100% - 20px); }
+  #panel-settings .o55g-railitem:not([data-state="current"]) .o55g-raillabel { display: none; }
+  #panel-settings .o55g-railitem { padding: 0 8px; }
+  #panel-settings .o55g-close span, #panel-settings .o55g-footnote { display: none; }
+  #panel-settings .o55g-head { grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; }
+  #panel-settings .o55g-brandname { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #panel-settings .o55g-wrap .drawer.o55g-win, #panel-settings .o55g-card, #panel-settings .o55g-progress, #panel-settings .o55g-foot .btn { transition: none !important; }
+  #panel-settings .o55g-ring-a, #panel-settings .o55g-node circle, #panel-settings .o55g-railnode, #panel-settings .o55g-title::after { animation: none !important; }
+  #panel-settings .o55g-card:hover, #panel-settings .o55g-card:active { transform: none; }
+}
+
+/* ---- side panels that are not guided (forms, checks, lists): a lead line and roomy fields ---------------------- */
+#panel-settings .o55-wiz-lead { margin: 2px 0 12px; font-size: 13px; line-height: 1.45; color: var(--k3-text-2); }
+#panel-settings .o55-setup-fields { display: flex; flex-direction: column; gap: 12px; }
+#panel-settings .drawer .o55-setup-fields .text-control, #panel-settings .drawer .o55-setup-fields textarea { width: 100%; max-width: none; box-sizing: border-box; }
+#panel-settings .drawer .o55-setup-fields .pm51-commands-inline .text-control { width: auto; flex: 1 1 0; min-width: 0; }
+#panel-settings .o55-setup-mono { font-family: var(--k3-mono, ui-monospace, monospace); font-size: 12px; }
+#panel-settings .o55-setup-summary { margin: 0; }
+#panel-settings .o55-setup-fields .o55-chips { justify-content: flex-start; max-width: none; }
+/* a group of cards inside a step stands on its own: a heading and the cards, no box around the boxes */
+html #panel-settings .o55g-win .pm51-panel-card.o55g-group { padding: 0; border: 0; background: none; box-shadow: none; }
+html #panel-settings .o55g-win .pm51-panel-card.o55g-group .pm51-pc-head { margin-bottom: 8px; }
+/* the question takes focus so a screen reader reads it; it is not a control, so it draws no focus ring */
+html #panel-settings .o55g-win .o55g-title:is(:focus, :focus-visible) { outline: none; box-shadow: none; background: transparent; }

@@ -1,0 +1,361 @@
+{
+ "_about": "Personas: every persona-scoped row is edited inside the persona it belongs to; Crews, Group work (BrainStorm, Review, Chat Room) and Helpers are separate tabs; defaults name real personas. Review moves here from Goals.",
+ "sections": {
+  "personas-library-tools": null,
+  "personas-home": {
+   "to": "personas",
+   "title": "Your personas",
+   "help": "Core personas are locked; duplicate one to make your own.",
+   "order": 1,
+   "tab": "personas",
+   "composed": true
+  },
+  "personas-fields": {
+   "to": "personas",
+   "title": "About this persona",
+   "help": "Its name, what it's for, and other names it answers to.",
+   "order": 2,
+   "tab": "personas",
+   "composed": true
+  },
+  "personas-tuning": {
+   "to": "personas",
+   "title": "How it answers",
+   "help": "Style and length of this persona's replies.",
+   "order": 3,
+   "tab": "personas",
+   "composed": true
+  },
+  "personas-model": {
+   "to": "personas",
+   "title": "Model and cost",
+   "help": "Which AI this persona prefers and how much it may spend.",
+   "order": 4,
+   "tab": "personas",
+   "composed": true
+  },
+  "personas-tools": {
+   "to": "personas",
+   "title": "Tools and instructions",
+   "help": "What this persona reads first and which tools it reaches for.",
+   "order": 5,
+   "tab": "personas",
+   "composed": true
+  },
+  "personas-tools-audit": {
+   "to": "personas",
+   "title": "Skipped settings",
+   "help": "Persona settings a model could not follow on recent runs.",
+   "order": 6,
+   "tab": "personas",
+   "advanced": true
+  },
+  "personas-crews": {
+   "to": "personas",
+   "title": "Crews",
+   "help": "Teams of personas that work on one Goal together.",
+   "order": 107,
+   "tab": "crews",
+   "composed": true
+  },
+  "personas-crew-defaults": {
+   "to": "personas",
+   "title": "New crews start with",
+   "help": "Copied into each new crew; change a crew in its own editor.",
+   "order": 108,
+   "tab": "crews"
+  },
+  "personas-crew-auto": {
+   "to": "personas",
+   "title": "Crew Auto",
+   "help": "Let the assistant offer a crew when a request looks big.",
+   "order": 109,
+   "tab": "crews"
+  },
+  "personas-brainstorm": {
+   "to": "personas",
+   "title": "BrainStorm: who takes part",
+   "help": "Who joins, how many questions, how far to research.",
+   "order": 210,
+   "tab": "workflows"
+  },
+  "personas-brainstorm-debate": {
+   "to": "personas",
+   "title": "BrainStorm: debate and vote",
+   "help": "How ideas are compared and decided.",
+   "order": 211,
+   "tab": "workflows"
+  },
+  "personas-review": {
+   "to": "personas",
+   "title": "Review",
+   "help": "Independent reviewers read the work and report.",
+   "order": 212,
+   "tab": "workflows"
+  },
+  "personas-chat-room": {
+   "to": "personas",
+   "title": "Chat Room",
+   "help": "Several personas talking it through with you.",
+   "order": 213,
+   "tab": "workflows"
+  },
+  "personas-helpers": {
+   "to": "personas",
+   "title": "Helper agents",
+   "help": "Smaller agents a persona hands bounded tasks to.",
+   "order": 314,
+   "tab": "helpers"
+  },
+  "personas-helper-picks": {
+   "to": "personas",
+   "title": "Which helpers",
+   "help": "Always include some, never use others, or pick per step.",
+   "order": 315,
+   "tab": "helpers"
+  },
+  "personas-helper-safety": {
+   "to": "personas",
+   "title": "Keeping helpers safe",
+   "help": "Who may write files and how deep delegation goes.",
+   "order": 316,
+   "tab": "helpers"
+  },
+  "personas-agent-limits": {
+   "to": "personas",
+   "title": "Limits for all agents",
+   "help": "Hard caps; the server may allow fewer.",
+   "order": 317,
+   "tab": "helpers",
+   "advanced": true
+  },
+  "personas-helper-tools": {
+   "to": "personas",
+   "title": "Helper contracts",
+   "help": "What an agent may do and what it was asked to deliver.",
+   "order": 318,
+   "tab": "helpers",
+   "advanced": true
+  },
+  "personas-defaults": {
+   "to": "personas",
+   "title": "Choosing a persona",
+   "help": "Who answers when you haven't picked one.",
+   "order": 419,
+   "tab": "defaults"
+  },
+  "personas-chat": {
+   "to": "personas",
+   "title": "In a chat",
+   "help": "The persona of the open chat, and how to switch.",
+   "order": 420,
+   "tab": "defaults",
+   "composed": true
+  },
+  "goals-review": null
+ },
+ "overrides": [
+  {
+   "section": "personas-home",
+   "ids": [
+    "personas.library.persona-manager",
+    "personas.library.core-personas",
+    "personas.library.disabled-bundled"
+   ]
+  },
+  {
+   "section": "personas-fields",
+   "ids": [
+    "personas.library.persona-name",
+    "personas.library.persona-description",
+    "personas.library.persona-aliases",
+    "personas.library.persona-tags",
+    "personas.library.persona-id"
+   ]
+  },
+  {
+   "section": "personas-tuning",
+   "ids": [
+    "personas.tuning.response-style",
+    "personas.tuning.output-format",
+    "personas.tuning.default-mode",
+    "personas.tuning.verbosity",
+    "personas.tuning.talkativeness"
+   ]
+  },
+  {
+   "section": "personas-model",
+   "ids": [
+    "personas.tuning.default-platform",
+    "personas.tuning.default-model",
+    "personas.tuning.default-variant",
+    "personas.tuning.reasoning-effort",
+    "personas.tuning.cost-budget",
+    "personas.tuning.temperature",
+    "personas.tuning.top-p"
+   ]
+  },
+  {
+   "section": "personas-tools",
+   "ids": [
+    "personas.tools.system-prompt",
+    "personas.tools.permission-profile",
+    "personas.tools.tool-posture",
+    "personas.tools.preferred-tools",
+    "personas.tools.discouraged-tools",
+    "personas.tools.tool-guidance",
+    "personas.tools.default-skills",
+    "personas.tools.disabled-plugins"
+   ]
+  },
+  {
+   "section": "personas-tools-audit",
+   "ids": [
+    "personas.tools.skipped-controls-audit"
+   ]
+  },
+  {
+   "section": "personas-crews",
+   "ids": [
+    "branching.crew.crew-enabled"
+   ]
+  },
+  {
+   "section": "personas-crew-defaults",
+   "ids": [
+    "branching.crew.crew-participant-count",
+    "branching.crew.crew-members",
+    "branching.crew.crew-coordinator",
+    "branching.crew.crew-assignment-strategy",
+    "branching.crew.crew-parallelism"
+   ]
+  },
+  {
+   "section": "personas-crew-auto",
+   "ids": [
+    "branching.crew.crew-auto-enabled",
+    "branching.crew.crew-auto-complexity",
+    "branching.crew.crew-auto-max-members",
+    "branching.crew.crew-auto-roster"
+   ]
+  },
+  {
+   "section": "personas-brainstorm",
+   "ids": [
+    "branching.crew.brainstorm-core-participants",
+    "branching.crew.brainstorm-roster",
+    "branching.crew.brainstorm-question-limit",
+    "branching.crew.grill-me-question-extension",
+    "branching.crew.brainstorm-external-research"
+   ]
+  },
+  {
+   "section": "personas-brainstorm-debate",
+   "ids": [
+    "branching.crew.brainstorm-independent-proposals",
+    "branching.crew.brainstorm-debate-rounds",
+    "branching.crew.brainstorm-voting",
+    "branching.crew.brainstorm-preserve-dissent"
+   ]
+  },
+  {
+   "section": "personas-review",
+   "ids": [
+    "planning.verification.review-strategy",
+    "planning.verification.review-reviewer-count",
+    "planning.verification.review-roster",
+    "planning.verification.review-blind-initial-pass",
+    "planning.verification.review-peer-corroboration",
+    "planning.verification.review-preserve-dissent",
+    "planning.verification.review-auto-repair"
+   ]
+  },
+  {
+   "section": "personas-chat-room",
+   "ids": [
+    "branching.crew.chat-room-participant-count",
+    "branching.crew.chat-room-roster",
+    "branching.crew.chat-room-turn-policy",
+    "branching.crew.chat-room-max-rounds"
+   ]
+  },
+  {
+   "section": "personas-helpers",
+   "ids": [
+    "branching.subagents.enable-subagents",
+    "branching.subagents.subagents-mandatory",
+    "branching.subagents.fanout-threshold",
+    "branching.subagents.parallel-subagents",
+    "branching.subagents.max-parallel",
+    "branching.subagents.retry-policy",
+    "general.interaction.subagent-disclosure"
+   ]
+  },
+  {
+   "section": "personas-helper-picks",
+   "ids": [
+    "branching.subagents.required-subagents",
+    "branching.subagents.disabled-subagents",
+    "branching.subagents.per-node-overrides"
+   ]
+  },
+  {
+   "section": "personas-helper-safety",
+   "ids": [
+    "branching.subagents.single-writer-lease",
+    "branching.subagents.write-isolation-mode",
+    "branching.subagents.delegation-depth",
+    "branching.subagents.child-state-isolation",
+    "branching.subagents.external-agent-provenance"
+   ]
+  },
+  {
+   "section": "personas-agent-limits",
+   "ids": [
+    "branching.subagents.input-token-limit",
+    "branching.subagents.provider-concurrency-cap",
+    "branching.subagents.max-total-active-agents",
+    "branching.subagents.max-nesting-depth",
+    "branching.subagents.max-total-spawned",
+    "branching.crew.max-crews-per-platform",
+    "branching.crew.max-agents-per-crew"
+   ]
+  },
+  {
+   "section": "personas-helper-tools",
+   "ids": [
+    "branching.subagents.agent-control-envelope",
+    "branching.subagents.child-agent-lease"
+   ]
+  },
+  {
+   "section": "personas-defaults",
+   "ids": [
+    "personas.library.selection-mode",
+    "personas.library.default-persona",
+    "personas.library.custom-scope",
+    "personas.tools.support-badges"
+   ]
+  },
+  {
+   "section": "personas-chat",
+   "ids": [
+    "personas.library.active-persona",
+    "personas.library.lock-persona",
+    "personas.library.ask-by-name"
+   ]
+  }
+ ],
+ "managers": {
+  "personas": {
+   "tabs": {
+    "personas": "Personas",
+    "crews": "Crews",
+    "workflows": "Group work",
+    "helpers": "Helpers",
+    "defaults": "Defaults"
+   },
+   "defaultTab": "personas"
+  }
+ }
+}

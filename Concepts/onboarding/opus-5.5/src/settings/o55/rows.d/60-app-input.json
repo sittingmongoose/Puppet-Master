@@ -1,0 +1,458 @@
+{
+ "_about": "app-input (App & Input): wording, conditions, units and bounds from the plain-pages audit (2026-09-27). Hand rows (accent, animation-speed, sidebar-labels, startup-view, spellcheck, dictionaries, custom-words) are worded here too.",
+ "rows": {
+  "general.visual.theme": {
+   "label": "Theme",
+   "help": "Pick a look; each one has a dark and a light version."
+  },
+  "general.visual.theme-mode": {
+   "label": "Light or dark",
+   "help": "Switches the chosen theme between its light and dark versions.",
+   "options": {
+    "Auto": "Match my computer"
+   }
+  },
+  "accent": {
+   "label": "Accent color",
+   "help": "The color of selections, focus outlines and progress."
+  },
+  "general.visual.basic-color-scheme": {
+   "label": "Light or dark for Basic (older setting)",
+   "help": "Kept for older projects; Light or dark above now decides.",
+   "options": {
+    "Auto": "Match my computer"
+   },
+   "when": {
+    "id": "general.visual.theme",
+    "in": [
+     "Basic Dark",
+     "Basic Light"
+    ]
+   }
+  },
+  "general.visual.theme-preview": {
+   "label": "Preview a theme before switching",
+   "help": "Try a look while browsing; it snaps back unless you apply it."
+  },
+  "general.visual.glass-background-mode": {
+   "label": "Glass background",
+   "help": "What shows behind the see-through panels.",
+   "options": {
+    "Mesh": "Drifting colors",
+    "Depth": "Floating shapes",
+    "Minimal": "Plain"
+   },
+   "when": {
+    "id": "general.visual.theme",
+    "in": [
+     "Glass Dark",
+     "Glass Light"
+    ]
+   }
+  },
+  "general.visual.glass-transparency": {
+   "label": "How see-through panels are",
+   "help": "Text always stays readable, whatever you choose.",
+   "when": {
+    "id": "general.visual.theme",
+    "in": [
+     "Glass Dark",
+     "Glass Light"
+    ]
+   }
+  },
+  "general.visual.retro-effects": {
+   "label": "Retro textures",
+   "help": "Pixel grid, paper and scanline overlays on Retro themes.",
+   "when": {
+    "id": "general.visual.theme",
+    "in": [
+     "Retro Dark",
+     "Retro Light"
+    ]
+   }
+  },
+  "general.visual.app-font": {
+   "label": "App font",
+   "help": "Changing it restarts the app.",
+   "options": {
+    "System Fonts": "My computer's fonts",
+    "Orbitron + Rajdhani (Retro)": "Retro display fonts"
+   }
+  },
+  "general.visual.ui-scale": {
+   "label": "Size of everything",
+   "help": "Makes the whole app bigger or smaller.",
+   "unit": "%",
+   "min": 50,
+   "max": 200,
+   "step": 10
+  },
+  "general.visual.font-size": {
+   "label": "Text size",
+   "help": "Base size of text in the app; code has its own size.",
+   "unit": "px",
+   "min": 10,
+   "max": 24
+  },
+  "general.visual.interface-density": {
+   "label": "Spacing",
+   "help": "Automatic adapts to the size of your window.",
+   "options": {
+    "Auto": "Automatic",
+    "Comfortable": "Roomy"
+   }
+  },
+  "general.visual.line-height": {
+   "label": "Line spacing",
+   "help": "Space between lines of text.",
+   "min": 1,
+   "max": 2,
+   "step": 0.05
+  },
+  "general.visual.reduce-animations": {
+   "label": "Reduce motion",
+   "help": "Stops decorative movement; everything still works the same."
+  },
+  "animation-speed": {
+   "label": "Animation speed",
+   "help": "How quickly panels and pages move.",
+   "when": {
+    "id": "general.visual.reduce-animations",
+    "not": true
+   }
+  },
+  "general.visual.high-contrast": {
+   "label": "High contrast",
+   "help": "Stronger colors and edges, for the Basic theme.",
+   "when": {
+    "id": "general.visual.theme",
+    "in": [
+     "Basic Dark",
+     "Basic Light"
+    ]
+   }
+  },
+  "general.visual.focus-indicator": {
+   "label": "Keyboard focus outline",
+   "help": "How the outline around the focused control looks.",
+   "options": {
+    "Color-blind safe": "Color-blind friendly"
+   }
+  },
+  "general.visual.chat-layout-mode": {
+   "label": "Where the chat sits",
+   "help": "Only the chat; other panels have their own choice.",
+   "options": {
+    "Docked": "On the right edge",
+    "Overlay": "Slides over my work",
+    "Detached": "In its own window"
+   }
+  },
+  "general.visual.manage-custom-themes": {
+   "actionLabel": "Manage your themes",
+   "flow": {
+    "kind": "list",
+    "icon": "image",
+    "listTitle": "Your themes",
+    "empty": "No themes of your own yet. The eight built-in looks are under Appearance.",
+    "items": [
+     {
+      "label": "Tastebook Night",
+      "help": "Based on Glass Dark · made by you",
+      "value": "Your theme",
+      "action": "Use it",
+      "doneTitle": "Theme applied",
+      "remove": true
+     },
+     {
+      "label": "High contrast warm",
+      "help": "Imported from a file · 1 problem skipped",
+      "value": "Imported",
+      "action": "Use it",
+      "doneTitle": "Theme applied",
+      "remove": true
+     }
+    ],
+    "add": {
+     "title": "Add a theme",
+     "label": "Add theme",
+     "labelKey": "name",
+     "helpKeys": [
+      "base"
+     ],
+     "item": {
+      "value": "Your theme",
+      "action": "Use it",
+      "doneTitle": "Theme applied",
+      "remove": true
+     },
+     "fields": [
+      {
+       "key": "name",
+       "label": "Name",
+       "placeholder": "e.g. Soft paper",
+       "required": true
+      },
+      {
+       "key": "base",
+       "label": "Start from",
+       "type": "select",
+       "options": [
+        "Friendly Light",
+        "Friendly Dark",
+        "Glass Light",
+        "Glass Dark",
+        "Retro Light",
+        "Retro Dark",
+        "Basic Light",
+        "Basic Dark",
+        "A theme file"
+       ]
+      }
+     ]
+    }
+   },
+   "label": "Your own themes",
+   "help": "Create, import or export your own theme files."
+  },
+  "general.visual.custom-theme-base": {
+   "label": "Start custom themes from",
+   "help": "Colors you leave out come from this theme."
+  },
+  "general.visual.pixel-grid-opacity": {
+   "label": "Retro pixel grid strength",
+   "help": "Zero hides the grid.",
+   "min": 0,
+   "max": 0.3,
+   "step": 0.01,
+   "when": {
+    "id": "general.visual.retro-effects",
+    "truthy": true
+   }
+  },
+  "general.visual.scanline-opacity": {
+   "label": "Retro scanline strength",
+   "help": "Zero hides the scanlines.",
+   "min": 0,
+   "max": 0.3,
+   "step": 0.01,
+   "when": {
+    "id": "general.visual.retro-effects",
+    "truthy": true
+   }
+  },
+  "general.visual.padding-scale": {
+   "label": "Extra padding",
+   "help": "Fine-tunes space inside panels, on top of Spacing.",
+   "min": 0.75,
+   "max": 1.5,
+   "step": 0.05
+  },
+  "general.visual.border-width": {
+   "label": "Border width",
+   "unit": "px",
+   "min": 0,
+   "max": 4
+  },
+  "general.visual.border-radius": {
+   "label": "Corner roundness",
+   "unit": "px",
+   "min": 0,
+   "max": 16
+  },
+  "general.visual.scrollbar-width": {
+   "label": "Scrollbar width",
+   "unit": "px",
+   "min": 4,
+   "max": 20
+  },
+  "general.interaction.submit-key": {
+   "label": "Key that sends a message",
+   "help": "Ctrl+Enter avoids sending a half-typed message."
+  },
+  "general.interaction.queue-behavior": {
+   "label": "If I send while it is busy",
+   "help": "Steer changes course now; Wait holds your message.",
+   "options": {
+    "Steer": "Steer it now",
+    "Queue": "Wait for the current step"
+   }
+  },
+  "general.interaction.queue-size": {
+   "label": "Messages that can wait",
+   "help": "When the line is full, new messages must wait.",
+   "unit": "messages",
+   "min": 1,
+   "max": 10,
+   "when": {
+    "id": "general.interaction.queue-behavior",
+    "in": [
+     "Queue"
+    ]
+   }
+  },
+  "general.interaction.edit-resend": {
+   "label": "Edit and resend my last message"
+  },
+  "general.interaction.composer-persist-unsent": {
+   "label": "Keep what I was typing",
+   "help": "Unsent text stays in each chat when you switch or close."
+  },
+  "general.interaction.assistant-mode": {
+   "label": "New chats start in",
+   "help": "Ask only answers, Agent makes changes, Plan thinks first. What Agent may do is set in Permissions."
+  },
+  "general.interaction.natural-language-modes": {
+   "label": "Change modes by asking",
+   "help": "Say \"use plan mode\" to switch in the middle of a chat."
+  },
+  "general.interaction.question-cards": {
+   "label": "Ask me questions as cards",
+   "help": "Choices and a text box instead of a wall of text."
+  },
+  "general.interaction.question-drafts": {
+   "label": "Keep half-written answers",
+   "help": "Closing a question card never loses what you typed."
+  },
+  "planning.interview.todo-auto-use": {
+   "label": "Keep a checklist for big tasks",
+   "help": "Multi-step work gets its own checklist so no step is missed."
+  },
+  "general.interaction.auto-follow": {
+   "label": "Scroll with new messages"
+  },
+  "general.interaction.unread-marker": {
+   "label": "Mark where I stopped reading"
+  },
+  "general.interaction.working-activity-style": {
+   "label": "How work in progress looks",
+   "options": {
+    "Orbit": "Orbit (animated)",
+    "Step Rail Simple": "Step rail (simpler)"
+   }
+  },
+  "general.interaction.activity-cards": {
+   "label": "Show what the assistant does",
+   "help": "Cards for commands, web searches and file edits."
+  },
+  "general.interaction.file-discovery-cards": {
+   "label": "Show when it reads files",
+   "help": "Safety and approval messages always show."
+  },
+  "general.interaction.copy-code-button": {
+   "label": "Copy button on code"
+  },
+  "general.interaction.mermaid": {
+   "label": "Draw diagrams",
+   "help": "Diagram code in chat shows as a picture."
+  },
+  "general.interaction.inline-visualizers": {
+   "label": "Interactive charts and previews",
+   "help": "Small sandboxed widgets that can't touch your files."
+  },
+  "general.interaction.mode": {
+   "label": "How the app talks to me",
+   "help": "Plain English hides jargon and rarely used controls.",
+   "options": {
+    "ELI5": "Plain English",
+    "Expert": "Expert"
+   }
+  },
+  "general.interaction.eli5-default": {
+   "label": "Explain technical terms in chats",
+   "help": "On for every new chat; a chat's own switch wins."
+  },
+  "general.interaction.chat-eli5": {
+   "label": "Explain terms in the chat I have open",
+   "help": "Only that chat; its menu has the same switch."
+  },
+  "general.interaction.show-tooltips": {
+   "label": "Show hints when I hover"
+  },
+  "general.interaction.explain-disabled": {
+   "label": "Explain grayed-out controls right away"
+  },
+  "general.interaction.scope-labels": {
+   "label": "Show where each setting comes from"
+  },
+  "general.interaction.rediscoverability": {
+   "label": "Keep hidden features findable",
+   "help": "Hidden features still appear in search and commands."
+  },
+  "general.interaction.minimize-to-tray": {
+   "label": "Keep running when I close the window",
+   "help": "It hides in the system tray so work keeps going."
+  },
+  "general.interaction.dashboard-widgets": {
+   "label": "Dashboard widgets",
+   "help": "Opens the dashboard's widget picker on Home.",
+   "control": "action",
+   "actionLabel": "Choose widgets",
+   "icon": "layers",
+   "pm51": "pm51-o55-dash-widgets"
+  },
+  "general.interaction.panel-dock": {
+   "label": "Other side panels",
+   "help": "Files, source control and the rest, but not the chat.",
+   "options": {
+    "Docked": "Docked to an edge",
+    "Floating": "Floating windows"
+   }
+  },
+  "general.interaction.activity-bar-order": {
+   "label": "Order of the icons on the left"
+  },
+  "sidebar-labels": {
+   "label": "Show names next to those icons"
+  },
+  "startup-view": {
+   "label": "First screen when Puppet Master opens",
+   "help": "The page you land on; the side panel is chosen below."
+  },
+  "general.startup.restore-panel": {
+   "label": "Side panel when a project opens",
+   "options": {
+    "Last used": "The one I used last"
+   }
+  },
+  "general.startup.window-state": {
+   "label": "Remember window size and layout",
+   "help": "Size, position, panel widths and splits come back as you left them."
+  },
+  "general.startup.crash-restore": {
+   "label": "Bring my work back after a crash"
+  },
+  "general.startup.unsaved-capture": {
+   "label": "Protect unsaved changes",
+   "help": "Keeps copies of unsaved edits so a crash can't lose them."
+  },
+  "spellcheck": {
+   "label": "Check spelling",
+   "help": "In chat and notes; code is never marked."
+  },
+  "dictionaries": {
+   "label": "Languages to check"
+  },
+  "custom-words": {
+   "label": "Words to always accept",
+   "help": "Names and terms the spell checker should not flag.",
+   "noun": "word",
+   "nouns": "words",
+   "empty": "No words yet"
+  },
+  "general.interaction.settings-search": {
+   "actionLabel": "Search settings",
+   "pm51": "pm51-o55-focus-search",
+   "label": "Search all settings",
+   "help": "Takes you to the search box at the top of Settings."
+  },
+  "general.startup.reset-home-layout": {
+   "actionLabel": "Reset Home layout",
+   "pm51": "pm51-o55-home-reset",
+   "message": "Home panels, docks, the terminal position and floating windows go back to the default. Open files, terminal sessions, the browser, dashboard widgets and chats are kept.",
+   "label": "Reset the layout",
+   "help": "Puts panels back; open files, terminals and chats stay."
+  }
+ }
+}

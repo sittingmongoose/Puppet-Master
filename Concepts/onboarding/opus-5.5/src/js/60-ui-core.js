@@ -61,7 +61,11 @@
   function layoutClass() {
     const w = S.root.querySelector('.o55-win'); if (!w) return;
     const r = w.getBoundingClientRect();
-    S.root.setAttribute('data-o55-layout', r.width < 760 ? 'narrow' : r.height < 520 ? 'short' : 'wide');
+    const layout = r.width < 760 ? 'narrow' : r.height < 520 ? 'short' : 'wide';
+    S.root.setAttribute('data-o55-layout', layout);
+    /* mirrored on <html> for the demo pill: an html:has(#pm-o55-onboarding[…]) rule made every DOM insertion in the
+       app restyle the whole document (~90 ms each), which is what made Settings scrolling and navigation lag */
+    document.documentElement.setAttribute('data-o55-ob-layout', layout);
   }
 
   /* ---------------------------------------------------------------- theme */

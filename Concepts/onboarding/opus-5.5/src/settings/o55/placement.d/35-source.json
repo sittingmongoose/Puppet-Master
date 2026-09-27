@@ -1,0 +1,199 @@
+{
+ "_about": "Source Control: GitHub sign-in lives inside GitHub; new-repository and contribution fields are guided set-ups; the safety level decides the switches it covers; pins are the Pinned workflows row; one main-branch name and one workspace folder are used everywhere.",
+ "sections": {
+  "source-github": null,
+  "source-github-auth": {
+   "to": "source-manager",
+   "title": "GitHub sign-in",
+   "help": "Shown inside the GitHub service.",
+   "order": 1,
+   "tab": "services",
+   "composed": true
+  },
+  "source-new-repo": {
+   "to": "source-manager",
+   "title": "Create a new repository",
+   "help": "Used when a new project gets its own online repository.",
+   "order": 202,
+   "tab": "repos",
+   "composed": true
+  },
+  "source-contribute": {
+   "to": "source-manager",
+   "title": "Contribute to another project",
+   "help": "Work on someone else's project through your own copy.",
+   "order": 203,
+   "tab": "repos",
+   "composed": true
+  },
+  "source-chat-workspaces": {
+   "to": "source-manager",
+   "title": "Workspaces for chats",
+   "help": "Give each chat its own copy so experiments stay apart.",
+   "order": 204,
+   "tab": "repos"
+  },
+  "source-worktrees": {
+   "to": "source-manager",
+   "title": "Before and after each run",
+   "help": "Clearing leftovers so runs start clean.",
+   "order": 205,
+   "tab": "repos"
+  },
+  "source-worktree-tools": {
+   "to": "source-manager",
+   "title": "Workspace storage",
+   "help": "Where workspaces live and when to warn about them.",
+   "order": 206,
+   "tab": "repos",
+   "advanced": true
+  },
+  "source-branches": {
+   "to": "source-manager",
+   "title": "How runs use version history",
+   "help": "Branches, merging and pushing for work the assistant does.",
+   "order": 307,
+   "tab": "defaults"
+  },
+  "source-safety": {
+   "to": "source-manager",
+   "title": "Safety",
+   "help": "Guard rails for the assistant and for you.",
+   "order": 308,
+   "tab": "defaults",
+   "composed": true
+  },
+  "source-recovery": {
+   "to": "source-manager",
+   "title": "Recovery",
+   "help": "Undo, recovery points and guided fixes.",
+   "order": 309,
+   "tab": "defaults",
+   "composed": true
+  },
+  "source-panel": {
+   "to": "source-manager",
+   "title": "Source Control panel",
+   "help": "What the side panel shows.",
+   "order": 310,
+   "tab": "defaults",
+   "advanced": true
+  },
+  "source-actions-pins": {
+   "to": "source-manager",
+   "title": "Pinned workflows",
+   "help": "Pin a workflow to watch it from inside the app.",
+   "order": 411,
+   "tab": "actions",
+   "composed": true
+  },
+  "source-actions": {
+   "to": "source-manager",
+   "title": "Keeping checks current",
+   "help": "Refreshing check results, and a starter test workflow.",
+   "order": 412,
+   "tab": "actions"
+  }
+ },
+ "overrides": [
+  {
+   "section": "source-github-auth",
+   "ids": [
+    "ai.accounts.github-connect",
+    "ai.accounts.github-token",
+    "ai.accounts.github-host-policy",
+    "ai.accounts.github-oauth-loopback"
+   ]
+  },
+  {
+   "section": "source-new-repo",
+   "ids": [
+    "branching.worktrees.create-github-repo",
+    "branching.worktrees.new-repo-details"
+   ]
+  },
+  {
+   "section": "source-contribute",
+   "ids": [
+    "branching.worktrees.upstream-repo",
+    "branching.worktrees.create-fork",
+    "branching.worktrees.fork-location",
+    "branching.worktrees.feature-branch-name"
+   ]
+  },
+  {
+   "section": "source-chat-workspaces",
+   "ids": [
+    "branching.worktrees.auto-worktree-new-threads",
+    "branching.worktrees.assistant-worktree-base",
+    "branching.worktrees.file-manager-follows",
+    "branching.worktrees.worktree-cleanup",
+    "branching.worktrees.thread-worktree-binding"
+   ]
+  },
+  {
+   "section": "source-worktrees",
+   "ids": [
+    "branching.worktrees.clean-untracked-before-run",
+    "branching.worktrees.clear-agent-output",
+    "branching.worktrees.clean-ignored-files",
+    "branching.worktrees.remove-build-artifacts",
+    "branching.worktrees.clean-workspace-now"
+   ]
+  },
+  {
+   "section": "source-worktree-tools",
+   "ids": [
+    "branching.worktrees.worktree-base-dir",
+    "branching.worktrees.worktree-count-warning",
+    "branching.worktrees.worktree-creation-timeout",
+    "branching.worktrees.clean-all-worktrees"
+   ]
+  },
+  {
+   "section": "source-branches",
+   "ids": [
+    "branching.worktrees.enable-git",
+    "branching.worktrees.default-branch",
+    "branching.worktrees.branch-strategy",
+    "branching.worktrees.branch-naming-pattern",
+    "branching.worktrees.merge-strategy",
+    "branching.worktrees.push-behavior",
+    "branching.worktrees.auto-pr"
+   ]
+  },
+  {
+   "section": "source-safety",
+   "ids": [
+    "branching.worktrees.git-policy-preset",
+    "branching.worktrees.force-push-policy"
+   ]
+  },
+  {
+   "section": "source-recovery",
+   "ids": [
+    "branching.worktrees.recovery-tools"
+   ]
+  },
+  {
+   "section": "source-panel",
+   "ids": [
+    "branching.worktrees.source-control-sections",
+    "branching.worktrees.worktree-filter"
+   ]
+  },
+  {
+   "section": "source-actions-pins",
+   "ids": [
+    "branching.worktrees.github-pinned-workflows"
+   ]
+  },
+  {
+   "section": "source-actions",
+   "ids": [
+    "branching.worktrees.github-actions-auto-refresh",
+    "planning.testing.github-actions-template"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,99 @@
+{
+ "_about": "Notifications & Sounds: the master switch on every tab; the lists are the homes of the stored destinations, routes and sound assignments; the in-app style and tray choice live in those destinations; which alerts reach you sits under the event list.",
+ "managers": {
+  "notifications": {
+   "tabs": {
+    "destinations": "Destinations",
+    "events": "Events",
+    "sounds": "Sounds",
+    "quiet": "Quiet hours",
+    "history": "History"
+   },
+   "defaultTab": "destinations"
+  }
+ },
+ "sections": {
+  "notif-sound-map": null,
+  "notif-quiet-window": null,
+  "notif-master": {
+   "to": "notifications",
+   "tab": "destinations",
+   "title": "Notifications",
+   "help": "The master switch for every alert.",
+   "order": 5,
+   "composed": true
+  },
+  "notif-destination-list": {
+   "to": "notifications",
+   "tab": "destinations",
+   "title": "Destinations",
+   "help": "Places an alert can arrive. Each one has its own options.",
+   "order": 30,
+   "advanced": false,
+   "composed": true
+  },
+  "notif-routing": {
+   "to": "notifications",
+   "tab": "events",
+   "title": "Events",
+   "help": "Turn each alert on or off and pick where it goes.",
+   "order": 20,
+   "advanced": false,
+   "composed": true
+  },
+  "notif-alerts": {
+   "to": "notifications",
+   "tab": "events",
+   "title": "Which alerts reach you",
+   "help": "How serious an alert must be, how long a warning keeps repeating, and how you dismiss one.",
+   "order": 25
+  },
+  "notif-sound-defaults": {
+   "to": "notifications",
+   "tab": "sounds",
+   "title": "Sounds",
+   "help": "Whether sounds play, the library, and which sound each alert uses.",
+   "order": 40,
+   "composed": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "notif-master",
+   "ids": [
+    "general.interaction.notifications-enabled"
+   ]
+  },
+  {
+   "section": "notif-destination-list",
+   "ids": [
+    "general.interaction.notification-destinations",
+    "general.interaction.notification-method",
+    "general.interaction.tray-notifications"
+   ]
+  },
+  {
+   "section": "notif-routing",
+   "ids": [
+    "general.interaction.notification-mapping"
+   ]
+  },
+  {
+   "section": "notif-alerts",
+   "ids": [
+    "general.interaction.notification-severity",
+    "general.interaction.alert-quiet-window",
+    "general.interaction.dismissal-rationale"
+   ]
+  },
+  {
+   "section": "notif-sound-defaults",
+   "ids": [
+    "general.interaction.sound-effects",
+    "general.interaction.sound-catalog",
+    "general.interaction.sound-management",
+    "general.interaction.sound-mapping"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,97 @@
+{
+ "_about": "Inventory actions that used to open a generic panel: each now routes to the page that does it, or runs a small flow (kit.d/65-flows.js).",
+ "rows": {
+  "branching.subagents.agent-control-envelope": {
+   "actionLabel": "See the rules helpers get",
+   "flow": {
+    "kind": "list",
+    "icon": "lock",
+    "listTitle": "Every helper starts with",
+    "intro": "Frozen before its first call; a helper can never loosen it.",
+    "items": [
+     {
+      "label": "How freely it may act",
+      "help": "Same as the chat that started it, or stricter",
+      "value": "Regular"
+     },
+     {
+      "label": "What it may write",
+      "help": "Only its own workspace",
+      "value": "Workspace only"
+     },
+     {
+      "label": "Models",
+      "help": "The helper model in Models, with its fallbacks",
+      "value": "Claude Sonnet"
+     },
+     {
+      "label": "Tools",
+      "help": "Everything the parent has, minus web writes",
+      "value": "24 tools"
+     },
+     {
+      "label": "Budget",
+      "help": "Stops when it has used this much",
+      "value": "$2.00 per helper"
+     }
+    ]
+   }
+  },
+  "personas.tools.skipped-controls-audit": {
+   "actionLabel": "See skipped persona settings",
+   "flow": {
+    "kind": "list",
+    "icon": "user",
+    "listTitle": "Recent runs",
+    "intro": "Persona settings a model could not follow, so nothing is silently ignored.",
+    "items": [
+     {
+      "label": "Frontend Craft · temperature 1.1",
+      "help": "Codex coding model ignores temperature · today",
+      "value": "Skipped"
+     },
+     {
+      "label": "Research Lead · web search on",
+      "help": "Kimi Code has no web search here · yesterday",
+      "value": "Skipped"
+     },
+     {
+      "label": "Test Engineer · 8,000-token replies",
+      "help": "Capped at 4,096 by the model · Monday",
+      "value": "Capped"
+     }
+    ]
+   }
+  },
+  "safety.approvals.debug-profile-disclosure": {
+   "actionLabel": "Show debug permissions",
+   "flow": {
+    "kind": "list",
+    "icon": "shield",
+    "listTitle": "Debug automation is active until 3:00 PM",
+    "items": [
+     {
+      "label": "Restart the app under test",
+      "help": "Allowed without asking",
+      "value": "Until 3:00 PM"
+     },
+     {
+      "label": "Attach a debugger",
+      "help": "Allowed without asking",
+      "value": "Until 3:00 PM"
+     },
+     {
+      "label": "Change files",
+      "help": "Still asks you each time",
+      "value": "Asks"
+     },
+     {
+      "label": "Reach the network",
+      "help": "Blocked while debugging",
+      "value": "Blocked"
+     }
+    ]
+   }
+  }
+ }
+}

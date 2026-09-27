@@ -1,0 +1,349 @@
+{
+ "_about": "Context & Memory rows (settings audit, 2026-09-27).",
+ "rows": {
+  "memory.retention.enabled": {
+   "label": "Remember things between chats",
+   "help": "Off gives the assistant a clean slate every time."
+  },
+  "memory.retention.gist-review-filter": {
+   "label": "Show",
+   "options": {
+    "Unverified": "Unconfirmed",
+    "Verified": "Confirmed",
+    "Pinned": "Pinned",
+    "All": "All memories"
+   },
+   "help": "Which memories the list shows when you open it."
+  },
+  "general.interaction.context-usage": {
+   "label": "Show this gauge in chat",
+   "help": "A small meter in chat shows how full the space is."
+  },
+  "memory.limits.manual-compact": {
+   "label": "Squeeze now",
+   "help": "Summarizes old context in the open chat right away.",
+   "pm51": "pm51-memory-squeeze",
+   "actionLabel": "Squeeze now",
+   "icon": "bolt"
+  },
+  "memory.limits.auto-compress": {
+   "label": "Squeeze old context automatically",
+   "help": "Summarizes stale context so long runs don't stop."
+  },
+  "memory.limits.compaction-mode": {
+   "label": "When automatic squeezing is off",
+   "help": "What happens once the space is full.",
+   "options": {
+    "manual": "Wait for me",
+    "disabled": "Never; the run stops"
+   },
+   "when": {
+    "id": "memory.limits.auto-compress",
+    "in": [
+     "false",
+     "off"
+    ]
+   },
+   "choices": [
+    "manual",
+    "disabled"
+   ]
+  },
+  "memory.limits.pressure-start-threshold": {
+   "label": "Start trimming at",
+   "help": "A warning shows and gentle trimming begins.",
+   "unit": "% full",
+   "min": 1,
+   "max": 99,
+   "step": 1
+  },
+  "memory.limits.pressure-aggressive-threshold": {
+   "label": "Trim hard at",
+   "help": "Past this point old context is squeezed firmly.",
+   "unit": "% full",
+   "min": 1,
+   "max": 99,
+   "step": 1
+  },
+  "memory.limits.low-context-warning": {
+   "label": "Warn me when this much is left",
+   "help": "Time to wrap up, or to squeeze.",
+   "unit": "% left",
+   "min": 1,
+   "max": 99,
+   "step": 1
+  },
+  "memory.limits.max-context-ktokens": {
+   "label": "Largest working space",
+   "help": "In thousands of tokens; capped to what the model allows.",
+   "unit": "thousand tokens",
+   "min": 1,
+   "placeholder": "As large as the model allows"
+  },
+  "memory.limits.budget-buckets": {
+   "label": "How the space is split",
+   "help": "Shares for protected text, history, reply, tools and spare.",
+   "editor": "pm51-memory-split",
+   "noun": "share",
+   "nouns": "shares",
+   "keys": {
+    "immune": "Protected",
+    "history": "Earlier conversation",
+    "current_turn": "This reply",
+    "tool_results": "Tool results",
+    "contingency": "Spare"
+   },
+   "valueUnit": "%"
+  },
+  "memory.limits.compaction-immune-pct": {
+   "label": "Never squeeze this share",
+   "help": "The same share as Protected in How the space is split.",
+   "unit": "%",
+   "min": 0,
+   "max": 90,
+   "step": 1
+  },
+  "memory.limits.large-block-threshold": {
+   "label": "Trim chunks bigger than",
+   "help": "Big chunks, in tokens, are trimmed first.",
+   "unit": "tokens",
+   "min": 100,
+   "step": 100
+  },
+  "memory.limits.compaction-loop-limit": {
+   "label": "Squeezes in a row, at most",
+   "help": "One pass is almost always enough.",
+   "min": 1,
+   "max": 5,
+   "step": 1,
+   "unit": "times"
+  },
+  "memory.limits.local-llm-caps": {
+   "label": "Keep small helper models small",
+   "help": "Helper and memory models never get the full history."
+  },
+  "memory.notebook.auto-capture": {
+   "label": "Keep a working notebook",
+   "help": "Saves findings and dead ends during long tasks."
+  },
+  "memory.notebook.resume-capsule": {
+   "label": "Add a short recap when work resumes",
+   "help": "A brief 'where we were' note after a fresh start.",
+   "when": {
+    "id": "memory.notebook.auto-capture",
+    "truthy": true
+   }
+  },
+  "memory.notebook.capsule-budget-tokens": {
+   "label": "Recap size limit",
+   "help": "Most tokens the recap may use.",
+   "unit": "tokens",
+   "min": 64,
+   "step": 64,
+   "when": {
+    "id": "memory.notebook.resume-capsule",
+    "truthy": true
+   }
+  },
+  "memory.notebook.injection-budget-tokens": {
+   "label": "Notebook space per reply",
+   "help": "Most tokens of notebook text added to one reply.",
+   "unit": "tokens",
+   "min": 64,
+   "step": 64,
+   "when": {
+    "id": "memory.notebook.auto-capture",
+    "truthy": true
+   }
+  },
+  "memory.assembly.app-rules": {
+   "label": "Rules for every project",
+   "help": "Standing instructions every run reads, everywhere.",
+   "placeholder": "Starts from your AGENTS.md",
+   "editor": "pm51-memory-rules"
+  },
+  "memory.assembly.project-rules": {
+   "label": "Rules for this project",
+   "help": "Saved with the code in .puppet-master/project-rules.md.",
+   "placeholder": "Nothing yet",
+   "editor": "pm51-memory-rules"
+  },
+  "memory.assembly.instruction-budget-mode": {
+   "label": "How instructions are packed",
+   "options": {
+    "full": "Whole, every time",
+    "bounded": "Whole, within a size limit",
+    "excerpt": "Only the parts that fit the task"
+   },
+   "help": "Whether rules go in whole, within a size limit, or only the parts that fit the task."
+  },
+  "memory.assembly.dry-method-guard": {
+   "label": "Reuse code before writing new code",
+   "help": "A nudge only; safety rules always apply."
+  },
+  "memory.assembly.instruction-visibility": {
+   "label": "Show instructions with each run",
+   "options": {
+    "hidden": "Hidden",
+    "summary": "A short summary",
+    "full": "In full"
+   },
+   "help": "How much of the rules a run was given you see next to it."
+  },
+  "memory.assembly.rule-pack-display": {
+   "label": "Show",
+   "options": {
+    "active": "Loaded rule packs",
+    "all": "All rule packs",
+    "disabled-hidden": "All except switched off"
+   }
+  },
+  "memory.assembly.injected-context-breakdown": {
+   "label": "List what was packed into each run",
+   "help": "Every file and note given to a run, with its size."
+  },
+  "memory.assembly.compiled-prompt-preview": {
+   "label": "Let me preview the full prompt",
+   "help": "Lets you read the whole prompt before it is sent."
+  },
+  "memory.assembly.integrity-tracking": {
+   "label": "Record where each instruction came from",
+   "help": "Each instruction keeps a note of the file it came from."
+  },
+  "memory.assembly.max-injected-memories": {
+   "label": "Memories per reply, at most",
+   "help": "Only confirmed notes count.",
+   "unit": "memories",
+   "min": 1,
+   "max": 50,
+   "step": 1
+  },
+  "memory.assembly.memory-capsule-budget": {
+   "label": "Memory space per reply",
+   "help": "Most tokens of memory added before each reply.",
+   "unit": "tokens",
+   "min": 50,
+   "step": 50
+  },
+  "memory.retention.retrieval-mode": {
+   "label": "Bring memories in",
+   "options": {
+    "automatic": "Automatically",
+    "manual": "Only when I ask",
+    "hybrid": "Automatically, and when I ask"
+   },
+   "help": "Automatically fits most chats. Only when I ask keeps replies free of memories unless you say so."
+  },
+  "memory.retention.rehydration": {
+   "label": "When a chat starts, reload what it knew",
+   "options": {
+    "eager": "Right away",
+    "lazy": "When it is needed",
+    "manual": "Only when I ask",
+    "off": "Never"
+   },
+   "help": "What a new chat loads from the last one."
+  },
+  "memory.retention.retrieval-strategy": {
+   "label": "Match memories by",
+   "options": {
+    "semantic": "Meaning",
+    "recency": "Most recent first",
+    "hybrid": "Meaning and recency"
+   }
+  },
+  "memory.retention.retrieval-balance": {
+   "label": "Exact words or meaning",
+   "help": "0 leans on exact words, 100 on meaning.",
+   "when": {
+    "id": "memory.retention.retrieval-strategy",
+    "not": "recency"
+   },
+   "scale": 0.01,
+   "unit": "% meaning",
+   "min": 0,
+   "max": 100,
+   "step": 5,
+   "control": "number"
+  },
+  "memory.limits.memory-context-window": {
+   "label": "How far back to look",
+   "options": {
+    "short": "Recent days",
+    "standard": "Recent weeks",
+    "extended": "Everything kept"
+   }
+  },
+  "memory.retention.half-life-by-kind": {
+   "label": "Fade time for each kind of note",
+   "help": "Days until an unused note of that kind fades.",
+   "pair": [
+    "Kind of note",
+    "Fades after (days)"
+   ],
+   "noun": "kind",
+   "editorHelp": "CurrentThread is what this chat is working on, Blocker is something stopping progress, Constraint is a rule the work must follow. An unused note of that kind fades after this many days.",
+   "keys": {
+    "CurrentThread": "This chat's work",
+    "Blocker": "Blockers",
+    "Constraint": "Rules the work follows"
+   },
+   "valueUnit": "days"
+  },
+  "memory.retention.done-decay-multiplier": {
+   "label": "Notes about finished work fade faster",
+   "help": "50% means notes about finished work last half as long.",
+   "scale": 0.01,
+   "unit": "% of the usual time",
+   "min": 5,
+   "max": 100,
+   "step": 5,
+   "control": "number"
+  },
+  "memory.retention.auto-save-unverified": {
+   "label": "Keep unconfirmed notes",
+   "help": "Notes the assistant proposes wait for someone to check them. Off drops them when the run ends."
+  },
+  "memory.retention.pinned-unverified-injection": {
+   "label": "Use pinned notes even if unconfirmed",
+   "help": "Off leaves a pinned note out of replies until someone confirms it."
+  },
+  "memory.retention.verify-without-evidence": {
+   "label": "Let me confirm notes myself",
+   "help": "Off keeps the automatic re-check, the safer choice."
+  },
+  "memory.retention.subagent-access": {
+   "label": "Helper agents can read memories",
+   "help": "Off keeps helpers free of your history."
+  },
+  "memory.retention.maintenance": {
+   "label": "Tidy up memories",
+   "pm51": "pm51-memory-tidy",
+   "actionLabel": "Tidy up memories",
+   "icon": "wand"
+  },
+  "memory.retention.history-retention": {
+   "label": "Chat history",
+   "options": {
+    "none": "Off",
+    "recent": "Recent chats",
+    "full": "All chats",
+    "custom": "Custom window"
+   },
+   "choices": [
+    "none",
+    "recent",
+    "full"
+   ]
+  },
+  "memory.limits.tool-result-policy": {
+   "label": "What tool results keep",
+   "options": {
+    "full": "Everything",
+    "summarize": "A summary",
+    "meta_only": "Only what ran and how it ended",
+    "exclude": "Nothing"
+   }
+  }
+ }
+}

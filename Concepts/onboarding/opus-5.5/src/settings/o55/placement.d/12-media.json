@@ -1,0 +1,113 @@
+{
+ "_about": "Media & Output: two tabs. Abilities draws the project switches above the list and, inside each ability, its switch, its service and the inventory rows that are its defaults (the manager's own copies of quality, voice, format, retention and folders are gone). Pictures & files holds what the assistant takes in and where results go.",
+ "managers": {
+  "media": {
+   "tabs": {
+    "abilities": "Abilities",
+    "files": "Pictures & files"
+   },
+   "defaultTab": "abilities"
+  }
+ },
+ "sections": {
+  "media-services": null,
+  "media-generation": null,
+  "media-switches": {
+   "to": "media",
+   "tab": "abilities",
+   "title": "For the whole project",
+   "help": "Whether the assistant may hand back files and make media.",
+   "order": 1,
+   "composed": true
+  },
+  "media-abilities": {
+   "to": "media",
+   "tab": "abilities",
+   "title": "Media abilities",
+   "help": "Pick an ability to choose its service and its defaults.",
+   "order": 2,
+   "composed": true
+  },
+  "media-io": {
+   "to": "media",
+   "tab": "files",
+   "title": "Pictures you share",
+   "help": "What the assistant may take in, and how screenshots are protected.",
+   "order": 101
+  },
+  "media-files": {
+   "to": "media",
+   "tab": "files",
+   "title": "Where results go",
+   "help": "The project folder for results, and how long they are kept.",
+   "order": 102
+  },
+  "media-more": {
+   "to": "media",
+   "tab": "files",
+   "title": "Expert options",
+   "help": "Model nicknames, extra service options and which picture wins.",
+   "order": 103,
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "media-switches",
+   "ids": [
+    "media.io.media-output",
+    "media.capabilities.master",
+    "media.capabilities.enabled-types"
+   ]
+  },
+  {
+   "section": "media-abilities",
+   "ids": [
+    "media.image.provider",
+    "media.image.model",
+    "media.capabilities.aspect-ratio",
+    "media.capabilities.image-size",
+    "media.capabilities.image-quality",
+    "media.capabilities.image-count",
+    "media.capabilities.image-format",
+    "media.capabilities.response-format",
+    "media.capabilities.seed",
+    "media.capabilities.prompt-optimizer",
+    "media.io.vision-bridge",
+    "media.io.vision-fallback-model",
+    "media.io.voice-input",
+    "media.capabilities.tts",
+    "media.capabilities.tts-voice",
+    "media.capabilities.music",
+    "media.capabilities.music-bpm",
+    "media.capabilities.video",
+    "media.capabilities.video-duration",
+    "media.capabilities.video-resolution"
+   ]
+  },
+  {
+   "section": "media-io",
+   "ids": [
+    "media.io.media-input",
+    "general.interaction.composer-media-controls",
+    "media.io.screenshot-source",
+    "media.io.redaction-policy"
+   ]
+  },
+  {
+   "section": "media-files",
+   "ids": [
+    "media.io.artifacts-location",
+    "media.io.artifact-retention"
+   ]
+  },
+  {
+   "section": "media-more",
+   "ids": [
+    "media.io.image-source-order",
+    "media.image.model-aliases",
+    "media.capabilities.provider-params"
+   ]
+  }
+ ]
+}

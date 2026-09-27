@@ -1,0 +1,315 @@
+{
+ "_about": "Permissions (audit C, 2026-09-26): profiles own the safety level, the rule list owns the inventory rule list, per-tool answers are fixed tables; approvals and limits are the inventory rows in groups of four to six.",
+ "sections": {
+  "permissions-approvals": null,
+  "permissions-profiles": {
+   "to": "permissions",
+   "tab": "profiles",
+   "title": "Profiles",
+   "help": "Pick how much the assistant may do; the built-in ones cover most needs.",
+   "order": 0,
+   "composed": true
+  },
+  "permissions-freedom": {
+   "to": "permissions",
+   "tab": "profiles",
+   "title": "New runs and chats",
+   "help": "What new work starts with; you can change it for one run.",
+   "order": 1
+  },
+  "permissions-freedom-more": {
+   "to": "permissions",
+   "tab": "profiles",
+   "title": "Who runs the tools",
+   "help": "Whether Puppet Master or the agent's own app carries out each action.",
+   "order": 2,
+   "advanced": true
+  },
+  "permissions-rules-view": {
+   "to": "permissions",
+   "tab": "rules",
+   "title": "View and scope",
+   "help": "Simple or Expert, and which layer's rules you are editing.",
+   "order": 103,
+   "composed": true
+  },
+  "permissions-rules": {
+   "to": "permissions",
+   "tab": "rules",
+   "title": "Rules, in order",
+   "help": "Checked top to bottom; the last matching rule wins.",
+   "order": 104,
+   "composed": true
+  },
+  "permissions-tool-answers": {
+   "to": "permissions",
+   "tab": "rules",
+   "title": "Answers for each tool",
+   "help": "Allow, ask or block each tool and each web ability.",
+   "order": 105,
+   "composed": true
+  },
+  "permissions-rules-more": {
+   "to": "permissions",
+   "tab": "rules",
+   "title": "Rule details",
+   "help": "Where rules come from and where they are saved.",
+   "order": 106,
+   "advanced": true
+  },
+  "permissions-protection": {
+   "to": "permissions",
+   "tab": "protected",
+   "title": "File protection",
+   "help": "Guards that keep secrets and unplanned files safe.",
+   "order": 207
+  },
+  "permissions-commands": {
+   "to": "permissions",
+   "tab": "protected",
+   "title": "Dangerous commands",
+   "help": "Commands that could wipe files are stopped before they run.",
+   "order": 208
+  },
+  "permissions-outside": {
+   "to": "permissions",
+   "tab": "protected",
+   "title": "Folders outside the project",
+   "help": "What happens when the assistant reaches outside the project.",
+   "order": 209
+  },
+  "permissions-redaction": {
+   "to": "permissions",
+   "tab": "protected",
+   "title": "Hide secrets",
+   "help": "Scrub keys and personal data from output and screenshots.",
+   "order": 210
+  },
+  "permissions-exceptions": {
+   "to": "permissions",
+   "tab": "protected",
+   "title": "Exceptions during checks",
+   "help": "When checks may pass guards that are normally closed.",
+   "order": 211,
+   "advanced": true
+  },
+  "permissions-pauses": {
+   "to": "permissions",
+   "tab": "approvals",
+   "title": "When a run stops to ask",
+   "help": "Hands-off, or pause at the checkpoints you pick.",
+   "order": 312
+  },
+  "permissions-always-ask": {
+   "to": "permissions",
+   "tab": "approvals",
+   "title": "Always ask first",
+   "help": "Actions that need your OK whatever the profile says.",
+   "order": 313
+  },
+  "permissions-answering": {
+   "to": "permissions",
+   "tab": "approvals",
+   "title": "When you're asked",
+   "help": "Where requests show up and what your answer does.",
+   "order": 314
+  },
+  "permissions-approvals-more": {
+   "to": "permissions",
+   "tab": "approvals",
+   "title": "Strictness and records",
+   "help": "How tightly approvals match, and what is kept.",
+   "order": 315,
+   "advanced": true
+  },
+  "permissions-runaway": {
+   "to": "permissions",
+   "tab": "limits",
+   "title": "Stop runaway work",
+   "help": "Step in when the assistant repeats itself or keeps failing.",
+   "order": 416
+  },
+  "permissions-run-limits": {
+   "to": "permissions",
+   "tab": "limits",
+   "title": "Limits for one run",
+   "help": "Caps on money, time and steps for a single run.",
+   "order": 417
+  },
+  "permissions-limits-more": {
+   "to": "permissions",
+   "tab": "limits",
+   "title": "Finer limits",
+   "help": "Loop detection style and limits for helpers and steps.",
+   "order": 418,
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "permissions-profiles",
+   "ids": [
+    "safety.rules.permission-preset"
+   ]
+  },
+  {
+   "section": "permissions-freedom",
+   "ids": [
+    "code.execution.run-mode",
+    "code.execution.mode-overlay",
+    "safety.rules.chat-mode"
+   ]
+  },
+  {
+   "section": "permissions-freedom-more",
+   "ids": [
+    "code.execution.execution-strategy",
+    "code.execution.strategy-override"
+   ]
+  },
+  {
+   "section": "permissions-rules-view",
+   "ids": [
+    "safety.rules.ui-mode",
+    "safety.rules.scoped-overrides",
+    "safety.rules.scope-selector"
+   ]
+  },
+  {
+   "section": "permissions-rules",
+   "ids": [
+    "safety.rules.rule-editor",
+    "safety.rules.default-tool-permission"
+   ]
+  },
+  {
+   "section": "permissions-tool-answers",
+   "ids": [
+    "safety.rules.per-tool-permissions",
+    "safety.protection.web-tool-permissions"
+   ]
+  },
+  {
+   "section": "permissions-rules-more",
+   "ids": [
+    "safety.rules.layer-origin-badge",
+    "safety.rules.capability-disclosure",
+    "safety.rules.storage-format"
+   ]
+  },
+  {
+   "section": "permissions-protection",
+   "ids": [
+    "safety.protection.filesafe-integration",
+    "safety.protection.security-filter",
+    "safety.protection.file-guard",
+    "safety.protection.strict-mode",
+    "safety.protection.governance-unlock",
+    "safety.protection.write-conflict-detection"
+   ]
+  },
+  {
+   "section": "permissions-commands",
+   "ids": [
+    "safety.protection.bash-guard",
+    "safety.protection.allow-destructive",
+    "safety.protection.approved-commands",
+    "safety.protection.custom-patterns-path"
+   ]
+  },
+  {
+   "section": "permissions-outside",
+   "ids": [
+    "safety.protection.external-dir-action",
+    "safety.protection.external-dir-allowlist"
+   ]
+  },
+  {
+   "section": "permissions-redaction",
+   "ids": [
+    "safety.protection.redaction-profile",
+    "safety.protection.screenshot-redaction"
+   ]
+  },
+  {
+   "section": "permissions-exceptions",
+   "ids": [
+    "safety.protection.interview-relax",
+    "safety.protection.qa-gate-override",
+    "safety.protection.security-audit-override"
+   ]
+  },
+  {
+   "section": "permissions-pauses",
+   "ids": [
+    "safety.approvals.autonomy-mode",
+    "safety.approvals.gate-seam",
+    "safety.approvals.gate-package",
+    "safety.approvals.gate-lane",
+    "safety.approvals.auto-continue",
+    "safety.approvals.require-plan-first"
+   ]
+  },
+  {
+   "section": "permissions-always-ask",
+   "ids": [
+    "safety.approvals.checkpoint-types",
+    "safety.approvals.boundary-enforcement",
+    "safety.approvals.external-publish-ask",
+    "safety.approvals.pre-run-display"
+   ]
+  },
+  {
+   "section": "permissions-answering",
+   "ids": [
+    "safety.approvals.alert-channel",
+    "safety.approvals.approval-ladder-default",
+    "safety.approvals.timeout-mode",
+    "safety.approvals.wake-scheduler",
+    "safety.protection.safe-point-restore"
+   ]
+  },
+  {
+   "section": "permissions-approvals-more",
+   "ids": [
+    "safety.approvals.plan-mode-boundary",
+    "safety.approvals.lease-normalization",
+    "safety.approvals.hitl-aware-defaults",
+    "safety.approvals.boundary-default-strictness",
+    "safety.approvals.history-visibility",
+    "safety.approvals.denial-audit-log",
+    "safety.approvals.preserve-skip-abort-history",
+    "safety.approvals.recovery-actions"
+   ]
+  },
+  {
+   "section": "permissions-runaway",
+   "ids": [
+    "safety.approvals.doom-loop-action",
+    "safety.approvals.doom-loop-threshold",
+    "safety.approvals.max-shell-failures",
+    "safety.approvals.max-write-thrash",
+    "safety.approvals.max-retryable-errors"
+   ]
+  },
+  {
+   "section": "permissions-run-limits",
+   "ids": [
+    "ai.usage.run-spend-budget",
+    "memory.limits.run-token-budget",
+    "ai.usage.max-wall-clock",
+    "ai.usage.max-tool-rounds",
+    "ai.usage.max-goal-turns",
+    "memory.limits.goal-token-budget"
+   ]
+  },
+  {
+   "section": "permissions-limits-more",
+   "ids": [
+    "safety.approvals.loop-detection-mode",
+    "ai.usage.subagent-wave-cost",
+    "ai.usage.node-timeout"
+   ]
+  }
+ ]
+}

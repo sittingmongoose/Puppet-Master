@@ -1,0 +1,67 @@
+{
+ "_about": "advanced: sections from the settings audit (2026-09-26).",
+ "sections": {
+  "adv-behavior": {
+   "to": "advanced",
+   "title": "Sharing with the makers",
+   "help": "Anonymous reports that help improve the app; off unless you turn it on.",
+   "order": 5
+  },
+  "adv-diagnostics": {
+   "to": "advanced",
+   "title": "Troubleshooting",
+   "help": "Extra detail for chasing a problem; leave these off otherwise.",
+   "order": 10
+  },
+  "adv-runtime": {
+   "to": "advanced",
+   "title": "Startup and drawing",
+   "help": "How the app starts and draws its windows.",
+   "order": 15
+  },
+  "adv-recovery": {
+   "to": "advanced",
+   "title": "Start over",
+   "help": "Put settings back to their defaults, with a preview first.",
+   "order": 20
+  }
+ },
+ "overrides": [
+  {
+   "section": "adv-behavior",
+   "ids": [
+    "system.health.telemetry"
+   ]
+  },
+  {
+   "section": "adv-diagnostics",
+   "ids": [
+    "system.advanced.debug-mode",
+    "system.advanced.log-verbosity",
+    "system.advanced.receipts-verbosity",
+    "system.advanced.runtime-artifacts",
+    "system.advanced.cache-linter"
+   ]
+  },
+  {
+   "section": "adv-runtime",
+   "ids": [
+    "system.advanced.version-handshake",
+    "system.advanced.viewer-mode",
+    "system.advanced.renderer"
+   ]
+  },
+  {
+   "section": "adv-recovery",
+   "ids": [
+    "system.advanced.reset-defaults"
+   ]
+  }
+ ],
+ "hand_drops": {
+  "advanced": [
+   "telemetry",
+   "restore-defaults"
+  ]
+ }
+}

@@ -1,0 +1,2085 @@
+{
+  "$doc": [
+    "Wave S placement map: where each of the 892 canonical settings renders (Concepts/pm7-tools/settings_refresh/placement.json).",
+    "Resolution per id: hand-rendered on a surviving plain page (the literal setting('<id>') rows) wins; else the first override rule that matches; else subgroups[cat.sub]; else page_defaults[cat].",
+    "Every section names its destination (a manager id or a page id) and, for tabbed managers, the tab. advanced sections render inside the view's single Advanced disclosure; composed sections are rendered by the manager itself (BSD) and are only placed automatically when the manager did not render them.",
+    "Rules: ids = exact ids, glob = fnmatch on the full id. The builder (settings_refresh_source.validate_placement) asserts every rule hits, every id resolves exactly once, destinations and tabs exist in the manager files, and no inline action row is check-labelled."
+  ],
+  "version": 1,
+  "managers": {
+    "notifications": {
+      "domain": "general",
+      "type": "notifications",
+      "tabs": {
+        "destinations": "Destinations",
+        "events": "Events",
+        "sounds": "Sounds",
+        "quiet": "Quiet Hours",
+        "history": "History"
+      },
+      "defaultTab": "destinations"
+    },
+    "providers": {
+      "domain": "ai",
+      "type": "providers",
+      "tabs": {},
+      "defaultTab": null
+    },
+    "web": {
+      "domain": "ai",
+      "type": "webRoutes",
+      "tabs": {},
+      "defaultTab": null
+    },
+    "media": {
+      "domain": "ai",
+      "type": "mediaRoutes",
+      "tabs": {},
+      "defaultTab": null
+    },
+    "bsd": {
+      "domain": "ai",
+      "type": "bsd",
+      "tabs": {
+        "overview": "Overview",
+        "stages": "Stages",
+        "findings": "Findings"
+      },
+      "defaultTab": "overview"
+    },
+    "toolchain": {
+      "domain": "code",
+      "type": "toolchain",
+      "tabs": {
+        "servers": "Language Servers",
+        "formatters": "Formatters",
+        "agent-tools": "Agent Tools"
+      },
+      "defaultTab": "servers"
+    },
+    "skills": {
+      "domain": "code",
+      "type": "skills",
+      "tabs": {},
+      "defaultTab": null
+    },
+    "plugins": {
+      "domain": "code",
+      "type": "plugins",
+      "tabs": {},
+      "defaultTab": null
+    },
+    "mcp": {
+      "domain": "code",
+      "type": "mcp",
+      "tabs": {},
+      "defaultTab": null
+    },
+    "commands": {
+      "domain": "code",
+      "type": "commands",
+      "tabs": {
+        "shortcuts": "Shortcuts",
+        "commands": "Commands"
+      },
+      "defaultTab": "shortcuts"
+    },
+    "testing": {
+      "domain": "code",
+      "type": "testing",
+      "tabs": {
+        "profiles": "Profiles",
+        "when": "When to Test",
+        "browser-native": "Browser & Native",
+        "debug": "Debug",
+        "history": "History"
+      },
+      "defaultTab": "profiles"
+    },
+    "context-memory": {
+      "domain": "memory",
+      "type": "memory",
+      "tabs": {
+        "memories": "Memories",
+        "retrieval": "Retrieval",
+        "retention": "Retention & Privacy",
+        "sources": "Sources"
+      },
+      "defaultTab": "memories"
+    },
+    "goals": {
+      "domain": "memory",
+      "type": "goals",
+      "tabs": {
+        "templates": "Templates",
+        "active": "Active Goals",
+        "defaults": "Defaults",
+        "checkpoints": "Checkpoints & Recovery",
+        "verification": "Verification"
+      },
+      "defaultTab": "templates"
+    },
+    "personas": {
+      "domain": "memory",
+      "type": "personas",
+      "tabs": {
+        "personas": "Personas",
+        "crews": "Crews",
+        "defaults": "Defaults"
+      },
+      "defaultTab": "personas"
+    },
+    "source-manager": {
+      "domain": "source",
+      "type": "sourceControl",
+      "tabs": {
+        "services": "Code Services",
+        "tools": "Local Tools",
+        "repos": "Repositories",
+        "defaults": "Defaults & Safety",
+        "actions": "Actions & Pipelines"
+      },
+      "defaultTab": "services"
+    },
+    "browser-scm": {
+      "domain": "source",
+      "type": "browserScm",
+      "tabs": {},
+      "defaultTab": null
+    },
+    "project-history": {
+      "domain": "projects",
+      "type": "projectHistory",
+      "tabs": {
+        "timeline": "Timeline",
+        "sessions": "Sessions",
+        "artifacts": "Artifacts",
+        "cleanup": "Cleanup"
+      },
+      "defaultTab": "timeline"
+    },
+    "permissions": {
+      "domain": "safety",
+      "type": "permissions",
+      "tabs": {
+        "profiles": "Profiles",
+        "rules": "Rules",
+        "protected": "Protected Files",
+        "approvals": "Approvals",
+        "limits": "Limits"
+      },
+      "defaultTab": "profiles"
+    },
+    "settings-transfer": {
+      "domain": "system",
+      "type": "settingsTransfer",
+      "tabs": {},
+      "defaultTab": null
+    },
+    "servers": {
+      "domain": "system",
+      "type": "serverLocation",
+      "tabs": {
+        "home": "Home & Location",
+        "servers": "Servers",
+        "devices": "Devices",
+        "away": "Away From Home",
+        "move": "Move & Copy"
+      },
+      "defaultTab": "home"
+    },
+    "backup": {
+      "domain": "system",
+      "type": "backup",
+      "tabs": {
+        "backup": "Backup",
+        "destinations": "Destinations",
+        "restore": "Restore",
+        "history": "History"
+      },
+      "defaultTab": "backup"
+    },
+    "doctor": {
+      "domain": "system",
+      "type": "doctor",
+      "tabs": {},
+      "defaultTab": null
+    },
+    "updates": {
+      "domain": "system",
+      "type": "updates",
+      "tabs": {},
+      "defaultTab": null
+    }
+  },
+  "pages": {
+    "app-input": {
+      "domain": "general",
+      "label": "App & Input",
+      "hand": true,
+      "intro": "Look and feel, the chat view, help, and what happens at startup."
+    },
+    "editor-runtime": {
+      "domain": "code",
+      "label": "Editor & Runtime",
+      "hand": true,
+      "intro": "Files, editing, the terminal, and the project search index."
+    },
+    "code-reference": {
+      "domain": "code",
+      "label": "Containers & Execution",
+      "hand": false,
+      "intro": "Building and running containers, Kubernetes views, and Unraid templates."
+    },
+    "planning-reference": {
+      "domain": "planning",
+      "label": "Planning & Interviews",
+      "hand": false,
+      "intro": "How the planning interview asks questions and how deep plans go."
+    },
+    "advanced": {
+      "domain": "system",
+      "label": "Advanced Settings",
+      "hand": true,
+      "intro": "Diagnostics, runtime options, and deliberate recovery actions."
+    }
+  },
+  "sections": {
+    "notif-alerts": {
+      "to": "notifications",
+      "title": "Alerts",
+      "help": "Turn alerts on, choose how they appear, and which events deserve one.",
+      "order": 10,
+      "tab": "events"
+    },
+    "notif-routing": {
+      "to": "notifications",
+      "title": "Event routing map",
+      "help": "The stored map of events to destinations. The Events list above is the friendly way to change it.",
+      "order": 20,
+      "tab": "events",
+      "advanced": true
+    },
+    "notif-destination-list": {
+      "to": "notifications",
+      "title": "Destination list",
+      "help": "The stored list of places alerts go. Use the Destinations list above to add or remove one.",
+      "order": 30,
+      "tab": "destinations",
+      "advanced": true
+    },
+    "notif-sound-defaults": {
+      "to": "notifications",
+      "title": "Sound defaults",
+      "help": "Whether sounds play at all.",
+      "order": 40,
+      "tab": "sounds"
+    },
+    "notif-sound-map": {
+      "to": "notifications",
+      "title": "Sound catalog & assignments",
+      "help": "The stored sound assignments and catalog tools. The Sounds tab above is the friendly way to change them.",
+      "order": 50,
+      "tab": "sounds",
+      "advanced": true
+    },
+    "notif-quiet-window": {
+      "to": "notifications",
+      "title": "Quiet window",
+      "help": "Hold back advisory alerts for a while after the last one.",
+      "order": 60,
+      "tab": "quiet"
+    },
+    "providers-accounts": {
+      "to": "providers",
+      "title": "Accounts & sign-in",
+      "help": "How each service signs in and which account is used by default.",
+      "order": 10
+    },
+    "providers-api-keys": {
+      "to": "providers",
+      "title": "API keys & credentials",
+      "help": "Keys are stored as secure references and never shown in full.",
+      "order": 20
+    },
+    "providers-switching": {
+      "to": "providers",
+      "title": "Account switching & quotas",
+      "help": "When to move to the next account as a quota runs low.",
+      "order": 30
+    },
+    "providers-opencode": {
+      "to": "providers",
+      "title": "OpenCode",
+      "help": "Use an OpenCode server as another way to reach models.",
+      "order": 40
+    },
+    "providers-models": {
+      "to": "providers",
+      "title": "Models & defaults",
+      "help": "Which model answers by default and how presets are chosen.",
+      "order": 50
+    },
+    "providers-roles": {
+      "to": "providers",
+      "title": "Role models",
+      "help": "Different jobs can use different models: planning, building, design, and checking.",
+      "order": 60
+    },
+    "providers-generation": {
+      "to": "providers",
+      "title": "Generation parameters",
+      "help": "Fine controls for how models answer. The defaults suit most work.",
+      "order": 70
+    },
+    "providers-health": {
+      "to": "providers",
+      "title": "Health & discovery",
+      "help": "Keeping the model list fresh and knowing when a service is under pressure.",
+      "order": 80
+    },
+    "providers-usage": {
+      "to": "providers",
+      "title": "Usage & budgets",
+      "help": "What the Usage board shows and how much you are willing to spend.",
+      "order": 90
+    },
+    "providers-apps": {
+      "to": "providers",
+      "title": "Installed apps",
+      "help": "Where Puppet Master finds the coding apps it can drive.",
+      "order": 100
+    },
+    "providers-account-tools": {
+      "to": "providers",
+      "title": "Account tools",
+      "help": "Stored account lists and switch history. The accounts above are the friendly way to change them.",
+      "order": 110,
+      "advanced": true
+    },
+    "providers-model-tools": {
+      "to": "providers",
+      "title": "Model diagnostics",
+      "help": "What actually ran for a request, model by model.",
+      "order": 120,
+      "advanced": true
+    },
+    "providers-health-tools": {
+      "to": "providers",
+      "title": "Health & quota reports",
+      "help": "Detailed health, pressure, and budget consoles.",
+      "order": 130,
+      "advanced": true
+    },
+    "web-search-providers": {
+      "to": "web",
+      "title": "Search providers",
+      "help": "Which services search and read the web, and in what order.",
+      "order": 10
+    },
+    "web-limits": {
+      "to": "web",
+      "title": "Fetch & crawl limits",
+      "help": "How much the assistant may read in one go, and when to ask before spending credits.",
+      "order": 20
+    },
+    "web-caching": {
+      "to": "web",
+      "title": "Caching",
+      "help": "Reuse recent results instead of fetching them again.",
+      "order": 30
+    },
+    "web-network": {
+      "to": "web",
+      "title": "Network & proxy",
+      "help": "Proxies, certificates, and offline mode for locked-down networks.",
+      "order": 40
+    },
+    "web-provider-matrix": {
+      "to": "web",
+      "title": "Provider status & coverage",
+      "help": "The stored status and coverage tables. The route list above is the friendly view.",
+      "order": 50,
+      "advanced": true
+    },
+    "media-services": {
+      "to": "media",
+      "title": "Media services",
+      "help": "Which service makes images and which model handles each media task.",
+      "order": 10
+    },
+    "media-io": {
+      "to": "media",
+      "title": "Media in & out",
+      "help": "What media the assistant accepts and produces, and where results are kept.",
+      "order": 20
+    },
+    "media-generation": {
+      "to": "media",
+      "title": "Generation options",
+      "help": "Defaults for image, video, speech, and music output.",
+      "order": 30
+    },
+    "bsd-advisor": {
+      "to": "bsd",
+      "title": "Advisor",
+      "help": "It only advises. It never blocks your work.",
+      "order": 10,
+      "tab": "overview",
+      "composed": true
+    },
+    "bsd-timing": {
+      "to": "bsd",
+      "title": "Timing",
+      "help": "How readily it speaks up and how long it stays quiet after advice.",
+      "order": 20,
+      "tab": "overview",
+      "composed": true
+    },
+    "bsd-memory": {
+      "to": "bsd",
+      "title": "Memory",
+      "help": "What the advisor keeps of its own conversation.",
+      "order": 30,
+      "tab": "overview",
+      "composed": true
+    },
+    "bsd-stages": {
+      "to": "bsd",
+      "title": "Stage bindings",
+      "help": "The stored list of stages the advisor watches. The Stages list above is the friendly way to change it.",
+      "order": 40,
+      "tab": "stages",
+      "advanced": true,
+      "composed": true
+    },
+    "toolchain-lsp": {
+      "to": "toolchain",
+      "title": "Language servers",
+      "help": "Language smarts: hover tips, problem highlights, and autocomplete.",
+      "order": 10,
+      "tab": "servers"
+    },
+    "toolchain-code-gate": {
+      "to": "toolchain",
+      "title": "Code health gate",
+      "help": "Block a job from finishing while language checks still report problems.",
+      "order": 20,
+      "tab": "servers"
+    },
+    "toolchain-lsp-tools": {
+      "to": "toolchain",
+      "title": "Server catalog & restart",
+      "help": "The stored server catalog, custom servers, and a restart.",
+      "order": 30,
+      "tab": "servers",
+      "advanced": true
+    },
+    "toolchain-formatters": {
+      "to": "toolchain",
+      "title": "Formatter defaults",
+      "help": "Whether code is tidied automatically.",
+      "order": 40,
+      "tab": "formatters"
+    },
+    "toolchain-formatter-tools": {
+      "to": "toolchain",
+      "title": "Formatter catalog",
+      "help": "The stored formatter catalog and custom formatters.",
+      "order": 50,
+      "tab": "formatters",
+      "advanced": true
+    },
+    "toolchain-containers": {
+      "to": "toolchain",
+      "title": "Containers & registries",
+      "help": "Which container engine runs agent tools and where images are published.",
+      "order": 60,
+      "tab": "agent-tools"
+    },
+    "skills-settings": {
+      "to": "skills",
+      "title": "Skills settings",
+      "help": "How skills are found, shown, and allowed to run.",
+      "order": 10
+    },
+    "skills-permissions": {
+      "to": "skills",
+      "title": "Skill permissions",
+      "help": "What skills may do, one by one or by pattern.",
+      "order": 20
+    },
+    "skills-checks": {
+      "to": "skills",
+      "title": "Skill list & checks",
+      "help": "The stored skill list and a full check. The list above is the friendly way to manage skills.",
+      "order": 30,
+      "advanced": true
+    },
+    "plugins-settings": {
+      "to": "plugins",
+      "title": "Plugin settings",
+      "help": "How new plugins are handled and how much time they may take.",
+      "order": 10
+    },
+    "plugins-catalog": {
+      "to": "plugins",
+      "title": "Plugin catalog & install tools",
+      "help": "The stored plugin list and install actions. The list above is the friendly way to manage plugins.",
+      "order": 20,
+      "advanced": true
+    },
+    "mcp-servers": {
+      "to": "mcp",
+      "title": "Servers",
+      "help": "Turn servers and single tools on or off, and how each one connects.",
+      "order": 10
+    },
+    "mcp-connection": {
+      "to": "mcp",
+      "title": "Connection defaults",
+      "help": "Launch details, remote addresses, sign-in, and time limits.",
+      "order": 20
+    },
+    "mcp-server-list": {
+      "to": "mcp",
+      "title": "Server list",
+      "help": "The stored server list. The list above is the friendly way to manage servers.",
+      "order": 30,
+      "advanced": true
+    },
+    "mcp-debug": {
+      "to": "mcp",
+      "title": "Effective configuration",
+      "help": "Inspect what each server really runs with.",
+      "order": 40,
+      "advanced": true
+    },
+    "commands-keys": {
+      "to": "commands",
+      "title": "Shortcut keys",
+      "help": "Hints, clashes, text-editing keys, and terminal shortcuts.",
+      "order": 10,
+      "tab": "shortcuts"
+    },
+    "commands-key-tools": {
+      "to": "commands",
+      "title": "Shortcut map & backups",
+      "help": "The stored shortcut map, a reset, and export or import.",
+      "order": 20,
+      "tab": "shortcuts",
+      "advanced": true
+    },
+    "commands-behaviour": {
+      "to": "commands",
+      "title": "Command behaviour",
+      "help": "Where commands live and what a command may override.",
+      "order": 30,
+      "tab": "commands"
+    },
+    "commands-list": {
+      "to": "commands",
+      "title": "Stored command list",
+      "help": "The stored list of custom commands. The list above is the friendly way to manage them.",
+      "order": 40,
+      "tab": "commands",
+      "advanced": true
+    },
+    "testing-session": {
+      "to": "testing",
+      "title": "Session controls",
+      "help": "Start, stop, and inspect test sessions.",
+      "order": 10,
+      "tab": "profiles",
+      "advanced": true
+    },
+    "testing-premerge": {
+      "to": "testing",
+      "title": "Before merging",
+      "help": "Tests that must pass before finished work is merged.",
+      "order": 20,
+      "tab": "when"
+    },
+    "testing-capabilities": {
+      "to": "testing",
+      "title": "Test capabilities",
+      "help": "What kinds of automated testing the assistant may use.",
+      "order": 30,
+      "tab": "browser-native"
+    },
+    "testing-capture": {
+      "to": "testing",
+      "title": "Browser capture",
+      "help": "What screenshots include and what agents may do in DevTools.",
+      "order": 40,
+      "tab": "browser-native"
+    },
+    "testing-debug-setups": {
+      "to": "testing",
+      "title": "Debug setups & permissions",
+      "help": "Stored debug configurations and what debug mode may do on its own.",
+      "order": 50,
+      "tab": "debug"
+    },
+    "testing-evidence": {
+      "to": "testing",
+      "title": "Evidence",
+      "help": "How much proof is kept from each run, and for how long.",
+      "order": 60,
+      "tab": "history"
+    },
+    "memory-limits": {
+      "to": "context-memory",
+      "title": "Context limits",
+      "help": "How much fits in one run and when old context is squeezed.",
+      "order": 10,
+      "tab": "memories"
+    },
+    "memory-notebook": {
+      "to": "context-memory",
+      "title": "Working notebook",
+      "help": "Notes the assistant keeps for itself while it works.",
+      "order": 20,
+      "tab": "memories"
+    },
+    "memory-assembly": {
+      "to": "context-memory",
+      "title": "Context assembly",
+      "help": "Rules and instructions that go into every run.",
+      "order": 30,
+      "tab": "retrieval"
+    },
+    "memory-retrieval": {
+      "to": "context-memory",
+      "title": "Retrieval",
+      "help": "How memories are found and how fast they fade.",
+      "order": 40,
+      "tab": "retrieval"
+    },
+    "memory-retention": {
+      "to": "context-memory",
+      "title": "Memory retention",
+      "help": "What is remembered between sessions and who may read it.",
+      "order": 50,
+      "tab": "retention"
+    },
+    "memory-retention-tools": {
+      "to": "context-memory",
+      "title": "Cleanup tools",
+      "help": "Tidy up stored memories.",
+      "order": 60,
+      "tab": "retention",
+      "advanced": true
+    },
+    "goals-progress": {
+      "to": "goals",
+      "title": "Progress view",
+      "help": "How running Goals are drawn.",
+      "order": 10,
+      "tab": "active"
+    },
+    "goals-defaults": {
+      "to": "goals",
+      "title": "Goal defaults",
+      "help": "How new Goals report progress and what they may write.",
+      "order": 20,
+      "tab": "defaults"
+    },
+    "goals-recovery": {
+      "to": "goals",
+      "title": "Recovery & replanning",
+      "help": "Picking up after interruptions and rethinking the plan.",
+      "order": 30,
+      "tab": "checkpoints"
+    },
+    "goals-scheduling": {
+      "to": "goals",
+      "title": "Scheduling",
+      "help": "Wind-down time and what happens when a scheduled run is missed.",
+      "order": 40,
+      "tab": "checkpoints"
+    },
+    "goals-verification": {
+      "to": "goals",
+      "title": "Verification policy",
+      "help": "How hard the checks are before a Goal is called done.",
+      "order": 50,
+      "tab": "verification"
+    },
+    "goals-review": {
+      "to": "goals",
+      "title": "Agent review",
+      "help": "Who reviews the work and how disagreements are handled.",
+      "order": 60,
+      "tab": "verification"
+    },
+    "goals-legacy": {
+      "to": "goals",
+      "title": "Legacy advisor key",
+      "help": "An older Back Seat Driver key kept for compatibility. Use the Back Seat Driver manager instead.",
+      "order": 70,
+      "tab": "verification",
+      "advanced": true
+    },
+    "personas-fields": {
+      "to": "personas",
+      "title": "Persona fields",
+      "help": "The name and description a persona shows.",
+      "order": 10,
+      "tab": "personas"
+    },
+    "personas-tuning": {
+      "to": "personas",
+      "title": "Behaviour tuning",
+      "help": "Style, length, and creativity for the selected persona.",
+      "order": 20,
+      "tab": "personas"
+    },
+    "personas-tools": {
+      "to": "personas",
+      "title": "Tools & support",
+      "help": "Which tools, skills, and instructions a persona carries.",
+      "order": 30,
+      "tab": "personas"
+    },
+    "personas-tools-audit": {
+      "to": "personas",
+      "title": "Skipped settings",
+      "help": "See which settings a persona could not apply.",
+      "order": 40,
+      "tab": "personas",
+      "advanced": true
+    },
+    "personas-crews": {
+      "to": "personas",
+      "title": "Crew settings",
+      "help": "How teams of personas form and how big they get.",
+      "order": 50,
+      "tab": "crews"
+    },
+    "personas-brainstorm": {
+      "to": "personas",
+      "title": "Brainstorm & chat room",
+      "help": "Group discussions: who joins, how many rounds, and how votes are counted.",
+      "order": 60,
+      "tab": "crews"
+    },
+    "personas-helpers": {
+      "to": "personas",
+      "title": "Helper agents",
+      "help": "Smaller agents a persona can hand bounded tasks to.",
+      "order": 70,
+      "tab": "crews"
+    },
+    "personas-helper-tools": {
+      "to": "personas",
+      "title": "Helper contracts",
+      "help": "Inspect what a helper is allowed to do and what it was asked to deliver.",
+      "order": 80,
+      "tab": "crews",
+      "advanced": true
+    },
+    "personas-defaults": {
+      "to": "personas",
+      "title": "Persona defaults",
+      "help": "Which persona is used and who gets to choose.",
+      "order": 90,
+      "tab": "defaults"
+    },
+    "personas-library-tools": {
+      "to": "personas",
+      "title": "Persona library",
+      "help": "The stored core persona list and the persona manager. The list above is the friendly way to manage personas.",
+      "order": 100,
+      "tab": "defaults",
+      "advanced": true
+    },
+    "source-github": {
+      "to": "source-manager",
+      "title": "GitHub repositories",
+      "help": "Creating repositories, forks, and pinned workflows on GitHub.",
+      "order": 10,
+      "tab": "services"
+    },
+    "source-github-auth": {
+      "to": "source-manager",
+      "title": "GitHub sign-in",
+      "help": "How Puppet Master signs in to GitHub.",
+      "order": 20,
+      "tab": "services"
+    },
+    "source-worktrees": {
+      "to": "source-manager",
+      "title": "Worktrees",
+      "help": "Private workspaces for chats and Goals, and how they are cleaned up.",
+      "order": 30,
+      "tab": "repos"
+    },
+    "source-worktree-tools": {
+      "to": "source-manager",
+      "title": "Remove every workspace",
+      "help": "A last resort that deletes all private workspaces at once.",
+      "order": 40,
+      "tab": "repos",
+      "advanced": true
+    },
+    "source-branches": {
+      "to": "source-manager",
+      "title": "Branches & merging",
+      "help": "Branch names, how finished work is merged, and when it is pushed.",
+      "order": 50,
+      "tab": "defaults"
+    },
+    "source-actions": {
+      "to": "source-manager",
+      "title": "Actions & templates",
+      "help": "GitHub Actions checks and starter workflows.",
+      "order": 60,
+      "tab": "actions"
+    },
+    "browser-sessions": {
+      "to": "browser-scm",
+      "title": "Browser sessions",
+      "help": "Whether the built-in browser remembers website logins and can share pages with chat.",
+      "order": 10
+    },
+    "history-view": {
+      "to": "project-history",
+      "title": "History view",
+      "help": "What the timeline shows.",
+      "order": 10,
+      "tab": "timeline"
+    },
+    "history-sessions": {
+      "to": "project-history",
+      "title": "Session details",
+      "help": "Technical details shown for each session.",
+      "order": 20,
+      "tab": "sessions"
+    },
+    "history-retention": {
+      "to": "project-history",
+      "title": "Retention",
+      "help": "How long chats, runtime records, and diagnostics are kept.",
+      "order": 30,
+      "tab": "cleanup"
+    },
+    "history-tools": {
+      "to": "project-history",
+      "title": "Index & storage tools",
+      "help": "Rebuild the history index, export it, and inspect storage holds.",
+      "order": 40,
+      "tab": "cleanup",
+      "advanced": true
+    },
+    "permissions-freedom": {
+      "to": "permissions",
+      "title": "Agent freedom",
+      "help": "How much room agents get before they must ask.",
+      "order": 10,
+      "tab": "profiles"
+    },
+    "permissions-rules": {
+      "to": "permissions",
+      "title": "Rules & presets",
+      "help": "Presets and per-tool answers that decide what the assistant may do.",
+      "order": 20,
+      "tab": "rules"
+    },
+    "permissions-protection": {
+      "to": "permissions",
+      "title": "Files & tools protection",
+      "help": "Guards that stop dangerous commands and protect secret files.",
+      "order": 30,
+      "tab": "protected"
+    },
+    "permissions-redaction": {
+      "to": "permissions",
+      "title": "Redaction",
+      "help": "Hide sensitive data in output and screenshots.",
+      "order": 40,
+      "tab": "protected"
+    },
+    "permissions-approvals": {
+      "to": "permissions",
+      "title": "Approvals & gates",
+      "help": "When the assistant pauses to ask you, and where the question appears.",
+      "order": 50,
+      "tab": "approvals"
+    },
+    "permissions-runaway": {
+      "to": "permissions",
+      "title": "Runaway protection",
+      "help": "Stop the assistant when it repeats itself or keeps failing.",
+      "order": 60,
+      "tab": "limits"
+    },
+    "permissions-run-limits": {
+      "to": "permissions",
+      "title": "Run limits",
+      "help": "Caps on spending, steps, and time for a single run.",
+      "order": 70,
+      "tab": "limits"
+    },
+    "transfer-files": {
+      "to": "settings-transfer",
+      "title": "Settings files",
+      "help": "Export your settings to a file or import them from one.",
+      "order": 10
+    },
+    "servers-execution": {
+      "to": "servers",
+      "title": "Where work runs",
+      "help": "Whether tools run here or on a remote machine.",
+      "order": 10,
+      "tab": "servers"
+    },
+    "doctor-onboarding": {
+      "to": "doctor",
+      "title": "Onboarding & teacher",
+      "help": "First-run help and the demo teacher.",
+      "order": 10
+    },
+    "doctor-checkups": {
+      "to": "doctor",
+      "title": "Checkups",
+      "help": "How often the setup is checked and what the checkup covers.",
+      "order": 20
+    },
+    "doctor-tools": {
+      "to": "doctor",
+      "title": "Deep checks",
+      "help": "Run the full checkup or deep diagnostics.",
+      "order": 30,
+      "advanced": true
+    },
+    "updates-settings": {
+      "to": "updates",
+      "title": "Update checks",
+      "help": "When Puppet Master looks for updates and which channel it follows.",
+      "order": 10
+    },
+    "app-visual": {
+      "to": "app-input",
+      "title": "Appearance details",
+      "help": "Fine-tune the look beyond the basics above.",
+      "order": 10
+    },
+    "app-chat": {
+      "to": "app-input",
+      "title": "Chat",
+      "help": "How the conversation view behaves.",
+      "order": 20
+    },
+    "app-help": {
+      "to": "app-input",
+      "title": "Help & guidance",
+      "help": "How much the app explains and where to find things.",
+      "order": 30
+    },
+    "app-desktop": {
+      "to": "app-input",
+      "title": "Desktop & layout",
+      "help": "Tray, dashboard, and panel placement.",
+      "order": 40
+    },
+    "app-startup": {
+      "to": "app-input",
+      "title": "Startup & recovery",
+      "help": "What opens on launch and what is restored after a crash.",
+      "order": 50
+    },
+    "app-more": {
+      "to": "app-input",
+      "title": "Other settings",
+      "help": "Settings without a home yet.",
+      "order": 900
+    },
+    "editor-files": {
+      "to": "editor-runtime",
+      "title": "Files & folders",
+      "help": "How the file tree and editor tabs behave.",
+      "order": 10
+    },
+    "editor-editing": {
+      "to": "editor-runtime",
+      "title": "Editing & languages",
+      "help": "Line numbers, wrapping, and file size limits.",
+      "order": 20
+    },
+    "editor-terminal": {
+      "to": "editor-runtime",
+      "title": "Terminal & shell",
+      "help": "Fonts, shell, and behaviour of the built-in terminal.",
+      "order": 30
+    },
+    "editor-search-index": {
+      "to": "editor-runtime",
+      "title": "Project Search Index",
+      "help": "What the project search index covers.",
+      "order": 40,
+      "hand_section": "search-index"
+    },
+    "editor-more": {
+      "to": "editor-runtime",
+      "title": "Other settings",
+      "help": "Settings without a home yet.",
+      "order": 900
+    },
+    "exec-build": {
+      "to": "code-reference",
+      "title": "Build & publish",
+      "help": "Compose files, build folders, and image publishing.",
+      "order": 10
+    },
+    "exec-running": {
+      "to": "code-reference",
+      "title": "Running containers",
+      "help": "Ports, shells, and log streams for running containers.",
+      "order": 20
+    },
+    "exec-drift": {
+      "to": "code-reference",
+      "title": "Drift, receipts & cleanup",
+      "help": "Config drift alerts, operation receipts, and disk cleanup.",
+      "order": 30
+    },
+    "exec-k8s": {
+      "to": "code-reference",
+      "title": "Kubernetes",
+      "help": "Cluster, namespace, and safety policy for Kubernetes views.",
+      "order": 40
+    },
+    "exec-unraid": {
+      "to": "code-reference",
+      "title": "Unraid templates & publisher profile",
+      "help": "Community Applications templates and your publisher details.",
+      "order": 50
+    },
+    "exec-more": {
+      "to": "code-reference",
+      "title": "Other settings",
+      "help": "Settings without a home yet.",
+      "order": 900
+    },
+    "plan-interview": {
+      "to": "planning-reference",
+      "title": "Interview & wizard",
+      "help": "How the planning interview and wizard behave.",
+      "order": 10
+    },
+    "plan-depth": {
+      "to": "planning-reference",
+      "title": "Plan depth & questions",
+      "help": "How thorough plans are and how many questions each depth may ask.",
+      "order": 20
+    },
+    "plan-helpers": {
+      "to": "planning-reference",
+      "title": "Builder helpers",
+      "help": "Which helpers draft, review, and understand images during planning.",
+      "order": 30
+    },
+    "plan-more": {
+      "to": "planning-reference",
+      "title": "Other settings",
+      "help": "Settings without a home yet.",
+      "order": 900
+    },
+    "adv-diagnostics": {
+      "to": "advanced",
+      "title": "Diagnostics & runtime",
+      "help": "Logging, renderer, and config file options for troubleshooting.",
+      "order": 10
+    },
+    "adv-behavior": {
+      "to": "advanced",
+      "title": "Advanced Behavior",
+      "help": "",
+      "order": 20,
+      "hand_section": "behavior"
+    },
+    "adv-recovery": {
+      "to": "advanced",
+      "title": "Restore & Recovery",
+      "help": "",
+      "order": 30,
+      "hand_section": "recovery"
+    },
+    "adv-more": {
+      "to": "advanced",
+      "title": "Other settings",
+      "help": "Settings without a home yet.",
+      "order": 900
+    }
+  },
+  "subgroups": {
+    "general.visual": "app-visual",
+    "general.interaction": "app-chat",
+    "general.startup": "app-startup",
+    "ai.accounts": "providers-accounts",
+    "ai.models": "providers-models",
+    "ai.usage": "providers-usage",
+    "safety.rules": "permissions-rules",
+    "safety.approvals": "permissions-approvals",
+    "safety.protection": "permissions-protection",
+    "code.terminal": "editor-terminal",
+    "code.editing": "editor-editing",
+    "code.execution": "exec-build",
+    "memory.assembly": "memory-assembly",
+    "memory.retention": "memory-retention",
+    "memory.notebook": "memory-notebook",
+    "memory.limits": "memory-limits",
+    "planning.interview": "plan-interview",
+    "planning.testing": "testing-capabilities",
+    "planning.verification": "goals-verification",
+    "branching.worktrees": "source-worktrees",
+    "branching.crew": "personas-crews",
+    "branching.subagents": "personas-helpers",
+    "media.image": "media-services",
+    "media.io": "media-io",
+    "media.capabilities": "media-generation",
+    "web.providers": "web-search-providers",
+    "web.fetch": "web-limits",
+    "web.index": "editor-search-index",
+    "personas.library": "personas-defaults",
+    "personas.tuning": "personas-tuning",
+    "personas.tools": "personas-tools",
+    "extensions.skills": "skills-settings",
+    "extensions.plugins": "plugins-settings",
+    "extensions.commands": "commands-keys",
+    "system.health": "doctor-checkups",
+    "system.mcp": "mcp-servers",
+    "system.advanced": "adv-diagnostics"
+  },
+  "overrides": [
+    {
+      "section": "notif-alerts",
+      "ids": [
+        "general.interaction.notifications-enabled",
+        "general.interaction.notification-method",
+        "general.interaction.tray-notifications",
+        "general.interaction.notification-severity",
+        "general.interaction.dismissal-rationale"
+      ]
+    },
+    {
+      "section": "notif-routing",
+      "ids": [
+        "general.interaction.notification-mapping"
+      ]
+    },
+    {
+      "section": "notif-destination-list",
+      "ids": [
+        "general.interaction.notification-destinations"
+      ]
+    },
+    {
+      "section": "notif-sound-defaults",
+      "ids": [
+        "general.interaction.sound-effects"
+      ]
+    },
+    {
+      "section": "notif-sound-map",
+      "ids": [
+        "general.interaction.sound-catalog",
+        "general.interaction.sound-management",
+        "general.interaction.sound-mapping"
+      ]
+    },
+    {
+      "section": "notif-quiet-window",
+      "ids": [
+        "general.interaction.alert-quiet-window"
+      ]
+    },
+    {
+      "section": "history-view",
+      "ids": [
+        "general.interaction.history-scope",
+        "general.interaction.history-approved-only",
+        "general.interaction.history-archived",
+        "general.interaction.history-compare"
+      ]
+    },
+    {
+      "section": "history-sessions",
+      "ids": [
+        "general.interaction.thread-lineage"
+      ]
+    },
+    {
+      "section": "history-retention",
+      "ids": [
+        "general.interaction.thread-archive-days",
+        "general.interaction.thread-retention-days"
+      ]
+    },
+    {
+      "section": "history-tools",
+      "ids": [
+        "general.interaction.history-export",
+        "general.interaction.history-rebuild"
+      ]
+    },
+    {
+      "section": "goals-progress",
+      "ids": [
+        "general.interaction.run-graph-mode",
+        "general.interaction.graph-density",
+        "general.interaction.progress-widget-layout"
+      ]
+    },
+    {
+      "section": "browser-sessions",
+      "ids": [
+        "general.interaction.browser-capture"
+      ]
+    },
+    {
+      "section": "media-io",
+      "ids": [
+        "general.interaction.composer-media-controls"
+      ]
+    },
+    {
+      "section": "memory-limits",
+      "ids": [
+        "general.interaction.context-usage"
+      ]
+    },
+    {
+      "section": "providers-models",
+      "ids": [
+        "general.interaction.provider-disclosure"
+      ]
+    },
+    {
+      "section": "personas-helpers",
+      "ids": [
+        "general.interaction.subagent-disclosure"
+      ]
+    },
+    {
+      "section": "toolchain-lsp",
+      "ids": [
+        "general.interaction.language-detection"
+      ]
+    },
+    {
+      "section": "editor-files",
+      "ids": [
+        "general.interaction.hide-ignored-files",
+        "general.interaction.expand-current-file",
+        "general.interaction.max-editor-tabs",
+        "general.interaction.row-cap",
+        "general.interaction.drop-conflict",
+        "general.interaction.drop-action",
+        "general.interaction.persist-tree-state"
+      ]
+    },
+    {
+      "section": "app-help",
+      "ids": [
+        "general.interaction.mode",
+        "general.interaction.show-tooltips",
+        "general.interaction.explain-disabled",
+        "general.interaction.rediscoverability",
+        "general.interaction.scope-labels",
+        "general.interaction.settings-search"
+      ]
+    },
+    {
+      "section": "app-desktop",
+      "ids": [
+        "general.interaction.minimize-to-tray",
+        "general.interaction.dashboard-widgets",
+        "general.interaction.panel-dock"
+      ]
+    },
+    {
+      "section": "source-github-auth",
+      "ids": [
+        "ai.accounts.github-connect",
+        "ai.accounts.github-token",
+        "ai.accounts.github-host-policy",
+        "ai.accounts.github-oauth-loopback"
+      ]
+    },
+    {
+      "section": "providers-account-tools",
+      "ids": [
+        "ai.accounts.provider-connections",
+        "ai.accounts.set-preferred-account",
+        "ai.accounts.switch-history"
+      ],
+      "note": "duplicate the account accordion"
+    },
+    {
+      "section": "providers-api-keys",
+      "ids": [
+        "ai.accounts.anthropic-api-key",
+        "ai.accounts.openai-api-key",
+        "ai.accounts.gemini-api-key",
+        "ai.accounts.cursor-api-key",
+        "ai.accounts.minimax-api-key",
+        "ai.accounts.credential-storage",
+        "ai.accounts.auth-surface"
+      ]
+    },
+    {
+      "section": "providers-switching",
+      "ids": [
+        "ai.accounts.account-priority",
+        "ai.accounts.soft-switch",
+        "ai.accounts.soft-warning-level",
+        "ai.accounts.hard-switch-level",
+        "ai.accounts.account-threshold-override",
+        "ai.accounts.switch-mode-override",
+        "ai.accounts.cooldown-policy",
+        "ai.accounts.retry-budget",
+        "ai.accounts.quota-profile"
+      ]
+    },
+    {
+      "section": "providers-opencode",
+      "glob": "ai.accounts.opencode-*"
+    },
+    {
+      "section": "providers-roles",
+      "ids": [
+        "ai.models.overseer-model",
+        "ai.models.worker-model",
+        "ai.models.gui-worker-model",
+        "ai.models.high-effort-worker-model",
+        "ai.models.auditor-model",
+        "ai.models.goal-worker-model",
+        "ai.models.goal-verifier-model",
+        "ai.models.lane-bindings",
+        "ai.models.role-policy",
+        "ai.models.subagent-model",
+        "ai.models.subagent-effort",
+        "ai.models.per-lane-platform",
+        "ai.models.per-lane-model",
+        "ai.models.execution-role"
+      ]
+    },
+    {
+      "section": "providers-generation",
+      "ids": [
+        "ai.models.temperature",
+        "ai.models.top-p",
+        "ai.models.max-output-tokens",
+        "ai.models.capability-overrides",
+        "ai.models.cache-strategy",
+        "ai.models.cache-with-oauth",
+        "ai.models.gemini-cache-ttl",
+        "ai.models.max-payload-size",
+        "ai.models.system-role-name",
+        "ai.models.provider-options"
+      ]
+    },
+    {
+      "section": "providers-model-tools",
+      "ids": [
+        "ai.models.requested-effective-inspector"
+      ],
+      "note": "diagnostic"
+    },
+    {
+      "section": "providers-health",
+      "ids": [
+        "ai.usage.refresh-models",
+        "ai.usage.auto-refresh-discovery",
+        "ai.usage.free-models-auto-apply",
+        "ai.usage.pressure-visibility",
+        "ai.usage.pressure-sensitivity",
+        "ai.usage.auto-resume-default",
+        "ai.usage.cooldown-timers"
+      ]
+    },
+    {
+      "section": "providers-health-tools",
+      "ids": [
+        "ai.usage.provider-health",
+        "ai.usage.pressure-history",
+        "ai.usage.quota-management"
+      ],
+      "note": "diagnostic consoles"
+    },
+    {
+      "section": "permissions-run-limits",
+      "ids": [
+        "ai.usage.run-spend-budget",
+        "ai.usage.subagent-wave-cost",
+        "ai.usage.max-tool-rounds",
+        "ai.usage.max-wall-clock",
+        "ai.usage.max-goal-turns",
+        "ai.usage.node-timeout"
+      ]
+    },
+    {
+      "section": "permissions-runaway",
+      "ids": [
+        "safety.approvals.doom-loop-action",
+        "safety.approvals.doom-loop-threshold",
+        "safety.approvals.loop-detection-mode",
+        "safety.approvals.max-shell-failures",
+        "safety.approvals.max-write-thrash",
+        "safety.approvals.max-retryable-errors"
+      ]
+    },
+    {
+      "section": "testing-debug-setups",
+      "ids": [
+        "safety.approvals.debug-max-browser-branches",
+        "safety.approvals.debug-max-no-evidence-loops",
+        "safety.approvals.debug-grant-scope",
+        "safety.approvals.debug-profile-disclosure"
+      ]
+    },
+    {
+      "section": "bsd-advisor",
+      "ids": [
+        "safety.approvals.bsd-mode",
+        "safety.approvals.bsd-model",
+        "safety.approvals.bsd-persona"
+      ]
+    },
+    {
+      "section": "bsd-timing",
+      "ids": [
+        "safety.approvals.bsd-trigger-sensitivity",
+        "safety.approvals.bsd-catch-up-seconds",
+        "safety.approvals.bsd-cooldown-turns"
+      ]
+    },
+    {
+      "section": "bsd-memory",
+      "ids": [
+        "safety.approvals.bsd-retain-transcript",
+        "safety.approvals.bsd-self-compact-threshold"
+      ]
+    },
+    {
+      "section": "bsd-stages",
+      "ids": [
+        "safety.approvals.bsd-stage-bindings"
+      ]
+    },
+    {
+      "section": "goals-scheduling",
+      "glob": "safety.approvals.schedule-*"
+    },
+    {
+      "section": "permissions-redaction",
+      "ids": [
+        "safety.protection.redaction-profile",
+        "safety.protection.screenshot-redaction"
+      ]
+    },
+    {
+      "section": "commands-keys",
+      "ids": [
+        "code.terminal.shortcuts"
+      ]
+    },
+    {
+      "section": "toolchain-lsp",
+      "ids": [
+        "code.editing.lsp-enabled",
+        "code.editing.lsp-root-override",
+        "code.editing.lsp-host-attachment",
+        "code.editing.lsp-auto-restart",
+        "code.editing.lsp-hover-delay",
+        "code.editing.lsp-hover-timeout",
+        "code.editing.lsp-completion-timeout",
+        "code.editing.lsp-symbol-timeout",
+        "code.editing.lsp-change-debounce",
+        "code.editing.lsp-max-memory",
+        "code.editing.lsp-max-cpu",
+        "code.editing.lsp-subagent-bias"
+      ]
+    },
+    {
+      "section": "toolchain-lsp-tools",
+      "ids": [
+        "code.editing.lsp-server-catalog",
+        "code.editing.lsp-custom-servers",
+        "code.editing.lsp-restart"
+      ],
+      "note": "duplicate the server roster; restart is a diagnostic action"
+    },
+    {
+      "section": "toolchain-formatters",
+      "ids": [
+        "code.editing.formatters-enabled"
+      ]
+    },
+    {
+      "section": "toolchain-formatter-tools",
+      "ids": [
+        "code.editing.formatter-catalog",
+        "code.editing.formatter-custom"
+      ],
+      "note": "duplicate the formatter roster"
+    },
+    {
+      "section": "permissions-freedom",
+      "ids": [
+        "code.execution.run-mode"
+      ]
+    },
+    {
+      "section": "servers-execution",
+      "ids": [
+        "code.execution.execution-strategy",
+        "code.execution.strategy-override",
+        "code.execution.ssh-remotes"
+      ]
+    },
+    {
+      "section": "testing-debug-setups",
+      "ids": [
+        "code.execution.debug-configurations"
+      ]
+    },
+    {
+      "section": "toolchain-containers",
+      "ids": [
+        "code.execution.docker-manager-visibility",
+        "code.execution.dockerhub-auth-method",
+        "code.execution.dockerhub-token",
+        "code.execution.dockerhub-signin",
+        "code.execution.dockerhub-namespace",
+        "code.execution.dockerhub-repository",
+        "code.execution.create-repository",
+        "code.execution.repo-privacy",
+        "code.execution.default-registry",
+        "code.execution.container-runtime",
+        "code.execution.docker-binary-path",
+        "code.execution.docker-display-context",
+        "code.execution.registry-credentials",
+        "code.execution.enterprise-registries"
+      ]
+    },
+    {
+      "section": "exec-running",
+      "ids": [
+        "code.execution.preferred-browser",
+        "code.execution.port-preference-order",
+        "code.execution.container-shell-command",
+        "code.execution.port-forward-auto-open",
+        "code.execution.stream-follow-default"
+      ]
+    },
+    {
+      "section": "exec-drift",
+      "ids": [
+        "code.execution.drift-sensitivity",
+        "code.execution.drift-ignore-rules",
+        "code.execution.drift-comparison-target",
+        "code.execution.receipt-verbosity",
+        "code.execution.receipt-retention",
+        "code.execution.cleanup-aggressiveness",
+        "code.execution.cleanup-scan-cadence",
+        "code.execution.disk-threshold",
+        "code.execution.hide-ephemeral-cleanup-warnings",
+        "code.execution.protected-assets"
+      ]
+    },
+    {
+      "section": "exec-k8s",
+      "glob": "code.execution.k8s-*"
+    },
+    {
+      "section": "exec-k8s",
+      "ids": [
+        "code.execution.helm-visibility"
+      ]
+    },
+    {
+      "section": "exec-unraid",
+      "glob": "code.execution.unraid-*"
+    },
+    {
+      "section": "exec-unraid",
+      "glob": "code.execution.maintainer-*"
+    },
+    {
+      "section": "exec-unraid",
+      "glob": "code.execution.app-template-*"
+    },
+    {
+      "section": "exec-unraid",
+      "ids": [
+        "code.execution.edit-publisher-xml",
+        "code.execution.preserve-unknown-xml"
+      ]
+    },
+    {
+      "section": "memory-retrieval",
+      "ids": [
+        "memory.retention.retrieval-strategy",
+        "memory.retention.retrieval-mode",
+        "memory.retention.rehydration",
+        "memory.retention.retrieval-balance",
+        "memory.retention.half-life-by-kind",
+        "memory.retention.done-decay-multiplier"
+      ]
+    },
+    {
+      "section": "memory-retention-tools",
+      "ids": [
+        "memory.retention.maintenance"
+      ]
+    },
+    {
+      "section": "plan-depth",
+      "ids": [
+        "planning.interview.plan-thoroughness",
+        "planning.interview.web-research-mode",
+        "planning.interview.todo-auto-use",
+        "planning.interview.scope-probe-questions",
+        "planning.interview.topic-depth",
+        "planning.interview.max-questions-per-topic",
+        "planning.interview.min-questions-per-topic",
+        "planning.interview.run-all-topics",
+        "planning.interview.topic-checklist",
+        "planning.interview.builder-topics",
+        "planning.interview.require-arch-confirmation",
+        "planning.interview.plan-default-depth",
+        "planning.interview.deep-plan-default-depth",
+        "planning.interview.deep-plan-grill-me",
+        "planning.interview.plan-default-export"
+      ]
+    },
+    {
+      "section": "plan-helpers",
+      "ids": [
+        "planning.interview.builder-preferences",
+        "planning.interview.prefer-gemini-gui",
+        "planning.interview.vision-provider",
+        "planning.interview.builder-persona-mode",
+        "planning.interview.builder-intake-persona",
+        "planning.interview.builder-drafting-persona",
+        "planning.interview.builder-review-personas"
+      ]
+    },
+    {
+      "section": "plan-depth",
+      "glob": "branching.plan.*",
+      "note": "orphan prefix: no declared subgroup"
+    },
+    {
+      "section": "plan-depth",
+      "glob": "branching.deep-plan.*",
+      "note": "orphan prefix: no declared subgroup"
+    },
+    {
+      "section": "testing-capture",
+      "ids": [
+        "planning.testing.browser-capture-full-default",
+        "planning.testing.browser-component-action",
+        "planning.testing.browser-component-crop",
+        "planning.testing.browser-devtools-policy"
+      ]
+    },
+    {
+      "section": "testing-session",
+      "ids": [
+        "planning.testing.session-actions"
+      ],
+      "note": "label starts with Test; the Profiles tab has its own run button"
+    },
+    {
+      "section": "source-actions",
+      "ids": [
+        "planning.testing.github-actions-template"
+      ]
+    },
+    {
+      "section": "goals-review",
+      "glob": "planning.verification.review-*"
+    },
+    {
+      "section": "goals-defaults",
+      "ids": [
+        "planning.verification.goal-template",
+        "planning.verification.heartbeat-interval",
+        "planning.verification.stall-detection",
+        "planning.verification.cloud-local-display",
+        "planning.verification.goal-write-mode",
+        "planning.verification.worknode-activation"
+      ]
+    },
+    {
+      "section": "goals-recovery",
+      "ids": [
+        "planning.verification.goal-auto-resume",
+        "planning.verification.goal-checkpoint-cadence",
+        "planning.verification.goal-replan-behavior",
+        "planning.verification.goal-replan-events",
+        "planning.verification.goal-interruption",
+        "planning.verification.interrupt-settlement",
+        "planning.verification.true-blocker-escalation"
+      ]
+    },
+    {
+      "section": "toolchain-code-gate",
+      "glob": "planning.verification.lsp-gate*"
+    },
+    {
+      "section": "testing-evidence",
+      "ids": [
+        "planning.verification.evidence-span",
+        "planning.verification.source-evidence-layers",
+        "planning.verification.receipt-evidence-policy",
+        "planning.verification.evidence-retention-days",
+        "planning.verification.evidence-retain-runs",
+        "planning.verification.prune-on-cleanup",
+        "planning.verification.evidence-detail",
+        "planning.verification.evidence-redaction"
+      ]
+    },
+    {
+      "section": "goals-legacy",
+      "ids": [
+        "planning.verification.back-seat-driver-mode"
+      ],
+      "note": "legacy key; the Back Seat Driver manager owns the live bsd-* keys"
+    },
+    {
+      "section": "source-branches",
+      "ids": [
+        "branching.worktrees.enable-git",
+        "branching.worktrees.default-branch",
+        "branching.worktrees.merge-strategy",
+        "branching.worktrees.push-behavior",
+        "branching.worktrees.force-push-policy",
+        "branching.worktrees.git-policy-preset",
+        "branching.worktrees.branch-strategy",
+        "branching.worktrees.branch-naming-pattern",
+        "branching.worktrees.auto-pr",
+        "branching.worktrees.source-control-sections"
+      ]
+    },
+    {
+      "section": "source-github",
+      "ids": [
+        "branching.worktrees.github-pinned-workflows",
+        "branching.worktrees.create-github-repo",
+        "branching.worktrees.new-repo-details",
+        "branching.worktrees.upstream-repo",
+        "branching.worktrees.create-fork",
+        "branching.worktrees.fork-location",
+        "branching.worktrees.feature-branch-name"
+      ]
+    },
+    {
+      "section": "source-actions",
+      "ids": [
+        "branching.worktrees.github-actions-auto-refresh"
+      ]
+    },
+    {
+      "section": "testing-premerge",
+      "glob": "branching.worktrees.pre-merge-*"
+    },
+    {
+      "section": "testing-evidence",
+      "ids": [
+        "branching.worktrees.evidence-retention-days",
+        "branching.worktrees.evidence-retain-last-runs"
+      ]
+    },
+    {
+      "section": "source-worktree-tools",
+      "ids": [
+        "branching.worktrees.clean-all-worktrees"
+      ],
+      "note": "destructive"
+    },
+    {
+      "section": "personas-brainstorm",
+      "glob": "branching.crew.brainstorm-*"
+    },
+    {
+      "section": "personas-brainstorm",
+      "glob": "branching.crew.chat-room-*"
+    },
+    {
+      "section": "personas-brainstorm",
+      "ids": [
+        "branching.crew.grill-me-question-extension"
+      ]
+    },
+    {
+      "section": "personas-helper-tools",
+      "ids": [
+        "branching.subagents.agent-control-envelope",
+        "branching.subagents.child-agent-lease"
+      ],
+      "note": "inspection views"
+    },
+    {
+      "section": "web-provider-matrix",
+      "ids": [
+        "web.providers.provider-status",
+        "web.providers.capability-matrix"
+      ],
+      "note": "duplicate the route list"
+    },
+    {
+      "section": "web-caching",
+      "ids": [
+        "web.fetch.provider-cache"
+      ]
+    },
+    {
+      "section": "web-caching",
+      "glob": "web.fetch.cache-*"
+    },
+    {
+      "section": "web-network",
+      "ids": [
+        "web.fetch.redirect-policy",
+        "web.fetch.egress-timeout",
+        "web.fetch.no-proxy-domains",
+        "web.fetch.ca-bundle",
+        "web.fetch.per-host-ca",
+        "web.fetch.air-gap-mode"
+      ]
+    },
+    {
+      "section": "web-network",
+      "glob": "web.fetch.proxy-*"
+    },
+    {
+      "section": "browser-sessions",
+      "ids": [
+        "web.fetch.browser-session-profile",
+        "web.fetch.browser-save-session"
+      ]
+    },
+    {
+      "section": "personas-fields",
+      "ids": [
+        "personas.library.persona-name",
+        "personas.library.persona-description",
+        "personas.library.persona-id",
+        "personas.library.persona-tags",
+        "personas.library.persona-aliases"
+      ]
+    },
+    {
+      "section": "personas-library-tools",
+      "ids": [
+        "personas.library.persona-manager",
+        "personas.library.core-personas"
+      ],
+      "note": "duplicate the persona roster"
+    },
+    {
+      "section": "personas-tools-audit",
+      "ids": [
+        "personas.tools.skipped-controls-audit"
+      ],
+      "note": "diagnostic"
+    },
+    {
+      "section": "skills-permissions",
+      "ids": [
+        "extensions.skills.permissions",
+        "extensions.skills.pattern-permissions"
+      ]
+    },
+    {
+      "section": "skills-checks",
+      "ids": [
+        "extensions.skills.your-skills",
+        "extensions.skills.validate"
+      ],
+      "note": "your-skills duplicates the skill list; validate trips the one-check rule"
+    },
+    {
+      "section": "plugins-catalog",
+      "ids": [
+        "extensions.plugins.plugin-on-off",
+        "extensions.plugins.add-from-catalog",
+        "extensions.plugins.add-local",
+        "extensions.plugins.remove",
+        "extensions.plugins.packages"
+      ],
+      "note": "duplicate the plugin list and its add / remove actions"
+    },
+    {
+      "section": "commands-key-tools",
+      "ids": [
+        "extensions.commands.keyboard-shortcuts",
+        "extensions.commands.reset-shortcuts",
+        "extensions.commands.backup-shortcuts"
+      ],
+      "note": "keyboard-shortcuts duplicates the shortcut list; reset / backup are recovery actions"
+    },
+    {
+      "section": "commands-behaviour",
+      "ids": [
+        "extensions.commands.command-scope",
+        "extensions.commands.command-mode",
+        "extensions.commands.command-model",
+        "extensions.commands.command-persona",
+        "extensions.commands.command-permissions",
+        "extensions.commands.override-builtin",
+        "extensions.commands.git-routing"
+      ]
+    },
+    {
+      "section": "commands-list",
+      "ids": [
+        "extensions.commands.custom-commands"
+      ],
+      "note": "duplicates the command list"
+    },
+    {
+      "section": "doctor-tools",
+      "ids": [
+        "system.health.run-doctor",
+        "system.health.platform-diagnostics"
+      ],
+      "note": "Check My Setup duplicates the Doctor primary action"
+    },
+    {
+      "section": "adv-behavior",
+      "ids": [
+        "system.health.telemetry"
+      ]
+    },
+    {
+      "section": "mcp-server-list",
+      "ids": [
+        "system.mcp.server-list"
+      ],
+      "note": "duplicates the server list"
+    },
+    {
+      "section": "mcp-connection",
+      "ids": [
+        "system.mcp.launch-config",
+        "system.mcp.remote-url",
+        "system.mcp.remote-headers",
+        "system.mcp.oauth-autodetect",
+        "system.mcp.oauth-refresh",
+        "system.mcp.timeout",
+        "system.mcp.lazy-exposure",
+        "system.mcp.catalog-cache-ttl",
+        "system.mcp.header-secret-hooks",
+        "system.mcp.show-availability"
+      ]
+    },
+    {
+      "section": "mcp-debug",
+      "ids": [
+        "system.mcp.debug-surface"
+      ],
+      "note": "diagnostic"
+    },
+    {
+      "section": "updates-settings",
+      "ids": [
+        "system.advanced.auto-update",
+        "system.advanced.catalog-updates",
+        "system.advanced.update-frequency",
+        "system.advanced.release-channel"
+      ]
+    },
+    {
+      "section": "transfer-files",
+      "ids": [
+        "system.advanced.export-settings",
+        "system.advanced.import-settings"
+      ]
+    },
+    {
+      "section": "providers-apps",
+      "ids": [
+        "system.advanced.cli-path-cursor",
+        "system.advanced.cli-path-claude",
+        "system.advanced.binary-rescan"
+      ]
+    },
+    {
+      "section": "history-retention",
+      "ids": [
+        "system.advanced.chat-history-retention",
+        "system.advanced.runtime-history-days",
+        "system.advanced.diagnostic-history-days",
+        "system.advanced.released-safe-point-days"
+      ]
+    },
+    {
+      "section": "history-tools",
+      "ids": [
+        "system.advanced.preserved-terminal-runs",
+        "system.advanced.request-storage-compaction",
+        "system.advanced.inspect-holds-quarantine"
+      ],
+      "note": "storage inspection tools"
+    },
+    {
+      "section": "adv-recovery",
+      "ids": [
+        "system.advanced.reset-defaults"
+      ]
+    }
+  ],
+  "page_defaults": {
+    "general": "app-more",
+    "code": "editor-more",
+    "extensions": "exec-more",
+    "planning": "plan-more",
+    "branching": "plan-more",
+    "system": "adv-more",
+    "safety": "adv-more",
+    "ai": "adv-more",
+    "web": "adv-more",
+    "media": "adv-more",
+    "memory": "adv-more",
+    "personas": "adv-more"
+  },
+  "hand_moves": [
+    {
+      "workspace": "editor-runtime",
+      "section": "containers",
+      "to_section": "toolchain-containers",
+      "note": "hand rows container-engine and registry join the canonical registry rows"
+    },
+    {
+      "workspace": "app-input",
+      "ids": [
+        "teacher",
+        "onboarding"
+      ],
+      "to_section": "doctor-onboarding"
+    },
+    {
+      "workspace": "app-input",
+      "ids": [
+        "command-confirm"
+      ],
+      "to_section": "commands-behaviour"
+    }
+  ],
+  "retire_workspaces": [
+    "assistant"
+  ],
+  "delete_reference_pages": true,
+  "domain_labels": {
+    "planning": {
+      "label": "Planning",
+      "summary": "Planning interviews, question limits, and plan depth."
+    }
+  }
+}

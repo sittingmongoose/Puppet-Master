@@ -1,0 +1,27 @@
+{
+ "_about": "Built-in browser rows (settings audit, 2026-09-27).",
+ "rows": {
+  "general.interaction.browser-capture": {
+   "label": "Let me point at things to share with chat",
+   "help": "Nothing is sent until you confirm."
+  },
+  "web.fetch.browser-session-profile": {
+   "label": "Browser profile",
+   "help": "Protected sign-in windows never keep anything.",
+   "options": {
+    "persistent": "Keep one for this project",
+    "isolated": "Start clean every time"
+   }
+  },
+  "web.fetch.browser-save-session": {
+   "label": "Remember website logins",
+   "help": "Keeps approved cookies for later runs.",
+   "when": {
+    "id": "web.fetch.browser-session-profile",
+    "in": [
+     "persistent"
+    ]
+   }
+  }
+ }
+}

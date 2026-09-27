@@ -1,0 +1,20 @@
+{
+ "_about": "servers rows (settings audit).",
+ "rows": {
+  "code.execution.ssh-remotes": {
+   "label": "SSH computers",
+   "help": "Keys stay in the system keychain, never in settings files.",
+   "why": "Is the SSH computers list on the Servers tab.",
+   "noun": "computer"
+  },
+  "system.health.capability-provisioning": {
+   "label": "Install tools that work needs",
+   "help": "AI provider apps always need you to set them up yourself.",
+   "options": {
+    "Off": "Never",
+    "Auto": "When the safety checks pass",
+    "On": "Always make them available"
+   }
+  }
+ }
+}

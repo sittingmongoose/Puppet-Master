@@ -1,0 +1,17 @@
+{
+  "_about": "MCP: every per-server setting lives in the server's panel (the list is its home); importing is drawn by the page with the real choice; connection defaults are a placed group; the two expert switches are More options; the 'effective config' view is the More options summary.",
+  "sections": {
+    "mcp-home": { "to": "mcp", "title": "Your servers", "help": "The list and everything about one server.", "order": 1, "composed": true },
+    "mcp-import": { "to": "mcp", "title": "Servers from other apps", "help": "Reusing servers set up in Claude Desktop, Cursor and VS Code.", "order": 5, "composed": true },
+    "mcp-defaults": { "to": "mcp", "title": "Connection defaults", "help": "How every server connects unless a server says otherwise.", "order": 10 },
+    "mcp-more": { "to": "mcp", "title": "Refresh and secrets", "help": "How often tool lists are refreshed, and adding secrets only at the moment of a request.", "order": 20, "advanced": true },
+    "mcp-debug": { "to": "mcp", "title": "What each server ended up with", "help": "The final settings of every server.", "order": 30, "composed": true, "advanced": true }
+  },
+  "overrides": [
+    { "section": "mcp-home", "ids": ["system.mcp.server-list", "system.mcp.server-enabled", "system.mcp.tool-toggle", "system.mcp.health-status", "system.mcp.sign-out", "system.mcp.transport", "system.mcp.server-scope", "system.mcp.launch-config", "system.mcp.remote-url", "system.mcp.remote-headers", "system.mcp.oauth-refresh"] },
+    { "section": "mcp-import", "ids": ["system.mcp.import-external"] },
+    { "section": "mcp-defaults", "ids": ["system.mcp.oauth-autodetect", "system.mcp.timeout", "system.mcp.lazy-exposure", "system.mcp.show-availability"] },
+    { "section": "mcp-more", "ids": ["system.mcp.catalog-cache-ttl", "system.mcp.header-secret-hooks"] },
+    { "section": "mcp-debug", "ids": ["system.mcp.debug-surface"] }
+  ]
+}

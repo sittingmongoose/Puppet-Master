@@ -1,0 +1,135 @@
+{
+  "_about": "Skills rows. `why` records the decision (not shown).",
+  "rows": {
+    "extensions.skills.your-skills": {
+      "why": "Is the skill list itself; the list is its home.",
+      "noun": "skill"
+    },
+    "extensions.skills.skill-on-off": {
+      "why": "Per skill: each skill's switch in the list and in its panel.",
+      "label": "Skill on or off"
+    },
+    "extensions.skills.search": {
+      "why": "The list's search box.",
+      "placeholder": "Search skills"
+    },
+    "extensions.skills.registry-view": {
+      "why": "The list's Show menu.",
+      "label": "Which skills the list shows"
+    },
+    "extensions.skills.sort": {
+      "why": "The list's Sort menu.",
+      "label": "How the list is sorted"
+    },
+    "extensions.skills.rescan": {
+      "why": "A toolbar button on the list, not a preference.",
+      "actionLabel": "Rescan",
+      "icon": "refresh",
+      "pm51": "pm51-skills-rescan"
+    },
+    "extensions.skills.validate": {
+      "why": "Toolbar button; merged with the old separate diagnostics button (both checked every skill).",
+      "actionLabel": "Check all",
+      "icon": "test",
+      "pm51": "pm51-skills-diagnostics"
+    },
+    "extensions.skills.preview": {
+      "why": "Per skill: Read its instructions, in the skill's panel.",
+      "actionLabel": "Read a skill's instructions",
+      "route": {
+        "domain": "code",
+        "workspace": "skills",
+        "target": "[data-pm51-manager=\"skills\"] .pm51-skills-list .pm51-item"
+      },
+      "routeToast": [
+        "Open a skill",
+        "Its panel has Read its instructions."
+      ]
+    },
+    "extensions.skills.permissions": {
+      "why": "Per skill in each skill's panel; name patterns in 'Rules for groups of skills'.",
+      "label": "When skills may run",
+      "pair": [
+        "Skill name or pattern",
+        "When it runs"
+      ],
+      "editorHelp": "A skill's name, or a pattern like doc-* for every skill whose name starts with doc-. For each, choose allow, ask or deny.",
+      "valueChoices": [
+        "allow",
+        "ask",
+        "deny"
+      ],
+      "options": {
+        "allow": "Runs when it fits",
+        "ask": "Asks me first",
+        "deny": "Never runs"
+      }
+    },
+    "extensions.skills.pattern-permissions": {
+      "why": "The button on 'Rules for groups of skills'; opens the name-or-pattern editor.",
+      "actionLabel": "Add a pattern rule",
+      "open": "extensions.skills.permissions"
+    },
+    "extensions.skills.auto-invocation": {
+      "label": "Let skills start on their own",
+      "help": "The assistant picks up a skill when it fits the job. Skills with a warning always wait for you."
+    },
+    "extensions.skills.skills-panel": {
+      "label": "Skills in chat",
+      "help": "Type /skill in chat to browse and run skills, or just ask for one by name."
+    },
+    "extensions.skills.discovery": {
+      "label": "Find new skills automatically",
+      "help": "Looks in your project's and your profile's skill folders when Puppet Master starts."
+    },
+    "extensions.skills.auto-enable-new": {
+      "label": "Turn new skills on right away",
+      "help": "Off means a new skill arrives switched off until you've had a look at it."
+    },
+    "extensions.skills.projection": {
+      "label": "Share skills with other AI tools",
+      "help": "Copies your skills into the folders other AI coding tools read, like .claude/skills and .agents/skills.",
+      "control": "segmented",
+      "choices": [
+        "not_projected",
+        "projected"
+      ],
+      "options": {
+        "not_projected": "Don't share",
+        "projected": "Share",
+        "projection_failed": "Sharing failed",
+        "drifted": "Out of step"
+      },
+      "why": "The inventory lists sharing's states (failed, out of step) as choices; only share / don't share are choices."
+    },
+    "extensions.skills.projection-method": {
+      "label": "How to share",
+      "help": "A copy works everywhere. A link keeps one original, on drives that support links.",
+      "when": {
+        "id": "extensions.skills.projection",
+        "in": [
+          "projected",
+          "projection_failed",
+          "drifted"
+        ]
+      }
+    },
+    "extensions.skills.context-budget-percent": {
+      "label": "Room for the skill list in each request",
+      "help": "At most this share of the model's working memory. Skills that don't fit are listed in the prompt inspector.",
+      "unit": "%",
+      "min": 0,
+      "max": 20
+    },
+    "extensions.skills.context-budget-chars": {
+      "label": "Longest skill list, in characters",
+      "help": "A hard cap on the skill list sent to the model. The tighter of this and the share above wins.",
+      "unit": "characters",
+      "min": 0
+    },
+    "extensions.skills.info-badges": {
+      "label": "Shown on each skill in the list",
+      "help": "Whether it's ready, where it came from, and which personas use it."
+    }
+  }
+}

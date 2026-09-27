@@ -1,0 +1,65 @@
+{
+ "_about": "advanced rows (settings audit).",
+ "rows": {
+  "system.health.telemetry": {
+   "label": "Share anonymous usage and crash reports",
+   "help": "Nothing leaves this computer unless you turn this on."
+  },
+  "system.advanced.debug-mode": {
+   "label": "Record extra detail",
+   "help": "Slows things a little; turn on only while chasing a problem."
+  },
+  "system.advanced.log-verbosity": {
+   "label": "How much the logs record",
+   "help": "More detail helps support but fills the disk faster.",
+   "options": {
+    "Silent": "Nothing",
+    "Errors only": "Errors only",
+    "Warnings": "Warnings and errors",
+    "Info": "Normal",
+    "Debug": "Detailed",
+    "Trace": "Everything"
+   }
+  },
+  "system.advanced.receipts-verbosity": {
+   "label": "Detail in the activity record",
+   "help": "Full keeps more but is harder to read.",
+   "options": {
+    "Compact": "Short",
+    "Verbose": "Full"
+   }
+  },
+  "system.advanced.runtime-artifacts": {
+   "label": "Show the app's working files",
+   "help": "Temporary files made while running; for odd behavior only."
+  },
+  "system.advanced.cache-linter": {
+   "label": "Warn about changes that raise AI costs",
+   "help": "Catches edits that stop prompt caching from working."
+  },
+  "system.advanced.version-handshake": {
+   "label": "Check the app's parts match at startup",
+   "help": "Stops with a clear message if they don't."
+  },
+  "system.advanced.viewer-mode": {
+   "label": "Open read-only if another copy is running",
+   "help": "Stops two copies from overwriting each other."
+  },
+  "system.advanced.renderer": {
+   "label": "Drawing engine",
+   "help": "Change only if you see visual glitches.",
+   "options": {
+    "Auto": "Automatic",
+    "winit + Skia": "Skia",
+    "winit + FemtoVG (wgpu)": "FemtoVG (graphics card)",
+    "Software": "Software (slowest, works everywhere)"
+   }
+  },
+  "system.advanced.reset-defaults": {
+   "label": "Reset settings to defaults",
+   "help": "Pick one setting, a section or everything; you see it first.",
+   "actionLabel": "Reset…",
+   "danger": true
+  }
+ }
+}

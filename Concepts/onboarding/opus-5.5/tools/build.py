@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Concepts/TestOpus5.5PmConcept.html from the pinned TestPMConcept.html plus ./src.
+"""Build Concepts/TestOpus5.5PmConcept.html from the pinned TestPMConcept.html plus ./src (onboarding, tour, Settings).
 
 Usage:
   python3 Concepts/onboarding/opus-5.5/tools/build.py          # build TestOpus only
@@ -19,6 +19,8 @@ import json
 import re
 import sys
 from pathlib import Path
+
+import settings_layer
 
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
@@ -95,6 +97,12 @@ def lint_sources() -> list[str]:
         if EMOJI.search(text):
             problems.append(f'emoji glyph in {p.relative_to(PKG)}')
         if p.suffix == '.css':
+            # A :has() whose subject is html/body/:root makes every DOM insertion restyle the whole ~17k-node document
+            # (measured ~90 ms each); that is what made Settings lag. Settings styles use no :has() at all.
+            for m in re.finditer(r'(?:^|[\s,}])(?:html|body|:root)\b[^{},]*:has\(', text):
+                problems.append(f'page-wide :has() in {p.relative_to(PKG)}: {m.group(0).strip()[:80]}')
+            if 'settings' in p.relative_to(SRC).parts and ':has(' in text:
+                problems.append(f':has() in Settings styles {p.relative_to(PKG)}')
             for m in re.finditer(r'border-(?:left|inline-start)\s*:\s*([^;]+);', text):
                 width = re.search(r'(\d+(?:\.\d+)?)px', m.group(1))
                 if width and float(width.group(1)) >= 2:
@@ -183,6 +191,31 @@ PATCHES = [
     ("      { label: 'Replay setup', action: 'replay-onboarding', data: { 'ui-action-id': 'settings.onboarding.run_again', 'source-surface': 'settings_rerun' } },\n"
      "      { label: 'Guided Tour', action: 'start-guided-tour', data: { 'ui-action-id': 'settings.guided_tour.replay' } },\n",
      '', 'doctor quiet actions'),
+    # Settings lag: with this rule's universal subject, every DOM insertion anywhere restyled the whole document
+    # (~90 ms each; the hover-tag layer inserts one description per control it binds, so scrolling and index jumps in
+    # Settings ran at 2-6 fps). The :has() is implied by the descendant part; the doubled class keeps (0,3,0).
+    (".pm7u-card:has(.pm7u-setup-cta) .pm7u-setup-cta > * {",
+     ".pm7u-card .pm7u-setup-cta.pm7u-setup-cta > * {",
+     'usage card cta :has restyle'),
+    # Notification sounds: a built-in sound may carry its own recipe (sound.tones), so the library can hold more,
+    # and more varied, sounds than the name-matched demo tones. A note may glide to a second pitch and set its level.
+    ("    const profileFor = sound => {\n      const key = `${sound && sound.id || ''} ${sound && sound.name || ''}`.toLowerCase();",
+     "    const profileFor = sound => {\n      if (sound && Array.isArray(sound.tones) && sound.tones.length) return sound.tones;\n      const key = `${sound && sound.id || ''} ${sound && sound.name || ''}`.toLowerCase();",
+     'sound recipe from the sound'),
+    ("        for (const [frequency, offset, length, type] of profileFor(sound)) {",
+     "        for (const [frequency, offset, length, type, glideTo, level] of profileFor(sound)) {",
+     'sound recipe note fields'),
+    ("          oscillator.frequency.setValueAtTime(frequency, noteStart);\n          envelope.gain.setValueAtTime(.0001, noteStart);\n          envelope.gain.exponentialRampToValueAtTime(.42, noteStart + Math.min(.025, duration * .04));",
+     "          oscillator.frequency.setValueAtTime(frequency, noteStart);\n          if (glideTo) oscillator.frequency.exponentialRampToValueAtTime(glideTo, noteEnd);\n          envelope.gain.setValueAtTime(.0001, noteStart);\n          envelope.gain.exponentialRampToValueAtTime(level || .42, noteStart + Math.min(.025, duration * .04));",
+     'sound recipe glide and level'),
+    # The Settings rail and Home count the real AI services (the list grew from 13 to 22 and each one's state is
+    # live), not a fixed "7 ready · 2 need attention". Providers & Accounts defines window.O55ProviderSummary.
+    ("<strong>AI Providers</strong><small>7 ready · 2 need attention</small>",
+     "<strong>AI Providers</strong><small>${window.O55ProviderSummary ? window.O55ProviderSummary() : ''}</small>",
+     'settings rail provider count'),
+    ('<span class="setup-meta">7 ready · 2 need attention · install, sign in, choose models</span>',
+     '<span class="setup-meta">${window.O55ProviderSummary ? window.O55ProviderSummary() + \' · \' : \'\'}install, sign in, choose models</span>',
+     'settings home provider count'),
     # Teacher is a real persona in the Assistant Chat guide picker.
     ("var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer'];",
      "var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher'];",
@@ -231,11 +264,17 @@ LAYOUT_EXPOSE = ('    o55RestoreSnapshot: function (snapshot) { var problem = va
                  'return { ok: result !== false, result: result }; },\n')
 
 
+SETTINGS_NOTES: dict = {}
+
+
 def build_text() -> str:
     original = SOURCE.read_bytes()
     need(hashlib.sha256(original).hexdigest() == BASE_SHA256,
          'TestPMConcept.html changed since the pin; review the strip boundaries and patches, then re-pin BASE_SHA256.')
     text = original.decode('utf-8')
+
+    # 0. Settings: swap the base's T50 managers layer for the Opus 5.5 fork in src/settings.
+    text, SETTINGS_NOTES['layer'] = settings_layer.apply(text, need)
 
     # 1. Strip the legacy Product Onboarding + Guided Tour.
     text = remove_block(text, 'style', 'pm7-onboarding-css')
@@ -274,7 +313,7 @@ def build_text() -> str:
 
 
 def check(built: str) -> list[str]:
-    problems = lint_sources()
+    problems = lint_sources() + syntax_check(built)
     for removed in ['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                     'pm7-onboarding-css', 'pm7-guided-tour-css', "'.pm7gt-callout", ".closest('.pm7gt')",
                     "getElementById('pm7-onboarding')", "getElementById('pm7-guided-tour')"]:
@@ -295,6 +334,26 @@ def check(built: str) -> list[str]:
     return problems
 
 
+def syntax_check(built: str) -> list[str]:
+    """node --check the scripts this package writes (the Settings engine with its managers, and the O55 module)."""
+    import subprocess
+    import tempfile
+    out = []
+    for sid in ('pm4-settings-js', 'pm-o55-js'):
+        m = re.search(r'<script\b[^>]*\bid="' + sid + r'"[^>]*>(.*?)</script>', built, re.S)
+        if not m:
+            out.append(f'script {sid} missing')
+            continue
+        with tempfile.NamedTemporaryFile('w', suffix='.js', delete=False, encoding='utf-8') as fh:
+            fh.write(m.group(1))
+            path = fh.name
+        r = subprocess.run(['node', '--check', path], capture_output=True, text=True)
+        Path(path).unlink(missing_ok=True)
+        if r.returncode:
+            out.append(f'syntax error in {sid}: ' + ' | '.join(r.stderr.strip().splitlines()[-4:])[:600])
+    return out
+
+
 def main() -> int:
     try:
         built = build_text()
@@ -307,7 +366,7 @@ def main() -> int:
             print('CHECK:', p)
         print('check', 'ok' if not problems else f'failed ({len(problems)})')
         return 0 if not problems else 1
-    problems = lint_sources()
+    problems = lint_sources() + syntax_check(built)
     if problems:
         for p in problems:
             print('LINT:', p)

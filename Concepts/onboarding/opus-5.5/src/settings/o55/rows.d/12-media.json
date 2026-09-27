@@ -1,0 +1,271 @@
+{
+ "_about": "Media & Output rows (settings audit, 2026-09-26). Picture sizes and video resolutions that are the same size say so; the picture service lists what each option needs.",
+ "rows": {
+  "media.io.media-output": {
+   "label": "Hand back files and media",
+   "help": "Off means answers come back as text only."
+  },
+  "media.capabilities.master": {
+   "label": "Let the assistant make media",
+   "help": "Pictures, video, speech and music. Off by default."
+  },
+  "media.capabilities.enabled-types": {
+   "label": "Kinds of media it may make",
+   "options": {
+    "image": "Pictures",
+    "screenshot": "Screenshots",
+    "diagram": "Diagrams",
+    "recording": "Screen recordings",
+    "video": "Videos"
+   }
+  },
+  "media.image.provider": {
+   "label": "Service that makes pictures",
+   "help": "Only services you are signed in to can be chosen.",
+   "options": {
+    "None": "No service",
+    "OpenAI/Codex subscription": "ChatGPT / Codex plan",
+    "OpenAI gpt-image-2": "GPT Image 2 with an OpenAI API key",
+    "OpenAI Responses image_generation": "Pictures inside OpenAI replies",
+    "MiniMax Image-01": "MiniMax Image-01",
+    "Gemini Direct": "Gemini API",
+    "Antigravity gemini-3.1-flash-image": "Google Antigravity"
+   },
+   "hints": {
+    "None": "Pictures are not made",
+    "OpenAI/Codex subscription": "Uses the pictures included in your ChatGPT plan",
+    "OpenAI gpt-image-2": "Paid per picture",
+    "OpenAI Responses image_generation": "An API key account; the picture comes back in the reply",
+    "MiniMax Image-01": "Through your MiniMax Coding Plan",
+    "Gemini Direct": "Gemini picture models, paid per picture",
+    "Antigravity gemini-3.1-flash-image": "Gemini 3.1 Flash Image through your Google plan"
+   }
+  },
+  "media.image.model": {
+   "label": "Model for each ability",
+   "help": "Each ability's Uses row picks it. The service's default model is the usual choice.",
+   "options": {
+    "Service default": "The service's default model",
+    "Per-task override": "A model I choose per ability"
+   }
+  },
+  "media.image.model-aliases": {
+   "label": "Model nicknames",
+   "help": "Short names you can type instead of a full model name."
+  },
+  "media.capabilities.aspect-ratio": {
+   "label": "Picture shape",
+   "help": "You can still ask for another shape in a request.",
+   "options": {
+    "1:1": "Square (1:1)",
+    "16:9": "Wide (16:9)",
+    "9:16": "Tall (9:16)",
+    "custom": "Custom"
+   },
+   "hints": {
+    "custom": "Give the exact size in your request"
+   }
+  },
+  "media.capabilities.image-size": {
+   "label": "Picture size",
+   "help": "Bigger looks sharper but costs more and takes longer.",
+   "options": {
+    "512px": "Small (512 px)",
+    "1024px": "Medium (1024 px)",
+    "2048px": "Large (2048 px)",
+    "2K": "2K (same as large)",
+    "4K": "4K",
+    "8K": "8K"
+   }
+  },
+  "media.capabilities.image-quality": {
+   "label": "Picture quality",
+   "options": {
+    "draft": "Draft",
+    "standard": "Standard",
+    "high": "High"
+   },
+   "hints": {
+    "draft": "Fast and cheap",
+    "high": "Slower and costs more"
+   },
+   "help": "Draft is fast and cheap. High takes longer and costs more."
+  },
+  "media.capabilities.image-count": {
+   "label": "Pictures per request",
+   "help": "1 to 8. Each extra picture costs credits.",
+   "min": 1,
+   "max": 8,
+   "step": 1
+  },
+  "media.capabilities.image-format": {
+   "label": "Picture file type",
+   "options": {
+    "png": "PNG (best quality)",
+    "jpg": "JPG (smaller)",
+    "webp": "WebP (smallest)"
+   },
+   "help": "PNG keeps every detail. JPG and WebP make smaller files."
+  },
+  "media.capabilities.response-format": {
+   "label": "How pictures come back",
+   "options": {
+    "url": "A link (may expire)",
+    "base64": "Inside the reply"
+   },
+   "hints": {
+    "url": "MiniMax links expire after 24 hours"
+   }
+  },
+  "media.capabilities.seed": {
+   "label": "Same picture every time",
+   "help": "Set a number to repeat a result. Blank gives a new one.",
+   "placeholder": "New picture each time"
+  },
+  "media.capabilities.prompt-optimizer": {
+   "label": "Let MiniMax improve my prompt",
+   "help": "Off keeps your exact words.",
+   "when": {
+    "id": "media.image.provider",
+    "in": [
+     "MiniMax Image-01"
+    ]
+   }
+  },
+  "media.capabilities.video": {
+   "label": "Make videos",
+   "help": "Not every service can. One that cannot says so."
+  },
+  "media.capabilities.video-duration": {
+   "label": "Video length",
+   "help": "0.5 to 60 seconds. Longer takes longer and costs more.",
+   "unit": "s",
+   "min": 0.5,
+   "max": 60
+  },
+  "media.capabilities.video-resolution": {
+   "label": "Video sharpness",
+   "options": {
+    "720p": "720p",
+    "1080p": "1080p (Full HD)",
+    "1440p": "1440p",
+    "2160p": "4K (2160p)",
+    "4k": "4K (same as 2160p)"
+   }
+  },
+  "media.capabilities.tts": {
+   "label": "Read text aloud",
+   "help": "Your workspace may lock this off on some plans."
+  },
+  "media.capabilities.tts-voice": {
+   "label": "Voice",
+   "options": {
+    "alloy": "Alloy",
+    "echo": "Echo",
+    "fable": "Fable",
+    "onyx": "Onyx",
+    "nova": "Nova",
+    "shimmer": "Shimmer"
+   },
+   "hints": {
+    "alloy": "Even and neutral",
+    "echo": "Soft and calm",
+    "fable": "Warm storyteller",
+    "onyx": "Deep",
+    "nova": "Bright and friendly",
+    "shimmer": "Light and clear"
+   }
+  },
+  "media.capabilities.music": {
+   "label": "Make music and sounds",
+   "help": "Songs, instrumentals, beats and sound effects. Off by default."
+  },
+  "media.capabilities.music-bpm": {
+   "label": "Music tempo",
+   "help": "Beats per minute, 60 to 200. 120 suits most styles.",
+   "unit": "BPM",
+   "min": 60,
+   "max": 200
+  },
+  "media.capabilities.provider-params": {
+   "label": "Extra options for the service",
+   "help": "Leave empty unless a guide tells you what to add."
+  },
+  "media.io.media-input": {
+   "label": "Accept pictures and files",
+   "help": "Off keeps every conversation text only."
+  },
+  "general.interaction.composer-media-controls": {
+   "label": "Picture buttons in the message box",
+   "help": "Shown when the current model can use them."
+  },
+  "media.io.voice-input": {
+   "label": "Voice typing",
+   "help": "What you say becomes a draft you check before sending."
+  },
+  "media.io.vision-bridge": {
+   "label": "Understand pictures and screenshots",
+   "help": "Works even when your main model cannot see pictures."
+  },
+  "media.io.screenshot-source": {
+   "label": "Where to look for 'my screenshot'",
+   "options": {
+    "clipboard": "The clipboard",
+    "recent-os": "My latest screenshot",
+    "manual-picker": "Ask me to pick"
+   },
+   "help": "Used when you mention a screenshot without attaching it."
+  },
+  "media.io.image-source-order": {
+   "label": "Which picture wins",
+   "help": "Used when more than one picture could match a request.",
+   "options": {
+    "attachment": "Files I attached",
+    "artifact": "Results the assistant made",
+    "project_file": "Project files",
+    "clipboard": "The clipboard",
+    "screenshot": "Screenshots"
+   },
+   "valueChoices": [
+    "attachment",
+    "artifact",
+    "project_file",
+    "clipboard",
+    "screenshot"
+   ],
+   "noun": "place"
+  },
+  "media.io.vision-fallback-model": {
+   "label": "Backup for looking at pictures",
+   "options": {
+    "auto": "The best one available",
+    "choose a specific model": "Models I pick"
+   }
+  },
+  "media.io.redaction-policy": {
+   "label": "If private details can't be blurred",
+   "help": "Blocking the picture is safest.",
+   "options": {
+    "Block the image": "Block the picture",
+    "Let me override": "Let me decide"
+   }
+  },
+  "media.io.artifact-retention": {
+   "label": "Keep results for",
+   "options": {
+    "24 Hours": "1 day",
+    "7 Days": "1 week",
+    "30 Days": "30 days",
+    "Unlimited": "Forever"
+   },
+   "hints": {
+    "24 Hours": "Some service links expire after a day anyway"
+   },
+   "help": "After that, results are cleaned up."
+  },
+  "media.io.artifacts-location": {
+   "label": "Results folder",
+   "help": "Inside your project. Each ability saves to a folder here."
+  }
+ }
+}

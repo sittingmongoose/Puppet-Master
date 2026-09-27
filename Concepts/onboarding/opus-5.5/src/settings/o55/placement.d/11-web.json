@@ -1,0 +1,141 @@
+{
+ "_about": "Web & Research: four tabs. Abilities draws each ability's web services (capability matrix), its AI model and the inventory limits inside it; the manager's own copies of those limits are gone. Search services draws every service with its switch, status, key and own rows.",
+ "managers": {
+  "web": {
+   "tabs": {
+    "abilities": "Abilities",
+    "services": "Search services",
+    "limits": "Limits & saving",
+    "network": "Network"
+   },
+   "defaultTab": "abilities"
+  }
+ },
+ "sections": {
+  "web-search-providers": null,
+  "web-limits": null,
+  "web-caching": null,
+  "web-network": null,
+  "web-provider-matrix": null,
+  "web-abilities": {
+   "to": "web",
+   "tab": "abilities",
+   "title": "Web abilities",
+   "help": "Pick a job to see who does it and its limits.",
+   "order": 1,
+   "composed": true
+  },
+  "web-services": {
+   "to": "web",
+   "tab": "services",
+   "title": "Search services",
+   "help": "The services that search and read the web.",
+   "order": 2,
+   "composed": true
+  },
+  "web-spending": {
+   "to": "web",
+   "tab": "limits",
+   "title": "Spending",
+   "help": "When a web job must ask first, and when it is stopped.",
+   "order": 10
+  },
+  "web-caching-o55": {
+   "to": "web",
+   "tab": "limits",
+   "title": "Saved results",
+   "help": "Reuse recent results instead of fetching them again.",
+   "order": 20
+  },
+  "web-network-o55": {
+   "to": "web",
+   "tab": "network",
+   "title": "Network",
+   "help": "Working offline, proxies and certificates.",
+   "order": 10
+  },
+  "web-network-more": {
+   "to": "web",
+   "tab": "network",
+   "title": "Your own servers",
+   "help": "Rules for self-hosted services such as your own Firecrawl.",
+   "order": 20,
+   "advanced": true
+  }
+ },
+ "overrides": [
+  {
+   "section": "web-abilities",
+   "ids": [
+    "web.providers.web-search-enable",
+    "web.providers.capability-matrix",
+    "web.fetch.search-max-results",
+    "web.fetch.research-max-sources",
+    "web.fetch.research-auto-read-pages",
+    "web.fetch.pdf-mode",
+    "web.fetch.request-timeout",
+    "web.fetch.crawl-max-pages",
+    "web.fetch.crawl-max-depth",
+    "web.fetch.map-max-pages",
+    "web.fetch.map-max-depth"
+   ]
+  },
+  {
+   "section": "web-services",
+   "ids": [
+    "web.providers.provider-order",
+    "web.providers.provider-status",
+    "web.providers.health-disclosure",
+    "web.providers.web-api-keys",
+    "web.providers.model-native-enable",
+    "web.providers.duckduckgo-enable",
+    "web.providers.exa-enable",
+    "web.providers.tavily-enable",
+    "web.providers.tavily-fetch-mode",
+    "web.providers.firecrawl-enable",
+    "web.providers.firecrawl-api-key",
+    "web.providers.firecrawl-url",
+    "web.fetch.firecrawl-proxy-mode",
+    "web.fetch.provider-cache",
+    "web.providers.brave-enable",
+    "web.providers.jina-enable"
+   ]
+  },
+  {
+   "section": "web-spending",
+   "ids": [
+    "web.fetch.cost-warning-threshold",
+    "web.fetch.cost-hard-cap"
+   ]
+  },
+  {
+   "section": "web-caching-o55",
+   "ids": [
+    "web.fetch.cache-size",
+    "web.fetch.cache-ttl-search",
+    "web.fetch.cache-ttl-fetch",
+    "web.fetch.cache-ttl-crawl"
+   ]
+  },
+  {
+   "section": "web-network-o55",
+   "ids": [
+    "web.fetch.air-gap-mode",
+    "web.fetch.proxy-mode",
+    "web.fetch.proxy-http-url",
+    "web.fetch.proxy-https-url",
+    "web.fetch.proxy-credentials",
+    "web.fetch.no-proxy-domains",
+    "web.fetch.ca-bundle"
+   ]
+  },
+  {
+   "section": "web-network-more",
+   "ids": [
+    "web.fetch.redirect-policy",
+    "web.fetch.egress-timeout",
+    "web.fetch.per-host-ca"
+   ]
+  }
+ ]
+}

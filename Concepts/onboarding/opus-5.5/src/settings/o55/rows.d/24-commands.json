@@ -1,0 +1,127 @@
+{
+ "_about": "Commands & Shortcuts rows (settings audit, 2026-09-26).",
+ "rows": {
+  "extensions.commands.keyboard-shortcuts": {
+   "label": "Keyboard shortcuts",
+   "help": "Only the keys you change are saved."
+  },
+  "extensions.commands.shortcut-hints": {
+   "label": "Show shortcut hints",
+   "help": "Keys appear next to buttons, and the cheat sheet is offered."
+  },
+  "extensions.commands.search-shortcuts": {
+   "label": "Search shortcuts",
+   "help": "Filters the shortcut list as you type."
+  },
+  "extensions.commands.conflict-handling": {
+   "label": "When two actions share keys",
+   "options": {
+    "warn": "Warn me",
+    "hide": "Keep the older one",
+    "override": "The newer one wins"
+   },
+   "hints": {
+    "warn": "Safest"
+   }
+  },
+  "extensions.commands.text-editing-keys": {
+   "label": "Keys in the message box",
+   "help": "For moving and deleting while you type."
+  },
+  "code.terminal.shortcuts": {
+   "label": "Keys in the terminal",
+   "help": "Only while the terminal has focus."
+  },
+  "extensions.commands.variant-cycling-key": {
+   "label": "Switch model variant",
+   "help": "Flips between a model's variants without opening the picker.",
+   "options": {
+    "unbound": "Not set"
+   }
+  },
+  "extensions.commands.reset-shortcuts": {
+   "label": "Reset shortcuts",
+   "help": "All of them at once. To reset one, open it and choose Use the default.",
+   "options": {
+    "This shortcut": "Just this one",
+    "All shortcuts": "All of them"
+   },
+   "pm51": "pm51-commands-reset-shortcuts",
+   "actionLabel": "Reset all shortcuts"
+  },
+  "extensions.commands.backup-shortcuts": {
+   "label": "Save or load shortcuts",
+   "options": {
+    "Export": "Save to a file",
+    "Import (Replace)": "Load and replace mine",
+    "Import (Merge)": "Load and add to mine"
+   },
+   "pm51": "pm51-commands-backup",
+   "actionLabel": "Save or load shortcuts"
+  },
+  "extensions.commands.custom-commands": {
+   "label": "Your commands",
+   "noun": "command"
+  },
+  "extensions.commands.command-scope": {
+   "label": "Available in",
+   "options": {
+    "Global": "Every project",
+    "Project": "This project"
+   }
+  },
+  "extensions.commands.command-mode": {
+   "label": "How freely it may act",
+   "options": {
+    "inherit": "Same as the chat",
+    "ask": "Ask",
+    "plan": "Plan",
+    "regular": "Regular",
+    "yolo": "No pauses"
+   }
+  },
+  "extensions.commands.command-model": {
+   "label": "Model",
+   "choices": [
+    "Inherit"
+   ],
+   "options": {
+    "Inherit": "Same as the chat"
+   }
+  },
+  "extensions.commands.command-persona": {
+   "label": "Persona",
+   "choices": [
+    "Inherit"
+   ],
+   "options": {
+    "Inherit": "Same as the chat"
+   }
+  },
+  "extensions.commands.command-permissions": {
+   "label": "Permissions",
+   "choices": [
+    "Inherit"
+   ],
+   "options": {
+    "Inherit": "My usual permissions"
+   }
+  },
+  "extensions.commands.override-builtin": {
+   "label": "Let my commands take a built-in name",
+   "help": "Core commands like /web and /stop are never replaced."
+  },
+  "extensions.commands.git-routing": {
+   "label": "Keep /git and /github built in",
+   "help": "Off lets your own command with that name run.",
+   "when": {
+    "id": "extensions.commands.override-builtin",
+    "truthy": true
+   }
+  },
+  "command-confirm": {
+   "label": "Ask again before a high-impact command",
+   "help": "A second step before commands that change or delete a lot."
+  }
+ }
+}
