@@ -25,11 +25,12 @@ const only = opt('only', '') ? opt('only', '').split(',') : null;
 const theme = opt('theme', 'basic-dark');
 const snaps = argv.includes('--snaps');
 mkdirSync(out, { recursive: true });
-/* one Chrome profile for this run's browsers (they run one after another), removed at the end: each is ~150 MB */
-const PROFILE = `${tmpdir()}/pm-cdp-profile-${process.pid}-tour`;
+/* Each scenario starts with an independent owner layout and Chat state. A Keep result from an earlier
+ * scenario must not change a later scenario's restoration basis. Profiles are removed after each case. */
+const PROFILE_BASE = `${tmpdir()}/pm-cdp-profile-${process.pid}-tour`;
 
-async function openPage() {
-  const { page, close, chrome } = await launch({ width: 1600, height: 1000, profile: PROFILE });
+async function openPage(profile) {
+  const { page, close, chrome } = await launch({ width: 1600, height: 1000, profile });
   const [fam, mode] = theme.split('-');
   await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mode }] });
   await page.goto(pathToFileURL(PAGE).href + '?o55=off');
@@ -123,7 +124,10 @@ async function byHandChapter1(t, A) {
   A.ok(!(await t.ev(() => window.O55.tour.chat.chatVisible())), 'Chat tucked away so opening it is a real action');
   await t.click('#activityBar .icon[data-ab-id="chat"]', 'Chat icon');
   await t.untilStep('select_teacher'); await t.snap('select_teacher');
-  await t.click('.pm6-chat-personabtn', 'persona picker'); await t.click('.pm6-chat-personaitem[data-persona="Teacher"]', 'Teacher');
+  await t.until(() => !window.O55.tour.st.entering && !!window.O55.tour.chat.personaBtn(), 'Teacher picker ready');
+  await t.click('.pm6-chat-personabtn', 'persona picker');
+  await t.until(() => !!window.O55.tour.chat.personaItem('Teacher'), 'Teacher choice ready');
+  await t.click('.pm6-chat-personaitem[data-persona="Teacher"]', 'Teacher');
   await t.untilStep('send_question'); await t.snap('send_question');
   await t.callout('fillQuestion'); await t.click('#chatPanel .pm6-chat-send', 'Send');
   await t.untilStep('answer_stream');
@@ -223,7 +227,7 @@ def('t2', 'Every action through Show Me, then Keep this layout', async (t, A) =>
     A.ok(true, 'Show Me completed ' + id);
     if (id === 'send_question') { await t.untilStep('answer_stream', 8000); await t.until(() => window.O55.tour.chat.answered('a1'), 'answer'); await t.callout('next'); }
     if (id === 'same_answer_eli5') { await sleep(1400); await t.callout('next'); await t.untilStep('workspace_orientation'); await t.until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]'), 'orientation ready', 9000); await t.callout('next'); }
-    if (id === 'review') { await t.untilStep('review_parts', 8000); await t.until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]'), 'plan read part by part', 20000); await t.callout('next'); }
+    if (id === 'review') { await t.untilStep('review_parts', 8000); await t.until(() => window.O55.tour.st.partsDone === true && !!document.querySelector('#pm-o55-tour .o55t-callout[data-step="review_parts"] [data-o55t="next"]'), 'plan read part by part', 20000); await t.callout('next'); }
     if (id === 'answer_edit') { await t.untilStep('consequence_changed', 6000); await t.callout('next'); }
   }
   await t.untilStep('completion_boundary'); await t.callout('finish', 'keep'); await sleep(1200);
@@ -356,10 +360,11 @@ def('t7', 'Run Onboarding Again, and a replay, start the tour over', async (t, A
 });
 
 /* ------------------------------------------------------------------------------------------ runner */
-const report = []; let lastChrome = null;
+const report = [];
 for (const sc of SC) {
   if (only && !only.includes(sc.id)) continue;
-  const t = await openPage(); const asserts = []; let error = null, inv = null; const t0 = Date.now();
+  const profile = `${PROFILE_BASE}-${sc.id}`;
+  const t = await openPage(profile); const asserts = []; let error = null, inv = null; const t0 = Date.now();
   const A = { ok: (c, m) => asserts.push({ ok: !!c, m }), eq: (a, b, m) => asserts.push({ ok: a === b, m: m + (a === b ? '' : ` (got ${JSON.stringify(a)}, want ${JSON.stringify(b)})`) }) };
   try { await sc.fn(t, A); } catch (e) { error = String(e.message || e).slice(0, 400); }
   try {
@@ -372,10 +377,8 @@ for (const sc of SC) {
   const r = { id: sc.id, title: sc.title, ms: Date.now() - t0, pass: !error && asserts.every((x) => x.ok) && !t.page.errors.length, error, asserts, errors: t.page.errors.slice(0, 8), inv, state: await t.ev(() => window.O55.tour.state()).catch(() => null) };
   report.push(r);
   console.log((r.pass ? 'PASS ' : 'FAIL ') + sc.id + '  ' + sc.title + (error ? '  !! ' + error : '') + asserts.filter((x) => !x.ok).map((x) => '\n      x ' + x.m).join('') + (t.page.errors.length ? '\n      errors: ' + t.page.errors.slice(0, 3).join(' | ') : ''));
-  await t.close(); lastChrome = t.chrome;
-  /* the next scenario reuses this profile: let this Chrome finish exiting first */
-  if (t.chrome.exitCode === null && t.chrome.signalCode === null) await new Promise((r) => { t.chrome.once('exit', r); setTimeout(r, 3000); });
+  await t.close();
+  await dropProfile(profile, t.chrome);
 }
 writeFileSync(join(out, 'report.json'), JSON.stringify(report, null, 1));
-await dropProfile(PROFILE, lastChrome);
 console.log(JSON.stringify({ scenarios: report.length, pass: report.filter((r) => r.pass).length, fail: report.filter((r) => !r.pass).map((r) => r.id) }));

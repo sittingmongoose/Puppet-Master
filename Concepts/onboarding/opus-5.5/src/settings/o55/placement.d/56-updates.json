@@ -17,8 +17,8 @@
   },
   "updates-settings": {
    "to": "updates",
-   "title": "How often and which releases",
-   "help": "Check frequency and release channel.",
+   "title": "Which releases",
+   "help": "Release channel.",
    "order": 3,
    "advanced": true
   }
@@ -39,7 +39,6 @@
   {
    "section": "updates-settings",
    "ids": [
-    "system.advanced.update-frequency",
     "system.advanced.release-channel"
    ]
   }

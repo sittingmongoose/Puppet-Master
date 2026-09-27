@@ -28,8 +28,9 @@ function ensurePm51State() {
    pass, so the same seeding runs here for every canonical row wherever it now renders. */
 function pm51SeedCanonicalValues() {
   const reg = PM51.placement && PM51.placement.byId; if (!reg || !state.settings || typeof state.settings !== 'object') return;
+  delete state.settings['system.advanced.update-frequency'];
   for (const entry of Object.values(reg)) {
-    const s = entry.setting; if (!s || state.settings[s.id] !== undefined || s.value === undefined) continue;
+    const s = entry.setting; if (!s || s.id === 'system.advanced.update-frequency' || state.settings[s.id] !== undefined || s.value === undefined) continue;
     state.settings[s.id] = typeof s.value === 'object' && s.value !== null ? clone(s.value) : s.value;
   }
 }
@@ -791,6 +792,7 @@ pm51SeedCanonicalValues();
 const pm51NarrowSettingRow = renderSettingRow;
 const pm51PlainSettingRow = typeof narrowOriginalSettingRow === 'function' ? narrowOriginalSettingRow : renderSettingRow;
 renderSettingRow = function (setting, section, workspace) {
+  if (setting.id === 'system.advanced.update-frequency') return '';
   if (!(pm51InlineDepth > 0 || (section && section.inline))) return pm51NarrowSettingRow(setting, section, workspace);
   const brief = pm51FirstSentence(setting.description);
   return pm51PlainSettingRow(brief === setting.description ? setting : Object.assign({}, setting, { description: brief }), section, workspace);
@@ -953,6 +955,7 @@ scrollToSection = function (sectionId, smooth = true) {
   return pm51OriginalScrollToSection(sectionId, smooth);
 };
 PM51.revealSetting = (id, { detail = false } = {}) => {
+  if (id === 'system.advanced.update-frequency') return false;
   const e = pm51ById[id];
   const f = !e ? findSettingGlobal(id) : null;
   if (!e && !f) return false;
@@ -968,6 +971,24 @@ PM51.revealSetting = (id, { detail = false } = {}) => {
 const pm51OriginalApplySearchSelection = applySearchSelection;
 applySearchSelection = function (p) {
   if (p && p.kind === 'setting' && p.id && PM51.revealSetting(p.id)) return;
+  if (p && p.kind === 'provider-model' && p.providerId && p.id) {
+    PM51.s().searchExactTarget = { kind: p.kind, providerId: p.providerId, id: p.id };
+    if (PM51.revealProviderModel && PM51.revealProviderModel(p.providerId, p.id)) return;
+    infoDrawer('Model unavailable', 'The exact model is no longer in the current service list.', [['Service ID', p.providerId], ['Model ID', p.id]]);
+    return;
+  }
+  if (p && (p.kind === 'history-session' || p.kind === 'artifact') && p.id) {
+    PM51.s().searchExactTarget = { kind: p.kind, id: p.id };
+    if (PM51.revealHistoryObject && PM51.revealHistoryObject(p.kind, p.id)) return;
+    infoDrawer('History item unavailable', 'The exact item is no longer in the current workspace history.', [['Kind', p.kind], ['Stable ID', p.id]]);
+    return;
+  }
+  if (p && (p.kind === 'sync-client' || p.kind === 'sync-location') && p.id) {
+    PM51.s().searchExactTarget = { kind: p.kind, id: p.id };
+    infoDrawer('Project Sync item unavailable', 'This search record has no verified identity in the current Servers & Project view. Refresh the owner list before opening it.',
+      [['Stable ID', p.id], ['Kind', p.kind], ['Status', 'Unavailable']]);
+    return;
+  }
   return pm51OriginalApplySearchSelection(p);
 };
 

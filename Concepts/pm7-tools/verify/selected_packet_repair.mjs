@@ -82,9 +82,14 @@ try {
       backup: typeof window.PM51?.refresh === 'function' };
   });
   check(settings.exact && !settings.frequency && settings.backup, 'Settings exact targets and no normal frequency', settings);
-  const exact = await page.evaluate(() => ({ resolved: window.PM51.revealProviderModel('claude-code','claude-opus'),
-    target: document.querySelector('[data-search-exact-target="claude-opus"]')?.outerHTML.slice(0, 180) || null }));
-  check(exact.resolved && exact.target, 'exact model target resolves to its account row', exact);
+  const exact = await page.evaluate(() => {
+    const ambiguous = window.PM51.revealProviderModel('claude-code', 'claude-opus');
+    const choice = document.querySelector('#panel-settings')?.textContent.includes('Choose a model account');
+    const resolved = window.PM51.revealProviderModel('openai-codex', 'gpt-codex');
+    return { ambiguous, choice, resolved,
+      target: document.querySelector('[data-search-exact-target="gpt-codex"]')?.outerHTML.slice(0, 180) || null };
+  });
+  check(exact.ambiguous && exact.choice && exact.resolved && exact.target, 'exact model targets distinguish ambiguous and unique accounts', exact);
   const backup = await page.evaluate(() => {
     window.PM12_KIMI.navigate('system', 'backup'); window.PM51.setTab('backup', 'restore'); window.PM51.refresh('backup');
     return { selection: window.PM51.s().backupRestore,
