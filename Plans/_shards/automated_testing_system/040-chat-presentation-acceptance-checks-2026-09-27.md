@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L5363-L5419
 
-Source SHA256: `44c1217aca59d47032fb784d4659f88bb0905552e036a98575585fca3e02cb5b`
+Source SHA256: `661b5d839dfd40ccce5e60202e64011ee81334c4dcf201ab7965e2e089fc7ea2`
 
 ---
 
@@ -23,7 +23,7 @@ canonical_text: >-
   word and word counts that only grow; the four terminal states of ACD-470; busy sends per ACD-471
   (queued by default, Stop holds the queue, Send now steers and sends only its entry); follow-along
   within 24px of the bottom and a wheel-up never pulled back; content above the reader moving at
-  most 5px when a card folds; concurrent, failed and waiting subjects; at most 30 nodes at 140
+  most 5px when a card folds and never snapping down when a card shrinks mid-turn; concurrent, failed and waiting subjects; at most 30 nodes at 140
   subjects; the fold when the answer starts; every item naming its family; the accent scan of
   ACD-469; zero sideways overflow at full width and in a 234px pane; reduced motion landing end
   states; and a live-only working tick that costs less than a full render. Sound checks render every

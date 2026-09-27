@@ -26031,8 +26031,11 @@ canonical_text: >-
   back down. When a turn's working card folds as its answer starts (ACD-473), the height the card
   gives up is held for the answer, as a floor on the list's height taken from before the fold, and
   released gently once the answer settles, so content above the reader moves at most a few pixels
-  instead of jumping. Clamping and layout anchoring are not reader input and never release follow-
-  along.
+  instead of jumping. A working card that gets shorter mid-turn under a reader at the bottom (a
+  narration line tucking into its caption, a subject's rows folding) holds the list's height the
+  same way for a moment, so the next subject can fill it, and then eases the rest away; the thread
+  never snaps down under the reader. Clamping and layout anchoring are not reader input and never
+  release follow-along.
 gui_related: true
 gui_classification_reason: "Defines scroll behaviour the reader sees during streaming and card changes."
 split_recommended: false
@@ -26042,6 +26045,7 @@ acceptance_criteria:
   - "A reader at the bottom stays within 24px of the bottom through a streaming turn, never away for more than 300ms."
   - "A wheel-up during a stream is never pulled back to the bottom."
   - "When a card folds as its answer starts, content above the reader moves at most 5px."
+  - "When a working card shrinks mid-turn, the thread above a reader at the bottom eases down rather than snapping (no drop faster than 0.4px/ms)."
   - "The jump-to-latest control keeps its unseen-count badge (section 4)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -26067,6 +26071,7 @@ negative_constraints:
   - "Do not move a reader who scrolled away."
   - "Do not treat clamping or anchoring as reader input."
   - "Do not let a folding card move content above the reader by more than a few pixels."
+  - "Do not let a card shrinking mid-turn snap the thread down under a reader at the bottom."
 owner_hints:
   - Plans/assistant-chat-design.md
 ```
