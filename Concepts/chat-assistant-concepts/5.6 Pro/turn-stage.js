@@ -188,7 +188,7 @@
     var ox = -(gutter - 9), oy = 10;                       /* the mark, in card coordinates */
     var r = card.getBoundingClientRect();
     var far = Math.hypot(r.width - ox, r.height) + 20;
-    var ms = window.PM56_CLOCK ? window.PM56_CLOCK.ms(560) : 560;
+    var ms = 560;   /* a web animation: a film slows the timeline itself (PM56_CLOCK.ms is for timers) */
     var from = 'circle(6px at ' + ox + 'px ' + oy + 'px)', to = 'circle(' + far.toFixed(0) + 'px at ' + ox + 'px ' + oy + 'px)';
     var kf = [{ clipPath: from, opacity: 0.6 }, { clipPath: to, opacity: 1 }];
     var ease = 'cubic-bezier(.2,.8,.2,1)';

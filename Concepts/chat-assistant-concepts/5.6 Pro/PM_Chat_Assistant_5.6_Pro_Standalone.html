@@ -23512,8 +23512,15 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     var dx = fr.left - cr.left, dy = fr.top - cr.top;
     var voice = (document.querySelector('.transcript') || {}).getAttribute ? document.querySelector('.transcript').getAttribute('data-voice') : 'basic';
     var ease = voice === 'friendly' ? 'cubic-bezier(.34,1.4,.64,1)' : voice === 'retro' ? 'steps(5,end)' : 'cubic-bezier(.17,.84,.29,.99)';
-    var ms = window.PM56_CLOCK ? window.PM56_CLOCK.ms(380) : 380;
-    cap.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(1.06)', opacity: 0.9 }, { transform: 'none', opacity: 1 }], { duration: ms, easing: ease });
+    /* a web animation runs on the document timeline, which a film already
+       slows; scaling it by PM56_CLOCK as well played it 25x slower on film */
+    var ms = 380;
+    /* the head's title column clips for its ellipsis, which hid the line for
+       most of its travel up from the foot; the clip lifts for the tuck only (a
+       web animation, so a patch mid-tuck cannot strip it) */
+    var par = cap.parentElement;
+    if (par && par.animate) par.animate([{ overflow: 'visible' }, { overflow: 'visible' }], { duration: ms });
+    cap.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(1.06)', opacity: 0.9, zIndex: 5 }, { transform: 'none', opacity: 1, zIndex: 5 }], { duration: ms, easing: ease });
   }
 
   /* ---- helpers ------------------------------------------------------- */
@@ -47158,7 +47165,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var ox = -(gutter - 9), oy = 10;                       /* the mark, in card coordinates */
     var r = card.getBoundingClientRect();
     var far = Math.hypot(r.width - ox, r.height) + 20;
-    var ms = window.PM56_CLOCK ? window.PM56_CLOCK.ms(560) : 560;
+    var ms = 560;   /* a web animation: a film slows the timeline itself (PM56_CLOCK.ms is for timers) */
     var from = 'circle(6px at ' + ox + 'px ' + oy + 'px)', to = 'circle(' + far.toFixed(0) + 'px at ' + ox + 'px ' + oy + 'px)';
     var kf = [{ clipPath: from, opacity: 0.6 }, { clipPath: to, opacity: 1 }];
     var ease = 'cubic-bezier(.2,.8,.2,1)';
