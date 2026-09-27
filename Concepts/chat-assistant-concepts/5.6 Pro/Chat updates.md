@@ -100,10 +100,19 @@ Plans.
 ## Transcript message chrome
 
 - Per-turn **metadata chips** and **action buttons** share a hover-gated
-  `.message-chrome` row below the message surface. At rest the row is hidden;
-  hovering the message reveals it. Clicks do not pin the chrome open. After
-  the pointer leaves, the row stays visible for **~280ms** so it is easier to
-  reach. Below **590px** width the row stays visible (no hover on phones).
+  `.message-chrome` row below the message surface. At rest the row is hidden
+  but keeps its space; hovering the message reveals it. Clicks do not pin the
+  chrome open. After the pointer leaves, the row stays visible for **~280ms**
+  so it is easier to reach. It stays open while its overflow menu is open, is
+  hidden while a reply is being written, and shows once for ~1.5s when a
+  streamed reply settles. Below **590px** width the row stays visible (no
+  hover on phones).
+- **Module ticks.** The popup modules add small one-line ticks to a reply's
+  meta row: **Noted**, **Verified: …**, **Used 1 of your rules**, **Simple
+  explanation**, **Sent on schedule**. They are part of the meta row, so they
+  follow its gating exactly (hidden at rest, shown on hover). A reply's
+  **Revert files** row ("Changed 4 files +121 −46 · Revert") is not chrome: it
+  sits under the reply and is visible at rest.
 - **User** turns place chrome **outside and below** the bubble, right-aligned
   with the bubble width. **Assistant** turns place chrome below the surface
   body. Copy / Details / More stay on the same row as the chips; they do not
@@ -153,22 +162,29 @@ Plans.
     around it only while it is live.
   - **Deliverable** (plans, artifacts, file-change records): a raised sheet
     with a paper shadow and a teal eyebrow tile.
-  - **Needs you** (permission, questionnaire, advisor, tool error, model
-    unavailable, blocked, waiting): an accent-tinted surface, a round icon
-    medallion, and one filled primary action at the far edge (danger-toned for
-    tool errors).
+  - **Needs you** (permission, questionnaire, tool error, model unavailable,
+    blocked, waiting): an accent-tinted surface, a round icon medallion, and
+    one filled primary action at the far edge (danger-toned for tool errors).
+    A collaboration run that needs the reader keeps its own card and shows it
+    with an in-card warm tint, never the family halo.
   - **People** (crew / review / brainstorm / chat room runs, live subagents,
-    delegation records): a roster with a warm band and an avatar stack whose
-    rings show each participant's state.
-  - **Time** (scheduled messages): a ticket with a stub showing the time, a
-    perforated edge, and punched notches.
-  - **Ledger** (goal, context, thread-op, teach and memory receipts, route
-    changes, reconnects, attachment events): not a card, one quiet line (icon,
-    title, first line of detail); hover or focus expands the rest.
+    delegation records): live subagents are a roster of rows. Collaboration
+    run cards keep their own look inside the family: the spine tick only, no
+    warm band and no avatar stack.
+  - **Time** (scheduled messages while **Scheduled** or **Held**): the
+    scheduled bubble keeps its own look and dateline (no ticket stub); the
+    family gives it the spine's time tick. Once the message is **Sent**,
+    **Canceled**, **Expired** or **Failed** it becomes a Ledger receipt.
+  - **Ledger** (goal, context, thread-op, teach, memory and revert receipts,
+    revert-turn, advisor notes (never Needs you), finished scheduled messages,
+    route changes, reconnects, attachment events): not a card, one quiet line
+    (icon, title, first line of detail); hover or focus expands the rest.
 - **Accent rule.** Surfaces are neutral (Basic Dark and Light are graphite, not
   navy). The accent is spent only on live work, on Needs-you items, on the one
   primary action of a card, and on Send/Stop. Event icons outside Needs-you,
-  the model chip and chart bars are neutral or family-toned.
+  the model chip and chart bars are neutral or family-toned. There is no
+  exception: the Crew Coordinator's mark uses the text colour (provisional,
+  pending Jared's decision).
 - **Item identity.** Every item carries `data-family`, `data-msg-type`, a
   stable key and its turn position, so an item revealed mid-list animates in
   place and a thread switch arrives as one short crossfade instead of every
@@ -185,6 +201,12 @@ Plans.
     50ms apart.
   - **Time**: the ticket slides in 16px from the gutter side.
   - **Ledger**: a 4px slide and fade (220ms); receipts do not make a scene.
+
+  The popup modules' own transcript surfaces (collaboration run cards and
+  receipts, the scheduled bubble, advisor notes, file rows, the change-point
+  divider) arrive through their own choreography and never play a family
+  entrance; their family still places them on the spine. So the Time entrance
+  has no item to play on, and People's plays only on the live subagent roster.
 - **Thread switch.** The new thread's list fades up from 40% opacity with a 4px
   rise in 180ms, and the turn spine fades with it, so there is no blink between
   threads (Glass clears a blur, Retro steps, Friendly settles with a slight
