@@ -330,7 +330,7 @@
       title: 'Away from home', help: 'Puppet Master tries these in order, private and local first. You can change the order.',
       body: PM51.rows([
         { label: 'Right now', help: 'The route your devices are using at this moment.', control: `<span class="pm51-row-value">${h(actual.status === 'active' ? `Connected · ${actual.name}` : actual.name)}</span>${routeToken(actual)}` },
-        { label: 'Preferred when away', help: 'The first route that is set up and turned on.', control: preferred ? `<span class="pm51-row-value">${h(preferred.name)}</span>${routeToken(preferred)}` : `<span class="pm51-row-value is-muted">None set up yet — set one up below</span>${PM51.status('Not set up', 'attention')}` }
+        { label: 'Preferred when away', help: 'The first route that is set up and turned on.', control: preferred ? `<span class="pm51-row-value">${h(preferred.name)}</span>${routeToken(preferred)}` : `<span class="pm51-row-value is-muted">None set up yet — set one up below</span>` }
       ])
     });
     const routes = PM51.section({

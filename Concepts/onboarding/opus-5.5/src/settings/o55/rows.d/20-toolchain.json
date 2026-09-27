@@ -268,7 +268,8 @@
     "option": "custom…",
     "label": "Name",
     "placeholder": "For example: my-team"
-   }
+   },
+   "empty": "My Docker Hub account"
   },
   "code.execution.dockerhub-repository": {
    "label": "Publish to",
@@ -280,7 +281,8 @@
     "option": "custom…",
     "label": "Name",
     "placeholder": "For example: my-app"
-   }
+   },
+   "empty": "Named after the project"
   },
   "code.execution.repo-privacy": {
    "label": "New Docker Hub repositories are"

@@ -320,7 +320,7 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
 
   /* ---------- keys ----------------------------------------------------------- */
   const keysHtml = keys => String(keys || '').split('+').map(k => k.trim()).filter(Boolean).map(k => PM51.kbd(k)).join('<span>+</span>');
-  const keyButton = s => `<button type="button" class="pm51-commands-keys${s.keys ? '' : ' is-empty'}" data-action="pm51-commands-rebind" data-id="${a(s.id)}" aria-label="Change shortcut for ${a(s.name)}" data-pm-hover-label="Change shortcut">${s.keys ? keysHtml(s.keys) : 'Not set'}</button>`;
+  const keyButton = s => `<button type="button" class="pm51-commands-keys${s.keys ? '' : ' is-empty'}" data-action="pm51-commands-rebind" data-id="${a(s.id)}" aria-label="Change shortcut for ${a(s.name)}" data-pm-hover-label="Change shortcut">${s.keys ? keysHtml(s.keys) : 'Set a key'}</button>`;
   const searchQuery = () => String(PM51.value(SID.search) || '').trim().toLowerCase();
   function keyRow({ id, name, keys, group, help, extra }) {
     const others = clashesFor(id, group, keys); const q = searchQuery();

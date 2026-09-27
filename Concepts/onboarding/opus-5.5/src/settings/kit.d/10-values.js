@@ -48,7 +48,7 @@ PM51.valueLabel = (id, raw) => {
   if (o55Has(per, k)) return per[k];
   if (o55Has(O55L.global, k)) return O55L.global[k];
   if (o55Has(o55MoreLabels, k)) return o55MoreLabels[k];
-  if (k === '') return 'Not set';
+  if (k === '') return (row && row.empty) || 'Not set';
   return o55Humanize(k);
 };
 PM51.valueHint = (id, raw) => { const row = O55R[id], k = String(raw); return (row && row.hints && row.hints[k]) || ((O55L.hints[id] || {})[k]) || o55MoreHints[id + '|' + k] || ''; };

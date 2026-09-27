@@ -202,3 +202,17 @@ PM51.panel = opts => {
   }
   return wrap;
 };
+
+/* ---------- the page index lists only groups that are showing -------------------------------------------------------- */
+/* A group whose every row waits on a switch that is off steps aside (New crews start with, while crews are off); its
+   page-index entry pointed at nothing. The index leaves it out until the switch is on. */
+const o55IndexSections = continuousWorkspaceSections;
+continuousWorkspaceSections = function (workspace) {
+  const list = o55IndexSections(workspace);
+  if (!Array.isArray(list) || typeof PM51.relevant !== 'function') return list;
+  return list.filter(s => {
+    const sec = pm51SectionObjects.get(s.id) || (workspace.sections || []).find(x => x.id === s.id);
+    if (!sec || !Array.isArray(sec.settings) || !sec.settings.length) return true;
+    return !sec.settings.every(st => (O55R[st.id] || {}).when && !PM51.relevant(st.id));
+  });
+};
