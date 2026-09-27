@@ -1,11 +1,19 @@
-/* Testing & Debug — how your work gets checked and how you debug it. */
+/* Testing & Debug — how your work gets checked and how you debug it.
+   O55: "When to test" starts with the one switch that governs every kind of automated test (capability policy);
+   "What it can test" draws the inventory's capability rows in three groups (browser, desktop and mobile, behind the
+   scenes) instead of a flat wall, and the manager's own "Use built-in browser", "Visual inspection" and "Native
+   checks" switches that repeated three of them are gone. The Debug list is the home of the stored debug
+   configurations. History's policy lines read the evidence rows. The browser's own screenshot and DevTools
+   choices moved to Browser & SCM, and Goal receipt evidence moved to Goals. */
 (function () {
   const ID = 'testing';
   const KEY = 'testing-debug-capture';
-  const TABS = [{ id: 'profiles', label: 'Profiles' }, { id: 'when', label: 'When to Test' }, { id: 'browser-native', label: 'Browser & Native' }, { id: 'debug', label: 'Debug' }, { id: 'history', label: 'History' }];
+  const TABS = [{ id: 'profiles', label: 'Profiles' }, { id: 'when', label: 'When to test' }, { id: 'browser-native', label: 'What it can test' }, { id: 'debug', label: 'Debug' }, { id: 'history', label: 'History' }];
   const DEFAULTS = clone({ testProfiles: state.testProfiles || [], debugProfiles: state.debugProfiles || [] });
-  const BROWSER_DEFAULTS = { useBuiltIn: true, screenshots: 'On failure', visual: true };
-  const NATIVE_DEFAULTS = { checks: true, runtime: true };
+  const BROWSER_DEFAULTS = { screenshots: 'On failure' };
+  const NATIVE_DEFAULTS = { runtime: true };
+  const V = id => PM51.value(id);
+  const CAP = k => 'planning.testing.cap-' + k;
   const TRIGGERS = ['After meaningful edits', 'Before completion', 'Manual or release Goal'];
   const RETRY_LABELS = [[0, 'Do not retry'], [1, 'Once'], [2, 'Twice'], [3, '3 times']];
   const THEN = ['Ask me', 'Stop', 'Continue'];
@@ -13,7 +21,7 @@
   const WORKFLOWS = [['Settings navigation', 'Every domain, workspace, and short page section'], ['Manager controls', 'Add, edit, check, reorder, turn off, remove'], ['Menus, dialogs, and motion', 'Open and close continuity, focus, no flashes'], ['Responsive layouts', 'Desktop, compact, and mobile navigation']];
   const profiles = () => (state.testProfiles = state.testProfiles || []);
   const debugs = () => (state.debugProfiles = state.debugProfiles || []);
-  const t = () => { const s = PM51.s(); if (!s.testing) s.testing = clone(DATA.testing); const x = s.testing; if (!x.runs) x.runs = []; if (!x.evidence) x.evidence = { keepDays: 90, screenshots: true, logs: true }; if (!x.triggers) x.triggers = { afterEdits: 'Fast feedback', beforeCompletion: 'Thorough verification', manual: 'Release candidate', retry: 1, then: 'Ask me' }; if (!x.browser) x.browser = clone(BROWSER_DEFAULTS); if (!x.native) x.native = clone(NATIVE_DEFAULTS); return x; };
+  const t = () => { const s = PM51.s(); if (!s.testing) s.testing = clone(DATA.testing); const x = s.testing; if (!x.runs) x.runs = []; if (!x.triggers) x.triggers = { afterEdits: 'Fast feedback', beforeCompletion: 'Thorough verification', manual: 'Release candidate', retry: 1, then: 'Ask me' }; if (!x.browser) x.browser = clone(BROWSER_DEFAULTS); if (!x.native) x.native = clone(NATIVE_DEFAULTS); return x; };
   const profileById = id => profiles().find(x => x.id === id);
   const debugById = id => debugs().find(x => x.id === id);
   const selected = (kind, list) => list.find(x => x.id === PM51.sel(ID + '-' + kind)) || list.find(x => x.status === 'default') || list[0];
@@ -65,6 +73,7 @@
         menu: anchor => PM51.menu(anchor, [
           { label: 'Edit', icon: 'edit', onClick: () => editProfile(p.id) },
           { label: 'Duplicate', icon: 'copy', onClick: () => duplicateProfile(p.id) },
+          { label: 'Watch running session', icon: 'eye', onClick: () => actions['testing-session']() },
           { label: 'Make default', icon: 'pin', ariaDisabled: isDefault(p), meta: isDefault(p) ? 'Already default' : '', onClick: () => { profiles().forEach(x => { x.status = x.id === p.id ? 'default' : 'ready'; }); saveState(); PM51.refresh(ID, { swap: false }); PM51.toast('Default profile', `${p.name} is now the default.`); } },
           { separator: true },
           { label: 'Delete', icon: 'trash', danger: true, ariaDisabled: isDefault(p), meta: isDefault(p) ? 'Default profile' : '', onClick: () => deleteProfile(p.id) }
@@ -79,7 +88,10 @@
     const tr = t().triggers;
     const choices = profileChoices();
     const sel = (value, key, label) => PM51.select(value || 'None', withChoice(choices, value), { action: 'pm51-testing-trigger', data: { key }, label });
+    const pm = V('branching.worktrees.pre-merge-tests') !== false;
+    const cmd = String(V('branching.worktrees.pre-merge-test-command') || '');
     return [
+      PM51.section({ title: 'Automated testing', body: PM51.bound.rows(['planning.testing.capability-policy']) }),
       PM51.section({
         title: 'When tests run', help: 'Pick the profile for each moment. Choose None to skip that moment.',
         body: PM51.rows([
@@ -91,13 +103,13 @@
       PM51.section({
         title: 'If tests fail',
         body: PM51.rows([
-          { label: 'Retry', help: 'Try a failing stage again before giving up.', control: PM51.select(String(tr.retry == null ? 1 : tr.retry), RETRY_LABELS.map(([v, l]) => [String(v), l]), { action: 'pm51-testing-trigger', data: { key: 'retry' }, label: 'Retry' }) },
+          { label: 'Retries', help: 'Unless a profile sets its own. A test that passes on retry is reported as flaky.', control: PM51.select(String(tr.retry == null ? 1 : tr.retry), RETRY_LABELS.map(([v, l]) => [String(v), l]), { action: 'pm51-testing-trigger', data: { key: 'retry' }, label: 'Retry' }) },
           { label: 'Then', help: 'Ask me pauses and shows you the failure.', control: PM51.select(tr.then || 'Ask me', THEN, { action: 'pm51-testing-trigger', data: { key: 'then' }, label: 'Then' }) }
         ])
       }),
       PM51.advanced(PM51.section({ title: 'Verification gate details', body: PM51.kv([
         ['Before completion', `Blocks completion until ${tr.beforeCompletion && tr.beforeCompletion !== 'None' ? tr.beforeCompletion : 'no profile'} passes`],
-        ['Before merge or delivery', 'Uses the same profile as Before completion'],
+        ['Before merging', pm ? `Runs ${!cmd || /auto/i.test(cmd) ? 'the test command found in the project' : cmd} on ${V('branching.worktrees.pre-merge-test-target') === 'branch_only' ? 'the branch alone' : 'the merged result'}; a failure blocks the merge` : 'Off: work can be merged without tests'],
         ['Release', `Uses ${tr.manual && tr.manual !== 'None' ? tr.manual : 'no profile'}`],
         ['Flaky tests', 'A test that passes on retry is marked flaky and reported']
       ]) }))
@@ -107,23 +119,23 @@
   /* ---------- Browser & native ---------------------------------------------- */
   function renderBrowserNative() {
     const b = t().browser, n = t().native;
+    const off = V('planning.testing.capability-policy') === 'Off';
     return [
+      off ? PM51.note('Automated testing is set to Never under When to test, so none of these run.', 'info') : '',
       PM51.section({
         title: 'Browser testing', help: 'For anything with a screen: web apps, docs, and this app.',
-        body: PM51.rows([
-          { label: 'Use built-in browser', help: 'Puppet Master drives its own browser to click through your app.', control: PM51.toggle(!!b.useBuiltIn, { action: 'pm51-testing-browser', data: { key: 'useBuiltIn' }, label: 'Use built-in browser' }) },
-          { label: 'Screenshots', help: 'Pictures of the screen kept with each run.', control: PM51.select(b.screenshots || 'On failure', ['On failure', 'Always', 'Never'], { action: 'pm51-testing-browser-select', data: { key: 'screenshots' }, label: 'Screenshots' }) },
-          { label: 'Visual and motion inspection', help: 'Checks appearance over time, not only the final screenshot.', control: PM51.toggle(!!b.visual, { action: 'pm51-testing-browser', data: { key: 'visual' }, label: 'Visual and motion inspection' }) },
-          { label: 'Browser status', pill: PM51.pill('Ready'), help: 'Managed in Browser & SCM.', action: { label: 'Open Browser & SCM', icon: 'arrowRight', ghost: true, action: 'pm51-go', data: { domain: 'source', workspace: 'browser-scm' } } }
-        ])
+        body: PM51.bound.rows(['planning.testing.test-visibility', CAP('built-in-browser')])
+          + PM51.rows([{ label: 'Screenshots', help: 'Pictures of the screen kept with each run.', control: PM51.select(b.screenshots || 'On failure', [['On failure', 'When something fails'], ['Always', 'Always'], ['Never', 'Never']], { action: 'pm51-testing-browser-select', data: { key: 'screenshots' }, label: 'Screenshots' }) }])
+          + PM51.bound.rows([CAP('screenshot-compare'), CAP('console-network'), CAP('accessibility')])
+          + PM51.rows([{ label: 'Browser status', pill: PM51.pill('Ready'), help: 'Its sessions and screenshot button are set in Browser & SCM.', action: { label: 'Open Browser & SCM', icon: 'arrowRight', ghost: true, action: 'pm51-go', data: { domain: 'source', workspace: 'browser-scm' } } }])
       }),
       PM51.section({
-        title: 'Native app testing', help: 'For desktop apps and background services.',
-        body: PM51.rows([
-          { label: 'Native checks', help: 'Builds and launches the app to make sure it starts and shuts down cleanly.', control: PM51.toggle(!!n.checks, { action: 'pm51-testing-native', data: { key: 'checks' }, label: 'Native checks' }) },
-          { label: 'Runtime and service tests', help: 'Checks the background service, its connections, and recovery.', control: PM51.toggle(!!n.runtime, { action: 'pm51-testing-native', data: { key: 'runtime' }, label: 'Runtime and service tests' }) },
-          { label: 'Test tools', pill: PM51.pill('Ready'), help: 'Build tools and test runners on this computer.', action: { label: 'Check test tools', icon: 'test', action: 'pm51-testing-check-tools' } }
-        ])
+        title: 'Desktop and mobile apps', help: 'Checks for app windows, simulators and real devices.',
+        body: PM51.bound.rows([CAP('desktop-gui'), CAP('live-preview'), CAP('hot-reload'), CAP('simulator'), CAP('physical-device')])
+          + PM51.rows([
+            { label: 'Runtime and service tests', help: 'Checks the background service, its connections, and recovery.', control: PM51.toggle(!!n.runtime, { action: 'pm51-testing-native', data: { key: 'runtime' }, label: 'Runtime and service tests' }) },
+            { label: 'Test tools', pill: PM51.pill('Ready'), help: 'Build tools and test runners on this computer.', action: { label: 'Check test tools', icon: 'test', action: 'pm51-testing-check-tools' } }
+          ])
       }),
       PM51.advanced([
         PM51.section({ title: 'Browser workflow catalog', help: 'Ready-made click-through checks the browser can run.', body: PM51.list(WORKFLOWS.map(([title, meta]) => ({ title, meta, pill: PM51.pill('Ready'), avatar: icon('browser') }))) }),
@@ -145,7 +157,7 @@
       PM51.kv([['Arguments', d.args || 'None'], ['Working folder', folderLabel(d.cwd)], ['Status', PM51.plain(d.status || 'ready')]]),
       actionRow(PM51.btn({ label: 'Check launch', small: true, icon: 'test', action: 'pm51-testing-check-launch', data: { id: d.id } }))
     ].join(''));
-    return PM51.listDetail({
+    return PM51.home('code.execution.debug-configurations', PM51.listDetail({
       id: ID, rosterId: 'testing-debug', rosterTitle: 'Debug profiles', count: list.length,
       add: { action: 'pm51-testing-add-debug', label: 'New debug profile' },
       filter: { placeholder: 'Filter debug profiles' },
@@ -162,7 +174,7 @@
         ], d.name),
         body
       }
-    });
+    }));
   }
 
   /* ---------- History ---------------------------------------------------------- */
@@ -177,18 +189,29 @@
       /* Wave S: the canonical evidence rows (planning.verification.evidence-*, branching.worktrees.evidence-*)
          render inline on this tab, so the kit keeps no duplicate keep-days / screenshots / logs rows. */
       PM51.advanced([
-        PM51.section({ title: 'Policy', body: PM51.kv([['Secrets', 'Hidden before anything is saved'], ['Passing runs', 'Summary only'], ['Failing runs', 'Full output with secrets hidden'], ['Video', 'Only when a workflow needs motion review']]) }),
+        PM51.section({ title: 'Policy', body: PM51.kv([['Secrets and personal data', V('planning.verification.evidence-redaction') ? 'Hidden before anything is saved' : 'Kept as they are. Turn on hiding under Keeping proof'], ['Passing runs', 'Summary only'], ['Failing runs', 'Full output'], ['Screenshots', { 'On failure': 'When something fails', Always: 'Always', Never: 'Never' }[t().browser.screenshots || 'On failure']], ['Test run logs kept', V('branching.worktrees.evidence-retention-days') ? `${V('branching.worktrees.evidence-retention-days')} days` : 'Until you delete them']]) }),
         actionRow(PM51.btn({ label: 'Export evidence', small: true, icon: 'download', action: 'pm51-testing-export' }), PM51.btn({ label: 'Clear history', small: true, icon: 'trash', action: 'pm51-testing-clear-history', disabled: !runs.length, reason: 'There are no runs to clear.' }))
       ].join(''))
     ].join('');
   }
 
   function render() {
-    const tab = PM51.tab(ID, 'profiles');
+    const tab = PM51.tab(ID, 'profiles'); syncDebugs();
     const body = tab === 'when' ? renderWhen() : tab === 'browser-native' ? renderBrowserNative() : tab === 'debug' ? renderDebug() : tab === 'history' ? renderHistory() : renderProfiles();
     return PM51.page({ id: ID, key: KEY, tabs: TABS, active: tab, body, quiet: [{ label: 'Reset testing defaults', action: 'pm51-testing-reset' }, { label: 'How testing works', action: 'pm51-testing-help' }] });
   }
   PM51.manager('testing', { render });
+  const syncDebugs = () => { const names = debugs().map(d => d.name); if (PM51.setting('code.execution.debug-configurations') && JSON.stringify(V('code.execution.debug-configurations')) !== JSON.stringify(names) && commitSettingValue('code.execution.debug-configurations', names)) saveState(); };
+  PM51.owner(ID, id => { const e = PM51.placement.byId[id]; if (e && e.tab) PM51.setTab(ID, e.tab); });
+  ['planning.testing.capability-policy', 'branching.worktrees.pre-merge-tests', 'branching.worktrees.pre-merge-test-command', 'branching.worktrees.pre-merge-test-target', 'planning.verification.evidence-redaction', 'branching.worktrees.evidence-retention-days'].forEach(id => PM51.watch(id, () => PM51.refresh(ID, { swap: false })));
+  /* Watch running session: the controls of a run in progress, or History when nothing runs. */
+  PM51.on('testing-session', () => {
+    const run = t().runs.find(r => /running/i.test(r.result));
+    if (!run) { PM51.panel({ title: 'No test session is running', icon: 'eye', eyebrow: 'Testing', summary: 'Start one with Run now on a profile. Finished runs are in History.', body: PM51.panelSection('Last run', t().runs[0] ? PM51.kv([['Profile', t().runs[0].profile], ['Result', t().runs[0].result], ['When', t().runs[0].time]]) : PM51.note('No runs yet.', 'info')), primaryLabel: 'Open History', onPrimary: () => { PM51.setTab(ID, 'history'); PM51.refresh(ID); } }); return; }
+    PM51.panel({ title: `${run.profile} is running`, icon: 'eye', eyebrow: 'Test session', status: { label: 'Running', tone: 'info' },
+      body: PM51.panelSection('While it runs', PM51.rows([{ label: 'Watch it', help: 'Opens the live view in the browser panel.', action: { label: 'Watch', icon: 'eye', action: 'pm51-testing-session-do', data: { what: 'Watching' } } }, { label: 'Keep it in the background', help: 'You are told when it finishes.', action: { label: 'Background', icon: 'down', action: 'pm51-testing-session-do', data: { what: 'Moved to the background' } } }, { label: 'Stop it', help: 'Evidence so far is kept.', action: { label: 'Stop', icon: 'pause', action: 'pm51-testing-session-do', data: { what: 'Stopped' } } }])) });
+  });
+  PM51.on('testing-session-do', el => PM51.toast(ds(el, 'what'), 'Example only: no test session runs in this preview.', 'info'));
 
   /* ---------- profile behaviour ------------------------------------------------ */
   function editProfile(id) {
@@ -311,7 +334,7 @@
       title: r.profile, subtitle: r.time, pill: PM51.pill(r.result),
       body: PM51.panelSection('Summary', PM51.kv([['Result', r.result], ['Took', r.duration], ['Stages', p ? `${p.stages.length}` : 'Unknown']]))
         + (p ? PM51.panelSection('Stages', PM51.steps(p.stages.map((s, i) => ({ title: s, status: failed && i === p.stages.length - 2 ? 'Failed' : 'Passed', tone: failed && i === p.stages.length - 2 ? 'blocked' : 'ready', done: !(failed && i === p.stages.length - 2) })))) : '')
-        + PM51.panelSection('Evidence', PM51.kv([['Screenshots', t().evidence.screenshots ? (failed ? 'Kept for the failing stage' : 'None needed') : 'Off'], ['Logs', t().evidence.logs ? (failed ? 'Full output, secrets hidden' : 'Summary only') : 'Off']]))
+        + PM51.panelSection('Evidence', PM51.kv([['Screenshots', (t().browser.screenshots || 'On failure') === 'Never' ? 'Off' : failed || t().browser.screenshots === 'Always' ? 'Kept for the failing stage' : 'None needed'], ['Logs', `${failed ? 'Full output' : 'Summary only'}${V('planning.verification.evidence-redaction') ? ', secrets hidden' : ''}`]]))
         + PM51.note('Example data only. Real runs show their own stages and evidence here.', 'info')
     });
   });
@@ -335,7 +358,7 @@
   PM51.on('testing-help', () => PM51.panel({
     title: 'How testing works',
     body: PM51.panelSection('In short', '<p class="pm51-ps-text">A test profile is a list of stages that run in order. Puppet Master picks a profile for each moment: quick checks while you work, a thorough run before a job counts as done, and a full run for releases.</p>')
-      + PM51.panelSection('The tabs', PM51.kv([['Profiles', 'What each profile checks, and a Run now button.'], ['When to Test', 'Which profile runs at which moment, and what happens on failure.'], ['Browser & Native', 'Screen checks in the built-in browser, and app checks for desktop apps.'], ['Debug', 'One-click debugging for your program or a test.'], ['History', 'Past runs and the evidence kept from them.']]))
+      + PM51.panelSection('The tabs', PM51.kv([['Profiles', 'What each profile checks, and a Run now button.'], ['When to test', 'Whether automated tests may run, which profile runs at which moment, and what happens on failure.'], ['What it can test', 'Screen checks in the built-in browser, and app checks for desktop apps.'], ['Debug', 'One-click debugging for your program or a test.'], ['History', 'Past runs and the evidence kept from them.']]))
       + PM51.panelSection('Good to know', '<p class="pm51-ps-text">Secrets are hidden before any log or screenshot is saved.</p>')
   }));
 })();
