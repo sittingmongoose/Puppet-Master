@@ -7,6 +7,13 @@
   --o55-win-bg: var(--surface); --o55-card-bg: color-mix(in srgb, var(--surface) 88%, var(--text-primary) 3%); --o55-line: var(--border); }
 #pm-o55-onboarding[hidden] { display: none !important; }
 html[data-o55-open] #pm-hover-tag-root { display: none !important; }
+/* the app beneath the window is inert and dimmed (its demo clock is paused too): its own loops (working pulses, status
+   dots) hold still until the window closes, so every frame's work is the window's own. Restyled in the same frame that
+   makes the app inert, which the window's first held frame already pays for. */
+html[data-o55-open] body > [inert], html[data-o55-open] body > [inert] * { animation-play-state: paused !important; }
+/* the solid backdrop (60-ui-core.js): on a computer that cannot composite the app beneath at full rate, the app is
+   not drawn at all while the window is open; the scrim then lies over the page's own ground */
+html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !important; }
 .o55-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--background) 74%, transparent); }
 .o55-win { position: relative; z-index: 1; width: min(1080px, calc(100vw - 48px)); height: min(720px, calc(100vh - 48px)); display: grid; grid-template-rows: auto minmax(0, 1fr);
   border-radius: var(--o55-r); background: var(--o55-win-bg); border: 1px solid var(--o55-line); box-shadow: 0 40px 90px -24px rgba(0, 0, 0, 0.55); overflow: hidden; isolation: isolate; }
@@ -61,8 +68,11 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 #pm-o55-onboarding[data-family="retro"] .o55-railnode { border-radius: 0; width: 10px; height: 10px; border-width: 2px; }
 #pm-o55-onboarding[data-family="retro"] .o55-railitem { font-family: var(--display-font); text-transform: uppercase; font-size: 11px; letter-spacing: 0.06em; }
 #pm-o55-onboarding[data-family="retro"] .o55-railitem + .o55-railitem::before { height: 2px; background: repeating-linear-gradient(90deg, var(--text-muted) 0 3px, transparent 3px 6px); }
-#pm-o55-onboarding[data-family="retro"] .o55-railitem[data-state="current"] .o55-railnode { box-shadow: none; background: var(--o55-accent); animation: o55-pixblink 1s steps(1) infinite; }
-@keyframes o55-pixblink { 50% { background: transparent; } }
+/* the current node's pixel fill blinks as an opacity step on an overlay (the compositor runs it; a blinking background
+   is restyled by the main thread every frame) */
+#pm-o55-onboarding[data-family="retro"] .o55-railitem[data-state="current"] .o55-railnode { box-shadow: none; background: transparent; position: relative; }
+#pm-o55-onboarding[data-family="retro"] .o55-railitem[data-state="current"] .o55-railnode::after { content: ''; position: absolute; inset: 0; background: var(--o55-accent); animation: o55-pixblink 1s steps(1, end) infinite; }
+@keyframes o55-pixblink { 50% { opacity: 0; } }
 .o55-headctl { display: flex; align-items: center; gap: 4px; }
 .o55-iconbtn, .o55-sound { display: inline-flex; align-items: center; gap: 6px; height: 34px; min-width: 34px; justify-content: center; padding: 0 10px; border-radius: var(--o55-btn-r); border: 1px solid transparent;
   background: transparent; color: var(--text-secondary); cursor: pointer; font: 600 13px/1 var(--body-font); }
@@ -98,20 +108,24 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 .o55-footgrow { flex: 1; }
 .o55-footnote { font-size: 12.5px; color: var(--text-muted); }
 .o55-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 18px; border-radius: var(--o55-btn-r); font: 650 14px/1 var(--body-font);
-  cursor: pointer; border: 1px solid transparent; background: transparent; color: var(--text-primary); transition: transform 140ms ease, background 160ms ease, box-shadow 160ms ease, filter 160ms ease; white-space: nowrap; }
+  cursor: pointer; border: 1px solid transparent; background: transparent; color: var(--text-primary); transition: transform 140ms ease, background 160ms ease, box-shadow 160ms ease; white-space: nowrap; }
 .o55-btn:active { transform: translateY(1px) scale(0.985); }
 .o55-btn.o55-small { min-height: 32px; padding: 0 12px; font-size: 13px; }
 .o55-primary { background: var(--o55-accent); color: var(--o55-on-accent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 8px 18px -8px color-mix(in srgb, var(--o55-accent) 80%, transparent); }
-.o55-primary:hover { filter: brightness(1.07); }
+/* hover and disabled states are colour mixes, not filters (Slint has no filters; its colours have mix()) */
+.o55-primary:hover { background-color: color-mix(in srgb, var(--o55-accent) 91%, #fff); }
 .o55-secondary { border-color: var(--o55-line); background: color-mix(in srgb, var(--surface) 70%, transparent); }
 .o55-secondary:hover { background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
 .o55-ghost, .o55-secondary.o55-ghost { color: var(--text-secondary); border-color: transparent; background: transparent; box-shadow: none; }
 .o55-ghost:hover { color: var(--text-primary); background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
-.o55-btn[aria-disabled="true"] { opacity: 0.46; cursor: not-allowed; filter: saturate(0.55); box-shadow: none; }
+.o55-btn[aria-disabled="true"] { opacity: 0.46; cursor: not-allowed; box-shadow: none; }
+.o55-primary[aria-disabled="true"] { background-color: color-mix(in srgb, var(--o55-accent) 58%, var(--text-muted)); }
 #pm-o55-onboarding[data-family="friendly"] .o55-btn { border: 2px solid var(--o55-ink); box-shadow: 3px 4px 0 color-mix(in srgb, var(--text-primary) 20%, transparent); }
 #pm-o55-onboarding[data-family="friendly"] .o55-btn.o55-ghost { border-color: transparent; box-shadow: none; }
 #pm-o55-onboarding[data-family="friendly"] .o55-btn:active { transform: translate(2px, 3px); box-shadow: 1px 1px 0 color-mix(in srgb, var(--text-primary) 20%, transparent); }
 #pm-o55-onboarding[data-family="glass"] .o55-primary { background: linear-gradient(135deg, var(--accent-blue), var(--accent-magenta)); color: #fff; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25); }
+#pm-o55-onboarding[data-family="glass"] .o55-primary:hover { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-blue) 91%, #fff), color-mix(in srgb, var(--accent-magenta) 91%, #fff)); }
+#pm-o55-onboarding[data-family="glass"] .o55-primary[aria-disabled="true"] { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-blue) 58%, var(--text-muted)), color-mix(in srgb, var(--accent-magenta) 58%, var(--text-muted))); }
 #pm-o55-onboarding[data-family="glass"] .o55-secondary { background: color-mix(in srgb, #fff 8%, transparent); border-color: rgba(255, 255, 255, 0.28); }
 #pm-o55-onboarding[data-family="retro"] .o55-btn { border: 2px solid var(--text-primary); text-transform: uppercase; font-family: var(--display-font); font-size: 12.5px; letter-spacing: 0.05em; box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
 #pm-o55-onboarding[data-family="retro"] .o55-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
@@ -197,11 +211,13 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
    square spun with one side open read as a box with a side cut off) */
 #pm-o55-onboarding[data-family="retro"] .o55-spin { width: 12px; height: 12px; border-radius: 0; border-right-color: currentColor; animation: none; position: relative; --b: 3px; --g: 1px; }
 #pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark { border-right-color: var(--o55-accent); animation: none; position: relative; --b: 4px; --g: 3px; }
+/* the pixel sits in the corner of the square it runs round, and the square turns in whole quarter turns: a square pixel
+   turned 90 degrees is the same pixel one corner on, so nothing is ever seen turning, and the compositor runs it (the
+   first version stepped left/top, which the main thread restyles every frame) */
 #pm-o55-onboarding[data-family="retro"] .o55-spin::after, #pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark::after {
-  content: ''; position: absolute; width: var(--b); height: var(--b); background: currentColor; left: var(--g); top: var(--g); animation: o55-px-chase 0.8s steps(1, end) infinite; }
-#pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark::after { background: var(--o55-accent); }
-@keyframes o55-px-chase { 0% { left: var(--g); top: var(--g); } 25% { left: calc(100% - var(--g) - var(--b)); top: var(--g); }
-  50% { left: calc(100% - var(--g) - var(--b)); top: calc(100% - var(--g) - var(--b)); } 75% { left: var(--g); top: calc(100% - var(--g) - var(--b)); } }
+  content: ''; position: absolute; inset: var(--g); background: linear-gradient(currentColor, currentColor) 0 0 / var(--b) var(--b) no-repeat; animation: o55-px-chase 0.8s steps(4, end) infinite; }
+#pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark::after { background-image: linear-gradient(var(--o55-accent), var(--o55-accent)); }
+@keyframes o55-px-chase { to { transform: rotate(360deg); } }
 html[data-motion="reduced"] #pm-o55-onboarding[data-family="retro"] .o55-spin::after, html[data-motion="reduced"] #pm-o55-onboarding[data-family="retro"] .o55-ph-active .o55-phmark::after { animation: none; }
 @keyframes o55-spin { to { transform: rotate(360deg); } }
 .o55-field { display: grid; gap: 6px; }

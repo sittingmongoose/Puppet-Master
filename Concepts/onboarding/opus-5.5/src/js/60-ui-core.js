@@ -60,8 +60,11 @@
   }
   function layoutClass() {
     const w = S.root.querySelector('.o55-win'); if (!w) return;
-    const r = w.getBoundingClientRect();
-    S.root.setAttribute('data-o55-layout', r.width < 760 ? 'narrow' : r.height < 520 ? 'short' : 'wide');
+    const r = w.getBoundingClientRect(), layout = r.width < 760 ? 'narrow' : r.height < 520 ? 'short' : 'wide';
+    if (S.root.getAttribute('data-o55-layout') !== layout) S.root.setAttribute('data-o55-layout', layout);
+    /* the concept demo pill folds into a slim tab beside a narrow window (12-components.css) */
+    const demo = document.getElementById('o55-demo');
+    if (demo && demo.hasAttribute('data-o55-narrow') !== (layout === 'narrow')) demo.toggleAttribute('data-o55-narrow', layout === 'narrow');
   }
 
   /* ---------------------------------------------------------------- theme */
@@ -198,7 +201,7 @@
     if (!S.resumed || S.resumedShownOn !== def.id || def.id === 'welcome') return '';
     return `<div class="o55-banner" data-key="resumed">${O55.c.small('history', 18)}<span>${U.esc(T('welcome.resumed'))}</span>${O55.c.link(T('welcome.startOver'), 'startOver')}</div>`;
   }
-  function renderScene(force) {
+  function renderScene(force, hold) {
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
     const sc = def.scene ? def.scene(S) : { id: 'hero' };
     const host = S.root.querySelector('.o55-stage');
@@ -206,7 +209,7 @@
     const band = S.root.getAttribute('data-o55-layout') === 'narrow';
     const key = `${sc.id}|${th.family}|${th.mode}|${band}`;
     if (force || host.getAttribute('data-scene-key') !== key || host.getAttribute('data-beat') !== (sc.beat || 'default') || JSON.stringify(sc.params || {}) !== host.getAttribute('data-params')) {
-      O55.art.mount(host, sc.id, { family: th.family, mode: th.mode, beat: sc.beat || 'default', params: sc.params || {}, band, instance: band ? 'band' : '' });
+      O55.art.mount(host, sc.id, { family: th.family, mode: th.mode, beat: sc.beat || 'default', params: sc.params || {}, band, instance: band ? 'band' : '', hold: !!hold });
       host.setAttribute('data-scene-key', key); host.setAttribute('data-beat', sc.beat || 'default'); host.setAttribute('data-params', JSON.stringify(sc.params || {}));
     }
   }
@@ -226,29 +229,47 @@
     const def = SCREENS.defs[S.sess.screen]; if (!def) return;
     O55.motion.quiet(1400);
     const pane = S.root.querySelector('.o55-pane');
-    const old = pane.querySelector('.o55-layer:not(.o55-out)');
-    if (old) {
-      old.classList.add('o55-out', 'o55-out-' + (dir || 'fwd'));
-      old.setAttribute('inert', ''); old.setAttribute('aria-hidden', 'true');
-      old.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+    let old = pane.querySelector('.o55-layer:not(.o55-out)');
+    /* a screen replaced while it was still held was never seen: it goes at once (its own release still lets the
+       screen before it leave) */
+    if (old && old.classList.contains('o55-hold')) { old.remove(); old = null; }
+    /* the new screen is built held and released a frame later (O55.motion.release), so its entrance starts on a light
+       frame instead of inside the long one that styles and lays out the new DOM; Reduced Motion has no entrance */
+    const hold = !O55.motion.reduced();
+    const leave = () => {
+      if (!old) return;
+      old.classList.add('o55-out-' + (dir || 'fwd'));
       const kill = () => old.remove();
       O55.motion.after(900, kill);
       old.addEventListener('animationend', (e) => { if (e.target === old) kill(); });
+    };
+    if (old) {
+      old.classList.add('o55-out');
+      old.setAttribute('inert', ''); old.setAttribute('aria-hidden', 'true');
+      old.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
     }
     const layer = document.createElement('div');
-    layer.className = `o55-layer o55-entering o55-in-${dir || 'fwd'}`;
+    layer.className = `o55-layer o55-entering o55-in-${dir || 'fwd'}${hold ? ' o55-hold' : ''}`;
     layer.setAttribute('data-screen', def.id);
     layer.innerHTML = paneHtml(def);
     pane.appendChild(layer);
     layer.querySelectorAll('.o55-card, .o55-row, .o55-tile').forEach((n, i) => n.style.setProperty('--ci', i));
     /* the entrance classes leave once every entrance animation has finished (never cut short, even in slow motion) */
     O55.motion.settled(layer, { fallback: 2600 }).then(() => layer.classList.remove('o55-entering', 'o55-in-fwd', 'o55-in-back', 'o55-in-open'));
-    renderScene(); renderRail(); renderSound();
+    renderScene(false, hold); renderRail(); renderSound();
     const h = layer.querySelector('#o55-h');
     /* the scene heading takes programmatic focus when the screen settles, unless the person is already inside it */
-    O55.motion.after(60, () => { const a = document.activeElement; if (h && S.open && !(a && a !== layer && layer.contains(a))) h.focus({ preventScroll: true }); });
+    const focusHeading = () => O55.motion.after(60, () => { const a = document.activeElement; if (h && S.open && !(a && a !== layer && layer.contains(a))) h.focus({ preventScroll: true }); });
     U.announce(O55.stages.progress(S, def).announce + '. ' + (val(def.title) || ''), S.root.querySelector('.o55-win'));
     def.mounted && def.mounted(S, layer, true);
+    if (!hold) { leave(); focusHeading(); return; }
+    O55.motion.release(() => {
+      layer.classList.remove('o55-hold');
+      S.root.classList.remove('o55-hold');
+      O55.art.release(S.root.querySelector('.o55-stage'));
+      leave(); focusHeading();
+      if (dir === 'open') checkSolid(); /* the opening is the window's busiest motion: measured while it plays */
+    });
   }
 
   /* the look menu beside the sound button (O55.lookMenu): open until a click lands outside it or Escape */
@@ -403,9 +424,29 @@
     O55.motion.setLowResource(!!S.env.lowResource, 'scenario');
     if (O55.tour && O55.tour.reset) O55.tour.reset({ silent: true });
   }
+  /* Solid backdrop. A computer that cannot draw the dimmed app beneath at full rate (no GPU: the app's live backdrop
+     blurs, paper grounds and translucent layers composited in software, one pass per frame of motion in the window)
+     gets a solid backdrop instead, so the window's own motion stays at 60 fps; a fast computer keeps the dimmed live
+     app. Known at once when the browser renders in software (O55.motion.softwareRendered), otherwise measured over the
+     first opening (the app then goes once the scrim covers it); kept for the page, and the app comes back as the
+     window starts to close. */
+  let SOLID = null;
+  const setSolid = (on) => { const h = document.documentElement; if (h.hasAttribute('data-o55-solid') !== !!on) h.toggleAttribute('data-o55-solid', !!on); };
+  function checkSolid() {
+    if (SOLID !== null || document.hidden || O55.motion.reduced()) return;
+    O55.motion.sampleFrames(900).then((r) => {
+      if (SOLID !== null || document.hidden) return;
+      /* fewer than a dozen frames in 0.9 s is itself the answer (a Glass skin without a GPU draws three a second) */
+      SOLID = r.n < 12 || r.median > 21;
+      if (SOLID && S.open && !S.root.classList.contains('o55-opening')) setSolid(true);
+    });
+  }
+  O55.solid = { get: () => SOLID, set(v) { SOLID = v == null ? null : !!v; setSolid(!!SOLID && S.open); } };
+
   function open(opts) {
     opts = opts || {};
     O55.motion.quiet(2200); /* building the window is expected to be heavy; it never counts as a slow computer */
+    const wasShown = !!(S.open && S.root && !S.root.hidden); /* Start over reopens a window already on screen */
     build();
     /* a Project that is being created is never abandoned half-made: starting over waits for it, on its own screen */
     let waitNote = false;
@@ -438,7 +479,13 @@
     setInert(true); syncTheme(false); layoutClass();
     r.setAttribute('data-o55-ambient', 'on');
     r.classList.remove('o55-closing'); r.classList.add('o55-opening');
-    O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) r.classList.remove('o55-opening'); });
+    /* the whole window waits, unseen, through the frame that styles it and restyles the now inert app beneath; the
+       first screen's release (transition below) lets the opening play from its first frame */
+    if (!wasShown && !O55.motion.reduced()) r.classList.add('o55-hold');
+    /* known in advance on a computer that renders in software: the backdrop is solid from the first frame */
+    if (SOLID === null && O55.motion.softwareRendered()) SOLID = true;
+    if (SOLID && !wasShown) setSolid(true);
+    O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening'); if (SOLID) setSolid(true); } });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
     const stage = r.querySelector('.o55-stage'); stage.innerHTML = ''; stage.removeAttribute('data-scene-key');
     transition('open');
@@ -459,6 +506,7 @@
     S.save();
     S.open = false;
     const r = S.root;
+    setSolid(false); /* the app is back under the scrim before the window leaves */
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
     if (!handoff) O55.sound.play('close');
     const finish = () => {

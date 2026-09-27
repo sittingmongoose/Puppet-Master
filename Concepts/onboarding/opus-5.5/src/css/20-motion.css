@@ -7,6 +7,12 @@
 #pm-o55-onboarding[data-family="glass"] { --o55-ui-ease: cubic-bezier(0.05, 0.7, 0.1, 1); --o55-step: 560ms; }
 #pm-o55-onboarding[data-family="retro"] { --o55-ui-ease: steps(4, end); --o55-step: 420ms; --o55-stagger: 60ms; --o55-enter-delay: 40ms; }
 
+/* held: a screen (or the whole window) just built waits, unseen and with its entrances paused at their first frame,
+   for the frame that does its heavy style and layout; O55.motion.release then lets the choreography start on a light
+   frame. The outgoing layer and scene wait in place, still visible, and start leaving at the same moment. */
+.o55-hold { visibility: hidden; }
+.o55-hold, .o55-hold *, .o55-wait, .o55-wait * { animation-play-state: paused !important; }
+
 /* layers are transparent so the outgoing layer stays visible under the incoming one */
 .o55-pane > .o55-layer { background: transparent !important; }
 .o55-pane > .o55-layer.o55-out { pointer-events: none; z-index: 0; }
