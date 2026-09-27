@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6013,
+      "line_count": 6016,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "cb30c059749992fbb13703b93a3b7d6fda0f36daa70a2dab2cb22f4632369929",
+      "sha256": "a7b7d38d2494757edf2b6c3552e1f1f27ccd46661c9ecae00d3c29cc79ae6527",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -7214,7 +7214,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 38252,
+      "line_count": 38258,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 561,
       "plan_unit_ids": [
@@ -7878,7 +7878,7 @@
         "visualizer_script_policy_drift",
         "wand_overflow_or_demo_command_pollution"
       ],
-      "sha256": "261b9e8d956ff63994bf4751f50868b6718b59df20d8e427337e7814e8bda0dd",
+      "sha256": "946d3f385d9d69f212a5f5dec413ec655f90042abe85376781c5824f55d3ea14",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 560,
@@ -9039,7 +9039,7 @@
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 2072,
+      "line_count": 2074,
       "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
       "plan_unit_count": 32,
       "plan_unit_ids": [
@@ -9087,7 +9087,7 @@
         "gui_usage_fixture_false_pass",
         "migration_lineage"
       ],
-      "sha256": "e024f56af83a32efe5bd8ebd7bbe0b089b6edf1206a0ffce01cac0f31b245ca4",
+      "sha256": "9658f485cf5fc1cfebbe4bd0e24ff25bc1566fa5979ed8341198b6df080e231c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 32
@@ -16506,11 +16506,16 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 1,
-        "True": 37
+        "True": 39
       },
-      "heading_count": 77,
+      "heading_count": 87,
       "implementation_surfaces": [
         "Concepts/PMConcept7.html",
+        "Concepts/onboarding/opus-5.5/src/settings/kit.d",
+        "Concepts/onboarding/opus-5.5/src/settings/kit.d/17-look.js",
+        "Concepts/onboarding/opus-5.5/src/settings/o55/placement.d",
+        "Concepts/onboarding/opus-5.5/src/settings/o55/rows.d",
+        "Concepts/onboarding/opus-5.5/src/settings/styles.d/12-look.css",
         "Concepts/pm7-tools/build_pm7.py",
         "Concepts/pm7-tools/build_testpm_settings_refresh.py",
         "Concepts/pm7-tools/settings_refresh/kit.js",
@@ -16564,9 +16569,9 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 2333,
+      "line_count": 2593,
       "path": "Plans/Settings_System.md",
-      "plan_unit_count": 38,
+      "plan_unit_count": 40,
       "plan_unit_ids": [
         "SSYS-001",
         "SSYS-002",
@@ -16605,7 +16610,9 @@
         "SSYS-035",
         "SSYS-036",
         "SSYS-037",
-        "SSYS-038"
+        "SSYS-038",
+        "SSYS-039",
+        "SSYS-040"
       ],
       "reasoning_tiers": [
         "high",
@@ -16613,6 +16620,7 @@
         "standard"
       ],
       "risk_classes": [
+        "appearance_setting_without_effect_or_theme_override_leak",
         "canonical_setting_placement_drift",
         "concept_fixture_promoted_as_runtime_proof",
         "cross_project_settings_leak",
@@ -16631,6 +16639,7 @@
         "settings_false_acceptance_or_certification",
         "settings_geometry_or_host_width_drift",
         "settings_identity_drift_or_optimistic_persistence",
+        "settings_information_architecture_or_duplicate_control_drift",
         "settings_inventory_or_denominator_drift",
         "settings_manager_registry_or_dry_projection_drift",
         "settings_onboarding_doctor_false_readiness",
@@ -16652,10 +16661,10 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "4a6fe0bbedd6a4f689a74602889259dfcfe7b791ac6f2918d2943961794238c1",
+      "sha256": "a3b7b9be4aded44da4b2b1e4ab3871845a20b2fb62ce1c030c573a1ed3e91e79",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 38
+        "accepted": 40
       },
       "title": "Settings System",
       "unit_type_counts": {
@@ -16663,7 +16672,7 @@
         "contract": 5,
         "integration_contract": 4,
         "owner_boundary": 4,
-        "requirement": 21,
+        "requirement": 23,
         "schema_contract": 1,
         "security_constraint": 1,
         "validation": 1
@@ -16737,6 +16746,7 @@
         "node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs",
         "node Concepts/pm7-tools/verify/settings_refresh_film.mjs",
         "protected-auth negative fixtures",
+        "python3 Concepts/onboarding/opus-5.5/tools/build.py --check",
         "python3 Concepts/pm7-tools/build_testpm_settings_refresh.py --check",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py json-syntax",
@@ -19130,7 +19140,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 1732,
+      "line_count": 1740,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 23,
       "plan_unit_ids": [
@@ -19187,7 +19197,7 @@
         "unwired_gui",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "6c3f0f5bed62d1beda720f51d06e53470c29670422c509a914cd559089dc6666",
+      "sha256": "feab666c58f921c4f01b209b5557206ad9b8f97c9dce67c06af06503db496f8a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23
@@ -20080,7 +20090,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-26T23:56:07Z",
+  "generated_at_utc": "2026-09-27T06:52:08Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20089,12 +20099,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3547,
-      "True": 3207
+      "True": 3209
     },
-    "plan_unit_count": 6754,
+    "plan_unit_count": 6756,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6563,
+      "accepted": 6565,
       "retired": 182,
       "superseded": 9
     },
@@ -20161,7 +20171,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5297,
+      "requirement": 5299,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

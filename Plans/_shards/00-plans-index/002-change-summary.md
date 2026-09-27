@@ -2,13 +2,16 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L91
+Source lines: L7-L94
 
-Source SHA256: `cb30c059749992fbb13703b93a3b7d6fda0f36daa70a2dab2cb22f4632369929`
+Source SHA256: `a7b7d38d2494757edf2b6c3552e1f1f27ccd46661c9ecae00d3c29cc79ae6527`
 
 ---
 
 ## Change Summary
+
+- 2026-09-27: Recorded the Settings rework demonstrated in `Concepts/onboarding/opus-5.5/src/settings`. `Plans/Settings_System.md` gains SSYS-039 (every view draws short everyday groups and one More options disclosure; the plain pages App & Input, Editor & Terminal, Containers, Planning & Interviews and Advanced Settings with their groups; manager tab groups; 44 canonical-id moves between pages; retired hand-written duplicate rows and manager-owned copies; plain-language labels with a sentence-case fallback and worded options, units and bounds; dependent-row visibility; owner routes and form/check/confirm/list/order flows instead of the generic action panel; structured editors; per-account and per-service rows) and SSYS-040 (appearance rows apply as overrides over the per-variant token contract, write nothing while unchanged, and reset removes only what they wrote), with §4.4 and §22 amended. `Plans/FinalGUISpec.md` §25, the Home reset-layout note and the theme-token addendum, `Plans/UI_Wiring_Rules.md` §16 and the Home checklist in `Plans/GUI_Rebuild_Requirements_Checklist.md` consume them. Manager keys, routes, command ids and inventory ids are unchanged; no command, handler, wiring row, inventory row or governance seal is added, and the concept remains fixture-only evidence.
+  ContractRef: ContractName:Plans/Settings_System.md#SSYS-039, ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/FinalGUISpec.md#F3-551, ContractName:Plans/UI_Wiring_Rules.md#UIW-020
 
 - 2026-09-23: Registered `Plans/back_seat_driver_contracts.schema.json` as the typed machine companion for the six `pm.bsd.*` record families declared by `Plans/Back_Seat_Driver.md` §16, with the central storage disposition row `scd.back_seat_driver.durable.v1` under new storage-plan unit `SP-318`. Routing/contract-materialization only: no physical family, no storage key, no EventRecord registration, no writer, and no handler availability or readiness change; the CS-078 `cmd.bsd.*` rows keep `handler_unavailable` and the command request/result definitions remain future owner-authored artifacts. The legacy `pm.shared_runtime.bsd_runtime_record.v1` completed-review summary is not extended.
   ContractRef: ContractName:Plans/Back_Seat_Driver.md, ContractName:Plans/storage-plan.md#SP-318, ContractName:Plans/Commands_System.md#CS-078

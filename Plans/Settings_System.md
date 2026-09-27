@@ -1225,6 +1225,8 @@ Project theme and layout changes update the active Project shell only after atom
 
 The theme family/mode pair yields exactly eight built-in variants. Glass background mode is `Mesh`, `Depth`, or `Minimal`; Glass alpha is bounded to 0.35..1.0 for Dark and 0.45..1.0 for Light, and non-Glass families keep the controls visible but disabled with `not_applicable`. `general.interaction.show-tooltips=false` suppresses hover hints only; focus descriptions and Help/Details remain. Effective reduced motion is the logical OR of Project request and platform preference and calms nonessential movement without suppressing progress, focus, error, or state-change feedback.
 
+Appearance application model (decided 2026-09-27, SSYS-040). Every appearance row changes what the app shows; none is stored without effect. Beyond the theme pair, Glass rows, reduced motion and chat layout, the rows apply through the per-variant token contract of `Plans/FinalGUISpec.md#F3-426` as overrides layered over the active variant's table: `general.visual.ui-scale` scales the whole app; `general.visual.font-size`, `general.visual.line-height` and the animation-speed choice scale the variant's type sizes, line heights and motion durations (scripted motion included) and exist only while one of them differs from its default; `general.visual.interface-density` and `general.visual.padding-scale` set the spacing steps; `general.visual.border-width`, `general.visual.border-radius` and `general.visual.scrollbar-width` set the border-width, radius and scrollbar-size tokens; `general.visual.app-font` swaps the display and body fonts for the system fonts; `general.visual.high-contrast` (Basic families) and `general.visual.focus-indicator` set contrast and the keyboard focus outline; `general.visual.retro-effects`, `general.visual.pixel-grid-opacity` and `general.visual.scanline-opacity` set the Retro textures. An accent choice sets the primary accent, its RGB triple and the accent tokens derived from it from precomputed per-mode values (a brighter shade in Dark, a deeper one in Light), never by runtime colour derivation. Unchanged means the theme's own: a row whose value was never changed writes no override, so each variant keeps its own accent, corners, borders, fonts, spacing and scrollbar; the first accent choice and a "use the theme's" action on the theme-owned fine-tuning rows (border width, corner roundness, scrollbar width) mean exactly that, and those rows present the active variant's value rather than an inventory literal until a value is chosen. Reset removes exactly the override the row wrote and nothing else. Overrides follow the same atomic acceptance, preview and Project scope as the theme pair.
+
 ### 4.5 Exact provider action availability projection
 
 Settings consumes the following CS-066/UCC-145 owner selectors and disabled-reason codes without becoming their owner. Central catalog parity must be revalidated; the Settings schema does not turn an unregistered peer command or stale catalog row into a handler:
@@ -1747,17 +1749,26 @@ Settings manager refresh under USER-SETTINGS-MANAGER-REFRESH-20260908 (§22, SSY
      in a section title row, or in the single quiet bottom row.
   8. *Bounded Tabs:* A manager exposes at most six tabs.
   9. *Exactly One Advanced Disclosure:* Advanced, dangerous, rarely used, and diagnostic items collapse into
-     one labeled keyboard-operable disclosure per manager view, never scattered per-section toggles.
+     one labeled keyboard-operable disclosure per manager view, never scattered per-section toggles. From
+     2026-09-27 that disclosure reads **More options** in every manager view and on every plain page, sits
+     after the view's everyday groups, and opens itself when search, the page index or a Details link lands on
+     a row inside it (SSYS-039).
   10. *Side Panel Anatomy:* Manager drawers and the setting Details inspector share one anatomy (identity
      header, sectioned body, quiet footer), the same spring motion, and no decorative accent bars; the
      inspector keeps its width tokens.
   11. *Status Tokens, Not Pills:* State reads as a small coloured dot with text; category labels are quiet
-     text; only keyboard keys keep a capsule.
+     text; only keyboard keys keep a capsule. From 2026-09-27 the same holds for Details' Default and
+     Recommended marks, engine badges and drawer status (words, with a dot only where they carry a tone);
+     pick-several choices are squared tiles with a checkbox; related settings in Details are text links; and
+     Settings carries no coloured side or top stripe and no emoji.
   12. *Themed Listboxes:* Every select is a listbox drawn by the concept over a hidden native select, sharing
      the chat assistant's popout motion; no native option list is ever visible, and menus use the same popout.
   13. *Manager-Topic Settings Live Inside Their Manager:* Canonical ordinary settings that belong to a manager
      topic render as inline canonical sections inside that manager, before its Advanced disclosure; core
-     settings stay on plain pages; every inventory id renders exactly once.
+     settings stay on plain pages; every inventory id renders exactly once. From 2026-09-27 a manager may draw
+     an inventory row as its own control (a list's search, Show or Sort menu, a per-item switch, a field inside
+     one account or server) bound to the same setting id; that bound control is the row's one home, and no
+     manager keeps its own copy of a choice an inventory row already makes (SSYS-039).
 - **Universal Application Across 38 Managers:** These principles govern all thirty-eight registered
   managers:
   `all-settings`, `general-appearance-input`, `providers-accounts-models`, `web-routes`, `media-routes`,
@@ -2331,3 +2342,252 @@ owner_hints: [Plans/Settings_System.md, Plans/Commands_System.md]
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Commands_System.md#CS-081
+
+## Settings information architecture and plain-language rework — 2026-09-27
+
+Every decision in this section is dated 2026-09-27. It records the product decisions demonstrated by the Settings rework in `Concepts/onboarding/opus-5.5/src/settings` (placement in `o55/placement.d/*.json`, row wording, conditions, units, routes, flows and editors in `o55/rows.d/*.json`, behaviour in `kit.d/*.js` and `managers/*.js`). The concept remains `concept_fixture_only` (§4.6): its fixture values, simulated flows, counts and screenshots are not runtime, persistence, handler or readiness evidence. The 38-key manager registry, every `manager_id`, route, detail id and command id, and every inventory id are unchanged; page names, groups and moves are presentation over the same registry (SSYS-015, SSYS-035). Where an existing unit already governs a topic (SSYS-010 Glass control disclosure, SSYS-013 container and SCM operation boundaries, `Plans/Commands_System.md#CS-081` Commands & Shortcuts controls, `Plans/Personas.md` §4 persona editing), that unit still governs and this section does not change it.
+
+### 1. Page and group structure
+
+Every Settings view, manager tab or plain page, draws its short everyday groups first (a list the manager draws itself counts as one group; on plain pages they replace single groups of up to 26 rows) and folds rarely changed groups into the view's one disclosure at the end, labelled More options (§22 principle 9). A group lists its rows in reading order, master switch first and the choices it unlocks after it, instead of inventory order. A group whose every row waits on a switch that is off steps aside with its rows. Each group reads the same way: a title, one line of help, the rows, and at most one owner line (for example the single Open Docker Manager line at the top of Docker on this computer instead of one on every group holding a container id); the numbered section kicker and per-section guide button are retired because every row has its own About.
+
+| Plain page | Everyday groups, in order | More options |
+|---|---|---|
+| App & Input | Theme & colors; Size & readability; Sending messages; How the assistant works; What the chat shows; Help & explanations; Window & panels (including Choose widgets and Reset the layout); When Puppet Master opens; Spelling | Custom themes; Fine-tuning the look; More about help |
+| Editor & Terminal (was Editor & Runtime; its containers moved to Containers) | Saving & tabs; File tree; Editing; Terminal; Terminal look; Terminal output & history; Copy & paste; Project search index | Big files & folders; Terminal: more options; Search index: more options |
+| Containers (was Containers & Execution) | Docker on this computer; Docker Hub and other registries; Building & publishing images; Running containers; Changed containers; Disk cleanup; Kubernetes; Unraid templates; Your app's store listing; Your publisher profile | Docker panel views & records; Template repository details |
+| Planning & Interviews | Plan and Deep Plan; Planning Wizard; Interview topics; Helpers | Question limits; This wizard session only; Files & formats |
+| Advanced Settings | Sharing with the makers; Troubleshooting; Startup and drawing; Start over | none |
+
+The former 20-row Plan depth & questions group and 26-row Terminal & shell group are retired in favour of the groups above.
+
+| Manager | Tabs and groups in order (More options last) |
+|---|---|
+| Providers & Accounts | Services (every service, account and key, drawn by the service list); Models (Everyday model; A model for each job; Goals, helpers and small jobs; Presets and nicknames; More options: How models answer, Service features and caching, Work lanes and what ran); Limits & switching (Moving between accounts; Moving between services; More options: One run, and the switch log); Usage & budgets (Spending limits; Warnings; The Usage page; More options: Records and prices) |
+| Web & Research | Abilities (each ability's web services apart from the AI model that decides what to look for, and its limits inside it); Search services; Limits & saving (Spending; Saved results); Network (offline mode, proxy with its fields shown only for a manual proxy, and the certificate bundle; More options: Your own servers) |
+| Media & Output | Abilities (the project switches above the list; each ability's switch, service and defaults inside it); Pictures & files (Pictures you share; Where results go; More options: Expert options) |
+| Toolchain | Language Servers (the server list; Language help; Code health gate; More options: Timing and limits); Formatters (the formatter list; Tidy code; More options: Formatter catalog); Agent Tools (no container rows) |
+| Skills; Plugins; MCP Servers | The list first, owning its search, Show, Sort, add, remove and per-item switches; then Skills: How skills are used, New skills, Share with other AI tools (More options: Size and display); Plugins: New plugins and updates, Limits and safety; MCP Servers: Servers from other apps, Connection defaults (More options: Refresh and secrets, What each server ended up with) |
+| Commands & Shortcuts | Shortcuts (one shortcut list in three groups, everywhere, in the message box and in the terminal, with clashes checked across all three; shortcut hints, with clash display on CS-081's warn policy; More options: Reset and back up); Commands (Safety; Your commands; More options: Defaults for new commands, Built-in names) |
+| Testing & Debug | Profiles (Running sessions); When to test (the one switch for all automated testing; Before merging); What it can test, was Browser & Native (Browser testing; Desktop and mobile apps; Behind the scenes; More options: Test tools and windows); Debug (Debug profiles; What debugging may do on its own; More options: Debug loop limits); History (Keeping proof) |
+| Context & Memory | Memories (the on/off switch heading the list); Context space (Context in use; When space runs low; Working notebook; More options: Fine-tune context space); Instructions (Standing instructions; What you can see; Rule packs; More options: Prompt safety checks); Finding memories (When memories are used; How memories are matched); Keeping & privacy (How long memories last; Unconfirmed notes; Who else can read memories; More options: Tidy up); Sources |
+| Goals | Templates (kind of job set per template); Active Goals (Progress view; Receipt earned); Defaults (New Goals start with; Keeping an eye on progress; Scheduled runs); Recovery (If something interrupts; Changing the plan; When a check fails); Checks (Before a Goal is called done; Goal evidence; More options: Stricter proof) |
+| Personas | Personas (Your personas; inside the selected persona: About this persona, How it answers, Model and cost, Tools and instructions; More options: Skipped settings); Crews (Crews; New crews start with; Crew Auto); Group work (BrainStorm: who takes part; BrainStorm: debate and vote; Review; Chat Room); Helpers (Helper agents; Which helpers; Keeping helpers safe; More options: Limits for all agents, Helper contracts); Defaults (Choosing a persona; In a chat) |
+| Back Seat Driver | Overview (one Advisor group; More options: Expert options); Stages (Where the advisor watches); Findings |
+| Source Control | Code Services (GitHub sign-in inside GitHub); Repositories (Create a new repository; Contribute to another project; Workspaces for chats; Before and after each run; More options: Workspace storage); Defaults & Safety (How runs use version history; Safety; Recovery; More options: Source Control panel); Actions & Pipelines (Pinned workflows; Keeping checks current) |
+| Built-in browser | Built-in browser; Signing in to websites; Screenshots and developer tools |
+| Notifications & Sounds | The master switch at the top of every tab; Destinations; Events (with Which alerts reach you under the event list); Sounds (play sounds, volume and also-while-using-the-app first); Quiet hours; History |
+| Permissions | Profiles (Profiles; New runs and chats; More options: Who runs the tools); Rules (View and scope; Rules, in order; Answers for each tool; More options: Rule details); Protected Files (File protection; Dangerous commands; Folders outside the project; Hide secrets; More options: Exceptions during checks); Approvals (When a run stops to ask; Always ask first; When you're asked; More options: Strictness and records); Limits (Stop runaway work; Limits for one run; More options: Finer limits) |
+| History | Timeline (What the timeline shows, in the filter bar; More options: Export and import); Sessions; Artifacts; Cleanup (Chats; Run records and logs; More options: Index and storage tools) |
+| Server & Project Location; Settings Transfer; Readiness & Doctor; Updates | Servers tab: SSH computers, Setting up tools on servers. Settings Transfer: Save or load a file (More options: File format and older versions). Readiness & Doctor: Last checkup; Automatic checkups; What you see around the app; Setup and tour (More options: For support). Updates: Puppet Master; Content and catalogs (More options: How often and which releases) |
+
+### 2. Canonical-id moves between pages
+
+These ids change the view that draws them. Nothing else about them changes.
+
+| Canonical ids | From | To |
+|---|---|---|
+| `code.execution.docker-manager-visibility`, `container-runtime`, `docker-binary-path`, `docker-display-context` | Toolchain › Agent Tools | Containers › Docker on this computer |
+| `code.execution.dockerhub-auth-method`, `dockerhub-token`, `dockerhub-signin`, `dockerhub-namespace`, `dockerhub-repository`, `create-repository`, `repo-privacy`, `default-registry`, `registry-credentials`, `enterprise-registries` | Toolchain › Agent Tools | Containers › Docker Hub and other registries |
+| `planning.verification.review-strategy`, `review-reviewer-count`, `review-blind-initial-pass`, `review-peer-corroboration`, `review-preserve-dissent`, `review-auto-repair`, `review-roster` | Goals | Personas › Group work › Review |
+| `planning.verification.evidence-span`, `source-evidence-layers`, `receipt-evidence-policy`, `evidence-detail` | Testing & Debug | Goals › Checks › Goal evidence |
+| `planning.testing.browser-capture-full-default`, `browser-component-action`, `browser-component-crop`, `browser-devtools-policy` | Testing & Debug | Built-in browser › Screenshots and developer tools |
+| `code.execution.execution-strategy`, `strategy-override` | Server & Project Location | Permissions › Profiles › Who runs the tools |
+| `code.execution.mode-overlay` | Containers | Permissions › Profiles › New runs and chats, next to the run mode it narrows |
+| `memory.limits.run-token-budget`, `goal-token-budget` | Context & Memory | Permissions › Limits › Limits for one run |
+| `general.startup.onboarding`; `planning.interview.wizard-first-run`, `provider-setup-skip` | App & Input; Planning & Interviews | Readiness & Doctor › Setup and tour |
+| `system.advanced.config-format`, `legacy-config-names` | Advanced Settings | Settings Transfer › File format and older versions |
+| `general.startup.max-persisted-tabs` | App & Input | Editor & Terminal › Saving & tabs, bounded by `general.interaction.max-editor-tabs` |
+| `general.startup.refresh-investigation` | App & Input | Testing & Debug › Debug › What debugging may do on its own |
+| `planning.interview.todo-auto-use` | Planning & Interviews | App & Input › How the assistant works |
+| `planning.verification.back-seat-driver-mode` | Goals | Back Seat Driver › Overview; this planning copy follows the advisor's mode and search lands on the mode row |
+| `system.health.capability-provisioning` | Readiness & Doctor | Server & Project Location › Servers › Setting up tools on servers |
+
+### 3. Retired duplicates
+
+Hand-written rows that repeat an inventory row, often with other options or defaults, are not drawn; the inventory row is the one control: on App & Input, `font-size` (Text size, `general.visual.font-size`), `motion` (Reduce motion, `general.visual.reduce-animations`), `contrast` (Keyboard focus outline, `general.visual.focus-indicator`), `restore-window` and `panel-restore` (Remember window size and layout, `general.startup.window-state`), `help-level` (How the app talks to me, `general.interaction.mode`) and the short-key `working-activity-style` row (`general.interaction.working-activity-style`, §19); the hand Interface density row draws `general.visual.interface-density` with its inventory choices Auto, Comfortable and Compact (Relaxed was never a stored value). On Editor & Terminal, `format-save` (`code.editing.formatters-enabled`, on Toolchain), `large-file` (the inventory size limits), `terminal-profile` (`code.terminal.shell`), `terminal-restore` (`code.terminal.layout-restore`) and `index-exclusions` (`web.index.exclusion-patterns`). On Advanced Settings, the hand Diagnostic telemetry row, whose crash reports defaulted on (`system.health.telemetry`, Share anonymous usage and crash reports, off by default), and the hand reset row (`system.advanced.reset-defaults`, which runs the real Restore Defaults preview of SSYS-009). The old Editor page's container section, Preferred container engine and Registry accounts, gives way to `code.execution.container-runtime` and `code.execution.registry-credentials`. A hand section left with no rows is removed.
+
+A manager keeps no second copy of a choice an inventory row makes; the inventory row is drawn once in the manager or bound into its own control:
+
+| Manager | Retired own copy | The one control |
+|---|---|---|
+| Skills | the second list of every skill; share failure states offered as choices | the skills list with its switches and run rules; Share or Don't share |
+| Plugins | the table repeating every plugin; the page's own 10-second hook limit | the plugin list, whose switch writes `extensions.plugins.plugin-on-off`; `extensions.plugins.hook-timeout` |
+| MCP Servers | a second Ask me first import switch; the page's own 30-second limit | `system.mcp.import-external`; `system.mcp.timeout`; every per-server setting inside the server's panel |
+| Providers & Accounts | the flat Accounts & sign-in and API keys lists | each account's and service's own rows and key dialog (§8) |
+| Web & Research | the manager's own source and crawl-page counts, fetch timeout and cache, browser profile and certificates | the inventory limits inside each ability and on Network |
+| Media & Output | the manager's own quality, voice, format, retention and folder copies | the inventory rows inside each ability; `media.image.provider`; `media.io.vision-fallback-model` |
+| Permissions | the manager's own expiry, remember-my-choice, then, parallel-task, disk, network and threshold copies; free-typed tool names | the inventory rows in their tabs; a profile sets the inventory safety level (Read only, Plan only, Regular, Full; your own profiles read Custom); the ordered rule list is the inventory rule list, last match wins; fixed Allow, Ask, Block tables per tool and per web ability |
+| Server & Project Location | a second SSH folders list | `code.execution.ssh-remotes` |
+| Settings Transfer | encrypted-archive and notes choices; Save and Load drawn twice | the inventory Save and Load actions; Merge or Replace; twin categories picked together |
+| Readiness & Doctor; Updates | Doctor's separate check buttons; Updates' own automatic-check switch, frequency and channel copies | one Check everything with a dated last-checkup line; `system.advanced.auto-update` with install-when-idle beneath it, catalogs following their switch, and the inventory frequency and channel rows |
+| Back Seat Driver | free-text model and persona boxes; the duplicate stage key/value list | pickers (Automatic plus signed-in models; the advisor persona plus your personas); each of the ten stages stored as inherit, off, auto or on (`Plans/Back_Seat_Driver.md` §23) in the concept-proposed `safety.approvals.bsd-stage-bindings` row, which stays a proposal under §19 |
+| Notifications & Sounds | the stats strip; a per-destination urgent switch, a global switch and an exceptions list | the Destinations, event and sound lists as the homes of `general.interaction.notification-destinations`, `general.interaction.notification-mapping` and `general.interaction.sound-mapping`; one getting-through-quiet-hours choice per destination |
+| Commands & Shortcuts | second copies of the shortcut search, hints, reset and save/load | the inventory rows and actions beside the one shortcut list, which writes the inventory map of changed keys |
+| Testing & Debug | the manager's own built-in-browser, visual-inspection and native-checks switches | the capability rows, read as Automatic, Always or Never |
+| Context & Memory | per-store lifetimes, the hard-coded decay table, the chat-history on/off switch and the preview's own result cap | the fade times; how much history is kept; the real retrieval limits |
+| Goals | the manager's own saving-progress, resume, retry, then, require-evidence, helper, Goal-model and ask-before-risky-steps copies | the Recovery and Checks rows, with helpers, the Goal model and risky-step approval shown as one line each with a way to where they live |
+| Personas | persona-scoped rows drawn once for every persona; the Defaults inheritance switches and Goals row | the persona-scoped rows inside the persona they belong to |
+| Source Control | the manager's own branch name and worktree folder; the per-service default switch | `branching.worktrees.default-branch` and the workspace folder row for new repositories, clones, worktrees and runs; Make default; the Pinned workflows row; the safety level decides its three switches unless it is Custom |
+| Built-in browser | its own screenshot switch and Testing's copy; retention and redaction copies | one capture choice shown on both pages; Testing's run-evidence retention and `safety.protection.screenshot-redaction`, shown with a way to change them |
+| History | the manager's own keep-for copies, except temporary files | the chat, run-record, log and safe-point keep-for rows with their minimums; Testing's evidence retention |
+
+### 4. Plain-language labels and values
+
+One row grammar everywhere: a label, one plain sentence, the control, and an About button that opens Details; a changed value carries a quiet dot. A row's label and help are decided per row; a row with no decided wording falls back to its inventory label in sentence case ("Keep Running In System Tray" reads "Keep running in system tray"), keeping product and tool names, words with an inner capital (GitHub, BrainStorm), all-capital words (MB, AI) and fixed phrases (Deep Plan, Grill Me, Docker Hub). Search results show the row's own label and help, and the inventory title stays searchable, so either wording finds the row.
+
+Stored values never change for presentation; what a person reads does. Each option reads as words from one shared vocabulary, overridden per setting where a word means something specific there, with an optional one-line hint; identifier-looking tokens become words while text already written for people is left alone; a select whose current value is not one of its options shows that value as a visible choice instead of implying the first option is chosen. Numbers show their unit or nothing, never the word "number"; a number that follows a default until someone sets it reads Automatic with Set a number; a unit people do not think in is shown in one they do (milliseconds as seconds, bytes as MB); a typed number is checked on leaving the field and brought back inside its bounds with a message; and a bound may follow another setting (tabs reopened next time stay within tabs allowed open; fewest questions per topic stays below most). A toggle whose inventory default is a word reads on for on, show, enabled, enforced, override and yes, and off for off, hide, disabled, inherit and no; an unchanged saved value is corrected to match and a saved choice is never overwritten. A default that is really words (such as "(default project location)") reads as the field's placeholder; a path kept inside the project reads `project/…`; an empty keep-for row reads Until I delete them; a policy that is not a choice reads as one fixed sentence; and a Custom choice gets its own field directly under it.
+
+Details answers in order: where the row lives (chapter and page), what it is set to and whether that is the default, what it does, the choices in plain words (clickable, the current one ticked, default and recommended marked), where it applies, and which settings sit next to it; the technical id comes last and folded. Inventory machine fields (tier, curation flags, a raw default shown as an example) are never shown as prose.
+
+### 5. Visibility
+
+A row whose meaning depends on another switch or choice shows only while that switch or choice makes it apply, and relevance follows chains: proxy address fields only with a manual proxy; the Docker Hub access token only when signing in with a token; the Kubernetes namespace only once a cluster is chosen; Animation speed only while Reduce motion is off; Retro scanline and pixel-grid strengths only while Retro textures are on; Back Seat Driver rows only while the advisor is on; the capability rows only while testing is not Off; crew and helper detail rows only while crews or helpers are on; Review's reviewer count, blind first pass and corroboration only with multi-pass review; the code health gate's options only once the gate is on; the checkpoint pauses only while the run mode asks at checkpoints; permission scopes only in the Expert Rules view with overrides on; and the MiniMax prompt option only for the MiniMax picture service. A hidden row keeps its stored value, stays findable through search and Details, and hiding never removes a blocking error, consent boundary, unavailable reason, requested/effective difference or live-versus-example distinction (SSYS-006). Theme-family rows are outside this rule: Glass controls keep SSYS-010's visible `not_applicable` disclosure.
+
+### 6. Owner routes and flows instead of a generic action panel
+
+No Settings action opens the generic "What this does" preview panel whose button only reported that the action was requested. An inventory action row does one of two things. It routes to the owner surface that does the job and lands on the exact control: `ai.accounts.github-connect` to Source Control; `ai.usage.quota-management` to Providers & Accounts › Usage & budgets; `personas.library.persona-manager` to Personas; `general.interaction.settings-search` (Search all settings) to the Settings search box (`settings.search.focus`); `general.interaction.dashboard-widgets` (Choose widgets) to the Home dashboard's own widget picker, since a typed list of widget names could never be valid; `general.startup.reset-home-layout` (Reset the layout) to Home's own Reset Layout (`cmd.workspace_layout.reset`) after one plain question naming what moves back and what is kept; a per-account or per-service row, including every API key row, to its account or service. Or it runs one small flow bound to the owner's command and availability: a form (fields to fill in; non-secret answers are kept, secrets are only marked as saved in the keychain), a check (steps run in order with an outcome and the time of the last run), a confirm (a plain question with the consequence, marked dangerous when it removes something), a list (things to read or act on, each with its own action or Remove) or an order (an ordered list). A flow performs no owner operation itself: it dispatches the owner's registered command or shows the owner's unavailable reason (SSYS-015, SSYS-020), and where SSYS-013 requires a route (container, registry, publish and SCM operations) the row routes to the owner surface instead.
+
+Adding an MCP server, a plugin, a skill, a command, a shortcut, a persona, a crew or a Goal template, creating a repository and contributing to another project are guided set-ups in one window over the dimmed page, in the onboarding wizard's form: the steps as a rail, one plain question per step, Back and Continue, and a click on the dimmed page never closes it. Each commits through its owner's command; the answers a row remembers are its inventory values.
+
+### 7. Structured editors
+
+Lists and key/value settings open an editor that adds, removes and reorders items instead of a raw JSON or text box; items from a known set (services, personas, clusters, models) are picked rather than typed; nested data keeps a structured editor labelled as such; secret rows open a key panel that never shows the key, and notification destination addresses are entered and shown like keys (masked, kept on the server, with Replace). Rows that had a raw box get a small editor of their own: Words to always accept is a word list; reviewers are one persona per review round, picked from the library; Kubernetes logs start is one choice; what agents may do in each cluster is one entry per cluster with its namespaces and four switches; Unraid setup fields are entries with a kind, a name and a default; the publisher picture is an upload or a link; the context-space split adds up to 100 percent; rule documents open in an editor; per-tool and per-web-ability answers are fixed Allow, Ask and Block tables; Back Seat Driver's model and persona and the Commands defaults for new commands offer the signed-in models, real personas and profiles instead of free text. Fields inside a Settings panel carry their own label and help and no generic hover or focus tag over them; the panel's buttons keep theirs.
+
+### 8. Rows that describe one thing
+
+Rows the inventory holds once but which describe one account (nickname, jobs it may do, billing, sign-in method, Google Cloud project, priority, switch and cooldown overrides, retry budget, quota profile, credential storage) or one AI service (on or off, preferred sign-in) are drawn and edited inside that account or service. A thing without its own value shows the inventory default, never another thing's value; Details says the row is set per account or per service and lists what each one has; anywhere the plain row renderer draws such a row (All Settings included) it is a way to the accounts or services, not one global control. The per-thing value is held by the account or service owner record; the inventory row's scope metadata is not widened by this presentation.
+
+### 9. Pending inventory admission
+
+The rows Accent color, Animation speed, Show names next to those icons, First screen when Puppet Master opens, Check spelling, Languages to check, Words to always accept, and on Editor & Terminal autosave, file encoding, paste protection and index mode are hand-written rows without inventory ids; Show names next to those icons mirrors the icon rail's own expand and collapse state in both directions. They follow this section and SSYS-040 but are owed inventory admission by the inventory owner (`Plans/FinalGUISpec.md#F3-441`) before a runtime may persist them; until then no inventory row is claimed for them.
+
+```yaml
+plan_unit_id: SSYS-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  Every Settings view draws short everyday groups first, each in reading order with its master
+  switch first, and folds rarely changed groups into the view's one disclosure, labelled More options, at the
+  end. The plain pages are App & Input, Editor & Terminal (was Editor & Runtime), Containers (was Containers &
+  Execution), Planning & Interviews and Advanced Settings, and the page groups, manager tab groups and
+  canonical-id moves are those recorded in this section; they are presentation over unchanged manager keys,
+  routes, detail ids, command ids and inventory ids. Hand-written rows that repeat an inventory row and every
+  manager-owned copy of a choice an inventory row makes are retired: the inventory row, drawn once or bound into
+  its manager's own control, is the one control. Rows read in plain words: a decided label and sentence, else
+  the inventory label in sentence case with names kept; options read as words while the stored value is
+  unchanged; numbers show units and stay within bounds, including bounds that follow another setting; search
+  shows the row's own label. A row that depends on a switch or choice shows only while it applies. No action
+  opens a generic preview panel: each action row routes to its owner surface or runs a form, check, confirm,
+  list or order flow bound to the owner's command and availability. Lists, maps and structured values open
+  structured editors; rows that describe one account or service are edited inside it.
+gui_related: true
+gui_classification_reason: Governs the visible grouping, order, disclosure, labels, visibility, action routes and editors of every Settings page and manager.
+split_recommended: false
+depends_on: [SSYS-006, SSYS-013, SSYS-015, SSYS-020, SSYS-033, SSYS-035]
+unblocks: []
+acceptance_criteria:
+  - Every manager view and plain page renders its everyday groups first and at most one More options disclosure, last; a landing from search, the page index or Details on a folded row opens it first.
+  - Plain-page and manager group orders and the canonical-id moves match this section; manager_id keys, routes, detail ids, command ids and inventory ids are unchanged.
+  - No retired hand-written row or manager-owned copy renders, and each inventory id still renders exactly once, a manager's bound control counting as its home.
+  - Every label, option, unit and search result reads in plain words while stored values and inventory titles stay unchanged and searchable; word defaults of toggles resolve by the on/off table without overwriting a saved choice.
+  - A dependent row hides only while its condition fails, keeps its stored value, stays findable, and never hides a blocking error, consent boundary, unavailable reason or requested/effective difference; Glass controls keep SSYS-010 disclosure.
+  - No Settings action opens a generic preview panel; each action row reaches its owner route or a flow that dispatches its owner command, or shows the owner's unavailable reason, and SSYS-013 operations route to their owner surface.
+  - List, key/value and structured rows open structured editors; no secret is rendered; per-account and per-service rows are edited inside their account or service.
+validation_surfaces:
+  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
+  - python3 scripts/pm-plan-index.py validate
+risk_class: settings_information_architecture_or_duplicate_control_drift
+reasoning_tier: high
+context_scope: settings_manager_presentation
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Plans/FinalGUISpec.md
+  - Concepts/onboarding/opus-5.5/src/settings/o55/placement.d
+  - Concepts/onboarding/opus-5.5/src/settings/o55/rows.d
+  - Concepts/onboarding/opus-5.5/src/settings/kit.d
+node_compile_hint:
+  mode: settings_manager_specification
+  create_worknodes: false
+source_lineage:
+  - Concepts/onboarding/opus-5.5/src/settings/o55/placement.d
+  - Concepts/onboarding/opus-5.5/src/settings/o55/rows.d
+  - Concepts/onboarding/opus-5.5/src/settings/kit.d/16-pages.js
+  - Concepts/onboarding/opus-5.5/src/settings/kit.d/65-flows.js
+  - SSYS-035
+preserved_exact_tokens:
+  - "More options"
+  - "App & Input"
+  - "Editor & Terminal"
+  - "Planning & Interviews"
+negative_constraints:
+  - Do not draw a hand-written row or a manager-owned copy beside the inventory row it repeats.
+  - Do not open a generic action preview panel for an inventory action, and do not let a flow perform an owner operation without the owner's command.
+  - Do not show raw JSON, identifier tokens or the word "number" where a person reads a value.
+  - Do not mint, rename or delete a manager_id, route, command id or inventory id for these presentation changes.
+  - Do not treat concept flows, fixture values or placement counts as runtime, persistence or readiness evidence.
+owner_hints:
+  - Plans/Settings_System.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-035, ContractName:Plans/Settings_System.md#SSYS-013, ContractName:Plans/Settings_System.md#SSYS-020, ContractName:Plans/FinalGUISpec.md#F3-551
+
+```yaml
+plan_unit_id: SSYS-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  Appearance rows apply through the per-variant token contract as overrides over the active variant: size of
+  everything, text size, line spacing, animation speed, spacing and extra padding, border width, corner
+  roundness, scrollbar width, app font, high contrast, keyboard focus outline, Retro textures and accent. A row
+  never changed writes no override, so each theme keeps its own values (unchanged means the theme's own); reset
+  removes exactly the override that row wrote. Accent overrides use precomputed per-mode values, never runtime
+  colour derivation, and theme-owned fine-tuning rows present the active variant's value until a value is chosen.
+  Overrides share the theme pair's atomic acceptance, non-persistent preview and Project scope.
+gui_related: true
+gui_classification_reason: Every appearance row visibly changes the app and must leave each built-in variant intact until changed.
+split_recommended: false
+depends_on: [SSYS-009, SSYS-010, F3-426]
+unblocks: []
+acceptance_criteria:
+  - Each appearance row named in section 4.4 visibly changes the app in every family where it applies, and no appearance value is stored without effect.
+  - With no appearance row changed, every built-in variant renders exactly its own token table.
+  - Resetting one row restores the variant's own value for what that row wrote and leaves every other override in place.
+  - Accent choices carry precomputed per-mode values for the primary accent, its RGB triple and the accent tokens derived from it.
+  - Border width, corner roundness and scrollbar width show the active variant's value until chosen, and returning them to the theme removes the override.
+validation_surfaces:
+  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
+  - python3 scripts/pm-plan-index.py validate
+risk_class: appearance_setting_without_effect_or_theme_override_leak
+reasoning_tier: standard
+context_scope: project_appearance_settings
+implementation_surfaces:
+  - Plans/Settings_System.md
+  - Plans/FinalGUISpec.md
+  - Concepts/onboarding/opus-5.5/src/settings/kit.d/17-look.js
+  - Concepts/onboarding/opus-5.5/src/settings/styles.d/12-look.css
+node_compile_hint:
+  mode: project_appearance_settings_contract
+  create_worknodes: false
+source_lineage:
+  - Concepts/onboarding/opus-5.5/src/settings/kit.d/17-look.js
+  - Plans/FinalGUISpec.md#F3-426
+  - Plans/Settings_System.md#SSYS-010
+preserved_exact_tokens:
+  - "token contract"
+  - "the theme's own"
+  - "reset"
+negative_constraints:
+  - Do not store an appearance value that changes nothing.
+  - Do not present an inventory literal, such as a Retro radius, as the value in use on another family.
+  - Do not derive accent colours at runtime.
+  - Do not change the theme pair atomicity, the Glass alpha floors or Glass control disclosure of SSYS-010.
+owner_hints:
+  - Plans/Settings_System.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/FinalGUISpec.md#F3-426

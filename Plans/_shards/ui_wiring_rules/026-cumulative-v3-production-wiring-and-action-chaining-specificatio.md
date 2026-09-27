@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1477-L1545
+Source lines: L1477-L1553
 
-Source SHA256: `6c3f0f5bed62d1beda720f51d06e53470c29670422c509a914cd559089dc6666`
+Source SHA256: `feab666c58f921c4f01b209b5557206ad9b8f97c9dce67c06af06503db496f8a`
 
 ---
 
@@ -19,6 +19,14 @@ handler dispatch invariants in accordance with APR-023 and APR-050.
   one canonical command/handler route. Multiple UI entry points (e.g., Assistant wand menu,
   context menus, keyboard shortcuts, Settings panels) must wire to the identical canonical command ID
   rather than introducing duplicate dispatchers or competing handlers.
+- **Settings Action Rows Reuse Their Owner (2026-09-27):** No Settings action row opens a generic
+  "What this does" preview whose only effect is to report the action as requested. Each action row
+  either routes to the owner surface that performs the job (for example Choose widgets to the Home
+  dashboard's widget picker, Search all settings to `settings.search.focus`) or runs a Settings flow
+  (form, check, confirm, list or order) that dispatches the owner's existing canonical command and shows
+  the owner's disabled reason when it is unavailable. The Settings Reset the layout row dispatches the
+  same `cmd.workspace_layout.reset` as the Home menu after one confirmation. No Settings-specific command
+  ID, handler or production wiring row is created for these routes (`Plans/Settings_System.md#SSYS-039`).
 - **Declared Action Chaining and Teardown Order (APR-050):** Application reset hooks, workspace
   reloads, and component unmount sequences enforce deterministic, declared action chaining where each
   subsystem owner is invoked exactly once:

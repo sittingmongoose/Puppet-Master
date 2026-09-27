@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L262-L1225
+Source lines: L262-L1229
 
-Source SHA256: `261b9e8d956ff63994bf4751f50868b6718b59df20d8e427337e7814e8bda0dd`
+Source SHA256: `946d3f385d9d69f212a5f5dec413ec655f90042abe85376781c5824f55d3ea14`
 
 ---
 
@@ -197,6 +197,10 @@ prior reset prohibition in this popup is retired with a dated disposition below:
 `Collapse Bottom Terminal`, and `Reset Home Layout` under
 Settings -> General & Appearance -> Startup & Recovery keeps working; both
 dispatch the same `cmd.workspace_layout.reset` and no new command ID is minted.
+Amended 2026-09-27: the Settings copy (`general.startup.reset-home-layout`) now sits
+in App & Input -> Window & panels as Reset the layout, asks one plain question
+naming what moves back and what is kept, and dispatches the same command
+(`Plans/Settings_System.md#SSYS-039`).
 In the concept demo the top-bar row additionally closes any legacy chat overlay
 state and reloads the page so the demo flow restarts pristine; that reload
 semantic is concept-demo behavior only and is NOT promoted into the typed command

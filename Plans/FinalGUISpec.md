@@ -448,6 +448,10 @@ prior reset prohibition in this popup is retired with a dated disposition below:
 `Collapse Bottom Terminal`, and `Reset Home Layout` under
 Settings -> General & Appearance -> Startup & Recovery keeps working; both
 dispatch the same `cmd.workspace_layout.reset` and no new command ID is minted.
+Amended 2026-09-27: the Settings copy (`general.startup.reset-home-layout`) now sits
+in App & Input -> Window & panels as Reset the layout, asks one plain question
+naming what moves back and what is kept, and dispatches the same command
+(`Plans/Settings_System.md#SSYS-039`).
 In the concept demo the top-bar row additionally closes any legacy chat overlay
 state and reloads the page so the demo flow restarts pristine; that reload
 semantic is concept-demo behavior only and is NOT promoted into the typed command
@@ -30001,6 +30005,8 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
+Settings appearance overrides (2026-09-27): the per-variant tables below are what every variant renders while no appearance setting has been changed. Settings appearance rows (size, text size, line spacing, animation speed, spacing, padding, border width, corner roundness, scrollbar width, app font, high contrast, focus outline, Retro textures, accent) apply as overrides over the active variant's table, write nothing while unchanged, remove exactly what they wrote on reset, and use precomputed per-mode accent values; `Plans/Settings_System.md#SSYS-040` owns that model and this unit's no-runtime-colour-derivation rule still applies.
+
 ### Theme Token Tables (F3-426 spec data)
 
 Values below are transcribed verbatim from the concept CSS: `Concepts/pm6-build/parts/02-css-tokens.part.html` (root contract :28-66, theme blocks :140-552, glass background stage :554-733), `Concepts/pm6-build/parts/03-css-glass-a.part.html` (:19-49, :59-153), `Concepts/pm6-build/parts/04-css-glass-b.part.html` (:11-56, :138-196), `Concepts/pm6-build/parts/10x-pm6-css-global.part.html` (:139-176 friendly chrome), `Concepts/pm6-build/parts/10-css-settings.part.html` (:580-590, :912-940), and `Concepts/pm6-build/parts/29-js-settings-engine.part.html` (:60-86 alpha clamps). Values containing `calc()`, `color-mix()`, or `var()` chains are runtime-derived in concept; precompute per F3-431.
@@ -36560,11 +36566,11 @@ invariants.
   6. *One Quiet Action Row:* Secondary actions, resets, and documentation links cluster into a single subtle bottom action strip.
   7. *No Top Action Bar:* No header-level action strip; actions live in rows, section title rows, or the single quiet bottom row.
   8. *Bounded Tabs:* At most six tabs per manager.
-  9. *Exactly One Advanced Disclosure:* One labeled keyboard-operable Advanced disclosure per manager view holds advanced, dangerous, rarely used, and diagnostic items.
+  9. *Exactly One Advanced Disclosure:* One labeled keyboard-operable Advanced disclosure per manager view holds advanced, dangerous, rarely used, and diagnostic items. From 2026-09-27 it reads More options in every manager view and on every plain page, follows the view's short everyday groups, and opens itself when search, the page index or Details lands inside it (`Plans/Settings_System.md#SSYS-039`).
   10. *Side Panel Anatomy:* Manager drawers and the setting Details inspector share one anatomy (identity header, sectioned body, quiet footer) and the same spring motion, without decorative accent bars; inspector width tokens are unchanged.
-  11. *Status Tokens, Not Pills:* A small coloured dot with text for state; quiet text for category labels; capsules only for keyboard keys.
+  11. *Status Tokens, Not Pills:* A small coloured dot with text for state; quiet text for category labels; capsules only for keyboard keys. From 2026-09-27 Details' Default and Recommended marks, engine badges and drawer status are words (a dot only where they carry a tone), pick-several choices are squared tiles with a checkbox, related settings are text links, and Settings has no coloured side or top stripe and no emoji.
   12. *Themed Listboxes:* Concept-drawn listboxes over hidden native selects with the chat assistant's popout motion; no native option list is visible; menus share the popout.
-  13. *Manager-Topic Settings Live Inside Their Manager:* Manager-topic canonical settings render inline inside their manager before its Advanced disclosure; core settings stay on plain pages; every inventory id renders exactly once.
+  13. *Manager-Topic Settings Live Inside Their Manager:* Manager-topic canonical settings render inline inside their manager before its Advanced disclosure; core settings stay on plain pages; every inventory id renders exactly once. From 2026-09-27 a manager's own bound control (a list's search or Show menu, a per-item switch, a field inside one account) is a row's one home, no manager keeps its own copy of an inventory choice, and the plain pages are App & Input, Editor & Terminal, Containers, Planning & Interviews and Advanced Settings (`Plans/Settings_System.md#SSYS-039`).
 - **Exhaustive Application Across 38 Settings Managers (APR-062):** The restored native presentation
   grammar applies across all thirty-eight registered Settings managers:
   1. `all-settings` (Search-first catalog)

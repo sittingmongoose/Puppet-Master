@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L1914-L2009
+Source lines: L1914-L2011
 
-Source SHA256: `e024f56af83a32efe5bd8ebd7bbe0b089b6edf1206a0ffce01cac0f31b245ca4`
+Source SHA256: `9658f485cf5fc1cfebbe4bd0e24ff25bc1566fa5979ed8341198b6df080e231c`
 
 ---
 
@@ -23,7 +23,9 @@ The GUI rebuild is not Home-complete until the evidence set verifies:
   Bottom Terminal, and Reset Layout (amended 2026-08-13: reset is dual-surface —
   the top-bar row and the Settings Startup & Recovery row both dispatch
   `cmd.workspace_layout.reset`, and the demo's post-reset reload stays off the
-  command bus);
+  command bus; amended 2026-09-27: the Settings row is Reset the layout under
+  App & Input -> Window & panels, asks one plain question first, and dispatches
+  the same command);
 - Dashboard, Chat, and terminal-section movement through `home_main`, all four
   in-app edge docks, and web in-canvas floating, with independent editor floating
   panels and native Slint multi-window disclosure; floating is explicit-only

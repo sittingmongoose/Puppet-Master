@@ -1926,7 +1926,9 @@ The GUI rebuild is not Home-complete until the evidence set verifies:
   Bottom Terminal, and Reset Layout (amended 2026-08-13: reset is dual-surface —
   the top-bar row and the Settings Startup & Recovery row both dispatch
   `cmd.workspace_layout.reset`, and the demo's post-reset reload stays off the
-  command bus);
+  command bus; amended 2026-09-27: the Settings row is Reset the layout under
+  App & Input -> Window & panels, asks one plain question first, and dispatches
+  the same command);
 - Dashboard, Chat, and terminal-section movement through `home_main`, all four
   in-app edge docks, and web in-canvas floating, with independent editor floating
   panels and native Slint multi-window disclosure; floating is explicit-only
