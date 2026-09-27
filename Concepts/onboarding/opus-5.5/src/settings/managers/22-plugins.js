@@ -57,7 +57,6 @@
 #panel-settings .pm51-plugins-cmds .btn { min-height: 26px; padding: 0 9px; font-size: 11px; }
 #panel-settings .o55-plg-search { margin: 0 0 10px; }
 #panel-settings .o55-plg-search .text-control { width: 100%; box-sizing: border-box; }
-#panel-settings .o55-tiles .o55-tile[hidden] { display: none; }
 `);
 
   function render() {
@@ -159,9 +158,9 @@
   function pluginWizard(pick, { install } = {}) {
     const existing = install ? byId(install) : null;
     const steps = [];
-    if (!pick && !existing) steps.push({ label: 'Find', title: 'What should the assistant be able to use?', render: d => `<div class="o55-plg-search">${PM51.input('', { placeholder: 'Search plugins', type: 'search', cls: 'o55-plg-q', label: 'Search plugins' })}</div>` + PM51.tiles(CATALOG.map(c => ({ title: c.name, text: c.what, meta: c.local ? 'Unsigned · your own' : `${c.publisher} · ${c.tools} tools`, icon: c.icon, selected: d.pick === c.id, done: !c.local && onList(c), doneReason: `${c.name} is already installed.`, data: { pick: c.id } })), { action: 'pm51-plugins-pick' }), check: d => d.pick ? '' : 'Pick a plugin to go on.', onShow: wrap => { const q = wrap.querySelector('.o55-plg-q'); if (q) q.addEventListener('input', () => { const s = q.value.trim().toLowerCase(); wrap.querySelectorAll('.o55-tile').forEach(t => { t.hidden = !!s && !t.textContent.toLowerCase().includes(s); }); }); } });
-    steps.push({ label: 'Review', title: 'What it adds, and what it may reach.', render: reviewStep, collect: (wrap, d) => { const f = wrap.querySelector('.o55-plg-folder'); if (f) d.folder = f.value.trim(); }, check: d => d.local && !d.name ? 'Pick the folder and read it first.' : '' });
-    steps.push({ label: 'Set up', title: 'A few details so it can work.', render: d => setupFields(d) + PM51.rows([{ label: 'Turn it on after installing', help: 'Off installs it but keeps its tools away until you switch it on.', control: `<span class="o55-plg-on-wrap">${PM51.toggle(d.turnOn, { action: 'pm51-plugins-wtoggle', label: 'Turn it on after installing', cls: 'o55-plg-on' }).replace('class="toggle pm51-toggle', 'class="toggle pm51-toggle o55-plg-on')}</span>` }]), collect: collectSetup, check: checkSetup });
+    if (!pick && !existing) steps.push({ label: 'Find', title: 'What should the assistant be able to use?', lead: 'Plugins bundle tools and connections. Search, or pick one below.', render: d => `<div class="o55-plg-search">${PM51.input('', { placeholder: 'Search plugins', type: 'search', cls: 'o55-plg-q', label: 'Search plugins' })}</div>` + PM51.tiles(CATALOG.map(c => ({ title: c.name, text: c.what, meta: c.local ? 'Unsigned · your own' : `${c.publisher} · ${c.tools} tools`, icon: c.icon, selected: d.pick === c.id, done: !c.local && onList(c), doneReason: `${c.name} is already installed.`, data: { pick: c.id } })), { action: 'pm51-plugins-pick' }), check: d => d.pick ? '' : 'Pick a plugin to go on.', onShow: wrap => { const q = wrap.querySelector('.o55-plg-q'); if (q) q.addEventListener('input', () => { const s = q.value.trim().toLowerCase(); wrap.querySelectorAll('.o55g-card').forEach(t => { t.hidden = !!s && !t.textContent.toLowerCase().includes(s); }); }); } });
+    steps.push({ label: 'Review', icon: 'shield', title: 'Is this what you expect?', lead: 'What it adds, and everything it may reach. It never gets more without asking you.', recap: d => d.name ? `${d.publisher || 'You'} · ${d.version}` : '', render: reviewStep, collect: (wrap, d) => { const f = wrap.querySelector('.o55-plg-folder'); if (f) d.folder = f.value.trim(); }, check: d => d.local && !d.name ? 'Pick the folder and read it first.' : '' });
+    steps.push({ label: 'Set up', icon: 'sliders', title: 'A few details so it can work', lead: 'Anything it needs from you. Keys go to your server\'s keychain and are never shown again.', render: d => setupFields(d) + PM51.rows([{ label: 'Turn it on after installing', help: 'Off installs it but keeps its tools away until you switch it on.', control: `<span class="o55-plg-on-wrap">${PM51.toggle(d.turnOn, { action: 'pm51-plugins-wtoggle', label: 'Turn it on after installing', cls: 'o55-plg-on' }).replace('class="toggle pm51-toggle', 'class="toggle pm51-toggle o55-plg-on')}</span>` }]), collect: collectSetup, check: checkSetup });
     const c = pick ? catalogItem(pick) : existing ? (catalogItem(existing.id) || { id: existing.id, name: existing.name, what: 'Listed but not installed yet.', publisher: sourceLabel(existing.source), version: existing.version || '1.0.0', tools: existing.tools, hooks: existing.hooks, permissions: existing.permissions, setup: [] }) : null;
     PM51.wizard({
       title: existing ? `Install ${existing.name}` : 'Add a plugin', subtitle: 'Plugins give the assistant new tools and connections. You review what they may reach first.', eyebrow: 'Plugin', icon: 'brackets',
@@ -194,7 +193,7 @@
     const p = byId(ds(el, 'id')); if (!p) return; const c = catalogItem(p.id); const setup = (c && c.setup) || [];
     PM51.wizard({ title: `${p.name} settings`, subtitle: 'Saved keys stay unless you paste new ones.', eyebrow: 'Plugin', icon: 'brackets', finishLabel: 'Save',
       draft: { editing: true, setup: setup.map(f => Object.assign({}, f)), config: Object.assign({}, p.config || {}), signedIn: true },
-      steps: [{ label: 'Settings', render: d => setupFields(d, true), collect: collectSetup }],
+      steps: [{ label: 'Settings', icon: 'sliders', title: `How should ${p.name} work?`, render: d => setupFields(d, true), collect: collectSetup }],
       onFinish: d => { p.config = d.config; saveState(); PM51.refresh(ID, { swap: false }); PM51.toast('Settings saved', `${p.name} uses them from its next run.`); } });
   });
   PM51.on('plugins-pick-folder', el => {

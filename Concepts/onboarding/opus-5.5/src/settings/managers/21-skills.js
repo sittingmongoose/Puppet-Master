@@ -93,9 +93,9 @@
       title: 'Add a skill', subtitle: 'A skill is a short set of instructions the assistant follows for one kind of job.', eyebrow: 'Skill', icon: 'sliders',
       draft: { source: null, turnOn: PM51.value('extensions.skills.auto-enable-new') !== false, needs: [] }, finishLabel: 'Add skill',
       steps: [
-        { label: 'Start', title: 'Where does it come from?', render: d => PM51.tiles(START.map(x => ({ title: x.title, text: x.text, icon: x.icon, selected: d.source === x.id, data: { source: x.id } })), { action: 'pm51-skills-source' }), check: d => d.source ? '' : 'Pick one to go on.' },
-        { label: 'Details', render: detailsStep, collect: collectDetails, check: checkDetails },
-        { label: 'Review', title: 'Check it, then add it.', render: reviewStep, collect: (wrap, d) => { const w = wrap.querySelector('.o55-skl-where'); if (w) d.where = w.value; const on = wrap.querySelector('[data-action="pm51-skills-won"]'); if (on) d.turnOn = on.classList.contains('on'); } }
+        { label: 'Start', title: 'Where does the skill come from?', lead: 'Write one yourself, or bring in one that already exists.', render: d => PM51.tiles(START.map(x => ({ title: x.title, text: x.text, icon: x.icon, selected: d.source === x.id, data: { source: x.id } })), { action: 'pm51-skills-source' }), check: d => d.source ? '' : 'Pick one to go on.' },
+        { label: 'Details', icon: 'edit', title: d => d.source === 'catalog' ? 'Which skill would you like?' : d.source === 'github' ? 'Where is it on GitHub?' : d.source === 'folder' ? 'Which folder is it in?' : 'What is the skill for?', lead: d => d.source === 'catalog' ? 'Reviewed skills that work as soon as they are added.' : d.source === 'write' ? 'Say when it applies and what the assistant should do. Plain sentences are fine.' : 'Paste where it is, then read it. You see what it asks for before anything is added.', recap: d => d.name || '', render: detailsStep, collect: collectDetails, check: checkDetails },
+        { label: 'Review', icon: 'shield', title: 'Does this look right?', lead: 'What it may do, what it needs, and where it is saved.', render: reviewStep, collect: (wrap, d) => { const w = wrap.querySelector('.o55-skl-where'); if (w) d.where = w.value; const on = wrap.querySelector('[data-action="pm51-skills-won"]'); if (on) d.turnOn = on.classList.contains('on'); } }
       ],
       onFinish: d => {
         const miss = missingNeeds(d);
