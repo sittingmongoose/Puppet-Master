@@ -1,11 +1,11 @@
 {
  "_about": "editor-runtime (Editor & Terminal): wording, conditions, units and bounds from the plain-pages audit (2026-09-27). Hand rows autosave, file-encoding, paste-protect and index-mode are worded here too. The index actions keep the flows they had in 90-flows.json.",
  "rows": {
-  "autosave": {
+  "code.editing.autosave": {
    "label": "Save files automatically",
    "help": "Saves a moment after you stop typing."
   },
-  "file-encoding": {
+  "code.editing.default-encoding": {
    "label": "Text encoding for new files",
    "help": "Used when a file does not say which encoding it uses."
   },
@@ -195,7 +195,7 @@
     "Trim Whitespace": "Trim extra spaces"
    }
   },
-  "paste-protect": {
+  "code.terminal.paste-protection": {
    "label": "Check before pasting several lines",
    "help": "Shows pasted commands first when they could run more than one thing."
   },
@@ -235,7 +235,7 @@
    "label": "Keep a search index of this project",
    "help": "Off stops indexing and clears what was built."
   },
-  "index-mode": {
+  "web.index.mode": {
    "label": "How much to index",
    "help": "Deep finds more but uses more of your computer.",
    "when": {

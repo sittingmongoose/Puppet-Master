@@ -82,16 +82,16 @@ PM51.on('o55-home-reset', () => {
 /* The hand row said "42 words" and its button opened a page that pointed back at the row. It is now a list of the
    words themselves, edited with the same list editor as every other list. */
 (function o55SpellingWords() {
-  const e = findSettingGlobal('custom-words'); if (!e || !e.setting) return;
+  const e = findSettingGlobal('general.interaction.spellcheck-words'); if (!e || !e.setting) return;
   e.setting.control = 'list';
   if (!Array.isArray(e.setting.value)) e.setting.value = ['Tastebook', 'Jujutsu', 'Tauri', 'Kimi', 'Unraid', 'rustfmt', 'Playwright', 'monorepo', 'Supabase', 'SvelteKit', 'PRD', 'Grill Me'];
-  if (state && state.settings && !Array.isArray(state.settings['custom-words'])) delete state.settings['custom-words'];
+  if (state && state.settings && !Array.isArray(state.settings['general.interaction.spellcheck-words'])) delete state.settings['general.interaction.spellcheck-words'];
 })();
 
 /* ---------- Accent color keeps the theme's own until you pick one ------------------------------------------------ */
 /* The hand row defaulted to Violet, drawn as chosen, while each theme paints its own accent (Basic Dark is blue). */
 (function o55AccentThemeFirst() {
-  const e = findSettingGlobal('accent'); if (!e || !e.setting || !Array.isArray(e.setting.options)) return;
+  const e = findSettingGlobal('general.visual.accent-color'); if (!e || !e.setting || !Array.isArray(e.setting.options)) return;
   if (!e.setting.options.includes('Theme')) e.setting.options = ['Theme'].concat(e.setting.options);
   e.setting.value = 'Theme';
 })();

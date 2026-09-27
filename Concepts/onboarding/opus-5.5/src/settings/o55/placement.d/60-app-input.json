@@ -12,7 +12,7 @@
    "help": "Pick a look, then light or dark.",
    "order": 10,
    "after": {
-    "accent": "general.visual.theme-mode"
+    "general.visual.accent-color": "general.visual.theme-mode"
    }
   },
   "app-visual": {
@@ -21,7 +21,7 @@
    "help": "Make text and controls easier to see and use.",
    "order": 20,
    "after": {
-    "animation-speed": "general.visual.reduce-animations"
+    "general.visual.animation-speed": "general.visual.reduce-animations"
    }
   },
   "app-chat": {
@@ -54,7 +54,7 @@
    "help": "Where the chat and panels sit, and the icons on the left.",
    "order": 70,
    "after": {
-    "sidebar-labels": "general.interaction.activity-bar-order"
+    "general.interaction.activity-bar-labels": "general.interaction.activity-bar-order"
    }
   },
   "app-startup": {
@@ -63,7 +63,7 @@
    "help": "What you see first and what comes back after a crash.",
    "order": 80,
    "after": {
-    "startup-view": ""
+    "general.startup.first-screen": ""
    }
   },
   "app-spelling": {
@@ -264,5 +264,14 @@
    "help-level",
    "working-activity-style"
   ]
+ },
+ "hand_ids": {
+  "accent": "general.visual.accent-color",
+  "animation-speed": "general.visual.animation-speed",
+  "sidebar-labels": "general.interaction.activity-bar-labels",
+  "startup-view": "general.startup.first-screen",
+  "spellcheck": "general.interaction.spellcheck",
+  "dictionaries": "general.interaction.spellcheck-languages",
+  "custom-words": "general.interaction.spellcheck-words"
  }
 }

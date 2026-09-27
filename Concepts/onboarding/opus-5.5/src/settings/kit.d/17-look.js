@@ -7,7 +7,7 @@
    read. A setting that was never changed writes nothing, so every theme keeps its own corners, borders, fonts and
    accent until you choose otherwise. Text size, Line spacing and Animation speed scale the page's own font sizes,
    line heights and durations through one generated override sheet, which exists only while one of them is changed. */
-const O55_LOOK_IDS = ['accent', 'animation-speed', 'sidebar-labels', 'general.visual.ui-scale', 'general.visual.font-size', 'general.visual.interface-density',
+const O55_LOOK_IDS = ['general.visual.accent-color', 'general.visual.animation-speed', 'general.interaction.activity-bar-labels', 'general.visual.ui-scale', 'general.visual.font-size', 'general.visual.interface-density',
   'general.visual.line-height', 'general.visual.high-contrast', 'general.visual.focus-indicator', 'general.visual.app-font', 'general.visual.border-width',
   'general.visual.border-radius', 'general.visual.padding-scale', 'general.visual.scrollbar-width', 'general.visual.retro-effects',
   'general.visual.pixel-grid-opacity', 'general.visual.scanline-opacity', 'general.visual.theme', 'general.visual.theme-mode'];
@@ -106,7 +106,7 @@ function o55ApplyLook() {
   /* the theme's own accent, read with no override in place, for the first swatch */
   if (st.getPropertyValue('--accent-primary')) { st.removeProperty('--accent-primary'); st.removeProperty('--accent-primary-rgb'); }
   set('--o55-theme-accent', getComputedStyle(html).getPropertyValue('--accent-primary').trim() || null);
-  const acc = O55_ACCENTS[V('accent')];
+  const acc = O55_ACCENTS[V('general.visual.accent-color')];
   const pick = acc ? acc[light ? 'light' : 'dark'] : null;
   set('--accent-primary', pick && pick[0]); set('--accent-primary-rgb', pick && pick[1]);
   /* Size of everything: the whole app, like the browser zoom */
@@ -142,7 +142,7 @@ function o55ApplyLook() {
   attr('data-o55-scan', scan == null || Number(scan) <= 0 ? null : 'on');
   /* Text size, Line spacing, Animation speed */
   const fs = o55Px(V('general.visual.font-size')), lh = o55Px(V('general.visual.line-height'));
-  o55SpeedFactor = O55_SPEED[V('animation-speed')] || 1;
+  o55SpeedFactor = O55_SPEED[V('general.visual.animation-speed')] || 1;
   o55PaintScales(fs ? Math.round(fs / 14 * 1000) / 1000 : 1, lh ? Math.round(lh / 1.4 * 1000) / 1000 : 1, o55SpeedFactor);
   /* Show names next to those icons: the rail's own expand state */
   o55SyncRail();
@@ -150,8 +150,8 @@ function o55ApplyLook() {
 /* The rail keeps its own Expand/Collapse button; the setting mirrors it both ways, so the shell looks the same until
    you change either. */
 function o55SyncRail() {
-  const bar = document.getElementById('activityBar'), f = findSettingGlobal('sidebar-labels'); if (!bar || !f) return;
-  const chosen = state.settings && Object.prototype.hasOwnProperty.call(state.settings, 'sidebar-labels') ? o55On(state.settings['sidebar-labels']) : null;
+  const bar = document.getElementById('activityBar'), f = findSettingGlobal('general.interaction.activity-bar-labels'); if (!bar || !f) return;
+  const chosen = state.settings && Object.prototype.hasOwnProperty.call(state.settings, 'general.interaction.activity-bar-labels') ? o55On(state.settings['general.interaction.activity-bar-labels']) : null;
   if (chosen == null) { f.setting.value = !bar.classList.contains('collapsed'); return; }
   if (chosen === bar.classList.contains('collapsed')) { const t = document.getElementById('activityBarToggle'); if (t) t.click(); }
 }
@@ -160,8 +160,8 @@ document.addEventListener('click', e => {
   window.setTimeout(() => {
     const bar = document.getElementById('activityBar'); if (!bar || !state || !state.settings) return;
     const on = !bar.classList.contains('collapsed');
-    if (Object.prototype.hasOwnProperty.call(state.settings, 'sidebar-labels') && o55On(state.settings['sidebar-labels']) !== on) { state.settings['sidebar-labels'] = on; saveState(); refreshSettingRow('sidebar-labels'); }
-    const f = findSettingGlobal('sidebar-labels'); if (f && !Object.prototype.hasOwnProperty.call(state.settings, 'sidebar-labels')) f.setting.value = on;
+    if (Object.prototype.hasOwnProperty.call(state.settings, 'general.interaction.activity-bar-labels') && o55On(state.settings['general.interaction.activity-bar-labels']) !== on) { state.settings['general.interaction.activity-bar-labels'] = on; saveState(); refreshSettingRow('general.interaction.activity-bar-labels'); }
+    const f = findSettingGlobal('general.interaction.activity-bar-labels'); if (f && !Object.prototype.hasOwnProperty.call(state.settings, 'general.interaction.activity-bar-labels')) f.setting.value = on;
   }, 0);
 }, true);
 const o55LookCommit = commitSettingValue;

@@ -73,8 +73,9 @@ def o55_data() -> dict:
 def placement() -> dict:
     """placement.json plus o55/placement.d/*.json: `sections` merge by id (a patch may add or change fields, or drop a
     section with null), `overrides` are prepended in file order (first match wins, so a patch beats the base),
-    `managers` and `pages` merge by id, `hand_moves` are appended in file order (after the base's moves), and
-    `hand_drops` ({page: [hand row ids]}) name hand-written rows that only repeat an inventory row and are not drawn."""
+    `managers` and `pages` merge by id, `hand_moves` are appended in file order (after the base's moves),
+    `hand_drops` ({page: [hand row ids]}) name hand-written rows that only repeat an inventory row and are not drawn, and
+    `hand_ids` ({old id: inventory id}) give hand-written rows admitted to Plans/settings_inventory.json their ids."""
     base = json.loads((FORK / 'placement.json').read_text(encoding='utf-8'))
     extra_rules = []
     for p in sorted((FORK / 'o55' / 'placement.d').glob('*.json')):
@@ -89,6 +90,7 @@ def placement() -> dict:
         for pid, meta in patch.get('pages', {}).items():
             base['pages'][pid] = dict(base['pages'].get(pid, {}), **meta)
         base['hand_moves'] = base.get('hand_moves', []) + [dict(m, _patch=p.name) for m in patch.get('hand_moves', [])]
+        base.setdefault('hand_ids', {}).update(patch.get('hand_ids', {}))
         for ws, ids in patch.get('hand_drops', {}).items():
             have = base.setdefault('hand_drops', {}).setdefault(ws, [])
             have += [i for i in ids if i not in have]
@@ -143,6 +145,11 @@ def validate(merged: dict, engine: str, t50, need) -> dict:
         if mv.get('_patch'):
             need(mv.get('to_section') in sections, f"O55 placement: {mv['_patch']} moves hand rows to unknown section {mv.get('to_section')!r}")
             need(pages.get(mv.get('workspace'), {}).get('hand'), f"O55 placement: {mv['_patch']} moves hand rows from {mv.get('workspace')!r}, which draws none")
+    inventory = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
+    if merged.get('hand_ids') and inventory.exists():
+        known = {r['id'] for r in json.loads(inventory.read_text(encoding='utf-8'))['settings']}
+        for old_id, new_id in merged['hand_ids'].items():
+            need(new_id in known, f'O55 placement: hand row {old_id!r} maps to {new_id!r}, which Plans/settings_inventory.json does not hold')
     for ws in merged.get('hand_drops', {}):
         need(pages.get(ws, {}).get('hand'), f'O55 placement: hand_drops names {ws!r}, which draws no hand rows')
     hand = set(t50.HAND_CANONICAL_RE.findall(engine))

@@ -13,8 +13,8 @@
    "help": "When files are saved and how many tabs stay open.",
    "order": 10,
    "after": {
-    "autosave": "",
-    "file-encoding": "autosave"
+    "code.editing.autosave": "",
+    "code.editing.default-encoding": "code.editing.autosave"
    }
   },
   "editor-files": {
@@ -53,7 +53,7 @@
    "help": "What copying and pasting do in the terminal.",
    "order": 70,
    "after": {
-    "paste-protect": "code.terminal.copy-behavior"
+    "code.terminal.paste-protection": "code.terminal.copy-behavior"
    }
   },
   "editor-search-index": {
@@ -63,7 +63,7 @@
    "order": 80,
    "hand_section": null,
    "after": {
-    "index-mode": "web.index.enable"
+    "web.index.mode": "web.index.enable"
    }
   },
   "editor-big-files": {
@@ -227,5 +227,11 @@
    "terminal-restore",
    "index-exclusions"
   ]
+ },
+ "hand_ids": {
+  "autosave": "code.editing.autosave",
+  "file-encoding": "code.editing.default-encoding",
+  "paste-protect": "code.terminal.paste-protection",
+  "index-mode": "web.index.mode"
  }
 }

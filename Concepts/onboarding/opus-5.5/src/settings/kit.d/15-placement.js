@@ -5,6 +5,20 @@
      below the strip instead of under it.
    - A jump keeps following its target until the page above it has settled: All Project Settings measures its rows
      only as they pass through view, so a jump past it to History & Artifacts landed about 400px low. */
+/* Hand-written rows admitted to the inventory (Plans/settings_inventory.json, 2026-09-27) take their canonical ids:
+   placement `hand_ids` maps the page's old id to the inventory id. The rename runs after the hand moves and before
+   the rows are ordered, and a value saved under the old id moves to the new one. */
+(function o55CanonicalHandIds() {
+  const map = PLACEMENT.hand_ids || {}; if (!Object.keys(map).length) return;
+  const has = (o, k) => !!o && Object.prototype.hasOwnProperty.call(o, k);
+  for (const d of D.domains) for (const w of d.workspaces) for (const s of w.sections || []) for (const st of s.settings || []) {
+    const to = map[st.id]; if (!to) continue;
+    if (state && has(state.settings, st.id)) { if (!has(state.settings, to)) state.settings[to] = state.settings[st.id]; delete state.settings[st.id]; }
+    if (state && has(state.changed, st.id)) { state.changed[to] = state.changed[st.id]; delete state.changed[st.id]; }
+    st.id = to;
+  }
+  allSettingsCatalogCache = null; searchIndexDirty = true;
+})();
 (function o55OrderPlacedRows() {
   if (!PLACEMENT || !Array.isArray(PLACEMENT.overrides)) return;
   for (const rule of PLACEMENT.overrides) {
@@ -14,7 +28,7 @@
     sec.settings.sort((x, y) => (at.has(x.id) ? at.get(x.id) : 1e6) - (at.has(y.id) ? at.get(y.id) : 1e6));
   }
   /* A hand-written row moved into a placement section (hand_moves) has no inventory id, so a rule cannot list it.
-     The section's `after` places it: {"accent": "general.visual.theme-mode"} puts Accent color right under Light or
+     The section's `after` places it: {"general.visual.accent-color": "general.visual.theme-mode"} puts Accent color right under Light or
      dark; an empty target puts the row first. Entries apply in order, so a row can follow one placed just before. */
   for (const [sid, def] of Object.entries(PLACEMENT.sections || {})) {
     const sec = def && def.after ? pm51SectionObjects.get(sid) : null; if (!sec || !Array.isArray(sec.settings)) continue;

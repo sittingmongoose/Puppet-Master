@@ -12,7 +12,7 @@
     "Auto": "Match my computer"
    }
   },
-  "accent": {
+  "general.visual.accent-color": {
    "label": "Accent color",
    "help": "The color of selections, focus outlines and progress; the first keeps the theme's own.",
    "options": {
@@ -117,7 +117,7 @@
    "label": "Reduce motion",
    "help": "Stops decorative movement; everything still works the same."
   },
-  "animation-speed": {
+  "general.visual.animation-speed": {
    "label": "Animation speed",
    "help": "How quickly panels and pages move.",
    "when": {
@@ -415,10 +415,10 @@
   "general.interaction.activity-bar-order": {
    "label": "Order of the icons on the left"
   },
-  "sidebar-labels": {
+  "general.interaction.activity-bar-labels": {
    "label": "Show names next to those icons"
   },
-  "startup-view": {
+  "general.startup.first-screen": {
    "label": "First screen when Puppet Master opens",
    "help": "The page you land on; the side panel is chosen below."
   },
@@ -439,14 +439,14 @@
    "label": "Protect unsaved changes",
    "help": "Keeps copies of unsaved edits so a crash can't lose them."
   },
-  "spellcheck": {
+  "general.interaction.spellcheck": {
    "label": "Check spelling",
    "help": "In chat and notes; code is never marked."
   },
-  "dictionaries": {
+  "general.interaction.spellcheck-languages": {
    "label": "Languages to check"
   },
-  "custom-words": {
+  "general.interaction.spellcheck-words": {
    "label": "Words to always accept",
    "help": "Names and terms the spell checker should not flag.",
    "noun": "word",
