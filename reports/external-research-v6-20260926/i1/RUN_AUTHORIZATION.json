@@ -1,0 +1,82 @@
+{
+  "schema": "er6.i1_run_authorization.v1",
+  "schedule": "I1",
+  "user_words": "approved",
+  "authority": "User go in this Codex chat following supplied technical sign-off; sign-off alone is not spending authorization",
+  "approved_utc": "2026-09-27T22:49:58.290683+00:00",
+  "reviewed_commit": "4a664731f46b2480de899b6b950d20350101fe16",
+  "proposal_sha256": "c8543110ae9048c176189d584d7490eeb2f66a61f80790c5699402e6f5b8512c",
+  "amendment_manifest_sha256": "5e1fd908b0291af4d22bd8668465d518b75ad84c4aa9c10635fda1cd9ef75fb4",
+  "technical_signoff_sha256": "97aa352a153604de78e7d82b35ebee579b981e5ac8af8191d5948cd14c6e163c",
+  "frozen_proposal_note": "Leave the pre-approval proposal unchanged. This separate run authorization binds its exact bytes. Old R1b approval is not reused.",
+  "schedule_order": [
+    [
+      "I1-M-control",
+      "M",
+      "control"
+    ],
+    [
+      "I1-M-maintained",
+      "M",
+      "maintained"
+    ],
+    [
+      "I1-Z-maintained",
+      "Z",
+      "maintained"
+    ],
+    [
+      "I1-Z-control",
+      "Z",
+      "control"
+    ]
+  ],
+  "limits": {
+    "candidate_assignments": 4,
+    "candidate_seconds_each": 1800,
+    "candidate_responses_each": 160,
+    "candidate_seconds_total": 7200,
+    "candidate_parent_responses_total": 640,
+    "evaluation_assignments": 2,
+    "evaluation_seconds_each": 2700,
+    "evaluation_responses_each": 160,
+    "evaluation_seconds_total": 5400,
+    "evaluation_responses_total": 320,
+    "model_seconds_total": 12600,
+    "phase_wall_seconds": 14400,
+    "host_seconds_per_slot": 300,
+    "retries": 0,
+    "replacement_slots": 0,
+    "concurrency": 1
+  },
+  "evaluation": {
+    "assignments": 2,
+    "model": "claude-opus-5-5",
+    "effort_requested": "xhigh",
+    "one_per_app_pair": true
+  },
+  "excluded": [
+    "R1b reruns or Block2",
+    "retries/replacements",
+    "follow-on flash verifier",
+    "canonical/governance/WorkNode/production changes",
+    "new answer key or premium candidate research"
+  ],
+  "publication": "Existing user authorization for GitHub review visibility persists.",
+  "launch_checks": {
+    "freeze_files_matched": 21,
+    "published_files_matched": 34,
+    "preparation_ok": true,
+    "corpus_files": 129,
+    "claude_usage_source": "Native interactive /usage; zero model tokens, zero API seconds and $0.00 for the check",
+    "claude_window_used_percent": 41,
+    "claude_weekly_used_percent": 61,
+    "usage_credits_enabled": false,
+    "muse": "Use unchanged post-slot headroom gate; no extra inference probe",
+    "zcode": "No exposed headroom readout; unchanged quota/failure stop rules"
+  },
+  "vm_record": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v6-20260926/i1-20260927/APPROVAL.json",
+    "sha256": "4b5d550d95017ecb38ffddc340a9e5e4def5c0f808c2d29bead442c3cd3122f4"
+  }
+}
