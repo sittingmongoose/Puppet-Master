@@ -3,6 +3,7 @@
  *   node turn-film.mjs --scene send --theme basic-dark --out /tmp/x
  *        [--rate 0.1] [--ms 900] [--step 16.667] [--file index.html] [--size 1440x900]
  *        [--crop 0,0.48,1,0.5] [--cols 6] [--width 320] [--msg "..."] [--voice auto|basic|friendly|glass|retro]
+ *        [--from 0]   keep only frames at or after this motion time
  *
  * Method: the scene's setup runs at normal speed and settles. Then CSS and Web
  * Animations are slowed with CDP Animation.setPlaybackRate(rate) and every
@@ -38,11 +39,18 @@ const COLS = Number(opt('cols', 6));
 const TW = Number(opt('width', 320));
 const VOICE = opt('voice', 'auto');
 const MSG = opt('msg', 'Walk me through the steps for the rollout.');
+const FROM = Number(opt('from', 0));
 
 const SCENES = {
   /* the composer text flies into its bubble, then the reply waits and streams */
   send: {
     setup: `(() => { PM56_DEMO.selectThread('plain'); const ta=document.querySelector('textarea[data-input="composer"]'); ta.focus(); ta.value=${JSON.stringify(MSG)}; ta.dispatchEvent(new Event('input',{bubbles:true})); })()`,
+    trigger: `document.querySelector('[data-action="send"]').click()`
+  },
+  /* a whole live agent turn: send, think, the card born from the mark, parallel
+     subjects, narration tucking into the caption, the fold and the answer */
+  live: {
+    setup: `(() => { PM56_DEMO.selectThread('live-turn'); const ta=document.querySelector('textarea[data-input="composer"]'); ta.focus(); ta.value=${JSON.stringify(opt('msg', "Add the composite index and prove it's faster."))}; ta.dispatchEvent(new Event('input',{bubbles:true})); })()`,
     trigger: `document.querySelector('[data-action="send"]').click()`
   },
   multi: {
@@ -71,7 +79,7 @@ try {
   await cdp.send('Animation.setPlaybackRate', { playbackRate: RATE });
   await cdp.send('Runtime.evaluate', { expression: `PM56_CLOCK.setScale(${RATE}); window.__filmT0 = PM56_CLOCK.now(); ${sc.trigger}` });
   const kept = [];
-  let next = 0, n = 0, guard = 0;
+  let next = FROM, n = 0, guard = 0;
   while (guard++ < 5000) {
     const shot = await cdp.send('Page.captureScreenshot', { format: 'png', clip });
     const t = (await cdp.send('Runtime.evaluate', { expression: 'PM56_CLOCK.now() - window.__filmT0', returnByValue: true })).result.value;

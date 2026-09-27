@@ -2690,7 +2690,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     });
   }
   function followWorkCardHeight(startH){
-    if(startH==null||scrollIntents.has('transcript')) return;
+    /* This anchors what sits BELOW a card whose height changes, for a reader
+       scrolled away. A reader stuck to the bottom is the glide's: anchoring
+       there fought it, and fought the room a folding card holds for its answer
+       (turn-stream.js), scrolling the thread up by the card's shrink. */
+    if(startH==null||scrollIntents.has('transcript')||tStick) return;
     const tr=document.querySelector('[data-scroll-key="transcript"]');
     if(!tr) return;
     /* Absolute target from the restored scroll baseline — relative += compounds

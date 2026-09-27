@@ -131,10 +131,13 @@ Build with `python3 build.py` then `--check`.
   receipts sit **on** the spine (their icon rides the line). A user turn opens
   with extra air above it. The spine is one layer drawn behind the whole
   transcript, so cards never clip it.
-- **Live.** While the assistant is thinking the mark's satellite **orbits**;
-  while a reply is written or work runs, the mark lights and a short **comet of
-  light** runs down the spine to the live item. Light, not color floods, says
-  live. Reduced motion drops both.
+- **Live.** While the assistant is thinking the mark's satellite (a bead that
+  rides the ring itself, so the mark always reads as a circle) **orbits**;
+  while a reply is written or work runs, the mark lights and a **comet of
+  light** runs down the spine to the live point: a streaming reply's caret, or
+  the live card. The comet appears only once it has real length (a few pixels
+  under the ring read as a glyph, not as light travelling). Light, not color
+  floods, says live. Reduced motion drops both.
 - **Families.** Every transcript item is one of eight families, each with its
   own silhouette:
   - **Prose** (assistant text): no container, 14px reading type, the only
@@ -169,7 +172,11 @@ Build with `python3 build.py` then `--check`.
 
 - An ordinary reply **streams**. On send the reply's placeholder appears after
   the bubble lands: the model's name and a shimmering "is thinking" (elapsed
-  seconds after 4s). The first word emerges where the caret starts; words
+  seconds after 4s). When the first text arrives, the label **condenses
+  toward the mark** while the first word emerges where the caret starts (the
+  same 180ms in every voice: Basic condenses and blurs, Friendly hops away,
+  Glass sinks into depth, Retro backspaces). The label leaves from its own
+  layer, so the reply's first line never reflows. Words
   release at a natural, rate-smoothed pace (faster when text is waiting, a
   breath at sentence ends, never a dump), behind a soft caret. The reply's
   height follows its text through a spring, so a new line opens rather than
@@ -798,7 +805,14 @@ section heads, and no Goal/Todo/Subagents/Crew/Changes/Artifacts chip footer.
   It never collapses the card.
 - The **panel X collapses the card** — live or completed — to a compact strip. The
   collapse is two beats: the panel folds while the dial recenters, then the dial lifts
-  up into the strip line. Expanding is the exact reverse: the dial **drops down from
+  up into the strip line while the stage closes to the strip's height (one move, no
+  empty box), and the strip settles in.
+- **The fold never moves the thread.** When a turn's card folds as its answer starts,
+  the room the card gives up is **held** (a floor on the list's height at its pre-fold
+  size) and the answer grows into it; what the answer does not use is let go once it
+  has settled, easing shut like a drawer. Measured on the live agent turn: the thread
+  above moved 550px down and back before, 5px now. The answer that follows visible
+  work starts writing without an "is thinking" label. Expanding is the exact reverse: the dial **drops down from
   the strip line to the center** (visible travel), then slides left as the panel opens.
 - **Compact strip:** one row of kind-colored subject discs + "N subjects" + a
   **chevron that re-expands following the live/last subject**. Clicking a disc
