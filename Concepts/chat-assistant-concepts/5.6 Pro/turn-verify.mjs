@@ -201,14 +201,19 @@ await safe('long run stays legible', async () => {
 await safe('item families', async () => {
   const p = await fresh();
   const ids = await p.evaluate(() => PM56_EXT.ctx().state.threads.map(t => t.id));
-  let missing = [], total = 0;
+  let missing = [], total = 0, sideways = [];
   for (const id of ids) {
     await p.evaluate(id => PM56_DEMO.selectThread(id), id); await sleep(120);
     const r = await p.evaluate(() => [...document.querySelectorAll('.transcript-inner > *')].filter(e => !e.getAttribute('data-family')).map(e => e.className.split(' ')[0]));
     total += await p.evaluate(() => document.querySelectorAll('.transcript-inner > *').length);
     if (r.length) missing.push({ id, r });
+    /* the Python browser harnesses fail their first geometry check on any
+       sideways overflow, even hidden: the spine once overflowed by the gutter */
+    const over = await p.evaluate(() => { const t = document.querySelector('.transcript'); return t.scrollWidth - t.clientWidth; });
+    if (over > 0) sideways.push({ id, over });
   }
   check('every transcript item in every thread names its family', missing.length === 0, { total, missing: missing.slice(0, 3) });
+  check('no thread overflows the transcript sideways (scrollWidth == clientWidth)', sideways.length === 0, sideways.slice(0, 4));
   /* accent budget (Basic Dark): who paints with the accent */
   const scan = await p.evaluate(() => {
     const acc = getComputedStyle(document.body).getPropertyValue('--accent').trim();

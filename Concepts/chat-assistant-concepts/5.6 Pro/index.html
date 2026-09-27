@@ -47074,7 +47074,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
        for that frame it held the scroll height up, then let it drop at once. */
     layer.style.height = '';
     if (svg.hasAttribute('viewBox')) svg.removeAttribute('viewBox');
-    set(svg, { width: Math.round(tR.width), height: 1 });
+    /* clientWidth, not the bounding width: the transcript keeps a stable
+       scrollbar gutter, and an SVG as wide as the border box overflowed it
+       sideways by the gutter (scrollWidth > clientWidth in every thread) */
+    set(svg, { width: tr.clientWidth, height: 1 });
     nodes.forEach(function (n) { n.__seen = false; });
     var turns = {}, order = [];
     var kids = inner.children;
